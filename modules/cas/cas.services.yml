@@ -1,0 +1,63 @@
+services:
+  cas.forced_auth_subscriber:
+    class: Drupal\cas\Subscriber\CasForcedAuthSubscriber
+    arguments: ['@current_route_match', '@config.factory',  '@current_user', '@plugin.manager.condition', '@cas.helper', '@cas.redirector']
+    tags:
+      - { name: 'event_subscriber' }
+  cas.gateway_subscriber:
+    class: Drupal\cas\Subscriber\CasGatewayAuthSubscriber
+    arguments: ['@current_route_match', '@config.factory',  '@current_user', '@plugin.manager.condition', '@cas.helper', '@cas.redirector']
+    tags:
+      - { name: 'event_subscriber' }
+  cas.helper:
+    class: Drupal\cas\Service\CasHelper
+    arguments: ['@config.factory', '@logger.factory', '@token']
+  cas.redirector:
+    class: Drupal\cas\Service\CasRedirector
+    arguments: ['@cas.helper', '@event_dispatcher', '@url_generator.non_bubbling', '@config.factory']
+  cas.validator:
+    class: Drupal\cas\Service\CasValidator
+    arguments: ['@http_client', '@cas.helper', '@config.factory', '@url_generator.non_bubbling', '@event_dispatcher']
+  cas.user_manager:
+    class: Drupal\cas\Service\CasUserManager
+    arguments: ['@externalauth.externalauth', '@externalauth.authmap', '@config.factory', '@session', '@database', '@event_dispatcher', '@cas.helper', '@cas.proxy_helper', '@password_generator']
+  cas.logout:
+    class: Drupal\cas\Service\CasLogout
+    arguments: ['@cas.helper', '@database', '@config.factory']
+  cas.proxy_helper:
+    class: Drupal\cas\Service\CasProxyHelper
+    arguments: ['@http_client', '@cas.helper', '@session', '@config.factory', '@database']
+  cas.route_enhancer:
+    class: Drupal\cas\Routing\CasRouteEnhancer
+    arguments: ['@config.factory']
+    tags:
+      - { name: route_enhancer }
+  cas.page_cache_response_policy.deny_cas:
+    class: Drupal\cas\PageCache\DenyCas
+    arguments: ['@config.factory', '@plugin.manager.condition']
+    public: false
+    tags:
+      - { name: page_cache_response_policy }
+  cas.auto_assign_roles_subscriber:
+    class: Drupal\cas\Subscriber\CasAutoAssignRolesSubscriber
+    arguments: ['@config.factory']
+    tags:
+      - { name: 'event_subscriber' }
+  cas.route_subscriber:
+    class: Drupal\cas\Subscriber\CasRouteSubscriber
+    tags:
+      - { name: event_subscriber }
+  cas.cas_user_access_checker:
+    class: Drupal\cas\Access\CasUserAccessCheck
+    arguments: ['@config.factory', '@cas.user_manager']
+    tags:
+      - { name: access_check, applies_to: _cas_user_access }
+  cas.login_redirect.subscriber:
+    class: Drupal\cas\Subscriber\CasLoginRedirectSubscriber
+    tags:
+      - { name: 'event_subscriber' }
+  cas.admin_approval_registration.subscriber:
+    class: Drupal\cas\Subscriber\CasAdminApprovalRegistrationSubscriber
+    arguments: ['@config.factory', '@messenger']
+    tags:
+      - { name: 'event_subscriber' }

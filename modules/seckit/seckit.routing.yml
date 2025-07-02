@@ -1,0 +1,14 @@
+seckit.settings:
+  path: '/admin/config/system/seckit'
+  defaults:
+    _title: 'Security Kit'
+    _form: '\Drupal\seckit\Form\SecKitSettingsForm'
+  requirements:
+    _permission: 'administer seckit'
+seckit.report:
+  path: '/report-csp-violation'
+  defaults:
+    _controller: '\Drupal\seckit\Controller\SeckitExportController::export'
+  requirements:
+    # Needs explanation of why there is no access restriction.
+    _access: 'TRUE'

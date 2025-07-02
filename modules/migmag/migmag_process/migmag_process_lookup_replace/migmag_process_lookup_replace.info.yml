@@ -1,0 +1,12 @@
+name: Migrate Magician Forced Lookup Process Plugin
+type: module
+description: Replaces core's migration_lookup process plugin with migmag_lookup.
+package: Migration
+core_version_requirement: ^8.9 || ^9 || ^10 || ^11
+dependencies:
+  - migmag:migmag_process
+
+# Information added by Drupal.org packaging script on 2025-04-04
+version: '1.8.3'
+project: 'migmag'
+datestamp: 1743751426

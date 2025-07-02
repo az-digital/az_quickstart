@@ -1,0 +1,5 @@
+cas.settings:
+  title: 'CAS'
+  parent: user.admin_index
+  description: 'Configure central authentication services.'
+  route_name: cas.settings

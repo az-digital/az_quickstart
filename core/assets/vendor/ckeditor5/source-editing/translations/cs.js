@@ -1,0 +1,1 @@
+!function(o){const c=o.cs=o.cs||{};c.dictionary=Object.assign(c.dictionary||{},{"Show source":"Zobrazit zdroj",Source:"Zdroj"})}(window.CKEDITOR_TRANSLATIONS||(window.CKEDITOR_TRANSLATIONS={}));

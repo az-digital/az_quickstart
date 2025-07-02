@@ -1,0 +1,20 @@
+/vendor/
+/web/
+/node_modules/
+/.editorconfig
+/.ddev/
+/.idea/
+
+#PHPUnit output
+junit.xml
+phpunit.xml
+.phpunit.result.cache
+
+# We symlink docker-compsoe for docker-relay to work with ddev
+docker-compose.yml
+
+# ignore patches for easier contrib workflow
+*.patch
+.envrc
+.envrc.local
+.composer-plugin.env

@@ -1,0 +1,61 @@
+cas.settings:
+  path: '/admin/config/people/cas'
+  defaults:
+    _form: '\Drupal\cas\Form\CasSettings'
+    _title: 'CAS settings'
+  requirements:
+    _permission: 'administer account settings'
+cas.login:
+  path: '/caslogin'
+  defaults:
+    _controller: '\Drupal\cas\Controller\ForceLoginController::forceLogin'
+  requirements:
+    # This route is publicly accessible.
+    _access: 'TRUE'
+  options:
+    _maintenance_access: TRUE
+cas.legacy_login:
+  path: '/cas'
+  defaults:
+    _controller: '\Drupal\cas\Controller\ForceLoginController::forceLogin'
+  requirements:
+    # This route is publicly accessible.
+    _access: 'TRUE'
+  options:
+    _maintenance_access: TRUE
+cas.service:
+  path: '/casservice'
+  defaults:
+    _controller: '\Drupal\cas\Controller\ServiceController::handle'
+  requirements:
+    # This route is publicly accessible.
+    _access: 'TRUE'
+  options:
+    _maintenance_access: TRUE
+    no_cache: TRUE
+cas.proxyCallback:
+  path: '/casproxycallback'
+  defaults:
+    _controller: '\Drupal\cas\Controller\ProxyCallbackController::callback'
+  requirements:
+    # This route is publicly accessible.
+    _access: 'TRUE'
+  options:
+    _maintenance_access: TRUE
+    no_cache: TRUE
+cas.logout:
+  path: '/caslogout'
+  defaults:
+    _controller: '\Drupal\cas\Controller\LogoutController::logout'
+  requirements:
+    _user_is_logged_in: 'TRUE'
+  options:
+    _maintenance_access: TRUE
+    no_cache: TRUE
+cas.bulk_add_cas_users:
+  path: '/admin/people/create/cas-bulk'
+  defaults:
+    _form: '\Drupal\cas\Form\BulkAddCasUsers'
+    _title: 'Bulk Add CAS Users'
+  requirements:
+    _permission: 'administer users'

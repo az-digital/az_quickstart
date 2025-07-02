@@ -1,0 +1,57 @@
+server:
+  version: '2.0'
+  protocol: 'https'
+  hostname: ''
+  port: 443
+  path: '/'
+  verify: 0
+  cert: ''
+gateway:
+  enabled: false
+  recheck_time: 720
+  method: 'client_side'
+  paths:
+    id: request_path
+    pages: '<front>'
+    negate: false
+forced_login:
+  enabled: false
+  paths:
+    id: request_path
+    pages: ''
+    negate: false
+logout:
+  logout_destination: ''
+  enable_single_logout: false
+  cas_logout: false
+  single_logout_session_lifetime: 25
+proxy:
+  initialize: false
+  can_be_proxied: false
+  proxy_chains: ''
+user_accounts:
+  prevent_normal_login: true
+  auto_register: false
+  auto_register_follow_registration_policy: false
+  email_assignment_strategy: 0
+  email_hostname: ''
+  email_attribute: ''
+  auto_assigned_roles: {}
+  restrict_password_management: true
+  restrict_email_management: true
+error_handling:
+  login_failure_page: '/user/login'
+  message_validation_failure: 'There was a problem validating your login, please contact a site administrator.'
+  message_no_local_account: 'You do not have an account on this website. Please contact a site administrator.'
+  message_subscriber_denied_reg: 'You do not have access to log in to this website. Please contact a site administrator if you believe you should have access.'
+  message_account_blocked: 'Your account is blocked or has not been activated. Please contact a site administrator.'
+  message_subscriber_denied_login: 'You do not have access to log in to this website. Please contact a site administrator if you believe you should have access.'
+  message_username_already_exists: 'An account on this website with your username already exists. Please contact a site administrator.'
+  message_prevent_normal_login: 'This account must log in using <a href="[cas:login-url]">CAS</a>.'
+  message_restrict_password_management: 'The requested account is associated with CAS and its password cannot be managed from this website.'
+advanced:
+  debug_log: false
+  connection_timeout: 10
+login_link_enabled: false
+login_link_label: 'CAS Login'
+login_success_message: ''

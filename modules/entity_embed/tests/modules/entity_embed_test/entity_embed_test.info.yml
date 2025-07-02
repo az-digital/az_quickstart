@@ -1,0 +1,19 @@
+name: 'Entity Embed test'
+type: module
+description: 'Support module for the Entity Embed module tests.'
+package: Testing
+dependencies:
+ - drupal:ckeditor5
+ - drupal:file
+ - drupal:image
+ - drupal:node
+ - drupal:text
+ - drupal:media
+ - drupal:editor
+ - embed:embed
+ - entity_embed:entity_embed
+
+# Information added by Drupal.org packaging script on 2025-02-02
+version: '8.x-1.7'
+project: 'entity_embed'
+datestamp: 1738512142

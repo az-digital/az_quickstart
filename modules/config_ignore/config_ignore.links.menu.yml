@@ -1,0 +1,6 @@
+config_ignore.settings:
+  title: 'Ignore'
+  description: 'Configuration Ignore settings'
+  route_name: config_ignore.settings
+  parent: config.sync
+  weight: 3

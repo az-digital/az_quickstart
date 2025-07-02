@@ -1,0 +1,7 @@
+upgrade_status.settings:
+  type: config_object
+  label: 'Upgrade status settings'
+  mapping:
+    paths_per_scan:
+      type: integer
+      label: 'Paths per iteration to scan'

@@ -1,0 +1,13 @@
+name: Chosen
+type: module
+description: Makes select elements more user-friendly using <a href="https://github.com/JJJ/chosen">Chosen</a>.
+package: User interface
+core_version_requirement: ^9.2 || ^10 || ^11
+configure: chosen.admin
+dependencies:
+  - chosen:chosen_lib
+
+# Information added by Drupal.org packaging script on 2024-09-02
+version: '4.0.3'
+project: 'chosen'
+datestamp: 1725307448

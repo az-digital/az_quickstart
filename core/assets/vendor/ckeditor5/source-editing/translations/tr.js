@@ -1,0 +1,1 @@
+!function(n){const o=n.tr=n.tr||{};o.dictionary=Object.assign(o.dictionary||{},{"Show source":"Kaynağı göster",Source:"Kaynak"})}(window.CKEDITOR_TRANSLATIONS||(window.CKEDITOR_TRANSLATIONS={}));

@@ -1,0 +1,203 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the config_sync module.
+ */
+
+use Drupal\config_snapshot\ConfigSnapshotStorage;
+use Drupal\config_snapshot\Entity\ConfigSnapshot;
+use Drupal\config_sync\ConfigSyncSnapshotterInterface;
+use Drupal\Core\Extension\Extension;
+use Drupal\Core\Utility\UpdateException;
+
+/**
+ * Implements hook_install().
+ *
+ * Takes a snapshot of configuration from extensions already installed on the
+ * site.
+ */
+function config_sync_install() {
+  \Drupal::service('config_sync.snapshotter')->createSnapshot();
+}
+
+/**
+ * Migrate snapshot data from table to configuration entities.
+ */
+function config_sync_update_8001() {
+  if (!\Drupal::moduleHandler()->moduleExists('config_snapshot')) {
+    // Install new dependency.
+    try {
+      \Drupal::service('module_installer')->install(['config_snapshot'], FALSE);
+    }
+    catch (Exception $e) {
+      throw new UpdateException('The Configuration Snapshot module is required but was not found.');
+    }
+  }
+
+  $provider_storage = \Drupal::service('config_provider.storage');
+  $table_name = 'config_sync_snapshot_extension';
+  $database = \Drupal::database();
+  $database_schema = $database->schema();
+  if ($database_schema->tableExists($table_name)) {
+    // Load data from old table storage.
+    $legacy_data = $database->query('SELECT * FROM {' . $table_name . '}')->fetchAll();
+    $data = [];
+    foreach ($legacy_data as $item) {
+      // Data are serialized.
+      $data[$item->collection][$item->name] = unserialize($item->data, ['allowed_classes' => FALSE]);
+    }
+
+    // The config item data we've read in doesn't include information on the
+    // providing extension. To determine this, our best proxy indicator is the
+    // config that is currently provided.
+    /** @var \Drupal\config_sync\Plugin\SyncConfigCollectorInterface $config_collector */
+    $config_collector = \Drupal::service('config_sync.collector');
+    $installed_extensions = \Drupal::config('core.extension');
+
+    // Iterate through installed extensions.
+    foreach (['module', 'theme'] as $type) {
+      if ($installed_type = $installed_extensions->get($type)) {
+
+        // For each extension, determine what configuration it currently
+        // provides.
+        foreach (array_keys($installed_type) as $name) {
+
+          $pathname = \Drupal::service('extension.path.resolver')->getPathname($type, $name);
+          $extension = new Extension(\Drupal::root(), $type, $pathname);
+          $extensions = [
+            $name => $extension,
+          ];
+          $config_collector->addInstallableConfig($extensions);
+
+          // Try loading the snapshot from configuration. We need to support
+          // snapshots that may have been created when we installed the
+          // config_snapshot module or when other modules were installed after
+          // code was updated but prior to this update.
+          $config_snapshot = ConfigSnapshot::load(ConfigSyncSnapshotterInterface::CONFIG_SNAPSHOT_SET . ".{$type}.{$name}");
+
+          // If not found, create a fresh snapshot object for this extension.
+          if (!$config_snapshot) {
+            $config_snapshot = ConfigSnapshot::create([
+              'snapshotSet' => ConfigSyncSnapshotterInterface::CONFIG_SNAPSHOT_SET,
+              'extensionType' => $type,
+              'extensionName' => $name,
+            ]);
+          }
+
+          foreach (array_keys($data) as $collection) {
+            if ($provider_storage->getCollectionName() !== $collection) {
+              $provider_storage = $provider_storage->createCollection($collection);
+            }
+            if ($config_names = $provider_storage->listAll()) {
+
+              // If the currently-provided item has a previous snapshot value,
+              // set that for the new snapshot.
+              foreach ($config_names as $config_name) {
+                if (isset($data[$collection][$config_name])) {
+                  $config_snapshot
+                    ->setItem($collection, $config_name, $data[$collection][$config_name]);
+                }
+              }
+              $config_snapshot->save();
+            }
+          }
+        }
+      }
+    }
+
+    // Drop the obsolete table.
+    $database_schema->dropTable($table_name);
+  }
+
+  // Also drop a second obsolete table if present.
+  $table_name = 'config_sync_snapshot_active';
+  if ($database_schema->tableExists($table_name)) {
+    $database_schema->dropTable($table_name);
+  }
+}
+
+/**
+ * Fill in missing snapshots for optional configuration.
+ */
+function config_sync_update_8002() {
+  $active_storage = \Drupal::service('config.storage');
+  $provider_storage = \Drupal::service('config_provider.storage');
+  $config_lister = \Drupal::service('config_update.config_list');
+  $config_differ = \Drupal::service('config_update.config_diff');
+  $config_reverter = \Drupal::service('config_update.config_update');
+
+  $extension_changelists = \Drupal::service('config_sync.lister')->getExtensionChangelists();
+  // Populate the provider storage with all available configuration.
+  \Drupal::service('config_provider.collector')->addInstallableConfig();
+
+  foreach ($extension_changelists as $type => $extensions) {
+    foreach ($extensions as $name => $collection_changelists) {
+      // Can't use Drupal\config_snapshot\ConfigSnapshotStorageTrait because
+      // we're in a static method.
+      $service_id = "config_snapshot.{ConfigSyncSnapshotterInterface::CONFIG_SNAPSHOT_SET}.{$type}.{$name}";
+      if (\Drupal::getContainer() && \Drupal::hasService($service_id)) {
+        $snapshot_storage = \Drupal::service($service_id);
+      }
+      else {
+        $snapshot_storage = new ConfigSnapshotStorage(ConfigSyncSnapshotterInterface::CONFIG_SNAPSHOT_SET, $type, $name);
+      }
+
+      foreach ($collection_changelists as $collection => $operation_types) {
+        // Switch collection storages if necessary.
+        if ($collection !== $snapshot_storage->getCollectionName()) {
+          $snapshot_storage = $snapshot_storage->createCollection($collection);
+        }
+
+        // Create operations indicate the configuration is provided but
+        // hasn't been snapshotted.
+        if (isset($operation_types['create'])) {
+          foreach (array_keys($operation_types['create']) as $config_id) {
+            // If the item exists but there's no snapshot, create one.
+            if ($active_storage->exists($config_id)) {
+              $provided_value = $provider_storage->read($config_id);
+              $active_value = $active_storage->read($config_id);
+
+              // Snapshot the provided value.
+              $snapshot_storage->write($config_id, $provided_value);
+
+              // If the currently active value is not as provided, assume that
+              // we have an update and revert to it.
+              if (!$config_differ->same($provided_value, $active_value)) {
+                // The revert command needs the type and the unprefixed name.
+                $config_type = $config_lister->getTypeNameByConfigName($name);
+                // The lister gives NULL if simple configuration, but the
+                // reverter expects 'system.simple' so we convert it.
+                if ($config_type === NULL) {
+                  $config_type = 'system.simple';
+                }
+                $config_reverter->revert($config_type, $config_id);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Rebuild the container to add a parameter to the config_sync.lister service.
+ */
+function config_sync_update_8203() {
+  // Empty update to cause a cache rebuild so that the container is rebuilt.
+}
+
+/**
+ * Install a new module dependency, Configuration Normalizer.
+ */
+function config_sync_update_8204() {
+  \Drupal::service('module_installer')->install(['config_normalizer'], FALSE);
+}
+
+/**
+ * Rebuild the container to add a service parameter.
+ */
+function config_sync_update_8205() {
+  // Empty update to cause a cache rebuild so that the container is rebuilt.
+}

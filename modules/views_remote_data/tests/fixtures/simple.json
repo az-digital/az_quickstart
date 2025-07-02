@@ -1,0 +1,18 @@
+{
+  "data": [
+    {
+      "name": "Llama",
+      "description": "A llama in red pajamas.",
+      "foo": {
+        "bar": "baz"
+      }
+    },
+    {
+      "name": "Alpaca",
+      "description": "An alpaca has a blue pajama.",
+      "foo": {
+        "bar": "wahoo"
+      }
+    }
+  ]
+}

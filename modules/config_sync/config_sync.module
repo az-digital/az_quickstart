@@ -1,0 +1,48 @@
+<?php
+
+/**
+ * @file
+ * Manage synchronizing configuration from extensions.
+ */
+
+use Drupal\config_sync\ConfigSyncSnapshotterInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_help().
+ */
+function config_sync_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.config_sync':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('The Configuration Synchronizer module provides a way to import configuration changes from updated modules and themes.') . '</p>';
+      $output .= '<p>' . t('When you update to a new version of a module or theme, it may come with configuration changes. For example, if you previously installed an <em>Event</em> module that provided an <em>Event</em> content type and related fields, some of those fields may have changed in the new version, while new fields may have been added. With Configuration Synchronizer you can import those changes.') . '</p>';
+      $output .= '<h3>' . t('Usage') . '</h3>';
+      $output .= '<p>' . t('You can import available updates from your installed modules and themes on the <a href=":url">Distribution Updates</a> page.', [':url' => Url::fromRoute('config_distro.import')->toString()]) . ' </p>';
+      return $output;
+
+    case 'config_distro.import':
+      $output = '';
+      $output .= '<p>' . t('Any available configuration updates from installed modules or themes are displayed here.') . '</p>';
+      $output .= '<p>' . t("If you're an advanced user, you may wish to use the checkboxes to select which modules and themes to run updates from. Running some updates while skipping others can lead to unexpected results and so should be done with caution.") . '</p>';
+      $output .= '<p>' . t("By default, changes will be merged into the site\'s active configuration so as to retain any customizations you've made. For example, if you've edited the label of a field for which updates are available, that edit will be retained.") . '</p>';
+      $output .= '<p>' . t('Advanced users may choose instead to reset configuration to the state currently provided by installed modules, themes, and the install profile.') . '</p>';
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_modules_installed().
+ */
+function config_sync_modules_installed($module_names) {
+  \Drupal::service('config_sync.snapshotter')->refreshExtensionSnapshot('module', $module_names, ConfigSyncSnapshotterInterface::SNAPSHOT_MODE_INSTALL);
+}
+
+/**
+ * Implements hook_themes_installed().
+ */
+function config_sync_themes_installed($theme_names) {
+  \Drupal::service('config_sync.snapshotter')->refreshExtensionSnapshot('theme', $theme_names, ConfigSyncSnapshotterInterface::SNAPSHOT_MODE_INSTALL);
+}

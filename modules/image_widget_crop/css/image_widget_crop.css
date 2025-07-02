@@ -1,0 +1,128 @@
+.crop-preview-wrapper__preview-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-bottom: 1em;
+}
+
+.image-data__crop-wrapper .crop-preview-wrapper__crop-reset {
+  margin-top: 1em;
+}
+
+.cropper--width-soft-limit-reached .point-n,
+.cropper--width-soft-limit-reached .point-s,
+.cropper--width-soft-limit-reached .point-ne,
+.cropper--width-soft-limit-reached .point-se,
+.cropper--width-soft-limit-reached .point-sw,
+.cropper--width-soft-limit-reached .point-nw {
+  background-color: #a51b00;
+}
+
+.cropper--height-soft-limit-reached .point-w,
+.cropper--height-soft-limit-reached .point-e,
+.cropper--height-soft-limit-reached .point-ne,
+.cropper--height-soft-limit-reached .point-se,
+.cropper--height-soft-limit-reached .point-nw,
+.cropper--height-soft-limit-reached .point-sw {
+  background-color: #a51b00;
+}
+
+.cropper--width-soft-limit-reached .cropper-point {
+  background-color: #a51b00;
+}
+
+.cropper--height-soft-limit-reached .line-w {
+  background-color: #ff0000;
+  opacity: 1;
+  width: 1px;
+  left: -1px;
+}
+
+.cropper--height-soft-limit-reached .line-e {
+  background-color: #ff0000;
+  opacity: 1;
+  width: 1px;
+  right: -1px;
+}
+
+.cropper--width-soft-limit-reached .line-n {
+  background-color: #ff0000;
+  opacity: 1;
+  height: 1px;
+  top: -1px;
+}
+
+.cropper--width-soft-limit-reached .line-s {
+  background-color: #ff0000;
+  opacity: 1;
+  height: 1px;
+  bottom: -1px;
+}
+
+@media screen and (max-width: 480px) {
+  .details-wrapper th {
+    display: none;
+  }
+
+  .details-wrapper table,
+  .details-wrapper thead,
+  .details-wrapper tbody,
+  .details-wrapper tr,
+  .details-wrapper td,
+  .details-wrapper th:first-child {
+    display: block;
+  }
+
+  .details-wrapper tr {
+    position: relative;
+    padding: 0;
+  }
+
+  .details-wrapper td {
+    padding: 10px 0;
+  }
+
+  .details-wrapper td  .button.js-form-submit.form-submit {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    max-width: 265px;
+  }
+}
+
+@media screen and (min-width: 641px) and (max-width: 1250px) {
+  .responsive-enabled--opened th {
+    display: none;
+  }
+
+  .responsive-enabled--opened,
+  .responsive-enabled--opened thead,
+  .responsive-enabled--opened tbody,
+  .responsive-enabled--opened tr,
+  .responsive-enabled--opened td,
+  .responsive-enabled--opened th:first-child {
+    display: block;
+  }
+
+  .responsive-enabled--opened tr {
+    position: relative;
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .responsive-enabled--opened td > .button.js-form-submit.form-submit {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    max-width: 265px;
+  }
+
+  .responsive-enabled--opened .vertical-tabs__menu {
+    width: 206px;
+  }
+
+  .responsive-enabled--opened .vertical-tabs__panes {
+    margin-left: 205px;
+  }
+}

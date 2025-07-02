@@ -1,0 +1,53 @@
+<?php
+
+/**
+ * @file
+ * Contains jquery_ui.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function jquery_ui_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.jquery_ui':
+      $output = '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Drupal 8 includes jQuery UI in core, however it is no longer actively maintained and has been marked deprecated. This module provides the jQuery UI asset library for any themes and modules that require it.') . '</p>';
+      $output .= '<p>' . t('For more information about the deprecation of jQuery UI, see this <a href=":change-record">change record</a>', [':change-record' => 'https://www.drupal.org/node/3067969']) . '</p>';
+      $output .= '<p>' . t('Visit the <a href=":project_link">jQuery UI project page</a> on Drupal.org for more information about this module.', [':project_link' => 'https://www.drupal.org/project/jquery_ui']) . '</p>';
+
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_library_info_alter().
+ *
+ * Declare libraries on behalf of sub-modules.
+ */
+function jquery_ui_library_info_alter(array &$libraries, string $module): void {
+  $data = &drupal_static(__FUNCTION__, []);
+  if (empty($data)) {
+    $data['libraries'] = json_decode(file_get_contents(__DIR__ . '/jquery_ui.libraries.data.json'), TRUE, 512, JSON_THROW_ON_ERROR);
+    $data['path'] = \Drupal::service('module_handler')->getModule('jquery_ui')->getPath();
+  }
+
+  if (array_key_exists($module, $data['libraries'])) {
+    $module_libraries = $data['libraries'][$module];
+    foreach ($module_libraries as &$definition) {
+      // Set some defaults.
+      $definition += ['css' => [], 'js' => []];
+      foreach ($definition['css'] as $bem => $files) {
+        $definition['css'][$bem] = array_combine(array_map(function ($path) use ($data) {
+          return "/$data[path]/$path";
+        }, array_keys($files)), $files);
+      }
+      $definition['js'] = array_combine(array_map(function ($path) use ($data) {
+        return "/$data[path]/$path";
+      }, array_keys($definition['js'])), $definition['js']);
+    }
+    $libraries = array_merge($libraries, $module_libraries);
+  }
+}

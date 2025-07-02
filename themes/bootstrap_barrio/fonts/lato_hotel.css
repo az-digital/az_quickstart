@@ -1,0 +1,23 @@
+/* ---------- Lato, Grand Hotel ---------- */
+
+h1,
+h2,
+h1 a,
+h2 a {
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+}
+h3,
+h4,
+h5,
+h6,
+h3 a {
+  font-family: 'Grand Hotel', cursive;
+  font-weight: normal;
+}
+body,
+p,
+a,
+li {
+  font-family: 'Lato', sans-serif;
+}

@@ -1,0 +1,19 @@
+access_unpublished.settings_form:
+  path: '/admin/config/content/access_unpublished'
+  defaults:
+    _form: '\Drupal\access_unpublished\Form\SettingsForm'
+    _title: 'Access Unpublished'
+  requirements:
+    _permission: 'administer site configuration'
+  options:
+    _admin_route: TRUE
+
+access_unpublished.access_token.list:
+  path: '/admin/content/access_token'
+  defaults:
+    _entity_list: 'access_token'
+    _title: 'Access Unpublished'
+  requirements:
+    _permission: 'access tokens overview'
+  options:
+    _admin_route: TRUE

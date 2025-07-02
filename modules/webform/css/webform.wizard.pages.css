@@ -1,0 +1,19 @@
+/**
+ * @file
+ * Wizard styles.
+ */
+
+.webform-wizard-pages-links {
+  display: none;
+}
+
+/**
+  * Preview link styles.
+ */
+.webform-wizard-page-edit {
+  display: none;
+}
+
+.webform-wizard-page-edit input {
+  margin: 0;
+}

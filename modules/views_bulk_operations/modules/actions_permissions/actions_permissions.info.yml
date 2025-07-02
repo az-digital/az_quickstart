@@ -1,0 +1,12 @@
+type: module
+name: 'Actions Permissions'
+description: 'Adds access permissions on all actions allowing admins to restrict access on a per-role basis.'
+package: 'Views Bulk Operations'
+core_version_requirement: ^9 || ^10 || ^11
+dependencies:
+  - drupal:views_bulk_operations
+
+# Information added by Drupal.org packaging script on 2025-03-10
+version: '4.3.4'
+project: 'views_bulk_operations'
+datestamp: 1741604499

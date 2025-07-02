@@ -1,0 +1,14 @@
+name: 'Upgrade status test contrib 11 compatible'
+type: module
+description: 'Support module for upgrade status module testing.'
+package: Testing
+# Intentionally using a requirement that is slightly more specific to
+# test handling of this case.
+core_version_requirement: ^9.1 || ^10 || ^11
+# Project name intentionally different from module name for testing.
+# project: 'upgrade_status_test_contributed_11_compatible'
+
+# Information added by Drupal.org packaging script on 2025-05-02
+version: '4.3.7'
+project: 'upgrade_status'
+datestamp: 1746203413

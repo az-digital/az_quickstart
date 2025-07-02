@@ -1,0 +1,37 @@
+# The name of the recipe.
+name: 'Example'
+# The description of the recipe.
+description: 'Provides an example recipe.'
+# The type key is similar to the package key in module.info.yml. It can be used
+# to group Drupal recipes.
+type: 'Content type'
+install:
+  # An array of modules or themes to install if they are not already. The system
+  # will detect if it is a theme or a module. During the install only simple
+  # configuration from the new modules is created. This allows the Drupal recipe
+  # control over the configuration.
+  - node
+  - text
+config:
+  # A Drupal recipe can have a config directory. All configuration is this
+  # directory will be imported after the modules have been installed.
+  # Additionally, the Drupal recipe can install configuration entities provided
+  # by the modules it configures. This allows them to not have to maintain or
+  # copy this configuration.
+  import:
+    text:
+      - text.settings
+    # Import all configuration that is provided by the node module and any
+    # optional configuration that depends on the text module that is provided by
+    # modules already installed.
+    node: '*'
+  # Configuration actions may be defined. The structure here should be
+  # entity_type.ID.action. Below the user role entity type with an ID of
+  # editor is having the permissions added. The permissions key will be
+  # mapped to the \Drupal\user\Entity\Role::grantPermission() method.
+  actions:
+    text.settings:
+      simpleConfigUpdate:
+        default_summary_length: 700
+# A Drupal recipe can have a content directory. All content in this directory
+# will be created after the configuration is installed.

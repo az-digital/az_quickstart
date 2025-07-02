@@ -1,0 +1,20 @@
+{#
+/**
+ * @file
+ * Webform share html template override.
+ */
+#}
+<!DOCTYPE html>
+<html{{ html_attributes }}>
+  <head>
+    <head-placeholder token="{{ placeholder_token }}">
+    <title>{{ head_title|safe_join(' | ') }}</title>
+    <css-placeholder token="{{ placeholder_token }}">
+    <js-placeholder token="{{ placeholder_token }}">
+  </head>
+  <body{{ attributes }}>
+    {{ page }}
+    <js-bottom-placeholder token="{{ placeholder_token }}">
+  </body>
+</html>
+

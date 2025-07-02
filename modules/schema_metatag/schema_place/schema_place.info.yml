@@ -1,0 +1,12 @@
+name: Schema.org Place
+type: module
+description: Adds Schema.org/Place to the JSON LD array.
+core_version_requirement: ^9 || ^10 || ^11
+package: SEO
+dependencies:
+  - schema_metatag:schema_metatag
+
+# Information added by Drupal.org packaging script on 2024-07-16
+version: '3.0.3'
+project: 'schema_metatag'
+datestamp: 1721141810

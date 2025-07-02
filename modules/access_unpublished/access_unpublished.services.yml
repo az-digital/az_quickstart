@@ -1,0 +1,17 @@
+services:
+  access_unpublished.access_token_manager:
+    class: 'Drupal\access_unpublished\AccessTokenManager'
+    arguments:
+      - '@config.factory'
+      - '@entity_type.manager'
+      - '@?content_moderation.moderation_information'
+  access_unpublished.token_getter:
+    class: Drupal\access_unpublished\TokenGetter
+    arguments: ['@config.factory']
+    tags:
+      - { name: event_subscriber }
+  access_unpublished.add_http_header:
+    class: 'Drupal\access_unpublished\EventSubscriber\AddHttpHeaders'
+    arguments: ['@config.factory', '@access_unpublished.token_getter']
+    tags:
+      - { name: 'event_subscriber' }

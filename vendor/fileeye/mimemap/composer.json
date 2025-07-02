@@ -1,0 +1,36 @@
+{
+    "name": "fileeye/mimemap",
+    "type": "library",
+    "description": "A PHP library to handle MIME Content-Type fields and their related file extensions.",
+    "keywords": ["mime", "mime-type", "mime-database", "mime-parser"],
+    "homepage": "https://github.com/FileEye/MimeMap",
+    "license": "LGPL-3.0-or-later",
+    "require": {
+        "php": ">=8.1"
+    },
+    "require-dev": {
+        "composer-runtime-api": "^2.0.0",
+        "sebastian/comparator": ">=5",
+        "sebastian/diff": ">=5",
+        "symfony/filesystem": ">=6.4",
+        "symfony/console": ">=6.4",
+        "symfony/var-dumper": ">=6.4",
+        "symfony/yaml": ">=6.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "FileEye\\MimeMap\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "FileEye\\MimeMap\\Test\\": "tests/src/"
+        }
+    },
+    "bin": ["bin/fileeye-mimemap"],
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.x-dev"
+        }
+    }
+}

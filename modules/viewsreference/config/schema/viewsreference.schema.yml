@@ -1,0 +1,62 @@
+field.widget.settings.viewsreference_autocomplete:
+  type: field.widget.settings.entity_reference_autocomplete
+  label: 'Views reference autocomplete field widget settings'
+
+field.formatter.settings.viewsreference_formatter:
+  type: mapping
+  label: 'Formatter settings'
+  mapping:
+    plugin_types:
+      type: viewsreference.plugin_types
+
+field.storage_settings.viewsreference:
+  type: mapping
+  label: 'Viewsreference field storage settings'
+  mapping:
+    target_type:
+      type: string
+      label: 'Type of item to reference'
+
+# @see field.field_settings.entity_reference
+field.field_settings.viewsreference:
+  type: mapping
+  label: 'Viewsreference field settings'
+  mapping:
+    handler:
+      type: string
+      label: 'Reference method'
+    handler_settings:
+      type: entity_reference_selection.[%parent.handler]
+      label: 'Entity reference selection plugin settings'
+    plugin_types:
+      type: viewsreference.plugin_types
+    preselect_views:
+      type: sequence
+      label: 'Preselect View Options'
+      sequence:
+        type: string
+    enabled_settings:
+      type: sequence
+      label: 'Enabled settings'
+      sequence:
+        type: string
+
+field.value.viewsreference:
+  type: mapping
+  label: 'Default value'
+  mapping:
+    target_uuid:
+      type: uuid
+    display_id:
+      type: string
+      label: 'Display Id'
+    data:
+      type: string
+      label: 'Serialized data'
+
+viewsreference.plugin_types:
+  type: sequence
+  label: 'View display plugins to allow'
+  sequence:
+    label: 'Allowed view display plugin'
+    type: string

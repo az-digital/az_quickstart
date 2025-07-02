@@ -1,0 +1,11 @@
+name: Inline Entity Form
+description: "Provides a widget for inline management (creation, modification, removal) of referenced entities. "
+type: module
+package: Fields
+core_version_requirement: ^8.8 || ^9 || ^10 || ^11
+php: 7.1
+
+# Information added by Drupal.org packaging script on 2025-05-05
+version: '3.0.0-rc21'
+project: 'inline_entity_form'
+datestamp: 1746459783

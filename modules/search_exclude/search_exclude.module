@@ -1,0 +1,63 @@
+<?php
+
+/**
+ * @file
+ * Search Exclude.
+ */
+
+use Drupal\Core\Entity\EntityInterface;
+
+/**
+ * Implements hook_ENTITY_TYPE_update().
+ *
+ * Triggers the reindex for node updates.
+ */
+function search_exclude_node_update(EntityInterface $entity) {
+  _search_exclude_reindex($entity);
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_insert().
+ *
+ * Triggers the reindex for comment insert.
+ */
+function search_exclude_comment_insert(EntityInterface $comment) {
+  _search_exclude_reindex($comment);
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_update().
+ *
+ * Triggers the reindex for comment update.
+ */
+function search_exclude_comment_update(EntityInterface $comment) {
+  _search_exclude_reindex($comment);
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_delete().
+ *
+ * Triggers the reindex for comment updates.
+ */
+function search_exclude_comment_delete(EntityInterface $comment) {
+  _search_exclude_reindex($comment);
+}
+
+/**
+ * Find all active search_exclude plugins and trigger re-index of the entity.
+ *
+ * @param \Drupal\Core\Entity\EntityInterface $entity
+ *   Triggers the exclude reindex.
+ */
+function _search_exclude_reindex(EntityInterface $entity) {
+  /** @var \Drupal\search\SearchPageRepository $repo */
+  $repo = \Drupal::service('search.search_page_repository');
+  /** @var \Drupal\search\SearchPageInterface $item */
+  foreach ($repo->getIndexableSearchPages() as $item) {
+    if ($item->getPlugin()->getPluginId() === 'search_exclude_node_search') {
+      /** @var \Drupal\search_exclude\Plugin\Search\SearchExcludeNodeSearch $plugin */
+      $plugin = $item->getPlugin();
+      $plugin->reIndex($entity);
+    }
+  }
+}

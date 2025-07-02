@@ -1,0 +1,19 @@
+services:
+  xmlsitemap_generator:
+    class: Drupal\xmlsitemap\XmlSitemapGenerator
+    arguments: ['@config.factory', '@state', '@language_manager', '@logger.channel.xmlsitemap', '@module_handler', '@entity_type.manager', '@database', '@messenger', '@file_system', '@datetime.time', '@entity.memory_cache']
+    tags:
+      - { name: xmlsitemap_generator }
+  xmlsitemap.link_storage:
+    class: Drupal\xmlsitemap\XmlSitemapLinkStorage
+    arguments: ['@state', '@module_handler', '@database', '@file_url_generator', '@entity_type.manager', '@entity_field.manager']
+    tags:
+      - { name: xmlsitemap.link_storage }
+  logger.channel.xmlsitemap:
+    parent: logger.channel_base
+    arguments: ['xmlsitemap']
+  xmlsitemap.link_settings_config_subscriber:
+    class: Drupal\xmlsitemap\EventSubscriber\LinkSettingsConfigSubscriber
+    arguments: ['@xmlsitemap.link_storage', '@cache_tags.invalidator']
+    tags:
+      - { name: event_subscriber }

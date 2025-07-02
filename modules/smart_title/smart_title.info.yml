@@ -1,0 +1,11 @@
+name: Smart Title
+description: Make entity labels visible and configurable by the entity view display configuration form
+type: module
+package: Content
+core_version_requirement: ^9 || ^10 || ^11
+dependencies: {  }
+
+# Information added by Drupal.org packaging script on 2024-06-29
+version: '8.x-1.0'
+project: 'smart_title'
+datestamp: 1719631159

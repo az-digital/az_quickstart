@@ -1,0 +1,5 @@
+services:
+  cas_user_interaction_test.subscriber:
+    class: Drupal\cas_user_interaction_test\CasUserInteractionTestSubscriber
+    tags:
+      - { name: 'event_subscriber' }

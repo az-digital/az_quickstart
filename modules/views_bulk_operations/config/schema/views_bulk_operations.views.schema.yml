@@ -1,0 +1,44 @@
+views.field.views_bulk_operations_bulk_form:
+  type: views_field
+  label: 'Views Bulk Operations'
+  mapping:
+    batch:
+      type: boolean
+      label: 'Process selected entities in a batch operation'
+    batch_size:
+      type: integer
+      label: 'Size of the processing batch'
+    form_step:
+      type: boolean
+      label: 'Display configuration form on a separate page'
+    ajax_loader:
+      type: boolean
+      label: 'Show throbber on VBO ajax petitions.'
+    buttons:
+      type: boolean
+      label: 'Display action options as buttons'
+    action_title:
+      type: string
+      label: 'Title of the action selector form element'
+    clear_on_exposed:
+      type: boolean
+      label: 'Clear selection when exposed filters change'
+    force_selection_info:
+      type: boolean
+      label: 'Should the selection information always be displayed?'
+    selected_actions:
+      type: sequence
+      label: 'Selected actions data array'
+      sequence:
+        type: mapping
+        mapping:
+          action_id:
+            type: string
+            label: 'Action plugin ID'
+          preconfiguration:
+            label: 'Configuration array for the plugin'
+            type: views_bulk_operations.action_config.[%parent.action_id]
+
+views_bulk_operations.action_config.*:
+  type: views_bulk_operations_action_config
+  label: 'Default'

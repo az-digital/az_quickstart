@@ -1,0 +1,31 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the Quick Node Clone module.
+ */
+
+/**
+ * Clears the cache. Optional service dependency is injected.
+ */
+function quick_node_clone_update_8119(&$sandbox) {
+  // Clear cache.
+  drupal_flush_all_caches();
+}
+
+/**
+ * Adds more options for clone node's status.
+ */
+function quick_node_clone_update_8120() {
+  // Editable settings.
+  $settings = \Drupal::service('config.factory')->getEditable('quick_node_clone.settings');
+  $clone_status = $settings->get('clone_status');
+  if ($clone_status) {
+    $settings->set('clone_status', 'original');
+    $settings->save();
+  }
+  else {
+    $settings->set('clone_status', 'default');
+    $settings->save();
+  }
+}

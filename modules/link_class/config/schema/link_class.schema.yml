@@ -1,0 +1,19 @@
+field.widget.settings.link_class_field_widget:
+  type: mapping
+  label: 'Link with class settings'
+  mapping:
+    placeholder_url:
+      type: string
+      label: 'Placeholder for URL'
+    placeholder_title:
+      type: label
+      label: 'Placeholder for link text'
+    link_class_mode:
+      type: string
+      label: 'Method for adding class'
+    link_class_force:
+      type: string
+      label: 'Classes in force method'
+    link_class_select:
+      type: string
+      label: 'Classes in select method'

@@ -1,0 +1,3 @@
+metatag.metatag_tag.metatag_custom_tag:*:
+  type: text
+  label: 'Custom Tag'

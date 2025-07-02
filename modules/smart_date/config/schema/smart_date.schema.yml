@@ -1,0 +1,281 @@
+# Schema for the configuration files of the Smart Date module.
+
+# smartdate field type.
+
+field.storage_settings.smartdate:
+  type: field.storage_settings.datetime
+  label: 'Smart date settings'
+
+field.field_settings.smartdate:
+  type: field.field_settings.datetime
+  label: 'Smart date settings'
+
+field.value.smartdate:
+  type: mapping
+  label: 'Default value'
+  mapping:
+    default_time_type:
+      type: string
+      label: 'Default start time type'
+    default_time:
+      type: string
+      label: 'Default start time value'
+    default_end_time_type:
+      type: string
+      label: 'Default end time type'
+    default_end_time:
+      type: string
+      label: 'Default end time value'
+    default_duration:
+      type: integer
+      label: 'Default duration'
+    default_duration_increments:
+      type: string
+      label: 'Duration options made available to the user'
+    default_date_type:
+      type: string
+      label: 'Default start date type'
+    default_date:
+      type: string
+      label: 'Default start date value'
+    min:
+      type: string
+      label: 'Minimum Date'
+    max:
+      type: string
+      label: 'Maximum Date'
+
+field.formatter.settings.smartdate_default:
+  type: field.formatter.settings.datetime_default
+  label: 'Smart date default display format settings'
+  mapping:
+    timezone_override:
+      type: string
+      label: 'Time zone override'
+      translation context: 'Smart date display'
+    format:
+      type: string
+      label: 'Format'
+      translation context: 'Smart date display'
+    force_chronological:
+      type: boolean
+      label: 'Force chronological'
+      translation context: 'Smart date display'
+    format_type:
+      type: string
+      label: 'Format Type'
+      translation context: 'Smart date display'
+    add_classes:
+      type: boolean
+      label: 'Add Classes'
+      translation context: 'Smart date display'
+    time_wrapper:
+      type: boolean
+      label: 'Add time wrapper'
+      translation context: 'Smart date display'
+    localize:
+      type: boolean
+      label: 'Add JS localization'
+      translation context: 'Smart date display'
+    parts:
+      type: sequence
+      label: 'Time Parts'
+      sequence:
+        type: string
+        label: 'Part'
+    duration:
+      type: mapping
+      label: 'Duration settings'
+      translation context: 'Smart date display'
+      mapping:
+        separator:
+          type: string
+          label: 'Duration Separator'
+          translation context: 'Smart date display'
+        unit:
+          type: string
+          label: 'Units'
+          translation context: 'Smart date display'
+        decimals:
+          type: integer
+          label: 'Decimals'
+          translation context: 'Smart date display'
+        suffix:
+          type: string
+          label: 'Duration Suffix'
+          translation context: 'Smart date display'
+
+field.formatter.settings.smartdate_duration:
+  type: field.formatter.settings.smartdate_default
+  label: 'Smart date duration display format settings'
+  mapping:
+    duration_separator:
+      type: string
+      label: 'Duration Separator'
+      translation context: 'Smart date display'
+    unit:
+      type: string
+      label: 'Units'
+      translation context: 'Smart date display'
+    decimals:
+      type: integer
+      label: 'Decimals'
+      translation context: 'Smart date display'
+    suffix:
+      type: string
+      label: 'Duration Suffix'
+      translation context: 'Smart date display'
+
+field.formatter.settings.smartdate_plain:
+  type: field.formatter.settings.datetime_base
+  label: 'Smart date plain display format settings'
+  mapping:
+    separator:
+      type: label
+      label: 'Separator'
+      translation context: 'Smart date display'
+
+field.formatter.settings.smartdate_custom:
+  type: field.formatter.settings.datetime_base
+  label: 'Smart date custom display format settings'
+  mapping:
+    separator:
+      type: label
+      label: 'Separator'
+      translation context: 'Smart date display'
+
+field.widget.settings.smartdate_datelist:
+  type: mapping
+  label: 'Smart date select list display format settings'
+  mapping:
+    increment:
+      type: integer
+      label: 'Time increments'
+    date_order:
+      type: string
+      label: 'Date part order'
+    time_type:
+      type: string
+      label: 'Time type'
+    show_extra:
+      type: boolean
+      label: 'Show extra'
+
+field.widget.settings.smartdate_default:
+  type: mapping
+  label: 'Smart date default display format settings'
+  mapping:
+    modal:
+      type: boolean
+      label: 'Use modal for managing instances'
+    default_duration:
+      type: integer
+      label: 'Default duration'
+    default_duration_increments:
+      type: string
+      label: 'Duration options made available to the user'
+    show_extra:
+      type: boolean
+      label: 'Show extra'
+    hide_date:
+      type: boolean
+      label: 'Hide end date unless different'
+    allday:
+      type: boolean
+      label: 'Show an all day checkbox'
+    remove_seconds:
+      type: boolean
+      label: 'Remove any seconds, if present, from existing values'
+    duration_overlay:
+      type: boolean
+      label: 'Use an overlay to show duration options'
+
+field.widget.settings.smartdate_inline:
+  type: field.widget.settings.smartdate_default
+  label: 'Smart Date, date-only range widget settings'
+  mapping:
+    separator:
+      type: string
+      label: 'Separator string (separating start and end date)'
+
+field.widget.settings.smartdate_timezone:
+  type: field.widget.settings.smartdate_inline
+  label: 'Smart date timezone display format settings'
+  mapping:
+    default_tz:
+      type: string
+      label: 'Default timezone'
+    custom_tz:
+      type: string
+      label: 'Custom timezone'
+    allowed_timezones:
+      type: sequence
+      label: 'Allowed timezones'
+      sequence:
+        type: string
+        label: 'Timezone'
+    add_abbreviations:
+      type: string
+      label: 'Add abbreviations'
+
+smart_date.smart_date_format.*:
+  type: config_entity
+  label: 'Smart date format'
+  mapping:
+    id:
+      type: string
+      label: 'ID'
+    label:
+      type: label
+      label: 'Label'
+    date_format:
+      type: string
+      translatable: true
+      form_element_class: \Drupal\config_translation\FormElement\DateFormat
+      label: 'Date Format String'
+      translation context: 'Smart date format'
+    time_format:
+      type: string
+      translatable: true
+      form_element_class: \Drupal\config_translation\FormElement\Textfield
+      label: 'Time Format String'
+      translation context: 'Smart date format'
+    time_hour_format:
+      type: string
+      translatable: true
+      form_element_class: \Drupal\config_translation\FormElement\Textfield
+      label: 'Time Hour Format String'
+      translation context: 'Smart date format'
+    allday_label:
+      type: string
+      translatable: true
+      form_element_class: \Drupal\config_translation\FormElement\Textfield
+      label: 'All day label'
+      translation context: 'Smart date format'
+    separator:
+      type: string
+      translatable: true
+      form_element_class: \Drupal\config_translation\FormElement\Textfield
+      label: 'Separator'
+      translation context: 'Smart date format'
+    join:
+      type: string
+      translatable: true
+      form_element_class: \Drupal\config_translation\FormElement\Textfield
+      label: 'Join'
+      translation context: 'Smart date format'
+    ampm_reduce:
+      type: string
+      translatable: true
+      form_element_class: \Drupal\smart_date\FormElement\Boolean
+      label: 'Reduce AM/PM display'
+    date_first:
+      type: string
+      translatable: true
+      form_element_class: \Drupal\smart_date\FormElement\Boolean
+      label: 'Date First (if unchecked, will show time first)'
+    site_time_toggle:
+      type: string
+      translatable: true
+      form_element_class: \Drupal\smart_date\FormElement\Boolean
+      label: 'Site Time display'

@@ -1,0 +1,17 @@
+{
+    "name": "drupal/environment_indicator",
+    "description": "Environment Indicator adds some visual cuest to indicate which copy of the site are you interacting with",
+    "type": "drupal-module",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Mateu Aguiló Bosch",
+            "email": "mateu@mateuaguilo.com"
+        },
+        {
+            "name": "Ignacio Sánchez",
+            "email": "nacho@isholgueras.com"
+        }
+    ],
+    "require": {}
+}

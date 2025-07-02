@@ -1,0 +1,49 @@
+services:
+  google_tag.event_collector:
+    class: Drupal\google_tag\EventCollector
+    arguments: ['@plugin.manager.google_tag_event', '@google_tag.tag_container_resolver', '@session']
+  google_tag.tag_container_resolver:
+    class: Drupal\google_tag\TagContainerResolver
+    arguments: ['@request_stack', '@entity_type.manager', '@context.repository', '@context.handler']
+  plugin.manager.google_tag_event:
+    class: Drupal\google_tag\GoogleTagEventManager
+    parent: default_plugin_manager
+    arguments: ['@token']
+  google_tag.response_subscriber:
+    class: Drupal\google_tag\EventSubscriber\ResponseSubscriber
+    arguments: ['@google_tag.tag_container_resolver', '@google_tag.event_collector']
+    tags:
+      - { name: 'event_subscriber' }
+  google_tag.dimensions_metrics_processor:
+    class: Drupal\google_tag\DimensionsMetricsProcessor
+    arguments: ['@token', '@current_route_match']
+
+  google_tag.csp_subscriber:
+    class: Drupal\google_tag\EventSubscriber\CspSubscriber
+    tags:
+      - { name: 'event_subscriber' }
+  google_tag.commerce_cart_subscriber:
+    class: Drupal\google_tag\EventSubscriber\CommerceCartSubscriber
+    arguments: ['@google_tag.event_collector']
+    tags:
+      - { name: 'event_subscriber' }
+  google_tag.commerce_order_subscriber:
+    class: Drupal\google_tag\EventSubscriber\CommerceOrderSubscriber
+    arguments: ['@google_tag.event_collector']
+    tags:
+      - { name: 'event_subscriber' }
+  google_tag.search_api_subscriber:
+    class: Drupal\google_tag\EventSubscriber\SearchApiSubscriber
+    arguments: ['@google_tag.event_collector']
+    tags:
+      - { name: 'event_subscriber' }
+  google_tag.commerce_wishlist_subscriber:
+    class: Drupal\google_tag\EventSubscriber\CommerceWishlistSubscriber
+    arguments: ['@google_tag.event_collector']
+    tags:
+      - { name: 'event_subscriber' }
+  google_tag.commerce_product_subscriber:
+    class: Drupal\google_tag\EventSubscriber\CommerceProductSubscriber
+    arguments: [ '@google_tag.event_collector' ]
+    tags:
+      - { name: 'event_subscriber' }

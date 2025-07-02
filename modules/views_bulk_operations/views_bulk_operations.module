@@ -1,0 +1,48 @@
+<?php
+
+/**
+ * @file
+ * Allows operations to be performed on items selected in a view.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_views_data_alter().
+ */
+function views_bulk_operations_views_data_alter(&$data): void {
+  $data['views']['views_bulk_operations_bulk_form'] = [
+    'title' => t('Views bulk operations'),
+    'help' => t("Process entities returned by the view with Views Bulk Operations' actions."),
+    'field' => [
+      'id' => 'views_bulk_operations_bulk_form',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_help().
+ */
+function views_bulk_operations_help($route_name, RouteMatchInterface $route_match): ?string {
+  switch ($route_name) {
+    case 'help.page.views_bulk_operations':
+      $filepath = dirname(__FILE__) . '/README.md';
+      if (file_exists($filepath)) {
+        $readme = file_get_contents($filepath);
+        $output = '<pre>' . $readme . '</pre>';
+
+        return $output;
+      }
+  }
+  return NULL;
+}
+
+/**
+ * Implements hook_preprocess_THEME().
+ */
+function views_bulk_operations_preprocess_views_view_table(&$variables): void {
+  if (!empty($variables['view']->style_plugin->options['views_bulk_operations_enabled'])) {
+    // Add module own class to improve resistance to theme overrides.
+    $variables['attributes']['class'][] = 'vbo-table';
+  }
+}

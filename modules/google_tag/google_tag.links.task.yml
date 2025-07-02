@@ -1,0 +1,14 @@
+google_tag.default_tag_tab:
+  route_name: entity.google_tag_container.single_form
+  title: Tag Settings
+  base_route: entity.google_tag_container.single_form
+
+google_tag.settings_form_tab:
+  route_name: google_tag.settings_form
+  title: Advanced
+  base_route: entity.google_tag_container.single_form
+
+google_tag.container_list_tab:
+  route_name: entity.google_tag_container.collection
+  title: Additional Tags
+  base_route: entity.google_tag_container.single_form

@@ -1,0 +1,17 @@
+name: Slick
+type: module
+description: "Slick carousel, the last carousel you'll ever need."
+core_version_requirement: '>=9.4'
+package: Slick
+dependencies:
+  - blazy:blazy (>= 3.x)
+
+# Do not remove until below issues are resolved!
+# Add a fake version so local drush and Git checkouts do not fail dependencies.
+# Also accounts for the failing PHP8.1+ with git clone or --prefer-source.
+# version: 3.x
+
+# Information added by Drupal.org packaging script on 2024-10-18
+version: '3.0.4'
+project: 'slick'
+datestamp: 1729250267

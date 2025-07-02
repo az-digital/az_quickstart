@@ -1,0 +1,11 @@
+name: 'Google Tag Tests'
+type: module
+description: 'Support module for Google Tag testing.'
+package: Testing
+dependencies:
+  - google_tag:google_tag
+
+# Information added by Drupal.org packaging script on 2025-01-29
+version: '2.0.8'
+project: 'google_tag'
+datestamp: 1738126306

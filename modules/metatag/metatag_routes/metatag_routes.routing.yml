@@ -1,0 +1,9 @@
+metatag_routes.create:
+  path: '/admin/config/search/metatag/custom/create'
+  defaults:
+    _form: '\Drupal\metatag_routes\Form\MetatagCustomCreateForm'
+    _title: 'Add custom metatag'
+  requirements:
+    _permission: 'administer meta tags'
+  options:
+    _admin_route: TRUE

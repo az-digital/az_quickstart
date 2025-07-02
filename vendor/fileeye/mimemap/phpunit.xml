@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         backupGlobals="false" 
+         colors="true" 
+         stopOnFailure="false" bootstrap="vendor/autoload.php" 
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.0/phpunit.xsd" 
+         cacheDirectory=".phpunit.cache" 
+         backupStaticProperties="false">
+  <testsuites>
+    <testsuite name="FileEye Testing Suite">
+      <directory suffix="Test.php">./tests/</directory>
+    </testsuite>
+  </testsuites>
+  <source>
+    <include>
+      <directory suffix=".php">./src/</directory>
+    </include>
+    <exclude>
+      <directory suffix=".php">./src/Command/</directory>
+    </exclude>
+  </source>
+</phpunit>

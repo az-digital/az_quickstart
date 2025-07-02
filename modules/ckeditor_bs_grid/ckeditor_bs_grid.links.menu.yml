@@ -1,0 +1,5 @@
+ckeditor_bs_grid.settings:
+  title: 'CKEditor BS Grid'
+  parent: system.admin_config_content
+  description: 'Settings for CKEditor BS Grid.'
+  route_name: ckeditor_bs_grid.settings

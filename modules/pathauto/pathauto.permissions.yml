@@ -1,0 +1,12 @@
+administer pathauto:
+  title: 'Administer pathauto'
+  description: 'Allows a user to configure pathauto settings, configure patterns for automated aliases, bulk update and delete URL-aliases.'
+notify of path changes:
+  title: 'Notify of Path Changes'
+  description: 'Determines whether or not users are notified.'
+bulk update aliases:
+  title: 'Bulk update aliases'
+  description: 'Allows a user to bulk update aliases.'
+bulk delete aliases:
+  title: 'Bulk delete aliases'
+  description: 'Allows a user to bulk delete aliases.'

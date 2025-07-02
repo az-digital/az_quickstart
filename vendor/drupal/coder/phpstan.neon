@@ -1,0 +1,70 @@
+parameters:
+    level: 6
+    paths:
+        - coder_sniffer
+        - tests
+    excludePaths:
+        # Test files that should not be checked.
+        - 'tests/*/*.tpl.php'
+        - 'tests/*/*.api.php'
+        - 'tests/*/good.php'
+        - 'tests/*/bad.php'
+        - 'tests/*/drupal[678]/*.php'
+    bootstrapFiles:
+        - tests/Drupal/phpunit-bootstrap.php
+        # PHPStan does not find the constants in this file, so load it manually.
+        - vendor/squizlabs/php_codesniffer/src/Util/Tokens.php
+    ignoreErrors:
+        # PHPStan does not support variable variables, see https://github.com/phpstan/phpstan/issues/2810
+        -
+            count: 3
+            message: '~^Undefined variable: \$value[123]$~'
+            path: coder_sniffer/Drupal/Sniffs/InfoFiles/ClassFilesSniff.php
+        -
+            count: 3
+            message: '~^Undefined variable: \$value[123]$~'
+            path: coder_sniffer/Drupal/Sniffs/InfoFiles/DuplicateEntrySniff.php
+        -
+            count: 1
+            message: '~^Variable \$key might not be defined.$~'
+            path: coder_sniffer/Drupal/Sniffs/InfoFiles/ClassFilesSniff.php
+        -
+            count: 1
+            message: '~^Variable \$key might not be defined.$~'
+            path: coder_sniffer/Drupal/Sniffs/InfoFiles/DuplicateEntrySniff.php
+        -
+            message: "#^Result of \\|\\| is always true\\.$#"
+            count: 1
+            path: coder_sniffer/Drupal/Sniffs/InfoFiles/ClassFilesSniff.php
+        -
+            message: "#^Offset mixed on array\\{\\} in isset\\(\\) does not exist\\.$#"
+            count: 1
+            path: coder_sniffer/Drupal/Sniffs/InfoFiles/ClassFilesSniff.php
+        -
+            message: "#^Result of \\|\\| is always true\\.$#"
+            count: 1
+            path: coder_sniffer/Drupal/Sniffs/InfoFiles/DuplicateEntrySniff.php
+        -
+            message: "#^Strict comparison using \\=\\=\\= between false and true will always evaluate to false\\.$#"
+            count: 1
+            path: coder_sniffer/Drupal/Sniffs/InfoFiles/DuplicateEntrySniff.php
+        -
+            message: "#^Call to function array_key_exists\\(\\) with mixed and array\\{\\} will always evaluate to false\\.$#"
+            count: 1
+            path: coder_sniffer/Drupal/Sniffs/InfoFiles/DuplicateEntrySniff.php
+        -
+            message: "#^Offset mixed on array\\{\\} in isset\\(\\) does not exist\\.$#"
+            count: 1
+            path: coder_sniffer/Drupal/Sniffs/InfoFiles/DuplicateEntrySniff.php
+        # We don't want to introduce abstract methods for the 2 calls because
+        # the class is used in different ways where those methods are not
+        # always necessary for implementors.
+        -
+            count: 2
+            message: '~^Call to an undefined method Drupal\\Sniffs\\Semantics\\FunctionCall::(registerFunctionNames|processFunctionCall)\(\).$~'
+            path: coder_sniffer/Drupal/Sniffs/Semantics/FunctionCall.php
+        # PHPStan Bug https://github.com/phpstan/phpstan/issues/6811
+        -
+            message: "#^Strict comparison using \\=\\=\\= between mixed and 0 will always evaluate to false\\.$#"
+            count: 1
+            path: coder_sniffer/Drupal/Sniffs/Formatting/MultipleStatementAlignmentSniff.php

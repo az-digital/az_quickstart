@@ -1,0 +1,14 @@
+name: Config Ignore Readonly
+description: Allows submission of config forms that are ignored when config_readonly is active.
+type: module
+package: Configuration
+core_version_requirement: ^10 || ^11
+
+dependencies:
+  - config_ignore:config_ignore
+  - config_readonly:config_readonly
+
+# Information added by Drupal.org packaging script on 2024-08-04
+version: '2.2.0'
+project: 'config_ignore_readonly'
+datestamp: 1722772891

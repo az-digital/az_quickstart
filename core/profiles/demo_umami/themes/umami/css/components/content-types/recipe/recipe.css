@@ -1,0 +1,8 @@
+/**
+* @file
+* This file is used to style the recipe using the 'full' view mode.
+*/
+
+.node--type-recipe.node--view-mode-full .block-views-blockrelated-recipes-related-recipes-block {
+  margin-top: 2rem;
+}

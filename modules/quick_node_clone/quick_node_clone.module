@@ -1,0 +1,163 @@
+<?php
+
+/**
+ * @file
+ * Contains quick_node_clone.module.
+ */
+
+use Drupal\Component\Utility\Html;
+use Drupal\Core\Entity\ContentEntityFormInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Url;
+use Drupal\group\Entity\GroupContent;
+use Drupal\group\Entity\GroupRelationship;
+use Drupal\group\Plugin\Group\Relation\GroupRelationTypeManagerInterface;
+use Drupal\node\NodeInterface;
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Session\AccountInterface;
+
+/**
+ * Implements hook_entity_type_build().
+ */
+function quick_node_clone_entity_type_build(array &$entity_types) {
+  if (isset($entity_types['node'])) {
+    $entity_types['node']->setFormClass('quick_node_clone', 'Drupal\quick_node_clone\Form\QuickNodeCloneNodeForm');
+  }
+}
+
+/**
+ * Implements hook_entity_operation().
+ */
+function quick_node_clone_entity_operation(EntityInterface $entity) {
+  $operations = [];
+
+  // Only add an operation for node entities.
+  if ($entity->getEntityTypeId() !== 'node') {
+    return $operations;
+  }
+
+  if ($entity->access('clone')) {
+    $operations['quick_clone'] = [
+      'title' => t('Clone'),
+      'weight' => '100',
+      'url' => Url::fromRoute('quick_node_clone.node.quick_clone', ['node' => $entity->id()]),
+    ];
+  }
+
+  return $operations;
+}
+
+/**
+ * Implements hook_help().
+ */
+function quick_node_clone_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.quick_node_clone':
+      $text = file_get_contents(dirname(__FILE__) . '/README.md');
+      if (!\Drupal::moduleHandler()->moduleExists('markdown')) {
+        return '<pre>' . Html::escape($text) . '</pre>';
+      }
+      else {
+        // Use the Markdown filter to render the README.
+        $filter_manager = \Drupal::service('plugin.manager.filter');
+        $settings = \Drupal::configFactory()
+          ->get('markdown.settings')
+          ->getRawData();
+        $config = ['settings' => $settings];
+        $filter = $filter_manager->createInstance('markdown', $config);
+        return $filter->process($text, 'en');
+      }
+  }
+  return NULL;
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function quick_node_clone_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  if (!array_key_exists('footer', $form)) {
+    return;
+  }
+
+  // Check the operation set on the form is 'quick_node_clone'.
+  $form_object = $form_state->getFormObject();
+  if (!$form_object instanceof ContentEntityFormInterface) {
+    return;
+  }
+  if ($form_object->getOperation() !== 'quick_node_clone') {
+    return;
+  }
+
+  // Check that the content entity being cloned is moderated.
+  if (!\Drupal::moduleHandler()->moduleExists('content_moderation')) {
+    return;
+  }
+  $moderation_info = \Drupal::service('content_moderation.moderation_information');
+  if (!$moderation_info->isModeratedEntity($form_object->getEntity())) {
+    return;
+  }
+
+  $form['moderation_state']['#group'] = 'footer';
+}
+
+/**
+ * Implements hook_node_access().
+ */
+function quick_node_clone_node_access(NodeInterface $node, $operation, AccountInterface $account) {
+  // Check if the operation is 'clone'.
+  if ($operation != 'clone') {
+    return AccessResult::neutral();
+  }
+
+  $bundle = $node->bundle();
+  $permissions = ["clone $bundle content"];
+
+  $is_owner = $node->getOwnerId() == $account->id();
+  if ($is_owner) {
+    $permissions[] = "clone own $bundle content";
+  }
+
+  $access = AccessResult::allowedIfHasPermissions($account, $permissions, 'OR');
+  if (!$access->isAllowed()) {
+    return AccessResult::neutral();
+  }
+
+  if (\Drupal::moduleHandler()->moduleExists('gnode')) {
+
+    // Check that user has permission to create a relationship.
+    // Support for group module version 1.x.
+    if (class_exists(GroupContent::class)) {
+      $group_relationships = GroupContent::loadByEntity($node);
+      foreach ($group_relationships as $group_relationship) {
+        $access = $group_relationship->getContentPlugin()->createEntityAccess($group_relationship->getGroup(), $account);
+        if ($access->isAllowed()) {
+          return AccessResult::allowed();
+        }
+      }
+    }
+    // Support for group module version 2.x and 3.x.
+    else {
+      $group_relationships = GroupRelationship::loadByEntity($node);
+      $relation_type_manager = \Drupal::service('group_relation_type.manager');
+      assert($relation_type_manager instanceof GroupRelationTypeManagerInterface);
+      foreach ($group_relationships as $group_relationship) {
+        $access_handler = $relation_type_manager->getAccessControlHandler($group_relationship->getPluginId());
+        $access = $access_handler->entityCreateAccess($group_relationship->getGroup(), $account);
+        if ($access) {
+          return AccessResult::allowed();
+        }
+      }
+    }
+  }
+
+  // Only check global access if we there is no group module enabled, or
+  // content does not have group(s).
+  if (empty($group_relationships) && $node->access('create')) {
+    return AccessResult::allowed();
+  }
+
+  // Default to Drupal's normal access handling.
+  return AccessResult::neutral();
+}

@@ -1,0 +1,23 @@
+/vendor/
+vendor
+/web/
+web
+/node_modules/
+.env
+composer.lock
+composer.dev.lock
+yarn.lock
+/.editorconfig
+
+#PHPUnit output
+junit.xml
+.phpunit.result.cache
+
+# Ignore local overrides.
+docker-compose.override.yml
+/composer.spoons.json
+/composer.spoons.lock
+/.env
+.envrc
+.envrc.local
+.composer-plugin.env

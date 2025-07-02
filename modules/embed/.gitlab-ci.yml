@@ -1,0 +1,19 @@
+# Use the DrupalCI templates.
+include:
+  - project: $_GITLAB_TEMPLATES_REPO
+    ref: $_GITLAB_TEMPLATES_REF
+    file:
+      - '/includes/include.drupalci.main.yml'
+      - '/includes/include.drupalci.variables.yml'
+      - '/includes/include.drupalci.workflows.yml'
+
+#
+# Start custom overrides.
+#
+variables:
+  _LENIENT_ALLOW_LIST: ckeditor
+  # Broaden test coverage.
+  SKIP_ESLINT: 1
+  _PHPUNIT_CONCURRENT: 1
+  OPT_IN_TEST_PREVIOUS_MAJOR: 1
+  OPT_IN_TEST_NEXT_MINOR: 1

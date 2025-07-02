@@ -1,0 +1,35 @@
+[
+    {
+        "uid": 3,
+        "uuid": "78d1955b-9254-4e4a-a9fe-2530404d7a39",
+        "langcode": "fr",
+        "preferred_langcode": "fr",
+        "preferred_admin_langcode": "fr",
+        "name": "Bob",
+        "pass": [
+            {
+                "value": "$S$DGFZUE.FhrXbe4y52eC7p0ZVRGD/gOPtVctDlmC89qkujnBokAlJ",
+                "existing": null
+            }
+        ],
+        "mail": "bob@local.host",
+        "timezone": "America/New_York",
+        "status": "1",
+        "created": 1440532218,
+        "changed": 1623674343,
+        "access": 0,
+        "login": 0,
+        "init": "bob@local.host",
+        "roles": "administrator",
+        "default_langcode": "1",
+        "content_translation_source": "und",
+        "content_translation_outdated": "0",
+        "content_translation_uid": 1,
+        "content_translation_status": "1",
+        "content_translation_created": null,
+        "field_file": null,
+        "field_integer": null,
+        "field_reference": null,
+        "user_picture": null
+    }
+]

@@ -1,0 +1,15 @@
+# Schema for the configuration files of the Coffee module.
+
+coffee.configuration:
+  type: config_object
+  label: 'Coffee settings'
+  mapping:
+    coffee_menus:
+      type: sequence
+      label: 'Coffee menus'
+      sequence:
+        type: string
+        label: 'Menu'
+    max_results:
+      type: integer
+      label: 'Number of items to show in the search result'

@@ -1,0 +1,17 @@
+/**
+ * @file
+ * Generic styles for flag links.
+ *
+ * @see flag.html.twig.
+ */
+.flag a {
+  border: none;
+}
+
+.flag a:hover {
+  border: none;
+}
+
+.links.inline .flag {
+  display: inline;
+}

@@ -1,0 +1,8 @@
+<?php
+
+/**
+ * Implements hook_pathauto_punctuation_chars_alter().
+ */
+function pathauto_custom_punctuation_test_pathauto_punctuation_chars_alter(array &$punctuation) {
+  $punctuation['copyright'] = ['value' => '©', 'name' => t('Copyright symbol')];
+}

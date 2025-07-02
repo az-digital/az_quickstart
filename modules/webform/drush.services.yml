@@ -1,0 +1,32 @@
+services:
+  webform.submission.commands:
+    class: \Drupal\webform\Commands\WebformSubmissionCommands
+    arguments: ['@file_system', '@module_handler', '@entity_type.manager', '@webform_submission.exporter']
+    tags:
+      - { name: drush.command }
+  webform.libraries.commands:
+    class: \Drupal\webform\Commands\WebformLibrariesCommands
+    arguments: ['@http_client', '@webform.libraries_manager', '@module_handler']
+    tags:
+      - { name: drush.command }
+  webform.utilities.commands:
+    class: \Drupal\webform\Commands\WebformUtilityCommands
+    arguments: ['@file_system', '@module_handler', '@extension.list.module']
+    tags:
+      - { name: drush.command }
+  webform.documentation.commands:
+    class: \Drupal\webform\Commands\WebformDocumentationCommands
+    arguments: ['@file_system',  '@module_handler', '@renderer', '@webform.help_manager']
+    tags:
+      - { name: drush.command }
+  webform.devel.commands:
+    class: \Drupal\webform\Commands\WebformDevelCommands
+    arguments: ['@database',  '@module_handler', '@config.factory', '@cache.discovery', '@renderer', '@webform.elements_validator']
+    tags:
+      - { name: drush.command }
+
+  webform.sanitize.commands:
+    class: \Drupal\webform\Commands\WebformSanitizeSubmissionsCommands
+    arguments: ['@database', '@module_handler', '@entity_type.manager']
+    tags:
+      - { name: drush.command }

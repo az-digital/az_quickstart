@@ -1,0 +1,2 @@
+library_exception:
+  deprecated: The "%library_id%" asset library is deprecated for testing.

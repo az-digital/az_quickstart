@@ -1,0 +1,4 @@
+drupal.redirect.admin:
+  css:
+    component:
+      css/redirect.admin.css: {}

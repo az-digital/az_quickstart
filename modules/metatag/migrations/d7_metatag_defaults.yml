@@ -1,0 +1,44 @@
+# A default migration mapping for Metatag-D7 default configuration.
+#
+# @see Drupal\metatag\Plugin\migrate\source\d7\MetatagDefault
+
+id: d7_metatag_defaults
+label: Metatag defaults configuration
+migration_tags:
+  - Drupal 7
+
+source:
+  plugin: d7_metatag_defaults
+  source_module: metatag
+  ignore_map: true
+  constants:
+    status: true
+    # Not currently used, see below.
+    # langcode: en
+
+destination:
+  # @todo Can this work without specifying config_name here?
+  plugin: entity:metatag_defaults
+
+process:
+  # Custom process plugins are used to simplify creating appropriate values.
+  id:
+    plugin: d7_metatag_config_id
+    source: instance
+  label:
+    plugin: d7_metatag_config_label
+    source: instance
+
+  # @todo Load the status from the config object, because on D7 the items can be
+  # disabled.
+  status: 'constants/status'
+
+  # Let the langcode be assigned at runtime.
+  # langcode: 'constants/langcode'
+
+  # Use a custom process plugin to convert the defaults from D7.
+  # @see \Drupal\metatag\Plugin\migrate\process\d7\MetatagDefaults
+  # @see \Drupal\metatag\Plugin\migrate\MigrateMetatagD7Trait
+  tags:
+    source: config
+    plugin: d7_metatag_defaults

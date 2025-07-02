@@ -1,0 +1,15 @@
+config_distro_ignore.settings:
+  path: '/admin/config/development/configuration/distro/ignore'
+  defaults:
+    _form: '\Drupal\config_distro_ignore\Form\SettingsForm'
+    _title: 'Retain Settings'
+  requirements:
+    _permission: 'synchronize distro configuration'
+config_distro_ignore.add_item:
+  path: '/admin/config/development/configuration/distro/ignore/add/{config_name}/{collection}'
+  defaults:
+    _form: '\Drupal\config_distro_ignore\Form\AddIgnoredConfigForm'
+    _title: 'Add Config to retain'
+    collection: null
+  requirements:
+    _permission: 'synchronize distro configuration'

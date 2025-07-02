@@ -1,0 +1,25 @@
+config_inspector.list_page:
+  route_name: config_inspector.list_page
+  title: 'List'
+  base_route: config_inspector.overview
+  weight: 0
+config_inspector.tree_page:
+  route_name: config_inspector.tree_page
+  title: 'Tree'
+  base_route: config_inspector.overview
+  weight: 5
+config_inspector.form_page:
+  route_name: config_inspector.form_page
+  title: 'Form'
+  base_route: config_inspector.overview
+  weight: 10
+config_inspector.raw_page:
+  route_name: config_inspector.raw_page
+  title: 'Raw data'
+  base_route: config_inspector.overview
+  weight: 15
+config_inspector.download:
+  route_name: config_inspector.download
+  title: 'Download'
+  base_route: config_inspector.overview
+  weight: 20

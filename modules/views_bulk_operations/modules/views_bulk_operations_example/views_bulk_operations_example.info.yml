@@ -1,0 +1,13 @@
+type: module
+name: 'Views Bulk Operations example'
+description: 'Defines an example action with all possible options.'
+package: 'Examples'
+core_version_requirement: ^10.3 || ^11
+hidden: true
+dependencies:
+  - drupal:views_bulk_operations
+
+# Information added by Drupal.org packaging script on 2025-03-10
+version: '4.3.4'
+project: 'views_bulk_operations'
+datestamp: 1741604499

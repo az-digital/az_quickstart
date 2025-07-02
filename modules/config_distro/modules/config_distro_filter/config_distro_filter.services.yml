@@ -1,0 +1,6 @@
+services:
+  config_distro_filter.event_subscriber:
+    class: Drupal\config_distro_filter\ConfigDistroFilterEventSubscriber
+    arguments: ['@config_filter.storage_factory']
+    tags:
+      - { name: event_subscriber }

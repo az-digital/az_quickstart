@@ -1,0 +1,11 @@
+name: 'Devel Generate Fields'
+type: module
+description: 'Alter in a base field for testing purposes.'
+package: Testing
+tags:
+  - developer
+
+# Information added by Drupal.org packaging script on 2024-08-10
+version: '5.3.1'
+project: 'devel'
+datestamp: 1723258449

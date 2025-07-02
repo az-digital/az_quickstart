@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="sophron">
+  <description>PHP CodeSniffer configuration for Sophron module.</description>
+  <file>.</file>
+  <arg name="extensions" value="inc,install,module,php,profile,test,theme"/>
+
+  <!--Exclude README.md.-->
+  <exclude-pattern>README.md</exclude-pattern>
+
+  <!--Use Drupal code rule.-->
+  <rule ref="vendor/drupal/coder/coder_sniffer/Drupal"></rule>
+
+  <!--Use DrupalPractice code rule.-->
+  <rule ref="vendor/drupal/coder/coder_sniffer/DrupalPractice"></rule>
+
+</ruleset>

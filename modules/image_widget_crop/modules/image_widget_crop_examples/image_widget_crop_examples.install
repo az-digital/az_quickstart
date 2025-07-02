@@ -1,0 +1,33 @@
+<?php
+
+/**
+ * @file
+ * Contains image_widget_crop_example.install.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function image_widget_crop_examples_install() {
+  // Set the front page.
+  \Drupal::configFactory()
+    ->getEditable('system.site')
+    ->set('page.front', '/image_widget_crop_examples')
+    ->save();
+
+  // Set the IWC general settings.
+  \Drupal::configFactory()
+    ->getEditable('image_widget_crop.settings')
+    ->set('settings.crop_preview_image_style', 'crop_thumbnail')
+    ->set('settings.show_default_crop', TRUE)
+    ->set('settings.warn_multiple_usages', FALSE)
+    ->set('settings.crop_types_required', [
+      'crop_16_9' => 'crop_16_9',
+    ])
+    ->set('settings.crop_list', [
+      'crop_16_9' => 'crop_16_9',
+      'crop_4_3' => 'crop_4_3',
+      'crop_free_ratio' => 'crop_free_ratio',
+    ])
+    ->save();
+}

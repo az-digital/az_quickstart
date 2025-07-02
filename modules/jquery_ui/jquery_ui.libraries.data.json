@@ -1,0 +1,1288 @@
+{
+  "jquery_ui": {
+    "internal.widget-css": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "css": {
+        "component": {
+          "assets/vendor/jquery.ui/themes/base/core.css": {}
+        },
+        "theme": {
+          "assets/vendor/jquery.ui/themes/base/theme.css": {}
+        }
+      }
+    },
+    "core": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {},
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/internal.data",
+        "jquery_ui/internal.disable-selection",
+        "jquery_ui/internal.focusable",
+        "jquery_ui/internal.form",
+        "jquery_ui/internal.ie",
+        "jquery_ui/internal.keycode",
+        "jquery_ui/internal.labels",
+        "jquery_ui/internal.jquery-patch.js",
+        "jquery_ui/internal.plugin",
+        "jquery_ui/internal.safe-active-element",
+        "jquery_ui/internal.safe-blur",
+        "jquery_ui/internal.scroll-parent",
+        "jquery_ui/internal.tabbable",
+        "jquery_ui/internal.unique-id",
+        "jquery_ui/internal.version",
+        "jquery_ui/internal.widget-css"
+      ]
+    },
+    "internal.data": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/data-min.js": {
+          "minified": true,
+          "weight": -11
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/internal.version"
+      ]
+    },
+    "internal.disable-selection": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/disable-selection-min.js": {
+          "minified": true,
+          "weight": -11
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/internal.version"
+      ]
+    },
+    "internal.focusable": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/focusable-min.js": {
+          "minified": true,
+          "weight": -11
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/internal.version"
+      ]
+    },
+    "internal.form-reset-mixin": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/form-reset-mixin-min.js": {
+          "minified": true,
+          "weight": -11
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/internal.form",
+        "jquery_ui/internal.version"
+      ]
+    },
+    "internal.form": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/form-min.js": {
+          "minified": true,
+          "weight": -11
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/internal.version"
+      ]
+    },
+    "internal.ie": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/ie-min.js": {
+          "minified": true,
+          "weight": -11
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/internal.version"
+      ]
+    },
+    "internal.jquery-patch": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/jquery-patch-min.js": {
+          "minified": true,
+          "weight": -11
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/internal.version"
+      ]
+    },
+    "internal.jquery-var-for-color": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/jquery-var-for-color-min.js": {
+          "minified": true,
+          "weight": -11
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/internal.version"
+      ]
+    },
+    "internal.keycode": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/keycode-min.js": {
+          "minified": true,
+          "weight": -11
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/internal.version"
+      ]
+    },
+    "internal.labels": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/labels-min.js": {
+          "minified": true,
+          "weight": -11
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/internal.version"
+      ]
+    },
+    "internal.plugin": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/plugin-min.js": {
+          "minified": true,
+          "weight": -11
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/internal.version"
+      ]
+    },
+    "position": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/position-min.js": {
+          "minified": true,
+          "weight": -11
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/internal.version"
+      ]
+    },
+    "internal.safe-active-element": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/safe-active-element-min.js": {
+          "minified": true,
+          "weight": -11
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/internal.version"
+      ]
+    },
+    "internal.safe-blur": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/safe-blur-min.js": {
+          "minified": true,
+          "weight": -11
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/internal.version"
+      ]
+    },
+    "internal.scroll-parent": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/scroll-parent-min.js": {
+          "minified": true,
+          "weight": -11
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/internal.version"
+      ]
+    },
+    "internal.tabbable": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/tabbable-min.js": {
+          "minified": true,
+          "weight": -11
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/internal.version",
+        "jquery_ui/internal.focusable"
+      ]
+    },
+    "internal.unique-id": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/unique-id-min.js": {
+          "minified": true,
+          "weight": -11
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/internal.version"
+      ]
+    },
+    "internal.vendor.jquery.color": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/vendor/jquery-color/jquery.color-min.js": {
+          "minified": true,
+          "weight": -11
+        }
+      },
+      "dependencies": [
+        "core/jquery"
+      ]
+    },
+    "internal.version": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/version-min.js": {
+          "minified": true,
+          "weight": -11
+        }
+      },
+      "dependencies": [
+        "core/jquery"
+      ]
+    },
+    "widget": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/widget-min.js": {
+          "minified": true,
+          "weight": -11
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/internal.version",
+        "jquery_ui/internal.widget-css"
+      ]
+    },
+    "mouse": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/widgets/mouse-min.js": {
+          "minified": true,
+          "weight": -11
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/internal.ie",
+        "jquery_ui/internal.version",
+        "jquery_ui/widget",
+        "jquery_ui/internal.widget-css"
+      ]
+    }
+  },
+  "jquery_ui_effects": {
+    "core": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/effect-min.js": {
+          "minified": true,
+          "weight": -9
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/internal.jquery-var-for-color",
+        "jquery_ui/internal.vendor.jquery.color",
+        "jquery_ui/internal.version"
+      ]
+    },
+    "blind": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/effects/effect-blind-min.js": {
+          "minified": true
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/internal.version",
+        "jquery_ui_effects/core"
+      ]
+    },
+    "bounce": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/effects/effect-bounce-min.js": {
+          "minified": true
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/internal.version",
+        "jquery_ui_effects/core"
+      ]
+    },
+    "clip": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/effects/effect-clip-min.js": {
+          "minified": true
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/internal.version",
+        "jquery_ui_effects/core"
+      ]
+    },
+    "drop": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/effects/effect-drop-min.js": {
+          "minified": true
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/internal.version",
+        "jquery_ui_effects/core"
+      ]
+    },
+    "explode": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/effects/effect-explode-min.js": {
+          "minified": true
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/internal.version",
+        "jquery_ui_effects/core"
+      ]
+    },
+    "fade": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/effects/effect-fade-min.js": {
+          "minified": true
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/internal.version",
+        "jquery_ui_effects/core"
+      ]
+    },
+    "fold": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/effects/effect-fold-min.js": {
+          "minified": true
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/internal.version",
+        "jquery_ui_effects/core"
+      ]
+    },
+    "highlight": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/effects/effect-highlight-min.js": {
+          "minified": true
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/internal.version",
+        "jquery_ui_effects/core"
+      ]
+    },
+    "puff": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/effects/effect-puff-min.js": {
+          "minified": true
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/internal.version",
+        "jquery_ui_effects/core",
+        "jquery_ui_effects/scale"
+      ]
+    },
+    "pulsate": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/effects/effect-pulsate-min.js": {
+          "minified": true
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/internal.version",
+        "jquery_ui_effects/core"
+      ]
+    },
+    "scale": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/effects/effect-scale-min.js": {
+          "minified": true
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/internal.version",
+        "jquery_ui_effects/core",
+        "jquery_ui_effects/size"
+      ]
+    },
+    "shake": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/effects/effect-shake-min.js": {
+          "minified": true
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/internal.version",
+        "jquery_ui_effects/core"
+      ]
+    },
+    "size": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/effects/effect-size-min.js": {
+          "minified": true
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/internal.version",
+        "jquery_ui_effects/core"
+      ]
+    },
+    "slide": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/effects/effect-slide-min.js": {
+          "minified": true
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/internal.version",
+        "jquery_ui_effects/core"
+      ]
+    },
+    "transfer": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/effects/effect-transfer-min.js": {
+          "minified": true
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/internal.version",
+        "jquery_ui_effects/core"
+      ]
+    }
+  },
+  "jquery_ui_accordion": {
+    "accordion": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/widgets/accordion-min.js": {
+          "minified": true,
+          "weight": -11
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/internal.version",
+        "jquery_ui/internal.keycode",
+        "jquery_ui/internal.unique-id",
+        "jquery_ui/widget",
+        "jquery_ui/internal.widget-css"
+      ],
+      "css": {
+        "component": {
+          "assets/vendor/jquery.ui/themes/base/accordion.css": {}
+        }
+      }
+    }
+  },
+  "jquery_ui_autocomplete": {
+    "autocomplete": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/widgets/autocomplete-min.js": {
+          "minified": true,
+          "weight": -11
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui_menu/menu",
+        "jquery_ui/internal.keycode",
+        "jquery_ui/position",
+        "jquery_ui/internal.safe-active-element",
+        "jquery_ui/internal.version",
+        "jquery_ui/widget",
+        "jquery_ui/internal.widget-css"
+      ],
+      "css": {
+        "component": {
+          "assets/vendor/jquery.ui/themes/base/autocomplete.css": {}
+        }
+      }
+    }
+  },
+  "jquery_ui_button": {
+    "button": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/widgets/button-min.js": {
+          "minified": true,
+          "weight": -11
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui_controlgroup/controlgroup",
+        "jquery_ui_checkboxradio/checkboxradio",
+        "jquery_ui/internal.keycode",
+        "jquery_ui/widget",
+        "jquery_ui/internal.widget-css"
+      ],
+      "css": {
+        "component": {
+          "assets/vendor/jquery.ui/themes/base/button.css": {}
+        }
+      }
+    }
+  },
+  "jquery_ui_checkboxradio": {
+    "checkboxradio": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/widgets/checkboxradio-min.js": {
+          "minified": true,
+          "weight": -11
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/internal.form-reset-mixin",
+        "jquery_ui/internal.labels",
+        "jquery_ui/widget",
+        "jquery_ui/internal.widget-css"
+      ],
+      "css": {
+        "component": {
+          "assets/vendor/jquery.ui/themes/base/checkboxradio.css": {}
+        }
+      }
+    }
+  },
+  "jquery_ui_controlgroup": {
+    "controlgroup": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/widgets/controlgroup-min.js": {
+          "minified": true,
+          "weight": -11
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/widget",
+        "jquery_ui/internal.widget-css"
+      ],
+      "css": {
+        "component": {
+          "assets/vendor/jquery.ui/themes/base/controlgroup.css": {}
+        }
+      }
+    }
+  },
+  "jquery_ui_datepicker": {
+    "datepicker": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/widgets/datepicker-min.js": {
+          "minified": true,
+          "weight": -11
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/internal.version",
+        "jquery_ui/internal.keycode",
+        "jquery_ui/internal.widget-css"
+      ],
+      "css": {
+        "component": {
+          "assets/vendor/jquery.ui/themes/base/datepicker.css": {}
+        }
+      }
+    }
+  },
+  "jquery_ui_dialog": {
+    "dialog": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/widgets/dialog-min.js": {
+          "minified": true,
+          "weight": -11
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui_button/button",
+        "jquery_ui_draggable/draggable",
+        "jquery_ui/mouse",
+        "jquery_ui_resizable/resizable",
+        "jquery_ui/internal.focusable",
+        "jquery_ui/internal.keycode",
+        "jquery_ui/position",
+        "jquery_ui/internal.safe-active-element",
+        "jquery_ui/internal.safe-blur",
+        "jquery_ui/internal.tabbable",
+        "jquery_ui/internal.unique-id",
+        "jquery_ui/internal.version",
+        "jquery_ui/widget",
+        "jquery_ui/internal.widget-css"
+      ],
+      "css": {
+        "component": {
+          "assets/vendor/jquery.ui/themes/base/dialog.css": {}
+        }
+      }
+    }
+  },
+  "jquery_ui_draggable": {
+    "draggable": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/widgets/draggable-min.js": {
+          "minified": true,
+          "weight": -11
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/mouse",
+        "jquery_ui/internal.data",
+        "jquery_ui/internal.plugin",
+        "jquery_ui/internal.safe-active-element",
+        "jquery_ui/internal.safe-blur",
+        "jquery_ui/internal.scroll-parent",
+        "jquery_ui/internal.version",
+        "jquery_ui/widget",
+        "jquery_ui/internal.widget-css"
+      ],
+      "css": {
+        "component": {
+          "assets/vendor/jquery.ui/themes/base/draggable.css": {}
+        }
+      }
+    }
+  },
+  "jquery_ui_droppable": {
+    "droppable": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/widgets/droppable-min.js": {
+          "minified": true,
+          "weight": -11
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui_draggable/draggable",
+        "jquery_ui/mouse",
+        "jquery_ui/internal.version",
+        "jquery_ui/widget",
+        "jquery_ui/internal.widget-css"
+      ]
+    }
+  },
+  "jquery_ui_menu": {
+    "menu": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/widgets/menu-min.js": {
+          "minified": true,
+          "weight": -11
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/internal.keycode",
+        "jquery_ui/position",
+        "jquery_ui/internal.safe-active-element",
+        "jquery_ui/internal.unique-id",
+        "jquery_ui/internal.version",
+        "jquery_ui/widget",
+        "jquery_ui/internal.widget-css"
+      ],
+      "css": {
+        "component": {
+          "assets/vendor/jquery.ui/themes/base/menu.css": {}
+        }
+      }
+    }
+  },
+  "jquery_ui_progressbar": {
+    "progressbar": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/widgets/progressbar-min.js": {
+          "minified": true,
+          "weight": -11
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/internal.version",
+        "jquery_ui/widget",
+        "jquery_ui/internal.widget-css"
+      ],
+      "css": {
+        "component": {
+          "assets/vendor/jquery.ui/themes/base/progressbar.css": {}
+        }
+      }
+    }
+  },
+  "jquery_ui_resizable": {
+    "resizable": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/widgets/resizable-min.js": {
+          "minified": true,
+          "weight": -11
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/mouse",
+        "jquery_ui/internal.disable-selection",
+        "jquery_ui/internal.plugin",
+        "jquery_ui/internal.version",
+        "jquery_ui/widget",
+        "jquery_ui/internal.widget-css"
+      ],
+      "css": {
+        "component": {
+          "assets/vendor/jquery.ui/themes/base/resizable.css": {}
+        }
+      }
+    }
+  },
+  "jquery_ui_selectable": {
+    "selectable": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/widgets/selectable-min.js": {
+          "minified": true,
+          "weight": -11
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/mouse",
+        "jquery_ui/internal.version",
+        "jquery_ui/widget",
+        "jquery_ui/internal.widget-css"
+      ],
+      "css": {
+        "component": {
+          "assets/vendor/jquery.ui/themes/base/selectable.css": {}
+        }
+      }
+    }
+  },
+  "jquery_ui_selectmenu": {
+    "selectmenu": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/widgets/selectmenu-min.js": {
+          "minified": true,
+          "weight": -11
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui_menu/menu",
+        "jquery_ui/internal.form-reset-mixin",
+        "jquery_ui/internal.keycode",
+        "jquery_ui/internal.labels",
+        "jquery_ui/position",
+        "jquery_ui/internal.unique-id",
+        "jquery_ui/internal.version",
+        "jquery_ui/widget",
+        "jquery_ui/internal.widget-css"
+      ],
+      "css": {
+        "component": {
+          "assets/vendor/jquery.ui/themes/base/selectmenu.css": {}
+        }
+      }
+    }
+  },
+  "jquery_ui_slider": {
+    "slider": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/widgets/slider-min.js": {
+          "minified": true,
+          "weight": -11
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/mouse",
+        "jquery_ui/internal.keycode",
+        "jquery_ui/internal.version",
+        "jquery_ui/widget",
+        "jquery_ui/internal.widget-css"
+      ],
+      "css": {
+        "component": {
+          "assets/vendor/jquery.ui/themes/base/slider.css": {}
+        }
+      }
+    }
+  },
+  "jquery_ui_sortable": {
+    "sortable": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/widgets/sortable-min.js": {
+          "minified": true,
+          "weight": -11
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/mouse",
+        "jquery_ui/internal.data",
+        "jquery_ui/internal.ie",
+        "jquery_ui/internal.scroll-parent",
+        "jquery_ui/internal.version",
+        "jquery_ui/widget",
+        "jquery_ui/internal.widget-css"
+      ],
+      "css": {
+        "component": {
+          "assets/vendor/jquery.ui/themes/base/sortable.css": {}
+        }
+      }
+    }
+  },
+  "jquery_ui_spinner": {
+    "spinner": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/widgets/spinner-min.js": {
+          "minified": true,
+          "weight": -11
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui_button/button",
+        "jquery_ui/internal.version",
+        "jquery_ui/internal.keycode",
+        "jquery_ui/internal.safe-active-element",
+        "jquery_ui/widget",
+        "jquery_ui/internal.widget-css"
+      ],
+      "css": {
+        "component": {
+          "assets/vendor/jquery.ui/themes/base/spinner.css": {}
+        }
+      }
+    }
+  },
+  "jquery_ui_tabs": {
+    "tabs": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/widgets/tabs-min.js": {
+          "minified": true,
+          "weight": -11
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/internal.keycode",
+        "jquery_ui/internal.safe-active-element",
+        "jquery_ui/internal.unique-id",
+        "jquery_ui/internal.version",
+        "jquery_ui/widget",
+        "jquery_ui/internal.widget-css"
+      ],
+      "css": {
+        "component": {
+          "assets/vendor/jquery.ui/themes/base/tabs.css": {}
+        }
+      }
+    }
+  },
+  "jquery_ui_tooltip": {
+    "tooltip": {
+      "version": "1.13.2",
+      "license": {
+        "name": "Public Domain",
+        "url": "https://raw.githubusercontent.com/jquery/jquery-ui/1.13.2/LICENSE.txt",
+        "gpl-compatible": true
+      },
+      "js": {
+        "assets/vendor/jquery.ui/ui/widgets/tooltip-min.js": {
+          "minified": true,
+          "weight": -11
+        }
+      },
+      "dependencies": [
+        "core/jquery",
+        "jquery_ui/internal.keycode",
+        "jquery_ui/position",
+        "jquery_ui/internal.unique-id",
+        "jquery_ui/internal.version",
+        "jquery_ui/widget",
+        "jquery_ui/internal.widget-css"
+      ],
+      "css": {
+        "component": {
+          "assets/vendor/jquery.ui/themes/base/tooltip.css": {}
+        }
+      }
+    }
+  }
+}

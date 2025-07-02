@@ -1,0 +1,124 @@
+<?php
+
+/**
+ * @file
+ * Install hook for the External Links module.
+ */
+
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_install().
+ */
+function extlink_install(): void {
+  // Weight needs to be 1 for compatibility with SpamSpan.
+  module_set_weight('extlink', 1);
+}
+
+/**
+ * Add extlink and mailto icon labels to the default configuration.
+ */
+function extlink_update_8101() {
+  $config_factory = \Drupal::configFactory();
+  $config = $config_factory->getEditable('extlink.settings');
+  $config->set('extlink_label', '(link is external)');
+  $config->set('extlink_mailto_label', '(link sends email)');
+  $config->save(TRUE);
+}
+
+/**
+ * Add extlink_exclude_admin_routes to the default configuration.
+ */
+function extlink_update_8102(): void {
+  \Drupal::configFactory()
+    ->getEditable('extlink.settings')
+    ->set('extlink_exclude_admin_routes', FALSE)
+    ->save();
+}
+
+/**
+ * Add extlink css classes to the default configuration.
+ */
+function extlink_update_8103(): void {
+  \Drupal::configFactory()
+    ->getEditable('extlink.settings')
+    ->set('extlink_additional_link_classes', '')
+    ->set('extlink_additional_mailto_classes', '')
+    ->save();
+}
+
+/**
+ * Add tel icon labels to the default configuration.
+ */
+function extlink_update_8104(): void {
+  $config_factory = \Drupal::configFactory();
+  $config = $config_factory->getEditable('extlink.settings');
+  $config->set('extlink_tel_label', '(link is a phone number)');
+  $config->set('extlink_tel_class', '');
+  $config->set('extlink_additional_tel_classes', '');
+  $config->save(TRUE);
+}
+
+/**
+ * Add extlink_css_include to the default configuration.
+ */
+function extlink_update_8105():void {
+  \Drupal::configFactory()
+    ->getEditable('extlink.settings')
+    ->set('extlink_css_include', '')
+    ->save();
+}
+
+/**
+ * Add extlink_exclude_noreferrer to the default configuration.
+ */
+function extlink_update_8106(): void {
+  \Drupal::configFactory()
+    ->getEditable('extlink.settings')
+    ->set('extlink_exclude_noreferrer', '')
+    ->save();
+}
+
+/**
+ * Fix mistakenly applied configuration from extlink_update_8103.
+ */
+function extlink_update_8107(): void {
+  \Drupal::configFactory()
+    ->getEditable('extlink.settings')
+    ->clear('extlink_additional_link_settings')
+    ->clear('extlink_additional_mailto_settings')
+    ->set('extlink_additional_link_classes', '')
+    ->set('extlink_additional_mailto_classes', '')
+    ->save();
+}
+
+/**
+ * Set the default value for the new key extlink_prevent_orphan.
+ */
+function extlink_update_8108(): ?TranslatableMarkup {
+  $config = \Drupal::configFactory()
+    ->getEditable('extlink.settings');
+  $config->set('extlink_prevent_orphan', FALSE)
+    ->save(TRUE);
+
+  if ($config->get('extlink_icon_placement') === 'append') {
+    // @see https://www.drupal.org/project/drupal/issues/2956953#comment-12762642.
+    $url = Url::fromRoute('extlink_admin.settings', [], ['base_url' => '']);
+    $context = [
+      ':url' => $url->toString(),
+    ];
+    return t('If upgrading from an earlier 2.x version of External Links, please be aware that the facility to prevent text wrapping from separating the last word from the icon is now optional, and disabled by default. You can enable it on <a href=":url">the module settings page</a>.', $context);
+  }
+  return NULL;
+}
+
+/**
+ * Add extlink_title_no_override to the default configuration.
+ */
+function extlink_update_8109(): void {
+  \Drupal::configFactory()
+    ->getEditable('extlink.settings')
+    ->set('extlink_title_no_override', FALSE)
+    ->save();
+}

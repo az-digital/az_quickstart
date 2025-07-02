@@ -1,0 +1,6 @@
+# @file
+# Provide individual permissions for each meta tag available on the site.
+
+# All of the actual permissions are provided by a callback.
+permission_callbacks:
+  - Drupal\metatag_extended_perms\MetatagPermissions::permissions

@@ -1,0 +1,12 @@
+name: Config Distro
+type: module
+description: Framework for managing configuration updates from distributions.
+core_version_requirement: ^10.3 || ^11
+package: Configuration
+dependencies:
+  - drupal:config
+
+# Information added by Drupal.org packaging script on 2025-03-27
+version: '2.1.0-alpha1'
+project: 'config_distro'
+datestamp: 1743102882

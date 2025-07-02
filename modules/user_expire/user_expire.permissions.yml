@@ -1,0 +1,9 @@
+set user expiration:
+  title: 'Set user expiration'
+  restrict access: TRUE
+view expiring users report:
+  title: 'View expiring users report'
+  restrict access: TRUE
+administer user expire settings:
+  title: 'Administer user expire settings'
+  restrict access: TRUE

@@ -1,0 +1,76 @@
+name: PHPUnit Tests
+
+on:
+  push:
+    branches: [ master ]
+  schedule:
+    - cron: "0 6 * * 3"
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  phpunit:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - php-version: "8.1"
+            php-unit-args: "-c phpunit.xml"
+          - php-version: "8.2"
+            php-unit-args: "-c phpunit.xml"
+          - php-version: "8.3"
+            php-unit-args: "-c phpunit.xml"
+          - php-version: "8.4"
+            php-unit-args: "-c phpunit.xml"
+          - php-version: "8.5"
+            php-unit-args: "-c phpunit.xml --fail-on-deprecation --fail-on-phpunit-deprecation"
+
+    steps:
+
+        - uses: actions/checkout@v4
+
+        - name: Install PHP
+          uses: "shivammathur/setup-php@v2"
+          with:
+            php-version: "${{ matrix.php-version }}"
+            coverage: "pcov"
+            ini-values: "zend.assertions=1"
+
+        - name: Install Composer dependencies
+          run: composer install --no-progress --ansi
+
+        - name: "Require tools"
+          continue-on-error: true
+          run: composer require --ansi --dev "phpunit/phpunit:>=10"
+
+        - name: Run tests
+          run: ./vendor/bin/phpunit --color=always --testdox --coverage-clover=coverage.xml ${{ matrix.php-unit-args }}
+
+        - name: Send code coverage report to Codecov.io
+          uses: codecov/codecov-action@v4
+          with:
+            token: ${{ secrets.CODECOV_TOKEN }}
+            files: coverage.xml
+
+        - name: Mapping test
+          id: mapTest
+          continue-on-error: true
+          if: ${{ matrix.php-version == 8.1 }}
+          run: |
+            php ./bin/fileeye-mimemap --version
+            php ./bin/fileeye-mimemap update --diff --fail-on-diff --ansi
+
+        - name: Map update
+          id: mapUpdate
+          if: ${{ steps.mapTest.outcome == 'failure' }}
+          run: php ./bin/fileeye-mimemap update --ansi
+
+        - name: Map artifact
+          if: ${{ steps.mapTest.outcome == 'failure' && steps.mapUpdate.outcome == 'success' }}
+          uses: actions/upload-artifact@v4
+          with:
+            name: map
+            path: src/Map/DefaultMap.php

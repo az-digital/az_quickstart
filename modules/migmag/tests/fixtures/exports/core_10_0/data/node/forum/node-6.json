@@ -1,0 +1,37 @@
+[
+    {
+        "nid": 6,
+        "uuid": "c1d6bc01-2cc9-4e4e-a7d2-63cc251f7a13",
+        "vid": 6,
+        "langcode": "en",
+        "type": "forum",
+        "revision_timestamp": 1504715414,
+        "revision_uid": 1,
+        "revision_log": null,
+        "status": "1",
+        "uid": 1,
+        "title": "Comments are closed :-(",
+        "created": 1504715414,
+        "changed": 1504715414,
+        "promote": "0",
+        "sticky": "0",
+        "default_langcode": "1",
+        "revision_default": "1",
+        "revision_translation_affected": "1",
+        "content_translation_source": null,
+        "content_translation_outdated": "0",
+        "body": null,
+        "comment_forum": [
+            {
+                "status": 1,
+                "cid": 0,
+                "last_comment_timestamp": 1504715414,
+                "last_comment_name": null,
+                "last_comment_uid": 1,
+                "comment_count": 0
+            }
+        ],
+        "field_event": null,
+        "taxonomy_forums": 1
+    }
+]

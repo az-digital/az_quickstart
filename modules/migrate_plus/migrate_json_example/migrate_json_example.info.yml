@@ -1,0 +1,13 @@
+type: module
+name: Migrate JSON Example
+description: 'Simple JSON Migration example'
+package: Examples
+core_version_requirement: '>=9.1'
+dependencies:
+  - drupal:migrate
+  - migrate_plus:migrate_plus
+
+# Information added by Drupal.org packaging script on 2024-11-20
+version: '6.0.5'
+project: 'migrate_plus'
+datestamp: 1732124626

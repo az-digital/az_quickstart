@@ -1,0 +1,38 @@
+trimIefIdParentslangcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.err_level_2.field_level_3_items
+    - node.type.err_level_2
+  module:
+    - inline_entity_form
+id: node.err_level_2.default
+targetEntityType: node
+bundle: err_level_2
+mode: default
+content:
+  field_level_3_items:
+    weight: 1
+    settings:
+      match_operator: CONTAINS
+      form_mode: default
+      override_labels: false
+      label_singular: ''
+      label_plural: ''
+      allow_new: true
+      allow_existing: false
+    third_party_settings: {  }
+    type: inline_entity_form_complex
+  title:
+    type: string_textfield
+    weight: 0
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  path: true
+  promote: true
+  sticky: true
+  uid: true

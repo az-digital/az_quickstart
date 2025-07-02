@@ -1,0 +1,58 @@
+<?php
+
+/**
+ * @file
+ * IntelligenceBank DAM media integration module.
+ */
+
+use Drupal\Component\Serialization\Json;
+use Drupal\Core\Link;
+use Drupal\Core\Url;
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Add Asset Browser button on media_library_add_form_upload form.
+ */
+function ib_dam_media_form_media_library_add_form_upload_alter(array &$form, FormStateInterface $formState): void {
+  $url = Url::fromRoute('id_dam_media.asset_browser_form');
+  $url->setOptions([
+    'attributes' => [
+      'class' => ['use-ajax', 'button', 'button--primary', 'js-button-add-ib-asset'],
+      'data-dialog-type' => 'modal',
+      'data-dialog-options' => Json::encode([
+        'dialogClass' => 'media-library-widget-modal',
+        'width' => '75%',
+        'height' => 'window.innerHeight',
+        'minHeight' => 500,
+      ]),
+    ],
+    'query' => $formState->get('media_library_state')->all(),
+  ]);
+
+  $link = Link::fromTextAndUrl(t('Open IntelligenceBank Browser'), $url);
+
+  $renderable_link = $link->toRenderable();
+
+  $form['ib_dam_container'] = [
+    "#type" => "container",
+  ];
+  $form['ib_dam_container']['asset_browser'] = $renderable_link;
+
+  $form['ib_dam_container']['asset_browser']['#attached']['library'][] = 'core/drupal.dialog.ajax';
+  $form['ib_dam_container']['asset_browser']['#attached']['library'][] = 'ib_dam/ckeditor';
+  $dialogMode = 'regular';
+  if ($dialogMode === 'stacked') {
+    $form['ib_dam_container']['asset_browser']['#attached']['library'][] = 'ib_dam/dialog';
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function ib_dam_media_preprocess_links__media_library_menu(&$variables) {
+  if (!\Drupal::config('ib_dam.settings')->get('allow_embedding')) {
+    unset($variables['links']['media-library-menu-ib_dam_embed']);
+  }
+}

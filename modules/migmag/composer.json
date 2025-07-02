@@ -1,0 +1,25 @@
+{
+    "name": "drupal/migmag",
+    "description": "Toolset and utilities for Drupal migrations.",
+    "homepage": "https://www.drupal.org/project/migmag",
+    "license": "GPL-2.0-or-later",
+    "type": "drupal-module",
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/migmag",
+        "source": "https://git.drupalcode.org/project/migmag"
+    },
+    "require-dev": {
+        "drupal/eme": "^1@alpha",
+        "drupal/smart_sql_idmap": "^1.1@beta",
+        "drupal/tecla": "^1@RC",
+        "drush/drush": "10 - 13"
+    },
+    "replace": {
+        "drupal/migmag_callback_upgrade": "self.version",
+        "drupal/migmag_menu_link_migrate": "self.version",
+        "drupal/migmag_process": "self.version",
+        "drupal/migmag_process_lookup_replace": "self.version",
+        "drupal/migmag_rollbackable": "self.version",
+        "drupal/migmag_rollbackable_replace": "self.version"
+    }
+}

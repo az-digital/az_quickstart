@@ -1,0 +1,36 @@
+uuid: 32d4340f-f8b2-42ec-9820-70e8fe1f70a9
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.pokemon.field_description
+    - field.field.node.pokemon.field_image
+    - node.type.pokemon
+  module:
+    - image
+    - user
+id: node.pokemon.teaser
+targetEntityType: node
+bundle: pokemon
+mode: teaser
+content:
+  field_description:
+    type: basic_string
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_image:
+    type: image
+    label: hidden
+    settings:
+      image_link: ''
+      image_style: ''
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  links: true
+

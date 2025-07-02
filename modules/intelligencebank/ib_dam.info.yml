@@ -1,0 +1,11 @@
+name: 'IntelligenceBank DAM'
+type: module
+description: 'The bridge between IntelligenceBank DAM & Drupal'
+core_version_requirement: ^10.3 || ^11
+package: 'IntelligenceBank DAM'
+configure: ib_dam.settings_form
+
+# Information added by Drupal.org packaging script on 2024-10-29
+version: '5.1.0'
+project: 'intelligencebank'
+datestamp: 1730244850

@@ -1,0 +1,13 @@
+name: 'Config actions'
+type: 'Testing'
+install:
+  - config_test
+config:
+  actions:
+    config_test.dynamic.recipe:
+      createIfNotExists:
+        label: 'Created by recipe'
+      setProtectedProperty: 'Set by recipe'
+    config_test.system:
+      simpleConfigUpdate:
+        foo: 'not bar'

@@ -1,0 +1,26 @@
+<div class="recurring-output--wrapper">
+  {% if next_display %}
+  <div class="next_instance">
+    {{ next_display }}
+  </div>
+  {% endif %}
+  {% if rule_text %}
+  <div class="rule-text">{{ rule_text }}</div>
+  {% endif %}
+  {% if past_display %}
+  <details open="open">
+    <summary>{{ 'Recent'|t }}</summary>
+    <div class="details-wrapper">
+      {{ past_display }}
+    </div>
+  </details>
+  {% endif %}
+  {% if upcoming_display and upcoming_display['#items'] %}
+    <details open="open">
+      <summary>{{ 'Upcoming'|t }}</summary>
+      <div class="details-wrapper">
+        {{ upcoming_display }}
+      </div>
+    </details>
+  {% endif %}
+</div>

@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - webform_image_select
+id: dogs
+label: 'Cute Dogs'
+category: Animals
+images: |
+  dog_1:
+    text: 'Cute Dog 1'
+    src: 'https://placedog.net/220/200'
+  dog_2:
+    text: 'Cute Dog 2'
+    src: 'https://placedog.net/180/200'
+  dog_3:
+    text: 'Cute Dog 3'
+    src: 'https://placedog.net/130/200'
+  dog_4:
+    text: 'Cute Dog 4'
+    src: 'https://placedog.net/270/200'

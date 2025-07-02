@@ -1,0 +1,78 @@
+# Schema for the configuration files of the Migrate Plus module.
+
+migrate_plus.migration.*:
+  type: config_entity
+  label: 'Migration'
+  mapping:
+    id:
+      type: string
+      label: 'ID'
+    class:
+      type: string
+      label: 'Class'
+    field_plugin_method:
+      type: string
+      label: 'Field Plugin Method'
+    cck_plugin_method:
+      type: string
+      label: 'BC layer for Field Plugin Method'
+    migration_tags:
+      type: sequence
+      label: 'Migration Tags'
+      sequence:
+        type: string
+        label: 'Tag'
+    migration_group:
+      type: string
+      label: 'Group'
+    label:
+      type: label
+      label: 'Label'
+    source:
+      type: ignore
+      label: 'Source'
+    process:
+      type: ignore
+      label: 'Process'
+    destination:
+      type: ignore
+      label: 'Destination'
+    migration_dependencies:
+      type: mapping
+      label: 'Dependencies'
+      mapping:
+        required:
+          type: sequence
+          label: 'Required dependencies'
+          sequence:
+            type: string
+            label: 'Dependency'
+        optional:
+          type: sequence
+          label: 'Optional dependencies'
+          sequence:
+            type: string
+            label: 'Dependency'
+
+migrate_plus.migration_group.*:
+  type: config_entity
+  label: 'Migration Group'
+  mapping:
+    id:
+      type: string
+      label: 'ID'
+    label:
+      type: label
+      label: 'Label'
+    description:
+      type: string
+      label: 'Description'
+    source_type:
+      type: string
+      label: 'Source type'
+    module:
+      type: string
+      label: 'Dependent module'
+    shared_configuration:
+      type: ignore
+      label: 'Shared migration configuration'

@@ -1,0 +1,236 @@
+/**
+ * @file
+ * Admin styles.
+ */
+
+/**
+ * Local actions.
+ */
+.webform-form .action-links {
+  margin-bottom: 0;
+}
+
+/**
+ * Bulk form.
+ */
+.webform-bulk-form .form-item {
+  margin-right: 5px;
+}
+
+/**
+ * Submission.
+ */
+.webform-submission-information .button {
+  font-size: 1em;
+}
+
+/**
+ * Webform setting button displays a table rows icon.
+ * @see /admin/structure/webform/manage/contact/results/submissions
+ */
+a.button.button-webform-table-setting {
+  float: right;
+  margin: 0 0 1em 0;
+}
+
+a.button.button-webform-table-setting:before {
+  content: "☷";
+  font-size: 1.2em;
+}
+
+[dir="rtl"] a.button.button-webform-table-setting {
+  float: left;
+}
+
+/**
+ * Results table.
+ * @see /admin/structure/webform/submissions/manage
+ * @see /admin/structure/webform/manage/contact/results/submissions
+ */
+.webform-results-table th,
+.webform-results-table td {
+  overflow: hidden;
+  max-width: 400px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* Make sure 'Operations' is never cut-off. */
+.webform-results-table td.webform-dropbutton-wrapper {
+  overflow: visible;
+  max-width: inherit;
+  white-space: normal;
+}
+
+th.webform-results-table__icon,
+td.webform-results-table__icon {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+/* Hide throbber, which breaks icon alignment */
+.webform-results-table__icon .ajax-progress-throbber {
+  display: none;
+}
+
+/* Entire row is clickable. @see Drupal.behaviors.webformTableRowHref */
+.webform-results-table tbody tr {
+  cursor: pointer;
+}
+
+/* Limit image height to 60px */
+.webform-results-table td img {
+  width: auto;
+  max-height: 60px;
+}
+
+/**
+ * Results icons (notes, sticky, and locked)
+ */
+.webform-icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  text-align: center;
+  vertical-align: -2px;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100% auto;
+}
+
+/* Notes */
+
+.webform-icon-notes--on {
+  background-image: url(../images/icons/notes-on.svg);
+}
+
+.webform-icon-notes--off {
+  background-image: url(../images/icons/notes-off.svg);
+}
+
+.webform-icon-notes--link {
+  background-image: url(../images/icons/notes-link.svg);
+}
+
+a:hover .webform-icon-notes--on,
+a:focus .webform-icon-notes--on,
+a:hover .webform-icon-notes--off,
+a:focus .webform-icon-notes--off {
+  background-image: url(../images/icons/notes-link.svg);
+}
+
+/* Sticky */
+
+.webform-icon-sticky {
+  display: inline-block;
+  background: transparent url(../images/icons/sticky.svg) no-repeat left top;
+  background-size: 64px 16px;
+}
+
+.webform-icon-sticky--off:hover,
+.webform-icon-sticky--off:focus {
+  background-position: -16px top;
+}
+.webform-icon-sticky--on {
+  background-position: -32px top;
+}
+.webform-icon-sticky--on:focus,
+.webform-icon-sticky--on:hover {
+  background-position: -48px top;
+}
+
+.webform-icon-sticky--link {
+  background: transparent url(../images/icons/sticky-link.svg) no-repeat left top;
+}
+
+/* Locked */
+
+.webform-icon-locked--on {
+  background-image: url(../images/icons/locked-on.svg);
+}
+
+.webform-icon-locked--off {
+  background-image: url(../images/icons/locked-off.svg);
+}
+
+.webform-icon-locked--link {
+  background-image: url(../images/icons/locked-on-link.svg);
+}
+
+a:hover .webform-icon-locked--on,
+a:focus .webform-icon-locked--on {
+  background-image: url(../images/icons/locked-off-link.svg);
+}
+
+a:hover .webform-icon-locked--off,
+a:focus .webform-icon-locked--off {
+  background-image: url(../images/icons/locked-on-link.svg);
+}
+
+/**
+ * Submission view table.
+ * @see /admin/structure/webform/manage/{webform_id}/submission/{webform_submission_id}/table
+ */
+.webform-submission-table th {
+  width: 33%;
+  min-width: 100px;
+}
+
+.webform-submission-table td {
+  width: 66%;
+}
+
+.webform-horizontal-rule {
+  margin: 0.5em 0;
+}
+
+/**
+ * Handlers table.
+ * @see /admin/structure/webform/manage/{webform_id}/handlers
+ */
+.webform-handlers-table .ajax-progress-throbber {
+  display: none;
+}
+
+@media screen and (max-width: 1280px) {
+  .js-off-canvas-dialog-open .webform-handlers-table th,
+  .js-off-canvas-dialog-open .webform-handlers-table td {
+    display: none;
+  }
+
+  .js-off-canvas-dialog-open .webform-handlers-table th:first-child,
+  .js-off-canvas-dialog-open .webform-handlers-table th:last-child,
+  .js-off-canvas-dialog-open .webform-handlers-table td:first-child,
+  .js-off-canvas-dialog-open .webform-handlers-table td:last-child {
+    display: table-cell;
+  }
+}
+
+/**
+ * Variants table.
+ * @see /admin/structure/webform/manage/{webform_id}/variants
+ */
+.webform-variants-table .ajax-progress-throbber {
+  display: none;
+}
+
+.webform-variants-table .webform-variant-table-test-multiple td {
+  border-top: 1px solid #a6a6a6;
+  border-bottom: 1px solid #a6a6a6;
+  background-color: #f5f5f2;
+}
+
+@media screen and (max-width: 1280px) {
+  .js-off-canvas-dialog-open .webform-variants-table th,
+  .js-off-canvas-dialog-open .webform-variants-table td {
+    display: none;
+  }
+
+  .js-off-canvas-dialog-open .webform-variants-table th:first-child,
+  .js-off-canvas-dialog-open .webform-variants-table th:last-child,
+  .js-off-canvas-dialog-open .webform-variants-table td:first-child,
+  .js-off-canvas-dialog-open .webform-variants-table td:last-child {
+    display: table-cell;
+  }
+}

@@ -1,0 +1,6 @@
+formatter.accordion:
+  js:
+    js/accordion.js: {}
+  dependencies:
+    - field_group/core
+    - jquery_ui_accordion/accordion

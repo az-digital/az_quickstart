@@ -1,0 +1,6 @@
+entity.embed_button.collection:
+  title: 'Text editor embed buttons'
+  parent: system.admin_config_content
+  description: 'Manage text editor embed buttons.'
+  route_name: entity.embed_button.collection
+  weight: 10

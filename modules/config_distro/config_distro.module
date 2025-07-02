@@ -1,0 +1,62 @@
+<?php
+
+/**
+ * @file
+ * Framework for managing configuration updates from distributions.
+ */
+
+use Drupal\Core\Link;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_help().
+ */
+function config_distro_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the 'Config Distro' module.
+    case 'help.page.config_distro':
+      $output = '<h3>' . t('Usage') . '</h3>';
+
+      $output .= '<p>' . t('Update your installed modules or themes to new
+       versions that include configuration changes or updates. Run database
+       updates and clear caches.') . '</p>';
+
+      // Using Drupal's Url and Link classes for internal paths.
+      $distroUpdateUrl = Url::fromRoute('config_distro.import');
+      $distroUpdateLink = Link::fromTextAndUrl(t('Distribution Update'), $distroUpdateUrl)->toString();
+
+      $output .= '<p>' . t('If using the UI, navigate to Configuration > Development > @distroUpdateLink. Review and run updates.', [
+        '@distroUpdateLink' => $distroUpdateLink,
+      ]) . '</p>';
+
+      $output .= '<p>' . t('If using Drush, use the Drush command config-distro-update to run imports.') . '</p>';
+
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_batch_alter().
+ *
+ * Switches out the default batch 'finished' callback class for our custom
+ * version.
+ *
+ * By testing for the presence of \Drupal\Core\Config\ConfigImporterBatch,
+ * which was introduced to core in 8.6.x, we restrict our change to sites
+ * running that or a later version.
+ *
+ * @see \Drupal\config_distro\Form\ConfigDistroImportForm::finishBatch()
+ */
+function config_distro_batch_alter(&$batch) {
+  // Detect the batch generated in
+  // \Drupal\config\Form\ConfigSync::submitForm().
+  if (
+    isset($batch['form_state']) &&
+    ($batch['form_state']->getValue('form_id') === 'config_distro_import_form') &&
+    !empty($batch['sets'][0]['finished'][0]) &&
+    ($batch['sets'][0]['finished'][0] === 'Drupal\Core\Config\Importer\ConfigImporterBatch')
+  ) {
+    $batch['sets'][0]['finished'][0] = 'Drupal\config_distro\ConfigDistroConfigImporterBatch';
+  }
+}

@@ -1,0 +1,6 @@
+services:
+  config_update_ui.commands:
+    class: \Drupal\config_update_ui\Commands\ConfigUpdateUiCommands
+    arguments: ['@entity_type.manager', '@config_update.config_diff', '@config_update.config_list', '@config_update.config_update']
+    tags:
+      - { name: drush.command }

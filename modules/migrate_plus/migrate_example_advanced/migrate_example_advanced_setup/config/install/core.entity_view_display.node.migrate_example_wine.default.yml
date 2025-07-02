@@ -1,0 +1,88 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.migrate_example_wine.body
+    - field.field.node.migrate_example_wine.field_migrate_example_comments
+    - field.field.node.migrate_example_wine.field_migrate_example_adv_image
+    - field.field.node.migrate_example_wine.field_migrate_example_top_vintag
+    - field.field.node.migrate_example_wine.field_migrate_example_wine_best
+    - field.field.node.migrate_example_wine.field_migrate_example_wine_ratin
+    - field.field.node.migrate_example_wine.field_migrate_example_wine_regio
+    - field.field.node.migrate_example_wine.field_migrate_example_wine_var
+    - node.type.migrate_example_wine
+  module:
+    - comment
+    - image
+    - text
+    - user
+id: node.migrate_example_wine.default
+targetEntityType: node
+bundle: migrate_example_wine
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 101
+    settings: {  }
+    third_party_settings: {  }
+  field_migrate_example_comments:
+    weight: 108
+    label: hidden
+    settings:
+      pager_id: 0
+    third_party_settings: {  }
+    type: comment_default
+  field_migrate_example_adv_image:
+    weight: 105
+    label: hidden
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+  field_migrate_example_top_vintag:
+    weight: 107
+    label: inline
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_integer
+  field_migrate_example_wine_best:
+    weight: 104
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+  field_migrate_example_wine_ratin:
+    weight: 106
+    label: inline
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_decimal
+  field_migrate_example_wine_regio:
+    weight: 103
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+  field_migrate_example_wine_var:
+    weight: 102
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+hidden: {  }

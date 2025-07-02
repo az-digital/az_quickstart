@@ -1,0 +1,472 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for Block Class.
+ */
+
+use Drupal\block\Entity\Block;
+use Drupal\Component\Serialization\Json;
+
+/**
+ * Implements hook_install().
+ */
+function block_class_install() {
+  // Send a message with the documentation.
+  \Drupal::messenger()->addStatus(t('Thanks for installing Block Class. Now in the block configuration you will see a field to add your classes. If you need to see more please visit our <a href="https://www.drupal.org/docs/contributed-modules/block-class" target="blank">documentation here</a>'));
+}
+
+/**
+ * Update the maxlength field to use 255 by default.
+ */
+function block_class_update_20001() {
+
+  // Get the config object.
+  $config = \Drupal::configFactory()->getEditable('block_class.settings');
+
+  // Set the value of maxlength.
+  $config->set('maxlength_block_class_field', 255);
+
+  // Save that.
+  $config->save();
+
+}
+
+/**
+ * Update the field type with "textfield" by default.
+ */
+function block_class_update_20002() {
+
+  // Get the config object.
+  $config = \Drupal::configFactory()->getEditable('block_class.settings');
+
+  // Set the field_type with "textfield" by default.
+  $config->set('field_type', 'textfield');
+
+  // Save that.
+  $config->save();
+
+}
+
+/**
+ * Update the "default_case" and "allow_letters" to the default values.
+ */
+function block_class_update_20003() {
+
+  // Get the config object.
+  $config = \Drupal::configFactory()->getEditable('block_class.settings');
+
+  // Set the "default_case" to be 'standard'.
+  $config->set('default_case', 'standard');
+
+  // Set the "allow_only_letters_and_numbers" to be 0.
+  $config->set('allow_only_letters_and_numbers', 0);
+
+  // Save that.
+  $config->save();
+
+}
+
+/**
+ * Get all block classes configured and set in the settings.
+ */
+function block_class_update_20004() {
+
+  // Get the config object.
+  $config = \Drupal::configFactory()->getEditable('block_class.settings');
+
+  // Load blocks.
+  $blocks = Block::loadMultiple();
+
+  foreach ($blocks as $block) {
+
+    // If there is no classes on ThirdPartySettings, skip.
+    if (empty($block->getThirdPartySetting('block_class', 'classes'))) {
+      continue;
+    }
+
+    // Get the current block classes configured.
+    $block_classes = $block->getThirdPartySetting('block_class', 'classes');
+
+    // Get the current classes stored.
+    $block_classes_stored = $config->get('block_classes_stored');
+
+    // Get the array from JSON.
+    $block_classes_stored = Json::decode($block_classes_stored);
+
+    // Verify if is empty.
+    if (empty($block_classes_stored)) {
+      $block_classes_stored = [];
+    }
+
+    // Get the current class and export to array.
+    $block_classes = explode(' ', $block_classes);
+
+    // Merge with the current one.
+    $block_classes_to_store = array_merge($block_classes, $block_classes_stored);
+
+    // Use the key the same as value.
+    $block_classes_to_store = array_combine($block_classes_to_store, $block_classes_to_store);
+
+    // Filter to remove empty values.
+    $block_classes_to_store = array_filter($block_classes_to_store);
+
+    // Get as JSON.
+    $block_classes_to_store = Json::encode($block_classes_to_store);
+
+    // Store in the config.
+    $config->set('block_classes_stored', $block_classes_to_store);
+
+    // Save.
+    $config->save();
+
+  }
+
+}
+
+/**
+ * Enable attributes.
+ */
+function block_class_update_20005() {
+
+  // Get the config object.
+  $config = \Drupal::configFactory()->getEditable('block_class.settings');
+
+  // Set enable attributes by default.
+  $config->set('enable_attributes', TRUE);
+
+  // Save.
+  $config->save();
+
+}
+
+/**
+ * Set multiple textfields by default.
+ */
+function block_class_update_20006() {
+
+  // Get the config object.
+  $config = \Drupal::configFactory()->getEditable('block_class.settings');
+
+  // Set the fieldtype with "multiple_textfields" by default.
+  $config->set('field_type', 'multiple_textfields');
+
+  // Save.
+  $config->save();
+
+}
+
+/**
+ * Enable the auto-complete by default.
+ */
+function block_class_update_20007() {
+
+  // Get the config object.
+  $config = \Drupal::configFactory()->getEditable('block_class.settings');
+
+  // Set the auto-complete = TRUE by default.
+  $config->set('enable_auto_complete', TRUE);
+
+  // Save.
+  $config->save();
+
+}
+
+/**
+ * Set the quantity of items to 10 by default.
+ */
+function block_class_update_20008() {
+
+  // Get the config object.
+  $config = \Drupal::configFactory()->getEditable('block_class.settings');
+
+  // Set the qty_classes_per_block = 10 by default.
+  $config->set('qty_classes_per_block', 10);
+
+  // Save.
+  $config->save();
+
+}
+
+/**
+ * Set the items per page in the block class list pagination to 50 by default.
+ */
+function block_class_update_20009() {
+
+  // Get the config object.
+  $config = \Drupal::configFactory()->getEditable('block_class.settings');
+
+  // Set the items_per_page = 50 by default.
+  $config->set('items_per_page', 50);
+
+  // Save.
+  $config->save();
+
+}
+
+/**
+ * Set the settings "enable special chars" as TRUE by default.
+ */
+function block_class_update_20010() {
+
+  // Get the config object.
+  $config = \Drupal::configFactory()->getEditable('block_class.settings');
+
+  // Set the settings.
+  $config->set('enable_special_chars', TRUE);
+
+  // Save.
+  $config->save();
+
+}
+
+/**
+ * Set the settings "qty of attributes per block" to 10 by default.
+ */
+function block_class_update_20011() {
+
+  // Get the config object.
+  $config = \Drupal::configFactory()->getEditable('block_class.settings');
+
+  // Set the settings.
+  $config->set('qty_attributes_per_block', 10);
+
+  // Save.
+  $config->save();
+
+}
+
+/**
+ * Set the deprecated field type from textarea to multiple that is the new one.
+ */
+function block_class_update_20012() {
+
+  // Get the config object.
+  $config = \Drupal::configFactory()->getEditable('block_class.settings');
+
+  // Verify if the field type isn't textarea skip.
+  if ($config->get('field_type') != 'textarea') {
+    return FALSE;
+  }
+
+  // If it's a textarea set to multiple fields that is the new.
+  $config->set('field_type', 'multiple_textfields');
+
+  // Save.
+  $config->save();
+
+}
+
+/**
+ * Get the attributes and save in the settings to be used in the auto-complete.
+ */
+function block_class_update_20013() {
+
+  // Get the config object.
+  $config = \Drupal::configFactory()->getEditable('block_class.settings');
+
+  // Load blocks.
+  $blocks = Block::loadMultiple();
+
+  foreach ($blocks as $block) {
+
+    // If there is no classes on ThirdPartySettings, skip.
+    if (empty($block->getThirdPartySetting('block_class', 'attributes'))) {
+      continue;
+    }
+
+    // Get the attributes configured.
+    $attributes = $block->getThirdPartySetting('block_class', 'attributes');
+
+    // Get the keys stored.
+    $attribute_keys_stored = $config->get('attribute_keys_stored');
+
+    // Decode this to get an array with those values.
+    $attribute_keys_stored = Json::decode($attribute_keys_stored);
+
+    // Verify if it's empty and set a default array on this.
+    if (empty($attribute_keys_stored)) {
+      $attribute_keys_stored = [];
+    }
+
+    // Get the array with the values.
+    $attributes = explode(PHP_EOL, $attributes);
+
+    // Do a foreach to get all items.
+    foreach ($attributes as $attribute) {
+
+      // Get by pipe to be able to get the key value.
+      $attribute_array = explode('|', $attribute);
+
+      // Get the attribute key.
+      $attribute_key = $attribute_array[0];
+
+      if (empty($attribute_key)) {
+        continue;
+      }
+
+      // Put that on array.
+      $attribute_keys_stored[] = trim($attribute_key);
+
+    }
+
+    // Combine to use the id and value.
+    $attribute_keys_stored = array_combine($attribute_keys_stored, $attribute_keys_stored);
+
+    // Merge the values.
+    $attribute_keys_stored = array_merge($attribute_keys_stored, $attribute_keys_stored);
+
+    // Encode that to store in JSON.
+    $attribute_keys_stored = Json::encode($attribute_keys_stored);
+
+    // Set in the object.
+    $config->set('attribute_keys_stored', $attribute_keys_stored);
+
+    // Save  it.
+    $config->save();
+  }
+}
+
+/**
+ * Save the attribute value in the settings to be used in the auto-complete.
+ */
+function block_class_update_20014() {
+
+  // Get the config object.
+  $config = \Drupal::configFactory()->getEditable('block_class.settings');
+
+  // Load blocks.
+  $blocks = Block::loadMultiple();
+
+  foreach ($blocks as $block) {
+
+    // If there is no classes on ThirdPartySettings, skip.
+    if (empty($block->getThirdPartySetting('block_class', 'attributes'))) {
+      continue;
+    }
+
+    // Get the attributes configured.
+    $attributes = $block->getThirdPartySetting('block_class', 'attributes');
+
+    // Get the keys stored.
+    $attribute_value_stored = $config->get('attribute_value_stored');
+
+    // Decode this to get an array with those values.
+    $attribute_value_stored = Json::decode($attribute_value_stored);
+
+    // Verify if it's empty and set a default array on this.
+    if (empty($attribute_value_stored)) {
+      $attribute_value_stored = [];
+    }
+
+    // Get the array with the values.
+    $attributes = explode(PHP_EOL, $attributes);
+
+    // Do a foreach to get all items.
+    foreach ($attributes as $attribute) {
+
+      // Get by pipe to be able to get the key value.
+      $attribute_array = explode('|', $attribute);
+
+      // Get the attribute value.
+      $attribute_value = $attribute_array[1];
+
+      if (empty($attribute_value)) {
+        continue;
+      }
+
+      // Put that on array.
+      $attribute_value_stored[] = trim($attribute_value);
+
+    }
+
+    // Combine to use the id and value.
+    $attribute_value_stored = array_combine($attribute_value_stored, $attribute_value_stored);
+
+    // Merge the values.
+    $attribute_value_stored = array_merge($attribute_value_stored, $attribute_value_stored);
+
+    // Encode that to store in JSON.
+    $attribute_value_stored = Json::encode($attribute_value_stored);
+
+    // Set in the object.
+    $config->set('attribute_value_stored', $attribute_value_stored);
+
+    // Save  it.
+    $config->save();
+  }
+}
+
+/**
+ * Enable the possibility to personalize the id in the block settings.
+ */
+function block_class_update_20015() {
+
+  // Get the config object.
+  $config = \Drupal::configFactory()->getEditable('block_class.settings');
+
+  // Set enable id replacement by default.
+  $config->set('enable_id_replacement', TRUE);
+
+  // Save.
+  $config->save();
+
+}
+
+/**
+ * Set the default value for weight items.
+ */
+function block_class_update_20016() {
+
+  // Get the config object.
+  $config = \Drupal::configFactory()->getEditable('block_class.settings');
+
+  // Set the default value for weight on attributes.
+  $config->set('weight_attributes', '');
+
+  // Set the default value for weight on items.
+  $config->set('weight_class', '');
+
+  // Set the default value for weight on ID.
+  $config->set('weight_id', '');
+
+  // Save.
+  $config->save();
+
+}
+
+/**
+ * Convert block_classes_stored from JSON to a sequence.
+ */
+function block_class_update_20017() {
+  $config = \Drupal::configFactory()->getEditable('block_class.settings');
+
+  $block_classes_stored = $config->get('block_classes_stored');
+  // Classes may have already been converted.
+  if (!is_string($block_classes_stored)) {
+    return;
+  }
+
+  $block_classes_stored = Json::decode($block_classes_stored);
+
+  if (empty($block_classes_stored)) {
+    $block_classes_stored = [];
+  }
+
+  $config->set('block_classes_stored', array_values($block_classes_stored));
+  $config->save();
+}
+
+/**
+ * Set 'maxlength_attributes' config default value to '255', if it is empty.
+ */
+function block_class_update_20018() {
+  $config = \Drupal::configFactory()->getEditable('block_class.settings');
+
+  // If the config 'maxlength_attributes' is 'NULL', 'FALSE' or '0', set it to a
+  // default integer value of '255' like other 'maxlength' config fields.
+  if (empty($config->get('maxlength_attributes'))) {
+    $config->set('maxlength_attributes', 255);
+    $config->save();
+  }
+}

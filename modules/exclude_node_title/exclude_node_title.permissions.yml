@@ -1,0 +1,12 @@
+administer exclude node title:
+  title: 'Administer exclude node title'
+  restrict access: TRUE
+
+exclude any node title:
+  title: 'Exclude any node title'
+
+exclude own node title:
+  title: 'Exclude own node title'
+
+use exclude node title:
+  title: 'Use exclude node title'

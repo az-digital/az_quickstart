@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the Config Distro module.
+ */
+
+/**
+ * Installs Config Distro Filter module.
+ */
+function config_distro_update_8101() {
+  \Drupal::service('module_installer')->install(['config_distro_filter']);
+}

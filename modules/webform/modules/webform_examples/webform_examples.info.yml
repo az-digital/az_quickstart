@@ -1,0 +1,12 @@
+name: 'Webform Examples'
+type: module
+description: 'Provides examples of all webform elements and functionality which can used for demonstrating and testing advanced functionality or used as cut-n-paste code snippets for creating new webforms.'
+package: 'Webform example'
+core_version_requirement: ^10.2
+dependencies:
+  - 'webform:webform'
+
+# Information added by Drupal.org packaging script on 2024-12-10
+version: '6.2.9'
+project: 'webform'
+datestamp: 1733851071

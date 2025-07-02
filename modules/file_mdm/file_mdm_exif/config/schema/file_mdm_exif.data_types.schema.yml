@@ -1,0 +1,14 @@
+# Basic data types for file_mdf_exif module.
+
+file_mdm_exif.ifd:
+  type: mapping
+  label: 'EXIF IFD'
+  mapping:
+    type:
+      type: integer
+      label: 'IFD type'
+    aliases:
+      type: sequence
+      sequence:
+        type: string
+        label: 'Literal representation of IFD'

@@ -1,0 +1,117 @@
+/**
+ * @file
+ * Provides shared lightbox stylings for both Colorbox and Photobox.
+ */
+
+.litebox {
+  position: relative;
+}
+
+.media__icon--litebox {
+  position: absolute;
+  z-index: 9;
+  top: 50%;
+  left: 50%;
+  display: block;
+  visibility: hidden;
+  width: 80px;
+  height: 80px;
+  margin: 0;
+  cursor: pointer;
+  transition: visibility 0s linear 0.5s, opacity 0.5s linear;
+  -ms-transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  opacity: 0;
+}
+
+.media__icon--litebox::before,
+.media__icon--litebox::after {
+  position: absolute;
+  display: block;
+  content: "";
+  pointer-events: none;
+}
+
+.media__icon--litebox {
+  z-index: 9;
+}
+
+.media__icon--litebox::before,
+.media__icon--litebox::after {
+  top: 50%;
+  left: 50%;
+  width: 80px;
+  height: 2px;
+  margin: -1px 0 0 -40px;
+  -ms-transform: rotate(0deg);
+  -webkit-transform: rotate(0deg);
+  transform: rotate(0deg);
+  border-radius: 4px;
+  background: white;
+}
+
+.media__icon--litebox::after {
+  -ms-transform: rotate(-90deg);
+  -webkit-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+}
+
+.media__icon--litebox:hover::before,
+.media__icon--litebox:hover::after {
+  background-color: #ff6d2c;
+}
+
+.media:hover .media__icon--litebox {
+  transition-delay: 0s;
+}
+
+/* Ensures to not conflict with blazy.media.css. */
+.media:hover .media__icon--litebox,
+a:hover .media__icon--litebox,
+a .media--switch img.media__element {
+  visibility: visible;
+  opacity: 1;
+}
+
+.media-wrapper--box {
+  margin: auto;
+}
+
+.media.media--box,
+.media--box iframe {
+  display: block;
+  margin: auto;
+}
+
+.media.media--box audio {
+  top: 50%;
+  bottom: auto;
+  height: auto;
+  transform: translateY(-50%);
+}
+
+/* stylelint-disable declaration-no-important */
+.media--box > [data-pin-do],
+.media--box > [data-pin-href],
+.media--box > .instagram-media,
+.media--box > .twitter-tweet-rendered {
+  display: block !important; /* csslint allow: known-properties, important */
+  min-width: 320px;
+  min-height: 120px;
+  margin: auto;
+}
+
+.media--box > .instagram-media {
+  min-height: 420px;
+}
+
+.media .instagram-media,
+.media--box > .twitter-tweet-rendered {
+  margin: 0 auto !important; /* csslint allow: known-properties, important */
+}
+
+.media--box > .twitter-tweet-rendered {
+  max-width: 100% !important; /* csslint allow: known-properties, important */
+}

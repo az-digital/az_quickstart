@@ -1,0 +1,18 @@
+/**
+ * @file
+ * Webform share admin styling.
+ */
+
+.webform-share-iframe-container {
+  border: 1px solid #ccc;
+  background-color: #eee;
+}
+
+.webform-share-admin-copy-message {
+  display: none;
+}
+
+.webform-share-admin-copy-message:before {
+  content: '✓';
+  font-size: 2em;
+}

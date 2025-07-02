@@ -1,0 +1,329 @@
+<?php
+
+/**
+ * @file
+ * Provides CAS authentication for Drupal.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Url;
+use Drupal\user\RoleInterface;
+
+/**
+ * Implements hook_cron().
+ *
+ * Delete stale, unused PGTs.
+ */
+function cas_cron() {
+  // PGTs older than one hour get discarded.
+  \Drupal::database()->delete('cas_pgt_storage')
+    ->condition('timestamp', time() - 3600, '<=')
+    ->execute();
+
+  // Clear old single logout session mapping data.
+  $max_days = \Drupal::configFactory()->get('cas.settings')->get('logout.single_logout_session_lifetime');
+  $seconds_in_day = 86400;
+  $seconds = $max_days * $seconds_in_day;
+  if ($seconds > 0) {
+    \Drupal::database()->delete('cas_login_data')
+      ->condition('created', time() - $seconds, '<=')
+      ->execute();
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_delete().
+ */
+function cas_user_role_delete(RoleInterface $role) {
+  $config = \Drupal::configFactory()->getEditable('cas.settings');
+  $auto_assigned_roles = $config->get('user_accounts.auto_assigned_roles');
+  $array_key = array_search($role->id(), $auto_assigned_roles, TRUE);
+  if ($array_key) {
+    // Remove the role from the auto-assigned roles.
+    unset($auto_assigned_roles[$array_key]);
+    $config->set('user_accounts.auto_assigned_roles', $auto_assigned_roles)->save();
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Alters the user entity form.
+ */
+function cas_form_user_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  _cas_add_cas_username_to_user_form($form);
+
+  $cas_user_manager = \Drupal::service('cas.user_manager');
+  $account = $form_state->getFormObject()->getEntity();
+  if (!$account->isNew()) {
+    $cas_username = $cas_user_manager->getCasUsernameForAccount($account->id());
+
+    // If a CAS username was found for this user, then populate the CAS username
+    // form field with its current value. Also remove the password management
+    // fields if configured to do so.
+    if ($cas_username) {
+      $form['account']['cas_enabled']['#default_value'] = TRUE;
+      $form['account']['cas_username']['#default_value'] = $cas_username;
+
+      if (!\Drupal::currentUser()->hasPermission('administer users')) {
+        if (\Drupal::config('cas.settings')->get('user_accounts.restrict_password_management')) {
+          $form['account']['pass']['#access'] = FALSE;
+
+          // Users are normally required to entier their current password when
+          // changing their password or email address. Since we are disabling
+          // access to change their password, and since a CAS user would not
+          // know their local Drupal password anyway, we remove this field as
+          // well.
+          if (isset($form['account']['current_pass'])) {
+            $form['account']['current_pass']['#access'] = FALSE;
+          }
+        }
+
+        if (\Drupal::config('cas.settings')->get('user_accounts.restrict_email_management')) {
+          if (isset($form['account']['mail'])) {
+            $form['account']['mail']['#disabled'] = TRUE;
+          }
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function cas_form_user_register_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  _cas_add_cas_username_to_user_form($form);
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function cas_form_user_pass_alter(&$form, FormStateInterface $form_state) {
+  if (\Drupal::currentUser()->isAnonymous() && \Drupal::config('cas.settings')->get('user_accounts.restrict_password_management')) {
+    $form['#validate'][] = '_cas_validate_user_pass_form';
+  }
+}
+
+/**
+ * Custom form validator for the password reset form.
+ */
+function _cas_validate_user_pass_form(array &$form, FormStateInterface $form_state) {
+  // If the previous validation succeeded, the 'account' value is not NULL.
+  // @see \Drupal\user\Form\UserPasswordForm::validateForm()
+  $account = $form_state->getValue('account');
+  if ($account) {
+    /** @var \Drupal\cas\Service\CasUserManager $cas_user_manager */
+    $cas_user_manager = \Drupal::service('cas.user_manager');
+    // Check if this user account is associated with CAS and set an error if so.
+    if ($cas_user_manager->getCasUsernameForAccount($account->id())) {
+      $form_state->setErrorByName('name', \Drupal::service('cas.helper')->getMessage('error_handling.message_restrict_password_management'));
+    }
+  }
+}
+
+/**
+ * Alter the user entity form to include a textfield for CAS username.
+ *
+ * @param array $form
+ *   The user entity form.
+ */
+function _cas_add_cas_username_to_user_form(array &$form) {
+  $form['account']['cas_enabled'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Allow user to log in via CAS'),
+    '#access' => \Drupal::currentUser()->hasPermission('administer users'),
+    '#weight' => 0,
+  ];
+  $form['account']['cas_username'] = [
+    '#type' => 'textfield',
+    '#title' => t('CAS Username'),
+    '#description' => t('The username that this user logs into CAS with (typically the same as the Drupal username). Note that while the Drupal password field is required to be filled in, CAS users will not use it to log in.'),
+    '#access' => \Drupal::currentUser()->hasPermission('administer users'),
+    '#maxlength' => 128,
+    '#weight' => 0,
+    '#states' => [
+      'visible' => [
+        ':input[name="cas_enabled"]' => ['checked' => TRUE],
+      ],
+    ],
+  ];
+
+  // We cannot apply form validation method directly to buttons on entity forms
+  // anymore so apply it to the whole form instead.
+  $form['#validate'][] = '_cas_user_form_validate';
+  $form['actions']['submit']['#submit'][] = '_cas_user_form_submit';
+}
+
+/**
+ * Validation callback for the user entity form.
+ *
+ * Verify that the provided CAS username is not already taken by someone else.
+ *
+ * @param array $form
+ *   The form.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The form state object.
+ */
+function _cas_user_form_validate(array &$form, FormStateInterface $form_state) {
+  // Verify that it was the save / register button that was clicked. We don't
+  // want to run our validation if this was for a 'cancel account' action.
+  if (in_array('::save', $form_state->getSubmitHandlers())) {
+    // If the CAS enabled checkbox was checked, then ensure that the CAS
+    // username field is not empty.
+    if ($form_state->getValue('cas_enabled') && empty($form_state->getValue('cas_username'))) {
+      $form_state->setError($form['account']['cas_username'], t('Please provide a CAS username, or uncheck "Allow user to log in via CAS".'));
+    }
+
+    // The externalauth module does not provide this validation so we have to
+    // implement it ourselves. See https://drupal.org/node/2804797.
+    $cas_username = $form_state->getValue('cas_username');
+    if (!empty($cas_username)) {
+      $cas_user_manager = \Drupal::service('cas.user_manager');
+      $existing_uid = $cas_user_manager->getUidForCasUsername($cas_username);
+      $user_being_edited = $form_state->getFormObject()->getEntity();
+
+      if ($existing_uid && $existing_uid !== $user_being_edited->id()) {
+        $form_state->setError($form['account']['cas_username'], t('The specified CAS username is already in use by another user.'));
+      }
+    }
+  }
+}
+
+/**
+ * Submit callback for the user entity form.
+ *
+ * Save (or remove) the association of the CAS username to this edited user.
+ *
+ * @param array $form
+ *   The form.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The form state object.
+ */
+function _cas_user_form_submit(array $form, FormStateInterface $form_state) {
+  $cas_user_manager = \Drupal::service('cas.user_manager');
+  $account = $form_state->getFormObject()->getEntity();
+  if ($form_state->getValue('cas_username') && $form_state->getValue('cas_enabled')) {
+    $cas_user_manager->setCasUsernameForAccount($account, $form_state->getValue('cas_username'));
+  }
+  elseif ($account->id() && $cas_user_manager->getCasUsernameForAccount($account->id())) {
+    $cas_user_manager->removeCasUsernameForAccount($account);
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Modify the user login form.
+ */
+function cas_form_user_login_form_alter(&$form, FormStateInterface $form_state) {
+  $config = Drupal::config('cas.settings');
+
+  // Cached form must be busted if we alter CAS settings.
+  $form['#cache']['tags'] = array_merge($form['#cache']['tags'], $config->getCacheTags());
+
+  // Add a link to login via CAS on the user login form.
+  $enabled = $config->get('login_link_enabled');
+  if ($enabled) {
+    $url = new Url('cas.login', [], [
+      'attributes' => [
+        'class' => ['cas-login-link'],
+      ],
+    ]);
+
+    $form['cas_login_link'] = [
+      '#type' => 'link',
+      '#url' => $url,
+      '#title' => $config->get('login_link_label'),
+      '#weight' => -1,
+    ];
+  }
+
+  $form['#validate'][] = '_cas_user_login_validate';
+}
+
+/**
+ * Custom validation function added to user login form.
+ */
+function _cas_user_login_validate(&$form, FormStateInterface $form_state) {
+  // If the user attempting to log in is a CAS user, prevent log in if
+  // configured to do so. This forces users to log in using CAS even if
+  // they somehow know their Drupal account password.
+  // The UID of the user attempting to log in is set from an earlier validate
+  // function from the main UserLoginForm.
+  $uid = $form_state->get('uid');
+  $config = Drupal::config('cas.settings');
+  if ($config->get('user_accounts.prevent_normal_login') && !empty($uid)) {
+    $cas_user_manager = \Drupal::service('cas.user_manager');
+    if ($cas_user_manager->getCasUsernameForAccount($uid)) {
+      $form_state->setErrorByName('name', \Drupal::service('cas.helper')->getMessage('error_handling.message_prevent_normal_login'));
+    }
+  }
+}
+
+/**
+ * Implements hook_validation_constraint_alter().
+ *
+ * Replace core's ProtectedUserFieldConstraint with a decorated version that
+ * skips over the validation if restricted password mangement is enabled.
+ */
+function cas_validation_constraint_alter(array &$definitions) {
+  $definitions['ProtectedUserField']['class'] = 'Drupal\cas\Plugin\Validation\Constraint\CasProtectedUserFieldConstraint';
+}
+
+/**
+ * Implements hook_user_logout().
+ *
+ * Remove data from the cas_login_data table for this user's session.
+ */
+function cas_user_logout($account) {
+  \Drupal::database()->delete('cas_login_data')
+    ->condition('plainsid', \Drupal::service('session')->getId())
+    ->execute();
+}
+
+/**
+ * Implements hook_help().
+ */
+function cas_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.cas':
+      $text = file_get_contents(dirname(__FILE__) . '/README.md');
+      if (!\Drupal::moduleHandler()->moduleExists('markdown')) {
+        return '<pre>' . $text . '</pre>';
+      }
+      else {
+        // Use the Markdown filter to render the README.
+        /** @var \Drupal\filter\FilterPluginManager $filter_manager */
+        $filter_manager = \Drupal::service('plugin.manager.filter');
+        $settings = \Drupal::configFactory()->get('markdown.settings')->getRawData();
+        $config = ['settings' => $settings];
+        $filter = $filter_manager->createInstance('markdown', $config);
+        return $filter->process($text, 'en');
+      }
+    default:
+      return NULL;
+  }
+}
+
+/**
+ * Implements hook_menu_links_discovered_alter().
+ */
+function cas_menu_links_discovered_alter(&$links) {
+  // The "admin toolbar tools" module adds a "Add a new user" menu item to
+  // the "People" admin menu. Here we supplement that with one for adding
+  // CAS users as well. We could also just add this via cas.links.menu.yml,
+  // but we only want it to appear if the admin toolbar tools module is also
+  // enabled.
+  if (\Drupal::moduleHandler()->moduleExists('admin_toolbar_tools')) {
+    $links['cas.bulk_add_users'] = [
+      'title' => t('Add CAS user(s)'),
+      'provider' => 'cas',
+      'route_name' => 'cas.bulk_add_cas_users',
+      'menu_name' => 'admin',
+      'parent' => 'entity.user.collection',
+      'weight' => -1,
+    ];
+  }
+}

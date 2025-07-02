@@ -1,0 +1,34 @@
+views_bulk_operations.execute_batch:
+  path: '/views-bulk-operations/execute/{view_id}/{display_id}'
+  defaults:
+    _controller: '\Drupal\views_bulk_operations\Controller\ViewsBulkOperationsController::execute'
+    _title: 'Views Bulk Operations batch starter'
+  requirements:
+    _views_bulk_operation_access: 'TRUE'
+  options:
+    _admin_route: TRUE
+views_bulk_operations.update_selection:
+  path: '/views-bulk-operations/ajax/{view_id}/{display_id}'
+  defaults:
+    _controller: '\Drupal\views_bulk_operations\Controller\ViewsBulkOperationsController::updateSelection'
+    _title: 'Views Bulk Operations multipage AJAX'
+  requirements:
+    _views_bulk_operation_access: 'TRUE'
+views_bulk_operations.execute_configurable:
+  path: '/views-bulk-operations/configure/{view_id}/{display_id}'
+  defaults:
+    _form: '\Drupal\views_bulk_operations\Form\ConfigureAction'
+    _title: 'Views Bulk Operations configure step'
+  requirements:
+    _views_bulk_operation_access: 'TRUE'
+  options:
+    _admin_route: TRUE
+views_bulk_operations.confirm:
+  path: '/views-bulk-operations/confirm/{view_id}/{display_id}'
+  defaults:
+    _form: '\Drupal\views_bulk_operations\Form\ConfirmAction'
+    _title: 'Views Bulk Operations confirm execution'
+  requirements:
+    _views_bulk_operation_access: 'TRUE'
+  options:
+    _admin_route: TRUE

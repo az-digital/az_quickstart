@@ -1,0 +1,8 @@
+cas_user_interaction_test.form:
+  path: '/cas-user-interaction-test'
+  defaults:
+    _form: Drupal\cas_user_interaction_test\CasUserInteractionTestForm
+    _title: 'We need your agreement'
+  requirements:
+    # On a real use case, access rules should be carefully enforced.
+    _access: 'TRUE'

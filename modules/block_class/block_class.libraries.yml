@@ -1,0 +1,9 @@
+block-class:
+  js:
+    js/block-class.js: {}
+  css:
+    theme:
+      css/block-class.css: {}
+  dependencies:
+    - core/jquery
+    - core/drupal

@@ -1,0 +1,9 @@
+# Schema for the Smart Date views default arguments.
+
+views.argument_default.date_token:
+  type: mapping
+  label: 'Date Token'
+  mapping:
+    token:
+      type: string
+      label: 'Token value'

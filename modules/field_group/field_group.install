@@ -1,0 +1,62 @@
+<?php
+
+/**
+ * @file
+ * Update hooks for the Field Group module.
+ */
+
+/**
+ * Removed in favor of hook_post_update script.
+ */
+function field_group_update_8301() {
+  // @see field_group_post_update_0001().
+}
+
+/**
+ * Install the 'jquery_ui_accordion' module if it exists.
+ */
+function field_group_update_8302() {
+  try {
+    // Enables the jQuery UI accordion module if it exists.
+    if (\Drupal::service('extension.list.module')
+      ->getName('jquery_ui_accordion')) {
+      \Drupal::service('module_installer')
+        ->install(['jquery_ui_accordion'], TRUE);
+      return t('The "jquery_ui_accordion" module has been installed.');
+    }
+  }
+  catch (\Exception $e) {
+    return t('If you want to use the Field Group accordion formatter, you will need to install the <a href=":link" target="_blank">jQuery UI Accordion</a> module.',
+        [':link' => 'https://www.drupal.org/project/jquery_ui_accordion']);
+  }
+}
+
+/**
+ * Install the field_group_accordion if this site is using accordion.
+ */
+function field_group_update_8303() {
+  $configFactory = Drupal::configFactory();
+  $hasAccordion = FALSE;
+  $displayConfig = [
+    ...\Drupal::service('config.storage')->listAll('core.entity_form_display'),
+    ...\Drupal::service('config.storage')->listAll('core.entity_view_display'),
+  ];
+
+  foreach ($displayConfig as $item) {
+    $config = $configFactory->get($item);
+    $thirdPartySettings = $config->get('third_party_settings');
+    if (is_array($thirdPartySettings) && isset($thirdPartySettings['field_group'])) {
+      foreach ($thirdPartySettings['field_group'] as $group) {
+        if ($group['format_type'] === 'accordion' || $group['format_type'] === 'accordion_item') {
+          $hasAccordion = TRUE;
+          break 2;
+        }
+      }
+    }
+  }
+
+  if ($hasAccordion) {
+    \Drupal::service('module_installer')
+      ->install(['field_group_accordion'], TRUE);
+  }
+}

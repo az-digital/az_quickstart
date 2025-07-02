@@ -1,0 +1,10 @@
+node_modules/*
+yarn.lock
+# Exclude development files.
+.ddev/
+.vscode/
+/vendor/
+/web/
+.editorconfig
+.gitattributes
+phpcs.xml.dist

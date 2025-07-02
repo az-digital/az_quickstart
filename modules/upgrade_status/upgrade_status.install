@@ -1,0 +1,72 @@
+<?php
+
+/**
+ * @file
+ * Install, update, and uninstall functions for the Upgrade Status module.
+ */
+
+/**
+ * Implements hook_requirements().
+ */
+function upgrade_status_requirements($phase) {
+  if ($phase == 'install') {
+    // Check if the Drupal Finder is available. This will attempt to autoload
+    // the class, so we can bail out as soon as possible.
+    if (!class_exists('DrupalFinder\DrupalFinder')) {
+      return [
+        'upgrade_status' => [
+          'description' => t('External dependencies for Upgrade Status are not available. Composer must be used to download the module with dependencies. See <a href="@url">the Upgrade Status project page</a> for instructions.', ['@url' => 'https://drupal.org/project/upgrade_status']),
+          'severity' => REQUIREMENT_ERROR,
+        ],
+      ];
+    }
+  }
+  return [];
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function upgrade_status_uninstall() {
+  \Drupal::keyValue('upgrade_status_scan_results')->deleteAll();
+}
+
+/**
+ * Delete old state information that is not anymore relevant or valid.
+ *
+ * You will need to scan modules again to get your results back (now in
+ * the new format).
+ */
+function upgrade_status_update_8101() {
+  \Drupal::state()->delete('upgrade_status.number_of_jobs');
+  \Drupal::state()->delete('upgrade_status.last_scan');
+  \Drupal::state()->delete('upgrade_status.scanning_job_fatal');
+  \Drupal::keyValue('upgrade_status_scan_results')->deleteAll();
+
+  // Drop the 'queue_inspectable' table if it exists. The module used
+  // to come with a custom queue implementation of this name.
+  $db = \Drupal::database();
+  $schema = $db->schema();
+  if ($schema->tableExists('queue_inspectable')) {
+    if (!$db->select('queue_inspectable')->countQuery()->execute()->fetchField()) {
+      $schema->dropTable('queue_inspectable');
+    }
+    else {
+      return t("Most legacy Upgrade Status data was cleaned up, however the 'queue_inspectable' table remains because it had values in it. This will not cause issues with the module, but will linger around as old unused data in the database. It may become a problem in the future if another module chooses to use the same queue type name. Please remove manually.");
+    }
+  }
+}
+
+/**
+ * Delete old state information so the changed storage format can be used.
+ */
+function upgrade_status_update_8301() {
+  \Drupal::keyValue('upgrade_status_scan_results')->deleteAll();
+}
+
+/**
+ * Delete state, because PHPStan fail state was incorrectly formatted.
+ */
+function upgrade_status_update_8302() {
+  \Drupal::keyValue('upgrade_status_scan_results')->deleteAll();
+}

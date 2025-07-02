@@ -1,0 +1,55 @@
+# The 'type' should be "label" for short meta tags and "text" for ones which
+# could get longer, especially ones which use a textarea field instead of a
+# textfield.
+
+metatag.metatag_tag.schema_article_about:
+  type: text
+  label: 'about'
+metatag.metatag_tag.schema_article_author:
+  type: text
+  label: 'author'
+metatag.metatag_tag.schema_article_date_modified:
+  type: text
+  label: 'dateModified'
+metatag.metatag_tag.schema_article_date_published:
+  type: text
+  label: 'datePublished'
+metatag.metatag_tag.schema_article_description:
+  type: text
+  label: 'description'
+metatag.metatag_tag.schema_article_has_part:
+  type: text
+  label: 'hasPart'
+metatag.metatag_tag.schema_article_headline:
+  type: text
+  label: 'headline'
+metatag.metatag_tag.schema_article_id:
+  type: text
+  label: '@id'
+metatag.metatag_tag.schema_article_image:
+  type: text
+  label: 'image'
+metatag.metatag_tag.schema_article_is_accessible_for_free:
+  type: text
+  label: 'isAccessibleForFree'
+metatag.metatag_tag.schema_article_main_entity_of_page:
+  type: text
+  label: 'mainEntityOfPage'
+metatag.metatag_tag.schema_article_name:
+  type: text
+  label: 'name'
+metatag.metatag_tag.schema_article_publisher:
+  type: text
+  label: 'publisher'
+metatag.metatag_tag.schema_article_type:
+  type: string
+  label: '@type'
+metatag.metatag_tag.schema_article_aggregate_rating:
+  type: text
+  label: 'aggregateRating'
+metatag.metatag_tag.schema_article_review:
+  type: text
+  label: 'review'
+metatag.metatag_tag.schema_article_speakable:
+  type: text
+  label: 'speakable'

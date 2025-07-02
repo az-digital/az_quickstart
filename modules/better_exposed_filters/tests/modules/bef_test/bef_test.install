@@ -1,0 +1,95 @@
+<?php
+
+/**
+ * @file
+ * Provides install hooks for the BEF Test module.
+ */
+
+/**
+ * Adds terms to the hierarchical "location" vocabulary.
+ *
+ * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+ *   Thrown if the entity type doesn't exist.
+ * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+ *   Thrown if the storage handler couldn't be loaded.
+ * @throws \Drupal\Core\Entity\EntityStorageException
+ *   In case of failures an exception is thrown.
+ */
+function bef_test_install() {
+  // Set up an example hierarchical terms in the "Location" vocab.
+  $locations = [
+    'United States' => [
+      'California' => [
+        'San Francisco',
+        'San Diego',
+        'Santa Barbara',
+      ],
+      'Oregon' => [
+        'Portland',
+        'Eugene',
+      ],
+      'Washington' => [
+        'Seattle',
+        'Spokane',
+        'Walla Walla',
+      ],
+    ],
+    'Canada' => [
+      'British Columbia' => [
+        'Vancouver',
+        'Victoria',
+        'Whistler',
+      ],
+      'Alberta' => [
+        'Calgary',
+        'Edmonton',
+        'Lake Louise',
+      ],
+    ],
+    'Mexico' => [],
+  ];
+  foreach ($locations as $country => $states) {
+    $country_tid = _bef_test_add_term($country);
+    if ($country_tid && !empty($states)) {
+      foreach ($states as $state => $cities) {
+        $state_tid = _bef_test_add_term($state, $country_tid);
+        if ($state_tid && !empty($cities)) {
+          foreach ($cities as $city) {
+            _bef_test_add_term($city, $state_tid);
+          }
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Adds a new term to the bef_test-location vocabulary.
+ *
+ * If a TID is specified in $parent, the new term is added as a child of that
+ * term.
+ *
+ * @param string $name
+ *   The name of the new term.
+ * @param int $parent
+ *   The (optional) TID of the parent term.
+ *
+ * @return int
+ *   TID of the newly created term.
+ *
+ * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+ *   Thrown if the entity type doesn't exist.
+ * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+ *   Thrown if the storage handler couldn't be loaded.
+ * @throws \Drupal\Core\Entity\EntityStorageException
+ *   In case of failures an exception is thrown.
+ */
+function _bef_test_add_term($name, $parent = 0) {
+  $term = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->create([
+    'vid' => 'bef_test_location',
+    'name' => $name,
+    'parent' => [$parent],
+  ]);
+  $term->save();
+  return $term->id();
+}

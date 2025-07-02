@@ -1,0 +1,28 @@
+/* ---------- Oswald, Droid Serif ---------- */
+
+h1,
+h1 a {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+h2,
+h2 a {
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+}
+h3,
+h3 a {
+  font-family: 'Droid Serif', serif;
+  font-weight: 400;
+  font-style: italic;
+}
+body,
+p,
+h4,
+h5,
+h6,
+a,
+li {
+  font-family: 'Droid Serif', serif;
+}

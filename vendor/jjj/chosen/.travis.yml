@@ -1,0 +1,20 @@
+sudo: false
+
+language: node_js
+
+node_js:
+  - 6
+
+addons:
+  apt:
+    sources:
+      - git-core
+    packages:
+      - git
+
+before_install: npm install -g grunt-cli
+before_script: grunt build package-npm
+
+env:
+  global:
+    secure: "SOYNh0YO4eLAM38FQxrg7iqytXgdjJHRkmj/1lFzGrGeuuXP6Owe/2TaMyTJXWb9nHAAtRRwQyhAUE07eKhxI6b3YNyozeRulMK4B0K8P3P1B2MslpROyvQYtZupno3dWc0tyvsQ3ucnZE25mtetH6KYcwiI+vHv6hT8HnzBnp0="

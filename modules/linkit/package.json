@@ -1,0 +1,20 @@
+{
+  "name": "drupal-linkit",
+  "version": "5.0.0",
+  "description": "Provides an easy interface for internal and external linking with wysiwyg editors.",
+  "author": "",
+  "license": "GPL-2.0-or-later",
+  "scripts": {
+    "watch": "yarn manifest && webpack --mode development --watch",
+    "build": "yarn manifest && webpack",
+    "manifest": "node ./js/scripts/manifest.js"
+  },
+  "devDependencies": {
+    "@ckeditor/ckeditor5-dev-utils": "^30.0.0",
+    "ckeditor5": "^36.0.1",
+    "raw-loader": "^4.0.2",
+    "terser-webpack-plugin": "^5.3.3",
+    "webpack": "^5.51.1",
+    "webpack-cli": "^5.0.0"
+  }
+}

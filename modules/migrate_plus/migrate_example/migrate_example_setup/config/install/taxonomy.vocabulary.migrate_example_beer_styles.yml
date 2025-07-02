@@ -1,0 +1,11 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - migrate_example_setup
+name: 'Migrate Example Beer Styles'
+vid: migrate_example_beer_styles
+description: 'Use tags to group beers on similar topics into categories.'
+hierarchy: 0
+weight: 0

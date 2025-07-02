@@ -1,0 +1,31 @@
+id: d7_flag
+label: Flag configuration
+migration_tags:
+  - Drupal 7
+migration_group: flag
+dependencies:
+  enforced:
+    module:
+      - flag
+source:
+  plugin: d7_flag
+process:
+  id: name
+  label: title
+  bundles: bundles
+  entity_type: entity_type
+  global: global
+  weight: 'options/weight'
+  flag_short: 'options/flag_short'
+  flag_long: 'options/flag_long'
+  flag_message: 'options/flag_message'
+  unflag_short: 'options/unflag_short'
+  unflag_long: 'options/unflag_long'
+  unflag_message: 'options/unflag_message'
+  unflag_denied_text: 'options/unflag_denied_text'
+  flag_type: flag_type
+  link_type: ajax_link
+  flagTypeConfig: flagTypeConfig
+  linkTypeConfig: linkTypeConfig
+destination:
+  plugin: entity:flag

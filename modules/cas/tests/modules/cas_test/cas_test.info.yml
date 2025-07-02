@@ -1,0 +1,11 @@
+name: 'CAS test'
+type: module
+description: 'Used by the automated tests for the CAS module.'
+package: Testing
+dependencies:
+  - cas:cas
+
+# Information added by Drupal.org packaging script on 2024-05-30
+version: '2.3.2'
+project: 'cas'
+datestamp: 1717055660

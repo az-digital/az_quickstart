@@ -1,0 +1,24 @@
+{
+  "name": "ckeditor_bs_grid",
+  "description": "Add Bootstrap Grid support to CKEditor.",
+  "author": "Bryan Sharpe",
+  "version": "2.0.0",
+  "license": "GPL-2.0-or-later",
+  "scripts": {
+    "css:compile": "node-sass scss/dialog.scss --output-style expanded -o css",
+    "css:build": "npm run css:compile",
+    "css:watch": "nodemon -e scss -x \"npm run css:build\" --ignore dist",
+    "watch": "webpack --mode development --watch",
+    "build": "webpack"
+  },
+  "dependencies": {
+    "@ckeditor/ckeditor5-dev-utils": "^30.0.0",
+    "ckeditor5": "~35.1.0",
+    "node-sass": "^8.0.0",
+    "nodemon": "^2.0.20",
+    "raw-loader": "^4.0.2",
+    "terser-webpack-plugin": "^5.3.3",
+    "webpack": "^5.51.1",
+    "webpack-cli": "^4.4.0"
+  }
+}

@@ -1,0 +1,7 @@
+ib_dam.settings_form:
+  path: '/admin/config/services/ib_dam'
+  defaults:
+    _form: '\Drupal\ib_dam\Form\IbSettingsForm'
+    _title: 'IntelligenceBank Settings'
+  requirements:
+    _permission: 'administer intelligencebank configuration'

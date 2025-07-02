@@ -1,0 +1,11 @@
+drupal.exclude_node_title.admin:
+  version: VERSION
+  js:
+    js/exclude_node_title.js: {}
+  css:
+    theme:
+      css/exclude_node_title.css: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings

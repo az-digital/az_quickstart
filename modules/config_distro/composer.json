@@ -1,0 +1,35 @@
+{
+    "name": "drupal/config_distro",
+    "description": "Framework for managing configuration updates from distributions.",
+    "type": "drupal-module",
+    "homepage": "https://www.drupal.org/project/config_distro",
+    "license": "GPL-2.0+",
+    "authors": [
+        {
+            "name": "Nedjo Rogers (nedjo)",
+            "email": "nedjo@4481.no-reply.drupal.org",
+            "homepage": "https://www.drupal.org/u/nedjo",
+            "role": "Maintainer"
+        },
+        {
+            "name": "Fabian Bircher",
+            "email": "opensource@fabianbircher.com",
+            "homepage": "https://www.drupal.org/u/bircher",
+            "role": "Maintainer"
+        }
+    ],
+    "support": {
+        "issues": "https://drupal.org/project/issues/config_distro",
+        "irc": "irc://irc.freenode.org/drupal-contribute",
+        "source": "https://cgit.drupalcode.org/config_distro"
+    },
+    "require": {
+        "drupal/config_filter": "*"
+    },
+    "require-dev": {
+        "drush/drush": ">=11"
+    },
+    "suggest": {
+        "drush/drush": ">=11"
+    }
+}

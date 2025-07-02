@@ -1,0 +1,264 @@
+<?php
+
+/**
+ * @file
+ * Contains hooks and private functions of smart_title.module.
+ */
+
+use Drupal\Component\Utility\Html;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityFormInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\smart_title\EntityViewDisplayAlterer;
+use Drupal\smart_title\SmartTitleBuilder;
+
+/**
+ * Implements hook_help().
+ */
+function smart_title_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the smart_title module.
+    case 'help.page.smart_title':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Smart Title makes content entity labels visible and configurable on Field UI forms. For more information, see the <a href=":smart-title-docs">online documentation for the Smart Title module</a>.', [
+        ':smart-title-docs' => 'https://www.drupal.org/docs/8/modules/smart-title',
+      ]) . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function smart_title_theme() {
+  return [
+    'smart_title' => [
+      'render element' => 'element',
+    ],
+  ];
+}
+
+/**
+ * Implements template_preprocess_hook() for smart_title.
+ *
+ * Prepares variables for smart title template.
+ *
+ * Default template: smart-title.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - element: An associative array containing the properties of the whole
+ *     element.
+ *     Properties used: #tag, #attributes, #children.
+ */
+function template_preprocess_smart_title(array &$variables) {
+  $element = $variables['element'];
+  $element += ['#attributes' => []];
+  $variables['children'] = $element['#children'];
+  $variables['attributes'] = $element['#attributes'];
+  $variables['tag'] = Html::escape($element['#tag']);
+}
+
+/**
+ * Implements hook_entity_extra_field_info().
+ */
+function smart_title_entity_extra_field_info() {
+  $extra = [];
+
+  $config = \Drupal::service('config.factory')->get('smart_title.settings');
+  $smartTitleConfig = $config->get('smart_title') ?: [];
+
+  foreach ($smartTitleConfig as $entityTypeAndBundle) {
+    [$entityTypeId, $bundle] = explode(':', $entityTypeAndBundle);
+    $extra[$entityTypeId][$bundle]['display']['smart_title'] = [
+      'label' => t('Smart Title'),
+      'weight' => -5,
+      'visible' => FALSE,
+    ];
+  }
+
+  return $extra;
+}
+
+/**
+ * Implements hook_entity_view().
+ */
+function smart_title_entity_view(&$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+  if (
+    !$entity->isNew() &&
+    $display->getThirdPartySetting('smart_title', 'enabled') &&
+    $display->getComponent('smart_title')
+  ) {
+    \Drupal::classResolver()->getInstanceFromDefinition(SmartTitleBuilder::class)
+      ->buildView($build, $entity, $display);
+  }
+}
+
+/**
+ * Implements hook_preprocess().
+ */
+function smart_title_preprocess(&$variables, $hook) {
+  $bundle_info = \Drupal::service('entity_type.bundle.info')->getBundleInfo($hook);
+
+  if (!empty($bundle_info)) {
+    // Restoring configurable base fields which's original output is hidden for
+    // example by template_preprocess_node().
+    foreach (_smart_title_view_configurable_base_fields($hook) as $base_field_name) {
+      if (!empty($variables['content']["smart__temp_$base_field_name"])) {
+        $variables['content'][$base_field_name] = $variables['content']["smart__temp_$base_field_name"];
+        unset($variables['content']["smart__temp_$base_field_name"]);
+      }
+    }
+
+    // Determine whether the `page` property should be set to TRUE to prevent
+    // rendering the original label.
+    $evdIdArr = ['type' => $hook];
+    if (!empty($variables['elements']['#' . $hook])) {
+      $evdIdArr['viewMode'] = $variables['elements']['#' . $hook]->bundle();
+    };
+    $evdStorage = \Drupal::service('entity_type.manager')
+      ->getStorage('entity_view_display');
+
+    $evd = isset($variables['view_mode']) && $evdStorage->load(implode('.', $evdIdArr + [$variables['view_mode']])) ?
+      $evdStorage->load(implode('.', $evdIdArr + [$variables['view_mode']])) :
+      $evdStorage->load(implode('.', $evdIdArr + ['default']));
+
+    if (
+      $evd &&
+      $evd->getThirdPartySetting('smart_title', 'enabled') &&
+      isset($variables['page'])
+    ) {
+      $variables['page'] = TRUE;
+    }
+  }
+}
+
+/**
+ * Implements hook_entity_base_field_info_alter().
+ *
+ * Alter created and uid base fields: making them configurable for view display
+ * context.
+ */
+function smart_title_entity_base_field_info_alter(&$fields, EntityTypeInterface $entity_type) {
+  foreach (_smart_title_view_configurable_base_fields($entity_type->id()) as $field_name) {
+    if (!empty($fields[$field_name])) {
+      $view_display_options = $fields[$field_name]->getDisplayOptions('view');
+      $view_display_options['type'] = 'hidden';
+      $fields[$field_name]->setDisplayOptions('view', $view_display_options);
+      $fields[$field_name]->setDisplayConfigurable('view', TRUE);
+    }
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_view_alter() for node.
+ */
+function smart_title_node_view_alter(&$build, EntityInterface $entity, EntityViewDisplayInterface $display) {
+  foreach (_smart_title_view_configurable_base_fields('node') as $base_field_name) {
+    if (!empty($build[$base_field_name])) {
+      // Create a shadow copy of these base fields. template_preprocess_node()
+      // removes the original output of these field and we won't be able to get
+      // them on render.
+      $build["smart__temp_$base_field_name"] = $build[$base_field_name];
+    }
+  }
+}
+
+/**
+ * Returns the available HTML tags for Smart Title formatter.
+ *
+ * @return array
+ *   Wrapper options for smart title formatter.
+ */
+function _smart_title_tag_options() {
+  // @todo Add alter or convert to config and validate.
+  return [
+    'h1' => 'H1',
+    'h2' => 'H2',
+    'h3' => 'H3',
+    'h4' => 'H4',
+    'h5' => 'H5',
+    'h6' => 'H6',
+    'div' => 'div',
+    'span' => 'span',
+  ];
+}
+
+/**
+ * Get display configurable node fields.
+ *
+ * @return array
+ *   Array of display configurable base field's name.
+ *
+ * @todo Convert to config.
+ */
+function _smart_title_view_configurable_base_fields($entity_type_id) {
+  $configurable_base_fields = [];
+  \Drupal::moduleHandler()->alter('smart_title_view_configurable_base_fields', $configurable_base_fields, $entity_type_id);
+  return $configurable_base_fields;
+}
+
+/**
+ * Helper callback for Smart Title defaults.
+ *
+ * @param string $entity_type_id
+ *   The entity_type_id of the smart title's host entity.
+ * @param true|null $values_only
+ *   Return only the values.
+ * @param string|null $key
+ *   The key of a specific option which default value should be returned.
+ *   If omitted, every default settings will be returned.
+ *
+ * @return string[][]|string[]|string
+ *   An array of smart title default setting values or the value of the
+ *   specified option.
+ */
+function _smart_title_defaults($entity_type_id = 'smart', $values_only = NULL, $key = NULL) {
+  $defaults = [
+    'smart_title__tag' => [
+      'label' => t('HTML tag'),
+      'description' => '',
+      'default_value' => 'h2',
+    ],
+    'smart_title__classes' => [
+      'label' => t('CSS classes'),
+      'description' => '',
+      'default_value' => [Html::getClass(sprintf('%1$s__title', $entity_type_id))],
+    ],
+    'smart_title__link' => [
+      'label' => t('Linked to entity'),
+      'description' => '',
+      'default_value' => TRUE,
+    ],
+  ];
+
+  if ($values_only) {
+    $filter = function ($defaults) {
+      return $defaults['default_value'];
+    };
+
+    $filtered = array_map($filter, $defaults);
+    return $key ? $filtered[$key] : $filtered;
+  }
+
+  return $key ? $defaults[$key] : $defaults;
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function smart_title_form_alter(&$form, FormStateInterface $form_state) {
+  if (
+    ($form_state->getFormObject() instanceof EntityFormInterface) &&
+    ($form_state->getFormObject()->getEntity() instanceof EntityViewDisplayInterface)
+  ) {
+    \Drupal::classResolver()->getInstanceFromDefinition(EntityViewDisplayAlterer::class)
+      ->addSmartTitle($form, $form_state);
+  }
+}

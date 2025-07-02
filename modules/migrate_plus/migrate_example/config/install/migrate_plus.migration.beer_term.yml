@@ -1,0 +1,91 @@
+# A "migration" is, in technical terms, a plugin whose configuration describes
+# how to read source data, process it (generally by mapping source fields to
+# destination fields), and write it to Drupal.
+
+# The machine name for a migration, used to uniquely identify it.
+id: beer_term
+
+# A human-friendly description of the migration.
+label: Migrate style categories from the source database to taxonomy terms
+
+# The machine name of the group containing this migration (which contains shared
+# configuration to be merged with our own configuration here).
+migration_group: beer
+
+# The category or tag for the migration.
+migration_tags:
+  - example
+
+# Every migration must have a source plugin, which controls the delivery of our
+# source data. In this case, our source plugin has the name "beer_term", which
+# Drupal resolves to the PHP class defined in
+# src/Plugin/migrate/source/BeerTerm.php.
+source:
+  plugin: beer_term
+
+# Every migration must also have a destination plugin, which handles writing
+# the migrated data in the appropriate form for that particular kind of data.
+# Most Drupal content is an "entity" of one type or another, and we need to
+# specify what entity type we are populating (in this case, taxonomy terms).
+# Unlike the source plugin (which is specific to our particular scenario), this
+# destination plugin is implemented in Drupal itself.
+destination:
+  plugin: entity:taxonomy_term
+
+# Here's the meat of the migration - the processing pipeline. This describes how
+# each destination field is to be populated based on the source data. For each
+# destination field, one or more process plugins may be invoked.
+process:
+  # The simplest process plugin is named 'get' - it is the default plugin, so
+  # does not need to be explicitly named. It simply copies the source value
+  # (the 'style' field from the source database in this case) to the destination
+  # field (the taxonomy term 'name' field). You can see we simply copy the
+  # source 'details' field to destination 'description' field in the same way.
+  name: style
+  description: details
+
+  # Here is a new plugin - default_value. In its simplest usage here, it is used
+  # to hard-code a destination value, the vid (vocabulary ID) our taxonomy terms
+  # should be assigned to. It's important to note that while above the right
+  # side of the mappings was a source field name, here the right side of the
+  # 'default_value:' line is an actual value.
+  vid:
+    plugin: default_value
+    default_value: migrate_example_beer_styles
+
+  # Here's another new plugin - migration. When importing data from another
+  # system, typically the unique identifiers for items on the destination side
+  # are not the same as the identifiers were on the source side. For example, in
+  # our style data the term names are the unique identifiers for each term,
+  # while in Drupal each term is assigned a unique integer term ID (tid). When
+  # any such items are referenced in Drupal, the reference needs to be
+  # translated from the old ID ('ale') to the new ID (1). The migration
+  # framework keeps track of the relationships between source and destination
+  # IDs in map tables, and the migration plugin is the means of performing a
+  # lookup in those map tables during processing.
+  parent:
+    plugin: migration_lookup
+    # Here we reference the migration whose map table we're performing a lookup
+    # against. You'll note that in this case we're actually referencing this
+    # migration itself, since category parents are imported by the same
+    # migration. This works best when we're sure the parents are imported
+    # before the children, and in this case our source plugin is guaranteeing
+    # that.
+    migration: beer_term
+    # 'style_parent' is the parent reference field from the source data. The
+    # result of this plugin is that the destination 'parent' field is populated
+    # with the Drupal term ID of the referenced style (or NULL if style_parent
+    # was empty).
+    source: style_parent
+
+# We'll learn more about dependencies in beer_node - here, we leave them empty.
+migration_dependencies: {}
+
+# By default, configuration entities (like this migration) are not automatically
+# removed when the migration which installed them is uninstalled. To have your
+# migrations uninstalled with your migration module, add an enforced dependency
+# on your module.
+dependencies:
+  enforced:
+    module:
+      - migrate_example

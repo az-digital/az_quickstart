@@ -1,0 +1,14 @@
+body.ace-editor-added .ace-editor {
+  min-height: calc(100vh - 200px);
+  border: 2px solid #ccc;
+}
+
+.ace-editor-text-area {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  tab-index: -1;
+}

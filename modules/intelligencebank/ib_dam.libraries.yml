@@ -1,0 +1,75 @@
+libraries.pnotify:
+  remote: github.com/sciactive/pnotify
+  version: '3.2.1'
+  license:
+    name: 'Apache License 2.0'
+    url: https://github.com/sciactive/pnotify/blob/v3.2/LICENSE
+    gpl-compatible: true
+  css:
+    component:
+      https://cdnjs.cloudflare.com/ajax/libs/pnotify/3.2.1/pnotify.css: {type: external, minified: true}
+    theme:
+      https://cdnjs.cloudflare.com/ajax/libs/pnotify/3.2.1/pnotify.brighttheme.css: {type: external, minified: true}
+  js:
+    https://cdnjs.cloudflare.com/ajax/libs/pnotify/3.2.1/pnotify.js: { type: external, minified: true, weight: -1}
+
+common:
+  version: VERSION
+  js:
+    js/ib_dam.common.js: {}
+  css:
+    theme:
+      css/ib_dam.iframe_browser.css: {}
+#CSS ib_dam.iframe_browser.css is added by HS
+browser:
+  version: VERSION
+  css:
+    theme:
+      css/ib_dam.iframe_browser.css: {}
+  js:
+    js/ib_dam.iframe_browser.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - ib_dam/libraries.pnotify
+    - ib_dam/common
+    - core/once
+
+dialog:
+  version: VERSION
+  js:
+    js/ib_dam.dialog.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupal.ajax
+    - core/drupalSettings
+
+ckeditor:
+  version: VERSION
+  js:
+    js/ib_dam.ckeditor.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupal.ajax
+    - core/drupalSettings
+
+resizer.iframe:
+  version: VERSION
+  css:
+    component:
+      css/ib_dam.iframe_resizer.css: {}
+  js:
+    js/ib_dam.iframe_resizer.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
+
+link_type_checker:
+  version: VERSION
+  js:
+    js/ib_dam.link_type_checker.js: {}
+  dependencies:
+    - core/drupal
+    - core/once

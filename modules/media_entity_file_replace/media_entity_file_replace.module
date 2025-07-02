@@ -1,0 +1,386 @@
+<?php
+
+/**
+ * @file
+ * Media Entity File Replace module file.
+ */
+
+declare(strict_types=1);
+
+use Drupal\Component\Utility\DeprecationHelper;
+use Drupal\Core\File\FileExists;
+use Drupal\Core\File\FileSystemInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\media\Plugin\media\Source\File;
+
+/**
+ * Implements hook_help().
+ */
+function media_entity_file_replace_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.media_entity_file_replace':
+      $output = '<p>' . t('Visit the form display configuration page for any file-based media entities (like Document or Image) and enable the "Replace file" form component. Edit any existing media entity of that type and use the replace file form widget to provide a replacement file that overwrites the original file contents.') . '</p>';
+      $output .= '<p>' . t('For additional usage instructions and more information, visit the <a href=":module_link" target="_blank">module overview page</a>.', [':module_link' => 'https://drupal.org/project/media_entity_file_replace']) . '</p>';
+      return $output;
+  }
+
+  return NULL;
+}
+
+/**
+ * Implements hook_entity_extra_field_info().
+ */
+function media_entity_file_replace_entity_extra_field_info() {
+  $extra = [];
+
+  // Create a pseudo-field on form displays to allow site builders to control
+  // if they want to enable our custom file replacement widget on media edit
+  // forms.
+  if (\Drupal::service('module_handler')->moduleExists('media')) {
+    $mediaTypes = \Drupal::entityTypeManager()
+      ->getStorage('media_type')
+      ->loadMultiple();
+
+    foreach ($mediaTypes as $mediaType) {
+      /** @var \Drupal\media\MediaTypeInterface $mediaType */
+      // We only care about media types that use a file field as a source.
+      if ($mediaType->getSource() instanceof File) {
+        $extra['media'][$mediaType->id()]['form']['replace_file'] = [
+          'label' => t('Replace file'),
+          'description' => t('Widget to replace the file.'),
+          'visible' => FALSE,
+        ];
+      }
+    }
+  }
+
+  return $extra;
+}
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter().
+ *
+ * Modify media edit form to add a custom replacement file form field.
+ * The custom field we add here will not be automatically hidden unless the
+ * entity form display has enabled the pseudo-widget we defined in
+ * media_entity_file_replace_entity_extra_field_info().
+ */
+function media_entity_file_replace_form_media_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  /** @var \Drupal\media\MediaInterface $media */
+  $media = $form_state->getFormObject()->getEntity();
+  // Don't modify the form at all for new media that is being added, since there
+  // is nothing for us to do.
+  if ($media->isNew()) {
+    return;
+  }
+
+  // Only run for media entity types that use a file based source field.
+  /** @var \Drupal\media\Entity\MediaType $mediaType */
+  $mediaType = \Drupal::entityTypeManager()->getStorage('media_type')->load($media->bundle());
+  if (!$mediaType->getSource() instanceof File) {
+    return;
+  }
+
+  $sourceFieldDefinition = $mediaType->getSource()->getSourceFieldDefinition($mediaType);
+  $sourceFieldName = $sourceFieldDefinition->getName();
+
+  // Make sure we have a file field item and that the file entity exists.
+  // It's possible the file field item still exists (the reference to it)
+  // but that the file entity was deleted.
+  /** @var \Drupal\file\Plugin\Field\FieldType\FileItem $fileFieldItem */
+  $fileFieldItem = $media->get($sourceFieldName)->first();
+  if (!$fileFieldItem || !$fileFieldItem->entity) {
+    return;
+  }
+
+  // Content translation support for Media field.
+  if (!$media->isDefaultTranslation()) {
+    if ($media->isDefaultTranslationAffectedOnly() && !$sourceFieldDefinition->isTranslatable()) {
+      // Stop if the field is not translatable, and it is not visible on the
+      // translation form.
+      return;
+    }
+
+    if ($sourceFieldDefinition->isTranslatable()) {
+      // If the field is translatable, and it's visible on the translation form.
+      if ($media->isNewTranslation()) {
+        $contentTranslationSettings = $sourceFieldDefinition->getThirdPartySettings('content_translation');
+        if (!empty($contentTranslationSettings['translation_sync']['file'])) {
+          // If the file column in the field is marked as translatable,
+          // we don't render the replacement widget because we risk to replace
+          // the file on the default language version. For example: image filed.
+          return;
+        }
+      }
+
+      // Get both untranslated and translated files.
+      $untranslatedMedia = $media->getUntranslated();
+      $translatedFileId = $media->{$sourceFieldName}->target_id;
+      $untranslatedFileId = $untranslatedMedia->{$sourceFieldName}->target_id;
+
+      if ($untranslatedFileId === $translatedFileId) {
+        // If the referenced file in the translation is the same as the default
+        // language, don't render the replacement, because we risk to override
+        // the default language version as well since it's the same file.
+        return;
+      }
+    }
+  }
+
+  $form['replace_file'] = [
+    '#type' => 'fieldset',
+    '#title' => t('Replace file'),
+    '#multilingual' => $sourceFieldDefinition->isTranslatable(),
+  ];
+
+  $uploadValidators = $media->get($sourceFieldName)->first()->getUploadValidators();
+  $form['replace_file']['replacement_file'] = [
+    '#title' => t('File'),
+    '#type' => 'file',
+    // Note that the 'file' element does not support automatic handling of
+    // upload_validators like 'file_managed' does, but we pass it here anyway
+    // so that we can manually use it in the submit handler.
+    '#upload_validators' => $uploadValidators,
+    // Pass source field name so we don't need to execute the logic again
+    // to figure it out in the submit handler.
+    '#source_field_name' => $sourceFieldName,
+  ];
+
+  // Build help text for the replacement file upload field that indicates
+  // what the upload restrictions are (which we get from the source field).
+  // This help text comes by default with the "managed_file" form element,
+  // but we are using the standard "file" form element.
+  $helpText = [
+    '#theme' => 'file_upload_help',
+    '#upload_validators' => $uploadValidators,
+    '#cardinality' => 1,
+  ];
+  /** @var \Drupal\Core\Render\RendererInterface $renderer */
+  $renderer = \Drupal::service('renderer');
+  // @todo Remove the deprecated "renderPlain" method call once we drop the
+  // Drupal 10 support:
+  $renderedDescription = DeprecationHelper::backwardsCompatibleCall(
+  currentVersion: \Drupal::VERSION,
+  deprecatedVersion: '10.3',
+  currentCallable: fn() => $renderer->renderInIsolation($helpText),
+  deprecatedCallable: fn() => $renderer->renderPlain($helpText),
+  );
+  $form['replace_file']['replacement_file']['#description'] = $renderedDescription;
+
+  // Inform the user that when replacing the original file, the new one
+  // must have the same extension.
+  $originalExtension = '.' . pathinfo($fileFieldItem->entity->getFilename(), PATHINFO_EXTENSION);
+  $form['replace_file']['keep_original_filename'] = [
+    '#title' => t('Overwrite original file (@originalExtension)', ['@originalExtension' => $originalExtension]),
+    '#description' => t('When checked, the original filename is kept and its contents are replaced with the new file, which <strong>must have the same file extension: @originalExtension</strong>. If unchecked, the filename of the replacement file will be used with any allowed file type and the original file may be deleted if no previous revision references it (depending on your specific site configuration).', ['@originalExtension' => $originalExtension]),
+    '#type' => 'checkbox',
+    '#default_value' => TRUE,
+  ];
+
+  $form['#validate'][] = '_media_entity_file_replace_validate';
+
+  // We need a submit callback to handle our processing. We want it to run
+  // just before the normal MediaForm::save() callback is called, so that
+  // the various entity lifecycle hooks that are called there will have
+  // access to the changes we make.
+  $saveCallbackPosition = array_search('::save', $form['actions']['submit']['#submit']);
+  if ($saveCallbackPosition !== FALSE) {
+    array_splice($form['actions']['submit']['#submit'], $saveCallbackPosition, 0, '_media_entity_file_replace_submit');
+  }
+  else {
+    // If for some reason we cannot find the normal save callback in the list,
+    // then just insert our callback at the end.
+    $form['actions']['submit']['#submit'][] = '_media_entity_file_replace_submit';
+  }
+
+  // If the normal file/image widget is on the form, then we want to hide
+  // the action buttons that users would normally use to manage the file.
+  // This widget doesn't allow for true file replacement, so we don't want
+  // editors to use it. We do still want the portion of the widget that
+  // displays the name of the file to render, so we don't remove the entire
+  // widget outright.
+  // This must be done in a process callback, since the action buttons on
+  // the widget are themselves added in a process callback.
+  if (isset($form[$sourceFieldName]['widget'][0]) && isset($form[$sourceFieldName]['widget'][0]['#type']) && $form[$sourceFieldName]['widget'][0]['#type'] === 'managed_file') {
+    $form[$sourceFieldName]['widget'][0]['#process'][] = '_media_entity_file_replace_disable_remove_button';
+  }
+}
+
+/**
+ * Custom process callback on file widget to disable remove/upload buttons.
+ *
+ * @param array $element
+ *   The form element.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The form state.
+ * @param array $complete_form
+ *   The complete form array.
+ *
+ * @return array
+ *   The element from the callback originates.
+ */
+function _media_entity_file_replace_disable_remove_button(array &$element, FormStateInterface $form_state, array $complete_form): array {
+  // We only want to do this on media edit forms that are configured to use
+  // our "replace_file" widget, so we check to make sure it's there and
+  // accessible before continuing.
+  if (!isset($complete_form['replace_file'])) {
+    return $element;
+  }
+
+  // It can happen that the "#access" is not set, which means that the field
+  // is visible or when it's explicitly set we remove access to the original
+  // file upload buttons.
+  if (!isset($complete_form['replace_file']['#access']) || $complete_form['replace_file']['#access'] === TRUE) {
+    $element['remove_button']['#access'] = FALSE;
+    $element['upload_button']['#access'] = FALSE;
+  }
+
+  return $element;
+}
+
+/**
+ * Custom validate handler for media entity edit form submissions.
+ *
+ * @param array $form
+ *   The form array.
+ * @param \Drupal\Core\Form\FormStateInterface $formState
+ *   The form state.
+ */
+function _media_entity_file_replace_validate(array $form, FormStateInterface $formState): void {
+  if (!isset($form['replace_file'])) {
+    // If the "replace_file" widget is not enabled in the form, we bail out.
+    return;
+  }
+
+  // If no access is allowed to the widget we skip validation.
+  if (isset($form['replace_file']['#access']) && !$form['replace_file']['#access']) {
+    return;
+  }
+
+  /** @var \Drupal\media\Entity\Media $media */
+  $media = $formState->getFormObject()->getEntity();
+  $sourceFieldName = $form['replace_file']['replacement_file']['#source_field_name'];
+
+  /** @var \Drupal\Core\File\FileSystem $fileSystem */
+  $fileSystem = \Drupal::service('file_system');
+
+  // Determine where to place the replacement file that a user selected.
+  // When overwriting the existing file, then the replacement file should be
+  // stored in temporary storage, so we can then copy it over the existing one.
+  // When not overwriting, we want to move it to the correct final destination
+  // folder, which we determine by examining the settings of the source field
+  // definition on the media entity.
+  if ($formState->getValue('keep_original_filename')) {
+    $uploadDestination = FALSE;
+  }
+  else {
+    // For whatever reason, the interface for getting the upload location of the
+    // file field is on the field item object and not on the source field
+    // definition object.
+    $uploadDestination = $media->get($sourceFieldName)->first()->getUploadLocation();
+    $fileSystem->prepareDirectory($uploadDestination, FileSystemInterface::CREATE_DIRECTORY);
+  }
+
+  $uploadValidators = $form['replace_file']['replacement_file']['#upload_validators'];
+
+  // If the user is overwriting the original file, we want to make sure the same
+  // file extension is used on the replacement. This is important because web
+  // servers usually set the content type header based on the filename of the
+  // file, and browsers use that content type when interpretting the data.
+  if ($formState->getValue('keep_original_filename')) {
+    $originalFileEntity = $media->get($sourceFieldName)->first()->entity;
+    $originalExtension = pathinfo($originalFileEntity->getFileUri(), PATHINFO_EXTENSION);
+    if (version_compare(\Drupal::VERSION, '11', '>=')) {
+      $uploadValidators['FileExtension']['extensions'] = $originalExtension;
+    }
+    // @todo Remove this, once we drop the Drupal 10 support:
+    else {
+      $uploadValidators['file_validate_extensions'] = [$originalExtension];
+    }
+  }
+
+  $replacementFile = file_save_upload('replacement_file', $uploadValidators, $uploadDestination, 0);
+
+  // Return value is NULL if no replacement file was submitted.
+  if ($replacementFile === NULL) {
+    return;
+  }
+
+  if ($replacementFile === FALSE) {
+    $formState->setErrorByName('replacement_file', t('Unable to upload replacement file.'));
+    return;
+  }
+
+  // Store the uploaded file reference so submit handler can use it.
+  $formState->set('replacement_file', $replacementFile);
+}
+
+/**
+ * Custom submit handler for media entity edit form submissions.
+ *
+ * @param array $form
+ *   The form array.
+ * @param \Drupal\Core\Form\FormStateInterface $formState
+ *   The form state.
+ */
+function _media_entity_file_replace_submit(array $form, FormStateInterface $formState): void {
+  $replacementFile = $formState->get('replacement_file');
+  if (!$replacementFile) {
+    return;
+  }
+
+  /** @var \Drupal\media\Entity\Media $media */
+  $media = $formState->getFormObject()->getEntity();
+
+  if ($formState->getValue('keep_original_filename')) {
+    $fid = $media->getSource()->getSourceFieldValue($media);
+    $originalFile = \Drupal::entityTypeManager()->getStorage('file')->load($fid);
+
+    // Copy the uploaded file (which is in temporary storage) to the existing
+    // file location, overwriting it.
+    $fileSystem = \Drupal::service('file_system');
+
+    // Make sure the destination dir exists. It may not in rare situations like
+    // when copying a database from one env to another without also copying the
+    // files.
+    $destination = $fileSystem->dirname($originalFile->getFileUri());
+    $fileSystem->prepareDirectory($destination, FileSystemInterface::CREATE_DIRECTORY);
+    if (version_compare(\Drupal::VERSION, '11', '>=')) {
+      $file_exists_param = FileExists::Replace;
+    }
+    // @todo Remove this, once we drop the Drupal 10 support:
+    else {
+      $file_exists_param = FileSystemInterface::EXISTS_REPLACE;
+    }
+    if (!$fileSystem->copy($replacementFile->getFileUri(), $originalFile->getFileUri(), $file_exists_param)) {
+      \Drupal::messenger()->addError(t('Unable to overwrite original file with the replacement.'));
+      return;
+    }
+
+    // The file entity must be saved to force it to recalculate metadata about
+    // the file (like size).
+    $originalFile->save();
+
+    // Delete image style derivatives for this file. If it's not an image, this
+    // is harmless.
+    image_path_flush($originalFile->getFileUri());
+
+    // The replacement file is marked as temporary and will typically be
+    // automatically deleted on cron after a certain period of time, but
+    // lets just do it now to avoid any potential confusion of the file
+    // remaining on the filesystem and in the managed files table.
+    $replacementFile->delete();
+  }
+  else {
+    // The replacement should already be uploaded to its final destination.
+    // We just need to have the media entity reference it instead of the old
+    // one. The old file that was referenced will automatically have its usage
+    // counter decremented, which will likely mark it as temporary (and thus
+    // automatic deletion on cron) if nothing else references it.
+    // Note that we don't need to save the media entity. The next form submit
+    // callback is the MediaForm::save() one which will save it.
+    $sourceFieldName = $form['replace_file']['replacement_file']['#source_field_name'];
+    $media->set($sourceFieldName, $replacementFile);
+  }
+}

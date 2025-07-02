@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies: {  }
+id: dummy
+label: Dummy migration
+migration_tags: {  }
+source:
+  plugin: embedded_data
+  data_rows:
+    -
+      name: Dummy
+  ids:
+    name:
+      type: string
+process:
+  name: name
+destination:
+  plugin: null
+migration_dependencies:
+  required: {  }
+  optional: {  }

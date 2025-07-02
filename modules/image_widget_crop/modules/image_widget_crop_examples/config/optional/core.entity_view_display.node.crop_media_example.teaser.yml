@@ -1,0 +1,29 @@
+uuid: 4a2ed42d-1347-4ff1-890c-a95b38d19abb
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.crop_media_example.body
+    - node.type.crop_media_example
+  module:
+    - text
+    - user
+id: node.crop_media_example.teaser
+targetEntityType: node
+bundle: crop_media_example
+mode: teaser
+content:
+  body:
+    label: hidden
+    type: text_summary_or_trimmed
+    weight: 101
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    region: content
+  links:
+    weight: 100
+    region: content
+hidden:
+  langcode: true

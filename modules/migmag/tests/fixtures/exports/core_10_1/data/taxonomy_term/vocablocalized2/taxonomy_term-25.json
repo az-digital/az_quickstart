@@ -1,0 +1,58 @@
+[
+    {
+        "tid": 25,
+        "uuid": "46d5bd46-8bb0-4610-ae0d-2972d0b0f709",
+        "revision_id": 25,
+        "langcode": "en",
+        "vid": "vocablocalized2",
+        "revision_created": 1623674336,
+        "revision_user": null,
+        "revision_log_message": null,
+        "status": "1",
+        "name": "Emissary",
+        "description": [
+            {
+                "value": "Pilot episode",
+                "format": "filtered_html"
+            }
+        ],
+        "weight": 0,
+        "parent": 0,
+        "changed": 1623674336,
+        "default_langcode": "1",
+        "revision_default": "1",
+        "revision_translation_affected": "1",
+        "content_translation_source": "und",
+        "content_translation_outdated": "0",
+        "content_translation_uid": 1,
+        "content_translation_created": 1623674336
+    },
+    {
+        "tid": 25,
+        "uuid": "46d5bd46-8bb0-4610-ae0d-2972d0b0f709",
+        "revision_id": 25,
+        "langcode": "fr",
+        "vid": "vocablocalized2",
+        "revision_created": 1623674336,
+        "revision_user": null,
+        "revision_log_message": null,
+        "status": "1",
+        "name": "fr - Emissary",
+        "description": [
+            {
+                "value": "fr - Pilot episode",
+                "format": null
+            }
+        ],
+        "weight": 0,
+        "parent": 0,
+        "changed": 1623674342,
+        "default_langcode": "0",
+        "revision_default": "1",
+        "revision_translation_affected": "1",
+        "content_translation_source": "und",
+        "content_translation_outdated": "0",
+        "content_translation_uid": 1,
+        "content_translation_created": 1623674342
+    }
+]

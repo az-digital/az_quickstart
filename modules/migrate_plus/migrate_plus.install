@@ -1,0 +1,38 @@
+<?php
+
+/**
+ * @file
+ * Install, update, and uninstall functions for migrate_plus.
+ */
+
+/**
+ * Converts 8.0.x core migration entities to 8.1.x migrate_plus entities.
+ */
+function migrate_plus_update_8100(): void {
+  // We cannot use the configration entity system directly, because the entity
+  // type migrate.migration.* no longer exists - we must directly manipulate
+  // the config table.
+  $database = \Drupal::database();
+  $migration_config = $database->select('config', 'c')
+    ->fields('c', ['name', 'data'])
+    ->condition('name', 'migrate.migration.%', 'LIKE')
+    ->execute();
+  foreach ($migration_config as $migration) {
+    $data = unserialize($migration->data);
+    if (isset($data['third_party_settings']['migrate_plus']['migration_group'])) {
+      $data['migration_group'] = $data['third_party_settings']['migrate_plus']['migration_group'];
+      unset($data['third_party_settings']['migrate_plus']);
+      if (empty($data['third_party_settings'])) {
+        unset($data['third_party_settings']);
+      }
+      $new_name = str_replace('migrate.migration.', 'migrate_plus.migration.', $migration->name);
+      $database->update('config')
+        ->fields([
+          'name' => $new_name,
+          'data' => serialize($data),
+        ])
+        ->condition('name', $migration->name)
+        ->execute();
+    }
+  }
+}

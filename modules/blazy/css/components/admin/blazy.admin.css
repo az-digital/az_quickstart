@@ -1,0 +1,26 @@
+/**
+ * @file
+ * Basic formatter/ views forms.
+ */
+
+/* stylelint-disable selector-max-id, declaration-no-important */
+/** Declutter form when Vanilla is enabled coz table form states are broken. */
+.form--vanilla-on .form__title--hideable,
+.form--media-switch-rendered .form-item--background,
+.form--media-switch-rendered .form-item--image-style,
+.form--media-switch-rendered .form-item--ratio {
+  display: none !important; /* csslint allow: known-properties, important */
+}
+
+/** Fixed for things beyond Blazy. */
+.form--blazy .form-item--ajax-link,
+.form--blazy .form-item--litebox {
+  display: none !important; /* csslint allow: known-properties, important */
+}
+
+.form--media-switch-on .form-item--media-switch,
+.form--media-switch-lightbox .form-item--litebox,
+.form--media-switch-splidebox .form-item--ajax-link,
+.form--vanilla-off .form-item--media-switch {
+  display: flex !important; /* csslint allow: known-properties, important */
+}

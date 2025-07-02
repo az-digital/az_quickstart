@@ -1,0 +1,12 @@
+name: 'Configuration Snapshot'
+type: module
+description: 'Manages snapshots of configuration as provided by modules and themes.'
+core_version_requirement: ^8 || ^9 || ^10 || ^11
+package: Configuration
+dependencies:
+  - drupal:config
+
+# Information added by Drupal.org packaging script on 2025-01-07
+version: '2.0.0'
+project: 'config_snapshot'
+datestamp: 1736287400

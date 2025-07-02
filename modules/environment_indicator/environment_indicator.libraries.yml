@@ -1,0 +1,13 @@
+drupal.environment_indicator:
+  version: '3.0'
+  js:
+    js/environment_indicator.js: {}
+    js/color.js: {}
+    js/tinycon.min.js: { minified: true }
+  css:
+    component:
+      css/environment_indicator.css: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/once

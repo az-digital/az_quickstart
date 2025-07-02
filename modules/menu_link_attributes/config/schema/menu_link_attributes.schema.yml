@@ -1,0 +1,25 @@
+menu_link_attributes.config:
+  type: config_object
+  mapping:
+    attributes:
+      type: sequence
+      label: 'Attributes'
+      sequence:
+        type: _menu_link_attributes.attribute
+        label: 'An attribute'
+
+_menu_link_attributes.attribute:
+    type: mapping
+    mapping:
+      label:
+        type: string
+      description:
+        type: string
+      type:
+        type: string
+      options:
+        type: sequence
+        sequence:
+          type: string
+      default_value:
+        type: string

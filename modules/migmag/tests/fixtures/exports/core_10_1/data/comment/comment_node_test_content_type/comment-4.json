@@ -1,0 +1,32 @@
+[
+    {
+        "cid": 4,
+        "uuid": "d4b276f0-3fcf-412a-9cb5-087b559c3852",
+        "langcode": "und",
+        "comment_type": "comment_node_test_content_type",
+        "status": "1",
+        "uid": 3,
+        "pid": null,
+        "entity_id": 1,
+        "subject": "Comment without language",
+        "name": null,
+        "mail": null,
+        "homepage": null,
+        "hostname": "drupal7.local",
+        "created": 1426781880,
+        "changed": 1426781880,
+        "thread": "02/",
+        "entity_type": "node",
+        "field_name": "comment_node_test_content_type",
+        "default_langcode": "1",
+        "content_translation_source": "und",
+        "content_translation_outdated": "0",
+        "comment_body": [
+            {
+                "value": "A comment without language (migrated from Drupal 6)",
+                "format": "filtered_html"
+            }
+        ],
+        "field_integer": 10
+    }
+]

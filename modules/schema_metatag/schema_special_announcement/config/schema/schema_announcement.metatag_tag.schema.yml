@@ -1,0 +1,54 @@
+# The 'type' should be "label" for short meta tags and "text" for ones which
+# could get longer, especially ones which use a textarea field instead of a
+# textfield.
+metatag.metatag_tag.schema_special_announcement_type:
+  type: label
+  label: '@type'
+metatag.metatag_tag.schema_special_announcement_date_posted:
+  type: text
+  label: 'datePosted'
+metatag.metatag_tag.schema_special_announcement_name:
+  type: text
+  label: 'name'
+metatag.metatag_tag.schema_special_announcement_text:
+  type: text
+  label: 'text'
+metatag.metatag_tag.schema_special_announcement_disease_prevention_info:
+  type: text
+  label: 'diseasePreventionInfo'
+metatag.metatag_tag.schema_special_announcement_disease_spread_statistics:
+  type: text
+  label: 'diseaseSpreadStatistics'
+metatag.metatag_tag.schema_special_announcement_getting_tested_info:
+  type: text
+  label: 'gettingTestedInfo'
+metatag.metatag_tag.schema_special_announcement_government_benefits_info:
+  type: text
+  label: 'governmentBenefitsInfo'
+metatag.metatag_tag.schema_special_announcement_news_updates_and_guidelines:
+  type: text
+  label: 'newsUpdatesAndGuidelines'
+metatag.metatag_tag.schema_special_announcement_public_transport_closures_info:
+  type: text
+  label: 'publicTransportClosuresInfo'
+metatag.metatag_tag.schema_special_announcement_quarantine_guidelines:
+  type: text
+  label: 'quarantineGuidelines'
+metatag.metatag_tag.schema_special_announcement_school_closures_info:
+  type: text
+  label: 'schoolClosuresInfo'
+metatag.metatag_tag.schema_special_announcement_travel_bans:
+  type: text
+  label: 'travelBans'
+metatag.metatag_tag.schema_special_announcement_category:
+  type: text
+  label: 'category'
+metatag.metatag_tag.schema_special_announcement_expires:
+  type: text
+  label: 'expires'
+metatag.metatag_tag.schema_special_announcement_spatial_coverage:
+  type: text
+  label: 'spacialCoverage'
+metatag.metatag_tag.schema_special_announcement_announcement_location:
+  type: text
+  label: 'announcementLocation'

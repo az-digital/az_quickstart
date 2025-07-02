@@ -1,0 +1,31 @@
+/**
+ * @file
+ * CodeMirror element styles.
+ *
+ * @see /webform/test_element_codemirror/test
+ */
+
+/* Clean up CodeMirror editor */
+form .CodeMirror {
+  height: auto;
+  border: 1px solid #ccc;
+  font-size: 13px;
+}
+
+form .CodeMirror-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+form .CodeMirror .CodeMirror-placeholder {
+  color: #999;
+}
+
+/* Clean up CodeMirror viewer */
+pre.webform-codemirror-runmode {
+  overflow: auto;
+  margin: 0;
+  padding: 0.5em 1em;
+  border: 1px solid #ccc;
+  font-size: 13px;
+}

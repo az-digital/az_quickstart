@@ -1,0 +1,25 @@
+{#
+/**
+ * @file
+ * Two column template for the product add/edit form.
+ *
+ * Available variables:
+ * - form: The form.
+ *
+ * @ingroup themeable
+ */
+#}
+<div class="layout-product-form clearfix">
+  <div class="layout-region layout-region-product-main">
+    {{ form|without('advanced', 'footer', 'actions') }}
+  </div>
+  <div class="layout-region layout-region-product-secondary">
+    {{ form.advanced }}
+  </div>
+  <div class="layout-region layout-region-product-footer">
+    <div class="layout-region-product-footer__content">
+      {{ form.footer }}
+      {{ form.actions }}
+    </div>
+  </div>
+</div>

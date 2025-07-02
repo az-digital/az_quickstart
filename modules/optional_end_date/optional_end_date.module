@@ -1,0 +1,60 @@
+<?php
+
+/**
+ * @file
+ * Make the end date in a Date range field optional.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_field_info_alter().
+ */
+function optional_end_date_field_info_alter(&$info) {
+  if (isset($info['daterange'])) {
+    $info['daterange']['class'] = 'Drupal\optional_end_date\Plugin\Field\FieldType\OptionalEndDateDateRangeItem';
+  }
+}
+
+/**
+ * Implements hook_field_formatter_info_alter().
+ */
+function optional_end_date_field_formatter_info_alter(&$info) {
+  if (isset($info['daterange_default'])) {
+    $info['daterange_default']['class'] = 'Drupal\optional_end_date\Plugin\Field\FieldFormatter\OptionalEndDateDateRangeDefaultFormatter';
+    $info['daterange_plain']['class'] = 'Drupal\optional_end_date\Plugin\Field\FieldFormatter\OptionalEndDateDateRangePlainFormatter';
+    $info['daterange_custom']['class'] = 'Drupal\optional_end_date\Plugin\Field\FieldFormatter\OptionalEndDateDateRangeCustomFormatter';
+  }
+}
+
+/**
+ * Implements hook_field_formatter_info_alter().
+ */
+function optional_end_date_field_widget_info_alter(&$info) {
+  if (isset($info['daterange_default'])) {
+    $info['daterange_default']['class'] = 'Drupal\optional_end_date\Plugin\Field\FieldWidget\OptionalEndDateDateRangeDefaultWidget';
+    $info['daterange_datelist']['class'] = 'Drupal\optional_end_date\Plugin\Field\FieldWidget\OptionalEndDateDateRangeDatelistWidget';
+  }
+}
+
+/**
+ * Implements hook_help().
+ */
+function optional_end_date_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.optional_end_date':
+      $text = file_get_contents(__DIR__ . "/README.txt");
+      if (!\Drupal::moduleHandler()->moduleExists('markdown')) {
+        return '<pre>' . $text . '</pre>';
+      }
+      else {
+        // Use the Markdown filter to render the README.
+        $filter_manager = \Drupal::service('plugin.manager.filter');
+        $settings = \Drupal::configFactory()->get('markdown.settings')->getRawData();
+        $config = ['settings' => $settings];
+        $filter = $filter_manager->createInstance('markdown', $config);
+        return $filter->process($text, 'en');
+      }
+  }
+  return NULL;
+}

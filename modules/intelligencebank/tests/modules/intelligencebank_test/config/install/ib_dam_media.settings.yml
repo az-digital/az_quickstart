@@ -1,0 +1,13 @@
+media_types:
+  image:
+    source_type: image
+    media_type: image
+  audio:
+    source_type: audio
+    media_type: audio
+  video:
+    source_type: video
+    media_type: video
+  file:
+    source_type: file
+    media_type: document

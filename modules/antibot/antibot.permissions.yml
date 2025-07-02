@@ -1,0 +1,8 @@
+administer antibot configuration:
+  title: 'Administer antibot configuration'
+  description: 'Access to the Antibot configurations'
+  restrict access: true
+
+skip antibot:
+  title: 'Skip antibot'
+  description: 'Antibot will be bypassed for users with this permission.'

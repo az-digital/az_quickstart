@@ -1,0 +1,40 @@
+
+migrate_plus_http_test.json_first:
+  path: '/migrate-plus-http-test/json-first'
+  defaults:
+    _controller: '\Drupal\migrate_plus_http_test\Controller\HttpResponses::content'
+    _title: 'JSON First'
+  requirements:
+    _permission: 'access content'
+
+migrate_plus_http_test.json_second:
+  path: '/migrate-plus-http-test/json-second'
+  defaults:
+    _controller: '\Drupal\migrate_plus_http_test\Controller\HttpResponses::second'
+    _title: 'JSON Second'
+  requirements:
+    _permission: 'access content'
+
+migrate_plus_http_test.json_third:
+  path: '/migrate-plus-http-test/json-third'
+  defaults:
+    _controller: '\Drupal\migrate_plus_http_test\Controller\HttpResponses::third'
+    _title: 'JSON Third'
+  requirements:
+    _permission: 'access content'
+
+migrate_plus_http_test.json_fourth:
+  path: '/migrate-plus-http-test/json-fourth'
+  defaults:
+    _controller: '\Drupal\migrate_plus_http_test\Controller\HttpResponses::fourth'
+    _title: 'JSON Fourth'
+  requirements:
+    _permission: 'access content'
+
+migrate_plus_http_test.json_fifth:
+  path: '/migrate-plus-http-test/json-fifth'
+  defaults:
+    _controller: '\Drupal\migrate_plus_http_test\Controller\HttpResponses::fifth'
+    _title: 'JSON Fifth'
+  requirements:
+    _permission: 'access content'

@@ -1,0 +1,10 @@
+name: Chosen Library
+type: module
+description: Add <a href="https://github.com/JJJ/chosen">chosen</a> library definition.
+package: User interface
+core_version_requirement: ^9.2 || ^10 || ^11
+
+# Information added by Drupal.org packaging script on 2024-09-02
+version: '4.0.3'
+project: 'chosen'
+datestamp: 1725307448

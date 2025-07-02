@@ -1,0 +1,35 @@
+{
+    "name": "drupal/calendar_link",
+    "type": "drupal-module",
+    "description": "Provides Twig functions for generating calendar links.",
+    "keywords": ["Drupal"],
+    "license": "GPL-2.0+",
+    "homepage": "https://www.drupal.org/project/calendar_link",
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/calendar_link",
+        "source": "https://git.drupalcode.org/project/calendar_link"
+    },
+    "require": {
+        "php": ">=8.0",
+        "ext-dom": "*",
+        "drupal/core": "^9.5 || ^10 || ^11",
+        "spatie/calendar-links": "^1.11.0"
+    },
+    "authors": [
+        {
+            "name": "Chrsitopher C. Wells (wells)",
+            "email": "drupal.org@chris-wells.net"
+        }
+    ],
+    "require-dev": {
+        "drupal/coder": "^8.3",
+        "phpcompatibility/php-compatibility": "^9.3"
+    },
+    "minimum-stability": "dev",
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}

@@ -1,0 +1,26 @@
+/**
+ * Override style of seckit.no_body.css to show div with message.
+ */
+body {
+  display: block !important;
+}
+
+/**
+ * Set style of div with message
+ * "Sorry, you need to enable JavaScript to visit this website."
+ * so it hides all site behind itself.
+ */
+#seckit-noscript-tag {
+  position: fixed;
+  z-index: 999 !important;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+  padding-top: 20px;
+  text-align: center;
+  color: red;
+  background-color: white;
+  font-family: sans-serif;
+  font-weight: bold;
+}

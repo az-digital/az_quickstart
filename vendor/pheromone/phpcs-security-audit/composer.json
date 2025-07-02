@@ -1,0 +1,32 @@
+{
+    "name": "pheromone/phpcs-security-audit",
+    "type" : "phpcodesniffer-standard",
+    "description": "phpcs-security-audit is a set of PHP_CodeSniffer rules that finds vulnerabilities and weaknesses related to security in PHP code",
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Jonathan Marcil",
+            "homepage": "https://twitter.com/jonathanmarcil"
+        }
+    ],
+    "require": {
+        "php": ">=5.4",
+        "squizlabs/php_codesniffer": "^3.1.0",
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.4.1 || ^0.5 || ^0.6.2 || ^0.7 || ^1.0"
+    },
+    "require-dev" : {
+        "php-parallel-lint/php-parallel-lint": "^1.0",
+        "php-parallel-lint/php-console-highlighter": "^0.4",
+        "phpunit/phpunit": "^4.5 || ^5.0 || ^6.0"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts" : {
+        "lint": [
+            "@php ./vendor/php-parallel-lint/php-parallel-lint/parallel-lint . -e php --exclude vendor --exclude .git"
+        ],
+        "test": [
+            "@php ./vendor/phpunit/phpunit/phpunit --filter Security ./vendor/squizlabs/php_codesniffer/tests/AllTests.php"
+        ]
+    }
+}

@@ -1,0 +1,4 @@
+services:
+  coffee.url_generator:
+    alias: url_generator.non_bubbling
+    public: true

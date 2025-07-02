@@ -1,0 +1,27 @@
+/**
+ * @file
+ * Theme styling for tabs.
+ */
+
+nav.tabs {
+  margin-bottom: 1rem;
+}
+
+nav.tabs ul {
+  background: #e9ecef;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex; 
+}
+nav.tabs ul .nav-item {
+  flex-grow: 1; 
+}
+nav.tabs ul .nav-item a {
+  color: #303030;
+  text-align: center;
+}
+nav.tabs ul .nav-item.active a {
+  background: #303030;
+  color: #e9ecef;
+}

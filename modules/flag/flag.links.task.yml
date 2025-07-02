@@ -1,0 +1,4 @@
+entity.flag.edit_form:
+  title: 'Edit'
+  route_name: entity.flag.edit_form
+  base_route: entity.flag.edit_form

@@ -1,0 +1,11 @@
+name: Config Split
+type: module
+description: Configuration transformer for importing and exporting split config
+core_version_requirement: ^8.8 || ^9 || ^10 || ^11
+package: Config
+configure: entity.config_split.collection
+
+# Information added by Drupal.org packaging script on 2025-02-12
+version: '2.0.2'
+project: 'config_split'
+datestamp: 1739356082

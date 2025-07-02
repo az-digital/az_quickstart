@@ -1,0 +1,31 @@
+langcode: en
+status: true
+dependencies:
+  config:
+  - core.entity_view_mode.node.teaser
+  - field.field.node.crop_responsive_example.body
+  - field.field.node.crop_responsive_example.field_image_crop_simple
+  - node.type.crop_responsive_example
+  module:
+  - text
+  - user
+_core:
+  default_config_hash: 2C6ZH2FA6ATdEl8iSqKJUz03DIPzyHc8yMI3oAbjGWQ
+id: node.crop_responsive_example.teaser
+targetEntityType: node
+bundle: crop_responsive_example
+mode: teaser
+content:
+  body:
+    label: hidden
+    type: text_summary_or_trimmed
+    weight: 101
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    region: content
+  links:
+    weight: 100
+    region: content
+hidden:
+  field_image_crop_simple: true

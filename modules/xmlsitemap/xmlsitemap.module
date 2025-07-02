@@ -1,0 +1,2657 @@
+<?php
+
+/**
+ * @file
+ * @defgroup xmlsitemap XML Sitemap
+ */
+
+/**
+ * @file
+ * Main file for the xmlsitemap module.
+ */
+
+use Drupal\Component\Utility\Crypt;
+use Drupal\Component\Utility\Environment;
+use Drupal\Component\Utility\UrlHelper;
+use Drupal\Core\Cache\Cache;
+use Drupal\Core\Database\Query\AlterableInterface;
+use Drupal\Core\Database\Query\Condition;
+use Drupal\Core\Entity\ContentEntityFormInterface;
+use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\Core\Entity\ContentEntityTypeInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Entity\RevisionableInterface;
+use Drupal\Core\Entity\TranslatableInterface;
+use Drupal\Core\File\FileSystemInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Language\LanguageInterface;
+use Drupal\Core\Link;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Site\Settings;
+use Drupal\Core\Url;
+use Drupal\xmlsitemap\Controller\XmlSitemapController;
+use Drupal\xmlsitemap\Entity\XmlSitemap;
+use Drupal\xmlsitemap\XmlSitemapInterface;
+use Symfony\Component\HttpFoundation\Request;
+
+/**
+ * The maximum number of links in one sitemap chunk file.
+ */
+const XMLSITEMAP_MAX_SITEMAP_LINKS = 50000;
+
+/**
+ * The maximum filesize of a sitemap chunk file.
+ */
+const XMLSITEMAP_MAX_SITEMAP_FILESIZE = 52528800;
+
+/**
+ * Xmlsitemap Frequencies.
+ */
+const XMLSITEMAP_FREQUENCY_YEARLY = 31449600;
+// 60 * 60 * 24 * 7 * 52.
+const XMLSITEMAP_FREQUENCY_MONTHLY = 2419200;
+// 60 * 60 * 24 * 7 * 4.
+const XMLSITEMAP_FREQUENCY_WEEKLY = 604800;
+// 60 * 60 * 24 * 7.
+const XMLSITEMAP_FREQUENCY_DAILY = 86400;
+// 60 * 60 * 24.
+const XMLSITEMAP_FREQUENCY_HOURLY = 3600;
+// 60 * 60.
+const XMLSITEMAP_FREQUENCY_ALWAYS = 60;
+
+/**
+ * Short lastmod timestamp format.
+ */
+const XMLSITEMAP_LASTMOD_SHORT = 'Y-m-d';
+
+/**
+ * Medium lastmod timestamp format.
+ */
+const XMLSITEMAP_LASTMOD_MEDIUM = 'Y-m-d\TH:i\Z';
+
+/**
+ * Long lastmod timestamp format.
+ */
+const XMLSITEMAP_LASTMOD_LONG = 'c';
+
+/**
+ * The default inclusion status for link types in the sitemaps.
+ */
+const XMLSITEMAP_STATUS_DEFAULT = 0;
+
+/**
+ * The default priority for link types in the sitemaps.
+ */
+const XMLSITEMAP_PRIORITY_DEFAULT = 0.5;
+
+/**
+ * Implements hook_hook_info().
+ */
+function xmlsitemap_hook_info() {
+  $hooks = [
+    'xmlsitemap_link_info',
+    'xmlsitemap_link_info_alter',
+    'xmlsitemap_link_alter',
+    'xmlsitemap_index_links',
+    'xmlsitemap_context_info',
+    'xmlsitemap_context_info_alter',
+    'xmlsitemap_context_url_options',
+    'xmlsitemap_context',
+    'xmlsitemap_element_alter',
+    'xmlsitemap_root_attributes_alter',
+    'xmlsitemap_sitemap_insert',
+    'xmlsitemap_sitemap_update',
+    'xmlsitemap_sitemap_operations',
+    'xmlsitemap_sitemap_delete',
+    'xmlsitemap_sitemap_link_url_options_alter',
+    'query_xmlsitemap_generate_alter',
+    'query_xmlsitemap_index_links_alter',
+    'form_xmlsitemap_sitemap_edit_form_alter',
+    'xmlsitemap_rebuild_clear',
+  ];
+
+  $hooks = array_combine($hooks, $hooks);
+  foreach ($hooks as $hook => $info) {
+    $hooks[$hook] = ['group' => 'xmlsitemap'];
+  }
+
+  return $hooks;
+}
+
+/**
+ * Implements hook_help().
+ */
+function xmlsitemap_help($route_name, RouteMatchInterface $route_match) {
+  $output = '';
+
+  switch ($route_name) {
+    case 'xmlsitemap.admin_settings':
+    case 'xmlsitemap.entities_settings':
+    case 'entity.xmlsitemap.edit_form':
+    case 'entity.xmlsitemap.delete_form':
+      return;
+
+    case 'xmlsitemap.admin_search':
+      break;
+
+    case 'xmlsitemap.admin_search_list':
+      break;
+
+    case 'help.page.xmlsitemap':
+
+      $output = '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('XML Sitemap automatically creates a sitemap that conforms to the sitemaps.org specification. This helps search engines keep their search results up to date.') . '</p>';
+      $output .= '<h3>' . t('Usage') . '</h3>';
+      $output .= '<p>' . t("You can adjust the settings for your site's sitemap at admin/config/search/xmlsitemap. Your can view your site's sitemap at http://yoursite.com/sitemap.xml.") . '</p>';
+      $output .= '<p>' . t("When is necessary you can rebuild your sitemap at admin/config/search/xmlsitemap/rebuild.") . '</p>';
+      $output .= '<p>' . t("You can configure all Custom Entities Settings at admin/config/search/xmlsitemap/entities/settings") . '</p>';
+      $output .= '<p>' . t('It is highly recommended that you have clean URLs enabled for this project.') . '</p>';
+      return $output;
+
+    case 'xmlsitemap.admin_rebuild':
+      $output .= '<p>' . t("This action rebuilds your site's XML Sitemap and regenerates the cached files, and may be a lengthy process. If you just installed XML Sitemap, this can be helpful to import all your site's content into the sitemap. Otherwise, this should only be used in emergencies.") . '</p>';
+  }
+
+  $currentUser = \Drupal::currentUser();
+  if (strpos($route_name, 'xmlsitemap') !== FALSE && $currentUser->hasPermission('administer xmlsitemap')) {
+    // Alert the user to any potential problems detected by hook_requirements.
+    $output .= _xmlsitemap_get_blurb();
+  }
+
+  return $output;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function xmlsitemap_theme() {
+  return [
+    'xmlsitemap_content_settings_table' => [
+      'render element' => 'element',
+      'file' => 'xmlsitemap.module',
+    ],
+  ];
+}
+
+/**
+ * Menu access callback; determines if the user can use the rebuild links page.
+ *
+ * @return bool
+ *   Returns TRUE if current user can access rebuild form. FALSE otherwise.
+ */
+function _xmlsitemap_rebuild_form_access() {
+  $rebuild_types = xmlsitemap_get_rebuildable_link_types();
+  return !empty($rebuild_types) && \Drupal::currentUser()->hasPermission('administer xmlsitemap');
+}
+
+/**
+ * Implements hook_cron().
+ *
+ * @todo Use new Queue system. Need to add {sitemap}.queued.
+ * @todo Regenerate one at a time?
+ */
+function xmlsitemap_cron() {
+  // If cron sitemap file regeneration is disabled, stop.
+  if (\Drupal::config('xmlsitemap.settings')->get('disable_cron_regeneration')) {
+    return;
+  }
+
+  // If there were no new or changed links, skip.
+  if (!\Drupal::state()->get('xmlsitemap_regenerate_needed')) {
+    return;
+  }
+
+  // If the minimum sitemap lifetime hasn't been passed, skip.
+  $lifetime = \Drupal::time()->getRequestTime() - \Drupal::state()->get('xmlsitemap_generated_last');
+  if ($lifetime < \Drupal::config('xmlsitemap.settings')->get('minimum_lifetime')) {
+    return;
+  }
+  xmlsitemap_xmlsitemap_index_links(\Drupal::config('xmlsitemap.settings')->get('batch_limit'));
+  // Regenerate the sitemap XML files.
+  xmlsitemap_run_unprogressive_batch('xmlsitemap_regenerate_batch');
+}
+
+/**
+ * Implements hook_modules_installed().
+ */
+function xmlsitemap_modules_installed(array $modules) {
+  Cache::invalidateTags(['xmlsitemap']);
+}
+
+/**
+ * Implements hook_modules_uninstalled().
+ */
+function xmlsitemap_modules_uninstalled(array $modules) {
+  Cache::invalidateTags(['xmlsitemap']);
+}
+
+/**
+ * Implements hook_robotstxt().
+ */
+function xmlsitemap_robotstxt() {
+  if ($sitemap = XmlSitemap::loadByContext()) {
+    $uri = xmlsitemap_sitemap_uri($sitemap);
+    $path = UrlHelper::isExternal($uri['path']) ? $uri['path'] : 'base://' . $uri['path'];
+    $robotstxt[] = 'Sitemap: ' . Url::fromUri($path, $uri['options'])->toString();
+    return $robotstxt;
+  }
+}
+
+/**
+ * Internal default variables config for xmlsitemap_var().
+ *
+ * @return array
+ *   Array with config variables of xmlsitemap.settings config object.
+ */
+function xmlsitemap_config_variables() {
+  return [
+    'minimum_lifetime' => 0,
+    'xsl' => 1,
+    'prefetch_aliases' => 1,
+    'chunk_size' => 'auto',
+    'batch_limit' => 100,
+    'path' => 'xmlsitemap',
+    'frontpage_priority' => 1.0,
+    'frontpage_changefreq' => XMLSITEMAP_FREQUENCY_DAILY,
+    'lastmod_format' => XMLSITEMAP_LASTMOD_MEDIUM,
+    'gz' => FALSE,
+    'disable_cron_regeneration' => FALSE,
+  ];
+}
+
+/**
+ * Internal default variables state for xmlsitemap_var().
+ *
+ * @return array
+ *   Array with state variables defined by xmlsitemap module.
+ */
+function xmlsitemap_state_variables() {
+  return [
+    'xmlsitemap_rebuild_needed' => FALSE,
+    'xmlsitemap_regenerate_needed' => TRUE,
+    'xmlsitemap_base_url' => '',
+    'xmlsitemap_generated_last' => 0,
+    'xmlsitemap_developer_mode' => 0,
+    'max_chunks' => NULL,
+    'max_filesize' => NULL,
+  ];
+}
+
+/**
+ * Internal implementation of variable_get().
+ */
+function xmlsitemap_var($name, $default = NULL) {
+  $defaults = &drupal_static(__FUNCTION__);
+  if (!isset($defaults)) {
+    $defaults = xmlsitemap_config_variables();
+    $defaults += xmlsitemap_state_variables();
+  }
+
+  // @todo Remove when stable.
+  if (!isset($defaults[$name])) {
+    trigger_error("Default variable for $name not found.");
+  }
+
+  if (\Drupal::state()->get($name, NULL) === NULL) {
+    return \Drupal::config('xmlsitemap.settings')->get($name);
+  }
+  return \Drupal::state()->get($name);
+}
+
+/**
+ * @defgroup xmlsitemap_api XML Sitemap API.
+ * @{
+ * This is the XML Sitemap API to be used by modules wishing to work with
+ * XML Sitemap and/or link data.
+ */
+
+/**
+ * Load an XML Sitemap array from the database.
+ *
+ * @param mixed $smid
+ *   An XML Sitemap ID.
+ *
+ * @return \Drupal\xmlsitemap\XmlSitemapInterface
+ *   The XML Sitemap object.
+ */
+function xmlsitemap_sitemap_load($smid) {
+  $sitemap = xmlsitemap_sitemap_load_multiple([$smid]);
+  return $sitemap ? reset($sitemap) : FALSE;
+}
+
+/**
+ * Load multiple XML Sitemaps from the database.
+ *
+ * @param array|bool $smids
+ *   An array of XML Sitemap IDs, or FALSE to load all XML Sitemaps.
+ * @param array $conditions
+ *   An array of conditions in the form 'field' => $value.
+ *
+ * @return \Drupal\xmlsitemap\XmlSitemapInterface[]
+ *   An array of XML Sitemap objects.
+ */
+function xmlsitemap_sitemap_load_multiple($smids = [], array $conditions = []) {
+  if ($smids !== FALSE) {
+    $conditions['smid'] = $smids;
+  }
+  else {
+    $conditions['smid'] = NULL;
+  }
+  $storage = Drupal::entityTypeManager()->getStorage('xmlsitemap');
+
+  /** @var \Drupal\xmlsitemap\XmlSitemapInterface[] $sitemaps */
+  $sitemaps = $storage->loadMultiple($conditions['smid']);
+  if (count($sitemaps) <= 0) {
+    return [];
+  }
+
+  return $sitemaps;
+}
+
+/**
+ * Save changes to an XML Sitemap or add a new XML Sitemap.
+ *
+ * @param Drupal\xmlsitemap\XmlSitemapInterface $sitemap
+ *   The XML Sitemap array to be saved. If $sitemap->smid is omitted, a new
+ *   XML Sitemap will be added.
+ *
+ * @todo Save the sitemap's URL as a column?
+ */
+function xmlsitemap_sitemap_save(XmlSitemapInterface $sitemap) {
+  $context = $sitemap->context;
+  if (!isset($context) || !$context) {
+    $sitemap->context = [];
+  }
+
+  // Make sure context is sorted before saving the hash.
+  $sitemap->setOriginalId($sitemap->isNew() ? NULL : $sitemap->getId());
+  $sitemap->setId(xmlsitemap_sitemap_get_context_hash($context));
+  // If the context was changed, we need to perform additional actions.
+  if (!$sitemap->isNew() && $sitemap->getId() != $sitemap->getOriginalId()) {
+    // Rename the files directory so the sitemap does not break.
+    $old_sitemap = xmlsitemap_sitemap_load($sitemap->getOriginalId());
+    $old_dir = xmlsitemap_get_directory($old_sitemap);
+    $new_dir = xmlsitemap_get_directory($sitemap);
+    xmlsitemap_directory_move($old_dir, $new_dir);
+
+    // Mark the sitemaps as needing regeneration.
+    \Drupal::state()->set('xmlsitemap_regenerate_needed', TRUE);
+  }
+  $sitemap->save();
+
+  return $sitemap;
+}
+
+/**
+ * Delete an XML Sitemap.
+ *
+ * @param string $smid
+ *   An XML Sitemap ID.
+ */
+function xmlsitemap_sitemap_delete($smid) {
+  xmlsitemap_sitemap_delete_multiple([$smid]);
+}
+
+/**
+ * Delete multiple XML Sitemaps.
+ *
+ * @param array $smids
+ *   An array of XML Sitemap IDs.
+ */
+function xmlsitemap_sitemap_delete_multiple(array $smids) {
+  if (!empty($smids)) {
+    $sitemaps = xmlsitemap_sitemap_load_multiple($smids);
+    foreach ($sitemaps as $sitemap) {
+      $sitemap->delete();
+      \Drupal::moduleHandler()->invokeAll('xmlsitemap_sitemap_delete', [$sitemap]);
+    }
+  }
+}
+
+/**
+ * Return the expected file path for a specific sitemap chunk.
+ *
+ * @param Drupal\xmlsitemap\XmlSitemapInterface $sitemap
+ *   An XmlSitemapInterface sitemap object.
+ * @param string $chunk
+ *   An optional specific chunk in the sitemap. Defaults to the index page.
+ *
+ * @return string
+ *   File path for a specific sitemap chunk.
+ */
+function xmlsitemap_sitemap_get_file(XmlSitemapInterface $sitemap, $chunk = 'index') {
+  return xmlsitemap_get_directory($sitemap) . "/{$chunk}.xml";
+}
+
+/**
+ * Find the maximum file size of all a sitemap's XML files.
+ *
+ * @param \Drupal\xmlsitemap\XmlSitemapInterface $sitemap
+ *   The XML Sitemap object.
+ *
+ * @return int
+ *   Maximum file size in the directory.
+ */
+function xmlsitemap_sitemap_get_max_filesize(XmlSitemapInterface $sitemap) {
+  $dir = xmlsitemap_get_directory($sitemap);
+  $sitemap->setMaxFileSize(0);
+  /** @var \Drupal\Core\File\FileSystemInterface $file_system */
+  $file_system = \Drupal::service('file_system');
+  $files = $file_system->scanDirectory($dir, '/\.xml$/');
+  foreach ($files as $file) {
+    $sitemap->setMaxFileSize(max($sitemap->getMaxFileSize(), filesize($file->uri)));
+  }
+  return $sitemap->getMaxFileSize();
+}
+
+/**
+ * Returns the hash string for a context.
+ *
+ * @param array $context
+ *   Context to be hashed.
+ *
+ * @return string
+ *   Hash string for the context.
+ */
+function xmlsitemap_sitemap_get_context_hash(array &$context) {
+  ksort($context);
+  return Crypt::hashBase64(serialize($context));
+}
+
+/**
+ * Returns the uri elements of an XML Sitemap.
+ *
+ * @param \Drupal\xmlsitemap\XmlSitemapInterface $sitemap
+ *   The sitemap represented by and XmlSitemapInterface object.
+ *
+ * @return array
+ *   An array containing the 'path' and 'options' keys used to build the uri of
+ *   the XML Sitemap, and matching the signature of url().
+ */
+function xmlsitemap_sitemap_uri(XmlSitemapInterface $sitemap) {
+  $uri['path'] = 'sitemap.xml';
+  $uri['options'] = \Drupal::moduleHandler()->invokeAll('xmlsitemap_context_url_options', [$sitemap->context]);
+  $context = $sitemap->context;
+  \Drupal::moduleHandler()->alter('xmlsitemap_context_url_options', $uri['options'], $context);
+  $uri['options'] += [
+    'absolute' => TRUE,
+    'base_url' => Settings::get('xmlsitemap_base_url', \Drupal::state()->get('xmlsitemap_base_url')),
+  ];
+  return $uri;
+}
+
+/**
+ * @} End of "defgroup xmlsitemap_api"
+ */
+function xmlsitemap_get_directory(XmlSitemapInterface $sitemap = NULL, $directory = NULL) {
+  if (!isset($directory)) {
+    $directory = \Drupal::config('xmlsitemap.settings')->get('path') ?: 'xmlsitemap';
+  }
+
+  $path = \Drupal::config('system.file')->get('default_scheme') . '://' . $directory;
+
+  if ($sitemap != NULL && !empty($sitemap->id)) {
+    $path .= '/' . $sitemap->id;
+  }
+
+  return $path;
+}
+
+/**
+ * Check that the sitemap files directory exists and is writable.
+ */
+function xmlsitemap_check_directory(XmlSitemapInterface $sitemap = NULL) {
+  $directory = xmlsitemap_get_directory($sitemap);
+  /** @var \Drupal\Core\File\FileSystemInterface $filesystem */
+  $filesystem = \Drupal::service('file_system');
+  $result = $filesystem->prepareDirectory($directory, FileSystemInterface::CREATE_DIRECTORY | FileSystemInterface::MODIFY_PERMISSIONS);
+  if (!$result) {
+    \Drupal::logger('file system')->error('The directory %directory does not exist or is not writable.', ['%directory' => $directory]);
+  }
+  return $result;
+}
+
+/**
+ * Check all directories.
+ */
+function xmlsitemap_check_all_directories() {
+  $directories = [];
+
+  $sitemaps = xmlsitemap_sitemap_load_multiple(FALSE);
+  foreach ($sitemaps as $sitemap) {
+    $directory = xmlsitemap_get_directory($sitemap);
+    $directories[$directory] = $directory;
+  }
+
+  /** @var \Drupal\Core\File\FileSystemInterface $filesystem */
+  $filesystem = \Drupal::service('file_system');
+
+  foreach ($directories as $directory) {
+    $result = $filesystem->prepareDirectory($directory, $filesystem::CREATE_DIRECTORY | $filesystem::MODIFY_PERMISSIONS);
+    if ($result) {
+      $directories[$directory] = TRUE;
+    }
+    else {
+      $directories[$directory] = FALSE;
+    }
+  }
+
+  return $directories;
+}
+
+/**
+ * Clears sitemap directory.
+ *
+ * @param \Drupal\xmlsitemap\XmlSitemapInterface $sitemap
+ *   Sitemap entity.
+ * @param bool $delete
+ *   If TRUE, delete the path directory afterwards.
+ *
+ * @return bool
+ *   Returns TRUE is operation was successful, FALSE otherwise.
+ */
+function xmlsitemap_clear_directory(XmlSitemapInterface $sitemap = NULL, $delete = FALSE) {
+  $directory = xmlsitemap_get_directory($sitemap);
+  return _xmlsitemap_delete_recursive($directory, $delete);
+}
+
+/**
+ * Move a directory to a new location.
+ *
+ * @param string $old_dir
+ *   A string specifying the filepath or URI of the original directory.
+ * @param string $new_dir
+ *   A string specifying the filepath or URI of the new directory.
+ * @param int $replace
+ *   Behavior when the destination file already exists.
+ *   Replace behavior when the destination file already exists.
+ *
+ * @return bool
+ *   TRUE if the directory was moved successfully. FALSE otherwise.
+ */
+function xmlsitemap_directory_move($old_dir, $new_dir, $replace = FileSystemInterface::EXISTS_REPLACE) {
+  /** @var \Drupal\Core\File\FileSystemInterface $filesystem */
+  $filesystem = \Drupal::service('file_system');
+
+  $success = $filesystem->prepareDirectory($new_dir, $filesystem::CREATE_DIRECTORY | $filesystem::MODIFY_PERMISSIONS);
+
+  $old_path = $filesystem->realpath($old_dir);
+  $new_path = $filesystem->realpath($new_dir);
+  if (!is_dir($old_path) || !is_dir($new_path) || !$success) {
+    return FALSE;
+  }
+
+  $files = $filesystem->scanDirectory($old_dir, '/.*/');
+  foreach ($files as $file) {
+    $file->uri_new = $new_dir . '/' . basename($file->filename);
+    $success &= (bool) $filesystem->move($file->uri, $file->uri_new, $replace);
+  }
+
+  // The remove the directory.
+  $success &= $filesystem->rmdir($old_dir);
+  return $success;
+}
+
+/**
+ * Recursively delete all files and folders in the specified filepath.
+ *
+ * This is a backport of Drupal 8's file_unmanaged_delete_recursive().
+ *
+ * Note that this only deletes visible files with write permission.
+ *
+ * @param string $path
+ *   A filepath relative to the Drupal root directory.
+ * @param bool $delete_root
+ *   A boolean if TRUE will delete the $path directory afterwards.
+ *
+ * @return bool
+ *   TRUE if operation was successful, FALSE otherwise.
+ */
+function _xmlsitemap_delete_recursive($path, $delete_root = FALSE) {
+  /** @var \Drupal\Core\File\FileSystemInterface $filesystem */
+  $filesystem = \Drupal::service('file_system');
+
+  // Resolve streamwrapper URI to local path.
+  $path = $filesystem->realpath($path);
+  if (is_dir($path)) {
+    $dir = dir($path);
+    while (($entry = $dir->read()) !== FALSE) {
+      if ($entry === '.' || $entry === '..') {
+        continue;
+      }
+      $entry_path = $path . '/' . $entry;
+      $filesystem->deleteRecursive($entry_path);
+    }
+    $dir->close();
+    return $delete_root ? $filesystem->rmdir($path) : TRUE;
+  }
+  return $filesystem->delete($path);
+}
+
+/**
+ * Implements hook_entity_type_build().
+ */
+function xmlsitemap_entity_type_build(array &$entity_types) {
+  // Mark some specific core entity types as not supported by XML Sitemap.
+  // If a site wants to undo this, they may use hook_entity_type_alter().
+  $unsupported_types = [
+    // Custom blocks.
+    'block_content',
+    // Comments.
+    'comment',
+    // Shortcut items.
+    'shortcut',
+    // Redirects.
+    'redirect',
+    // Custom Token module.
+    // @see https://www.drupal.org/project/token_custom/issues/3150038
+    'token_custom',
+  ];
+
+  /** @var \Drupal\Core\Entity\EntityTypeInterface[] $entity_types */
+  foreach ($unsupported_types as $entity_type_id) {
+    if (isset($entity_types[$entity_type_id])) {
+      $entity_types[$entity_type_id]->set('xmlsitemap', FALSE);
+    }
+  }
+}
+
+/**
+ * Determines if an entity type can be listed in the XML Sitemap as links.
+ *
+ * @param \Drupal\Core\Entity\EntityTypeInterface $entity_type
+ *   The entity type.
+ *
+ * @return bool
+ *   TRUE if the entity type can be used, or FALSE otherwise.
+ */
+function xmlsitemap_is_entity_type_supported(EntityTypeInterface $entity_type) {
+  // If the XML Sitemap status in the entity type annotation has been set then
+  // return that first. This will allow modules to bypass the logic below if
+  // needed.
+  $status = $entity_type->get('xmlsitemap');
+  if ($status !== NULL) {
+    return $status;
+  }
+
+  // Skip if the entity type is not a content entity type.
+  if (!($entity_type instanceof ContentEntityTypeInterface)) {
+    return FALSE;
+  }
+
+  // Skip if the entity type is internal (and not considered public).
+  if ($entity_type->isInternal()) {
+    return FALSE;
+  }
+
+  // Skip if the entity type does not have a canonical URL.
+  if (!$entity_type->hasLinkTemplate('canonical') && !$entity_type->getUriCallback()) {
+    return FALSE;
+  }
+
+  // Skip if the entity type as a bundle entity type but does not yet have
+  // any bundles created.
+  if ($entity_type->getBundleEntityType() && !\Drupal::service('entity_type.bundle.info')->getBundleInfo($entity_type->id())) {
+    return FALSE;
+  }
+
+  return TRUE;
+}
+
+/**
+ * Returns information about supported sitemap link types.
+ *
+ * @param mixed $type
+ *   (optional) The link type to return information for. If omitted,
+ *   information for all link types is returned.
+ * @param mixed $reset
+ *   (optional) Boolean whether to reset the static cache and do nothing. Only
+ *   used for tests.
+ *
+ * @return array
+ *   Info about sitemap link.
+ *
+ * @see hook_xmlsitemap_link_info()
+ * @see hook_xmlsitemap_link_info_alter()
+ */
+function xmlsitemap_get_link_info($type = NULL, $reset = FALSE) {
+  $language = \Drupal::languageManager()->getCurrentLanguage();
+  $link_info = &drupal_static(__FUNCTION__);
+
+  if ($reset) {
+    $link_info = NULL;
+    \Drupal::service('cache_tags.invalidator')->invalidateTags(['xmlsitemap']);
+  }
+
+  if (!isset($link_info)) {
+    $cid = 'xmlsitemap:link_info:' . $language->getId();
+    if ($cache = \Drupal::cache()->get($cid)) {
+      $link_info = $cache->data;
+    }
+    else {
+      $link_info = [];
+      $entity_types = \Drupal::entityTypeManager()->getDefinitions();
+
+      foreach ($entity_types as $key => $entity_type) {
+        if (!xmlsitemap_is_entity_type_supported($entity_type)) {
+          continue;
+        }
+
+        $link_info[$key] = [
+          'label' => $entity_type->getLabel(),
+          'type' => $entity_type->id(),
+          'base table' => $entity_type->getBaseTable(),
+          'bundles' => \Drupal::service('entity_type.bundle.info')->getBundleInfo($entity_type->id()),
+          'bundle label' => $entity_type->getBundleLabel(),
+          'entity keys' => [
+            'id' => $entity_type->getKey('id'),
+            'bundle' => $entity_type->getKey('bundle'),
+          ],
+          'xmlsitemap' => [
+            // Add in the default callbacks for entity types.
+            'process callback' => $entity_type->get('xmlsitemap')['process callback'] ?? 'xmlsitemap_xmlsitemap_process_entity_links',
+            'rebuild callback' => $entity_type->get('xmlsitemap')['process callback'] ?? 'xmlsitemap_rebuild_batch_fetch',
+          ],
+        ];
+      }
+
+      $link_info = array_merge($link_info, \Drupal::moduleHandler()->invokeAll('xmlsitemap_link_info'));
+      foreach ($link_info as $key => &$info) {
+        $info += [
+          'type' => $key,
+          'base table' => FALSE,
+          'bundles' => [],
+        ];
+        foreach ($info['bundles'] as $bundle => &$bundle_info) {
+          $bundle_info += [
+            'xmlsitemap' => [],
+          ];
+          $bundle_info['xmlsitemap'] += xmlsitemap_link_bundle_load($key, $bundle, FALSE);
+        }
+      }
+      \Drupal::moduleHandler()->alter('xmlsitemap_link_info', $link_info);
+
+      // Sort the entity types by label.
+      uasort($link_info, function ($a, $b) {
+        // Put frontpage first.
+        if ($a['type'] === 'frontpage') {
+          return -1;
+        }
+        if ($b['type'] === 'frontpage') {
+          return 1;
+        }
+        return strnatcmp($a['label'], $b['label']);
+      });
+
+      // Cache by language since this info contains translated strings.
+      // Also include entity type tags since this is tied to entity and bundle
+      // information.
+      \Drupal::cache()->set(
+        $cid,
+        $link_info,
+        Cache::PERMANENT,
+        [
+          'xmlsitemap',
+          'entity_types',
+          'entity_bundles',
+        ]
+      );
+    }
+  }
+
+  if (isset($type)) {
+    return $link_info[$type] ?? NULL;
+  }
+
+  return $link_info;
+}
+
+/**
+ * Returns enabled bundles of an entity type.
+ *
+ * @param string $entity_type
+ *   Entity type id.
+ *
+ * @return array
+ *   Array with entity bundles info.
+ */
+function xmlsitemap_get_link_type_enabled_bundles($entity_type) {
+  $bundles = [];
+  $info = xmlsitemap_get_link_info($entity_type);
+  foreach ($info['bundles'] as $bundle => $bundle_info) {
+    $settings = xmlsitemap_link_bundle_load($entity_type, $bundle);
+    if (!empty($settings['status'])) {
+      $bundles[] = $bundle;
+    }
+  }
+  return $bundles;
+}
+
+/**
+ * Returns statistics about specific entity links.
+ *
+ * @param string $entity_type_id
+ *   Entity type id.
+ * @param string $bundle
+ *   Bundle id.
+ *
+ * @return array
+ *   Array with statistics.
+ */
+function xmlsitemap_get_link_type_indexed_status($entity_type_id, $bundle = '') {
+  $info = xmlsitemap_get_link_info($entity_type_id);
+  $database = \Drupal::database();
+  $entity_type = \Drupal::entityTypeManager()->getDefinition($entity_type_id);
+
+  $status['indexed'] = $database->query("SELECT COUNT(id) FROM {xmlsitemap} WHERE type = :entity AND subtype = :bundle", [':entity' => $entity_type_id, ':bundle' => $bundle])->fetchField();
+  $status['visible'] = $database->query("SELECT COUNT(id) FROM {xmlsitemap} WHERE type = :entity AND subtype = :bundle AND status = 1 AND access = 1", [':entity' => $entity_type_id, ':bundle' => $bundle])->fetchField();
+
+  try {
+    $query = \Drupal::entityQuery($entity_type_id);
+    if ($bundle && $entity_type->hasKey('bundle')) {
+      $query->condition($entity_type->getKey('bundle'), $bundle);
+    }
+    // We are only using this for totals, so we can skip the access check.
+    $query->accessCheck(FALSE);
+    $query->addTag('xmlsitemap_link_indexed_status');
+    $status['total'] = $query->count()->execute();
+    return $status;
+  }
+  catch (\Exception $e) {
+    $status['total'] = 0;
+  }
+  return $status;
+}
+
+/**
+ * Saves xmlsitemap settings for a specific bundle.
+ *
+ * @param string $entity
+ *   Entity type id.
+ * @param string $bundle
+ *   Bundle id.
+ * @param array $settings
+ *   Settings to be saved.
+ */
+function xmlsitemap_link_bundle_settings_save($entity, $bundle, array $settings) {
+  $config = \Drupal::configFactory()->getEditable("xmlsitemap.settings.{$entity}.{$bundle}");
+  foreach ($settings as $key => $value) {
+    $config->set($key, $value);
+  }
+  $config->save();
+}
+
+/**
+ * Renames a bundle.
+ *
+ * @param string $entity
+ *   Entity type id.
+ * @param string $bundle_old
+ *   Old bundle name.
+ * @param string $bundle_new
+ *   New bundle name.
+ */
+function xmlsitemap_link_bundle_rename($entity, $bundle_old, $bundle_new) {
+  if ($bundle_old != $bundle_new && xmlsitemap_link_bundle_check_enabled($entity, $bundle_old)) {
+    \Drupal::configFactory()->rename("xmlsitemap.settings.{$entity}.{$bundle_old}", "xmlsitemap.settings.{$entity}.{$bundle_new}");
+  }
+}
+
+/**
+ * Loads link bundle info.
+ *
+ * @param string $entity
+ *   Entity type id.
+ * @param string $bundle
+ *   Bundle info.
+ * @param bool $load_bundle_info
+ *   If TRUE, loads bundle info.
+ *
+ * @return array
+ *   Info about a bundle.
+ */
+function xmlsitemap_link_bundle_load($entity, $bundle, $load_bundle_info = TRUE) {
+  $info = [
+    'entity' => $entity,
+    'bundle' => $bundle,
+  ];
+  if ($load_bundle_info) {
+    $entity_info = xmlsitemap_get_link_info($entity);
+    if (isset($entity_info['bundles'][$bundle])) {
+      $info['info'] = $entity_info['bundles'][$bundle];
+    }
+  }
+  $bundle_settings = \Drupal::config("xmlsitemap.settings.{$entity}.{$bundle}")->get();
+  if ($bundle_settings) {
+    $info += $bundle_settings;
+  }
+  $info += [
+    'status' => XMLSITEMAP_STATUS_DEFAULT,
+    'priority' => XMLSITEMAP_PRIORITY_DEFAULT,
+    'changefreq' => 0,
+  ];
+  return $info;
+}
+
+/**
+ * Deletes all links of a specific bundle.
+ *
+ * @param string $entity
+ *   Entity type id.
+ * @param string $bundle
+ *   Bundle id.
+ */
+function xmlsitemap_link_bundle_delete($entity, $bundle) {
+  \Drupal::configFactory()->getEditable("xmlsitemap.settings.{$entity}.{$bundle}")->delete();
+}
+
+/**
+ * Checks access for a bundle.
+ *
+ * @param string $entity
+ *   Entity type id.
+ * @param string $bundle
+ *   Bundle id.
+ *
+ * @return bool
+ *   If TRUE, access is allowed, FALSE otherwise.
+ *
+ * @deprecated in xmlsitemap:8.x-1.1 and is removed from xmlsitemap:2.0.0.
+ *
+ * @see https://www.drupal.org/project/xmlsitemap/issues/3156088
+ */
+function xmlsitemap_link_bundle_access($entity, $bundle = NULL) {
+  @trigger_error(__FUNCTION__ . ' is deprecated in xmlsitemap:8.x-1.1 and will be removed in xmlsitemap:2.0.0. See https://www.drupal.org/project/xmlsitemap/issues/3156088', E_USER_DEPRECATED);
+  return FALSE;
+}
+
+/**
+ * Get path of a bundle.
+ *
+ * @param string $entity
+ *   Entity type id.
+ * @param string $bundle
+ *   Bundle id.
+ *
+ * @return mixed
+ *   Path of bundle, or FALSE if it does not exist.
+ *
+ * @deprecated in xmlsitemap:8.x-1.1 and is removed from xmlsitemap:2.0.0.
+ *
+ * @see https://www.drupal.org/project/xmlsitemap/issues/3156088
+ */
+function xmlsitemap_get_bundle_path($entity, $bundle) {
+  @trigger_error(__FUNCTION__ . ' is deprecated in xmlsitemap:8.x-1.1 and will be removed in xmlsitemap:2.0.0. See https://www.drupal.org/project/xmlsitemap/issues/3156088', E_USER_DEPRECATED);
+  return FALSE;
+}
+
+/**
+ * Implements hook_entity_bundle_rename().
+ */
+function xmlsitemap_entity_bundle_rename($entity_type_id, $bundle_old, $bundle_new) {
+  xmlsitemap_link_bundle_rename($entity_type_id, $bundle_old, $bundle_new);
+}
+
+/**
+ * Implements hook_entity_bundle_delete().
+ */
+function xmlsitemap_entity_bundle_delete($entity_type_id, $bundle) {
+  xmlsitemap_link_bundle_delete($entity_type_id, $bundle);
+}
+
+/**
+ * Determine the frequency of updates to a link.
+ *
+ * @param int $interval
+ *   An interval value in seconds.
+ *
+ * @return string|\Drupal\Core\StringTranslation\TranslatableMarkup
+ *   A string representing the update frequency according to the sitemaps.org
+ *   protocol.
+ */
+function xmlsitemap_get_changefreq($interval, bool $translated = FALSE) {
+  if ($interval <= 0 || !is_numeric($interval)) {
+    return FALSE;
+  }
+
+  foreach (xmlsitemap_get_changefreq_options() as $value => $frequency) {
+    if ($interval <= $value) {
+      return $translated ? $frequency : $frequency->getUntranslatedString();
+    }
+  }
+
+  return $translated ? t('never', [], ['context' => 'At no time']) : 'never';
+}
+
+/**
+ * Get the current number of sitemap chunks.
+ *
+ * @param int $reset
+ *   If TRUE, reset number of chunks.
+ *
+ * @static int $chunks
+ *   Number of chunks.
+ *
+ * @return int
+ *   Number of chunks.
+ */
+function xmlsitemap_get_chunk_count($reset = FALSE) {
+  static $chunks;
+  if (!isset($chunks) || $reset) {
+    $count = max(xmlsitemap_get_link_count($reset), 1);
+    $chunks = ceil($count / xmlsitemap_get_chunk_size($reset));
+  }
+  return $chunks;
+}
+
+/**
+ * Get the current number of sitemap links.
+ *
+ * @param bool $reset
+ *   If TRUE, update current number of sitemap links.
+ *
+ * @static int $count
+ *   Current number of sitemap links.
+ *
+ * @return int
+ *   Returns current number of sitemap links.
+ */
+function xmlsitemap_get_link_count($reset = FALSE) {
+  static $count;
+  if (!isset($count) || $reset) {
+    $count = \Drupal::database()->query("SELECT COUNT(id) FROM {xmlsitemap} WHERE access = 1 AND status = 1")->fetchField();
+  }
+  return $count;
+}
+
+/**
+ * Get the sitemap chunk size.
+ *
+ * This function is useful with the chunk size is set to automatic as it will
+ * calculate the appropriate value. Use this function instead of @code
+ * xmlsitemap_var('chunk_size') @endcode when the actual value is needed.
+ *
+ * @param bool $reset
+ *   A boolean to reset the saved, static result. Defaults to FALSE.
+ *
+ * @return int
+ *   An integer with the number of links in each sitemap page.
+ */
+function xmlsitemap_get_chunk_size($reset = FALSE) {
+  static $size;
+  if (!isset($size) || $reset) {
+    $size = xmlsitemap_var('chunk_size');
+    if ($size === 'auto') {
+      // Prevent divide by zero.
+      $count = max(xmlsitemap_get_link_count($reset), 1);
+      $size = min(ceil($count / 10000) * 5000, XMLSITEMAP_MAX_SITEMAP_LINKS);
+    }
+  }
+  return $size;
+}
+
+/**
+ * Recalculate the changefreq of a sitemap link.
+ *
+ * @param array $link
+ *   A sitemap link array.
+ */
+function xmlsitemap_recalculate_changefreq(array &$link) {
+  $time = \Drupal::time()->getRequestTime();
+  $link['changefreq'] = round((($link['changefreq'] * $link['changecount']) + ($time - $link['lastmod'])) / ($link['changecount'] + 1));
+  $link['changecount']++;
+  $link['lastmod'] = $time;
+}
+
+/**
+ * Calculates the average interval between UNIX timestamps.
+ *
+ * @param array $timestamps
+ *   An array of UNIX timestamp integers.
+ *
+ * @return int
+ *   An integer of the average interval.
+ */
+function xmlsitemap_calculate_changefreq(array $timestamps) {
+  sort($timestamps);
+  $count = count($timestamps) - 1;
+  $diff = 0;
+
+  for ($i = 0; $i < $count; $i++) {
+    $diff += $timestamps[$i + 1] - $timestamps[$i];
+  }
+
+  return $count > 0 ? round($diff / $count) : 0;
+}
+
+/**
+ * Submit handler; Set the regenerate needed flag if variables have changed.
+ *
+ * This function needs to be called before system_settings_form_submit() or any
+ * calls to variable_set().
+ */
+function xmlsitemap_form_submit_flag_regenerate(array $form, FormStateInterface $form_state) {
+  $values = $form_state->getValues();
+  foreach ($values as $variable => $value) {
+    if (\Drupal::config('xmlsitemap.settings')->get($variable) == NULL) {
+      $stored_value = 'not_a_variable';
+    }
+    else {
+      $stored_value = \Drupal::config('xmlsitemap.settings')->get($variable);
+    }
+    if (is_array($value) && !$form_state->isValueEmpty('array_filter')) {
+      $value = array_keys(array_filter($value));
+    }
+    if ($stored_value != 'not_a_variable' && $stored_value != $value) {
+      \Drupal::state()->set('xmlsitemap_regenerate_needed', TRUE);
+      \Drupal::messenger()->addWarning(t('XML Sitemap settings have been modified and the files should be regenerated. You can <a href="@run-cron">run cron manually</a> to regenerate the cached files.', [
+        '@run-cron' => Url::fromRoute('system.run_cron', [], ['query' => \Drupal::destination()->getAsArray()])->toString(),
+      ]), FALSE);
+      return;
+    }
+  }
+}
+
+/**
+ * Add a link's XML Sitemap options to the link's form.
+ *
+ * @param array $form
+ *   Form array.
+ * @param string $entity_type
+ *   Entity type id.
+ * @param string $bundle
+ *   Bundle id.
+ * @param int $id
+ *   Entity id.
+ *
+ * @todo Add changefreq overridability.
+ */
+function xmlsitemap_add_form_link_options(array &$form, $entity_type, $bundle, $id) {
+  if (!$link = \Drupal::service('xmlsitemap.link_storage')->load($entity_type, $id)) {
+    $link = [];
+  }
+
+  $bundle_info = xmlsitemap_link_bundle_load($entity_type, $bundle);
+  $link += [
+    'access' => 1,
+    'status' => $bundle_info['status'],
+    'status_default' => $bundle_info['status'],
+    'status_override' => 0,
+    'priority' => $bundle_info['priority'],
+    'priority_default' => $bundle_info['priority'],
+    'priority_override' => 0,
+    'changefreq' => $bundle_info['changefreq'],
+  ];
+
+  $currentUser = \Drupal::currentUser();
+  $admin_permission = \Drupal::entityTypeManager()->getDefinition($entity_type)->getAdminPermission();
+  $form['xmlsitemap'] = [
+    '#type' => 'details',
+    '#tree' => TRUE,
+    '#title' => t('XML Sitemap'),
+    '#collapsible' => TRUE,
+    '#collapsed' => !$link['status_override'] && !$link['priority_override'],
+    '#access' => $currentUser->hasPermission('administer xmlsitemap') || $currentUser->hasPermission('override xmlsitemap link settings') || ($admin_permission && $currentUser->hasPermission($admin_permission)),
+    '#group' => 'advanced',
+    '#weight' => 10,
+  ];
+
+  // Show a warning if the link is not accessible and will not be included in
+  // the sitemap.
+  if ($id && !$link['access']) {
+    $form['xmlsitemap']['warning'] = [
+      '#type' => 'markup',
+      '#prefix' => '<p><strong>',
+      '#suffix' => '</strong></p>',
+      '#value' => ('This item is not currently visible to anonymous users, so it will not be included in the sitemap.'),
+    ];
+  }
+
+  // Status field (inclusion/exclusion)
+  $form['xmlsitemap']['status'] = [
+    '#type' => 'select',
+    '#title' => t('Inclusion'),
+    '#options' => xmlsitemap_get_status_options($link['status_default']),
+    '#default_value' => $link['status_override'] ? $link['status'] : 'default',
+  ];
+  $form['xmlsitemap']['status_default'] = [
+    '#type' => 'value',
+    '#value' => $link['status_default'],
+  ];
+  $form['xmlsitemap']['status_override'] = [
+    '#type' => 'value',
+    '#value' => $link['status_override'],
+  ];
+
+  // Priority field.
+  $form['xmlsitemap']['priority'] = [
+    '#type' => 'select',
+    '#title' => t('Priority'),
+    '#options' => xmlsitemap_get_priority_options($link['priority_default']),
+    '#default_value' => $link['priority_override'] ? number_format($link['priority'], 1) : 'default',
+    '#description' => t('The priority of this URL relative to other URLs on your site.'),
+    '#states' => [
+      'invisible' => [
+        'select[name="xmlsitemap[status]"]' => ['value' => '0'],
+      ],
+    ],
+  ];
+  $form['xmlsitemap']['changefreq'] = [
+    '#type' => 'select',
+    '#title' => t('Change frequency'),
+    '#options' => xmlsitemap_get_changefreq_options(),
+    '#default_value' => $link['changefreq'],
+    '#description' => t('Select the frequency of changes.'),
+    '#states' => [
+      'invisible' => [
+        'select[name="xmlsitemap[status]"]' => ['value' => '0'],
+      ],
+    ],
+  ];
+  if (!$link['status_default']) {
+    // If the default status is excluded, add a visible state on the include
+    // override option.
+    $form['xmlsitemap']['priority']['#states']['visible'] = [
+      'select[name="xmlsitemap[status]"]' => ['value' => '1'],
+    ];
+  }
+  $form['xmlsitemap']['priority_default'] = [
+    '#type' => 'value',
+    '#value' => $link['priority_default'],
+  ];
+  $form['xmlsitemap']['priority_override'] = [
+    '#type' => 'value',
+    '#value' => $link['priority_override'],
+  ];
+
+  array_unshift($form['actions']['submit']['#submit'], 'xmlsitemap_process_form_link_options');
+  if (!empty($form['actions']['publish']['#submit'])) {
+    array_unshift($form['actions']['publish']['#submit'], 'xmlsitemap_process_form_link_options');
+  }
+}
+
+/**
+ * Submit callback for the entity form to save.
+ */
+function xmlsitemap_process_form_link_options(array $form, FormStateInterface $form_state) {
+  $link = $form_state->getValue('xmlsitemap');
+  $fields = ['status' => XMLSITEMAP_STATUS_DEFAULT, 'priority' => XMLSITEMAP_PRIORITY_DEFAULT];
+
+  foreach ($fields as $field => $default) {
+    if ($link[$field] === 'default') {
+      $link[$field] = $link[$field . '_default'] ?? $default;
+      $link[$field . '_override'] = 0;
+    }
+    else {
+      $link[$field . '_override'] = 1;
+    }
+  }
+  $form_state->setValue('xmlsitemap', $link);
+
+  $entity = $form_state->getFormObject()->getEntity();
+  $entity->xmlsitemap = $form_state->getValue('xmlsitemap');
+}
+
+/**
+ * Gets xmlsitemap frequency options.
+ *
+ * @return \Drupal\Core\StringTranslation\TranslatableMarkup[]
+ *   Frequency options.
+ */
+function xmlsitemap_get_changefreq_options() {
+  return [
+    XMLSITEMAP_FREQUENCY_ALWAYS => t('always', [], ['context' => 'At all times']),
+    XMLSITEMAP_FREQUENCY_HOURLY => t('hourly'),
+    XMLSITEMAP_FREQUENCY_DAILY => t('daily'),
+    XMLSITEMAP_FREQUENCY_WEEKLY => t('weekly'),
+    XMLSITEMAP_FREQUENCY_MONTHLY => t('monthly'),
+    XMLSITEMAP_FREQUENCY_YEARLY => t('yearly'),
+  ];
+}
+
+/**
+ * Load a language object by its language code.
+ *
+ * @param string $language
+ *   A language code. If not provided the default language will be returned.
+ *
+ * @return \Drupal\core\Language\LanguageInterface
+ *   A language object.
+ *
+ * @todo Remove when https://www.drupal.org/node/660736 is fixed in Drupal core.
+ */
+function xmlsitemap_language_load($language = LanguageInterface::LANGCODE_NOT_SPECIFIED) {
+  $languages = &drupal_static(__FUNCTION__);
+
+  if (!isset($languages)) {
+    $languages = \Drupal::languageManager()->getLanguages();
+    $languages[LanguageInterface::LANGCODE_NOT_SPECIFIED] = NULL;
+  }
+
+  return $languages[$language] ?? NULL;
+}
+
+/**
+ * @defgroup xmlsitemap_context_api XML Sitemap API for sitemap contexts.
+ * @{
+ */
+
+/**
+ * Gets info about a context.
+ *
+ * @param string $context
+ *   The context.
+ * @param bool $reset
+ *   If TRUE, resets context info.
+ *
+ * @return array
+ *   Array with info.
+ */
+function xmlsitemap_get_context_info($context = NULL, $reset = FALSE) {
+  $language = \Drupal::languageManager()->getCurrentLanguage();
+  $info = &drupal_static(__FUNCTION__);
+
+  if ($reset) {
+    $info = NULL;
+  }
+  elseif ($cached = \Drupal::cache()->get('xmlsitemap:context_info:' . $language->getId())) {
+    $info = $cached->data;
+  }
+
+  if (!isset($info)) {
+    $info = \Drupal::moduleHandler()->invokeAll('xmlsitemap_context_info');
+    \Drupal::moduleHandler()->alter('xmlsitemap_context_info', $info);
+    ksort($info);
+    // Cache by language since this info contains translated strings.
+    \Drupal::cache()->set('xmlsitemap:context_info:' . $language->getId(), $info, Cache::PERMANENT, ['xmlsitemap']);
+  }
+
+  if (isset($context)) {
+    return $info[$context] ?? NULL;
+  }
+
+  return $info;
+}
+
+/**
+ * Get the sitemap context of the current request.
+ *
+ * @return array
+ *   Current context.
+ */
+function xmlsitemap_get_current_context() {
+  $context = &drupal_static(__FUNCTION__);
+
+  if (!isset($context)) {
+    $context = \Drupal::moduleHandler()->invokeAll('xmlsitemap_context');
+    \Drupal::moduleHandler()->alter('xmlsitemap_context', $context);
+    ksort($context);
+  }
+
+  return $context;
+}
+
+/**
+ * Gets summary about a context.
+ *
+ * @param \Drupal\xmlsitemap\XmlSitemapInterface $sitemap
+ *   Sitemap entity.
+ * @param string $context_key
+ *   Key for the context.
+ * @param array $context_info
+ *   Info about the context.
+ *
+ * @return string
+ *   Context summary.
+ */
+function _xmlsitemap_sitemap_context_summary(XmlSitemapInterface $sitemap, $context_key, array $context_info) {
+  $context_value = $sitemap->context[$context_key] ?? NULL;
+
+  if (!isset($context_value)) {
+    return t('Default');
+  }
+  elseif (!empty($context_info['summary callback'])) {
+    return $context_info['summary callback']($context_value);
+  }
+  else {
+    return $context_value;
+  }
+}
+
+/**
+ * @} End of "defgroup xmlsitemap_context_api"
+ */
+
+/**
+ * Run a not-progressive batch operation.
+ */
+function xmlsitemap_run_unprogressive_batch() {
+  $batch = batch_get();
+  $lock = \Drupal::lock();
+  if (!empty($batch)) {
+    // If there is already something in the batch, don't run.
+    return FALSE;
+  }
+
+  $args = func_get_args();
+  $batch_callback = array_shift($args);
+
+  if (!$lock->acquire($batch_callback)) {
+    return FALSE;
+  }
+
+  // Attempt to increase the execution time.
+  Environment::setTimeLimit(240);
+
+  // Build the batch array.
+  $batch = call_user_func_array($batch_callback, $args);
+  batch_set($batch);
+
+  // We need to manually set the progressive variable again.
+  // @todo Remove when https://www.drupal.org/node/638712 is fixed.
+  $batch = & batch_get();
+  $batch['progressive'] = FALSE;
+
+  // Run the batch process.
+  if (PHP_SAPI === 'cli' && function_exists('drush_backend_batch_process')) {
+    drush_backend_batch_process();
+  }
+  else {
+    batch_process();
+  }
+
+  $lock->release($batch_callback);
+  return TRUE;
+}
+
+/**
+ * Gets a link from url.
+ *
+ * @param string $url
+ *   Url of the link.
+ * @param array $options
+ *   Extra options of the url such as 'query'.
+ *
+ * @static string $destination
+ *   Destination option.
+ *
+ * @return array
+ *   An array representing a link.
+ */
+function xmlsitemap_get_operation_link($url, array $options = []) {
+  static $destination;
+  if (!isset($destination)) {
+    $destination = \Drupal::destination()->getAsArray();
+  }
+
+  $link = ['href' => $url] + $options;
+
+  $link += ['query' => $destination];
+  return $link;
+}
+
+/**
+ * Returns HTML for an administration settings table.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - build: A render element representing a table of bundle content language
+ *     settings for a particular entity type.
+ *
+ * @return string
+ *   HTML content.
+ *
+ * @ingroup themable
+ */
+function theme_xmlsitemap_content_settings_table(array $variables) {
+  return '<h4>' . $variables['build']['#title'] . '</h4>' . \Drupal::service('renderer')->render($variables['build']);
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function xmlsitemap_form_alter(array &$form, FormStateInterface $form_state, $form_id) {
+  $form_object = $form_state->getFormObject();
+  if ($form_object instanceof ContentEntityFormInterface) {
+    $entity = $form_object->getEntity();
+    // Some entity types use 'default' for add/edit forms.
+    $operations = ['default', 'edit'];
+    if ($entity->getEntityTypeId() === 'user') {
+      $operations[] = 'register';
+    }
+    if (in_array($form_object->getOperation(), $operations, TRUE) && xmlsitemap_link_bundle_check_enabled($entity->getEntityTypeId(), $entity->bundle())) {
+      xmlsitemap_add_form_link_options($form, $entity->getEntityTypeId(), $entity->bundle(), $entity->id());
+    }
+  }
+}
+
+/**
+ * Implements hook_xmlsitemap_index_links().
+ */
+function xmlsitemap_xmlsitemap_index_links($limit) {
+  $entity_type_manager = \Drupal::entityTypeManager();
+  $entity_types = $entity_type_manager->getDefinitions();
+  foreach ($entity_types as $entity_type_id => $entity_type) {
+    // If an entity type is not supported it will not have link info.
+    $info = xmlsitemap_get_link_info($entity_type_id);
+    if (empty($info)) {
+      continue;
+    }
+
+    $bundles = xmlsitemap_get_link_type_enabled_bundles($entity_type_id);
+    if (empty($bundles)) {
+      continue;
+    }
+
+    try {
+      $linkStorage = \Drupal::service('xmlsitemap.link_storage');
+      $query = $linkStorage->getEntityQuery($entity_type_id, $bundles, NULL, 'NOT IN');
+      $query->range(0, $limit);
+      $query->addTag('xmlsitemap_index_links');
+
+      if ($ids = $query->execute()) {
+        // Chunk the array into batch sizes.
+        $chunks = array_chunk($ids, \Drupal::config('xmlsitemap.settings')->get('batch_limit'));
+        foreach ($chunks as $chunk) {
+          $info['xmlsitemap']['process callback']($entity_type_id, $chunk);
+        }
+
+        \Drupal::logger('xmlsitemap')->info('Indexed @count new @type items.', [
+          '@count' => count($ids),
+          '@type' => $entity_type_id,
+        ]);
+      }
+    }
+    catch (\Exception $e) {
+      watchdog_exception('xmlsitemap', $e);
+    }
+  }
+}
+
+/**
+ * Process sitemap links.
+ *
+ * @param string $entity_type_id
+ *   The entity type to process.
+ * @param array $entity_ids
+ *   Entity IDs to be processed.
+ */
+function xmlsitemap_xmlsitemap_process_entity_links($entity_type_id, array $entity_ids) {
+  /** @var \Drupal\Core\Entity\ContentEntityInterface[] $entities */
+  $entities = \Drupal::entityTypeManager()->getStorage($entity_type_id)->loadMultiple($entity_ids);
+  foreach ($entities as $entity) {
+    xmlsitemap_xmlsitemap_process_entity_link($entity);
+  }
+  // Reset the entity cache afterwards to clear out some memory.
+  \Drupal::service('entity.memory_cache')->deleteAll();
+}
+
+/**
+ * Process sitemap link for an entity.
+ *
+ * @param \Drupal\Core\Entity\EntityInterface $entity
+ *   The entity object.
+ * @param bool $process_translations
+ *   If TRUE will also process all the translations on the entity. FALSE will
+ *   skip the translations and just process the entity itself.
+ */
+function xmlsitemap_xmlsitemap_process_entity_link(EntityInterface $entity, bool $process_translations = TRUE) {
+  // Ignore any non-default revision entity data (for example, unpublished
+  // future revisions of existing published content).
+  if ($entity instanceof RevisionableInterface && !$entity->isDefaultRevision()) {
+    return;
+  }
+
+  /** @var \Drupal\xmlsitemap\XmlSitemapLinkStorageInterface $link_storage */
+  $link_storage = \Drupal::service('xmlsitemap.link_storage');
+
+  if ($process_translations && $entity instanceof TranslatableInterface) {
+    // Generate an entry for each translation.
+    $translation_languages = $entity->getTranslationLanguages();
+    foreach ($translation_languages as $langcode => $language) {
+      $translation = $entity->getTranslation($langcode);
+      xmlsitemap_xmlsitemap_process_entity_link($translation, FALSE);
+    }
+
+    // Check if there are any removed language translations.
+    if (isset($entity->original)) {
+      $original_translation_languages = $entity->original->getTranslationLanguages();
+      $removed_translation_languages = array_diff(array_keys($original_translation_languages), array_keys($translation_languages));
+      if (!empty($removed_translation_languages)) {
+        $link_storage->deleteMultiple([
+          'type' => $entity->getEntityTypeId(),
+          'id' => $entity->id(),
+          'language' => $removed_translation_languages,
+        ]);
+      }
+    }
+  }
+  else {
+    $link = $link_storage->create($entity);
+    $context = [$link['type'] => $entity, 'entity' => $entity];
+    $link_storage->save($link, $context);
+  }
+}
+
+/**
+ * Implements hook_entity_insert().
+ */
+function xmlsitemap_entity_insert(EntityInterface $entity) {
+  if (xmlsitemap_link_bundle_check_enabled($entity->getEntityTypeId(), $entity->bundle())) {
+    xmlsitemap_xmlsitemap_process_entity_link($entity);
+  }
+}
+
+/**
+ * Implements hook_entity_update().
+ */
+function xmlsitemap_entity_update(EntityInterface $entity) {
+  if (xmlsitemap_link_bundle_check_enabled($entity->getEntityTypeId(), $entity->bundle())) {
+    xmlsitemap_xmlsitemap_process_entity_link($entity);
+  }
+}
+
+/**
+ * Implements hook_entity_delete().
+ */
+function xmlsitemap_entity_delete(EntityInterface $entity) {
+  $langcode = $entity->language() ? $entity->language()->getId() : NULL;
+  \Drupal::service('xmlsitemap.link_storage')->delete($entity->getEntityTypeId(), $entity->id(), $langcode);
+}
+
+/**
+ * Implements hook_entity_translation_delete().
+ */
+function xmlsitemap_entity_translation_delete(EntityInterface $translation) {
+  \Drupal::service('xmlsitemap.link_storage')->delete($translation->getEntityTypeId(), $translation->id(), $translation->language()->getId());
+}
+
+/**
+ * Implements hook_xmlsitemap_context_info() for language module.
+ */
+function language_xmlsitemap_context_info() {
+  $context['language'] = [
+    'label' => t('Language'),
+    'summary callback' => 'language_name',
+    'default' => \Drupal::languageManager()->getDefaultLanguage()->getId(),
+  ];
+  return $context;
+}
+
+/**
+ * Implements hook_xmlsitemap_context() for language module.
+ */
+function language_xmlsitemap_context() {
+  $language = \Drupal::languageManager()->getCurrentLanguage();
+  $context['language'] = $language->getId();
+  return $context;
+}
+
+/**
+ * Implements hook_xmlsitemap_context_url_options() for language module.
+ */
+function language_xmlsitemap_context_url_options(array $context) {
+  $options = [];
+  if (isset($context['language'])) {
+    $options['language'] = xmlsitemap_language_load($context['language']);
+  }
+  return $options;
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter() for language module.
+ */
+function language_form_xmlsitemap_sitemap_edit_form_alter(&$form, FormStateInterface $form_state) {
+  $options = [];
+  $languages = \Drupal::languageManager()->getLanguages();
+  foreach ($languages as $language_key => $language) {
+    $options[$language_key] = $language->getName();
+  }
+
+  $form['context']['language'] = [
+    '#type' => 'select',
+    '#title' => t('Language'),
+    '#options' => $options,
+    '#default_value' => isset($form['#entity']->context['language']) ? $form['#entity']->context['language'] : \Drupal::languageManager()->getDefaultLanguage()->getId(),
+    '#description' => t('Most sites should only need a sitemap for their default language since translated content is now added to the sitemap using alternate links. If you truly need a sitemap for multiple languages, it is still possible to do so.'),
+  ];
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Set the regeneration needed flag if settings are changed.
+ */
+function xmlsitemap_form_language_admin_overview_form_alter(&$form, FormStateInterface $form_state) {
+  array_unshift($form['#submit'], 'xmlsitemap_form_submit_flag_regenerate');
+}
+
+/**
+ * Implements hook_query_TAG_alter() for language module.
+ */
+function language_query_xmlsitemap_generate_alter(AlterableInterface $query) {
+  $mode = \Drupal::config('xmlsitemap.settings')->get('i18n_selection_mode') ?: 'simple';
+
+  if ($mode === 'off') {
+    return;
+  }
+
+  /** @var \Drupal\xmlsitemap\XmlSitemapInterface $sitemap */
+  $sitemap = $query->getMetaData('sitemap');
+
+  // Get languages to simplify query building.
+  $default = \Drupal::languageManager()->getDefaultLanguage()->getId();
+  $current = isset($sitemap->context['language']) ? $sitemap->context['language'] : $default;
+
+  if ($mode == 'mixed' && $current == $default) {
+    // If mode is mixed but current = default, is the same as 'simple'.
+    $mode = 'simple';
+  }
+
+  switch ($mode) {
+    case 'simple':
+      // Current language and language neutral.
+      $query->condition('language', [
+        $current, LanguageInterface::LANGCODE_NOT_SPECIFIED,
+      ], 'IN');
+      break;
+
+    case 'mixed':
+      // Mixed current language (if available) or default language (if not) and
+      // language neutral.
+      $query->condition('language', [
+        $current, $default, LanguageInterface::LANGCODE_NOT_SPECIFIED,
+      ], 'IN');
+      break;
+
+    case 'default':
+      // Only default language and language neutral.
+      $query->condition('language', [$default, LanguageInterface::LANGCODE_NOT_SPECIFIED], 'IN');
+      break;
+
+    case 'strict':
+      // Only current language (for nodes), simple for all other types.
+      $node_condition = new Condition('AND');
+      $node_condition->condition('type', 'node', '=');
+      $node_condition->condition('language', $current, '=');
+      $normal_condition = new Condition('AND');
+      $normal_condition->condition('type', 'node', '<>');
+      $normal_condition->condition('language', [$current, LanguageInterface::LANGCODE_NOT_SPECIFIED], 'IN');
+      $condition = new Condition('OR');
+      $condition->condition($node_condition);
+      $condition->condition($normal_condition);
+      $query->condition($condition);
+      break;
+
+    case 'off':
+      // All content. No language conditions apply.
+      break;
+  }
+}
+
+/**
+ * Implements hook_xmlsitemap_element_alter() for language module.
+ */
+function language_xmlsitemap_element_alter(array &$element, array $link, XmlSitemapInterface $sitemap) {
+  // Add alternate links for each language for generic links.
+  if ($link['langcode'] === LanguageInterface::LANGCODE_NOT_SPECIFIED) {
+    $languages = \Drupal::languageManager()->getLanguages();
+    unset($languages[$sitemap->context['language']]);
+    foreach ($languages as $language) {
+      _xmlsitemap_element_add_alternate_lang($element, $link['loc'], $language, $sitemap);
+    }
+  }
+}
+
+/**
+ * Implements hook_xmlsitemap_element_alter() for content_translation module.
+ */
+function content_translation_xmlsitemap_element_alter(array &$element, array $link, XmlSitemapInterface $sitemap) {
+  if ($link['langcode'] === LanguageInterface::LANGCODE_NOT_SPECIFIED) {
+    return;
+  }
+
+  // @todo Cache this information longer than a static method.
+  $loc_whitelist = &drupal_static(__FUNCTION__);
+  if (!isset($loc_whitelist)) {
+    $loc_whitelist = FALSE;
+    if ($types = array_keys(\Drupal::service('content_translation.manager')->getSupportedEntityTypes())) {
+      $query = \Drupal::database()->select('xmlsitemap', 'x');
+      $query->distinct(TRUE);
+      $query->addExpression('SUBSTRING_INDEX(x.loc, :slash, 2)', 'path', [':slash' => '/']);
+      $query->condition('x.type', $types, 'IN');
+      $whitelist_paths = $query->execute()->fetchCol();
+      $loc_whitelist = '/^(' . implode('|', array_map(function ($path) {
+        return preg_quote($path . '/', '/') . '.*';
+      }, $whitelist_paths)) . ')/';
+    }
+  }
+
+  if ($loc_whitelist && preg_match($loc_whitelist, $link['loc'])) {
+    $query = \Drupal::database()->select('xmlsitemap', 'x');
+    $query->fields('x', ['loc', 'language']);
+    $query->condition('x.loc', $link['loc']);
+    $query->condition('x.language', [$link['langcode'], LanguageInterface::LANGCODE_NOT_SPECIFIED], 'NOT IN');
+    $query->condition('x.access', 1);
+    $query->condition('x.status', 1);
+    $language_links = $query->execute();
+    while ($language_link = $language_links->fetchAssoc()) {
+      _xmlsitemap_element_add_alternate_lang($element, $language_link['loc'], xmlsitemap_language_load($language_link['language']), $sitemap);
+    }
+  }
+}
+
+/**
+ * Adds alternate language links to a sitemap element.
+ *
+ * @param array $element
+ *   The sitemap element from hook_xmlsitemap_element_alter().
+ * @param string $loc
+ *   The location for the URL.
+ * @param \Drupal\Core\Language\LanguageInterface $language
+ *   The alternate language.
+ * @param \Drupal\xmlsitemap\XmlSitemapInterface $sitemap
+ *   The current sitemap being generated for the element.
+ *
+ * @internal
+ */
+function _xmlsitemap_element_add_alternate_lang(array &$element, $loc, LanguageInterface $language, XmlSitemapInterface $sitemap) {
+  $url_options = $sitemap->uri['options'];
+  $url_options += [
+    'absolute' => TRUE,
+    'base_url' => rtrim(Settings::get('xmlsitemap_base_url', \Drupal::state()->get('xmlsitemap_base_url')), '/'),
+    'alias' => FALSE,
+  ];
+
+  $alternate_href = Url::fromUri('internal:' . $loc, ['language' => $language] + $url_options)->toString();
+  if ($alternate_href !== $element['loc']) {
+    $element[] = [
+      'key' => 'xhtml:link',
+      'attributes' => [
+        'rel' => 'alternate',
+        'hreflang' => $language->getId(),
+        'href' => $alternate_href,
+      ],
+    ];
+  }
+}
+
+/**
+ * Implements hook_xmlsitemap_link_info().
+ */
+function xmlsitemap_xmlsitemap_link_info() {
+  return [
+    'frontpage' => [
+      'label' => t('Frontpage'),
+      'xmlsitemap' => [
+        'settings callback' => 'xmlsitemap_link_frontpage_settings',
+      ],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_xmlsitemap_link_alter().
+ */
+function xmlsitemap_xmlsitemap_link_alter(&$link) {
+  // Alter the frontpage priority.
+  if ($link['type'] == 'frontpage' || $link['loc'] == '/' || $link['loc'] == Drupal::config('system.site')->get('page.front')) {
+    $link['priority'] = \Drupal::config('xmlsitemap.settings')->get('frontpage_priority');
+    $link['changefreq'] = \Drupal::config('xmlsitemap.settings')->get('frontpage_changefreq');
+  }
+}
+
+/**
+ * Implements hook_xmlsitemap_links().
+ */
+function xmlsitemap_xmlsitemap_links() {
+  // Frontpage link.
+  $links[] = [
+    'type' => 'frontpage',
+    'id' => 0,
+    'loc' => '/',
+  ];
+  return $links;
+}
+
+/**
+ * Implements hook_xmlsitemap_sitemap_operations().
+ */
+function xmlsitemap_xmlsitemap_sitemap_operations() {
+  $operations['update'] = [
+    'label' => t('Update cached files'),
+    'action past' => t('Updated'),
+    'callback' => 'xmlsitemap_sitemap_multiple_update',
+  ];
+  return $operations;
+}
+
+/**
+ * XML Sitemap link type settings callback for frontpage link entity.
+ *
+ * @param array $form
+ *   Form array.
+ *
+ * @return array
+ *   Updated form.
+ */
+function xmlsitemap_link_frontpage_settings(array &$form) {
+  if (\Drupal::currentUser()->hasPermission('administer site configuration')) {
+    $form['#description'] = t('The front page path can be changed in the <a href="@url-frontpage">site information configuration</a>.', ['@url-frontpage' => Url::fromRoute('system.site_information_settings')->toString()]);
+  }
+  $form['frontpage_priority'] = [
+    '#type' => 'select',
+    '#title' => t('Priority'),
+    '#options' => xmlsitemap_get_priority_options(),
+    '#default_value' => \Drupal::config('xmlsitemap.settings')->get('frontpage_priority'),
+  ];
+  $form['frontpage_changefreq'] = [
+    '#type' => 'select',
+    '#title' => t('Change frequency'),
+    '#options' => xmlsitemap_get_changefreq_options(),
+    '#default_value' => \Drupal::config('xmlsitemap.settings')->get('frontpage_changefreq'),
+  ];
+  return $form;
+}
+
+/**
+ * XML Sitemap operation callback; regenerate sitemap files using the batch API.
+ *
+ * @param array $smids
+ *   An array of XML Sitemap IDs.
+ *
+ * @see xmlsitemap_regenerate_batch()
+ */
+function xmlsitemap_sitemap_multiple_update(array $smids) {
+  $batch = xmlsitemap_regenerate_batch($smids);
+  batch_set($batch);
+}
+
+/**
+ * Add a table summary for an entity and its bundles.
+ *
+ * @param array $form
+ *   Form array.
+ * @param string $entity
+ *   Entity type id.
+ * @param array $entity_info
+ *   Info about the entity type.
+ */
+function xmlsitemap_add_form_entity_summary(array &$form, $entity, array $entity_info) {
+  $priorities = xmlsitemap_get_priority_options(NULL, FALSE);
+  $statuses = xmlsitemap_get_status_options(NULL);
+
+  $rows = [];
+  $totals = ['total' => 0, 'indexed' => 0, 'visible' => 0];
+  foreach ($entity_info['bundles'] as $bundle => $bundle_info) {
+    // Fetch current per-bundle link total and indexed counts.
+    if (!xmlsitemap_link_bundle_check_enabled($entity, $bundle)) {
+      continue;
+    }
+    $status = xmlsitemap_get_link_type_indexed_status($entity, $bundle);
+    $totals['total'] += $status['total'];
+    $totals['indexed'] += $status['indexed'];
+    $totals['visible'] += $status['visible'];
+
+    $rows[] = [
+      Link::createFromRoute($bundle_info['label'], 'xmlsitemap.admin_settings_bundle', ['entity' => $entity, 'bundle' => $bundle]),
+      $statuses[$bundle_info['xmlsitemap']['status'] ? 1 : 0],
+      $priorities[number_format($bundle_info['xmlsitemap']['priority'], 1)],
+      $status['total'],
+      $status['indexed'],
+      $status['visible'],
+    ];
+  }
+
+  if ($rows) {
+    $header = [
+      $entity_info['bundle label'] ?? '',
+      t('Inclusion'),
+      t('Priority'),
+      t('Available'),
+      t('Indexed'),
+      t('Visible'),
+    ];
+    $rows[] = [
+      [
+        'data' => t('Totals'),
+        'colspan' => 3,
+        'header' => TRUE,
+      ],
+      [
+        'data' => $totals['total'],
+        'header' => TRUE,
+      ],
+      [
+        'data' => $totals['indexed'],
+        'header' => TRUE,
+      ],
+      [
+        'data' => $totals['visible'],
+        'header' => TRUE,
+      ],
+    ];
+    $form['summary'] = [
+      '#theme' => 'table',
+      '#header' => $header,
+      '#rows' => $rows,
+    ];
+  }
+}
+
+/**
+ * Add the link type XML Sitemap options to the link type's form.
+ *
+ * Caller is responsible for ensuring xmlsitemap_link_bundle_settings_save()
+ * is called during submission.
+ *
+ * @param array $form
+ *   Form array.
+ * @param Drupal\Core\Form\FormStateInterface $form_state
+ *   Form state array.
+ * @param string $entity
+ *   Entity type id.
+ * @param string $bundle
+ *   Bundle id.
+ */
+function xmlsitemap_add_link_bundle_settings(array &$form, FormStateInterface $form_state, $entity, $bundle) {
+  $entity_info = xmlsitemap_get_link_info($entity);
+
+  $bundle_info = xmlsitemap_link_bundle_load($entity, $bundle);
+
+  $form['xmlsitemap'] = [
+    '#type' => 'details',
+    '#title' => t('XML Sitemap'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+    '#access' => \Drupal::currentUser()->hasPermission('administer xmlsitemap'),
+    '#group' => 'advanced',
+    '#tree' => TRUE,
+    '#entity' => $entity,
+    '#bundle' => $bundle,
+    '#entity_info' => $entity_info,
+    '#bundle_info' => $bundle_info,
+  ];
+
+  $form['xmlsitemap']['description'] = [
+    '#prefix' => '<div class="description">',
+    '#suffix' => '</div>',
+    '#markup' => t('Changing these type settings will affect any items of this type that have either inclusion or priority set to default.'),
+  ];
+  $form['xmlsitemap']['status'] = [
+    '#type' => 'select',
+    '#title' => t('Inclusion'),
+    '#options' => xmlsitemap_get_status_options(),
+    '#default_value' => (int) $bundle_info['status'],
+  ];
+  $form['xmlsitemap']['priority'] = [
+    '#type' => 'select',
+    '#title' => t('Default priority'),
+    '#options' => xmlsitemap_get_priority_options(),
+    '#default_value' => $bundle_info['priority'],
+    '#states' => [
+      'invisible' => [
+        'select[name="xmlsitemap[status]"]' => ['value' => '0'],
+      ],
+    ],
+  ];
+  $form['xmlsitemap']['changefreq'] = [
+    '#type' => 'select',
+    '#title' => t('Default change frequency'),
+    '#options' => xmlsitemap_get_changefreq_options(),
+    '#default_value' => $bundle_info['changefreq'],
+    '#states' => [
+      'invisible' => [
+        'select[name="xmlsitemap[status]"]' => ['value' => '0'],
+      ],
+    ],
+  ];
+}
+
+/**
+ * Get a list of priority options.
+ *
+ * @param string $default
+ *   Include a 'default' option.
+ * @param bool $guides
+ *   Add helpful indicators for the highest, middle and lowest values.
+ *
+ * @return array
+ *   An array of options.
+ */
+function xmlsitemap_get_priority_options($default = NULL, $guides = TRUE) {
+  $options = [];
+  $priorities = [
+    '1.0' => t('1.0'),
+    '0.9' => t('0.9'),
+    '0.8' => t('0.8'),
+    '0.7' => t('0.7'),
+    '0.6' => t('0.6'),
+    '0.5' => t('0.5'),
+    '0.4' => t('0.4'),
+    '0.3' => t('0.3'),
+    '0.2' => t('0.2'),
+    '0.1' => t('0.1'),
+    '0.0' => t('0.0'),
+  ];
+
+  if (isset($default)) {
+    $default = number_format($default, 1);
+    $options['default'] = t('Default (@value)', ['@value' => $priorities[$default]]);
+  }
+
+  // Add the rest of the options.
+  $options += $priorities;
+
+  if ($guides) {
+    $options['1.0'] .= ' ' . t('(highest)');
+    $options['0.5'] .= ' ' . t('(normal)');
+    $options['0.0'] .= ' ' . t('(lowest)');
+  }
+
+  return $options;
+}
+
+/**
+ * Get a list of priority options.
+ *
+ * @param string $default
+ *   Include a 'default' option.
+ *
+ * @return array
+ *   An array of options.
+ *
+ * @see _xmlsitemap_translation_strings()
+ */
+function xmlsitemap_get_status_options($default = NULL) {
+  $options = [];
+  $statuses = [
+    1 => t('Included'),
+    0 => t('Excluded'),
+  ];
+
+  if (isset($default)) {
+    $default = $default ? 1 : 0;
+    $options['default'] = t('Default (@value)', ['@value' => mb_strtolower($statuses[$default])]);
+  }
+
+  $options += $statuses;
+
+  return $options;
+}
+
+/**
+ * Get the sitemap chunk/page of the current request.
+ *
+ * @param \Drupal\xmlsitemap\XmlSitemapInterface $sitemap
+ *   Sitemap entity.
+ * @param \Symfony\Component\HttpFoundation\Request $request
+ *   The request to use if provided, otherwise \Drupal::request() will be used.
+ *
+ * @return int|string
+ *   Returns current chunk of the sitemap.
+ */
+function xmlsitemap_get_current_chunk(XmlSitemapInterface $sitemap, Request $request = NULL) {
+  if (!isset($request)) {
+    $request = \Drupal::request();
+  }
+
+  // Check if we should display the index.
+  $query = $request->query;
+  $query_page = $query->get('page');
+  if (!isset($query_page) || !is_numeric($query_page)) {
+    if ($sitemap->getChunks() > 1) {
+      return 'index';
+    }
+    else {
+      return 1;
+    }
+  }
+  else {
+    return (int) $query_page;
+  }
+}
+
+/**
+ * Creates a response reading the sitemap file and adding content to response.
+ *
+ * @param \Symfony\Component\HttpFoundation\Response $response
+ *   Response object.
+ * @param string $file
+ *   File uri.
+ * @param array $headers
+ *   Headers of the response.
+ *
+ * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+ *   The sitemap response object.
+ *
+ * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+ *   If the sitemap is not found or the sitemap file is not readable.
+ *
+ * @deprecated in xmlsitemap:8.x-1.0 and is removed from xmlsitemap:2.0.0. Use
+ *   \Drupal\xmlsitemap\Controller\XmlSitemapController::getSitemapResponse()
+ *   instead.
+ *
+ * @see https://www.drupal.org/project/xmlsitemap/issues/2869214
+ */
+function xmlsitemap_output_file(Response $response, $file, array $headers = []) {
+  @trigger_error(__FUNCTION__ . ' is deprecated in xmlsitemap:8.x-1.0 and will be removed in xmlsitemap:2.0.0. Use \Drupal\xmlsitemap\Controller\XmlSitemapController::getSitemapResponse. See https://www.drupal.org/project/xmlsitemap/issues/2869214', E_USER_DEPRECATED);
+  /** @var \Drupal\xmlsitemap\Controller\XmlSitemapController $controller */
+  $controller = \Drupal::classResolver(XmlSitemapController::class);
+  return $controller->getSitemapResponse($file, \Drupal::request(), $headers + $response->headers->all());
+}
+
+/**
+ * Get Blurb.
+ *
+ * Fetch a short blurb string about module maintainership and sponsors.
+ * This message will be FALSE in 'official' releases.
+ *
+ * @param mixed $check_version
+ *   Check version.
+ *
+ * @static string $blurb
+ *   Blurb message.
+ *
+ * @return string
+ *   String with $blurb.
+ */
+function _xmlsitemap_get_blurb($check_version = TRUE) {
+  static $blurb;
+
+  if (!isset($blurb)) {
+    $blurb = FALSE;
+    if (!$check_version || (($version = _xmlsitemap_get_version()) && preg_match('/dev|unstable|alpha|beta|HEAD/i', $version))) {
+      $sponsors = [
+        \Drupal::linkGenerator()->generate('Symantec', Url::fromUri('http://www.symantec.com/', ['attributes' => ['target' => 'blank']])),
+        \Drupal::linkGenerator()->generate('WebWise Solutions', Url::fromUri('http://www.webwiseone.com/', ['attributes' => ['target' => 'blank']])),
+        \Drupal::linkGenerator()->generate('Volacci', Url::fromUri('http://www.volacci.com/', ['attributes' => ['target' => 'blank']])),
+        \Drupal::linkGenerator()->generate('lanetro', Url::fromUri('http://www.lanetro.com/', ['attributes' => ['target' => 'blank']])),
+        \Drupal::linkGenerator()->generate('Coupons Dealuxe', Url::fromUri('http://couponsdealuxe.com/', ['attributes' => ['target' => 'blank']])),
+      ];
+      // Don't extract the following string for translation.
+      $blurb = '<div class="description"><p>Thank you for helping test the XML Sitemap module rewrite. Please consider helping offset developer free time by <a href="http://davereid.chipin.com/" target="blank">donating</a> or if your company is interested in sponsoring the rewrite or a specific feature, please <a href="http://davereid.net/contact" target="blank">contact the developer</a>. Thank you to the following current sponsors: ' . implode(', ', $sponsors) . ', and all the individuals that have donated. This message will not be seen in the stable versions.</p></div>';
+      // http://drupalmodules.com/module/xml-sitemap
+    }
+  }
+
+  return $blurb;
+}
+
+/**
+ * Returns xmlsitemap module version.
+ *
+ * @static string $version
+ *   Current version.
+ *
+ * @return string
+ *   Xmlsitemap module version.
+ */
+function _xmlsitemap_get_version() {
+  static $version;
+  if (!isset($version)) {
+    $modules = \Drupal::service('extension.list.module')->getList();
+    $version = $modules['xmlsitemap']->info['version'];
+  }
+  return $version;
+}
+
+/**
+ * Check the status of all hook_requirements() from any xmlsitemap modules.
+ *
+ * @return bool
+ *   TRUE if all requirements are met, FALSE otherwise.
+ */
+function xmlsitemap_check_status() {
+  $messages = &drupal_static(__FUNCTION__);
+
+  if (!isset($messages)) {
+    $moduleHandler = \Drupal::moduleHandler();
+
+    // Cache the list of modules that are checked.
+    if ($cache = \Drupal::cache('bootstrap')->get('xmlsitemap:registry:requirements')) {
+      $modules = $cache->data;
+    }
+    else {
+      $moduleHandler->loadAllIncludes('install');
+      $modules = array_keys($moduleHandler->getModuleList());
+      $modules = array_filter($modules, function ($module) use ($moduleHandler) {
+        if (strpos($module, 'xmlsitemap') === FALSE) {
+          return FALSE;
+        }
+        elseif (!method_exists($moduleHandler, 'hasImplementations')) {
+          // @todo Remove this check once we require Drupal 9.4+.
+          return $moduleHandler->implementsHook($module, 'requirements');
+        }
+        else {
+          return $moduleHandler->hasImplementations('requirements', $module);
+        }
+      });
+      \Drupal::cache('bootstrap')->set('xmlsitemap:registry:requirements', $modules, Cache::PERMANENT, ['xmlsitemap']);
+    }
+
+    $messages = [];
+    require_once DRUPAL_ROOT . '/core/includes/install.inc';
+    foreach ($modules as $module) {
+      $moduleHandler->loadInclude($module, 'install');
+      $requirements = $moduleHandler->invoke($module, 'requirements', ['runtime']);
+      foreach ($requirements as $requirement) {
+        if (isset($requirement['severity']) && max(REQUIREMENT_OK, $requirement['severity'])) {
+          $messages[] = $requirement['description'];
+        }
+      }
+    }
+
+    if ($messages) {
+      $messages = [
+        '#type' => 'item_list',
+        '#items' => [$messages],
+      ];
+      $message = t('One or more problems were detected with your XML Sitemap configuration: @messages', ['@messages' => \Drupal::service('renderer')->render($messages)]);
+      \Drupal::messenger()->addWarning($message, FALSE);
+      if (\Drupal::currentUser()->hasPermission('access site reports')) {
+        \Drupal::messenger()->addWarning(t('Check the <a href="@status-report">status report</a> for more information.', ['@status-report' => Url::fromRoute('system.status')->toString()]), FALSE);
+      }
+    }
+  }
+
+  return !empty($messages);
+}
+
+/**
+ * Perform operations before rebuilding the sitemap.
+ */
+function _xmlsitemap_regenerate_before() {
+  \Drupal::service('xmlsitemap_generator')->regenerateBefore();
+}
+
+/**
+ * Batch information callback for regenerating the sitemap files.
+ *
+ * @param array $smids
+ *   An optional array of XML Sitemap IDs. If not provided, it will load all
+ *   existing XML Sitemaps.
+ */
+function xmlsitemap_regenerate_batch(array $smids = []) {
+  if (empty($smids)) {
+    $sitemaps = \Drupal::entityTypeManager()->getStorage('xmlsitemap')->loadMultiple();
+    foreach ($sitemaps as $sitemap) {
+      $smids[] = $sitemap->id();
+    }
+  }
+
+  $t = 't';
+  $batch = [
+    'operations' => [],
+    'error_message' => $t('An error has occurred.'),
+    'finished' => 'xmlsitemap_regenerate_batch_finished',
+    'title' => t('Regenerating Sitemap'),
+  ];
+
+  // Set the regenerate flag in case something fails during file generation.
+  $batch['operations'][] = ['xmlsitemap_batch_variable_set', [['xmlsitemap_regenerate_needed' => TRUE]]];
+
+  // @todo Get rid of this batch operation.
+  $batch['operations'][] = ['_xmlsitemap_regenerate_before', []];
+
+  // Generate all the sitemap pages for each context.
+  foreach ($smids as $smid) {
+    $batch['operations'][] = ['xmlsitemap_regenerate_batch_generate', [$smid]];
+    $batch['operations'][] = ['xmlsitemap_regenerate_batch_generate_index', [$smid]];
+  }
+
+  // Clear the regeneration flag.
+  $batch['operations'][] = ['xmlsitemap_batch_variable_set', [['xmlsitemap_regenerate_needed' => FALSE]]];
+
+  return $batch;
+}
+
+/**
+ * Batch callback; generate all pages of a sitemap.
+ *
+ * @param string $smid
+ *   Sitemap entity id.
+ * @param array|\ArrayAccess $context
+ *   Sitemap context.
+ */
+function xmlsitemap_regenerate_batch_generate($smid, &$context = []) {
+  \Drupal::service('xmlsitemap_generator')->regenerateBatchGenerate($smid, $context);
+}
+
+/**
+ * Batch callback; generate the index page of a sitemap.
+ *
+ * @param string $smid
+ *   Sitemap entity id.
+ * @param array|\ArrayAccess $context
+ *   Sitemap context.
+ */
+function xmlsitemap_regenerate_batch_generate_index($smid, &$context = []) {
+  \Drupal::service('xmlsitemap_generator')->regenerateBatchGenerateIndex($smid, $context);
+}
+
+/**
+ * Batch callback; sitemap regeneration finished.
+ *
+ * @param bool $success
+ *   Checks if regeneration batch process was successful.
+ * @param array $results
+ *   Results for the regeneration process.
+ * @param array $operations
+ *   Operations performed.
+ * @param int $elapsed
+ *   Time elapsed.
+ */
+function xmlsitemap_regenerate_batch_finished($success, array $results, array $operations, $elapsed) {
+  \Drupal::service('xmlsitemap_generator')->regenerateBatchFinished($success, $results, $operations, $elapsed);
+}
+
+/**
+ * Batch information callback for rebuilding the sitemap data.
+ *
+ * @param array $entity_type_ids
+ *   Entity types to rebuild.
+ * @param bool $save_custom
+ *   Save custom data.
+ *
+ * @return array
+ *   Batch array.
+ */
+function xmlsitemap_rebuild_batch(array $entity_type_ids, $save_custom = FALSE) {
+  $batch = [
+    'operations' => [],
+    'finished' => 'xmlsitemap_rebuild_batch_finished',
+    'title' => t('Rebuilding Sitemap'),
+    'file' => \Drupal::service('extension.list.module')->getPath('xmlsitemap') . '/xmlsitemap.generate.inc',
+  ];
+
+  // Set the rebuild flag in case something fails during the rebuild.
+  $batch['operations'][] = ['xmlsitemap_batch_variable_set', [['xmlsitemap_rebuild_needed' => TRUE]]];
+
+  // Purge any links first.
+  $batch['operations'][] = [
+    'xmlsitemap_rebuild_batch_clear', [$entity_type_ids, (bool) $save_custom],
+  ];
+
+  // Fetch all the sitemap links and save them to the {xmlsitemap} table.
+  foreach ($entity_type_ids as $entity_type_id) {
+    $info = xmlsitemap_get_link_info($entity_type_id);
+    $batch['operations'][] = [$info['xmlsitemap']['rebuild callback'], [$entity_type_id]];
+  }
+
+  // Clear the rebuild flag.
+  $batch['operations'][] = ['xmlsitemap_batch_variable_set', [['xmlsitemap_rebuild_needed' => FALSE]]];
+
+  // Add the regeneration batch.
+  $regenerate_batch = xmlsitemap_regenerate_batch();
+  $batch['operations'] = array_merge($batch['operations'], $regenerate_batch['operations']);
+
+  return $batch;
+}
+
+/**
+ * Batch callback; set an array of variables and their values.
+ *
+ * @param array $variables
+ *   Variables to be set during the batch process.
+ */
+function xmlsitemap_batch_variable_set(array $variables) {
+  \Drupal::service('xmlsitemap_generator')->batchVariableSet($variables);
+}
+
+/**
+ * Batch callback; clear sitemap links for entities.
+ *
+ * @param array $entity_type_ids
+ *   Entity types to rebuild.
+ * @param bool $save_custom
+ *   Save custom data.
+ * @param array|\ArrayAccess $context
+ *   Context to be rebuilt.
+ */
+function xmlsitemap_rebuild_batch_clear(array $entity_type_ids, $save_custom, &$context = []) {
+  \Drupal::service('xmlsitemap_generator')->rebuildBatchClear($entity_type_ids, $save_custom, $context);
+}
+
+/**
+ * Batch callback; fetch and add the sitemap links for a specific entity type.
+ *
+ * @param string $entity_type_id
+ *   Entity type ID.
+ * @param array|\ArrayAccess $context
+ *   Sitemap context.
+ */
+function xmlsitemap_rebuild_batch_fetch($entity_type_id, &$context) {
+  \Drupal::service('xmlsitemap_generator')->rebuildBatchFetch($entity_type_id, $context);
+}
+
+/**
+ * Batch callback; sitemap rebuild finished.
+ *
+ * @param bool $success
+ *   Checks if regeneration batch process was successful.
+ * @param array $results
+ *   Results for the regeneration process.
+ * @param array $operations
+ *   Operations performed.
+ * @param int $elapsed
+ *   Time elapsed.
+ */
+function xmlsitemap_rebuild_batch_finished($success, array $results, array $operations, $elapsed) {
+  \Drupal::service('xmlsitemap_generator')->rebuildBatchFinished($success, $results, $operations, $elapsed);
+}
+
+/**
+ * Get all rebuildable entity types.
+ *
+ * @return array
+ *   Array with all rebuildable entity types.
+ */
+function xmlsitemap_get_rebuildable_link_types() {
+  $rebuild_types = [];
+  $entities = xmlsitemap_get_link_info();
+
+  foreach ($entities as $entity => $info) {
+    if (empty($info['xmlsitemap']['rebuild callback'])) {
+      // If the entity is missing a rebuild callback, skip.
+      continue;
+    }
+    if (!empty($info['bundles']) && !xmlsitemap_get_link_type_enabled_bundles($entity)) {
+      // If the entity has bundles, but no enabled bundles, skip since
+      // rebuilding wouldn't get any links.
+      continue;
+    }
+    $rebuild_types[] = $entity;
+  }
+
+  return $rebuild_types;
+}
+
+/**
+ * Link bundle enable.
+ *
+ * Enable an entity bundle and create specific xmlsitemap settings config
+ * object.
+ *
+ * @param string $entity_type_id
+ *   Entity type id.
+ * @param string $bundle_id
+ *   Bundle id.
+ *
+ * @return bool
+ *   Returns TRUE if operation was successful.
+ */
+function xmlsitemap_link_bundle_enable($entity_type_id, $bundle_id) {
+  if (!xmlsitemap_link_bundle_check_enabled($entity_type_id, $bundle_id)) {
+    $settings = [
+      'status' => XMLSITEMAP_STATUS_DEFAULT,
+      'priority' => XMLSITEMAP_PRIORITY_DEFAULT,
+      'changefreq' => 0,
+    ];
+    xmlsitemap_link_bundle_settings_save($entity_type_id, $bundle_id, $settings);
+  }
+  return TRUE;
+}
+
+/**
+ * Link bundle check enabled.
+ *
+ * Check if a bundle is enabled and config object xmlsitemap.settings object
+ * exists.
+ *
+ * @param string $entity_type_id
+ *   Entity type id.
+ * @param string $bundle_id
+ *   Bundle id.
+ *
+ * @return bool
+ *   Returns TRUE if bundle is enabled, FALSE otherwise.
+ */
+function xmlsitemap_link_bundle_check_enabled($entity_type_id, $bundle_id) {
+  return !\Drupal::config("xmlsitemap.settings.{$entity_type_id}.{$bundle_id}")->isNew();
+}
+
+/**
+ * Check if an entity is enabled and configuration exists for the entity type.
+ *
+ * @param string $entity_type_id
+ *   Entity type id.
+ *
+ * @return bool
+ *   Returns TRUE if bundle is enabled, FALSE otherwise.
+ */
+function xmlsitemap_link_entity_check_enabled($entity_type_id) {
+  $configuration = \Drupal::configFactory()->listAll("xmlsitemap.settings.{$entity_type_id}.");
+  return !empty($configuration);
+}
+
+/**
+ * Implements hook_xmlsitemap_link_alter() on behalf of metatag.module.
+ */
+function metatag_xmlsitemap_link_alter(array &$link, array $context) {
+  $enabled = &drupal_static(__FUNCTION__);
+  if (!isset($enabled)) {
+    $enabled = \Drupal::config('xmlsitemap.settings')->get('metatag_exclude_noindex');
+  }
+
+  if ($enabled && !empty($context['entity']) && $context['entity'] instanceof ContentEntityInterface && $link['access']) {
+    /** @var \Drupal\metatag\MetatagManagerInterface $metatagManager */
+    $metatagManager = \Drupal::service('metatag.manager');
+    $metatags = $metatagManager->tagsFromEntity($context['entity']);
+    if (!empty($metatags['robots'])) {
+      $has_noindex = FALSE;
+      if (is_string($metatags['robots'])) {
+        // Check for `noindex` value in legacy string format.
+        $has_noindex = strpos($metatags['robots'], 'noindex');
+      }
+      if (is_array($metatags['robots'] && isset($metatags['robots']['noindex']))) {
+        // Check for `noindex` value in current array format.
+        $has_noindex = $metatags['robots']['noindex'] === 1;
+      }
+      if ($has_noindex !== FALSE) {
+        $link['access'] = FALSE;
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * @file
+ * Installation actions for Blazy.
+ */
+
+/**
+ * Implements hook_uninstall().
+ */
+function blazy_uninstall() {
+  blazy_filter_cleanup('blazy');
+}

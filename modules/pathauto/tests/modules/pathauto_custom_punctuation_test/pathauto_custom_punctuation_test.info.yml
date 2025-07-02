@@ -1,0 +1,9 @@
+name: 'Pathauto custom punctuation testing module'
+type: module
+description: 'Add some uncommon punctuation to the replacement list.'
+package: Testing
+
+# Information added by Drupal.org packaging script on 2024-08-01
+version: '8.x-1.13'
+project: 'pathauto'
+datestamp: 1722507674

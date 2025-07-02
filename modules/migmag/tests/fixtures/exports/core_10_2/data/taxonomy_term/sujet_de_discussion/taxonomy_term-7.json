@@ -1,0 +1,25 @@
+[
+    {
+        "tid": 7,
+        "uuid": "889f928f-6c01-47b5-b8fc-86a532ea6c9b",
+        "revision_id": 7,
+        "langcode": "en",
+        "vid": "sujet_de_discussion",
+        "revision_created": 1623674334,
+        "revision_user": null,
+        "revision_log_message": null,
+        "status": "1",
+        "name": "Minecraft",
+        "description": null,
+        "weight": 1,
+        "parent": 6,
+        "changed": 1623674334,
+        "default_langcode": "1",
+        "revision_default": "1",
+        "revision_translation_affected": "1",
+        "content_translation_source": "und",
+        "content_translation_outdated": "0",
+        "content_translation_uid": 1,
+        "content_translation_created": 1623674334
+    }
+]

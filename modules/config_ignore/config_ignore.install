@@ -1,0 +1,51 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the config_ignore module.
+ */
+
+use Drupal\config_ignore\ConfigIgnoreConfig;
+
+/**
+ * Enable the config_filter module.
+ */
+function config_ignore_update_8201() {
+  \Drupal::getContainer()->get('module_installer')->install(['config_filter']);
+}
+
+/**
+ * Remove index from configuration export.
+ */
+function config_ignore_update_8202() {
+  $config = \Drupal::configFactory()->getEditable('config_ignore.settings');
+  $ignored_config_entities = $config->get('ignored_config_entities') ?: [];
+  $config->set('ignored_config_entities', array_values($ignored_config_entities));
+  $config->save();
+}
+
+/**
+ * Force-clear the config_filter plugin cache.
+ */
+function config_ignore_update_8301() {
+  \Drupal::cache('discovery')->delete('config_filter_plugins');
+}
+
+/**
+ * Set the new mode of config ignore to simple.
+ */
+function config_ignore_update_8302() {
+  $config = \Drupal::configFactory()->getEditable('config_ignore.settings');
+  $existing = $config->get('mode');
+  if ($existing) {
+    if (!in_array($existing, ['simple', 'intermediate', 'advanced'])) {
+      throw new UnexpectedValueException(sprintf('The mode of the config ignore settings is set but not an expected value: %s', (string) $existing));
+    }
+    return;
+  }
+  $object = new ConfigIgnoreConfig('simple', $config->get('ignored_config_entities') ?? []);
+  // Save the config with the mode set and the settings sorted.
+  $config->set('mode', 'simple');
+  $config->set('ignored_config_entities', $object->getFormated('simple'));
+  $config->save();
+}

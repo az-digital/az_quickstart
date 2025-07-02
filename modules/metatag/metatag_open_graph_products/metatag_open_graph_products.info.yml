@@ -1,0 +1,13 @@
+name: 'Metatag: Open Graph Products'
+type: module
+description: Provides additional Open Graph Protocol meta tags for describing products.
+core_version_requirement: '^9.4 || ^10 || ^11'
+package: SEO
+dependencies:
+  - metatag:metatag
+  - metatag:metatag_open_graph
+
+# Information added by Drupal.org packaging script on 2024-11-07
+version: '2.1.0'
+project: 'metatag'
+datestamp: 1731004045

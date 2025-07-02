@@ -1,0 +1,6 @@
+metatag_routes.create_custom_metatag.action:
+  route_name: metatag_routes.create
+  title: 'Add meta tag for custom route'
+  weight: 1
+  appears_on:
+    - entity.metatag_defaults.collection

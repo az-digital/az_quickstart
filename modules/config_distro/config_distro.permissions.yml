@@ -1,0 +1,3 @@
+synchronize distro configuration:
+  title: 'Synchronize distribution configuration'
+  restrict access: true

@@ -1,0 +1,18 @@
+#!/bin/bash
+
+#ddev-generated
+## Command provided by https://github.com/ddev/ddev-drupal-contrib
+## Description: Symlink all root files/dirs into web.modules/custom/[PROJECT_NAME]
+## Usage: symlink-project [flags] [args]
+## Example: "ddev symlink-project"
+## ExecRaw: true
+
+export _WEB_ROOT=$DDEV_DOCROOT
+#todo use more dynamic ref.
+cd "$DDEV_COMPOSER_ROOT" || exit
+curl -OL https://git.drupalcode.org/project/gitlab_templates/-/raw/default-ref/scripts/symlink_project.php
+
+# Symlink name using underscores.
+# @see https://www.drupal.org/docs/develop/creating-modules/naming-and-placing-your-drupal-module
+php symlink_project.php "${DDEV_SITENAME//-/_}"
+rm -f symlink_project.php

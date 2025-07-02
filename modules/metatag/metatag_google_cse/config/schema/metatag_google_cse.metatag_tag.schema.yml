@@ -1,0 +1,19 @@
+# The 'type' should be "label" for short meta tags and "text" for ones which
+# could get longer, especially ones which use a textarea field instead of a
+# textfield.
+
+metatag.metatag_tag.thumbnail:
+  type: text
+  label: 'Thumbnail'
+metatag.metatag_tag.department:
+  type: text
+  label: 'Department'
+metatag.metatag_tag.audience:
+  type: text
+  label: 'Content audience'
+metatag.metatag_tag.doc_status:
+  type: text
+  label: 'Document status'
+metatag.metatag_tag.google_rating:
+  type: text
+  label: 'google_rating'

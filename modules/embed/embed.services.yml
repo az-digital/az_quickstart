@@ -1,0 +1,8 @@
+services:
+  access_check.embed_button_editor:
+    class: Drupal\embed\Access\EmbedButtonEditorAccessCheck
+    tags:
+      - { name: access_check, applies_to: _embed_button_editor_access }
+  plugin.manager.embed.type:
+    class: Drupal\embed\EmbedType\EmbedTypeManager
+    arguments: ['@container.namespaces', '@cache.discovery', '@module_handler']

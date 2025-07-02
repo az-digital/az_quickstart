@@ -1,0 +1,3 @@
+# Ignore development and scaffolding tools
+incubator
+node_modules

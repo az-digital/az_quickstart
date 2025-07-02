@@ -1,0 +1,4 @@
+library:
+  css:
+    component:
+      assets/test.css: {}

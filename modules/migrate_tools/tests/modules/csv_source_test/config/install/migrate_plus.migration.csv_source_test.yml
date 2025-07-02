@@ -1,0 +1,39 @@
+langcode: en
+status: true
+id: csv_source_test
+label: Test edit of column aliases for CSV source plugin
+class: null
+field_plugin_method: null
+cck_plugin_method: null
+migration_tags: {  }
+migration_group: csv_test
+source:
+  plugin: csv
+  path: 'public://test.csv'
+  header_offset: 0
+  enclosure: '"'
+  ids:
+    - vid
+  fields:
+    -
+      name: vid
+      label: Vocabulary Id
+    -
+      name: name
+      label: Name
+    -
+      name: description
+      label: Description
+process:
+  vid: vid
+  name: name
+  description: description
+destination:
+  plugin: entity:taxonomy_vocabulary
+migration_dependencies:
+  required: {  }
+  optional: {  }
+dependencies:
+  enforced:
+    module:
+      - csv_source_test

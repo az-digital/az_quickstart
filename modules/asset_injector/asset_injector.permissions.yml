@@ -1,0 +1,9 @@
+administer css assets injector:
+  title: "Administer CSS Assets"
+  description: "Add CSS to desired pages."
+  restrict access: true
+
+administer js assets injector:
+  title: "Administer JS Assets"
+  description: "Add JS to desired pages."
+  restrict access: true

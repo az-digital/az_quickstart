@@ -1,0 +1,19 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^\\\\Drupal calls should be avoided in classes, use dependency injection instead$#"
+			count: 1
+			path: src/Plugin/BetterExposedFiltersWidgetBase.php
+		-
+			message: "#^Anonymous function has an unused use \\$element\\.$#"
+			count: 1
+			path: src/Plugin/BetterExposedFiltersWidgetBase.php
+
+		-
+			message: "#^Anonymous function has an unused use \\$form\\.$#"
+			count: 1
+			path: src/Plugin/BetterExposedFiltersWidgetBase.php
+		-
+			message: "#^Variable \\$cities in empty\\(\\) always exists and is not falsy\\.$#"
+			count: 1
+			path: tests/modules/bef_test/bef_test.install

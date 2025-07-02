@@ -1,0 +1,21 @@
+cropper:
+  title: 'Cropper'
+  js: {}
+  css: {}
+  dependencies:
+    - core/jquery
+
+cropper.integration:
+  version: 2.2
+  js:
+    js/ImageWidgetCrop.js: {}
+    js/ImageWidgetCropType.js: {}
+    js/iwc.behaviors.js: {}
+  css:
+    theme:
+      css/image_widget_crop.css: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupal.debounce
+    - image_widget_crop/cropper

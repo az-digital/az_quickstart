@@ -1,0 +1,26 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the seckit module.
+ */
+
+/**
+ * Remove x_content_type from seckit module configuration.
+ */
+function seckit_update_8101() {
+  \Drupal::configFactory()->getEditable('seckit.settings')
+    ->clear('seckit_xss.x_content_type')
+    ->save();
+}
+
+/**
+ * Replace "empty" with an empty string for the Referrer-Policy.
+ */
+function seckit_update_8102() {
+  $config = \Drupal::configFactory()->getEditable('seckit.settings');
+  if ($config->get('seckit_various.referrer_policy_policy') == 'empty') {
+    $config->set('seckit_various.referrer_policy_policy', '""')
+      ->save(TRUE);
+  }
+}

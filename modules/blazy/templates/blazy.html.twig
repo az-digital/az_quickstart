@@ -1,0 +1,191 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a formatted blazy image/media field.
+ *
+ * The Blazy supports core image, responsive image and media entity.
+ * If iframe switcher is enabled, audio/video iframe will be hidden below image
+ * overlay, and only visible when toggled. Otherwise iframe only, and image is
+ * emptied.
+ *
+ * Important!
+ * If you are adding additional contents to any content-related variable here,
+ * e.g.: content, overlay, preface, postscript, etc., including icon, be sure to
+ * add your own key, normally unique like UUID or module name, to not conflict
+ * against, or nullify, other providers, e.g.:
+ * Good: postscript.cta, or postscript.widget (This extends postscript)
+ * Bad: postscript = cta (This overrides/ nullifies other postscripts with cta)
+ *
+ * Unless that is expected, of course. Beware! Blazy sub-modules may need them.
+ * The bad guy may break Slick, and all sub-modules, at 3.x! If any issues,
+ * it is recommended to adjust, or re-layering, than nullifying. At least,
+ * conditionally like seen below with any IFs. CSS overrides are the safest.
+ *
+ * Should you override this template drastically, it will be safer to use
+ * hook_theme_suggestions_alter(), and conditionally override per (sub)-module
+ * since this theme is also used by Slick, Splide, etc. for their theme_ITEM()
+ * contents. All info is available in element.#settings for granular controls.
+ *
+ * Available variables:
+ *   - captions: An optional renderable array of inline or lightbox captions.
+ *   - image: A collection of image data.
+ *   - attributes: An array of attributes applied to .media container.
+ *   - iframe: A renderable array of iframe with its attributes and SRC.
+ *   - settings: An array containing the given settings.
+ *   - blazies: A convenient shortcut for settings.blazies.
+ *   - url: An optional URL the image can be linked to, can be any of
+ *       audio/video, or entity URLs, when using Colorbox/Photobox, or Link to
+ *       content options.
+ *   - url_attributes: An array of URL attributes, lightbox or content links.
+ *   - icon: normally just lightbox + sign icon, not media player icons.
+ *   - noscript: The fallback image for non-js users.
+ *   - preface: any content prefacing the image/ video goes here, e.g.: blur.
+ *   - overlay: any extra content overlaying the image/ video goes here. Both
+ *       preface and overlay useful to work with layering, z-index. This opens
+ *       up possibility for blazy-related modules -- Slick, GridStack, etc. to
+ *       use blazy.html.twig for their slide or item contents, perhaps at 3+.
+ *   - postscript: Any extra contents to put into blazy goes here.
+ *   - content: Various Media entities like Facebook, Instagram, local Video,
+ *       etc. Basically content is the replacement for (Responsive) image
+ *       and oEmbed video. This makes it possible to have a mix of Media
+ *       entities, image and videos on a Blazy Grid, Slick, GridStack, etc.
+ *       Regular Blazy features are still disabled by default at
+ *       \Drupal\blazy\BlazyDefault::richSettings() to avoid complication.
+ *       However you can override them accordingly as needed, such as lightbox
+ *       for local Video with/o a pre-configured poster image. The #settings
+ *       are provided under content variables for more work. Originally
+ *       content is a theme_field() output, trimmed down to a bare minimum to
+ *       avoid nested field markups for DOM diets.
+ *
+ * @see template_preprocess_blazy()
+ *
+ * @ingroup themeable
+ */
+#}
+{%
+  set classes = [
+    content ? 'media--rendered',
+    blazies.namespace ? 'media--' ~ blazies.namespace|clean_class,
+    blazies.media.provider ? 'media--' ~ blazies.media.provider|clean_class,
+    settings.media_switch ? 'media--switch media--switch--' ~ settings.media_switch|clean_class,
+    blazies.use.player ? 'media--player',
+    blazies.media.bundle ? 'media--bundle--' ~ blazies.media.bundle|clean_class,
+    blazies.media.type ? 'media--' ~ blazies.media.type|clean_class,
+    blazies.resimage.id and not content ? 'media--responsive',
+    blazies.is.svg ? 'media--svg',
+    settings.ratio ? 'media--ratio media--ratio--' ~ settings.ratio,
+    blazies.use.loader ? 'is-b-loading',
+    settings.classes ? settings.classes|join(' ')|clean_class,
+  ]
+%}
+{% if blazies.use.player %}
+  {% set attributes = attributes.setAttribute('aria-live', 'polite') %}
+
+  {% set label = blazies.media.label %}
+  {% set play_title = 'Load and play video.'|t %}
+  {% set close_title = 'Stop and close video.'|t %}
+
+  {% if label %}
+    {% set play_title = 'Load and play the video "@label".'|t({'@label': label}) %}
+    {% set close_title = 'Stop and close the video "@label".'|t({'@label': label}) %}
+  {% endif %}
+
+  {% set play_button_attributes = create_attribute({
+    'aria-label': play_title,
+    'class': ['media__icon', 'media__icon--play'],
+    'data-b-provider': blazies.media.provider,
+    'data-b-token': blazies.media.token,
+    'data-b-url': blazies.media.embed_url,
+    'data-iframe-title': label,
+    'title': play_title,
+    'type': 'button'
+  }) %}
+
+  {% set close_button_attributes = create_attribute({
+    'aria-label': close_title,
+    'class': ['media__icon', 'media__icon--close'],
+    'title': close_title,
+    'type': 'button'
+  }) %}
+{% endif %}
+{% set player %}
+  {% block blazy_player %}
+    {% if blazies.use.player %}
+      <button{{ close_button_attributes }}></button>
+      <button{{ play_button_attributes }}></button>
+    {% else %}
+      {{- iframe -}}
+    {% endif %}
+  {% endblock %}
+{% endset %}
+{% set media %}
+  {%- block blazy_media %}
+    <div{{ attributes.addClass(classes) }}>
+      {{- preface -}}
+      {{- image -}}
+      {# Noscript over image, to minimize CSS works. #}
+      {{- noscript -}}
+      {# Audio over image in case image is not a background. #}
+      {{- content -}}
+      {{- overlay -}}
+      {{- player -}}
+      {{- icon -}}
+    </div>
+  {%- endblock %}
+{% endset %}
+{% set blazy %}
+  {%- block blazy_content %}
+    {%- if media_attributes -%}<div{{- media_attributes -}}>{%- endif -%}
+      {%- if url and not blazies.use.player -%}
+        <a href="{{ url }}"{{ url_attributes }}>{{- media -}}</a>
+        {# Allows fieldable captions with A tag, such as social share. #}
+        {%- if captions and captions.lightbox is not empty -%}
+          <div class="litebox__caption visually-hidden">
+            {{- captions.lightbox -}}
+          </div>
+        {%- endif -%}
+      {% else %}
+        {{- media -}}
+      {%- endif -%}
+    {%- if media_attributes -%}</div>{%- endif -%}
+  {%- endblock %}
+
+  {# Since 3.x, this replaces sub-modules theme_ITEM() contents. #}
+  {%- set IS_INLINE = captions.inline is not empty -%}
+  {%- set IS_OVERLAY = captions.overlay is not empty -%}
+
+  {%- if IS_INLINE or IS_OVERLAY -%}
+    {%- block blazy_caption %}
+      {%- set caption_tag = captions.tag ?? 'div' -%}
+      {%- set cw_tag = captions.wrapper_tag ?? 'div' -%}
+      {%- set IS_CATEGORY = captions.category is not empty -%}
+
+      {%- if caption_wrapper_attributes -%}<{{ cw_tag }}{{- caption_wrapper_attributes -}}>{%- endif -%}
+
+        <{{ caption_tag }}{{ caption_attributes }}>
+          {%- if IS_OVERLAY -%}
+            {{ captions.overlay }}
+            {%- if IS_INLINE -%}<div{{ caption_content_attributes }}>{%- endif -%}
+          {%- endif -%}
+
+          {%- if IS_INLINE -%}{{- captions.inline -}}{%- endif -%}
+
+          {%- if IS_INLINE and IS_OVERLAY -%}</div>{%- endif -%}
+        </{{ caption_tag }}>
+
+        {%- if IS_CATEGORY -%}{{- captions.category -}}{%- endif -%}
+
+      {%- if caption_wrapper_attributes -%}</{{ cw_tag }}>{%- endif -%}
+
+    {%- endblock %}
+  {%- endif -%}
+  {{- postscript -}}
+{% endset %}
+{%- if wrapper_attributes -%}
+  {%- set wrapper_tag = blazies.item.wrapper_tag ?? 'div' -%}
+  <{{ wrapper_tag }}{{ wrapper_attributes }}>
+    {{- blazy -}}
+  </{{ wrapper_tag }}>
+{% else %}
+  {{- blazy -}}
+{%- endif -%}

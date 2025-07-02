@@ -1,0 +1,114 @@
+/**
+ * @file
+ * Media related  specific CSS.
+ */
+
+/* Media Image */
+.field--name-field-media-image img {
+  max-width: 100%;
+  height: auto;
+}
+
+
+/* Node Dialog Add/Select Overlay */
+
+/* Two Column Layout */
+.media-library-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+
+
+/* Left Menu Layout */
+.media-library-menu {
+  margin: 5px 5px 5px 0;
+  padding: 20px 15px;
+  border: 1px solid #dddddd;
+  border-radius: 3px;
+  background: #e9e9e9;
+  height: 100%;
+}
+
+.media-library-menu li {
+  margin: 5px;
+  white-space: nowrap;
+  height: 45px;
+}
+
+.media-library-menu li::marker {
+  color: #e9e9e9;
+}
+
+.media-library-menu__link {
+  margin: 5px 5px 5px 0;
+  padding: 10px 15px;
+  border: 1px solid #dddddd;
+  border-radius: 3px;
+  background: #e9e9e9;
+}
+
+.active.media-library-menu__link {
+  background: #fff;
+}
+
+
+
+/* Form Eliments Layout  */
+.media-library-content {
+  flex: 2;
+}
+
+.media-library-wrapper .form--inline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+}
+
+.media-library-widget-modal .js-form-item {
+  margin: 5px;
+}
+
+.media-library-wrapper .form-type-textfield {
+  flex: 2;
+}
+
+
+
+/* Fix Form Insert Button to Bottom of Popup */
+.media-library-widget-modal .form-actions {
+  position: sticky;
+  bottom: 0;
+  background: #fff;
+  padding: 5px;
+}
+
+.media-library-widget-modal .ui-dialog-content {
+  padding-bottom: 0;
+}
+
+/* Grid Layout */
+.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.media-library-widget-modal.ui-dialog--narrow {
+  width: 80% !important;
+  left: 10% !important;
+}
+
+.media-library-views-form__rows {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.media-library-item--grid {
+  margin: 10px;
+  width: 220px;
+}
+
+.media-library-item--grid .js-form-type-checkbox, .media-library-item--grid .form-check-label {
+  padding-left: 0;
+}
+
+
+/* Add or Select Media */
+.media-library-add-form__media::marker {
+  color: #fff;
+}

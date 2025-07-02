@@ -1,0 +1,63 @@
+/**
+ * @file
+ * Message element styles.
+ *
+ * @see /webform/test_element_message
+ */
+
+/**
+ * Webform message close container.
+ */
+.webform-message--close .messages {
+  position: relative;
+  padding-right: 35px;
+}
+
+.webform-message--close .webform-message__link {
+  display: none;
+}
+
+html.js .webform-message--close .webform-message__link {
+  position: absolute;
+  top: 11px;
+  right: 10px;
+  display: block;
+  font-size: 24px;
+  line-height: 24px;
+}
+
+html[dir="rtl"].js .webform-message--close .webform-message__link {
+  top: 11px;
+  right: inherit;
+  left: 10px;
+}
+
+.webform-message__link {
+  opacity: 0.33;
+  color: inherit;
+}
+
+.webform-message__link:link {
+  text-decoration: none;
+  border-bottom: none;
+}
+
+.webform-message__link:hover,
+.webform-message__link:focus,
+.webform-message__link:active {
+  text-decoration: none;
+  opacity: 1;
+  color: inherit;
+  border-bottom: none;
+}
+
+html.js .js-webform-message--close-storage {
+  display: none;
+}
+
+/**
+ * Hide Gin themes dismiss button even when it appears on the node edit form.
+ */
+.js-webform-message--close .button--dismiss {
+  display: none;
+}

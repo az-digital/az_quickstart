@@ -1,0 +1,8 @@
+{
+  "name": "drupal/link_class",
+  "type": "drupal-module",
+  "description": "Provide a widget to Link field type for adding class to link.",
+  "license": "GPL-2.0+",
+  "minimum-stability": "dev",
+  "require": { }
+}

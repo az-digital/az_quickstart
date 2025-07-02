@@ -1,0 +1,17 @@
+{
+    "name": "drupal/migrate_queue_importer",
+    "type": "drupal-module",
+    "description": "Provides Queue API base functionality to import migrations.",
+    "keywords": ["Drupal"],
+    "license": "GPL-2.0+",
+    "homepage": "https://www.drupal.org/project/migrate_queue_importer",
+    "minimum-stability": "dev",
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/migrate_queue_importer",
+        "source": "http://cgit.drupalcode.org/migrate_queue_importer"
+    },
+    "require": {
+        "drupal/migrate_plus": ">=5.0",
+        "drupal/migrate_tools": ">=5.0"
+    }
+}

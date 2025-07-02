@@ -1,0 +1,169 @@
+# Configuration schema for the CAS module
+
+cas.settings:
+  type: config_object
+  label: 'CAS settings'
+  mapping:
+    login_link_enabled:
+      type: boolean
+      label: 'Login Link Enabled'
+    login_link_label:
+      type: label
+      label: 'Login Link Label'
+    login_success_message:
+      type: label
+      label: 'Login Success Message'
+    server:
+      type: mapping
+      label: 'CAS Server'
+      mapping:
+        version:
+          type: string
+          label: 'Version'
+        protocol:
+          type: string
+          label: 'Protocol'
+        hostname:
+          type: string
+          label: 'Hostname'
+        port:
+          type: integer
+          label: 'Port'
+        path:
+          type: string
+          label: 'Path'
+        verify:
+          type: integer
+          label: 'SSL Verification Method'
+        cert:
+          type: string
+          label: 'PEM Cert path'
+    gateway:
+      type: mapping
+      label: 'Gateway Feature'
+      mapping:
+        enabled:
+          type: boolean
+          label: 'Enabled'
+        recheck_time:
+          type: integer
+          label: 'Recheck time'
+        paths:
+          type: condition.plugin.request_path
+          label: 'Paths'
+        method:
+          type: string
+          label: 'Method'
+    forced_login:
+      type: mapping
+      label: 'Forced Login'
+      mapping:
+        enabled:
+          type: boolean
+          label: 'Enable'
+        paths:
+          type: condition.plugin.request_path
+          label: 'Paths'
+    user_accounts:
+      type: mapping
+      label: 'User Accounts'
+      mapping:
+        prevent_normal_login:
+          type: boolean
+          label: 'Prevent normal login'
+        auto_register:
+          type: boolean
+          label: 'Auto Register Users'
+        auto_register_follow_registration_policy:
+          type: boolean
+          label: 'Follow user account registration policy'
+        email_assignment_strategy:
+          type: integer
+          label: 'Email Assignment Strategy'
+        email_hostname:
+          type: string
+          label: 'Email Hostname'
+        email_attribute:
+          type: string
+          label: 'Email Attribute'
+        auto_assigned_roles:
+          type: sequence
+          label: 'Auto assigned roles'
+          sequence:
+            type: string
+        restrict_password_management:
+          type: boolean
+          label: 'Restrict password management'
+        restrict_email_management:
+          type: boolean
+          label: 'Restrict email management'
+    error_handling:
+      type: mapping
+      label: 'Error Handling'
+      mapping:
+        login_failure_page:
+          type: text
+          label: 'Login Failure Page'
+        message_validation_failure:
+          type: text
+          label: 'Ticket validation failure error message'
+        message_no_local_account:
+          type: text
+          label: 'Local account does not exist error message'
+        message_subscriber_denied_reg:
+          type: text
+          label: 'Event subscriber denied registration error message'
+        message_subscriber_denied_login:
+          type: text
+          label: 'Event subscriber denied login error message'
+        message_account_blocked:
+          type: text
+          label: 'Local account is blocked error message'
+        message_username_already_exists:
+          type: text
+          label: 'Local account username already exists error message'
+        message_prevent_normal_login:
+          type: text
+          label: 'Prevent normal login error message'
+        message_restrict_password_management:
+          type: text
+          label: 'Restrict password management error message'
+    logout:
+      type: mapping
+      label: 'Logout'
+      mapping:
+        cas_logout:
+          type: boolean
+          label: 'Drupal Logout Triggers CAS Logout'
+        logout_destination:
+          type: string
+          label: 'Logout Destination'
+        enable_single_logout:
+          type: boolean
+          label: 'Enable'
+        single_logout_session_lifetime:
+          type: integer
+          label: 'Single Logout Session Lifetime'
+    proxy:
+      type: mapping
+      label: 'Proxy'
+      mapping:
+        initialize:
+          type: boolean
+          label: 'Enable'
+        can_be_proxied:
+          type: boolean
+          label: 'Enable'
+        proxy_chains:
+          type: string
+          label: 'Proxy Chains'
+    advanced:
+      type: mapping
+      label: 'Advanced'
+      mapping:
+        debug_log:
+          type: boolean
+          label: 'Log Debug Information'
+        connection_timeout:
+          type: integer
+          label: 'Connection Timeout'

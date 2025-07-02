@@ -1,0 +1,7 @@
+access coffee:
+  title: 'Access Coffee'
+  description: 'Access the Coffee search box to navigate fast between admin pages'
+
+administer coffee:
+  title: 'Administer Coffee'
+  description: 'Administer the Coffee search module'

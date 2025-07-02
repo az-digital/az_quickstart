@@ -1,0 +1,52 @@
+uuid: e91c2255-2146-46fb-af58-1b391113c352
+langcode: en
+status: true
+dependencies:
+  module:
+    - file
+    - node
+    - imce
+third_party_settings:
+  imce:
+    use: 1
+    scheme: public
+id: test_profile
+label: 'Test profile'
+description: 'This is a test profile'
+attributes:
+  target:
+    id: target
+    weight: 0
+    settings:
+      widget_type: simple_checkbox
+  title:
+    id: title
+    weight: 0
+    settings:
+      automatic_title: false
+  accesskey:
+    id: accesskey
+    weight: 0
+    settings: {  }
+matchers:
+  fc48c807-2a9c-44eb-b86b-7e134c1aa252:
+    uuid: fc48c807-2a9c-44eb-b86b-7e134c1aa252
+    id: 'entity:node'
+    weight: 0
+    settings:
+      result_description: 'by [node:author] | [node:created:medium]'
+      bundles: {  }
+      group_by_bundle: false
+      include_unpublished: false
+  b8d6d672-6377-493f-b492-3cc69511cf17:
+    uuid: b8d6d672-6377-493f-b492-3cc69511cf17
+    id: 'entity:file'
+    weight: 0
+    settings:
+      result_description: '[file:path] [file:url]'
+      bundles: null
+      group_by_bundle: null
+      images:
+        show_dimensions: false
+        show_thumbnail: false
+        thumbnail_image_style: null

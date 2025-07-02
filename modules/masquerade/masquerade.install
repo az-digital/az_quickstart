@@ -1,0 +1,16 @@
+<?php
+
+/**
+ * @file
+ * Install, uninstall, and update hooks for the Masquerade module.
+ */
+
+/**
+ * Remove the {masquerade} table.
+ */
+function masquerade_update_8200() {
+  $schema = \Drupal::database()->schema();
+  if ($schema->tableExists('masquerade')) {
+    $schema->dropTable('masquerade');
+  }
+}

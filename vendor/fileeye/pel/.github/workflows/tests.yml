@@ -1,0 +1,56 @@
+name: Tests
+
+on:
+  push:
+    branches: [ master ]
+  schedule:
+    - cron: "0 6 * * 3"
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  php-version:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version:
+          - "7.4"
+          - "8.0"
+          - "8.1"
+          - "8.2"
+          - "8.3"
+          - "8.4"
+
+    steps:
+
+        - name: Checkout
+          uses: actions/checkout@v3
+
+        - name: Install PHP
+          uses: "shivammathur/setup-php@v2"
+          with:
+            php-version: "${{ matrix.php-version }}"
+            coverage: "pcov"
+            ini-values: "zend.assertions=1"
+
+        - name: Install Composer dependencies
+          run: composer install --no-progress --ansi
+
+        - name: Run tests
+          run: ./vendor/bin/phpunit --color=always --coverage-clover=coverage.xml ./test
+
+        - name: Send code coverage report to Codecov.io
+          uses: codecov/codecov-action@v3
+          with:
+            files: coverage.xml
+            
+        - name: Code style test
+          if: ${{ matrix.php-version == 8.2 }}
+          run: ./vendor/bin/phpcs --runtime-set ignore_warnings_on_exit 1
+
+        - name: PHPStan code analysis
+          if: ${{ matrix.php-version == 8.2 }}
+          run: php vendor/bin/phpstan analyze

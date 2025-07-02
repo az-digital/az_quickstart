@@ -1,0 +1,1 @@
+!function(i){const o=i.hi=i.hi||{};o.dictionary=Object.assign(o.dictionary||{},{"Show source":"सोर्स दिखाएं",Source:"सोर्स"})}(window.CKEDITOR_TRANSLATIONS||(window.CKEDITOR_TRANSLATIONS={}));

@@ -1,0 +1,22 @@
+uuid: 85b46035-1585-4d37-be90-9083c38bb07f
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.crop_media_example
+id: node.crop_media_example.promote
+field_name: promote
+entity_type: node
+bundle: crop_media_example
+label: 'Promoted to homepage'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: ActivÃ©
+  off_label: DÃ©sactivÃ©
+field_type: boolean

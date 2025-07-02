@@ -1,0 +1,16 @@
+# The 'type' should be "label" for short meta tags and "text" for ones which
+# could get longer, especially ones which use a textarea field instead of a
+# textfield.
+
+metatag.metatag_tag.schema_item_list_id:
+  type: text
+  label: '@id'
+metatag.metatag_tag.schema_item_list_item_list_element:
+  type: text
+  label: 'itemListElement'
+metatag.metatag_tag.schema_item_list_main_entity_of_page:
+  type: text
+  label: 'mainEntityOfPage'
+metatag.metatag_tag.schema_item_list_type:
+  type: string
+  label: '@type'

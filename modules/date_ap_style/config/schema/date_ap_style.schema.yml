@@ -1,0 +1,43 @@
+date_ap_style.dateapstylesettings:
+  type: mapping
+  label: 'Date AP Style Settings'
+  mapping:
+    always_display_year:
+      type: integer
+      label: 'Always display year'
+    use_today:
+      type: integer
+      label: 'Use "Today"'
+    cap_today:
+      type: integer
+      label: 'Capitalize "Today"'
+    display_day:
+      type: integer
+      label: 'Display day of the week'
+    display_time:
+      type: integer
+      label: 'Display time'
+    hide_date:
+      type: integer
+      label: 'Hide date'
+    time_before_date:
+      type: integer
+      label: 'Display time before date'
+    display_noon_and_midnight:
+      type: integer
+      label: 'Display noon and midnight'
+    capitalize_noon_and_midnight:
+      type: integer
+      label: 'Capitalize Noon and Midnight'
+    use_all_day:
+      type: integer
+      label: 'Use "All Day"'
+    separator:
+      type: string
+      label: 'Date range separator'
+    timezone:
+      type: string
+      label: 'Timezone'
+    month_only:
+      type: integer
+      label: 'Display only the month'

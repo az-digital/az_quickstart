@@ -1,0 +1,139 @@
+<?php
+
+/**
+ * @file
+ * Module file for redirect_404.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Language\LanguageInterface;
+use Drupal\Core\Url;
+use Drupal\redirect\Entity\Redirect;
+
+/**
+ * Implements hook_cron().
+ *
+ * Adds clean up job to drop the irrelevant rows from the redirect_404 table.
+ */
+function redirect_404_cron() {
+  /** @var \Drupal\redirect_404\SqlRedirectNotFoundStorage $redirect_storage */
+  $redirect_storage = \Drupal::service('redirect.not_found_storage');
+  $redirect_storage->purgeOldRequests();
+
+  $last_daily_reset = \Drupal::state()->get('redirect_404.last_daily_reset', 0);
+
+  if (date('d', $last_daily_reset) != date('d')) {
+    $redirect_storage->resetDailyCount();
+
+    \Drupal::state()->set('redirect_404.last_daily_reset', \Drupal::time()->getRequestTime());
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter() for system_logging_settings().
+ */
+function redirect_404_form_redirect_settings_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $config = \Drupal::configFactory()->getEditable('redirect_404.settings');
+
+  $row_limits = [100, 1000, 10000, 100000, 1000000];
+  $form['row_limit'] = [
+    '#type' => 'select',
+    '#title' => t('404 error database logs to keep'),
+    '#default_value' => $config->get('row_limit'),
+    '#options' => [0 => t('All')] + array_combine($row_limits, $row_limits),
+    '#description' => t('The maximum number of 404 error logs to keep in the database log. Requires a <a href=":cron">cron maintenance task</a>.', [':cron' => Url::fromRoute('system.status')->toString()]),
+  ];
+
+  $form['reset_404'] = [
+    '#type' => 'submit',
+    '#value' => t('Clear all 404 log entries'),
+    '#submit' => ['redirect_404_reset_submit'],
+  ];
+
+  $ignored_pages = $config->get('pages');
+  // Add a new path to be ignored, if there is an ignore argument in the query.
+  if ($path_to_ignore = \Drupal::request()->query->get('ignore')) {
+    $ignored_pages .= $path_to_ignore;
+  }
+
+  // Replace '\r\n' with '\n' to keep consistency in tests.
+  // See: https://www.drupal.org/project/redirect/issues/3244924
+  $ignored_pages = str_replace("\r\n", "\n", $ignored_pages);
+
+  $form['ignore_pages'] = [
+    '#type' => 'textarea',
+    '#title' => t('Pages to ignore'),
+    '#default_value' => $ignored_pages,
+    '#description' => t("Specify pages by using their paths. Enter one path per line. The '*' character is a wildcard. An example path is %user-wildcard for every user page. %front is the front page.", [
+      '%user-wildcard' => '/user/*',
+      '%front' => '<front>',
+    ]),
+  ];
+
+  $form['clear_ignored'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Clear ignored 404 log entries when saving this form'),
+    '#default_value' => FALSE,
+  ];
+
+  $form['suppress_404'] = [
+    '#type' => 'checkbox',
+    '#title' => t("Suppress 'page not found' log messages"),
+    '#default_value' => $config->get('suppress_404'),
+    '#description' => t("Prevents logging 'page not found' events. Can be safely enabled when redirect_404 module is used, which stores them separately, nothing else relies on those messages."),
+  ];
+
+  $form['#submit'][] = 'redirect_404_logging_settings_submit';
+}
+
+/**
+ * Form submission handler for system_logging_settings().
+ *
+ * @see redirect_404_form_redirect_settings_form_alter()
+ */
+function redirect_404_logging_settings_submit($form, FormStateInterface $form_state) {
+  // Make sure to store the 'pages to ignore' with the leading slash.
+  $ignore_pages = explode(PHP_EOL, $form_state->getValue('ignore_pages'));
+  $pages = '';
+  foreach ($ignore_pages as $page) {
+    if (!empty($page)) {
+      $pages .= '/' . ltrim($page, '/') . "\n";
+    }
+  }
+
+  \Drupal::configFactory()
+    ->getEditable('redirect_404.settings')
+    ->set('row_limit', $form_state->getValue('row_limit'))
+    ->set('pages', $pages)
+    ->set('suppress_404', $form_state->getValue('suppress_404'))
+    ->save();
+
+  // Remove the filtered out items.
+  /** @var \Drupal\redirect_404\RedirectNotFoundStorageInterface; $redirect_storage */
+  $redirect_storage = \Drupal::service('redirect.not_found_storage');
+  foreach ($ignore_pages as $ignore_page) {
+    $redirect_storage->resolveLogRequest(trim($ignore_page));
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave() for redirect entities.
+ */
+function redirect_404_redirect_presave(Redirect $redirect) {
+  $path = $redirect->getSourcePathWithQuery();
+  $langcode = $redirect->get('language')->value;
+
+  if ($langcode == LanguageInterface::LANGCODE_NOT_SPECIFIED) {
+    $langcode = NULL;
+  }
+
+  // Mark a potentially existing log entry for this path as resolved.
+  \Drupal::service('redirect.not_found_storage')->resolveLogRequest($path, $langcode);
+}
+
+/**
+ * Submit Handler for Reseting all the 404 logs from Database.
+ */
+function redirect_404_reset_submit() {
+  \Drupal::database()->truncate('redirect_404')->execute();
+}

@@ -1,0 +1,50 @@
+# The routing.yml file defines the routes for the management pages: collection,
+# add, edit, delete.
+
+slick.settings:
+  path: '/admin/config/media/slick/ui'
+  defaults:
+    _form: '\Drupal\slick_ui\Form\SlickSettingsForm'
+    _title: 'Slick UI'
+  requirements:
+    _permission: 'administer slick'
+
+entity.slick.collection:
+  path: '/admin/config/media/slick'
+  defaults:
+    _entity_list: 'slick'
+    _title: 'Slick Configuration'
+  requirements:
+    _permission: 'administer slick'
+
+slick.optionset_page_add:
+  path: '/admin/config/media/slick/add'
+  defaults:
+    _entity_form: 'slick.add'
+    _title: 'Add slick'
+  requirements:
+    _permission: 'administer slick'
+
+entity.slick.edit_form:
+  path: '/admin/config/media/slick/{slick}'
+  defaults:
+    _entity_form: 'slick.edit'
+    _title: 'Edit slick'
+  requirements:
+    _permission: 'administer slick'
+
+entity.slick.duplicate_form:
+  path: '/admin/config/media/slick/{slick}/duplicate'
+  defaults:
+    _entity_form: 'slick.duplicate'
+    _title: 'Duplicate slick optionset'
+  requirements:
+    _permission: 'administer slick'
+
+entity.slick.delete_form:
+  path: '/admin/config/media/slick/{slick}/delete'
+  defaults:
+    _entity_form: 'slick.delete'
+    _title: 'Delete slick'
+  requirements:
+    _permission: 'administer slick'

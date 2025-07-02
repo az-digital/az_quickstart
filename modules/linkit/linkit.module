@@ -1,0 +1,144 @@
+<?php
+
+/**
+ * @file
+ * Linkit hook implementations.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_help().
+ */
+function linkit_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.linkit':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('The Linkit module provides an easy interface for internal and external linking with wysiwyg editors by using an autocomplete field.') . '</p>';
+      $output .= '<h3>' . t('Uses') . '</h3>';
+      $output .= '<dl>';
+      $output .= '<dt>' . t('Managing Linkit profiles') . '</dt>';
+      $output .= '<dd>' . t('You can create and edit Linkit profiles on the <a href=":profiles">Linkit profile page</a>. You can create a Linkit profile by clicking "<a href=":add_profile">Add profile</a>".', [':profiles' => Url::fromRoute('entity.linkit_profile.collection')->toString(), ':add_profile' => Url::fromRoute('entity.linkit_profile.add_form')->toString()]) . '</dd>';
+      $output .= '</dl>';
+      return $output;
+
+    case 'entity.linkit_profile.collection':
+      $output = '<p>' . t('Linkit profiles define how Linkit will operate on fields that have Linkit attached.') . '</p>';
+      $output .= '<p>' . t('The most common way to use Linkit is to enable Linkit on the Drupal Link plugin and associate a Linkit profile to it on a Text format.') . '</p>';
+      return $output;
+
+    case 'linkit.matchers':
+      $output = '<p>' . t('Matchers defines how different data can be queried and displayed in the autocomplete suggestion list. Multiple matchers of the same type can be used at the same time to granulate the suggestions. The order of the added matchers defines in which order the suggestions will be presented.') . '</p>';
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function linkit_form_editor_link_dialog_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // Alter only the form with ID 'editor_link_dialog'.
+  if ($form_id !== 'editor_link_dialog') {
+    return;
+  }
+
+  /** @var Drupal\filter\Entity\FilterFormat $filter_format */
+  $filter_format = $form_state->getBuildInfo()['args'][0];
+
+  /** @var \Drupal\Core\Entity\EntityStorageInterface $editorStorage */
+  $editorStorage = Drupal::service('entity_type.manager')->getStorage('editor');
+
+  /** @var \Drupal\editor\EditorInterface $editor */
+  $editor = $editorStorage->load($filter_format->id());
+  $plugin_settings = $editor->getSettings()['plugins']['drupallink'];
+
+  // Do not alter the form if Linkit is not enabled for this text format.
+  if (!isset($plugin_settings['linkit_enabled']) || (isset($plugin_settings['linkit_enabled']) && !$plugin_settings['linkit_enabled'])) {
+    return;
+  }
+
+  $linkit_profile_id = $editor->getSettings()['plugins']['drupallink']['linkit_profile'];
+
+  if (isset($form_state->getUserInput()['editor_object'])) {
+    $input = $form_state->getUserInput()['editor_object'];
+    $form_state->set('link_element', $input);
+    $form_state->setCached(TRUE);
+  }
+  else {
+    // Retrieve the link element's attributes from form state.
+    $input = $form_state->get('link_element') ?: [];
+  }
+
+  $form['href_dirty_check'] = [
+    '#type' => 'hidden',
+    '#default_value' => $input['href'] ?? '',
+  ];
+
+  $form['attributes']['href'] = array_merge($form['attributes']['href'], [
+    '#type' => 'linkit',
+    '#description' => t('Start typing to find content.'),
+    '#autocomplete_route_name' => 'linkit.autocomplete',
+    '#autocomplete_route_parameters' => [
+      'linkit_profile_id' => $linkit_profile_id,
+    ],
+    "#weight" => -10,
+    '#default_value' => $input['href'] ?? '',
+  ]);
+
+  $fields = [
+    'data-entity-type',
+    'data-entity-uuid',
+    'data-entity-substitution',
+  ];
+
+  $form['attributes']["#weight"] = -100;
+
+  foreach ($fields as $field_name) {
+    $form['attributes'][$field_name] = [
+      '#title' => $field_name,
+      '#type' => 'hidden',
+      '#default_value' => $input[$field_name] ?? '',
+    ];
+  }
+
+  // Add #submit callback that handles the data-* attributes.
+  array_unshift($form['#submit'], 'linkit_form_editor_link_dialog_submit');
+}
+
+/**
+ * Handles the data-* attributes and href replacement when appropriate.
+ */
+function linkit_form_editor_link_dialog_submit(array &$form, FormStateInterface $form_state) {
+  $link_element = $form_state->get('link_element');
+
+  $href = parse_url($form_state->getValue(['attributes', 'href']), PHP_URL_PATH);
+  $href_dirty_check = parse_url($form_state->getValue(['href_dirty_check']), PHP_URL_PATH);
+
+  if ($href !== $href_dirty_check) {
+    $form_state->unsetValue(['attributes', 'data-entity-type']);
+    $form_state->unsetValue(['attributes', 'data-entity-uuid']);
+    $form_state->unsetValue(['attributes', 'data-entity-substitution']);
+  }
+
+  $fields = [
+    'href',
+    'data-entity-type',
+    'data-entity-uuid',
+    'data-entity-substitution',
+  ];
+
+  foreach ($fields as $field_name) {
+    $value = $form_state->getValue(['attributes', $field_name]);
+    if (empty($value)) {
+      if (!empty($link_element)) {
+        $form_state->setValue(['attributes', $field_name], '');
+      }
+      else {
+        $form_state->unsetValue(['attributes', $field_name]);
+      }
+    }
+  }
+}

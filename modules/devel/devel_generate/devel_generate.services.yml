@@ -1,0 +1,10 @@
+services:
+  plugin.manager.develgenerate:
+    class: Drupal\devel_generate\DevelGeneratePluginManager
+    parent: default_plugin_manager
+    arguments: ['@entity_type.manager', '@messenger', '@language_manager', '@string_translation', '@entity_field.manager']
+  Drupal\devel_generate\DevelGeneratePluginManager: '@plugin.manager.develgenerate'
+
+  logger.channel.devel_generate:
+    parent: logger.channel_base
+    arguments: ['devel_generate']

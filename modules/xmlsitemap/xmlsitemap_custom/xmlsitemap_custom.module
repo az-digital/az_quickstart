@@ -1,0 +1,17 @@
+<?php
+
+/**
+ * @file
+ * Adds user configurable links to the XML Sitemap.
+ */
+
+/**
+ * Implements hook_xmlsitemap_link_info().
+ */
+function xmlsitemap_custom_xmlsitemap_link_info() {
+  return [
+    'custom' => [
+      'label' => t('Custom links'),
+    ],
+  ];
+}

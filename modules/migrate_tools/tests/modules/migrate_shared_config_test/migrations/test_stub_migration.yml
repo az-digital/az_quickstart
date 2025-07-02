@@ -1,0 +1,15 @@
+id: test_stub_migration
+label: Test stub migration
+include: my_default_configuration
+source:
+  plugin: embedded_data
+  data_rows:
+    - label: foo
+    - label: bar
+    - label: baz
+  ids:
+    label:
+      type: string
+process: {  }
+destination:
+  plugin: 'entity:entity_test'

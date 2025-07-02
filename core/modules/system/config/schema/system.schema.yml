@@ -1,0 +1,519 @@
+# Schema for the configuration files of the System module.
+
+system.site:
+  type: config_object
+  label: 'Site information'
+  mapping:
+    uuid:
+      type: uuid
+      label: 'Site UUID'
+      constraints:
+        Uuid: []
+        NotNull: []
+    name:
+      type: label
+      label: 'Site name'
+    mail:
+      type: email
+      label: 'Email address'
+    slogan:
+      type: label
+      label: 'Slogan'
+    page:
+      type: mapping
+      label: 'Pages'
+      mapping:
+        403:
+          type: path
+          label: 'Default 403 (access denied) page'
+        404:
+          type: path
+          label: 'Default 404 (not found) page'
+        front:
+          type: path
+          label: 'Default front page'
+    admin_compact_mode:
+      type: boolean
+      label: 'Compact mode'
+    weight_select_max:
+      type: integer
+      label: 'Weight element maximum value'
+    default_langcode:
+      type: langcode
+      label: 'Site default language code'
+    mail_notification:
+      type: string
+      label: 'Notification email address'
+
+system.maintenance:
+  type: config_object
+  label: 'Maintenance mode'
+  constraints:
+    FullyValidatable: ~
+  mapping:
+    message:
+      type: text
+      label: 'Message to display when in maintenance mode'
+
+system.cron:
+  type: config_object
+  label: 'Cron settings'
+  constraints:
+    FullyValidatable: ~
+  mapping:
+    threshold:
+      type: mapping
+      label: 'Thresholds'
+      mapping:
+        requirements_warning:
+          type: integer
+          label: 'Requirements warning period'
+          constraints:
+            # @see system_requirements()
+            Range:
+              min: 60
+        requirements_error:
+          type: integer
+          label: 'Requirements error period'
+          constraints:
+            # @see system_requirements()
+            Range:
+              min: 300
+    logging:
+      type: boolean
+      label: 'Detailed cron logging'
+
+system.date:
+  type: config_object
+  label: 'Date settings'
+  constraints:
+    FullyValidatable: ~
+  mapping:
+    first_day:
+      type: integer
+      label: 'First day of week'
+      constraints:
+        Range:
+          # @see \Drupal\system\Form\RegionalForm::buildForm()
+          min: 0
+          max: 6
+    country:
+      type: mapping
+      label: 'Country'
+      mapping:
+        default:
+          nullable: true
+          type: string
+          label: 'Default country'
+          constraints:
+            # @see \Drupal\system\Form\RegionalForm::buildForm()
+            CountryCode: []
+    timezone:
+      type: mapping
+      label: 'Time zone settings'
+      mapping:
+        default:
+          type: string
+          label: 'Default time zone'
+          nullable: true
+          constraints:
+            # @see \Drupal\system\Form\RegionalForm::buildForm()
+            Choice:
+              callback: 'DateTimeZone::listIdentifiers'
+        user:
+          type: mapping
+          label: 'User'
+          mapping:
+            configurable:
+              type: boolean
+              label: 'Users may set their own time zone'
+            default:
+              type: integer
+              label: 'Time zone for new users'
+              constraints:
+                # Time zone for new users can have one of the following values:
+                # - UserInterface::TIMEZONE_DEFAULT
+                # - UserInterface::TIMEZONE_EMPTY
+                # - UserInterface::TIMEZONE_SELECT
+                # @see \Drupal\user\UserInterface::TIMEZONE_*
+                # @todo Update this to use enum in https://www.drupal.org/project/drupal/issues/3402178
+                Choice: [0, 1, 2]
+            warn:
+              type: boolean
+              label: 'Remind users at login if their time zone is not set'
+
+system.diff:
+  type: config_object
+  label: 'Diff settings'
+  constraints:
+    FullyValidatable: ~
+  mapping:
+    context:
+      type: mapping
+      label: 'Context'
+      mapping:
+        lines_leading:
+          type: integer
+          label: 'Number of leading lines in a diff'
+          constraints:
+            # @see \Drupal\Component\Diff\DiffFormatter
+            Range:
+              min: 0
+        lines_trailing:
+          type: integer
+          label: 'Number of trailing lines in a diff'
+          constraints:
+            # @see \Drupal\Component\Diff\DiffFormatter
+            Range:
+              min: 0
+
+system.logging:
+  type: config_object
+  label: 'Logging settings'
+  mapping:
+    error_level:
+      type: string
+      label: 'Error messages to display'
+
+system.performance:
+  type: config_object
+  label: 'Performance settings'
+  mapping:
+    cache:
+      type: mapping
+      label: 'Caching'
+      mapping:
+        page:
+          type: mapping
+          label: 'Page caching'
+          mapping:
+            max_age:
+              type: integer
+              label: 'Max age'
+    css:
+      type: mapping
+      label: 'CSS performance settings'
+      mapping:
+        preprocess:
+          type: boolean
+          label: 'Aggregate CSS files'
+        gzip:
+          type: boolean
+          label: 'Compress CSS files'
+    fast_404:
+      type: mapping
+      label: 'Fast 404 settings'
+      mapping:
+        enabled:
+          type: boolean
+          label: 'Fast 404 enabled'
+        paths:
+          type: string
+          label: 'Regular expression to match'
+        exclude_paths:
+          type: string
+          label: 'Regular expression to not match'
+        html:
+          type: string
+          label: 'Fast 404 page html'
+    js:
+      type: mapping
+      label: 'JavaScript performance settings'
+      mapping:
+        preprocess:
+          type: boolean
+          label: 'JavaScript preprocess'
+        gzip:
+          type: boolean
+          label: 'Compress JavaScript files.'
+    stale_file_threshold:
+      type: integer
+      label: 'Stale file threshold'
+      deprecated: 'The system.performance.stale_file_threshold config key is deprecated in drupal:10.2.0 and is removed from drupal:11.0.0. See https://www.drupal.org/node/3301744'
+
+system.rss:
+  type: config_object
+  label: 'Feed settings'
+  mapping:
+    items:
+      type: mapping
+      label: 'Feed items'
+      mapping:
+        view_mode:
+          type: string
+          label: 'Feed content'
+
+system.theme:
+  type: config_object
+  label: 'Theme settings'
+  mapping:
+    admin:
+      type: string
+      label: 'Administration theme'
+    default:
+      type: string
+      label: 'Default theme'
+
+system.menu.*:
+  type: config_entity
+  label: 'Menu'
+  mapping:
+    id:
+      type: machine_name
+      label: 'ID'
+      # Menu IDs are specifically limited to 32 characters, and allow dashes but not
+      # underscores.
+      # @see \Drupal\menu_ui\MenuForm::form()
+      constraints:
+        Regex:
+          pattern: '/^[a-z0-9-]+$/'
+          message: "The %value machine name is not valid."
+        Length:
+          max: 32
+    label:
+      type: required_label
+      label: 'Label'
+    description:
+      type: label
+      label: 'Menu description'
+      # @see \Drupal\menu_ui\MenuForm::form()
+      nullable: true
+      constraints:
+        Length:
+          max: 512
+    locked:
+      type: boolean
+      label: 'Locked'
+  constraints:
+    FullyValidatable: ~
+
+system.action.*:
+  type: config_entity
+  label: 'System action'
+  mapping:
+    id:
+      type: machine_name
+      label: 'ID'
+      constraints:
+        # Action IDs also allow periods.
+        # @see user_user_role_insert()
+        Regex:
+          pattern: '/^[a-z0-9_\.]+$/'
+          message: "The %value machine name is not valid."
+    label:
+      type: required_label
+      label: 'Label'
+    type:
+      type: string
+      label: 'Type'
+    plugin:
+      type: string
+      label: 'Plugin'
+      constraints:
+        PluginExists:
+          manager: plugin.manager.action
+          interface: 'Drupal\Core\Action\ActionInterface'
+    configuration:
+      type: action.configuration.[%parent.plugin]
+
+system.file:
+  type: config_object
+  label: 'File system'
+  mapping:
+    allow_insecure_uploads:
+      type: boolean
+      label: 'Allow insecure uploads'
+    default_scheme:
+      type: string
+      label: 'Default download method'
+    path:
+      type: mapping
+      label: 'Path settings'
+      mapping:
+        temporary:
+          deprecated: "The 'system.file:path.temporary' config property path is deprecated in drupal:8.8.0 and is removed from drupal 11.0.0. Use settings.php instead. See https://www.drupal.org/node/3039255."
+          type: string
+          label: 'Temporary directory'
+    temporary_maximum_age:
+      type: integer
+      label: 'Maximum age for temporary files'
+
+system.image:
+  type: config_object
+  label: 'Image settings'
+  constraints:
+    FullyValidatable: ~
+  mapping:
+    toolkit:
+      type: string
+      label: 'Toolkit'
+      constraints:
+        PluginExists:
+          manager: 'image.toolkit.manager'
+          interface: '\Drupal\Core\ImageToolkit\ImageToolkitInterface'
+
+system.image.gd:
+  type: config_object
+  label: 'Image settings'
+  constraints:
+    FullyValidatable: ~
+  mapping:
+    jpeg_quality:
+      type: integer
+      label: 'JPEG quality'
+      constraints:
+        # @see \Drupal\system\Plugin\ImageToolkit\GDToolkit::buildConfigurationForm()
+        Range:
+          min: 0
+          max: 100
+
+system.mail:
+  type: config_object
+  label: 'Mail system'
+  mapping:
+    interface:
+      type: sequence
+      label: 'Interfaces'
+      sequence:
+        type: string
+        label: 'Interface'
+        constraints:
+          PluginExists:
+            manager: plugin.manager.mail
+            interface: 'Drupal\Core\Mail\MailInterface'
+    mailer_dsn:
+      type: mapping
+      label: 'Symfony mailer transport DSN'
+      mapping:
+        scheme:
+          type: string
+          label: 'Scheme'
+          constraints:
+            NotBlank:
+              message: 'The mailer DSN must contain a scheme.'
+        host:
+          type: string
+          label: 'Host'
+          constraints:
+            NotBlank:
+              message: 'The mailer DSN must contain a host (use "default" by default).'
+        user:
+          type: string
+          nullable: true
+          label: 'User'
+        password:
+          type: string
+          nullable: true
+          label: 'Password'
+        port:
+          type: integer
+          nullable: true
+          label: 'Port'
+          constraints:
+            Range:
+              min: 0
+              max: 65535
+        options:
+          type: sequence
+          label: 'Options'
+          sequence:
+            type: string
+            label: Option
+            constraints:
+              NotNull: []
+
+system.theme.global:
+  type: theme_settings
+  label: 'Theme global settings'
+
+system.advisories:
+  type: config_object
+  label: 'Security advisory settings'
+  constraints:
+    FullyValidatable: ~
+  mapping:
+    enabled:
+      type: boolean
+      label: 'Display critical security advisories'
+    interval_hours:
+      type: integer
+      label: 'How often to check for security advisories, in hours'
+      # Minimum can be set to 0 as it just means the advisories will be retrieved on every call.
+      # @see \Drupal\system\SecurityAdvisories\SecurityAdvisoriesFetcher::getSecurityAdvisories
+      constraints:
+        Range:
+          min: 0
+
+block.settings.system_branding_block:
+  type: block_settings
+  label: 'Branding block'
+  constraints:
+    FullyValidatable: ~
+  mapping:
+    use_site_logo:
+      type: boolean
+      label: 'Use site logo'
+    use_site_name:
+      type: boolean
+      label: 'Use site name'
+    use_site_slogan:
+      type: boolean
+      label: 'Use site slogan'
+
+block.settings.system_menu_block:*:
+  type: block_settings
+  label: 'Menu block'
+  mapping:
+    level:
+      type: integer
+      label: 'Starting level'
+    depth:
+      type: integer
+      label: 'Maximum number of levels'
+    expand_all_items:
+      type: boolean
+      label: 'Expand all items'
+
+block.settings.local_tasks_block:
+  type: block_settings
+  label: 'Tabs block'
+  constraints:
+    FullyValidatable: ~
+  mapping:
+    primary:
+      type: boolean
+      label: 'Whether primary tabs are shown'
+    secondary:
+      type: boolean
+      label: 'Whether secondary tabs are shown'
+
+condition.plugin.request_path:
+  type: condition.plugin
+  mapping:
+    pages:
+      type: string
+
+condition.plugin.response_status:
+  type: condition.plugin
+  mapping:
+    status_codes:
+      type: sequence
+      sequence:
+        type: integer
+
+system.feature_flags:
+  type: config_object
+  label: 'System Feature Flags'
+  constraints:
+    FullyValidatable: ~
+  mapping:
+    linkset_endpoint:
+      type: boolean
+      label: 'Enable the menu linkset endpoint'
+
+condition.plugin.current_theme:
+  type: condition.plugin
+  mapping:
+    theme:
+      type: string
+      label: Theme

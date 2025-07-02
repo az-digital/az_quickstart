@@ -1,0 +1,28 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^\\\\Drupal calls should be avoided in classes, use dependency injection instead$#"
+			count: 1
+			path: src/Controller/EditEmbeddedEntity.php
+
+		-
+			message: "#^\\\\Drupal calls should be avoided in classes, use dependency injection instead$#"
+			count: 1
+			path: src/EntityEmbedBuilder.php
+
+		# Remove cache tag rule for plugin managers:
+		# https://github.com/mglaman/phpstan-drupal/issues/824
+		-
+			message: "#^config\\:entity_view_mode_list cache tag might be unclear and does not contain the cache key in it\\.$#"
+			count: 1
+			path: src/EntityEmbedDisplay/EntityEmbedDisplayManager.php
+
+		-
+			message: "#^\\\\Drupal calls should be avoided in classes, use dependency injection instead$#"
+			count: 1
+			path: src/EntityEmbedDisplay/FieldFormatterEntityEmbedDisplayBase.php
+
+		-
+			message: "#^\\\\Drupal calls should be avoided in classes, use dependency injection instead$#"
+			count: 1
+			path: tests/modules/entity_embed_test/src/Controller/TestEntityEmbedController.php

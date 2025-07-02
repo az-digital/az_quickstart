@@ -1,0 +1,46 @@
+entity.webform.share:
+  title: 'Share'
+  route_name: entity.webform.share_embed
+  base_route: entity.webform.canonical
+  weight: 50
+
+entity.webform.share_embed:
+  title: 'Embed'
+  route_name: entity.webform.share_embed
+  parent_id: entity.webform.share
+
+entity.webform.share_preview:
+  title: 'Preview'
+  route_name: entity.webform.share_preview
+  parent_id: entity.webform.share
+
+entity.webform.share_test:
+  title: 'Test'
+  route_name: entity.webform.share_test
+  parent_id: entity.webform.share
+
+
+# Webform share tasks.
+# These tasks will be removed if the webform_node.module is not installed.
+# @see webform_share_local_tasks_alter()
+
+entity.node.webform.share:
+  title: 'Share'
+  route_name: entity.node.webform.share_embed
+  base_route: entity.node.canonical
+  # No weight provided. @see node.links.task.yml
+
+entity.node.webform.share_embed:
+  title: 'Embed'
+  route_name: entity.node.webform.share_embed
+  parent_id: entity.node.webform.share
+
+entity.node.webform.share_preview:
+  title: 'Preview'
+  route_name: entity.node.webform.share_preview
+  parent_id: entity.node.webform.share
+
+entity.node.webform.share_test:
+  title: 'Test'
+  route_name: entity.node.webform.share_test
+  parent_id: entity.node.webform.share

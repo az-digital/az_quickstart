@@ -1,0 +1,21 @@
+{
+  "name": "drupal/smtp",
+  "description": "Allow for site emails to be sent through an SMTP server of your choice.",
+  "type": "drupal-module",
+  "license": "GPL-2.0-or-later",
+  "homepage": "https://www.drupal.org/project/smtp",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/smtp"
+  },
+  "require": {
+    "phpmailer/phpmailer": "^6.1.7"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-8.x-1.x": "1.x-dev"
+    }
+  },
+  "suggest": {
+    "drupal/mailsystem": "Allows using SMTP alongside other mail modules."
+  }
+}

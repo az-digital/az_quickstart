@@ -1,0 +1,5 @@
+ib_dam.settings_form:
+  title: 'IntelligenceBank DAM'
+  route_name: ib_dam.settings_form
+  parent: system.admin_config_services
+  description: 'IntelligenceBank global settings.'

@@ -1,0 +1,44 @@
+name: Code quality
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  static-analysis:
+    name: "Code quality checks"
+    runs-on: "ubuntu-20.04"
+
+    strategy:
+      matrix:
+        php-version:
+          - "8.1"
+
+    steps:
+      - name: "Checkout code"
+        uses: "actions/checkout@v4"
+
+      - name: "Install PHP"
+        uses: "shivammathur/setup-php@v2"
+        with:
+          coverage: "none"
+          php-version: "${{ matrix.php-version }}"
+          tools: "cs2pr"
+
+      - name: "Install dependencies with Composer"
+        uses: "ramsey/composer-install@v2"
+
+      - name: "Require tools"
+        continue-on-error: true
+        run: |
+          composer config --no-plugins allow-plugins.phpstan/extension-installer true
+          composer require --ansi --dev "phpstan/phpstan:>=2" "phpstan/extension-installer:>=1.4" "phpstan/phpstan-phpunit:>=1.4" "squizlabs/php_codesniffer:>=3.7" "phpunit/phpunit:>=10"
+
+      - name: "Run static analysis with phpstan/phpstan"
+        run: "vendor/bin/phpstan"
+
+      - name: "Run code style check with squizlabs/php_codesniffer"
+        run: ./vendor/bin/phpcs --runtime-set ignore_warnings_on_exit 1

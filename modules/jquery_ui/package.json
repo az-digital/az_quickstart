@@ -1,0 +1,19 @@
+{
+  "name": "drupal-query-ui",
+  "license": "GPL-2.0",
+  "private": true,
+  "engines": {
+    "yarn": ">= 1.6",
+    "node": ">= 16.0"
+  },
+  "scripts": {
+    "build": "yarn vendor-update & yarn generate-libraries",
+    "vendor-update": "node ./scripts/vendor-update.js",
+    "generate-libraries": "node ./scripts/generate-libraries.js"
+  },
+  "devDependencies": {
+    "glob": "^8.0.3",
+    "jquery-ui": "~1.13.2",
+    "terser": "^5.14.2"
+  }
+}

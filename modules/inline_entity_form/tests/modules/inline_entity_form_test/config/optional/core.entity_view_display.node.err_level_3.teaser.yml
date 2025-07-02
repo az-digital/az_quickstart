@@ -1,0 +1,16 @@
+trimIefIdParentslangcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - node.type.err_level_3
+  module:
+    - user
+id: node.err_level_3.teaser
+targetEntityType: node
+bundle: err_level_3
+mode: teaser
+content:
+  links:
+    weight: 100
+hidden: {  }

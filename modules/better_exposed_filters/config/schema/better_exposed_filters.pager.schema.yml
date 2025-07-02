@@ -1,0 +1,32 @@
+#
+# Schema for the Better Exposed Filters pager widgets.
+#
+better_exposed_filters_pager_widget:
+  type: mapping
+  mapping:
+    plugin_id:
+      type: string
+      label: 'Plugin id'
+    advanced:
+      type: mapping
+      mapping:
+        is_secondary:
+          type: boolean
+          label: 'Pager is a secondary option'
+
+# BEF exposed pager widgets
+better_exposed_filters.pager.*:
+  type: better_exposed_filters_pager_widget
+  label: 'Exposed pager BEF settings'
+
+better_exposed_filters.pager.default:
+  type: better_exposed_filters_pager_widget
+  label: 'Default'
+
+better_exposed_filters.pager.bef:
+  type: better_exposed_filters_pager_widget
+  label: 'Checkboxes/Radio Buttons'
+
+better_exposed_filters.pager.bef_links:
+  type: better_exposed_filters_pager_widget
+  label: 'Links'

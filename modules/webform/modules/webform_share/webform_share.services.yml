@@ -1,0 +1,21 @@
+services:
+  webform_share.event_subscriber:
+    class: Drupal\webform_share\EventSubscriber\WebformShareEventSubscriber
+    arguments: ['@current_route_match']
+    tags:
+      - { name: event_subscriber }
+  webform_share.page_display_variant_subscriber:
+    class: Drupal\webform_share\EventSubscriber\WebformShareDisplayVariantSubscriber
+    arguments: ['@current_route_match']
+    tags:
+      - { name: event_subscriber }
+  webform_share.route_subscriber:
+    class: Drupal\webform_share\Routing\WebformShareRouteSubscriber
+    arguments: ['@module_handler']
+    tags:
+      - { name: event_subscriber }
+  webform_share.theme_negotiator:
+    class: Drupal\webform_share\Theme\WebformShareThemeNegotiator
+    arguments: ['@config.factory']
+    tags:
+      - { name: theme_negotiator }

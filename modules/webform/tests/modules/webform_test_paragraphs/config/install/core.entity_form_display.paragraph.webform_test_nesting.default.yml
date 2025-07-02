@@ -1,0 +1,28 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.webform_test_nesting.field_webform_test_nesting
+    - paragraphs.paragraphs_type.webform_test_nesting
+  module:
+    - paragraphs
+id: paragraph.webform_test_nesting.default
+targetEntityType: paragraph
+bundle: webform_test_nesting
+mode: default
+content:
+  field_webform_test_nesting:
+    type: entity_reference_paragraphs
+    weight: 0
+    region: content
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

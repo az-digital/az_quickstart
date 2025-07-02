@@ -1,0 +1,42 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.webform_test_link.field_webform_test
+    - field.field.paragraph.webform_test_link.field_webform_test_para_value
+    - field.field.paragraph.webform_test_link.field_webform_test_value
+    - paragraphs.paragraphs_type.webform_test_link
+  module:
+    - webform
+id: paragraph.webform_test_link.default
+targetEntityType: paragraph
+bundle: webform_test_link
+mode: default
+content:
+  field_webform_test:
+    type: webform_entity_reference_link
+    label: above
+    settings:
+      label: 'Go to [webform:title] webform'
+      dialog: ''
+      attributes: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_webform_test_para_value:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_webform_test_value:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden: {  }

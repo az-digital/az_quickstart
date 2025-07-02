@@ -1,0 +1,153 @@
+google_tag.settings:
+  type: config_object
+  label: 'Module settings and default tag container settings'
+  mapping:
+    use_collection:
+      type: boolean
+      label: 'Allow multiple tag containers'
+    default_google_tag_entity:
+      type: string
+      label: 'Default Google Tag Entity'
+
+google_tag.container.*:
+  type: config_entity
+  label: 'Google Tag settings container'
+  mapping:
+    id:
+      type: string
+      label: 'ID'
+    label:
+      type: label
+      label: 'Label'
+    weight:
+      type: integer
+      label: 'Weight'
+    tag_container_ids:
+      type: sequence
+      label: 'Tag IDs'
+      sequence:
+        type: string
+        label: 'Tag ID'
+    advanced_settings:
+      type: sequence
+      label: 'Advanced Settings'
+      sequence:
+        type: google_tag.advanced_settings.[%key]
+    dimensions_metrics:
+      type: sequence
+      label: 'Custom dimensions and metrics'
+      sequence:
+        type: mapping
+        label: 'Parameter'
+        mapping:
+          type:
+            type: string
+            label: 'Type'
+            constraints:
+              NotNull: []
+              AllowedValues: ['dimension', 'metric']
+          name:
+            type: string
+            label: 'Name'
+            constraints:
+              NotNull: []
+              # NotNull does not cover empty strings.
+              Length:
+                min: 1
+                minMessage: 'This value cannot be empty.'
+          value:
+            type: string
+            label: 'Value'
+            constraints:
+              NotNull: []
+              # NotNull does not cover empty strings.
+              Length:
+                min: 1
+                minMessage: 'This value cannot be empty.'
+    conditions:
+      type: sequence
+      label: 'Insertion conditions'
+      sequence:
+        type: condition.plugin.[id]
+        label: 'Insertion condition'
+    events:
+      type: sequence
+      label: 'Events'
+      sequence:
+        type: google_tag.google_tag_event.[%key]
+
+google_tag.google_tag_event.*:
+  type: google_tag_event_configuration
+
+google_tag.google_tag_event.login:
+  type: google_tag_event_configuration
+  mapping:
+    method:
+      type: string
+      label: 'Method'
+
+google_tag.google_tag_event.sign_up:
+  type: google_tag_event_configuration
+  mapping:
+    method:
+      type: string
+      label: 'Method'
+
+google_tag.google_tag_event.generate_lead:
+  type: google_tag_event_with_value_configuration
+
+google_tag_event_with_value_configuration:
+  type: google_tag_event_configuration
+  mapping:
+    value:
+      type: string
+      label: 'Value'
+    currency:
+      type: string
+      label: 'Currency'
+
+google_tag_event_configuration:
+  type: mapping
+
+google_tag.advanced_settings.*:
+  type: google_tag_advanced_configuration
+
+google_tag_advanced_configuration:
+  type: mapping
+
+google_tag.advanced_settings.consent_mode:
+  type: boolean
+  label: Consent mode
+
+google_tag.advanced_settings.gtm:
+  type: sequence
+  sequence:
+    type: mapping
+    mapping:
+      data_layer:
+        type: string
+        label: 'Data layer ID'
+      include_classes:
+        type: boolean
+        label: 'Add classes to the data layer'
+      allowlist_classes:
+        type: string
+        label: 'Allowed classes'
+      blocklist_classes:
+        type: string
+        label: 'Blocked classes'
+      include_environment:
+        type: boolean
+        label: 'Include an environment'
+      environment_id:
+        type: string
+        label: 'Environment ID'
+      environment_token:
+        type: string
+        label: 'Environment token'
+
+condition.plugin.response_code:
+  type: condition.plugin
+  mapping:
+    response_codes:
+      type: string

@@ -1,0 +1,5 @@
+<?xml version="1.0" standalone="yes"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+<path style="fill:#ffffff; stroke:none;" d="M0 0L0 16L16 16L16 0L0 0z"/>
+<path style="fill:#010101; stroke:none;" d="M1 3L1 6L10 6L10 3L1 3M11 3L11 6L15 6L15 3L11 3M1 7L1 10L5 10L5 7L1 7M6 7L6 10L10 10L10 7L6 7M11 7L11 10L15 10L15 7L11 7M1 11L1 14L15 14L15 11L1 11z"/>
+</svg>

@@ -1,0 +1,40 @@
+entity.config_split.canonical:
+  route_name: entity.config_split.canonical
+  base_route: entity.config_split.canonical
+  title: 'View'
+entity.config_split.edit_form:
+  route_name: entity.config_split.edit_form
+  base_route: entity.config_split.canonical
+  title: Edit
+entity.config_split.delete_form:
+  route_name: entity.config_split.delete_form
+  base_route: entity.config_split.canonical
+  title: Delete
+  weight: 10
+entity.config_split.activate:
+  route_name: entity.config_split.activate
+  base_route: entity.config_split.canonical
+  title: Activate
+  weight: 20
+entity.config_split.deactivate:
+  route_name: entity.config_split.deactivate
+  base_route: entity.config_split.canonical
+  title: Deactivate
+  weight: 20
+
+entity.config_split.import:
+  route_name: entity.config_split.import
+  base_route: entity.config_split.canonical
+  title: Import
+  weight: 20
+
+entity.config_split.export:
+  route_name: entity.config_split.export
+  base_route: entity.config_split.canonical
+  title: Export
+  weight: 20
+
+entity.config_split.collection:
+  title: List
+  route_name: entity.config_split.collection
+  base_route: entity.config_split.collection

@@ -1,0 +1,15 @@
+block.settings.masquerade:
+  type: block_settings
+  label: 'Masquerade'
+  mapping:
+    show_unmasquerade_link:
+      type: boolean
+      label: 'Show unmasquerade link in block'
+
+masquerade.settings:
+  type: config_object
+  label: Masquerade settings
+  mapping:
+    update_user_last_access:
+      type: boolean
+      label: Update user's last access time when masquerading

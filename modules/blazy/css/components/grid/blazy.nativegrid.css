@@ -1,0 +1,375 @@
+/**
+ * @file
+ * Provides pure CSS3 nativegrid based on Grid Layout without JavaScript.
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout
+ * Below is the less-robust version of GridStack layouts.
+ * Specific for Masonry, add a min-height to the .b-nativegrid to avoid
+ * reflow due to using JS.
+ *
+ * Classes:
+ *  - .is-b-nativegrid, as the original two-dimensional, the real Native Grid.
+ *  - .is-b-masonry, as the tweaked one-dimensional, the Masonry.
+ */
+
+/* csslint ignore:start */
+/* The gap 15px is to match CSS grid convention such as Bootstrap, adjust it. */
+:root {
+  --bn-col-gap: 15px;
+  --bn-row-height-native: 80px;
+  /* Since 3.0.7, these values are to determine multi-breakpoint grids with
+  min-max device widths, basically just to make grid_medium value kicks in
+  within this range. If changed, be sure to update its media query far below. */
+  --bn-md: 768px;
+  --bn-lg: 1024px;
+}
+
+.b-nativegrid,
+.blazy.b-nativegrid,
+.item-list > .b-nativegrid {
+  position: relative;
+  display: block;
+  clear: both;
+  overflow: hidden;
+  width: 100%;
+  margin: 0 auto;
+  list-style: none;
+}
+
+ul.blazy.b-nativegrid {
+  padding: 0;
+}
+
+.blazy.b-nativegrid > .grid,
+.item-list > .blazy.b-nativegrid > .grid {
+  display: block;
+  width: 100%;
+  min-height: 40px;
+  margin: 0 0 var(--bn-col-gap);
+  padding: 0;
+  /* At most grids, transition is causing issues than helpful. */
+  transition: none;
+}
+
+/** Without margin. */
+.is-b-gapless > .grid,
+.item-list > .is-b-gapless > .grid {
+  margin: 0;
+}
+
+.blazy.b-nativegrid .grid__content,
+.blazy.b-nativegrid .region__content {
+  height: 100%;
+}
+
+/** 480px = 30em with 16px base font. */
+@media only screen and (min-width: 480px) {
+  .blazy.b-nativegrid > .grid,
+  .item-list > .blazy.b-nativegrid > .grid {
+    margin-bottom: 0;
+  }
+
+  .blazy.b-nativegrid {
+    gap: var(--bn-col-gap);
+    grid-template-columns: auto;
+    /* Use min-content if to make perfectly calculated non-bg images fit. */
+    grid-auto-rows: var(--bn-row-height-native);
+    /* bad for bg: align-items: start; */
+    /* align-content: start;
+    justify-content: start;  */
+  }
+
+  .blazy.b-nativegrid,
+  .item-list > .blazy.b-nativegrid {
+    display: grid;
+    grid-auto-flow: row dense;
+  }
+
+  /** Without margin. */
+  .blazy.b-nativegrid.is-b-gapless {
+    gap: 0; /* csslint allow: known-properties, gap */
+  }
+
+  .blazy.b-nativegrid > .grid,
+  .item-list > .blazy.b-nativegrid > .grid {
+    display: flex;
+    flex-wrap: wrap;
+    /* @todo recheck align-self is broken. */
+    align-items: start;
+    justify-content: start;
+  }
+
+  /** Adjust the minimum accordingly like everything else. */
+  .is-b-nativegrid > .grid {
+    grid-row: span 2;
+    grid-column: auto;
+  }
+
+  .is-b-nativegrid:not(.b-layout) .grid__content {
+    overflow: hidden;
+    height: 100%;
+  }
+
+  /* Add more relevant selectors accordingly to make gapless grids.
+  Remove .is-b-nativegrid to make it fit height-width for Masonry as well, if needed. */
+  .is-b-nativegrid:not(.b-layout) .b-cover,
+  .is-b-nativegrid:not(.b-layout) .b-link,
+  .is-b-nativegrid:not(.b-layout) .litebox,
+  .is-b-nativegrid:not(.b-layout) .b-bg,
+  .is-b-nativegrid:not(.b-layout) iframe,
+  .is-b-nativegrid:not(.b-layout) picture,
+  .is-b-nativegrid:not(.b-layout) video,
+  .is-b-nativegrid:not(.b-layout) .media,
+  .is-b-nativegrid:not(.b-layout) img.media__element,
+  .is-b-nativegrid:not(.b-layout) .slide__media {
+    position: static; /* To keep lightbox/ video icon centered. */
+    width: 100%;
+    height: inherit;
+    /* Aspect ratio is irrelevant for gapless grid. */
+    padding: 0 !important; /* csslint allow: known-properties, important */
+    object-fit: cover;
+  }
+
+  .is-b-nativegrid .b-html.b-loaded > img {
+    position: absolute;
+    z-index: -1;
+    width: 0;
+    object-fit: none;
+  }
+
+  /* For some reason, unlike video, etc., iframe refuses to show when static. */
+  .is-b-nativegrid:not(.b-layout) .grid iframe {
+    position: absolute;
+    height: 100%;
+  }
+
+  /* Olivero surprises, adjust it. */
+  .is-b-nativegrid:not(.b-layout) .blazy__caption h2 {
+    margin: 0;
+    color: #fff;
+    font-size: 1.25rem;
+    line-height: 1.6rem;
+  }
+
+  /* To avoid initial confusion due to being overflow: hidden, adjust it. */
+  .is-b-nativegrid:not(.b-layout) .blazy__caption,
+  .is-b-nativegrid:not(.b-layout) .slide__caption {
+    position: absolute;
+    z-index: 3;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px 15px;
+    text-align: center;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.8);
+  }
+
+  /* The only rule make sense for small devices, adjust it accordingly. */
+  .blazy.b-nativegrid--sm-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/** 640px = 40em with 16px base font. */
+@media only screen and (min-width: 640px) {
+  .blazy.b-nativegrid--md-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .blazy.b-nativegrid--md-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .blazy.b-nativegrid--md-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .blazy.b-nativegrid--md-5 {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  .blazy.b-nativegrid--md-6 {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .blazy.b-nativegrid--md-7 {
+    grid-template-columns: repeat(7, 1fr);
+  }
+
+  .blazy.b-nativegrid--md-8 {
+    grid-template-columns: repeat(8, 1fr);
+  }
+
+  .blazy.b-nativegrid--md-9 {
+    grid-template-columns: repeat(9, 1fr);
+  }
+
+  .blazy.b-nativegrid--md-10 {
+    grid-template-columns: repeat(10, 1fr);
+  }
+
+  .blazy.b-nativegrid--md-11 {
+    grid-template-columns: repeat(11, 1fr);
+  }
+
+  .blazy.b-nativegrid--md-12 {
+    grid-template-columns: repeat(12, 1fr);
+  }
+}
+
+/**
+ * 768px = 48em with 16px base font.
+ *
+ * Since 3.0.7, supports multi-breakpoint grids for grid and grid_medium.
+ */
+@media only screen and (min-width: 768px) {
+  /* Default for two-dimensional layout. */
+  .blazy.b-nativegrid {
+    grid-template-columns: repeat(12, 1fr);
+  }
+
+  /* Configurable one-dimensional layouts. */
+  .blazy.b-nativegrid--lg-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .blazy.b-nativegrid--lg-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .blazy.b-nativegrid--lg-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .blazy.b-nativegrid--lg-5 {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  .blazy.b-nativegrid--lg-6 {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .blazy.b-nativegrid--lg-7 {
+    grid-template-columns: repeat(7, 1fr);
+  }
+
+  .blazy.b-nativegrid--lg-8 {
+    grid-template-columns: repeat(8, 1fr);
+  }
+
+  .blazy.b-nativegrid--lg-9 {
+    grid-template-columns: repeat(9, 1fr);
+  }
+
+  .blazy.b-nativegrid--lg-10 {
+    grid-template-columns: repeat(10, 1fr);
+  }
+
+  .blazy.b-nativegrid--lg-11 {
+    grid-template-columns: repeat(11, 1fr);
+  }
+
+  .blazy.b-nativegrid--lg-12 {
+    grid-template-columns: repeat(12, 1fr);
+  }
+
+  /* Dimensions for two-dimensional layout. */
+  /** grid-row == height */
+  .blazy.b-nativegrid > [data-b-h="1"] {
+    grid-row: span 1;
+  }
+
+  .blazy.b-nativegrid > [data-b-h="2"] {
+    grid-row: span 2;
+  }
+
+  .blazy.b-nativegrid > [data-b-h="3"] {
+    grid-row: span 3;
+  }
+
+  .blazy.b-nativegrid > [data-b-h="4"] {
+    grid-row: span 4;
+  }
+
+  .blazy.b-nativegrid > [data-b-h="5"] {
+    grid-row: span 5;
+  }
+
+  .blazy.b-nativegrid > [data-b-h="6"] {
+    grid-row: span 6;
+  }
+
+  .blazy.b-nativegrid > [data-b-h="7"] {
+    grid-row: span 7;
+  }
+
+  .blazy.b-nativegrid > [data-b-h="8"] {
+    grid-row: span 8;
+  }
+
+  .blazy.b-nativegrid > [data-b-h="9"] {
+    grid-row: span 9;
+  }
+
+  .blazy.b-nativegrid > [data-b-h="10"] {
+    grid-row: span 10;
+  }
+
+  .blazy.b-nativegrid > [data-b-h="11"] {
+    grid-row: span 11;
+  }
+
+  .blazy.b-nativegrid > [data-b-h="12"] {
+    grid-row: span 12;
+  }
+
+  /** grid-column == width */
+  .blazy.b-nativegrid > [data-b-w="1"] {
+    grid-column: span 1;
+  }
+
+  .blazy.b-nativegrid > [data-b-w="2"] {
+    grid-column: span 2;
+  }
+
+  .blazy.b-nativegrid > [data-b-w="3"] {
+    grid-column: span 3;
+  }
+
+  .blazy.b-nativegrid > [data-b-w="4"] {
+    grid-column: span 4;
+  }
+
+  .blazy.b-nativegrid > [data-b-w="5"] {
+    grid-column: span 5;
+  }
+
+  .blazy.b-nativegrid > [data-b-w="6"] {
+    grid-column: span 6;
+  }
+
+  .blazy.b-nativegrid > [data-b-w="7"] {
+    grid-column: span 7;
+  }
+
+  .blazy.b-nativegrid > [data-b-w="8"] {
+    grid-column: span 8;
+  }
+
+  .blazy.b-nativegrid > [data-b-w="9"] {
+    grid-column: span 9;
+  }
+
+  .blazy.b-nativegrid > [data-b-w="10"] {
+    grid-column: span 10;
+  }
+
+  .blazy.b-nativegrid > [data-b-w="11"] {
+    grid-column: span 11;
+  }
+
+  .blazy.b-nativegrid > [data-b-w="12"] {
+    grid-column: span 12;
+  }
+}

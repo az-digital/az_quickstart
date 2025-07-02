@@ -1,0 +1,129 @@
+# Iframe embed page with and without JavaScript.
+
+entity.webform.share_page:
+  path: '/webform/{webform}/share'
+  defaults:
+    _controller: '\Drupal\webform_share\Controller\WebformShareController::page'
+    _title_callback: '\Drupal\webform\Controller\WebformEntityController::title'
+  options:
+    parameters:
+      webform:
+        type: 'entity:webform'
+  requirements:
+    _entity_access: 'webform.submission_create'
+    _custom_access: '\Drupal\webform_share\Access\WebformShareAccess::checkAccess'
+
+entity.webform.share_page.javascript:
+  path: '/webform/{webform}/share/{library}/{version}'
+  defaults:
+    _controller: '\Drupal\webform_share\Controller\WebformShareController::page'
+    _title_callback: '\Drupal\webform\Controller\WebformEntityController::title'
+  options:
+    parameters:
+      webform:
+        type: 'entity:webform'
+  requirements:
+    _entity_access: 'webform.submission_create'
+    _custom_access: '\Drupal\webform_share\Access\WebformShareAccess::checkAccess'
+
+entity.webform.share_script:
+  path: '/webform/{webform}/share.js'
+  defaults:
+    _controller: '\Drupal\webform_share\Controller\WebformShareController::script'
+  options:
+    parameters:
+      webform:
+        type: 'entity:webform'
+  requirements:
+    _entity_access: 'webform.submission_create'
+    _custom_access: '\Drupal\webform_share\Access\WebformShareAccess::checkAccess'
+
+# Share embed, preview, and test.
+
+entity.webform.share_embed:
+  path: '/admin/structure/webform/manage/{webform}/share'
+  defaults:
+    _form: '\Drupal\webform_share\Form\WebformShareEmbedForm'
+    _title_callback: '\Drupal\webform\Controller\WebformEntityController::title'
+  options:
+    parameters:
+      webform:
+        type: 'entity:webform'
+  requirements:
+    _entity_access: 'webform.update'
+    _custom_access: '\Drupal\webform_share\Access\WebformShareAccess::checkAccess'
+
+entity.webform.share_preview:
+  path: '/admin/structure/webform/manage/{webform}/share/preview'
+  defaults:
+    _controller: '\Drupal\webform_share\Controller\WebformShareController::preview'
+    _title_callback: '\Drupal\webform\Controller\WebformEntityController::title'
+  options:
+    parameters:
+      webform:
+        type: 'entity:webform'
+  requirements:
+    _entity_access: 'webform.submission_create'
+    _custom_access: '\Drupal\webform_share\Access\WebformShareAccess::checkAccess'
+
+entity.webform.share_test:
+  path: '/admin/structure/webform/manage/{webform}/share/test'
+  defaults:
+    _controller: '\Drupal\webform_share\Controller\WebformShareController::test'
+    _title_callback: '\Drupal\webform\Controller\WebformEntityController::title'
+  options:
+    parameters:
+      webform:
+        type: 'entity:webform'
+  requirements:
+    _entity_access: 'webform.test'
+    _custom_access: '\Drupal\webform_share\Access\WebformShareAccess::checkAccess'
+
+# Webform node routes.
+# These routes will be removed if the webform_node.module is not installed.
+# @see \Drupal\webform_options_limit\Routing\WebformOptionsLimitRouteSubscriber
+
+entity.node.webform.share_embed:
+  path: '/node/{node}/webform/share'
+  defaults:
+    _form: '\Drupal\webform_share\Form\WebformShareEmbedForm'
+    _title_callback: '\Drupal\Core\Entity\Controller\EntityController::title'
+    operation: webform_share
+    entity_access: 'webform.share'
+  options:
+    _admin_route: TRUE
+    parameters:
+      node:
+        type: 'entity:node'
+  requirements:
+    _custom_access: '\Drupal\webform_share\Access\WebformShareAccess::checkNodeAccess'
+
+entity.node.webform.share_preview:
+  path: '/node/{node}/webform/share/preview'
+  defaults:
+    _controller: '\Drupal\webform_share\Controller\WebformShareController::preview'
+    _title_callback: '\Drupal\Core\Entity\Controller\EntityController::title'
+    operation: webform_share_preview
+    entity_access: 'webform.submission_create'
+  options:
+    _admin_route: TRUE
+    parameters:
+      node:
+        type: 'entity:node'
+  requirements:
+    _custom_access: '\Drupal\webform_share\Access\WebformShareAccess::checkNodeAccess'
+
+entity.node.webform.share_test:
+  path: '/node/{node}/webform/share/test'
+  defaults:
+    _controller: '\Drupal\webform_share\Controller\WebformShareController::test'
+    _title_callback: '\Drupal\Core\Entity\Controller\EntityController::title'
+    operation: webform_share_test
+    entity_access: 'webform.test'
+  options:
+    _admin_route: TRUE
+    parameters:
+      node:
+        type: 'entity:node'
+  requirements:
+    _custom_access: '\Drupal\webform_share\Access\WebformShareAccess::checkNodeAccess'

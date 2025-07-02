@@ -1,0 +1,26 @@
+{% extends "block.html.twig" %}
+{#
+/**
+ * @file
+ * Theme override for a disclaimer block.
+ *
+ * Displays Umami Disclaimer and Copyright text.
+ *
+ * Available variables:
+ * - content.field_disclaimer: Content of Disclaimer formatted text field.
+ * - content.field_copyright: Content of Copyright formatted text field.
+ */
+#}
+{% block content %}
+  {% embed 'umami:disclaimer' with {
+    attributes: create_attribute(),
+    content,
+  } only %}
+    {% block copyright %}
+      {{ content.field_copyright }}
+    {% endblock %}
+    {% block disclaimer %}
+      {{ content.field_disclaimer }}
+    {% endblock %}
+  {% endembed %}
+{% endblock %}

@@ -1,0 +1,13 @@
+name: 'Smart Date'
+type: module
+description: 'Provides the ability to store start and end times, with duration. Also provides an intelligent admin UI, and a variety of formatting options.'
+package: Field types
+core_version_requirement: ^9 || ^10 || ^11
+dependencies:
+  - drupal:datetime
+  - drupal:options
+
+# Information added by Drupal.org packaging script on 2025-03-01
+version: '4.2.3'
+project: 'smart_date'
+datestamp: 1740856568

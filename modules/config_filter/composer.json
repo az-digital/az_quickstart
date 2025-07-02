@@ -1,0 +1,34 @@
+{
+  "name": "drupal/config_filter",
+  "type": "drupal-module",
+  "description": "Config Filter allows other modules to interact with a ConfigStorage through filter plugins.",
+  "keywords": ["Drupal", "configuration", "configuration management"],
+  "authors": [
+    {
+      "name": "Fabian Bircher",
+      "email": "opensource@fabianbircher.com",
+      "homepage": "https://www.drupal.org/u/bircher",
+      "role": "Maintainer"
+    },
+    {
+      "name": "Nuvole Web",
+      "email": "info@nuvole.org",
+      "homepage": "http://nuvole.org",
+      "role": "Maintainer"
+    }
+  ],
+  "homepage": "https://www.drupal.org/project/config_filter",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/config_filter",
+    "slack": "https://drupal.slack.com/archives/C45342CDD",
+    "source": "https://git.drupalcode.org/project/config_filter"
+  },
+  "license": "GPL-2.0-or-later",
+  "require": {},
+  "conflict": {
+    "drush/drush": "<10"
+  },
+  "suggest": {
+    "drupal/config_split": "Split site configuration for different environments."
+  }
+}

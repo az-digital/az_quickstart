@@ -1,0 +1,39 @@
+entity.metatag_custom_tag.collection:
+  path: '/admin/config/search/metatag/custom-tags'
+  defaults:
+    _entity_list: 'metatag_custom_tag'
+    _title: 'Custom tags'
+  requirements:
+    _permission: 'administer custom meta tags'
+  options:
+    _admin_route: TRUE
+
+entity.metatag_custom_tag.admin_add:
+  path: '/admin/config/search/metatag/custom-tags/add'
+  defaults:
+    _entity_form: 'metatag_custom_tag.add'
+    _title: 'Add Custom tag'
+  requirements:
+    _permission: 'administer custom meta tags'
+  options:
+    _admin_route: TRUE
+
+entity.metatag_custom_tag.edit_form:
+  path: '/admin/config/search/metatag/custom-tags/{metatag_custom_tag}/edit'
+  defaults:
+    _entity_form: 'metatag_custom_tag.edit'
+    _title_callback: '\Drupal\metatag_custom_tags\Form\MetaTagCustomTagForm::getTitle'
+  requirements:
+    _permission: 'administer custom meta tags'
+  options:
+    _admin_route: TRUE
+
+entity.metatag_custom_tag.delete_form:
+  path: '/admin/config/search/metatag/custom-tags/{metatag_custom_tag}/delete'
+  defaults:
+    _entity_form: 'metatag_custom_tag.delete'
+    _title: 'Delete Custom tag'
+  requirements:
+    _permission: 'administer custom meta tags'
+  options:
+    _admin_route: TRUE

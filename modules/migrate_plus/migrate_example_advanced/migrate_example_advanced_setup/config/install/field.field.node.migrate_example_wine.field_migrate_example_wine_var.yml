@@ -1,0 +1,26 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_migrate_example_wine_var
+    - node.type.migrate_example_wine
+    - taxonomy.vocabulary.migrate_example_wine_varieties
+id: node.migrate_example_wine.field_migrate_example_wine_var
+field_name: field_migrate_example_wine_var
+entity_type: node
+bundle: migrate_example_wine
+label: 'Migrate Example Wine Varieties'
+description: 'Select the variety of this wine'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      migrate_example_wine_varieties: migrate_example_wine_varieties
+    sort:
+      field: _none
+    auto_create: false
+field_type: entity_reference

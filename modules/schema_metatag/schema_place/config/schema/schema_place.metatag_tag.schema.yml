@@ -1,0 +1,27 @@
+# The 'type' should be "label" for short meta tags and "text" for ones which
+# could get longer, especially ones which use a textarea field instead of a
+# textfield.
+metatag.metatag_tag.schema_place_description:
+  type: text
+  label: 'description'
+metatag.metatag_tag.schema_place_image:
+  type: text
+  label: 'image'
+metatag.metatag_tag.schema_place_name:
+  type: text
+  label: 'name'
+metatag.metatag_tag.schema_place_telephone:
+  type: text
+  label: 'telephone'
+metatag.metatag_tag.schema_place_type:
+  type: text
+  label: '@type'
+metatag.metatag_tag.schema_place_address:
+  type: text
+  label: 'address'
+metatag.metatag_tag.schema_place_geo:
+  type: text
+  label: 'geo'
+metatag.metatag_tag.schema_place_url:
+  type: text
+  label: 'url'

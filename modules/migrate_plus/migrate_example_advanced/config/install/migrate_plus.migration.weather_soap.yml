@@ -1,0 +1,56 @@
+# This migration demonstrates importing from SOAP/WSDL.
+id: weather_soap
+label: SOAP service providing weather.
+migration_group: wine
+migration_tags:
+  - advanced example
+source:
+  # We use the SOAP parser source plugin.
+  plugin: url
+  data_fetcher_plugin: http # Ignored - SoapClient does the fetching.
+  data_parser_plugin: soap
+  # URL of a WSDL endpoint.
+  urls:
+    - http://www.webservicex.net/globalweather.asmx?WSDL
+  # The function to call on the service, and the parameters to pass. See
+  # http://www.webservicex.net/New/Home/ServiceDetail/56 for the XML structure
+  # of this feed - how CountryName is passed within the GetCitiesByCountry
+  # XML element.
+  function: GetCitiesByCountry
+  parameters:
+    CountryName: Spain
+  # Responses may be returned as an XML string, an object, or an array - specify
+  # the type of response here.
+  response_type: xml
+  # Looking at the XML response at http://www.webservicex.net/globalweather.asmx/GetCitiesByCountry,
+  # we see that the data items we want are within <NewDataSet><Table>.
+  item_selector: /NewDataSet/Table
+  # For each field, 'name' is the source property name to be used in the process
+  # steps below, 'label' is optional (to document the property), and selector
+  # is an xpath (-like, for array and object returns) string relative to the
+  # item_selector for retrieving that data value.
+  fields:
+    -
+      name: Country
+      label: Country
+      selector: Country
+    -
+      name: City
+      label: City
+      selector: City
+  # 'ids' tells us what source property ('City') holds the unique identifying
+  # value for each imported item, and what schema type to use to hold that
+  # value in the migration map an message tables.
+  ids:
+    City:
+      type: string
+process:
+  vid:
+    plugin: default_value
+    default_value: migrate_example_wine_varieties
+  name: City
+destination:
+  plugin: entity:taxonomy_term
+migration_dependencies:
+  required: {}
+  optional: {}

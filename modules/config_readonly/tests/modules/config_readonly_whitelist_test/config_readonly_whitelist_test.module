@@ -1,0 +1,17 @@
+<?php
+
+/**
+ * @file
+ * Provide test whitelist.
+ */
+
+/**
+ * Implements hook_config_readonly_whitelist_patterns().
+ */
+function config_readonly_whitelist_test_config_readonly_whitelist_patterns() {
+  return [
+    '*article2*',
+    'system.performance',
+    'block.block.*',
+  ];
+}

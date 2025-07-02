@@ -1,0 +1,74 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the config_split module.
+ */
+
+declare(strict_types=1);
+
+/**
+ * Enable the config_filter module.
+ */
+function config_split_update_8001() {
+  // Do not enable config filter any more.
+}
+
+/**
+ * Change the config schema for split entities.
+ */
+function config_split_update_8002() {
+  $configFactory = \Drupal::configFactory();
+  foreach ($configFactory->listAll('config_split.config_split') as $name) {
+    $split = $configFactory->getEditable($name);
+    $data = $split->getRawData();
+
+    if (!isset($data['storage'])) {
+      $key = array_search('folder', array_keys($data), TRUE);
+      $data = array_slice($data, 0, $key, TRUE) +
+        ['storage' => $data['folder'] === '' ? 'database' : 'folder'] +
+        array_slice($data, $key, NULL, TRUE);
+    }
+
+    foreach (['black' => 'complete', 'gray' => 'partial'] as $list => $new) {
+      $list .= 'list';
+      $new .= '_list';
+      if (!isset($data[$new])) {
+        $data[$new] = $data[$list] ?? [];
+      }
+      unset($data[$list]);
+      unset($data[$list . '_dependents']);
+      unset($data[$list . '_skip_equal']);
+    }
+    $split->setData($data);
+    $split->save(TRUE);
+  }
+}
+
+/**
+ * Add no_patch and stackable.
+ */
+function config_split_update_8003() {
+  $configFactory = \Drupal::configFactory();
+  foreach ($configFactory->listAll('config_split.config_split') as $name) {
+    $split = $configFactory->getEditable($name);
+    $data = $split->getRawData();
+
+    if (!isset($data['stackable'])) {
+      $key = array_search('weight', array_keys($data), TRUE) + 1;
+      $data = array_slice($data, 0, $key, TRUE) +
+        ['stackable' => FALSE] +
+        array_slice($data, $key, NULL, TRUE);
+    }
+
+    if (!isset($data['no_patching'])) {
+      $key = array_search('stackable', array_keys($data), TRUE) + 1;
+      $data = array_slice($data, 0, $key, TRUE) +
+        ['no_patching' => FALSE] +
+        array_slice($data, $key, NULL, TRUE);
+    }
+
+    $split->setData($data);
+    $split->save(TRUE);
+  }
+}

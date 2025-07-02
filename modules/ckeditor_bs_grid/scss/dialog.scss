@@ -1,0 +1,88 @@
+.bs_grid-dialog {
+  @media only screen and (min-width: 768px) {
+    min-width: 600px;
+  }
+}
+
+#bs_grid-dialog-form {
+
+  // STEP 1.
+  .bs_grid-dialog-step--select {
+    max-width: 520px;
+
+    .form-radios,
+    .form-boolean-group {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      text-align: center;
+
+      .form-item-num-columns {
+        margin: 0 0 10px;
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 25%;
+        flex: 0 0 25%;
+        max-width: 25%;
+        position: relative;
+        width: 100%;
+        min-height: 1px;
+      }
+
+      input {
+        display: none;
+
+        &:checked {
+          & ~ label {
+            background: powderblue;
+          }
+          &:disabled ~ label {
+            background: lightgrey;
+          }
+        }
+
+      }
+
+      label {
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        p {
+          margin: 0;
+        }
+      }
+    }
+  }
+
+  // STEP 2.
+  .bs_grid-dialog-step--layout {
+    .bs-grid-option {
+      input[type="radio"] {
+        display: none;
+        &:checked ~ label .bs-col {
+          background: lightgreen;
+        }
+      }
+      label {
+        .row {
+          box-sizing: border-box;
+        }
+        .bs-option-label {
+          font-weight: bold;
+        }
+        cursor: pointer;
+        .bs-col {
+          border: 1px solid whitesmoke;
+          border-radius: 5px;
+          background: lightgray;
+        }
+        &:hover,
+        &:focus {
+          .bs-col {
+            background: lightsteelblue;
+          }
+        }
+      }
+    }
+  }
+
+}

@@ -1,0 +1,9 @@
+services:
+  seckit.subscriber:
+    class: Drupal\seckit\EventSubscriber\SecKitEventSubscriber
+    arguments: ['@logger.channel.seckit', '@config.factory', '@extension.list.module']
+    tags:
+      - { name: event_subscriber }
+  logger.channel.seckit:
+    parent: logger.channel_base
+    arguments: ['seckit']

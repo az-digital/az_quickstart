@@ -1,0 +1,54 @@
+# This migration demonstrates importing from a monolithic XML file.
+id: wine_role_xml
+label: XML feed of roles (positions)
+migration_group: wine
+migration_tags:
+  - advanced example
+source:
+  # We use the XML data parser plugin.
+  plugin: url
+  data_fetcher_plugin: http
+  data_parser_plugin: xml
+  # Normally, this is one or more fully-qualified URLs or file paths. Because
+  # we can't hardcode your local URL, we provide a relative path here which
+  # hook_install() will rewrite to a full URL for the current site.
+  urls:
+    - /migrate_example_advanced_position?_format=xml
+  # Visit the URL above (relative to your site root) and look at it. You can see
+  # that <response> is the outer element, and each item we want to import is a
+  # <position> element. The item_xpath value is the xpath to use to query the
+  # desired elements.
+  item_selector: /response/position
+  # Under 'fields', we list the data items to be imported. The first level keys
+  # are the source field names we want to populate (the names to be used as
+  # sources in the process configuration below). For each field we're importing,
+  # we provide a label (optional - this is for display in migration tools) and
+  # an xpath for retrieving that value. It's important to note that this xpath
+  # is relative to the elements retrieved by item_xpath.
+  fields:
+    -
+      name: machine_name
+      label: 'Unique position identifier'
+      selector: sourceid
+    -
+      name: friendly_name
+      label: 'Position name'
+      selector: name
+  # Under 'ids', we identify source fields populated above which will uniquely
+  # identify each imported item. The 'type' makes sure the migration map table
+  # uses the proper schema type for stored the IDs.
+  ids:
+    machine_name:
+      type: string
+process:
+  # Note that the source field names here (machine_name and friendly_name) were
+  # defined by the 'fields' configuration for the source plugin above.
+  id: machine_name
+  label: friendly_name
+destination:
+  plugin: entity:user_role
+migration_dependencies: {}
+dependencies:
+  enforced:
+    module:
+      - migrate_example_advanced

@@ -1,0 +1,19 @@
+{
+    "name": "drupal/externalauth",
+    "type": "drupal-module",
+    "description": "Helper module to authenticate users using an external site / service and storing identification details",
+    "homepage": "https://drupal.org/project/externalauth",
+    "license": "GPL-2.0-or-later",
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "Sven Decabooter",
+            "homepage": "https://www.drupal.org/u/svendecabooter",
+            "role": "Maintainer"
+        }
+    ],
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/externalauth",
+        "source": "https://git.drupalcode.org/project/externalauth"
+    }
+}

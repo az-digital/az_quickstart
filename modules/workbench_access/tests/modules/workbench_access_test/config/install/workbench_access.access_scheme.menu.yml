@@ -1,0 +1,15 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.article
+    - system.menu.main
+id: menu
+label: Menu
+plural_label: Menu
+scheme: menu
+scheme_settings:
+  menus:
+    - main
+  bundles:
+    - article

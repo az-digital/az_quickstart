@@ -1,0 +1,98 @@
+/**
+ * @file
+ * Provides shared CSS rules for Blazy layout.
+ *
+ * This is just dummy to avoid collapsed images with blazy layout backgrounds.
+ * To have a multi-breakpoint height, override this file and add revelant media
+ * queries and change each rule height based on the media widths.
+ *
+ * data-b-h is actually taking the largest grid, but made global here.
+ * data-b-mh is taking the grid_medium down, that is why it has max-width.
+ */
+
+.blazy.b-mh > [data-b-h="xxs"],
+.blazy.b-mh > [data-b-h="x2s"] {
+  min-height: 80px;
+}
+
+.blazy.b-mh > [data-b-h="xs"] {
+  min-height: 120px;
+}
+
+.blazy.b-mh > [data-b-h="sm"] {
+  min-height: 240px;
+}
+
+.blazy.b-mh > [data-b-h="md"] {
+  min-height: 320px;
+}
+
+.blazy.b-mh > [data-b-h="lg"] {
+  min-height: 480px;
+}
+
+.blazy.b-mh > [data-b-h="xl"] {
+  min-height: 560px;
+}
+
+.blazy.b-mh > [data-b-h="xxl"],
+.blazy.b-mh > [data-b-h="x2l"] {
+  min-height: 640px;
+}
+
+.blazy.b-mh > [data-b-h="x3l"] {
+  min-height: 720px;
+}
+
+.blazy.b-mh > [data-b-h="x4l"] {
+  min-height: 820px;
+}
+
+.blazy.b-mh > [data-b-h="x5l"] {
+  min-height: 920px;
+}
+
+/** 768px = 48em with 16px base font. */
+@media only screen and (max-width: 48em) {
+  .blazy.b-mh > [data-b-mh="xxs"],
+  .blazy.b-mh > [data-b-mh="x2s"] {
+    min-height: 80px;
+  }
+
+  .blazy.b-mh > [data-b-mh="xs"] {
+    min-height: 120px;
+  }
+
+  .blazy.b-mh > [data-b-mh="sm"] {
+    min-height: 240px;
+  }
+
+  .blazy.b-mh > [data-b-mh="md"] {
+    min-height: 320px;
+  }
+
+  .blazy.b-mh > [data-b-mh="lg"] {
+    min-height: 480px;
+  }
+
+  .blazy.b-mh > [data-b-mh="xl"] {
+    min-height: 560px;
+  }
+
+  .blazy.b-mh > [data-b-mh="xxl"],
+  .blazy.b-mh > [data-b-mh="x2l"] {
+    min-height: 640px;
+  }
+
+  .blazy.b-mh > [data-b-mh="x3l"] {
+    min-height: 720px;
+  }
+
+  .blazy.b-mh > [data-b-mh="x4l"] {
+    min-height: 820px;
+  }
+
+  .blazy.b-mh > [data-b-mh="x5l"] {
+    min-height: 920px;
+  }
+}

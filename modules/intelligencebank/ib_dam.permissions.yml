@@ -1,0 +1,3 @@
+administer intelligencebank configuration:
+  title: 'Administer IntelligenceBank configuration'
+  description: 'This permission gives user ability to set up additional options for IntelligenceBank Digital Asset Management service.'

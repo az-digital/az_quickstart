@@ -1,0 +1,109 @@
+# Schema for the configuration files of the Smart Date Recur module.
+field.formatter.settings.smartdate_recurring:
+  type: field.formatter.settings.smartdate_default
+  label: 'Smart date default display format settings'
+  mapping:
+    timezone_override:
+      type: string
+      label: 'Time zone override'
+      translation context: 'Smart date display'
+    format:
+      type: string
+      label: 'Format'
+      translation context: 'Smart date display'
+    force_chronological:
+      type: boolean
+      label: 'Force chronological'
+      translation context: 'Smart date display'
+    add_classes:
+      type: boolean
+      label: 'Add Classes'
+      translation context: 'Smart date display'
+    time_wrapper:
+      type: boolean
+      label: 'Add time wrapper'
+      translation context: 'Smart date display'
+    past_display:
+      type: integer
+      label: 'Recent Instances'
+      translation context: 'Smart date display'
+    upcoming_display:
+      type: integer
+      label: 'Upcoming Instances'
+      translation context: 'Smart date display'
+    show_next:
+      type: boolean
+      label: 'Show next instance separately'
+      translation context: 'Smart date display'
+    current_upcoming:
+      type: boolean
+      label: 'Treat current events as upcoming'
+      translation context: 'Smart date display'
+
+field.formatter.settings.smartdate_dailyrange:
+  type: field.formatter.settings.datetime_default
+  label: 'Smart date daily range display format settings'
+  mapping:
+    timezone_override:
+      type: string
+      label: 'Time zone override'
+      translation context: 'Smart date display'
+    format:
+      type: string
+      label: 'Format'
+      translation context: 'Smart date display'
+    force_chronological:
+      type: boolean
+      label: 'Force chronological'
+      translation context: 'Smart date display'
+    add_classes:
+      type: boolean
+      label: 'Add Classes'
+      translation context: 'Smart date display'
+    time_wrapper:
+      type: boolean
+      label: 'Add time wrapper'
+      translation context: 'Smart date display'
+
+field.field.*.*.*.third_party.smart_date_recur:
+  type: mapping
+  label: 'Recurring Dates'
+  mapping:
+    allow_recurring:
+      type: boolean
+      label: 'Allow recurring date values'
+    month_limit:
+      type: integer
+      label: 'Months to extend'
+
+field.widget.third_party.smart_date_recur:
+  type: mapping
+  label: 'Recurring Dates'
+  mapping:
+    modal:
+      type: boolean
+      label: 'Use modal for managing instances'
+    show_single:
+      type: boolean
+      label: 'Show a value of 1 in the increment field'
+    allowed_recur_freq_values:
+      type: mapping
+      mapping:
+        MINUTELY:
+          label: Minutely
+          type: string
+        HOURLY:
+          label: Hourly
+          type: string
+        DAILY:
+          label: Daily
+          type: string
+        WEEKLY:
+          label: Weekly
+          type: string
+        MONTHLY:
+          label: Monthly
+          type: string
+        YEARLY:
+          label: Yearly
+          type: string

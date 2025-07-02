@@ -1,0 +1,8 @@
+xmlsitemap_engines_test.ping:
+  path: '/ping'
+  defaults:
+    _controller: '\Drupal\xmlsitemap_engines_test\Controller\XmlSitemapEnginesTestController::render'
+    _title: 'Ping'
+  requirements:
+    # Access is open because crawlers need to be able to access the ping URL.
+    _access: 'TRUE'

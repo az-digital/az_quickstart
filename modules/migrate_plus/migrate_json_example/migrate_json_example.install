@@ -1,0 +1,26 @@
+<?php
+
+declare(strict_types = 1);
+
+/**
+ * @file
+ * Install, update, and uninstall functions for migrate_json_example.
+ */
+
+use Drupal\Core\File\FileSystemInterface;
+
+/**
+ * Copies the example file to the sites/default/files folder.
+ */
+function migrate_json_example_install(): void {
+  // Create the example file directory and ensure it's writable.
+  $directory = \Drupal::config('system.file')->get('default_scheme') . '://migrate_json_example';
+  \Drupal::service('file_system')->prepareDirectory($directory, FileSystemInterface::CREATE_DIRECTORY | FileSystemInterface::MODIFY_PERMISSIONS);
+
+  // Copy the example file to example directory.
+  // @todo Use \Drupal\Core\Extension\ExtensionPathResolver::getPath() when we
+  // require Drupal > 9.3.0.
+  $module_path = \Drupal::moduleHandler()->getModule('migrate_json_example')->getPath();
+  $file_source = $module_path . '/artifacts/products.json';
+  \Drupal::service('file_system')->copy($file_source, $directory . '/products.json', FileSystemInterface::EXISTS_REPLACE);
+}

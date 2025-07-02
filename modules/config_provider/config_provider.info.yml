@@ -1,0 +1,12 @@
+name: 'Configuration Provider'
+type: module
+description: 'Enables provision of configuration by extensions.'
+core_version_requirement: ^9.3 || ^10 || ^11
+package: Configuration
+dependencies:
+  - 'drupal:config'
+
+# Information added by Drupal.org packaging script on 2025-03-27
+version: '3.0.0-alpha2'
+project: 'config_provider'
+datestamp: 1743107890

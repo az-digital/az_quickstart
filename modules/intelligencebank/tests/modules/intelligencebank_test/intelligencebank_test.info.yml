@@ -1,0 +1,12 @@
+name: 'IntelligenceBank test'
+type: module
+description: 'Support module for IntelligenceBank testing.'
+package: Testing
+# version: VERSION
+dependencies:
+  - ib_dam:ib_dam_media
+
+# Information added by Drupal.org packaging script on 2024-10-29
+version: '5.1.0'
+project: 'intelligencebank'
+datestamp: 1730244850

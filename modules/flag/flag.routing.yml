@@ -1,0 +1,143 @@
+flag.add_page:
+  path: '/admin/structure/flags/add'
+  defaults:
+    _form: '\Drupal\flag\Form\FlagAddPageForm'
+    _title: 'Add flag'
+  requirements:
+    _permission: 'administer flags'
+
+entity.flag.collection:
+  path: '/admin/structure/flags'
+  defaults:
+    _entity_list: 'flag'
+    _title: 'Flags'
+  requirements:
+    _permission: 'administer flags'
+
+entity.flag.add_form:
+  path: '/admin/structure/flags/add/{entity_type}'
+  defaults:
+    _entity_form: flag.add
+    _title: 'Add flag'
+  requirements:
+    _permission: 'administer flags'
+
+entity.flag.edit_form:
+  path: '/admin/structure/flags/manage/{flag}'
+  defaults:
+    _entity_form: flag.edit
+    _title: 'Edit Flag'
+  requirements:
+    _entity_access: 'flag.update'
+
+entity.flag.delete_form:
+  path: '/admin/structure/flags/manage/{flag}/delete'
+  defaults:
+    _entity_form: flag.delete
+    _title: 'Delete Flag'
+  requirements:
+    _entity_access: 'flag.update'
+
+flag.action_link_flag:
+  path: '/flag/flag/{flag}/{entity_id}/{view_mode}'
+  defaults:
+    _controller: '\Drupal\flag\Controller\ActionLinkController::flag'
+  methods: [POST]
+  requirements:
+    _flag_access: 'entity:flag{flag}'
+    _format: 'html'
+    _csrf_token: 'TRUE'
+
+flag.action_link_flag_nojs:
+  path: '/flag/flag/{flag}/{entity_id}/{view_mode}'
+  defaults:
+    _controller: '\Drupal\flag\Controller\ActionLinkNoJsController::flag'
+  methods: [GET]
+  requirements:
+    _flag_access: 'entity:flag{flag}'
+    _format: 'html'
+    _csrf_token: 'TRUE'
+
+flag.action_link_unflag:
+  path: '/flag/unflag/{flag}/{entity_id}/{view_mode}'
+  defaults:
+    _controller: '\Drupal\flag\Controller\ActionLinkController::unflag'
+  methods: [POST]
+  requirements:
+    _unflag_access: 'entity:flag{flag}'
+    _format: 'html'
+    _csrf_token: 'TRUE'
+
+flag.action_link_unflag_nojs:
+  path: '/flag/unflag/{flag}/{entity_id}/{view_mode}'
+  defaults:
+    _controller: '\Drupal\flag\Controller\ActionLinkNoJsController::unflag'
+  methods: [GET]
+  requirements:
+    _unflag_access: 'entity:flag{flag}'
+    _format: 'html'
+    _csrf_token: 'TRUE'
+
+flag.confirm_flag:
+  path: '/flag/confirm/flag/{flag}/{entity_id}'
+  defaults:
+    _form: '\Drupal\flag\Form\FlagConfirmForm'
+    _title: 'Flag Content'
+  requirements:
+    _flag_access: 'entity:flag{flag}'
+
+flag.confirm_unflag:
+  path: '/flag/confirm/unflag/{flag}/{entity_id}'
+  defaults:
+    _form: '\Drupal\flag\Form\UnflagConfirmForm'
+    _title: 'Flag Content'
+  requirements:
+    _unflag_access: 'entity:flag{flag}'
+
+flag.field_entry:
+  path: '/flag/details/flag/{flag}/{entity_id}'
+  defaults:
+    _controller: '\Drupal\flag\Controller\FieldEntryFormController::flag'
+    _title_callback: '\Drupal\flag\Controller\FieldEntryFormController::flagTitle'
+  requirements:
+    _flag_access: 'entity:flag{flag}'
+
+flag.field_entry.edit:
+  path: '/flag/details/edit/{flag}/{entity_id}'
+  defaults:
+    _controller: '\Drupal\flag\Controller\FieldEntryFormController::edit'
+    _title_callback: '\Drupal\flag\Controller\FieldEntryFormController::editTitle'
+  requirements:
+    _flag_access: 'entity:flag{flag}'
+
+flag.field_entry.delete:
+  path: '/flag/details/delete/{flag}/{entity_id}'
+  defaults:
+    _form: '\Drupal\flag\Form\UnflaggingForm'
+    _title: 'Unflag Content'
+  requirements:
+    _unflag_access: 'entity:flag{flag}'
+
+entity.flag.enable:
+  path: '/admin/structure/flags/manage/{flag}/enable'
+  defaults:
+    _form: '\Drupal\flag\Form\FlagDisableConfirmForm'
+    _title: 'Enable Flag?'
+  requirements:
+    _permission: 'administer flags'
+
+entity.flag.disable:
+  path: '/admin/structure/flags/manage/{flag}/disable'
+  defaults:
+    _form: '\Drupal\flag\Form\FlagDisableConfirmForm'
+    _title: 'Disable Flag?'
+  requirements:
+    _permission: 'administer flags'
+
+entity.flag.reset:
+  path: '/admin/structure/flags/manage/{flag}/reset'
+  defaults:
+    _form: '\Drupal\flag\Form\FlagResetForm'
+    _title: 'Reset Flag?'
+  requirements:
+    _permission: 'administer flags'

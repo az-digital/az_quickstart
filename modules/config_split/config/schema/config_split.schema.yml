@@ -1,0 +1,53 @@
+config_split.config_split.*:
+  type: config_entity
+  label: 'Configuration Split setting'
+  mapping:
+    status:
+      type: boolean
+      label: 'Active'
+    id:
+      type: string
+      label: 'ID'
+    label:
+      type: label
+      label: 'Label'
+    description:
+      type: label
+      label: 'Description'
+    weight:
+      type: integer
+      label: 'Weight'
+    stackable:
+      type: boolean
+      label: 'Stackable'
+    no_patching:
+      type: boolean
+      label: 'No Patching'
+    storage:
+      type: string
+      label: 'Storage'
+    folder:
+      type: string
+      label: 'Folder'
+    module:
+      type: sequence
+      label: 'Filtered modules'
+      sequence:
+        type: integer
+        label: 'Weight'
+    theme:
+      type: sequence
+      label: 'Filtered themes'
+      sequence:
+        type: integer
+        label: 'Weight'
+    complete_list:
+      type: sequence
+      label: 'Completely split configuration'
+      sequence:
+        type: string
+    partial_list:
+      type: sequence
+      label: 'Partially split configuration'
+      sequence:
+        type: string

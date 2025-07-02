@@ -1,0 +1,9 @@
+trimIefIdParentslangcode: en
+status: true
+name: 'Entity Reference Revisions (Level 3)'
+type: err_level_3
+description: 'Third level content type.'
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: false

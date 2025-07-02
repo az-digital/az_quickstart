@@ -1,0 +1,7 @@
+coffee_test.csrf:
+  path: '/coffee-test-csrf'
+  defaults:
+    _controller: '\Drupal\coffee_test\Controller\CoffeeTestController::csrf'
+  requirements:
+    _access: 'TRUE'
+    _csrf_token: 'TRUE'

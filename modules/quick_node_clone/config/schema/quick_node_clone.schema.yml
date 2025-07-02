@@ -1,0 +1,25 @@
+quick_node_clone.settings:
+  type: config_object
+  label: 'Quick Node Clone settings'
+  mapping:
+    exclude:
+      type: sequence
+      label: 'Exclude list'
+      sequence:
+        type: sequence
+        label: 'Entity type'
+        sequence:
+          type: sequence
+          label: 'Bundle Name'
+          sequence:
+            type: string
+            label: 'Field Name'
+    text_to_prepend_to_title:
+      type: string
+      label: 'Text to prepend to title'
+    clone_status:
+      type: string
+      label: 'Cloned node status'
+    create_group_relationships:
+      type: boolean
+      label: 'Create group relationships?'

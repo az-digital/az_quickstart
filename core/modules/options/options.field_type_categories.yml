@@ -1,0 +1,6 @@
+selection_list:
+  label: 'Selection list'
+  description: 'Field to select from predefined options.'
+  weight: -15
+  libraries:
+    - options/drupal.options-icon

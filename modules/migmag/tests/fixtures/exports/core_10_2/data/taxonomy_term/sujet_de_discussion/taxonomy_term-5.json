@@ -1,0 +1,30 @@
+[
+    {
+        "tid": 5,
+        "uuid": "ce49e061-beda-479c-83eb-bbdd9bdcd384",
+        "revision_id": 5,
+        "langcode": "en",
+        "vid": "sujet_de_discussion",
+        "revision_created": 1623674334,
+        "revision_user": null,
+        "revision_log_message": null,
+        "status": "1",
+        "name": "Custom Forum",
+        "description": [
+            {
+                "value": "Where the cool kids are.",
+                "format": null
+            }
+        ],
+        "weight": 3,
+        "parent": 0,
+        "changed": 1623674334,
+        "default_langcode": "1",
+        "revision_default": "1",
+        "revision_translation_affected": "1",
+        "content_translation_source": "und",
+        "content_translation_outdated": "0",
+        "content_translation_uid": 1,
+        "content_translation_created": 1623674334
+    }
+]

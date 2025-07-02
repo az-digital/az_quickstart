@@ -1,0 +1,10 @@
+entity.webform_ui.element.card:
+  route_name: entity.webform_ui.element.add_card
+  title: 'Add card'
+  class: '\Drupal\webform\Plugin\Menu\LocalAction\WebformDialogLocalAction'
+  weight: 20
+  off_canvas: normal
+  attributes:
+    id: 'webform-ui-add-card'
+  appears_on:
+    - entity.webform.edit_form

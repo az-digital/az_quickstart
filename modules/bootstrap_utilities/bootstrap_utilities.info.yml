@@ -1,0 +1,12 @@
+name: Bootstrap Utilities
+type: module
+description: Bootstrap utility filters for Drupal. Add Bootstrap CSS classes to tables, images, figures & block-quotes automatically. 
+core_version_requirement: ^10.3 || ^11
+package: Bootstrap
+dependencies:
+  - drupal:filter
+
+# Information added by Drupal.org packaging script on 2024-08-19
+version: '3.0.1'
+project: 'bootstrap_utilities'
+datestamp: 1724078151

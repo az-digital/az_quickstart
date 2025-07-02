@@ -1,0 +1,34 @@
+media.source.ib_dam_embed:
+  type: media.source.field_aware
+  label: '"File" media source configuration'
+
+ib_dam_media.settings:
+  type: config_object
+  label: 'IntelligenceBank DAM Media configuration'
+  mapping:
+    upload_location:
+      type: string
+      label: 'File directory for downloaded files'
+    dialog_mode:
+      type: string
+      label: 'Drupal dialog mode'
+    media_types:
+      type: sequence
+      label: 'Media type mapping'
+      sequence:
+        type: mapping
+        mapping:
+          source_type:
+            type: string
+            label: 'Source type'
+          media_type:
+            type: string
+            label: 'Media type'
+
+field.formatter.settings.ib_dam_embed:
+  type: field.formatter.settings.link
+  label: 'IntelligenceBank DAM embed field formatter configuration'
+  mapping:
+    no_link:
+      type: boolean
+      label: 'Do not wrap embed content into link'

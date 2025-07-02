@@ -1,0 +1,157 @@
+<?php
+
+/**
+ * @file
+ * Adding classes to blocks.
+ */
+
+use Drupal\block\BlockInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function block_class_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+
+    case 'help.page.block_class':
+
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t("Block Class allows users to add classes to any block through the block's configuration interface. Hooray for more powerful block theming!") . '</p>';
+      $output .= '<h3>' . t('Usage') . '</h3>';
+      $output .= '<dl>';
+      $output .= '<dt>' . t("To add a class to a block, simply visit that block's configuration page at Administration » Structure » Block Layout and click on Configure of the desired block.") . '</dt>';
+      $output .= '<dt>' . t('The max-length by default is 255, after the 2.0.x version there is a Global Settings Page and you can modify if you need at: <a href="/admin/config/content/block-class/settings">Configuration » Content authoring » Block Class</a>') . '</dt>';
+      $output .= '<dt>' . t('You can also add attributes in the multiple attributes field available in the block list as well. You can set the key and the value of the attributes that you want.') . '</dt>';
+      $output .= '<dt>' . t("Remember that you can't use id attribute because is the Drupal's default, and you can't use attribute class because there is a specific field to use in class.") . '</dt>';
+      $output .= '</dl>';
+      $output .= '<h3>' . t('Global Configuration') . '</h3>';
+      $output .= '<dl>';
+      $output .= '<dt>' . t('Inside of global settings there are some possibilities to be used:') . '</dt>';
+
+      $output .= '<ul>';
+
+      $output .= '<li>' . t('General') . '</li>';
+      $output .= '<ul>';
+      $output .= '<li>' . t('Enable auto-complete: Enabling this option when you are typing will appear an auto-complete for you to select the other classes that you have.') . '</li>';
+      $output .= '<li>' . t('Enable special chars: By default block class will have this option unchecked to block special chars by default. But if you need for any reason you can check this option and it will be accepted.') . '</li>';
+      $output .= '<li>' . t('The "Default Case" is a field to select a standard of your classes. So if you select "Uppercase and Lowercase" but cases will be accepted. If you select "Uppercase" all classes will be added using uppercase and if you select "Lowercase" all classes added will be added using lowercase. Attention, if you change to only lowercase or only uppercase when save the block all block classes will be updated.') . '</li>';
+      $output .= '</ul>';
+
+      $output .= '<li>' . t('Class') . '</li>';
+      $output .= '<ul>';
+      $output .= '<li>' . t('Qty of classes per block: You can select this number to use in the multiple items. By default is 10 but you can modify if necessary') . '</li>';
+      $output .= '<li>' . t('Field Type: By default the block class is using the field type as a "textfield", with that configuration you can select textarea as well, it\'s recommended if you have many classes per block') . '</li>';
+      $output .= '<li>' . t('The max-length by default is 255, after the 2.0.x version there is a Global Settings Page and you can modify if you need at: /admin/config/content/block-class/settings or Configuration » Content authoring » Block Class') . '</li>';
+      $output .= '<li>' . t('Weight: Set the weight to organize better the field items in the block settings') . '</li>';
+      $output .= '</ul>';
+
+      $output .= '<li>' . t('Attributes') . '</li>';
+      $output .= '<ul>';
+      $output .= '<li>' . t('Enable attributes: Mark this option to be able to use attributes.') . '</li>';
+      $output .= '<li>' . t('Qty of attributes per block: On this field you can define how many attribute field will be implemented per block. By default is 10 but you can increase and decrease if you want.') . '</li>';
+      $output .= '<li>' . t('Maxlength: In the attributes field group you can insert the maxlength, by default there is no limit for attributes but you can insert if you want.') . '</li>';
+      $output .= '<li>' . t('Weight: Set the weight to organize better the field items in the block settings') . '</li>';
+      $output .= '</ul>';
+
+      $output .= '<li>' . t('ID') . '</li>';
+      $output .= '<ul>';
+      $output .= '<li>' . t('Enable id replacement: Mark this option to be able to use ID.') . '</li>';
+      $output .= '<li>' . t('Maxlength: In the ID field group you can insert the maxlength, by default there is no limit for ID but you can insert if you want.') . '</li>';
+      $output .= '<li>' . t('Weight: Set the weight to organize better the field items in the block settings') . '</li>';
+      $output .= '</ul>';
+
+      $output .= '<li>' . t('Advanced') . '</li>';
+      $output .= '<ul>';
+      $output .= '<li>' . t('You can use the filter "Filter to HTML Clean CSS Identifier" to put a list of chars to be replaced by default in the class Html::cleanCssIdentifier') . '</li>';
+      $output .= '</ul>';
+
+      $output .= '</ul>';
+
+      $output .= '<h3>' . t('Block List') . '</h3>';
+      $output .= '<dl>';
+      $output .= '<dt>' . t("You're able to see that at admin/config/content/block-class/list , on this list you're able to see all blocks that have block class added, and on this table you also can edit easily your block classes and if you need you can remove the block class using this page as well") . '</dt>';
+      $output .= '</dl>';
+      $output .= '<h3>' . t('Bulk Operations') . '</h3>';
+      $output .= '<dl>';
+      $output .= '<dt>' . t('There is a Bulk Operation to update classes automatically to help. To do this, you can go to Administration » Configuration » Content authoring » Block Class » Bulk Operations and there you can select some options:') . '</dt>';
+      $output .= '<dt>' . t('Insert classes: With that option you can insert a class by default in all blocks that you have') . '</dt>';
+      $output .= '<dt>' . t('Insert Attributes: With this option you can insert with a bulk operation attributes to all blocks that you have') . '</dt>';
+      $output .= '<dt>' . t('Convert all attributes to uppercase: With this operation you can update all attributes that you have to use uppercase.') . '</dt>';
+      $output .= '<dt>' . t('Convert all attributes to lowercase: With this operation you can update all attributes that you have to use lowercase.') . '</dt>';
+      $output .= '<dt>' . t('Convert all block classes to uppercase: With this operation you can convert all block classes that you have to use uppercase.') . '</dt>';
+      $output .= '<dt>' . t('Convert all block classes to lowercase: With this operation you can convert all block classes that you have to use lowercase.') . '</dt>';
+      $output .= '<dt>' . t('Update class: With that option you can insert a current class that you have in the field "Current class" and in the other field "New class" you can insert the new class that you want to use. After this you\'ll be redirected to another page to review that and update all classes.') . '</dt>';
+      $output .= '<dt>' . t("Delete all block classes: With this option, the bulk operation will remove all block classes on blocks. After this form you'll be redirected to another page to confirm that operation") . '</dt>';
+      $output .= '<dt>' . t("Delete all attributes: With this option the bulk operation will remove all attributes on blocks. After this form you'll be redirected to another page to confirm that operation.") . '</dt>';
+      $output .= '<dt>' . t('Insert Attributes: With this option you can insert with a bulk operation attributes to all blocks that you have') . '</dt>';
+      $output .= '<dt>' . t("Delete all block classes: With this option, the bulk operation will remove all block classes on blocks. After this form you'll be redirected to another page to confirm that operation") . '</dt>';
+      $output .= '</dl>';
+      $output .= '<h3>' . t('Block Class Documentation') . '</h3>';
+      $output .= '<dl>';
+      $output .= '<dt>' . t('To see more information feel free to see our documentation at <a href="https://www.drupal.org/docs/contributed-modules/block-class" target="blank">Drupal » Contributed Projects » Block Class</a>') . '</dt>';
+      $output .= '</dl>';
+
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ */
+function block_class_block_presave(BlockInterface $entity) {
+
+  // Call the helper class to implement the presave logic.
+  \Drupal::service('block_class.helper')->blockClassPreSave($entity);
+
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function block_class_form_block_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  // Call the helper class to implement the form alter logic.
+  \Drupal::service('block_class.helper')->blockClassFormAlter($form, $form_state);
+
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function block_class_form_block_class_admin_bulk_operations_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  // Add the library for bulk operation.
+  $form['#attached']['library'][] = 'block_class/block-class';
+
+  // Get the config object.
+  $config = \Drupal::configFactory()->getEditable('block_class.settings');
+
+  // Get the default case on settings.
+  $default_case = $config->get('default_case', 'standard');
+
+  // Put the "default case" in the Drupal settings to be used in the JS.
+  $form['#attached']['drupalSettings']['block_class']['default_case'] = $default_case;
+
+}
+
+/**
+ * Form validate.
+ */
+function block_class_form_block_form_validate(&$form, FormStateInterface $form_state) {
+
+  \Drupal::service('block_class.helper')->blockClassFormValidate($form, $form_state);
+
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function block_class_preprocess_block(&$variables) {
+
+  // Call the helper class to implement the preprocess block logic.
+  \Drupal::service('block_class.helper')->blockClassPreprocessBlock($variables);
+
+}

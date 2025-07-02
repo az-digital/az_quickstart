@@ -1,0 +1,22 @@
+/* ---------- Amatic SC, Josefin Sans ---------- */
+
+h1,
+h1 a {
+  font-family: 'Amatic SC', cursive;
+  font-weight: 700;
+}
+h2,
+h3,
+h4,
+h5,
+h6,
+h2 a,
+h3 a {
+  font-family: 'Amatic SC', cursive;
+}
+body,
+p,
+li,
+a {
+  font-family: 'Josefin Sans', sans-serif;
+}

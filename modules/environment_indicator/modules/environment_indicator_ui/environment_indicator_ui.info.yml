@@ -1,0 +1,14 @@
+name: 'Environment Indicator UI'
+type: module
+description: 'Provides a UI for environment indicator toolbar configurations.'
+package: Development
+core_version_requirement: '^9.3 || ^10 || ^11'
+dependencies:
+  - environment_indicator:environment_indicator
+
+configure: environment_indicator_ui.settings
+
+# Information added by Drupal.org packaging script on 2024-12-17
+version: '4.0.21'
+project: 'environment_indicator'
+datestamp: 1734428217

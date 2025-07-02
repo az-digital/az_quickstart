@@ -1,0 +1,11 @@
+name: Views Remote Data
+type: module
+description: Provide an API to integrate remote data with Views
+core_version_requirement: ^9 || ^10 || ^11
+dependencies:
+  - drupal:views
+
+# Information added by Drupal.org packaging script on 2024-06-25
+version: '1.0.3'
+project: 'views_remote_data'
+datestamp: 1719349726

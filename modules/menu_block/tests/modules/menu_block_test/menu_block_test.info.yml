@@ -1,0 +1,9 @@
+name: 'Menu block test module'
+type: module
+description: 'Support module for menu_block testing.'
+package: Testing
+
+# Information added by Drupal.org packaging script on 2024-08-02
+version: '8.x-1.13'
+project: 'menu_block'
+datestamp: 1722579325

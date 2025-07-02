@@ -1,0 +1,28 @@
+<?php
+
+/**
+ * @file
+ * Provides Drupal core compatible rollbackable migration destination plugins.
+ */
+
+declare(strict_types=1);
+
+/**
+ * Implements hook_help().
+ */
+function migmag_rollbackable_help($route_name) {
+  switch ($route_name) {
+    case 'help.page.migmag_rollbackable':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>';
+      $output .= t(
+        'Migrate Magician Rollbackable Destination Plugins provides Drupal core compatible rollbackable migration destination plugins. See the <a href=":documentation">online documentation for Migrate Magician Rollbackable Destination Plugins module</a>.',
+        [
+          ':documentation' => 'https://drupal.org/docs/contributed-modules/migrate-magician/migrate-magician-rollbackable-destination-plugins',
+        ]
+      );
+      $output .= '</p>';
+      return $output;
+  }
+}

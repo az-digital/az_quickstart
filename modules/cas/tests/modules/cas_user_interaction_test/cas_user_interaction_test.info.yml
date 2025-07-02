@@ -1,0 +1,9 @@
+name: 'CAS User Interaction Test'
+type: module
+description: 'Support for testing insertion of user interaction into the flow.'
+package: Testing
+
+# Information added by Drupal.org packaging script on 2024-05-30
+version: '2.3.2'
+project: 'cas'
+datestamp: 1717055660

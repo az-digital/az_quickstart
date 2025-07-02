@@ -1,0 +1,10 @@
+services:
+  blazy_layout:
+    class: Drupal\blazy_layout\BlazyLayoutManager
+    parent: blazy.manager
+
+  blazy_layout.admin:
+    class: Drupal\blazy_layout\Form\BlazyLayoutAdmin
+    parent: blazy.admin.base
+    calls:
+      - [setManager, ['@blazy_layout']]

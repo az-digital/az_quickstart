@@ -1,0 +1,9 @@
+# Sophron module routes
+
+sophron.settings:
+  path: '/admin/config/system/sophron'
+  defaults:
+    _form: '\Drupal\sophron\Form\SettingsForm'
+    _title: 'Sophron - MIME Types'
+  requirements:
+    _permission: 'administer site configuration'

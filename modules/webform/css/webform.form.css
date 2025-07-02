@@ -1,0 +1,142 @@
+/**
+ * @file
+ * Webform form styles.
+ */
+
+/**
+ * This allows components to be hidden when a JS plugin provides the UI.
+ */
+html.js .js-webform-visually-hidden,
+html.js .js-webform-visually-hidden[style*="display: none"] {
+  position: absolute !important;
+  display: inline !important;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  width: 1px;
+  height: 1px;
+  word-wrap: normal;
+}
+
+/**
+ * Element states.
+ * @see \Drupal\webform\WebformSubmissionConditionsValidator::buildForm
+ * @see \Drupal\webform\Utility\WebformElementHelper::fixStatesWrapper
+ * @see \Drupal\webform\Plugin\WebformElement\TextFormat::preRenderFixTextFormatStates
+ * @see text-format-wrapper.html.twig
+ */
+.js-form-item.js-webform-states-hidden,
+.js-form-submit.js-webform-states-hidden,
+.js-form-wrapper.js-webform-states-hidden,
+.js-webform-text-format-hidden > .js-text-format-wrapper {
+  display: none;
+}
+
+/**
+ * Form inline. (This is not included in all themes)
+ */
+.form--inline .form-item {
+  float: left; /* LTR */
+  margin-right: 0.5em; /* LTR */
+}
+[dir="rtl"] .form--inline .form-item {
+  float: right;
+  margin-right: 0;
+  margin-left: 0.5em;
+}
+
+/**
+ * Description.
+ */
+.webform-element-description p:first-child {
+  margin-top: 0;
+}
+
+.webform-element-description p:last-child {
+  margin-bottom: 0;
+}
+
+/**
+ * Container inline
+ */
+.form-item .container-inline {
+  margin: 2px 0;
+}
+
+/**
+ * Issue #2731991: Setting required on radios marks all options required.
+ */
+.form-checkboxes .form-required:after,
+.form-radios .form-required:after {
+  display: none;
+}
+
+/**
+ * Element title inline.
+ */
+.webform-element--title-inline > label {
+  display: inline;
+  padding-right: 0.5em;
+}
+
+.webform-element--title-inline > div.container-inline {
+  display: inline;
+}
+
+/**
+ * Fieldset title inline.
+ * Applies to radios, checkboxes, and buttons. (aka .form-composite)
+ * @see \Drupal\webform\Plugin\WebformElement\OptionsBase::prepare
+ * @see webform_preprocess_fieldset()
+ */
+.form-composite.webform-fieldset--title-inline legend {
+  float: left; /* LTR */
+  margin: 0.4em 0.5em 0.4em 0; /* LTR */
+}
+
+[dir=rtl] .form-composite.webform-fieldset--title-inline legend {
+  float: right; /* RTL */
+  margin-right: 0; /* RTL */
+  margin-left: 0.5em; /* RTL */
+}
+
+.form-composite.webform-fieldset--title-inline .fieldset-wrapper,
+.form-composite.webform-fieldset--title-inline .fieldset-wrapper > div {
+  display: inline;
+}
+
+/**
+ * Checkboxes and radios title inline.
+ */
+.webform-element--title-inline .form-radios,
+.webform-element--title-inline .form-checkboxes {
+  display: inline;
+}
+
+/**
+ * Clientside validation errors.
+
+ * @see webform_clientside_validation.ife.css
+ */
+.webform-submission-form strong.error.form-item--error-message {
+  display: block;
+}
+
+/**
+ * Readonly inputs. (@see .form-disabled)
+ * @see https://www.wufoo.com/html5/attributes/21-readonly.html
+ */
+.webform-readonly input[type="date"],
+.webform-readonly input[type="datetime-local"],
+.webform-readonly input[type="email"],
+.webform-readonly input[type="number"],
+.webform-readonly input[type="password"],
+.webform-readonly input[type="search"],
+.webform-readonly input[type="tel"],
+.webform-readonly input[type="text"],
+.webform-readonly input[type="time"],
+.webform-readonly input[type="url"],
+.webform-readonly textarea {
+  color: #6B6B6B;
+  border-color: #bbb;
+  background: #ededed;
+}

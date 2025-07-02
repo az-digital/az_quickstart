@@ -1,0 +1,51 @@
+# Component routing definition
+entity.migration.overview:
+  route_name: entity.migration.overview
+  base_route: entity.migration.overview
+  title: View
+
+entity.migration.overview_general:
+  title: Overview
+  route_name: entity.migration.overview
+  parent_id: entity.migration.overview
+entity.migration.overview_source:
+  title: Source
+  route_name: entity.migration.source
+  parent_id: entity.migration.overview
+  weight: 1
+entity.migration.overview_process:
+  title: Process
+  route_name: entity.migration.process
+  parent_id: entity.migration.overview
+  weight: 2
+entity.migration.overview_destination:
+  title: Destination
+  route_name: entity.migration.destination
+  parent_id: entity.migration.overview
+  weight: 3
+
+entity.migration.execute_form:
+  route_name: migrate_tools.execute
+  base_route: entity.migration.overview
+  title: Execute
+
+entity.migration.edit_form:
+  route_name: entity.migration.edit_form
+  base_route: entity.migration.overview
+  title: Edit
+
+migrate_tools.messages:
+  route_name: migrate_tools.messages
+  base_route: entity.migration.overview
+  title: Messages
+
+entity.migration.delete_form:
+  route_name:  entity.migration.delete_form
+  base_route:  entity.migration.overview
+  title: Delete
+  weight: 10
+
+entity.migration.overview_general_edit:
+  title: Overview
+  route_name: entity.migration.edit_form
+  parent_id: entity.migration.edit_form

@@ -1,0 +1,3 @@
+form.exclude-node-title-admin-settings fieldset:not(.fieldgroup) legend {
+  position: static;
+}

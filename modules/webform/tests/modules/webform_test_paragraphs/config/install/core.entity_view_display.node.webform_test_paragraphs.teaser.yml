@@ -1,0 +1,35 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.webform_test_paragraphs.body
+    - field.field.node.webform_test_paragraphs.field_webform_test_node_value
+    - field.field.node.webform_test_paragraphs.field_webform_test_paragraphs
+    - field.field.node.webform_test_paragraphs.field_webform_test_value
+    - node.type.webform_test_paragraphs
+  module:
+    - text
+    - user
+id: node.webform_test_paragraphs.teaser
+targetEntityType: node
+bundle: webform_test_paragraphs
+mode: teaser
+content:
+  body:
+    type: text_summary_or_trimmed
+    label: hidden
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_webform_test_node_value: true
+  field_webform_test_paragraphs: true
+  field_webform_test_value: true

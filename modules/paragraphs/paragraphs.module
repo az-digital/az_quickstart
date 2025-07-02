@@ -1,0 +1,523 @@
+<?php
+
+/**
+ * @file
+ * Contains paragraphs.module
+ */
+
+use \Drupal\Core\Field\FieldTypeCategoryManagerInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\field\FieldStorageConfigInterface;
+use Drupal\paragraphs\Entity\ParagraphsType;
+use Drupal\paragraphs\MigrationPluginsAlterer;
+use Drupal\Core\Render\Element;
+use Drupal\Core\Entity\EntityTypeInterface;
+
+/**
+ * Implements hook_help().
+ */
+function paragraphs_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the paragraphs module.
+    case 'help.page.paragraphs':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('The Paragraphs module provides a field type that can contain several other fields and thereby allows users to break content up on a page. Administrators can predefine <em>Paragraphs types</em> (for example a simple text block, a video, or a complex and configurable slideshow). Users can then place them on a page in any order instead of using a text editor to add and configure such elements. For more information, see the <a href=":online">online documentation for the Paragraphs module</a>.', [':online' => 'https://www.drupal.org/node/2444881']) . '</p>';
+      $output .= '<h3>' . t('Uses') . '</h3>';
+      $output .= '<dt>' . t('Creating Paragraphs types') . '</dt>';
+      $output .= '<dd>' . t('<em>Paragraphs types</em> can be created by clicking <em>Add Paragraphs type</em> on the <a href=":paragraphs">Paragraphs types page</a>. By default a new Paragraphs type does not contain any fields.', [':paragraphs' => Url::fromRoute('entity.paragraphs_type.collection')->toString()]) . '</dd>';
+      $output .= '<dt>' . t('Configuring Paragraphs types') . '</dt>';
+      $output .= '<dd>' . t('Administrators can add fields to a <em>Paragraphs type</em> on the <a href=":paragraphs">Paragraphs types page</a> if the <a href=":field_ui">Field UI</a> module is enabled. The form display and the display of the Paragraphs type can also be managed on this page. For more information on fields and entities, see the <a href=":field">Field module help page</a>.', [':paragraphs' => Url::fromRoute('entity.paragraphs_type.collection')->toString(), ':field' => Url::fromRoute('help.page', ['name' => 'field'])->toString(), ':field_ui' => (\Drupal::moduleHandler()->moduleExists('field_ui')) ? Url::fromRoute('help.page', ['name' => 'field_ui'])->toString() : '#']) . '</dd>';
+      $output .= '<dt>' . t('Creating content with Paragraphs') . '</dt>';
+      $output .= '<dd>' . t('Administrators can add a <em>Paragraph</em> field to content types or other entities, and configure which <em>Paragraphs types</em> to include. When users create content, they can then add one or more paragraphs by choosing the appropriate type from the dropdown list. Users can also dragdrop these paragraphs. This allows users to add structure to a page or other content (for example by adding an image, a user reference, or a differently formatted block of text) more easily then including it all in one text field or by using fields in a pre-defined order.') . '</dd>';
+      return $output;
+    break;
+  }
+}
+
+function paragraphs_type_get_types() {
+  return ParagraphsType::loadMultiple();
+}
+
+function paragraphs_type_get_names() {
+  return array_map(function ($bundle_info) {
+    return $bundle_info['label'];
+  }, \Drupal::service('entity_type.bundle.info')->getBundleInfo('paragraphs_type'));
+}
+
+function paragraphs_type_load($name) {
+  return ParagraphsType::load($name);
+}
+
+/**
+ * Implements hook_theme().
+ */
+function paragraphs_theme() {
+  return array(
+    'paragraph' => array(
+      'render element' => 'elements',
+    ),
+    'paragraphs_dropbutton_wrapper' => array(
+      'variables' => array('children' => NULL),
+    ),
+    'paragraphs_info_icon' => [
+      'variables' => [
+        'message' => NULL,
+        'icon' => NULL,
+      ],
+    ],
+    'paragraphs_add_dialog' => [
+      'render element' => 'element',
+      'template' => 'paragraphs-add-dialog',
+    ],
+    'paragraphs_actions' => [
+      'render element' => 'element',
+      'template' => 'paragraphs-actions',
+    ],
+    'paragraphs_summary' => [
+      'render element' => 'element',
+      'template' => 'paragraphs-summary',
+    ],
+  );
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK().
+ */
+function paragraphs_theme_suggestions_paragraph(array $variables) {
+  $suggestions = array();
+  $paragraph = $variables['elements']['#paragraph'];
+  $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
+
+  $suggestions[] = 'paragraph__' . $sanitized_view_mode;
+  $suggestions[] = 'paragraph__' . $paragraph->bundle();
+  $suggestions[] = 'paragraph__' . $paragraph->bundle() . '__' . $sanitized_view_mode;
+
+  return $suggestions;
+}
+
+/**
+ * Implements hook_theme_registry_alter().
+ */
+function paragraphs_theme_registry_alter(&$theme_registry) {
+  // Force paragraphs_preprocess_field_multiple_value_form to run last.
+  $key = array_search('paragraphs_preprocess_field_multiple_value_form', $theme_registry['field_multiple_value_form']['preprocess functions']);
+  unset($theme_registry['field_multiple_value_form']['preprocess functions'][$key]);
+  $theme_registry['field_multiple_value_form']['preprocess functions'][] = 'paragraphs_preprocess_field_multiple_value_form';
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function paragraphs_form_entity_form_display_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $field_definitions = \Drupal::service('entity_field.manager')->getFieldDefinitions($form['#entity_type'], $form['#bundle']);
+  // Loop over ERR field's display options with paragraph target type.
+  foreach (array_keys($field_definitions) as $field_name) {
+    if ($field_definitions[$field_name]->getType() == 'entity_reference_revisions') {
+      if ($field_definitions[$field_name]->getSettings()['target_type'] == 'paragraph') {
+        foreach (['options_buttons', 'options_select', 'entity_reference_revisions_autocomplete'] as $option) {
+          unset($form['fields'][$field_name]['plugin']['type']['#options'][$option]);
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Indicate unsupported multilingual paragraphs field configuration.
+ */
+function paragraphs_form_field_config_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $field = $form_state->getFormObject()->getEntity();
+
+  if (\Drupal::hasService('content_translation.manager')) {
+    $bundle_is_translatable = \Drupal::service('content_translation.manager')->isEnabled($field->getTargetEntityTypeId(), $field->getTargetBundle());
+
+    if ($bundle_is_translatable && $field->getType() === 'entity_reference_revisions' && $field->getSetting('target_type') === 'paragraph') {
+      // This is a translatable ERR field pointing to a paragraph.
+      $message_display = 'warning';
+      $message_text = t('Paragraphs fields do not support translation. See the <a href=":documentation">online documentation</a>.', [
+        ':documentation' => Url::fromUri('https://www.drupal.org/node/2735121')
+          ->toString()
+      ]);
+
+      if ($form['translatable']['#default_value'] == TRUE) {
+        $message_display = 'error';
+      }
+
+      $form['paragraphs_message'] = [
+        '#type' => 'container',
+        '#markup' => $message_text,
+        '#attributes' => [
+          'class' => ['messages messages--' . $message_display],
+        ],
+        '#weight' => 0,
+      ];
+    }
+  }
+
+  if ($field->getType() == 'entity_reference') {
+    $selector = 'field_storage[subform][settings][target_type]';
+
+    // Add a note about paragraphs if selected.
+    $form['field_storage']['subform']['settings']['paragraph_warning_wrapper'] = [
+      '#type' => 'container',
+      '#states' => [
+        'visible' => [
+          ':input[name="' . $selector . '"]' => ['value' => 'paragraph'],
+        ],
+      ],
+      'warning' => [
+        '#theme' => 'status_messages',
+        '#message_list' => [
+          'warning' => [
+            t('Note: Regular paragraph fields should use the revision based reference fields, entity reference fields should only be used for cases when an existing paragraph is referenced from somewhere else.'),
+          ],
+        ],
+        '#status_headings' => [
+          'error' => t('Warning'),
+        ],
+      ],
+    ];
+  }
+
+}
+
+function paragraphs_field_ui_preconfigured_options_alter(array &$options, $field_type) {
+  // Move the preconfigured paragraph option to the generic category,
+  // so it is available as a top-level option in the new field type selection
+  // UI in Drupal 10.2+.
+  if ($field_type == 'entity_reference_revisions' && !empty($options['paragraph'])) {
+    $options['paragraph']['weight'] = -15;
+    $options['paragraph']['category'] = FieldTypeCategoryManagerInterface::FALLBACK_CATEGORY;;
+    $options['paragraph']['label'] = t('Paragraphs');
+    $options['paragraph']['description'] = t('Create structured content.');
+  }
+}
+
+/**
+ * Implements hook_preprocess_form_element__new_storage_type().
+ */
+function paragraphs_preprocess_form_element__new_storage_type(&$variables) {
+  $variables['#attached']['library'][] = 'paragraphs/paragraph-field-type-icon';
+}
+
+/**
+ * Implements hook_module_implements_alter().
+ *
+ * Our paragraphs_form_field_config_edit_form_alter() needs to be run after
+ * that of the content_translation module in order to see the current state
+ * of the translation field.
+ *
+ * The hook here can't be more specific, as the $hook that's passed in to this
+ * function is form_alter, and not form_FORM_ID_alter.
+ */
+function paragraphs_module_implements_alter(&$implementations, $hook) {
+  if ($hook == 'form_alter' && isset($implementations['paragraphs'])) {
+    $group = $implementations['paragraphs'];
+    unset($implementations['paragraphs']);
+    $implementations['paragraphs'] = $group;
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Indicate unsupported multilingual paragraphs field configuration.
+ *
+ * Add a warning that paragraph fields can not be translated.
+ * Switch to error if a paragraph field is marked as translatable.
+ */
+function paragraphs_form_language_content_settings_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // Without it Paragraphs message are meaningless.
+  if (!\Drupal::hasService('content_translation.manager')) {
+    return;
+  }
+
+  $content_translation_manager = \Drupal::service('content_translation.manager');
+  $message_display = 'warning';
+  $message_text = t('(* unsupported) Paragraphs fields do not support translation. See the <a href=":documentation">online documentation</a>.', [
+    ':documentation' => Url::fromUri('https://www.drupal.org/node/2735121')
+      ->toString()]);
+  $map = \Drupal::service('entity_field.manager')->getFieldMapByFieldType('entity_reference_revisions');
+  foreach ($map as $entity_type_id => $info) {
+    if (!$content_translation_manager->isEnabled($entity_type_id)) {
+      continue;
+    }
+    $field_storage_definitions = \Drupal::service('entity_field.manager')->getFieldStorageDefinitions($entity_type_id);
+
+    /** @var \Drupal\Core\Field\FieldStorageDefinitionInterface  $storage_definition */
+    foreach ($field_storage_definitions as $name => $storage_definition) {
+      if ($storage_definition->getSetting('target_type') && $storage_definition->getSetting('target_type') == 'paragraph') {
+
+        // For configurable fields, check all bundles on which the field exists,
+        // for base fields that are translable, check all bundles,
+        // untranslatable base fields do not show up at all.
+        $bundles = [];
+        if ($storage_definition instanceof FieldStorageConfigInterface) {
+          $bundles = $storage_definition->getBundles();
+        }
+        elseif ($storage_definition->isTranslatable()) {
+          $bundles = Element::children($form['settings'][$entity_type_id]);
+        }
+        foreach($bundles as $bundle) {
+          if (!$content_translation_manager->isEnabled($entity_type_id, $bundle)) {
+            continue;
+          }
+
+          // Update the label and if the paragraph field is translatable,
+          // display an error message instead of just a warning.
+          if (isset($form['settings'][$entity_type_id][$bundle]['fields'][$name]['#label'])) {
+            $form['settings'][$entity_type_id][$bundle]['fields'][$name]['#label'] = t('@field_label (* unsupported)', ['@field_label' => $form['settings'][$entity_type_id][$bundle]['fields'][$name]['#label']]);
+          }
+          if (!empty($form['settings'][$entity_type_id][$bundle]['fields'][$name]['#default_value'])) {
+            $message_display = 'error';
+          }
+        }
+      }
+    }
+  }
+
+  // Update the description on the hide untranslatable fields checkbox.
+  if (isset($form['settings']['paragraph'])) {
+    $paragraph_untranslatable_hide_description = t('Paragraph types that are used in moderated content requires non-translatable fields to be edited in the original language form and this must be checked.');
+    foreach (Element::children($form['settings']['paragraph']) as $bundle) {
+      if (!empty($form['settings']['paragraph'][$bundle]['settings']['content_translation']['untranslatable_fields_hide'])) {
+        $form['settings']['paragraph'][$bundle]['settings']['content_translation']['untranslatable_fields_hide']['#description'] = $paragraph_untranslatable_hide_description;
+      }
+    }
+  }
+
+  $form['settings']['paragraphs_message'] = array(
+    '#type' => 'container',
+    '#markup' => $message_text,
+    '#attributes' => array(
+      'class' => array('messages messages--' . $message_display),
+    ),
+    '#weight' => 0,
+  );
+}
+
+/**
+ * Prepares variables for paragraph templates.
+ *
+ * Default template: paragraph.html.twig.
+ *
+ * Most themes use their own copy of paragraph.html.twig. The default is located
+ * inside "templates/paragraph.html.twig". Look in there for the
+ * full list of variables.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - elements: An array of elements to display in view mode.
+ *   - paragraph: The paragraph object.
+ *   - view_mode: View mode; e.g., 'full', 'teaser'...
+ */
+function template_preprocess_paragraph(&$variables) {
+  $variables['view_mode'] = $variables['elements']['#view_mode'];
+  $variables['paragraph'] = $variables['elements']['#paragraph'];
+
+  // Helpful $content variable for templates.
+  $variables += array('content' => array());
+  foreach (Element::children($variables['elements']) as $key) {
+    $variables['content'][$key] = $variables['elements'][$key];
+  }
+
+  $paragraph_type = $variables['elements']['#paragraph']->getParagraphType();
+  if (!$paragraph_type) {
+    \Drupal::logger('paragraphs')
+      ->critical(t('Unable to load paragraph type %type when displaying paragraph %id'), [
+        '%type' => $variables['elements']['#paragraph']->bundle(),
+        '%id' => $variables['elements']['#paragraph']->id(),
+      ]);
+    $paragraph_type = ParagraphsType::create(['id' => $variables['elements']['#paragraph']->bundle()]);
+  }
+  foreach ($paragraph_type->getEnabledBehaviorPlugins() as $plugin_value) {
+    $plugin_value->preprocess($variables);
+  }
+
+}
+
+/**
+ * Prepares variables for modal form add widget template.
+ *
+ * Default template: paragraphs-add-dialog.html.twig
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - buttons: An array of buttons to display in the modal form.
+ */
+function template_preprocess_paragraphs_add_dialog(&$variables) {
+  // Define variables for the template.
+  $variables += ['buttons' => []];
+  foreach (Element::children($variables['element']) as $key) {
+    if ($key == 'add_modal_form_area') {
+      // $add variable for the add button.
+      $variables['add'] = $variables['element'][$key];
+    }
+    elseif ($key == 'add_more_delta') {
+      // Add the delta to the add wrapper.
+      $variables['add'][$key] = $variables['element'][$key];
+    }
+    else {
+      // Buttons for the paragraph types in the modal form.
+      $variables['buttons'][$key] = $variables['element'][$key];
+    }
+  }
+}
+
+/**
+ * Prepares variables for paragraphs_actions component.
+ *
+ * Default template: paragraphs-actions.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - actions: An array of default action buttons.
+ *   - dropdown_actions: An array of buttons for dropdown.
+ */
+function template_preprocess_paragraphs_actions(&$variables) {
+  // Define variables for the template.
+  $variables += ['actions' => [], 'dropdown_actions' => []];
+
+  $element = $variables['element'];
+
+  if (!empty($element['actions'])) {
+    $variables['actions'] = $element['actions'];
+  }
+
+  if (!empty($element['dropdown_actions'])) {
+    $variables['dropdown_actions'] = $element['dropdown_actions'];
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for field_multiple_value_form().
+ */
+function paragraphs_preprocess_field_multiple_value_form(&$variables) {
+  if (!empty($variables['table']['#header']) && isset($variables['table']['#rows'][0])) {
+    // Find paragraph_actions and move to header.
+    // @see template_preprocess_field_multiple_value_form()
+    if (is_array($variables['table']['#rows'][0]['data'][1]) && !empty($variables['table']['#rows'][0]['data'][1]['data']['#paragraphs_header'])) {
+      $variables['table']['#header'][0]['data'] = [
+        'title' => $variables['table']['#header'][0]['data'],
+        'button' => $variables['table']['#rows'][0]['data'][1]['data'],
+      ];
+      unset($variables['table']['#rows'][0]);
+    }
+
+    // Add the paragraph type as a class to every row.
+    if (isset($variables['element']['#paragraphs_widget'])) {
+      foreach ($variables['table']['#rows'] as $key => $row) {
+        if (isset($row['data'][1]['data']['#paragraph_type'])) {
+          $variables['table']['#rows'][$key]['class'][] = 'paragraph-type--' . str_replace('_', '-', $row['data'][1]['data']['#paragraph_type']);
+        }
+      }
+    }
+  }
+
+  // Remove the drag handler if we are translating, if the field's cardinality
+  // is 1 or if there are no paragraphs added. Passing through this will not
+  // only remove the drag handler but also the order column that is empty when
+  // no paragraphs are added and when the field is single value.
+  if ((isset($variables['element']['#allow_reference_changes']) && !$variables['element']['#allow_reference_changes']) || (isset($variables['element']['#cardinality']) && $variables['element']['#cardinality'] == 1) || (isset($variables['table']['#rows']) && count($variables['table']['#rows']) == 0)) {
+    if (isset($variables['table']['#tabledrag'])) {
+      // Remove the tabledrag.
+      unset($variables['table']['#tabledrag']);
+      unset($variables['table']['#header'][2]);
+      foreach ($variables['table']['#rows'] as $key => $value) {
+        $variables['table']['#rows'][$key]['data'][0]['class'][] = 'paragraph-bullet';
+        // Restore the removed weight and give access FALSE.
+        if (isset($value['data'][3])) {
+          $variables['table']['#rows'][$key]['data'][1]['data']['_weight'] = $value['data'][3]['data'];
+          unset($variables['table']['#rows'][$key]['data'][3]);
+          $variables['table']['#rows'][$key]['data'][1]['data']['_weight']['#access'] = FALSE;
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_migration_plugins_alter().
+ *
+ * @todo refactor/rethink this when
+ * https://www.drupal.org/project/drupal/issues/2904765 is resolved
+ */
+function paragraphs_migration_plugins_alter(array &$migrations) {
+  $migration_plugins_alterer = \Drupal::service('paragraphs.migration_plugins_alterer');
+  assert($migration_plugins_alterer instanceof MigrationPluginsAlterer);
+  $migration_plugins_alterer->alterMigrationPlugins($migrations);
+}
+
+/**
+ * Implements hook_entity_type_alter().
+ */
+function paragraphs_entity_type_alter(array &$entity_types) {
+  /** @var $entity_types \Drupal\Core\Entity\EntityTypeInterface[] */
+  // Remove the handler class for moderation as it is managed by the host.
+  $entity_types['paragraph']->setHandlerClass('moderation', '');
+}
+
+/**
+ * Implements hook_entity_base_field_info_alter().
+ */
+function paragraphs_entity_base_field_info_alter(&$fields, EntityTypeInterface $entity_type) {
+  // Since the paragraph entity doesn't have uid fields anymore, remove the
+  // content_translation_uid from the field definitions.
+  if ($entity_type->id() == 'paragraph' && isset($fields['content_translation_uid'])) {
+    unset($fields['content_translation_uid']);
+  }
+}
+
+/**
+ * Remove 'field_' prefix from field collection bundles.
+ *
+ * @param array $migration
+ *   The migration configuration to process.
+ *
+ * @deprecated in paragraphs:8.x-1.13 and is removed from paragraphs:8.x-2.0.
+ *   Use \Drupal\paragraphs\MigrationPluginsAlterer::paragraphsMigrationBundleAdjust().
+ * @see https://www.drupal.org/project/paragraphs/issues/2911244
+ */
+function _paragraphs_migration_bundle_adjust(array &$migration) {
+  $migration_plugins_alterer = \Drupal::service('paragraphs.migration_plugins_alterer');
+  assert($migration_plugins_alterer instanceof MigrationPluginsAlterer);
+  $migration_plugins_alterer->paragraphsMigrationBundleAdjust($migration);
+}
+
+/**
+ * Map field_collection_item and 'paragraphs_item' fields to 'paragraph'.
+ *
+ * @param array $migration
+ *   The migration to process.
+ * @param string $destination
+ *   The process destination.
+ *
+ * @deprecated in paragraphs:8.x-1.13 and is removed from paragraphs:8.x-2.0.
+ *   Use \Drupal\paragraphs\MigrationPluginsAlterer::paragraphsMigrationEntityTypeAdjust().
+ * @see https://www.drupal.org/project/paragraphs/issues/2911244
+ */
+function _paragraphs_migration_entity_type_adjust(array &$migration, $destination = 'entity_type') {
+  $migration_plugins_alterer = \Drupal::service('paragraphs.migration_plugins_alterer');
+  assert($migration_plugins_alterer instanceof MigrationPluginsAlterer);
+  $migration_plugins_alterer->paragraphsMigrationEntityTypeAdjust($migration, $destination);
+}
+
+/**
+ * Prepares variables for.
+ *
+ * Default template: paragraphs-summary.html.twig
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - buttons: An array of buttons to display in the modal form.
+ */
+function template_preprocess_paragraphs_summary(&$variables) {
+  $variables['content'] = $variables['element']['#summary']['content'];
+  $variables['behaviors'] = $variables['element']['#summary']['behaviors'];
+  $variables['expanded'] = !empty($variables['element']['#expanded']);
+}

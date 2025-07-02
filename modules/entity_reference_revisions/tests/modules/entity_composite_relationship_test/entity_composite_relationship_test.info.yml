@@ -1,0 +1,13 @@
+name: 'ERR Composite relationship test'
+type: module
+description: 'Entity with parent type and ID.'
+package: Testing
+
+dependencies:
+ - entity_reference_revisions:entity_reference_revisions
+ - drupal:entity_test
+
+# Information added by Drupal.org packaging script on 2024-08-04
+version: '8.x-1.12'
+project: 'entity_reference_revisions'
+datestamp: 1722804499

@@ -1,0 +1,6 @@
+{
+    "name": "drupal/ckeditor_bs_grid",
+    "description": "Allows creating rows and columns within CKEditor using Bootstrap syntax.",
+    "type": "drupal-module",
+    "license": "GPL-2.0-or-later"
+}

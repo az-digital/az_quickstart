@@ -1,0 +1,16 @@
+{
+  "product": [
+    {
+      "upc": "11111",
+      "name": "Widget",
+      "description": "Helpful for many things.",
+      "price": "14.99"
+    },
+    {
+      "upc": "22222",
+      "name": "Sprocket",
+      "description": "Helpful for things needing sprockets.",
+      "price": "8.99"
+    }
+  ]
+}

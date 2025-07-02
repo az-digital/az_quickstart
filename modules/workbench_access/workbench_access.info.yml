@@ -1,0 +1,19 @@
+name: Workbench Access
+type: module
+description: Hierarchical access control module.
+core_version_requirement: ^9 || ^10 || ^11
+configure: workbench_access.admin
+package: Workbench
+dependencies:
+  - drupal:menu_ui
+  - drupal:menu_link_content
+  - drupal:node
+  - drupal:options
+  - drupal:taxonomy
+test_dependencies:
+  - inline_entity_form:inline_entity_form
+
+# Information added by Drupal.org packaging script on 2025-04-15
+version: '2.0.4'
+project: 'workbench_access'
+datestamp: 1744760022

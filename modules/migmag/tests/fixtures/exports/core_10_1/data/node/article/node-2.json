@@ -1,0 +1,152 @@
+[
+    {
+        "nid": 2,
+        "uuid": "c20af9eb-03a6-4901-9973-91c8c94181f2",
+        "vid": 12,
+        "langcode": "en",
+        "type": "article",
+        "revision_timestamp": 1564543706,
+        "revision_uid": 1,
+        "revision_log": "is - DS9 2nd rev",
+        "status": "1",
+        "uid": 2,
+        "title": "The thing about Deep Space 9",
+        "created": 1441306772,
+        "changed": 1623674343,
+        "promote": "1",
+        "sticky": "0",
+        "default_langcode": "1",
+        "revision_default": "1",
+        "revision_translation_affected": "1",
+        "content_translation_source": "en",
+        "content_translation_outdated": "0",
+        "body": [
+            {
+                "value": "...is that it's the absolute best show ever. Trust me, I would know.",
+                "summary": "",
+                "format": "filtered_html"
+            }
+        ],
+        "comment": [
+            {
+                "status": 2,
+                "cid": 0,
+                "last_comment_timestamp": 1564543588,
+                "last_comment_name": null,
+                "last_comment_uid": 2,
+                "comment_count": 0
+            }
+        ],
+        "comment_node_article": [
+            {
+                "status": 2,
+                "cid": 3,
+                "last_comment_timestamp": 1533031490,
+                "last_comment_name": "",
+                "last_comment_uid": 1,
+                "comment_count": 2
+            }
+        ],
+        "field_checkbox": null,
+        "field_image": null,
+        "field_link": [
+            {
+                "uri": "internal:/",
+                "title": "Home",
+                "options": {
+                    "attributes": []
+                }
+            }
+        ],
+        "field_node_reference": 4,
+        "field_reference": 4,
+        "field_reference_2": 6,
+        "field_tags": [
+            {
+                "target_id": 9
+            },
+            {
+                "target_id": 14
+            },
+            {
+                "target_id": 17
+            }
+        ],
+        "field_text_filtered": null,
+        "field_text_long_filtered": null,
+        "field_text_long_plain": "DS9 2nd rev",
+        "field_text_plain": "Kai Opaka",
+        "field_text_sum_filtered": null,
+        "field_user_reference": null,
+        "field_vocab_fixed": 24,
+        "field_vocab_localize": 20,
+        "field_vocab_translate": 21
+    },
+    {
+        "nid": 2,
+        "uuid": "c20af9eb-03a6-4901-9973-91c8c94181f2",
+        "vid": 12,
+        "langcode": "is",
+        "type": "article",
+        "revision_timestamp": 1564543706,
+        "revision_uid": 1,
+        "revision_log": "is - DS9 2nd rev",
+        "status": "1",
+        "uid": 1,
+        "title": "is - The thing about Deep Space 9",
+        "created": 1471428152,
+        "changed": 1564543706,
+        "promote": "1",
+        "sticky": "0",
+        "default_langcode": "0",
+        "revision_default": "1",
+        "revision_translation_affected": "1",
+        "content_translation_source": "en",
+        "content_translation_outdated": "0",
+        "body": [
+            {
+                "value": "is - ...is that it's the absolute best show ever. Trust me, I would know.",
+                "summary": "",
+                "format": "filtered_html"
+            }
+        ],
+        "comment": 2,
+        "comment_node_article": 2,
+        "field_checkbox": null,
+        "field_image": null,
+        "field_link": [
+            {
+                "uri": "internal:/",
+                "title": "Home",
+                "options": {
+                    "attributes": {
+                        "title": ""
+                    }
+                }
+            }
+        ],
+        "field_node_reference": null,
+        "field_reference": 4,
+        "field_reference_2": 4,
+        "field_tags": [
+            {
+                "target_id": 9
+            },
+            {
+                "target_id": 14
+            },
+            {
+                "target_id": 17
+            }
+        ],
+        "field_text_filtered": null,
+        "field_text_long_filtered": null,
+        "field_text_long_plain": "is - DS9 2nd rev",
+        "field_text_plain": "Kai Opaka",
+        "field_text_sum_filtered": null,
+        "field_user_reference": null,
+        "field_vocab_fixed": null,
+        "field_vocab_localize": 20,
+        "field_vocab_translate": 23
+    }
+]

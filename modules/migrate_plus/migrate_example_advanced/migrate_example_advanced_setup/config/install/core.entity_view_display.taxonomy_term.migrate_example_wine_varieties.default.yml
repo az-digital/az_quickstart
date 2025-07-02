@@ -1,0 +1,27 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.migrate_example_wine_varieties.field_variety_attributes
+    - taxonomy.vocabulary.migrate_example_wine_varieties
+  module:
+    - text
+id: taxonomy_term.migrate_example_wine_varieties.default
+targetEntityType: taxonomy_term
+bundle: migrate_example_wine_varieties
+mode: default
+content:
+  description:
+    label: hidden
+    type: text_default
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+  field_variety_attributes:
+    type: string
+    weight: 0
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+hidden: {  }

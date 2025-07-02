@@ -1,0 +1,13 @@
+name: 'Field Group: Accordion formatter (Deprecated)'
+type: module
+description: 'Provides the option to render groups as accordion. This module is deprecated as Jquery UI is EOL.'
+package : Fields
+core_version_requirement: ^9.2 || ^10 || ^11
+dependencies:
+  - drupal:field
+  - jquery_ui_accordion:jquery_ui_accordion
+
+# Information added by Drupal.org packaging script on 2024-08-03
+version: '8.x-3.6'
+project: 'field_group'
+datestamp: 1722672513

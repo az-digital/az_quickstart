@@ -1,0 +1,39 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_image_crop_simple
+    - node.type.crop_responsive_example
+  module:
+    - image
+_core:
+  default_config_hash: 3zky2UvAGhcUMnYrkYwgnFGB6TSgOb6UN04_Xi8jCA0
+id: node.crop_responsive_example.field_image_crop_simple
+field_name: field_image_crop_simple
+entity_type: node
+bundle: crop_responsive_example
+label: 'Image Crop Responsive'
+description: "This Field is configured to display different images (with different crop zone/ratio) depending on <b>Bartik</b> theme's breakpoint in the Default display.<br/>\r\n<b>Image Style breakpoints:</b>\r\n<ul>\r\n<li>Wide (min-width: 851px) => Small - (320 x 180) with crop 16:9</li>\r\n<li>Narrow (min-width: 851px to max-width: 850px) => Medium with crop simple</li>\r\n<li>Mobile  => Medium - (300 x 330) with crop 4:3</li>\r\n<li>Fallback =>  Small - (320 x 180) with crop 16:9</li>\r\n</ul><br/>\r\n\r\nTo experiment with different reactions change the <a href=\"/admin/config/media/responsive-image-style/crop_example_responsive\" target=\"_blank\">Crop Example Responsive Image Style</a><br/>"
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  file_directory: ''
+  file_extensions: 'png gif jpg jpeg'
+  max_filesize: ''
+  max_resolution: ''
+  min_resolution: ''
+  alt_field: false
+  alt_field_required: false
+  title_field: false
+  title_field_required: false
+  default_image:
+    uuid: ''
+    alt: ''
+    title: ''
+    width: null
+    height: null
+  handler: 'default:file'
+  handler_settings: {  }
+field_type: image

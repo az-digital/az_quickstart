@@ -1,0 +1,22 @@
+/* ---------- Dosis, Open Sans ---------- */
+
+h1,
+h1 a {
+  font-family: 'Dosis', serif;
+  font-weight: 900;
+}
+h2,
+h3,
+h4,
+h5,
+h6,
+h2 a,
+h3 a {
+  font-family: 'Dosis', serif;
+}
+body,
+p,
+a,
+li {
+  font-family: 'Open Sans', serif;
+}

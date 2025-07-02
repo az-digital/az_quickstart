@@ -1,0 +1,12 @@
+name: Migrate Magician Forced Rollbackable Destination Plugins
+type: module
+description: Replaces non-rollbackable destination plugins with rollbackable ones.
+package: Migration
+core_version_requirement: ^8.9 || ^9 || ^10 || ^11
+dependencies:
+  - migmag:migmag_rollbackable
+
+# Information added by Drupal.org packaging script on 2025-04-04
+version: '1.8.3'
+project: 'migmag'
+datestamp: 1743751426

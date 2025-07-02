@@ -1,0 +1,16 @@
+name: 'Metatag: Custom Tags'
+type: module
+description: Provides support to define and manage custom meta tags.
+core_version_requirement: ^9.5 || ^10 || ^11
+package: SEO
+configure: entity.metatag_custom_tag.collection
+dependencies:
+  - metatag:metatag
+
+test_dependencies:
+  - metatag:metatag
+
+# Information added by Drupal.org packaging script on 2024-11-07
+version: '2.1.0'
+project: 'metatag'
+datestamp: 1731004045

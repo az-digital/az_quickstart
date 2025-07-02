@@ -1,0 +1,124 @@
+# The 'type' should be "label" for short meta tags and "text" for ones which
+# could get longer, especially ones which use a textarea field instead of a
+# textfield.
+
+metatag.metatag_tag.dcterms_abstract:
+  type: text
+  label: 'Dublin Core: Abstract'
+metatag.metatag_tag.dcterms_access_rights:
+  type: text
+  label: 'Dublin Core: Access Rights'
+metatag.metatag_tag.dcterms_accrual_method:
+  type: text
+  label: 'Dublin Core: Accrual Method'
+metatag.metatag_tag.dcterms_accrual_periodicity:
+  type: text
+  label: 'Dublin Core: Accrual Periodicity'
+metatag.metatag_tag.dcterms_accrual_policy:
+  type: text
+  label: 'Dublin Core: Accrual Policy'
+metatag.metatag_tag.dcterms_alternative:
+  type: text
+  label: 'Dublin Core: Alternative Title'
+metatag.metatag_tag.dcterms_audience:
+  type: text
+  label: 'Dublin Core: Audience'
+metatag.metatag_tag.dcterms_available:
+  type: text
+  label: 'Dublin Core: Date Available'
+metatag.metatag_tag.dcterms_bibliographic_citation:
+  type: text
+  label: 'Dublin Core: Bibliographic Citation'
+metatag.metatag_tag.dcterms_conforms_to:
+  type: text
+  label: 'Dublin Core: Conforms To'
+metatag.metatag_tag.dcterms_created:
+  type: text
+  label: 'Dublin Core: Date Created'
+metatag.metatag_tag.dcterms_date_accepted:
+  type: text
+  label: 'Dublin Core: Date Accepted'
+metatag.metatag_tag.dcterms_date_copyrighted:
+  type: text
+  label: 'Dublin Core: Date Copyrighted'
+metatag.metatag_tag.dcterms_date_submitted:
+  type: text
+  label: 'Dublin Core: Date Submitted'
+metatag.metatag_tag.dcterms_education_level:
+  type: text
+  label: 'Dublin Core: Audience Education Level'
+metatag.metatag_tag.dcterms_extent:
+  type: text
+  label: 'Dublin Core: Extent'
+metatag.metatag_tag.dcterms_has_format:
+  type: text
+  label: 'Dublin Core: Has Format'
+metatag.metatag_tag.dcterms_has_part:
+  type: text
+  label: 'Dublin Core: Has Part'
+metatag.metatag_tag.dcterms_has_version:
+  type: text
+  label: 'Dublin Core: Has Version'
+metatag.metatag_tag.dcterms_instructional_method:
+  type: text
+  label: 'Dublin Core: Instructional Method'
+metatag.metatag_tag.dcterms_is_format_of:
+  type: text
+  label: 'Dublin Core: Is Format Of'
+metatag.metatag_tag.dcterms_is_part_of:
+  type: text
+  label: 'Dublin Core: Is Part Of'
+metatag.metatag_tag.dcterms_is_referenced_by:
+  type: text
+  label: 'Dublin Core: Is Referenced By'
+metatag.metatag_tag.dcterms_is_replaced_by:
+  type: text
+  label: 'Dublin Core: Is Replaced By'
+metatag.metatag_tag.dcterms_is_required_by:
+  type: text
+  label: 'Dublin Core: Is Required By'
+metatag.metatag_tag.dcterms_issued:
+  type: text
+  label: 'Dublin Core: Date Issued'
+metatag.metatag_tag.dcterms_is_version_of:
+  type: text
+  label: 'Dublin Core: Is Version Of'
+metatag.metatag_tag.dcterms_license:
+  type: text
+  label: 'Dublin Core: License'
+metatag.metatag_tag.dcterms_mediator:
+  type: text
+  label: 'Dublin Core: Mediator'
+metatag.metatag_tag.dcterms_medium:
+  type: text
+  label: 'Dublin Core: Medium'
+metatag.metatag_tag.dcterms_modified:
+  type: text
+  label: 'Dublin Core: Date Modified'
+metatag.metatag_tag.dcterms_provenance:
+  type: text
+  label: 'Dublin Core: Provenance'
+metatag.metatag_tag.dcterms_references:
+  type: text
+  label: 'Dublin Core: References'
+metatag.metatag_tag.dcterms_replaces:
+  type: text
+  label: 'Dublin Core: Replaces'
+metatag.metatag_tag.dcterms_requires:
+  type: text
+  label: 'Dublin Core: Requires'
+metatag.metatag_tag.dcterms_rights_holder:
+  type: text
+  label: 'Dublin Core: Rights Holder'
+metatag.metatag_tag.dcterms_spatial:
+  type: text
+  label: 'Dublin Core: Spatial Coverage'
+metatag.metatag_tag.dcterms_table_of_contents:
+  type: text
+  label: 'Dublin Core: Table Of Contents'
+metatag.metatag_tag.dcterms_temporal:
+  type: text
+  label: 'Dublin Core: Temporal Coverage'
+metatag.metatag_tag.dcterms_valid:
+  type: text
+  label: 'Dublin Core: Date Valid'

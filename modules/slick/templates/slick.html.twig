@@ -1,0 +1,85 @@
+{#
+/**
+ * @file
+ * Default theme implementation for the Slick carousel template.
+ *
+ * This template holds 3 displays: main, thumbnail and overlay slicks in one.
+ * Arrows are enforced, but toggled by JS accordingly. This allows responsive
+ * object to enable and disable it as needed without losing context.
+ *
+ * Available variables:
+ * - items: The array of items containing main image/video/audio, optional
+ *     image/video/audio overlay and captions, and optional thumbnail
+ *     texts/images.
+ * - settings: A cherry-picked settings that mostly defines the slide HTML or
+ *     layout, and none of JS settings/options which are defined at data-slick.
+ * - attributes: The array of attributes to hold the main container classes, id.
+ * - content_attributes: The array of attributes to hold optional RTL, id and
+ *     data-slick containing JSON object aka JS settings the Slick expects to
+ *     override default options. We don't store these JS settings in the normal
+ *     <head>, but inline within data-slick attribute instead.
+ *
+ * Debug:
+ * @see https://www.drupal.org/node/1906780
+ * @see https://www.drupal.org/node/1903374
+ * Use Kint: {{ kint(variable) }}
+ * Dump all available variables and their contents: {{ dump() }}
+ * Dump only the available variable keys: {{ dump(_context|keys) }}
+ *
+ * Note!
+ * - Unlike Splide, Slick changed markups when being unslick since it doesn't
+ *   use HTML list (UL > LI) to worry about, and it behaves with 1 slide.
+ * - If you see blazies, it is used to interop with Splide, such as required by
+ *   ElevateZoomPlus.
+ */
+#}
+{%
+  set classes = [
+    settings.unslick ? 'unslick',
+    settings.vertical ? 'slick--vertical',
+    settings.attributes.class ? settings.attributes.class|join(' '),
+    settings.skin ? 'slick--skin--' ~ settings.skin|clean_class,
+    'boxed' in settings.skin ? 'slick--skin--boxed',
+    'split' in settings.skin ? 'slick--skin--split',
+    settings.optionset ? 'slick--optionset--' ~ settings.optionset|clean_class,
+    arrow_down_attributes is defined ? 'slick--has-arrow-down',
+    settings.asNavFor ? 'slick--' ~ display|clean_class,
+    settings.slidesToShow > 1 ? 'slick--multiple-view',
+    blazies.count <= settings.slidesToShow ? 'slick--less',
+    display == 'main' and settings.media_switch ? 'slick--' ~ settings.media_switch|clean_class,
+    display == 'thumbnail' and settings.thumbnail_caption ? 'slick--has-caption'
+  ]
+%}
+{%
+  set arrow_classes = [
+    'slick__arrow',
+    settings.vertical ? 'slick__arrow--v',
+    settings.skin_arrows ? 'slick__arrow--' ~ settings.skin_arrows|clean_class
+  ]
+%}
+<div{{ attributes.addClass(classes) }}>
+  {%- if not settings.unslick -%}
+    <div{{ content_attributes.addClass('slick__slider') }}>
+  {%- endif -%}
+
+  {% block slick_content %}
+    {{- items -}}
+  {% endblock %}
+
+  {%- if not settings.unslick -%}
+    </div>
+    {% block slick_arrow %}
+      <nav{{ arrow_attributes.addClass(arrow_classes) }}>
+        <button type="button" data-role="none" class="slick-prev" aria-label="{{ settings.prevArrow|t|striptags }}" tabindex="0">{{ settings.prevArrow|t }}</button>
+        {%- if arrow_down_attributes is defined -%}
+          <button{{ arrow_down_attributes.addClass('slick-down')
+            .setAttribute('type', 'button')
+            .setAttribute('data-role', 'none')
+            .setAttribute('data-target', settings.downArrowTarget)
+            .setAttribute('data-offset', settings.downArrowOffset) }}></button>
+        {%- endif -%}
+        <button type="button" data-role="none" class="slick-next" aria-label="{{ settings.nextArrow|t|striptags }}" tabindex="0">{{ settings.nextArrow|t }}</button>
+      </nav>
+    {% endblock %}
+  {%- endif -%}
+</div>

@@ -1,0 +1,43 @@
+<ruleset name="webforme">
+
+  <description>Webform coding styles</description>
+
+  <!-- Use Drupal coding standards -->
+  <rule ref="Drupal"/>
+  <rule ref="DrupalPractice"/>
+
+  <!-- Test all the Drupal PHP file extensions -->
+  <arg name="extensions" value="php,module,inc,install,test,profile,theme" />
+
+  <!-- Issue #3185082: Drupal.Arrays.Array.LongLineDeclaration make me write less readable code -->
+  <rule ref="Drupal.Arrays.Array">
+    <exclude name="Drupal.Arrays.Array.LongLineDeclaration"/>
+  </rule>
+
+  <!-- Issue #3173782: Increase line length limit -->
+  <rule ref="Drupal.Files.LineLength">
+    <properties>
+      <property name="lineLimit" value="120" />
+      <property name="absoluteLineLimit" value="0" />
+    </properties>
+  </rule>
+
+  <!-- Rules that need to ignored -->
+  <rule ref="Drupal">
+    <exclude name="Drupal.Arrays.Array.ArrayIndentation"/>
+    <exclude name="Drupal.Commenting.DocComment.ShortNotCapital"/>
+    <exclude name="Drupal.Commenting.FunctionComment.TypeHintMissing"/>
+    <exclude name="Drupal.Commenting.InlineComment.NotCapital"/>
+    <exclude name="Drupal.Files.LineLength.TooLong"/>
+    <exclude name="Drupal.NamingConventions.ValidVariableName.LowerCamelName"/>
+    <exclude name="Drupal.Semantics.FunctionT.NotLiteralString"/>
+    <exclude name="Drupal.Semantics.FunctionT.ConcatString"/>
+    <exclude name="Drupal.Strings.UnnecessaryStringConcat.Found"/>
+  </rule>
+
+  <rule ref="Generic.CodeAnalysis.UselessOverridingMethod">
+    <exclude name="Generic.CodeAnalysis.UselessOverridingMethod.Found"/>
+  </rule>
+
+</ruleset>
+

@@ -1,0 +1,25 @@
+ckeditor_indentblock_indent:
+  ckeditor5:
+    plugins: [indent.IndentBlock]
+    config:
+      indentBlock:
+        classes:
+          - Indent1
+          - Indent2
+          - Indent3
+          - Indent4
+          - Indent5
+          - Indent6
+          - Indent7
+          - Indent8
+          - Indent9
+          - Indent10
+  drupal:
+    label: Indent block
+    library: ckeditor_indentblock/indentblock
+    class: Drupal\ckeditor_indentblock\Plugin\CKEditor5Plugin\IndentBlock
+    elements:
+      - <p class="Indent*">
+    conditions:
+      plugins:
+        - ckeditor5_indent

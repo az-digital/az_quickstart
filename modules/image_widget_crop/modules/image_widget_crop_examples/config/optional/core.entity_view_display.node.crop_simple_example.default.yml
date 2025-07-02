@@ -1,0 +1,38 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.crop_simple_example.body
+    - field.field.node.crop_simple_example.field_image_crop_simple
+    - image.style.small_16_9
+    - node.type.crop_simple_example
+  module:
+    - image
+    - text
+    - user
+_core:
+  default_config_hash: NLsDUSgl3Zhm2M7JifJuJXi90zilQsiW30lqXx_v7xQ
+id: node.crop_simple_example.default
+targetEntityType: node
+bundle: crop_simple_example
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 1
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_image_crop_simple:
+    weight: 0
+    label: above
+    settings:
+      image_style: small_16_9
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+    region: content
+hidden:
+  langcode: true
+  links: true

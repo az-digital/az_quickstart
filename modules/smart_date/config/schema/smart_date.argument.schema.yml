@@ -1,0 +1,22 @@
+# Schema for the Smart Date views argument plugin.
+
+views.argument.*:
+  type: views_argument
+  label: 'Default argument'
+
+views.argument.date:
+  type: views_argument
+  label: 'Date'
+  mapping:
+    date:
+      type: string
+      label: 'Date'
+    date_token:
+      type: string
+      label: 'Date Token'
+    node_created:
+      type: string
+      label: 'Node Creation Time'
+    node_changed:
+      type: string
+      label: 'Node Update Time'

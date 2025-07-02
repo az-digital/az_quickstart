@@ -1,0 +1,18 @@
+antibot.settings:
+  path: '/admin/config/user-interface/antibot'
+  defaults:
+    _form: '\Drupal\antibot\Form\AntibotSettings'
+    _title: 'Antibot settings'
+  requirements:
+    _permission: 'administer antibot configuration'
+  options:
+    _admin_route: TRUE
+
+antibot.antibot:
+  path: '/antibot'
+  defaults:
+    _controller: '\Drupal\antibot\Controller\AntibotPage::page'
+    _title: 'Submission failed'
+  requirements:
+  # This is anonymously accessible 'Submission Failed' page.
+    _access: 'TRUE'

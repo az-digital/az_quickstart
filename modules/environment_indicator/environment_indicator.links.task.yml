@@ -1,0 +1,9 @@
+environment_indicator.settings.tab:
+  title: 'Settings'
+  route_name: environment_indicator.settings
+  base_route: environment_indicator.settings
+
+environment_indicator.collection.tab:
+  title: 'Environment Switcher'
+  route_name: entity.environment_indicator.collection
+  base_route: environment_indicator.settings

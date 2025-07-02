@@ -1,0 +1,18 @@
+{
+  "name": "drupal/config_merge",
+  "type": "drupal-module",
+  "description": "Enables three-way merges of configuration items. This is useful for safely merging configuration updates while retaining any customizations.",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "http://drupal.org/project/config_merge",
+  "support": {
+    "issues": "http://drupal.org/project/issues/config_merge",
+    "source": "http://cgit.drupalcode.org/config_merge"
+  },
+  "require": {
+    "php": ">=8.0"
+  },
+  "require-dev": {
+    "drupal/config_filter": "*"
+  }
+}

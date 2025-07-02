@@ -1,0 +1,27 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.block_field_test.field_block_field_test
+    - node.type.block_field_test
+  module:
+    - block_field
+    - user
+id: node.block_field_test.default
+targetEntityType: node
+bundle: block_field_test
+mode: default
+content:
+  field_block_field_test:
+    weight: 102
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: block_field
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden: {  }

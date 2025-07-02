@@ -1,0 +1,6 @@
+name: 'Administrator role'
+description: 'Provides the Administrator role.'
+type: 'User role'
+config:
+  # If the administrator role already exists, we don't really care what it looks like.
+  strict: false

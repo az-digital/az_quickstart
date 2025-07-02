@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - migrate_example_advanced_setup
+name: 'Wine Producer'
+type: migrate_example_producer
+description: 'Wineries, vineyards, and large producers.'
+help: ''
+new_revision: false
+preview_mode: 1
+display_submitted: true

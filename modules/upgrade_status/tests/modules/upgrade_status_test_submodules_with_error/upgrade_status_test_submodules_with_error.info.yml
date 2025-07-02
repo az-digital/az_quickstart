@@ -1,0 +1,9 @@
+name: 'Upgrade status test root module with submodules with errors'
+type: module
+description: 'Support module for upgrade_status module testing for modules with submodules, both with errors.'
+package: Testing
+
+# Information added by Drupal.org packaging script on 2025-05-02
+version: '4.3.7'
+project: 'upgrade_status'
+datestamp: 1746203413

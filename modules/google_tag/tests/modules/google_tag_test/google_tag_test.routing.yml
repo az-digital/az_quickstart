@@ -1,0 +1,7 @@
+google_tag_test.generate_lead_form:
+  path: '/google-tag-generate-lead'
+  defaults:
+    _form: Drupal\google_tag_test\Form\GenerateLeadForm
+    _title: 'Generate lead test form'
+  requirements:
+    _access: 'TRUE'

@@ -1,0 +1,31 @@
+services:
+  _defaults:
+    autoconfigure: true
+  comment.breadcrumb:
+    class: Drupal\comment\CommentBreadcrumbBuilder
+    arguments: ['@entity_type.manager']
+    tags:
+      - { name: breadcrumb_builder, priority: 100 }
+
+  comment.manager:
+    class: Drupal\comment\CommentManager
+    arguments: ['@entity_type.manager', '@config.factory', '@string_translation', '@module_handler', '@current_user', '@entity_field.manager', '@entity_display.repository']
+  Drupal\comment\CommentManagerInterface: '@comment.manager'
+
+  comment.statistics:
+    autowire: true
+    class: Drupal\comment\CommentStatistics
+    arguments: ['@database', '@current_user', '@entity_type.manager', '@state', '@datetime.time', '@database.replica']
+    tags:
+      - { name: backend_overridable }
+  Drupal\comment\CommentStatisticsInterface: '@comment.statistics'
+
+  comment.lazy_builders:
+    class: Drupal\comment\CommentLazyBuilders
+    arguments: ['@entity_type.manager', '@entity.form_builder', '@current_user', '@comment.manager', '@module_handler', '@renderer']
+  Drupal\comment\CommentLazyBuilders: '@comment.lazy_builders'
+
+  comment.link_builder:
+    class: Drupal\comment\CommentLinkBuilder
+    arguments: ['@current_user', '@comment.manager', '@module_handler', '@string_translation', '@entity_type.manager']
+  Drupal\comment\CommentLinkBuilderInterface: '@comment.link_builder'

@@ -1,0 +1,206 @@
+<?php
+
+/**
+ * @file
+ * General functions and hook implementations.
+ */
+
+use Drupal\Component\Plugin\Exception\PluginException;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Render\Element;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Url;
+use Drupal\migrate\Exception\RequirementsException;
+use Drupal\migrate_drupal\Plugin\migrate\source\DrupalSqlBase;
+
+/**
+ * Define chosen library url.
+ */
+define('CHOSEN_WEBSITE_URL', 'https://github.com/JJJ/chosen');
+define('CHOSEN_INCLUDE_ADMIN', 0);
+define('CHOSEN_INCLUDE_NO_ADMIN', 1);
+define('CHOSEN_INCLUDE_EVERYWHERE', 2);
+
+/**
+ * Implements hook_element_info_alter().
+ */
+function chosen_element_info_alter(&$info) {
+  $info['select']['#pre_render'][] = '\Drupal\chosen\ChosenFormRender::preRenderSelect';
+
+  if (\Drupal::moduleHandler()->moduleExists('date')) {
+    $info['date_combo']['#pre_render'][] = '\Drupal\chosen\ChosenFormRender::preRenderDateCombo';
+  }
+
+  if (\Drupal::moduleHandler()->moduleExists('select_or_other')) {
+    $info['select_or_other']['#pre_render'][] = '\Drupal\chosen\ChosenFormRender::preRenderSelectOther';
+  }
+
+  if (\Drupal::moduleHandler()->moduleExists('synonyms')) {
+    $info['synonyms_entity_select']['#pre_render'][] = '\Drupal\chosen\ChosenFormRender::preRenderSelect';
+  }
+}
+
+/**
+ * Implements hook_field_widget_form_alter().
+ *
+ * Add entity type  and bundle information to the widget.
+ *
+ * @see chosen_pre_render_select()
+ */
+
+/**
+ * Implements hook_field_widget_single_element_form_alter().
+ */
+function chosen_field_widget_single_element_form_alter(&$element, FormStateInterface $form_state, $context) {
+  /** @var \Drupal\Core\Field\FieldDefinitionInterface $field_definition */
+  $field_definition = $context['items']->getFieldDefinition();
+  $element['#entity_type'] = $field_definition->getTargetEntityTypeId();
+  $element['#bundle'] = $field_definition->getTargetBundle();
+}
+
+/**
+ * Helper function to attach the Chosen library and settings to a given element.
+ *
+ * @param array &$element
+ *   An render array element.
+ */
+function chosen_attach_library(array &$element) {
+  $element['#attached']['library'][] = 'chosen/drupal.chosen';
+
+  // Add specific styling for Claro.
+  if (\Drupal::theme()->getActiveTheme()->getName() === 'claro') {
+    $element['#attached']['library'][] = 'chosen/chosen.claro';
+  }
+
+  $chosen_conf = \Drupal::config('chosen.settings');
+
+  $css_disabled_themes = $chosen_conf->get('disabled_themes');
+  if (empty($css_disabled_themes)) {
+    $css_disabled_themes = [];
+  }
+
+  // Only add the Chosen CSS if it is not disabled for the active theme.
+  $theme_name = \Drupal::theme()->getActiveTheme()->getName();
+  if (!in_array($theme_name, $css_disabled_themes, TRUE)) {
+    $element['#attached']['library'][] = 'chosen_lib/chosen.css';
+  }
+
+  $options = [
+    'disable_search' => (bool) $chosen_conf->get('disable_search'),
+    'disable_search_threshold' => (int) $chosen_conf->get('disable_search_threshold'),
+    'allow_single_deselect' => (bool) $chosen_conf->get('allow_single_deselect'),
+    'add_helper_buttons' => (bool) $chosen_conf->get('add_helper_buttons'),
+    'search_contains' => (bool) $chosen_conf->get('search_contains'),
+    'placeholder_text_multiple' => $chosen_conf->get('placeholder_text_multiple'),
+    'placeholder_text_single' => $chosen_conf->get('placeholder_text_single'),
+    'no_results_text' => $chosen_conf->get('no_results_text'),
+    'max_shown_results' => $chosen_conf->get('max_shown_results'),
+    'inherit_select_classes' => TRUE,
+  ];
+
+  $element['#attached']['drupalSettings']['chosen'] = [
+    'selector' => $chosen_conf->get('jquery_selector'),
+    'minimum_single' => (int) $chosen_conf->get('minimum_single'),
+    'minimum_multiple' => (int) $chosen_conf->get('minimum_multiple'),
+    'minimum_width' => (int) $chosen_conf->get('minimum_width'),
+    'use_relative_width' => (bool) $chosen_conf->get('use_relative_width'),
+    'options' => $options,
+  ];
+
+  // Add support for Better Exposed Filters integration.
+  if (\Drupal::moduleHandler()->moduleExists('better_exposed_filters')) {
+    $element['#attached']['library'][] = 'chosen/chosen.bef';
+  }
+}
+
+/**
+ * Recurse through an element to apply the chosen property to any select fields.
+ *
+ * @param array $element
+ *   The element.
+ * @param int $chosen_value
+ *   Chosen setting
+ *
+ * @return array
+ *   The element.
+ */
+function chosen_element_apply_property_recursive(array &$element, $chosen_value = NULL) {
+  if (!isset($chosen_value)) {
+    if (isset($element['#chosen'])) {
+      $chosen_value = $element['#chosen'];
+    }
+    else {
+      return;
+    }
+  }
+  if (isset($element['#type']) && $element['#type'] == 'select') {
+    $element['#chosen'] = $chosen_value;
+  }
+  foreach (Element::children($element) as $key) {
+    chosen_element_apply_property_recursive($element[$key], $chosen_value);
+  }
+}
+
+/**
+ * Implements hook_help().
+ */
+function chosen_help($route_name, RouteMatchInterface $route_match) {
+
+  switch ($route_name) {
+    case 'help.page.chosen':
+      $output = '';
+      $output = '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Chosen uses the Chosen jQuery plugin to make your < select > elements more user-friendly.') . '</p>';
+      $output .= '<h3>' . t('Usage') . '</h3>';
+      $output .= '<p>' . t('Configure at: <a href=":structure_types">admin/config/user-interface/chosen</a>', [':structure_types' => Url::fromRoute('chosen.admin')->toString()]) . '</p>';
+      return $output;
+  }
+
+}
+
+/**
+ * Implements hook_migration_plugins_alter().
+ */
+function chosen_migration_plugins_alter(array &$migrations) {
+  // Check if the module is enabled on source site.
+  try {
+    $variable_source = \Drupal::service('plugin.manager.migration')
+      ->createStubMigration([
+        'id' => 'foo',
+        'idMap' => ['plugin' => 'null'],
+        'source' => [
+          'plugin' => 'variable',
+          'ignore_map' => TRUE,
+        ],
+        'destination' => ['plugin' => 'null'],
+      ])
+      ->getSourcePlugin();
+    if (!$variable_source instanceof DrupalSqlBase) {
+      return;
+    }
+    $variable_source->checkRequirements();
+  }
+  catch (PluginException $e) {
+    // The 'variable' source plugin isn't available because Migrate Drupal
+    // isn't enabled. There is nothing we can do.
+    return;
+  }
+  catch (RequirementsException $e) {
+    // The source database is not a Drupal 7 database.
+    return;
+  }
+  $system_data = $variable_source->getSystemData();
+  if (empty($system_data['module']['chosen']['status'])) {
+    unset($migrations['d7_chosen_settings']);
+    return;
+  }
+  $chosen_migration = array_filter(
+    $migrations,
+    function ($definition) {
+      return $definition['id'] === 'd7_field_instance_widget_settings';
+    }
+  );
+  foreach (array_keys($chosen_migration) as $plugin_id) {
+    $migrations[$plugin_id]['process']['options/type'][] = ['plugin' => 'chosen'];
+  }
+}

@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * @file
+ * Contains link_class.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function link_class_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the social module.
+    case 'help.page.link_class':
+      $output = '';
+      $output .= '<h3>' . t('About Link class') . '</h3>';
+      $output .= '<p>' . t('Provide a widget for Link field type which permit to add classes') . '</p>';
+      $output .= '<p>' . t('Select the <em>Link with class</em> widget in the manage display form page to be able to add custom classes to the Link field') . '</p>';
+      return $output;
+  }
+}

@@ -1,0 +1,127 @@
+/**
+ * @file
+ * Blur effect.
+ *
+ * While blurring animation impresses smoother transition, it is likely slow.
+ * You can override this file, and change animation to just transition instead.
+ * Initially developed on a lower end device that even crashed and shutdown
+ * when opening github.com home years ago, so it took low-end devices into an
+ * account for economy animations while keeping the intention in mind. You can
+ * go crazy with transforms, etc. if low-ends are not a concern. Opacity is
+ * the cheapest. You got a background when you see expensive mentioned anywhere.
+ *
+ * @todo make 2.17 blazy.svg service usable for better blur.
+ */
+
+/* Without transform, this is more of formality hooking into animation event. */
+/*
+@-webkit-keyframes blazyblur {
+  from {
+    opacity: 0.3;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+*/
+
+@keyframes blazyblur {
+  from {
+    opacity: 0.3;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/**
+ * Js dynamic classes during animation to match animate.css convention.
+ * The .animates.blur classes are triggered after being loaded, when visible.
+ */
+.animated.blur img:not(.b-blur),
+.b-bg.animated.blur {
+  /* transition: opacity 500ms ease-in-out; */
+  transition: none;
+  /* The blurred image is not this actual image. */
+  -webkit-animation: blazyblur 1s;
+  animation: blazyblur 1s;
+}
+
+/** Client side may take extra time, adjust duration to be more apparent.
+Opacity is the cheapest among all animations, fine with longer time.
+.is-blur-client.animated.blur img:not(.b-blur),
+.is-blur-client.b-bg.animated.blur {
+  -webkit-animation-duration: 2s;
+  animation-duration: 2s;
+}
+*/
+
+/**
+ * The blur image, to support various usages: native, BG and regular IMG.
+ * The native lazy load swaps placeholders for real images, makes it impossible
+ * to have blur effect, that is why we put it into another IMG.
+ * Blur filter is an expensive effect, use it wisely, selectively by hook alter.
+ * @todo recheck if we can use pseudo selector for blur, last time the issue was
+ * due to failing JS to work with pseudo selectors.
+ */
+.media--fx.is-b-visible:not(.is-b-animated) .b-blur {
+  /* Longer than animation timing to let the actual image surface better. */
+  transition: opacity 1.2s;
+  opacity: 0.9;
+  /* < 980: The less the more artifacts. The more the slower. */
+  filter: blur(3px);
+  color: transparent;
+  /* Avoid overlaying, this causes unwanted dark shadow and more artifacts. */
+  /* z-index: 1; */
+}
+
+/* Longer than animation timing to let the actual image surface better.
+.is-blur-client.is-b-visible:not(.is-b-animated) .b-blur {
+  transition-duration: 2.2s;
+}
+*/
+
+.media--fx-lg.is-b-visible:not(.is-b-animated) .b-blur {
+  /* Reduces artifacts due to being large. */
+  opacity: 0.8;
+  /* > 980: The less the more artifacts. The more the slower. */
+  filter: blur(6px);
+}
+
+/* To minimize mutations we do not remove it from DOM, instead hide it.
+Ugly, but nobody except devs pressing F12 at browsers. */
+.media.is-b-animated .b-blur,
+/* Blur animation needs extra works for IEs, not supported, disabled. */
+.media.is-b-loaded .b-blur.is-b-ie {
+  z-index: -1;
+  right: auto;
+  /* display: none; */
+  /* To minimize abrupt hiding, safe since it is absolute by default. */
+  bottom: auto;
+  visibility: hidden;
+  width: 0;
+  height: 0;
+  object-fit: none;
+  opacity: 0;
+}
+
+/* stylelint-disable selector-max-id, declaration-no-important */
+/* Supports reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  .animated.blur img:not(.b-blur),
+  .b-bg.animated.blur {
+    -webkit-transition-duration: 1ms !important; /* csslint allow: known-properties, important */
+    transition-duration: 1ms !important; /* csslint allow: known-properties, important */
+    -webkit-animation-duration: 1ms !important; /* csslint allow: known-properties, important */
+    animation-duration: 1ms !important; /* csslint allow: known-properties, important */
+    -webkit-animation-iteration-count: 1 !important; /* csslint allow: known-properties, important */
+    animation-iteration-count: 1 !important; /* csslint allow: known-properties, important */
+  }
+
+  .media--fx-lg.is-b-loaded .b-blur {
+    opacity: 0.9;
+    filter: blur(1px);
+  }
+}

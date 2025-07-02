@@ -1,0 +1,26 @@
+<?php
+
+/**
+ * @file
+ * Contains hooks implemented by Migrate Magician module.
+ */
+
+/**
+ * Implements hook_help().
+ */
+function migmag_help($route_name) {
+  switch ($route_name) {
+    case 'help.page.migmag':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>';
+      $output .= t(
+        'Migrate Magician is a set of tools and utilities for Drupal migrations. See the <a href=":documentation">online documentation for Migrate Magician module</a>.',
+        [
+          ':documentation' => 'https://drupal.org/docs/contributed-modules/migrate-magician',
+        ]
+      );
+      $output .= '</p>';
+      return $output;
+  }
+}

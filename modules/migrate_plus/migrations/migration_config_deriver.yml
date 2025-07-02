@@ -1,0 +1,6 @@
+id: migration_config_deriver
+deriver: Drupal\migrate_plus\Plugin\MigrationConfigDeriver
+# @todo: Remove if/when https://www.drupal.org/node/2797421 is fixed.
+# Unused source configuration must be added to prevent errors.
+source:
+  plugin: embedded_data

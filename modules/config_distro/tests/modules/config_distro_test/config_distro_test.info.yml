@@ -1,0 +1,12 @@
+name: Config Distro Test
+type: module
+description: 'Support module for config_distro module testing.'
+core_version_requirement: ^10.3 || ^11
+package: Testing
+dependencies:
+  - config_distro:config_distro
+
+# Information added by Drupal.org packaging script on 2025-03-27
+version: '2.1.0-alpha1'
+project: 'config_distro'
+datestamp: 1743102882

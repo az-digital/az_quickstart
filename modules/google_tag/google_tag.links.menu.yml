@@ -1,0 +1,5 @@
+entity.google_tag_container.collection:
+  title: 'Google Tag'
+  description: 'Configure the website integration with Google Tag and Google Tag Manager.'
+  route_name: entity.google_tag_container.single_form
+  parent: system.admin_config_services

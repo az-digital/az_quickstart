@@ -1,0 +1,15 @@
+[
+    {
+        "fid": 1,
+        "uuid": "ddd7fc22-60a8-4351-b7c3-c5b6cd0d9fb4",
+        "langcode": "en",
+        "uid": 1,
+        "filename": "cube.jpeg",
+        "uri": "public://cube.jpeg",
+        "filemime": "image/jpeg",
+        "filesize": 3620,
+        "status": "1",
+        "created": 1421727515,
+        "changed": 1421727515
+    }
+]

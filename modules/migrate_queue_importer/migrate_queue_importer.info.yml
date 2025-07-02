@@ -1,0 +1,13 @@
+name: Migration queue importer
+description: Provides Queue API base functionality to import migrations.
+package: Migration
+type: module
+core_version_requirement: ^9 || ^10 || ^11
+dependencies:
+  - migrate_plus:migrate_plus (>=8.x-5.x)
+  - migrate_tools:migrate_tools (>=8.x-5.x)
+
+# Information added by Drupal.org packaging script on 2025-04-11
+version: '2.1.2'
+project: 'migrate_queue_importer'
+datestamp: 1744397414

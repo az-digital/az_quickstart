@@ -1,0 +1,18 @@
+[
+    {
+        "id": 6,
+        "uuid": "d6f9548e-683b-4dde-8bef-9b18d9fd8665",
+        "langcode": "en",
+        "shortcut_set": "shortcut-set-2",
+        "title": "People",
+        "weight": -50,
+        "link": [
+            {
+                "uri": "internal:/admin/people",
+                "title": null,
+                "options": []
+            }
+        ],
+        "default_langcode": "1"
+    }
+]

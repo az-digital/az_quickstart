@@ -1,0 +1,226 @@
+<?php
+
+/**
+ * @file
+ * Contains media_library_edit.module.
+ */
+
+use Drupal\Component\Utility\Html;
+use Drupal\Component\Utility\UrlHelper;
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\BeforeCommand;
+use Drupal\Core\Ajax\CloseDialogCommand;
+use Drupal\Core\Ajax\ReplaceCommand;
+use Drupal\Core\Entity\Display\EntityFormDisplayInterface;
+use Drupal\Core\Field\FieldDefinitionInterface;
+use Drupal\Core\Field\WidgetInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Url;
+use Drupal\media_library\MediaLibraryUiBuilder;
+use Drupal\Component\Render\FormattableMarkup;
+
+/**
+ * Implements hook_help().
+ */
+function media_library_edit_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the media_library_edit module.
+    case 'help.page.media_library_edit':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Add an edit button to the Media Library widget when an item is selected.') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_field_widget_settings_summary_alter().
+ */
+function media_library_edit_field_widget_settings_summary_alter(&$summary, $context) {
+  $plugin_id = $context['widget']->getPluginId();
+
+  if ($plugin_id == 'media_library_widget') {
+    $settings = $context['widget']->getThirdPartySettings('media_library_edit');
+    if (isset($settings['show_edit']) && $settings['show_edit']) {
+      $summary[] = t('Show edit button');
+      if (isset($settings['edit_form_mode'])) {
+        /** @var \Drupal\Core\Entity\EntityDisplayRepositoryInterface $entity_display */
+        $entity_display = \Drupal::service('entity_display.repository');
+        $form_modes_options = $entity_display->getFormModeOptions('media');
+        $summary[] = t('Edit form mode: @form_mode', [
+          '@form_mode' => $form_modes_options[$settings['edit_form_mode']],
+        ]);
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_field_widget_third_party_settings_form().
+ */
+function media_library_edit_field_widget_third_party_settings_form(WidgetInterface $plugin, FieldDefinitionInterface $field_definition, $form_mode, $form, FormStateInterface $form_state) {
+  $element = [];
+  $plugin_id = $plugin->getPluginId();
+
+  if ($plugin_id == 'media_library_widget') {
+    $settings = $plugin->getThirdPartySettings('media_library_edit');
+
+    $element['show_edit'] = [
+      '#type' => 'checkbox',
+      '#title' => t('Show edit button'),
+      '#default_value' => (isset($settings['show_edit'])) ? $settings['show_edit'] : '',
+    ];
+
+    /** @var \Drupal\Core\Entity\EntityDisplayRepositoryInterface $entity_display */
+    $entity_display = \Drupal::service('entity_display.repository');
+    $form_modes_options = $entity_display->getFormModeOptions('media');
+
+    $element['edit_form_mode'] = [
+      '#type' => 'select',
+      '#title' => t('Form mode'),
+      '#options' => $form_modes_options,
+      '#default_value' => (isset($settings['edit_form_mode'])) ? $settings['edit_form_mode'] : array_key_first($form_modes_options),
+      '#description' => t('You can select in which mode edit form will be rendered.'),
+      '#states' => [
+        'visible' => [':input[name$="[media_library_edit][show_edit]"]' => ['checked' => TRUE]],
+        'required' => [':input[name$="[media_library_edit][show_edit]"]' => ['checked' => TRUE]],
+      ],
+    ];
+  }
+
+  return $element;
+}
+
+/**
+ * Implements hook_field_widget_form_alter().
+ */
+function media_library_edit_field_widget_form_alter(&$element, FormStateInterface $form_state, $context) {
+
+}
+
+/**
+ * Implements hook_field_widget_single_element_form_alter().
+ */
+function media_library_edit_field_widget_single_element_form_alter(array &$element, FormStateInterface $form_state, array $context) {
+  $plugin_id = $context['widget']->getPluginId();
+
+  if ($plugin_id == 'media_library_widget') {
+    $settings = $context['widget']->getThirdPartySettings('media_library_edit');
+    if (isset($settings['show_edit']) && $settings['show_edit']) {
+      if (isset($context['items'])) {
+        // Gets the referenced entities.
+        // We need to check access for each.
+        foreach ($context['items'] as $key => $item) {
+          $media = $item->entity;
+          if ($media && $media->access('update') && $edit_template = $media->getEntityType()->getLinkTemplate('edit-form')) {
+            $element['#attributes']['class'][] = 'js-media-library-edit-' . Html::cleanCssIdentifier($context['items']->getFieldDefinition()->getName()) . '-wrapper';
+            $edit_url_query_params = [
+              'media_library_edit' => 'ajax',
+            ];
+            if (!empty($settings['edit_form_mode'])) {
+              $edit_url_query_params['media_library_form_mode'] = $settings['edit_form_mode'];
+            }
+            $edit_url = Url::fromUserInput(str_replace('{media}', $element['selection'][$key]['target_id']['#value'], $edit_template) . '?' . UrlHelper::buildQuery($edit_url_query_params));
+            $dialog_options = MediaLibraryUiBuilder::dialogOptions();
+            $element['selection'][$key]['media_edit'] = [
+              '#type' => 'link',
+              '#title' => new FormattableMarkup('<span class="visually-hidden">@link_text</span>', [
+                '@link_text' => t('Edit media item'),
+              ]),
+              '#url' => $edit_url,
+              '#attributes' => [
+                'class' => [
+                  'js-media-library-edit-link',
+                  'media-library-edit__link',
+                  'use-ajax',
+                ],
+                'target' => '_blank',
+                'data-dialog-options' => json_encode([
+                  'height' => $dialog_options['height'],
+                  'width' => $dialog_options['width'],
+                  'classes' => ['ui-dialog-content' => 'media-library-edit__modal'],
+                  'drupalAutoButtons' => FALSE,
+                ]),
+                'data-dialog-type' => 'modal',
+              ],
+              '#attached' => [
+                'library' => [
+                  'media_library_edit/admin',
+                  'core/drupal.dialog.ajax',
+                ],
+              ],
+            ];
+          }
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function media_library_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  if (\Drupal::request()->query->get('media_library_edit') === 'ajax') {
+    // Remove delete.
+    $form['actions']['delete']['#access'] = FALSE;
+
+    // Modify the save action to make sure the dialog closes.
+    $form['actions']['submit']['#submit'] = [];
+    $form['actions']['submit']['#ajax'] = [
+      'callback' => '_media_library_edit_media_edit_save',
+      'event' => 'click',
+      'disable-refocus' => TRUE,
+    ];
+  }
+}
+
+/**
+ * Callback for ajax media form above.
+ */
+function _media_library_edit_media_edit_save(array &$form, FormStateInterface $form_state) {
+  $response = new AjaxResponse();
+  $media_form = $form_state->getFormObject();
+  if (!$form_state->hasAnyErrors()) {
+    // Run the (inherited) media save callbacks.
+    $media_form->submitForm($form, $form_state);
+    $media = $media_form->getEntity();
+    $media->save();
+    $response->addCommand(new CloseDialogCommand('.media-library-edit__modal'));
+    $render_array = \Drupal::entityTypeManager()->getViewBuilder('media')->view($media, 'media_library');
+    $html = \Drupal::service('renderer')->render($render_array);
+    $response->addCommand(new ReplaceCommand('.selected-media', $html));
+  }
+  else {
+    $message = [
+      '#type' => 'status_messages',
+    ];
+    $response->addCommand(new BeforeCommand('form', $message));
+  }
+  return $response;
+}
+
+/**
+ * Implements hook_entity_form_display_alter().
+ */
+function media_library_edit_entity_form_display_alter(EntityFormDisplayInterface &$form_display, array $context) {
+  if (isset($context['entity_type']) && isset($context['bundle'])
+    && $context['entity_type'] === 'media'
+    && \Drupal::request()->query->has('media_library_form_mode')
+  ) {
+    $selected_form_mode = \Drupal::request()->query->get('media_library_form_mode', 'default');
+
+    /** @var \Drupal\Core\Entity\EntityDisplayRepository $entity_display_repo */
+    $entity_display_repo = \Drupal::service('entity_display.repository');
+    $form_mode_opts = $entity_display_repo->getFormModeOptionsByBundle($context['entity_type'], $context['bundle']);
+
+    if (!array_key_exists($selected_form_mode, $form_mode_opts)) {
+      return;
+    }
+
+    $form_display = $entity_display_repo->getFormDisplay($context['entity_type'], $context['bundle'], $selected_form_mode) ?: $form_display;
+  }
+}

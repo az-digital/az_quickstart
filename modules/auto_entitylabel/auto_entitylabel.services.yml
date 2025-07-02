@@ -1,0 +1,14 @@
+services:
+  auto_entitylabel.route_subscriber:
+    class: Drupal\auto_entitylabel\Routing\RouteSubscriber
+    arguments: ['@entity_type.manager']
+    tags:
+      - { name: event_subscriber }
+  auto_entitylabel.route_enhancer:
+    class: Drupal\auto_entitylabel\Routing\RouteEnhancer
+    arguments: ['@entity_type.manager']
+    tags:
+      - { name: route_enhancer }
+  auto_entitylabel.entity_decorator:
+    class: Drupal\auto_entitylabel\EntityDecorator
+    arguments: ['@config.factory', '@entity_type.manager', '@token', '@module_handler']

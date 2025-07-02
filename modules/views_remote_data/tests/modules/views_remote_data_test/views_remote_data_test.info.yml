@@ -1,0 +1,12 @@
+name: Views Remote Data test
+type: module
+description: 'Example module using Views Remote Data test.'
+package: Testing
+dependencies:
+  - entity_test:entity_test
+  - views_remote_data:views_remote_data
+
+# Information added by Drupal.org packaging script on 2024-06-25
+version: '1.0.3'
+project: 'views_remote_data'
+datestamp: 1719349726

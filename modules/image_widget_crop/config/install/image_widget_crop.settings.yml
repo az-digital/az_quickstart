@@ -1,0 +1,10 @@
+settings:
+  library_url: ''
+  css_url: ''
+  crop_preview_image_style: 'crop_thumbnail'
+  crop_list: []
+  crop_types_required: []
+  warn_multiple_usages: FALSE
+  show_default_crop: TRUE
+  notify_apply: FALSE
+  notify_update: TRUE

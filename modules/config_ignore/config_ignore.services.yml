@@ -1,0 +1,7 @@
+services:
+  config_ignore.event_subscriber:
+    class: Drupal\config_ignore\EventSubscriber\ConfigIgnoreEventSubscriber
+    arguments: ['@config.factory', '@module_handler', '@config.storage', '@config.storage.sync']
+    tags:
+      - { name: event_subscriber }
+      - { name: cache_tags_invalidator }

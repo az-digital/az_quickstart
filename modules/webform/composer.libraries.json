@@ -1,0 +1,391 @@
+{
+    "name": "drupal/webform",
+    "description": "Enables the creation of webforms and questionnaires.",
+    "type": "drupal-module",
+    "license": "GPL-2.0-or-later",
+    "minimum-stability": "dev",
+    "homepage": "https://drupal.org/project/webform",
+    "authors": [
+        {
+            "name": "Jacob Rockowitz (jrockowitz)",
+            "homepage": "https://www.drupal.org/u/jrockowitz",
+            "role": "Maintainer"
+        },
+        {
+            "name": "Contributors",
+            "homepage": "https://www.drupal.org/node/7404/committers",
+            "role": "Contributor"
+        }
+    ],
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/webform?version=8.x",
+        "source": "https://git.drupalcode.org/project/webform",
+        "docs": "https://www.drupal.org/docs/8/modules/webform",
+        "forum": "https://drupal.stackexchange.com/questions/tagged/webform"
+    },
+    "require": {
+        "algolia/places": "*",
+        "choices/choices": "*",
+        "codemirror/codemirror": "*",
+        "jquery/chosen": "*",
+        "jquery/geocomplete": "*",
+        "jquery/hotkeys": "*",
+        "jquery/icheck": "*",
+        "jquery/image-picker": "*",
+        "jquery/inputmask": "*",
+        "jquery/intl-tel-input": "*",
+        "jquery/rateit": "*",
+        "jquery/select2": "*",
+        "jquery/textcounter": "*",
+        "jquery/timepicker": "*",
+        "jquery/toggles": "*",
+        "popperjs/popperjs": "*",
+        "progress-tracker/progress-tracker": "*",
+        "signature_pad/signature_pad": "*",
+        "svg-pan-zoom/svg-pan-zoom": "*",
+        "tabby/tabby": "*",
+        "tippyjs/tippyjs": "*"
+    },
+    "suggest": {
+        "drupal/jquery_ui_checkboxradio": "Provides jQuery UI Checkboxradio library. Required by the Webform jQueryUI Buttons module. The Webform jQueryUI Buttons module is deprecated because jQueryUI is no longer maintained.",
+        "drupal/jquery_ui_datepicker": "Provides jQuery UI Datepicker library. Required to support datepickers. The Webform jQueryUI Datepicker module is deprecated because jQueryUI is no longer maintained."
+    },
+    "repositories": {
+        "algolia.places": {
+            "type": "package",
+            "package": {
+                "name": "algolia/places",
+                "version": "1.19.0",
+                "type": "drupal-library",
+                "extra": {
+                    "installer-name": "algolia.places"
+                },
+                "dist": {
+                    "url": "https://registry.npmjs.org/places.js/-/places.js-1.19.0.tgz",
+                    "type": "tar"
+                },
+                "license": "MIT"
+            }
+        },
+        "choices": {
+            "type": "package",
+            "package": {
+                "name": "choices/choices",
+                "version": "9.0.1",
+                "type": "drupal-library",
+                "extra": {
+                    "installer-name": "choices"
+                },
+                "dist": {
+                    "url": "https://github.com/Choices-js/Choices/archive/refs/tags/v9.0.1.zip",
+                    "type": "zip"
+                },
+                "license": "MIT"
+            }
+        },
+        "codemirror": {
+            "type": "package",
+            "package": {
+                "name": "codemirror/codemirror",
+                "version": "5.65.12",
+                "type": "drupal-library",
+                "extra": {
+                    "installer-name": "codemirror"
+                },
+                "dist": {
+                    "url": "https://github.com/components/codemirror/archive/refs/tags/5.65.12.zip",
+                    "type": "zip"
+                },
+                "license": "MIT"
+            }
+        },
+        "jquery.chosen": {
+            "type": "package",
+            "package": {
+                "name": "jquery/chosen",
+                "version": "1.8.7",
+                "type": "drupal-library",
+                "extra": {
+                    "installer-name": "jquery.chosen"
+                },
+                "dist": {
+                    "url": "https://github.com/harvesthq/chosen/releases/download/v1.8.7/chosen_v1.8.7.zip",
+                    "type": "zip"
+                },
+                "license": "MIT"
+            }
+        },
+        "jquery.geocomplete": {
+            "type": "package",
+            "package": {
+                "name": "jquery/geocomplete",
+                "version": "1.7.0",
+                "type": "drupal-library",
+                "extra": {
+                    "installer-name": "jquery.geocomplete"
+                },
+                "dist": {
+                    "url": "https://github.com/ubilabs/geocomplete/archive/refs/tags/1.7.0.zip",
+                    "type": "zip"
+                },
+                "license": "MIT"
+            }
+        },
+        "jquery.hotkeys": {
+            "type": "package",
+            "package": {
+                "name": "jquery/hotkeys",
+                "version": "0.2.0",
+                "type": "drupal-library",
+                "extra": {
+                    "installer-name": "jquery.hotkeys"
+                },
+                "dist": {
+                    "url": "https://github.com/jeresig/jquery.hotkeys/archive/refs/tags/0.2.0.zip",
+                    "type": "zip"
+                },
+                "license": "MIT"
+            }
+        },
+        "jquery.icheck": {
+            "type": "package",
+            "package": {
+                "name": "jquery/icheck",
+                "version": "1.0.2 ",
+                "type": "drupal-library",
+                "extra": {
+                    "installer-name": "jquery.icheck"
+                },
+                "dist": {
+                    "url": "https://api.github.com/repos/drgullin/icheck/zipball/8a6eb37bd7dab1e843c1b630c91c6398ff409d05",
+                    "type": "zip"
+                },
+                "license": "MIT"
+            }
+        },
+        "jquery.image-picker": {
+            "type": "package",
+            "package": {
+                "name": "jquery/image-picker",
+                "version": "0.3.1",
+                "type": "drupal-library",
+                "extra": {
+                    "installer-name": "jquery.image-picker"
+                },
+                "dist": {
+                    "url": "https://github.com/rvera/image-picker/archive/refs/tags/0.3.1.zip",
+                    "type": "zip"
+                },
+                "license": "MIT"
+            }
+        },
+        "jquery.inputmask": {
+            "type": "package",
+            "package": {
+                "name": "jquery/inputmask",
+                "version": "5.0.8",
+                "type": "drupal-library",
+                "extra": {
+                    "installer-name": "jquery.inputmask"
+                },
+                "dist": {
+                    "url": "https://github.com/RobinHerbots/jquery.inputmask/archive/refs/tags/5.0.8.zip",
+                    "type": "zip"
+                },
+                "license": "MIT"
+            }
+        },
+        "jquery.intl-tel-input": {
+            "type": "package",
+            "package": {
+                "name": "jquery/intl-tel-input",
+                "version": "17.0.19",
+                "type": "drupal-library",
+                "extra": {
+                    "installer-name": "jquery.intl-tel-input"
+                },
+                "dist": {
+                    "url": "https://github.com/jackocnr/intl-tel-input/archive/refs/tags/v17.0.19.zip",
+                    "type": "zip"
+                },
+                "license": "MIT"
+            }
+        },
+        "jquery.rateit": {
+            "type": "package",
+            "package": {
+                "name": "jquery/rateit",
+                "version": "1.1.5",
+                "type": "drupal-library",
+                "extra": {
+                    "installer-name": "jquery.rateit"
+                },
+                "dist": {
+                    "url": "https://github.com/gjunge/rateit.js/archive/refs/tags/1.1.5.zip",
+                    "type": "zip"
+                },
+                "license": "MIT"
+            }
+        },
+        "jquery.select2": {
+            "type": "package",
+            "package": {
+                "name": "jquery/select2",
+                "version": "4.0.13",
+                "type": "drupal-library",
+                "extra": {
+                    "installer-name": "jquery.select2"
+                },
+                "dist": {
+                    "url": "https://github.com/select2/select2/archive/refs/tags/4.0.13.zip",
+                    "type": "zip"
+                },
+                "license": "MIT"
+            }
+        },
+        "jquery.textcounter": {
+            "type": "package",
+            "package": {
+                "name": "jquery/textcounter",
+                "version": "0.9.1",
+                "type": "drupal-library",
+                "extra": {
+                    "installer-name": "jquery.textcounter"
+                },
+                "dist": {
+                    "url": "https://github.com/ractoon/jQuery-Text-Counter/archive/refs/tags/0.9.1.zip",
+                    "type": "zip"
+                },
+                "license": "MIT"
+            }
+        },
+        "jquery.timepicker": {
+            "type": "package",
+            "package": {
+                "name": "jquery/timepicker",
+                "version": "1.14.0",
+                "type": "drupal-library",
+                "extra": {
+                    "installer-name": "jquery.timepicker"
+                },
+                "dist": {
+                    "url": "https://github.com/jonthornton/jquery-timepicker/archive/refs/tags/1.14.0.zip",
+                    "type": "zip"
+                },
+                "license": "MIT"
+            }
+        },
+        "jquery.toggles": {
+            "type": "package",
+            "package": {
+                "name": "jquery/toggles",
+                "version": "4.0.0",
+                "type": "drupal-library",
+                "extra": {
+                    "installer-name": "jquery.toggles"
+                },
+                "dist": {
+                    "url": "https://github.com/simontabor/jquery-toggles/archive/refs/tags/v4.0.0.zip",
+                    "type": "zip"
+                },
+                "license": "MIT"
+            }
+        },
+        "popperjs": {
+            "type": "package",
+            "package": {
+                "name": "popperjs/popperjs",
+                "version": "2.11.6",
+                "type": "drupal-library",
+                "extra": {
+                    "installer-name": "popperjs"
+                },
+                "dist": {
+                    "url": "https://registry.npmjs.org/@popperjs/core/-/core-2.11.6.tgz",
+                    "type": "tar"
+                },
+                "license": "MIT"
+            }
+        },
+        "progress-tracker": {
+            "type": "package",
+            "package": {
+                "name": "progress-tracker/progress-tracker",
+                "version": "2.0.7",
+                "type": "drupal-library",
+                "extra": {
+                    "installer-name": "progress-tracker"
+                },
+                "dist": {
+                    "url": "https://github.com/NigelOToole/progress-tracker/archive/refs/tags/2.0.7.zip",
+                    "type": "zip"
+                },
+                "license": "MIT"
+            }
+        },
+        "signature_pad": {
+            "type": "package",
+            "package": {
+                "name": "signature_pad/signature_pad",
+                "version": "2.3.0",
+                "type": "drupal-library",
+                "extra": {
+                    "installer-name": "signature_pad"
+                },
+                "dist": {
+                    "url": "https://github.com/szimek/signature_pad/archive/refs/tags/v2.3.0.zip",
+                    "type": "zip"
+                },
+                "license": "MIT"
+            }
+        },
+        "svg-pan-zoom": {
+            "type": "package",
+            "package": {
+                "name": "svg-pan-zoom/svg-pan-zoom",
+                "version": "3.6.1",
+                "type": "drupal-library",
+                "extra": {
+                    "installer-name": "svg-pan-zoom"
+                },
+                "dist": {
+                    "url": "https://github.com/ariutta/svg-pan-zoom/archive/refs/tags/3.6.1.zip",
+                    "type": "zip"
+                },
+                "license": "BSD-2-Clause"
+            }
+        },
+        "tabby": {
+            "type": "package",
+            "package": {
+                "name": "tabby/tabby",
+                "version": "12.0.3",
+                "type": "drupal-library",
+                "extra": {
+                    "installer-name": "tabby"
+                },
+                "dist": {
+                    "url": "https://github.com/cferdinandi/tabby/archive/refs/tags/v12.0.3.zip",
+                    "type": "zip"
+                },
+                "license": "MIT"
+            }
+        },
+        "tippyjs": {
+            "type": "package",
+            "package": {
+                "name": "tippyjs/tippyjs",
+                "version": "6.3.7",
+                "type": "drupal-library",
+                "extra": {
+                    "installer-name": "tippyjs"
+                },
+                "dist": {
+                    "url": "https://registry.npmjs.org/tippy.js/-/tippy.js-6.3.7.tgz",
+                    "type": "tar"
+                },
+                "license": "MIT"
+            }
+        }
+    }
+}

@@ -1,0 +1,35 @@
+{
+    "name": "lullabot/php-webdriver",
+    "type": "library",
+    "description": "PHP WebDriver for Selenium 2",
+    "keywords": [
+        "selenium",
+        "webdriver",
+        "webtest",
+        "browser"
+    ],
+    "homepage": "https://www.lullabot.com/",
+    "license": "Apache-2.0",
+    "require": {
+        "ext-curl": "*",
+        "php": ">=8.0.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.5 || ^9.5"
+    },
+    "replace": {
+        "instaclick/php-webdriver":"1.4.16"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-0": {
+            "WebDriver": "lib/"
+       }
+    },
+    "autoload-dev": {
+        "psr-0": {
+            "Test": "test/"
+       }
+    }
+}

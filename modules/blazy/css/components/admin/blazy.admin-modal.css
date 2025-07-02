@@ -1,0 +1,159 @@
+/**
+ * @file
+ * Common modal utilities.
+ *
+ * May God forgive our sins and souls, and make our lives easier ever after.
+ * @see https://www.drupal.org/node/3305664
+ */
+
+/* stylelint-disable selector-max-id, declaration-no-important */
+/* csslint ignore:start */
+@media screen and (min-width: 1200px) {
+  /* Views UI. */
+  .ui-dialog-content .form--blazy .form-item {
+    margin: 0;
+  }
+
+  .ui-dialog-content .form--vanilla .form__header {
+    min-height: 82px;
+    font-size: 17px;
+  }
+
+  .ui-dialog-off-canvas .form--blazy.form--half {
+    min-width: 100%;
+    max-width: 100%;
+    padding: 0;
+    border: 0;
+    background: none;
+    box-shadow: 0 0 0 4px #777;
+  }
+
+  .ui-dialog-off-canvas .form--blazy.form--half .form-item {
+    position: relative;
+    height: auto;
+    min-height: 42px;
+    margin: 0;
+    padding: 8px;
+    border-color: #777;
+    border-top: 0;
+    border-right: 0;
+  }
+
+  .ui-dialog-off-canvas .form--blazy.form--half fieldset.form-item {
+    display: block;
+    box-sizing: border-box;
+    padding: 0;
+  }
+
+  .ui-dialog-off-canvas .b-tooltip .form-item > .description,
+  .ui-dialog-off-canvas .b-tooltip .form-composite > .fieldset-wrapper > .description {
+    min-width: 100%;
+    max-width: 100%;
+    background: #000;
+  }
+
+  .ui-dialog-off-canvas .b-tooltip .form-item > .description {
+    z-index: -1 !important; /* csslint allow: known-properties, important */
+    display: none !important; /* csslint allow: known-properties, important */
+  }
+
+  .ui-dialog-off-canvas .form--media-switch-on .form-item--media-switch,
+  .ui-dialog-off-canvas .form--media-switch-lightbox .form-item--litebox,
+  .ui-dialog-off-canvas .form--media-switch-splidebox .form-item--ajax-link,
+  .ui-dialog-off-canvas .form--vanilla-off .form-item--media-switch {
+    display: block !important; /* csslint allow: known-properties, important */
+  }
+
+  .ui-dialog-off-canvas .b-tooltip select,
+  .ui-dialog-off-canvas .b-tooltip input:not(.form-checkbox),
+  .ui-dialog-off-canvas .b-tooltip .form-type-boolean label {
+    min-width: 140px !important; /* csslint allow: known-properties, important */
+  }
+
+  .ui-dialog-off-canvas .b-tooltip .form-type-boolean label {
+    display: inline-block !important; /* csslint allow: known-properties, important */
+    text-align: right !important; /* csslint allow: known-properties, important */
+    vertical-align: middle;
+  }
+
+  .ui-dialog-off-canvas .b-tooltip select,
+  .ui-dialog-off-canvas .b-tooltip input {
+    position: relative;
+    z-index: 7 !important; /* csslint allow: known-properties, important */
+    height: auto;
+  }
+
+  .ui-dialog-off-canvas .b-tooltip .form-item.is-hovered,
+  .ui-dialog-off-canvas .b-tooltip .form-item.is-selected {
+    z-index: 10 !important; /* csslint allow: known-properties, important */
+  }
+
+  .ui-dialog-off-canvas .b-tooltip .form-item.is-hovered > .description,
+  .ui-dialog-off-canvas .b-tooltip .form-item.is-selected > .description {
+    z-index: 12 !important; /* csslint allow: known-properties, important */
+    display: block !important; /* csslint allow: known-properties, important */
+  }
+
+  .ui-dialog-off-canvas .b-tooltip .b-hint {
+    position: absolute !important; /* csslint allow: known-properties, important */
+    z-index: 7 !important; /* csslint allow: known-properties, important */
+    top: 8px !important; /* csslint allow: known-properties, important */
+    right: 8px !important; /* csslint allow: known-properties, important */
+    width: 16px !important; /* csslint allow: known-properties, important */
+    height: 16px !important; /* csslint allow: known-properties, important */
+    text-align: center !important; /* csslint allow: known-properties, important */
+    border-radius: 50% !important; /* csslint allow: known-properties, important */
+    background: #777 !important; /* csslint allow: known-properties, important */
+  }
+
+  .ui-dialog-off-canvas .b-nativegrid--form legend {
+    width: 100% !important; /* csslint allow: known-properties, important */
+    max-width: 100%;
+    padding: 0 !important; /* csslint allow: known-properties, important */
+  }
+
+  .ui-dialog-off-canvas .b-nativegrid--form .form__title,
+  .ui-dialog-off-canvas .b-nativegrid--form legend span {
+    background-color: #2d2d2d !important; /* csslint allow: known-properties, important */
+  }
+
+  .ui-dialog-off-canvas .b-nativegrid--form legend span,
+  .ui-dialog-off-canvas .b-nativegrid--form h3,
+  .ui-dialog-off-canvas .b-nativegrid--form p {
+    display: block !important; /* csslint allow: known-properties, important */
+    width: 100% !important; /* csslint allow: known-properties, important */
+    text-align: center !important; /* csslint allow: known-properties, important */
+    font-size: 1.125rem !important; /* csslint allow: known-properties, important */
+  }
+
+  .ui-dialog-off-canvas .b-nativegrid--form > h3,
+  .ui-dialog-off-canvas .b-nativegrid--form legend span {
+    padding: 10px 0 !important; /* csslint allow: known-properties, important */
+  }
+
+  .ui-dialog-off-canvas .form--blazy.form--half .fieldset__wrapper {
+    padding: 5px;
+  }
+
+  .ui-dialog-off-canvas .form--blazy.form--half .form-item--style {
+    top: 0;
+    min-width: 0;
+    height: auto;
+  }
+  .ui-dialog-off-canvas .b-nativegrid--form p {
+    font-size: 12px;
+    font-weight: 400;
+  }
+
+  .ui-dialog-off-canvas .form--blazy.form--half fieldset .form-type-boolean {
+    min-height: 42px;
+    text-align: right;
+  }
+
+  .ui-dialog-off-canvas .b-nativegrid--auto,
+  .ui-dialog-off-canvas .b-nativegrid--form .form-checkboxes,
+  .ui-dialog-off-canvas .form--blazy.form--half fieldset > div {
+    border: 0;
+  }
+}
+/* csslint ignore:end */

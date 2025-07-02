@@ -1,0 +1,28 @@
+auto_entitylabel.settings.*:
+  type: config_object
+  label: 'Auto entity label settings'
+  mapping:
+    status:
+      type: integer
+      label: 'Automatic label generation'
+    pattern:
+      type: string
+      label: 'Pattern for the label'
+    escape:
+      type: boolean
+      label: 'Remove special characters'
+    preserve_titles:
+      type: boolean
+      label: 'Preserve node titles'
+    save:
+      type: boolean
+      label: 'Re-save all labels'
+    chunk:
+      type: integer
+      label: 'Number of entities to be processed per batch operation'
+    dependencies:
+      type: config_dependencies
+      label: 'Dependencies'
+    new_content_behavior:
+      type: integer
+      label: 'When to generate labels for new content'

@@ -1,0 +1,17 @@
+anonim
+autentificat
+behaviour
+csslint
+ersetztes
+Formated
+Ignoriertes
+Jørgensen
+Logat
+Lynge
+Neues
+neues
+nord
+phplint
+Utilizator
+Vizitator
+webform

@@ -1,0 +1,301 @@
+/**
+ * @file
+ * Styles for TimeStamp Ranges fields.
+ *
+ */
+.smartdate--widget .fieldset-wrapper .form-item,
+.smartdate--widget tr.odd .fieldset-wrapper .form-item,
+.smartdate--widget tr.even .fieldset-wrapper .form-item {
+  margin: 0.4em 0;
+}
+
+.smartdate--widget .fieldset-wrapper h4.label,
+.smartdate--widget .fieldset__wrapper h4.form-item__label {
+  float: left;
+  width: 5em;
+  margin-right: 1em;
+  padding-top: 0.75em;
+  text-align: right;
+}
+
+/* Adjustments for Adminimal */
+.adminimal .smartdate--widget h4.label {
+  margin-top: 0;
+}
+
+/* Adjustments for Claro */
+.smartdate--widget .fieldset__wrapper h4.form-item__label {
+  display: block;
+  margin-top: 0.375rem;
+  padding-top: 0.85em;
+}
+
+.smartdate--widget .fieldset__wrapper .form-type--boolean {
+  margin-left: 0.3rem;
+}
+
+.smartdate--widget .allday {
+  margin: 0.65em 0.5em 0 4.8em;
+}
+
+.adminimal .smartdate--widget .allday {
+  margin: 0.125em 0.5em 0 4.5em;
+}
+
+.smartdate--widget .fieldset__wrapper .allday {
+  margin: 1em 0.5em 0;
+}
+
+.smartdate--widget .allday-label {
+  margin: 0.75em 2.2em 0.75em 0;
+}
+
+.adminimal .smartdate--widget .allday-label {
+  margin-right: 2em;
+}
+
+.smartdate--widget .form-type-select,
+tr.odd .smartdate--widget .form-type-select,
+tr.even .smartdate--widget .form-type-select,
+.smartdate--widget .form-type--select,
+tr.odd .smartdate--widget .form-type--select,
+tr.even .smartdate--widget .form-type--select {
+  display: inline-block;
+  margin: 0.6em 0;
+}
+
+.smartdate--widget .form-type-select label,
+.smartdate--widget .form-type--select label {
+  display: inline-block;
+  margin-right: 1em;
+  padding-top: 0.85em;
+  text-align: right;
+}
+
+/* Min width only for Seven and other legacy themes. */
+.smartdate--widget .form-type-select label {
+  min-width: 5em;
+}
+
+.smartdate--widget .form-type-select label,
+tr.odd .smartdate--widget .form-type-select label,
+tr.even .smartdate--widget .form-type-select label {
+  padding-top: 0.6em;
+}
+
+.smartdate--widget .form-type--select label,
+tr.odd .smartdate--widget .form-type--select label,
+tr.even .smartdate--widget .form-type--select label {
+  padding-top: 0.85em;
+}
+
+.smartdate--widget .pad-left {
+  margin-left: 0.7em;
+}
+
+.smartdate--widget .form-type-number,
+.smartdate--widget .form-type--number {
+  display: inline-block;
+}
+
+.smartdate--widget .form-type-number .field-suffix,
+.smartdate--widget .form-type--number .form-item__suffix {
+  display: inline-block;
+  padding-top: 0.85em;
+  font-weight: bold;
+}
+
+/* For Claro and Gin, match suffix to label size. */
+.smartdate--widget .form-type--number .form-item__suffix {
+  font-size: 0.889rem;
+}
+
+.smartdate--widget .form-type-number input,
+.smartdate--widget .form-type--number input {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+/* Narrower width for Seven and other legacy themes. */
+.smartdate--widget .form-type-number input {
+  width: 4.5em;
+}
+
+/* Wider width for Claro and Gin themes. */
+.smartdate--widget .form-type--number input {
+  width: 5em;
+}
+
+.smartdate--widget .form-type-number + .form-type-date,
+.smartdate--widget .form-type--number + .form-type--date {
+  display: inline-block;
+}
+
+/* Shorten spacing for single values */
+.smartdate--widget .fieldset__legend .fieldset__label {
+  padding-bottom: 0;
+}
+
+/* Restyle Smart Date fieldsets to allow more room */
+.field-multiple-table .smartdate--widget.fieldset {
+  border-width: 0 0 0 1px;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.field-multiple-table .smartdate--widget .fieldset__wrapper {
+  margin: 0 0 0 1.5rem;
+}
+
+/* Styles for the inline version */
+.smartdate--time-inline .form-datetime-wrapper h4.form-item__label,
+.smartdate--time-inline h4.label {
+  display: none;
+}
+
+.smartdate--time-inline .smartdate--separator {
+  display: block;
+  margin: 0 0.5rem;
+  text-align: center;
+}
+
+.smartdate--time-inline .form-datetime-wrapper .form-items-inline,
+.smartdate--time-inline div.time-start,
+.smartdate--time-inline div.time-end {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.smartdate--time-inline
+  .form-datetime-wrapper:nth-of-type(2)
+  .form-items-inline,
+.smartdate--time-inline div.time-end {
+  flex-wrap: wrap-reverse;
+}
+
+.smartdate--time-inline div.time-end .form-item {
+  text-align: center;
+}
+
+.smartdate--time-inline div.time-end {
+  position: relative;
+}
+
+/* Styling for duration list overlay. */
+/* stylelint-disable order/properties-order */
+:root {
+  /* Default theme */
+  --overlay-bkg: var(--gin-bg-input, #fff);
+  --overlay-hover: var(--gin-color-primary-hover, #f6f6f6);
+  --overlay-border: var(--gin-border-color, #999);
+  --overlay-item-border: rgba(0, 0, 0, 0.15);
+  --overlay-spacing: var(--gin-spacing-density-xs, 4px);
+  --overlay-text: var(--gin-color-text-light, #666);
+  --overlay-text-active: var(--gin-color-button-text, #222);
+  --overlay-text-hover: var(--gin-color-text, #999);
+}
+
+.gin--dark-mode {
+  --overlay-item-border: rgba(255, 255, 255, 0.12);
+}
+
+.smart-date--duration-list {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transform: translate(0, 100%);
+  margin: 0 0 0.5rem;
+  padding: 0 var(--overlay-spacing) var(--overlay-spacing);
+  z-index: 10;
+  list-style: none;
+  border: 1px solid var(--overlay-border);
+  border-top: none;
+  border-bottom-left-radius: var(--gin-border-m, 0);
+  border-bottom-right-radius: var(--gin-border-m, 0);
+  text-align: left;
+  background: var(--overlay-bkg);
+}
+
+.smart-date--duration-list li {
+  display: block;
+  background: var(--overlay-bkg);
+  padding: 0.25rem 0.55rem;
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: var(--overlay-text);
+  border-top: 1px solid var(--overlay-item-border);
+  text-decoration: none;
+}
+
+.smart-date--duration-list li.active {
+  background: var(--gin-color-primary, var(--color-text-primary-medium, #eee));
+  color: var(--overlay-text-active);
+}
+
+.smart-date--duration-list li:hover {
+  background: var(--gin-color-primary-light, var(--color--primary-50, #f6f6f6));
+  color: var(--overlay-text-hover);
+  text-decoration: none;
+}
+
+.smart-date--duration-list li:last-child {
+  border-radius: 0 0 4px 4px;
+}
+
+.smart-date--duration-list--time {
+  display: inline-block;
+}
+
+.smart-date--duration-list--time.12h-format {
+  width: 3.75rem;
+  text-align: right;
+}
+
+.smart-date--duration-list--duration {
+  font-style: italic;
+  opacity: 0.7;
+}
+
+.smart-date--duration-list--duration::before {
+  content: "(";
+  margin-left: 0.25rem;
+}
+
+.smart-date--duration-list--duration::after {
+  content: ")";
+}
+
+@media (min-width: 56em) {
+  .smartdate--time-inline {
+    display: flex;
+    align-items: center;
+  }
+
+  /* Use a different bottom margin for Claro and Gin */
+  .field-multiple-table
+    tr
+    .fieldset__wrapper
+    .smartdate--time-inline
+    .form-item {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .smartdate--time-inline .form-datetime-wrapper .form-items-inline,
+  .smartdate--time-inline div.time-start,
+  .smartdate--time-inline div.time-end {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 5px;
+  }
+  .smartdate--time-inline
+    .form-datetime-wrapper:nth-of-type(2)
+    .form-items-inline,
+  .smartdate--time-inline div.time-end {
+    flex-direction: row-reverse;
+    flex-wrap: wrap;
+  }
+}

@@ -1,0 +1,24 @@
+layout:
+  css:
+    theme:
+      css/blazy-layout.css: { }
+
+admin:
+  css:
+    theme:
+      css/blazy-layout.admin.css: { }
+  js:
+    js/blazy-layout.admin.js: { }
+  dependencies:
+    - core/drupal
+    - blazy/dblazy
+    - blazy/admin.lb
+
+modal:
+  css:
+    theme:
+      css/blazy-layout.modal.css: { }
+  js:
+    js/blazy-layout.modal.js: { }
+  dependencies:
+    - blazy_layout/admin

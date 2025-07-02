@@ -1,0 +1,22 @@
+metatag_custom_tags.metatag_custom_tag.*:
+  type: config_entity
+  label: 'Custom tag'
+  mapping:
+    id:
+      type: string
+      label: 'ID'
+    label:
+      type: label
+      label: 'Label'
+    description:
+      type: string
+      label: 'Description'
+    htmlElement:
+      type: string
+      label: 'Element of the html tag. e.g. meta, link, etc.'
+    htmlNameAttribute:
+      type: string
+      label: 'The attribute this tag uses for the name. e.g. name, property, http-equiv, itemprop, rel, etc.'
+    htmlValueAttribute:
+      type: string
+      label: 'The value of the html name attribute. e.g. content, href, etc.'

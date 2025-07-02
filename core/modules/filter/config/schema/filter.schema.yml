@@ -1,0 +1,77 @@
+# Schema for the configuration files of the Filter module.
+
+filter.settings:
+  type: config_object
+  label: 'Filter settings'
+  constraints:
+    FullyValidatable: ~
+  mapping:
+    # @todo Simple config cannot have dependencies on any other config. Remove this in https://www.drupal.org/project/drupal/issues/1932544.
+    fallback_format:
+      type: machine_name
+      label: 'Fallback text format'
+      # Filter format machine names can be up to 255 characters.
+      # @see \Drupal\filter\FilterFormatFormBase::form()
+      constraints:
+        Length:
+          max: 255
+    always_show_fallback_choice:
+      type: boolean
+      label: 'Always show fallback choice'
+
+filter.format.*:
+  type: config_entity
+  label: 'Text formats'
+  mapping:
+    name:
+      type: required_label
+      label: 'Name'
+    format:
+      type: machine_name
+      label: 'Machine name'
+      # Filter format machine names can be up to 255 characters.
+      # @see \Drupal\filter\FilterFormatFormBase::form()
+      constraints:
+        Length:
+          max: 255
+    weight:
+      type: weight
+      label: 'Weight'
+    roles:
+      type: sequence
+      label: 'Roles'
+      sequence:
+        type: string
+        label: 'Role'
+    filters:
+      type: sequence
+      orderby: key
+      label: 'Enabled filters'
+      sequence:
+        type: filter
+
+filter_settings.*:
+  type: mapping
+  label: 'Filter settings'
+
+filter_settings.filter_html:
+  type: mapping
+  label: 'Filter HTML'
+  mapping:
+    allowed_html:
+      type: string
+      label: 'Allowed HTML'
+    filter_html_help:
+      type: boolean
+      label: 'HTML help'
+    filter_html_nofollow:
+      type: boolean
+      label: 'HTML nofollow'
+
+filter_settings.filter_url:
+  type: mapping
+  label: 'Filter URL'
+  mapping:
+    filter_url_length:
+      type: integer
+      label: 'URL length'

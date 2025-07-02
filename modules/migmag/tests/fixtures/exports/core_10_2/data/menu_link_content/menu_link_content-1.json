@@ -1,0 +1,37 @@
+[
+    {
+        "id": 1,
+        "uuid": "1a383962-bd28-45fa-bc27-2f7c364a1f43",
+        "revision_id": 1,
+        "langcode": "en",
+        "bundle": "menu_link_content",
+        "revision_created": 1623674252,
+        "revision_user": null,
+        "revision_log_message": null,
+        "enabled": "1",
+        "title": "menu link",
+        "description": null,
+        "menu_name": "tools",
+        "link": [
+            {
+                "uri": "http://www.example.com",
+                "title": null,
+                "options": []
+            }
+        ],
+        "external": "0",
+        "rediscover": "0",
+        "weight": 0,
+        "expanded": "0",
+        "parent": null,
+        "changed": 1623674252,
+        "default_langcode": "1",
+        "revision_default": "1",
+        "revision_translation_affected": "1",
+        "content_translation_source": "und",
+        "content_translation_outdated": "0",
+        "content_translation_uid": null,
+        "content_translation_status": "1",
+        "content_translation_created": null
+    }
+]

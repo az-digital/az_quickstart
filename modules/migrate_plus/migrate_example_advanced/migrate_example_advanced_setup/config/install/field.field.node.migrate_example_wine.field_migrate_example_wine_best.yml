@@ -1,0 +1,26 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_migrate_example_wine_best
+    - node.type.migrate_example_wine
+    - taxonomy.vocabulary.migrate_example_wine_best_with
+id: node.migrate_example_wine.field_migrate_example_wine_best
+field_name: field_migrate_example_wine_best
+entity_type: node
+bundle: migrate_example_wine
+label: 'Migrate Example Wine Best With'
+description: 'Enter any foods this wine may be paired with, separated by commas'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      migrate_example_wine_best_with: migrate_example_wine_best_with
+    sort:
+      field: _none
+    auto_create: false
+field_type: entity_reference

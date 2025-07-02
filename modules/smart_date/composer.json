@@ -1,0 +1,30 @@
+{
+  "name": "drupal/smart_date",
+  "type": "drupal-module",
+  "description": "Adds app-like date and recurring date functionality.",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0-or-later",
+  "homepage": "https://www.drupal.org/project/smart_date",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/smart_date",
+    "documentation": "https://www.drupal.org/docs/contributed-modules/smart-date",
+    "source": "https://git.drupalcode.org/project/smart_date"
+  },
+  "require": {
+    "php": ">=8.1",
+    "simshaun/recurr": "^5"
+  },
+  "require-dev": {
+    "drush/drush": "*"
+  },
+  "suggest": {
+    "drupal/multiple_fields_remove_button": "Provides a button for editors to remove unwanted rows."
+  },
+  "extra": {
+    "drush": {
+      "services": {
+        "drush.services.yml": "^9"
+      }
+    }
+  }
+}

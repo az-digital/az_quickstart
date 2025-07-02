@@ -1,0 +1,24 @@
+bootstrap_barrio.small:
+  label: small
+  mediaQuery: 'all and (min-width: 34em) and (max-width: 47.99em)'
+  weight: 0
+  multipliers:
+    - 1x
+bootstrap_barrio.medium:
+  label: medium
+  mediaQuery: 'all and (min-width: 48em) and (max-width: 61.99em)'
+  weight: 1
+  multipliers:
+    - 1x
+bootstrap_barrio.large:
+  label: large
+  mediaQuery: 'all and (min-width: 62em) and (max-width: 74.99em)'
+  weight: 2
+  multipliers:
+    - 1x
+bootstrap_barrio.extra:
+  label: extra
+  mediaQuery: 'all and (min-width: 75em)'
+  weight: 3
+  multipliers:
+    - 1x

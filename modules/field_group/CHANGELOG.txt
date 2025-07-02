@@ -1,0 +1,81 @@
+8.x-3.0-rc1, 2019-03-28
+-----------------------
+- View Mode '_custom' should not go through the entity_display_build_alter.
+- Fix deprecated methods.
+- Temp remove the type hinting.
+- Fatal error when creating a paragraph.
+- Use mb_* functions instead of deprecated Unicode::* methods.
+- Large amount of fields causes tab functionality to break.
+- Field_group_theme_suggestions_alter notices.
+- Horizontal tab content is wrapped by detail border.
+- Syntax error in HorizontalTabs.php causes module installation to fail.
+- Duplicated fields with field_group on referenced ECK entities.
+- Horizontal tabs break keyboard navigation.
+- Accordion Doesn't Open on Error.
+- Create field_group.api.php for D8 version.
+- Choose sensible default tab for horizontal tabs.
+- Extend signature of field_group_form_process().
+- Migrated field groups all disabled.
+- Empty fieldgroups are showing in forms.
+- Missing hook_help.
+- Missing UI for description text for field groups.
+- Field groups default region should never be null.
+- Revert "Issue #2991400 by DuaelFr: Field groups default region should never
+  be null".
+- Field groups default region should never be null.
+- How to create horizontal tabs with 8.x-3.x ?.
+- XSS patch horizontal-tabs.js.
+- Allow modules to define form elements beneath field groups before they are
+  created.
+- Field_group_migrate.info.yml should not contain "version: VERSION".
+- 2998205: Fix call to member function errors when the plugin was not found.
+- PHP message: Error: Call to a member function process() on null.
+- Set default values in migrate destinations plugins.
+- D6 migration doesn't generate the migrations templates.
+- Change package name of migrate sub-modules.
+- Accordion/Default State doesn't do anything.
+- Fix access check for empty groups.
+- Fix config schema.
+- Markup ID of each tab is not unique.
+- Revert "Issue #2904577: Duplicate CSS ID confuses behat".
+- Duplicate CSS ID confuses behat.
+- The region part of entity view config isn't set for old installs.
+- Remove extra param in call to field_group_info_groups.
+- Update the processGroup implementations.
+- Cannot declare class HtmlElement.
+- Fix extending preRenderGroup.
+- Coding standards.
+- Remove helpers.inc.
+- Invalid CSS ID for field group causes error.
+- Add option to set group label classes for HTML element type.
+- Fix migration tests.
+- Fix migrate unit test + accordion.
+- Getting d6_field_group plugin must define the source_module property Error
+  When Using migrate-upgrade.
+- Field groups are not compatible with field layout.
+- Accordion items with children with errors not open.
+- Accordion doesn't work.
+- Fix syntax errors.
+- Convert module to use short array syntax (new coding standard).
+
+8.3.0-beta1, 2017-11-10
+-------------------
+- JS error: Modernizr is not defined.
+- Add the new region property to the schema.
+- Adding Multiple Fields wrapped by a Tabs Group cause maximum execution error.
+- Branch tests are failing.
+- .
+- Creating Duplicate Fieldgroup Name Overwrites Existing Fieldgroup.
+- Field groups are not compatible with field layout. Part 1: Make sure regions
+  are changed when changing layout.
+- Typo in Field Group Formatter Plugin HtmlElement::prerender.
+- Revert "Issue #2846589 by huzooka: Typo in Field Group Formatter Plugin
+  HtmlElement::prerender".
+- Undefined index: form_display.
+- Typo in Field Group Formatter Plugin HtmlElement::prerender.
+- Replace all deprecated uses.
+- MessageWarning: Invalid argument supplied for foreach() in
+  field_group_info_groups()
+  (line 663 of modules/contrib/field_group/field_group.module).
+- Replace removed formBuilder->setError with form_state->setError.
+- Undefined index: id in template_preprocess_fieldset() notice.

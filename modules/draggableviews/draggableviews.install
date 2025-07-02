@@ -1,0 +1,94 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the draggableviews module.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function draggableviews_schema() {
+  $schema['draggableviews_structure'] = [
+    'description' => 'Saves the order settings of a draggableviews view.',
+    'fields' => [
+      'dvid' => [
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'The primary identifier.',
+      ],
+      'view_name' => [
+        'type' => 'varchar',
+        'length' => 128,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Makes the order unique for each view.',
+      ],
+      'view_display' => [
+        'type' => 'varchar',
+        'length' => 64,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Makes the order unique for each view display.',
+      ],
+      'args' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'Makes the order unique for a given set of arguments',
+      ],
+      'entity_id' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Id of the entity that we are sorting (node, user, etc.).',
+      ],
+      'weight' => [
+        'type' => 'int',
+        'unsigned' => FALSE,
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'The order weight.',
+      ],
+      'parent' => [
+        'type' => 'int',
+        'unsigned' => FALSE,
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'The id of the parent.',
+      ],
+    ],
+    'indexes' => [
+      'view' => ['view_name', 'view_display', 'args', 'entity_id'],
+      'weight' => ['weight'],
+      'entity_id' => ['entity_id'],
+    ],
+    'primary key' => ['dvid'],
+  ];
+
+  return $schema;
+}
+
+/**
+ * Implements hook_update().
+ */
+function draggableviews_update_8104(&$sandbox) {
+  // The update hook here accidentally cropped in into 1.1 but it shouldn't be
+  // there, I believe that removing it should be harmless.
+}
+
+/**
+ * Update varchar length of arg field from 255 to 1024.
+ */
+function draggableviews_update_8105() {
+  $field_spec = [
+    'type' => 'varchar',
+    'length' => 1024,
+    'not null' => FALSE,
+    'default' => '',
+    'description' => 'Makes the order unique for a given set of arguments',
+  ];
+  \Drupal::database()->schema()->changeField('draggableviews_structure', 'args', 'args', $field_spec);
+}

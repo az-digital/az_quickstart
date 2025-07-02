@@ -1,0 +1,29 @@
+trimIefIdParentslangcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_level_2_items
+    - node.type.err_level_1
+    - node.type.err_level_2
+  module:
+    - entity_reference_revisions
+id: node.err_level_1.field_level_2_items
+field_name: field_level_2_items
+entity_type: node
+bundle: err_level_1
+label: 'Level 2 Items'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      err_level_2: err_level_2
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference_revisions

@@ -1,0 +1,33 @@
+<?php
+
+/**
+ * @file
+ * Support module for webform #states API testing.
+ */
+
+/**
+ * Implements hook_preprocess_webform_confirmation().
+ */
+function webform_test_states_preprocess_webform_confirmation(array &$variables) {
+  /** @var \Drupal\webform\WebformInterface $webform */
+  $webform = $variables['webform'];
+  switch ($webform->id()) {
+    case 'test_states_to_text':
+      /** @var \Drupal\webform\WebformEntityConditionsManagerInterface $conditions_manager */
+      $conditions_manager = \Drupal::service('webform.conditions_manager');
+
+      $build = [];
+      $elements = $webform->getElementsInitializedAndFlattened();
+      foreach ($elements as $element_key => $element) {
+        if (isset($element['#states'])) {
+          $build[$element_key] = [
+            '#type' => 'item',
+            '#title' => $element['#admin_title'],
+            'text' => $conditions_manager->toText($webform, $element['#states']),
+          ];
+        }
+      }
+      $variables['message'] = $build;
+      return;
+  }
+}

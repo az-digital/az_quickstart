@@ -1,0 +1,95 @@
+<?php
+
+/**
+ * @file
+ * General functions and hook implementations.
+ *
+ * @see https://www.drupal.org/project/better_exposed_filters
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Url;
+
+require_once __DIR__ . '/includes/better_exposed_filters.theme.inc';
+
+/**
+ * Implements hook_help().
+ */
+function better_exposed_filters_help($route_name, RouteMatchInterface $route_match) {
+  // Main module help for the better_exposed_filters module.
+  if ($route_name == 'help.page.better_exposed_filters') {
+    $output = '<h3>' . t('About') . '</h3>';
+    $output .= '<p>' . t('Better Exposed Filters (BEF) modifies the use of Views by replacing the \'single\'  or \'multi\' <em>select boxes</em> with <em>radio buttons or checkboxes</em>. Views offers the ability to expose filters to the end user. When you expose a filter, you allow the user to interact with the view making it easy to build an advanced search.  Better Exposed Filters gives you greater control over the rendering of exposed filters. For more information, see the <a href=":online">online documentation for the Better Exposed Filters module</a>.', [':online' => 'https://www.drupal.org/node/766974']) . '</p>';
+    $output .= '<h3>' . t('Uses') . '</h3>';
+    $output .= '<dt>' . t('Editing or Creating Views') . '</dt>';
+    $output .= '<dd>' . t('Better Exposed Filters is used on <a href=":views">Views</a> that use an exposed filter.  Views filters are used to reduce the result set of a View to a manageable amount of data. BEF only operates on fields that have a limited number of options such as <a href=":node">Node</a>:Type or <a href=":taxonomy">Taxonomy</a>:TermID.',
+        [
+          ':views' => Url::fromRoute('help.page',
+            ['name' => 'views'])->toString(),
+          ':node' => Url::fromRoute('help.page',
+            ['name' => 'node'])->toString(),
+          ':taxonomy' => (\Drupal::moduleHandler()
+            ->moduleExists('taxonomy')) ? Url::fromRoute('help.page',
+            ['name' => 'taxonomy'])->toString() : '#',
+        ]) . '</dd>';
+    $output .= '<dt>' . t('Styling Better Exposed Filters') . '</dt>';
+    $output .= '<dd>' . t('BEF provides some additional HTML structure to help you style your exposed filters. For some common examples see the <a href=":doco">online documentation</a>.', [':doco' => 'https://www.drupal.org/node/766974']) . '</dd>';
+    return $output;
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function better_exposed_filters_form_views_ui_config_item_form_alter(&$form, FormStateInterface $form_state): void {
+  // Checks if Token module is enabled.
+  if (!\Drupal::moduleHandler()->moduleExists('token')) {
+    $text = t('Enable the Token module to allow token replacement in this field.');
+    if (empty($form['options']['expose']['description']['#description'])) {
+      $form['options']['expose']['description']['#description'] = $text;
+    }
+    else {
+      $form['options']['expose']['description']['#description'] .= " $text";
+    }
+    return;
+  }
+  // Adds global token replacements, if available.
+  $text = t('Tokens are allowed in this field. Replacement options can be found in the "Global replacement patterns" section, below.');
+  if (empty($form['options']['expose']['description']['#description'])) {
+    $form['options']['expose']['description']['#description'] = $text;
+  }
+  else {
+    $form['options']['expose']['description']['#description'] .= " $text";
+  }
+  $form['options']['expose']['global_replacement_tokens'] = [
+    '#title' => t('Global replacement patterns (for description field only)'),
+    '#type' => 'details',
+    '#weight' => 151,
+  ];
+  $form['options']['expose']['global_replacement_tokens']['list'] = [
+    '#theme' => 'token_tree_link',
+    '#token_types' => [],
+  ];
+}
+
+/**
+ * Implements hook_library_info_alter().
+ */
+function better_exposed_filters_library_info_alter(&$libraries, $extension): void {
+  if ($extension === 'better_exposed_filters' && isset($libraries['sliders'])) {
+    $libraries_directory_file_finder = \Drupal::service('library.libraries_directory_file_finder');
+    $lib_slider_internal = $libraries_directory_file_finder->find('nouislider');
+    $lib_slider_internal_npm = $libraries_directory_file_finder->find('nouislider/dist');
+
+    if ($lib_slider_internal && !$lib_slider_internal_npm) {
+      $libraries['sliders']['dependencies'][] = 'better_exposed_filters/nouislider_internal';
+    }
+    elseif ($lib_slider_internal_npm) {
+      $libraries['sliders']['dependencies'][] = 'better_exposed_filters/nouislider_internal_npm';
+    }
+    else {
+      $libraries['sliders']['dependencies'][] = 'better_exposed_filters/nouislider_external';
+    }
+  }
+}

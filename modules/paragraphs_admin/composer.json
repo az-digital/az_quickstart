@@ -1,0 +1,11 @@
+{
+    "name": "drupal/paragraphs_admin",
+    "type": "drupal-module",
+    "description": "Additional admin tools to manage paragraphs.",
+    "homepage": "https://www.drupal.org/project/paragraphs_admin",
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/paragraphs_admin"
+    },
+    "license": "GPL-2.0-or-later",
+    "minimum-stability": "dev"
+}

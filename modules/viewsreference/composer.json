@@ -1,0 +1,19 @@
+{
+  "name": "drupal/viewsreference",
+  "type": "drupal-module",
+  "description": "Views reference",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0-or-later",
+  "homepage": "http://drupal.org/project/viewsreference",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/viewsreference",
+    "source": "https://git.drupalcode.org/project/viewsreference"
+  },
+  "conflict": {
+    "drupal/viewsreferennce": "*"
+  },
+  "require-dev": {
+    "drupal/views_ajax_history": "1.x-dev"
+  }
+}

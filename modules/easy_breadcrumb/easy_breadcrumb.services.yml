@@ -1,0 +1,15 @@
+services:
+  easy_breadcrumb.breadcrumb:
+    class: Drupal\easy_breadcrumb\EasyBreadcrumbBuilder
+    arguments: ['@router.request_context', '@access_manager', '@router', '@request_stack', '@path_processor_manager', '@config.factory', '@easy_breadcrumb.title_resolver', '@current_user', '@path.current', '@plugin.manager.menu.link', '@language_manager', '@entity_type.manager', '@entity.repository', '@logger.factory', '@messenger', '@module_handler', '@path.matcher']
+    tags:
+      - { name: breadcrumb_builder, priority: 1003 }
+  easy_breadcrumb.structured_data_json_ld:
+    class: Drupal\easy_breadcrumb\EasyBreadcrumbStructuredDataJsonLd
+    arguments: ['@easy_breadcrumb.breadcrumb', '@config.factory', '@current_route_match', '@module_handler']
+  logger.channel.easy_breadcrumb:
+    parent: logger.channel_base
+    arguments: ['easy_breadcrumb']
+  easy_breadcrumb.title_resolver:
+    class: Drupal\easy_breadcrumb\TitleResolver
+    arguments: ['@controller_resolver', '@string_translation', '@http_kernel.controller.argument_resolver', '@entity_type.manager', '@config.factory', '@language_manager']

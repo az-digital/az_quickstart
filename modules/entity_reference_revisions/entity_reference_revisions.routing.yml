@@ -1,0 +1,7 @@
+entity_reference_revisions.delete_orphans:
+  path: '/admin/config/system/delete-orphans'
+  defaults:
+    _form: 'Drupal\entity_reference_revisions\Form\OrphanedCompositeEntitiesDeleteForm'
+    _title: 'Delete orphaned composite entities'
+  requirements:
+    _permission: 'delete orphan revisions'

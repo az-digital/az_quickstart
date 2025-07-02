@@ -1,0 +1,15 @@
+webform_jqueryui_datepicker.element:
+  version: VERSION
+  css:
+    component:
+      css/webform_jqueryui_datepicker.element.css: {}
+  js:
+    js/webform_jqueryui_datepicker.element.js: {}
+  dependencies:
+    - core/drupalSettings
+    - core/drupal.date
+    - core/modernizr
+    - core/jquery
+    - core/once
+    - jquery_ui_datepicker/datepicker
+  deprecated: The "%library_id%" asset library is deprecated. jQueryUI is no longer maintained. See https://www.drupal.org/node/3064015

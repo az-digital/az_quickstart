@@ -1,0 +1,57 @@
+<?php
+
+/**
+ * @file
+ * Replaces non-rollbackable destination plugins with rollbackable ones.
+ */
+
+declare(strict_types=1);
+
+use Drupal\migmag_rollbackable\Plugin\migrate\destination\RollbackableColor;
+use Drupal\migmag_rollbackable\Plugin\migrate\destination\RollbackableConfig;
+use Drupal\migmag_rollbackable\Plugin\migrate\destination\RollbackableDefaultLangcode;
+use Drupal\migmag_rollbackable\Plugin\migrate\destination\RollbackablePerComponentEntityDisplay;
+use Drupal\migmag_rollbackable\Plugin\migrate\destination\RollbackablePerComponentEntityFormDisplay;
+use Drupal\migmag_rollbackable\Plugin\migrate\destination\RollbackableShortcutSetUsers;
+use Drupal\migmag_rollbackable\Plugin\migrate\destination\RollbackableThemeSettings;
+
+/**
+ * Implements hook_help().
+ */
+function migmag_rollbackable_replace_help($route_name) {
+  switch ($route_name) {
+    case 'help.page.migmag_rollbackable_replace':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>';
+      $output .= t(
+        'Migrate Magician Forced Rollbackable Destination Plugins replaces non-rollbackable migrate destination plugins with rollbackable ones. See the <a href=":documentation">online documentation for Migrate Magician Rollbackable Destination Plugins module</a>.',
+        [
+          ':documentation' => 'https://drupal.org/docs/contributed-modules/migrate-magician/migrate-magician-rollbackable-destination-plugins',
+        ]
+      );
+      $output .= '</p>';
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_migrate_destination_info_alter().
+ */
+function migmag_rollbackable_replace_migrate_destination_info_alter(&$definitions) {
+  $map = [
+    'color' => RollbackableColor::class,
+    'config' => RollbackableConfig::class,
+    'default_langcode' => RollbackableDefaultLangcode::class,
+    'component_entity_display' => RollbackablePerComponentEntityDisplay::class,
+    'component_entity_form_display' => RollbackablePerComponentEntityFormDisplay::class,
+    'shortcut_set_users' => RollbackableShortcutSetUsers::class,
+    'd7_theme_settings' => RollbackableThemeSettings::class,
+  ];
+
+  foreach ($map as $non_rollbackable_plugin_id => $rollbackable_class) {
+    if (!empty($definitions[$non_rollbackable_plugin_id])) {
+      $definitions[$non_rollbackable_plugin_id]['class'] = $rollbackable_class;
+    }
+  }
+}

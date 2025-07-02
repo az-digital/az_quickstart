@@ -1,0 +1,16 @@
+name: Webform
+type: module
+description: 'Enables the creation of webforms and questionnaires.'
+package: Webform
+core_version_requirement: ^10.2
+configure: entity.webform.collection
+php: 8.1
+dependencies:
+  - 'drupal:field'
+  - 'drupal:filter'
+  - 'drupal:user'
+
+# Information added by Drupal.org packaging script on 2024-12-10
+version: '6.2.9'
+project: 'webform'
+datestamp: 1733851071

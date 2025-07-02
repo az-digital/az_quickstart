@@ -1,0 +1,9 @@
+first_day: 0
+country:
+  default: null
+timezone:
+  default: null
+  user:
+    configurable: true
+    default: 0
+    warn: false

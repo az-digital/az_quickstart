@@ -1,0 +1,24 @@
+include:
+  - project: $_GITLAB_TEMPLATES_REPO
+    ref: $_GITLAB_TEMPLATES_REF
+    file:
+      - '/includes/include.drupalci.main.yml'
+      - '/includes/include.drupalci.variables.yml'
+      - '/includes/include.drupalci.workflows.yml'
+variables:
+  OPT_IN_TEST_PREVIOUS_MAJOR: 1
+  OPT_IN_TEST_NEXT_MINOR: 1
+cspell:
+  allow_failure: true
+phpcs:
+  allow_failure: true
+phpstan:
+  allow_failure: false
+phpstan (next minor):
+  allow_failure: false
+phpstan (next major):
+  allow_failure: false
+phpunit (next minor):
+  allow_failure: true
+phpunit (next major):
+  allow_failure: true

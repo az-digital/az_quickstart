@@ -1,0 +1,247 @@
+/**
+ * @file
+ * Provides CSS3 flex based on Flexbox layout.
+ *
+ * The .grid side margin affects the decision for .b-flexbox justify-content,
+ * affects odd and even .grid items. And .grid margin auto causes more trouble,
+ * overlapping .grid given odd number, etc.
+ * The intention to consider: left-to-right flow with flex limitation not
+ * designed for Masonry. This should be deprecated for Native Masonry:
+ * https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Masonry_Layout
+ * The current Native Masonry available via Display style Native Grid + Grid
+ * large single number columns are the closes to the real Masonry_Layout.
+ *
+ * @see https://caniuse.com/flexbox-gap
+ * @see https://developer.mozilla.org/en-US/docs/Web/CSS/flex
+ */
+
+/* csslint ignore:start */
+:root {
+  /* The gap 15px is to match CSS grid convention such as Bootstrap.
+  Affected by .grid margin 0 vs. auto. This 14px is best for .b-flexbox. Adjust it. */
+  --bfb-col-gap: 14px;
+  /* Since 3.0.7, these values are to determine multi-breakpoint grids with
+  min-max device widths, basically just to make grid_medium value kicks in
+  within this range. If changed, be sure to update its media query far below. */
+  --bfb-md: 768px;
+  --bfb-lg: 1024px;
+}
+
+.blazy.b-flexbox,
+.item-list > .b-flexbox {
+  display: block;
+  clear: both;
+  width: 100%;
+  height: auto;
+  min-height: 40px;
+  margin: 0 auto;
+  list-style: none;
+}
+
+ul.blazy.b-flexbox {
+  padding: 0;
+}
+
+.blazy.b-flexbox > .grid {
+  flex: 0 1 100%;
+}
+
+.b-flexbox > .grid,
+.item-list > .b-flexbox > .grid {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-height: 40px;
+  margin: 0;
+  padding: 0;
+  /* At most grids, transition is causing issues than helpful. */
+  transition: none;
+}
+
+/** 480px = 30em with 16px base font. */
+@media only screen and (min-width: 480px) {
+
+  /* Gap with flexbox is problematic against justify-content vs. flex-direction: row. */
+  .b-flexbox,
+  .blazy.b-flexbox,
+  .item-list > .b-flexbox {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    align-items: flex-start;
+    justify-content: flex-start;
+    /** Makes container gapless with negative margins. */
+    width: calc(100% + var(--bfb-col-gap));
+    height: fit-content;
+    margin: 0 calc(-1 * var(--bfb-col-gap) / 2);
+  }
+
+  .b-flexbox.is-b-gapless,
+  .blazy.b-flexbox.is-b-gapless,
+  .item-list > .b-flexbox.is-b-gapless {
+    --bfb-col-gap: 0.0001px;
+
+    justify-content: flex-start;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .b-flexbox > .grid,
+  .item-list > .b-flexbox > .grid {
+    /* flex-direction: row; */
+    /* Left and right 0 makes centered and gapless parent without negative margin.
+    Auto causes trouble against parent space-between vs. flex-start, incorrect
+    overlapping .grid placement, yet best for dynamic var calculation. */
+    margin: 0 calc(var(--bfb-col-gap) / 2) var(--bfb-col-gap);
+  }
+
+  /* Adjust distractions accordingly. */
+  .b-flexbox p,
+  .b-flexbox h2,
+  .b-flexbox figure,
+  .b-flexbox.is-b-gapless > .grid,
+  .blazy.b-flexbox.is-b-gapless > .grid,
+  .item-list > .b-flexbox.is-b-gapless > .grid {
+    margin: 0;
+  }
+
+  .b-flexbox,
+  .blazy.b-flexbox,
+  .item-list > .b-flexbox,
+  .b-flexbox > .grid,
+  .item-list > .b-flexbox > .grid {
+    display: flex;
+    /* flex-direction: row; */
+    overflow: hidden;
+  }
+
+  .blazy.b-flexbox--sm-2 > .grid {
+    /* width: calc(33.3333% - var(--bfb-col-gap)); */
+    flex: 0 1 calc(50% - var(--bfb-col-gap));
+  }
+}
+
+/** 640px = 40em with 16px base font. */
+@media only screen and (min-width: 640px) {
+  .blazy.b-flexbox--md-2 > .grid {
+    flex: 0 1 calc(50% - var(--bfb-col-gap));
+  }
+
+  .blazy.b-flexbox--md-3 > .grid {
+    flex: 0 1 calc(33.3333% - var(--bfb-col-gap));
+  }
+
+  .blazy.b-flexbox--md-4 > .grid {
+    flex: 0 1 calc(25% - var(--bfb-col-gap));
+  }
+
+  .blazy.b-flexbox--md-5 > .grid {
+    flex: 0 1 calc(20% - var(--bfb-col-gap));
+  }
+
+  .blazy.b-flexbox--md-6 > .grid {
+    flex: 0 1 calc(16.6666% - var(--bfb-col-gap));
+  }
+}
+
+/**
+ * 768px = 48em with 16px base font.
+ *
+ * Since 3.0.7, supports multi-breakpoint grids for grid and grid_medium.
+ */
+@media only screen and (min-width: 768px) {
+
+  /* Column widths are determined by column amount between 1-12. */
+  .blazy.b-flexbox--lg-6 > .grid {
+    flex: 0 1 calc(16.6666% - var(--bfb-col-gap));
+  }
+
+  .blazy.b-flexbox--lg-7 > .grid {
+    flex: 0 1 calc(14.2857% - var(--bfb-col-gap));
+  }
+
+  .blazy.b-flexbox--lg-8 > .grid {
+    flex: 0 1 calc(12.5% - var(--bfb-col-gap));
+  }
+
+  .blazy.b-flexbox--lg-9 > .grid {
+    flex: 0 1 calc(11.1111% - var(--bfb-col-gap));
+  }
+
+  .blazy.b-flexbox--lg-11 > .grid {
+    flex: 0 1 calc(9.0909% - var(--bfb-col-gap));
+  }
+
+  .blazy.b-flexbox--lg-12 > .grid {
+    flex: 0 1 calc(8.3333% - var(--bfb-col-gap));
+  }
+
+  /* Column widths are determined by real percentage. */
+  .blazy.b-flexbox--lg-10 > .grid,
+  .blazy.b-flexbox > [data-b-w="10"] {
+    flex: 0 1 calc(10% - var(--bfb-col-gap));
+  }
+
+  .blazy.b-flexbox > [data-b-w="15"] {
+    flex: 0 1 calc(15% - var(--bfb-col-gap));
+  }
+
+  .blazy.b-flexbox--lg-5 > .grid,
+  .blazy.b-flexbox > [data-b-w="20"] {
+    flex: 0 1 calc(20% - var(--bfb-col-gap));
+  }
+
+  .blazy.b-flexbox--lg-4 > .grid,
+  .blazy.b-flexbox > [data-b-w="25"] {
+    flex: 0 1 calc(25% - var(--bfb-col-gap));
+  }
+
+  .blazy.b-flexbox > [data-b-w="30"] {
+    flex: 0 1 calc(30% - var(--bfb-col-gap));
+  }
+
+  .blazy.b-flexbox--lg-3 > .grid,
+  .blazy.b-flexbox > [data-b-w="33"] {
+    /* Cannot use exact 33.3333% for some reason. */
+    flex: 0 1 calc(33% - var(--bfb-col-gap));
+  }
+
+  .blazy.b-flexbox > [data-b-w="34"] {
+    flex: 0 1 calc(34% - var(--bfb-col-gap));
+  }
+
+  .blazy.b-flexbox > [data-b-w="40"] {
+    flex: 0 1 calc(40% - var(--bfb-col-gap));
+  }
+
+  .blazy.b-flexbox--lg-2 > .grid,
+  .blazy.b-flexbox > [data-b-w="50"] {
+    flex: 0 1 calc(50% - var(--bfb-col-gap));
+  }
+
+  .blazy.b-flexbox > [data-b-w="55"] {
+    flex: 0 1 calc(55% - var(--bfb-col-gap));
+  }
+
+  .blazy.b-flexbox > [data-b-w="60"] {
+    flex: 0 1 calc(60% - var(--bfb-col-gap));
+  }
+
+  .blazy.b-flexbox > [data-b-w="75"] {
+    flex: 0 1 calc(75% - var(--bfb-col-gap));
+  }
+
+  .blazy.b-flexbox > [data-b-w="77"] {
+    flex: 0 1 calc(77% - var(--bfb-col-gap));
+  }
+
+  .blazy.b-flexbox > [data-b-w="80"] {
+    flex: 0 1 calc(80% - var(--bfb-col-gap));
+  }
+
+  .blazy.b-flexbox--lg-1 > .grid,
+  .blazy.b-flexbox > [data-b-w="100"] {
+    flex: 0 1 100%;
+  }
+
+}

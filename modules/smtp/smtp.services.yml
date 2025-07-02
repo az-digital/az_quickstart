@@ -1,0 +1,15 @@
+services:
+
+  smtp.logger_channel:
+    class: Drupal\Core\Logger\LoggerChannel
+    factory: logger.factory:get
+    arguments: ['smtp']
+
+  smtp.config:
+    class: Drupal\Core\Config\Config
+    factory: config.factory:getEditable
+    arguments: ['smtp.settings']
+
+  smtp.connection_tester:
+    class: Drupal\smtp\ConnectionTester\ConnectionTester
+    arguments: ['@config.factory', '@smtp.logger_channel', '@plugin.manager.mail']

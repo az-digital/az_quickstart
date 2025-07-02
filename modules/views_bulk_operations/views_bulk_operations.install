@@ -1,0 +1,143 @@
+<?php
+
+/**
+ * @file
+ * Contains update procedures for the module.
+ */
+
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+
+/**
+ * Add field ajax_loader to config.
+ */
+function views_bulk_operations_update_8035(&$sandbox): ?TranslatableMarkup {
+  /** @var \Drupal\Core\Entity\EntityStorageInterface $viewsStorage */
+  $viewsStorage = \Drupal::service('entity_type.manager')->getStorage('view');
+
+  if (!isset($sandbox['current'])) {
+    $sandbox['total'] = $viewsStorage->getQuery()->accessCheck(FALSE)->count()->execute();
+    $sandbox['current'] = 0;
+    $sandbox['converted'] = 0;
+    $sandbox['#finished'] = 0;
+  }
+
+  $query = $viewsStorage->getQuery()->accessCheck(FALSE);
+  $query->condition('display.*.display_options.fields.views_bulk_operations_bulk_form.plugin_id', 'views_bulk_operations_bulk_form');
+
+  // Process 10 view configs at a time.
+  $query->range($sandbox['current'], 10);
+  $results = $query->execute();
+  if (!empty($results)) {
+    foreach ($results as $view_id) {
+      $view = $viewsStorage->load($view_id);
+      $displays = $view->get('display');
+      $converted = FALSE;
+
+      foreach ($displays as &$display) {
+        if (!empty($display['display_options']['fields'])) {
+          foreach ($display['display_options']['fields'] as &$field) {
+            if ($field['plugin_id'] === 'views_bulk_operations_bulk_form' &&
+              !(isset($field['ajax_loader']))) {
+              $field['ajax_loader'] = FALSE;
+              $converted = TRUE;
+            }
+          }
+        }
+      }
+
+      if ($converted) {
+        $view->set('display', $displays);
+        $view->save();
+        $sandbox['converted']++;
+      }
+
+      $sandbox['current']++;
+      $sandbox['#finished'] = $sandbox['current'] / $sandbox['total'];
+
+    }
+  }
+  else {
+    $sandbox['#finished'] = 1;
+  }
+
+  if ($sandbox['#finished'] >= 1) {
+    if ($sandbox['converted']) {
+      return t('@count view configs updated with the new ajax field.', ['@count' => $sandbox['converted']]);
+    }
+    else {
+      return t('No conversions were required by Views Bulk Operations.');
+    }
+  }
+
+  return NULL;
+}
+
+/**
+ * Convert configuration of existing views to the new schema.
+ */
+function views_bulk_operations_update_8034(&$sandbox): ?TranslatableMarkup {
+  $viewsStorage = \Drupal::service('entity_type.manager')->getStorage('view');
+
+  if (!isset($sandbox['current'])) {
+    $sandbox['total'] = $viewsStorage->getQuery()->accessCheck(FALSE)->count()->execute();
+    $sandbox['current'] = 0;
+    $sandbox['converted'] = 0;
+  }
+
+  $query = $viewsStorage->getQuery()->accessCheck(FALSE);
+
+  // Process 10 view configs at a time.
+  $query->range($sandbox['current'], 10);
+  $results = $query->execute();
+  if (!empty($results)) {
+    foreach ($results as $view_id) {
+      $view = $viewsStorage->load($view_id);
+      $displays = $view->get('display');
+      $converted = FALSE;
+
+      foreach ($displays as &$display) {
+        if (!empty($display['display_options']['fields'])) {
+          foreach ($display['display_options']['fields'] as &$field) {
+            if ($field['plugin_id'] === 'views_bulk_operations_bulk_form') {
+              $new_selected_actions = [];
+              foreach ($field['selected_actions'] as $plugin_id) {
+                if (!is_string($plugin_id)) {
+                  continue;
+                }
+                $action_config_array = ['action_id' => $plugin_id];
+                if (isset($field['preconfiguration']) && isset($field['preconfiguration'][$plugin_id])) {
+                  $action_config_array['preconfiguration'] = $field['preconfiguration'][$plugin_id];
+                }
+                $new_selected_actions[] = $action_config_array;
+              }
+              $field['selected_actions'] = $new_selected_actions;
+              unset($field['preconfiguration']);
+              $converted = TRUE;
+            }
+          }
+        }
+      }
+
+      if ($converted) {
+        $view->set('display', $displays);
+        $view->save();
+        $sandbox['converted']++;
+      }
+
+      $sandbox['current']++;
+      $sandbox['#finished'] = $sandbox['current'] / $sandbox['total'];
+
+    }
+  }
+
+  if ($sandbox['#finished'] >= 1) {
+    if ($sandbox['converted']) {
+      return t('@count view configs converted.', ['@count' => $sandbox['converted']]);
+    }
+    else {
+      return t('No conversions were required by Views Bulk Operations.');
+    }
+  }
+
+  return NULL;
+}

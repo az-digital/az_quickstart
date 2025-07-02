@@ -1,0 +1,8 @@
+admin:
+  css:
+    component:
+      css/media_library_edit.admin.css: {}
+  js:
+    js/media_library_edit.admin.js: {}
+  dependencies:
+    - media_library/ui

@@ -1,0 +1,21 @@
+/**
+ * @file
+ * Common optionset utilities.
+ */
+
+.js .form--optionset .vertical-tabs .vertical-tabs__item {
+  clear: none;
+}
+
+@media screen and (min-width: 760px) {
+
+  .form--optionset .vertical-tabs .b-nativegrid {
+    border: 0;
+  }
+
+  .form--optionset .details--settings > div,
+  .form--optionset .form-wrapper--responsive > div {
+    margin-right: 0;
+    margin-left: 0;
+  }
+}

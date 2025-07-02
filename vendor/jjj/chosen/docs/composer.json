@@ -1,0 +1,40 @@
+{
+  "name": "jjj/chosen",
+  "description": "Chosen is a JavaScript plugin that makes select boxes user-friendly. It is currently available in both jQuery and Prototype flavors.",
+  "authors": [
+    {
+      "name": "John James Jacoby",
+      "homepage": "https://github.com/jjj"
+    },
+    {
+      "name": "Patrick Filler",
+      "homepage": "https://github.com/pfiller"
+    },
+    {
+      "name": "Christophe Coevoet",
+      "homepage": "https://github.com/stof"
+    },
+    {
+      "name": "Ken Earley",
+      "homepage": "https://github.com/kenearley"
+    },
+    {
+      "name": "Koen Punt",
+      "homepage": "https://github.com/koenpunt"
+    }
+  ],
+  "keywords": [
+    "select",
+    "multiselect",
+    "dropdown",
+    "form",
+    "input",
+    "ui"
+  ],
+  "type": "npm-asset",
+  "license": "MIT",
+  "minimum-stability": "stable",
+  "homepage": "https://jjj.github.io/chosen/",
+  "require": {
+  }
+}

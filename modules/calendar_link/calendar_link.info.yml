@@ -1,0 +1,10 @@
+name: Calendar Link
+type: module
+description: Provides Twig functions for generating "add to calendar" links.
+core_version_requirement: ^9.5 || ^10 || ^11
+package: Content Display
+
+# Information added by Drupal.org packaging script on 2024-12-12
+version: '3.0.4'
+project: 'calendar_link'
+datestamp: 1734019915

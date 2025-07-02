@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - node.type.crop_responsive_example
+  module:
+    - text
+_core:
+  default_config_hash: DjJfib6fdXfFRDLrnEvx2rFI0cRsbGe4QIl8DR6nptc
+id: node.crop_responsive_example.body
+field_name: body
+entity_type: node
+bundle: crop_responsive_example
+label: Body
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: true
+field_type: text_with_summary

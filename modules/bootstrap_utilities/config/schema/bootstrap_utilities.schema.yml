@@ -1,0 +1,20 @@
+# Plugin \Drupal\bootstrap_utilities\Plugin\Filter\TableFilter
+filter_settings.bootstrap_utilities_table_filter:
+  type: mapping
+  label: 'Bootstrap Utilities TableFilter'
+  mapping:
+    table_remove_width_height:
+      type: boolean
+      label: 'Remove <code>width</code> and <code>height</code> attributes from table cells.'
+    table_row_striping:
+      type: boolean
+      label: 'Adds <code>.table-striped</code> to add zebra-striping to any table row within the <code>&lt;tbody&gt;</code>.'
+    table_bordered:
+      type: boolean
+      label: 'Remove <code>width</code> and <code>height</code> attributes from table cells'
+    table_row_hover:
+      type: boolean
+      label: 'Adds <code>.table-hover</code> to enable a hover state on table rows within a <code>&lt;tbody&gt;</code>.'
+    table_small:
+      type: boolean
+      label: 'Adds <code>.table-sm</code> to make tables more compact by cutting cell padding in half.'

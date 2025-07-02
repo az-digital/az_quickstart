@@ -1,0 +1,5 @@
+entity.config_split.add_form:
+  route_name: 'entity.config_split.add_form'
+  title: 'Add Configuration Split setting'
+  appears_on:
+    - entity.config_split.collection

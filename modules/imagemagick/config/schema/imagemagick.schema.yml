@@ -1,0 +1,57 @@
+# Imagemagick module schema
+
+# Schema for settings.
+imagemagick.settings:
+  type: config_object
+  label: 'Imagemagick settings'
+  mapping:
+    quality:
+      type: integer
+      label: 'Image quality'
+    binaries:
+      type: string
+      label: 'Graphics package - ImageMagick/GraphicsMagick'
+    imagemagick_version:
+      type: string
+      label: 'ImageMagick version'
+    path_to_binaries:
+      type: string
+      label: 'Path to the binaries'
+    prepend:
+      type: string
+      label: 'Prepend arguments'
+    log_warnings:
+      type: boolean
+      label: 'Log command executions returning with non-zero code'
+    debug:
+      type: boolean
+      label: 'Display debugging information'
+    image_formats:
+      type: sequence
+      sequence:
+        type: imagemagick.image_format
+    advanced:
+      type: mapping
+      label: 'Advanced settings'
+      mapping:
+        density:
+          type: integer
+          label: 'Image resolution'
+        colorspace:
+          type: string
+          label: 'Convert colorspace'
+        profile:
+          type: string
+          label: 'Color profile path'
+        coalesce:
+          type: boolean
+          label: 'Coalesce Animated GIF images'
+
+
+imagemagick.file_metadata_plugin.imagemagick_identify:
+  type: config_object
+  label: 'imagemagick_identify file metadata plugin settings'
+  mapping:
+    configuration:
+      type: file_mdm.plugin.configuration
+      label: 'imagemagick_identify plugin settings'

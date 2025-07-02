@@ -1,0 +1,155 @@
+/**
+ * @file
+ * Styles for Smart Date Recur management.
+ *
+ */
+/* Formatting for instance form */
+.smart-date-instance--cancelled {
+  text-decoration: line-through;
+}
+.smart-date-instance--rescheduled {
+  font-style: italic;
+}
+.smartdate--widget .repeat-end-date {
+  display: inline-block;
+  width: 11.5em;
+  vertical-align: baseline;
+}
+
+.smartdate--widget .repeat-text {
+  margin-top: 0.8em;
+}
+
+/* Smart Date Recur elements */
+.smartdate--widget .repeat--label {
+  display: inline-block;
+  margin-right: 0.3rem;
+}
+
+.field-interval--label {
+  display: inline-block;
+  width: auto;
+  margin: 0.75em 0.25em 0.75em 0;
+  padding-top: 0.85em;
+  text-align: right;
+}
+.field-interval--label.form-item__label {
+  display: inline-block;
+}
+.adminimal .field-interval--label {
+  padding-right: 0.3em;
+}
+
+.smartdate--widget .byday-checkboxes {
+  display: inline-block;
+}
+
+.smartdate--widget .byday-checkboxes legend {
+  float: left;
+  margin: 0.75em 0.75em 0.75em 0.1em;
+}
+
+/* Fix wrapping for Claro. */
+.smartdate--widget .byday-checkboxes .fieldset__label,
+.smartdate--widget .byday-checkboxes .fieldset__wrapper {
+  display: inline-block;
+}
+
+.smartdate--widget .byday-checkboxes input {
+  display: none;
+}
+
+.smartdate--widget .byday-checkboxes input ~ label.option {
+  position: relative;
+  top: -2px;
+  display: inline-block;
+  width: 1.7rem;
+  padding: 5px 0 0;
+  text-align: center;
+  vertical-align: -3px;
+  color: black;
+  border: 1px solid black;
+  border-radius: 50% 50%;
+  background: white;
+  font-size: 0;
+  line-height: 1rem;
+}
+
+.adminimal .smartdate--widget .byday-checkboxes input ~ label.option {
+  vertical-align: -2px;
+}
+
+.smartdate--widget .byday-checkboxes input ~ label.option::first-letter {
+  font-size: 1rem;
+}
+
+.smartdate--widget .byday-checkboxes input ~ label.option:hover {
+  background: #ddd;
+}
+
+.smartdate--widget .byday-checkboxes input:checked ~ label.option {
+  color: white;
+  border: 1px solid #ddd;
+  background: black;
+}
+
+input.smart-date--hours,
+input.smart-date--minutes {
+  width: 100%;
+  background-position-x: left;
+  background-size: 20% 100%;
+}
+
+input.smart-date--minutes {
+  background-size: 25% 100%;
+}
+
+fieldset.smart-date--hours .form-item,
+fieldset.smart-date--minutes .form-item {
+  position: relative;
+  padding-right: 0.5rem;
+}
+
+fieldset.smart-date--hours .form-checkboxes .form-item label,
+fieldset.smart-date--minutes .form-checkboxes .form-item label {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+fieldset.smart-date--hours .form-checkboxes .form-item label.form-item__label,
+fieldset.smart-date--minutes .form-checkboxes .form-item label.form-item__label {
+  right: 2.5rem;
+}
+
+fieldset.smart-date--hours .form-boolean--type-checkbox:checked ~ label,
+fieldset.smart-date--minutes .form-boolean--type-checkbox:checked ~ label {
+  color: white;
+}
+
+.smart-date--hours .form-checkboxes .form-item {
+  float: left;
+  width: 14%;
+  min-width: 3rem;
+  margin-left: 0;
+}
+
+.smart-date--hours .form-checkboxes,
+.smart-date--minutes .form-checkboxes {
+  margin: 1rem 0.5rem 1rem 1.5rem;
+}
+
+.smart-date--hours .description,
+.smart-date--hours .fieldset__description,
+.smart-date--minutes .description,
+.smart-date--minutes .fieldset__description {
+  clear: both;
+  padding-top: 1rem;
+}
+
+.smart-date--minutes .form-checkboxes .form-item {
+  float: left;
+  width: 8.3%;
+  min-width: 2.5rem;
+  margin-left: 0;
+}

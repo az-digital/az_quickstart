@@ -1,0 +1,45 @@
+{
+  "name": "drupal/schema_metatag",
+  "description": "Metatag implementation of Schema.org structured data (JSON-LD)",
+  "license": "GPL-2.0-or-later",
+  "type": "drupal-module",
+  "keywords": [
+    "Drupal"
+  ],
+  "homepage": "https://www.drupal.org/project/schema_metatag",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/schema_metatag",
+    "source": "https://git.drupalcode.org/project/schema_metatag"
+  },
+  "require": {
+    "php": ">=8.0",
+    "drupal/core": "^9 || ^10 || ^11",
+    "drupal/metatag": "^2.0"
+  },
+  "require-dev": {
+    "drupal/coder": "^8.3",
+    "ergebnis/composer-normalize": "*",
+    "mpyw/phpunit-patch-serializable-comparison": "*",
+    "phpcompatibility/php-compatibility": "^9.3"
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://packages.drupal.org/8"
+    }
+  ],
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    },
+    "sort-packages": true
+  },
+  "extra": {
+    "composer-normalize": {
+      "indent-size": 2,
+      "indent-style": "space"
+    }
+  }
+}

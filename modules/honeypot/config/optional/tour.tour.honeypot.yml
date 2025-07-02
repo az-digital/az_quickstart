@@ -1,0 +1,62 @@
+id: honeypot
+module: honeypot
+label: Honeypot
+langcode: en
+routes:
+  - route_name: honeypot.config
+tips:
+  honeypot-configuration:
+    id: honeypot-configuration
+    plugin: text
+    label: Honeypot
+    weight: 1
+    body: "<p>Congratulations on installing Honeypot on your site! With just a few clicks, you can have your site well-protected against automated spam bots.</p><p>Click 'Next' to be guided through this configuration page.</p>"
+    position: top-start
+  protect-all-forms:
+    id: protect-all-forms
+    plugin: text
+    label: Protect all forms
+    weight: 2
+    selector: '#edit-protect-all-forms'
+    body: "<p>Protecting all the forms is the easiest way to quickly cut down on spam on your site, but doing this disables Drupal's caching for every page where a form is displayed.</p><p>Note: If you have the Honeypot time limit enabled, this option may cause issues with Drupal Commerce product forms or similarly-sparse forms that are able to be completed in a very short time.</p>"
+    position: bottom-start
+  log-blocked-form-submissions:
+    id: log-blocked-form-submissions
+    plugin: text
+    label: Log blocked form submissions
+    weight: 3
+    selector: '#edit-log'
+    body: '<p>Check this box to log every form submission using the Drupal database logger. You may view these log entries on the <a href="[site:url]admin/reports/dblog">Recent log messages</a> page.</p>'
+    position: bottom-start
+  honeypot-element-name:
+    id: honeypot-element-name
+    plugin: text
+    label: Honeypot Element Name
+    weight: 4
+    selector: '#edit-element-name'
+    body: Spam bots typically fill out any field they believe will help get links back to their site, so tempting them with a field named something like 'url', 'homepage', or 'link' makes it hard for them to resist filling in the field—and easy to catch them in the trap and reject their submissions!
+    position: top-start
+  honeypot-time-limit:
+    id: honeypot-time-limit
+    plugin: text
+    label: Honeypot Time Limit
+    weight: 5
+    selector: '#edit-time-limit'
+    body: If you enter a positive value, Honeypot will require that all protected forms take at least that many seconds to fill out. Most forms take at least 5-10 seconds to complete (if you're a human), so setting this to a value of 5 or more will help protect against spam bots. Set to 0 to disable.
+    position: top-start
+  honeypot-expire:
+    id: honeypot-expire
+    plugin: text
+    label: Honeypot Expire
+    weight: 6
+    selector: '#edit-expire'
+    body: "<p>Honeypot saves a record of failed form submissions for each user, including the time when the failure occurred. You may think of this variable as a look-back window, where Honeypot will look-back over the previous 'expire' seconds to determine how many failed submissions a user has made. Multiple failures within this window will increase the 'Honeypot Time Limit' for the user - the more failures, the longer the user must wait to try again. This increase is exponential; the first failure adds two seconds, the second adds 4 seconds, the third adds 8 seconds, etc. In no case will the time limit be increased to more than 'expire' seconds.</p><p>Failures older than (current time - 'expire') will be automatically deleted from the database. Entries are deleted by cron, so you must have <a href=\"[site:url]admin/config/system/cron\">cron configured</a> on your server.</p>"
+    position: top-start
+  honeypot-form-specific-settings:
+    id: honeypot-form-specific-settings
+    plugin: text
+    label: Honeypot form-specific settings
+    weight: 7
+    selector: '#edit-form-settings'
+    body: If you would like to choose particular forms to be protected by Honeypot, check the forms you wish to protect in this section. Most common types of forms are available for protection.
+    position: top-start

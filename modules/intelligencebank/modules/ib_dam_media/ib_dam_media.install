@@ -1,0 +1,61 @@
+<?php
+
+/**
+ * @file
+ * Contains install/uninstall hooks.
+ */
+
+/**
+ * Update existing embedded field structures.
+ */
+function ib_dam_media_update_8601() {
+  static $type       = 'ib_dam_embed';
+  static $field_name = 'field_media_ib_dam_embed';
+  /** @var \Drupal\media\MediaInterface[] $medias */
+  $medias = \Drupal::entityTypeManager()
+    ->getStorage('media')
+    ->loadByProperties(['bundle' => $type]);
+
+  if (empty($medias)) {
+    return t('No items found to update');
+  }
+  $updated_count = 0;
+
+  foreach ($medias as $media) {
+    $need_upd = FALSE;
+
+    if (!$media->hasField($field_name)) {
+      continue;
+    }
+    $field = $media->get($field_name);
+    if ($field->isEmpty()) {
+      continue;
+    }
+
+    $fix_value_cb = function (&$value, $index) use (&$field, &$need_upd) {
+      $options =& $value['options'];
+
+      foreach (['asset_type', 'filemimetype'] as $name) {
+        if (!isset($options[$name])) {
+          continue;
+        }
+        $need_upd ?: $need_upd = TRUE;
+        $options['attributes']['ib_dam'][$name] = $options[$name];
+        unset($options[$name]);
+      }
+
+      $field->set($index, $value);
+    };
+
+    array_walk($field->getValue(), $fix_value_cb);
+
+    if ($need_upd) {
+      $media->save();
+      $updated_count++;
+    }
+  }
+
+  return $updated_count > 0
+    ? t('Successfully updated @count embed media items', ['@count' => $updated_count])
+    : t('No items found to update');
+}

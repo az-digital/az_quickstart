@@ -1,0 +1,25 @@
+smart_date:
+  version: 1.x
+  css:
+    component:
+      css/smart_date.css: {}
+  js:
+    js/smart_date.js: {}
+  dependencies:
+    - core/drupal
+date_only:
+  version: 1.x
+  css:
+    component:
+      css/smart_date.css: {}
+  js:
+    js/date_only.js: {}
+  dependencies:
+    - core/drupal
+localize:
+  version: 1.x
+  js:
+    js/localize.js: {}
+  dependencies:
+    - core/drupal
+    - core/once

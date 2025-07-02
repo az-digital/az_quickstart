@@ -1,0 +1,14 @@
+langcode: en
+status: true
+dependencies: {  }
+id: time_only
+label: 'Time Only'
+date_format: ''
+time_format: 'g:ia'
+time_hour_format: 'g:ia'
+allday_label: 'All day'
+separator: ' - '
+join: ', '
+ampm_reduce: '1'
+date_first: '1'
+site_time_toggle: '1'

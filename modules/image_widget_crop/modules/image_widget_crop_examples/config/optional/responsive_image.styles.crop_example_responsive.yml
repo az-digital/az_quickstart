@@ -1,0 +1,31 @@
+langcode: en
+status: true
+dependencies:
+  config:
+  - image.style.medium_4_3
+  - image.style.medium_crop_simple
+  - image.style.small_16_9
+  theme:
+  - bartik
+_core:
+  default_config_hash: S2jUhX8LrpJpUAeqX4TH5LvSG8AXgX-dTVKMjtuEaqg
+id: crop_example_responsive
+label: 'Crop example responsive'
+image_style_mappings:
+-
+  breakpoint_id: bartik.wide
+  multiplier: 1x
+  image_mapping_type: image_style
+  image_mapping: small_16_9
+-
+  breakpoint_id: bartik.narrow
+  multiplier: 1x
+  image_mapping_type: image_style
+  image_mapping: medium_crop_simple
+-
+  breakpoint_id: bartik.mobile
+  multiplier: 1x
+  image_mapping_type: image_style
+  image_mapping: medium_4_3
+breakpoint_group: bartik
+fallback_image_style: small_16_9

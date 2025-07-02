@@ -1,0 +1,12 @@
+{
+    "require": {
+        "doctrine/collections": {
+            "version": "1.6.8",
+            "url": "https://github.com/doctrine/collections/archive/1.6.8.zip"
+        },
+        "simshaun/recurr": {
+            "version": "v4.0.5",
+            "url": "https://github.com/simshaun/recurr/archive/v4.0.5.zip"
+        }
+    }
+}

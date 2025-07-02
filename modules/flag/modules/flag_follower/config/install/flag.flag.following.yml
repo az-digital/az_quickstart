@@ -1,0 +1,31 @@
+uuid: b3a4f08c-726a-4729-99db-b6c8ec586c48
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - flag_follower
+  module:
+    - user
+id: following
+label: Following
+bundles: {  }
+entity_type: user
+global: false
+weight: 0
+flag_short: 'Follow this user'
+flag_long: 'Click the link to follow this user'
+flag_message: 'You are following the user'
+unflag_short: 'Unfollow this user'
+unflag_long: 'Click the link to unfollow this user'
+unflag_message: 'You have unfollowed the user'
+unflag_denied_text: ''
+flag_type: 'entity:user'
+link_type: ajax_link
+flagTypeConfig:
+  show_in_links: {  }
+  show_as_field: true
+  show_on_form: false
+  show_contextual_link: false
+  show_on_profile: false
+linkTypeConfig: {  }

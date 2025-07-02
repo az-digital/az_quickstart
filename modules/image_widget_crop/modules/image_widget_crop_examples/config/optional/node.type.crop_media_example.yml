@@ -1,0 +1,18 @@
+uuid: d40ac9d1-80c1-4c3c-a47e-0fa9e2c353a3
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+name: 'Crop Media Example'
+type: crop_media_example
+description: 'Implementation of ImageWidgetCrop with media integration.'
+help: ''
+new_revision: false
+preview_mode: 1
+display_submitted: true

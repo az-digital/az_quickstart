@@ -1,0 +1,10 @@
+services:
+  plugin.manager.migrate_plus.authentication:
+    class: Drupal\migrate_plus\AuthenticationPluginManager
+    parent: default_plugin_manager
+  plugin.manager.migrate_plus.data_fetcher:
+    class: Drupal\migrate_plus\DataFetcherPluginManager
+    parent: default_plugin_manager
+  plugin.manager.migrate_plus.data_parser:
+    class: Drupal\migrate_plus\DataParserPluginManager
+    parent: default_plugin_manager

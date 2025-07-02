@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - crop
+_core:
+  default_config_hash: tJnSf-Bg15BdKFz5sAoCZc30IhIbjYQNIGnJiwY4v-o
+name: small_16_9
+label: 'Small - (320 x 180) with crop 16:9'
+effects:
+  34de3df0-ac18-45c0-9b01-1e9c94a263c4:
+    uuid: 34de3df0-ac18-45c0-9b01-1e9c94a263c4
+    id: image_resize
+    weight: 4
+    data:
+      width: 320
+      height: 180
+  0f030da1-bfb4-4bc3-8200-cf9d67041f08:
+    uuid: 0f030da1-bfb4-4bc3-8200-cf9d67041f08
+    id: crop_crop
+    weight: 3
+    data:
+      crop_type: crop_16_9

@@ -1,0 +1,164 @@
+seckit.settings:
+  type: config_object
+  label: 'SecKit settings'
+  mapping:
+    seckit_xss:
+      type: mapping
+      label: 'XSS'
+      mapping:
+        csp:
+          type: mapping
+          label: 'CSP'
+          mapping:
+            checkbox:
+              type: boolean
+              label: 'Send HTTP response header'
+            vendor-prefix:
+              type: mapping
+              label: 'Vendor prefixed CSP headers'
+              mapping:
+                x:
+                  type: boolean
+                  label: 'Send X-Content-Security-Policy HTTP response header'
+                webkit:
+                  type: boolean
+                  label: 'Send X-WebKit-CSP HTTP response header'
+            report-only:
+              type: boolean
+              label: 'Report only'
+            default-src:
+              type: string
+              label: 'Default src'
+            script-src:
+              type: string
+              label: 'Script src'
+            object-src:
+              type: string
+              label: 'Object src'
+            style-src:
+              type: string
+              label: 'Style src'
+            img-src:
+              type: string
+              label: 'Image src'
+            media-src:
+              type: string
+              label: 'Media src'
+            frame-src:
+              type: string
+              label: 'Frame src'
+            frame-ancestors:
+              type: string
+              label: 'Frame ancestors'
+            child-src:
+              type: string
+              label: 'Child src'
+            font-src:
+              type: string
+              label: 'Font src'
+            connect-src:
+              type: string
+              label: 'Connect src'
+            report-uri:
+              type: string
+              label: 'Report URI'
+            upgrade-req:
+              type: boolean
+              label: 'Upgrade Insecure Requests'
+            policy-uri:
+              type: string
+              label: 'Policy URI'
+        x_xss:
+          type: mapping
+          label: 'X-XSS'
+          mapping:
+            select:
+              type: integer
+              label: 'Select'
+    seckit_csrf:
+      type: mapping
+      label: 'CSRF'
+      mapping:
+        origin:
+          type: boolean
+          label: 'Origin'
+        origin_whitelist:
+          type: string
+          label: 'Origin whitelist'
+    seckit_clickjacking:
+      type: mapping
+      label: 'Clickjacking'
+      mapping:
+        js_css_noscript:
+          type: boolean
+          label: 'Enable JavaScript + CSS + Noscript protection'
+        noscript_message:
+          type: string
+          label: 'Custom text for disabled JavaScript message'
+        x_frame:
+          type: string
+          label: 'X-Frame'
+        x_frame_allow_from:
+          type: string
+          label: 'X-Frame-ALLOW-FROM'
+    seckit_ssl:
+      type: mapping
+      label: 'HTTP Strict Transport Security'
+      mapping:
+        hsts:
+          type: boolean
+          label: 'Enable HTTP String Transport Security'
+        hsts_subdomains:
+          type: boolean
+          label: 'Include subdomains'
+        hsts_max_age:
+          type: integer
+          label: 'Max-Age'
+        hsts_preload:
+          type: boolean
+          label: 'HSTS Preload'
+    seckit_ct:
+      type: mapping
+      label: 'Expect-CT'
+      mapping:
+        expect_ct:
+          type: boolean
+          label: 'Expect-CT'
+        max_age:
+          type: integer
+          label: 'Max-Age'
+        report_uri:
+          type: string
+          label: 'Report uri'
+        enforce:
+          type: boolean
+          label: 'Enforce'
+    seckit_fp:
+      type: mapping
+      label: 'Feature policy'
+      mapping:
+        feature_policy:
+          type: boolean
+          label: 'Feature policy'
+        feature_policy_policy:
+          type: string
+          label: 'Policy'
+    seckit_various:
+      type: mapping
+      label: 'Various'
+      mapping:
+        from_origin:
+          type: boolean
+          label: 'From-Origin'
+        from_origin_destination:
+          type: string
+          label: 'Allow loading content to'
+        referrer_policy:
+          type: boolean
+          label: 'Referrer-Policy'
+        referrer_policy_policy:
+          type: string
+          label: 'Select policy'
+        disable_autocomplete:
+          type: boolean
+          label: 'Disable autocomplete'

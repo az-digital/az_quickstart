@@ -1,0 +1,132 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the Webform scheduled email module.
+ */
+
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\webform\Entity\Webform;
+
+// Webform install helper functions.
+include_once __DIR__ . '/../../includes/webform.install.inc';
+
+/**
+ * Implements hook_schema().
+ */
+function webform_scheduled_email_schema() {
+  $schema['webform_scheduled_email'] = [
+    'description' => 'Table that contains Webform scheduled emails.',
+    'fields' => [
+      'eid' => [
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Primary Key: Scheduled email ID.',
+      ],
+      'webform_id' => [
+        'description' => 'The webform id.',
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+      ],
+      'entity_type' => [
+        'description' => 'The entity type to which this submission was submitted from.',
+        'type' => 'varchar',
+        'length' => EntityTypeInterface::ID_MAX_LENGTH,
+        'not null' => FALSE,
+      ],
+      'entity_id' => [
+        'description' => 'The ID of the entity of which this webform submission was submitted from.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+      ],
+      'sid' => [
+        'description' => 'The webform submission id.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'handler_id' => [
+        'description' => 'The webform handler id.',
+        'type' => 'varchar',
+        'length' => 64,
+        'not null' => FALSE,
+      ],
+      'state' => [
+        'description' => 'The state of the scheduled email. (schedule, reschedule, unschedule, or send)',
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => FALSE,
+      ],
+      'send' => [
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'Unix timestamp of when email should be sent.',
+      ],
+    ],
+    'primary key' => ['eid'],
+    'indexes' => [
+      'webform_id' => ['webform_id'],
+      'sid' => ['sid'],
+      'scheduled' => ['webform_id', 'handler_id', 'send'],
+    ],
+  ];
+  return $schema;
+}
+
+/**
+ * Update schema config to add new "past actions" item.
+ */
+function webform_scheduled_email_update_8001() {
+  _webform_update_webform_handler_settings();
+}
+
+/**
+ * Issue #3013016: Set a time for the schedule email handler.
+ */
+function webform_scheduled_email_update_8002() {
+  \Drupal::configFactory()
+    ->getEditable('webform_scheduled_email.settings')
+    ->set('schedule_type', 'date')
+    ->save();
+}
+
+/**
+ * Issue #3014338: Add a setting to the Scheduled Email handler to allows emails to be sent immediately when a webform is being tested.
+ */
+function webform_scheduled_email_update_8003() {
+  _webform_update_webform_handler_settings();
+}
+
+/**
+ * Issue #3259195: Removes scheduled_email tasks from deleted handlers.
+ */
+function webform_scheduled_email_update_8004() {
+  // Getting all scheduled emails.
+  $result = \Drupal::database()->select('webform_scheduled_email', 'w')
+    ->fields('w', ['eid', 'webform_id', 'handler_id'])
+    ->execute();
+
+  while ($record = $result->fetchAssoc()) {
+    $webform = Webform::load($record['webform_id']);
+    // If the webform does not exist, remove the webform's scheduled emails.
+    if (!$webform) {
+      \Drupal::database()->delete('webform_scheduled_email')
+        ->condition('webform_id', $record['webform_id'])
+        ->execute();
+      return;
+    }
+
+    // If the webform handler does not exist, remove the webform
+    // handler's scheduled emails.
+    $handlers = $webform->getHandlers();
+    if (!$handlers->has($record['handler_id'])) {
+      \Drupal::database()->delete('webform_scheduled_email')
+        ->condition('webform_id', $record['webform_id'])
+        ->condition('handler_id', $record['handler_id'])
+        ->execute();
+    }
+  }
+}

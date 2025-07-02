@@ -1,0 +1,9 @@
+/**
+ * @file
+ * Date element styles.
+ */
+
+.form-item.form-type-datetime .container-inline,
+.form-item.form-type-datelist .container-inline {
+  display: inline-block;
+}

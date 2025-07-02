@@ -1,0 +1,32 @@
+<?php
+
+/**
+ * @file
+ * Support module for webform cards testing.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function webform_cards_test_theme() {
+  $info = [
+    'webform_progress__test_cards_progress_custom' => [
+      'variables' => [
+        'webform' => NULL,
+        'webform_submission' => NULL,
+        'current_page' => NULL,
+        'operation' => NULL,
+        'pages' => [],
+      ],
+    ],
+  ];
+  return $info;
+}
+
+/**
+ * Prepares variables for webform 'wizard' progress templates.
+ */
+function template_preprocess_webform_progress__test_cards_progress_custom(array &$variables) {
+  template_preprocess_webform_progress($variables);
+  _template_preprocess_webform_progress($variables);
+}

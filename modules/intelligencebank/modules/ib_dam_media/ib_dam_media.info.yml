@@ -1,0 +1,16 @@
+name: 'IB: Media integration'
+description: 'Integrates the Media module ecosystem with IntelligenceBank DAM'
+core_version_requirement: ^10.3 || ^11
+type: module
+package: 'IntelligenceBank DAM'
+configure: ib_dam_media.configuration_form
+dependencies:
+  - drupal:link
+  - drupal:media
+  - drupal:media_library
+  - ib_dam:ib_dam
+
+# Information added by Drupal.org packaging script on 2024-10-29
+version: '5.1.0'
+project: 'intelligencebank'
+datestamp: 1730244850

@@ -1,0 +1,15 @@
+entity.smart_date_format.canonical:
+  route_name: entity.smart_date_format.canonical
+  base_route: entity.smart_date_format.canonical
+  title: 'View'
+
+entity.smart_date_format.edit_form:
+  route_name: entity.smart_date_format.edit_form
+  base_route: entity.smart_date_format.canonical
+  title: 'Edit'
+
+entity.smart_date_format.delete_form:
+  route_name:  entity.smart_date_format.delete_form
+  base_route:  entity.smart_date_format.canonical
+  title: Delete
+  weight: 10

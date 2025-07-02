@@ -1,0 +1,47 @@
+services:
+  php:
+    # Specify the version of Drupal you wish to use for Tugboat below.
+    image: tugboatqa/drupal:11
+    default: true
+    http: false
+    depends: mysql
+    commands:
+      update: |
+        set -eux
+        # This is an environment variable we added in the Dockerfile that
+        # provides the path to Drupal composer root (not the web root).
+        cd $DRUPAL_COMPOSER_ROOT
+        # We need to change the minimum stability to dev to use the path
+        composer config minimum-stability dev
+        # We configure the Drupal project to use the checkout of the module as a
+        # Composer package repository.
+        composer config repositories.tugboat path $TUGBOAT_ROOT
+        # Now we can require this module
+        composer require drupal/workbench_access
+        # Install Drupal on the site.
+        vendor/bin/drush \
+          --yes \
+          --db-url=mysql://tugboat:tugboat@mysql:3306/tugboat \
+          --site-name="Live preview for ${TUGBOAT_PREVIEW_NAME}" \
+          --account-pass=admin \
+          site:install standard
+        # Add tugboat URLs to the Drupal trusted host patterns.
+        echo "\$settings['trusted_host_patterns'] = ['\.tugboatqa\.com\$'];" >> $DOCROOT/sites/default/settings.php
+        # Set up the files directory permissions.
+        mkdir -p $DRUPAL_DOCROOT/sites/default/files
+        chgrp -R www-data $DRUPAL_DOCROOT/sites/default/files
+        chmod 2775 $DRUPAL_DOCROOT/sites/default/files
+        chmod -R g+w $DRUPAL_DOCROOT/sites/default/files
+        # Enable the module.
+        vendor/bin/drush --yes pm:enable workbench_access
+      build: |
+        set -eux
+        cd $DRUPAL_COMPOSER_ROOT
+        composer install --optimize-autoloader
+        # Update this module, including all dependencies.
+        composer update drupal/workbench_access --with-all-dependencies
+        vendor/bin/drush --yes updb
+        vendor/bin/drush cache:rebuild
+        vendor/bin/drush wa-test
+  mysql:
+    image: tugboatqa/mariadb

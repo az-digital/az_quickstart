@@ -1,0 +1,9 @@
+name: 'Migrate Magician Predictable UUID'
+description: 'Provides flexible, predictable UUIDs in tests'
+type: module
+package: Testing
+
+# Information added by Drupal.org packaging script on 2025-04-04
+version: '1.8.3'
+project: 'migmag'
+datestamp: 1743751426

@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - comment.type.migrate_example_advanced_comment
+    - field.field.comment.migrate_example_advanced_comment.comment_body
+  module:
+    - text
+id: comment.migrate_example_advanced_comment.default
+targetEntityType: comment
+bundle: migrate_example_advanced_comment
+mode: default
+content:
+  comment_body:
+    label: hidden
+    type: text_default
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+  links:
+    weight: 100
+hidden: {  }

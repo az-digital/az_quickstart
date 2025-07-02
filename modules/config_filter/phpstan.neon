@@ -1,0 +1,12 @@
+parameters:
+  level: 5
+  customRulesetUsed: true
+  reportUnmatchedIgnoredErrors: false
+  ignoreErrors:
+    # One day we might get rid of this drupal pattern
+    - '#^Unsafe usage of new static\(\)\.#'
+    - '#^Method (.*) should return \$this\((.*)\) but returns static\(#'
+    - '#^Call to an undefined method Prophecy\\Prophecy\\ObjectProphecy#'
+  paths:
+    - src
+    - tests

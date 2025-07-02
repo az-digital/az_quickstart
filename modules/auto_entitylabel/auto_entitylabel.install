@@ -1,0 +1,161 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the Automatic Entity Labels.
+ */
+
+use Drupal\auto_entitylabel\AutoEntityLabelManager;
+
+/**
+ * Implements hook_install().
+ */
+function auto_entitylabel_install() {
+  module_set_weight('auto_entitylabel', -100);
+}
+
+/**
+ * Implements hook_update_N().
+ */
+function auto_entitylabel_update_8001() {
+  $config = \Drupal::configFactory()->getEditable('auto_entitylabel.settings');
+  foreach (['submit', 'form_build_id', 'form_token', 'form_id', 'op'] as $key) {
+    if ($config->get($key)) {
+      $config->clear($key);
+    }
+  }
+  $config->save();
+}
+
+/**
+ * Split a single configuration into separate configs.
+ */
+function auto_entitylabel_update_8201() {
+  /** @var \Drupal\Core\Entity\EntityTypeManager $entity_type_manager */
+  $entity_type_manager = \Drupal::entityTypeManager();
+
+  /** @var \Drupal\Core\Config\Config $old_config */
+  $old_config = \Drupal::configFactory()
+    ->getEditable('auto_entitylabel.settings');
+  $raw = $old_config->getRawData();
+
+  $entity_types = [];
+  /** @var \Drupal\Core\Config\Entity\ConfigEntityType $entity_type */
+  foreach ($entity_type_manager->getDefinitions() as $entity_type_id => $entity_type) {
+    if ($entity_type->getLinkTemplate('auto-label')) {
+      $entity_types[] = $entity_type_id;
+    }
+  }
+
+  $setting_keys = ['status', 'pattern', 'php', 'escape'];
+
+  $new_configs = [];
+  foreach ($raw as $key => $value) {
+    foreach ($entity_types as $type_id) {
+      if (strpos($key, $type_id) === 0) {
+
+        $key = substr($key, strlen($type_id) + 1);
+
+        foreach ($setting_keys as $setting) {
+          if (strpos($key, $setting) == strlen($key) - strlen($setting)) {
+            $bundle = substr($key, 0, strlen($key) - strlen($setting) - 1);
+            $new_configs[$type_id][$bundle][$setting] = $value;
+          }
+        }
+
+        continue;
+      }
+    }
+  }
+
+  /** @var \Drupal\Core\Config\ConfigFactory $config_interface */
+  $config_interface = \Drupal::service('config.factory');
+
+  foreach ($new_configs as $type => $type_configs) {
+    /** @var \Drupal\Core\Config\Entity\ConfigEntityTypeInterface $entityType */
+    $entityType = $entity_type_manager->getStorage($type)->getEntityType();
+    $prefix = $entityType->getConfigPrefix();
+    $type = $entity_type_manager->getStorage($type)->getEntityType()->getProvider();
+
+    foreach ($type_configs as $bundle => $settings) {
+      $config_name = "auto_entitylabel.settings.$type.$bundle";
+      $config = $config_interface->getEditable($config_name);
+
+      $config->setData($settings);
+      $config->set('dependencies', ['config' => ["$prefix.$bundle"]]);
+
+      $config->save();
+    }
+  }
+  $old_config->delete();
+}
+
+/**
+ * Sets the new "New content behavior" config option.
+ *
+ * All existing configurations using "Create label after first save" as the
+ * initial value, which preserves the old logic, that content is saved twice,
+ * (which may interfere with other modules, but all tokens are supported).
+ * NOTE, if you desire to switch to the new logic, which creates the label
+ * before saving the content (doesn't interfere with other modules, but not
+ * all tokens are supported), set the "New content behavior" to
+ * "Create label before first save" in your "automatic label" settings.
+ */
+function auto_entitylabel_update_8202() {
+  /** @var \Drupal\Core\Entity\EntityTypeManager $entity_type_manager */
+  $entity_type_manager = \Drupal::entityTypeManager();
+
+  $entity_types = [];
+  /** @var \Drupal\Core\Config\Entity\ConfigEntityType $entity_type */
+  foreach ($entity_type_manager->getDefinitions() as $entity_type_id => $entity_type) {
+    if ($entity_type->getLinkTemplate('auto-label')) {
+      $entity_types[] = $entity_type_id;
+    }
+  }
+
+  $bundleService = \Drupal::service('entity_type.bundle.info');
+
+  /** @var \Drupal\Core\Config\ConfigFactory $config_interface */
+  $config_interface = \Drupal::service('config.factory');
+  $existingConfigs = $config_interface->listAll('auto_entitylabel.settings');
+
+  foreach ($entity_types as $type_id) {
+    $type = $entity_type_manager->getStorage($type_id)->getEntityType()->getProvider();
+
+    // Special handling for paragraphs because the module had to
+    // be different.
+    if ($type == 'paragraphs') {
+      $type = 'paragraph';
+    }
+
+    $bundles = array_keys($bundleService->getBundleInfo($type));
+
+    foreach ($bundles as $bundle) {
+      $config_name = "auto_entitylabel.settings.$type.$bundle";
+
+      if (in_array($config_name, $existingConfigs)) {
+        $config = $config_interface->getEditable($config_name);
+        // There are two values for the new entity action: 0 means
+        // set the label before first save, 1 means after first
+        // save. Preserve the previous behavior and default to
+        // after first save.
+        $config->set('new_content_behavior', AutoEntityLabelManager::AFTER_SAVE);
+        $config->save();
+      }
+    }
+  }
+}
+
+/**
+ * Lower module weight so to run before other modules.
+ */
+function auto_entitylabel_update_8301(&$sandbox) {
+  module_set_weight('auto_entitylabel', -100);
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function auto_entitylabel_uninstall() {
+  \Drupal::configFactory()->getEditable('auto_entitylabel.settings')->delete();
+}

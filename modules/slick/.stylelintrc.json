@@ -1,0 +1,6 @@
+{
+  "extends": "../blazy/.stylelintrc.json",
+  "rules": {
+    "prettier/prettier": 0
+  },
+}

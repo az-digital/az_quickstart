@@ -1,0 +1,115 @@
+field_group.field_group_formatter_plugin.details:
+  type: field_group.field_group_formatter_plugin.base
+  label: 'Mapping for the details formatter settings'
+  mapping:
+    open:
+      type: boolean
+      label: 'Display element open by default.'
+    description:
+      type: text
+      label: 'Description of the element'
+    required_fields:
+      type: boolean
+      label: 'Mark for required fields'
+
+field_group.field_group_formatter_plugin.details_sidebar:
+  type: field_group.field_group_formatter_plugin.details
+  label: 'Mapping for the details sidebar formatter settings'
+  mapping:
+    weight:
+      type: integer
+      label: 'Weight'
+
+field_group.field_group_formatter_plugin.fieldset:
+  type: field_group.field_group_formatter_plugin.base
+  label: 'Mapping for the fieldset formatter settings'
+  mapping:
+    description:
+      type: text
+      label: 'Description of the item'
+    required_fields:
+      type: boolean
+      label: 'Mark for required fields'
+
+field_group.field_group_formatter_plugin.html_element:
+  type: field_group.field_group_formatter_plugin.base
+  label: 'Mapping for the html element formatter settings'
+  mapping:
+    element:
+      type: string
+      label: 'html element tag to be used'
+    show_label:
+      type: boolean
+      label: 'show the label'
+    label_element:
+      type: string
+      label: 'html element tag to be used for the label'
+    label_element_classes:
+      type: string
+      label: 'html classes to be used for the label'
+    attributes:
+      type: string
+      label: 'html attributes for the element'
+    effect:
+      type: string
+      label: 'effect on the element'
+    speed:
+      type: string
+      label: 'speed of the effect'
+    required_fields:
+      type: boolean
+      label: 'Mark for required fields'
+
+field_group.field_group_formatter_plugin.tab:
+  type: field_group.field_group_formatter_plugin.base
+  label: 'Mapping for the tab formatter settings'
+  mapping:
+    formatter:
+      type: string
+      label: 'default state for the tab'
+    description:
+      type: text
+      label: 'Description of the tab'
+    required_fields:
+      type: boolean
+      label: 'Mark for required fields'
+
+field_group.field_group_formatter_plugin.tabs:
+  type: field_group.field_group_formatter_plugin.base
+  label: 'Mapping for the tab formatter settings'
+  mapping:
+    formatter:
+      type: string
+      label: 'default state for the tabs'
+    description:
+      type: text
+      label: 'description of the tabs'
+    required_fields:
+      type: boolean
+      label: 'Mark for required fields'
+    direction:
+      type: string
+      label: 'Direction of the tabs'
+    width_breakpoint:
+      type: integer
+      label: 'Disable Tabs widget if the window width is equal or smaller'
+
+field_group.field_group_formatter_plugin.base:
+  type: mapping
+  label: 'Mapping for the base formatter settings'
+  mapping:
+    label:
+      type: label
+      label: 'Label of the fieldgroup'
+    classes:
+      type: string
+      label:  'Classes of the fieldgroup'
+    show_empty_fields:
+      type: boolean
+      label: 'Show Empty Fields'
+    id:
+      type: string
+      label: 'Html id of the fieldgroup'
+    label_as_html:
+      type: boolean
+      label: 'Output the label as html'

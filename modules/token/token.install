@@ -1,0 +1,162 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the token module.
+ */
+
+/**
+ * Implements hook_requirements().
+ */
+function token_requirements($phase = 'runtime') {
+  $requirements = [];
+
+  if ($phase == 'runtime') {
+    // Check for various token definition problems.
+    $token_problems = token_get_token_problems();
+    // Format and display each token problem.
+    foreach ($token_problems as $problem_key => $problem) {
+      if (!empty($problem['problems'])) {
+        $problems = array_unique($problem['problems']);
+
+        $build = [
+          '#theme' => 'item_list',
+          '#items' => $problems,
+        ];
+
+        $requirements['token-' . $problem_key] = [
+          'title' => $problem['label'],
+          'value' => \Drupal::service('renderer')->renderPlain($build),
+          'severity' => $problem['severity'],
+        ];
+      }
+    }
+  }
+
+  return $requirements;
+}
+
+/**
+ * Implements hook_install().
+ */
+function token_install() {
+  // Create a token view mode for each entity type.
+  $info = \Drupal::entityTypeManager()->getDefinitions();
+  foreach ($info as $entity_type => $entity_type_info) {
+    // We're only interested in entity types with a view builder.
+    if (!$entity_type_info->getViewBuilderClass()) {
+      continue;
+    }
+    // Try to find a token view mode for that entity type.
+    $storage = \Drupal::entityTypeManager()->getStorage('entity_view_mode');
+    // Add a token view mode if it does not already exist.
+    if (!$storage->load("$entity_type.token")) {
+      $storage->create([
+        'targetEntityType' => $entity_type,
+        'id' => "$entity_type.token",
+        'status' => TRUE,
+        'label' => t('Token'),
+      ])->save();
+    }
+  }
+}
+
+/**
+ * Get token problems.
+ */
+function token_get_token_problems() {
+  // @todo Improve the duplicate checking to report which modules are the offenders.
+  //$token_info = [];
+  //foreach (module_implements('token_info') as $module) {
+  //  $module_token_info = module_invoke($module, 'token_info');
+  //  if (in_array($module, _token_core_supported_modules())) {
+  //    $module .= '/token';
+  //  }
+  //  if (isset($module_token_info['types'])) {
+  //    if (is_array($module_token_info['types'])) {
+  //      foreach (array_keys($module_token_info['types']) as $type) {
+  //        if (is_array($module_token_info['types'][$type])) {
+  //          $module_token_info['types'][$type] += ['module' => $module];
+  //        }
+  //      }
+  //    }
+  //  }
+  //  if (isset($module_token_info['tokens'])) {
+  //    if (is_array($module_token_info['tokens'])) {
+  //
+  //    }
+  //  }
+  //  if (is_array($module_token_info)) {
+  //    $token_info = array_merge_recursive($token_info, $module_token_info);
+  //  }
+  //}
+
+  $token_info = \Drupal::token()->getInfo();
+  $token_problems = [
+    'not-array' => [
+      'label' => t('Tokens or token types not defined as arrays'),
+      'severity' => REQUIREMENT_ERROR,
+    ],
+    'missing-info' => [
+      'label' => t('Tokens or token types missing name property'),
+      'severity' => REQUIREMENT_WARNING,
+    ],
+    'type-no-tokens' => [
+      'label' => t('Token types do not have any tokens defined'),
+      'severity' => REQUIREMENT_INFO,
+    ],
+    'tokens-no-type' => [
+      'label' => t('Token types are not defined but have tokens'),
+      'severity' => REQUIREMENT_INFO,
+    ],
+    'duplicate' => [
+      'label' => t('Token or token types are defined by multiple modules'),
+      'severity' => REQUIREMENT_ERROR,
+    ],
+  ];
+
+  // Check token types for problems.
+  foreach ($token_info['types'] as $type => $type_info) {
+    $real_type = !empty($type_info['type']) ? $type_info['type'] : $type;
+    if (!is_array($type_info)) {
+      $token_problems['not-array']['problems'][] = "\$info['types']['$type']";
+      continue;
+    }
+    elseif (!isset($type_info['name'])) {
+      $token_problems['missing-info']['problems'][] = "\$info['types']['$type']";
+    }
+    elseif (is_array($type_info['name'])) {
+      $token_problems['duplicate']['problems'][] = "\$info['types']['$type']";
+    }
+    elseif (empty($token_info['tokens'][$real_type])) {
+      $token_problems['type-no-tokens']['problems'][] = "\$info['types']['$real_type']";
+    }
+  }
+
+  // Check tokens for problems.
+  foreach ($token_info['tokens'] as $type => $tokens) {
+    if (!is_array($tokens)) {
+      $token_problems['not-array']['problems'][] = "\$info['tokens']['$type']";
+      continue;
+    }
+    else {
+      foreach (array_keys($tokens) as $token) {
+        if (!is_array($tokens[$token])) {
+          $token_problems['not-array']['problems'][] = "\$info['tokens']['$type']['$token']";
+          continue;
+        }
+        elseif (!isset($tokens[$token]['name'])) {
+          $token_problems['missing-info']['problems'][] = "\$info['tokens']['$type']['$token']";
+        }
+        elseif (is_array($tokens[$token]['name'])) {
+          $token_problems['duplicate']['problems'][] = "\$info['tokens']['$type']['$token']";
+        }
+      }
+    }
+    if (!isset($token_info['types'][$type])) {
+      $token_problems['tokens-no-type']['problems'][] = "\$info['types']['$type']";
+    }
+  }
+
+  return $token_problems;
+}

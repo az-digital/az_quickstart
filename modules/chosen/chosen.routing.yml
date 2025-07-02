@@ -1,0 +1,7 @@
+chosen.admin:
+  path: 'admin/config/user-interface/chosen'
+  defaults:
+    _form: '\Drupal\chosen\Form\ChosenConfigForm'
+    _title: 'Chosen'
+  requirements:
+    _permission: 'administer site configuration'

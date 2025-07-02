@@ -1,0 +1,5 @@
+config-split-form:
+  version: 1.x
+  css:
+    component:
+      css/config_split_form.css: {}

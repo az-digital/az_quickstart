@@ -1,0 +1,36 @@
+# Schema for the Slick views style plugins.
+
+slick_extended_views:
+  type: slick_extended
+  label: 'Slick extended views settings'
+  mapping:
+    grouping:
+      type: sequence
+      label: 'Grouping field number %i'
+      sequence:
+        type: mapping
+        label: 'Field'
+        mapping:
+          field:
+            type: string
+            label: 'Field'
+          rendered:
+            type: boolean
+            label: 'Use rendered output to group rows'
+          rendered_strip:
+            type: boolean
+            label: 'Remove tags from rendered output'
+    grouping_limit:
+      type: integer
+      label: 'Grouping limit'
+    grouping_optionset:
+      type: string
+      label: 'Grouping optionset'
+
+views.style.slick:
+  type: slick_extended_views
+  label: 'Slick Carousel'
+
+views.style.slick_grouping:
+  type: slick_extended_views
+  label: 'Slick Grouping'

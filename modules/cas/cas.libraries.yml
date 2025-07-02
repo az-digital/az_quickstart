@@ -1,0 +1,6 @@
+client_side_gateway_redirect:
+  js:
+    js/cas-client-side-gateway-redirect.js: {}
+  dependencies:
+    - core/js-cookie
+    - core/drupalSettings

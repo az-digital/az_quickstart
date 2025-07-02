@@ -1,0 +1,6 @@
+entity.google_tag_container.add_form:
+  route_name: entity.google_tag_container.add_form
+  title: 'Add measurement container'
+  appears_on:
+    - entity.google_tag_container.collection
+    - google_tag.settings_form

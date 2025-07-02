@@ -1,0 +1,14 @@
+deprecated_library:
+  css:
+    component:
+      assets/test.css: {}
+  deprecated: The "%library_id%" asset library is deprecated for testing.
+
+library:
+  css:
+    component:
+      assets/test2.css: {}
+  dependencies:
+    - upgrade_status_test_library/deprecated_library
+    - upgrade_status_test_twig/deprecated_library
+  deprecated: The "%library_id%" asset library is deprecated for testing.

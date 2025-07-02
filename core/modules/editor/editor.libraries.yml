@@ -1,0 +1,30 @@
+drupal.editor.admin:
+  version: VERSION
+  js:
+    js/editor.admin.js: {}
+  dependencies:
+    - core/jquery
+    - core/once
+    - core/drupal
+  deprecated: The %library_id% asset library is deprecated in Drupal 10.3.0 and will be removed in Drupal 11.0.0. See https://www.drupal.org/node/3422372
+
+drupal.editor:
+  version: VERSION
+  js:
+    js/editor.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings
+    - core/once
+    - core/drupal.dialog
+
+drupal.editor.dialog:
+  version: VERSION
+  js:
+    js/editor.dialog.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal.dialog
+    - core/drupal.ajax
+    - core/drupalSettings

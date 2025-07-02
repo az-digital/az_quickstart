@@ -1,0 +1,26 @@
+/* ---------- Fjalla One, Cantarell ---------- */
+
+h1,
+h2,
+h1 a,
+h2 a {
+  font-family: 'Fjalla One', sans-serif;
+  font-weight: normal;
+  text-transform: uppercase;
+}
+h3,
+h4,
+h5,
+h6,
+h3 a {
+  font-family: 'Cantarell', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+}
+body,
+p,
+a,
+li {
+  font-family: 'Cantarell', sans-serif;
+}

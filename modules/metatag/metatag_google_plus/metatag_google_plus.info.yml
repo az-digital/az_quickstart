@@ -1,0 +1,13 @@
+name: 'Metatag: Google Plus'
+type: module
+description: Deprecated module, do not use. Will be removed in 3.0.0.
+core_version_requirement: '^9.4 || ^10 || ^11'
+package: SEO
+hidden: true
+dependencies:
+  - metatag:metatag
+
+# Information added by Drupal.org packaging script on 2024-11-07
+version: '2.1.0'
+project: 'metatag'
+datestamp: 1731004045

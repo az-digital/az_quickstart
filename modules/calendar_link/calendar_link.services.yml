@@ -1,0 +1,6 @@
+services:
+
+  calendar_link.twig_extension:
+    class: Drupal\calendar_link\Twig\CalendarLinkTwigExtension
+    tags:
+      - { name: twig.extension }

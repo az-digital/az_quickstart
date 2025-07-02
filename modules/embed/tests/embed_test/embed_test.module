@@ -1,0 +1,14 @@
+<?php
+
+/**
+ * @file
+ * Contains support code for testing Embed.
+ */
+
+/**
+ * Implements hook_ENTITY_TYPE_view_alter().
+ */
+function embed_test_node_view_alter(array &$build) {
+  // @see \Drupal\Tests\embed\Functional\EmbedPreviewTest::testPreview
+  $build['#attached']['library'][] = 'core/jquery';
+}

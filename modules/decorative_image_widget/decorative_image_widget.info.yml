@@ -1,0 +1,12 @@
+name: Decorative Image Widget
+description: Modifies image widgets to require alt text OR be marked as decorative.
+core_version_requirement: ^9.2 || ^10 || ^11
+type: module
+package: Media
+dependencies:
+  - drupal:image
+
+# Information added by Drupal.org packaging script on 2024-10-25
+version: '1.0.2'
+project: 'decorative_image_widget'
+datestamp: 1729870703

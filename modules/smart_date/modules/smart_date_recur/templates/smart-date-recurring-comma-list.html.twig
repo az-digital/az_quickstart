@@ -1,0 +1,5 @@
+{% for key, value in values -%}
+  {{ not loop.first and not loop.last ? ', '|t({}, {context: 'Rule text'}) -}}
+  {{ loop.last ? ', and '|t({}, {context: 'Rule text'}) -}}
+  {{ value -}}
+{% endfor -%}

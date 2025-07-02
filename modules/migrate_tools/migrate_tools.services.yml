@@ -1,0 +1,34 @@
+services:
+  logger.channel.migrate_tools:
+    class: Drupal\Core\Logger\LoggerChannel
+    factory: logger.factory:get
+    arguments: ['migrate_tools']
+  route_processor.migrate_group:
+    class: Drupal\migrate_tools\Routing\RouteProcessor
+    arguments: ['@entity_type.manager']
+    tags:
+      - { name: route_processor_outbound }
+  migrate_tools.migration_drush_command_progress:
+    class: Drupal\migrate_tools\EventSubscriber\MigrationDrushCommandProgress
+    tags:
+      - { name: event_subscriber }
+    arguments: ['@logger.channel.migrate_tools']
+  migrate_tools.migration_sync:
+    class: Drupal\migrate_tools\EventSubscriber\MigrationImportSync
+    tags:
+      - { name: event_subscriber }
+    arguments:
+      - '@event_dispatcher'
+      - '@migrate_tools.migrate_tools'
+
+  plugin.manager.migrate_shared_config:
+    class: Drupal\migrate_tools\MigrateSharedConfigPluginManager
+    arguments: ['@module_handler', '@cache.discovery']
+
+  migrate_tools.shared_config_include_handler:
+    class: Drupal\migrate_tools\MigrateIncludeHandler
+    arguments: ['@plugin.manager.migrate_shared_config']
+
+  migrate_tools.migrate_tools:
+    class: Drupal\migrate_tools\MigrateTools
+    arguments: ['@database']

@@ -1,0 +1,12 @@
+embed_test.test_access:
+  path: '/embed-test/access/{editor}/{embed_button}'
+  defaults:
+    _controller: '\Drupal\embed_test\Controller\EmbedTestController::testAccess'
+  requirements:
+    _embed_button_editor_access: 'TRUE'
+embed_test_csrf.csrftoken:
+  path: '/embed-test/get_csrf_token'
+  defaults:
+    _controller: '\Drupal\embed_test\Controller\EmbedTestController::getCsrfToken'
+  requirements:
+    _access: 'TRUE'

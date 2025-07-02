@@ -1,0 +1,30 @@
+entity.webform.fapi_export_form:
+  title: 'Form API'
+  route_name: entity.webform.fapi_export_form
+  parent_id: entity.webform.export
+  base_route: entity.webform.canonical
+  weight: 10
+
+entity.webform.test_form.form:
+  title: 'Form'
+  route_name: entity.webform.test_form
+  parent_id: entity.webform.test_form
+  weight: 0
+
+entity.webform.test_form.api:
+  title: 'API'
+  route_name: entity.webform.api_form
+  parent_id: entity.webform.test_form
+  weight: 10
+
+entity.node.webform.test_form.form:
+  title: 'Form'
+  route_name: entity.node.webform.test_form
+  parent_id: entity.node.webform.test_form
+  weight: 0
+
+entity.node.webform.test_form.api:
+  title: 'API'
+  route_name: entity.node.webform.api_form
+  parent_id: entity.node.webform.test_form
+  weight: 10

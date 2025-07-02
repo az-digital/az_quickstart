@@ -1,0 +1,5 @@
+environment_indicator.settings:
+  title: 'Environment Indicator Settings'
+  parent: system.admin_config_development
+  description: 'Settings to configure the environment indicators.'
+  route_name: environment_indicator.settings

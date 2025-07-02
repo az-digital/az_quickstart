@@ -1,0 +1,12 @@
+langcode: en
+status: true
+id: disabled
+label: Disabled
+description: 'Contains disabled migrations for testing'
+source_type: ''
+module: null
+shared_configuration: null
+dependencies:
+  enforced:
+    module:
+      - migrate_tools_test

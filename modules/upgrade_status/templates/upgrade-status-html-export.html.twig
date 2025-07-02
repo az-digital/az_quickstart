@@ -1,0 +1,53 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Upgrade status report</title>
+  <style>
+    body {
+      font-family: Helvetia, Arial, sans-serif;
+    }
+    table {
+      width: 100%;
+    }
+    th, td {
+      border-bottom: 1px solid #cdcdcd;
+    }
+    th:nth-child(1), td:nth-child(3) {
+      width: 40%;
+    }
+    th:nth-child(2) {
+      width: 10%;
+    }
+    .list-description {
+      margin-bottom: 1em;
+    }
+  </style>
+</head>
+
+<body>
+<h1>Upgrade Status report</h1>
+
+{% if projects.custom %}
+  <h2>Custom projects</h2>
+  {% for project in projects.custom %}
+    <h3>{{ project.name }}</h3>
+    {{ project.date }}
+    {{ project.summary }}
+    {{ project.groups }}
+  {% endfor %}
+{% endif %}
+
+{% if projects.contrib %}
+  <h2>Contributed projects</h2>
+  {% for project in projects.contrib %}
+    <h3>{{ project.name }}</h3>
+    {{ project.date }}
+    {{ project.summary }}
+    {{ project.groups }}
+  {% endfor %}
+{% endif %}
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+[
+    {
+        "tid": 6,
+        "uuid": "dd3cff32-3409-4505-8461-cfaa0469d880",
+        "revision_id": 6,
+        "langcode": "en",
+        "vid": "sujet_de_discussion",
+        "revision_created": 1623674334,
+        "revision_user": null,
+        "revision_log_message": null,
+        "status": "1",
+        "name": "Games",
+        "description": null,
+        "weight": 4,
+        "parent": 0,
+        "changed": 1623674334,
+        "default_langcode": "1",
+        "revision_default": "1",
+        "revision_translation_affected": "1",
+        "content_translation_source": "und",
+        "content_translation_outdated": "0",
+        "content_translation_uid": 1,
+        "content_translation_created": 1623674334
+    }
+]

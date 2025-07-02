@@ -1,0 +1,34 @@
+{
+  "name": "drupal/better_exposed_filters",
+  "type": "drupal-module",
+  "description": "Replaces the Views default single- or multi-select boxes with more advanced options.",
+  "homepage": "https://www.drupal.org/project/better_exposed_filters",
+  "authors": [
+    {
+      "name": "Mike Keran",
+      "homepage": "https://www.drupal.org/u/mikeker"
+    },
+    {
+      "name": "Martin Keereman",
+      "homepage": "https://www.drupal.org/u/etroid"
+    },
+    {
+      "name": "Neslee Canil Pinto",
+      "homepage": "https://www.drupal.org/u/neslee-canil-pinto"
+    }
+  ],
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/better_exposed_filters",
+    "source": "https://git.drupalcode.org/project/better_exposed_filters"
+  },
+  "license": "GPL-2.0-or-later",
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://packages.drupal.org/8"
+    }
+  ],
+  "require": {
+    "drupal/nouislider_js": "^15.8"
+  }
+}

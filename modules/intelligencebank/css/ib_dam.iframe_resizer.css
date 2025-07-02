@@ -1,0 +1,38 @@
+:root {
+  --ib-aspect-ratio: calc(9 / 16 * 100%);
+}
+
+.ib-ratio {
+  position: relative;
+  width: 100%
+}
+
+.ib-ratio:before {
+  content: "";
+  display: block;
+  padding-top: var(--ib-aspect-ratio)
+}
+
+.ib-ratio > * {
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%
+}
+
+.ib-ratio-1x1 {
+  --ib-aspect-ratio: 100%
+}
+
+.ib-ratio-4x3 {
+  --ib-aspect-ratio: 75%
+}
+
+.ib-ratio-16x9 {
+  --ib-aspect-ratio: 56.25%
+}
+
+.ib-ratio-21x9 {
+  --ib-aspect-ratio: 42.8571428571%
+}

@@ -1,0 +1,73 @@
+name: Create Release
+on:
+  repository_dispatch:
+    types: az_bootstrap_release
+
+jobs:
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.REPO_DISPATCH_TOKEN }}
+
+      - name: Build variables
+        run: echo "AZ_BOOTSTRAP_CLONE_DIR=arizona-bootstrap" >> ${GITHUB_ENV}
+
+      - name: Get new updates from arizona-bootstrap
+        uses: actions/checkout@v3
+        with:
+          repository: az-digital/arizona-bootstrap
+          path: ${{ env.AZ_BOOTSTRAP_CLONE_DIR }}
+          ref: ${{ github.event.client_payload.sha }}
+
+      - name: Copy new version of Arizona Bootstrap and commit
+        run: |
+          distwhitelist='css js'
+          srcroot='dist'
+          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git config --global user.name "${GITHUB_ACTOR}"
+          for w in $distwhitelist ; do
+            rsync --recursive --delete "${AZ_BOOTSTRAP_CLONE_DIR}/${srcroot}/${w}/" "${w}/"
+            git add "${w}"
+          done
+          git commit -m "Arizona Bootstrap updates for ${{ github.event.client_payload.version }}"
+          git push
+          echo "RELEASE_SHA=$(git rev-parse HEAD)" >> ${GITHUB_ENV}
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          commitish: "${{ env.RELEASE_SHA }}"
+          tag_name: "v${{ github.event.client_payload.version }}"
+          release_name: "v${{ github.event.client_payload.version }}"
+          draft: false
+          prerelease: false #${{ contains(env.AZ_VERSION, '-alpha') }}
+
+  dispatch:
+    needs: release
+    strategy:
+      matrix:
+        repo:
+          - az-digital/az_quickstart
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Get release data
+        run: |
+          sha=$(git rev-parse HEAD)
+          echo "RELEASE_SHA=${sha}" >> ${GITHUB_ENV}
+      - name: Notify dependencies
+        uses: peter-evans/repository-dispatch@1708dda5703a768a0fb0ef6a7a03a0c3805ebc59
+        with:
+          token: ${{ secrets.REPO_DISPATCH_TOKEN }}
+          repository: ${{ matrix.repo }}
+          event-type: az_bootstrap_release
+          client-payload: '{"version": "${{ github.event.client_payload.version  }}", "sha": "${{ env.RELEASE_SHA }}", "branch": "${{ github.event.client_payload.branch }}" }'

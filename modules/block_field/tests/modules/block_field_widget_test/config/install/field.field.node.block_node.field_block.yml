@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_block
+    - node.type.block_node
+  module:
+    - block_field
+id: node.block_node.field_block
+field_name: field_block
+entity_type: node
+bundle: block_node
+label: Block
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  selection: blocks
+  selection_settings:
+    plugin_ids: {  }
+field_type: block_field

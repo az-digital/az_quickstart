@@ -1,0 +1,167 @@
+<?php
+
+/**
+ * @file
+ * Contains migrate_queue_importer.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Url;
+use Drupal\migrate\Plugin\MigrationInterface;
+
+/**
+ * Implements hook_help().
+ */
+function migrate_queue_importer_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.migrate_queue_importer':
+      $output = '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Provides the ability to create cron
+      migrations(configuration entities) with a reference towards migration
+      entities in order to import them during CRON runs. You can also define
+      additional options such as update and ignore dependencies for each of the
+      referenced migrations. Navigate to <a href=":url">Cron migration</a> to use the UI.',
+          [':url' => Url::fromRoute('entity.cron_migration.collection')->toString()]) . '</p>';
+
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_cron().
+ */
+function migrate_queue_importer_cron() {
+  // Some migrations import process might cause timeout, thus avoid executing
+  // this from the CRON form.
+  $parameters = \Drupal::request()->request->all();
+
+  // Check if ParameterBag has form_id set and is CRON form.
+  if (isset($parameters['form_id']) && $parameters['form_id'] === 'system_cron_settings') {
+    return;
+  }
+
+  // Load all active cron_migration entities.
+  $cron_migration_entities = \Drupal::entityTypeManager()
+    ->getStorage('cron_migration')
+    ->loadByProperties(['status' => TRUE]);
+
+  if (empty($cron_migration_entities)) {
+    return;
+  }
+
+  $queue = \Drupal::queue('migrations_importer');
+  $queue_depth = $queue->numberOfItems();
+
+  /** @var \Drupal\migrate\Plugin\MigrationPluginManagerInterface $migrationPluginManager **/
+  $migrationPluginManager = \Drupal::service('plugin.manager.migration');
+  $logger = \Drupal::logger('migrate_queue_importer');
+
+  /** @var \Drupal\Core\KeyValueStore\KeyValueStoreInterface $migrate_last_imported_store **/
+  $migrate_last_imported_store = \Drupal::keyValue('migrate_last_imported');
+
+  // Current time.
+  $current_time = \Drupal::time()->getCurrentTime();
+
+  // Flag used to determine if any migration is scheduled for import.
+  $import_scheduled = FALSE;
+
+  // Count the number of cron_migration entities.
+  $cron_migration_entity_count = count($cron_migration_entities);
+
+  /** @var \Drupal\migrate_queue_importer\Entity\CronMigration $entity **/
+  foreach ($cron_migration_entities as $cron_migration) {
+    $migration_id = $cron_migration->migration;
+
+    // Skip if the migration ID is empty.
+    if (empty($migration_id)) {
+      continue;
+    }
+
+    // Create a migration instance.
+    $migration = $migrationPluginManager->createInstance($migration_id);
+
+    // Get the time interval for the cron migration entity in seconds.
+    $interval = $cron_migration->time ? $cron_migration->time * 1000 : 0;
+
+    // Get the last imported time of the migration.
+    $last_imported = (int) $migrate_last_imported_store->get($migration->id(), 0);
+
+    // Check if enough time has passed since the last import,
+    // if so, then queue up the migration.
+    if ($queue_depth <= $cron_migration_entity_count && ($last_imported + $interval) < $current_time * 1000) {
+      $import_scheduled = TRUE;
+
+      $settings = [
+        'migration' => $migration,
+        'update' => $cron_migration->update,
+        'sync' => $cron_migration->sync,
+        'ignore' => $cron_migration->ignore_dependencies,
+      ];
+
+      // Check dependencies first, queue them up if necessary.
+      if (!$cron_migration->ignore_dependencies) {
+        _migrate_queue_importer_check_dependencies($migration, $cron_migration->update, $cron_migration->sync, [
+          'migrationManager' => $migrationPluginManager,
+          'queue' => $queue,
+          'logger' => $logger,
+        ]);
+      }
+
+      // Queue the migration with the specified settings.
+      if ($queue->createItem($settings)) {
+        $logger->notice('%label has been scheduled for import.', ['%label' => $migration->label()]);
+      }
+    }
+  }
+
+  // Log if no migrations were scheduled for import.
+  if (!$import_scheduled) {
+    $logger->notice('No migrations to import.');
+  }
+}
+
+/**
+ * Helper function to check if migration dependencies are met.
+ *
+ * @param Drupal\migrate\Plugin\MigrationInterface $migration
+ *   Migration used to check if dependent migrations are fully processed.
+ * @param bool $update
+ *   Migration update flag.
+ * @param bool $sync
+ *   Migration sync flag.
+ * @param array $services
+ *   Drupal services passed on through the array_walk:
+ *   - migrationManager: MigrationPluginManagerInterface service.
+ *   - QueueInterface: queue object for migrate_queue_importer.
+ *   - LoggerInterface: logger service.
+ */
+function _migrate_queue_importer_check_dependencies(MigrationInterface $migration, bool $update, bool $sync, array $services) {
+  $migrationPluginManager = $services['migrationManager'];
+  $queue = $services['queue'];
+  $logger = $services['logger'];
+
+  if ($required_Ids = $migration->getMigrationDependencies()['required']) {
+    $required_migrations = $migrationPluginManager->createInstances($required_Ids);
+
+    /** @var \Drupal\migrate\Plugin\MigrationInterface $required_migration **/
+    foreach ($required_migrations as $required_migration) {
+      _migrate_queue_importer_check_dependencies($required_migration, $update, $sync, $services);
+
+      if (!$required_migration->allRowsProcessed() || $update || $sync) {
+        $success = $queue->createItem([
+          'migration' => $required_migration,
+          'update' => $update,
+          'sync' => $sync,
+          'ignore' => FALSE,
+        ]);
+        if ($success) {
+          $logger->notice('%label has been scheduled for import.',
+            [
+              '%label' => $required_migration->label(),
+            ]
+          );
+        }
+      }
+    }
+  }
+}

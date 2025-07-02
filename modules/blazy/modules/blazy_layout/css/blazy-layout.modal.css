@@ -1,0 +1,22 @@
+/**
+ * @file
+ * Provides blazy layout modal.
+ */
+
+/* stylelint-disable declaration-no-important */
+.form-wrapper--b-layout input[type="color"],
+.form-wrapper--b-layout input[type="range"] {
+  max-width: 125px !important;
+}
+
+.form-wrapper--b-layout input[type="color"] + .field-suffix,
+.form-wrapper--b-layout input[type="range"] + .field-suffix {
+  float: right !important;
+  font-size: small !important;
+}
+
+/* Help focus on the expanded details. */
+.ui-dialog .form-wrapper--b-layout > details[open] {
+  border-radius: 8px !important;
+  background-color: rgba(0, 0, 0, 0.5) !important;
+}

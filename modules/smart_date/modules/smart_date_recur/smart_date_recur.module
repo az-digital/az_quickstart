@@ -1,0 +1,941 @@
+<?php
+
+/**
+ * @file
+ * Field hooks for a field that stores a start and end date as timestamps.
+ */
+
+use Drupal\Component\Render\FormattableMarkup;
+use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Link;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Url;
+use Drupal\smart_date_recur\Entity\SmartDateRule;
+
+/**
+ * Implements hook_help().
+ */
+function smart_date_recur_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.smart_date_recur':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('The Smart Date Recur module adds recurring date functionality to Smart Date fields. For more information, see the <a href=":datetime_do">online documentation for the Smart Date module</a>.', [
+        ':datetime_do' => 'https://www.drupal.org/docs/contributed-modules/smart-date',
+      ]) . '</p>';
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function smart_date_recur_theme($existing, $type, $theme, $path) {
+  return [
+    'smart_date_recurring_formatter' => [
+      'variables' => [
+        'rule_text' => NULL,
+        'past_display' => NULL,
+        'next_display' => NULL,
+        'upcoming_display' => NULL,
+      ],
+    ],
+    'smart_date_recurring_text_rule' => [
+      'variables' => [
+        'rule' => NULL,
+        'repeat' => NULL,
+        'repeat_separator' => NULL,
+        'day' => NULL,
+        'day_separator' => NULL,
+        'days_array' => [],
+        'month' => NULL,
+        'month_separator' => NULL,
+        'time' => NULL,
+        'time_separator' => NULL,
+        'limit' => NULL,
+        'limit_separator' => NULL,
+      ],
+    ],
+    'smart_date_recurring_comma_list' => [
+      'variables' => [
+        'values' => NULL,
+      ],
+    ],
+  ];
+}
+
+/**
+ * Prepares variables for recurring smart date templates.
+ *
+ * Default template: smart-date-recurring-text-rule.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - rule: The smart date rule object.
+ *   - repeat: How often the date reoccurs.
+ *   - day: The day the date occurs.
+ *   - month: The month the date occurs.
+ *   - time: The time the date occurs.
+ *   - limit: How many times the date reoccurs.
+ */
+function template_preprocess_smart_date_recurring_text_rule(&$variables) {
+  $has_day_or_month = !empty($variables['day']) || !empty($variables['month']);
+  $has_time_or_limit = !empty($variables['time']) || !empty($variables['limit']);
+  if (!isset($variables['day_separator']) && !empty($variables['repeat']) && $has_day_or_month) {
+    // Add spacing if there's a day or month it repeats on.
+    $variables['day_separator'] = ' ';
+  }
+  if (!isset($variables['time_separator']) && $has_day_or_month && $has_time_or_limit) {
+    // Add spacing if there's a day or month it repeats on.
+    $variables['time_separator'] = ' ';
+  }
+}
+
+/**
+ * Implements hook_entity_delete().
+ */
+function smart_date_recur_entity_delete($entity) {
+  $entity_type = $entity->getEntityTypeId();
+  $bundle = $entity->bundle();
+
+  // Check for rules that apply to this entity type and bundle.
+  $query = \Drupal::entityTypeManager()->getStorage('smart_date_rule');
+  $query_result = $query->getQuery()
+    ->condition('entity_type', $entity_type)
+    ->condition('bundle', $bundle)
+    ->accessCheck(TRUE)
+    ->execute();
+
+  // If none exist, nothing to do.
+  if (!$query_result) {
+    return;
+  }
+
+  $field_names = [];
+  // Get all the relevant fields for this bundle.
+  foreach ($query_result as $rule) {
+    $rrule = SmartDateRule::load($rule);
+    if ($rrule) {
+      $field_name = $rrule->field_name->value;
+      if (!in_array($field_name, $field_names)) {
+        $field_names[] = $field_name;
+      }
+    }
+  }
+
+  // If no relevant fields for this bundle, nothing to do.
+  if (!$field_names) {
+    return;
+  }
+
+  // Check for relevant field values on the deleted entity.
+  foreach ($field_names as $field_name) {
+    if (!$values = $entity->$field_name) {
+      continue;
+    }
+    $rules = [];
+    // Collect all distinct rules defined for the deleted entity.
+    foreach ($values as $value) {
+      if ($value->rrule && !in_array($value->rrule, $rules)) {
+        $rules[] = $value->rrule;
+      }
+    }
+
+    // If no rules defined for this field, nothing to do.
+    if (!$rules) {
+      continue;
+    }
+    // Delete any rules found.
+    foreach ($rules as $rule) {
+      if ($rrule = SmartDateRule::load($rule)) {
+        $rrule->delete();
+      }
+    }
+  }
+}
+
+/**
+ * Helper function to add extra fields to Smart Date widgets.
+ */
+function smart_date_recur_widget_extra_fields(&$element, $item, $context) {
+  $default_repeat = '';
+  $default_end_count = '';
+  $default_end_date = '';
+  $limit_type = '';
+  $defaults = [
+    'interval' => NULL,
+    'which' => '',
+    'day' => '',
+    'byday' => [],
+    'byhour' => [],
+    'byminute' => [],
+  ];
+  // Get current user.
+  $user = \Drupal::currentUser();
+  // Check for permission.
+  $recur_permitted = $user->hasPermission('make smart dates recur');
+  // Get a helper service.
+  $recur_manager = \Drupal::service('smart_date_recur.manager');
+
+  if ($item->rrule) {
+    $rrule = SmartDateRule::load($item->rrule);
+    if ($rrule) {
+      $default_repeat = $rrule->get('freq')->getString();
+      if ($rrule->get('limit')->getString()) {
+        [$limit_type, $limit_value] = explode('=', $rrule->get('limit')->getString());
+        if ($limit_type == 'COUNT') {
+          $default_end_count = $limit_value;
+        }
+        elseif ($limit_type == 'UNTIL') {
+          $default_end_date = $limit_value;
+        }
+      }
+      $defaults = $rrule->getParametersArray();
+    }
+    $element['rrule'] = [
+      '#type' => 'hidden',
+      '#title' => t('Existing Rule ID'),
+      '#value' => $item->rrule,
+    ];
+
+    if (!$recur_permitted) {
+      $element['repeat'] = [
+        '#type' => 'hidden',
+        '#title' => t('Existing repeat frequency'),
+        '#value' => $default_repeat,
+      ];
+      $element['repeat-end'] = [
+        '#type' => 'hidden',
+        '#title' => t('Existing repeat limit type'),
+        '#value' => $limit_type,
+      ];
+      $element['repeat-end-count'] = [
+        '#type' => 'hidden',
+        '#title' => t('Existing maximum instances'),
+        '#value' => $default_end_count,
+      ];
+      $element['repeat-end-date'] = [
+        '#type' => 'hidden',
+        '#title' => t('Existing last instance date'),
+        '#value' => $default_end_date,
+      ];
+      if ($rule_text = $rrule->getTextRule()) {
+        if (is_array($rule_text)) {
+          $rule_text = \Drupal::service('renderer')->render($rule_text);
+        }
+        $element['repeat-text'] = [
+          '#markup' => '<span class="clearfix"></span>
+            <h4 class="label">' . t('Repeats') . '</h4>
+            <p class="repeat-text"> ' . $rule_text . '</p>',
+        ];
+      }
+      return;
+    }
+
+    // Also insert a link to the interface for managing interfaces.
+    $modal = $recur_manager->getThirdPartyFallback($context, 'modal', 1);
+    $url = Url::fromRoute('smart_date_recur.instances', [
+      'rrule' => $item->rrule,
+      'modal' => $modal,
+    ]);
+    $instances_link = Link::fromTextAndUrl(t('Manage Instances'), $url);
+    $instances_link = $instances_link->toRenderable();
+    // Add some classes.
+    $instances_link['#attributes'] = [
+      'class' => [
+        'button',
+        'button--small',
+        'manage-instances',
+      ],
+    ];
+    if ($modal) {
+      $instances_link['#attributes']['class'][] = 'use-ajax';
+      $instances_link['#attached']['library'][] = 'core/drupal.dialog.ajax';
+    }
+
+    $instances_link['#weight'] = 100;
+    $element['manage-instances'] = $instances_link;
+  }
+  elseif (!$recur_permitted) {
+    return;
+  }
+  $element['#attached']['library'][] = 'smart_date_recur/smart_date_recur';
+
+  $select_repeat = 'select[name$="[' . $element['#delta'] . '][repeat]"]';
+  $select_repeat_end = 'select[name$="[' . $element['#delta'] . '][repeat-end]"]';
+  $element['repeat-label'] = [
+    '#type' => 'label',
+    '#title' => t('Repeats') . ' ',
+    '#prefix' => '<div class="clearfix"></div>',
+    '#attributes' => ['class' => ['repeat--label']],
+  ];
+  if ($recur_manager->getThirdPartyFallback($context, 'show_single', 0) && empty($defaults['interval'])) {
+    $defaults['interval'] = 1;
+  }
+  $element['interval'] = [
+    '#type' => 'number',
+    '#title' => t('every'),
+    '#label_attributes' => ['class' => ['field-interval--label']],
+    '#attributes' => ['class' => ['field-interval']],
+    '#min' => 1,
+    '#step' => 1,
+    '#placeholder' => t('# of'),
+    '#default_value' => $defaults['interval'],
+    '#states' => [
+      // Show this textarea only if the 'repeat' select has a value.
+      'invisible' => [
+        $select_repeat => ['value' => ''],
+      ],
+    ],
+  ];
+  $repeat_labels = [
+    'MINUTELY' => t('by minute'),
+    'HOURLY' => t('by hour'),
+    'DAILY' => t('daily'),
+    'WEEKLY' => t('weekly'),
+    'MONTHLY' => t('monthly'),
+    'YEARLY' => t('annually'),
+  ];
+  $labels = ['' => t('never')];
+  $allowed_values = $recur_manager->getThirdPartyFallback($context, 'allowed_recur_freq_values', _smart_date_recur_get_freq_defaults());
+  foreach ($allowed_values as $value) {
+    if (isset($repeat_labels[$value])) {
+      $labels[$value] = $repeat_labels[$value];
+    }
+  }
+  $element['repeat'] = [
+    '#type' => 'select',
+    '#title' => t('Repeats'),
+    '#title_display' => 'invisible',
+    '#options' => $labels,
+    '#default_value' => $default_repeat,
+    '#attributes' => ['class' => ['recur-repeat']],
+  ];
+  $element['repeat-end'] = [
+    '#type' => 'select',
+    '#title' => t('Ends'),
+    '#label_attributes' => ['class' => ['pad-left']],
+    '#options' => [
+      '' => t('Never'),
+      'COUNT' => t('After'),
+      'UNTIL' => t('On Date'),
+    ],
+    '#states' => [
+      // Show this textarea only if the 'repeat' select has a value.
+      'invisible' => [
+        $select_repeat => ['value' => ''],
+      ],
+    ],
+    '#default_value' => $limit_type,
+  ];
+  $element['repeat-end-count'] = [
+    '#type' => 'number',
+    '#title' => t('Ends after'),
+    '#title_display' => t('invisible'),
+    '#min' => 2,
+    '#step' => 1,
+    '#field_suffix' => t('times'),
+    '#placeholder' => t('# of'),
+    '#states' => [
+      // Show this textarea only if the 'repeat' select has a value.
+      'visible' => [
+        $select_repeat => ['!value' => ''],
+        $select_repeat_end => ['value' => 'COUNT'],
+      ],
+    ],
+    '#default_value' => $default_end_count,
+  ];
+  $element['repeat-end-date'] = [
+    '#type' => 'date',
+    '#title' => t('Ends on date'),
+    '#title_display' => t('invisible'),
+    '#states' => [
+      // Show this textarea only if the 'repeat' select has a value.
+      'visible' => [
+        $select_repeat => ['!value' => ''],
+        $select_repeat_end => ['value' => 'UNTIL'],
+      ],
+    ],
+    '#default_value' => $default_end_date,
+    '#attributes' => [
+      'class' => ['repeat-end-date'],
+      'type' => 'date',
+    ],
+  ];
+  $element['repeat-advanced'] = [
+    '#type' => 'details',
+    '#title' => t('Advanced'),
+    '#open' => $defaults['interval'] || $defaults['which'] || $defaults['day'] || $defaults['byday'],
+    '#states' => [
+      // Show this textarea only if the 'repeat' select has a value.
+      'invisible' => [
+        [$select_repeat => ['value' => '']],
+      ],
+    ],
+  ];
+  // Checkboxes to select which weekdays for weekly repeats.
+  $days = [
+    'SU' => t('Sunday'),
+    'MO' => t('Monday'),
+    'TU' => t('Tuesday'),
+    'WE' => t('Wednesday'),
+    'TH' => t('Thursday'),
+    'FR' => t('Friday'),
+    'SA' => t('Saturday'),
+  ];
+  // Weekday int. 0-6 (Sun-Sat).
+  $firstDayInt = \Drupal::config('system.date')
+    ->get('first_day');
+
+  // Rebuild weekday options where system first day is first option in list.
+  $days_by_config = array_merge(
+      array_slice($days, $firstDayInt),
+      // Re-attach weekdays sliced up to the first day.
+      array_slice($days, 0, $firstDayInt)
+    );
+
+  $element['repeat-advanced']['byday'] = [
+    '#type' => 'checkboxes',
+    '#title' => t('on days'),
+    '#title_display' => t('inline'),
+    '#options' => $days_by_config,
+    // Populate with any existing values.
+    '#default_value' => $defaults['byday'],
+    '#states' => [
+      // Show only if the repeat select has an appropriate value.
+      'visible' => [
+        [$select_repeat => ['value' => 'MINUTELY']],
+        [$select_repeat => ['value' => 'HOURLY']],
+        [$select_repeat => ['value' => 'DAILY']],
+        [$select_repeat => ['value' => 'WEEKLY']],
+      ],
+    ],
+    '#attributes' => ['class' => ['container-inline', 'byday-checkboxes']],
+  ];
+  $element['repeat-advanced']['which'] = [
+    '#type' => 'select',
+    '#title' => t('on the'),
+    '#options' => [
+      '' => t('- Select -'),
+      '1' => t('First', [], ['context' => 'date_ordinal']),
+      '2' => t('Second', [], ['context' => 'date_ordinal']),
+      '3' => t('Third', [], ['context' => 'date_ordinal']),
+      '4' => t('Fourth', [], ['context' => 'date_ordinal']),
+      '5' => t('Fifth', [], ['context' => 'date_ordinal']),
+      '-1' => t('Last', [], ['context' => 'date_ordinal']),
+    ],
+    '#default_value' => $defaults['which'],
+    '#states' => [
+      // Show this textarea only if the repeat select has an appropriate value.
+      'visible' => [
+        [$select_repeat => ['value' => 'MONTHLY']],
+        [$select_repeat => ['value' => 'YEARLY']],
+      ],
+    ],
+  ];
+  $element['repeat-advanced']['weekday'] = [
+    '#type' => 'select',
+    '#title' => t('Weekday'),
+    '#title_display' => t('invisible'),
+    '#label_attributes' => ['class' => ['pad-left']],
+    '#options' => [
+      '' => t('- Day (any) -'),
+      'SU' => t('Sunday'),
+      'MO' => t('Monday'),
+      'TU' => t('Tuesday'),
+      'WE' => t('Wednesday'),
+      'TH' => t('Thursday'),
+      'FR' => t('Friday'),
+      'SA' => t('Saturday'),
+      'MO,TU,WE,TH,FR' => t('Weekday'),
+      'SA,SU' => t('Weekend day'),
+    ],
+    '#default_value' => $defaults['day'],
+    '#states' => [
+      // Show this textarea only if the repeat select has an appropriate value.
+      'visible' => [
+        [$select_repeat => ['value' => 'MONTHLY']],
+        [$select_repeat => ['value' => 'YEARLY']],
+      ],
+    ],
+  ];
+  $element['repeat-advanced']['restrict-hours'] = [
+    '#type' => 'details',
+    '#title' => t('Restrict to Specific Hours'),
+    '#open' => $defaults['byhour'],
+    '#states' => [
+      // Show this textarea only if the repeat select has an appropriate value.
+      'visible' => [
+        [$select_repeat => ['value' => 'MINUTELY']],
+        [$select_repeat => ['value' => 'HOURLY']],
+      ],
+    ],
+  ];
+  $hour_options = [];
+  for ($i = 0; $i < 24; $i++) {
+    $label = sprintf("%02d", $i);
+    $hour_options[$label] = $i . ':00';
+  }
+  $element['repeat-advanced']['restrict-hours']['byhour'] = [
+    '#type' => 'checkboxes',
+    '#title' => t('Choose hours to include'),
+    '#description' => t('Leave empty to allow repeating at any hour.'),
+    '#options' => $hour_options,
+    // Populate with any existing values.
+    '#default_value' => $defaults['byhour'],
+    '#states' => [
+      // Show only if the repeat select has an appropriate value.
+      'visible' => [
+        [$select_repeat => ['value' => 'MINUTELY']],
+        [$select_repeat => ['value' => 'HOURLY']],
+      ],
+    ],
+    '#attributes' => ['class' => ['smart-date--hours', 'clearfix']],
+  ];
+  $element['repeat-advanced']['restrict-minutes'] = [
+    '#type' => 'details',
+    '#title' => t('Restrict to Specific Minutes on the Hour'),
+    '#open' => $defaults['byminute'],
+    '#states' => [
+      // Show this textarea only if the repeat select has an appropriate value.
+      'visible' => [
+        [$select_repeat => ['value' => 'MINUTELY']],
+      ],
+    ],
+  ];
+  $minute_options = [];
+  for ($i = 0; $i < 60; $i++) {
+    $label = sprintf("%02d", $i);
+    $minute_options[$label] = ':' . $label;
+  }
+  $element['repeat-advanced']['restrict-minutes']['byminute'] = [
+    '#type' => 'checkboxes',
+    '#title' => t('Choose minutes to include'),
+    '#description' => t('Leave empty to allow repeating at any value.'),
+    '#options' => $minute_options,
+    // Populate with any existing values.
+    '#default_value' => $defaults['byminute'],
+    '#states' => [
+      // Show only if the repeat select has an appropriate value.
+      'visible' => [
+        [$select_repeat => ['value' => 'MINUTELY']],
+      ],
+    ],
+    '#attributes' => ['class' => ['smart-date--minutes', 'clearfix']],
+  ];
+  $element['#element_validate'][] = [
+    'Drupal\smart_date_recur\Entity\SmartDateRule', 'validateRecurring',
+  ];
+}
+
+/**
+ * Add configuration elements for Smart Date field storage.
+ */
+function smart_date_recur_form_field_storage_config_edit_form_alter(&$form, FormStateInterface $form_state) {
+  // Only try to add our option to Smart Date fields.
+  $field = $form_state->getFormObject()->getEntity();
+  if ($field->getType() != 'smartdate') {
+    return;
+  }
+
+  $messenger = \Drupal::messenger();
+  $messenger->addMessage(t('Recurring values can only be used on Smart Date fields that allow unlimited values.'), 'warning');
+}
+
+/**
+ * Add configuration elements for Smart Date fields.
+ */
+function smart_date_recur_form_field_config_edit_form_alter(&$form, FormStateInterface $form_state) {
+  // Only try to add our option to Smart Date fields.
+  $field = $form_state->getFormObject()->getEntity();
+  if ($field->getType() != 'smartdate') {
+    return;
+  }
+
+  // Only provide the recurring option if unlimited values are allowed.
+  $cardinality = $field->getFieldStorageDefinition()->getCardinality();
+  if ($cardinality != -1) {
+    $messenger = \Drupal::messenger();
+    $messenger->addMessage(t('Recurring values can only be used on Smart Date fields that allow unlimited values.'), 'warning');
+    return;
+  }
+
+  $entity = $form_state->getFormObject()->getEntity();
+  if ($entity instanceof BaseFieldDefinition) {
+    $allow_recurring = $entity->getSetting('allow_recurring');
+    $months = $entity->getSetting('month_limit');
+  }
+  else {
+    $allow_recurring = $entity->getThirdPartySetting('smart_date_recur', 'allow_recurring');
+    $months = $entity->getThirdPartySetting('smart_date_recur', 'month_limit');
+  }
+
+  $form['third_party_settings']['smart_date_recur'] = [
+    '#type' => 'details',
+    '#title' => t('Recurring Dates'),
+    '#open' => TRUE,
+  ];
+  $form['third_party_settings']['smart_date_recur']['allow_recurring'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Allow recurring date values'),
+    '#default_value' => $allow_recurring,
+  ];
+  $form['third_party_settings']['smart_date_recur']['month_limit'] = [
+    '#type' => 'number',
+    '#title' => t('Months to Extend'),
+    '#description' => t('For recurring dates without a specified end, how many months out should instances be generated? If left empty or zero, a default value of 12 will be used.'),
+    '#states' => [
+      // Show this textarea only if the 'repeat' select has a value.
+      'visible' => [
+        'input[name="third_party_settings[smart_date_recur][allow_recurring]"]' => ['checked' => TRUE],
+      ],
+    ],
+    '#default_value' => $months ? $months : 12,
+  ];
+}
+
+/**
+ * Helper function to generate additional field deltas based on user inputs.
+ */
+function smart_date_recur_generate_rows(&$values, $entity_type, $bundle, $field_name, $month_limit) {
+  $for_cloning = [];
+  foreach ($values as $index => &$item) {
+    // Keep track of the original position for sorting later.
+    $item['_original_delta'] = $index;
+    // Skip empty or non-repeating rows.
+    if (empty($item['value']) || empty($item['repeat'])) {
+      if (!empty($item['rrule'])) {
+        // Removed an existing reoccurrence, so delete.
+        $rrule = SmartDateRule::load($item['rrule']);
+        if ($rrule) {
+          $rrule->delete();
+        }
+        $item['rrule'] = NULL;
+      }
+      continue;
+    }
+
+    // Format provided values to be rrule-compatible.
+    $rrule_values = [
+      'freq'        => $item['repeat'],
+      'start'       => $item['value'],
+      'end'         => $item['end_value'],
+      'entity_type' => $entity_type,
+      'bundle'      => $bundle,
+      'field_name'  => $field_name,
+      'parameters'  => '',
+    ];
+    $limit = '';
+    if ($item['repeat-end'] == 'COUNT') {
+      $limit = $item['repeat-end-count'];
+    }
+    elseif ($item['repeat-end'] == 'UNTIL') {
+      $limit = $item['repeat-end-date'];
+    }
+    if ($item['repeat-end'] && $limit) {
+      $limit_safe = new FormattableMarkup(':type=:limit', [
+        ':type' => $item['repeat-end'],
+        ':limit' => $limit,
+      ]);
+      $rrule_values['limit'] = $limit_safe->__toString();
+      $rrule_values['unlimited'] = FALSE;
+      $before = NULL;
+    }
+    else {
+      $rrule_values['limit'] = '';
+      $rrule_values['unlimited'] = TRUE;
+      $before = strtotime('+' . (int) $month_limit . ' months');
+    }
+    if (!empty($item['interval']) || is_array($item['repeat-advanced'])) {
+      $params = [];
+      if (!empty($item['interval']) && $item['interval'] > 1) {
+        $interval_safe = new FormattableMarkup('INTERVAL=:interval', [':interval' => $item['interval']]);
+        $params['interval'] = $interval_safe->__toString();
+      }
+      // Only parse appropriate advanced options based on selected frequency.
+      switch ($rrule_values['freq']) {
+        case 'MINUTELY':
+          // Use the array of day checkboxes if one of them is checked.
+          if (!empty($item['repeat-advanced']['restrict-minutes']['byminute']) && is_array($item['repeat-advanced']['restrict-minutes']['byminute'])) {
+            $selected = [];
+            foreach ($item['repeat-advanced']['restrict-minutes']['byminute'] as $value) {
+              if ($value) {
+                $selected[] = $value;
+              }
+            }
+            if ($selected) {
+              $by_minute_safe = new FormattableMarkup('BYMINUTE=:byminute', [
+                ':byminute' => implode(',', $selected),
+              ]);
+              $params['by_minute'] = $by_minute_safe->__toString();
+            }
+          }
+
+        case 'HOURLY':
+          // Use the array of day checkboxes if one of them is checked.
+          if (!empty($item['repeat-advanced']['restrict-hours']['byhour']) && is_array($item['repeat-advanced']['restrict-hours']['byhour'])) {
+            $selected = [];
+            foreach ($item['repeat-advanced']['restrict-hours']['byhour'] as $value) {
+              if ($value) {
+                $selected[] = $value;
+              }
+            }
+            if ($selected) {
+              $by_hour_safe = new FormattableMarkup('BYHOUR=:byhour', [
+                ':byhour' => implode(',', $selected),
+              ]);
+              $params['by_hour'] = $by_hour_safe->__toString();
+            }
+          }
+
+        case 'DAILY':
+        case 'WEEKLY':
+          // Use the array of day checkboxes if one of them is checked.
+          if (!empty($item['repeat-advanced']['byday']) && is_array($item['repeat-advanced']['byday']) && array_sum(array_map('is_string', $item['repeat-advanced']['byday']))) {
+            // Remove any zero values.
+            $selected = [];
+            foreach ($item['repeat-advanced']['byday'] as $value) {
+              if ($value) {
+                $selected[] = $value;
+              }
+            }
+            $by_day_safe = new FormattableMarkup('BYDAY=:byday', [
+              ':byday' => implode(',', $selected),
+            ]);
+            $params['by_day'] = $by_day_safe->__toString();
+          }
+          break;
+
+        case 'MONTHLY':
+        case 'YEARLY':
+          if (!empty($item['repeat-advanced']['which'])) {
+            if (empty($item['repeat-advanced']['weekday'])) {
+              $by_day_safe = new FormattableMarkup('BYMONTHDAY=:which', [
+                ':which' => $item['repeat-advanced']['which'],
+              ]);
+              $params['by_day'] = $by_day_safe->__toString();
+            }
+            else {
+              // Weekday(s) specified so make the condition appropriately.
+              if (strpos($item['repeat-advanced']['weekday'], ',')) {
+                // A comma means a special format for multiple days allowed.
+                $pattern = 'BYDAY=:day;BYSETPOS=:which';
+              }
+              else {
+                $pattern = 'BYDAY=:which:day';
+              }
+              $by_day_safe = new FormattableMarkup($pattern, [
+                ':which' => $item['repeat-advanced']['which'],
+                ':day' => $item['repeat-advanced']['weekday'],
+              ]);
+              $params['by_day'] = $by_day_safe->__toString();
+            }
+          }
+          if ($rrule_values['freq'] == 'YEARLY') {
+            $by_month_safe = new FormattableMarkup('BYMONTH=:which', [
+              ':which' => \Drupal::service('date.formatter')->format($rrule_values['start'], 'custom', 'n'),
+            ]);
+            $params['by_month'] = $by_month_safe->__toString();
+          }
+          break;
+      }
+      $rrule_values['parameters'] = implode(';', $params);
+    }
+
+    if (!empty($item['rrule'])) {
+      // Existing rrule, so retrieve and update values.
+      $rrule = SmartDateRule::load($item['rrule']);
+
+      $rrule->set('freq', $rrule_values['freq']);
+      $rrule->set('limit', $rrule_values['limit']);
+      $rrule->set('unlimited', $rrule_values['unlimited']);
+      $rrule->set('start', $rrule_values['start']);
+      $rrule->set('end', $rrule_values['end']);
+      $rrule->set('parameters', $rrule_values['parameters']);
+    }
+    else {
+      // New rrule, so construct object.
+      $rrule = SmartDateRule::create($rrule_values);
+    }
+    // Ensure the rrule timezone matches the configured timezone on the field,
+    // if set.
+    if (isset($item['timezone'])) {
+      $rrule->setTimezone($item['timezone']);
+    }
+    // Generate instances.
+    $instances = $rrule->getRuleInstances($before);
+    $rrule->set('instances', ['data' => $instances]);
+
+    // @todo store unaltered instances instead?
+    $rrule->save();
+    $item['rrule'] = $rrule->id();
+    // Make additional field deltas for the generated instances.
+    $for_cloning[$index] = $instances;
+  }
+  // Now process field values that should be cloned.
+  foreach ($for_cloning as $index => $instances) {
+    // Now process the generated instances.
+    // Use the submitted values as a template.
+    $new_item = $values[$index];
+    // Replace the first instance, in case there's an override.
+    unset($values[$index]);
+
+    foreach ($instances as $rrule_index => $instance) {
+      $new_item['value'] = $instance['value'];
+      $new_item['end_value'] = $instance['end_value'];
+      $new_item['duration'] = ($instance['end_value'] - $instance['value']) / 60;
+      $new_item['rrule_index'] = $rrule_index;
+      $values[] = $new_item;
+    }
+
+  }
+  $values = smart_date_array_orderby($values, '_original_delta', SORT_ASC, 'value', SORT_ASC);
+
+  return $values;
+}
+
+/**
+ * Implements hook_cron().
+ *
+ * Queues rules without defined limits to have more instances generated.
+ */
+function smart_date_recur_cron() {
+  // Check a time variable to control how often this runs.
+  $time_check = \Drupal::state()->get('smart_date_recur_check');
+  if ($time_check && $time_check > time()) {
+    // Wait until a week has lapsed since the last check.
+    return;
+  }
+  /** @var QueueFactory $queue_factory */
+  $queue_factory = \Drupal::service('queue');
+  /** @var QueueInterface $queue */
+  $queue = $queue_factory->get('smart_date_recur_rules');
+  $queue->createQueue();
+
+  $to_process = [];
+  // Get the data we need, and group it by impacted entity.
+  $ids = \Drupal::entityTypeManager()->getStorage('smart_date_rule')->getRuleIdsToCheck();
+  foreach (SmartDateRule::loadMultiple($ids) as $rule) {
+    $entity_type = $rule?->entity_type?->getString();
+    if (!$entity_type) {
+      // Invalid rule, might be an orphaned rule.
+      // @todo Delete invalid rule?
+      // @todo Log a warning.
+      continue;
+    }
+
+    // Validate rule before calling getParentEntity
+    // Any orphaned rules (invalid entity type, bundle or field name) will
+    // prevent new instances from being generated.
+    $entity_id = $rule->validateRule() ? $rule->getParentEntity(TRUE) : NULL;
+    if (!$entity_id) {
+      // Invalid entity, might be an orphaned rule.
+      // @todo Log a warning.
+      continue;
+    }
+    $field_name = $rule->field_name->getString();
+    $rrid = $rule->id();
+    // Group the collected data by impacted entity.
+    $to_process[$entity_type][$entity_id][$field_name][$rrid] = $rrid;
+  }
+
+  foreach ($to_process as $entity_type => $type_items) {
+    foreach ($type_items as $entity_id => $data) {
+      // Create new queue item.
+      $item = new \stdClass();
+      $item->entity_type = $entity_type;
+      $item->entity_id = $entity_id;
+      $item->data = $data;
+      // Add our item to the queue.
+      $queue->createItem($item);
+    }
+  }
+  // Set the time to next extend instances.
+  $wait = "+7 days";
+  \Drupal::state()->set('smart_date_recur_check', strtotime($wait));
+}
+
+/**
+ * Implements hook_field_widget_third_party_settings_form().
+ *
+ * Adds extra configuration fields to Smart Date fields configured to recur.
+ */
+function smart_date_recur_field_widget_third_party_settings_form($plugin, $field_definition, $form_mode, $form, $form_state) {
+  if ($field_definition->getType() === 'smartdate') {
+    if ($field_definition instanceof BaseFieldDefinition) {
+      $allow_recurring = $field_definition->getSetting('allow_recurring');
+    }
+    else {
+      $allow_recurring = $field_definition->getThirdPartySetting('smart_date_recur', 'allow_recurring');
+    }
+    if ($allow_recurring) {
+      $recur_manager = \Drupal::service('smart_date_recur.manager');
+      $element['modal'] = [
+        '#type' => 'checkbox',
+        '#title' => t('Use modal for managing instances'),
+        '#default_value' => $recur_manager->getThirdPartyFallback($plugin, 'modal', 1),
+      ];
+      $element['show_single'] = [
+        '#type' => 'checkbox',
+        '#title' => t('Show a value of 1 in the increment field'),
+        '#default_value' => $recur_manager->getThirdPartyFallback($plugin, 'show_single', 0),
+      ];
+      $element['allowed_recur_freq_values'] = [
+        '#type' => 'checkboxes',
+        '#title' => t('Allowed frequency values for recurring events'),
+        '#default_value' => $recur_manager->getThirdPartyFallback($plugin, 'allowed_recur_freq_values', _smart_date_recur_get_freq_defaults()),
+        '#options' => [
+          'MINUTELY' => t('by Minutes'),
+          'HOURLY' => t('Hourly'),
+          'DAILY' => t('Daily'),
+          'WEEKLY' => t('Weekly'),
+          'MONTHLY' => t('Monthly'),
+          'YEARLY' => t('Annually'),
+        ],
+      ];
+      return $element;
+    }
+  }
+}
+
+/**
+ * Implements hook_field_formatter_settings_summary_alter().
+ */
+function smart_date_recur_field_widget_settings_summary_alter(&$summary, $context) {
+  $recur_manager = \Drupal::service('smart_date_recur.manager');
+  // Append messages to the summary.
+  if ($context['field_definition']->getType() == 'smartdate' && $recur_manager->getThirdPartyFallback($context['field_definition'], 'allow_recurring')) {
+    if ($recur_manager->getThirdPartyFallback($context['widget'], 'modal', 1)) {
+      $summary[] = t('Use modal for managing instances.');
+    }
+    if ($recur_manager->getThirdPartyFallback($context['widget'], 'show_single', 1)) {
+      $summary[] = t('Show a value of 1 in the increment field.');
+    }
+    if ($freq_values = $recur_manager->getThirdPartyFallback($context['widget'], 'allowed_recur_freq_values', _smart_date_recur_get_freq_defaults())) {
+      $labels = _smart_date_recur_label_freq_defaults($freq_values);
+      $summary[] = t('Dates can recur:') . ' ' . implode(', ', $labels);
+    }
+  }
+}
+
+/**
+ * Helper function to centralize default frequency values.
+ */
+function _smart_date_recur_label_freq_defaults($freq_values) {
+  $labels = [];
+  $freq_labels = \Drupal::service('smart_date_recur.manager')->getFrequencyLabels();
+  foreach ($freq_values as $key => $value) {
+    if ($value && isset($freq_labels[$value])) {
+      $labels[$key] = $freq_labels[$value];
+    }
+  }
+  return $labels;
+}
+
+/**
+ * Helper function to centralize default frequency values.
+ */
+function _smart_date_recur_get_freq_defaults() {
+  return ['DAILY', 'WEEKLY', 'MONTHLY', 'YEARLY'];
+}

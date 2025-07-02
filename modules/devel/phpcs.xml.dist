@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="Module">
+  <file>.</file>
+  <arg name="extensions" value="php,module,inc,install,test,profile,theme,css,info,txt,md,yml"/>
+  <config name="drupal_core_version" value="8"/>
+
+  <!-- Initially include all Drupal and DrupalPractice sniffs. -->
+  <rule ref="vendor/drupal/coder/coder_sniffer/Drupal"/>
+  <rule ref="vendor/drupal/coder/coder_sniffer/DrupalPractice"/>
+
+  <!-- Use 's' to print the full sniff name in the report. -->
+  <!-- A '-' is prefixed to each of these, so s becomes -s, etc. -->
+  <arg value="s"/>
+  <arg value="-colors"/>
+  <arg name='report-width' value='120'/>
+
+  <!-- Ignore all files that match these patterns. They are matched against -->
+  <!-- the full file path and there is an implied wildcard at each end. -->
+  <!-- Periods must be escaped using \. -->
+  <exclude-pattern>_ignore</exclude-pattern>
+  <exclude-pattern>\.patch</exclude-pattern>
+  <exclude-pattern>interdif</exclude-pattern>
+  <exclude-pattern>\.ddev</exclude-pattern>
+
+  <!-- Examples for how you disable rules you do not like. -->
+  <!-- Exclude a sniff from running on specific files. -->
+  <rule ref="Drupal.Files.TxtFileLineLength.TooLong">
+    <!-- Exclude .md files from the line limit rule. -->
+    <exclude-pattern>\.md</exclude-pattern>
+  </rule>
+  <rule ref="Drupal.Commenting.DocComment.ParamNotFirst">
+    <!-- Drush commands are most readable with @command at top. -->
+    <exclude-pattern>Commands\.php</exclude-pattern>
+  </rule>
+  <!-- Devel is allowed to use its own debug functions, but instead of disabling
+       the rule Drupal.Functions.DiscouragedFunctions globally, it is done just
+       in the places required. -->
+
+  <!-- Ignore specific sniffs in all files. The following are either not
+       relevant for Devel or we have decided not to adhere to them anyway. -->
+  <!-- Method declarations should be exempt from the long line limit. -->
+  <rule ref="Drupal.Arrays.Array.LongLineDeclaration"><severity>0</severity></rule>
+  <!-- We prefer typed properties, see https://stitcher.io/blog/typed-properties-in-php-74 -->
+  <rule ref="Drupal.Commenting.VariableComment.Missing"><severity>0</severity></rule>
+  <!-- Devel debug functions do not need to start with 'devel_' -->
+  <rule ref="Drupal.NamingConventions.ValidFunctionName.InvalidPrefix"><severity>0</severity></rule>
+  <!-- Fixing this makes the code look worse. Constants already start with DEVEL_ -->
+  <rule ref="DrupalPractice.Constants.GlobalDefine.GlobalConstant"><severity>0</severity></rule>
+  <!-- This module is allowed to use debug code -->
+  <rule ref="MySource.Debug.DebugCode.Found"><severity>0</severity></rule>
+  <!-- Commented out code triggers this. Long lived, commented out code is useful. https://gitlab.com/drupalspoons/devel/-/jobs/3439809881 -->
+  <rule ref="Drupal.WhiteSpace.ScopeIndent.Incorrect"><severity>0</severity></rule>
+  <!-- Some classes have self-explanatory names -->
+  <rule ref="Drupal.Commenting.ClassComment.Missing"><severity>0</severity></rule>
+  <!-- Some functions have self-explanatory names -->
+  <rule ref="Drupal.Commenting.FunctionComment.Missing"><severity>0</severity></rule>
+  <!-- Commented out code triggers this. Long lived, commented out code is useful. https://gitlab.com/drupalspoons/devel/-/jobs/3439809881 -->
+  <rule ref="Drupal.Commenting.InlineComment.SpacingBefore"><severity>0</severity></rule>
+  <!-- Commented out code triggers this. Long lived, commented out code is useful. https://gitlab.com/drupalspoons/devel/-/jobs/3439809881 -->
+  <rule ref="Drupal.Commenting.InlineComment.InvalidEndChar"><severity>0</severity></rule>
+  <!-- Use a real code editor -->
+  <rule ref="Drupal.Files.LineLength.TooLong"><severity>0</severity></rule>
+
+  <!-- While work is ongoing to fix coding standards faults, and to determine
+       which rules and sniffs we want to ignore, the following is a list of all
+       the currently failing sniffs and they are set to be ignored. The phpcs
+       job can now be allowed to fail for any new coding standard fault
+       introduced. When the codebase no longer has any messages for a particular
+       sniff below, it should be removed from this list.
+  -->
+  <rule ref="DrupalPractice.FunctionCalls.InsecureUnserialize.InsecureUnserialize"><severity>0</severity></rule>
+
+</ruleset>

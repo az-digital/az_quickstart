@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Module file for field_group_accordion.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function field_group_accordion_theme() {
+  return [
+    'field_group_accordion_item' => [
+      'render element' => 'element',
+      'template' => 'field-group-accordion-item',
+      'file' => 'templates/theme.inc',
+    ],
+    'field_group_accordion' => [
+      'render element' => 'element',
+      'template' => 'field-group-accordion',
+      'file' => 'templates/theme.inc',
+    ],
+  ];
+}

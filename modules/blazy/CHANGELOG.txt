@@ -1,0 +1,88 @@
+Blazy 3.0.x-dev, 2024-10-24
+---------------------------
+- Issue #3477901 by bburg: With Magnific Popup, next/prev buttons trigger pop up
+
+Blazy 3.0.x-dev, 2024-10-21
+---------------------------
+- Removed unwanted By delta option outside Layout builder.
+
+Blazy 3.0.x-dev, 2024-09-22
+---------------------------
+- Issue #3469022 by ahmad khader: Fix flybox malfunctions after being closed for
+  the first time.
+- Added max_region_count option for Blazy layout.
+
+Blazy 3.0.x-dev, 2024-09-15
+---------------------------
+Issue #3474291 by leslieg: Update logo for compatibility with Project Browser.
+
+Blazy 3.0.x-dev, 2024-08-11
+---------------------------
+- Fixed for Olivero Grid surprises with Splide and Slick.
+
+Blazy 3.0.x-dev, 2024-06-27
+---------------------------
+- Issue #3457375 by KarlShea: BlazyViews::withViewsField calls set() on null if
+  no results in view.
+
+Blazy 3.0.x-dev, 2024-06-02
+---------------------------
+- Updated hook_blazy_settings_alter() for Views field to facilitate a swap.
+- Removed no-longer working hook_views_pre_render() for preprocess_views_view().
+
+Blazy 3.0.x-dev, 2024-05-31
+---------------------------
+- Fixed for paragraphs UndefinedLinkTemplateException from a hook_alter.
+- Fixed for grid form item states witht the new textarea.
+- Fixed for irrelevant Vanilla option within Vanilla formatters.
+
+Blazy 3.0.x-dev, 2024-05-28
+---------------------------
+- Issue #3361143: Compatibility with BigPipe.
+- Renamed .is-b-native to .is-b-nativegrid for clarity and consistency.
+
+Blazy 3.0.x-dev, 2024-05-27
+---------------------------
+- Fixed for infinite scroll (IO/ VIS) grids with BigPipe complications.
+- Fixed for dynamic grids with BigPipe as usual.
+
+Blazy 3.0.x-dev, 2024-05-26
+---------------------------
+- Added supports for dynamic multi-breakpoint native grid and flexbox.
+- Changed blazy native grid and flexbox EM to PX to avoid theme compatibility.
+
+Blazy 3.0.x-dev, 2024-05-25
+---------------------------
+- Added supports for grid setting values with linebreak for reability.
+
+Blazy 3.0.x-dev, 2024-05-24
+---------------------------
+- Added gapless grid option for LB.
+- Fixed for Blazy layout -- CSS, dummy contents, etc.
+- Minor re-usability: JS, grid outside Layout Builder, etc.
+
+Blazy 3.0.x-dev, 2024-05-14
+---------------------------
+- Issue #3446991 by gausarts: Remove some once compat methods for core/once.
+
+Blazy 3.0.x-dev, 2024-05-12
+---------------------------
+- Supports triggering events with extra arguments ala jQuery.
+
+Blazy 3.0.x-dev, 2024-05-04
+---------------------------
+- Added link to entity option for Blazy Title formatter.
+
+Blazy 3.0.x-dev, 2024-04-22
+---------------------------
+- Upped Drupal requirement to 9.4 to avoid PHP7 issues.
+
+Blazy 3.0.x-dev, 2024-04-16
+---------------------------
+- Fixed for by_delta option count.
+- Added Blazy Layout sub-module for Layout Builder.
+- Added flexbox layout.
+
+Blazy 3.0.x-dev, 2023-09-18
+---------------------------
+- Initial 3.x.

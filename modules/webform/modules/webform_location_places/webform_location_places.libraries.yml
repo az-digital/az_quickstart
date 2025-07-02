@@ -1,0 +1,24 @@
+webform_location_places.element:
+  version: VERSION
+  css:
+    component:
+      css/webform.element.location.places.css: {}
+  js:
+    js/webform.element.location.places.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/once
+    - webform_location_places/libraries.algolia.places
+
+libraries.algolia.places:
+  remote: https://github.com/algolia/places
+  version: '1.19.0'
+  license:
+    name: MIT
+    url: https://github.com/algolia/places/blob/master/LICENSE
+    gpl-compatible: true
+  cdn:
+    /libraries/algolia.places/dist/cdn/: https://cdn.jsdelivr.net/npm/places.js@1.19.0/dist/cdn/
+  js:
+    /libraries/algolia.places/dist/cdn/places.js: {}

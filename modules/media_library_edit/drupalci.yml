@@ -1,0 +1,31 @@
+# This file customizes the steps that DrupalCI will use when testing this project.
+#
+# The primary customization provided here is to check for deprecation errors. It is recommended
+# to do this only when you've used https://github.com/mglaman/drupal-check/ to verify any
+# existing deprecation errors are addressed.
+#
+# Learn to make one for your own drupal.org project:
+# https://www.drupal.org/drupalorg/docs/drupal-ci/customizing-drupalci-testing
+build:
+  assessment:
+    validate_codebase:
+      phplint:
+      container_composer:
+      phpcs:
+        # phpcs will use core's specified version of Coder.
+        sniff-all-files: true
+        halt-on-fail: false
+    testing:
+      # run_tests task is executed several times in order of performance speeds.
+      # halt-on-fail can be set on the run_tests tasks in order to fail fast.
+      # suppress-deprecations is false in order to be alerted to usages of
+      # deprecated code.
+      run_tests.standard:
+        types: 'Simpletest,PHPUnit-Unit,PHPUnit-Kernel,PHPUnit-Functional'
+        testgroups: '--all'
+        suppress-deprecations: false
+      run_tests.js:
+        types: 'PHPUnit-FunctionalJavascript'
+        testgroups: '--all'
+        suppress-deprecations: false
+      nightwatchjs: {  }

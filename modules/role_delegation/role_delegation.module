@@ -1,0 +1,292 @@
+<?php
+
+/**
+ * @file
+ * Allows admins to grant roles the authority to assign selected roles to users.
+ *
+ * This module allows site administrators to grant some roles the authority to
+ * change roles assigned to users, without them needing the 'administer access
+ * control' permission.
+ *
+ * It provides its own tab in the user profile so that roles can be changed
+ * without needing access to the user edit form.
+ */
+
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\Field\FieldDefinitionInterface;
+use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Url;
+use Drupal\role_delegation\DelegatableRoles;
+use Drupal\role_delegation\Plugin\Action\RoleDelegationAddRoleUser;
+use Drupal\role_delegation\Plugin\Action\RoleDelegationRemoveRoleUser;
+use Drupal\user\Entity\Role;
+use Drupal\user\Plugin\Action\AddRoleUser;
+use Drupal\user\Plugin\Action\RemoveRoleUser;
+use Drupal\user\RoleInterface;
+use Drupal\user\UserInterface;
+
+/**
+ * Implements hook_help().
+ */
+function role_delegation_help(string $route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.role_delegation':
+      $output = '<p>' . t('This module allows site administrators to grant some roles the authority to assign selected roles to users, without them needing the <em>administer permissions</em> permission.') . '</p>';
+      $output .= '<p>' . t('It provides its own tab in the user profile so that roles can be assigned without needing access to the user edit form.') . '</p>';
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_delete().
+ */
+function role_delegation_user_role_delete(RoleInterface $entity) {
+  $permission = sprintf('assign %s role', $entity->id());
+
+  /** @var array $roles */
+  $roles = \Drupal::entityQuery('user_role')
+    ->condition('permissions.*', $permission)
+    ->condition('id', $entity->id(), '<>')
+    ->accessCheck(FALSE)
+    ->execute();
+
+  /** @var \Drupal\user\RoleInterface $role */
+  foreach (Role::loadMultiple($roles) as $role) {
+    $role->revokePermission($permission);
+    $role->save();
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ */
+function role_delegation_user_presave(UserInterface $entity) {
+  if (!$entity->hasField('role_change')) {
+    return;
+  }
+
+  $submitted_roles = [];
+  foreach ($entity->role_change as $item) {
+    $submitted_roles[] = $item->target_id;
+  }
+
+  // Change roles based on the field for role delegation.
+  if ($submitted_roles !== DelegatableRoles::$emptyFieldValue) {
+    $current_user = \Drupal::currentUser();
+    $delegatable_roles = array_keys(\Drupal::service('delegatable_roles')
+      ->getAssignableRoles($current_user));
+
+    // Of the roles that were submitted, only add ones that the user has access
+    // to use.
+    $add_roles = array_intersect($delegatable_roles, $submitted_roles);
+    foreach ($add_roles as $id) {
+      $entity->addRole($id);
+    }
+    // Any roles that the user has access to use and did not include in
+    // submission are removals.
+    $remove_roles = array_diff($delegatable_roles, $submitted_roles);
+    foreach ($remove_roles as $id) {
+      $entity->removeRole($id);
+    }
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_load().
+ */
+function role_delegation_user_load(array $entities) {
+  // This is a workaround for known limitations of computed fields: since they
+  // are not stored, they are also not loaded with the user, so values must be
+  // manually supplied. This allows us to later determine that an empty field
+  // actually means intentional role removals, as opposed to field data not
+  // being sent/no access to field.
+  // Things may later with https://www.drupal.org/node/2392845.
+  foreach ($entities as $user_entity) {
+    if ($user_entity->hasField('role_change')) {
+      $user_entity->set('role_change', DelegatableRoles::$emptyFieldValue);
+    }
+  }
+}
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter().
+ */
+function role_delegation_form_user_form_alter(array &$form, FormStateInterface $form_state, string $form_id) {
+  // Add an entity builder for the user entity to ensure that it recieves the
+  // "empty" value when the field is not accessible.
+  if (isset($form['role_change'])) {
+    $form['role_change']['#group'] = 'account';
+    $form['#entity_builders'][] = 'role_delegation_user_form_builder';
+  }
+}
+
+/**
+ * Implements hook_field_widget_single_element_form_alter().
+ */
+function role_delegation_field_widget_single_element_form_alter(array &$element, FormStateInterface $form_state, array $context) {
+  /** @var \Drupal\Core\Field\FieldItemListInterface $items */
+  $items = $context['items'];
+  /** @var \Drupal\Core\Field\FieldDefinitionInterface $field_definition */
+  $field_definition = $items->getFieldDefinition();
+
+  // Since the field is computed, the default value of the form element will be
+  // empty, so we need to adjust it.
+  if ($field_definition->getTargetEntityTypeId() === 'user' && $field_definition->getName() === 'role_change' && isset($element['#options'])) {
+    $roles_current = $items->getEntity()->getRoles();
+    $roles_options = array_keys($element['#options']);
+    $element['#default_value'] = array_intersect($roles_current, $roles_options);
+  }
+}
+
+/**
+ * Implements hook_options_list_alter().
+ */
+function role_delegation_options_list_alter(array &$options, array $context) {
+  /** @var \Drupal\Core\Field\FieldDefinitionInterface $field_definition */
+  $field_definition = $context['fieldDefinition'];
+
+  // By default, ALL the entities for a given type will be used for the options
+  // on an enity reference field, but we only want the user to be able to choose
+  // from the roles they can assign.
+  if ($field_definition->getTargetEntityTypeId() === 'user' && $field_definition->getName() === 'role_change') {
+    $current_user = \Drupal::currentUser();
+    $options = \Drupal::service('delegatable_roles')
+      ->getAssignableRoles($current_user);
+  }
+}
+
+/**
+ * Entity builder for the user form with empty field value for "role_change".
+ *
+ * @see role_delegation_form_alter()
+ */
+function role_delegation_user_form_builder(string $entity_type, UserInterface $user, array &$form, FormStateInterface $form_state) {
+  // If the user has no access to the "role_change" field, then the form will
+  // submit an empty array for the field, which will make later processing think
+  // it was intentional. Set it to the empty field value to correct this.
+  if (!isset($form['role_change']['#access']) || !$form['role_change']['#access']) {
+    $user->set('role_change', DelegatableRoles::$emptyFieldValue);
+  }
+}
+
+/**
+ * Implements hook_entity_base_field_info().
+ */
+function role_delegation_entity_base_field_info(EntityTypeInterface $entity_type) {
+  $fields = [];
+
+  if ($entity_type->id() === 'user') {
+    $fields['role_change'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Roles'))
+      ->setSetting('target_type', 'user_role')
+      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+      ->setComputed(TRUE)
+      ->setDisplayOptions('form', [
+        'type' => 'options_buttons',
+        'weight' => 1,
+      ])
+      ->setSetting('handler', 'role_change:user_role')
+      ->setDefaultValue(DelegatableRoles::$emptyFieldValue);
+  }
+
+  return $fields;
+}
+
+/**
+ * Implements hook_entity_field_access().
+ */
+function role_delegation_entity_field_access(string $operation, FieldDefinitionInterface $field_definition, AccountInterface $account, FieldItemListInterface $items = NULL) {
+  if ($operation === 'edit' && $field_definition->getName() === 'role_change' && $field_definition->getTargetEntityTypeId() === 'user') {
+    // Deny access if the user has access to the normal roles field.
+    if ($account->hasPermission('administer permissions')) {
+      return AccessResult::forbidden()->cachePerPermissions();
+    }
+
+    // Or if they don't have at least one role that allows them to delegate.
+    $permissions = \Drupal::service('permission_generator.role_delegation')
+      ->rolePermissions();
+    $permissions = array_merge(['assign all roles'], array_keys($permissions));
+    foreach ($permissions as $permission) {
+      if ($account->hasPermission($permission)) {
+        return AccessResult::allowed()->cachePerPermissions();
+      }
+    }
+    return AccessResult::forbidden()->cachePerPermissions();
+  }
+
+  return AccessResult::neutral();
+}
+
+/**
+ * Implements hook_entity_operation().
+ */
+function role_delegation_entity_operation(EntityInterface $entity) {
+  $operations = [];
+
+  if (!$entity instanceof UserInterface) {
+    return $operations;
+  }
+
+  $url = Url::fromRoute('role_delegation.edit_form', [
+    'user' => $entity->id(),
+  ]);
+
+  // Check if the current user has access to the role_delegation edit form.
+  if ($url->access()) {
+    $operations['role_delegation'] = [
+      'title' => t('Roles'),
+      'weight' => 210,
+      'url' => $url,
+    ];
+  }
+
+  return $operations;
+}
+
+/**
+ * Implements hook_views_data_alter().
+ */
+function role_delegation_views_data_alter(array &$data) {
+  $data['users']['user_bulk_form']['field']['id'] = 'role_delegation_user_bulk_form';
+}
+
+/**
+ * Implements hook_action_info_alter().
+ */
+function role_delegation_action_info_alter(&$definitions) {
+  // Override the addRoleUser and RemoveRoleUser action, so those actions also
+  // work without the 'administer users' permission. If another module has
+  // already swapped out those classes, though, we'll be polite and do nothing.
+  foreach ($definitions as &$definition) {
+    if ($definition['id'] === 'user_add_role_action' && $definition['class'] === AddRoleUser::class) {
+      $definition['class'] = RoleDelegationAddRoleUser::class;
+    }
+    if ($definition['id'] === 'user_remove_role_action' && $definition['class'] === RemoveRoleUser::class) {
+      $definition['class'] = RoleDelegationRemoveRoleUser::class;
+    }
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_access().
+ *
+ * Require role assign permission for all roles assigned to a user to be able to
+ * access the user entity delete (cancel/remove) operation.
+ */
+function role_delegation_user_access(EntityInterface $entity, $operation, AccountInterface $account) {
+  if ($operation === 'delete') {
+    foreach ($entity->getRoles(TRUE) as $rid) {
+      if (!$account->hasPermission(sprintf('assign %s role', $rid)) && !$account->hasPermission('assign all roles')) {
+        return AccessResult::forbidden()->cachePerUser();
+      }
+    }
+  }
+
+  return AccessResult::neutral();
+}

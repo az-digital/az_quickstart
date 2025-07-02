@@ -1,0 +1,78 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the Honeypot module.
+ */
+
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_schema().
+ */
+function honeypot_schema() {
+  $schema['honeypot_user'] = [
+    'description' => 'Table that stores failed attempts to submit a form.',
+    'fields' => [
+      'id' => [
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Unique record ID.',
+      ],
+      'uid' => [
+        'description' => 'Foreign key to {users}.uid; uniquely identifies a Drupal user to whom this ACL data applies.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'hostname' => [
+        'type' => 'varchar',
+        'length' => 128,
+        'not null' => TRUE,
+        'description' => 'Hostname of user that that triggered honeypot.',
+      ],
+      'timestamp' => [
+        'description' => 'Date/time when the form submission failed, as Unix timestamp.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+    ],
+    'primary key' => ['id'],
+    'indexes' => [
+      'uid' => ['uid'],
+      'timestamp' => ['timestamp'],
+      'hostname' => ['hostname'],
+    ],
+  ];
+  return $schema;
+}
+
+/**
+ * Implements hook_install().
+ */
+function honeypot_install() {
+  if (PHP_SAPI !== 'cli') {
+    // Rebuild so that routes defined in honeypot.routing.yml become available.
+    \Drupal::service('router.builder')->rebuild();
+    // Prompt the user to configure Honeypot.
+    \Drupal::messenger()->addMessage(t('Honeypot installed successfully. Please <a href=":url">configure Honeypot</a> to protect your forms from spam bots.', [
+      ':url' => Url::fromRoute('honeypot.config')->toString(),
+    ]));
+  }
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function honeypot_uninstall() {
+  // Clear the bootstrap cache.
+  \Drupal::cache('bootstrap')->deleteAll();
+}
+
+/**
+ * Implements hook_update_last_removed().
+ */
+function honeypot_update_last_removed() {
+  return 8104;
+}

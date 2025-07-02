@@ -1,0 +1,85 @@
+services:
+  blazy.base:
+    abstract: true
+    class: Drupal\blazy\BlazyBase
+    arguments: ['@blazy.libraries', '@entity.repository', '@entity_type.manager', '@renderer', '@language_manager']
+
+  blazy:
+    class: Drupal\blazy\Blazy
+    parent: blazy.base
+
+  blazy.manager.base:
+    abstract: true
+    class: Drupal\blazy\BlazyManagerBase
+    parent: blazy.base
+
+  blazy.manager:
+    abstract: false
+    class: Drupal\blazy\BlazyManager
+    parent: blazy.manager.base
+
+  blazy.formatter:
+    class: Drupal\blazy\BlazyFormatter
+    parent: blazy.manager
+
+  blazy.media:
+    class: Drupal\blazy\Media\BlazyMedia
+    arguments: ['@blazy.manager', '@http_client', '@media.oembed.iframe_url_helper']
+
+  blazy.oembed:
+    class: Drupal\blazy\Media\BlazyOEmbed
+    arguments: ['@blazy.media', '@media.oembed.resource_fetcher', '@media.oembed.url_resolver']
+
+  blazy.entity:
+    class: Drupal\blazy\BlazyEntity
+    arguments: ['@blazy.oembed']
+
+  blazy.config:
+    class: Drupal\blazy\Config\Config
+    # @todo recheck deprecated at D10: '@request_stack',
+    arguments: ['%app.root%', '@cache.default', '@config.factory', '@module_handler', '@current_route_match']
+
+  blazy.libraries:
+    class: Drupal\blazy\Asset\Libraries
+    parent: blazy.config
+    calls:
+      - [setDiscovery, ['@library.discovery']]
+      - [setFinder, ['@library.libraries_directory_file_finder']]
+
+  blazy.file:
+    class: Drupal\blazy\Media\BlazyFile
+    arguments: ['@file_system', '@file.repository', '@image.factory', '@logger.factory']
+
+  blazy.svg:
+    class: Drupal\blazy\Media\Svg\Svg
+    parent: blazy.file
+
+  blazy.skin.base:
+    abstract: true
+    class: Drupal\blazy\Skin\SkinManagerBase
+    parent: default_plugin_manager
+    arguments: ['@blazy']
+
+  blazy.skin:
+    class: Drupal\blazy\Skin\SkinManager
+    parent: blazy.skin.base
+
+  blazy.admin.base:
+    abstract: true
+    class: Drupal\blazy\Form\BlazyAdminBase
+    arguments: ['@entity_display.repository', '@config.typed', '@date.formatter', '@blazy.manager']
+
+  blazy.admin.formatter:
+    class: Drupal\blazy\Form\BlazyAdminFormatter
+    parent: blazy.admin.base
+
+  blazy.admin:
+    class: Drupal\blazy\Form\BlazyAdmin
+    parent: blazy.admin.base
+
+  blazy.csp_subscriber:
+    class: Drupal\blazy\EventSubscriber\CspSubscriber
+    arguments:
+      - '@library.dependency_resolver'
+    tags:
+      - { name: event_subscriber }

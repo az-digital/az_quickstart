@@ -1,0 +1,13 @@
+type: module
+core_version_requirement: ^10.3 | ^11
+name: File metadata - EXIF
+description: 'Provides a file metadata plugin for EXIF image information.'
+package: File metadata
+configure: file_mdm.settings
+dependencies:
+  - file_mdm:file_mdm
+
+# Information added by Drupal.org packaging script on 2024-06-11
+version: '3.1.0'
+project: 'file_mdm'
+datestamp: 1718086270

@@ -1,0 +1,22 @@
+{
+  "name": "drupal/linkit",
+  "description": "Linkit - Enriched linking experience",
+  "type": "drupal-module",
+  "homepage": "http://drupal.org/project/linkit",
+  "authors": [
+    {
+      "name": "Emil Stjerneman",
+      "email": "emil@stjerneman.com",
+      "homepage": "https://stjerneman.com",
+      "role": "Maintainer"
+    }
+  ],
+  "support": {
+    "issues": "http://drupal.org/project/linkit",
+    "source": "http://cgit.drupalcode.org/linkit"
+  },
+  "require" : {
+    "drupal/core": "^10.1 || ^11"
+  },
+  "license": "GPL-2.0-or-later"
+}

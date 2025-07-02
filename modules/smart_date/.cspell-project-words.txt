@@ -1,0 +1,45 @@
+# Drupal components, module names and programming terms
+adminimal
+fullcalendar
+recurr
+simshaun
+
+# Smart date words
+ajaxcancel
+ajaxform
+allday
+byday
+byhour
+byminute
+bymonth
+bymonthday
+bysetpos
+cancelurl
+chrono
+dailyrange
+dateaugmenter
+Datestring
+enddate
+getform
+newrule
+nodate
+nondaily
+notime
+notz
+rdata
+rrid
+rrule
+rruleindex
+rrules
+searchoverride
+smartdate
+submiturl
+subsetting
+tzoffset
+zonelist
+
+# Match rules
+exdate
+exdates
+nlwz
+optz

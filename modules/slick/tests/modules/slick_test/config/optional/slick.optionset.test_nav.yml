@@ -1,0 +1,42 @@
+uuid: 4ca3e61d-953c-4fd8-9756-4d87fa25ded9
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - slick_test
+id: test_nav
+name: test_nav
+label: 'Test nav'
+weight: -1
+group: thumbnail
+skin: asnavfor
+breakpoints: 2
+optimized: true
+options:
+  options__active_tab: edit-options-settings
+  settings:
+    centerMode: true
+    centerPadding: ''
+    focusOnSelect: true
+    lazyLoad: ondemand
+    slidesToShow: 7
+  responsives:
+    responsive:
+      -
+        breakpoint: 769
+        unslick: false
+        settings:
+          arrows: false
+          centerMode: true
+          centerPadding: ''
+          focusOnSelect: true
+          slidesToShow: 5
+      -
+        breakpoint: 481
+        unslick: false
+        settings:
+          centerMode: true
+          centerPadding: '0'
+          focusOnSelect: true
+          slidesToShow: 3

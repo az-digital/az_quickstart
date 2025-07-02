@@ -1,0 +1,9 @@
+trimIefIdParentslangcode: en
+status: true
+name: 'Entity Reference Revisions (Level 2)'
+type: err_level_2
+description: 'Second level content type with an entity_reference_revisions field type to another content type.'
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: false

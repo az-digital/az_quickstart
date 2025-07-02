@@ -1,0 +1,37 @@
+services:
+  masquerade:
+    class: Drupal\masquerade\Masquerade
+    arguments: ['@current_user', '@entity_type.manager', '@module_handler', '@session_manager', '@session', '@logger.channel.masquerade', '@user.permissions']
+  logger.channel.masquerade:
+    parent: logger.channel_base
+    arguments: ['masquerade']
+  access_check.masquerade.switch:
+    class: Drupal\masquerade\Access\SwitchAccessCheck
+    arguments: ['@masquerade']
+    tags:
+      - { name: access_check, applies_to: _masquerade_switch_access }
+  access_check.masquerade.unmasquerade:
+    class: Drupal\masquerade\Access\UnmasqueradeAccessCheck
+    arguments: ['@masquerade']
+    tags:
+      - { name: access_check, applies_to: _user_is_masquerading }
+  cache_context.session.is_masquerading:
+    class: Drupal\masquerade\Cache\MasqueradeCacheContext
+    arguments: ['@request_stack']
+    tags:
+      - { name: cache.context }
+  masquerade.callbacks:
+    class: Drupal\masquerade\MasqueradeCallbacks
+    arguments: ['@entity_type.manager', '@masquerade']
+  masquerade.user_last_access_subscriber:
+    class: Drupal\masquerade\EventSubscriber\MasqueradeUserRequestSubscriber
+    decorates: user_last_access_subscriber
+    parent: user_last_access_subscriber
+    public: false
+    calls:
+      - [setMasquerade, ['@masquerade', '@config.factory']]
+  masquerade.session_manager.metadata_bag:
+    class: Drupal\masquerade\Session\MetadataBag
+    decorates: session_manager.metadata_bag
+    parent: session_manager.metadata_bag
+    public: false

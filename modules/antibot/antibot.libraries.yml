@@ -1,0 +1,10 @@
+# Antibot form protection.
+antibot.form:
+  css:
+    component:
+      css/antibot.css: {}
+  js:
+    js/antibot.js: {}
+  dependencies:
+    - core/drupal
+    - core/drupalSettings

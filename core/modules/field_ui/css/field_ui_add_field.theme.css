@@ -1,0 +1,21 @@
+/**
+ * @file field_ui_add_field.theme.css
+ */
+.field-option .form-item__label,
+.subfield-option.subfield-option .form-item__label {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.subfield-option.subfield-option .form-item__label {
+  padding-bottom: 10px;
+}
+
+.field-option .field-option__description,
+.subfield-option .description .item-list {
+  color: #75767b;
+  font-size: 14px;
+  line-height: 1.2;
+}

@@ -1,0 +1,63 @@
+<?php
+
+/**
+ * @file
+ * General functions and hook implementations.
+ */
+
+use Drupal\Core\DrupalKernel;
+
+/**
+ * Implements hook_library_info_alter().
+ */
+function chosen_lib_library_info_alter(array &$libraries, $module) {
+  if ('chosen_lib' == $module) {
+    if (isset($libraries['chosen'])) {
+      // Set chosen library path.
+      $chosen_js_path = _chosen_lib_get_chosen_path();
+      $minified = file_exists($chosen_js_path . '/chosen.jquery.min.js');
+      $chosen_js_path = '/' . $chosen_js_path;
+      $chosen_js = $minified
+        ? $chosen_js_path . '/chosen.jquery.min.js'
+        : $chosen_js_path . '/chosen.jquery.js';
+      $libraries['chosen']['js'][$chosen_js] = [
+        'minified' => $minified,
+      ];
+      $chosen_css = $chosen_js_path . '/chosen.css';
+      $libraries['chosen.css']['css']['component'][$chosen_css] = [];
+    }
+  }
+}
+
+/**
+ * Get the location of the chosen library.
+ *
+ * @return string
+ *   The location of the library, or FALSE if the library isn't installed.
+ */
+function _chosen_lib_get_chosen_path() {
+
+  // The following logic is taken from libraries_get_libraries()
+  $searchdir = [];
+
+  // Similar to 'modules' and 'themes' directories inside an installation
+  // profile, installation profiles may want to place libraries into a
+  // 'libraries' directory.
+  $searchdir[] = 'profiles/' . \Drupal::installProfile() . '/libraries/';
+
+  // Always search libraries.
+  $searchdir[] = 'libraries/';
+
+  // Also search sites/<domain>/*.
+  $searchdir[] = DrupalKernel::findSitePath(\Drupal::request()) . '/libraries/';
+
+  foreach ($searchdir as $dir) {
+    foreach (['chosen', 'chosen/docs', 'chosen-js', 'jquery.chosen'] as $sub) {
+      if (file_exists($dir . $sub . '/chosen.jquery.min.js') || file_exists($dir . $sub . '/chosen.jquery.js')) {
+        return $dir . $sub;
+      }
+    }
+  }
+
+  return FALSE;
+}

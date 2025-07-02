@@ -1,0 +1,11 @@
+/**
+ * @file
+ * Excluded elements styles.
+ */
+
+.webform-excluded-elements--child .form-type--boolean {
+  padding: 0 0 0 2em;
+}
+[dir="rtl"] .webform-excluded-elements--child .form-type--boolean {
+  padding: 0 2em 0 0;
+}

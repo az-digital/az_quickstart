@@ -1,0 +1,44 @@
+/**
+ * @file
+ * Drupal-specific CSS fixes for the Chosen module
+ */
+
+.chosen-container.error .chosen-single,
+.chosen-container.error .chosen-single span {
+  line-height: inherit;
+}
+
+.chosen-container-single .chosen-search {
+  display: block;
+}
+
+.chosen-container-multi .chosen-choices li.search-field input[type="text"] {
+  height: auto;
+}
+
+.chosen-container {
+  display: inline-block !important;
+}
+.container-inline div.chosen-container div:not(.chosen-drop) {
+  display: block;
+}
+
+/* Error handling. */
+.chosen-container.error .chosen-choices,
+.chosen-container.error .chosen-single {
+  border: 2px solid red;
+}
+
+.filter-wrapper {
+  overflow: visible !important;
+}
+
+.filter-wrapper:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.chosen-container:has(+ .chosen-helper-btn) {
+  margin-right: var(--space-s, 0.75rem);
+}

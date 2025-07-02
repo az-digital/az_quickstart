@@ -1,0 +1,34 @@
+<?php
+
+/**
+ * @file
+ * Provides Blazy UI.
+ */
+
+/**
+ * Implements hook_help().
+ */
+function blazy_ui_help($route_name) {
+  if ($route_name == 'help.page.blazy_ui') {
+    $items = [
+      'README',
+      'COMPOSER',
+      'UPDATING',
+      'TROUBLESHOOTING',
+      'ROADMAP',
+      'FAQ',
+      'CONTRIBUTION',
+      'ASPECT_RATIO',
+      'ISSUE_TEMPLATE',
+      'CHANGES',
+    ];
+
+    $output = '';
+    foreach ($items as $key) {
+      $output .= file_get_contents(dirname(dirname(dirname(__FILE__))) . "/docs/{$key}.md");
+    }
+
+    return blazy()->markdown($output);
+  }
+  return '';
+}

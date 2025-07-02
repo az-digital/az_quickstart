@@ -1,0 +1,15 @@
+[
+    {
+        "fid": 3,
+        "uuid": "bca18b2e-4d21-44d5-ab81-634451e73d03",
+        "langcode": "en",
+        "uid": 1,
+        "filename": "Babylon5.txt",
+        "uri": "private://Babylon5.txt",
+        "filemime": "text/plain",
+        "filesize": 4,
+        "status": "1",
+        "created": 1486104045,
+        "changed": 1486104045
+    }
+]

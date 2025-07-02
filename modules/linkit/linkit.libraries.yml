@@ -1,0 +1,35 @@
+linkit.admin:
+  css:
+    theme:
+      css/linkit.admin.theme.css: {}
+
+linkit.base:
+  js:
+    js/linkit.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings
+
+linkit.autocomplete:
+  js:
+    js/linkit.autocomplete.js: {}
+  css:
+    component:
+      css/linkit.autocomplete.css: {}
+  dependencies:
+    - linkit/linkit.base
+    - core/drupal.ajax
+    - core/drupal.autocomplete
+    - core/once
+
+ckeditor5:
+  js:
+    js/build/linkit.js: { minified: true }
+  css:
+    component:
+      css/linkit.autocomplete.css: {}
+  dependencies:
+    - core/jquery
+    - core/drupal.autocomplete
+    - core/drupal.ajax

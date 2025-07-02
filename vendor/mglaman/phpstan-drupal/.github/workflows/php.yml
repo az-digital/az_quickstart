@@ -1,0 +1,205 @@
+name: Tests
+on:
+  push:
+    branches: [1.x]
+  pull_request:
+    branches: [1.x]
+  schedule:
+    - cron: 0 0 * * *
+
+jobs:
+  lint:
+    runs-on: "ubuntu-latest"
+    name: "Linting | PHP ${{ matrix.php-version }}"
+    strategy:
+      matrix:
+        php-version:
+          - "8.1"
+          - "8.2"
+          - "8.3"
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v4"
+      - name: "Install PHP"
+        uses: "shivammathur/setup-php@v2"
+        with:
+          coverage: "none"
+          php-version: "${{ matrix.php-version }}"
+          tools: composer:v2
+          extensions: dom, curl, libxml, mbstring, zip, pdo, mysql, pdo_mysql, gd
+      - name: "Install dependencies"
+        uses: "ramsey/composer-install@v3"
+      - name: "PHPCS"
+        run: "php vendor/bin/phpcs"
+      - name: "PHPStan"
+        run: "php vendor/bin/phpstan analyze"
+  tests:
+    continue-on-error: ${{ matrix.experimental }}
+    runs-on: "ubuntu-latest"
+    name: "Tests | PHP ${{ matrix.php-version }} | Drupal ${{ matrix.drupal }}"
+    strategy:
+      matrix:
+        experimental: [false]
+        php-version:
+          - "8.1"
+          - "8.2"
+          - "8.3"
+        drupal:
+          - "^10"
+        include:
+          - php-version: "8.1"
+            drupal: "^9.0"
+            experimental: false
+          - php-version: "8.3"
+            drupal: "11.x-dev"
+            experimental: true
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v4"
+      - name: "Install PHP"
+        uses: "shivammathur/setup-php@v2"
+        with:
+          coverage: "xdebug"
+          php-version: "${{ matrix.php-version }}"
+          tools: composer:v2
+          extensions: dom, curl, libxml, mbstring, zip, pdo, mysql, pdo_mysql, gd
+      - name: "Set drupal/core to ${{ matrix.drupal }}"
+        run: "composer require drupal/core-recommended:${{ matrix.drupal }} --with-all-dependencies --dev --no-update"
+      - name: "Add phpspec/prophecy-phpunit"
+        run: "composer require phpspec/prophecy-phpunit:^2 --dev --no-update"
+        if: ${{ matrix.drupal == '^9.0' }}
+      - name: "Install dependencies"
+        uses: "ramsey/composer-install@v3"
+      - name: "PHPUnit"
+        run: "php vendor/bin/phpunit"
+
+  build_integration:
+    needs:
+      - lint
+      - tests
+    continue-on-error: ${{ matrix.experimental }}
+    runs-on: "ubuntu-latest"
+    name: "Build Integration | PHP ${{ matrix.php-version }} | Drupal ${{ matrix.drupal }}"
+    strategy:
+      matrix:
+        experimental: [false]
+        php-version:
+          - "8.1"
+          - "8.2"
+        drupal:
+          - "^10"
+        include:
+          - php-version: "8.1"
+            drupal: "^9.0"
+            experimental: false
+          - php-version: "8.3"
+            drupal: "~11.1"
+            experimental: false
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v4"
+      - name: "Install PHP"
+        uses: "shivammathur/setup-php@v2"
+        with:
+          coverage: "none"
+          php-version: "${{ matrix.php-version }}"
+          tools: composer:v2
+          extensions: dom, curl, libxml, mbstring, zip, pdo, mysql, pdo_mysql, bcmath, gd, exif, iconv
+      - name: Setup Drupal
+        uses: bluehorndigital/setup-drupal@v1.1.0
+        with:
+          version: ${{ matrix.drupal }}
+          path: ~/drupal
+      - name: "set the version alias for self"
+        run: |
+          if [ "${{ github.event_name }}" == 'pull_request' ]; then
+            echo "VERSION_ALIAS=dev-"${{ github.sha }}"" >> $GITHUB_OUTPUT
+          else
+            echo "VERSION_ALIAS=dev-main" >> $GITHUB_OUTPUT
+          fi
+        id: branch_alias
+      - name: "require phpstan-drupal"
+        run: |
+          cd ~/drupal
+          COMPOSER_MEMORY_LIMIT=-1 composer require phpstan/phpstan:"^1" mglaman/phpstan-drupal "${{ steps.branch_alias.outputs.VERSION_ALIAS }} as 1.99.99" phpstan/extension-installer --with-all-dependencies
+          cp $GITHUB_WORKSPACE/tests/fixtures/config/drupal-phpstan.neon phpstan.neon
+      - name: "Test core/install.php"
+        run: |
+          cd ~/drupal
+          ./vendor/bin/phpstan analyze web/core/install.php --debug
+      - name: "Test BrowserTestBase is autoloaded"
+        run: |
+          cd ~/drupal
+          ./vendor/bin/phpstan analyze web/core/modules/dynamic_page_cache | grep -q "Class Drupal\Tests\BrowserTestBase not found and could not be autoloaded." && false || true
+      - name: "Verify test fixtures are ignored."
+        run: |
+          cd ~/drupal
+          ./vendor/bin/phpstan analyze web/core/modules/migrate_drupal --no-progress | grep -q "tests/fixtures" && false || true
+      - name: 'Check "Cannot redeclare token_theme() due to blazy_test.module"'
+        if: ${{ matrix.drupal != '11.x-dev' }}
+        run: |
+          cd ~/drupal
+          COMPOSER_MEMORY_LIMIT=-1 composer require drupal/token drupal/blazy
+          ./vendor/bin/phpstan analyze web/modules/contrib/blazy --no-progress || if (($? == 255)); then false; else true; fi
+          COMPOSER_MEMORY_LIMIT=-1 composer remove drupal/token drupal/blazy
+      - name: 'Check "Cannot redeclare video_embed_media_media_bundle_insert()"'
+        if: ${{ matrix.drupal != '11.x-dev' }}
+        run: |
+          cd ~/drupal
+          COMPOSER_MEMORY_LIMIT=-1 composer require drupal/video_embed_field drupal/slick
+          ./vendor/bin/phpstan analyze web/modules/contrib --no-progress || if (($? == 255)); then false; else true; fi
+          COMPOSER_MEMORY_LIMIT=-1 composer remove drupal/video_embed_field drupal/slick
+  build_integration_no_phpunit:
+    needs:
+      - lint
+      - tests
+    continue-on-error: ${{ matrix.experimental }}
+    runs-on: "ubuntu-latest"
+    name: "Build Integration (No PHPUnit) | PHP ${{ matrix.php-version }} | Drupal ${{ matrix.drupal }}"
+    strategy:
+      matrix:
+        experimental: [false]
+        php-version:
+          - "8.1"
+          - "8.2"
+        drupal:
+          - "^10"
+        include:
+          - php-version: "8.1"
+            drupal: "^9.0"
+            experimental: false
+          - php-version: "8.3"
+            drupal: "11.x-dev"
+            experimental: true
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v4"
+      - name: "Install PHP"
+        uses: "shivammathur/setup-php@v2"
+        with:
+          coverage: "none"
+          php-version: "${{ matrix.php-version }}"
+          tools: composer:v2
+          extensions: dom, curl, libxml, mbstring, zip, pdo, mysql, pdo_mysql, bcmath, gd, exif, iconv
+      - name: Setup Drupal
+        uses: bluehorndigital/setup-drupal@v1.1.0
+        with:
+          version: ${{ matrix.drupal }}
+          path: ~/drupal
+      - name: "Remove PHPUnit"
+        run: |
+          cd ~/drupal
+          composer --dev remove phpspec/prophecy-phpunit drupal/core-dev
+      - name: "require phpstan-drupal"
+        run: |
+          cd ~/drupal
+          COMPOSER_MEMORY_LIMIT=-1 composer require mglaman/phpstan-drupal *@dev
+          cp $GITHUB_WORKSPACE/tests/fixtures/config/drupal-no-dev-phpstan.neon phpstan.neon
+      - name: "Test core/install.php"
+        run: |
+          cd ~/drupal
+          ./vendor/bin/phpstan analyze web/core/install.php --debug
+      - name: "Test no crash"
+        run: |
+          cd ~/drupal
+          ./vendor/bin/phpstan analyze web/core/modules/dynamic_page_cache --debug

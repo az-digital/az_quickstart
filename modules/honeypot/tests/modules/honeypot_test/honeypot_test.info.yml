@@ -1,0 +1,9 @@
+name: Honeypot Test
+type: module
+description: Support module for Honeypot internal testing purposes.
+package: Testing
+
+# Information added by Drupal.org packaging script on 2025-02-18
+version: '2.2.2'
+project: 'honeypot'
+datestamp: 1739854374

@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - node.type.migrate_example_wine
+  module:
+    - text
+id: node.migrate_example_wine.body
+field_name: body
+entity_type: node
+bundle: migrate_example_wine
+label: Body
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: true
+field_type: text_with_summary

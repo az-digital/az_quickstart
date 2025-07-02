@@ -1,0 +1,17 @@
+name: 'Block field module tests'
+type: module
+description: 'Support module for Block field that provides a working example of a block field.'
+package: Testing
+dependencies:
+  - drupal:block_field
+  - drupal:block_content
+  - drupal:field
+  - drupal:menu_ui
+  - drupal:node
+  - drupal:path
+  - drupal:user
+
+# Information added by Drupal.org packaging script on 2024-08-13
+version: '8.x-1.0-rc5'
+project: 'block_field'
+datestamp: 1723550579

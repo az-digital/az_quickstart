@@ -1,0 +1,92 @@
+[
+    {
+        "cid": 1,
+        "uuid": "b05c050b-d550-46ff-845d-5e0659d5e313",
+        "langcode": "en",
+        "comment_type": "comment_node_test_content_type",
+        "status": "1",
+        "uid": 1,
+        "pid": null,
+        "entity_id": 1,
+        "subject": "Subject field in English",
+        "name": null,
+        "mail": null,
+        "homepage": null,
+        "hostname": "2001:db8:ffff:ffff:ffff:ffff:ffff:ffff",
+        "created": 1421727536,
+        "changed": 1421727536,
+        "thread": "01/",
+        "entity_type": "node",
+        "field_name": "comment_node_test_content_type",
+        "default_langcode": "1",
+        "content_translation_source": "und",
+        "content_translation_outdated": "0",
+        "comment_body": [
+            {
+                "value": "This is a comment",
+                "format": "filtered_html"
+            }
+        ],
+        "field_integer": 1000000
+    },
+    {
+        "cid": 1,
+        "uuid": "b05c050b-d550-46ff-845d-5e0659d5e313",
+        "langcode": "fr",
+        "comment_type": "comment_node_test_content_type",
+        "status": "0",
+        "uid": 1,
+        "pid": null,
+        "entity_id": 1,
+        "subject": "Subject field in French",
+        "name": null,
+        "mail": null,
+        "homepage": null,
+        "hostname": null,
+        "created": 1531837764,
+        "changed": 1531837764,
+        "thread": "01/",
+        "entity_type": "node",
+        "field_name": "comment_node_test_content_type",
+        "default_langcode": "0",
+        "content_translation_source": "en",
+        "content_translation_outdated": "0",
+        "comment_body": [
+            {
+                "value": "This is a comment",
+                "format": "filtered_html"
+            }
+        ],
+        "field_integer": 2000000
+    },
+    {
+        "cid": 1,
+        "uuid": "b05c050b-d550-46ff-845d-5e0659d5e313",
+        "langcode": "is",
+        "comment_type": "comment_node_test_content_type",
+        "status": "1",
+        "uid": 2,
+        "pid": null,
+        "entity_id": 1,
+        "subject": "Subject field in Icelandic",
+        "name": null,
+        "mail": null,
+        "homepage": null,
+        "hostname": null,
+        "created": 1531838064,
+        "changed": 1531838064,
+        "thread": "01/",
+        "entity_type": "node",
+        "field_name": "comment_node_test_content_type",
+        "default_langcode": "0",
+        "content_translation_source": "en",
+        "content_translation_outdated": "1",
+        "comment_body": [
+            {
+                "value": "This is a comment",
+                "format": "filtered_html"
+            }
+        ],
+        "field_integer": 3000000
+    }
+]

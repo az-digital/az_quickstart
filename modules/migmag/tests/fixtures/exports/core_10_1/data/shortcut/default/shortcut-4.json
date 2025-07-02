@@ -1,0 +1,18 @@
+[
+    {
+        "id": 4,
+        "uuid": "197bf8bf-aa1b-4264-9e2e-1bf330ad000f",
+        "langcode": "en",
+        "shortcut_set": "default",
+        "title": "Find content",
+        "weight": -19,
+        "link": [
+            {
+                "uri": "internal:/admin/content",
+                "title": null,
+                "options": []
+            }
+        ],
+        "default_langcode": "1"
+    }
+]

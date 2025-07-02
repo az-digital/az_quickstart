@@ -1,0 +1,16 @@
+# See docs at https://www.drupal.org/drupalorg/docs/drupal-ci/customizing-drupalci-testing-for-projects
+build:
+  assessment:
+    validate_codebase: { }
+    # Remove all validation and standards checking from drupal.org CI as this
+    # is now covered by jobs running on Drupalspoons.
+    # https://gitlab.com/drupalspoons/devel/-/pipelines
+    testing:
+      run_tests.standard:
+        types: 'PHPUnit-Unit,PHPUnit-Kernel,PHPUnit-Functional'
+        suppress-deprecations: true
+      run_tests.js:
+        types: 'PHPUnit-FunctionalJavascript'
+        suppress-deprecations: true
+        concurrency: 1
+        halt-on-fail: false

@@ -1,0 +1,8 @@
+admin:
+  version: VERSION
+  js:
+    js/workbench_access.js: {}
+  dependencies:
+    - core/jquery
+    - core/once
+    - core/drupal

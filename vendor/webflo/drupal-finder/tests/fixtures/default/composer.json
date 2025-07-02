@@ -1,0 +1,35 @@
+{
+  "repositories": {
+    "drupal-finder": {
+      "type": "path",
+      "url": "../../../"
+    }
+  },
+  "require": {
+    "composer/installers": "^2.2",
+    "drupal/core": "^10",
+    "webflo/drupal-finder": "*"
+  },
+  "config": {
+    "allow-plugins": {
+      "composer/installers": true
+    }
+  },
+  "extra": {
+    "installer-paths": {
+      "web/core": [
+        "type:drupal-core"
+      ]
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "autoload": {
+    "classmap": [
+      "TestAsComposerScript.php"
+    ]
+  },
+  "scripts": {
+    "dump-drupal-finder": "\\DrupalFinder\\Tests\\Fixtures\\Default\\TestAsComposerScript::dumpDrupalFinder"
+  }
+}

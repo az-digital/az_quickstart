@@ -1,0 +1,66 @@
+/**
+ * @file
+ * Provides loading indicator animation, not used when using blur.
+ */
+
+/* Credit: https://github.com/tobiasahlin/SpinKit */
+/*
+@-webkit-keyframes rotateplane {
+  0% {
+    -webkit-transform: perspective(120px);
+    transform: perspective(120px);
+  }
+  50% {
+    -webkit-transform: perspective(120px) rotateY(180deg);
+    transform: perspective(120px) rotateY(180deg);
+  }
+  100% {
+    -webkit-transform: perspective(120px) rotateY(180deg) rotateX(180deg);
+    transform: perspective(120px) rotateY(180deg) rotateX(180deg);
+  }
+}
+*/
+
+@keyframes rotateplane {
+  0% {
+    transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+  }
+  50% {
+    transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+  }
+  100% {
+    transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+  }
+}
+
+.is-b-loading {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  position: relative;
+  min-height: 30px;
+}
+
+/* Hide for non-js users. */
+.is-b-loading::before {
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  display: none;
+  width: 30px;
+  max-width: 30px;
+  height: 30px;
+  margin-top: -15px;
+  margin-left: -15px;
+  content: "";
+  background: #2eaae0;
+  font-size: 0;
+}
+
+/* Only animate when being visible. */
+.is-b-loading.is-b-visible::before {
+  z-index: 22;
+  display: block;
+  -webkit-animation: rotateplane 1.2s infinite ease-in-out;
+  animation: rotateplane 1.2s infinite ease-in-out;
+}

@@ -1,0 +1,19 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+_core:
+  default_config_hash: Umqd2MOx5fWz6ntl0GmkDY0DM9QmI_K2-SQ9gSfE2T4
+name: 'Crop Responsive Example'
+type: crop_responsive_example
+description: 'Implementation of ImageWidgetCrop with Node integration using Responsive image style to render a specific crop type by breakpoint defined on Theme basis.'
+help: ''
+new_revision: false
+preview_mode: 0
+display_submitted: true

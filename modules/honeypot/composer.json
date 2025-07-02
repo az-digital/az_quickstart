@@ -1,0 +1,26 @@
+{
+    "name": "drupal/honeypot",
+    "description": "Mitigates spam form submissions using the honeypot method.",
+    "type": "drupal-module",
+    "license": "GPL-2.0-or-later",
+    "keywords": ["spam", "php", "form", "honeypot", "honeytrap", "deterrent"],
+    "homepage": "https://www.drupal.org/project/honeypot",
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "Jeff Geerling",
+            "email": "geerlingguy@mac.com"
+        }
+    ],
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/honeypot",
+        "source": "https://git.drupalcode.org/project/honeypot"
+    },
+    "require": {
+        "drupal/core": "^10.3 || ^11"
+    },
+    "require-dev": {
+        "drupal/rules": "^4.0",
+        "drupal/webform": "^6.2"
+    }
+}

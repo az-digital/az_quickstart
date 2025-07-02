@@ -1,0 +1,15 @@
+trimIefIdParentslangcode: en
+status: true
+dependencies:
+  config:
+    - node.type.err_level_3
+  module:
+    - user
+id: node.err_level_3.default
+targetEntityType: node
+bundle: err_level_3
+mode: default
+content:
+  links:
+    weight: 100
+hidden: {  }

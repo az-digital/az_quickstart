@@ -1,0 +1,10 @@
+masquerade as any user:
+  title: 'Masquerade as any user except super user'
+  restrict access: true
+
+masquerade as super user:
+  title: 'Masquerade as super user (UID 1)'
+  restrict access: true
+
+permission_callbacks:
+  - Drupal\masquerade\MasqueradePermissions::permissions

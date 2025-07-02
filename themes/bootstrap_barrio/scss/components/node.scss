@@ -1,0 +1,82 @@
+/**
+ * @file
+ * Visual styles for Bootstrap Barrio's node component.
+ */
+
+.node__content {
+    font-size: $font-size-base;
+    margin-top: $spacer;
+}
+
+
+/* View mode teaser styles. */
+
+.node--view-mode-teaser {
+    border-bottom: $border-width solid $border-color;
+    margin-bottom: $spacer;
+    padding-bottom: $spacer;
+}
+
+.node--view-mode-teaser h2 {
+    margin-top: 0;
+    padding-top: 0.5em;
+}
+
+.node--view-mode-teaser.node--sticky {
+    background: #f9f9f9;
+    background: rgba(0, 0, 0, 0.024);
+    border: $border-width solid $border-color;
+    padding: 0 $spacer $spacer;
+}
+
+.node--view-mode-teaser .node__content {
+    clear: none;
+    font-size: $font-size-base;
+    line-height: $line-height-base;
+}
+
+
+/* Node metadata styles. */
+
+.node__meta {
+    font-size: $font-size-sm;
+    margin-bottom: -5px;
+}
+
+.node__meta .field--name-field-user-picture img {
+    float: left;
+    /* LTR */
+    margin: 1px $spacer 0 0;
+    /* LTR */
+}
+
+[dir="rtl"] .node__meta .field--name-field-user-picture img {
+    float: right;
+    margin-left: $spacer;
+    margin-right: 0;
+}
+
+
+/* Node links styles. */
+
+.node__links {
+    text-align: right;
+    /* LTR */
+    font-size: $font-size-base;
+}
+
+[dir="rtl"] .node__links {
+    text-align: left;
+}
+
+
+/* Unpublished node styles. */
+
+.node--unpublished {
+    padding: $spacer $spacer 0;
+}
+
+.node--unpublished .comment-text .comment-arrow {
+    border-left: $border-width solid #fff4f4;
+    border-right: $border-width solid #fff4f4;
+}

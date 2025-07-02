@@ -1,0 +1,9 @@
+/**
+ * @file
+ * Webform schema styling.
+ */
+
+.webform-schema-table tr.webform-schema-composite {
+  border-top: 2px dashed #a6a6a6;
+  font-weight: bold;
+}

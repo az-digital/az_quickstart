@@ -1,0 +1,39 @@
+# The 'type' should be "label" for short meta tags and "text" for ones which
+# could get longer, especially ones which use a textarea field instead of a
+# textfield.
+metatag.metatag_tag.schema_web_page_breadcrumb:
+  type: text
+  label: 'breadcrumb'
+metatag.metatag_tag.schema_web_page_has_part:
+  type: text
+  label: 'hasPart'
+metatag.metatag_tag.schema_web_page_id:
+  type: text
+  label: '@id'
+metatag.metatag_tag.schema_web_page_is_accessible_for_free:
+  type: text
+  label: 'isAccessibleForFree'
+metatag.metatag_tag.schema_web_page_type:
+  type: string
+  label: '@type'
+metatag.metatag_tag.schema_web_page_author:
+  type: text
+  label: 'author'
+metatag.metatag_tag.schema_web_page_description:
+  type: text
+  label: 'description'
+metatag.metatag_tag.schema_web_page_publisher:
+  type: text
+  label: 'publisher'
+metatag.metatag_tag.schema_web_page_speakable:
+  type: text
+  label: 'speakable'
+metatag.metatag_tag.schema_web_page_in_language:
+  type: text
+  label: 'language'
+metatag.metatag_tag.schema_web_page_translation_of_work:
+  type: text
+  label: 'translationOfWork'
+metatag.metatag_tag.schema_web_page_work_translation:
+  type: text
+  label: 'workTranslation'

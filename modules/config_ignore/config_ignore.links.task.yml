@@ -1,0 +1,5 @@
+config_ignore.settings:
+  route_name: config_ignore.settings
+  title: 'Ignore'
+  base_route: config.sync
+  weight: 3

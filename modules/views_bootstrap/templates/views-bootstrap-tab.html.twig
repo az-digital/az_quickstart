@@ -1,0 +1,28 @@
+{% if title is not empty %}
+    <h3>{{ title }}</h3>
+{% endif %}
+<div id="views-bootstrap-tab-{{ id }}" {{ attributes.addClass(classes) }}>
+    <ul class="nav nav-{{ tab_type }} {% if justified %}nav-justified{% endif %}">
+        {% for key, tab in tabs %}
+            {% set tab_classes = [
+                loop.first ? 'active',
+                'nav-item'
+            ] %}
+            <li class="{{ tab_classes|join(' ') }}">
+                {% set link_classes = [
+                    loop.first ? 'active',
+                    'nav-link'
+                ] %}
+                <a href="{{ "#tab-#{  id }-#{ key }" }}" data-toggle="tab" class="{{ link_classes|join(' ') }}">{{ tab }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+    <div class="tab-content">
+        {% for key, row in rows %}
+            {% set row_classes = ['tab-pane', loop.first ? 'active'] %}
+            <div class="{{ row_classes|join(' ') }}" id="tab-{{ id }}-{{ key }}" {{ row.attributes }}>
+            {{ row.content }}
+        </div>
+        {% endfor %}
+    </div>
+</div>

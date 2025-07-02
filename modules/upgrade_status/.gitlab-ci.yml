@@ -1,0 +1,18 @@
+#
+# DrupalCI includes.
+#
+include:
+  - project: $_GITLAB_TEMPLATES_REPO
+    ref: $_GITLAB_TEMPLATES_REF
+    file:
+      - '/includes/include.drupalci.main.yml'
+      - '/includes/include.drupalci.variables.yml'
+      - '/includes/include.drupalci.workflows.yml'
+
+#
+# Start custom overrides.
+#
+variables:
+  OPT_IN_TEST_CURRENT: 1
+  OPT_IN_TEST_PREVIOUS_MAJOR: 1
+  OPT_IN_TEST_NEXT_MAJOR: 1

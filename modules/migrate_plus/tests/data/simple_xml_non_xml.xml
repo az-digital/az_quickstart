@@ -1,0 +1,17 @@
+
+
+
+<? xml version="1.0" encoding="utf-8"?>
+<items>
+  <item id="1">
+    <values title="Values">
+      <value>Value 1</value>
+      <value>Value 2</value>
+    </values>
+  </item>
+  <item id="2">
+    <values title="Values">
+      <value>Value 1 (single)</value>
+    </values>
+  </item>
+</items>

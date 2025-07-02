@@ -1,0 +1,12 @@
+[
+    {
+        "id": 6,
+        "uuid": "d7715996-ca34-4cc2-b920-54c8dea7e856",
+        "revision_id": 6,
+        "langcode": "und",
+        "path": "/admin",
+        "alias": "/source-noslash",
+        "status": "1",
+        "revision_default": "1"
+    }
+]

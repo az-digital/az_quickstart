@@ -1,0 +1,2 @@
+*.gz      -text diff
+/tests export-ignore

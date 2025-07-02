@@ -1,0 +1,16 @@
+name: Blazy Layout
+type: module
+description: Provides a single layout with dynamic regions for Layout Builder.
+core_version_requirement: '>=9.4'
+package: Blazy
+dependencies:
+  - drupal:layout_discovery
+  - blazy:blazy (>= 3.x)
+
+# Add a fake version so local drush and Git checkouts do not fail dependencies.
+# version: 3.x
+
+# Information added by Drupal.org packaging script on 2024-10-24
+version: '3.0.13'
+project: 'blazy'
+datestamp: 1729740945

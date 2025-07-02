@@ -1,0 +1,137 @@
+<?php
+
+/**
+ * @file
+ * Honeypot module, for deterring spam bots from completing Drupal forms.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\honeypot\Hook\HoneypotCronHooks;
+use Drupal\honeypot\Hook\HoneypotFormHooks;
+use Drupal\honeypot\Hook\HoneypotHelpHooks;
+use Drupal\honeypot\Hook\HoneypotHoneypotHooks;
+
+/**
+ * Implements hook_help().
+ */
+#[LegacyHook]
+function honeypot_help($route_name, RouteMatchInterface $route_match) {
+  return \Drupal::service(HoneypotHelpHooks::class)->help($route_name, $route_match);
+}
+
+/**
+ * Implements hook_cron().
+ */
+#[LegacyHook]
+function honeypot_cron() {
+  \Drupal::service(HoneypotCronHooks::class)->cron();
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+#[LegacyHook]
+function honeypot_form_system_performance_settings_alter(&$form, FormStateInterface $form_state, $form_id) {
+  \Drupal::service(HoneypotFormHooks::class)->systemPerformanceSettingsFormAlter($form, $form_state, $form_id);
+}
+
+/**
+ * Implements hook_form_alter().
+ *
+ * Adds Honeypot features to forms enabled in the Honeypot admin interface.
+ */
+#[LegacyHook]
+function honeypot_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  \Drupal::service(HoneypotFormHooks::class)->formAlter($form, $form_state, $form_id);
+}
+
+/**
+ * Implements hook_honeypot_reject().
+ *
+ * Generates an event when a form submission is rejected.
+ *
+ * @todo Only accepts two args - see above.
+ */
+#[LegacyHook]
+function honeypot_honeypot_reject($form_id, $uid, $type) {
+  \Drupal::service(HoneypotHoneypotHooks::class)->honeypotReject($form_id, $uid, $type);
+}
+
+/**
+ * Builds an array of all the protected forms on the site.
+ *
+ * @return array
+ *   An array whose values are the form_ids of all the protected forms
+ *   on the site.
+ *
+ * @deprecated in honeypot:2.1.0 and is removed from honeypot:3.0.0. Use the
+ *   'honeypot' service instead. For example, \Drupal::service('honeypot')
+ *   ->getProtectedForms().
+ *
+ * @see https://www.drupal.org/node/2949447
+ */
+function honeypot_get_protected_forms() {
+  @trigger_error("honeypot_get_protected_forms() is deprecated in honeypot:2.1.0 and is removed from honeypot:3.0.0. Use the 'honeypot' service instead. For example, \Drupal::service('honeypot')->getProtectedForms(). See https://www.drupal.org/node/2949447", E_USER_DEPRECATED);
+  return \Drupal::service('honeypot')->getProtectedForms();
+}
+
+/**
+ * Form builder function to add different types of protection to forms.
+ *
+ * @param array $options
+ *   (optional) Array of options to be added to form. Currently accepts
+ *   'honeypot' and 'time_restriction'.
+ *
+ * @deprecated in honeypot:2.1.0 and is removed from honeypot:3.0.0. Use the
+ *   'honeypot' service instead. For example, \Drupal::service('honeypot')
+ *   ->addFormProtection($form, $form_state, $options).
+ *
+ * @see https://www.drupal.org/node/2949447
+ */
+function honeypot_add_form_protection(&$form, FormStateInterface $form_state, array $options = []) {
+  @trigger_error("honeypot_add_form_protection() is deprecated in honeypot:2.1.0 and is removed from honeypot:3.0.0. Use the 'honeypot' service instead. For example, \Drupal::service('honeypot')->addFormProtection(\$form, \$form_state, \$options). See https://www.drupal.org/node/2949447", E_USER_DEPRECATED);
+  \Drupal::service('honeypot')->addFormProtection($form, $form_state, $options);
+}
+
+/**
+ * Looks up the time limit for the current user.
+ *
+ * @param array $form_values
+ *   (optional) Array of form values.
+ *
+ * @return int
+ *   The time limit in seconds.
+ *
+ * @deprecated in honeypot:2.1.0 and is removed from honeypot:3.0.0. Use the
+ *   'honeypot' service instead. For example, \Drupal::service('honeypot')
+ *   ->getTimeLimit($form_values).
+ *
+ * @see https://www.drupal.org/node/2949447
+ */
+function honeypot_get_time_limit(array $form_values = []) {
+  @trigger_error("honeypot_get_time_limit() is deprecated in honeypot:2.1.0 and is removed from honeypot:3.0.0. Use the 'honeypot' service instead. For example, \Drupal::service('honeypot')->getTimeLimit(\$form_values). See https://www.drupal.org/node/2949447", E_USER_DEPRECATED);
+  return \Drupal::service('honeypot')->getTimeLimit($form_values);
+}
+
+/**
+ * Logs the failed submission with timestamp and hostname.
+ *
+ * @param string $form_id
+ *   Form ID for the rejected form submission.
+ * @param string $type
+ *   String indicating the reason the submission was blocked. Allowed values:
+ *   - honeypot: If honeypot field was filled in.
+ *   - honeypot_time: If form was completed before the configured time limit.
+ *
+ * @deprecated in honeypot:2.1.0 and is removed from honeypot:3.0.0. Use the
+ *   'honeypot' service instead. For example, \Drupal::service('honeypot')
+ *   ->logFailure($form_id, $type).
+ *
+ * @see https://www.drupal.org/node/2949447
+ */
+function honeypot_log_failure($form_id, $type) {
+  @trigger_error("honeypot_log_failure() is deprecated in honeypot:2.1.0 and is removed from honeypot:3.0.0. Use the 'honeypot' service instead. For example, \Drupal::service('honeypot')->logFailure(\$form_id, \$type). See https://www.drupal.org/node/2949447", E_USER_DEPRECATED);
+  \Drupal::service('honeypot')->logFailure($form_id, $type);
+}

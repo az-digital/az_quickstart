@@ -1,0 +1,185 @@
+/**
+ * @file
+ * Provides CSS3 nativegrid based on Grid Layout.
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout
+ * Below is the less-robust version of GridStack layouts.
+ * Specific for Masonry, add a min-height to the .b-nativegrid to avoid
+ * reflow due to using JS.
+ *
+ * Classes:
+ *  - .is-b-nativegrid, as the original two-dimensional, the real Native Grid.
+ *  - .is-b-masonry, as the tweaked one-dimensional, the Masonry.
+ *
+ * Warning! The percentage values are affected by :root--bnColGap. Adjust.
+ * Percentage is used specific for Masonry due to numeric values 1~12 is broken
+ * when being used on AJAX loaded contents like VIS, or IO infinite pager.
+ *
+ * @todo https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Masonry_Layout
+ */
+
+/* csslint ignore:start */
+/* The gap 15px is to match CSS grid convention such as Bootstrap, adjust it.
+To have gapless, simply add `is-b-gapless` class via template_preprocess. */
+.is-b-masonry {
+  /* Assumed images only. If any captions, see .is-b-captioned. */
+  --bn-row-height-masonry: 0.0001px;
+}
+
+/* Adjust this if any texts cropped. */
+.is-b-masonry.is-b-captioned {
+  --bn-row-height-masonry: 15px;
+}
+
+.b-nativegrid.is-b-masonry-disabled:not(.is-b-gapless) > .grid,
+.item-list > .is-b-masonry-disabled:not(.is-b-gapless) > .grid {
+  margin-top: 0 !important;
+  margin-bottom: var(--bn-col-gap);
+}
+
+.b-nativegrid.is-b-masonry-disabled,
+.blazy.b-nativegrid.is-b-masonry-disabled,
+.item-list > .b-nativegrid.is-b-masonry-disabled {
+  display: block;
+}
+
+/** 480px = 30em with 16px base font. */
+@media only screen and (min-width: 30em) {
+  .b-nativegrid.is-b-masonry {
+    grid-template-rows: masonry;
+    /* grid-auto-rows: var(--bn-row-height-masonry); */
+    grid-auto-rows: auto;
+    /* Add a min-height to the .b-nativegrid to avoid reflow due to using JS. */
+    min-height: 180px;
+  }
+
+  /** Without margin. */
+  .b-nativegrid.is-b-masonry.is-b-gapless {
+    gap: 0;
+  }
+
+  .b-nativegrid.is-b-masonry > .grid,
+  .item-list > .b-nativegrid.is-b-masonry > .grid {
+    overflow: hidden;
+    flex-wrap: nowrap;
+    grid-row-end: span 2;
+    align-self: start;
+  }
+
+  /* To make even bottom gaps when using CSS background Blazy formatter.
+  See Troubleshooting for more details on this.
+  Only if using images, add more inner divs to fill in the gaps here.
+  Disabled if any captions. */
+  .b-nativegrid.is-b-masonry:not(.is-b-captioned) .grid .litebox,
+  .b-nativegrid.is-b-masonry:not(.is-b-captioned) .grid .media {
+    height: 100%;
+  }
+
+  /* Adjust distractions accordingly. */
+  .is-b-masonry p,
+  .is-b-masonry h2,
+  .is-b-masonry figure {
+    margin: 0;
+  }
+
+  /* The only rule make sense for small devices, adjust it accordingly. */
+  .b-nativegrid--sm-2.is-b-masonry {
+    grid-template-columns: repeat(auto-fit, minmax(calc(50% - var(--bn-col-gap)), 1fr));
+  }
+}
+
+/** 641px = 40.063em with 16px base font. */
+@media only screen and (min-width: 40.063em) {
+  .b-nativegrid--md-2.is-b-masonry {
+    grid-template-columns: repeat(auto-fit, minmax(calc(50% - var(--bn-col-gap)), 1fr));
+  }
+
+  .b-nativegrid--md-3.is-b-masonry {
+    grid-template-columns: repeat(auto-fit, minmax(calc(33.3333% - var(--bn-col-gap)), 1fr));
+  }
+
+  .b-nativegrid--md-4.is-b-masonry {
+    grid-template-columns: repeat(auto-fit, minmax(calc(25% - var(--bn-col-gap)), 1fr));
+  }
+
+  .b-nativegrid--md-5.is-b-masonry {
+    grid-template-columns: repeat(auto-fit, minmax(calc(20% - var(--bn-col-gap)), 1fr));
+  }
+
+  .b-nativegrid--md-6.is-b-masonry {
+    grid-template-columns: repeat(auto-fit, minmax(calc(16.6666% - var(--bn-col-gap)), 1fr));
+  }
+
+  .b-nativegrid--md-7.is-b-masonry {
+    grid-template-columns: repeat(auto-fit, minmax(calc(14.2857% - var(--bn-col-gap)), 1fr));
+  }
+
+  .b-nativegrid--md-8.is-b-masonry {
+    grid-template-columns: repeat(auto-fit, minmax(calc(12.5% - var(--bn-col-gap)), 1fr));
+  }
+
+  .b-nativegrid--md-9.is-b-masonry {
+    grid-template-columns: repeat(auto-fit, minmax(calc(11.11111% - var(--bn-col-gap)), 1fr));
+  }
+
+  .b-nativegrid--md-10.is-b-masonry {
+    grid-template-columns: repeat(auto-fit, minmax(calc(10% - var(--bn-col-gap)), 1fr));
+  }
+
+  .b-nativegrid--md-11.is-b-masonry {
+    grid-template-columns: repeat(auto-fit, minmax(calc(9.0909% - var(--bn-col-gap)), 1fr));
+  }
+
+  .b-nativegrid--md-12.is-b-masonry {
+    grid-template-columns: repeat(auto-fit, minmax(calc(8.3333% - var(--bn-col-gap)), 1fr));
+  }
+}
+
+/** 1025px = 64.063em with 16px base font. */
+@media only screen and (min-width: 64.063em) {
+  /* Configurable one-dimensional layouts. */
+  .b-nativegrid--lg-2.is-b-masonry {
+    grid-template-columns: repeat(auto-fit, minmax(calc(50% - var(--bn-col-gap)), 1fr));
+  }
+
+  .b-nativegrid--lg-3.is-b-masonry {
+    grid-template-columns: repeat(auto-fit, minmax(calc(33.3333% - var(--bn-col-gap)), 1fr));
+  }
+
+  .b-nativegrid--lg-4.is-b-masonry {
+    grid-template-columns: repeat(auto-fit, minmax(calc(25% - var(--bn-col-gap)), 1fr));
+  }
+
+  .b-nativegrid--lg-5.is-b-masonry {
+    grid-template-columns: repeat(auto-fit, minmax(calc(20% - var(--bn-col-gap)), 1fr));
+  }
+
+  .b-nativegrid--lg-6.is-b-masonry {
+    grid-template-columns: repeat(auto-fit, minmax(calc(16.6666% - var(--bn-col-gap)), 1fr));
+  }
+
+  .b-nativegrid--lg-7.is-b-masonry {
+    grid-template-columns: repeat(auto-fit, minmax(calc(14.2857% - var(--bn-col-gap)), 1fr));
+  }
+
+  .b-nativegrid--lg-8.is-b-masonry {
+    grid-template-columns: repeat(auto-fit, minmax(calc(12.5% - var(--bn-col-gap)), 1fr));
+  }
+
+  .b-nativegrid--lg-9.is-b-masonry {
+    grid-template-columns: repeat(auto-fit, minmax(calc(11.11111% - var(--bn-col-gap)), 1fr));
+  }
+
+  .b-nativegrid--lg-10.is-b-masonry {
+    grid-template-columns: repeat(auto-fit, minmax(calc(10% - var(--bn-col-gap)), 1fr));
+  }
+
+  .b-nativegrid--lg-11.is-b-masonry {
+    grid-template-columns: repeat(auto-fit, minmax(calc(9.0909% - var(--bn-col-gap)), 1fr));
+  }
+
+  .b-nativegrid--lg-12.is-b-masonry {
+    grid-template-columns: repeat(auto-fit, minmax(calc(8.3333% - var(--bn-col-gap)), 1fr));
+  }
+}
+/* csslint ignore:end */

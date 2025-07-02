@@ -1,0 +1,12 @@
+/**
+ * @file
+ * Table select sort element styles.
+ *
+ * @see /webform/test_element_table
+ */
+
+.tableselect-sort th:first-child,
+.tableselect-sort td:first-child {
+  width: 40px;
+  white-space: nowrap;
+}

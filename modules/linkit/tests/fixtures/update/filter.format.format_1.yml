@@ -1,0 +1,17 @@
+uuid: 3e7bc0b9-3220-4b4d-aa62-e8e0c5c7e8c0
+langcode: en
+status: true
+dependencies: {  }
+name: 'Format 1'
+format: format_1
+weight: 0
+filters:
+  filter_html:
+    id: filter_html
+    provider: filter
+    status: true
+    weight: -86
+    settings:
+      allowed_html: '<a href hreflang> <em> <strong> <cite> <blockquote cite> <code> <ul type> <ol start type=''1 A I''> <li> <dl> <dt> <dd> <h2 id=''jump-*''> <h3 id> <h4 id> <h5 id> <h6 id>'
+      filter_html_help: true
+      filter_html_nofollow: false

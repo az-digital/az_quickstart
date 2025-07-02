@@ -1,0 +1,328 @@
+<?php
+
+/**
+ * @file
+ * Contains workbench_access.module.
+ */
+
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\Core\Entity\EntityForm;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Render\BubbleableMetadata;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\views\Plugin\views\cache\CachePluginBase;
+use Drupal\views\ViewExecutable;
+use Drupal\workbench_access\Entity\AccessSchemeInterface;
+use Drupal\workbench_access\FormAlterHelper;
+
+/**
+ * Implements hook_help().
+ */
+function workbench_access_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the workbench_access module.
+    case 'help.page.workbench_access':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Hierarchical access control module.') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ *
+ * Restricts selection options for the node form.
+ */
+function workbench_access_form_alter(&$form, FormStateInterface $form_state) {
+  $form_object = $form_state->getFormObject();
+  if (!$form_object instanceof EntityForm) {
+    return;
+  }
+  $entity = $form_object->getEntity();
+  if (!$entity instanceof ContentEntityInterface) {
+    return;
+  }
+  \Drupal::classResolver()->getInstanceFromDefinition(FormAlterHelper::class)->alterForm($form, $form, $form_state, $entity);
+}
+
+/**
+ * Implements hook_entity_access().
+ */
+function workbench_access_entity_access(EntityInterface $entity, $op, AccountInterface $account) {
+  // We don't care about the View operation right now.
+  if ($op === 'view' || $op === 'view label' || $account->hasPermission('bypass workbench access')) {
+    // Return early.
+    return AccessResult::neutral();
+  }
+
+  // Return net result of all enabled access schemes.
+  $aggregate_access_result = AccessResult::neutral();
+
+  $schemes = \Drupal::entityTypeManager()->getStorage('access_scheme')->loadMultiple();
+
+  if (count($schemes) > 0) {
+    /** @var Drupal\Core\Config\ConfigFactoryInterface $config_factory */
+    $config_factory = \Drupal::service('config.factory');
+    $config = $config_factory->get('workbench_access.settings');
+
+    if ($config->get('deny_strict') === TRUE) {
+      foreach ($schemes as $scheme) {
+        if ($scheme->getAccessScheme()->checkEntityAccess($scheme, $entity, $op, $account)->isForbidden()) {
+          $aggregate_access_result = AccessResult::forbidden();
+        }
+      }
+    }
+    else {
+      $aggregate_access_result = AccessResult::forbidden();
+      foreach ($schemes as $scheme) {
+        if ($scheme->getAccessScheme()->checkEntityAccess($scheme, $entity, $op, $account)->isNeutral()) {
+          $aggregate_access_result = AccessResult::neutral();
+        }
+      }
+    }
+  }
+
+  $aggregate_access_result->addCacheableDependency($entity);
+  $aggregate_access_result->addCacheableDependency($account);
+  $aggregate_access_result->cachePerPermissions();
+  foreach ($schemes as $scheme) {
+    $aggregate_access_result->addCacheableDependency($scheme);
+  }
+
+  return $aggregate_access_result;
+}
+
+/**
+ * Implements hook_entity_delete().
+ */
+function workbench_access_entity_delete(EntityInterface $entity) {
+  foreach (\Drupal::entityTypeManager()->getStorage('access_scheme')->loadMultiple() as $scheme) {
+    $entity_type = $scheme->getAccessScheme()->entityType();
+    if ($entity_type === $entity->getEntityTypeId()) {
+      // Delete all associated storage.
+      $section_storage = \Drupal::entityTypeManager()->getStorage('section_association');
+      $sections = $section_storage->loadByProperties([
+        'access_scheme' => $scheme->id(),
+        'section_id' => $entity->id(),
+      ]);
+      $section_storage->delete($sections);
+      \Drupal::service('workbench_access.user_section_storage')->resetCache($scheme);
+    }
+  }
+}
+
+/**
+ * Implements hook_node_create_access().
+ *
+ * @link https://www.drupal.org/node/2348203
+ */
+function workbench_access_entity_create_access(AccountInterface $account, $context, $entity_bundle) {
+  // @todo move this to the access schemes.
+  $return = AccessResult::neutral();
+  // User can bypass.
+  if ($account->hasPermission('bypass workbench access')) {
+    return $return->cachePerPermissions();
+  }
+
+  // Check that access control applies to this entity type.
+  $entity_type_id = $context['entity_type_id'];
+  $schemes = array_filter(\Drupal::entityTypeManager()->getStorage('access_scheme')->loadMultiple(), function (AccessSchemeInterface $scheme) use ($entity_type_id, $entity_bundle, $return) {
+    $return->addCacheableDependency($scheme);
+    return $scheme->getAccessScheme()->applies($entity_type_id, $entity_bundle);
+  });
+  if (!$schemes) {
+    return $return->addCacheTags(['access_scheme_list']);
+  }
+
+  // Check that the user is able to assign content to a section.
+  // Note that 'strict' access checking for multiple schemes does not apply
+  // when creating content.
+  $user_section_storage = \Drupal::service('workbench_access.user_section_storage');
+  $forbidden = AccessResult::forbidden();
+  $valid_schemes = array_reduce($schemes, function ($carry, AccessSchemeInterface $scheme) use ($user_section_storage, $account, $forbidden, $return) {    $sections = $user_section_storage->getUserSections($scheme, $account);
+    if ($sections) {
+      $carry[] = $scheme->label();
+      $return->addCacheableDependency($scheme);
+    }
+    else {
+      $forbidden->addCacheableDependency($scheme);
+     }
+    return $carry;
+  }, []);
+  if (empty($valid_schemes)) {
+    return $forbidden->setReason(sprintf('User has no active sections.'));
+  }
+  return $return;
+}
+
+/**
+ * Implements hook_views_data_alter().
+ */
+function workbench_access_views_data_alter(array &$data) {
+  $scheme_storage = \Drupal::entityTypeManager()->getStorage('access_scheme');
+  if ($schemes = $scheme_storage->loadMultiple()) {
+    /** @var \Drupal\workbench_access\Entity\AccessSchemeInterface $scheme */
+    foreach ($schemes as $scheme) {
+      $scheme->getAccessScheme()->viewsData($data, $scheme);
+      $data['users']['workbench_access_section__' . $scheme->id()] = [
+        'title' => t('Workbench Section: @name', [
+          '@name' => $scheme->label(),
+        ]),
+        'help' => t('The sections to which this user belongs for the @name scheme.', [
+          '@name' => $scheme->label(),
+        ]),
+        'field' => [
+          'id' => 'workbench_access_user_section',
+          'scheme' => $scheme->id(),
+        ],
+        'filter' => [
+          'field' => 'uid',
+          'scheme' => $scheme->id(),
+          'id' => 'workbench_access_section',
+        ],
+      ];
+    }
+  }
+  // Legacy support.
+  // @todo Remove in 8.x-2.x.
+  if ($default = \Drupal::state()->get('workbench_access_upgraded_scheme_id')) {
+    if ($scheme = $scheme_storage->load($default)) {
+      $data['users']['workbench_access_section'] = [
+        'title' => t('Workbench Section: @name (legacy)', [
+          '@name' => $scheme->label(),
+        ]),
+        'help' => t('The sections to which this user belongs for the @name scheme.', [
+          '@name' => $scheme->label(),
+        ]),
+        'field' => [
+          'id' => 'workbench_access_user_section',
+          'scheme' => $scheme->id(),
+        ],
+        'filter' => [
+          'field' => 'uid',
+          'scheme' => $scheme->id(),
+          'id' => 'workbench_access_section',
+        ],
+      ];
+    }
+    if (isset($data['node']['workbench_access_section__default'])) {
+      $data['node']['workbench_access_section'] = $data['node']['workbench_access_section__default'];
+      $data['node']['workbench_access_section']['title'] = t('Workbench Section: @name (legacy)', [
+        '@name' => $scheme->label(),
+      ]);
+    }
+  }
+}
+
+/**
+ * Implements hook_element_info_alter().
+ */
+function workbench_access_element_info_alter(array &$info) {
+  if (isset($info['inline_entity_form'])) {
+    $info['inline_entity_form']['#process'][] = 'workbench_access_process_inline_entity_form';
+  }
+}
+
+/**
+ * Process callback for inline entity form.
+ */
+function workbench_access_process_inline_entity_form(array &$element, FormStateInterface $form_state, &$complete_form) {
+  $entity = $element['#entity'];
+  if (!$entity instanceof ContentEntityInterface) {
+    return $element;
+  }
+  return \Drupal::classResolver()->getInstanceFromDefinition(FormAlterHelper::class)->alterForm($element, $complete_form, $form_state, $entity);
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_delete().
+ */
+function workbench_access_user_delete($account) {
+  $uid = $account->id();
+  $storage_handler = \Drupal::entityTypeManager()->getStorage('section_association');
+  // Retrieve all the section associations referencing this user.
+  $section_user_associations = $storage_handler->loadByProperties(['user_id' => $uid]);
+  foreach ($section_user_associations as $section_association) {
+    // For each retrieved association, remove this user.
+    if ($user_ids = $section_association->getCurrentUserIds()) {
+      $remaining_user_ids = array_diff($user_ids, [$uid]);
+      $section_association->set('user_id', $remaining_user_ids);
+      $section_association->save();
+    }
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_delete().
+ */
+function workbench_access_user_role_delete($role) {
+  $role_section_storage = \Drupal::service('workbench_access.role_section_storage');
+  $scheme_storage = \Drupal::entityTypeManager()->getStorage('access_scheme');
+  foreach ($scheme_storage->loadMultiple() as $scheme) {
+    $role_section_storage->deleteRoleSections($scheme, $role->id());
+  }
+}
+
+/**
+ * Implements hook_token_info().
+ */
+function workbench_access_token_info() {
+  return \Drupal::service('workbench_access.tokens')->getTokenInfo();
+}
+
+/**
+ * Implements hook_tokens().
+ */
+function workbench_access_tokens($type, $tokens, array $data, array $options, BubbleableMetadata $bubbleable_metadata) {
+  return \Drupal::service('workbench_access.tokens')->getTokens($type, $tokens, $data, $options, $bubbleable_metadata);
+}
+
+/**
+ * Determines if a view uses Workbench Access.
+ *
+ * We use this function to determine if the view needs cache tags.
+ *
+ * @param \Drupal\views\ViewExecutable $view
+ *   The view being rendered.
+ *
+ * @return bool
+ *   Whether to add cache tags or not.
+ */
+function workbench_access_view_check(ViewExecutable $view) {
+  static $is_workbench_access_view = [];
+  $id = $view->id();
+  if (!isset($is_workbench_access_view[$id])) {
+    $is_workbench_access_view[$id] = FALSE;
+    $handler_types = $view->getHandlerTypes();
+    $plugins = ['workbench_access_section', 'workbench_access_user_section'];
+    foreach ($handler_types as $type => $info) {
+      foreach ($view->getHandlers($type) as $items) {
+        if (isset($items['plugin_id']) && in_array($items['plugin_id'], $plugins, TRUE)) {
+          $is_workbench_access_view[$id] = TRUE;
+        }
+      }
+    }
+  }
+
+  return $is_workbench_access_view[$id];
+}
+
+/**
+ * Implements hook_views_post_render().
+ *
+ * Cache workbench_access views per-user automatically.
+ */
+function workbench_access_views_post_render(ViewExecutable $view, &$output, CachePluginBase $cache) {
+  // Add user cache tags to views if required.
+  if (workbench_access_view_check($view)) {
+    // Add the user cache context.
+    $view->addCacheContext('user');
+    $output['#cache']['tags'][] = 'workbench_access_view';
+  }
+}

@@ -1,0 +1,18 @@
+services:
+  plugin.manager.config_provider.processor:
+    class: Drupal\config_provider\Plugin\ConfigProviderManager
+    parent: default_plugin_manager
+
+  config_provider.storage:
+    class: Drupal\Core\Config\MemoryStorage
+
+  config_provider.collector:
+    class: Drupal\config_provider\Plugin\ConfigCollector
+    arguments:
+      - '@config.factory'
+      - '@config.storage'
+      - '@config.manager'
+      - '@config_provider.storage'
+      - '@plugin.manager.config_provider.processor'
+      - '%install_profile%'
+      - '@extension.path.resolver'

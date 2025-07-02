@@ -1,0 +1,10 @@
+
+date_ap_style.date_ap_style_settings:
+  path: '/admin/config/content/date-ap-style'
+  defaults:
+    _form: '\Drupal\date_ap_style\Form\DateAPStyleSettings'
+    _title: 'AP Style Date Settings'
+  requirements:
+    _permission: 'administer ap style settings'
+  options:
+    _admin_route: TRUE

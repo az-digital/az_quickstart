@@ -1,0 +1,206 @@
+<?php
+
+/**
+ * @file
+ * Provides basic Blazy integration for lazy loading and multi-serving images.
+ */
+
+use Drupal\Core\Field\FormatterInterface;
+use Drupal\blazy\Blazy;
+use Drupal\blazy\BlazyAlter;
+use Drupal\blazy\BlazyManager;
+use Drupal\blazy\Theme\BlazyTheme;
+use Drupal\blazy\Theme\BlazyViews;
+use Drupal\editor\Entity\Editor;
+
+/**
+ * Provides a convenient shortcut for procedural hooks, or static methods.
+ *
+ * @return \Drupal\blazy\BlazyManager
+ *   The Blazy manager class instance.
+ */
+// @codingStandardsIgnoreStart
+function blazy(): BlazyManager {
+  static $manager;
+
+  if (!isset($manager)) {
+    $manager = \Drupal::service('blazy.manager');
+  }
+
+  return $manager;
+}
+// @codingStandardsIgnoreEnd
+
+/**
+ * Implements hook_theme().
+ */
+function blazy_theme() {
+  return ['blazy' => ['render element' => 'element']];
+}
+
+/**
+ * Prepares variables for blazy.html.twig templates.
+ */
+function template_preprocess_blazy(&$variables) {
+  BlazyTheme::blazy($variables);
+}
+
+/**
+ * Overrides variables for image.html.twig templates.
+ */
+function blazy_preprocess_image(&$variables) {
+  $attributes = &$variables['attributes'];
+  if (isset($attributes['data-b-unloading'])) {
+    unset($attributes['loading'], $attributes['data-b-unloading']);
+  }
+}
+
+/**
+ * Overrides variables for responsive-image.html.twig templates.
+ */
+function blazy_preprocess_responsive_image(array &$variables) {
+  if (isset($variables['attributes']['data-b-lazy'])) {
+    BlazyTheme::responsiveImage($variables);
+  }
+}
+
+/**
+ * Overrides variables for file-video.html.twig templates.
+ */
+function blazy_preprocess_file_video(array &$variables) {
+  if (isset($variables['attributes']['data-b-lazy'])) {
+    BlazyTheme::fileLocal($variables);
+  }
+}
+
+/**
+ * Overrides variables for file-audio.html.twig templates.
+ */
+function blazy_preprocess_file_audio(array &$variables) {
+  if (isset($variables['attributes']['data-b-lazy'])) {
+    BlazyTheme::fileLocal($variables);
+  }
+}
+
+/**
+ * Overrides template_preprocess_media_oembed_iframe().
+ */
+function blazy_preprocess_media_oembed_iframe(array &$variables) {
+  BlazyTheme::mediaOembedIframe($variables);
+}
+
+/**
+ * Implements hook_preprocess_field().
+ */
+function blazy_preprocess_field(array &$variables) {
+  $element = $variables['element'];
+  $formatter = $element['#formatter'] ?? 'null';
+  $blazy = strpos($formatter, 'blazy') !== FALSE;
+
+  if ($blazy || isset($element['#blazy'])
+    || !empty($element['#third_party_settings']['blazy']['blazy'])) {
+    BlazyTheme::field($variables);
+  }
+}
+
+/**
+ * Implements hook_preprocess_views_view().
+ */
+function blazy_preprocess_views_view(array &$variables) {
+  BlazyViews::preprocessViewsView($variables);
+}
+
+/**
+ * Implements hook_config_schema_info_alter().
+ */
+function blazy_config_schema_info_alter(array &$definitions) {
+  blazy()->configSchemaInfoAlter($definitions, 'blazy_base');
+}
+
+/**
+ * Implements hook_library_info_alter().
+ */
+function blazy_library_info_alter(array &$libraries, $extension) {
+  $core = $extension === 'core' && isset($libraries['drupal.debounce']);
+  $check = in_array($extension, [
+    'blazy',
+    'media',
+    'media_entity_instagram',
+    'media_entity_pinterest',
+  ]);
+  if ($check || $core) {
+    BlazyAlter::libraryInfoAlter($libraries, $extension);
+  }
+}
+
+/**
+ * Implements hook_library_info_build().
+ */
+function blazy_library_info_build() {
+  return BlazyAlter::libraryInfoBuild();
+}
+
+/**
+ * Implements hook_blazy_settings_alter().
+ */
+function blazy_blazy_settings_alter(array &$build, $object) {
+  BlazyAlter::blazySettingsAlter($build, $object);
+}
+
+/**
+ * Implements hook_field_formatter_third_party_settings_form().
+ */
+function blazy_field_formatter_third_party_settings_form(FormatterInterface $plugin) {
+  return BlazyAlter::fieldFormatterThirdPartySettingsForm($plugin);
+}
+
+/**
+ * Implements hook_field_formatter_settings_summary_alter().
+ */
+function blazy_field_formatter_settings_summary_alter(&$summary, $context) {
+  BlazyAlter::fieldFormatterSettingsSummaryAlter($summary, $context);
+}
+
+/**
+ * Implements hook_ckeditor_css_alter().
+ */
+function blazy_ckeditor_css_alter(array &$css, Editor $editor) {
+  BlazyAlter::ckeditorCssAlter($css, $editor);
+}
+
+/**
+ * Cleans out unclean module filter references after uninstalls.
+ *
+ * @todo remove when core filter takes care of its own plugins removal cleanly.
+ */
+function blazy_filter_cleanup($module = 'blazy') {
+  $config_factory = \Drupal::configFactory();
+  $config_storage = \Drupal::service('config.storage');
+
+  $filter = "filters.{$module}_filter";
+
+  // Removes unclean [module]_filter references, see #3257390.
+  foreach ($config_storage->listAll('filter.format') as $config_name) {
+    $config = $config_factory->getEditable($config_name);
+
+    if ($config->get($filter) && $dependencies = $config->get('dependencies')) {
+      if ($existings = $dependencies['module'] ?? []) {
+        $modules = array_diff($existings, [$module]);
+        $config->set('dependencies.module', $modules);
+      }
+      $config->clear($filter)->save(TRUE);
+    }
+  }
+
+  // Just to be safe and sure, reset filter_formats cache, etc.
+  // @todo re-check if core deprecated this function at or by D10.
+  $reset = 'drupal_static_reset';
+  if (is_callable($reset)) {
+    $reset('filter_formats');
+  }
+
+  blazy()->getStorage('filter_format')->resetCache();
+
+  // Clear plugin manager caches.
+  \Drupal::getContainer()->get('plugin.cache_clearer')->clearCachedDefinitions();
+}

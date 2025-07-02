@@ -1,0 +1,69 @@
+# The 'type' should be "label" for short meta tags and "text" for ones which
+# could get longer, especially ones which use a textarea field instead of a
+# textfield.
+metatag.metatag_tag.schema_person_additional_name:
+  type: text
+  label: 'additionalName'
+metatag.metatag_tag.schema_person_address:
+  type: text
+  label: 'address'
+metatag.metatag_tag.schema_person_affiliation:
+  type: text
+  label: 'affiliation'
+metatag.metatag_tag.schema_person_alternate_name:
+  type: text
+  label: 'alternateName'
+metatag.metatag_tag.schema_person_birth_date:
+  type: text
+  label: 'birth_date'
+metatag.metatag_tag.schema_person_description:
+  type: text
+  label: 'description'
+metatag.metatag_tag.schema_person_email:
+  type: text
+  label: 'email'
+metatag.metatag_tag.schema_person_family_name:
+  type: text
+  label: 'family_name'
+metatag.metatag_tag.schema_person_gender:
+  type: text
+  label: 'gender'
+metatag.metatag_tag.schema_person_given_name:
+  type: text
+  label: 'given_name'
+metatag.metatag_tag.schema_person_id:
+  type: text
+  label: '@id'
+metatag.metatag_tag.schema_person_image:
+  type: text
+  label: 'image'
+metatag.metatag_tag.schema_person_job_title:
+  type: text
+  label: 'job_title'
+metatag.metatag_tag.schema_person_member_of:
+  type: text
+  label: 'member_of'
+metatag.metatag_tag.schema_person_name:
+  type: text
+  label: 'name'
+metatag.metatag_tag.schema_person_telephone:
+  type: text
+  label: 'telephone'
+metatag.metatag_tag.schema_person_type:
+  type: string
+  label: '@type'
+metatag.metatag_tag.schema_person_url:
+  type: text
+  label: 'url'
+metatag.metatag_tag.schema_person_same_as:
+  type: text
+  label: 'sameAs'
+metatag.metatag_tag.schema_person_works_for:
+  type: text
+  label: 'works_for'
+metatag.metatag_tag.schema_person_contact_point:
+  type: text
+  label: 'contactPoint'
+metatag.metatag_tag.schema_person_brand:
+  type: text
+  label: 'brand'

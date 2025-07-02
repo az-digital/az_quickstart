@@ -1,0 +1,16 @@
+services:
+  plugin.manager.config_filter:
+    class: Drupal\config_filter\Plugin\ConfigFilterPluginManager
+    parent: default_plugin_manager
+    tags:
+      - { name: config.filter }
+  config_filter.event_subscriber:
+    class: Drupal\config_filter\ConfigFilterEventSubscriber
+    arguments: ['@config_filter.storage_factory', '@config.storage.sync']
+    tags:
+      - { name: event_subscriber }
+  config_filter.storage_factory:
+    class: Drupal\config_filter\ConfigFilterStorageFactory
+    arguments: ['@config.storage.sync']
+    tags:
+      - { name: service_collector, tag: 'config.filter', call: addConfigFilterManager }

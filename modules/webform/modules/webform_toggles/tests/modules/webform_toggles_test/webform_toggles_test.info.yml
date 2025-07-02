@@ -1,0 +1,12 @@
+name: 'Webform Toggles test'
+type: module
+description: 'Support module for webform toggles element testing.'
+package: 'Webform Testing'
+core_version_requirement: ^10.2
+dependencies:
+  - 'webform:webform_toggles'
+
+# Information added by Drupal.org packaging script on 2024-12-10
+version: '6.2.9'
+project: 'webform'
+datestamp: 1733851071

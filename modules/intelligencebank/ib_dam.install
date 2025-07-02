@@ -1,0 +1,17 @@
+<?php
+
+/**
+ * @file
+ * Contains install/uninstall hooks.
+ */
+
+/**
+ * Apply configuration's schema update.
+ */
+function ib_dam_update_8001(&$sandbox) {
+  $config = \Drupal::configFactory()->getEditable('ib_dam.settings');
+  $config->set('login_url', '');
+  $config->set('login_enable_browser_login', FALSE);
+  $config->set('login_enable_custom_url', FALSE);
+  $config->save(TRUE);
+}

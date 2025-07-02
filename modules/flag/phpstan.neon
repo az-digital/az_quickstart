@@ -1,0 +1,7 @@
+parameters:
+  level: 2
+  ignoreErrors:
+    # new static() is a best practice in Drupal, so we cannot fix that.
+    - "#^Unsafe usage of new static#"
+    # ObjectProphecy objects are doubles for other classes.
+    - "#^Call to an undefined method Prophecy#"

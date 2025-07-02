@@ -1,0 +1,23 @@
+name: ImageWidgetCrop examples
+type: module
+description: Provides an out of box example implementation of ImageWidgetCrop.
+core_version_requirement: ^9.5 || ^10 || ^11
+package: Examples
+dependencies:
+  - drupal:node
+  - crop:crop
+  - drupal:image
+  - drupal:user
+  - image_widget_crop:image_widget_crop
+  - inline_entity_form:inline_entity_form
+  - drupal:media
+  - drupal:responsive_image
+  - entity_browser:entity_browser
+  - ctools:ctools
+theme:
+  - drupal:stark
+
+# Information added by Drupal.org packaging script on 2025-02-07
+version: '3.0.0'
+project: 'image_widget_crop'
+datestamp: 1738929068

@@ -1,0 +1,26 @@
+{
+    "name": "drupal/config_ignore_readonly",
+    "description": "Allows submission of config forms that are ignored when config_readonly is active.",
+    "type": "drupal-module",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Shawn Duncan",
+            "homepage": "https://www.drupal.org/u/fathershawn"
+        },
+        {
+            "name": "Nathan Dentzau",
+            "homepage": "https://www.drupal.org/u/nathandentzau"
+        },
+        {
+            "name": "Marc Addeo",
+            "homepage": "https://www.drupal.org/u/marcaddeo"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "drupal/core": "^10 || ^11",
+        "drupal/config_ignore": "^3.0",
+        "drupal/config_readonly": "^1.0"
+    }
+}

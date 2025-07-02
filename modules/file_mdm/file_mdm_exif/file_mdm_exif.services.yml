@@ -1,0 +1,9 @@
+services:
+  _defaults:
+    autowire: true
+  Drupal\file_mdm_exif\ExifTagMapperInterface:
+    class: Drupal\file_mdm_exif\ExifTagMapper
+
+  Drupal\file_mdm_exif\ExifTagMapper:
+    alias: Drupal\file_mdm_exif\ExifTagMapperInterface
+    deprecated: 'The "%alias_id%" service alias is deprecated. Use "Drupal\file_mdm_exif\ExifTagMapperInterface" service id instead.'

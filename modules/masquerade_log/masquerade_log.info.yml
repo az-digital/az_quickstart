@@ -1,0 +1,11 @@
+type: module
+name: 'Masquerade Log'
+description: 'Allows to record also the original user in logger event.'
+core_version_requirement: ^9.5 || ^10 || ^11
+dependencies:
+  - masquerade:masquerade (>2.0-rc4)
+
+# Information added by Drupal.org packaging script on 2025-02-07
+version: '2.0.0'
+project: 'masquerade_log'
+datestamp: 1738892953

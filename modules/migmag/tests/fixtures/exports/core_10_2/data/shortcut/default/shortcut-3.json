@@ -1,0 +1,18 @@
+[
+    {
+        "id": 3,
+        "uuid": "9253a247-5c19-4e63-97a4-31fccfb3b1a5",
+        "langcode": "en",
+        "shortcut_set": "default",
+        "title": "Add content",
+        "weight": -20,
+        "link": [
+            {
+                "uri": "internal:/node/add",
+                "title": null,
+                "options": []
+            }
+        ],
+        "default_langcode": "1"
+    }
+]

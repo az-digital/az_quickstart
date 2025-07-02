@@ -1,0 +1,28 @@
+uuid: 12509f09-3d03-4e8c-a849-6302373d1e01
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_image_crop_media
+    - media.type.image_with_crop
+    - node.type.crop_media_example
+id: node.crop_media_example.field_image_crop_media
+field_name: field_image_crop_media
+entity_type: node
+bundle: crop_media_example
+label: 'Image crop media'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      image_with_crop: image_with_crop
+    sort:
+      field: _none
+    auto_create: true
+    auto_create_bundle: ''
+field_type: entity_reference

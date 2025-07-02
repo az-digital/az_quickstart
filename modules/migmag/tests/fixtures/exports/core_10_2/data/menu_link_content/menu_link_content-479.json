@@ -1,0 +1,45 @@
+[
+    {
+        "id": 479,
+        "uuid": "b977395d-a081-4d9a-97e8-adc2e726668f",
+        "revision_id": 5,
+        "langcode": "und",
+        "bundle": "menu_link_content",
+        "revision_created": 1623674331,
+        "revision_user": null,
+        "revision_log_message": null,
+        "enabled": "1",
+        "title": "node link test",
+        "description": "node 2",
+        "menu_name": "tools",
+        "link": [
+            {
+                "uri": "entity:node/2",
+                "title": null,
+                "options": {
+                    "attributes": {
+                        "title": "node 2"
+                    },
+                    "query": {
+                        "name": "ferret",
+                        "color": "purple"
+                    }
+                }
+            }
+        ],
+        "external": "0",
+        "rediscover": "0",
+        "weight": 3,
+        "expanded": "0",
+        "parent": null,
+        "changed": 1623674331,
+        "default_langcode": "1",
+        "revision_default": "1",
+        "revision_translation_affected": "1",
+        "content_translation_source": "und",
+        "content_translation_outdated": "0",
+        "content_translation_uid": 1,
+        "content_translation_status": "1",
+        "content_translation_created": 1623674331
+    }
+]

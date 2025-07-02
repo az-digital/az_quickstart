@@ -1,0 +1,11 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Parameter \\#2 \\$value of class lsolesen\\\\pel\\\\PelEntryShort constructor expects int\\|null, array\\<int, int\\> given\\.$#"
+			count: 1
+			path: file_mdm_exif/tests/src/Kernel/FileMetadataExifTest.php
+
+		-
+			message: "#^Parameter \\#2 \\$message of method Drupal\\\\Core\\\\Form\\\\FormStateInterface\\:\\:setError\\(\\) expects string, Drupal\\\\Core\\\\StringTranslation\\\\TranslatableMarkup given\\.$#"
+			count: 1
+			path: src/Element/FileMetadataCaching.php

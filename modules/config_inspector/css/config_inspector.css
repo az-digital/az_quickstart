@@ -1,0 +1,53 @@
+.config-inspector-error .icon {
+  width: 16px;
+  background: no-repeat center;
+}
+.config-inspector-error .icon {
+  background-image: url(../icons/error.svg);
+}
+.no-svg .config-inspector-error .icon {
+  background-image: url(../icons/error.png);
+}
+
+/**
+ * Remove the margin at the start of the list of validation constraints.
+ */
+[dir="ltr"] .config-inspector-tree .item-list ul.config-inspector--validation-constraints-list {
+  margin-left: initial;
+}
+[dir="rtl"] .config-inspector-tree .item-list ul.config-inspector--validation-constraints-list {
+  margin-right: initial;
+}
+
+/**
+ * Position an arrow originating from the description above pointing towards the list of validation constraints.
+ */
+.config-inspector-tree .item-list ul.config-inspector--validation-constraints-list::before {
+  position: absolute;
+}
+[dir="ltr"] .config-inspector-tree .item-list ul.config-inspector--validation-constraints-list::before {
+  content: "↪";
+}
+[dir="rtl"] .config-inspector-tree .item-list ul.config-inspector--validation-constraints-list::before {
+  content: "↩";
+}
+
+/**
+ * Use checkmarks instead of bullets for the list of validation constraints.
+ */
+.config-inspector-tree .item-list ul.config-inspector--validation-constraints-list li {
+  list-style-type: "✔ ";
+}
+[dir="ltr"] .config-inspector-tree .item-list ul.config-inspector--validation-constraints-list li {
+  margin-left: 3em;
+}
+[dir="rtl"] .config-inspector-tree .item-list ul.config-inspector--validation-constraints-list li {
+  margin-right: 3em;
+}
+
+/**
+ * Make inherited validation constraints visually less prominent.
+ */
+.config-inspector-tree .item-list ul.config-inspector--validation-constraints-list li .inherited {
+  opacity: 0.6;
+}

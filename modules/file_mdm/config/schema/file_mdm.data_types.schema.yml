@@ -1,0 +1,32 @@
+# Basic data types for file_mdm module.
+
+file_mdm.cache_settings:
+  type: mapping
+  label: 'Cache settings'
+  mapping:
+    enabled:
+      type: boolean
+      label: 'Enable metadata caching'
+    expiration:
+      type: integer
+      label: 'Cache entry duration'
+    disallowed_paths:
+      type: sequence
+      label: 'Paths to be excluded from caching'
+      sequence:
+        type: string
+
+file_mdm.plugin.configuration:
+  type: mapping
+  label: 'FileMetadata plugin settings'
+  mapping:
+    cache:
+      type: mapping
+      label: 'Cache settings'
+      mapping:
+        override:
+          type: boolean
+          label: 'Override general settings'
+        settings:
+          type: file_mdm.cache_settings
+          label: 'Plugin overridden cache settings'

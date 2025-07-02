@@ -1,0 +1,16 @@
+type: module
+name: Migrate Example
+description: 'Examples of how Drupal 8+ migration compares to previous versions.'
+package: Examples
+core_version_requirement: '>=9.1'
+dependencies:
+  - drupal:migrate
+  - migrate_plus:migrate_example_setup
+  - migrate_plus:migrate_plus
+  - drupal:menu_ui
+  - drupal:path
+
+# Information added by Drupal.org packaging script on 2024-11-20
+version: '6.0.5'
+project: 'migrate_plus'
+datestamp: 1732124626

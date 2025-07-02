@@ -1,0 +1,20 @@
+<?php
+
+/**
+ * @file
+ * Update hooks for migrate_queue_importer.
+ */
+
+/**
+ * Add LinkTemplates and the entity key.
+ */
+function migrate_queue_importer_update_8100(&$sandbox) {
+  $entityDefinitionUpdateManager = \Drupal::entityDefinitionUpdateManager();
+  $entityType = $entityDefinitionUpdateManager->getEntityType('cron_migration');
+  $entityType->setLinkTemplate('enable', '/admin/config/migrate_queue_importer/cron_migration/{cron_migration}/enable');
+  $entityType->setLinkTemplate('disable', '/admin/config/migrate_queue_importer/cron_migration/{cron_migration}/disable');
+  $keys = $entityType->getKeys();
+  $keys['status'] = 'status';
+  $entityType->set('entity_keys', $keys);
+  $entityDefinitionUpdateManager->updateEntityType($entityType);
+}

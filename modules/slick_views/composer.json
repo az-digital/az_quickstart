@@ -1,0 +1,15 @@
+{
+  "name": "drupal/slick_views",
+  "description": "Provides Slick carousel integration with Views. Slick carousel, the last carousel you'll ever need.",
+  "keywords": ["carousel", "slideshow", "Drupal", "views"],
+  "type": "drupal-module",
+  "license": "GPL-2.0-or-later",
+  "homepage": "https://drupal.org/project/slick_views",
+  "support": {
+    "issues": "https://drupal.org/project/issues/slick_views",
+    "source": "https://git.drupalcode.org/project/slick_views"
+  },
+  "require": {
+    "drupal/slick": "^3.0"
+  }
+}

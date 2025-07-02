@@ -1,0 +1,125 @@
+# Schema for the migrate process plugins.
+
+migrate_plus.process.*:
+  type: migrate_process
+  label: 'Default process'
+
+migrate_plus.process.callback:
+  type: migrate_process
+  label: 'Callback process'
+  mapping:
+    callback:
+      type: string
+      label: 'Callback'
+
+migrate_plus.process.concat:
+  type: migrate_process
+  label: 'Concat process'
+  mapping:
+    delimiter:
+      type: string
+      label: 'Delimiter'
+
+migrate_plus.process.explode:
+  type: migrate_process
+  label: 'Explode process'
+  mapping:
+    delimiter:
+      type: string
+      label: 'Delimiter'
+    limit:
+      type: integer
+      label: 'Limit'
+
+migrate_plus.process.extract:
+  type: migrate_process
+  label: 'Extract process'
+  mapping:
+    default:
+      type: string
+      label: 'Default value'
+
+migrate_plus.process.flatten:
+  type: migrate_process
+  label: 'Flatten process'
+
+migrate_plus.process.get:
+  type: migrate_process
+  label: 'Get process'
+  mapping:
+    source:
+      type: string
+      label: 'Source key'
+
+migrate_plus.process.sub_process:
+  type: migrate_process
+  label: 'Sub process'
+  mapping:
+    process:
+      type: ignore
+      label: 'Process'
+    key:
+      type: string
+      label: 'Key'
+
+migrate_plus.process.machine_name:
+  type: migrate_process
+  label: 'Machine name process'
+
+migrate_plus.process.migration:
+  type: migrate_process
+  label: 'Migration process'
+  mapping:
+    migration:
+      type: sequence
+      label: 'Migration'
+    source:
+      type: sequence
+      label: 'Source keys'
+    source_ids:
+      type: string
+      label: 'Source IDs'
+    stub_id:
+      type: string
+      label: 'Stub ID'
+
+migrate_plus.process.route:
+  type: migrate_process
+  label: 'Route process'
+
+migrate_plus.process.skip_on_empty:
+  type: migrate_process
+  label: 'Skip on Empty'
+
+migrate_plus.process.skip_row_if_not_set:
+  type: migrate_process
+  label: 'Skip Row process if not set'
+  mapping:
+    index:
+      type: integer
+      label: 'Index'
+
+migrate_plus.process.static_map:
+  type: migrate_process
+  label: 'Static Map'
+  mapping:
+    map:
+      type: sequence
+      label: 'Map'
+    default_value:
+      type: string
+      label: 'Default value'
+    bypass:
+      type: boolean
+      label: 'Bypass lookup'
+
+migrate_plus.process.default_value:
+  type: migrate_process
+  label: 'Default value'
+  mapping:
+    strict:
+      type: boolean
+      label: 'Strict type check'
+    default_value:
+      type: string
+      label: 'Default value'

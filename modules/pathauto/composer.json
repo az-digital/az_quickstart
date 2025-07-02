@@ -1,0 +1,29 @@
+{
+    "name": "drupal/pathauto",
+    "description": "Provides a mechanism for modules to automatically generate aliases for the content they manage.",
+    "type": "drupal-module",
+    "license": "GPL-2.0-or-later",
+    "homepage": "https://www.drupal.org/project/pathauto",
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/pathauto",
+        "documentation": "https://www.drupal.org/docs/8/modules/pathauto",
+        "source": "https://cgit.drupalcode.org/pathauto"
+    },
+    "require": {
+        "drupal/token": "*",
+        "drupal/ctools": "*"
+    },
+    "require-dev": {
+        "drupal/forum": "*"
+    },
+    "suggest": {
+        "drupal/redirect": "When installed Pathauto will provide a new \"Update Action\" in case your URLs change. This is the recommended update action and is considered the best practice for SEO and usability."
+    },
+    "extra": {
+        "drush": {
+            "services": {
+                "drush.services.yml": "^9 || ^10"
+            }
+        }
+    }
+}

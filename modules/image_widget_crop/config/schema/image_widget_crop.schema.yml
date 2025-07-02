@@ -1,0 +1,76 @@
+# Schema for configuration files of the ImageWidgetCrop module.
+
+field.widget.settings.image_widget_crop:
+  type: mapping
+  label: 'Image field display format settings'
+  mapping:
+    progress_indicator:
+      type: string
+      label: 'Progress indicator'
+    preview_image_style:
+      type: string
+      label: 'Preview image style'
+    crop_preview_image_style:
+      type: string
+      label: 'Preview crop image style'
+    crop_list:
+      type: sequence
+      label: 'The preview image will be cropped'
+      sequence:
+        type: string
+    crop_types_required:
+      type: sequence
+      label: 'Required crop types'
+      sequence:
+        type: string
+    warn_multiple_usages:
+      type: boolean
+      label: 'Warn user when a file have multiple usages'
+    show_crop_area:
+      type: boolean
+      label: 'Always expand crop area'
+    show_default_crop:
+      type: boolean
+      label: 'Show default crop area'
+
+image_widget_crop.settings:
+  type: config_object
+  label: 'Image widget crop settings'
+  mapping:
+    settings:
+      type: mapping
+      mapping:
+        library_url:
+          type: string
+          label: 'Library URL'
+        css_url:
+          type: string
+          label: 'CSS URL'
+        crop_preview_image_style:
+          type: string
+          label: 'Preview crop image style'
+        crop_list:
+          type: sequence
+          label: 'The preview image will be cropped'
+          sequence:
+            type: string
+        crop_types_required:
+          type: sequence
+          label: 'Required crop types'
+          sequence:
+            type: string
+        warn_multiple_usages:
+          type: boolean
+          label: 'Warn user when a file have multiple usages'
+        show_default_crop:
+          type: boolean
+          label: 'Show default crop area'
+        show_crop_area:
+          type: boolean
+          label: 'Always expand crop area'
+        notify_apply:
+          type: boolean
+          label: 'Notify when crop applied'
+        notify_update:
+          type: boolean
+          label: 'Notify when are crop updated'

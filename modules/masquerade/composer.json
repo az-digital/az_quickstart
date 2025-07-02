@@ -1,0 +1,43 @@
+{
+  "name": "drupal/masquerade",
+  "description": "Allows privileged users to masquerade as another user.",
+  "type": "drupal-module",
+  "homepage": "https://www.drupal.org/project/masquerade",
+  "authors": [
+    {
+      "name": "Andrey Postnikov (andypost)",
+      "homepage": "https://www.drupal.org/u/andypost",
+      "role": "Maintainer"
+    },
+    {
+      "name": "David Norman (deekayen)",
+      "homepage": "https://www.drupal.org/u/deekayen",
+      "role": "Maintainer"
+    },
+    {
+      "name": "Mark Shropshire (shrop)",
+      "homepage": "https://www.drupal.org/u/shrop",
+      "role": "Maintainer"
+    },
+    {
+      "name": "Daniel Kudwien (sun)",
+      "homepage": "https://www.drupal.org/u/sun",
+      "role": "Maintainer"
+    },
+    {
+      "name": "Andrew Berry (deviantintegral)",
+      "homepage": "https://www.drupal.org/u/deviantintegral",
+      "role": "Maintainer"
+    }
+  ],
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/masquerade",
+    "irc": "irc://irc.freenode.org/drupal-contribute",
+    "source": "https://git.drupal.org/project/masquerade.git"
+  },
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "drupal/core": "^9.2 || ^10 || ^11.0"
+  },
+  "minimum-stability": "dev"
+}

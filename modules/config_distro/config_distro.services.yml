@@ -1,0 +1,7 @@
+services:
+  config_distro.storage.distro:
+    class: Drupal\Core\Config\ManagedStorage
+    arguments: ['@config_distro.storage.distro.manager']
+  config_distro.storage.distro.manager:
+    class: Drupal\config_distro\DistroStorageManager
+    arguments: ['@config.storage', '@event_dispatcher', '@lock']

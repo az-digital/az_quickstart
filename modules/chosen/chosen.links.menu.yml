@@ -1,0 +1,5 @@
+chosen.admin:
+  title: 'Chosen'
+  parent: system.admin_config_ui
+  description: 'Configuration for Chosen plugin.'
+  route_name: chosen.admin

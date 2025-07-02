@@ -1,0 +1,124 @@
+/**
+ * @file
+ * Provides flybox view based on blazybox.
+ */
+
+body.is-flybox--open {
+  overflow: visible;
+}
+
+.b-flybox {
+  top: auto;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  min-height: 236px;
+  transform: translate3d(0, 400%, 0);
+  backface-visibility: hidden;
+}
+
+.b-flybox,
+.b-flybox audio,
+.b-flybox iframe,
+.b-flybox video,
+.b-flybox .blazybox__fullscreen {
+  width: 100%;
+  height: 236px;
+}
+
+.b-flybox .blazybox__html,
+.b-flybox .blazybox__media,
+.b-flybox .media {
+  /* left: 0;
+  top: 0;
+  transform: none; */
+  max-width: 100%;
+}
+
+.is-flybox--open .b-flybox {
+  z-index: 9999;
+  transition: transform 0.6s, min-height 0.6s;
+  transform: translateY(0);
+}
+
+.is-flybox--closing .b-flybox {
+  z-index: 9999;
+  transition: 0.5s transform ease;
+  transform: translateY(400%);
+}
+
+.b-flybox .media--box audio {
+  top: auto;
+  bottom: 0;
+  height: 100%;
+  transform: none;
+}
+
+.is-bbox--fh audio,
+.is-bbox--fh iframe,
+.is-bbox--fh video,
+.is-bbox--fh .media,
+.is-bbox--fh .blazybox__content,
+.is-bbox--fh .blazybox__html,
+.is-bbox--fh .blazybox__media {
+  min-height: inherit;
+  max-height: 100%;
+}
+
+/** 641px with 16px base font. */
+@media only screen and (min-width: 40.063em) {
+
+  /** Aspect ratio 16:9. */
+  .b-flybox,
+  .b-flybox audio,
+  .b-flybox iframe,
+  .b-flybox video,
+  .b-flybox .blazybox__fullscreen {
+    width: 420px;
+    height: 236px;
+  }
+
+  .b-flybox.b-provider--instagram {
+    width: 326px;
+    background-color: #fff;
+  }
+
+  .blazybox.b-provider--pinterest,
+  .blazybox.b-provider--twitter {
+    width: 322px;
+    background-color: #fff;
+  }
+
+  .b-flybox .media--instagram iframe {
+    width: auto;
+    min-height: inherit;
+  }
+
+  .b-flybox {
+    right: 2px;
+    bottom: 2px;
+    left: auto;
+    box-shadow: 0 0 0 2px #777;
+  }
+
+  [dir="rtl"] .b-flybox {
+    right: auto;
+    left: 2px;
+  }
+
+  .b-flybox .blazybox__close {
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    width: 22px;
+    height: 22px;
+    transform: none;
+    border: 1px solid #777;
+    font-size: 12px;
+  }
+
+  [dir="rtl"] .b-flybox .blazybox__close {
+    right: -8px;
+    left: auto;
+  }
+}

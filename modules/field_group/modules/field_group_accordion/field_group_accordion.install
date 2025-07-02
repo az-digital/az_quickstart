@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Update hooks for the Field Group module.
+ */
+
+/**
+ * Implements hook_requirements().
+ */
+function field_group_accordion_requirements($phase) {
+  $requirements = [];
+
+  if ($phase == 'runtime') {
+    $requirements['field_group_jquery_ui_accordion'] = [
+      'title' => t('Field Group'),
+      'value' => t('jQuery UI Accordion is deprecated'),
+      'description' => t('This module is deprecated, as the Jquery UI library is EOL.'),
+      'severity' => REQUIREMENT_WARNING,
+    ];
+  }
+
+  return $requirements;
+}

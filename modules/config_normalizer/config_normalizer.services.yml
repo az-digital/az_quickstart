@@ -1,0 +1,4 @@
+services:
+  plugin.manager.config_normalizer:
+    class: Drupal\config_normalizer\Plugin\ConfigNormalizerManager
+    parent: default_plugin_manager

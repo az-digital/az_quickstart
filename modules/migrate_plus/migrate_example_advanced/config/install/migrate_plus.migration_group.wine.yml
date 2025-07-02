@@ -1,0 +1,11 @@
+id: wine
+label: Wine Imports
+description: A few wine-related imports, demonstrating some more advanced migration techniques.
+source_type: Custom tables and XML
+shared_configuration:
+  source:
+    key: default
+dependencies:
+  enforced:
+    module:
+      - migrate_example_advanced

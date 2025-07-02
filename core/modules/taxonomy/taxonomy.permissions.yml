@@ -1,0 +1,21 @@
+administer taxonomy:
+  title: 'Administer vocabularies and terms'
+
+access taxonomy overview:
+  title: 'Access the taxonomy vocabulary overview page'
+  description: 'Get an overview of all taxonomy vocabularies.'
+
+revert all taxonomy revisions:
+  title: 'Revert all term revisions'
+
+delete all taxonomy revisions:
+  title: 'Delete all term revisions'
+
+view all taxonomy revisions:
+  title: 'View all term revisions'
+
+view vocabulary labels:
+  title: 'View vocabulary labels'
+
+permission_callbacks:
+  - Drupal\taxonomy\TaxonomyPermissions::permissions

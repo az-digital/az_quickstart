@@ -1,0 +1,4 @@
+8.x-1.1, 2017-05-01
+-------------------
+- Potential for cron and drush search indexing to stall indefinitely.
+- Content Ranking settings not saved.

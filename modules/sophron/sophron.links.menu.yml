@@ -1,0 +1,5 @@
+sophron.settings:
+  title: 'MIME types'
+  route_name: sophron.settings
+  description: 'Manage MIME Types.'
+  parent: system.admin_config_system

@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Config Ignore Readonly module file.
+ */
+
+declare(strict_types=1);
+
+use Drupal\config_ignore\ConfigIgnoreConfig;
+
+/**
+ * Implements hook_config_readonly_whitelist_patterns().
+ */
+function config_ignore_readonly_config_readonly_whitelist_patterns(): array {
+
+  // Allow modules that have defined config ignore alter hooks to have their
+  // say.
+  $ignoreConfig = ConfigIgnoreConfig::fromConfig(\Drupal::configFactory()->get('config_ignore.settings'));
+  \Drupal::moduleHandler()->alter('config_ignore_ignored', $ignoreConfig);
+
+  // Whitelist the simple case, which uses import:update.
+  return $ignoreConfig->getFormated('simple');
+}

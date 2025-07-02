@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * @file
+ * A test module for test the coffee module.
+ */
+
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_coffee_commands().
+ */
+function coffee_test_coffee_commands() {
+  $commands[] = [
+    'value' => Url::fromRoute('<front>')->toString(),
+    'label' => t('Coffee hook fired!'),
+    'command' => ':test',
+  ];
+
+  return $commands;
+}

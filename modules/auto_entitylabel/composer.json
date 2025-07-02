@@ -1,0 +1,27 @@
+{
+  "name": "drupal/auto_entitylabel",
+  "description": "Allows hiding of entity label fields and automatic label creation.",
+  "type": "drupal-module",
+  "homepage": "https://www.drupal.org/project/auto_entitylabel",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/auto_entitylabel"
+   },
+  "license": "GPL-2.0-or-later",
+  "repositories": [{
+    "type": "package",
+    "package": {
+      "name": "drupal/auto_entitylabel",
+      "version": "8.0.0",
+      "type": "drupal-module",
+      "source": {
+        "url": "https://git.drupal.org/project/auto_entitylabel.git",
+        "type": "git",
+        "reference": "refs/heads/8.x-2.x"
+      }
+    }
+  }],
+  "require-dev": {
+    "drupal/token": "^1.0",
+    "drupal/book": "^1.0"
+  }
+}

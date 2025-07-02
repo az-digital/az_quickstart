@@ -1,0 +1,7 @@
+decorative_image_widget:
+  js:
+    js/decorative-image-widget.js: {}
+  dependencies:
+    - core/jquery
+    - core/once
+    - core/drupal

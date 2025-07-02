@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * @file
+ * Hooks for the block_field module.
+ */
+
+/**
+ * Implements hook_field_info_alter().)
+ */
+function block_field_field_info_alter(&$info) {
+  if (version_compare(\Drupal::VERSION, '10.1.999', '<')) {
+    $info['block_field']['category'] = t('Reference');
+  }
+}

@@ -1,0 +1,11 @@
+name: 'Basic HTML editor'
+description: 'Provides "Basic HTML" text format along with WYSIWYG editor and related configuration.'
+type: 'Text format editor'
+install:
+  - ckeditor5
+config:
+  # If the basic_html format and editor already exist, leave them as-is.
+  strict: false
+  actions:
+    user.role.authenticated:
+      grantPermission: 'use text format basic_html'

@@ -1,0 +1,26 @@
+<?php
+/**
+ * @file
+ * Installation hooks for Paragraphs module.
+ */
+
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\paragraphs\ParagraphStorageSchema;
+
+/**
+ * Implements hook_install().
+ */
+function paragraphs_install() {
+  // Assign a weight 1 higher than content_translation to ensure paragraphs_module_implements_alter
+  // runs after content_translation_module_implements_alter.
+  module_set_weight('paragraphs', 11);
+}
+
+/**
+ * Returns the last paragraph_update function removed.
+ */
+function paragraphs_update_last_removed() {
+  return 8022;
+}

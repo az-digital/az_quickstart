@@ -1,0 +1,80 @@
+[
+    {
+        "id": 467,
+        "uuid": "a3b4a6dd-8a7a-40ee-b63b-d16a72d9423d",
+        "revision_id": 8,
+        "langcode": "en",
+        "bundle": "menu_link_content",
+        "revision_created": 1623674331,
+        "revision_user": null,
+        "revision_log_message": null,
+        "enabled": "1",
+        "title": "Google",
+        "description": "Google",
+        "menu_name": "menu-test-menu",
+        "link": [
+            {
+                "uri": "http://google.com",
+                "title": null,
+                "options": {
+                    "attributes": {
+                        "title": "Google"
+                    }
+                }
+            }
+        ],
+        "external": "1",
+        "rediscover": "0",
+        "weight": 0,
+        "expanded": "0",
+        "parent": "menu_link_content:538aaea3-84ad-44ba-81b9-b2b3671f89eb",
+        "changed": 1623674331,
+        "default_langcode": "1",
+        "revision_default": "1",
+        "revision_translation_affected": "1",
+        "content_translation_source": "und",
+        "content_translation_outdated": "0",
+        "content_translation_uid": 1,
+        "content_translation_status": "1",
+        "content_translation_created": 1623674331
+    },
+    {
+        "id": 467,
+        "uuid": "a3b4a6dd-8a7a-40ee-b63b-d16a72d9423d",
+        "revision_id": 8,
+        "langcode": "fr",
+        "bundle": "menu_link_content",
+        "revision_created": 1623674331,
+        "revision_user": null,
+        "revision_log_message": null,
+        "enabled": "1",
+        "title": "fr - Google",
+        "description": "fr - Google description",
+        "menu_name": "menu-test-menu",
+        "link": [
+            {
+                "uri": "http://google.com",
+                "title": null,
+                "options": {
+                    "attributes": {
+                        "title": "Google"
+                    }
+                }
+            }
+        ],
+        "external": "1",
+        "rediscover": "0",
+        "weight": 0,
+        "expanded": "0",
+        "parent": "menu_link_content:538aaea3-84ad-44ba-81b9-b2b3671f89eb",
+        "changed": 1623674336,
+        "default_langcode": "0",
+        "revision_default": "1",
+        "revision_translation_affected": "1",
+        "content_translation_source": "und",
+        "content_translation_outdated": "0",
+        "content_translation_uid": 1,
+        "content_translation_status": "1",
+        "content_translation_created": 1623674336
+    }
+]

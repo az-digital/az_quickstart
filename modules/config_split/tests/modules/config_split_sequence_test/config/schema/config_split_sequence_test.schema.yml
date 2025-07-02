@@ -1,0 +1,18 @@
+config_split_sequence_test.nested_sequences:
+  type: config_object
+  mapping:
+    nested:
+      type: sequence
+      label: 'first layer'
+      orderby: value
+      sequence:
+        type: sequence
+        label: 'second layer'
+        orderby: value
+        sequence:
+          type: sequence
+          label: 'third layer'
+          orderby: value
+          sequence:
+            type: string
+            label: 'element'

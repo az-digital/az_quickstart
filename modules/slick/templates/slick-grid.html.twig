@@ -1,0 +1,40 @@
+{#
+/**
+ * @file
+ * Default theme implementation for the slick-grid items template.
+ *
+ * Available variables:
+ * - attributes: An array of attributes to apply to the element.
+ * - items: A renderable array containing chunks of slick-slide.html.twig.
+ * - settings: A renderable array containing the given settings.
+ *
+ * @deprecated in slick:8.x-2.3 and is removed from slick:8.x-3.0. Use
+ *   hook_slick_grid_item_alter if necessary instead.
+ * @see https://www.drupal.org/node/3239708
+ */
+#}
+{%
+  set classes = [
+    settings.unslick ? 'slick__grid' : 'slide__content',
+    'b-columngrid',
+  ]
+%}
+{%
+  set item_classes = [
+    not settings.unslick ? 'slide__grid',
+    'grid',
+    settings.type ? 'grid--' ~ settings.type|clean_class,
+    settings.media_switch ? 'grid--' ~ settings.media_switch,
+    settings.media_switch and 'box' in settings.media_switch ? 'grid--litebox',
+  ]
+%}
+
+<ul{{ attributes.addClass(classes) }}>
+  {% for delta, item in items %}
+    <li{{ item.attributes.addClass(item_classes, 'grid--' ~ delta) }}>
+      <div class="grid__content">
+        {{ item.content }}
+      </div>
+    </li>
+  {% endfor %}
+</ul>

@@ -1,0 +1,19 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+_core:
+  default_config_hash: roWfFJka8zwGicvIGmrm6TuFymn0bnE3CbY9INy3SIs
+name: 'Crop Simple Example'
+type: crop_simple_example
+description: 'Implementation of ImageWidgetCrop with basic (core) File field.'
+help: ''
+new_revision: false
+preview_mode: 0
+display_submitted: true

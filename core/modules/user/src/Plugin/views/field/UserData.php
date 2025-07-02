@@ -1,0 +1,119 @@
+<?php
+
+namespace Drupal\user\Plugin\views\field;
+
+use Drupal\Core\Extension\ModuleExtensionList;
+use Drupal\Core\Extension\ModuleHandlerInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\views\Attribute\ViewsField;
+use Drupal\views\Plugin\views\field\FieldPluginBase;
+use Drupal\views\ResultRow;
+use Drupal\user\UserDataInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
+/**
+ * Provides access to the user data service.
+ *
+ * @ingroup views_field_handlers
+ *
+ * @see \Drupal\user\UserDataInterface
+ */
+#[ViewsField("user_data")]
+class UserData extends FieldPluginBase {
+
+  /**
+   * Provides the user data service object.
+   *
+   * @var \Drupal\user\UserDataInterface
+   */
+  protected $userData;
+
+  /**
+   * The module handler.
+   *
+   * @var \Drupal\Core\Extension\ModuleHandlerInterface
+   */
+  protected $moduleHandler;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static(
+      $configuration,
+      $plugin_id,
+      $plugin_definition,
+      $container->get('user.data'),
+      $container->get('module_handler'),
+      $container->get('extension.list.module')
+    );
+  }
+
+  /**
+   * Constructs a UserData object.
+   */
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, UserDataInterface $user_data, ModuleHandlerInterface $module_handler, protected ?ModuleExtensionList $moduleExtensionList = NULL) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition);
+
+    $this->userData = $user_data;
+    $this->moduleHandler = $module_handler;
+    if ($this->moduleExtensionList === NULL) {
+      @trigger_error('Calling ' . __METHOD__ . '() without the $moduleExtensionList argument is deprecated in drupal:10.3.0 and will be required in drupal:12.0.0. See https://www.drupal.org/node/3310017', E_USER_DEPRECATED);
+      $this->moduleExtensionList = \Drupal::service('extension.list.module');
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function defineOptions() {
+    $options = parent::defineOptions();
+
+    $options['data_module'] = ['default' => ''];
+    $options['data_name'] = ['default' => ''];
+
+    return $options;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function buildOptionsForm(&$form, FormStateInterface $form_state) {
+    parent::buildOptionsForm($form, $form_state);
+
+    $modules = $this->moduleHandler->getModuleList();
+    $names = [];
+    foreach (array_keys($modules) as $name) {
+      $names[$name] = $this->moduleExtensionList->getName($name);
+    }
+
+    $form['data_module'] = [
+      '#title' => $this->t('Module name'),
+      '#type' => 'select',
+      '#description' => $this->t('The module which sets this user data.'),
+      '#default_value' => $this->options['data_module'],
+      '#options' => $names,
+    ];
+
+    $form['data_name'] = [
+      '#title' => $this->t('Name'),
+      '#type' => 'textfield',
+      '#description' => $this->t('The name of the data key.'),
+      '#default_value' => $this->options['data_name'],
+    ];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function render(ResultRow $values) {
+    $uid = $this->getValue($values);
+    $data = $this->userData->get($this->options['data_module'], $uid, $this->options['data_name']);
+
+    // Don't sanitize if no value was found.
+    if (isset($data)) {
+      return $this->sanitizeValue($data);
+    }
+  }
+
+}

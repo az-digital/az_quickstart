@@ -1,0 +1,92 @@
+[
+    {
+        "tid": 4,
+        "uuid": "6762c4c3-133d-4a48-9b2a-bdd3e8d04cc9",
+        "revision_id": 18,
+        "langcode": "en",
+        "vid": "test_vocabulary",
+        "revision_created": 1623674336,
+        "revision_user": null,
+        "revision_log_message": null,
+        "status": "1",
+        "name": "Term3 in plain old English",
+        "description": [
+            {
+                "value": "The third term in plain old English.",
+                "format": "full_html"
+            }
+        ],
+        "weight": 0,
+        "parent": 3,
+        "changed": 1623674336,
+        "default_langcode": "1",
+        "revision_default": "1",
+        "revision_translation_affected": "1",
+        "content_translation_source": "und",
+        "content_translation_outdated": "0",
+        "content_translation_uid": 1,
+        "content_translation_created": 1623674336,
+        "field_integer": 6,
+        "field_term_reference": null
+    },
+    {
+        "tid": 4,
+        "uuid": "6762c4c3-133d-4a48-9b2a-bdd3e8d04cc9",
+        "revision_id": 18,
+        "langcode": "fr",
+        "vid": "test_vocabulary",
+        "revision_created": 1623674336,
+        "revision_user": null,
+        "revision_log_message": null,
+        "status": "1",
+        "name": "Term3 en français s'il vous plaît",
+        "description": [
+            {
+                "value": "The third term en français s'il vous plaît.",
+                "format": "filtered_html"
+            }
+        ],
+        "weight": 0,
+        "parent": 3,
+        "changed": 1531922268,
+        "default_langcode": "0",
+        "revision_default": "1",
+        "revision_translation_affected": "1",
+        "content_translation_source": "en",
+        "content_translation_outdated": "1",
+        "content_translation_uid": 2,
+        "content_translation_created": 1531922267,
+        "field_integer": 5,
+        "field_term_reference": null
+    },
+    {
+        "tid": 4,
+        "uuid": "6762c4c3-133d-4a48-9b2a-bdd3e8d04cc9",
+        "revision_id": 18,
+        "langcode": "is",
+        "vid": "test_vocabulary",
+        "revision_created": 1623674336,
+        "revision_user": null,
+        "revision_log_message": null,
+        "status": "0",
+        "name": "Term3 á íslensku",
+        "description": [
+            {
+                "value": "The third term á íslensku.",
+                "format": "plain_text"
+            }
+        ],
+        "weight": 0,
+        "parent": 3,
+        "changed": 1531922279,
+        "default_langcode": "0",
+        "revision_default": "1",
+        "revision_translation_affected": "1",
+        "content_translation_source": "en",
+        "content_translation_outdated": "0",
+        "content_translation_uid": 1,
+        "content_translation_created": 1531922278,
+        "field_integer": 4,
+        "field_term_reference": null
+    }
+]

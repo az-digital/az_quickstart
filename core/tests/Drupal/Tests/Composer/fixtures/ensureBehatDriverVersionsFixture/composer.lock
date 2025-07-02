@@ -1,0 +1,17 @@
+{
+    "_readme": [
+        "This file is a fixture used to test Drupal."
+    ],
+    "content-hash": "da9910627bab73a256b39ceda83d7167",
+    "packages-dev": [
+        {
+            "name": "lullabot/mink-selenium2-driver",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Lullabot/MinkSelenium2Driver.git",
+                "reference": "228004452354c1945fec2d273de2586da8c29213"
+            }
+        }
+    ]
+}

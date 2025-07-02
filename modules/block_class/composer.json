@@ -1,0 +1,71 @@
+{
+    "name": "drupal/block_class",
+    "description": "Allows assigning classes to Blocks.",
+    "type": "drupal-module",
+    "keywords": ["Drupal"],
+    "homepage": "https://www.drupal.org/project/block_class",
+    "authors": [
+        {
+            "name": "Todd Nienkerk",
+            "homepage": "https://www.drupal.org/u/todd-nienkerk",
+            "role": "Maintainer"
+        },
+        {
+            "name": "Renato Gonçalves (RenatoG)",
+            "homepage": "https://www.drupal.org/u/RenatoG",
+            "role": "Maintainer"
+        },
+        {
+            "name": "Neslee Canil Pinto",
+            "homepage": "https://www.drupal.org/u/neslee-canil-pinto",
+            "role": "Maintainer"
+        },
+        {
+            "name": "Aaron Stanush",
+            "homepage": "https://www.drupal.org/u/aaron-stanush",
+            "role": "Maintainer"
+        },
+        {
+            "name": "David Suissa (DYdave)",
+            "homepage": "https://www.drupal.org/u/DYdave",
+            "role": "Maintainer"
+        },
+        {
+            "name": "Four Kitchens",
+            "homepage": "https://www.drupal.org/user/358502",
+            "role": "Maintainer"
+        },
+        {
+            "name": "berenddeboer",
+            "homepage": "https://www.drupal.org/u/berenddeboer",
+            "role": "Maintainer"
+        },
+        {
+            "name": "elliotttf",
+            "homepage": "https://www.drupal.org/u/elliotttf",
+            "role": "Maintainer"
+        },
+        {
+            "name": "Michal Minecki (mirzu)",
+            "homepage": "https://www.drupal.org/u/mirzu",
+            "role": "Maintainer"
+        },
+        {
+            "name": "Patrick Coffey (pcoffey)",
+            "homepage": "https://www.drupal.org/u/pcoffey",
+            "role": "Maintainer"
+        },
+        {
+            "name": "Taylor Smith (tsmith512)",
+            "homepage": "https://www.drupal.org/u/tsmith512",
+            "role": "Maintainer"
+        }
+    ],
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/block_class",
+        "irc": "irc://irc.freenode.org/drupal-contribute",
+        "source": "https://git.drupalcode.org/project/block_class"
+    },
+    "license": "GPL-2.0-or-later",
+    "minimum-stability": "dev"
+}

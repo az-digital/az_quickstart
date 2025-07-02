@@ -1,0 +1,6 @@
+cas.bulk_add_cas_users:
+  title: 'Add CAS user(s)'
+  route_name: cas.bulk_add_cas_users
+  appears_on:
+    - entity.user.collection
+  weight: 1

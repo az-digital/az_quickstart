@@ -1,0 +1,6 @@
+text_to_prepend_to_title: "Clone of"
+exclude:
+  node: { }
+  paragraph: { }
+clone_status: default
+create_group_relationships: true

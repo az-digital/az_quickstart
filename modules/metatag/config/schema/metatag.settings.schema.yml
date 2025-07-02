@@ -1,0 +1,37 @@
+metatag.settings:
+  type: config_object
+  label: 'Metatag settings'
+  mapping:
+    entity_type_groups:
+      type: sequence
+      label: 'Metatag groups that apply to each entity type'
+      sequence:
+        type: sequence
+        label: 'Entity type'
+        sequence:
+          type: sequence
+          label: 'Bundle'
+          sequence:
+            type: string
+            label: 'Group'
+    separator:
+      type: string
+      label: 'Separator'
+    tag_trim_method:
+      type: string
+      label: 'Trim method for trimmable tags.'
+    use_maxlength:
+      type: boolean
+      label: 'Use Maxlength module to force these limits?'
+    tag_trim_maxlength:
+      type: sequence
+      label: 'Tag-specific maximum length'
+      sequence:
+        type: integer
+        label: 'Tag maximum length in characters'
+    tag_scroll_max_height:
+      type: string
+      label: 'Add max height value'
+    tag_trim_end:
+      type: string
+      label: 'End of the word trimming'

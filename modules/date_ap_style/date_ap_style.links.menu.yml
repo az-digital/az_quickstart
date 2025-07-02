@@ -1,0 +1,6 @@
+date_ap_style.date_ap_style_settings:
+  title: 'AP Style Date Display Settings'
+  route_name: date_ap_style.date_ap_style_settings
+  description: 'Configure AP date style default settings when using the AP date style format.'
+  parent: system.admin_config_content
+  weight: 99

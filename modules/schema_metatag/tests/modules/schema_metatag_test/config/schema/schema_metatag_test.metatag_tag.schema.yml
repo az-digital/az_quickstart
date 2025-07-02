@@ -1,0 +1,129 @@
+# The 'type' should be "label" for short meta tags and "text" for ones which
+# could get longer, especially ones which use a textarea field instead of a
+# textfield.
+metatag.metatag_tag.schema_metatag_test_action:
+  type: text
+  label: 'action'
+metatag.metatag_tag.schema_metatag_test_aggregate_rating:
+  type: text
+  label: 'aggregateRating'
+metatag.metatag_tag.schema_metatag_test_answer:
+  type: text
+  label: 'answer'
+metatag.metatag_tag.schema_metatag_test_book:
+  type: text
+  label: 'book'
+metatag.metatag_tag.schema_metatag_test_boolean:
+  type: text
+  label: 'boolean'
+metatag.metatag_tag.schema_metatag_test_brand:
+  type: text
+  label: 'brand'
+metatag.metatag_tag.schema_metatag_test_clip:
+  type: text
+  label: 'clip'
+metatag.metatag_tag.schema_metatag_test_contact_point:
+  type: text
+  label: 'contactPoint'
+metatag.metatag_tag.schema_metatag_test_country:
+  type: text
+  label: 'country'
+metatag.metatag_tag.schema_metatag_test_creative_work:
+  type: text
+  label: 'creativeWork'
+metatag.metatag_tag.schema_metatag_test_creative_work_season:
+  type: text
+  label: 'creativeWorkSeason'
+metatag.metatag_tag.schema_metatag_test_date:
+  type: text
+  label: 'date'
+metatag.metatag_tag.schema_metatag_test_date_time:
+  type: text
+  label: 'date_time'
+metatag.metatag_tag.schema_metatag_test_duration:
+  type: text
+  label: 'duration'
+metatag.metatag_tag.schema_metatag_test_entry_point:
+  type: text
+  label: 'entryPoint'
+metatag.metatag_tag.schema_metatag_test_event:
+  type: text
+  label: 'event'
+metatag.metatag_tag.schema_metatag_test_geo_coordinates:
+  type: text
+  label: 'geoCoordinates'
+metatag.metatag_tag.schema_metatag_test_government_service:
+  type: text
+  label: 'governmentService'
+metatag.metatag_tag.schema_metatag_test_how_to_step:
+  type: text
+  label: 'howToStep'
+metatag.metatag_tag.schema_metatag_test_image:
+  type: text
+  label: 'image'
+metatag.metatag_tag.schema_metatag_test_item_list_element:
+  type: text
+  label: 'itemListElement'
+metatag.metatag_tag.schema_metatag_test_mass:
+  type: text
+  label: 'mass'
+metatag.metatag_tag.schema_metatag_test_monetary_amount:
+  type: text
+  label: 'monetaryAmount'
+metatag.metatag_tag.schema_metatag_test_number:
+  type: text
+  label: 'number'
+metatag.metatag_tag.schema_metatag_test_nutrition_information:
+  type: text
+  label: 'nutritionInformation'
+metatag.metatag_tag.schema_metatag_test_offer:
+  type: text
+  label: 'offer'
+metatag.metatag_tag.schema_metatag_test_opening_hours_specification:
+  type: text
+  label: 'openingHoursSpecification'
+metatag.metatag_tag.schema_metatag_test_organization:
+  type: text
+  label: 'organization'
+metatag.metatag_tag.schema_metatag_test_person:
+  type: text
+  label: 'person'
+metatag.metatag_tag.schema_metatag_test_place:
+  type: text
+  label: 'place'
+metatag.metatag_tag.schema_metatag_test_rating:
+  type: text
+  label: 'rating'
+metatag.metatag_tag.schema_metatag_test_postal_address:
+  type: text
+  label: 'postalAddress'
+metatag.metatag_tag.schema_metatag_test_program_membership:
+  type: text
+  label: 'programMembership'
+metatag.metatag_tag.schema_metatag_test_quantitative_value:
+  type: text
+  label: 'quantitativeValue'
+metatag.metatag_tag.schema_metatag_test_question:
+  type: text
+  label: 'question'
+metatag.metatag_tag.schema_metatag_test_review:
+  type: text
+  label: 'review'
+metatag.metatag_tag.schema_metatag_test_speakable:
+  type: text
+  label: 'speakable'
+metatag.metatag_tag.schema_metatag_test_text:
+  type: text
+  label: 'text'
+metatag.metatag_tag.schema_metatag_test_thing:
+  type: text
+  label: 'thing'
+metatag.metatag_tag.schema_metatag_test_type:
+  type: string
+  label: '@type'
+metatag.metatag_tag.schema_metatag_test_url:
+  type: string
+  label: 'url'
+metatag.metatag_tag.schema_metatag_test_web_page_element:
+  type: string
+  label: 'web_page_element'

@@ -1,0 +1,9 @@
+config_update_ui.settings:
+  type: config_entity
+  label: 'Configuration Update Reports settings'
+  mapping:
+    ignore:
+      type: sequence
+      label: 'Ignored configuration items'
+      sequence:
+        type: string

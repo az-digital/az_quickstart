@@ -1,0 +1,74 @@
+# This migration demonstrates importing from multiple XML files.
+id: wine_variety_multi_xml
+label: XML feed of varieties
+migration_group: wine
+migration_tags:
+  - advanced example
+source:
+  # We use the XML source plugin.
+  plugin: url
+  data_fetcher_plugin: http
+  data_parser_plugin: xml
+  # Guzzle request options can be added.
+  request_options:
+    allow_redirects: false
+  # Normally, this is one or more fully-qualified URLs or file paths. Because
+  # we can't hardcode your local URL, we provide a relative path here which
+  # hook_install() will rewrite to a full URL for the current site.
+  urls:
+    - /migrate_example_advanced_variety_multiple/red?_format=xml
+    - /migrate_example_advanced_variety_multiple/white?_format=xml
+  # Visit the URL above (relative to your site root) and look at it. You can see
+  # that <response> is the outer element, and each item we want to import is a
+  # <position> element. The item_xpath value is the xpath to use to query the
+  # desired elements.
+  item_selector: /response/variety
+  # Under 'fields', we list the data items to be imported. The first level keys
+  # are the source field names we want to populate (the names to be used as
+  # sources in the process configuration below). For each field we're importing,
+  # we provide a label (optional - this is for display in migration tools) and
+  # an xpath for retrieving that value. It's important to note that this xpath
+  # is relative to the elements retrieved by item_xpath.
+  fields:
+    -
+      name: category_name
+      label: Name
+      selector: name
+    -
+      name: category_details
+      label: Details
+      selector: details
+    -
+      name: category_parent
+      label: 'Unique position identifier'
+      selector: parent
+    -
+      name: category_attributes
+      label: 'List of variety attributes'
+      selector: attributes
+  # Under 'ids', we identify source fields populated above which will uniquely
+  # identify each imported item. The 'type' makes sure the migration map table
+  # uses the proper schema type for stored the IDs.
+  ids:
+    category_name:
+      type: string
+process:
+  vid:
+    plugin: default_value
+    default_value: migrate_example_wine_varieties
+  name: category_name
+  description: category_details
+  parent:
+    plugin: migration_lookup
+    migration: wine_terms
+    source: category_parent
+  field_variety_attributes: category_attributes
+destination:
+  plugin: entity:taxonomy_term
+migration_dependencies:
+  required:
+    - wine_terms
+dependencies:
+  enforced:
+    module:
+      - migrate_example_advanced

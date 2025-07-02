@@ -1,0 +1,35 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.migrate_example_beer.body
+    - field.field.node.migrate_example_beer.field_comments
+    - field.field.node.migrate_example_beer.field_migrate_example_beer_style
+    - field.field.node.migrate_example_beer.field_migrate_example_country
+    - field.field.node.migrate_example_beer.field_migrate_example_image
+    - node.type.migrate_example_beer
+  module:
+    - text
+    - user
+id: node.migrate_example_beer.teaser
+targetEntityType: node
+bundle: migrate_example_beer
+mode: teaser
+content:
+  body:
+    label: hidden
+    type: text_summary_or_trimmed
+    weight: 1
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+  links:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  field_comments: true
+  field_migrate_example_beer_style: true
+  field_migrate_example_country: true
+  field_migrate_example_image: true

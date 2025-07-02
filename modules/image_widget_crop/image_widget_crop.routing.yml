@@ -1,0 +1,7 @@
+image_widget_crop.crop_widget_settings:
+  path: '/admin/config/media/crop-widget'
+  defaults:
+    _form: 'Drupal\image_widget_crop\Form\CropWidgetForm'
+    _title: 'Image Crop Widget settings'
+  requirements:
+    _permission: 'administer site configuration'

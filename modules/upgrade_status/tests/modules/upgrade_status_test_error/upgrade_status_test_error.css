@@ -1,0 +1,11 @@
+#drupal-off-canvas:not(.drupal-off-canvas-reset) {
+  /* this will not be detected */
+}
+
+#drupal-off-canvas-wrapper {
+  /* this will also not be detected */
+}
+
+#drupal-off-canvas {
+  /* THIS will be detected however */
+}

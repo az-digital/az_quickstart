@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="file_mdm">
+  <description>PHP CodeSniffer configuration for file_mdm module.</description>
+  <file>.</file>
+  <arg name="extensions" value="inc,install,module,php,profile,test,theme"/>
+
+  <!--Exclude README.md.-->
+  <exclude-pattern>./README.md</exclude-pattern>
+
+  <!--Use Drupal code rule.-->
+  <rule ref="vendor/drupal/coder/coder_sniffer/Drupal"></rule>
+
+  <!--Use DrupalPractice code rule.-->
+  <rule ref="vendor/drupal/coder/coder_sniffer/DrupalPractice"></rule>
+
+  <rule ref="Drupal.Commenting.DocComment">
+    <exclude name="Drupal.Commenting.DocComment.LongFullStop"/>
+    <exclude name="Drupal.Commenting.DocComment.MissingShort"/>
+    <exclude name="Drupal.Commenting.DocComment.ParamNotFirst"/>
+    <exclude name="Drupal.Commenting.DocComment.ShortNotCapital"/>
+    <exclude name="Drupal.Commenting.DocComment.ShortSingleLine"/>
+    <exclude name="Drupal.Commenting.DocComment.SpacingBeforeTags"/>
+  </rule>
+
+  <rule ref="Drupal.Commenting.FunctionComment">
+    <exclude name="Drupal.Commenting.FunctionComment.IncorrectParamVarName"/>
+    <exclude name="Drupal.Commenting.FunctionComment.InvalidNoReturn"/>
+    <exclude name="Drupal.Commenting.FunctionComment.Missing"/>
+    <exclude name="Drupal.Commenting.FunctionComment.MissingParamType"/>
+    <exclude name="Drupal.Commenting.FunctionComment.MissingReturnComment"/>
+    <exclude name="Drupal.Commenting.FunctionComment.ParamCommentFullStop"/>
+    <exclude name="Drupal.Commenting.FunctionComment.ParamMissingDefinition"/>
+    <exclude name="Drupal.Commenting.FunctionComment.TypeHintMissing"/>
+  </rule>
+
+  <rule ref="Drupal.Commenting.VariableComment">
+    <exclude name="Drupal.Commenting.VariableComment.Missing"/>
+  </rule>
+
+</ruleset>

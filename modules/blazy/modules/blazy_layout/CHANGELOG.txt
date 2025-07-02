@@ -1,0 +1,61 @@
+Blazy Layout 3.x-dev, 2024-10-21
+--------------------------------
+- Remove unwanted block attributes from builtin Media background.
+- Changed Link field target entity to Media bundles for unique links.
+- Added link option.
+- Added some formatter options to Media in Blazy layout.
+- Added tabs for readability.
+
+Blazy Layout 3.x-dev, 2024-10-20
+--------------------------------
+- Added media-related options.
+- Fixed Edge to edge regression.
+- Added Use player option for Background video.
+- Respected Background color with empty regions without media/images.
+- Added Background media option for all regions.
+
+Blazy Layout 3.x-dev, 2024-10-18
+--------------------------------
+- Fix for AJAX regions.
+- Fixed for unwanted Olivero grid overrides.
+- Fixed for regions beyond defaults.
+- Fixed for initial LB preview.
+
+Blazy Layout 3.x-dev, 2024-09-22
+--------------------------------
+- Fixed for hidden regions beyond defaults.
+
+Blazy Layout 3.x-dev, 2024-09-21
+--------------------------------
+- Fixed for collapsed background at Flexbox engine.
+- Added supports for plain column numbers 1-12 for Flexbox.
+- Added known issues and solutions.
+
+Blazy Layout 3.x-dev, 2024-04-27
+--------------------------------
+- Added responsive max-width option.
+- Added Edge to edge option.
+- Changed region background image to be optional for just background color.
+- Changed problematic opacity to color alpha channel.
+- Changed background image to be optional for just background color.
+- Fixed for problematic text opacity selector.
+
+Blazy Layout 3.x-dev, 2024-04-26
+--------------------------------
+- Added Blazy layout live preview.
+- Fixed for Blazy layout ID, requires saving form.
+- Moved complex admin inline style into JS-generated CSS.
+- Added link colors.
+
+Blazy Layout 3.x-dev, 2024-04-25
+--------------------------------
+- Fixed for region classes.
+
+Blazy Layout 3.x-dev, 2024-04-22
+--------------------------------
+- Added color style options for Blazy layout.
+- Renamed classes for clarity.
+
+Blazy Layout 3.x-dev, 2024-04-12
+--------------------------------
+- Initial 3.x commit.

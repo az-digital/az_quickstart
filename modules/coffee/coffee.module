@@ -1,0 +1,97 @@
+<?php
+
+/**
+ * @file
+ * Coffee primary module file.
+ */
+
+use Drupal\Core\Cache\Cache;
+use Drupal\Core\Url;
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function coffee_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.coffee':
+      $output = '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('The Coffee module offers quick navigation functionality as well as an extensible set of commands to let you jump around your site to desired pages very fast. The functionality is inspired by Alfred and Spotlight on Mac OS X. To activate the feature, either press the Coffee button in the toolbar or use the Alt-D keyboard shortcut (Alt + Shift + D in Opera, Alt + Ctrl + D in Windows Internet Explorer). For more information, see the <a href=":coffee">online documentation for the Coffee module</a>.', [':coffee' => 'https://www.drupal.org/documentation/modules/coffee']) . '</p>';
+      $output .= '<h3>' . t('Uses') . '</h3>';
+      $output .= '<dl>';
+      $output .= '<dt>' . t('Jumping to pages in the administration menu') . '</dt>';
+      $output .= '<dd>' . t('Start typing either part of the path or the title of an administration page you want to jump to. If the first result is the one you were looking for, just hit enter. If not, either continue typing or pick the right result from the list. You can also use your keyboard cursor keys to pick the desired result.') . '</dd>';
+      $output .= '<dt>' . t('Configuring additional menus and number of results') . '</dt>';
+      $output .= '<dd>' . t('Coffee only searches in the administration menu by default. You can configure support for any other menu on <a href=":admin-coffee">the Coffee configuration page</a>. It is also possible to set the number of displayed results to less or more than the default 7.', [':admin-coffee' => Url::fromRoute('coffee.configuration')->toString()]) . '</dd>';
+      $output .= '<dt>' . t('Additional commands') . '</dt>';
+      $output .= '<dd>' . t('Coffee also supports an extensible set of commands. The two built-in commands are <code>:front</code> which results in the front page and <code>:add</code> which provides a list of all content types to create new content with. The <code>:add</code> command may receive the name of the content type as well, therefore <code>:add:Article</code> also works. Other modules may provide further commands.') . '</dd>';
+      $output .= '<dt>' . t('Permissions') . '</dt>';
+      $output .= '<dd>' . t('Users with the <em>Administer Coffee</em> permission can configure available menus and number of result, while the <em>Access Coffee</em> permission grants the use of the feature itself to users.') . '</dd>';
+      $output .= '</dl>';
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_page_attachments().
+ */
+function coffee_page_attachments(array &$attachments) {
+  if (\Drupal::currentUser()->hasPermission('access coffee')) {
+    $config = \Drupal::config('coffee.configuration');
+    $cache_tags = isset($attachments['#cache']['tags']) ? $attachments['#cache']['tags'] : [];
+    $attachments['#cache']['tags'] = Cache::mergeTags($cache_tags, $config->getCacheTags());
+
+    $data_path =  Url::fromRoute('coffee.get_data', [], ['language' => Drupal::languageManager()->getCurrentLanguage()])->toString();
+
+    $attachments['#attached']['library'][] = 'coffee/drupal.coffee';
+    $attachments['#attached']['drupalSettings']['coffee'] = [
+      'dataPath' => $data_path,
+      'maxResults' => $config->get('max_results'),
+    ];
+  }
+}
+
+/**
+ * Implements hook_hook_info().
+ */
+function coffee_hook_info() {
+  $hooks = [
+    'coffee_commands' => [
+      'group' => 'coffee',
+    ],
+  ];
+
+  return $hooks;
+}
+
+/**
+ * Implements hook_toolbar().
+ */
+function coffee_toolbar() {
+  $items['coffee'] = [
+    '#cache' => [
+      'contexts' => ['user.permissions'],
+    ],
+  ];
+
+  if (\Drupal::currentUser()->hasPermission('access coffee')) {
+    $items['coffee'] += [
+      '#weight' => 999,
+      '#type' => 'toolbar_item',
+      'tab' => [
+        '#type' => 'link',
+        '#title' => t('Go to'),
+        '#url' => Url::fromRoute('<none>'),
+        '#attributes' => [
+          'title' => t('Use alt+d to start Coffee and search for a page to go to'),
+          'class' => ['toolbar-icon', 'toolbar-icon-coffee'],
+        ],
+      ],
+      '#attached' => [
+        'library' => ['coffee/drupal.coffee'],
+      ],
+    ];
+  }
+
+  return $items;
+}

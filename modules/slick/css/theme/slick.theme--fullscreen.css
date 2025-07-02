@@ -1,0 +1,191 @@
+/**
+ * @file
+ * Best with 1 slidesToShow, placed at external region.
+ *
+ * Detailed stylings are all yours, get yourself dirty.
+ */
+
+html,
+body {
+  height: 100%;
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  overflow: hidden;
+}
+
+.slick-wrapper--fullscreen {
+  background: #000;
+}
+
+.slick-wrapper--fullscreen,
+.slick-wrapper--fullscreen .slick,
+.slick--skin--fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.slick-wrapper--fullscreen,
+.slick--skin--fullscreen {
+  height: 100%;
+  min-height: 100%;
+}
+
+.slick-wrapper--fullscreen {
+  z-index: 997;
+}
+
+.slick--skin--fullscreen {
+  z-index: 998;
+}
+
+.slick-wrapper--fullscreen .slick.slick--thumbnail {
+  z-index: 999;
+  top: auto;
+  bottom: 0;
+}
+
+.slick-wrapper--fullscreen.slick-wrapper--tn-top .slick.slick--thumbnail {
+  z-index: 999;
+  top: 0;
+  bottom: auto;
+}
+
+.slick-wrapper--fullscreen .slick__slider {
+  margin-bottom: 0;
+}
+
+.slick--skin--fullscreen .slick__slider {
+  height: 100%;
+  min-height: 100%;
+  margin-bottom: 0;
+}
+
+/** @todo better way than over-specificity to support nested slicks. */
+.slick--skin--fullscreen .slick-list,
+.slick--skin--fullscreen .slick-track,
+.slick--skin--fullscreen .slick__slide,
+.slick--skin--fullscreen .slide__content,
+.slick--skin--fullscreen .media,
+.slick--skin--fullscreen .slide__media {
+  height: 100% !important; /* csslint allow: known-properties, important */
+  min-height: 320px;
+}
+
+.slick--skin--fullscreen .slick-track {
+  margin: 0;
+  padding: 0;
+}
+
+.slick--skin--fullscreen .slick__slide {
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+
+.slick--skin--fullscreen .slide__media img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-width: 100%;
+  height: auto;
+  min-height: 100%;
+  margin: 0 auto;
+}
+
+.slick--skin--fullscreen .slide__constrained {
+  position: absolute;
+  left: 50%;
+  width: 98%;
+  margin-left: -49%;
+}
+
+.slick--skin--fullscreen .slide__constrained .slide__caption {
+  position: relative;
+}
+
+.slick--skin--fullscreen .slide__caption {
+  color: #fff;
+  font-size: 22px;
+  font-size: 1.375rem;
+}
+
+.slick--skin--fullscreen .slide__title {
+  text-transform: uppercase;
+  color: #fff;
+  font-size: 48px;
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.slick--skin--fullscreen .slide__link a {
+  text-decoration: none;
+  color: #fff;
+  color: rgba(255, 255, 255, 0.8);
+  border-top: 2px solid rgba(255, 255, 255, 0.8);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.8);
+}
+
+.slick--skin--fullscreen .slide__link a:hover {
+  text-decoration: none;
+  color: #fff;
+  border-color: #fff;
+}
+
+.slick--skin--fullscreen .slick-dots {
+  bottom: 20px;
+}
+
+/* Views UI Preview */
+body.path-admin {
+  overflow: visible;
+}
+
+.path-admin .slick-wrapper--fullscreen,
+.path-admin .slick-wrapper--fullscreen .slick,
+.path-admin .slick--skin--fullscreen,
+.path-admin .slick--skin--fullscreen .slide__media {
+  position: relative;
+  min-height: 620px;
+}
+
+.path-admin .slick-wrapper--fullscreen .slick--thumbnail {
+  position: absolute;
+  min-height: 80px;
+}
+
+.path-admin .slick--skin--fullscreen .slick__slider {
+  min-height: 120px;
+}
+
+/** Nested slicks overrides. */
+.slick-wrapper--fullscreen .slick .slick {
+  position: relative;
+}
+
+.slick--skin--fullscreen .slick__slider .slick__slider {
+  height: auto;
+}
+
+.slick--skin--fullscreen .slick-list .slick-list {
+  height: auto !important; /* csslint allow: known-properties, important */
+  min-height: 40px;
+}
+
+@media (min-width: 65em) {
+  .slick--skin--fullscreen .slide__constrained {
+    padding-top: 10%;
+  }
+}
+
+@media (min-width: 90em) {
+  .slick--skin--fullscreen .slide__constrained {
+    width: 1170px;
+    margin-left: -585px;
+  }
+}

@@ -1,0 +1,5 @@
+exclude_node_title_settings:
+  title: 'Exclude Node Title'
+  description: 'Exclude Node Title from display'
+  parent: system.admin_config_content
+  route_name: exclude_node_title.settings

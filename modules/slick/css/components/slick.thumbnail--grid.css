@@ -1,0 +1,45 @@
+/**
+ * @file
+ * Thumbnails displayed as a static grid instead of dots.
+ */
+
+.slick .slick-dots--thumbnail-grid {
+  position: relative;
+  bottom: 0;
+  padding: 15px 0;
+}
+
+.slick .slick-dots--thumbnail-grid li {
+  display: inline-block;
+  width: 120px;
+  height: auto;
+  vertical-align: top;
+}
+
+.slick .slick-dots--thumbnail-grid button {
+  position: absolute;
+  visibility: hidden;
+}
+
+.slick .slick-dots--thumbnail-grid img {
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  border: 2px solid transparent;
+}
+
+.slick .slick-dots--thumbnail-grid li:hover img,
+.slick .slick-dots--thumbnail-grid .slick-active img {
+  -webkit-transition-delay: 0s;
+  transition-delay: 0s;
+  border-color: #ff6d2c;
+}
+
+/**
+ * Enable if the grid is displayed side by side to the Main image.
+
+.slick .slick-dots--thumbnail-grid::after,
+.slick .slick-dots--thumbnail-grid .slick-dots__thumbnail::after {
+  clear: none;
+  display: none;
+}
+ */

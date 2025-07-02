@@ -1,0 +1,4 @@
+inspect configuration:
+  title: 'Inspect configuration'
+  description: 'Use developer inspection tools to review configuration.'
+  restrict access: TRUE

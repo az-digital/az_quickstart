@@ -1,0 +1,16 @@
+webform_clientside_validation.novalidate:
+  version: VERSION
+  js:
+    js/webform_clientside_validation.novalidate.js: {}
+  dependencies:
+    - clientside_validation_jquery/cv.jquery.validate
+
+webform_clientside_validation.ife:
+  version: VERSION
+  js:
+    js/webform_clientside_validation.ife.js: { weight: -1 }
+  css:
+    component:
+      css/webform_clientside_validation.ife.css: { }
+  dependencies:
+    - clientside_validation_jquery/cv.jquery.validate.ife

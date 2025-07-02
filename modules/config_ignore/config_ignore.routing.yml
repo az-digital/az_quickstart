@@ -1,0 +1,7 @@
+config_ignore.settings:
+  path: '/admin/config/development/configuration/ignore'
+  defaults:
+    _form: '\Drupal\config_ignore\Form\IgnoreSettingsForm'
+    _title: 'Ignore'
+  requirements:
+    _permission: 'import configuration'

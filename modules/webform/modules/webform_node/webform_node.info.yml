@@ -1,0 +1,17 @@
+name: 'Webform Node'
+type: module
+description: 'Provides a Webform content type which allows webforms to be integrated into a website as nodes.'
+package: Webform
+core_version_requirement: ^10.2
+dependencies:
+  - 'drupal:field'
+  - 'drupal:node'
+  - 'drupal:path'
+  - 'drupal:text'
+  - 'drupal:user'
+  - 'webform:webform'
+
+# Information added by Drupal.org packaging script on 2024-12-10
+version: '6.2.9'
+project: 'webform'
+datestamp: 1733851071

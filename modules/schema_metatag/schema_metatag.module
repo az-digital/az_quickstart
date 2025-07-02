@@ -1,0 +1,54 @@
+<?php
+
+/**
+ * @file
+ * Contains schema_metatag.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function schema_metatag_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.schema_metatag':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('This module adds Schema.org structured data to web pages as JSON-LD. Configure structured data elements using the metatags module.') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_page_attachments_alter().
+ *
+ * Load all meta tags for this page, then separate out the structured data.
+ */
+function schema_metatag_page_attachments_alter(array &$attachments) {
+  if (empty($attachments['#attached']['html_head'])) {
+    return;
+  }
+
+  // Collect tags added by Schema Metatag into structured data array.
+  $schema_metatag_manager = \Drupal::service('schema_metatag.schema_metatag_manager');
+  $items = $schema_metatag_manager->parseJsonld($attachments['#attached']['html_head']);
+
+  // Turn the structured data array into JSON LD and add it to page head.
+  if (count($items) > 0) {
+    $jsonld = $schema_metatag_manager->encodeJsonld($items);
+    if (!empty($jsonld)) {
+      $attachments['#attached']['html_head'][] = [
+        [
+          '#type' => 'html_tag',
+          '#tag' => 'script',
+          '#value' => $jsonld,
+          '#attributes' => ['type' => 'application/ld+json'],
+        ],
+        'schema_metatag',
+      ];
+    }
+  }
+}

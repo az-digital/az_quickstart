@@ -1,0 +1,118 @@
+id: migmag_unmigratable_menu_link_trap
+source:
+  plugin: embedded_data
+  data_rows: []
+  ids:
+    mlid:
+      type: string
+  source_module: menu
+  constants:
+    bundle: menu_link_content
+    langcode: und
+    missing_title_prefix: 'mlid #'
+    missing_path_prefix: " (unavailable: '"
+    missing_path_suffix: "')"
+    menu_name_placeholder: ''
+    path_missing: 'MISSING'
+process:
+  # Trap should ignore mlid = 0.
+  id:
+    plugin: skip_on_empty
+    source: mlid
+    method: row
+  langcode: 'constants/langcode'
+  bundle: 'constants/bundle'
+  source_data:
+    plugin: callback
+    source: mlid
+    callable:
+      - Drupal\migmag_menu_link_migrate\MigMagMenuLinkMigrate
+      - getSourceMenuLinkData
+  title_of_missing_menu_link:
+    plugin: concat
+    source:
+      - 'constants/missing_title_prefix'
+      - mlid
+  title_raw:
+    plugin: null_coalesce
+    source:
+      - '@source_data/link_title'
+      - '@title_of_missing_menu_link'
+  description:
+    plugin: default_value
+    source: '@source_data/description'
+    default_value: NULL
+  # Menu name will be set by migmag lookup.
+  menu_name: 'constants/menu_name_placeholder'
+  'link/uri':
+    -
+      plugin: migmag_try
+      process:
+        -
+          plugin: skip_on_empty
+          source: '@source_data/link_path'
+          method: process
+        -
+          plugin: link_uri
+      catch:
+        Drupal\migrate\MigrateException: ~
+      saveMessage: false
+    -
+      plugin: default_value
+      default_value: 'route:<current>'
+  'link/options':
+    plugin: default_value
+    source: '@source_data/options'
+    default_value: {}
+  weight:
+    plugin: default_value
+    source: '@source_data/weight'
+    default_value: 0
+  expanded:
+    plugin: default_value
+    source: '@source_data/expanded'
+    default_value: 0
+  path_is_available:
+    plugin: static_map
+    source: '@link/uri'
+    map:
+      'route:<current>': 0
+    default_value: 1
+  'source_data/link_path':
+    plugin: null_coalesce
+    source:
+      - '@source_data/link_path'
+      - 'constants/path_missing'
+  title_suffix:
+    -
+      plugin: static_map
+      source: '@path_is_available'
+      map:
+        0: 'do not skip'
+        1: ~
+    -
+      plugin: skip_on_empty
+      method: process
+    -
+      plugin: concat
+      source:
+        - 'constants/missing_path_prefix'
+        - '@source_data/link_path'
+        - 'constants/missing_path_suffix'
+  title:
+    plugin: concat
+    source:
+      - '@title_raw'
+      - '@title_suffix'
+  enabled:
+    plugin: static_map
+    source:
+      - '@path_is_available'
+      - '@source_data/enabled'
+    map:
+      1:
+        0: 0
+        1: 1
+    default_value: 0
+destination:
+  plugin: entity:menu_link_content

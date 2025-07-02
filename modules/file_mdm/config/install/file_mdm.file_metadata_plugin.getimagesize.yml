@@ -1,0 +1,7 @@
+configuration:
+  cache:
+    override: FALSE
+    settings:
+      enabled: TRUE
+      expiration: 172800
+      disallowed_paths: {  }

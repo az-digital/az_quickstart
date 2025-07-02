@@ -1,0 +1,505 @@
+global-styling:
+  version: VERSION
+  js:
+    js/barrio.js: {}
+    js/affix.js: {}
+  css:
+    component:
+      css/components/affix.css: {}
+      css/components/book.css: {}
+      css/components/contextual.css: {}
+      # @see https://www.drupal.org/node/2389735
+      css/components/feed-icon.css: {}
+      css/components/field.css: {}
+      css/components/header.css: {}
+      css/components/help.css: {}
+      css/components/icons.css: {}
+      css/components/image-button.css: {}
+      css/components/item-list.css: {}
+      css/components/list-group.css: {}
+      css/components/media.css: {}
+      css/components/page.css: {}
+      css/components/search-form.css: {}
+      css/components/shortcut.css: {}
+      css/components/sidebar.css: {}
+      css/components/site-footer.css: {}
+      css/components/skip-link.css: {}
+      css/components/table.css: {}
+      css/components/tabledrag.css: {}
+      css/components/tableselect.css: {}
+      css/components/tablesort-indicator.css: {}
+      css/components/ui.widget.css: {}
+      css/components/tabs.css: {}
+      css/components/toolbar.css: {}
+      css/components/user.css: { weight: -10 }
+      # @see https://www.drupal.org/node/2389735
+      css/components/vertical-tabs.css: {}
+      css/components/views.css: {}
+      css/components/ui-dialog.css: {}
+      css/components/progress.css: { weight: -10 }
+    theme:
+      css/print.css: { media: print }
+  dependencies:
+    - core/jquery
+    - core/once
+    - core/drupal
+
+affix:
+  version: VERSION
+  js:
+    js/affix.js: {}
+  css:
+    component:
+      css/components/affix.css: {}
+  dependencies:
+    - core/jquery
+    - core/once
+alerts:
+  version: VERSION
+  css:
+    component:
+      css/components/alerts.css: {}
+book-navigation:
+  version: VERSION
+  css:
+    component:
+      css/components/book-navigation.css: {}
+
+bootstrap-icons:
+  version: VERSION
+  css:
+    component:
+      css/components/bootstrap-icons.css: {}
+
+breadcrumb:
+  version: VERSION
+  css:
+    component:
+      css/components/breadcrumb.css: {}
+
+comments:
+  css:
+    component:
+      css/components/comments.css: {}
+
+dropbutton:
+  version: VERSION
+  css:
+    component:
+      css/components/dropbutton.component.css: {}
+      css/components/dropbutton.css: { weight: -10 }
+
+file:
+  version: VERSION
+  css:
+    component:
+      css/components/file.css: { weight: -10 }
+
+form:
+  version: VERSION
+  css:
+    component:
+      css/components/form.css: {}
+
+forum:
+  version: VERSION
+  css:
+    component:
+      css/components/forum.css: { weight: -10 }
+
+image-widget:
+  version: VERSION
+  css:
+    component:
+      css/components/image-widget.css: {}
+
+image_fluid:
+  version: VERSION
+  css:
+    component:
+      css/components/img-fluid.css: {}
+
+indented:
+  version: VERSION
+  css:
+    component:
+      css/components/indented.css: {}
+
+maintenance_page:
+  version: VERSION
+  css:
+    theme:
+      css/maintenance-page.css: {}
+  dependencies:
+    - system/maintenance
+    - bootstrap_barrio/global-styling
+
+messages:
+  js:
+    js/messages.js: {}
+
+navigation:
+  version: VERSION
+  css:
+    theme:
+      css/components/navigation.css: {}
+
+node:
+  version: VERSION
+  css:
+    component:
+      css/components/node.css: { weight: -10 }
+
+slide_nav:
+  version: VERSION
+  css:
+    theme:
+      css/components/slide-nav.css: {}
+
+sidebar_collapse:
+  version: VERSION
+  js:
+    js/sidebar-collapse.js: { external: true }
+  css:
+    component:
+      css/components/sidebar-collapse.css: {}
+
+tabs:
+  version: VERSION
+  css:
+    component:
+      css/components/tabs.css: {}
+
+tabs_full:
+  version: VERSION
+  css:
+    component:
+      css/components/tabs-full.css: {}
+
+toast:
+  version: VERSION
+  js:
+    js/toast.js: {}
+
+verticaltabs:
+  version: VERSION
+  css:
+    component:
+      css/components/vertical-tabs.css: {}
+
+commerce:
+  version: VERSION
+  css:
+    component:
+      css/components/commerce.css: {}
+
+# Core
+
+drupal.node.preview:
+  css:
+    component:
+      css/components/node-preview.css: {}
+
+# Fonts
+
+roboto:
+  version: VERSION
+  css:
+    component:
+      fonts/roboto.css: {}
+      //fonts.googleapis.com/css?family=Roboto|Roboto+Condensed:700: {}
+
+alegreya_roboto:
+  version: VERSION
+  css:
+    component:
+      fonts/alegreya_roboto.css: {}
+      //fonts.googleapis.com/css?family=Roboto|Roboto+Condensed|Alegreya:700: {}
+
+dancing_garamond:
+  version: VERSION
+  css:
+    component:
+      fonts/dancing_garamond.css: {}
+      //fonts.googleapis.com/css?family=Dancing+Script:700|EB+Garamond: {}
+
+amatic_josefin:
+  version: VERSION
+  css:
+    component:
+      fonts/amatic_josefin.css: {}
+      //fonts.googleapis.com/css?family=Josefin+Sans:700|Amatic+SC:700: {}
+
+oswald_droid:
+  version: VERSION
+  css:
+    component:
+      fonts/oswald_droid.css: {}
+      //fonts.googleapis.com/css?family=Oswald:700|Droid+Serif:400,700italic: {}
+
+playfair_alice:
+  version: VERSION
+  css:
+    component:
+      fonts/playfair_alice.css: {}
+      //fonts.googleapis.com/css?family=Alice|Playfair+Display:900: {}
+
+dosis_opensans:
+  version: VERSION
+  css:
+    component:
+      fonts/dosis_opensans.css: {}
+      //fonts.googleapis.com/css?family=Open+Sans|Dosis:400,800: {}
+
+lato_hotel:
+  version: VERSION
+  css:
+    component:
+      fonts/lato_hotel.css: {}
+      //fonts.googleapis.com/css?family=Lato:300|Grand+Hotel: {}
+
+medula_abel:
+  version: VERSION
+  css:
+    component:
+      fonts/medula_abel.css: {}
+      //fonts.googleapis.com/css?family=Abel|Medula+One: {}
+
+fjalla_cantarell:
+  version: VERSION
+  css:
+    component:
+      fonts/fjalla_cantarell.css: {}
+      //fonts.googleapis.com/css?family=Fjalla+One|Cantarell:400,400italic,700italic,700: {}
+
+coustard_leckerli:
+  version: VERSION
+  css:
+    component:
+      fonts/coustard_leckerli.css: {}
+      //fonts.googleapis.com/css?family=Leckerli+One|Coustard:900: {}
+
+philosopher_muli:
+  version: VERSION
+  css:
+    component:
+      fonts/philosopher_muli.css: {}
+      //fonts.googleapis.com/css?family=Philosopher|Muli:300: {}
+
+vollkorn_exo:
+  version: VERSION
+  css:
+    component:
+      fonts/vollkorn_exo.css: {}
+      //fonts.googleapis.com/css?family=Vollkorn:700italic,700|Exo:400,400italic: {}
+
+monserrat_lato:
+  version: VERSION
+  css:
+    component:
+      fonts/monserrat_lato.css: {}
+      //fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic: {}
+      //fonts.googleapis.com/css?family=Montserrat:400,700: {}
+
+# Colors
+
+messages_white:
+  version: VERSION
+  css:
+    component:
+      css/colors/messages/messages-white.css: {}
+
+messages_gray:
+  version: VERSION
+  css:
+    component:
+      css/colors/messages/messages-gray.css: {}
+
+messages_light:
+  version: VERSION
+  css:
+    component:
+      css/colors/messages/messages-light.css: {}
+
+messages_dark:
+  version: VERSION
+  css:
+    component:
+      css/colors/messages/messages-dark.css: {}
+
+# icons
+
+material_design_icons:
+  version: VERSION
+  css:
+    component:
+      //fonts.googleapis.com/icon?family=Material+Icons: {}
+
+fontawesome:
+  version: VERSION
+  css:
+    component:
+      //use.fontawesome.com/releases/v5.13.0/css/all.css: {}
+
+# Material Design for Bootstrap
+
+mdb:
+  remote: http://mdbootstrap.com
+  license:
+    name: MIT
+    gpl-compatible: false
+  js:
+    //mdbootstrap.com/mdbcdn/mdbcdn/mdb.min.js: { external: true }
+  css:
+    theme:
+      //mdbootstrap.com/mdbcdn/mdb.min.css: {}
+  dependencies:
+    - core/jquery
+    - bootstrap_barrio/material_design_icons
+
+views.ajax:
+  js:
+    js/modules/views/ajax_view.js: {}
+
+# Bootstrap
+
+bootstrap:
+  js:
+    /libraries/bootstrap/dist/js/bootstrap.min.js: {}
+  css:
+    component:
+      /libraries/bootstrap/dist/css/bootstrap.min.css: {}
+  dependencies:
+    - core/popperjs
+bootstrap_cdn:
+  js:
+    //cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js: {}
+    //stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js: {}
+  css:
+    component:
+      //stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css: {}
+boostrap_js:
+  js:
+    //cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js: {}
+    //stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js: {}
+
+# Bootswatch
+
+bootswatch_cosmo:
+  css:
+    component:
+      //stackpath.bootstrapcdn.com/bootswatch/4.5.2/cosmo/bootstrap.min.css: {}
+  dependencies:
+    - bootstrap_barrio/bootstrap_js
+bootswatch_cyborg:
+  css:
+    component:
+      //stackpath.bootstrapcdn.com/bootswatch/4.5.2/cyborg/bootstrap.min.css: {}
+bootswatch_darkly:
+  css:
+    component:
+      //stackpath.bootstrapcdn.com/bootswatch/4.5.2/darkly/bootstrap.min.css: {}
+  dependencies:
+    - bootstrap_barrio/bootstrap_js
+bootswatch_flatly:
+  css:
+    component:
+      //stackpath.bootstrapcdn.com/bootswatch/4.5.2/flatly/bootstrap.min.css: {}
+  dependencies:
+    - bootstrap_barrio/bootstrap_js
+bootswatch_journal:
+  css:
+    component:
+      //stackpath.bootstrapcdn.com/bootswatch/4.5.2/journal/bootstrap.min.css: {}
+  dependencies:
+    - bootstrap_barrio/bootstrap_js
+bootswatch_litera:
+  css:
+    component:
+      //stackpath.bootstrapcdn.com/bootswatch/4.5.2/litera/bootstrap.min.css: {}
+  dependencies:
+    - bootstrap_barrio/bootstrap_js
+bootswatch_lumen:
+  css:
+    component:
+      //stackpath.bootstrapcdn.com/bootswatch/4.5.2/lumen/bootstrap.min.css: {}
+  dependencies:
+    - bootstrap_barrio/bootstrap_js
+bootswatch_lux:
+  css:
+    component:
+      //stackpath.bootstrapcdn.com/bootswatch/4.5.2/lux/bootstrap.min.css: {}
+  dependencies:
+    - bootstrap_barrio/bootstrap_js
+bootswatch_materia:
+  css:
+    component:
+      //stackpath.bootstrapcdn.com/bootswatch/4.5.2/materia/bootstrap.min.css: {}
+  dependencies:
+    - bootstrap_barrio/bootstrap_js
+bootswatch_minty:
+  css:
+    component:
+      //stackpath.bootstrapcdn.com/bootswatch/4.5.2/minty/bootstrap.min.css: {}
+  dependencies:
+    - bootstrap_barrio/bootstrap_js
+bootswatch_pulse:
+  css:
+    component:
+      //stackpath.bootstrapcdn.com/bootswatch/4.5.2/pulse/bootstrap.min.css: {}
+  dependencies:
+    - bootstrap_barrio/bootstrap_js
+bootswatch_sandstone:
+  css:
+    component:
+      //stackpath.bootstrapcdn.com/bootswatch/4.5.2/sandstone/bootstrap.min.css: {}
+  dependencies:
+    - bootstrap_barrio/bootstrap_js
+bootswatch_simplex:
+  css:
+    component:
+      //stackpath.bootstrapcdn.com/bootswatch/4.5.2/simplex/bootstrap.min.css: {}
+  dependencies:
+    - bootstrap_barrio/bootstrap_js
+bootswatch_sketchy:
+  css:
+    component:
+      //stackpath.bootstrapcdn.com/bootswatch/4.5.2/sketchy/bootstrap.min.css: {}
+  dependencies:
+    - bootstrap_barrio/bootstrap_js
+bootswatch_slate:
+  css:
+    component:
+      //stackpath.bootstrapcdn.com/bootswatch/4.5.2/slate/bootstrap.min.css: {}
+  dependencies:
+    - bootstrap_barrio/bootstrap_js
+bootswatch_solar:
+  css:
+    component:
+      //stackpath.bootstrapcdn.com/bootswatch/4.5.2/solar/bootstrap.min.css: {}
+  dependencies:
+    - bootstrap_barrio/bootstrap_js
+bootswatch_spacelab:
+  css:
+    component:
+      //stackpath.bootstrapcdn.com/bootswatch/4.5.2/spacelab/bootstrap.min.css: {}
+  dependencies:
+    - bootstrap_barrio/bootstrap_js
+bootswatch_superhero:
+  css:
+    component:
+      //stackpath.bootstrapcdn.com/bootswatch/4.5.2/superhero/bootstrap.min.css: {}
+  dependencies:
+    - bootstrap_barrio/bootstrap_js
+bootswatch_united:
+  css:
+    component:
+      //stackpath.bootstrapcdn.com/bootswatch/4.5.2/united/bootstrap.min.css: {}
+  dependencies:
+    - bootstrap_barrio/bootstrap_js
+bootswatch_yeti:
+  css:
+    component:
+      //stackpath.bootstrapcdn.com/bootswatch/4.5.2/yeti/bootstrap.min.css: {}
+  dependencies:
+    - bootstrap_barrio/bootstrap_js

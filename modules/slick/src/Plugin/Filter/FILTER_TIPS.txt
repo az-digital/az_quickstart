@@ -1,0 +1,78 @@
+<h3>Slick</h3>
+<p>If you copy paste the lines here into CKEditor, be sure to view CKEditor
+source and remove the surrounding <code>&lt;code&gt;...&lt;/code&gt;</code>.
+<br />
+Create a slideshow/ carousel with a shortcode. Pay attention to attributes,
+slashes, single and double quotes:</p>
+<ol>
+  <li><b>Basic</b>, with inline HTML: <br>
+  <code>[slick]...[slide]...[/slide]...[/slick]</code></li>
+  <li><b>With self-closing
+  <code>data=ENTITY_TYPE:ID:FIELD_NAME:FIELD_IMAGE</code></b>, without inline
+  HTML: <br><code>[slick data="node:44:field_media" /]</code><br>
+  <code>[slick data="node:44:field_media:field_media_image" /]</code><br>
+  <b>Required</b>: <code>ENTITY_TYPE:ID:FIELD_NAME</code>, where
+  <code>ENTITY_TYPE</code> is <b>node</b> -- only tested with node,
+  <code>ID</code> is <b>node ID</b>, <code>FIELD_NAME</code> can be field Media,
+  Entityreference, Image, Text (long or with summary), must be multi-value,
+  or unlimited. <br><b>Optional</b>: <code>FIELD_IMAGE</code> named
+  <code>field_media_image</code> as found at Media Image/ Video for hires
+  poster image, must be similar and single-value field image for all media
+  entities to have mixed media correctly. This is not field image at Node, it is
+  at Media.</li>
+  <li><b>With settings and or options</b>, to override Slick filter settings:
+  <br>
+  <code>[slick settings="{}" options="{}"]..[slide]..[/slide]..[/slick]</code>
+  <br>
+  Where <code>settings</code> is HTML settings as seen at Filter, Field or Views
+  UI forms, and <code>options</code> is JavaScript options as seen at Optionset
+  UI forms.</li>
+  <li><b>Options only</b>: any JavaScript options relevant from
+  <code>slick/config/install/slick.optionset.default.yml</code>:<br>
+    <code>[slick options="{'type':  'loop', 'arrows': false,
+    'pagination': true}"]...[/slick]</code>
+  </li>
+  <li><b>HTML settings only</b>: any HTML settings relevant from
+  <code>SlickDefault/ BlazyDefault</code> methods:<br>
+     <code>[slick settings="{'optionset': 'x_main', 'skin': 'fullwidth',
+     'layout': 'bottom'}"]...[/slick]</code><br>
+     To force disabling enabled navigation, add <code>'nav': false</code>
+  </li>
+  <li><b>With grid</b>: similar to Blazy grid + visible items:<br>
+     <code>STYLE:SMALL-MEDIUM-LARGE:VISIBLE_ITEMS</code>
+     <code>[slick grid="nativegrid:2-3-4:8" /]</code><br>
+  </li>
+  <li><b>With HTML caption</b> for each <code>[slide]</code>, if not using
+  Filter caption for a reason: <br>
+  <code>[slide caption='Read <a href="https://mysite.com">more</a>']...</code>
+  <br>Use single quotes for HTML caption, else broken. The link is normally
+  converted automatically when using WYSIWYG. This will replace Filter caption
+  if they both exist.</li>
+</ol>
+<p><br><b>Tips</b>, if any issues:</p>
+<ul>
+  <li>Attributes <code>data, settings, options</code> can be put together into
+  one <code>[slick]</code>.</li>
+  <li><code>[slide]</code> can have attributes, including <code>caption</code>,
+  e.g.: <br>
+  <code>[slide class="slide--custom-class" caption='Read more...']</code>.</li>
+  <li>To disable thumbnail/ text navigation add <code>nav="false"</code>:
+  <code>[slick nav="false"]</code>.</li>
+  <li>Except for self-closing one-liner <code>data</code> attribute, be sure
+  slide items are stacked, separated by line breaks, or any relevant HTML tags,
+  and wrapped each with <code>[slide]</code>:<br>
+<code>
+[slick]<br>
+  &nbsp;&nbsp;[slide]<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;IMG&gt;<br>&nbsp;&nbsp;[/slide]<br>
+  &nbsp;&nbsp;[slide]<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;IFRAME&gt;<br>&nbsp;&nbsp;[/slide]<br>
+  &nbsp;&nbsp;[slide]<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Any non-media HTML
+  content&lt;/p&gt;<br>&nbsp;&nbsp;[/slide]<br>
+[/slick]
+</code><br>
+    <code>IMG/ IFRAME</code>, or other HTML as slide contents can be wrapped
+    with any relevant tags, no problem.
+    </li>
+  <li>Except for <code>[slide]</code>, avoid using the reserved square bracket
+  characters <code>[</code> and <code>]</code> or other inner shortcodes inside
+  <code>[slick]...[/slick]</code> blocks till we support nested slicks.</li>
+</ul>

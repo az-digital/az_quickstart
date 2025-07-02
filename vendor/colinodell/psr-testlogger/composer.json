@@ -1,0 +1,65 @@
+{
+    "name": "colinodell/psr-testlogger",
+    "type": "library",
+    "description": "PSR-3 compliant test logger based on psr/log v1's, but compatible with v2 and v3 too!",
+    "keywords": ["psr","log","logger","logging","test","mock","unit","phpunit"],
+    "homepage": "https://github.com/colinodell/psr-testlogger",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Colin O'Dell",
+            "email": "colinodell@gmail.com",
+            "homepage": "https://www.colinodell.com",
+            "role": "Lead Developer"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/colinodell/psr-testlogger/issues",
+        "rss": "https://github.com/colinodell/psr-testlogger/releases.atom",
+        "source": "https://github.com/colinodell/psr-testlogger"
+    },
+    "require": {
+        "php": "^8.0",
+        "psr/log": "^1.0 || ^2.0 || ^3.0"
+    },
+    "provide": {
+        "psr/log-implementation": "1.0.0 || 2.0.0 || 3.0.0"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^1.9.2",
+        "phpunit/phpunit": "^9.5.5",
+        "scrutinizer/ocular": "^1.8.1",
+        "unleashedtech/php-coding-standard": "^3.1",
+        "vimeo/psalm": "^4.30.0"
+    },
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "ColinODell\\PsrTestLogger\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ColinODell\\PsrTestLogger\\Tests\\Unit\\": "tests/unit"
+        }
+    },
+    "scripts": {
+        "phpcs": "phpcs",
+        "phpstan": "phpstan analyse",
+        "phpunit": "phpunit --no-coverage",
+        "psalm": "psalm --stats",
+        "test": [
+            "@phpcs",
+            "@phpstan",
+            "@psalm",
+            "@phpunit"
+        ]
+    },
+    "config": {
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        },
+        "sort-packages": true
+    }
+}

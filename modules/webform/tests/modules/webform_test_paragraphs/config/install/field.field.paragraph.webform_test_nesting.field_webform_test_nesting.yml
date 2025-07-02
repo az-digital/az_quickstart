@@ -1,0 +1,46 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_webform_test_nesting
+    - paragraphs.paragraphs_type.webform_test_inline
+    - paragraphs.paragraphs_type.webform_test_inline_no_source
+    - paragraphs.paragraphs_type.webform_test_link
+    - paragraphs.paragraphs_type.webform_test_nesting
+  module:
+    - entity_reference_revisions
+id: paragraph.webform_test_nesting.field_webform_test_nesting
+field_name: field_webform_test_nesting
+entity_type: paragraph
+bundle: webform_test_nesting
+label: 'Webform test nesting'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      webform_test_inline: webform_test_inline
+      webform_test_inline_no_source: webform_test_inline_no_source
+      webform_test_link: webform_test_link
+    negate: 0
+    target_bundles_drag_drop:
+      webform_test_inline:
+        weight: -11
+        enabled: true
+      webform_test_inline_no_source:
+        weight: -10
+        enabled: true
+      webform_test_link:
+        weight: -9
+        enabled: true
+      webform_test_link_no_source:
+        weight: -8
+        enabled: true
+      webform_test_nesting:
+        weight: -7
+        enabled: false
+field_type: entity_reference_revisions

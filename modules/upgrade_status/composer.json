@@ -1,0 +1,26 @@
+{
+    "name": "drupal/upgrade_status",
+    "type": "drupal-module",
+    "description": "Review Drupal major upgrade readiness of the environment and components of the site.",
+    "homepage": "http://drupal.org/project/upgrade_status",
+    "license": "GPL-2.0-or-later",
+    "require": {
+        "mglaman/phpstan-drupal": "^1.2.11",
+        "phpstan/phpstan-deprecation-rules": "^1.0.0",
+        "dekor/php-array-table": "^2.0",
+        "nikic/php-parser": "^4.0.0|^5.0.0",
+        "webflo/drupal-finder": "^1.2",
+        "symfony/process": "^3.4|^4.0|^5.0|^6.0|^7.0"
+    },
+    "require-dev": {
+        "drush/drush": "^11|^12|^13"
+    },
+    "minimum-stability": "dev",
+    "extra": {
+        "drush": {
+            "services": {
+                 "drush.services.yml": "^9 || ^10"
+            }
+        }
+    }
+}

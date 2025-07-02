@@ -1,0 +1,5 @@
+hash_key: 'auHash'
+duration: 172800
+cleanup_expired_tokens: false
+cleanup_expired_tokens_period: '-2 weeks'
+modify_http_headers: {  }

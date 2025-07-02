@@ -1,0 +1,9 @@
+name: Recipe with direct dependency present
+type: 'Testing'
+install:
+  - node
+config:
+  actions:
+    node.settings:
+      simpleConfigUpdate:
+        use_admin_theme: true

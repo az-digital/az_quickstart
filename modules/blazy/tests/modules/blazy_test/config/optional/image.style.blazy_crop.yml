@@ -1,0 +1,17 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - blazy_test
+name: blazy_crop
+label: 'Blazy crop'
+effects:
+  f70c1c17-2522-4a85-84d0-e78ce847992a:
+    uuid: f70c1c17-2522-4a85-84d0-e78ce847992a
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 640
+      height: 360
+      anchor: center-center

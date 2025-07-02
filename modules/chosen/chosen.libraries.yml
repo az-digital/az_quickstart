@@ -1,0 +1,28 @@
+drupal.chosen:
+  remote: https://drupal.org/project/chosen
+  version: 1.7.0
+  license:
+      name: GNU GPL v2
+      url: https://www.drupal.org/about/licensing
+      gpl-compatible: true
+  js:
+    js/chosen.js: {}
+  css:
+    component:
+      css/chosen-drupal.css: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/once
+    - chosen_lib/chosen
+drupal.chosen.all:
+  dependencies:
+    - chosen/drupal.chosen
+    - chosen_lib/chosen.css
+chosen.claro:
+  css:
+    component:
+      css/chosen.claro.css: {}
+chosen.bef:
+  js:
+    js/chosen-bef.js: {}

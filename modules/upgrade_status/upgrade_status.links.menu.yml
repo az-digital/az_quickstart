@@ -1,0 +1,5 @@
+upgrade_status.report:
+  title: 'Upgrade status'
+  description: 'Review Drupal major upgrade readiness of the environment and components of the site.'
+  route_name: upgrade_status.report
+  parent: system.admin_reports

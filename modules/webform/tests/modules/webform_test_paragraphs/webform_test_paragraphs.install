@@ -1,0 +1,111 @@
+<?php
+
+/**
+ * @file
+ * Install and uninstall functions for the Webform Test Paragraphs module.
+ */
+
+use Drupal\node\Entity\Node;
+use Drupal\paragraphs\Entity\Paragraph;
+
+/**
+ * Implements hook_install().
+ */
+function webform_test_paragraphs_install() {
+  $langcode = \Drupal::languageManager()->getDefaultLanguage()->getId();
+
+  $field_webform_test_value = [
+    'target_id' => 'webform_test_paragraphs',
+    'default_data' => 'textfield: \'{default_value}\'',
+  ];
+
+  $node_default_values = [
+    'type' => 'webform_test_paragraphs',
+    'langcode' => $langcode,
+    'field_webform_test_value' => ['value' => '{node.field_webform_test_value}'],
+    'field_webform_test_node_value' => ['value' => '{node.field_webform_test_node_value}'],
+  ];
+
+  $paragraph_default_values = [
+    'langcode' => $langcode,
+    'field_webform_test_value' => ['value' => '{paragraph.field_webform_test_value}'],
+    'field_webform_test_para_value' => ['value' => '{paragraph.field_webform_test_para_value}'],
+  ];
+
+  // Inline.
+  Node::create([
+    'title' => 'Webform Test Inline',
+    'field_webform_test_paragraphs' => Paragraph::create([
+      'type' => 'webform_test_inline',
+      'field_webform_test' => $field_webform_test_value,
+    ] + $paragraph_default_values),
+  ] + $node_default_values)->save();
+
+  // Inline  (No Source).
+  Node::create([
+    'title' => 'Webform Test Inline (No Source)',
+    'field_webform_test_paragraphs' => Paragraph::create([
+      'type' => 'webform_test_inline_no_source',
+      'field_webform_test' => $field_webform_test_value,
+    ] + $paragraph_default_values),
+  ] + $node_default_values)->save();
+
+  // Link.
+  Node::create([
+    'title' => 'Webform Test Link',
+    'field_webform_test_paragraphs' => Paragraph::create([
+      'type' => 'webform_test_link',
+      'field_webform_test' => $field_webform_test_value,
+    ] + $paragraph_default_values),
+  ] + $node_default_values)->save();
+
+  // Link  (No Source).
+  Node::create([
+    'title' => 'Webform Test Link  (No Source)',
+    'field_webform_test_paragraphs' => Paragraph::create([
+      'type' => 'webform_test_link_no_source',
+      'field_webform_test' => $field_webform_test_value,
+    ] + $paragraph_default_values),
+  ] + $node_default_values)->save();
+
+  // Multiple.
+  Node::create([
+    'title' => 'Webform Test Multiple',
+    'field_webform_test_paragraphs' => [
+      Paragraph::create([
+        'type' => 'webform_test_inline',
+        'field_webform_test' => $field_webform_test_value,
+      ] + $paragraph_default_values),
+      Paragraph::create([
+        'type' => 'webform_test_link',
+        'field_webform_test' => $field_webform_test_value,
+      ] + $paragraph_default_values),
+    ],
+  ] + $node_default_values)->save();
+
+  // Nesting.
+  Node::create([
+    'title' => 'Webform Test Nesting',
+    'field_webform_test_paragraphs' => [
+      Paragraph::create([
+        'type' => 'webform_test_nesting',
+        'langcode' => $langcode,
+        'field_webform_test_nesting' => Paragraph::create([
+          'type' => 'webform_test_link',
+          'field_webform_test' => $field_webform_test_value,
+        ] + $paragraph_default_values),
+      ]),
+    ],
+  ] + $node_default_values)->save();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function webform_test_paragraphs_uninstall() {
+  $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+  $nodes = $node_storage->loadByProperties(['type' => 'webform_test_paragraphs']);
+  foreach ($nodes as $node) {
+    $node->delete();
+  }
+}

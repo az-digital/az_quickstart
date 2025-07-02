@@ -1,0 +1,276 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Function menu_block_update_8101\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: menu_block.install
+
+		-
+			message: "#^Function menu_block_update_8102\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: menu_block.install
+
+		-
+			message: "#^Function menu_block_plugin_filter_block_alter\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: menu_block.module
+
+		-
+			message: "#^Function menu_block_plugin_filter_block_alter\\(\\) has parameter \\$consumer with no type specified\\.$#"
+			count: 1
+			path: menu_block.module
+
+		-
+			message: "#^Function menu_block_plugin_filter_block_alter\\(\\) has parameter \\$definitions with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: menu_block.module
+
+		-
+			message: "#^Function menu_block_plugin_filter_block_alter\\(\\) has parameter \\$extra with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: menu_block.module
+
+		-
+			message: "#^Function menu_block_preprocess_block\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: menu_block.module
+
+		-
+			message: "#^Function menu_block_preprocess_block\\(\\) has parameter \\$variables with no type specified\\.$#"
+			count: 1
+			path: menu_block.module
+
+		-
+			message: "#^Function menu_block_theme_registry_alter\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: menu_block.module
+
+		-
+			message: "#^Function menu_block_theme_registry_alter\\(\\) has parameter \\$theme_registry with no type specified\\.$#"
+			count: 1
+			path: menu_block.module
+
+		-
+			message: "#^Function menu_block_theme_suggestions_block\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: menu_block.module
+
+		-
+			message: "#^Function menu_block_theme_suggestions_block\\(\\) has parameter \\$variables with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: menu_block.module
+
+		-
+			message: "#^Function menu_block_theme_suggestions_block_alter\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: menu_block.module
+
+		-
+			message: "#^Function menu_block_theme_suggestions_block_alter\\(\\) has parameter \\$suggestions with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: menu_block.module
+
+		-
+			message: "#^Function menu_block_theme_suggestions_block_alter\\(\\) has parameter \\$variables with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: menu_block.module
+
+		-
+			message: "#^Function menu_block_theme_suggestions_menu\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: menu_block.module
+
+		-
+			message: "#^Function menu_block_theme_suggestions_menu\\(\\) has parameter \\$variables with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: menu_block.module
+
+		-
+			message: "#^Function menu_block_post_update_add_expand_all_items_key\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: menu_block.post_update.php
+
+		-
+			message: "#^Function menu_block_post_update_add_expand_all_items_key\\(\\) has parameter \\$sandbox with no type specified\\.$#"
+			count: 1
+			path: menu_block.post_update.php
+
+		-
+			message: "#^Function menu_block_post_update_implement_schema_for_follow_and_follow_parent\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: menu_block.post_update.php
+
+		-
+			message: "#^Function menu_block_post_update_implement_schema_for_follow_and_follow_parent\\(\\) has parameter \\$sandbox with no type specified\\.$#"
+			count: 1
+			path: menu_block.post_update.php
+
+		-
+			message: "#^Method Drupal\\\\menu_block\\\\Plugin\\\\Block\\\\MenuBlock\\:\\:blockForm\\(\\) has parameter \\$form with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Plugin/Block/MenuBlock.php
+
+		-
+			message: "#^Method Drupal\\\\menu_block\\\\Plugin\\\\Block\\\\MenuBlock\\:\\:blockForm\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Plugin/Block/MenuBlock.php
+
+		-
+			message: "#^Method Drupal\\\\menu_block\\\\Plugin\\\\Block\\\\MenuBlock\\:\\:blockSubmit\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Plugin/Block/MenuBlock.php
+
+		-
+			message: "#^Method Drupal\\\\menu_block\\\\Plugin\\\\Block\\\\MenuBlock\\:\\:blockSubmit\\(\\) has parameter \\$form with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Plugin/Block/MenuBlock.php
+
+		-
+			message: "#^Method Drupal\\\\menu_block\\\\Plugin\\\\Block\\\\MenuBlock\\:\\:build\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Plugin/Block/MenuBlock.php
+
+		-
+			message: "#^Method Drupal\\\\menu_block\\\\Plugin\\\\Block\\\\MenuBlock\\:\\:create\\(\\) has parameter \\$configuration with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Plugin/Block/MenuBlock.php
+
+		-
+			message: "#^Method Drupal\\\\menu_block\\\\Plugin\\\\Block\\\\MenuBlock\\:\\:defaultConfiguration\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Plugin/Block/MenuBlock.php
+
+		-
+			message: "#^Method Drupal\\\\menu_block\\\\Plugin\\\\Block\\\\MenuBlock\\:\\:findLinkInTree\\(\\) has parameter \\$menu_tree with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Plugin/Block/MenuBlock.php
+
+		-
+			message: "#^Method Drupal\\\\menu_block\\\\Plugin\\\\Block\\\\MenuBlock\\:\\:getDerivativeActiveTrailIds\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Plugin/Block/MenuBlock.php
+
+		-
+			message: "#^Method Drupal\\\\menu_block\\\\Plugin\\\\Block\\\\MenuBlock\\:\\:processMenuBlockFieldSets\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Plugin/Block/MenuBlock.php
+
+		-
+			message: "#^Method Drupal\\\\menu_block\\\\Plugin\\\\Block\\\\MenuBlock\\:\\:processMenuBlockFieldSets\\(\\) has parameter \\$complete_form with no type specified\\.$#"
+			count: 1
+			path: src/Plugin/Block/MenuBlock.php
+
+		-
+			message: "#^Method Drupal\\\\menu_block\\\\Plugin\\\\Block\\\\MenuBlock\\:\\:processMenuBlockFieldSets\\(\\) has parameter \\$element with no type specified\\.$#"
+			count: 1
+			path: src/Plugin/Block/MenuBlock.php
+
+		-
+			message: "#^PHPDoc tag @var for variable \\$active_trail_ids has no value type specified in iterable type array\\.$#"
+			count: 3
+			path: src/Plugin/Block/MenuBlock.php
+
+		-
+			message: "#^Property Drupal\\\\menu_block\\\\Plugin\\\\Block\\\\MenuBlock\\:\\:\\$buildCache \\(array\\) in isset\\(\\) is not nullable\\.$#"
+			count: 1
+			path: src/Plugin/Block/MenuBlock.php
+
+		-
+			message: "#^Property Drupal\\\\menu_block\\\\Plugin\\\\Block\\\\MenuBlock\\:\\:\\$buildCache type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Plugin/Block/MenuBlock.php
+
+		-
+			message: "#^Unreachable statement \\- code above always terminates\\.$#"
+			count: 1
+			path: src/Plugin/Block/MenuBlock.php
+
+		-
+			message: "#^\\\\Drupal calls should be avoided in classes, use dependency injection instead$#"
+			count: 1
+			path: src/Plugin/Block/MenuBlock.php
+
+		-
+			message: "#^Method Drupal\\\\menu_block\\\\Plugin\\\\Derivative\\\\MenuBlock\\:\\:getDerivativeDefinitions\\(\\) has parameter \\$base_plugin_definition with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Plugin/Derivative/MenuBlock.php
+
+		-
+			message: "#^Method Drupal\\\\menu_block\\\\Plugin\\\\Derivative\\\\MenuBlock\\:\\:getDerivativeDefinitions\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Plugin/Derivative/MenuBlock.php
+
+		-
+			message: "#^Method Drupal\\\\menu_block_test\\\\Controller\\\\MenuBlockTestController\\:\\:menuBlockTestCallback\\(\\) should return string but returns array\\<string, string\\>\\.$#"
+			count: 1
+			path: tests/modules/menu_block_test/src/Controller/MenuBlockTestController.php
+
+		-
+			message: "#^Method Drupal\\\\Tests\\\\menu_block\\\\Functional\\\\MenuBlockTest\\:\\:createLinkHierarchy\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/src/Functional/MenuBlockTest.php
+
+		-
+			message: "#^Method Drupal\\\\Tests\\\\menu_block\\\\Functional\\\\MenuBlockTest\\:\\:testMenuBlockDepth\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/src/Functional/MenuBlockTest.php
+
+		-
+			message: "#^Method Drupal\\\\Tests\\\\menu_block\\\\Functional\\\\MenuBlockTest\\:\\:testMenuBlockExpand\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/src/Functional/MenuBlockTest.php
+
+		-
+			message: "#^Method Drupal\\\\Tests\\\\menu_block\\\\Functional\\\\MenuBlockTest\\:\\:testMenuBlockFollow\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/src/Functional/MenuBlockTest.php
+
+		-
+			message: "#^Method Drupal\\\\Tests\\\\menu_block\\\\Functional\\\\MenuBlockTest\\:\\:testMenuBlockFormDisplay\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/src/Functional/MenuBlockTest.php
+
+		-
+			message: "#^Method Drupal\\\\Tests\\\\menu_block\\\\Functional\\\\MenuBlockTest\\:\\:testMenuBlockLevel\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/src/Functional/MenuBlockTest.php
+
+		-
+			message: "#^Method Drupal\\\\Tests\\\\menu_block\\\\Functional\\\\MenuBlockTest\\:\\:testMenuBlockParent\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/src/Functional/MenuBlockTest.php
+
+		-
+			message: "#^Method Drupal\\\\Tests\\\\menu_block\\\\Functional\\\\MenuBlockTest\\:\\:testMenuBlockRenderParent\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/src/Functional/MenuBlockTest.php
+
+		-
+			message: "#^Method Drupal\\\\Tests\\\\menu_block\\\\Functional\\\\MenuBlockTest\\:\\:testMenuBlockSuggestion\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/src/Functional/MenuBlockTest.php
+
+		-
+			message: "#^Method Drupal\\\\Tests\\\\menu_block\\\\Functional\\\\MenuBlockTest\\:\\:testMenuBlockTitleOptions\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/src/Functional/MenuBlockTest.php
+
+		-
+			message: "#^Method Drupal\\\\Tests\\\\menu_block\\\\Functional\\\\MenuBlockTest\\:\\:testMenuBlockUi\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/src/Functional/MenuBlockTest.php
+
+		-
+			message: "#^Method Drupal\\\\Tests\\\\menu_block\\\\Functional\\\\MenuBlockTest\\:\\:testMenuHideOnNonactive\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/src/Functional/MenuBlockTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$account of method Drupal\\\\Tests\\\\BrowserTestBase\\:\\:drupalLogin\\(\\) expects Drupal\\\\Core\\\\Session\\\\AccountInterface, Drupal\\\\user\\\\Entity\\\\User\\|false given\\.$#"
+			count: 1
+			path: tests/src/Functional/MenuBlockTest.php
+
+		-
+			message: "#^Property Drupal\\\\Tests\\\\menu_block\\\\Functional\\\\MenuBlockTest\\:\\:\\$links type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/src/Functional/MenuBlockTest.php

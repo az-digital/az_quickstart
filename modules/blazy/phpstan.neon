@@ -1,0 +1,26 @@
+# Useless file, not working.
+# includes:
+#   - ../../../core/phpstan-baseline.neon
+parameters:
+  # level 5 is still experimental, stick it to 4 at most for now.
+  # See https://github.com/phpstan/phpstan/issues/105
+  level: 4
+  paths:
+    - src
+    # - tests/src
+  excludePaths:
+    - 'tests/src'
+  # https://phpstan.org/user-guide/ignoring-errors#reporting-unused-ignores
+  reportUnmatchedIgnoredErrors: false
+  treatPhpDocTypesAsCertain: false
+  ignoreErrors:
+    # See https://github.com/mglaman/phpstan-drupal/issues/30
+    # new static() is a best practice in Drupal, so we cannot fix that.
+    - "#^Unsafe usage of new static#"
+    - '#Plugin definitions cannot be altered.#'
+    # https://github.com/phpstan/phpstan/discussions/7287
+    # - "#Method [a-zA-Z0-9\\\\:\\(\\)]+ has parameter \\$[a-zA-Z0-9_]+ with no value type specified in iterable type array#"
+    # - "#Method [a-zA-Z0-9\\\\:\\(\\)]+ has parameter \\$[a-zA-Z0-9_]+ with no type specified#"
+    # - "#Method [a-zA-Z0-9\\\\:\\(\\)]+ has no return type specified#"
+    # - "#Method [a-zA-Z0-9\\\\:\\(\\)]+ return type has no value type specified in iterable type array#"
+    # - '#Call to an undefined method Drupal\\blazy\\BlazyManagerInterface::[a-zA-Z0-9\\_]()#'

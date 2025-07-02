@@ -1,0 +1,13 @@
+name: Smart Title UI
+description: Administrator interface for Smart Title module
+type: module
+package: Content
+core_version_requirement: ^9 || ^10 || ^11
+dependencies:
+  - smart_title:smart_title
+configure: smart_title_ui.settings
+
+# Information added by Drupal.org packaging script on 2024-06-29
+version: '8.x-1.0'
+project: 'smart_title'
+datestamp: 1719631159

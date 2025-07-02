@@ -1,0 +1,13 @@
+name: AP Style Date Formats
+description: Provides a field formatter to display dates in AP style formats.
+package: Date
+type: module
+core_version_requirement: ^10.1 || ^11
+dependencies:
+  - drupal:datetime
+  - drupal:datetime_range
+
+# Information added by Drupal.org packaging script on 2024-09-11
+version: '2.0.2'
+project: 'date_ap_style'
+datestamp: 1726072271

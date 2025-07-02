@@ -1,0 +1,17 @@
+/**
+ * @file
+ * This file is used to create the layout when the theme has 2 columns.
+ */
+
+.two-columns .main {
+  display: grid;
+  gap: 14px;
+}
+/* Large */
+@media screen and (min-width: 60rem) {
+  /* 960px */
+  .two-columns .main {
+    grid-template-columns: 72% 1fr;
+    gap: 3%;
+  }
+}

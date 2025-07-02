@@ -1,0 +1,11 @@
+name: Asset Injector
+type: module
+description: Adds CSS or JS to the page output based on configurable rules.
+core_version_requirement: ^10.3 || ^11
+package: Development
+configure: asset_injector.development
+
+# Information added by Drupal.org packaging script on 2024-08-07
+version: '8.x-2.21'
+project: 'asset_injector'
+datestamp: 1723044567

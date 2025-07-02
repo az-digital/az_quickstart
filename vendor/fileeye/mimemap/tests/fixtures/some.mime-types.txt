@@ -1,0 +1,22 @@
+# This file maps Internet media types to unique file extension(s).
+#
+# This is a subset version for testing purposes.
+
+# MIME type (lowercased)			Extensions
+# ============================================	==========
+# application/edi-consent
+# application/edi-x12
+# application/edifact
+application/octet-stream	bin dms lrf mar so dist distz pkg bpk dump elc deploy
+application/pls+xml				pls
+audio/midi					mid midi kar rmi
+# audio/mobile-xmf
+audio/mp4					m4a mp4a
+image/jpeg					jpeg jpg jpe
+image/sgi					sgi
+image/svg+xml					svg svgz
+# image/t38
+image/tiff					tiff tif
+text/css					css
+text/csv					csv
+text/plain					txt text conf def list log in

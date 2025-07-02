@@ -1,0 +1,11 @@
+name: Flag
+description: Create customized flags that users can set on entities.
+core_version_requirement: ^10.3 || ^11
+type: module
+package: Flags
+configure: entity.flag.collection
+
+# Information added by Drupal.org packaging script on 2025-04-05
+version: '8.x-4.0-beta7'
+project: 'flag'
+datestamp: 1743851263

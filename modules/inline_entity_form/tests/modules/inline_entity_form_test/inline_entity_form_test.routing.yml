@@ -1,0 +1,10 @@
+inline_entity_form_test.form:
+  path: '/ief-test/{form_mode}/{node}'
+  defaults:
+    _form: '\Drupal\inline_entity_form_test\IefTestForm'
+    _title: 'IEF test'
+    form_mode: 'default'
+    node: NULL
+  requirements:
+    # Needs to be accessed by an anonymous user.
+    _access: 'TRUE'

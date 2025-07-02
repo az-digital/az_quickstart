@@ -1,0 +1,5 @@
+services:
+  upgrade_status_test_twig.twig_extension:
+    class: Drupal\upgrade_status_test_twig\TwigExtension\DeprecatedFilter
+    tags:
+      - { name: twig.extension }

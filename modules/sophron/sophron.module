@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * @file
+ * Sophron - MIME types management API.
+ */
+
+declare(strict_types=1);
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function sophron_help(string $route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'sophron.settings':
+      $output = '';
+      $output .= '<p>' . t('<strong>Sophron</strong> provides an extensive MIME types management API, enhancing Drupal core capabilities. It integrates with the <a href=":mimemap_url">FileEye/MimeMap</a> PHP library.', [':mimemap_url' => 'https://github.com/FileEye/MimeMap/']) . '</p>';
+      return $output;
+
+  }
+}

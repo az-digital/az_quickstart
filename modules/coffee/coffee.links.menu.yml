@@ -1,0 +1,5 @@
+coffee.configuration:
+  title: Coffee
+  description: 'Select what menus coffee should search.'
+  route_name: coffee.configuration
+  parent: system.admin_config_ui

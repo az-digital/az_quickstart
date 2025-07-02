@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * @file
+ * Hooks for the Calendar Link module.
+ *
+ * @noinspection PhpUnusedParameterInspection
+ * @noinspection PhpUnused
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function calendar_link_help(string $route_name, RouteMatchInterface $route_match): string {
+  return match ($route_name) {
+    'help.page.calendar_link' => check_markup(file_get_contents(dirname(__FILE__) . '/README.md')),
+    default => '',
+  };
+}

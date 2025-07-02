@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<persons>
+  <person>
+    <id>1</id>
+    <name>Elizabeth</name>
+    <children>
+      <child age="8">
+        <name>Elizabeth Junior</name>
+        <name>Jane</name>
+      </child>
+    </children>
+  </person>
+  <person>
+    <id>2</id>
+    <name>George</name>
+    <children>
+      <child>
+        <name>George Junior</name>
+        <age>10</age>
+      </child>
+    </children>
+  </person>
+  <person>
+    <id>3</id>
+    <name>Peter</name>
+    <children>
+      <child>
+        <name age="6">Lucy</name>
+      </child>
+    </children>
+  </person>
+</persons>

@@ -1,0 +1,50 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the embed module.
+ */
+
+/**
+ * Implements hook_requirements().
+ */
+function embed_requirements($phase): array {
+  $requirements = [];
+
+  if ($phase === 'runtime') {
+    // Check for any icons that are not SVG files when CKEditor5 is installed.
+    if (\Drupal::moduleHandler()->moduleExists('ckeditor5')) {
+      $button_icons_not_svg = [];
+      /** @var \Drupal\embed\Entity\EmbedButton[] $buttons */
+      $buttons = \Drupal::entityTypeManager()->getStorage('embed_button')->loadMultiple();
+      foreach ($buttons as $button) {
+        $icon = $button->getIconUrl();
+        if (\Drupal::service('file.mime_type.guesser')->guessMimeType($icon) !== 'image/svg+xml') {
+          $label = $button->label() . ': ' . $icon;
+          $button_icons_not_svg[] = $button->toLink($label, 'edit-form');
+        }
+      }
+      if (!empty($button_icons_not_svg)) {
+        $requirements['embed_buttons_ckeditor5'] = [
+          'title' => t('Embed button CKEditor5 compatibility'),
+          'value' => t('The following embed button(s) are not using SVG icons and will not be compatible with CKEditor5'),
+          'description' => [
+            '#theme' => 'item_list',
+            '#items' => $button_icons_not_svg,
+          ],
+          'severity' => REQUIREMENT_ERROR,
+        ];
+      }
+    }
+  }
+
+  return $requirements;
+}
+
+/**
+ * Moved to embed_post_update_convert_encoded_icon_data().
+ */
+function embed_update_8101(): void {
+  // This update function has been moved to
+  // embed_post_update_convert_encoded_icon_data().
+}

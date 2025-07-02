@@ -1,0 +1,18 @@
+# Basic data types for ImageMagick module.
+
+imagemagick.image_format:
+  type: mapping
+  label: 'Image format'
+  mapping:
+    mime_type:
+      type: string
+      label: 'MIME type'
+    weight:
+      type: integer
+      label: 'Weight to prioritise image file extensions mapping to format'
+    enabled:
+      type: boolean
+      label: 'Support enabled in the toolkit'
+    exclude_extensions:
+      type: string
+      label: 'Image file extensions to be excluded'

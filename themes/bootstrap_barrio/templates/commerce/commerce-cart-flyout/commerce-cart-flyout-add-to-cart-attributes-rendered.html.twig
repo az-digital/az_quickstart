@@ -1,0 +1,17 @@
+<fieldset class="product--rendered-attribute fieldgroup form-composite required js-form-item form-item js-form-wrapper form-wrapper" aria-required="true">
+  <legend>
+    <span class="fieldset-legend js-form-required form-required"><%= label %></span>
+  </legend>
+  <div class="fieldset-wrapper">
+    <div class="form-radios">
+      <% _.each(attributeValues, function(currentValue, key) { %>
+      <div class="custom-control custom-radio js-form-item form-item js-form-type-radio form-type-radio js-form-item-purchased-entity-attributes-attribute-<%= attributeId %> form-item-purchased-entity-attributes-attribute-<%= attributeId %>">
+        <input type="radio" class="custom-control-input form-radio" name="attribute_<%= attributeId %>" id="attribute_<%= attributeId %>_<%= currentValue.attribute_value_id %>" value="<%= currentValue.attribute_value_id %>" <%= (activeValue === currentValue.attribute_value_id) ? 'checked' : '' %>/>
+        <label class="custom-control-label control-label option" for="attribute_<%= attributeId %>_<%= currentValue.attribute_value_id %>">
+          <% print (currentValue.output) %>
+        </label>
+      </div>
+      <% }); %>
+    </div>
+  </div>
+</fieldset>

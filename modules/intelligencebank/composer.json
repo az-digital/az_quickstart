@@ -1,0 +1,26 @@
+{
+  "name": "drupal/intelligencebank",
+  "type": "drupal-module",
+  "description": "Integrates Drupal with intelligencebank.com service",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "http://www.intelligencebank.com",
+  "minimum-stability": "dev",
+  "authors": [
+    {
+      "name": "Vladyslav Moyseenko (vladdancer)",
+      "homepage": "https://www.drupal.org/u/vladdancer",
+      "role": "Maintainer"
+    },
+    {
+      "name": "Valentine Matsveiko (Valentine94)",
+      "homepage": "https://www.drupal.org/u/valentine94",
+      "role": "Maintainer"
+    }
+  ],
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/intelligencebank",
+    "source": "http://cgit.drupalcode.org/intelligencebank"
+  },
+  "require-dev": {}
+}

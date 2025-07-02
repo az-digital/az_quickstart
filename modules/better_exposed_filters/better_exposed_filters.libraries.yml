@@ -1,0 +1,86 @@
+general:
+  css:
+    theme:
+      css/better_exposed_filters.css: {}
+  js:
+    js/better_exposed_filters.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+auto_submit:
+  js:
+    js/auto_submit.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
+    - core/drupal.debounce
+select_all_none:
+  js:
+    js/bef_select_all_none.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/once
+
+sliders:
+  js:
+    js/bef_sliders.js: {}
+  dependencies:
+    - core/drupal
+    - core/drupalSettings
+    - core/jquery
+    - core/once
+
+datepickers:
+  js:
+    js/bef_datepickers.js: {}
+  dependencies:
+    - core/drupal
+    - core/drupalSettings
+    - core/jquery
+
+links_use_ajax:
+  js:
+    js/bef_links_use_ajax.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
+
+nouislider_internal:
+  js:
+    /libraries/nouislider/nouislider.min.js: { minified: true }
+  css:
+    component:
+      /libraries/nouislider/nouislider.min.css: { minified: true }
+
+nouislider_internal_npm:
+  js:
+    /libraries/nouislider/dist/nouislider.min.js: { minified: true }
+  css:
+    component:
+      /libraries/nouislider/dist/nouislider.min.css: { minified: true }
+
+nouislider_external:
+  remote: https://refreshless.com/nouislider/
+  version: 15.5.1
+  license:
+    name: MIT
+    url: https://github.com/leongersen/noUiSlider/blob/master/LICENSE.md
+    gpl-compatible: true
+  js:
+    https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.5.1/nouislider.min.js:
+      type: external
+      minified: true
+      attributes:
+        crossorigin: anonymous
+        integrity: "sha512-T5Bneq9hePRO8JR0S/0lQ7gdW+ceLThvC80UjwkMRz+8q+4DARVZ4dqKoyENC7FcYresjfJ6ubaOgIE35irf4w=="
+        referrerpolicy: no-referrer
+  css:
+    component:
+      https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.5.1/nouislider.min.css:
+        type: external
+        minified: true
+        attributes:
+          crossorigin: anonymous
+          integrity: "sha512-qveKnGrvOChbSzAdtSs8p69eoLegyh+1hwOMbmpCViIwj7rn4oJjdmMvWOuyQlTOZgTlZA0N2PXA7iA8/2TUYA=="
+          referrerpolicy: no-referrer

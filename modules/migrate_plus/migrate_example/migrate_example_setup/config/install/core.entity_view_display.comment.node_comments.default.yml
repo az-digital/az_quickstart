@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - comment.type.node_comments
+    - field.field.comment.node_comments.comment_body
+  module:
+    - text
+id: comment.node_comments.default
+targetEntityType: comment
+bundle: node_comments
+mode: default
+content:
+  comment_body:
+    label: hidden
+    type: text_default
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+  links:
+    weight: 100
+hidden: {  }

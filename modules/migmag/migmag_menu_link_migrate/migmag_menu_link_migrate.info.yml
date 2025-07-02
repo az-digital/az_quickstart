@@ -1,0 +1,13 @@
+name: Migrate Magician Menu Link Migration
+type: module
+description: Alters core migrations to migrate every menu link.
+package: Migration
+core_version_requirement: ^8.9 || ^9 || ^10 || ^11
+dependencies:
+  - migmag:migmag
+  - migmag:migmag_process
+
+# Information added by Drupal.org packaging script on 2025-04-04
+version: '1.8.3'
+project: 'migmag'
+datestamp: 1743751426

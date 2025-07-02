@@ -1,0 +1,9 @@
+<?php
+
+/**
+ * @file
+ * The Flag follower module.
+ *
+ * This module creates a default Flag and associated views. The content is
+ * intended to be an example and may be deleted afterward.
+ */

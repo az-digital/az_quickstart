@@ -1,0 +1,100 @@
+<?php
+
+/**
+ * @file
+ * Flag module install/schema/update hooks.
+ */
+
+use Drupal\Core\Config\Entity\ConfigEntityStorage;
+use Drupal\Core\Entity\EntityTypeInterface;
+
+/**
+ * Implements hook_schema().
+ */
+function flag_schema() {
+  $schema = [];
+
+  $schema['flag_counts'] = [
+    'description' => 'The number of times an item has been flagged.',
+    'fields' => [
+      'flag_id' => [
+        'type' => 'varchar_ascii',
+        'length' => '32',
+        'not null' => TRUE,
+      ],
+      'entity_type' => [
+        'description' => 'The flag type, for example "node", "comment", or "user".',
+        'type' => 'varchar_ascii',
+        'length' => EntityTypeInterface::ID_MAX_LENGTH,
+        'not null' => TRUE,
+      ],
+      'entity_id' => [
+        'description' => 'The unique ID of the flagged entity, for example the uid, cid, or nid.',
+        'type' => 'varchar_ascii',
+        'length' => ConfigEntityStorage::MAX_ID_LENGTH,
+        'not null' => TRUE,
+      ],
+      'count' => [
+        'description' => 'The number of times this object has been flagged for this flag.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+      ],
+      'last_updated' => [
+        'description' => 'The UNIX time stamp representing when the flag was last updated.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'disp-size' => 11,
+      ],
+    ],
+    'primary key' => ['flag_id', 'entity_id'],
+    'indexes' => [
+      'flag_id_entity_type' => ['flag_id', 'entity_type'],
+      'entity_type_entity_id' => ['entity_type', 'entity_id'],
+      'flag_id_count' => ['flag_id', 'count'],
+      'flag_id_last_updated' => ['flag_id', 'last_updated'],
+    ],
+  ];
+
+  return $schema;
+}
+
+/**
+ * Fix schema changes in 4.0-alpha2.
+ */
+function flag_update_8401() {
+  $bundle_schema = [
+    'description' => 'The Flag ID.',
+    'type' => 'varchar_ascii',
+    'length' => EntityTypeInterface::BUNDLE_MAX_LENGTH,
+    // 'binary' => FALSE,
+    'not null' => TRUE,
+  ];
+
+  /** @var \Drupal\Core\Database\Schema $schema */
+  $schema = \Drupal::database()->schema();
+  $schema->changeField('flagging', 'flag_id', 'flag_id', $bundle_schema);
+  $schema->dropIndex('flagging', 'flag_id');
+  $schema->dropIndex('flagging', 'flagging_field__flag_id__target_id');
+  $schema->addIndex('flagging', 'flagging_field__flag_id__target_id', ['flag_id'], ['fields' => ['flag_id' => $bundle_schema]]);
+
+  // Update the field storage repository.
+  /** @var \Drupal\Core\Entity\EntityFieldManagerInterface $efm */
+  $efm = \Drupal::service('entity_field.manager');
+  /** @var \Drupal\Core\KeyValueStore\KeyValueStoreInterface $kv */
+  $kv = \Drupal::service('keyvalue');
+  /** @var \Drupal\Core\Entity\EntityLastInstalledSchemaRepositoryInterface $repo */
+  $repo = \Drupal::service('entity.last_installed_schema.repository');
+
+  $efm->clearCachedFieldDefinitions();
+  $storage_definition = $efm->getFieldStorageDefinitions('flagging')['flag_id'];
+  $repo->setLastInstalledFieldStorageDefinition($storage_definition);
+
+  // Update the stored field schema.
+  // @todo There has to be a better way to do this.
+  $kv_collection = 'entity.storage_schema.sql';
+  $kv_name = 'flagging.field_schema_data.flag_id';
+  $field_schema = $kv->get($kv_collection)->get($kv_name);
+  $field_schema['flagging']['fields']['flag_id'] = $bundle_schema;
+  $field_schema['flagging']['indexes']['flagging_field__flag_id__target_id'] = ['flag_id'];
+  $kv->get($kv_collection)->set($kv_name, $field_schema);
+}

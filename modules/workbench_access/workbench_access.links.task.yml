@@ -1,0 +1,27 @@
+entity.access_scheme.collection:
+  title: 'Schemes'
+  route_name: entity.access_scheme.collection
+  base_route: entity.access_scheme.collection
+
+workbench_access.admin:
+  title: 'Settings'
+  route_name: workbench_access.admin
+  base_route: entity.access_scheme.collection
+  weight: 30
+
+workbench_access.sections:
+  title: 'Sections'
+  route_name: entity.access_scheme.sections
+  base_route: entity.access_scheme.edit_form
+  weight: 10
+
+workbench_access.edit:
+  title: 'Edit'
+  route_name: entity.access_scheme.edit_form
+  base_route: entity.access_scheme.edit_form
+  weight: 5
+
+workbench_access.user:
+  route_name: entity.section_association.edit
+  base_route: entity.user.canonical
+  title: Workbench Access

@@ -1,0 +1,10 @@
+services:
+  _defaults:
+    autoconfigure: true
+    autowire: true
+  date_ap_style.formatter:
+    class: Drupal\date_ap_style\ApStyleDateFormatter
+  date_ap_style.twig_extension:
+    class: Drupal\date_ap_style\TwigExtension\DateApStyle
+    tags:
+      - {name: twig.extension}

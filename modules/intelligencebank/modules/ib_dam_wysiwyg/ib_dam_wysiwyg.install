@@ -1,0 +1,141 @@
+<?php
+
+/**
+ * @file
+ * Contains install/uninstall hooks.
+ */
+
+use Drupal\Component\Serialization\Json;
+use Drupal\Core\Entity\EntityStorageException;
+use Drupal\filter\Entity\FilterFormat;
+use Drupal\ib_dam\Asset\Asset;
+use Drupal\ib_dam\IbDamResourceModel;
+use Drupal\ib_dam_media\AssetStorage\MediaStorage;
+
+/**
+ * Implements hook_requirements().
+ */
+function ib_dam_wysiwyg_requirements(string $phase): array {
+  $requirements = [];
+  if ($phase === 'runtime') {
+    $requirements['deprecation'] = [
+      'title'       => t('IB DAM CKEditor WYSIWYG integration'),
+      'description' => t('This module is deprecated in 4.x and will be removed in 5.x'),
+      'severity'    => REQUIREMENT_WARNING,
+    ];
+  }
+  return $requirements;
+}
+
+/**
+ * Disable text format and convert inline media
+ * from custom JSON markup into <drupal-media>.
+ */
+function ib_dam_wysiwyg_update_9000() {
+  /** @var \Drupal\ib_dam_media\MediaTypeMatcher $media_type_matcher */
+  $media_type_matcher = \Drupal::service('ib_dam_media.media_type_matcher');
+  /** @var \Drupal\filter\Entity\FilterFormat[] $filter_formats */
+  $filter_formats = FilterFormat::loadMultiple();
+  foreach ($filter_formats as $format) {
+    foreach ($format->filters()->getAll() as $item) {
+      if ($item->getPluginId() === 'ib_dam_wysiwyg') {
+        $format->removeFilter($item->getPluginId());
+        try {
+          $format->save();
+
+          // Get a list of storage fields
+          $field_config_ids = \Drupal::entityQuery('field_storage_config')
+            ->accessCheck(FALSE)
+            ->condition('type', ['text', 'text_long', 'text_with_summary'], 'IN')
+            ->condition('status', 1)
+            ->execute();
+
+          // Load all the fields.
+          $field_config_entities = \Drupal::entityTypeManager()
+            ->getStorage('field_storage_config')
+            ->loadMultiple($field_config_ids);
+
+          /** @var \Drupal\field\FieldStorageConfigInterface $config_entity */
+          foreach ($field_config_entities as $config_entity) {
+            $entity_type = $config_entity->getTargetEntityTypeId();
+            $field_name  = $config_entity->getName();
+            // Find entities with this field and affected format in use.
+            $entity_ids = \Drupal::entityQuery($entity_type)
+              ->accessCheck(FALSE)
+              ->condition($field_name . '.format', $format->id())
+              ->execute();
+
+            if (empty($entity_ids)) {
+              continue;
+            }
+            $entities = \Drupal::entityTypeManager()
+              ->getStorage($entity_type)
+              ->loadMultiple($entity_ids);
+
+            /** @var \Drupal\Core\Entity\FieldableEntityInterface $entity */
+            foreach ($entities as $entity) {
+              /** @var \Drupal\text\Plugin\Field\FieldType\TextItemBase $field */
+              $field = $entity->get($field_name);
+              if ($field->isEmpty()) {
+                continue;
+              }
+
+              $field_values = $field->getValue();
+              foreach ($field_values as $delta => $value) {
+                // Find all the JSON-formatted medias.
+                preg_match_all(
+                  '/{"source_type"...+}/m',
+                  $value['value'],
+                  $matches
+                );
+                $matches = reset($matches);
+                if (empty($matches)) {
+                  continue;
+                }
+
+                foreach ($matches as $match) {
+                  // Parse JSON into array.
+                  $media_data = Json::decode($match);
+
+                  // Create asset object.
+                  $asset = Asset::createFromValues($media_data);
+                  $media_asset_type = $asset->getSourceType() === 'embed'
+                    ? $asset->getSourceType()
+                    : $asset->getType();
+
+                  // Required to have source for embed assets.
+                  $asset->setSource(new IbDamResourceModel($media_data));
+
+                  $media_type_id = $media_type_matcher->matchType($media_asset_type);
+                  $storage_type_id = implode(':', [
+                    MediaStorage::class,
+                    $asset->getSourceType(),
+                    $media_type_id,
+                  ]);
+                  $asset->setStorageType($storage_type_id);
+
+                  // Create media entity.
+                  $media = $asset->save();
+                  $media->save();
+
+                  // Generate "<drupal-media>" tag.
+                  $tag = '<drupal-media data-entity-type="media" data-entity-uuid="' . $media->uuid() . '"></drupal-media>';
+
+                  // Replace JSON with newly created "drupal-media" tag.
+                  $field_values[$delta]['value'] = str_replace($match, $tag, $field_values[$delta]['value']);
+                }
+                unset($matches);
+              }
+              // Update entity field.
+              $entity->set($field_name, $field_values)->save();
+            }
+          }
+        }
+        catch (EntityStorageException $e) {
+          \Drupal::logger('ib_dam_wysiwyg')
+            ->error($e->getMessage());
+        }
+      }
+    }
+  }
+}

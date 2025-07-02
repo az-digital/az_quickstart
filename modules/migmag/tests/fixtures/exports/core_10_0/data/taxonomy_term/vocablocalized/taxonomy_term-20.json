@@ -1,0 +1,60 @@
+[
+    {
+        "tid": 20,
+        "uuid": "632616c2-a822-41a7-87bf-12a9f37590d0",
+        "revision_id": 20,
+        "langcode": "en",
+        "vid": "vocablocalized",
+        "revision_created": 1623674336,
+        "revision_user": null,
+        "revision_log_message": null,
+        "status": "1",
+        "name": "DS9",
+        "description": [
+            {
+                "value": "Terok Nor",
+                "format": "filtered_html"
+            }
+        ],
+        "weight": 0,
+        "parent": 0,
+        "changed": 1623674336,
+        "default_langcode": "1",
+        "revision_default": "1",
+        "revision_translation_affected": "1",
+        "content_translation_source": "und",
+        "content_translation_outdated": "0",
+        "content_translation_uid": 1,
+        "content_translation_created": 1623674336,
+        "field_sector": "Bajor"
+    },
+    {
+        "tid": 20,
+        "uuid": "632616c2-a822-41a7-87bf-12a9f37590d0",
+        "revision_id": 20,
+        "langcode": "fr",
+        "vid": "vocablocalized",
+        "revision_created": 1623674336,
+        "revision_user": null,
+        "revision_log_message": null,
+        "status": "1",
+        "name": "fr - DS9 (localized)",
+        "description": [
+            {
+                "value": "fr - Terok Nor (localized)",
+                "format": null
+            }
+        ],
+        "weight": 0,
+        "parent": 0,
+        "changed": 1623674342,
+        "default_langcode": "0",
+        "revision_default": "1",
+        "revision_translation_affected": "1",
+        "content_translation_source": "und",
+        "content_translation_outdated": "0",
+        "content_translation_uid": 1,
+        "content_translation_created": 1623674342,
+        "field_sector": "Bajor"
+    }
+]

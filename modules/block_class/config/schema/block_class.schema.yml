@@ -1,0 +1,59 @@
+block.block.*.third_party.block_class:
+  type: mapping
+  label: Block class third party settings
+  mapping:
+    classes:
+      type: string
+      label: Additional classes for the block
+    attributes:
+      type: string
+      label: Additional attributes for the block
+
+block_class.settings:
+  type: config_object
+  label: Block class settings
+  mapping:
+    maxlength_block_class_field:
+      type: integer
+    field_type:
+      type: string
+    default_case:
+      type: string
+    allow_only_letters_and_numbers:
+      type: boolean
+    block_classes_stored:
+      type: sequence
+      sequence:
+        type: string
+    enable_attributes:
+      type: boolean
+    enable_auto_complete:
+      type: boolean
+    qty_classes_per_block:
+      type: integer
+    items_per_page:
+      type: integer
+    enable_special_chars:
+      type: boolean
+    qty_attributes_per_block:
+      type: integer
+    enable_id_replacement:
+      type: boolean
+    weight_attributes:
+      type: integer
+    weight_class:
+      type: integer
+    weight_id:
+      type: integer
+    filter_html_clean_css_identifier:
+      type: text
+    maxlength_attributes:
+      type: integer
+    maxlength_id:
+      type: integer
+    attribute_keys_stored:
+      type: string
+    attribute_value_stored:
+      type: string
+    attributes_inline:
+      type: string

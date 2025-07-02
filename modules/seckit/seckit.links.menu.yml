@@ -1,0 +1,6 @@
+seckit.admin:
+  title: 'Security Kit settings'
+  description: 'Manage Security Kit settings.'
+  parent: system.admin_config_system
+  route_name: seckit.settings
+  weight: 100

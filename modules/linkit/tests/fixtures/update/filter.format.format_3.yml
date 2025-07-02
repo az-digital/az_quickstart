@@ -1,0 +1,17 @@
+uuid: ff6b71a0-5051-4857-a0a8-28a670b7317d
+langcode: en
+status: true
+dependencies: {  }
+name: 'Format 3'
+format: format_3
+weight: 0
+filters:
+  filter_html:
+    id: filter_html
+    provider: filter
+    status: true
+    weight: -10
+    settings:
+      allowed_html: '<em> <strong> <cite> <blockquote cite> <code> <ul type> <ol start type=''1 A I''> <li> <dl> <dt> <dd> <h2 id=''jump-*''> <h3 id> <h4 id> <h5 id> <h6 id>'
+      filter_html_help: true
+      filter_html_nofollow: false

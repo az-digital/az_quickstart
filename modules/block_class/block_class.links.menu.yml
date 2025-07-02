@@ -1,0 +1,34 @@
+# Block Class menu items definition
+block_class.admin:
+  title: 'Block Class'
+  route_name: block_class.settings
+  description: 'Settings for Block Class'
+  parent: system.admin_config_content
+
+block_class.settings:
+  title: 'Settings'
+  route_name: block_class.settings
+  description: 'Settings'
+  parent: block_class.admin
+  weight: 1
+
+block_class.list:
+  title: 'List'
+  route_name: block_class.list
+  description: 'List'
+  parent: block_class.admin
+  weight: 2
+
+block_class.bulk_operations:
+  title: 'Bulk Operations'
+  route_name: block_class.bulk_operations
+  description: 'Bulk Operations'
+  parent: block_class.admin
+  weight: 3
+
+block_class.help:
+  title: 'Help'
+  route_name: block_class.help
+  description: 'Help'
+  parent: block_class.admin
+  weight: 4

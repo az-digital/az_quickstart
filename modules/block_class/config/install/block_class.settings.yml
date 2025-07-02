@@ -1,0 +1,17 @@
+block_classes_stored: {  }
+default_case: 'standard'
+enable_attributes: TRUE
+enable_auto_complete: TRUE
+enable_id_replacement: TRUE
+enable_special_chars: FALSE
+field_type: 'multiple_textfields'
+filter_html_clean_css_identifier: ''
+items_per_page: 50
+qty_attributes_per_block: 10
+qty_classes_per_block: 10
+maxlength_attributes: 255
+maxlength_block_class_field: 255
+maxlength_id: 255
+weight_attributes: 0
+weight_class: 0
+weight_id: 0

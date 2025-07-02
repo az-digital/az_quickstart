@@ -1,0 +1,20 @@
+parameters:
+    level: 1
+    fileExtensions:
+        - php
+        - module
+        - inc
+        - install
+        - theme
+        - profile
+    reportUnmatchedIgnoredErrors: false
+    excludePaths:
+      -  src/Feeds/Target/SmartDate.php
+      -  src/Controller/FullCalendarController.php
+      -  src/Plugin/FullcalendarViewProcessor/SmartDateProcessor.php
+      -  src/Plugin/diff/Field/SmartdateFieldBuilder.php
+    ignoreErrors:
+        # new static() is a best practice in Drupal, so we cannot fix that.
+        - "#^Unsafe usage of new static#"
+includes:
+    - phpstan-baseline.neon

@@ -1,0 +1,27 @@
+# The 'type' should be "label" for short meta tags and "text" for ones which
+# could get longer, especially ones which use a textarea field instead of a
+# textfield.
+metatag.metatag_tag.schema_review_type:
+  type: string
+  label: '@type'
+metatag.metatag_tag.schema_review_name:
+  type: text
+  label: 'name'
+metatag.metatag_tag.schema_review_id:
+  type: text
+  label: '@id'
+metatag.metatag_tag.schema_review_item_reviewed:
+  type: text
+  label: 'itemReviewed'
+metatag.metatag_tag.schema_review_review_body:
+  type: text
+  label: 'reviewBody'
+metatag.metatag_tag.schema_review_author:
+  type: text
+  label: 'author'
+metatag.metatag_tag.schema_review_date_published:
+  type: text
+  label: 'datePublished'
+metatag.metatag_tag.schema_review_review_rating:
+  type: text
+  label: 'reviewRating'

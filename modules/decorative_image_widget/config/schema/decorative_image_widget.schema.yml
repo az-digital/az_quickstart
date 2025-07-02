@@ -1,0 +1,7 @@
+field.widget.third_party.decorative_image_widget:
+  type: mapping
+  label: 'Decorative image widget settings'
+  mapping:
+    use_decorative_checkbox:
+      label: 'Force image to be marked decorative if no alt text provided'
+      type: boolean

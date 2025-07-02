@@ -1,0 +1,10 @@
+drupal.access_unpublished.admin:
+  version: VERSION
+  css:
+    theme:
+      css/access_unpublished.admin.css: {}
+  js:
+    js/access_unpublished.admin.js: {}
+  dependencies:
+    - core/jquery
+    - core/once

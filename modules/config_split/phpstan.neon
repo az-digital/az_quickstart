@@ -1,0 +1,14 @@
+parameters:
+  level: 5
+  customRulesetUsed: true
+  reportUnmatchedIgnoredErrors: false
+  ignoreErrors:
+    # One day we might get rid of this drupal pattern
+    - '#Unsafe usage of new static\(\)\.#'
+    # These are wrong annotations on core classes.
+    - '#Method Drupal\\config_split\\Config\\SplitCollectionStorage::createCollection\(\) should return \$this\(Drupal\\config_split\\Config\\SplitCollectionStorage\) but returns static\(Drupal\\config_split\\Config\\SplitCollectionStorage\)\.#'
+    - '#Method Drupal\\config_split\\Config\\StatusConfigFactoryOverride::createConfigObject\(\) should return Drupal\\Core\\Config\\StorableConfigBase but returns null\.#'
+  paths:
+    - src
+    - tests
+    - config_split.module

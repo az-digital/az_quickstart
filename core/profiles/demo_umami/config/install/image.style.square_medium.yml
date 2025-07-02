@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies: {  }
+name: square_medium
+label: 'Square Medium'
+effects:
+  c42becc5-dd14-4384-81e1-8a667c60a705:
+    uuid: c42becc5-dd14-4384-81e1-8a667c60a705
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 600
+      height: 600
+      anchor: center-center
+  b39ee1dd-ee27-4219-ba5d-e49d973f6b0f:
+    uuid: b39ee1dd-ee27-4219-ba5d-e49d973f6b0f
+    id: image_convert
+    weight: 2
+    data:
+      extension: webp

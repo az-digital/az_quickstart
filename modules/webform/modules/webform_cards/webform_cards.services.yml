@@ -1,0 +1,9 @@
+services:
+  webform_cards.manager:
+    class: Drupal\webform_cards\WebformCardsManager
+    arguments: ['@plugin.manager.webform.element', '@webform_submission.conditions_validator']
+  webform_cards.route_subscriber:
+    class: Drupal\webform_cards\Routing\WebformCardsRouteSubscriber
+    arguments: ['@module_handler']
+    tags:
+      - { name: event_subscriber }

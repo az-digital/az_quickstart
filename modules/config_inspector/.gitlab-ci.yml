@@ -1,0 +1,119 @@
+################
+# Includes
+#
+# Additional configuration can be provided through includes.
+# One advantage of include files is that if they are updated upstream, the changes affect all pipelines using that include.
+#
+# Includes can be overridden by re-declaring anything provided in an include, here in gitlab-ci.yml
+# https://docs.gitlab.com/ee/ci/yaml/includes.html#override-included-configuration-values
+################
+
+include:
+  ################
+  # DrupalCI includes:
+  # As long as you include this, any future includes added by the Drupal Association will be accessible to your pipelines automatically.
+  # View these include files at https://git.drupalcode.org/project/gitlab_templates/
+  ################
+  - project: $_GITLAB_TEMPLATES_REPO
+    ref: $_GITLAB_TEMPLATES_REF
+    file:
+      - '/includes/include.drupalci.main.yml'
+      - '/includes/include.drupalci.variables.yml'
+      - '/includes/include.drupalci.workflows.yml'
+
+################
+# Pipeline configuration variables
+#
+# These are the variables provided to the Run Pipeline form that a user may want to override.
+#
+# Docs at https://git.drupalcode.org/project/gitlab_templates/-/blob/1.0.x/includes/include.drupalci.variables.yml
+################
+variables:
+  SKIP_ESLINT: '1'
+  # Opt in to testing current minor against max supported PHP version.
+  OPT_IN_TEST_MAX_PHP: '1'
+  # Opt in to testing previous & next minor (Drupal 10.0.x and 10.2.x).
+  OPT_IN_TEST_PREVIOUS_MINOR: '1'
+  OPT_IN_TEST_NEXT_MINOR: '1'
+  # Opt in to testing $CORE_PREVIOUS_MAJOR (currently Drupal 9.5).
+  OPT_IN_TEST_PREVIOUS_MAJOR: '1'
+  # Opt in to testing $CORE_MAJOR_DEVELOPMENT (currently Drupal 11).
+  OPT_IN_TEST_NEXT_MAJOR: '1'
+
+# This module wants to strictly comply with Drupal's coding standards.
+phpcs:
+  allow_failure: false
+
+# Custom job to analyze and visualize the config validatibility of Drupal core.
+📈 Core config validatability:
+  variables:
+    # @see https://git.drupalcode.org/project/drupal/-/commit/10466dba9d7322ed55165dd9224edb2153c9b27a
+    _TARGET_PHP: '8.3-ubuntu'
+    START_DATETIME: "2022-11-01 00:00:00"
+  stage: build
+  before_script:
+    # Log state before.
+    - which php && which composer && which jq || true
+    # Install jq.
+    - sudo apt-get -qq update
+    - sudo apt-get -qq install -y jq
+    # Log state after.
+    - which php && which composer && which jq
+    # This is the most resource-intensive test: log the current memory limit & composer version.
+    - php -i | grep memory_limit
+    - php --version
+    - composer --version
+  script:
+    # Construct needed directory structure in /tmp/drupal
+    - cd /tmp
+    - git clone https://git.drupalcode.org/project/drupal.git --single-branch --branch 11.x --quiet
+    - cd drupal
+    - mv $CI_PROJECT_DIR/scripts/* .
+    - mv $CI_PROJECT_DIR modules/
+    - mkdir statistics
+    # Move it back to $CI_PROJECT_DIR so we can keep the artifacts even in case of a crash.
+    - mv /tmp/drupal $CI_PROJECT_DIR
+    - cd $CI_PROJECT_DIR
+    # Run it.
+    - php config-validatability-report.php $START_DATETIME
+  artifacts:
+    paths:
+      - statistics
+      - statistics.csv
+    name: validatability-report
+    # Also keep artifacts in case of failure, to simplify debugging.
+    when: always
+  # Run in every scheduled pipeline, and allow manual runs on the default branch as well as in MRs.
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: always
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: manual
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: manual
+
+pages:
+  stage: build
+  needs:
+    - 📈 Core config validatability
+  image: r-base
+  script:
+    # Visualize the statistics from the report.
+    - Rscript scripts/visualize_statistics.R
+    # Publish the visualization of the report, plus the raw data behind it.
+    - mkdir public
+    - echo '<img src="validatability.png" width="100%">' > public/index.html
+    - mv validatability.png public/
+    - mv statistics public/raw
+    - mv statistics.csv public/raw/
+  artifacts:
+    paths:
+      - public
+  # Run in every scheduled pipeline, and allow manual runs on the default branch as well as in MRs.
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: always
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: manual
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: manual

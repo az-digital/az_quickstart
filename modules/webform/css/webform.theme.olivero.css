@@ -1,0 +1,41 @@
+/**
+ * @file
+ * Olivero theme styles.
+ */
+
+/*
+ * Adjust the tableselect sort element's first column because checkbox are wider.
+ */
+.tableselect-sort td:first-child {
+  width: 70px;
+}
+
+/*
+ * Remove webform scale element's label padding.
+ */
+[dir="ltr"] .webform-scale-options input[type="radio"] + label,
+[dir="rtl"] .webform-scale-options input[type="radio"] + label {
+  padding: 0;
+}
+
+/*
+ * Make the message close link bigger and a different color.
+ */
+.webform-message__link {
+  opacity: 0.66;
+}
+
+html.js .webform-message--close .webform-message__link {
+  color: #ffd23f;
+  font-size: 48px;
+  line-height: 48px;
+  font-weight: normal;
+}
+
+/*
+ * Hide Olivero's close message button.
+ * @see core/themes/olivero/js/messages.js
+ */
+.webform-message .messages__button {
+  display: none;
+}

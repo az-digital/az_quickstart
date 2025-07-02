@@ -1,0 +1,70 @@
+asset_injector.css.*:
+  type: config_entity
+  label: "CSS Injector config"
+  mapping:
+    id:
+      type: string
+      label: "ID"
+    label:
+      type: label
+      label: "Label"
+    code:
+      type: text
+      label: "Entered CSS"
+    media:
+      type: string
+      label: "Media type. ie all, print, screen"
+    preprocess:
+      type: boolean
+      label: "Preprocess CSS before using"
+    conditions:
+      type: sequence
+      label: "Conditions Conditions"
+      sequence:
+        type: condition.plugin.[id]
+        label: "Conditions Condition"
+    contexts:
+      type: sequence
+    conditions_require_all:
+      type: boolean
+      label: "Require all conditions"
+
+asset_injector.js.*:
+  type: config_entity
+  label: "JS Injector config"
+  mapping:
+    id:
+      type: string
+      label: "ID"
+    label:
+      type: label
+      label: "Label"
+    code:
+      type: text
+      label: "Entered JS"
+    noscript:
+      type: text
+      label: "<noscript> code"
+    noscriptRegion:
+      type: sequence
+      label: "Region to which noscript should apply"
+    jquery:
+      type: boolean
+      label: "Include jQuery"
+    header:
+      type: boolean
+      label: "Load the script in the header of the page"
+    preprocess:
+      type: boolean
+      label: "Preprocess JS before using"
+    conditions:
+      type: sequence
+      label: "Conditions Conditions"
+      sequence:
+        type: condition.plugin.[id]
+        label: "Conditions Condition"
+    contexts:
+      type: sequence
+    conditions_require_all:
+      type: boolean
+      label: "Require all conditions"

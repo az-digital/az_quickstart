@@ -1,0 +1,27 @@
+uuid: 616ca481-7579-4873-aee6-6aaf74375d7b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_level_2_entity_no_bundle
+    - node.type.err_level_1
+  module:
+    - entity_reference_revisions
+id: node.err_level_1.field_level_2_entity_no_bundle
+field_name: field_level_2_entity_no_bundle
+entity_type: node
+bundle: err_level_1
+label: 'Test entity no bundle'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:entity_test_no_bundle'
+  handler_settings:
+    target_bundles: null
+    sort:
+      field: _none
+    auto_create: false
+field_type: entity_reference_revisions

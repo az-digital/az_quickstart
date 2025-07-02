@@ -1,0 +1,48 @@
+menu_test.hierarchy.parent:
+  path: '/menu-block-test/hierarchy/parent'
+  defaults:
+    _title: 'parent page'
+    _controller: '\Drupal\menu_block_test\Controller\MenuBlockTestController::menuBlockTestCallback'
+  requirements:
+    _access: 'TRUE'
+
+menu_test.hierarchy.parent.child_1:
+  path: '/menu-block-test/hierarchy/parent/child-1'
+  defaults:
+    _title: 'child-1 page'
+    _controller: '\Drupal\menu_block_test\Controller\MenuBlockTestController::menuBlockTestCallback'
+  requirements:
+    _access: 'TRUE'
+
+menu_test.hierarchy.parent.child_1.child_1_1:
+  path: '/menu-block-test/hierarchy/parent/child-1/child-1-1'
+  defaults:
+    _title: 'child-1-1 page'
+    _controller: '\Drupal\menu_block_test\Controller\MenuBlockTestController::menuBlockTestCallback'
+  requirements:
+    _access: 'TRUE'
+
+menu_test.hierarchy.parent.child_1.child_1_2:
+  path: '/menu-block-test/hierarchy/parent/child-1/child-1-2'
+  defaults:
+    _title: 'child-1-2 page'
+    _controller: '\Drupal\menu_block_test\Controller\MenuBlockTestController::menuBlockTestCallback'
+  requirements:
+    _access: 'TRUE'
+
+menu_test.hierarchy.parent.child_2:
+  path: '/menu-block-test/hierarchy/parent/child-2'
+  defaults:
+    _title: 'child-2 page'
+    _controller: '\Drupal\menu_block_test\Controller\MenuBlockTestController::menuBlockTestCallback'
+  requirements:
+    _access: 'TRUE'
+
+# Not included in the menu link hierarchy to test 'hide-on-nonactive' feature.
+menu_test.hierarchy.parent_2:
+  path: '/menu-block-test/hierarchy/parent_2'
+  defaults:
+    _title: 'parent-2 page'
+    _controller: '\Drupal\menu_block_test\Controller\MenuBlockTestController::menuBlockTestCallback'
+  requirements:
+    _access: 'TRUE'

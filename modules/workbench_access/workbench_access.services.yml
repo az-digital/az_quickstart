@@ -1,0 +1,13 @@
+services:
+  plugin.manager.workbench_access.scheme:
+    class: Drupal\workbench_access\WorkbenchAccessManager
+    arguments: ['@container.namespaces', '@cache.discovery', '@module_handler', '@entity_type.manager', '@workbench_access.user_section_storage', '@config.factory', '@current_user']
+  workbench_access.user_section_storage:
+    class: Drupal\workbench_access\UserSectionStorage
+    arguments: ['@entity_type.manager', '@current_user', '@workbench_access.role_section_storage']
+  workbench_access.role_section_storage:
+    class: Drupal\workbench_access\RoleSectionStorage
+    arguments: ['@state', '@entity_type.manager']
+  workbench_access.tokens:
+    class: Drupal\workbench_access\WorkbenchAccessTokens
+    arguments: ['@token', '@entity_type.manager', '@module_handler', '@workbench_access.user_section_storage']

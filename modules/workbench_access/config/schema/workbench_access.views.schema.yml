@@ -1,0 +1,94 @@
+# Schema for the views plugins of the Workbench Access module.
+
+views.field.workbench_access_section:
+  type: views_field
+  label: 'Workbench Section'
+  mapping:
+    separator:
+      type: label
+      label: 'Separator'
+    type:
+      type: string
+      label: 'Type'
+    make_link:
+      type: integer
+      label: 'Make link'
+views.field.workbench_access_user_section:
+  type: views_field
+  label: 'Workbench Section'
+  mapping:
+    separator:
+      type: label
+      label: 'Separator'
+    type:
+      type: string
+      label: 'Type'
+    make_link:
+      type: integer
+      label: 'Make link'
+views.field.workbench_access_section_id:
+  type: views_field
+  label: 'Workbench Section Id'
+  mapping:
+    make_link:
+      type: integer
+      label: 'Make link'
+    output_format:
+      type: string
+      label: 'Output format'
+views.filter.workbench_access_section_id:
+  type: views_filter
+  label: 'Workbench Section Id'
+  mapping:
+    operator:
+      type: string
+      label: 'Operator'
+    value:
+      type: sequence
+      label: 'Values'
+      sequence:
+        type: string
+        label: 'Value'
+    expose:
+      type: mapping
+      label: 'Expose'
+      mapping:
+        reduce:
+          type: integer
+          label: 'Reduce'
+    reduce_duplicates:
+      type: integer
+      label: 'Reduce duplicates'
+    output_format:
+      type: string
+      label: 'Output format'
+views.filter.workbench_access_section:
+  type: views_filter
+  label: 'Workbench Section'
+  mapping:
+    operator:
+      type: string
+      label: 'Operator'
+    value:
+      type: sequence
+      label: 'Values'
+      sequence:
+        type: string
+        label: 'Value'
+    expose:
+      type: mapping
+      label: 'Expose'
+      mapping:
+        reduce:
+          type: integer
+          label: 'Reduce'
+    reduce_duplicates:
+      type: integer
+      label: 'Reduce duplicates'
+    section_filter:
+      type: mapping
+      label: 'Section Filter'
+      mapping:
+        show_hierarchy:
+          type: integer
+          label: 'Show Hierarchy'

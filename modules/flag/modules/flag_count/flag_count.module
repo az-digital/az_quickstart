@@ -1,0 +1,27 @@
+<?php
+
+/**
+ * @file
+ * The Flag count module.
+ *
+ * This module creates a @ActionLinkType plugin as a demonstration of how to
+ * use the twig extension flag.twig.count. The content is intended to be an
+ *  example and may be deleted afterward.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function flag_count_theme() {
+  return [
+    'flag_count' => [
+      'variables' => [
+        'attributes' => [],
+        'title' => NULL,
+        'action' => 'flag',
+        'flag' => NULL,
+        'flaggable' => NULL,
+      ],
+    ],
+  ];
+}

@@ -1,0 +1,136 @@
+.views-field-variations > span > div {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: center;
+}
+
+.views-field-variations > span > div > div {
+  display: inline-block;
+}
+
+.views-field-variations {
+  margin-bottom: 0;
+}
+
+.views-field-variations .field--name-price {
+  display: inline-block;
+  width: 70px;
+  text-align: right;
+  padding-bottom: 1.2rem;
+}
+
+.views-field-variations .field--type-entity-reference {
+  padding-left: 1rem;
+}
+
+.views-field-variations .commerce-order-item-variation-cart-form-form {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  max-width: 100%;
+}
+
+.views-field-variations .commerce-order-item-variation-cart-form-form .field--name-purchased-entity {
+  padding: 0;
+  margin: 0;
+}
+
+.views-field-variations .commerce-order-item-variation-cart-form-form .field--name-quantity {
+  display: inline-block;
+  margin-bottom: 0;
+  padding: 0;
+}
+
+.views-field-variations .commerce-order-item-variation-cart-form-form .field--name-quantity label {
+  display: none;
+}
+
+.views-field-variations .commerce-order-item-variation-cart-form-form .field--name-quantity input {
+  width: 50px;
+}
+
+.views-field-variations .commerce-order-item-variation-cart-form-form .form-actions {
+  display: inline-block;
+  margin-bottom: 0;
+  padding: 0;
+}
+
+#edit-shipping-information .col-auto,
+#edit-payment-information-billing-information .col-auto,
+#edit-payment-information-billing-information.col-auto,
+#edit-order-summary .col-auto,
+#edit-order-summary.col-auto {
+  padding: 0;
+}
+
+#edit-shipping-information #edit-shipping-information-shipping-profile-field-ruc-wrapper {
+  display: none;
+}
+
+.view-id-listado_de_productos .views-row > div {
+  display: inline-block;
+}
+
+.view-id-listado_de_productos .views-row {
+  margin-top: 0.5rem;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.view-id-listado_de_productos .views-row .views-field-title {
+  width: 320px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: center;
+}
+
+.cart-block--contents {
+  font-size: 0.75rem;
+  width: auto;
+}
+
+.cart-block--contents .cart-block--contents__items {
+  max-height: inherit;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
+.cart--cart-offcanvas {
+  font-size: 0.75rem;
+}
+
+.cart--cart-offcanvas .cart-block--offcanvas-contents__links {
+  padding: 0.5rem 1rem;
+}
+
+.cart--cart-offcanvas .cart-block--offcanvas-contents__links a {
+  text-decoration: none;
+}
+
+.cart--cart-offcanvas .close {
+  padding: 0.25rem;
+}
+
+.cart--cart-offcanvas table td.cart-block--offcanvas-cart-table__title,
+.cart--cart-offcanvas table td.cart-block--offcanvas-cart-table__price {
+  padding: 0.5rem 0.25rem !important;
+}
+
+.cart--cart-offcanvas table td.cart-block--offcanvas-cart-table__quantity {
+  padding: 0.25rem !important;
+}
+
+.cart--cart-offcanvas table .btn {
+  font-size: 0.75rem;
+}
+.cart--cart-offcanvas table tfoot .btn {
+  font-size: 0.75rem;
+  margin-top: 0.5rem;
+}

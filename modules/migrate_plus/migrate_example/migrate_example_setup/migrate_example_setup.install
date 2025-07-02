@@ -1,0 +1,502 @@
+<?php
+
+declare(strict_types = 1);
+
+/**
+ * @file
+ * Install file for migrate example module.
+ *
+ * Set up source data and destination configuration for the migration example
+ * module. We do this in a separate module so migrate_example itself is a pure
+ * migration module.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function migrate_example_setup_schema(): array {
+  $schema = [];
+  $schema['migrate_example_beer_account'] = migrate_example_beer_schema_account();
+  $schema['migrate_example_beer_node'] = migrate_example_beer_schema_node();
+  $schema['migrate_example_beer_comment'] = migrate_example_beer_schema_comment();
+  $schema['migrate_example_beer_topic'] = migrate_example_beer_schema_topic();
+  $schema['migrate_example_beer_topic_node'] = migrate_example_beer_schema_topic_node();
+
+  return $schema;
+}
+
+/**
+ * Implements hook_install().
+ */
+function migrate_example_setup_install(): void {
+  // Populate our tables.
+  migrate_example_beer_data_account();
+  migrate_example_beer_data_node();
+  migrate_example_beer_data_comment();
+  migrate_example_beer_data_topic();
+  migrate_example_beer_data_topic_node();
+}
+
+/**
+ * The hook_schema definition for node.
+ *
+ *   The schema definition.
+ */
+function migrate_example_beer_schema_node(): array {
+  return [
+    'description' => 'Beers of the world.',
+    'fields' => [
+      'bid'  => [
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Beer ID.',
+      ],
+      'name'  => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ],
+      'body' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'description' => 'Full description of the beer.',
+      ],
+      'excerpt' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'description' => 'Abstract for this beer.',
+      ],
+      'countries' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'description' => 'Countries of origin. Multiple values, delimited by pipe',
+      ],
+      'aid' => [
+        'type' => 'int',
+        'not null' => FALSE,
+        'description' => 'Account Id of the author.',
+      ],
+      'image' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'description' => 'Image path',
+      ],
+      'image_alt' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'description' => 'Image ALT',
+      ],
+      'image_title' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'description' => 'Image title',
+      ],
+      'image_description' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'description' => 'Image description',
+      ],
+    ],
+    'primary key' => ['bid'],
+  ];
+}
+
+/**
+ * The hook_schema definition for topic.
+ *
+ *   The schema definition.
+ */
+function migrate_example_beer_schema_topic(): array {
+  return [
+    'description' => 'Categories',
+    'fields' => [
+      'style'  => [
+        'type' => 'varchar_ascii',
+        'length' => 255,
+        'not null' => TRUE,
+      ],
+      'details' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+      ],
+      'style_parent' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'description' => 'Parent topic, if any',
+      ],
+      'region' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'description' => 'Region first associated with this style',
+      ],
+      'hoppiness' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'description' => 'Relative hoppiness of the beer',
+      ],
+    ],
+    'primary key' => ['style'],
+  ];
+}
+
+/**
+ * The hook_schema definition for topic node.
+ *
+ *   The schema definition.
+ */
+function migrate_example_beer_schema_topic_node(): array {
+  return [
+    'description' => 'Beers topic pairs.',
+    'fields' => [
+      'bid'  => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'description' => 'Beer ID.',
+      ],
+      'style'  => [
+        'type' => 'varchar_ascii',
+        'length' => 255,
+        'not null' => TRUE,
+        'description' => 'Topic name',
+      ],
+    ],
+    'primary key' => ['style', 'bid'],
+  ];
+}
+
+/**
+ * The hook_schema definition for comment.
+ *
+ *   The schema definition.
+ */
+function migrate_example_beer_schema_comment(): array {
+  return [
+    'description' => 'Beers comments.',
+    'fields' => [
+      'cid'  => [
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Comment ID.',
+      ],
+      'bid'  => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'description' => 'Beer ID that is being commented upon',
+      ],
+      'cid_parent' => [
+        'type' => 'int',
+        'not null' => FALSE,
+        'description' => 'Parent comment ID in case of comment replies.',
+      ],
+      'subject' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'description' => 'Comment subject',
+      ],
+      'body' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'description' => 'Comment body',
+      ],
+      'name' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'description' => 'Comment name (if anon)',
+      ],
+      'mail' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'description' => 'Comment email (if anon)',
+      ],
+      'aid' => [
+        'type' => 'int',
+        'not null' => FALSE,
+        'description' => 'Account ID (if any).',
+      ],
+    ],
+    'primary key' => ['cid'],
+  ];
+}
+
+/**
+ * The hook_schema definition for account.
+ *
+ *   The schema definition.
+ */
+function migrate_example_beer_schema_account(): array {
+  return [
+    'description' => 'Beers accounts.',
+    'fields' => [
+      'aid'  => [
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Account ID',
+      ],
+      'status'  => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'description' => 'Blocked_Allowed',
+      ],
+      'registered' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'description' => 'Registration date',
+      ],
+      'username' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'description' => 'Account name (for login)',
+      ],
+      'nickname' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'description' => 'Account name (for display)',
+      ],
+      'password' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'description' => 'Account password (raw)',
+      ],
+      'email' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'description' => 'Account email',
+      ],
+      'sex' => [
+        'type' => 'int',
+        'not null' => FALSE,
+        'description' => 'Gender (0 for male, 1 for female)',
+      ],
+      'beers' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'description' => 'Favorite Beers',
+      ],
+    ],
+    'primary key' => ['aid'],
+  ];
+}
+
+/**
+ * Populate node table.
+ */
+function migrate_example_beer_data_node(): void {
+  $fields = [
+    'bid',
+    'name',
+    'body',
+    'excerpt',
+    'countries',
+    'aid',
+    'image',
+    'image_alt',
+    'image_title',
+    'image_description',
+  ];
+  $query = \Drupal::database()->insert('migrate_example_beer_node')
+    ->fields($fields);
+  // Use high bid numbers to avoid overwriting an existing node id.
+  $data = [
+    // Comes with migrate_example project.
+    [
+      99999999,
+      'Heineken',
+      'Blab Blah Blah Green',
+      'Green',
+      'Netherlands|Belgium',
+      1,
+      'heineken.jpg',
+      'Heinekin alt',
+      'Heinekin title',
+      'Heinekin description',
+    ],
+    [
+      99999998,
+      'Miller Lite',
+      'We love Miller Brewing',
+      'Tasteless',
+      'USA|Canada',
+      2,
+      NULL,
+      NULL,
+      NULL,
+      NULL,
+    ],
+    [
+      99999997,
+      'Boddington',
+      'English occasionally get something right',
+      'A treat',
+      'United Kingdom',
+      2,
+      NULL,
+      NULL,
+      NULL,
+      NULL,
+    ],
+  ];
+  foreach ($data as $row) {
+    $query->values(array_combine($fields, $row));
+  }
+  $query->execute();
+}
+
+/**
+ * Populate account table.
+ *
+ * Note that alice has duplicate username. Exercises make_unique_entity_field
+ * plugin.
+ *
+ * @todo Duplicate email also.
+ */
+function migrate_example_beer_data_account(): void {
+  $fields = [
+    'status',
+    'registered',
+    'username',
+    'nickname',
+    'password',
+    'email',
+    'sex',
+    'beers',
+  ];
+  $query = \Drupal::database()->insert('migrate_example_beer_account')
+    ->fields($fields);
+  $data = [
+    [
+      1,
+      '2010-03-30 10:31:05',
+      'alice',
+      'alice in beerland',
+      'alicepass',
+      'alice@example.com',
+      '1',
+      '99999999|99999998|99999997',
+    ],
+    [
+      1,
+      '2010-04-04 10:31:05',
+      'alice',
+      'alice in aleland',
+      'alicepass',
+      'alice2@example.com',
+      '1',
+      '99999999|99999998|99999997',
+    ],
+    [
+      0,
+      '2007-03-15 10:31:05',
+      'bob',
+      'rebob',
+      'bobpass',
+      'bob@example.com',
+      '0',
+      '99999999|99999997',
+    ],
+    [
+      1,
+      '2004-02-29 10:31:05',
+      'charlie',
+      'charlie chocolate',
+      'mykids',
+      'charlie@example.com',
+      '0',
+      '99999999|99999998',
+    ],
+  ];
+  foreach ($data as $row) {
+    $query->values(array_combine($fields, $row));
+  }
+  $query->execute();
+}
+
+/**
+ * Populate comment table.
+ */
+function migrate_example_beer_data_comment(): void {
+  $fields = ['bid', 'cid_parent', 'subject', 'body', 'name', 'mail', 'aid'];
+  $query = \Drupal::database()->insert('migrate_example_beer_comment')
+    ->fields($fields);
+  $data = [
+    [99999998, NULL, 'im first', 'full body', 'alice', 'alice@example.com', 1],
+    [99999998, NULL, 'im second', 'aromatic', 'alice', 'alice@example.com', 1],
+    [99999999, NULL, 'im parent', 'malty', 'alice', 'alice@example.com', 1],
+    [99999999, 1, 'im child', 'cold body', 'bob', NULL, 2],
+    [
+      99999999,
+      4,
+      'im grandchild',
+      'bitter body',
+      'charlie@example.com',
+      NULL,
+      1,
+    ],
+  ];
+  foreach ($data as $row) {
+    $query->values(array_combine($fields, $row));
+  }
+  $query->execute();
+}
+
+/**
+ * Populate topic table.
+ */
+function migrate_example_beer_data_topic(): void {
+  $fields = ['style', 'details', 'style_parent', 'region', 'hoppiness'];
+  $query = \Drupal::database()->insert('migrate_example_beer_topic')
+    ->fields($fields);
+  $data = [
+    ['ale', 'traditional', NULL, 'Medieval British Isles', 'Medium'],
+    ['red ale', 'colorful', 'ale', NULL, NULL],
+    [
+      'pilsner',
+      'refreshing',
+      NULL,
+      'Pilsen, Bohemia (now Czech Republic)',
+      'Low',
+    ],
+  ];
+  foreach ($data as $row) {
+    $query->values(array_combine($fields, $row));
+  }
+  $query->execute();
+}
+
+/**
+ * Populate topic node table.
+ */
+function migrate_example_beer_data_topic_node(): void {
+  $fields = ['bid', 'style'];
+  $query = \Drupal::database()->insert('migrate_example_beer_topic_node')
+    ->fields($fields);
+  $data = [
+    [99999999, 'pilsner'],
+    [99999999, 'red ale'],
+    [99999998, 'red ale'],
+  ];
+  foreach ($data as $row) {
+    $query->values(array_combine($fields, $row));
+  }
+  $query->execute();
+}

@@ -1,0 +1,22 @@
+{
+  "name": "drupal/slick",
+  "description": "Slick carousel, the last carousel you'll ever need.",
+  "keywords": ["carousel", "slideshow", "Drupal"],
+  "type": "drupal-module",
+  "license": "GPL-2.0-or-later",
+  "homepage": "https://drupal.org/project/slick",
+  "authors": [
+      {
+          "name": "Contributors",
+          "homepage": "https://www.drupal.org/node/2232779/committers",
+          "role": "Contributors"
+      }
+  ],
+  "support": {
+    "issues": "https://drupal.org/project/issues/slick",
+    "source": "https://git.drupalcode.org/project/slick"
+  },
+  "require": {
+    "drupal/blazy": "^3.0"
+  }
+}

@@ -1,0 +1,4 @@
+extlink.settings_tab:
+  route_name: extlink_admin.settings
+  title: Settings
+  base_route: extlink_admin.settings

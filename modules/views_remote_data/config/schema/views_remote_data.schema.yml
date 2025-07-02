@@ -1,0 +1,65 @@
+views.field.views_remote_data_property:
+  type: views_field
+  label: 'Property field'
+  mapping:
+    property_path:
+      type: string
+      label: 'Property path'
+
+views.argument.views_remote_data_property:
+  type: views_argument
+  label: 'Property argument'
+  mapping:
+    property_path:
+      type: string
+      label: 'Property path'
+
+views.filter.views_remote_data_property:
+  type: views_filter
+  label: 'Property filter'
+  mapping:
+    property_path:
+      type: string
+      label: 'Property path'
+
+views.cache.views_remote_data_time:
+  type: views_cache
+  label: 'Time-based caching (Remote data)'
+  mapping:
+    options:
+      type: mapping
+      label: 'Cache options'
+      mapping:
+        results_lifespan:
+          type: integer
+          label: 'The length of time raw query results should be cached.'
+        results_lifespan_custom:
+          type: integer
+          label: 'Length of time in seconds raw query results should be cached.'
+        output_lifespan:
+          type: integer
+          label: 'The length of time rendered HTML output should be cached.'
+        output_lifespan_custom:
+          type: integer
+          label: 'Length of time in seconds rendered HTML output should be cached.'
+
+views.cache.views_remote_data_tag:
+  type: views_cache
+  label: 'Tag-based caching (Remote data)'
+  mapping:
+    options:
+      type: mapping
+      label: 'Cache options'
+
+
+views.sort.views_remote_data_property:
+  type: views_sort
+  label: 'Property sort'
+  mapping:
+    property_path:
+      type: string
+      label: 'Property path'
+
+views.sort_expose.views_remote_data_property:
+  type: views_sort_expose
+  label: 'Property sort expose settings'

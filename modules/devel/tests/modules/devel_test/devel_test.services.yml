@@ -1,0 +1,7 @@
+services:
+
+  devel_test.test_route_subscriber:
+    class: Drupal\devel_test\Routing\TestRouteSubscriber
+    arguments: ['@state']
+    tags:
+      - { name: event_subscriber }

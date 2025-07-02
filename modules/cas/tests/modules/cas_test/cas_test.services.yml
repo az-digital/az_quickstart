@@ -1,0 +1,5 @@
+services:
+  cas_test.test_subscriber:
+    class: Drupal\cas_test\CasTestSubscriber
+    tags:
+      - { name: 'event_subscriber' }

@@ -1,0 +1,19 @@
+services:
+  schema_metatag.schema_metatag_manager:
+    class: Drupal\schema_metatag\SchemaMetatagManager
+    arguments: ['@metatag.manager']
+  schema_metatag.schema_metatag_client:
+    class: Drupal\schema_metatag\SchemaMetatagClient
+    arguments: ['@module_handler', '@schema_metatag.cache', '@logger.channel.schema_metatag']
+  schema_metatag.cache:
+    class: Drupal\Core\Cache\CacheBackendInterface
+    tags:
+      - { name: cache.bin }
+    factory: cache_factory:get
+    arguments: [schema_metatag_cache]
+  plugin.manager.schema_property_type:
+    class: Drupal\schema_metatag\Plugin\schema_metatag\PropertyTypeManager
+    parent: default_plugin_manager
+  logger.channel.schema_metatag:
+    parent: logger.channel_base
+    arguments: ['schema_metatag']

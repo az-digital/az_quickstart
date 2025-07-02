@@ -1,0 +1,30 @@
+/**
+ * @file
+ * Footer Styling.
+ */
+
+.site-footer {
+    padding: $spacer 0;
+    .layout-container {
+        padding: 0 $spacer;
+    }
+}
+
+
+/* Footer Top Styling. */
+
+.site-footer__top .content {
+    margin-top: 0;
+}
+
+
+/* Footer Bottom Styling. */
+
+.site-footer__bottom .block {
+    margin: ($spacer * 0.5) 0;
+}
+
+.site-footer__bottom .content {
+    padding: ($spacer * 0.5) 0;
+    margin-top: 0;
+}

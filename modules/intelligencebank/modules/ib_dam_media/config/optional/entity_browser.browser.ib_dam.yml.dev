@@ -1,0 +1,34 @@
+
+langcode: en
+status: true
+dependencies:
+  config:
+    - media.type.audio
+    - media.type.file
+    - media.type.ib_dam_embed
+    - media.type.image
+    - media.type.video
+  module:
+    - ib_dam_media
+    - media
+name: ib_dam
+label: 'IB DAM'
+display: modal
+display_configuration:
+  width: ''
+  height: ''
+  link_text: 'Select entities'
+  auto_open: false
+selection_display: no_display
+selection_display_configuration: {  }
+widget_selector: tabs
+widget_selector_configuration: {  }
+widgets:
+  568d60de-31ba-40a5-91e3-7f478cfda093:
+    settings:
+      upload_location: 'public://intelligencebank'
+      submit_text: 'Select entities'
+
+    weight: 1
+    label: 'IntelligenceBank Asset Browser'
+    id: ib_dam_search

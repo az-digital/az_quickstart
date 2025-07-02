@@ -1,0 +1,13 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+  Drupal\sophron\MimeMapManagerInterface:
+    class: Drupal\sophron\MimeMapManager
+  Drupal\sophron\EventSubscriber\SophronEventSubscriber: ~
+  sophron.mime_map.manager:
+    alias: Drupal\sophron\MimeMapManagerInterface
+    deprecated: 'The "%alias_id%" service alias is deprecated. Use "Drupal\sophron\MimeMapManagerInterface" service id instead.'
+  sophron.event_subscriber:
+    alias: Drupal\sophron\EventSubscriber\SophronEventSubscriber
+    deprecated: 'The "%alias_id%" service alias is deprecated. Use "Drupal\sophron\EventSubscriber\SophronEventSubscriber" service id instead.'

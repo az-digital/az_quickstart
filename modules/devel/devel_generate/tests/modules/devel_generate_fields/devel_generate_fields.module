@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * @file
+ * Test module for field population.
+ */
+
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+
+/**
+ * Implements hook_entity_base_field_info_alter().
+ */
+function devel_generate_fields_entity_base_field_info_alter(array &$fields, EntityTypeInterface $entity_type): void {
+  if (in_array($entity_type->id(), ['node', 'media'])) {
+    $fields['phish'] = BaseFieldDefinition::create('string')
+      ->setName('phish')
+      ->setLabel(new TranslatableMarkup('Phish music'));
+  }
+}

@@ -1,0 +1,30 @@
+id: migmag_tbt_comment
+source:
+  plugin: embedded_data
+  data_rows:
+    -
+      id: 'test_type'
+    -
+      id: 'comment_node_test'
+    -
+      id: 'forum'
+  ids:
+    id:
+      type: string
+  constants:
+    id_prefix: 'comment_node_'
+process:
+  id:
+    -
+      plugin: concat
+      source:
+        - 'constants/id_prefix'
+        - id
+    -
+      plugin: static_map
+      bypass: true
+      map:
+        comment_node_forum: comment_forum
+  label: id
+destination:
+  plugin: entity:comment_type

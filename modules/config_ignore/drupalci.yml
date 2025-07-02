@@ -1,0 +1,17 @@
+build:
+  assessment:
+    validate_codebase:
+      phplint:
+      container_composer:
+      csslint:
+      eslint:
+      phpcs:
+    testing:
+      container_command:
+        commands:
+          - "cd ${SOURCE_DIR} && sudo -u www-data composer require drush/drush:^10"
+      run_tests.standard:
+        types: 'Simpletest,PHPUnit-Unit,PHPUnit-Kernel,PHPUnit-Functional'
+      run_tests.js:
+        concurrency: 1
+        types: 'PHPUnit-FunctionalJavascript'

@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_migrate_example_top_vintag
+    - node.type.migrate_example_wine
+id: node.migrate_example_wine.field_migrate_example_top_vintag
+field_name: field_migrate_example_top_vintag
+entity_type: node
+bundle: migrate_example_wine
+label: 'Recommended vintages'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

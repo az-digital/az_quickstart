@@ -1,0 +1,7 @@
+services:
+  block_field.manager:
+    class: Drupal\block_field\BlockFieldManager
+    arguments: ['@plugin.manager.block', '@context.repository']
+  plugin.manager.block_field_selection:
+    class: Drupal\block_field\BlockFieldSelectionManager
+    parent: default_plugin_manager

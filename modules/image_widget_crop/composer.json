@@ -1,0 +1,36 @@
+{
+  "name": "drupal/image_widget_crop",
+  "description": "Provides an interface for using the features of the Crop API.",
+  "type": "drupal-module",
+  "homepage": "https://www.drupal.org/project/image_widget_crop",
+  "keywords": ["Drupal", "Drupal Media", "Crop"],
+  "license": "GPL-2.0-or-later",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/image_widget_crop",
+    "irc": "irc://irc.freenode.org/drupal-contribute",
+    "source": "https://www.drupal.org/project/image_widget_crop"
+  },
+  "authors": [
+    {
+      "name": "Alexandre Mallet",
+      "homepage": "https://github.com/woprrr",
+      "role": "Maintainer"
+    }
+  ],
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://packages.drupal.org/8"
+    }
+  ],
+  "require": {
+    "drupal/crop": "^2"
+  },
+  "require-dev": {
+    "drupal/ctools": "^4.1",
+    "drupal/entity_browser": "^2",
+    "drupal/inline_entity_form": "^1 || ^3"
+  }
+}

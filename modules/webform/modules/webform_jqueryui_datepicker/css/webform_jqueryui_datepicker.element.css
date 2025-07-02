@@ -1,0 +1,10 @@
+/**
+ * @file
+ * Jquery UI Datepicker element styles.
+ */
+
+.ui-datepicker-trigger {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 4px;
+}

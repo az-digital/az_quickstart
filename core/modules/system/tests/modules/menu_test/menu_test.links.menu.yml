@@ -1,0 +1,191 @@
+# The name of the menu changes during the course of the test. Using a $_GET.
+menu_test.menu_name_test:
+  title: 'Test menu_name router item'
+  route_name: menu_test.menu_name_test
+  menu_name: original
+# This item uses SystemController::systemAdminMenuBlockPage() to list child
+# items.
+menu_test.menu_callback_description:
+  title: 'Menu item title'
+  description: 'Menu item description parent'
+  route_name: menu_test.callback_description
+# This item tests the description key.
+menu_test.menu_callback_description.description-plain:
+  title: 'Menu item with a regular description'
+  description: 'Menu item description text'
+  route_name: menu_test.callback_description_plain
+  parent: menu_test.menu_callback_description
+menu_test.parent_test:
+  title: 'Menu Parent'
+  description: 'Menu item description parent'
+  route_name: menu_test.parent_test
+  parent: system.admin
+menu_test.parent_test.child1_test:
+  title: 'Menu child1'
+  description: 'Menu child1: uses SystemController::overview'
+  route_name: menu_test.child1_test
+  parent: menu_test.parent_test
+menu_test.parent_test.child2_test:
+  title: 'Menu child2'
+  description: 'Menu item description child2'
+  route_name: menu_test.child2_test
+  parent: menu_test.parent_test
+menu_test.parent_test.child3_test:
+  title: 'Menu child3'
+  description: 'Menu item description child3'
+  route_name: menu_test.child3_test_block
+  parent: menu_test.parent_test
+menu_test.parent_test.child4_test:
+  title: 'Menu child4'
+  description: 'Menu item description child4'
+  route_name: menu_test.child4_test
+  parent: menu_test.parent_test
+menu_test.parent_test.child4_test_overview:
+  title: 'Menu child4 overview'
+  description: 'Menu item description child4 overview'
+  route_name: menu_test.child4_test_overview
+  parent: menu_test.parent_test
+menu_test.parent_test.child_test.grand_child1_test:
+  title: 'Menu grand child1'
+  description: 'Menu grand child1: direct parent uses SystemController::overview'
+  route_name: menu_test.grand_child1_test
+  parent: menu_test.parent_test.child1_test
+menu_test.parent_test.child_test.grand_child2_test:
+  title: 'Menu grand child2'
+  description: 'Menu item description grand child2'
+  route_name: menu_test.grand_child2_test
+  parent: menu_test.parent_test.child2_test
+menu_test.parent_test.child_test.grand_child3_test:
+  title: 'Menu grand child3'
+  description: 'Menu item description grand child3'
+  route_name: menu_test.grand_child3_test
+  parent: menu_test.parent_test.child2_test
+menu_test.parent_test.child_test.grand_child4_test:
+  title: 'Menu grand child4'
+  description: 'Menu item description grand child4'
+  route_name: menu_test.grand_child4_test
+  parent: menu_test.parent_test.child4_test
+menu_test.parent_test.child_test.great_grand_child1_test:
+  title: 'Menu great grand child1'
+  description: 'Menu great grand child1: grand parent uses SystemController::overview'
+  route_name: menu_test.great_grand_child1_test
+  parent: menu_test.parent_test.child_test.grand_child1_test
+menu_test.menu_parent_test_param:
+  title: 'Menu Parent Param'
+  description: 'Menu item description parent'
+  route_name: menu_test.parent_test_param
+  parent: system.admin
+  route_parameters:
+    param: 'param-in-menu'
+menu_test.menu_parent_test.child_test_param:
+  title: 'Menu Child Param'
+  description: 'Menu item description child'
+  route_name: menu_test.child_test_param
+  parent: menu_test.menu_parent_test_param
+  route_parameters:
+    param: 'param-in-menu'
+menu_test.menu_parent_test_param_default:
+  title: 'Menu Parent Param Default'
+  description: 'Menu item description parent'
+  route_name: menu_test.parent_test_param
+  parent: system.admin
+  route_parameters:
+    param: 'child_uses_default'
+menu_test.menu_parent_test.child_test_param_default:
+  title: 'Menu Child Param Default'
+  description: 'Menu item description child'
+  route_name: menu_test.child_test_param
+  parent: menu_test.menu_parent_test_param_default
+menu_test.menu_parent_test_param_default_explicit:
+  title: 'Menu Parent Param Default Explicit'
+  description: 'Menu item description parent'
+  route_name: menu_test.parent_test_param_explicit
+  parent: system.admin
+  route_parameters:
+    param: 'my_default'
+menu_test.menu_parent_test.child_test_param_default_explicit:
+  title: 'Menu Child Param Default Explicit'
+  description: 'Menu item description child'
+  route_name: menu_test.child_test_param_explicit
+  parent: menu_test.menu_parent_test_param_default_explicit
+  route_parameters:
+    param: 'my_default'
+menu_test.menu_no_title_callback:
+  title: 'A title with @placeholder'
+  route_name: menu_test.menu_no_title_callback
+# Hierarchical tests.
+menu_test.hierarchy_parent:
+  title: 'Parent menu router'
+  route_name: menu_test.hierarchy_parent
+menu_test.hierarchy_parent.child:
+  title: 'Child menu router'
+  route_name: menu_test.hierarchy_parent_child
+  parent: menu_test.hierarchy_parent
+menu_test.hierarchy_parent.child2.child:
+  title: 'Unattached subchild router'
+  route_name: menu_test.hierarchy_parent_child2
+  parent: menu_test.hierarchy_parent.child
+# Path containing "exotic" characters.
+menu_test.exotic_path:
+  title: '"Exotic" path'
+  route_name: menu_test.exotic_path
+  # "Special" ASCII characters. Characters that look like a percent-escaped
+  # string. Characters from various non-ASCII alphabets.
+  # cSpell:disable-next-line
+  route_parameters: { exotic: ' -._~!$''"()*@[]?&+%#,;=:%23%25%26%2B%2F%3Féøïвβ中國書۞' }
+# Hidden tests; base parents.
+# Same structure as in Menu and Block modules. Since those structures can
+# change, we need to simulate our own in here.
+menu_test:
+  title: 'Menu test root'
+  route_name: menu_test.menu_test
+# Hidden tests; one dynamic argument.
+menu_test.hidden:
+  title: 'Hidden test root'
+  route_name: menu_test.hidden
+  parent: menu_test
+menu_test.hidden.menu:
+  title: Menus
+  route_name: menu_test.hidden_menu
+  parent: menu_test.hidden
+# Hidden tests; two dynamic arguments.
+menu_test.hidden.block:
+  title: Blocks
+  route_name: menu_test.hidden_block
+  parent: menu_test.hidden
+menu_test.menu-title-test.case1:
+  title: 'Example title - Case 1'
+  route_name: menu_test.title_test_case1
+menu_test.menu-title-test.case2:
+  title: 'Example title'
+  route_name: menu_test.title_test_case2
+menu_test.menu-title-test.case3:
+  title: 'Bike sheds full of blue smurfs'
+  route_name: menu_test.title_test_case3
+menu_test.context:
+  title: ''
+  route_name: menu_test.context
+
+menu_test.parent:
+  title: 'Test menu_name parent'
+  route_name: menu_test.menu_name_test
+  menu_name: test
+
+menu_test.child:
+  title: 'Test menu_name child'
+  route_name: menu_test.menu_name_test
+  parent: menu_test.parent
+
+menu_test.unsafe:
+  route_name: menu_test.menu_name_test
+  deriver: '\Drupal\menu_test\Plugin\Derivative\MenuLinkTestWithUnsafeTitle'
+
+menu_test.access_check:
+  title: 'Test custom route access check'
+  route_name: menu_test.router_test_session
+  menu_name: account
+
+menu_test.admin_description:
+  title: 'Test custom admin block without description'
+  parent: system.admin_config_content
+  route_name: menu_test.menu_name_test

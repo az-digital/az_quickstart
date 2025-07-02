@@ -1,0 +1,4 @@
+paragraphs.paragraphs_behavior:
+  label: 'Paragraphs behavior'
+  plugin_manager_service_id: plugin.manager.paragraphs.behavior
+  plugin_definition_decorator_class: Drupal\plugin\PluginDefinition\ArrayPluginDefinitionDecorator

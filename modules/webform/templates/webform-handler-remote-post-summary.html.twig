@@ -1,0 +1,23 @@
+{#
+/**
+ * @file
+ * Default theme implementation for a summary of a webform remote posts handler.
+ *
+ * Available variables:
+ * - settings: The current configuration for this remote post handler.
+ * - handler: The remote post handler.
+ *
+ * @ingroup themeable
+ */
+#}
+{% if settings.debug %}<strong class="color-error">{{ 'Debugging is enabled'|t }}</strong><br />{% endif %}
+<b>{{ 'Completed URL:'|t }}</b> {{ settings.completed_url }}<br />
+{% if settings.updated_url %}<b>{{ 'Updated URL:'|t }}</b> {{ settings.updated_url }}<br />{% endif %}
+{% if settings.deleted_url %}<b>{{ 'Deleted URL:'|t }}</b> {{ settings.deleted_url }}<br />{% endif %}
+{% if settings.draft_url %}<b>{{ 'Draft URL:'|t }}</b> {{ settings.draft_url }}<br />{% endif %}
+{% if settings.converted_url %}<b>{{ 'Converted URL:'|t }}</b> {{ settings.converted_url }}<br />{% endif %}
+{% if settings.error_url %}<b>{{ 'Error URL:'|t }}</b> {{ settings.error_url }}<br />{% endif %}
+<b>{{ 'Method:'|t }}</b> {{ settings.method }}<br />
+{% if settings.method == 'POST' %}<b>{{ 'Post type:'|t }}</b> {{ settings.type }}<br />{% endif %}
+{% if settings.cast %}<b>{{ 'Type casting:'|t }}</b> {{ 'Enabled' }}<br />{% endif %}
+{% if settings.message or settings.messages %}<b>{{ 'Response message:'|t }}</b> {{ 'Yes'|t }}<br/>{% endif %}

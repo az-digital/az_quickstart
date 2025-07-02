@@ -1,0 +1,101 @@
+drupal.paragraphs.admin:
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings
+    - core/once
+    - core/drupal.ajax
+    - core/drupal.dropbutton
+  css:
+    theme:
+      css/paragraphs.admin.css: {}
+
+drupal.paragraphs.widget:
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings
+    - core/once
+    - core/drupal.ajax
+    - core/drupal.dropbutton
+    - paragraphs/drupal.paragraphs.summary
+  css:
+    theme:
+      css/paragraphs.widget.css: {}
+  js:
+    js/paragraphs.admin.js: {}
+
+drupal.paragraphs.add_above_button:
+  css:
+    theme:
+      css/paragraphs.actions.css: {}
+  js:
+    js/paragraphs.add_above_button.js: {}
+  dependencies:
+    - core/drupalSettings
+    - core/once
+    - core/jquery
+    - core/drupal.ajax
+    - core/drupal
+
+drupal.paragraphs.actions:
+  css:
+    theme:
+      css/paragraphs.actions.css: {}
+  js:
+    js/paragraphs.actions.js: {}
+  dependencies:
+    - core/drupalSettings
+    - core/once
+    - core/jquery
+    - core/drupal.ajax
+    - core/drupal
+
+drupal.paragraphs.list_builder:
+  css:
+    theme:
+      css/paragraphs.list-builder.css: {}
+
+drupal.paragraphs.modal:
+  js:
+    js/paragraphs.modal.js: {}
+  css:
+    theme:
+      css/paragraphs.modal.css: {}
+  dependencies:
+    - core/drupal.dialog
+    - core/drupal.dialog.ajax
+    - core/once
+
+paragraphs-dragdrop:
+  css:
+    theme:
+      css/paragraphs.dragdrop.css: {}
+  js:
+    js/paragraphs.dragdrop.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/sortable
+
+drupal.paragraphs.formatter:
+  css:
+    theme:
+      css/paragraphs.formatter.css: {}
+  dependencies:
+    - paragraphs/drupal.paragraphs.summary
+
+drupal.paragraphs.unpublished:
+  css:
+    theme:
+      css/paragraphs.unpublished.css: {}
+
+paragraphs.seven:
+  css:
+    theme:
+      css/paragraphs.seven.css: {}
+
+paragraph-field-type-icon:
+  css:
+    theme:
+      css/paragraphs.field-type-icon.css: {}

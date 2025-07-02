@@ -1,0 +1,30 @@
+id: d7_field_collection_revisions
+label: Field Collection Revisions
+migration_tags:
+  - Drupal 7
+  - Content
+  - Field Collection Revisions Content
+deriver: Drupal\paragraphs\Plugin\migrate\D7FieldCollectionItemDeriver
+source:
+  plugin: d7_field_collection_item_revision
+process:
+  id:
+    -
+      plugin: paragraphs_lookup
+      tags:
+        - Field Collection Content
+      source: item_id
+    -
+      plugin: extract
+      index:
+        - id
+  type: bundle
+  # @todo Get the langcode from the parent entity revision.
+  # See https://drupal.org/i/3146632.
+  # langcode: langcode
+destination:
+  plugin: entity_reference_revisions:paragraph
+  new_revisions: TRUE
+migration_dependencies:
+  required:
+    - d7_field_collection

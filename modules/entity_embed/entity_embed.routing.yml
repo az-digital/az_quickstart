@@ -1,0 +1,17 @@
+entity_embed.dialog:
+  path: '/entity-embed/dialog/{editor}/{embed_button}'
+  defaults:
+    _form: '\Drupal\entity_embed\Form\EntityEmbedDialog'
+    _title: 'Embed entity'
+  requirements:
+    _embed_button_editor_access: 'TRUE'
+
+entity_embed.edit_embedded_entity:
+  path: '/entity-embed/edit-embedded/{type}/{uuid}'
+  defaults:
+    _controller: '\Drupal\entity_embed\Controller\EditEmbeddedEntity::edit'
+    _title: 'Edit entity'
+  requirements:
+    # This controller returns a redirect. We set access to TRUE and let the
+    # target destination determine final access level.
+    _access: 'TRUE'

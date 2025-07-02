@@ -1,0 +1,27 @@
+{
+  "name": "drupal/smart_title",
+  "type": "drupal-module",
+  "description": "Makes entity labels visible and configurable on Field UI",
+  "homepage": "https://drupal.org/project/smart_title",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "authors": [
+    {
+      "name": "Zoltan Horvath",
+      "email": "z.a.horvath@gmail.com",
+      "role": "Maintainer"
+    }
+  ],
+  "support": {
+    "issues": "https://drupal.org/project/issues/smart_title",
+    "source": "https://cgit.drupalcode.org/smart_title"
+  },
+  "require": {},
+  "require-dev": {},
+  "archive": {
+    "exclude": [
+      ".git",
+      ".gitignore"
+    ]
+  }
+}

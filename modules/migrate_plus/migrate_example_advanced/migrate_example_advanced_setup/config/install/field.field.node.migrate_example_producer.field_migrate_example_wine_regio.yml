@@ -1,0 +1,26 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_migrate_example_wine_regio
+    - node.type.migrate_example_producer
+    - taxonomy.vocabulary.migrate_example_wine_regions
+id: node.migrate_example_producer.field_migrate_example_wine_regio
+field_name: field_migrate_example_wine_regio
+entity_type: node
+bundle: migrate_example_producer
+label: 'Migrate Example Wine Regions'
+description: 'Select the region this wine comes from'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      migrate_example_wine_regions: migrate_example_wine_regions
+    sort:
+      field: _none
+    auto_create: false
+field_type: entity_reference

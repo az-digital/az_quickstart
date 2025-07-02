@@ -1,0 +1,69 @@
+# The 'type' should be "label" for short meta tags and "text" for ones which
+# could get longer, especially ones which use a textarea field instead of a
+# textfield.
+metatag.metatag_tag.schema_movie_actor:
+  type: text
+  label: 'actor'
+metatag.metatag_tag.schema_movie_date_created:
+  type: text
+  label: 'dateCreated'
+metatag.metatag_tag.schema_movie_description:
+  type: text
+  label: 'description'
+metatag.metatag_tag.schema_movie_director:
+  type: text
+  label: 'director'
+metatag.metatag_tag.schema_movie_duration:
+  type: text
+  label: 'duration'
+metatag.metatag_tag.schema_movie_image:
+  type: text
+  label: 'image'
+metatag.metatag_tag.schema_movie_music_by:
+  type: text
+  label: 'musicBy'
+metatag.metatag_tag.schema_movie_name:
+  type: text
+  label: 'name'
+metatag.metatag_tag.schema_movie_producer:
+  type: text
+  label: 'producer'
+metatag.metatag_tag.schema_movie_production_company:
+  type: text
+  label: 'productionCompany'
+metatag.metatag_tag.schema_movie_type:
+  type: string
+  label: '@type'
+metatag.metatag_tag.schema_movie_id:
+  type: text
+  label: '@id'
+metatag.metatag_tag.schema_movie_url:
+  type: text
+  label: 'url'
+metatag.metatag_tag.schema_movie_same_as:
+  type: text
+  label: 'sameAs'
+metatag.metatag_tag.schema_movie_released_event:
+  type: text
+  label: 'releasedEvent'
+metatag.metatag_tag.schema_movie_potential_action:
+  type: text
+  label: 'potentialAction'
+metatag.metatag_tag.schema_movie_episode_number:
+  type: text
+  label: 'episodeNumber'
+metatag.metatag_tag.schema_movie_season_number:
+  type: text
+  label: 'seasonNumber'
+metatag.metatag_tag.schema_movie_part_of_season:
+  type: text
+  label: 'partOfSeason'
+metatag.metatag_tag.schema_movie_part_of_series:
+  type: text
+  label: 'partOfSeries'
+metatag.metatag_tag.schema_movie_has_part:
+  type: text
+  label: 'hasPart'
+metatag.metatag_tag.schema_movie_aggregate_rating:
+  type: text
+  label: 'aggregateRating'

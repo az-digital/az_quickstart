@@ -1,0 +1,31 @@
+{#
+/**
+ * @file views-bootstrap-list-group.html.twig
+ * Default simple view template to display Bootstrap List Group.
+ *
+ * Available variables:
+ * - view: The view object.
+ * - rows: A list of the view's row items.
+ * - id: A valid HTML ID and guaranteed to be unique.
+ *
+ * @see template_preprocess_views_bootstrap_list_group()
+ *
+ * @ingroup views_templates
+ */
+#}
+{%
+  set classes = [
+    'views-view-list-group',
+  ]
+%}
+
+<ul id="{{ id }}" {{ attributes.addClass(classes) }}>
+    {% for key, row in rows %}
+      <li class="list-group-item">
+          {% if row.title %}
+              <h4 class="list-group-item-heading">{{ row.title }}</h4>
+          {% endif %}
+          <p class="list-group-item-text">{{ row.content }}</p>
+      </li>
+    {% endfor %}
+</ul>

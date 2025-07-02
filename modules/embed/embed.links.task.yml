@@ -1,0 +1,9 @@
+entity.embed_button.collection:
+  title: List
+  route_name: entity.embed_button.collection
+  base_route: entity.embed_button.collection
+embed.settings:
+  title: Settings
+  route_name: embed.settings
+  base_route: entity.embed_button.collection
+  weight: 50

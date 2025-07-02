@@ -1,0 +1,42 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.webform_test_link.field_webform_test
+    - field.field.paragraph.webform_test_link.field_webform_test_para_value
+    - field.field.paragraph.webform_test_link.field_webform_test_value
+    - paragraphs.paragraphs_type.webform_test_link
+  module:
+    - webform
+id: paragraph.webform_test_link.default
+targetEntityType: paragraph
+bundle: webform_test_link
+mode: default
+content:
+  field_webform_test:
+    type: webform_entity_reference_select
+    weight: 0
+    region: content
+    settings:
+      default_data: true
+      webforms: {  }
+    third_party_settings: {  }
+  field_webform_test_para_value:
+    type: string_textfield
+    weight: 2
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_webform_test_value:
+    type: string_textfield
+    weight: 1
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

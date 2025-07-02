@@ -1,0 +1,13 @@
+name: Config Distro Ignore
+type: module
+description: Retain custom configuration when importing the distribution configuration.
+core_version_requirement: ^10.3 || ^11
+package: Configuration
+dependencies:
+  - config_distro:config_distro
+  - config_distro:config_distro_filter
+
+# Information added by Drupal.org packaging script on 2025-03-27
+version: '2.1.0-alpha1'
+project: 'config_distro'
+datestamp: 1743102882

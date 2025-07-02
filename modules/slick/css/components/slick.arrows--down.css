@@ -1,0 +1,85 @@
+/**
+ * @file
+ */
+
+.slick--has-arrow-down > .slick__arrow {
+  top: auto;
+  bottom: 20px;
+  left: 50%;
+  width: 180px;
+  height: 62px;
+  margin: 0 0 0 -90px;
+}
+
+.slick-down {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: none;
+  width: 48px;
+  height: 48px;
+  margin-left: -24px;
+  cursor: pointer;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  pointer-events: auto;
+  border: 0;
+  border-radius: 50%;
+  background: #ff6d2c;
+  font-size: 0;
+}
+
+.slick-initialized ~ .slick__arrow .slick-down {
+  display: block;
+}
+
+.slick-down:active,
+.slick-down:focus {
+  outline: 0;
+  box-shadow: none;
+}
+
+.slick-down::before,
+.slick-down::after {
+  pointer-events: none;
+}
+
+/* Pure CSS arrow down, override by icon font accordingly */
+.slick-down:hover {
+  background: #37465b;
+}
+
+.slick-down::before,
+.slick-down::after {
+  position: absolute;
+  top: 50%;
+  right: 28px;
+  display: block;
+  width: 0;
+  height: 16px;
+  margin-top: -6px;
+  content: "";
+  -ms-transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
+  transform: rotate(135deg);
+  color: #fff;
+  border-right: 3px solid;
+}
+
+.slick-down::after {
+  right: 18px;
+  -ms-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.slick-down:hover::before,
+.slick-down:hover::after {
+  color: #fff;
+}
+
+@media (min-width: 64em) {
+  .slick--has-arrow-down .slide--caption--bottom .slide__caption {
+    padding-bottom: 80px;
+  }
+}

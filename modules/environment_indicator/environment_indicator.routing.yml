@@ -1,0 +1,36 @@
+entity.environment_indicator.collection:
+  path: '/admin/config/development/environment-indicator/switcher'
+  defaults:
+    _entity_list: 'environment_indicator'
+    _title: 'Environment Indicator Switcher'
+  requirements:
+    _permission: 'administer environment indicator settings'
+
+entity.environment_indicator.delete_form:
+  path: '/admin/config/development/environment-indicator/manage/{environment_indicator}/delete'
+  defaults:
+    _entity_form: environment_indicator.delete
+  requirements:
+    _entity_access: 'environment_indicator.delete'
+
+entity.environment_indicator.edit_form:
+  path: '/admin/config/development/environment-indicator/manage/{environment_indicator}'
+  defaults:
+    _entity_form: environment_indicator.default
+  requirements:
+    _entity_access: 'environment_indicator.update'
+
+entity.environment_indicator.add:
+  path: '/admin/config/development/environment-indicator/switcher/add'
+  defaults:
+    _entity_form: environment_indicator.default
+  requirements:
+    _entity_create_access: 'environment_indicator'
+
+environment_indicator.settings:
+  path: '/admin/config/development/environment-indicator'
+  defaults:
+    _form: '\Drupal\environment_indicator\Form\EnvironmentIndicatorSettingsForm'
+    _title: 'Environment Indicator Settings'
+  requirements:
+    _permission: 'administer environment indicator settings'

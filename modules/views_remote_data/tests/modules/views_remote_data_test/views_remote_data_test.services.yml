@@ -1,0 +1,5 @@
+services:
+  views_remote_data_test.event_subscriber:
+    class: Drupal\views_remote_data_test\EventSubscriber\ViewsRemoteDataSubscriber
+    tags:
+      - { name: event_subscriber }

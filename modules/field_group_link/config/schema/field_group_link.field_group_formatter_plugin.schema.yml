@@ -1,0 +1,13 @@
+field_group.field_group_formatter_plugin.link:
+  type: field_group.field_group_formatter_plugin.base
+  label: 'Mapping for the link formatter settings'
+  mapping:
+    target:
+      type: string
+      label: 'Field to be used.'
+    custom_uri:
+      type: string
+      label: 'Custom URI to be used.'
+    target_attribute:
+      type: string
+      label: 'Target attribute'

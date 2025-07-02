@@ -1,0 +1,64 @@
+name: Create Release
+run-name: Create `${{ github.event.client_payload.version }}` release from `${{ github.ref_name }}` branch.
+on:
+  repository_dispatch:
+    types: az_icons_release
+jobs:
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.REPO_DISPATCH_TOKEN }}
+      - name: Build variables
+        run: echo "AZ_ICONS_CLONE_DIR=az-icons" >> ${GITHUB_ENV}
+      - name: Get new updates from az-icons
+        uses: actions/checkout@v4
+        with:
+          repository: az-digital/az-icons
+          path: ${{ env.AZ_ICONS_CLONE_DIR }}
+          ref: ${{ github.event.client_payload.sha }}
+      - name: Copy new version of Arizona Icons and commit
+        run: |
+          distwhitelist='fonts png svg az-icons-styles.css az-icons-styles.min.css'
+          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git config --global user.name "${GITHUB_ACTOR}"
+          for w in $distwhitelist ; do
+            rsync --recursive --delete "${AZ_ICONS_CLONE_DIR}/dist/${w}" .
+            git add "${w}"
+          done
+          git commit -m "Arizona Icon updates for ${{ github.event.client_payload.version }}"
+          git push
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag_name: "v${{ github.event.client_payload.version }}"
+          name: "v${{ github.event.client_payload.version }}"
+          draft: false
+          prerelease: false
+  dispatch:
+    needs: release
+    strategy:
+      matrix:
+        repo:
+          - az-digital/az_quickstart
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Get release data
+        run: |
+          sha=$(git rev-parse HEAD)
+          echo "RELEASE_SHA=${sha}" >> ${GITHUB_ENV}
+      - name: Notify dependencies
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.REPO_DISPATCH_TOKEN }}
+          repository: ${{ matrix.repo }}
+          event-type: az_icons_release
+          client-payload: '{"version": "${{ github.event.client_payload.version }}", "sha": "${{ env.RELEASE_SHA }}"}'

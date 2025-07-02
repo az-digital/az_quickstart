@@ -1,0 +1,309 @@
+/* cspell:ignore csvg cpath wght */
+/**
+ * @file
+ * Toolbar button styles.
+ */
+
+@import "../../css/base/media-queries.pcss.css";
+
+:root {
+  --toolbar-button-outline-offset: 0;
+}
+
+.toolbar-button {
+  z-index: 1;
+  align-items: center;
+  padding-inline: var(--admin-toolbar-space-16);
+  padding-block: var(--admin-toolbar-space-10);
+  min-height: var(--admin-toolbar-space-40);
+  cursor: pointer;
+  text-align: start;
+  text-decoration: none;
+  word-break: break-word;
+  color: var(--admin-toolbar-color-gray-800);
+  border: 0;
+  border-radius: var(--admin-toolbar-space-8);
+  background-color: transparent;
+  font-size: var(--admin-toolbar-font-size-info-sm);
+  font-variation-settings: "wght" 700;
+  line-height: var(--admin-toolbar-line-height-info-sm);
+  gap: calc(0.5 * var(--admin-toolbar-rem));
+
+  &:has(+ .toolbar-popover__wrapper .is-active) {
+    color: var(--admin-toolbar-color-gray-950);
+    background-color: var(--admin-toolbar-color-gray-050);
+  }
+
+  &:hover {
+    z-index: 20;
+    color: var(--admin-toolbar-color-gray-990);
+    outline: 2px solid var(--admin-toolbar-color-blue-200);
+    outline-offset: var(--toolbar-button-outline-offset);
+    background-color: var(--admin-toolbar-color-gray-050);
+  }
+
+  &:focus {
+    z-index: 10;
+    color: var(--admin-toolbar-color-blue-700);
+    outline: 2px solid var(--admin-toolbar-color-focus);
+    outline-offset: var(--toolbar-button-outline-offset);
+  }
+
+  &.current {
+    color: var(--admin-toolbar-color-blue-700);
+    background-color: var(--admin-toolbar-color-gray-050);
+  }
+}
+
+/* Dark color modifier for submenus title */
+.toolbar-button--dark {
+  color: var(--admin-toolbar-color-gray-990);
+}
+
+.toolbar-button--large {
+  padding: var(--admin-toolbar-space-8) var(--admin-toolbar-space-16);
+  font-size: var(--admin-toolbar-font-size-info-lg);
+  line-height: var(--admin-toolbar-line-height-info-lg);
+}
+
+.toolbar-button--non-interactive {
+  &:hover,
+  &:focus,
+  &:hover:focus {
+    z-index: 1;
+    cursor: auto;
+    color: var(--admin-toolbar-color-gray-800);
+    outline: 0;
+    background-color: transparent;
+  }
+}
+
+.toolbar-button--small-offset {
+  --toolbar-button-outline-offset: calc(-1 * var(--admin-toolbar-space-4));
+}
+
+/* Class starts with `toolbar-button--icon`  */
+[class*="toolbar-button--icon"] {
+  padding-inline: var(--admin-toolbar-space-10);
+
+  &::before {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    content: attr(data-icon-text);
+    color: currentColor;
+    background-image: linear-gradient(currentColor, currentColor 50%, transparent 50%);
+    background-position-y: calc(100% - (100% * var(--icon, 0)));
+    background-size: 100% 200%;
+    font-size: calc(0.75 * var(--admin-toolbar-rem));
+    inline-size: var(--admin-toolbar-space-20);
+    block-size: var(--admin-toolbar-space-20);
+    mask-repeat: no-repeat;
+    mask-position: center center;
+    mask-size: 100% auto;
+    -webkit-mask-image: var(--icon);
+    mask-image: var(--icon);
+  }
+
+  &:hover::before {
+    background-color: linear-gradient(var(--admin-toolbar-color-blue-600), var(--admin-toolbar-color-blue-600) 50%, transparent 50%);
+  }
+
+  @media (--forced-colors) {
+    &::before,
+    &:hover::before {
+      background: canvastext;
+    }
+
+    &a {
+      &::before,
+      &:hover::before {
+        background: linktext;
+      }
+    }
+  }
+}
+
+.toolbar-button--weight--400 {
+  font-variation-settings: "wght" 400;
+}
+
+/* Set 0 specificity */
+:where(.toolbar-button) {
+  display: flex;
+  flex-grow: 1;
+}
+
+[class*="toolbar-button--expand"] {
+  &::after {
+    flex-shrink: 0;
+    margin-inline-start: auto;
+    content: "";
+    transition: transform var(--admin-toolbar-transition);
+    background-color: currentColor;
+    block-size: var(--admin-toolbar-space-16);
+    inline-size: var(--admin-toolbar-space-16);
+    mask-size: var(--admin-toolbar-space-16);
+    mask-repeat: no-repeat;
+    mask-position: center center;
+    mask-image: url(./assets/chevron.svg);
+
+    :where([dir="rtl"]) & {
+      transform: rotate(180deg);
+    }
+
+    @media (--forced-colors) {
+      background: canvastext;
+    }
+  }
+}
+
+.toolbar-button--expand--down {
+  &::after {
+    transform: rotate(90deg);
+
+    @media (--forced-colors) {
+      background: canvastext;
+    }
+  }
+
+  &[aria-expanded="true"] {
+    &::after {
+      transform: rotate(-90deg);
+    }
+    &:focus,
+    &:hover {
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
+}
+
+.toolbar-button--icon--announcements-feed-announcement {
+  --icon: url(./assets/announcement.svg);
+  &::before {
+    transform: scaleX(-1);
+  }
+
+  [dir="rtl"] & {
+    &::before {
+      transform: scaleX(1);
+    }
+  }
+}
+
+.toolbar-button--icon--back {
+  --icon: url(./assets/arrow-left.svg);
+}
+
+.toolbar-button--icon--burger {
+  --icon: url(./assets/burger.svg);
+}
+
+.toolbar-button--icon--cross {
+  --icon: url(./assets/cross.svg);
+}
+
+.toolbar-button--icon--entity-user-collection {
+  --icon: url(./assets/people.svg);
+}
+
+.toolbar-button--icon--help {
+  --icon: url(./assets/help.svg);
+}
+
+.toolbar-button--icon--navigation-blocks {
+  --icon: url(./assets/blocks.svg);
+}
+
+.toolbar-button--icon--navigation-content {
+  --icon: url(./assets/content.svg);
+}
+
+.toolbar-button--icon--navigation-create {
+  --icon: url(./assets/create.svg);
+}
+
+.toolbar-button--icon--navigation-files {
+  --icon: url(./assets/files.svg);
+}
+
+.toolbar-button--icon--navigation-media {
+  --icon: url(./assets/media.svg);
+}
+
+.toolbar-button--icon--pencil {
+  --icon: url(./assets/pencil.svg);
+}
+
+.toolbar-button--icon--preview {
+  --icon: url(./assets/eye.svg);
+}
+
+.toolbar-button--icon--shortcuts {
+  --icon: url(./assets/shortcuts.svg);
+}
+
+.toolbar-button--icon--system-admin-config {
+  --icon: url(./assets/config.svg);
+}
+
+.toolbar-button--icon--system-admin-reports {
+  --icon: url(./assets/reports.svg);
+}
+
+.toolbar-button--icon--system-admin-structure {
+  --icon: url(./assets/structure.svg);
+}
+
+.toolbar-button--icon--system-modules-list {
+  --icon: url(./assets/extend.svg);
+}
+
+.toolbar-button--icon--system-themes-page {
+  --icon: url(./assets/appearance.svg);
+}
+
+.toolbar-button--icon--user {
+  --icon: url(./assets/user.svg);
+}
+
+.toolbar-button--collapsible {
+  &::after {
+    display: none;
+  }
+
+  & .toolbar-button__label {
+    position: absolute;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    width: 1px;
+    height: 1px;
+    white-space: nowrap;
+    clip-path: inset(50%);
+    opacity: 0;
+  }
+
+  [data-admin-toolbar="expanded"] & {
+    &::after {
+      display: block;
+    }
+
+    & .toolbar-button__label {
+      position: relative;
+      clip: revert;
+      width: auto;
+      height: auto;
+      white-space: wrap;
+      clip-path: none;
+      opacity: 1;
+    }
+  }
+
+  [data-admin-toolbar-animating] & {
+    & .toolbar-button__label {
+      display: none;
+    }
+  }
+}

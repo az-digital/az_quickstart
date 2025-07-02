@@ -1,0 +1,39 @@
+<?php
+
+/**
+ * @file
+ * Replaces core's migration_lookup process plugin with migmag_lookup.
+ */
+
+declare(strict_types=1);
+
+use Drupal\migmag_process\Plugin\migrate\process\MigMagLookup;
+
+/**
+ * Implements hook_help().
+ */
+function migmag_process_lookup_replace_help($route_name) {
+  switch ($route_name) {
+    case 'help.page.migmag_process_lookup_replace':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>';
+      $output .= t(
+        'Migrate Magician Forced Lookup Process Plugin replaces the definition of core migrate_lookup plugin with migmag_lookup. See the <a href=":documentation">online documentation for Migrate Magician Lookup Process Plugin module</a>.',
+        [
+          ':documentation' => 'https://www.drupal.org/docs/contributed-modules/migrate-magician/migrate-magician-process-plugins-110/migmaglookup',
+        ]
+      );
+      $output .= '</p>';
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_migrate_process_info_alter().
+ */
+function migmag_process_lookup_replace_migrate_process_info_alter(&$definitions) {
+  if (!empty($definitions['migration_lookup'])) {
+    $definitions['migration_lookup']['class'] = MigMagLookup::class;
+  }
+}

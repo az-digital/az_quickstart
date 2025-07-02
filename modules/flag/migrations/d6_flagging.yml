@@ -1,0 +1,32 @@
+id: d6_flagging
+label: Flagging
+migration_group: flag
+migration_tags:
+  - Drupal 6
+dependencies:
+  enforced:
+    module:
+      - flag
+migration_dependencies:
+  required:
+    - d6_flag
+    - d6_user
+source:
+  plugin: d6_flagging_source
+process:
+  id: fcid
+  flag_id: name
+  entity_type: content_type
+  entity_id: content_id
+  global: global
+  uid:
+    -
+      plugin: migration_lookup
+      migration: d6_user
+      source: uid
+    -
+      plugin: skip_on_empty
+      method: row
+  created: timestamp
+destination:
+  plugin: entity:flagging

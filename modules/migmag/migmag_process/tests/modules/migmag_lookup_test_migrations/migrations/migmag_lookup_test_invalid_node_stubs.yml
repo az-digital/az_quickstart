@@ -1,0 +1,38 @@
+id: migmag_lookup_test_invalid_node_stubs
+source:
+  plugin: embedded_data
+  data_rows:
+    -
+      nid: 222
+      vid: 333
+      language: und
+  ids:
+    nid:
+      type: integer
+    vid:
+      type: integer
+    language:
+      type: string
+process:
+  nid:
+    -
+      plugin: default_value
+      source: nid
+      default_value: 665
+    -
+      plugin: callback
+      callable: hexdec
+  vid:
+    plugin: default_value
+    source: vid
+    default_value: 665
+  langcode:
+    plugin: default_value
+    source: language
+    default_value: und
+  type:
+    plugin: default_value
+    default_value: page
+destination:
+  plugin: entity_complete:node
+  translations: true

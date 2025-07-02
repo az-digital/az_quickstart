@@ -1,0 +1,65 @@
+<?php
+
+/**
+ * @file
+ * The Easy Breadcrumb module improves the core system breadcrumbs.
+ */
+
+/**
+ * Implements hook_help().
+ */
+function easy_breadcrumb_help($route_name) {
+  switch ($route_name) {
+    case 'help.page.easy_breadcrumb':
+      $text = file_get_contents(__DIR__ . "/README.md");
+
+      // If the Markdown module is installed...
+      if (\Drupal::moduleHandler()->moduleExists('markdown') === TRUE) {
+        // Uses the Markdown filter to render the README.
+        $filter_manager = \Drupal::service('plugin.manager.filter');
+        $settings = \Drupal::configFactory()->get('markdown.settings')->getRawData();
+        $config = ['settings' => $settings];
+        $filter = $filter_manager->createInstance('markdown', $config);
+        $output = $filter->process($text, 'en');
+      }
+      // Else the Markdown module is not installed...
+      else {
+        // Outputs the README in plain text.
+        $output = '<pre>' . $text . '</pre>';
+      }
+
+      // Adds a link to the Drupal.org documentation pages.
+      $output .= t('<p>See the <a href=":documentation">documentation pages</a> on Drupal.org for more information.</p>',
+        [
+          ':documentation' => 'https://www.drupal.org/docs/8/improve-the-breadcrumbs',
+        ]);
+
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function easy_breadcrumb_preprocess_block(&$variables) {
+
+  if ($variables['plugin_id'] == 'system_breadcrumb_block') {
+    // Get JSON-LD.
+    if ($json_ld = \Drupal::service('easy_breadcrumb.structured_data_json_ld')
+      ->value()) {
+
+      // Prepare script tag.
+      $structured_data = [
+        '#tag'        => 'script',
+        '#attributes' => ['type' => 'application/ld+json'],
+        '#value'      => $json_ld,
+      ];
+
+      // Add script tag.
+      $variables['#attached']['html_head'][] = [
+        $structured_data,
+        'easy_breadcrumb_structured_data_json_ld',
+      ];
+    }
+  }
+}

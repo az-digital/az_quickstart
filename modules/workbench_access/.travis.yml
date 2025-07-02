@@ -1,0 +1,85 @@
+language: php
+sudo: false
+
+services:
+  - mysql
+
+matrix:
+  fast_finish: true
+  include:
+    - env: DRUPAL_BRANCH="8.9.x" drupal" UPDATE_PHPUNIT="composer run-script drupal-phpunit-upgrade"
+      php: 7.4
+    - env: DRUPAL_BRANCH="9.0.x" drupal" UPDATE_PHPUNIT="composer run-script drupal-phpunit-upgrade"
+      php: 7.4
+    - env: DRUPAL_BRANCH="9.1.x" drupal" UPDATE_PHPUNIT="composer run-script drupal-phpunit-upgrade"
+      php: 7.4
+    - env: DRUPAL_BRANCH="9.1.x" drupal" UPDATE_PHPUNIT="composer run-script drupal-phpunit-upgrade"
+      php: 8.0
+
+cache:
+  directories:
+    - $HOME/.composer/cache/files
+
+mysql:
+  database: wa
+  username: root
+  encoding: utf8
+
+notifications:
+  email: false
+
+before_install:
+  # Add composer's global bin directory to the path
+  # see: https://github.com/drush-ops/drush#install---composer
+  - export PATH="$HOME/.composer/vendor/bin:$PATH"
+
+  # Remove Xdebug. Not an issue for PHP 7.
+  - phpenv config-rm xdebug.ini || true
+
+  - composer self-update
+
+  # Install Drush. We need to pin this to 8.1.5 because there are compatability
+  # issues with symfony/console 2.8/3.0 in later versions.
+  - composer global require --no-interaction drush/drush:8.*
+  - phpenv rehash
+
+  # Create database.
+  - mysql -e 'create database wa;'
+
+before_script:
+  - TESTDIR=$(pwd)
+  # Navigate out of module directory to prevent blown stack by recursive module lookup.
+  - cd ..
+
+  # Download Drupal 8 core.
+  - git clone --depth=1 --branch $DRUPAL_BRANCH https://git.drupal.org/project/drupal.git
+  - cd drupal
+
+  # Update PHPUnit when needed (only 8.7).
+  - $UPDATE_PHPUNIT
+
+  # Install dependencies.
+  - composer install
+
+  # Make the module appear in the correct place
+  - ln -s $TESTDIR modules/workbench_access
+
+  # Install drupal default profile
+  - /usr/bin/env PHP_OPTIONS="-d sendmail_path=$(which true)" drush --yes --verbose site-install minimal --db-url=mysql://root:@127.0.0.1/wa
+  # Install modules
+  - composer require drupal/inline_entity_form
+  - drush cr
+
+  # Start a web server on port 8080 in the background.
+  - nohup php -S 0.0.0.0:8080 > /dev/null 2>&1 &
+
+  # Wait until the web server is responding.
+  - until curl -s localhost:8080; do true; done > /dev/null
+
+  # Export PHP Unit vars
+  - export SIMPLETEST_DB='mysql://root:@127.0.0.1/wa'
+  - export SIMPLETEST_BASE_URL='http://localhost:8080'
+  - export SYMFONY_DEPRECATIONS_HELPER='disabled'
+
+script:
+  - vendor/bin/phpunit -c core --group workbench_access modules/workbench_access -v

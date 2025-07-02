@@ -1,0 +1,15 @@
+name: 'Webform Node Translation test'
+type: module
+description: 'Support module for webform node translation testing.'
+package: 'Webform Testing'
+core_version_requirement: ^10.2
+dependencies:
+  - 'webform:webform'
+  - 'webform:webform_node'
+  - 'webform:webform_test_translation'
+  - 'drupal:content_translation'
+
+# Information added by Drupal.org packaging script on 2024-12-10
+version: '6.2.9'
+project: 'webform'
+datestamp: 1733851071

@@ -1,0 +1,5 @@
+# This config was added because Color module does not have any Drupal 11
+# release, and should be removed after we're able to install it for tests.
+parameters:
+    excludePaths:
+        - migmag_rollbackable/src/Plugin/migrate/destination/RollbackableColor.php

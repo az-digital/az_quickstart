@@ -1,0 +1,39 @@
+/**
+ * @file
+ * Gin theme styles.
+ */
+
+/**
+ * Help Block.
+ */
+div.block-help-block {
+  max-width: none;
+}
+
+/**
+ * Fix webform promotion message link color.
+ *
+ * @see /admin/structure/webform
+ * @see webform.promotions.css
+ * @see claro/css/src/components/messages.css
+ */
+.webform-message .messages.messages--webform {
+  color: #fff;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  background-color: #353641;
+  box-shadow: none;
+  padding-left: 0;
+}
+
+.webform-message .messages.messages--webform .messages__content {
+  margin-left: 3.5rem;
+}
+
+/**
+ * Issue #3384432: Tooltip incompatibility with Gin Admin Theme
+ * @see https://www.drupal.org/project/webform/issues/3384432s
+ */
+.webform-element-help-container--title label:not(.visually-hidden) {
+  position: static !important;
+}

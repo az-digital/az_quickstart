@@ -1,0 +1,16 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - crop
+_core:
+  default_config_hash: eoQqq_dca4czuDhTkKCmWgQ5QOHTB28mwePTOHwtcE8
+name: medium_crop_simple
+label: 'Medium with crop simple'
+effects:
+  f9bb44b6-168d-4398-861d-29561791e34b:
+    uuid: f9bb44b6-168d-4398-861d-29561791e34b
+    id: crop_crop
+    weight: 1
+    data:
+      crop_type: crop_free_ratio

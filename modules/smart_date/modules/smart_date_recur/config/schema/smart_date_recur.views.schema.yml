@@ -1,0 +1,28 @@
+# Schema for the views plugins of the Smart Date Recur module.
+
+views.filter.recur_freq:
+  type: views_filter
+  label: 'Frequency'
+  mapping:
+    operator:
+      type: string
+      label: 'Operator'
+    value:
+      type: sequence
+      label: 'Values'
+      sequence:
+        type: string
+        label: 'Value'
+    expose:
+      type: mapping
+      label: 'Expose'
+      mapping:
+        reduce:
+          type: boolean
+          label: 'Reduce'
+    group_info:
+      mapping:
+        group_items:
+          sequence:
+            type: views.filter.group_item.in_operator
+            label: 'Group item'

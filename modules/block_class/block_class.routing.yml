@@ -1,0 +1,94 @@
+block_class.settings:
+  path: '/admin/config/content/block-class/settings'
+  defaults:
+    _title: 'Block Class Settings'
+    _form: 'Drupal\block_class\Form\BlockClassSettingsForm'
+  requirements:
+    _permission: 'administer block classes'
+block_class.bulk_operations:
+  path: '/admin/config/content/block-class/bulk-operations'
+  defaults:
+    _title: 'Block Class Bulk Operations'
+    _form: 'Drupal\block_class\Form\BlockClassBulkOperationsForm'
+  requirements:
+    _permission: 'administer block classes'
+
+block_class.confirm_bulk_operation:
+  path: '/admin/config/content/block-class/confirm-bulk-operation/{operation}/{classes_to_be_added}/{current_class}/{new_class}/{attributes_to_be_added}/{current_attribute}/{new_attribute}'
+  defaults:
+    _form: '\Drupal\block_class\Form\BlockClassConfirmBulkOperationForm'
+    _title: 'Confirm Deletion'
+  requirements:
+    _permission: 'administer block classes'
+
+block_class.confirm_deletion:
+  path: '/admin/config/content/block-class/delete/{bid}'
+  defaults:
+    _form: '\Drupal\block_class\Form\BlockClassConfirmDeletionForm'
+    _title: 'Confirm Deletion'
+  requirements:
+    _permission: 'administer block classes'
+
+block_class.confirm_deletion_attribute:
+  path: '/admin/config/content/block-class/delete-attribute/{bid}'
+  defaults:
+    _form: '\Drupal\block_class\Form\BlockClassConfirmDeletionAttributeForm'
+    _title: 'Confirm Deletion Attribute'
+  requirements:
+    _permission: 'administer block classes'
+
+block_class.class_list:
+  path: '/admin/config/content/block-class/class-list'
+  defaults:
+    _controller: '\Drupal\block_class\Controller\BlockClassController::classList'
+    _title: 'Class List'
+  requirements:
+    _permission: 'administer block classes'
+
+block_class.attribute_list:
+  path: '/admin/config/content/block-class/attribute-list'
+  defaults:
+    _controller: '\Drupal\block_class\Controller\BlockClassController::attributeList'
+    _title: 'Attribute List'
+  requirements:
+    _permission: 'administer block classes'
+
+block_class.list:
+  path: '/admin/config/content/block-class/list'
+  defaults:
+    _controller: '\Drupal\block_class\Controller\BlockClassController::blockList'
+    _title: 'Block List'
+  requirements:
+    _permission: 'administer block classes'
+
+block_class.help:
+  path: '/admin/block-class/help'
+  defaults:
+    _controller: '\Drupal\block_class\Controller\BlockClassController::index'
+    _title: 'Block Class Help'
+  requirements:
+    _permission: 'administer block classes'
+
+block_class.autocomplete:
+  path: '/admin/block-class/auto-complete'
+  defaults:
+    _controller: '\Drupal\block_class\Controller\BlockClassController::handleAutocomplete'
+    _format: json
+  requirements:
+    _permission: 'administer block classes'
+
+block_class.autocomplete_attributes:
+  path: '/admin/block-class/auto-complete-attributes'
+  defaults:
+    _controller: '\Drupal\block_class\Controller\BlockClassController::handleAutocompleteAttributes'
+    _format: json
+  requirements:
+    _permission: 'administer block classes'
+
+block_class.autocomplete_attribute_values:
+  path: '/admin/block-class/auto-complete-attribute-values'
+  defaults:
+    _controller: '\Drupal\block_class\Controller\BlockClassController::handleAutocompleteAttributeValues'
+    _format: json
+  requirements:
+    _permission: 'administer block classes'

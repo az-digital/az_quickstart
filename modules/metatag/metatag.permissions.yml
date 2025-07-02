@@ -1,0 +1,4 @@
+'administer meta tags':
+  title: Administer meta tags
+  description: Control the Metatag settings pages. Does not control access to the Metatag field on content forms, etc, use the Field Permissions module or hook_form_alter().
+  'restrict access': TRUE

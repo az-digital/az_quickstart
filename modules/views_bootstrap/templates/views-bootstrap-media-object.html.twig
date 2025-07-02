@@ -1,0 +1,20 @@
+{# @todo: add more control to images and positoning #}
+
+<div{{ attributes.addClass(classes) }} id="{{ id }}">
+    {% for key, row in rows -%}
+    <div class="media">
+        {% if row.image %}
+            {{ row.image }}
+        {% endif %}
+        <div class="media-body">
+            {% if row.heading %}
+                {{ row.heading }}
+            {% endif %}
+
+            {% if row.body %}
+                {{ row.body }}
+            {% endif %}
+        </div>
+    </div>
+    {%- endfor %}
+</div>

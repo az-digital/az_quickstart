@@ -1,0 +1,8 @@
+# This file maps Internet media types to unique file extension(s).
+#
+# This is a subset version for testing purposes.
+#
+# MIME type (lowercased)			Extensions
+# ============================================	==========
+image/jpeg					jpeg jpg jpe
+text/plain					txt

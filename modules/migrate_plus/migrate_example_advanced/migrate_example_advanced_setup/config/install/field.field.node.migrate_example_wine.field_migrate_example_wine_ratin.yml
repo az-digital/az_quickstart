@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_migrate_example_wine_ratin
+    - node.type.migrate_example_wine
+id: node.migrate_example_wine.field_migrate_example_wine_ratin
+field_name: field_migrate_example_wine_ratin
+entity_type: node
+bundle: migrate_example_wine
+label: Rating
+description: 'Rating on a 1-100 scale'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: !!float 1
+  max: !!float 100
+  prefix: ''
+  suffix: ''
+field_type: decimal

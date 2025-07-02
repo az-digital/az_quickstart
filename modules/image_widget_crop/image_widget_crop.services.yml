@@ -1,0 +1,4 @@
+services:
+  image_widget_crop.manager:
+    class: Drupal\image_widget_crop\ImageWidgetCropManager
+    arguments: ['@entity_type.manager', '@config.factory']

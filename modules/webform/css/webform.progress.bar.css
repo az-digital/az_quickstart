@@ -1,0 +1,139 @@
+/**
+ * @file
+ * Wizard progress bar styles.
+ *
+ * @see /webform/example_wizard
+ * @see /webform/test_form_wizard_advanced
+ */
+
+/**
+ * Progress bar.
+ *
+ * @see https://coderwall.com/p/-7trcg/simple-css-only-wizard-progress-tracker
+ */
+.webform-progress-bar {
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  font-size: smaller;
+}
+
+li.webform-progress-bar__page {
+  position: relative;
+  display: inline-block;
+  height: 30px;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  background-color: #f0f0f0;
+  line-height: 30px;
+}
+
+.webform-progress-bar[data-steps="2"] li {
+  width: 50%;
+}
+.webform-progress-bar[data-steps="3"] li {
+  width: 33%;
+}
+.webform-progress-bar[data-steps="4"] li {
+  width: 25%;
+}
+.webform-progress-bar[data-steps="5"] li {
+  width: 20%;
+}
+.webform-progress-bar[data-steps="6"] li {
+  width: 16.6%;
+}
+.webform-progress-bar[data-steps="7"] li {
+  width: 14.28%;
+}
+.webform-progress-bar[data-steps="8"] li {
+  width: 12.5%;
+}
+.webform-progress-bar[data-steps="9"] li {
+  width: 11.11%;
+}
+.webform-progress-bar[data-steps="10"] li {
+  width: 10%;
+}
+
+li.webform-progress-bar__page > b {
+  display: block;
+  overflow: hidden;
+  padding: 0 0 0 30px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-weight: normal;
+}
+
+li.webform-progress-bar__page--done > b {
+  background-color: #dbdbdb;
+}
+
+li.webform-progress-bar__page--done > b[role="link"] {
+  cursor: pointer;
+  color: #337ab7;
+}
+
+li.webform-progress-bar__page--done > b[role="link"]:hover {
+  text-decoration: underline;
+}
+
+li.webform-progress-bar__page--current > b {
+  font-weight: bold;
+}
+
+li.webform-progress-bar__page > b:after,
+li.webform-progress-bar__page > b:before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 0;
+  height: 0;
+  content: "";
+  border: solid transparent;
+  border-width: 15px;
+  border-left-color: #ededed;
+}
+
+li.webform-progress-bar__page > b:after {
+  z-index: 1;
+  top: -5px;
+  border-width: 20px;
+  border-left-color: white;
+}
+
+li.webform-progress-bar__page > b:before {
+  z-index: 2;
+}
+
+li.webform-progress-bar__page--done + li > b:before {
+  border-left-color: #dbdbdb;
+}
+
+li.webform-progress-bar__page:first-child > b:after,
+li:first-child > b:before {
+  display: none;
+}
+
+li.webform-progress-bar__page:first-child span,
+li.webform-progress-bar__page:last-child span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 0;
+  height: 0;
+  border: solid transparent;
+  border-width: 15px;
+  border-left-color: white;
+}
+
+li.webform-progress-bar__page:last-child span {
+  right: -15px;
+  left: auto;
+  border-top-color: white;
+  border-bottom-color: white;
+  border-left-color: transparent;
+}

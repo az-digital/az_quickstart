@@ -1,0 +1,10 @@
+name: Chaos Wizard Test
+type: module
+description: 'Provides testing for ctools wizard'
+package: Testing
+# version: 3.x
+
+# Information added by Drupal.org packaging script on 2024-06-11
+version: '4.1.0'
+project: 'ctools'
+datestamp: 1718144953

@@ -1,0 +1,295 @@
+<?php
+
+/**
+ * @file
+ * Allows webforms to be shared on other websites using an iframe.
+ */
+
+use Drupal\Component\Utility\NestedArray;
+use Drupal\Core\Cache\RefinableCacheableDependencyInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Render\Markup;
+use Drupal\webform\WebformInterface;
+use Drupal\webform_share\WebformShareHelper;
+use Drupal\webform_share\WebformSharePreRender;
+
+/**
+ * Implements hook_webform_help_info().
+ */
+function webform_share_webform_help_info() {
+  $help = [];
+  $help['webform_share_embed'] = [
+    'group' => 'share',
+    'title' => t('Share embed'),
+    'content' => t("The <strong>Share embed</strong> page provides code snippets that are used to embedded a webform in any website, webpage, and application."),
+    'routes' => [
+      // @see /admin/structure/webform/manage/{webform}/share
+      'entity.webform.share_embed',
+      // @see /node/{node}/webform/share
+      'entity.node.webform.share_embed',
+    ],
+  ];
+  $help['webform_share_preview'] = [
+    'group' => 'share',
+    'title' => t('Share preview'),
+    'content' => t("The <strong>Share preview</strong> page allows site builders to preview an embedded webform."),
+    'routes' => [
+      // @see /admin/structure/webform/manage/{webform}/share/preview
+      'entity.webform.share_preview',
+      // @see /node/{node}/webform/share/preview
+      'entity.node.webform.share_preview',
+    ],
+  ];
+  $help['webform_share_test'] = [
+    'group' => 'share',
+    'title' => t('Share test'),
+    'content' => t("The <strong>Share test</strong> page allows site builders to test an embedded webform."),
+    'routes' => [
+      // @see /admin/structure/webform/manage/{webform}/share/test
+      'entity.webform.share_test',
+      // @see /node/{node}/webform/share/test
+      'entity.node.webform.share_test',
+    ],
+  ];
+  return $help;
+}
+
+/**
+ * Implements hook_local_tasks_alter().
+ */
+function webform_share_local_tasks_alter(&$local_tasks) {
+  // Remove webform share if the webform_node.module
+  // is not installed.
+  if (!\Drupal::moduleHandler()->moduleExists('webform_node')) {
+    unset(
+      $local_tasks['entity.node.webform.share'],
+      $local_tasks['entity.node.webform.share_embed'],
+      $local_tasks['entity.node.webform.share_preview'],
+      $local_tasks['entity.node.webform.share_test']
+    );
+  }
+}
+
+/**
+ * Implements hook_menu_local_tasks_alter().
+ */
+function webform_share_menu_local_tasks_alter(&$data, $route_name, RefinableCacheableDependencyInterface $cacheability) {
+  // Allow webform query string parameters to be transferred
+  // from canonical to test URL.
+  $route_names = [
+    'entity.webform.share_embed', 'entity.webform.share_preview', 'entity.webform.share_test',
+  ];
+  if (in_array($route_name, $route_names)) {
+    if ($query = \Drupal::request()->query->all()) {
+      foreach ($route_names as $route_name) {
+        if (isset($data['tabs'][1][$route_name])) {
+          $url = &$data['tabs'][1][$route_name]['#link']['url'];
+          $url->setOption('query', $query);
+        }
+      }
+    }
+
+    // Query string to cache context webform canonical and test routes.
+    $cacheability->addCacheContexts(['url.query_args']);
+  }
+}
+
+/**
+ * Implements hook_element_info_alter().
+ */
+function webform_share_element_info_alter(&$type) {
+  $type['page']['#pre_render'][] = [WebformSharePreRender::class, 'page'];
+}
+
+/**
+ * Implements hook_entity_type_alter().
+ */
+function webform_share_entity_type_alter(array &$entity_types) {
+  if (isset($entity_types['webform'])) {
+    /** @var \Drupal\Core\Entity\ContentEntityTypeInterface $webform_entity_type */
+    $webform_entity_type = $entity_types['webform'];
+
+    // Add 'share-embed',  'share-preview', and 'share-test' to link templates.
+    $webform_entity_type->setLinkTemplate('share-embed', '/admin/structure/webform/manage/{webform}/share/embed');
+    $webform_entity_type->setLinkTemplate('share-preview', '/admin/structure/webform/manage/{webform}/share/preview');
+    $webform_entity_type->setLinkTemplate('share-test', '/admin/structure/webform/manage/{webform}/share/test');
+  }
+}
+
+/**
+ * Implements hook_entity_operation().
+ */
+function webform_share_entity_operation(EntityInterface $entity) {
+  $operations = [];
+  if ($entity instanceof WebformInterface
+    && $entity->access('update')
+    && $entity->getSetting('share', TRUE)) {
+    $operations['share'] = [
+      'title' => t('Share'),
+      'url' => $entity->toUrl('share-embed'),
+      'weight' => 80,
+    ];
+  }
+  return $operations;
+}
+
+/**
+ * Implements hook_page_top().
+ */
+function webform_share_page_top(array &$page_top) {
+  if (!WebformShareHelper::isPage()) {
+    return;
+  }
+
+  // Remove the toolbar from the webform share page.
+  unset($page_top['toolbar']);
+}
+
+/* ************************************************************************** */
+// Theme functions.
+/* ************************************************************************** */
+
+/**
+ * Implements hook_theme().
+ */
+function webform_share_theme($existing, $type, $theme, $path) {
+  return [
+    // Using dedicated html and page template ensures the shared webforms
+    // output is as simple as possible.
+    'html__webform_share' => [
+      'render element' => 'html',
+    ],
+    'page__webform_share' => [
+      'render element' => 'page',
+    ],
+    'webform_share_iframe' => [
+      'render element' => 'element',
+    ],
+    'webform_share_script' => [
+      'render element' => 'element',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK().
+ */
+function webform_share_theme_suggestions_html(array $variables) {
+  return (WebformShareHelper::isPage()) ? ['html__webform_share'] : [];
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK().
+ */
+function webform_share_theme_suggestions_page(array $variables) {
+  return (WebformShareHelper::isPage()) ? ['page__webform_share'] : [];
+}
+
+/**
+ * Prepares variables for the webform share page HTML templates.
+ */
+function template_preprocess_html__webform_share(&$variables) {
+  // Make sure the variables are preprocessed.
+  // @see template_preprocess_page()
+  if (!isset($variables['page'])) {
+    template_preprocess_html($variables);
+  }
+
+  /** @var \Drupal\webform\WebformInterface $webform */
+  $webform = \Drupal::routeMatch()->getParameter('webform');
+
+  // Add html.webform-share-page-html class.
+  $variables['html_attributes']->addClass('webform-share-page-html');
+
+  // Add body.webform-share-page-body class.
+  // @see webform_share.page.css
+  $variables['attributes'] += ['class' => []];
+  $variables['attributes']['class'][] = 'webform-share-page-body';
+
+  // Add custom page body attributes.
+  $body_attributes = $webform->getSetting('share_page_body_attributes');
+  if (isset($body_attributes['class'])) {
+    $variables['attributes']['class'] = array_merge($variables['attributes']['class'], $body_attributes['class']);
+    unset($body_attributes['class']);
+  }
+  $variables['attributes'] = $body_attributes + $variables['attributes'];
+
+  // Remove toolbar.module body classes.
+  // @see toolbar_preprocess_html()
+  if (\Drupal::currentUser()->hasPermission('access toolbar')) {
+    foreach ($variables['attributes']['class'] as $index => $class_name) {
+      if (strpos($class_name, 'toolbar-') === 0) {
+        unset($variables['attributes']['class'][$index]);
+      }
+    }
+    $variables['attributes']['class'] = array_values($variables['attributes']['class']);
+  }
+
+  // Remove the page title.
+  if (!$webform->getSetting('share_title')) {
+    NestedArray::unsetValue($variables, ['page', 'content', 'page_title']);
+  }
+}
+
+/**
+ * Prepares variables for the webform share page templates.
+ */
+function template_preprocess_page__webform_share(&$variables) {
+  // Make sure the variables are preprocessed.
+  // @see template_preprocess_page()
+  if (!isset($variables['base_path'])) {
+    template_preprocess_page($variables);
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for page title templates.
+ */
+function webform_share_preprocess_page_title(&$variables) {
+  if (!WebformShareHelper::isPage()) {
+    return;
+  }
+
+  // Remove shortcut widget from page title.
+  // @see shortcut_preprocess_page_title()
+  if (isset($variables['title_suffix'])) {
+    unset($variables['title_suffix']['add_or_remove_shortcut']);
+  }
+}
+
+/**
+ * Prepares variables for webform share iframe templates.
+ *
+ * Default template: webform-share-iframe.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - element: An associative array containing the properties of the element.
+ *     Properties used: #webform, #javascript, #options, and #attributes.
+ */
+function template_preprocess_webform_share_iframe(array &$variables) {
+  $element = $variables['element'];
+
+  // Set javascript.
+  $variables['javascript'] = $element['#javascript'];
+
+  // Set iframe-resizer script options.
+  $variables['script'] = $element['#script'];
+  $options = json_encode($element['#options'], JSON_FORCE_OBJECT);
+  $variables['options'] = Markup::create($options);
+}
+
+/**
+ * Prepares variables for webform share script templates.
+ *
+ * Default template: webform-share-script.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - element: An associative array containing the properties of the element.
+ *     Properties used: #webform, #javascript, #options, and #attributes.
+ */
+function template_preprocess_webform_share_script(array &$variables) {
+  $element = $variables['element'];
+  $variables['script'] = $element['#script'];
+}

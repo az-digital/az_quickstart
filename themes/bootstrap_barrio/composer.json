@@ -1,0 +1,14 @@
+{
+  "name": "drupal/bootstrap_barrio",
+  "description": "Bootstrap 4 base theme.",
+  "type": "drupal-theme",
+  "license": "GPL-2.0-or-later",
+  "homepage": "https://www.drupal.org/project/bootstrap_barrio",
+  "require": {
+    "twbs/bootstrap": "^4.4.1"
+  },
+  "authors": [{
+    "name": "Alberto Siles",
+    "email": "alberto@siles.pe"
+  }]
+}

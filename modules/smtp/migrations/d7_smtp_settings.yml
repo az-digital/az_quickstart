@@ -1,0 +1,68 @@
+id: d7_smtp_settings
+label: SMTP Authentication Support configuration
+migration_tags:
+  - Drupal 7
+  - Configuration
+source:
+  plugin: variable
+  # Note that smtp_deliver, smtp_queue, and smtp_queue_fail were variables in
+  # D7, but the corresponding features have been removed in D8.
+  variables:
+    - smtp_allowhtml
+    - smtp_client_helo
+    - smtp_client_hostname
+    - smtp_debugging
+    - smtp_from
+    - smtp_fromname
+    - smtp_host
+    - smtp_hostbackup
+    - smtp_on
+    - smtp_password
+    - smtp_port
+    - smtp_protocol
+    - smtp_queue
+    - smtp_queue_fail
+    - smtp_reroute_address
+    - smtp_test_address
+    - smtp_username
+  source_module: smtp
+process:
+  smtp_on: smtp_on
+  smtp_host: smtp_host
+  smtp_hostbackup: smtp_hostbackup
+  smtp_port: smtp_port
+  smtp_protocol: smtp_protocol
+
+  # AutoTLS was always on in D7.
+  smtp_autotls:
+    plugin: default_value
+    default_value: true
+
+  # Timeout defaulted to 10 in D7's smtp.phpmailer.php.
+  smtp_timeout:
+    plugin: default_value
+    default_value: 10
+
+  smtp_username: smtp_username
+  smtp_password: smtp_password
+  smtp_from: smtp_from
+  smtp_fromname: smtp_fromname
+  smtp_client_hostname: smtp_client_hostname
+  smtp_client_helo: smtp_client_helo
+  smtp_allowhtml: smtp_allowhtml
+  smtp_reroute_address: smtp_reroute_address
+  smtp_test_address: smtp_test_address
+  smtp_debugging: smtp_debugging
+
+  # Previous mail system was not recorded in D7, so we assume the D8 default.
+  prev_mail_system:
+    plugin: default_value
+    default_value: 'php_mail'
+
+  # Keep-alive was, by default, false in D7.
+  smtp_keepalive:
+    plugin: default_value
+    default_value: false
+destination:
+  plugin: config
+  config_name: smtp.settings

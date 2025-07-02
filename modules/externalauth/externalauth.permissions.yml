@@ -1,0 +1,4 @@
+view authmap:
+  title: 'View external authentication data'
+delete authmap:
+  title: 'Delete external authentication data'

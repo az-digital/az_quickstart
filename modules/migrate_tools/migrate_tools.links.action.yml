@@ -1,0 +1,5 @@
+migrate_tools.add_group_action:
+  route_name: entity.migration_group.add_form
+  title: 'Add migration group'
+  appears_on:
+    - entity.migration_group.list

@@ -1,0 +1,11 @@
+name: 'Config sync tests'
+type: module
+description: 'Support module for config_sync module testing.'
+package: Testing
+dependencies:
+  - drupal:node
+
+# Information added by Drupal.org packaging script on 2025-03-27
+version: '3.0.0-alpha4'
+project: 'config_sync'
+datestamp: 1743110768

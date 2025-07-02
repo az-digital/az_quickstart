@@ -1,0 +1,10 @@
+{
+  "name": "drupal/nouislider_js",
+  "description": "Mirror of the noUiSlider javascript library tagged as a Drupal library.",
+  "type": "drupal-library",
+  "homepage": "https://github.com/leongersen/noUiSlider",
+  "license": "MIT License",
+  "extra": {
+    "installer-name": "nouislider"
+  }
+}

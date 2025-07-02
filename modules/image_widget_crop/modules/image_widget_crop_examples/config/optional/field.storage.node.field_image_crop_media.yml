@@ -1,0 +1,20 @@
+uuid: c601d521-e9b6-45f5-ac75-307e86c1da8a
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+    - node
+id: node.field_image_crop_media
+field_name: field_image_crop_media
+entity_type: node
+type: entity_reference
+settings:
+  target_type: media
+module: core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

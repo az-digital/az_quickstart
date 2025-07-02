@@ -1,0 +1,107 @@
+# Migration configuration for user accounts. We've described most of what goes
+# into migration configuration in migrate_plus.migration.beer_term.yml, so won't
+# repeat that here.
+id: beer_user
+label: Beer Drinkers of the world
+migration_group: beer
+migration_tags:
+  - example
+source:
+  plugin: beer_user
+destination:
+  plugin: entity:user
+process:
+  pass: password
+  mail: email
+  init: email
+  status: status
+  roles:
+    plugin: default_value
+    default_value: 2
+
+  # Here's a new process plugin - make_unique_entity_field. Our source site allowed there
+  # to be multiple user accounts with the same username, but Drupal wants
+  # usernames to be unique. This plugin allows us to automatically generate
+  # unique usernames when we detect collisions.
+  name:
+    plugin: make_unique_entity_field
+    # The name of the source field containing the username.
+    source: username
+    # These next two settings identify the destination-side field to check for
+    # duplicates. They say "see if the incoming 'name' matches any existing
+    # 'name' field in any 'user' entity".
+    entity_type: user
+    field: name
+    # Finally, this specifies a string to use between the original value and the
+    # sequence number appended to make the value unique. Thus, the first 'alice'
+    # account gets the name 'alice' in Drupal, and the second one gets the name
+    # 'alice_1'.
+    postfix: _
+
+  # Another new process plugin - callback. This allows us to filter an incoming
+  # source value through an arbitrary PHP function. The function called must
+  # have one required argument.
+  created:
+    plugin: callback
+    # The 'registered' timestamp in the source data is a string of the form
+    # 'yyyy-mm-dd hh:mm:ss', but Drupal wants a UNIX timestamp for 'created'.
+    source: registered
+    callable: strtotime
+
+  # Our source data only has a single timestamp value, 'registered', which we
+  # want to use for all four of Drupal's user timestamp fields. We could
+  # duplicate the callback plugin we used for 'created' above - but we have a
+  # shortcut. Putting an @ sign at the beginning of the source value indicates
+  # that it is to be interpreted as a *destination* field name instead of a
+  # *source* field name. Thus, if a value we need in more than one place
+  # requires some processing beyond simply copying it directly, we can perform
+  # that processing a single time and use the result in multiple places.
+  changed: '@created'
+  access: '@created'
+  login: '@created'
+
+  # Yet another new process plugin - static_map. We're making a transformation
+  # in how we represent gender data - formerly it was integer values 0 for male
+  # and 1 for female, but in our modern Drupal site we will be making this a
+  # free-form text field, so we want to replace the obscure integers with
+  # simple strings.
+  field_migrate_example_gender:
+    plugin: static_map
+    # Specify the source field we're reading (containing 0's and 1's).
+    source: sex
+    # Tell it to transform 0 to 'Male', and 1 to 'Female'.
+    map:
+      0: Male
+      1: Female
+    # If the input is missing, leave the field empty. Without this, an empty
+    # or invalid source value would cause the user record to be skipped
+    # entirely.
+    bypass: true
+
+  # This looks like a simple migration process plugin, but there's magic
+  # happening here. We import nodes after terms and users, because they have
+  # references to terms and users, so of course the terms and users must be
+  # migrated first - right? However, the favbeers field is a reference to the
+  # beer nodes which haven't yet been migrated - we have a circular relationship
+  # between users and nodes. The way the migration system resolves this
+  # situation is by creating "stubs". In this case, because no beer nodes have
+  # been created, each time a beer is looked up against the beer_node migration
+  # nothing is found, and by default the migration process plugin creates an
+  # empty stub node as a placeholder so the favbeers reference field has
+  # something to point to. The stub is recorded in the beer_node map table, so
+  # when that migration runs it knows that each incoming beer should overwrite
+  # its stub instead of creating a new node.
+  field_migrate_example_favbeers:
+    plugin: migration_lookup
+    source: beers
+    migration: beer_node
+
+migration_dependencies: {}
+
+# When a module is creating a custom content type it needs to add an 
+# enforced dependency to itself, otherwise the content type will persist
+# after the module is disabled. See: https://www.drupal.org/node/2629516.
+dependencies:
+  enforced:
+    module:
+      - migrate_example

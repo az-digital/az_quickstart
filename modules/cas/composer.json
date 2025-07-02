@@ -1,0 +1,48 @@
+{
+  "name": "drupal/cas",
+  "description": "Provides CAS authentication for Drupal.",
+  "type": "drupal-module",
+  "homepage": "http://drupal.org/project/cas",
+  "authors": [
+    {
+      "name": "David Metzler",
+      "homepage": "https://www.drupal.org/u/metzlerd",
+      "role": "Maintainer"
+    },
+    {
+      "name": "Brian Osborne",
+      "homepage": "https://www.drupal.org/u/bkosborne",
+      "role": "Maintainer"
+    },
+    {
+      "name": "Tim Yale",
+      "homepage": "https://www.drupal.org/u/yalet",
+      "role": "Maintainer"
+    },
+    {
+      "name": "See other contributors",
+      "homepage": "https://www.drupal.org/node/78967/committers",
+      "role": "contributor"
+    }
+  ],
+  "support": {
+    "issues": "http://drupal.org/project/issues/cas",
+    "irc": "irc://irc.freenode.org/drupal-contribute",
+    "source": "https://git.drupalcode.org/project/cas"
+  },
+  "license": "GPL-2.0-or-later",
+  "minimum-stability": "dev",
+  "require": {
+    "drupal/externalauth": "^2.0"
+  },
+  "require-dev": {
+    "drupal/cas_mock_server": "^2.0"
+  },
+  "extra": {
+    "drush": {
+      "services": {
+        "drush.services.yml": "^11"
+      }
+    }
+  }
+}

@@ -1,0 +1,44 @@
+<?php
+
+/**
+ * @file
+ * Update scripts for the Schema Item List module.
+ */
+
+use Drupal\metatag\Entity\MetatagDefaults;
+
+/**
+ * Implementations of hook_update_N().
+ */
+
+/**
+ * Update item list id.
+ *
+ * The "schema_item_list" and "schema_item_list_element" meta tags are renamed
+ * to the correct "schema_item_list_item_list_element".
+ */
+function schema_item_list_update_8101() {
+
+  /**
+   * @var Drupal\metatag\Entity\MetatagDefaults
+   *   The Metatag defaults.
+   */
+  $configs = MetatagDefaults::loadMultiple();
+
+  foreach ($configs as $config) {
+    $tags = $config->get('tags');
+
+    if (array_key_exists("schema_item_list_element", $tags)) {
+      $tags['schema_item_list_item_list_element'] = $tags['schema_item_list_element'];
+      unset($tags['schema_item_list_element']);
+      $config->set("tags", $tags);
+      $config->save();
+    }
+    if (array_key_exists("schema_item_list", $tags)) {
+      $tags['schema_item_list_item_list_element'] = $tags['schema_item_list'];
+      unset($tags['schema_item_list']);
+      $config->set("tags", $tags);
+      $config->save();
+    }
+  }
+}

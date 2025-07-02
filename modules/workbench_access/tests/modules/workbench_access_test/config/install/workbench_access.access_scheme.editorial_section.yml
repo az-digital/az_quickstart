@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.article.field_workbench_access
+    - taxonomy.vocabulary.editorial_section
+id: editorial_section
+label: 'Editorial section'
+plural_label: 'Editorial sections'
+scheme: taxonomy
+scheme_settings:
+  vocabularies:
+    - editorial_section
+  fields:
+    -
+      entity_type: node
+      bundle: article
+      field: field_workbench_access

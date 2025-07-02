@@ -1,0 +1,106 @@
+.paragraphs-badge {
+  display: inline-block;
+  padding: 0.15em 0.3em;
+  background: #787878;
+  border-radius: 4px;
+  color: #fff;
+  cursor: default;
+  font-size: 90%;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  margin: 3px 0;
+}
+
+.paragraphs-badge:empty {
+  display: none;
+}
+
+.js .paragraphs-description .paragraphs-content-wrapper,
+.js .paragraphs-description .paragraphs-plugin-wrapper {
+  position: relative;
+  height: 1.538em;
+  overflow: hidden;
+  word-break: break-all;
+  line-height: 1.538em;
+  text-overflow: ellipsis;
+}
+
+.js .paragraphs-description .summary-plugin-label::after {
+  content: ": ";
+}
+
+.js .paragraphs-description .summary-content {
+  color: #666666;
+}
+
+.js .paragraphs-description .summary-plugin {
+  display: inline-block;
+  padding-right: 5px;
+  font-size: 0.7rem;
+  color: #888888;
+}
+
+.js .paragraphs-description .summary-plugin:not(:last-child) {
+  border-right: 2px solid #e5e3de;
+}
+
+.js .paragraphs-description .summary-plugin:not(:first-child) {
+  padding: 0 5px;
+}
+
+.js .behavior-active .paragraphs-expanded-description .paragraphs-plugin-wrapper,
+.js .behavior-active .paragraphs-content {
+  display: none;
+}
+
+.js .behavior-active .paragraphs-behavior {
+  display: block;
+}
+
+.js .content-active .paragraphs-expanded-description .paragraphs-content-wrapper {
+  display: none;
+}
+
+.paragraph-formatter {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: auto 1fr;
+      grid-template-columns: auto 1fr;
+  -ms-grid-rows: auto;
+      grid-template-rows: auto;
+  grid-gap: 5px 5px;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.paragraph-formatter .paragraph-info {
+  grid-column: 1 / 2;
+  -ms-grid-column: 2;
+  -ms-grid-row-span: 1;
+  -ms-grid-row: 1;
+  grid-row: 1 / span 1;
+}
+
+.paragraph-formatter .paragraph-summary {
+  grid-column: 1 / 2;
+  -ms-grid-column: 3;
+  -ms-grid-column-span: 1;
+  -ms-grid-row-span: 1;
+  -ms-grid-row: 1;
+  grid-row: 2 / span 1;
+}
+
+@media (min-width: 600px) {
+  .paragraph-formatter .paragraph-summary {
+    grid-column: 2 / 2;
+    -ms-grid-column: 3;
+    -ms-grid-column-span: 1;
+    -ms-grid-row-span: 1;
+    -ms-grid-row: 1;
+    grid-row: 1 / span 1;
+  }
+}

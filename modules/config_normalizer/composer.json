@@ -1,0 +1,56 @@
+{
+    "name": "drupal/config_normalizer",
+    "description": "Normalizes configuration for comparison.",
+    "type": "drupal-module",
+    "license": "GPL-2.0-or-later",
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "Nedjo Rogers (nedjo)",
+            "homepage": "https://www.drupal.org/u/nedjo",
+            "role": "Original author"
+        },
+        {
+            "name": "Fabian Bircher (bircher)",
+            "homepage": "https://www.drupal.org/u/bircher",
+            "role": "Maintainer"
+        },
+        {
+            "name": "Benjamin Melançon (mlncn)",
+            "homepage": "https://www.drupal.org/u/mlncn",
+            "role": "Maintainer"
+        },
+        {
+            "name": "Joe Parsons (joegraduate)",
+            "homepage": "https://www.drupal.org/u/joegraduate",
+            "role": "Maintainer"
+        },
+        {
+            "name": "tadean",
+            "homepage": "https://www.drupal.org/u/tadean",
+            "role": "Maintainer"
+        },
+        {
+            "name": "Artem Dmitriiev (a.dmitriiev)",
+            "homepage": "https://www.drupal.org/u/a.dmitriiev",
+            "role": "Maintainer"
+        },
+        {
+            "name": "Merlin Axel Rutz (geek-merlin)",
+            "homepage": "https://www.drupal.org/u/geek-merlin",
+            "role": "Maintainer"
+        },
+        {
+            "name": "Campus Web Services The University of Arizona (uarizona)",
+            "homepage": "https://www.drupal.org/u/uarizona",
+            "role": "Maintainer"
+        }
+    ],
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/config_normalizer",
+        "source": "https://git.drupal.org/project/config_normalizer.git"
+    },
+    "require": {
+        "drupal/core": "^8.8 || ^9 || ^10 || ^11"
+    }
+}

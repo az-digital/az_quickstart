@@ -1,0 +1,24 @@
+/* ---------- Dancing Script, EB Garamond ---------- */
+
+h1,
+h1 a {
+  font-family: 'Dancing Script', cursive;
+  font-weight: 700;
+}
+h2,
+h3,
+h4,
+h5,
+h6,
+h2 a,
+h3 a {
+  font-family: 'EB Garamond', serif;
+  font-weight: normal;
+  text-transform: uppercase;
+}
+body,
+p,
+a,
+li {
+  font-family: 'EB Garamond', serif;
+}

@@ -1,0 +1,14 @@
+{
+    "name": "drupal/sophron",
+    "type": "drupal-module",
+    "description": "Provides an extensive MIME types management API",
+    "require": {
+        "drupal/core": "^10.2 || ^11",
+        "fileeye/mimemap": "^2.2.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Drupal\\sophron\\": "src/"
+        }
+    }
+}

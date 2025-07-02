@@ -1,0 +1,25 @@
+<?php
+
+/**
+ * @file
+ * Contains intelligencebank_test.module.
+ *
+ */
+
+ use Drupal\Component\Serialization\Json;
+ use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_form_alter().
+ *
+ * Change label text for open browser button.
+ * Change dialog title option.
+ *
+ * See @link drupal.org/project/intelligencebank/issues/3353858
+ */
+function intelligencebank_test_form_media_library_add_form_upload_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $form['ib_dam_container']['asset_browser']['#title'] = t('Add Custom Assets');
+  $data_dialog_options = Json::decode($form['ib_dam_container']['asset_browser']['#attributes']['data-dialog-options']);
+  $data_dialog_options['title'] = 'Custom Asset Browser';
+  $form['ib_dam_container']['asset_browser']['#attributes']['data-dialog-options'] = Json::encode($data_dialog_options);
+}

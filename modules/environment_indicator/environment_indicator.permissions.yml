@@ -1,0 +1,10 @@
+administer environment indicator settings:
+  title: 'Administer environment_indicator settings'
+  description: 'Configure the environments and the colors to display.'
+
+access environment indicator:
+  title: 'See all environment indicators'
+  description: 'See all the environment indicators in the site.'
+
+permission_callbacks:
+  - Drupal\environment_indicator\EnvironmentIndicatorPermissions::permissions

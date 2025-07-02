@@ -1,0 +1,5 @@
+indentblock:
+  version: 1.x
+  css:
+    theme:
+      css/plugins/indentblock/ckeditor.indentblock.css: {}

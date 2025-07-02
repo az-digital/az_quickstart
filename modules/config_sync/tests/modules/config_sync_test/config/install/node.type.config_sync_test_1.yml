@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies: { }
+name: 'Provided name'
+type: config_sync_test_1
+description: 'Provided description'
+help: 'Provided help'
+new_revision: true
+preview_mode: 1
+display_submitted: true

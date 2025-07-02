@@ -1,0 +1,478 @@
+uuid: null
+langcode: en
+status: open
+dependencies:
+  enforced:
+    module:
+      - webform_test
+open: null
+close: null
+weight: 0
+uid: null
+template: false
+archive: false
+id: test_element_multiple
+title: 'Test: Element: Multiple'
+description: 'Test multiple element.'
+categories:
+  - 'Test: Element'
+elements: |
+  webform_multiple_default:
+    '#type': webform_multiple
+    '#title': webform_multiple_default
+    '#default_value':
+      - One
+      - Two
+      - Three
+  webform_multiple_no_sorting:
+    '#type': webform_multiple
+    '#title': webform_multiple_no_sorting
+    '#sorting': false
+    '#default_value':
+      - One
+      - Two
+      - Three
+  webform_multiple_no_operations:
+    '#type': webform_multiple
+    '#title': webform_multiple_no_operations
+    '#operations': false
+    '#default_value':
+      - One
+      - Two
+      - Three
+  webform_multiple_no_add_more:
+    '#type': webform_multiple
+    '#title': webform_multiple_no_add_more
+    '#add_more': false
+    '#default_value':
+      - One
+      - Two
+      - Three
+  webform_multiple_no_add_more_input:
+    '#type': webform_multiple
+    '#title': webform_multiple_no_add_more_input
+    '#add_more_input': false
+    '#default_value':
+      - One
+      - Two
+      - Three
+  webform_multiple_custom_label:
+    '#type': webform_multiple
+    '#title': webform_multiple_custom_label
+    '#add_more_button_label': '{add_more_button_label}'
+    '#add_more_input_label': '{add_more_input_label}'
+    '#default_value':
+      - One
+      - Two
+      - Three
+  webform_multiple_required:
+    '#type': webform_multiple
+    '#title': webform_multiple_required
+    '#element':
+      '#type': textfield
+      '#title': textfield
+      '#required': true
+    '#default_value':
+      - One
+      - Two
+      - Three
+  webform_multiple_email_five:
+    '#type': webform_multiple
+    '#title': webform_multiple_email_five
+    '#cardinality': 5
+    '#element':
+      '#type': email
+      '#title': 'Please enter an email address'
+      '#title_display': invisible
+      '#placeholder': 'Enter email address'
+    '#default_value':
+      - example@example.com
+      - test@test.com
+  webform_multiple_datelist:
+    '#type': webform_multiple
+    '#title': webform_multiple_datelist
+    '#element':
+      '#type': datelist
+  webform_multiple_name_composite:
+    '#type': webform_multiple
+    '#title': webform_multiple_name_composite
+    '#header': true
+    '#element':
+      '#type': webform_name
+    '#default_value':
+      - first: John
+        last: Smith
+      - first: Jane
+        last: Doe
+  webform_multiple_elements_name_item:
+    '#type': webform_multiple
+    '#title': webform_multiple_elements_name_item
+    '#element':
+      first_name:
+        '#type': textfield
+        '#title': first_name
+      last_name:
+        '#type': textfield
+        '#title': last_name
+    '#default_value':
+      - first_name: John
+        last_name: Smith
+      - first_name: Jane
+        last_name: Doe
+  webform_multiple_elements_name_table:
+    '#type': webform_multiple
+    '#title': webform_multiple_elements_name_table
+    '#header': true
+    '#element':
+      first_name:
+        '#type': textfield
+        '#title': first_name
+        '#title_display': invisible
+        '#placeholder': 'Enter first name'
+      last_name:
+        '#type': textfield
+        '#title': last_name
+        '#title_display': invisible
+        '#placeholder': 'Enter last name'
+    '#default_value':
+      - first_name: John
+        last_name: Smith
+      - first_name: Jane
+        last_name: Doe
+  webform_multiple_options:
+    '#type': webform_multiple
+    '#title': webform_multiple_options
+    '#header': true
+    '#label': option
+    '#labels': options
+    '#element':
+      value:
+        '#type': textfield
+        '#title': 'Option value'
+        '#title_display': invisible
+        '#placeholder': 'Enter value'
+      text:
+        '#type': textfield
+        '#title': 'Option text'
+        '#title_display': invisible
+        '#placeholder': 'Enter text'
+    '#default_value':
+      - value: one
+        text: One
+      - value: two
+        text: Two
+  webform_multiple_key:
+    '#type': webform_multiple
+    '#title': webform_multiple_key
+    '#key': value
+    '#header': true
+    '#label': option
+    '#labels': options
+    '#element':
+      value:
+        '#type': textfield
+        '#title': 'Option value'
+        '#title_display': invisible
+        '#placeholder': 'Enter value'
+      text:
+        '#type': textfield
+        '#title': 'Option text'
+        '#title_display': invisible
+        '#placeholder': 'Enter text'
+      score:
+        '#type': number
+        '#title': 'Option score'
+        '#title_display': invisible
+        '#placeholder': 'Enter score'
+    '#default_value':
+      one:
+        text: One
+        score: 1
+      two:
+        text: Two
+        score: 2
+  webform_multiple_elements_hidden_table:
+    '#type': webform_multiple
+    '#title': webform_multiple_elements_hidden_table
+    '#header': true
+    '#element':
+      id:
+        '#type': value
+      first_name:
+        '#type': textfield
+        '#title': first_name
+        '#title_display': invisible
+        '#placeholder': 'Enter first name'
+      last_name:
+        '#access': false
+        '#type': textfield
+        '#title': last_name
+        '#title_display': invisible
+        '#placeholder': 'Enter last name'
+    '#default_value':
+      - id: john
+        first_name: John
+        last_name: Smith
+      - id: jane
+        first_name: Jane
+        last_name: Doe
+  webform_multiple_elements_flattened:
+    '#type': webform_multiple
+    '#title': webform_multiple_elements_flattened
+    '#header': true
+    '#element':
+      value:
+        '#type': textfield
+        '#title': value
+        '#title_display': invisible
+        '#placeholder': 'Enter value'
+        '#help': 'This is custom help text'
+      option:
+        '#type': container
+        '#title': text/description
+        '#title_display': invisible
+        '#help': 'This is custom help text'
+        text:
+          '#type': textfield
+          '#title': text
+          '#title_display': invisible
+          '#placeholder': 'Enter text'
+        description:
+          '#type': textfield
+          '#title': description
+          '#title_display': invisible
+          '#placeholder': 'Enter description'
+    '#default_value':
+      - value: one
+        text: One
+        description: 'This is the number 1.'
+      - value: two
+        text: Two
+        description: 'This is the number 2.'
+  webform_multiple_no_items:
+    '#type': webform_multiple
+    '#title': webform_multiple_no_items
+    '#min_items': 0
+    '#empty_items': 0
+  webform_multiple_custom_attributes:
+    '#type': webform_multiple
+    '#title': webform_multiple_custom_attributes
+    '#ajax_attributes':
+      class:
+        - custom-ajax
+    '#table_wrapper_attributes':
+      class:
+        - custom-table-wrapper
+    '#table_attributes':
+      class:
+        - custom-table
+    '#header': true
+    '#element':
+      textfield:
+        '#type': textfield
+        '#title': textfield
+        '#label_attributes':
+          class:
+            - custom-label
+        '#wrapper_attributes':
+          class:
+            - custom-wrapper
+        '#attributes':
+          class:
+            - custom-element
+css: ''
+javascript: ''
+settings:
+  ajax: false
+  ajax_scroll_top: form
+  ajax_progress_type: ''
+  ajax_effect: ''
+  ajax_speed: null
+  page: true
+  page_submit_path: ''
+  page_confirm_path: ''
+  page_theme_name: ''
+  form_title: source_entity_webform
+  form_submit_once: false
+  form_exception_message: ''
+  form_open_message: ''
+  form_close_message: ''
+  form_previous_submissions: true
+  form_confidential: false
+  form_confidential_message: ''
+  form_disable_remote_addr: false
+  form_convert_anonymous: false
+  form_prepopulate: false
+  form_prepopulate_source_entity: false
+  form_prepopulate_source_entity_required: false
+  form_prepopulate_source_entity_type: ''
+  form_reset: false
+  form_disable_autocomplete: false
+  form_novalidate: false
+  form_disable_inline_errors: false
+  form_required: false
+  form_unsaved: false
+  form_disable_back: false
+  form_submit_back: false
+  form_autofocus: false
+  form_details_toggle: false
+  form_access_denied: default
+  form_access_denied_title: ''
+  form_access_denied_message: ''
+  form_access_denied_attributes: {  }
+  form_file_limit: ''
+  form_method: ''
+  form_action: ''
+  form_attributes: {  }
+  share: false
+  share_node: false
+  share_theme_name: ''
+  share_title: true
+  share_page_body_attributes: {  }
+  submission_label: ''
+  submission_log: false
+  submission_views: {  }
+  submission_views_replace: {  }
+  submission_user_columns: {  }
+  submission_user_duplicate: false
+  submission_access_denied: default
+  submission_access_denied_title: ''
+  submission_access_denied_message: ''
+  submission_access_denied_attributes: {  }
+  submission_exception_message: ''
+  submission_locked_message: ''
+  submission_excluded_elements: {  }
+  submission_exclude_empty: false
+  submission_exclude_empty_checkbox: false
+  previous_submission_message: ''
+  previous_submissions_message: ''
+  autofill: false
+  autofill_message: ''
+  autofill_excluded_elements: {  }
+  wizard_progress_bar: true
+  wizard_progress_pages: false
+  wizard_progress_percentage: false
+  wizard_progress_link: false
+  wizard_progress_states: false
+  wizard_auto_forward: true
+  wizard_auto_forward_hide_next_button: false
+  wizard_keyboard: true
+  wizard_start_label: ''
+  wizard_preview_link: false
+  wizard_confirmation: true
+  wizard_confirmation_label: ''
+  wizard_track: ''
+  wizard_prev_button_label: ''
+  wizard_next_button_label: ''
+  wizard_toggle: false
+  wizard_toggle_show_label: ''
+  wizard_toggle_hide_label: ''
+  wizard_page_type: container
+  wizard_page_title_tag: h2
+  preview: 0
+  preview_label: ''
+  preview_title: ''
+  preview_message: ''
+  preview_attributes: {  }
+  preview_excluded_elements: {  }
+  preview_exclude_empty: true
+  preview_exclude_empty_checkbox: false
+  draft: none
+  draft_multiple: false
+  draft_auto_save: false
+  draft_saved_message: ''
+  draft_loaded_message: ''
+  draft_pending_single_message: ''
+  draft_pending_multiple_message: ''
+  confirmation_type: message
+  confirmation_title: ''
+  confirmation_message: ''
+  confirmation_url: ''
+  confirmation_attributes: {  }
+  confirmation_back: true
+  confirmation_back_label: ''
+  confirmation_back_attributes: {  }
+  confirmation_exclude_query: false
+  confirmation_exclude_token: false
+  confirmation_update: false
+  limit_total: null
+  limit_total_interval: null
+  limit_total_message: ''
+  limit_total_unique: false
+  limit_user: null
+  limit_user_interval: null
+  limit_user_message: ''
+  limit_user_unique: false
+  entity_limit_total: null
+  entity_limit_total_interval: null
+  entity_limit_user: null
+  entity_limit_user_interval: null
+  purge: none
+  purge_days: null
+  results_disabled: true
+  results_disabled_ignore: false
+  results_customize: false
+  token_view: false
+  token_update: false
+  token_delete: false
+  serial_disabled: false
+access:
+  create:
+    roles:
+      - anonymous
+      - authenticated
+    users: {  }
+    permissions: {  }
+  view_any:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  update_any:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  delete_any:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  purge_any:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  view_own:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  update_own:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  delete_own:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  administer:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  test:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  configuration:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+handlers:
+  debug:
+    id: debug
+    label: Debug
+    notes: ''
+    handler_id: debug
+    status: true
+    conditions: {  }
+    weight: 0
+    settings:
+      format: yaml
+      submission: false
+variants: {  }

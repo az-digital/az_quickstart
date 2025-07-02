@@ -1,0 +1,55 @@
+webform_test_editorial.index:
+  path: '/admin/structure/webform/editorial'
+  defaults:
+    _controller: '\Drupal\webform_test_editorial\Controller\WebformTestEditorialController::index'
+    _title: 'Webform: Editorial'
+  requirements:
+    _permission: 'administer webform'
+
+webform_test_editorial.help:
+  path: '/admin/structure/webform/editorial/help'
+  defaults:
+    _controller: '\Drupal\webform_test_editorial\Controller\WebformTestEditorialController::help'
+    _title: 'Help'
+  requirements:
+    _permission: 'administer webform'
+
+webform_test_editorial.videos:
+  path: '/admin/structure/webform/editorial/videos'
+  defaults:
+    _controller: '\Drupal\webform_test_editorial\Controller\WebformTestEditorialController::videos'
+    _title: 'Videos'
+  requirements:
+    _permission: 'administer webform'
+
+webform_test_editorial.elements:
+  path: '/admin/structure/webform/editorial/elements'
+  defaults:
+    _controller: '\Drupal\webform_test_editorial\Controller\WebformTestEditorialController::elements'
+    _title: 'Help'
+  requirements:
+    _permission: 'administer webform'
+
+webform_test_editorial.libraries:
+  path: '/admin/structure/webform/editorial/libraries'
+  defaults:
+    _controller: '\Drupal\webform_test_editorial\Controller\WebformTestEditorialController::libraries'
+    _title: 'Libraries'
+  requirements:
+    _permission: 'administer webform'
+
+webform_test_editorial.schema:
+  path: '/admin/structure/webform/editorial/schema'
+  defaults:
+    _controller: '\Drupal\webform_test_editorial\Controller\WebformTestEditorialController::schema'
+    _title: 'Schema'
+  requirements:
+    _permission: 'administer webform'
+
+webform_test_editorial.drush:
+  path: '/admin/structure/webform/editorial/drush'
+  defaults:
+    _controller: '\Drupal\webform_test_editorial\Controller\WebformTestEditorialController::drush'
+    _title: 'Schema'
+  requirements:
+    _permission: 'administer webform'

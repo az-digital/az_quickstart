@@ -1,0 +1,17 @@
+#ddev-generated
+## Command provided by https://github.com/ddev/ddev-drupal-contrib
+web_environment:
+  # If desired, override to a different version of Drupal core in via the project's DDEV config
+  - DRUPAL_CORE=^10
+  - SIMPLETEST_DB=mysql://db:db@db/db
+  - SIMPLETEST_BASE_URL=http://web
+  - BROWSERTEST_OUTPUT_DIRECTORY=/tmp
+  - BROWSERTEST_OUTPUT_BASE_URL=${DDEV_PRIMARY_URL}
+hooks:
+  post-start:
+    - exec-host: |
+        if [[ -f vendor/autoload.php ]]; then
+          ddev symlink-project
+        else
+          exit 0
+        fi

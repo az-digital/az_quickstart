@@ -1,0 +1,55 @@
+# Schema for the configuration files of the Taxonomy module.
+
+taxonomy.settings:
+  type: config_object
+  label: 'Taxonomy settings'
+  constraints:
+    FullyValidatable: ~
+  mapping:
+    maintain_index_table:
+      type: boolean
+      label: 'Maintain index table'
+    override_selector:
+      type: boolean
+      label: 'Override selector'
+    terms_per_page_admin:
+      type: integer
+      label: 'Number of terms per page'
+      constraints:
+        Range:
+          min: 1
+
+taxonomy.vocabulary.*:
+  type: config_entity
+  label: 'Vocabulary'
+  constraints:
+    FullyValidatable: ~
+  mapping:
+    name:
+      type: required_label
+      label: 'Name'
+    vid:
+      type: machine_name
+      label: 'Machine name'
+      # Vocabulary machine names are specifically limited to 32 characters.
+      # @see \Drupal\taxonomy\VocabularyForm::form()
+      constraints:
+        Length:
+          max: 32
+    description:
+      type: text
+      label: 'Description'
+      nullable: true
+      constraints:
+        NotBlank:
+          allowNull: true
+    weight:
+      type: weight
+      label: 'Weight'
+    new_revision:
+      type: boolean
+      label: 'Whether a new revision should be created by default'
+
+field.formatter.settings.entity_reference_rss_category:
+  type: mapping
+  label: 'Taxonomy format settings'

@@ -1,0 +1,40 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the Crop API module.
+ */
+
+/**
+ * Implements hook_requirements().
+ */
+function crop_requirements($phase) {
+  $requirements = [];
+
+  // This branch of Crop API shouldn't be used with media_entity 1.x enabled.
+  $incompatible = FALSE;
+  if (\Drupal::moduleHandler()->moduleExists('media_entity')) {
+    $info = \Drupal::service('extension.list.module')->getExtensionInfo('media_entity');
+    if (version_compare($info['version'], '8.x-2') < 0) {
+      $incompatible = TRUE;
+    }
+  }
+
+  if ($incompatible) {
+    $requirements['crop_media'] = [
+      'title' => t('Crop API'),
+      'value' => t('This branch of Crop API is not compatible with the version of Media Entity installed.'),
+      'description' => t('This branch of Crop API is not compatible with the version of Media Entity installed.'),
+      'severity' => REQUIREMENT_ERROR,
+    ];
+  }
+
+  return $requirements;
+}
+
+/**
+ * Implements hook_update_last_removed().
+ */
+function crop_update_last_removed() {
+  return 8005;
+}

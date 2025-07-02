@@ -1,0 +1,14 @@
+langcode: en
+status: true
+dependencies: {  }
+id: compact
+label: Compact
+date_format: 'M j Y'
+time_format: 'g:ia'
+time_hour_format: 'ga'
+allday_label: ''
+separator: ' - '
+join: ' | '
+ampm_reduce: '1'
+date_first: '1'
+site_time_toggle: '1'

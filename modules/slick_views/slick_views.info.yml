@@ -1,0 +1,16 @@
+name: Slick Views
+type: module
+description: 'Provides Slick carousel integration with Views.'
+core_version_requirement: '>=9.4'
+package: Slick
+dependencies:
+  - drupal:views
+  - slick:slick (>= 3.x)
+
+# Add a fake version so local drush and Git checkouts do not fail dependencies.
+# version: 3.x
+
+# Information added by Drupal.org packaging script on 2024-10-18
+version: '3.0.3'
+project: 'slick_views'
+datestamp: 1729253843

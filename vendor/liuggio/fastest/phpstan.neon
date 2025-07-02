@@ -1,0 +1,15 @@
+includes:
+    - vendor/phpstan/phpstan-phpunit/extension.neon 
+
+parameters:
+	level: 8
+	paths:
+		- src
+		- tests
+	stubFiles:
+	    - phpstan-stub/Doctrine/Common/Collections/ArrayCollection.stub #@todo To be removed when drop support for older deps
+	    - phpstan-stub/Doctrine/Common/Collections/Collection.stub #@todo To be removed when drop support for older deps
+	    - phpstan-stub/Doctrine/Common/Collections/Selectable.stub #@todo To be removed when drop support for older deps
+	    - phpstan-stub/Symfony/Component/Process/Process.stub
+	    - phpstan-stub/Symfony/Component/Process/Exception/ExceptionInterface.stub
+	    - phpstan-stub/Symfony/Component/Process/Exception/LogicException.stub

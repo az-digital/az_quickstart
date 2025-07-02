@@ -1,0 +1,25 @@
+migrate_queue_importer.cron_migration.*:
+  type: config_entity
+  label: 'Cron migration'
+  mapping:
+    id:
+      type: string
+      label: 'ID'
+    label:
+      type: label
+      label: 'Label'
+    migration:
+      type: string
+      label: 'The migrations ID'
+    time:
+      type: integer
+      label: 'Interval'
+    update:
+      type: boolean
+      label: 'Migrate update flag'
+    sync:
+      type: boolean
+      label: 'Migrate sync flag'
+    ignore_dependencies:
+      type: boolean
+      label: 'Migrate ignore flag'

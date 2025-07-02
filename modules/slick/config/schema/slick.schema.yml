@@ -1,0 +1,316 @@
+# Schema for the configuration files of the Slick module.
+
+# Slick global settings managed by UI.
+slick.settings:
+  type: config_object
+  label: 'Slick settings'
+  mapping:
+    library:
+      type: string
+      label: 'Library'
+    module_css:
+      type: boolean
+      label: 'Enable Slick module slick.theme.css'
+    slick_css:
+      type: boolean
+      label: 'Enable Slick library slick-theme.css'
+    sitewide:
+      type: integer
+      label: 'Load slick globally'
+
+# Slick JS settings managed by UI.
+slick_optionset:
+  type: mapping
+  label: Settings
+  mapping:
+    mobileFirst:
+      type: boolean
+      label: 'Mobile first'
+    asNavFor:
+      type: string
+      label: 'asNavFor target'
+    accessibility:
+      type: boolean
+      label: 'Accessibility'
+    regionLabel:
+      type: string
+      label: 'ARIA label'
+    useGroupRole:
+      type: boolean
+      label: Use group role
+    instructionsText:
+      type: text
+      label: 'Screen reader instructions'
+    adaptiveHeight:
+      type: boolean
+      label: 'Adaptive height'
+    autoplay:
+      type: boolean
+      label: 'Autoplay'
+    useAutoplayToggleButton:
+      type: boolean
+      label: 'Use autoplay toggle button'
+    pauseIcon:
+      type: string
+      label: 'Pause icon classes'
+    playIcon:
+      type: string
+      label: 'Play icon classes'
+    pauseOnHover:
+      type: boolean
+      label: 'Pause on hover'
+    pauseOnDotsHover:
+      type: boolean
+      label: 'Pause on dots hover'
+    pauseOnFocus:
+      type: boolean
+      label: 'Pause on focus'
+    autoplaySpeed:
+      type: integer
+      label: 'Autoplay speed'
+    arrows:
+      type: boolean
+      label: 'Arrows'
+    prevArrow:
+      type: text
+      label: 'Previous arrow'
+    nextArrow:
+      type: text
+      label: 'Next arrow'
+    arrowsPlacement:
+      type: text
+      label: 'Arrows placement'
+    downArrow:
+      type: boolean
+      label: 'Use arrow down'
+    downArrowTarget:
+      type: string
+      label: 'Arrow down target'
+    downArrowOffset:
+      type: integer
+      label: 'Arrow down offset'
+    centerMode:
+      type: boolean
+      label: 'Center mode'
+    centerPadding:
+      type: string
+      label: 'Center padding'
+    dots:
+      type: boolean
+      label: 'Dots'
+    dotsClass:
+      type: string
+      label: 'Dot class'
+    appendDots:
+      type: string
+      label: 'appendDots'
+    draggable:
+      type: boolean
+      label: 'Draggable'
+    fade:
+      type: boolean
+      label: 'Fade'
+    focusOnSelect:
+      type: boolean
+      label: 'Focus on select'
+    infinite:
+      type: boolean
+      label: 'Infinite'
+    initialSlide:
+      type: integer
+      label: 'Initial slide'
+    lazyLoad:
+      type: string
+      label: 'Lazy load'
+    mouseWheel:
+      type: boolean
+      label: 'Mousewheel'
+    randomize:
+      type: boolean
+      label: 'Randomize'
+    respondTo:
+      type: string
+      label: 'Respond to'
+    rtl:
+      type: boolean
+      label: 'RTL'
+    rows:
+      type: integer
+      label: 'Rows'
+    slidesPerRow:
+      type: integer
+      label: 'Slides per row'
+    slide:
+      type: string
+      label: 'Slide element'
+    slidesToShow:
+      type: integer
+      label: 'Slides to show'
+    slidesToScroll:
+      type: integer
+      label: 'Slides to scroll'
+    speed:
+      type: integer
+      label: 'Speed'
+    swipe:
+      type: boolean
+      label: 'Swipe'
+    swipeToSlide:
+      type: boolean
+      label: 'Swipe to slide'
+    edgeFriction:
+      type: float
+      label: 'Edge friction'
+    touchMove:
+      type: boolean
+      label: 'Touch move'
+    touchThreshold:
+      type: integer
+      label: 'Touch threshold'
+    useCSS:
+      type: boolean
+      label: 'Use CSS'
+    cssEase:
+      type: string
+      label: 'CSS ease'
+    cssEaseBezier:
+      type: string
+    cssEaseOverride:
+      type: string
+      label: 'CSS ease override'
+    useTransform:
+      type: boolean
+      label: 'Use Transform'
+    easing:
+      type: string
+      label: 'Easing'
+    variableWidth:
+      type: boolean
+      label: 'variableWidth'
+    vertical:
+      type: boolean
+      label: 'Vertical'
+    verticalSwiping:
+      type: boolean
+      label: 'verticalSwiping'
+    waitForAnimate:
+      type: boolean
+      label: 'waitForAnimate'
+
+# Individual Slick JS settings managed by UI.
+slick.optionset.*:
+  type: config_entity
+  label: 'Slick optionset'
+  mapping:
+    id:
+      type: string
+      label: ID
+    name:
+      type: string
+      label: Name
+    weight:
+      type: integer
+      label: Weight
+    label:
+      type: label
+      label: Label
+    uuid:
+      type: string
+      label: UUID
+    group:
+      type: string
+      label: Group
+    skin:
+      type: string
+      label: Skin
+    breakpoints:
+      type: integer
+      label: Breakpoints
+    optimized:
+      type: boolean
+      label: Optimized
+    options:
+      type: mapping
+      label: Options
+      mapping:
+        options__active_tab:
+          type: string
+        settings:
+          type: slick_optionset
+          label: Settings
+        responsives:
+          type: mapping
+          label: 'Responsive display'
+          mapping:
+            responsive:
+              type: sequence
+              label: Responsive
+              sequence:
+                type: mapping
+                mapping:
+                  breakpoint:
+                    type: integer
+                    label: Responsive
+                  unslick:
+                    type: boolean
+                    label: Unslick
+                  settings:
+                    type: slick_optionset
+                    label: 'Responsive settings'
+
+# HTML content/layout-related settings managed by Slick formatters and Views.
+slick_base:
+  type: blazy_base
+  label: 'Slick display format base settings'
+  mapping:
+    overridables:
+      type: sequence
+      label: 'Overridable options'
+      sequence:
+        type: string
+        label: Overridable
+
+# Slick image base settings.
+slick_image:
+  type: slick_base
+  label: 'Slick image display format settings'
+
+# Slick fieldable entity or Views settings.
+slick_extended:
+  type: slick_image
+  label: 'Slick fieldable display format extended settings'
+
+# The Slick text formatter settings.
+field.formatter.settings.slick_text:
+  type: slick_base
+  label: 'Slick text display format settings'
+
+# The Slick image formatter settings.
+field.formatter.settings.slick_image:
+  type: slick_image
+  label: 'Slick image display format settings'
+
+# The Slick file formatter settings.
+# @deprecated TBD; to be removed.
+field.formatter.settings.slick_file:
+  type: slick_image
+  label: 'Slick image with ME display format settings'
+
+slick_media:
+  type: slick_extended
+  label: 'Slick media base display format settings'
+
+field.formatter.settings.slick_media:
+  type: slick_media
+  label: 'Slick media display format settings'
+
+filter_settings.slick_filter:
+  type: slick_base
+  label: 'Slick filter'
+  mapping:
+    overridables:
+      type: sequence
+      label: Overridables
+      sequence:
+        type: string
+        label: override

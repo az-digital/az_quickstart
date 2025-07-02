@@ -1,0 +1,5 @@
+cas.settings:
+  title: 'CAS'
+  route_name: cas.settings
+  base_route: cas.settings
+  weight: 0

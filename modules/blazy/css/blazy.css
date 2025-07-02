@@ -1,0 +1,192 @@
+/**
+ * @file
+ * Basic blazy utility.
+ */
+
+/* stylelint-disable selector-max-id, declaration-no-important */
+.blazy,
+.blazy *,
+.blazy *::before,
+.blazy *::after {
+  box-sizing: border-box;
+}
+
+/* The lazyloaded element: IMG, IFRAME, DIV. */
+.b-lazy,
+.b-responsive {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  min-height: 1px;
+}
+
+/* Ensure that without js (or in print or emails) our lazy-loader stubs don't
+interfere. */
+html:not(.js) .b-lazy[data-src],
+html:not(.js) [data-b-blur] {
+  display: none;
+}
+
+/* The .b-bg-static is to not interfere with lazyloaded .b-bg. */
+.b-bg,
+.b-bg-static,
+/* Tricking IE and other oldies to fix aspect ratio. */
+.media--ratio .is-b-ie {
+  display: block;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+
+/* Needed to display preloader with CSS BG image, otherwise hidden. */
+.b-loaded,
+.b-error,
+.b-bg.is-b-loading {
+  opacity: 1;
+}
+
+/* The .blazy container is not always present such at lightboxes. */
+.litebox,
+.blazy iframe,
+.media iframe {
+  display: block;
+  max-width: 100%;
+  border: 0;
+}
+
+/* To keep animated elements in place when not having .blazy container. */
+.media--blazy,
+/* Or BlazyFilter which has no .blazy container. */
+.media--fx {
+  position: relative;
+}
+
+.media--blazy iframe {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+.blazy svg,
+.media-wrapper--inline {
+  max-width: 100%;
+}
+
+.media-wrapper--inline {
+  margin: auto;
+}
+
+/** Fix for conflict with Bootstrap CSS if not using aspect ratio. */
+.blazy .media {
+  display: block;
+}
+
+/**
+ * Non-js element. Supports both BG, or inline media.
+ * Makes generic animation container, either blur, or other animate.css.
+ */
+.media--fx {
+  /* Hide extra blur edges. */
+  overflow: hidden;
+}
+
+.media--fx img {
+  display: block;
+  /* Prevents blinking.
+  opacity: 1; */
+  /* Prevents collapsing thumbnail image if Aspect ratio is disabled. */
+  width: 100%;
+  /* Prevents unwanted alt text from showing. */
+  color: transparent;
+}
+
+/* Aspect ratio element: IMG, IFRAME, DIV.
+The best things we can do to minimize layout/ reflows with dynamic DOM:
+absolute position and fixed dimensions. */
+.media--ratio .media__element,
+.media--ratio svg,
+.media--fx .b-blur {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 1px;
+  /** Temp fix, also to fix the VIDEO element to max width, not only IMG. */
+  object-fit: cover;
+}
+
+.media--ratio audio.media__element {
+  z-index: 1;
+}
+
+.animated img,
+.b-bg.is-b-animated {
+  opacity: 1;
+}
+
+/* Be sure to add width to the container accordingly, otherwise collapsed. */
+.field[data-blazy] {
+  min-width: 50%;
+}
+
+/* Overrides .field--type-image img, causes confusing blur mismatched height. */
+.blazy .media--blazy img.b-blur,
+.blazy .media--blazy img.media__element,
+.blazy .grid figure {
+  margin: 0;
+}
+
+/* Without aspect ratio will be collapsed, with ratio, cropped. Adjust. */
+.b-html,
+.media--instagram {
+  min-height: 140px;
+}
+
+.b-html iframe,
+.media--instagram iframe {
+  min-height: 420px;
+}
+
+/** Forgiven, better than being broken anyway. */
+.grid iframe,
+.blazy .twitter-tweet-rendered {
+  max-width: 100% !important; /* csslint allow: known-properties, important */
+}
+
+.grid iframe,
+.grid .media__html > span {
+  min-width: 100% !important; /* csslint allow: known-properties, important */
+}
+
+/** @todo re-check various use-cases. */
+.b-html.b-loaded > img {
+  position: absolute;
+  z-index: -1;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.blazy .grid__content,
+.blazy .region__content {
+  position: relative;
+  overflow: visible;
+  width: 100%;
+  max-width: 100%;
+  margin-block-end: 0;
+}
+
+.b-error.b-checked {
+  display: none;
+}
+
+/* Fix for unnecessary Olivero Grid surprises with Splide/Slick excessive width. */
+.view.view--blazy,
+.view.view--blazy .view-content {
+  display: block;
+}
+
+/* Olivero surprises when blazy grid item is acting as a layout region. */
+.blazy > .grid {
+  margin-block-end: 0;
+}

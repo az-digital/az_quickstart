@@ -1,0 +1,24 @@
+{
+  "name": "drupal/blazy_layout",
+  "description": "Provides a single layout with dynamic regions for Layout Builder.",
+  "keywords": ["Blazy", "Layout", "Drupal"],
+  "type": "drupal-module",
+  "license": "GPL-2.0-or-later",
+  "homepage": "https://drupal.org/project/blazy",
+  "authors": [
+    {
+      "name": "Gaus Surahman",
+      "homepage": "https://www.drupal.org/u/gausarts",
+      "role": "Maintainer"
+    },
+    {
+      "name": "Contributors",
+      "homepage": "https://www.drupal.org/node/3048388/committers",
+      "role": "Contributor"
+    }
+  ],
+  "support": {
+    "issues": "https://drupal.org/project/issues/blazy",
+    "source": "https://git.drupalcode.org/project/blazy"
+  }
+}

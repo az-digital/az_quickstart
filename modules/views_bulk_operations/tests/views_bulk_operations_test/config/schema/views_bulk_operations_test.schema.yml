@@ -1,0 +1,10 @@
+# Since 4.x preliminary configuration schema should be defined for actions
+# that have additional configuration.
+views_bulk_operations.action_config.views_bulk_operations_advanced_test_action:
+  type: views_bulk_operations_action_config
+  mapping:
+    # This key is in the action configuration form, so it can be set in
+    # the UI.
+    test_preconfig:
+      type: string
+      label: 'Another configuration item'

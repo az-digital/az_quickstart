@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items>
+  <item id="3">
+    <values title="Values">
+      <value>Value 1</value>
+      <value>Value 2</value>
+    </values>
+  </item>
+</items>

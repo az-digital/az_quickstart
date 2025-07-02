@@ -1,0 +1,16 @@
+drupal.extlink:
+  version: VERSION
+  js:
+    js/extlink.js: {}
+  css:
+    theme:
+      css/extlink.css: {}
+  dependencies:
+    - core/drupal
+    - core/drupalSettings
+
+extlink.settings:
+  js:
+    /extlink/settings.js: { type: external, preprocess: false }
+  dependencies:
+    - core/drupalSettings

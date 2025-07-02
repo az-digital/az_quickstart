@@ -1,0 +1,12 @@
+name: Schema.org Metatag Example
+type: module
+description: 'Example of how to add more fields to Schema.org.'
+core_version_requirement: ^9 || ^10 || ^11
+package: SEO
+dependencies:
+  - schema_metatag:schema_article
+
+# Information added by Drupal.org packaging script on 2024-07-16
+version: '3.0.3'
+project: 'schema_metatag'
+datestamp: 1721141810

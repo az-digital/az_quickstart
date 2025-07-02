@@ -1,0 +1,23 @@
+/* ---------- Coustard Ultra, Leckerli One ---------- */
+
+h1,
+h2,
+h1 a,
+h2 a {
+  font-family: 'Coustard', serif;
+  font-weight: 900;
+}
+h3,
+h4,
+h5,
+h6,
+h3 a {
+  font-family: 'Coustard', serif;
+}
+body,
+p,
+a,
+li {
+  font-family: 'Leckerli One', cursive;
+  font-weight: 400;
+}

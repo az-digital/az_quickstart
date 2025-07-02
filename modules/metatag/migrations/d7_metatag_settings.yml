@@ -1,0 +1,49 @@
+id: d7_metatag_settings
+label: Metatag settings
+migration_tags:
+  - Drupal 7
+  - Configuration
+
+source:
+  plugin: variable
+  # Each of the D7 variables need to be listed here.
+  variables:
+    - metatag_separator
+    - metatag_use_maxlength
+    - metatag_maxlength_title
+    - metatag_maxlength_description
+    - metatag_maxlength_abstract
+    - metatag_maxlength_keywords
+  source_module: metatag
+
+process:
+  # Each of the D7 variables needs to be mapped here to the correct config name
+  # for D8+.
+  # CONFIG_NAME: metatag_VARIABLE_NAME
+
+  # Custom separator, defaults to ",".
+  separator: metatag_separator
+
+  # Whether to use the Maxlength module if it is installed to indicate in the
+  # UI that the field is approaching its maximum length.
+  use_maxlength: metatag_use_maxlength
+
+  # An array in the format tag_name:length to control the maximum length that
+  # each trimmable meta tag can be. In D7 these are stored as a variable named
+  # metatag_maxlength_TAGNAME, whereas in D8+ they are stored as a single array.
+  tag_trim_maxlength/title: metatag_maxlength_title
+  tag_trim_maxlength/description: metatag_maxlength_description
+  tag_trim_maxlength/abstract: metatag_maxlength_abstract
+  tag_trim_maxlength/keywords: metatag_maxlength_keywords
+
+  # No equivalent on Drupal 7, so skipping this.
+  # entity_type_groups:
+  # tag_scroll_max_height:
+  # tag_trim_method:
+
+  # Lots of D7 variables did not have an equivalent setting in D8+ or were
+  # replaced by something else, e.g. the Metatag field.
+
+destination:
+  plugin: config
+  config_name: metatag.settings

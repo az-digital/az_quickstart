@@ -1,0 +1,86 @@
+/**
+ * @file
+ * Progress tracker styles.
+ *
+ * @see http://nigelotoole.github.io/progress-tracker/
+ */
+
+/**
+ * Update progress text to show completed and active.
+ */
+.webform-progress-tracker .progress-step .progress-text {
+  padding-top: 5px;
+  padding-bottom: 0;
+  color: #777;
+}
+
+.webform-progress-tracker .progress-step.is-active .progress-text,
+.webform-progress-tracker .progress-step.is-complete .progress-text {
+  color: #333;
+}
+
+.webform-progress-tracker .progress-step.is-active .progress-title {
+  font-weight: bold;
+}
+
+/**
+ * Disable hover state because webform wizard progress markers are not clickable.
+ */
+.webform-progress-tracker .progress-step:not(.is-active) .progress-marker::before,
+.webform-progress-tracker .progress-step:hover .progress-marker::before,
+.webform-progress-tracker .progress-step .progress-marker::after {
+  background-color: #777;
+}
+
+.webform-progress-tracker .progress-step.is-complete .progress-marker::before,
+.webform-progress-tracker .progress-step.is-complete:hover .progress-marker::before,
+.webform-progress-tracker .progress-step.is-complete .progress-marker::after {
+  background-color: #333;
+}
+
+.webform-progress-tracker .progress-step.is-active:hover .progress-marker::before {
+  background-color: #2196f3;
+}
+
+/**
+ * Make progress text smaller for tablets.
+ */
+@media screen and (max-width: 800px) {
+  .webform-progress-tracker .progress-text {
+    font-size: smaller;
+  }
+}
+
+/**
+ * Hide progress text smaller for mobile.
+ */
+@media screen and (max-width: 600px) {
+  .webform-progress-tracker .progress-text {
+    display: none;
+  }
+}
+
+/**
+  * Progress link styles.
+ */
+.webform-progress-tracker [role="link"] {
+  cursor: pointer;
+}
+
+.webform-progress-tracker .progress-title[role="link"] {
+  color: #1976d2;
+}
+
+.webform-progress-tracker .progress-title[role="link"]:hover,
+.webform-progress-tracker .progress-title[role="link"]:focus {
+  text-decoration: underline;
+  color: #2196f3;
+}
+
+.webform-progress-tracker .progress-step.is-complete:hover .progress-marker[role="link"]:before {
+  background-color: #1976f2;
+}
+
+.webform-progress-tracker .progress-marker::after {
+  z-index: auto;
+}

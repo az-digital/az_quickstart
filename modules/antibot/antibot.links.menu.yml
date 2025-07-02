@@ -1,0 +1,6 @@
+antibot.settings:
+  title: 'Antibot'
+  route_name: antibot.settings
+  description: 'Configure the settings for Antibot.'
+  parent: system.admin_config_ui
+  weight: 99

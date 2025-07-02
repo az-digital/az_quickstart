@@ -1,0 +1,16 @@
+id: test_stub_conflicts_migration
+label: Test stub conflicts migration
+include: my_default_configuration
+source:
+  plugin: embedded_data
+  batch_size: 1000
+  data_rows:
+    - label: foo
+    - label: bar
+    - label: baz
+  ids:
+    label:
+      type: string
+process: {  }
+destination:
+  plugin: 'entity:entity_test'

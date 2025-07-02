@@ -1,0 +1,26 @@
+{
+  "name": "drupal/field_group_link",
+  "type": "drupal-module",
+  "description": "Field Group Link",
+  "keywords": ["Drupal", "Field Group"],
+  "license": "GPL-2.0+",
+  "homepage": "https://www.drupal.org/project/field_group_link",
+  "minimum-stability": "dev",
+  "authors": [
+    {
+      "name": "Leon Kessler",
+      "role": "Maintainer"
+    },
+    {
+      "name": "Rodrigo Aguilera",
+      "role": "Maintainer"
+    }
+  ],
+  "support": {
+    "issues": "http://drupal.org/project/issues/field_group_link",
+    "source": "http://cgit.drupalcode.org/field_group_link"
+  },
+  "require": {
+    "drupal/field_group": "^3 || ^4"
+  }
+}

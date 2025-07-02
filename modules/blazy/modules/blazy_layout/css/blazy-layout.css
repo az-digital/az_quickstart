@@ -1,0 +1,135 @@
+/**
+ * @file
+ * Provides base blazy layout.
+ */
+
+/* stylelint-disable declaration-no-important */
+:root {
+  /* The gap 15px is to match CSS grid convention such as Bootstrap.
+  Affected by .grid margin 0 vs. auto. This 14px is best for .b-flex. Adjust it. */
+  --blz-gap: 15px;
+}
+
+.b-layout-wrapper {
+  /* To make stacking layouts reasonable, adjust like anything else. */
+  margin-bottom: var(--blz-gap);
+}
+
+.blazy.b-layout {
+  position: relative;
+}
+
+.b-layout > .grid {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+.b-layout .region--bg {
+  z-index: 0;
+  /* Prevents unexpected collapsed background. */
+  width: 100% !important;
+  margin: 0;
+  inset: 0;
+}
+
+.b-layout > .region--bg:not(.layout-builder__region),
+.b-layout > .region--empty:not(.layout-builder__region) {
+  min-height: 0;
+}
+
+.b-layout .is-b-bg,
+.b-layout .b-link--bg,
+.b-layout .litebox--bg,
+.b-layout .region--bg,
+.b-layout .region--bg > .b-bg,
+.b-layout .region > .b-bg,
+.b-layout .region > div > .b-bg,
+.b-layout .region > div > .block > .b-bg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  min-height: 1px;
+  padding-bottom: 0 !important;
+  /** Temp fix, also to fix the VIDEO element to max width, not only IMG. */
+  object-fit: cover;
+  inset: 0;
+}
+
+.b-layout .litebox--bg > .media,
+.b-layout .b-link--bg > .media {
+  height: 100%;
+}
+
+.b-layout .block {
+  padding: var(--blz-gap);
+}
+
+.b-layout .block:not(.block--b-bg) {
+  position: relative;
+  z-index: 1;
+}
+
+/* @todo recheck if any side effects. */
+.b-layout .region--b-bg > .grid__content,
+.b-layout .region--b-bg > .region__content {
+  position: static;
+  inset: 0;
+}
+
+.b-layout .media__overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  inset: 0;
+}
+
+.b-nativegrid.b-layout > .region--bg {
+  display: block;
+  grid-row: unset;
+  grid-column: unset;
+}
+
+.b-layout .b-bg > iframe {
+  position: absolute;
+  height: 100%;
+}
+
+/* Edge to edge. */
+.b-layout-wrapper--ete {
+  position: relative;
+  overflow: visible;
+}
+
+.b-layout-wrapper--ete > .blazy.b-layout {
+  position: static;
+  overflow: visible;
+  margin-right: 0;
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
+
+.blazy.b-layout--ete > .region--bg {
+  left: 50%;
+  width: 100vw !important;
+  transform: translateX(-50%);
+}
+
+/* Few samples of theme compatibility issues. */
+/* Fix for unnecessary Olivero Grid surprises causing Slick excessive height. */
+.b-layout .view,
+.b-layout .view-content {
+  display: block;
+}
+
+/* To remove extra gap, try overflow:hidden in .layout-main of Olivero, or
+other themes with similar problems. */
+.b-layout--ete.b-theme-olivero > .region--bg {
+  /* Should be 100vw, but accounts for Olivero as a problematic sample. */
+  width: calc(100vw + var(--content-left)) !important;
+}
+
+.b-layout .region > * {
+  margin-block-end: 0;
+}

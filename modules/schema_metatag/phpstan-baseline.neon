@@ -1,0 +1,11 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Method Drupal\\\\schema_metatag\\\\SchemaMetatagClient\\:\\:getParents\\(\\) should return array but return statement is missing\\.$#"
+			count: 1
+			path: src/SchemaMetatagClient.php
+
+		-
+			message: "#^Method Drupal\\\\schema_metatag\\\\SchemaMetatagManager\\:\\:getRenderedJsonld\\(\\) should return string but return statement is missing\\.$#"
+			count: 1
+			path: src/SchemaMetatagManager.php

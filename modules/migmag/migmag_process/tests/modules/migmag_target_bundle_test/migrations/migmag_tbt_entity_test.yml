@@ -1,0 +1,23 @@
+id: migmag_tbt_entity_test
+source:
+  plugin: embedded_data
+  data_rows:
+    -
+      id: 'bundle 1'
+    -
+      id: 'bundle 2'
+  ids:
+    id:
+      type: string
+process:
+  id:
+    -
+      plugin: explode
+      source: id
+      delimiter: ' '
+    -
+      plugin: concat
+      delimiter: '_'
+  label: id
+destination:
+  plugin: entity:entity_test_bundle

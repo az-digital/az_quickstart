@@ -1,0 +1,27 @@
+views.field.draggable_views_field:
+  type: views_field
+  label: 'Draggable Views Field'
+  mapping:
+    action_title:
+      type: label
+      label: 'Action title'
+    include_exclude:
+      type: string
+      label: 'Available actions'
+    selected_actions:
+      type: string
+      label: 'Available actions'
+
+views.sort.draggable_views_sort_default:
+  type: views_sort
+  label: 'Draggableviews Sort Default'
+  mapping:
+    draggable_views_reference:
+      type: string
+      label: 'Views Reference'
+    draggable_views_null_order:
+      type: string
+      label: 'NULL stacking order'
+    draggable_views_pass_arguments:
+      type: integer
+      label: 'Pass Contextual Filters'

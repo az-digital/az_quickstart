@@ -1,0 +1,21 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Class Drupal\\\\imagemagick\\\\Plugin\\\\FileMetadata\\\\ImagemagickIdentify has an uninitialized readonly property \\$eventDispatcher\\. Assign it in the constructor\\.$#"
+			count: 1
+			path: src/Plugin/FileMetadata/ImagemagickIdentify.php
+
+		-
+			message: "#^Class Drupal\\\\imagemagick\\\\Plugin\\\\FileMetadata\\\\ImagemagickIdentify has an uninitialized readonly property \\$execManager\\. Assign it in the constructor\\.$#"
+			count: 1
+			path: src/Plugin/FileMetadata/ImagemagickIdentify.php
+
+		-
+			message: "#^Readonly property Drupal\\\\imagemagick\\\\Plugin\\\\FileMetadata\\\\ImagemagickIdentify\\:\\:\\$eventDispatcher is assigned outside of the constructor\\.$#"
+			count: 1
+			path: src/Plugin/FileMetadata/ImagemagickIdentify.php
+
+		-
+			message: "#^Readonly property Drupal\\\\imagemagick\\\\Plugin\\\\FileMetadata\\\\ImagemagickIdentify\\:\\:\\$execManager is assigned outside of the constructor\\.$#"
+			count: 1
+			path: src/Plugin/FileMetadata/ImagemagickIdentify.php

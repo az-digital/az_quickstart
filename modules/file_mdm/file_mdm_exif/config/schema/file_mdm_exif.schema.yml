@@ -1,0 +1,13 @@
+# file_mdm_exif module schema
+
+file_mdm_exif.file_metadata_plugin.exif:
+  type: config_object
+  label: 'File metadata EXIF plugin settings'
+  mapping:
+    ifd_map:
+      type: sequence
+      sequence:
+        type: file_mdm_exif.ifd
+    configuration:
+      type: file_mdm.plugin.configuration
+      label: 'exif plugin settings'

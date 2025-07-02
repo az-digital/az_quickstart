@@ -1,0 +1,5 @@
+metadata_cache:
+  enabled: TRUE
+  expiration: 172800
+  disallowed_paths: {  }
+missing_file_log_level: 3

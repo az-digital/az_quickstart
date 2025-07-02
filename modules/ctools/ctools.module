@@ -1,0 +1,135 @@
+<?php
+
+/**
+ * @file
+ * Provides utility and helper APIs for Drupal developers and site builders.
+ */
+
+use Drupal\Core\Entity\Plugin\Condition\EntityBundle as CoreEntityBundle;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Url;
+use Drupal\ctools\Plugin\Condition\EntityBundle;
+use Drupal\ctools\Plugin\Condition\NodeType;
+
+/**
+ * Implements hook_theme().
+ *
+ * @param $existing
+ * @param $type
+ * @param $theme
+ * @param $path
+ *
+ * @return \array[][]
+ */
+function ctools_theme($existing, $type, $theme, $path) {
+  return [
+    'ctools_wizard_trail' => [
+      'variables' => [
+        'wizard' => NULL,
+        'cached_values' => [],
+        'trail' => [],
+        'divider' => ' » ',
+        'step' => NULL,
+      ],
+    ],
+    'ctools_wizard_trail_links' => [
+      'variables' => [
+        'wizard' => NULL,
+        'cached_values' => [],
+        'trail' => [],
+        'divider' => ' » ',
+        'step' => NULL,
+      ],
+    ],
+  ];
+}
+
+/**
+ * Template Preprocess for Wizard Trail.
+ *
+ * @param $variables
+ */
+function template_preprocess_ctools_wizard_trail(&$variables) {
+  /** @var \Drupal\ctools\Wizard\FormWizardInterface|\Drupal\ctools\Wizard\EntityFormWizardInterface $wizard */
+  $wizard = $variables['wizard'];
+  $cached_values = $variables['cached_values'];
+  $trail = $variables['trail'];
+  $variables['step'] = $wizard->getStep($cached_values);
+  foreach ($wizard->getOperations($cached_values) as $step => $operation) {
+    $trail[$step] = !empty($operation['title']) ? $operation['title'] : '';
+  }
+  $variables['trail'] = $trail;
+}
+
+/**
+ * Template Preprocess for Trail links.
+ *
+ * @param $variables
+ */
+function template_preprocess_ctools_wizard_trail_links(&$variables) {
+  /** @var \Drupal\ctools\Wizard\FormWizardInterface|\Drupal\ctools\Wizard\EntityFormWizardInterface $wizard */
+  $wizard = $variables['wizard'];
+  $cached_values = $variables['cached_values'];
+  $trail = $variables['trail'];
+  $variables['step'] = $wizard->getStep($cached_values);
+  foreach ($wizard->getOperations($cached_values) as $step => $operation) {
+    $parameters = $wizard->getNextParameters($cached_values);
+    // Override step to be the step we want.
+    $parameters['step'] = $step;
+    $trail[$step] = [
+      'title' => !empty($operation['title']) ? $operation['title'] : '',
+      'url' => new Url($wizard->getRouteName(), $parameters),
+    ];
+  }
+  $variables['trail'] = $trail;
+}
+
+/**
+ * Implements Hook Info alter.
+ *
+ * @param $definitions
+ */
+function ctools_condition_info_alter(&$definitions) {
+  // Replace all generic entity bundle conditions classes if they are unaltered,
+  // these exist in Drupal 9.3+.
+  foreach ($definitions as $id => $definition) {
+    if (strpos($id, 'entity_bundle:') === 0 && ($definition['class'] == CoreEntityBundle::class || $definition['class'] == 'Drupal\ctools\Plugin\Condition\EntityBundleConstraint')) {
+      $definitions[$id]['class'] = EntityBundle::class;
+    }
+  }
+
+  if (\version_compare(\Drupal::VERSION, '10.0', '<')) {
+    // Drupal 9.x only: override core node_type with ctools constraints.
+    $definitions['node_type'] = $definitions['entity_bundle:node'];
+    $definitions['node_type']['id'] = 'node_type';
+    $definitions['node_type']['class'] = NodeType::class;
+  }
+}
+
+/**
+ * Implements hook_help().
+ */
+function ctools_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.ctools':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('This suite is primarily a set of APIs and tools to improve the developer experience. It also contains a module called the Page Manager whose job is to manage pages. In particular it manages panel pages, but as it grows it will be able to manage far more than just Panels.') . '</p>';
+
+      $output .= '<p>' . t('For the moment, it includes the following tools:') . '</p>';
+      $output .= '<ul>';
+      $output .= '<li>' . t('Plugins -- tools to make it easy for modules to let other modules implement plugins from .inc files.') . '</li>';
+      $output .= '<li>' . t('Exportables -- tools to make it easier for modules to have objects that live in database or live in code, such as "default views".') . '</li>';
+      $output .= '<li>' . t('AJAX responder -- tools to make it easier for the server to handle AJAX requests and tell the client what to do with them.') . '</li>';
+      $output .= '<li>' . t('Form tools -- tools to make it easier for forms to deal with AJAX.') . '</li>';
+      $output .= '<li>' . t('Object caching -- tool to make it easier to edit an object across multiple page requests and cache the editing work.') . '</li>';
+      $output .= '<li>' . t('Contexts -- the notion of wrapping objects in a unified wrapper and providing an API to create and accept these contexts as input.') . '</li>';
+      $output .= '<li>' . t('Modal dialog -- tool to make it simple to put a form in a modal dialog.') . '</li>';
+      $output .= '<li>' . t('Dependent -- a simple form widget to make form items appear and disappear based upon the selections in another item.') . '</li>';
+      $output .= '<li>' . t('Content -- pluggable content types used as panes in Panels and other modules like Dashboard.') . '</li>';
+      $output .= '<li>' . t('Form wizard -- an API to make multi-step forms much easier.') . '</li>';
+      $output .= '<li>' . t('CSS tools -- tools to cache and sanitize CSS easily to make user-input CSS safe.') . '</li>';
+      $output .= '</ul>';
+      return $output;
+  }
+}

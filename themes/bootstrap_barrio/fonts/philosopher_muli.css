@@ -1,0 +1,22 @@
+/* ---------- Philosopher, Muli ---------- */
+
+h1,
+h2,
+h1 a,
+h2 a {
+  font-family: "Philosopher",sans-serif;
+}
+h3,
+h4,
+h5,
+h6,
+h3 a {
+  font-family: "Muli",sans-serif;
+}
+body,
+p,
+a,
+li {
+  font-family: "Muli",sans-serif;
+  font-weight: 300;
+}

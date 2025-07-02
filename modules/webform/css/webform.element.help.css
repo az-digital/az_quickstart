@@ -1,0 +1,55 @@
+/**
+ * @file
+ * Help element styles.
+ */
+
+.webform-element-help {
+  display: inline-block;
+  box-sizing: content-box;
+  width: 14px;
+  height: 14px;
+  margin: 0 0.3em;
+  text-align: center;
+  vertical-align: baseline;
+  color: #fff;
+  border: 2px solid #bbb;
+  border-radius: 50%;
+  background: #bbb;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 14px;
+}
+
+.webform-element-help:focus,
+.webform-element-help:active,
+.webform-element-help:hover {
+  cursor: help;
+  color: #fff;
+  border: 2px solid #0074bd;
+  background: #0074bd;
+}
+
+.webform-element-help--title {
+  margin-bottom: 0.2em;
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+.webform-element-help--content {
+  font-weight: normal;
+}
+
+.webform-element-help--content a:link,
+.webform-element-help--content a:visited,
+.webform-element-help--content a:hover,
+.webform-element-help--content a:active {
+  color: #9cf;
+}
+
+.webform-element-help--content p:first-child {
+  margin-top: 0;
+}
+
+.webform-element-help--content p:last-child {
+  margin-bottom: 0;
+}

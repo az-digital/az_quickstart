@@ -1,0 +1,52 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the Block Field module.
+ */
+
+/**
+ * Update 'block_field' definition settings to reflect new plugin format.
+ */
+function block_field_update_8001() {
+  $entity_field_manager = \Drupal::service('entity_field.manager');
+  // Loop through all entities where 'block_fields' are defined.
+  foreach ($entity_field_manager->getFieldMapByFieldType('block_field') as $entity_type_id => $fields) {
+    foreach ($fields as $field) {
+      // Loop through each bundle and load definition.
+      foreach ($field['bundles'] as $bundle) {
+        foreach ($entity_field_manager->getFieldDefinitions($entity_type_id, $bundle) as $definition) {
+          if ($definition->getType() == 'block_field') {
+            $settings = $definition->get('settings');
+            // Upgrade path for patches pre-comment 20
+            // https://www.drupal.org/project/block_field/issues/2876110
+            if (isset($settings['filter']) && $settings['filter'] == 'categories') {
+              $settings = [
+                'selection' => 'categories',
+                'selection_settings' => [
+                  'categories' => $settings['categories'],
+                ],
+              ];
+            }
+            // Update settings for existing configuration.
+            elseif (isset($settings['plugin_ids'])) {
+              $settings = [
+                'selection' => 'blocks',
+                'selection_settings' => [
+                  'plugin_ids' => $settings['plugin_ids'],
+                ],
+              ];
+            }
+            $definition->setSettings($settings);
+            // Unset existing indices because setSettings is additive only.
+            $settings_raw = $definition->get('settings');
+            unset($settings_raw['plugin_ids']);
+            unset($settings_raw['filter']);
+            $definition->set('settings', $settings_raw);
+            $definition->save();
+          }
+        }
+      }
+    }
+  }
+}

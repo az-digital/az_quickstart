@@ -1,0 +1,14 @@
+name: 'IB: CKEditor WYSIWYG integration'
+description: 'Integrates ib_dam directly into ckeditor. Useful for websites not using the media suite of modules that need WYSIWYG support.'
+core_version_requirement: ^10.3 || ^11
+type: module
+package: 'IntelligenceBank DAM'
+dependencies:
+  - drupal:field
+  - drupal:filter
+  - ib_dam:ib_dam
+
+# Information added by Drupal.org packaging script on 2024-10-29
+version: '5.1.0'
+project: 'intelligencebank'
+datestamp: 1730244850

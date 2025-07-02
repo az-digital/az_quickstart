@@ -1,0 +1,11 @@
+{% if resource_type in ['video', 'audio'] %}
+<{{ resource_type }} {{ attributes }}>
+  <source src="{{ url }}" type="{{ mimetype }}" />
+</{{ resource_type }}>
+{% elseif resource_type in ['iframe'] %}
+  {{ attach_library('ib_dam/resizer.iframe') }}
+
+  <div class="id-dam-embed-wrapper">
+    <{{resource_type}} {{ attributes }} src="{{ url }}"></{{resource_type}}>
+  </div>
+{% endif %}

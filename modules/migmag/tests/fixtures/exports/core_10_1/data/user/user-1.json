@@ -1,0 +1,35 @@
+[
+    {
+        "uid": 1,
+        "uuid": "a40c92fa-21e3-42ac-8ec4-b299686f00b2",
+        "langcode": "en",
+        "preferred_langcode": "en",
+        "preferred_admin_langcode": "en",
+        "name": "admin",
+        "pass": [
+            {
+                "value": "$S$ECVVMo0q1Zat1uqVmnqFZ5yEVauoNZT/FUW5aQbz5w4YLXmK5USc",
+                "existing": null
+            }
+        ],
+        "mail": "admin@local.host",
+        "timezone": null,
+        "status": "1",
+        "created": 0,
+        "changed": 1623674308,
+        "access": 1623674309,
+        "login": 1444945097,
+        "init": null,
+        "roles": "administrator",
+        "default_langcode": "1",
+        "content_translation_source": "und",
+        "content_translation_outdated": "0",
+        "content_translation_uid": null,
+        "content_translation_status": "1",
+        "content_translation_created": null,
+        "field_file": null,
+        "field_integer": null,
+        "field_reference": null,
+        "user_picture": null
+    }
+]

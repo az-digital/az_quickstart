@@ -1,0 +1,39 @@
+include:
+  # Use CI from drupal.org https://git.drupalcode.org/project/gitlab_templates/
+  # This include centralizes our CI "golden path" https://docs.gitlab.com/ee/ci/yaml/#includefile
+  - remote: https://git.drupalcode.org/project/gitlab_templates/-/raw/default-ref/includes/include.drupalci.main.yml
+  - remote: https://git.drupalcode.org/project/gitlab_templates/-/raw/default-ref/includes/include.drupalci.variables.yml
+  - remote: https://git.drupalcode.org/project/gitlab_templates/-/raw/default-ref/includes/include.drupalci.hidden-variables.yml
+  - remote: https://git.drupalcode.org/project/gitlab_templates/-/raw/default-ref/includes/include.drupalci.workflows.yml
+
+# Start custom overrides.
+
+variables:
+  # Needed in order to get our Drupal 10 testing to use a Drush 13 compatible PHP.
+  _TARGET_PHP: 8.3
+  OPT_IN_TEST_NEXT_MAJOR: 1
+  SKIP_CSPELL: 1
+  # Show more log output.
+  # _PHPUNIT_EXTRA: --debug
+  # Convenient, and we have no secrets.
+  _SHOW_ENVIRONMENT_VARIABLES: 1
+
+phpcs:
+  allow_failure: false
+eslint:
+  allow_failure: false
+stylelint:
+  allow_failure: false
+
+# Disable not needed jobs.
+# We rely on 'phpstan (max PHP version)' job instead.
+phpstan:
+  rules:
+    - when: never
+phpstan (next major):
+  rules:
+    - when: never
+# We rely on 'phpunit' and 'phpunit (next major)' jobs instead.
+phpunit (max PHP version):
+  rules:
+    - when: never

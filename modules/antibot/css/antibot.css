@@ -1,0 +1,23 @@
+.antibot-message {
+  border: 1px solid;
+  border-width: 1px 1px 1px 0;
+  border-radius: 2px;
+  padding: 15px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  margin: 9px 0 10px 8px;
+}
+
+.antibot-message-warning {
+  background-color: #fdf8ed;
+  border-color: #f4daa6 #f4daa6 #f4daa6 transparent;
+  color: #734c00;
+  box-shadow: -8px 0 0 #e09600;
+}
+
+.antibot-message-error {
+  background-color: #fcf4f2;
+  color: #a51b00;
+  border-color: #f9c9bf #f9c9bf #f9c9bf transparent;
+  box-shadow: -8px 0 0 #e62600;
+}

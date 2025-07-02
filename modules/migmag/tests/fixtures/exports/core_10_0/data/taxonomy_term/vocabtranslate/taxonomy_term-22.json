@@ -1,0 +1,26 @@
+[
+    {
+        "tid": 22,
+        "uuid": "947dd3dd-5580-4e93-9b52-921a29fd1739",
+        "revision_id": 22,
+        "langcode": "fr",
+        "vid": "vocabtranslate",
+        "revision_created": 1623674336,
+        "revision_user": null,
+        "revision_log_message": null,
+        "status": "1",
+        "name": "fr - High council",
+        "description": null,
+        "weight": 0,
+        "parent": 0,
+        "changed": null,
+        "default_langcode": "1",
+        "revision_default": "1",
+        "revision_translation_affected": "1",
+        "content_translation_source": "und",
+        "content_translation_outdated": "0",
+        "content_translation_uid": 1,
+        "content_translation_created": 1623674336,
+        "field_chancellor": "fr - K'mpec"
+    }
+]

@@ -1,0 +1,93 @@
+smart_date_recur.instances:
+  path: '/admin/content/smart_date_recur/{rrule}/instances/{modal}'
+  options:
+    parameters:
+      rrule:
+        type: entity:smart_date_rule
+  defaults:
+    _controller: '\Drupal\smart_date_recur\Controller\Instances::listInstances'
+    _title: 'Manage Instances'
+    modal: FALSE
+  requirements:
+    _permission: 'reschedule smart date recur instances'
+
+smart_date_recur.apply_changes:
+  path: '/admin/content/smart_date_recur/{rrule}/apply_changes'
+  options:
+    parameters:
+      rrule:
+        type: entity:smart_date_rule
+  defaults:
+    _controller: '\Drupal\smart_date_recur\Controller\Instances::applyChanges'
+    _title: 'Apply Changes'
+  requirements:
+    _permission: 'reschedule smart date recur instances'
+
+smart_date_recur.instance.reschedule:
+  path: '/admin/content/smart_date_recur/{rrule}/instance/reschedule/{index}'
+  options:
+    parameters:
+      rrule:
+        type: entity:smart_date_rule
+  defaults:
+    _form: '\Drupal\smart_date_recur\Form\SmartDateOverrideForm'
+    _title: 'Override an Instance'
+  requirements:
+    _permission: 'reschedule smart date recur instances'
+
+smart_date_recur.instance.reschedule.ajax:
+  path: '/admin/content/smart_date_recur/{rrule}/instance/reschedule/{index}/ajax'
+  options:
+    parameters:
+      rrule:
+        type: entity:smart_date_rule
+  defaults:
+    _controller: '\Drupal\smart_date_recur\Controller\Instances::reschedule'
+    _title: 'Override an Instance'
+  requirements:
+    _permission: 'reschedule smart date recur instances'
+
+smart_date_recur.instance.remove:
+  path: '/admin/content/smart_date_recur/{rrule}/instance/remove/{index}'
+  options:
+    parameters:
+      rrule:
+        type: entity:smart_date_rule
+  defaults:
+    _form: '\Drupal\smart_date_recur\Form\SmartDateRemoveInstanceForm'
+    _title: 'Remove an Instance'
+  requirements:
+    _permission: 'cancel smart date recur instances'
+
+smart_date_recur.instance.remove.ajax:
+  path: '/admin/content/smart_date_recur/{rrule}/instance/remove/{index}/ajax'
+  options:
+    parameters:
+      rrule:
+        type: entity:smart_date_rule
+  defaults:
+    _controller: '\Drupal\smart_date_recur\Controller\Instances::removeAjax'
+    _title: 'Remove an Instance'
+  requirements:
+    _permission: 'cancel smart date recur instances'
+
+smart_date_recur.instance.revert.ajax:
+  path: '/admin/content/smart_date_recur/{entity}/instance/revert/{confirm}/ajax'
+  options:
+    parameters:
+      entity:
+        type: entity:smart_date_override
+  defaults:
+    _controller: '\Drupal\smart_date_recur\Controller\Instances::revertAjax'
+    _title: 'Revert an Instance'
+  requirements:
+    _permission: 'reschedule smart date recur instances'
+
+entity.smart_date_override.delete_form:
+  path: '/admin/content/smart_date_recur/overrides/{smart_date_override}/delete'
+  defaults:
+    # Calls the form.delete controller, defined in the smart_date_override entity.
+    _entity_form: smart_date_override.delete
+    _title: 'Revert to Default'
+  requirements:
+    _permission: 'reschedule smart date recur instances'

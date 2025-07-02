@@ -1,0 +1,6 @@
+entity.metatag_custom_tag.collection:
+  title: 'Custom tags'
+  description: 'Configure Custom tags.'
+  route_name: entity.metatag_custom_tag.collection
+  parent: entity.metatag_defaults.collection
+  weight: 20

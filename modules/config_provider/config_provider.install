@@ -1,0 +1,36 @@
+<?php
+
+/**
+ * @file
+ * Contains install and update functions for Configuration Provider.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function config_provider_install() {
+  // Set a relatively high weight so ConfigProviderServiceProvider::alter()
+  // will run after other modules' implementations.
+  module_set_weight('config_provider', 100);
+}
+
+/**
+ * Rebuild the container to add a service parameter.
+ */
+function config_provider_update_8101() {
+  // Empty update to cause a cache rebuild so that the container is rebuilt.
+}
+
+/**
+ * Rebuild the container to add a service parameter.
+ */
+function config_provider_update_8201() {
+  // Empty update to cause a cache rebuild so that the container is rebuilt.
+}
+
+/**
+ * Rebuild the container to change a service.
+ */
+function config_provider_update_8202() {
+  // Empty update to cause a cache rebuild so that the container is rebuilt.
+}

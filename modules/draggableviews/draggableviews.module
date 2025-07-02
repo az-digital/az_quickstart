@@ -1,0 +1,359 @@
+<?php
+
+/**
+ * @file
+ * Contains draggableviews.module.
+ */
+
+use Drupal\Core\Cache\Cache;
+use Drupal\Core\Database\Database;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
+use Drupal\draggableviews\DraggableViews;
+use Drupal\views\ViewExecutable;
+
+/**
+ * Implements hook_views_data_alter().
+ */
+function draggableviews_views_data_alter(&$data) {
+  $data['draggableviews_structure']['weight'] = [
+    'title' => t('DraggableViews Weight'),
+    'group' => t('Draggableviews'),
+    'help' => t('Display the weight value.'),
+    'field' => [
+      'id' => 'numeric',
+    ],
+    'sort' => [
+      'id' => 'draggable_views_sort_default',
+      'help' => t('Sort by the weight value.'),
+    ],
+    'filter' => [
+      'help' => t('Filter by the draggableviews weight value (Native handler only).'),
+      'id' => 'numeric',
+    ],
+    'argument' => [
+      'id' => 'numeric',
+    ],
+  ];
+  $data['draggableviews_structure']['parent'] = [
+    'title' => t('Parent'),
+    'help' => t('The parent entity id.'),
+    'group' => t('Draggableviews'),
+    'field' => [
+      'id' => 'numeric',
+    ],
+    'filter' => [
+      'help' => t("Filter by the draggableviews parent's entity id (Native handler only)."),
+      'id' => 'numeric',
+    ],
+    'argument' => [
+      'id' => 'numeric',
+    ],
+  ];
+
+  foreach (\Drupal::entityTypeManager()->getDefinitions() as $entity_type) {
+    $base_table = $entity_type->getDataTable() ?: $entity_type->getBaseTable();
+    $entity_keys = $entity_type->getKeys();
+    if ($base_table && isset($data[$base_table]['table']) && isset($data[$base_table]['table']['group'])) {
+      $data[$base_table]['draggableviews'] = [
+        'title' => $data[$base_table]['table']['group'],
+        'group' => t('Draggableviews'),
+        'help' => t('Provide a draggable functionality.'),
+        'entity field' => $entity_keys['id'],
+        'field' => [
+          'id' => 'draggable_views_field',
+          'click sortable' => FALSE,
+        ],
+      ];
+      // Explain to every entity how to join with draggableviews_structure
+      // table.
+      $data['draggableviews_structure']['table']['join'][$base_table] = [
+        'join_id' => 'draggableviews_with_args',
+        // Because this is a direct link it could be left out.
+        'left_table' => $base_table,
+        'left_field' => $entity_keys['id'],
+        'field' => 'entity_id',
+      ];
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_views_view_table().
+ */
+function draggableviews_preprocess_views_view_table(&$variables) {
+  $view = $variables['view'];
+
+  // If this view is not the sort view, then stop here.
+  if (!isset($view->field['draggableviews'])) {
+    return;
+  }
+
+  if (isset($variables['header']['draggableviews']['attributes'])) {
+    $variables['header']['draggableviews']['attributes']->removeClass('select-all');
+  }
+
+  $draggableviews = new DraggableViews($variables['view']);
+
+  // Add hierarchy.
+  foreach ($variables['rows'] as $key => $row) {
+    $columns = array_keys($row['columns']);
+
+    // Find the first column that is not the draggableviews field.
+    foreach ($columns as $first_column) {
+      if ($first_column !== 'draggableviews') {
+        break;
+      }
+    }
+    if (!empty($first_column)) {
+      // Indent the first column that is not the draggableviews field.
+      $columns_title = $row['columns'][$first_column]['content'][0]['field_output']['#markup'] ?? '';
+      $indent = [
+        '#theme' => 'indentation',
+        '#size' => $draggableviews->getDepth($key),
+      ];
+      $variables['rows'][$key]['columns'][$first_column]['content'][0]['field_output']['#markup'] = (string) (\Drupal::service('renderer')->render($indent) . $columns_title);
+    }
+  }
+
+  // Get an array of field group titles.
+  $fieldGrouping = $draggableviews->fieldGrouping();
+  foreach ($fieldGrouping as $key => $row) {
+    if (trim(strip_tags($variables['title'])) == trim(strip_tags($row))) {
+      // Add table attributes.
+      $variables['attributes']['id'] = $draggableviews->getHtmlId($key);
+    }
+  }
+
+  // Add rows attributes.
+  foreach ($variables['rows'] as &$row) {
+    $row['attributes']->addClass('draggable');
+  }
+  unset($row);
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function draggableviews_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // Filter the right form.
+  if (strpos($form_id, 'views_form_') === FALSE) {
+    return;
+  }
+
+  // Check whether the view is draggable.
+  $view = $form_state->getBuildInfo()['args'][0];
+  if (!isset($view->field['draggableviews'])) {
+    return;
+  }
+
+  // Attach library.
+  $form['#attached']['library'][] = 'draggableviews/draggableviews';
+
+  // Remove default submit button.
+  $form['actions']['submit']['#access'] = FALSE;
+
+  if (\Drupal::currentUser()->hasPermission('access draggableviews')) {
+    // Create draggableviews save order button.
+    $form['actions']['save_order'] = [
+      '#value' => t('Save order'),
+      '#type' => 'submit',
+      '#limit_validation_errors' => [],
+    ];
+    // Create draggableviews save order button.
+    $form['actions']['reset_order'] = [
+      '#value' => t('Reset order'),
+      '#type' => 'submit',
+      '#limit_validation_errors' => [],
+    ];
+  }
+
+  // If there is no results remove the save-order button.
+  if (!isset($form['draggableviews'][0])) {
+    $form['actions']['save_order']['#access'] = FALSE;
+    $form['actions']['reset_order']['#access'] = FALSE;
+    return;
+  }
+
+  $form['actions']['save_order']['#submit'][] = 'draggableviews_views_submit';
+  $form['actions']['reset_order']['#submit'][] = 'draggableviews_views_reset';
+}
+
+/**
+ * Submit handler.
+ */
+function draggableviews_views_submit(&$form, FormStateInterface $form_state) {
+  $input = $form_state->getUserInput();
+
+  /** @var \Drupal\views\ViewExecutable $view */
+  $view = $form_state->getBuildInfo()['args'][0];
+  $view_name = $view->id();
+  $view_display = $view->current_display;
+  $view_args = !empty($view->args) ? json_encode($view->args) : '[]';
+
+  $connection = Database::getConnection();
+  $transaction = $connection->startTransaction();
+  try {
+    foreach ($input['draggableviews'] as $item) {
+      // Remove old data.
+      $connection->delete('draggableviews_structure')
+        ->condition('view_name', $view_name)
+        ->condition('view_display', $view_display)
+        ->condition('args', $view_args)
+        ->condition('entity_id', $item['id'])
+        ->execute();
+
+      // Add new data.
+      $record = [
+        'view_name' => $view_name,
+        'view_display' => $view_display,
+        'args' => $view_args,
+        'entity_id' => $item['id'],
+        'weight' => $item['weight'],
+      ];
+      // Save parent if exists.
+      if (isset($item['parent'])) {
+        $record['parent'] = $item['parent'];
+      }
+      $connection->insert('draggableviews_structure')->fields($record)->execute();
+    }
+    // We invalidate the entity list cache, so other views are also aware of the
+    // cache.
+    $views_entity_table_info = $view->query->getEntityTableInfo();
+    // Find the entity type used by the view.
+    $result = array_keys(array_filter($views_entity_table_info, function ($info) {
+      return $info['relationship_id'] == 'none';
+    }));
+    $entity_type_id = reset($result);
+    $list_cache_tags = \Drupal::entityTypeManager()->getDefinition($entity_type_id)->getListCacheTags();
+
+    // Add the view configuration cache tag to let third-party integrations to
+    // rely on it.
+    $list_cache_tags[] = 'config:views.view.' . $view_name;
+    $list_cache_tags[] = 'config:views.view.' . $view_name . '.' . $view_display;
+
+    Cache::invalidateTags($list_cache_tags);
+  }
+  catch (\Exception $e) {
+    $transaction->rollback();
+    \Drupal::logger('draggableviews')->error('Failed with @message', ['@message' => $e->getMessage()]);
+    \Drupal::messenger()->addMessage(t('There was an error while saving the data. Please, try again.'), 'warning');
+  }
+}
+
+/**
+ * Reset handler.
+ */
+function draggableviews_views_reset(&$form, FormStateInterface $form_state) {
+  $input = $form_state->getUserInput();
+
+  /** @var \Drupal\views\ViewExecutable $view */
+  $view = $form_state->getBuildInfo()['args'][0];
+  $view_name = $view->id();
+  $view_display = $view->current_display;
+  $view_args = !empty($view->args) ? json_encode($view->args) : '[]';
+
+  $connection = Database::getConnection();
+  $transaction = $connection->startTransaction();
+  try {
+    foreach ($input['draggableviews'] as $item) {
+      // Remove old data.
+      $connection->delete('draggableviews_structure')
+        ->condition('view_name', $view_name)
+        ->condition('view_display', $view_display)
+        ->condition('args', $view_args)
+        ->condition('entity_id', $item['id'])
+        ->execute();
+    }
+    // We invalidate the entity list cache, so other views are also aware of the
+    // cache.
+    $views_entity_table_info = $view->query->getEntityTableInfo();
+    // Find the entity type used by the view.
+    $result = array_keys(array_filter($views_entity_table_info, function ($info) {
+      return $info['relationship_id'] == 'none';
+    }));
+    $entity_type_id = reset($result);
+    $list_cache_tags = \Drupal::entityTypeManager()->getDefinition($entity_type_id)->getListCacheTags();
+
+    // Add the view configuration cache tag to let third-party integrations to
+    // rely on it.
+    $list_cache_tags[] = 'config:views.view.' . $view_name;
+    $list_cache_tags[] = 'config:views.view.' . $view_name . '.' . $view_display;
+
+    Cache::invalidateTags($list_cache_tags);
+  }
+  catch (\Exception $e) {
+    $transaction->rollback();
+    \Drupal::logger('draggableviews')->error('Failed with @message', ['@message' => $e->getMessage()]);
+    \Drupal::messenger()->addMessage(t('There was an error while saving the data. Please, try again.'), 'warning');
+  }
+}
+
+/**
+ * Implements hook_contextual_links_alter().
+ */
+function draggableviews_contextual_links_alter(array &$links, $group, array $route_parameters) {
+  $link_key = 'draggableviews.view.order_view';
+  if ($group !== $link_key || empty($links[$link_key]['metadata'])) {
+    return;
+  }
+  $metadata = $links[$link_key]['metadata'];
+  /** @var \Drupal\views\ViewEntityInterface $view */
+  $view = \Drupal::entityTypeManager()->getStorage('view')->load($metadata['name']);
+  $default_sorts = $view->getDisplay('default')["display_options"]['sorts'] ?? [];
+  $sorts = $view->getDisplay($metadata['display_id'])["display_options"]['sorts'] ?? [];
+  if (empty($default_sorts) && empty($sorts)) {
+    unset($links[$link_key]);
+    return;
+  }
+  if (empty($sorts)) {
+    $sorts = $default_sorts;
+  }
+  foreach ($sorts as $sort) {
+    if (
+      empty($sort['draggable_views_reference'])
+      || $sort['draggable_views_reference'] === 'this'
+      || $sort['draggable_views_reference'] === $metadata['name'] . ':' . $metadata['display_id']
+    ) {
+      continue;
+    }
+    $route_name = 'view.' . str_replace(':', '.', $sort['draggable_views_reference']);
+    $route_provider = \Drupal::service('router.route_provider');
+    if (count($route_provider->getRoutesByNames([$route_name]))) {
+      // Check route access.
+      $url = Url::fromRoute($route_name, $route_parameters);
+      if ($url && $url->access()) {
+        $links[$link_key]['route_name'] = $route_name;
+      }
+      else {
+        unset($links[$link_key]);
+      }
+    }
+    else {
+      unset($links[$link_key]);
+    }
+    return;
+  }
+  unset($links[$link_key]);
+}
+
+/**
+ * Implements hook_views_pre_render().
+ *
+ * Add the current route parameters to draggableviews contextual links.
+ */
+function draggableviews_views_pre_render(ViewExecutable $view) {
+  if (!empty($view->element['#contextual_links']['draggableviews.view.order_view'])) {
+    $view->element['#contextual_links']['draggableviews.view.order_view']['route_parameters'] = \Drupal::routeMatch()->getRawParameters()->all();
+  }
+}
+
+/**
+ * Implements hook_views_plugins_display_alter().
+ */
+function draggableviews_views_plugins_display_alter(array &$plugins) {
+  // Attach contextual links to each display plugin.
+  foreach ($plugins as &$display) {
+    $display['contextual links']['draggableviews.view.order_view'] = [];
+  }
+}

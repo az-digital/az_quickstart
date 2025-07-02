@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="cas">
+  <description>Default PHP CodeSniffer configuration for CAS module.</description>
+  <config name="installed_paths" value="../../drupal/coder/coder_sniffer/Drupal,../../drupal/coder/coder_sniffer/DrupalPractice,../../slevomat/coding-standard" />
+  <file>.</file>
+  <arg name="extensions" value="inc,install,module,php,profile,test,theme,yml"/>
+
+  <!--Ignore README markdown-->
+  <exclude-pattern>README\.md</exclude-pattern>
+
+  <rule ref="Drupal"/>
+</ruleset>

@@ -1,0 +1,26 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.webform_test_nesting.field_webform_test_nesting
+    - paragraphs.paragraphs_type.webform_test_nesting
+  module:
+    - entity_reference_revisions
+id: paragraph.webform_test_nesting.default
+targetEntityType: paragraph
+bundle: webform_test_nesting
+mode: default
+content:
+  field_webform_test_nesting:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true

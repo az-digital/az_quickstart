@@ -1,0 +1,4 @@
+environment_indicator_ui.settings_form.tab:
+  title: 'Current Environment'
+  route_name: environment_indicator_ui.settings
+  base_route: environment_indicator.settings

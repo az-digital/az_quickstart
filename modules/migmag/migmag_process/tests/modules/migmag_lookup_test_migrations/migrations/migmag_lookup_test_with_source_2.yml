@@ -1,0 +1,16 @@
+id: migmag_lookup_test_with_source_2
+source:
+  plugin: embedded_data
+  data_rows:
+    -
+      id: 2
+  ids:
+    id:
+      type: integer
+process:
+  value:
+    plugin: callback
+    callable: decbin
+    source: id
+destination:
+  plugin: dummy

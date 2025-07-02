@@ -1,0 +1,12 @@
+name: 'Field Group Link'
+type: module
+description: Provides a link field group display formatter.
+package : Fields
+core_version_requirement: ^10.3 || ^11
+dependencies:
+  - field_group:field_group
+
+# Information added by Drupal.org packaging script on 2025-06-02
+version: '8.x-3.3'
+project: 'field_group_link'
+datestamp: 1748902373

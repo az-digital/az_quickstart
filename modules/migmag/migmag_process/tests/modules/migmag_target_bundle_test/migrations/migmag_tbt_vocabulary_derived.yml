@@ -1,0 +1,28 @@
+id: migmag_tbt_vocabulary_derived
+deriver: Drupal\migmag_target_bundle_test\MigMagTargetBundleDeriver
+source:
+  plugin: embedded_data
+  data_rows: []
+  ids:
+    id:
+      type: string
+process:
+  vid:
+    -
+      plugin: explode
+      source: id
+      delimiter: ' '
+    -
+      plugin: concat
+      delimiter: '_'
+    -
+      plugin: make_unique_entity_field
+      entity_type: taxonomy_vocabulary
+      field: vid
+      postfix: '_'
+  name: id
+  weight:
+    plugin: default_value
+    default_value: 0
+destination:
+  plugin: entity:taxonomy_vocabulary

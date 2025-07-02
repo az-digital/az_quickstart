@@ -1,0 +1,36 @@
+# Schema for the configuration files of the User expire module.
+
+user_expire.settings:
+  type: config_object
+  label: 'User expire settings'
+  mapping:
+    frequency:
+      type: integer
+      label: 'Notification frequency time (in seconds)'
+      constraints:
+        Range:
+          min: 0
+          notInRangeMessage: 'Notification frequency time must be 0 seconds or greater.'
+    offset:
+      type: integer
+      label: 'Warning offset time (in seconds)'
+      constraints:
+        Range:
+          min: 0
+          notInRangeMessage: 'Warning offset time must be 0 seconds or greater.'
+    user_expire_roles:
+      type: sequence
+      label: 'Account expiration settings by role'
+      sequence:
+        type: integer
+        label: 'Expiration time value for role (in seconds)'
+        constraints:
+          Range:
+            min: 0
+            notInRangeMessage: 'Role expiration time must be 0 seconds or greater.'
+    send_expiration_warnings:
+      type: boolean
+      label: 'Flag that enables or disables account expiration warning emails'
+    expiration_warning_mail:
+      type: mail
+

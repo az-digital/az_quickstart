@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies: {  }
+id: nodes_migrate_queue_importer_nodes
+label: 'Nodes (migrate_queue_importer_nodes)'
+migration: migrate_queue_importer_nodes
+time: 60
+update: true
+sync: false
+ignore_dependencies: false

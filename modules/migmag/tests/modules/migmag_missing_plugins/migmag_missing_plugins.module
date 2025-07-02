@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * @file
+ * Contains hooks implemented by migmag_missing_plugins.
+ */
+
+/**
+ * Implements hook_migrate_field_info_alter().
+ */
+function migmag_missing_plugins_migrate_field_info_alter(&$definitions) {
+  unset($definitions['phone']);
+}

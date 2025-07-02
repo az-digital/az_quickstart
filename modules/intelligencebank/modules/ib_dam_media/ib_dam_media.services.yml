@@ -1,0 +1,7 @@
+services:
+  ib_dam_media.media_type_matcher:
+    class: Drupal\ib_dam_media\MediaTypeMatcher
+    arguments:
+      - '@config.factory'
+      - '@file.mime_type.guesser'
+      - '@entity_type.manager'

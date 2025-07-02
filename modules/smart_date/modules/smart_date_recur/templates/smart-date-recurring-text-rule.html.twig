@@ -1,0 +1,25 @@
+{#
+/**
+ * @file
+ * Output the text representation of a recurring rule.
+ *
+ * Available variables:
+ * - rule: The rule object.
+ * - repeat: Text representation of the frequency of the recurrence.
+ * - day: Text representation of day(s) on which the rule repeats.
+ * - day_separator: String to join the day to the text that precedes it.
+ * - days_array: An array of days on which the rule repeats.
+ * - month: Text representation of the month on which an annual rule repeats.
+ * - month_separator: String to join the month to the text that precedes it.
+ * - time: Text representation of the time on which the rule repeats.
+ * - month_separator: String to join the month to the text that precedes it.
+ * - limit: Text representation of any restrictions for the recurrence.
+ * - limit_separator: String to join the limit to the text that precedes it.
+ *
+ * @see SmartDateRule::getTextRule()
+ *
+ * @ingroup themeable
+ */
+#}
+{% if days_array %}{% set day = include('smart-date-recurring-comma-list.html.twig', {values: days_array}) %}{% endif %}
+{% trans %}{{ repeat }}{{ day_separator }}{{ day }}{{ month_separator }}{{ month }}{{ time_separator }}{{ time }}{{ limit_separator }}{{ limit }}{% endtrans %}

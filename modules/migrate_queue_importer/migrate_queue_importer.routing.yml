@@ -1,0 +1,49 @@
+entity.cron_migration.enable:
+  path: '/admin/config/migrate_queue_importer/cron_migration/{cron_migration}/enable'
+  defaults:
+    _controller: 'Drupal\migrate_queue_importer\Controller\CronMigrationStatusController::enable'
+    _title: 'Enable Cron migration'
+  requirements:
+    _permission: 'administer cron migrations'
+    _csrf_token: 'TRUE'
+
+entity.cron_migration.disable:
+  path: '/admin/config/migrate_queue_importer/cron_migration/{cron_migration}/disable'
+  defaults:
+    _controller: 'Drupal\migrate_queue_importer\Controller\CronMigrationStatusController::disable'
+    _title: 'Disable Cron migration'
+  requirements:
+    _permission: 'administer cron migrations'
+    _csrf_token: 'TRUE'
+
+entity.cron_migration.collection:
+  path: '/admin/config/migrate_queue_importer/cron_migration'
+  defaults:
+    _entity_list: 'cron_migration'
+    _title: 'Cron migration configuration'
+  requirements:
+    _permission: 'administer cron migrations'
+
+entity.cron_migration.add_form:
+  path: '/admin/config/migrate_queue_importer/cron_migration/add'
+  defaults:
+    _entity_form: 'cron_migration.add'
+    _title: 'Add cron migration'
+  requirements:
+    _permission: 'administer cron migrations'
+
+entity.cron_migration.edit_form:
+  path: '/admin/config/migrate_queue_importer/cron_migration/{cron_migration}'
+  defaults:
+    _entity_form: 'cron_migration.edit'
+    _title: 'Edit cron migration'
+  requirements:
+    _permission: 'administer cron migrations'
+
+entity.cron_migration.delete_form:
+  path: '/admin/config/migrate_queue_importer/cron_migration/{cron_migration}/delete'
+  defaults:
+    _entity_form: 'cron_migration.delete'
+    _title: 'Delete cron migration'
+  requirements:
+    _permission: 'administer cron migrations'

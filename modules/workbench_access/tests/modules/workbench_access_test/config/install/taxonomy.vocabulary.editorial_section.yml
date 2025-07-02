@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+name: Editorial section
+vid: editorial_section
+description: ''
+hierarchy: 0
+weight: 0

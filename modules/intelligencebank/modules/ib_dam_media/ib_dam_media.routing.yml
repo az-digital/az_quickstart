@@ -1,0 +1,16 @@
+ib_dam_media.configuration_form:
+  path: '/admin/config/services/ib_dam/media'
+  defaults:
+    _form: '\Drupal\ib_dam_media\Form\MediaConfigurationForm'
+    _title: 'IntelligenceBank Media Configuration'
+  requirements:
+    _permission: 'administer intelligencebank configuration'
+
+id_dam_media.asset_browser_form:
+  path: '/ib-dam-browser'
+  defaults:
+    _form: '\Drupal\ib_dam_media\Form\MediaLibraryIbDamBrowserForm'
+    _title: 'IntelligenceBank Asset Browser'
+  requirements:
+    _access: 'TRUE'
+#    _custom_access: 'media_library.ui_builder:checkAccess'

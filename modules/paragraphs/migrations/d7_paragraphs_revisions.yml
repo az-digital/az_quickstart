@@ -1,0 +1,30 @@
+id: d7_paragraphs_revisions
+label: Paragraphs Revisions
+migration_tags:
+  - Drupal 7
+  - Content
+  - Paragraphs Revisions Content
+deriver: Drupal\paragraphs\Plugin\migrate\D7ParagraphsItemDeriver
+source:
+  plugin: d7_paragraphs_item_revision
+process:
+  id:
+    -
+      plugin: paragraphs_lookup
+      tags:
+        - Paragraphs Content
+      source: item_id
+    -
+      plugin: extract
+      index:
+        - id
+  type: bundle
+  # @todo Get the langcode from the parent entity revision.
+  # See https://drupal.org/i/3146632.
+  # langcode: langcode
+destination:
+  plugin: entity_reference_revisions:paragraph
+  new_revisions: TRUE
+migration_dependencies:
+  required:
+    - d7_paragraphs

@@ -1,0 +1,3 @@
+administer cron migrations:
+  description: 'Add, update and delete cron migrations.'
+  title: 'Administer cron migrations'

@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - crop
+_core:
+  default_config_hash: r0cnH4O-iql6vCIJSt6J3AT82jKBgME0raYtywxi15Q
+name: medium_4_3
+label: 'Medium - (300 x 330) with crop 4:3'
+effects:
+  d02cea5d-7435-49e1-9103-3d673ecf8734:
+    uuid: d02cea5d-7435-49e1-9103-3d673ecf8734
+    id: image_resize
+    weight: 4
+    data:
+      width: 300
+      height: 330
+  e051acef-d8a1-4983-a700-a70eb0856971:
+    uuid: e051acef-d8a1-4983-a700-a70eb0856971
+    id: crop_crop
+    weight: 3
+    data:
+      crop_type: crop_4_3

@@ -1,0 +1,11 @@
+name: 'Pathauto testing module'
+type: module
+description: 'Pathauto for Entity with string ID.'
+package: Testing
+dependencies:
+  - token:token
+
+# Information added by Drupal.org packaging script on 2024-08-01
+version: '8.x-1.13'
+project: 'pathauto'
+datestamp: 1722507674

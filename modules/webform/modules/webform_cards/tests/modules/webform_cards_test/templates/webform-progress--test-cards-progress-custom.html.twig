@@ -1,0 +1,97 @@
+{#
+/**
+ * @file
+ * Default theme implementation for webform wizard progress.
+ *
+ * Available variables:
+ * - webform: A webform.
+ * - pages: Array of wizard pages.
+ * - current_page: Current wizard page.
+ * - total_pages: Current wizard page.
+ * - summary: Summary of progress.
+ * - percentage: Percentage completed.
+ * - bar: A progress bar.
+ *
+ * @see template_preprocess_webform_progress()
+ *
+ * @ingroup themeable
+ */
+#}
+
+{{ attach_library('webform/webform.progress') }}
+
+<div class="webform-progress">
+
+  <progress value="{{ index }}" max="{{ total }}" style="width: 100%;">{{ percentage }}</progress>
+
+  {{ bar }}
+
+  {% if summary or percentage %}
+    <div class="webform-progress__status">
+      {% if summary %}
+        <span class="webform-progress__summary" data-webform-progress-summary>{{ summary }}</span>
+        {% if percentage %}
+          <span class="webform-progress__percentage">(<span data-webform-progress-percentage>{{ percentage }}</span>)</span>
+        {% endif %}
+      {% else %}
+        <span class="webform-progress__percentage" data-webform-progress-percentage>{{ percentage }}</span>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  <table width="100%">
+    <tbody>
+    <tr>
+      <th>{{ 'Summary'|t }} </th>
+      <td data-webform-progress-summary>{{ summary }}</td>
+    </tr>
+    <tr>
+      <th>{{ 'Percentage'|t }} </th>
+      <td data-webform-progress-percentage>{{ percentage }}</td>
+    </tr>
+    <tr>
+      <th>{{ 'Index'|t }} </th>
+      <td data-webform-progress-index>{{ index }}</td>
+    </tr>
+    <tr>
+      <th>{{ 'Total'|t }} </th>
+      <td data-webform-progress-total>{{ total }}</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <table width="100%">
+    <thead>
+    <tr>
+      <th>{{ 'Index'|t }} </th>
+      <th>{{ 'State'|t }} </th>
+      <th>{{ 'Name'|t }} </th>
+      <th>{{ 'Title'|t }} </th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for index, page in progress %}
+      {% set is_completed = index < current_index %}
+      {% set is_active = index == current_index %}
+      {%
+        set classes = [
+          is_completed ? 'is-complete',
+          is_active ? 'is-active',
+        ]
+      %}
+      {%
+        set attributes = create_attribute()
+          .setAttribute('data-webform-' ~ page.type, page.name)
+          .setAttribute('title', page.title)
+          .addClass(classes)
+      %}
+      <tr{{ attributes }}>
+        <td><span data-webform-progress-step>{{ index + 1 }}</span></td>
+        <td><span data-webform-progress-state></span></td>
+        <td><span data-webform-progress-link>{{ page.name }}</span></td>
+        <td>{{ page.title }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>

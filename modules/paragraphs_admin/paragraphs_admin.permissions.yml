@@ -1,0 +1,4 @@
+'administer paragraphs':
+  title: 'Administer paragraphs'
+  description: 'Allows to view and delete paragraphs from admin screen.'
+  restrict access: true

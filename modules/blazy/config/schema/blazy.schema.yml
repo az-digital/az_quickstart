@@ -1,0 +1,187 @@
+blazy.settings:
+  type: config_object
+  label: 'Blazy settings'
+  mapping:
+    admin_css:
+      type: boolean
+      label: 'Admin CSS'
+    lazy_html:
+      type: boolean
+      label: 'Lazy load HTML'
+    nojs:
+      type: sequence
+      label: 'No JavaScript'
+      sequence:
+        type: string
+        label: nojs
+    fx:
+      type: string
+      label: 'Image effect'
+    blur_client:
+      type: boolean
+      label: 'Use client-side blur'
+    blur_storage:
+      type: boolean
+      label: 'Store blur in localStorage'
+    blur_minwidth:
+      type: integer
+      label: 'Blur min-width'
+    noscript:
+      type: boolean
+      label: 'Add noscript'
+    one_pixel:
+      type: boolean
+      label: 'One pixel placeholder'
+    visible_class:
+      type: boolean
+      label: 'Add is-b-visible class'
+    wrapper_class:
+      type: boolean
+      label: 'Remove field/ view wrapper classes'
+    placeholder:
+      type: string
+      label: Placeholder
+    unstyled_extensions:
+      type: string
+      label: 'Extensions without image styles'
+    use_encodedbox:
+      type: boolean
+      label: 'Use encoding for lightbox HTML'
+    use_oembed:
+      type: boolean
+      label: 'Use oEmbed'
+    max_region_count:
+      type: integer
+      label: 'Max region count'
+    blazy:
+      type: mapping
+      label: Blazy
+      mapping:
+        loadInvisible:
+          type: boolean
+          label: 'Load invisible'
+        offset:
+          type: integer
+          label: Offset
+        saveViewportOffsetDelay:
+          type: integer
+          label: 'Save viewport offset delay'
+        validateDelay:
+          type: integer
+          label: 'Set validate delay'
+        container:
+          type: string
+          label: 'Scrolling container'
+    io:
+      type: mapping
+      label: IO
+      mapping:
+        unblazy:
+          type: boolean
+          label: 'Unload bLazy'
+        rootMargin:
+          type: string
+          label: rootMargin
+        threshold:
+          type: string
+          label: threshold
+        disconnect:
+          type: boolean
+          label: Disconnect
+    extras:
+      type: blazy_base
+      label: Extras
+
+blazy_base:
+  type: mapping
+  label: 'Blazy image base display format settings'
+  mapping:
+    caption:
+      type: sequence
+      label: Captions
+      sequence:
+        type: string
+        label: Caption
+    optionset:
+      type: string
+      label: Optionset
+
+field.formatter.settings.blazy:
+  type: blazy_base
+  label: 'Blazy image display format settings'
+
+field.formatter.settings.blazy_entity:
+  type: blazy_base
+  label: 'Blazy entity display format settings'
+
+field.formatter.settings.blazy_media:
+  type: blazy_base
+  label: 'Blazy media display format settings'
+
+field.formatter.settings.blazy_oembed:
+  type: blazy_base
+  label: 'Blazy oembed display format settings'
+
+field.formatter.settings.blazy_text:
+  type: blazy_base
+  label: 'Blazy text display format settings'
+
+field.formatter.third_party.blazy:
+  type: mapping
+  label: 'Blazy third party display format settings'
+  mapping:
+    blazy:
+      type: boolean
+      label: Blazy
+
+blazy_filter:
+  type: mapping
+  label: 'Blazy filter'
+  mapping:
+    media_switch:
+      type: string
+      label: 'Media switcher'
+    hybrid_style:
+      type: string
+      label: '(Responsive) image style'
+    box_style:
+      type: string
+      label: 'Lightbox (Responsive) image style'
+    box_media_style:
+      type: string
+      label: 'Lightbox media style'
+    box_caption:
+      type: string
+      label: 'Lightbox caption'
+
+filter_settings.blazy_filter:
+  type: blazy_filter
+  label: 'Blazy filter'
+  mapping:
+    filter_tags:
+      type: sequence
+      label: 'HTML tags'
+      sequence:
+        type: string
+        label: tag
+    use_data_uri:
+      type: string
+      label: 'Trust data URI'
+
+field.formatter.settings.blazy_file:
+  type: blazy_base
+  label: 'Blazy File/SVG display format settings'
+
+field.formatter.settings.blazy_title:
+  type: mapping
+  label: 'Blazy Title format settings'
+  mapping:
+    delimiter:
+      type: string
+      label: Delimiter
+    tag:
+      type: string
+      label: Tag
+    break:
+      type: boolean
+      label: 'Add Linebreak'

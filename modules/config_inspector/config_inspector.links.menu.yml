@@ -1,0 +1,5 @@
+config_inspector.inspect:
+  title: 'Configuration inspector'
+  description: 'Inspect the configuration of your site in different formats.'
+  parent: system.admin_reports
+  route_name: config_inspector.overview

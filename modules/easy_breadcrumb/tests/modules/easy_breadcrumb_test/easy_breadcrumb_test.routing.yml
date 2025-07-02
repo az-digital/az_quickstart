@@ -1,0 +1,32 @@
+easy_breadcrumb_test.title_string:
+  path: '/test/easy-breadcrumb'
+  defaults:
+    _title: 'Easy Breadcrumb'
+    _controller: '\Drupal\easy_breadcrumb_test\Controller\TestRouteController::page'
+easy_breadcrumb_test.title_formattable_markup:
+  path: '/test/easy-breadcrumb-formattable'
+  defaults:
+    _controller: '\Drupal\easy_breadcrumb_test\Controller\TestRouteController::page'
+    _title_callback: '\Drupal\easy_breadcrumb_test\Controller\TestRouteController::pageTitleFormattableMarkup'
+easy_breadcrumb_test.title_markup:
+  path: '/test/easy-breadcrumb-markup'
+  defaults:
+    _controller: '\Drupal\easy_breadcrumb_test\Controller\TestRouteController::page'
+    _title_callback: '\Drupal\easy_breadcrumb_test\Controller\TestRouteController::pageTitleMarkup'
+easy_breadcrumb_test.title_translatable_markup:
+  path: '/test/easy-breadcrumb-translatable'
+  defaults:
+    _controller: '\Drupal\easy_breadcrumb_test\Controller\TestRouteController::page'
+    _title_callback: '\Drupal\easy_breadcrumb_test\Controller\TestRouteController::pageTitleTranslatableMarkup'
+easy_breadcrumb_test.title_render_array:
+  path: '/test/easy-breadcrumb-render-array'
+  defaults:
+    _controller: '\Drupal\easy_breadcrumb_test\Controller\TestRouteController::page'
+    _title_callback: '\Drupal\easy_breadcrumb_test\Controller\TestRouteController::pageTitleRender'
+easy_breadcrumb_test.custom_path:
+  path: '/test/easy-breadcrumb-custom-path'
+  requirements:
+    _access: 'TRUE'
+  defaults:
+    _title: 'Easy Breadcrumb Custom Path Test'
+    _controller: '\Drupal\easy_breadcrumb_test\Controller\TestRouteController::page'

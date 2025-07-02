@@ -1,0 +1,26 @@
+{
+    "name": "drupal/media_library_form_element",
+    "description": "This module provides a Media Library Form API element to be used in all sorts of forms.",
+    "keywords": ["Drupal", "Media", "Media Library", "Form API"],
+    "authors": [
+        {
+            "name": "Kim Kennof",
+            "email": "kim.kennof@gmail.com",
+            "homepage": "https://www.drupal.org/u/nightlife2008",
+            "role": "Maintainer"
+        },
+        {
+            "name": "AUSY, a randstad company",
+            "email": "info@ausy.be",
+            "homepage": "https://www.ausy.be",
+            "role": "Sponsor"
+        }
+    ],
+    "homepage": "https://www.drupal.org/project/media_library_form_element",
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/media_library_form_element",
+        "source": "http://cgit.drupalcode.org/media_library_form_element"
+    },
+    "type": "drupal-module",
+    "license": "GPL-2.0+"
+}

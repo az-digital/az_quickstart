@@ -1,0 +1,47 @@
+/**
+ * @file
+ * Details toggle element styles.
+ *
+ * @see /webform/test_form_details_toggle
+ */
+
+.webform-details-toggle-state-wrapper {
+  text-align: right; /* LTR */
+  margin-top: 1em;
+}
+
+[dir="rtl"] .webform-details-toggle-state-wrapper {
+  text-align: left;
+}
+
+.webform-details-toggle-state-wrapper + details {
+  margin-top: 0;
+}
+
+/* Tweak details toggle state. */
+.webform-details-toggle-state {
+  margin-top: 0;
+  padding: 0;
+  cursor: pointer;
+  border: 0;
+  background: transparent;
+  font-size: 1em;
+  text-decoration: none;
+  color: #337ab7;
+}
+
+.webform-details-toggle-state:hover,
+.webform-details-toggle-statelink:focus {
+  text-decoration: underline;
+}
+
+/* Float toggle to the right of webform tabs */
+.webform-tabs .webform-details-toggle-state-wrapper {
+  float: right;
+}
+
+@media screen and (max-width: 600px) {
+  .webform-tabs .webform-details-toggle-state-wrapper {
+    float: none;
+  }
+}

@@ -1,0 +1,57 @@
+<?php
+
+/**
+ * @file
+ * Devel sub-module to for generating content, menus, taxonomy terms etc.
+ *
+ * See src/Plugin for specific details of each type that can be generated.
+ */
+
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+
+/**
+ * Implements hook_menu_links_discovered_alter().
+ */
+function devel_generate_menu_links_discovered_alter(array &$links): void {
+  $devel_generate_plugins = \Drupal::service('plugin.manager.develgenerate')->getDefinitions();
+  foreach ($devel_generate_plugins as $id => $plugin) {
+    $label = $plugin['label'];
+    $links['devel_generate.' . $id] = [
+      'title' => new TranslatableMarkup("Generate @label", ['@label' => $label]),
+      'parent' => 'devel_generate.admin_config_generate',
+      'description' => $plugin['description'],
+      'route_name' => 'devel_generate.' . $id,
+      'provider' => 'devel_generate',
+    ];
+  }
+
+  // Store the basic link info for repeated use. Each of the three actual links
+  // require subtle variations on this.
+  $basics = [
+    'title' => new TranslatableMarkup('Generate'),
+    'description' => new TranslatableMarkup('Generate realistic items (content, users, menus, etc) to assist your site development and testing.'),
+    'route_name' => 'devel_generate.admin_config_generate',
+    'provider' => 'devel_generate',
+  ];
+
+  // Define a separate group on admin/config page, so that 'Generate' has its
+  // own block with all the generate links.
+  $links['devel_generate.admin_config_generate'] = [
+    'parent' => 'system.admin_config',
+    // The main development group has weight -10 in system.links.menu.yml so use
+    // -9 here as this block should be near but just after it on the page.
+    'weight' => -9,
+  ] + $basics;
+
+  // Add a link in the main development group, to allow direct access to the
+  // the Generate page and to make the back breadcrumb more useful.
+  $links['devel_generate.generate'] = [
+    'title' => new TranslatableMarkup('Devel generate'),
+    'parent' => 'system.admin_config_development',
+  ] + $basics;
+
+  // Define a top-level link (with no parent) in the 'devel' menu. This also
+  // means that it will be available in the devel admin toolbar.
+  $links['devel_generate.generate2'] = ['menu_name' => 'devel'] + $basics;
+
+}

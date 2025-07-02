@@ -1,0 +1,16 @@
+{
+  "name": "drupal/media_library_edit",
+  "type": "drupal-module",
+  "description": "Add an edit button to the Media Library widget when an item is selected.",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "https://www.drupal.org/project/media_library_edit",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/media_library_edit",
+    "source": "http://cgit.drupalcode.org/media_library_edit"
+  },
+  "require": {
+    "drupal/core": "^9.2 || ^10 || ^11"
+  }
+}

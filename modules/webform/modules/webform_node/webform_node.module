@@ -1,0 +1,259 @@
+<?php
+
+/**
+ * @file
+ * Provides a webform content type which allows webforms to be integrated into a website as nodes.
+ */
+
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Database\Query\AlterableInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Serialization\Yaml;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Url;
+use Drupal\node\Entity\Node;
+use Drupal\node\NodeInterface;
+use Drupal\webform\Element\WebformMessage;
+use Drupal\webform\Entity\Webform;
+use Drupal\webform\WebformInterface;
+
+/**
+ * Implements hook_entity_type_alter().
+ */
+function webform_node_entity_type_alter(array &$entity_types) {
+  if (isset($entity_types['webform'])) {
+    /** @var \Drupal\Core\Entity\ContentEntityTypeInterface $webform_entity_type */
+    $webform_entity_type = $entity_types['webform'];
+    $webform_entity_type->setLinkTemplate('references', '/admin/structure/webform/manage/{webform}/references');
+  }
+}
+
+/**
+ * Implements hook_entity_operation().
+ */
+function webform_node_entity_operation(EntityInterface $entity) {
+  $operations = [];
+  if ($entity instanceof WebformInterface
+    && $entity->access('update')) {
+    $operations['references'] = [
+      'title' => t('References'),
+      'url' => $entity->toUrl('references'),
+      'weight' => 40,
+    ];
+  }
+  return $operations;
+}
+
+/**
+ * Implements hook_node_access().
+ */
+function webform_node_node_access(NodeInterface $node, $operation, AccountInterface $account) {
+  if (strpos($operation, 'webform_submission_') !== 0) {
+    return AccessResult::neutral();
+  }
+  else {
+    /** @var \Drupal\webform\WebformEntityReferenceManagerInterface $entity_reference_manager */
+    $entity_reference_manager = \Drupal::service('webform.entity_reference_manager');
+
+    // Check that the node has a webform field that has been populated.
+    $webform = $entity_reference_manager->getWebform($node);
+    if (!$webform) {
+      return AccessResult::forbidden();
+    }
+
+    // Check administer webform submissions.
+    if ($account->hasPermission('administer webform submission')) {
+      return AccessResult::allowed();
+    }
+
+    // Change access to ANY submission.
+    $operation = str_replace('webform_submission_', '', $operation);
+    $any_permission = "$operation webform submissions any node";
+    if ($account->hasPermission($any_permission)) {
+      return AccessResult::allowed();
+    }
+
+    // Change access to submission associated with the node's webform.
+    $own_permission = "$operation webform submissions own node";
+    if ($account->hasPermission($own_permission) && $node->getOwnerId() === $account->id()) {
+      return AccessResult::allowed();
+    }
+
+    return AccessResult::neutral();
+  }
+}
+
+/**
+ * Implements hook_webform_submission_query_access_alter().
+ */
+function webform_node_webform_submission_query_access_alter(AlterableInterface $query, array $webform_submission_tables) {
+  $route_name = \Drupal::routeMatch()->getRouteName();
+  if (!preg_match('/entity\.([^.]+)\.webform\.results_submissions/', $route_name, $match)) {
+    return;
+  }
+  $entity_type = $match[1];
+  $account = $query->getMetaData('account') ?: \Drupal::currentUser();
+  if ($account->hasPermission('view webform submissions any node')) {
+    foreach ($webform_submission_tables as $table) {
+      $table['condition']->condition($table['alias'] . '.entity_type', $entity_type);
+    }
+  }
+  elseif ($account->hasPermission('view webform submissions own node')) {
+    $entity_id = \Drupal::routeMatch()->getRawParameter($entity_type);
+    foreach ($webform_submission_tables as $table) {
+      /** @var \Drupal\Core\Database\Query\SelectInterface $query */
+      $condition = $query->andConditionGroup();
+      $condition->condition($table['alias'] . '.entity_type', $entity_type);
+      $condition->condition($table['alias'] . '.entity_id', $entity_id);
+      $table['condition']->condition($condition);
+    }
+  }
+}
+
+/**
+ * Implements hook_node_prepare_form().
+ *
+ * Prepopulate a node's webform field target id.
+ *
+ * @see \Drupal\webform_node\Controller\WebformNodeReferencesListController::render
+ */
+function webform_node_node_prepare_form(NodeInterface $node, $operation, FormStateInterface $form_state) {
+  // Only prepopulate new nodes.
+  if (!$node->isNew()) {
+    return;
+  }
+
+  /** @var \Drupal\webform\WebformEntityReferenceManagerInterface $entity_reference_manager */
+  $entity_reference_manager = \Drupal::service('webform.entity_reference_manager');
+
+  // Make the node has a webform (entity reference) field.
+  $field_name = $entity_reference_manager->getFieldName($node);
+  if (!$field_name) {
+    return;
+  }
+
+  // Populate the node's title, webform field id and default data.
+  $query = \Drupal::request()->query->all();
+  $webform_id = $query['webform_id'] ?? NULL;
+  if ($webform_id && ($webform = Webform::load($webform_id))) {
+    $node->$field_name->target_id = $webform_id;
+    $node->title->value = $query['webform_title'] ?? $webform->label();
+    $webform_default_data = $query['webform_default_data'] ?? NULL;
+    if ($webform_default_data) {
+      $node->$field_name->default_data = (is_array($webform_default_data))
+        ? Yaml::encode($webform_default_data)
+        : $webform_default_data;
+    }
+  }
+}
+
+/**
+ * Implements hook_node_delete().
+ *
+ * Remove user specified entity references.
+ */
+function webform_node_node_delete(NodeInterface $node) {
+  /** @var \Drupal\webform\WebformEntityReferenceManagerInterface $entity_reference_manager */
+  $entity_reference_manager = \Drupal::service('webform.entity_reference_manager');
+  $entity_reference_manager->deleteUserWebformId($node);
+}
+
+/**
+ * Implements hook_field_widget_single_element_WIDGET_TYPE_form_alter().
+ */
+function webform_node_field_widget_single_element_webform_entity_reference_autocomplete_form_alter(&$element, FormStateInterface $form_state, $context) {
+  static $once;
+  if (!empty($once)) {
+    return;
+  }
+  $once = TRUE;
+
+  // Make sure the 'target_id' is included.
+  if (!isset($element['target_id'])) {
+    return;
+  }
+
+  // Display a warning message if webform query string parameter is missing.
+  if (empty($element['target_id']['#default_value'])) {
+    $element['target_id']['#attributes']['class'][] = 'js-target-id-webform-node-references';
+    $element['webform_node_references'] = [
+      '#type' => 'webform_message',
+      '#message_type' => 'info',
+      '#message_close' => TRUE,
+      '#message_id' => 'webform_node.references',
+      '#message_storage' => WebformMessage::STORAGE_USER,
+      '#message_message' => t('Webforms must first be <a href=":href">created</a> before referencing them.', [':href' => Url::fromRoute('entity.webform.collection')->toString()]),
+      '#cache' => ['max-age' => 0],
+      '#weight' => -10,
+      '#states' => [
+        'visible' => [
+          '.js-target-id-webform-node-references' => ['value' => ''],
+        ],
+      ],
+    ];
+  }
+}
+
+/**
+ * Implements hook_field_widget_single_element_WIDGET_TYPE_form_alter().
+ */
+function webform_node_field_widget_single_element_webform_entity_reference_select_form_alter(&$element, FormStateInterface $form_state, $context) {
+  webform_node_field_widget_single_element_webform_entity_reference_autocomplete_form_alter($element, $form_state, $context);
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for page title templates.
+ */
+function webform_node_preprocess_page_title(&$variables) {
+  $node = \Drupal::routeMatch()->getParameter('node');
+  if ($node && is_string($node)) {
+    $node = Node::load($node);
+  }
+
+  if (!$node) {
+    return;
+  }
+
+  /** @var \Drupal\webform\WebformEntityReferenceManagerInterface $entity_reference_manager */
+  $entity_reference_manager = \Drupal::service('webform.entity_reference_manager');
+
+  // Only allow user to change webform for specific routes.
+  if (!$entity_reference_manager->isUserWebformRoute($node)) {
+    return;
+  }
+
+  $webforms = $entity_reference_manager->getWebforms($node);
+  if (count($webforms) > 1) {
+    $route_options = ['query' => \Drupal::destination()->getAsArray()];
+
+    $operations = [];
+
+    // Add current webform first.
+    $current_webform = $entity_reference_manager->getWebform($node);
+    $operations[$current_webform->id()] = [
+      'title' => $current_webform->label(),
+      'url' => Url::fromRoute('entity.node.webform.entity_reference.set', ['node' => $node->id(), 'webform' => $current_webform->id()], $route_options),
+    ];
+
+    // Add remaining webforms.
+    foreach ($webforms as $webform) {
+      $operations[$webform->id()] = [
+        'title' => $webform->label(),
+        'url' => Url::fromRoute('entity.node.webform.entity_reference.set', ['node' => $node->id(), 'webform' => $webform->id()], $route_options),
+      ];
+    }
+
+    $variables['title_prefix']['webform_node'] = [
+      '#type' => 'operations',
+      '#links' => $operations,
+      '#prefix' => '<div class="webform-dropbutton webform-node-entity-references">',
+      '#suffix' => '</div>',
+      '#attached' => [
+        'library' => [
+          'webform_node/webform_node.entity_references',
+        ],
+      ],
+    ];
+  }
+}

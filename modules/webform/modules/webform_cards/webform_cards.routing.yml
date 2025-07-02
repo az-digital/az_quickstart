@@ -1,0 +1,16 @@
+entity.webform_ui.element.add_card:
+  path: '/admin/structure/webform/manage/{webform}/element/add/card'
+  defaults:
+    _form: '\Drupal\webform_ui\Form\WebformUiElementAddForm'
+    _title: 'Add card'
+    type: webform_card
+  requirements:
+    _custom_access: '\Drupal\webform_ui\Access\WebformUiAccess::checkWebformElementAccess'
+
+entity.webform.cards_convert_form:
+  path: '/admin/structure/webform/manage/{webform}/cards/convert'
+  defaults:
+    _form: '\Drupal\webform_cards\Form\WebformCardsConvertForm'
+    _title: 'Convert wizard pages to cards'
+  requirements:
+    _entity_access: 'webform.update'

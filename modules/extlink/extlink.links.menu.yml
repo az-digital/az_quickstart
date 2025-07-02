@@ -1,0 +1,5 @@
+extlink_admin.settings:
+  title: External Links
+  description: 'External Links administration page.'
+  route_name: extlink_admin.settings
+  parent: system.admin_config_ui

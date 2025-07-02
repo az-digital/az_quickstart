@@ -1,0 +1,5 @@
+deprecated_library:
+  css:
+    component:
+      assets/test.css: {}
+  deprecated: The "%library_id%" asset library is deprecated for testing.

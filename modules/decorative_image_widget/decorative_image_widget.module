@@ -1,0 +1,53 @@
+<?php
+
+/**
+ * @file
+ * Module file for Decorative Image Widget.
+ */
+
+use Drupal\Core\Field\FieldDefinitionInterface;
+use Drupal\Core\Field\WidgetInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\decorative_image_widget\DecorativeImageWidgetHelper;
+use Drupal\image\Plugin\Field\FieldWidget\ImageWidget;
+
+/**
+ * Implements hook_field_widget_third_party_settings_form().
+ */
+function decorative_image_widget_field_widget_third_party_settings_form(WidgetInterface $widget, FieldDefinitionInterface $fieldDefinition) {
+  $element = [];
+
+  if ($widget instanceof ImageWidget) {
+    $element = DecorativeImageWidgetHelper::getSettingsForm($widget, $fieldDefinition);
+  }
+  return $element;
+}
+
+/**
+ * Implements hook_field_widget_settings_summary_alter().
+ */
+function decorative_image_widget_field_widget_settings_summary_alter(array &$summary, array $context) {
+  if ($context['widget'] instanceof ImageWidget) {
+    DecorativeImageWidgetHelper::summarize($context['widget'], $summary);
+  }
+}
+
+/**
+ * Implements hook_field_widget_form_alter().
+ */
+function decorative_image_widget_field_widget_form_alter(array &$element, FormStateInterface $form_state, array $context) {
+  // Note this hook is only executed for Drupal 9.
+  if ($context['widget'] instanceof ImageWidget) {
+    DecorativeImageWidgetHelper::alter($element, $context['widget']);
+  }
+}
+
+/**
+ * Implements hook_field_widget_single_element_form_alter().
+ */
+function decorative_image_widget_field_widget_single_element_form_alter(array &$element, FormStateInterface $form_state, array $context) {
+  // Note this hook is only executed for Drupal 10+.
+  if ($context['widget'] instanceof ImageWidget) {
+    DecorativeImageWidgetHelper::alter($element, $context['widget']);
+  }
+}

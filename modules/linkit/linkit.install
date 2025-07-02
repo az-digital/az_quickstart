@@ -1,0 +1,195 @@
+<?php
+
+/**
+ * @file
+ * Contains install and update functions for Linkit.
+ */
+
+/**
+ * Implements hook_uninstall().
+ */
+function linkit_uninstall() {
+  $config_factory = \Drupal::configFactory();
+
+  // Remove the image styles that Linkit has installed.
+  $config_factory->getEditable('image.style.linkit_result_thumbnail')->delete();
+}
+
+/**
+ * Updates Linkit from 4 to 5.
+ *
+ * Removes linkit profile attributes.
+ * Replaces the linkit ckeditor plugin with drupallink.
+ * Enables the linkit filter on text formats where linkit is used.
+ * Adds 'data-entity-type' and 'data-entity-uuid' attributes to the <a> tag
+ * if filter_html is activated.
+ */
+function linkit_update_8500() {
+  $config_factory = \Drupal::configFactory();
+
+  // Iterate on all profile configuration entities.
+  foreach ($config_factory->listAll('linkit.linkit_profile.') as $id) {
+    $profile = $config_factory->getEditable($id);
+    // Remove all attributes.
+    $profile->clear('attributes')->save(TRUE);
+  }
+
+  // An array that will be filled with text format ids that we should enable the
+  // new linkit_filter for.
+  $linkit_enabled_formats = [];
+
+  // Iterate on all editor configuration entities.
+  foreach ($config_factory->listAll('editor.editor.') as $id) {
+    $editor_config = $config_factory->getEditable($id);
+
+    // Save the old settings.
+    $old_linkit_settings = $editor_config->get('settings.plugins.linkit');
+
+    $drupal_link_in_use = FALSE;
+    $old_linkit_button_path = NULL;
+
+    // If the editor has old linkit settings, perform update tasks.
+    if (!is_null($old_linkit_settings)) {
+      // Remove the old linkit settings.
+      $editor_config->clear('settings.plugins.linkit');
+      $editor_config->save(TRUE);
+
+      // Add the format id that the editor is using.
+      $linkit_enabled_formats[] = $editor_config->get('format');
+
+      // Remove the old linkit plugin from the toolbar, and check if DrupalLink
+      // is present in the toolbar as linkit now extends this plugin.
+      $toolbar_rows = $editor_config->get('settings.toolbar.rows');
+      foreach ($toolbar_rows as $row_index => $row) {
+        foreach ($row as $button_group_index => $button_group) {
+          foreach ($button_group['items'] as $item__name) {
+            if ($item__name === 'Linkit') {
+              $old_linkit_button_path = 'settings.toolbar.rows.' . $row_index . '.' . $button_group_index . '.items';
+            }
+
+            if ($item__name === 'DrupalLink') {
+              $drupal_link_in_use = TRUE;
+            }
+          }
+        }
+      }
+
+      if ($old_linkit_button_path) {
+        $buttons = $editor_config->get($old_linkit_button_path);
+        $index = array_search('Linkit', $buttons);
+        // If the DrupalLink plugin is not present in the toolbar, lets add it
+        // in the same button group as the old linkit plugin was in.
+        if (!$drupal_link_in_use) {
+          $buttons[$index] = 'DrupalLink';
+        }
+        else {
+          unset($buttons[$index]);
+        }
+        $editor_config->set($old_linkit_button_path, array_values($buttons));
+        $editor_config->save(TRUE);
+      }
+
+      // Set the linkit settings to the DrupalLink.
+      $drupal_link_settings = [
+        'linkit_enabled' => TRUE,
+        'linkit_profile' => $old_linkit_settings['linkit_profile'],
+      ];
+      $editor_config->set('settings.plugins.drupallink', $drupal_link_settings);
+      $editor_config->save(TRUE);
+    }
+  }
+
+  // Enable the linkit_filter for all formats that is used with linkit.
+  foreach ($linkit_enabled_formats as $filter_id) {
+    $config = $config_factory->getEditable('filter.format.' . $filter_id);
+    $filter_html_weight = $config->get('filters.filter_html.weight');
+
+    $linkit_filter = [
+      'id' => 'linkit',
+      'provider' => 'linkit',
+      'status' => TRUE,
+      'weight' => $filter_html_weight ? ($filter_html_weight - 1) : -15,
+      'settings' => [
+        'title' => FALSE,
+      ],
+    ];
+    $config->set('filters.linkit', $linkit_filter);
+
+    $allowed_html = $config->get('filters.filter_html.settings.allowed_html');
+    if (!empty($allowed_html)) {
+      preg_match_all('/<([\w]+)[^>]*>/', $allowed_html, $out);
+      $current_mapping = array_combine($out[1], $out[0]);
+
+      if (isset($current_mapping['a'])) {
+        $allowed_html = str_replace($current_mapping['a'], str_replace('>', ' data-entity-type data-entity-uuid>', $current_mapping['a']), $allowed_html);
+      }
+      else {
+        $allowed_html .= ' <a href hreflang data-entity-type data-entity-uuid>';
+      }
+      $config->set('filters.filter_html.settings.allowed_html', $allowed_html);
+    }
+
+    $config->save(TRUE);
+  }
+}
+
+/**
+ * Prepare anchor attributes for substitution plugins.
+ */
+function linkit_update_8501() {
+  $config_factory = \Drupal::configFactory();
+
+  // Update all filter formats that allow the data-entity-uuid attribute to also
+  // allow the data-entity-substitution attribute.
+  foreach ($config_factory->listAll('filter.format.') as $id) {
+    $filter = $config_factory->getEditable($id);
+    if ($allowed_html = $filter->get('filters.filter_html.settings.allowed_html')) {
+      $allowed_html = str_replace('data-entity-uuid', 'data-entity-uuid data-entity-substitution', $allowed_html);
+      $filter->set('filters.filter_html.settings.allowed_html', $allowed_html);
+      $filter->save(TRUE);
+    }
+  }
+
+  // Update all "file" matchers to the "file" substitution plugin, to maintain
+  // existing behavior out of the box.
+  $config_factory = \Drupal::configFactory();
+  foreach ($config_factory->listAll('linkit.linkit_profile.') as $id) {
+    $profile = $config_factory->getEditable($id);
+    foreach ($profile->get('matchers') as $key => $matcher) {
+      $settings = $profile->get('matchers.' . $key . '.settings');
+      $settings['substitution_type'] = $matcher['id'] === 'entity:file' ? 'file' : 'canonical';
+      $profile->set('matchers.' . $key . '.settings', $settings);
+    }
+    $profile->save(TRUE);
+  }
+}
+
+/**
+ * Rename profile property 'result_description' to 'metadata'.
+ */
+function linkit_update_8502() {
+  $config_factory = \Drupal::configFactory();
+  foreach ($config_factory->listAll('linkit.linkit_profile.') as $id) {
+    $profile = $config_factory->getEditable($id);
+
+    foreach ($profile->get('matchers') as $key => $matcher) {
+      $old_value = $profile->get('matchers.' . $key . '.settings.result_description');
+      $profile->set('matchers.' . $key . '.settings.metadata', $old_value);
+      $profile->clear('matchers.' . $key . '.settings.result_description');
+    }
+
+    $profile->save(TRUE);
+  }
+}
+
+/**
+ * Remove imce integration settings.
+ */
+function linkit_update_8503() {
+  $config_factory = \Drupal::configFactory();
+  foreach ($config_factory->listAll('linkit.linkit_profile.') as $id) {
+    $profile = $config_factory->getEditable($id);
+    $profile->clear('third_party_settings.imce');
+    $profile->save(TRUE);
+  }
+}

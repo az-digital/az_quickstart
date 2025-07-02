@@ -1,0 +1,7 @@
+field.storage_settings.daterange:
+  type: field.storage_settings.datetime
+  label: 'Date range settings'
+  mapping:
+    optional_end_date:
+      type: boolean
+      label: 'Optional end date'

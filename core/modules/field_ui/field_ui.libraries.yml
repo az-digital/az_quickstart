@@ -1,0 +1,29 @@
+drupal.field_ui:
+  version: VERSION
+  js:
+    js/field_ui.js: {}
+  css:
+    theme:
+      css/field_ui.admin.css: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings
+    - core/once
+    - core/drupal.ajax
+    - core/drupal.dialog
+
+drupal.field_ui.manage_fields:
+  version: VERSION
+  css:
+    component:
+      css/field_ui_add_field.module.css: {}
+    theme:
+      css/field_ui_add_field.theme.css: {}
+      css/field_ui.icons.theme.css: {}
+
+drupal.field_ui_table:
+  version: VERSION
+  css:
+    theme:
+      css/field_ui_display_mode_table.css: {}

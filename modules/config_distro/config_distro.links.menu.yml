@@ -1,0 +1,5 @@
+config_distro.import:
+  title: 'Distribution Update'
+  description: 'Import configuration updates from distributions.'
+  route_name: config_distro.import
+  parent: system.admin_config_development

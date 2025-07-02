@@ -1,0 +1,12 @@
+# The 'type' should be "label" for short meta tags and "text" for ones which
+# could get longer, especially ones which use a textarea field instead of a
+# textfield.
+metatag.metatag_tag.schema_qa_page_id:
+  type: text
+  label: '@id'
+metatag.metatag_tag.schema_qa_page_type:
+  type: string
+  label: '@type'
+metatag.metatag_tag.schema_qa_page_main_entity:
+  type: text
+  label: 'mainEnity'

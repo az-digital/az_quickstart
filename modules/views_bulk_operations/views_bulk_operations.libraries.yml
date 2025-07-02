@@ -1,0 +1,21 @@
+frontUi:
+  version: 1.0
+  js:
+    js/frontUi.js: {}
+  css:
+    component:
+      css/frontUi.css: {}
+  dependencies:
+    - core/drupal
+    - core/drupal.ajax
+    - core/jquery
+    - core/once
+
+adminUi:
+  version: 1.0
+  js:
+    js/adminUi.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/once

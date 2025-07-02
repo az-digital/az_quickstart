@@ -1,0 +1,28 @@
+{
+  "name": "az-digital/arizona-bootstrap",
+  "description": "University of Arizona theme for Bootstrap.",
+  "homepage": "https://github.com/az-digital/arizona-bootstrap",
+  "authors": [
+      {
+          "name": "Arizona Digital",
+          "homepage": "https://digital.arizona.edu",
+          "role": "Team"
+      }
+  ],
+  "support": {
+    "issues": "https://github.com/az-digital/arizona-bootstrap/issues"
+  },
+  "license": "MIT",
+  "type": "drupal-library",
+  "require": {
+      "composer/installers": "*"
+  },
+  "replace": {
+      "twbs/bootstrap": "^4"
+  },
+  "extra": {
+      "branch-alias": {
+          "dev-main": "5.x-dev"
+      }
+  }
+}

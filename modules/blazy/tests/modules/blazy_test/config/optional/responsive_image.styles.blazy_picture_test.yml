@@ -1,0 +1,32 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - image.style.large
+    - image.style.medium
+    - image.style.thumbnail
+  enforced:
+    module:
+      - blazy_test
+  module:
+    - blazy_test
+id: blazy_picture_test
+label: 'Blazy picture test'
+image_style_mappings:
+  -
+    breakpoint_id: blazy_test.wide
+    multiplier: 1x
+    image_mapping_type: image_style
+    image_mapping: large
+  -
+    breakpoint_id: blazy_test.narrow
+    multiplier: 1x
+    image_mapping_type: image_style
+    image_mapping: medium
+  -
+    breakpoint_id: blazy_test.mobile
+    multiplier: 1x
+    image_mapping_type: image_style
+    image_mapping: thumbnail
+breakpoint_group: blazy_test
+fallback_image_style: thumbnail

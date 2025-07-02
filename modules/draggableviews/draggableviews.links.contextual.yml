@@ -1,0 +1,5 @@
+draggableviews.view.order_view:
+  title: 'Order view'
+  route_name: <none>
+  group: draggableviews.view.order_view
+  weight: 200

@@ -1,0 +1,37 @@
+{#
+/**
+ * @file
+ * Theme override for a form element label.
+ *
+ * Available variables:
+ * - title: The label's text.
+ * - title_display: Elements title_display setting.
+ * - required: An indicator for whether the associated form element is required.
+ * - attributes: A list of HTML attributes for the label.
+ *
+ * @see template_preprocess_form_element_label()
+ */
+#}
+{%
+  set classes = [
+    title_display == 'after' ? 'option',
+    title_display == 'invisible' ? 'visually-hidden',
+    required ? 'js-form-required',
+    required ? 'form-required',
+    'd-block',
+    'mt-2',
+  ]
+%}
+{% if title is not empty or required -%}
+  <label{{ attributes.addClass(classes) }}>
+    <div class="bs-option-label">{{ title }}</div>
+    <div class="row no-gutters g-0">
+      {% for item in bs_option_values %}
+        {% set class = item == 'equal' ? '' : item == 'none' ? '-12' : '-' ~ item %}
+        <div class="bs-col text-center col{{ class }}">
+          <div class="px-1"><strong>{{ item == 'none' ? 'Custom'|t : loop.index }}</strong></div>
+        </div>
+      {% endfor %}
+    </div>
+  </label>
+{%- endif %}

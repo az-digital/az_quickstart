@@ -1,0 +1,10 @@
+services:
+  upgrade_status.commands:
+    class: \Drupal\upgrade_status\Drush\Commands\UpgradeStatusCommands
+    arguments:
+      - '@upgrade_status.result_formatter'
+      - '@upgrade_status.project_collector'
+      - '@upgrade_status.deprecation_analyzer'
+      - '@date.formatter'
+    tags:
+      - { name: drush.command }

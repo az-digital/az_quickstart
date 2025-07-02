@@ -1,0 +1,15 @@
+# List of words excluded from cspell validation for the project Token.
+# Mostly contains custom names: variables, modules, users, etc...
+
+# Allowed words until better suggestions are provided or added to dictionary.
+browsable
+unaliased
+smooshed
+
+# Custom variable names, ids or keys.
+dataprovider
+mlid
+tnid
+tokenarea
+tokenblock
+treetable

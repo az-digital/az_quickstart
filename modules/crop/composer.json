@@ -1,0 +1,13 @@
+{
+  "name": "drupal/crop",
+  "description": "Provides storage and API for image crops.",
+  "type": "drupal-module",
+  "homepage": "https://www.drupal.org/project/crop",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/crop"
+  },
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "drupal/core": "^9.3 || ^10 || ^11"
+  }
+}

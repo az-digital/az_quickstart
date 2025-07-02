@@ -1,0 +1,28 @@
+<?php
+
+/**
+ * @file
+ * Provides extra migrate process plugins.
+ */
+
+declare(strict_types=1);
+
+/**
+ * Implements hook_help().
+ */
+function migmag_process_help($route_name) {
+  switch ($route_name) {
+    case 'help.page.migmag_process':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>';
+      $output .= t(
+        'Provides additional migrate process plugins. See the <a href=":documentation">online documentation for Migrate Magician Process Plugins module</a>.',
+        [
+          ':documentation' => 'https://drupal.org/docs/contributed-modules/migrate-magician/migrate-magician-process-plugins-110',
+        ]
+      );
+      $output .= '</p>';
+      return $output;
+  }
+}

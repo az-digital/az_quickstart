@@ -1,0 +1,43 @@
+{
+  "name": "drupal/metatag",
+  "description": "Manage meta tags for all entities.",
+  "license": "GPL-2.0-or-later",
+  "type": "drupal-module",
+  "keywords": [
+    "Drupal",
+    "seo"
+  ],
+  "authors": [
+    {
+      "name": "See contributors",
+      "homepage": "https://www.drupal.org/node/640498/committers",
+      "role": "Developer"
+    }
+  ],
+  "homepage": "https://www.drupal.org/project/metatag",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/metatag",
+    "source": "https://git.drupalcode.org/project/metatag",
+    "docs": "https://www.drupal.org/docs/8/modules/metatag"
+  },
+  "require": {
+    "php": ">=8.0",
+    "drupal/core": "^9.4 || ^10 || ^11",
+    "drupal/token": "^1.0"
+  },
+  "require-dev": {
+    "drupal/forum": "*",
+    "drupal/hal": "^1 || ^2 || ^9",
+    "drupal/page_manager": "^4.0",
+    "drupal/redirect": "^1.0",
+    "ergebnis/composer-normalize": "*",
+    "mpyw/phpunit-patch-serializable-comparison": "*"
+  },
+  "minimum-stability": "dev",
+  "extra": {
+    "composer-normalize": {
+      "indent-size": 2,
+      "indent-style": "space"
+    }
+  }
+}

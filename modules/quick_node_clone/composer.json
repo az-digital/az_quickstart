@@ -1,0 +1,28 @@
+{
+    "name": "drupal/quick_node_clone",
+    "type": "drupal-module",
+    "description": "Quickly clone a node with regular fields.",
+    "license": "GPL-2.0-or-later",
+    "homepage": "https://www.drupal.org/project/quick_node_clone",
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "vilepickle",
+            "homepage": "https://www.drupal.org/u/vilepickle",
+            "role": "Maintainer"
+        },
+        {
+            "name": "Neslee Canil Pinto",
+            "homepage": "https://www.drupal.org/u/neslee-canil-pinto",
+            "role": "Maintainer"
+        }
+    ],
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/quick_node_clone",
+        "source": "https://git.drupalcode.org/project/quick_node_clone"
+    },
+    "require-dev": {
+        "drupal/paragraphs": "1.x-dev",
+        "drupal/group": "^1 || ^2 || ^3"
+    }
+}

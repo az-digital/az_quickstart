@@ -1,0 +1,85 @@
+# The 'type' should be "label" for short meta tags and "text" for ones which
+# could get longer, especially ones which use a textarea field instead of a
+# textfield.
+
+metatag.metatag_tag.abstract:
+  type: text
+  label: 'Abstract'
+metatag.metatag_tag.cache_control:
+  type: text
+  label: 'Cache control'
+metatag.metatag_tag.canonical_url:
+  type: text
+  label: 'Canonical URL'
+metatag.metatag_tag.description:
+  type: text
+  label: 'Description'
+metatag.metatag_tag.expires:
+  type: text
+  label: 'Expires'
+metatag.metatag_tag.generator:
+  type: text
+  label: 'Generator'
+metatag.metatag_tag.image_src:
+  type: text
+  label: 'Image SRC'
+metatag.metatag_tag.keywords:
+  type: text
+  label: 'Keywords'
+metatag.metatag_tag.next:
+  type: text
+  label: 'Next page URL'
+metatag.metatag_tag.original_source:
+  type: text
+  label: 'Original source'
+metatag.metatag_tag.pragma:
+  type: text
+  label: 'Pragma'
+metatag.metatag_tag.prev:
+  type: text
+  label: 'Previous page URL'
+metatag.metatag_tag.rating:
+  type: text
+  label: 'Rating'
+metatag.metatag_tag.referrer:
+  type: text
+  label: 'Referrer policy'
+metatag.metatag_tag.refresh:
+  type: text
+  label: 'Refresh'
+metatag.metatag_tag.revisit_after:
+  type: text
+  label: 'Revisit After'
+metatag.metatag_tag.rights:
+  type: text
+  label: 'Rights'
+metatag.metatag_tag.robots:
+  type: text
+  label: 'Robots'
+metatag.metatag_tag.shortlink:
+  type: text
+  label: 'Shortlink'
+metatag.metatag_tag.title:
+  type: text
+  label: 'Page title'
+metatag.metatag_tag.icbm:
+  type: text
+  label: 'ICBM'
+metatag.metatag_tag.geo_region:
+  type: text
+  label: 'Geographical region'
+metatag.metatag_tag.geo_placename:
+  type: text
+  label: 'Geographical place name'
+metatag.metatag_tag.geo_position:
+  type: text
+  label: 'Geographical position'
+metatag.metatag_tag.set_cookie:
+  type: text
+  label: 'Set Cookie'
+metatag.metatag_tag.google:
+  type: text
+  label: 'Google'
+metatag.metatag_tag.author:
+  type: text
+  label: 'Author'

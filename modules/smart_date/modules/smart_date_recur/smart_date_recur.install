@@ -1,0 +1,125 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for smart_date_recur module.
+ */
+
+declare(strict_types=1);
+
+use Drupal\Core\Field\BaseFieldDefinition;
+
+/**
+ * Implements hook_requirements().
+ */
+function smart_date_recur_requirements($phase) {
+  $requirements = [];
+
+  if (!class_exists('\Recurr\Rule')) {
+    $requirements['smart_date_recur_dependencies'] = [
+      'title' => t('Smart date recur'),
+      'description' => \t('Smart Date Recur has unmet Composer dependencies. Read the <a href="@url">documentation</a> on how to install them.', [
+        '@url' => 'https://www.drupal.org/node/2627292',
+      ]),
+      'severity' => \REQUIREMENT_ERROR,
+    ];
+  }
+
+  return $requirements;
+}
+
+/**
+ * Increase the length of "freq" to 8 characters.
+ */
+function smart_date_recur_update_8301() {
+  db_change_varchar_field('smart_date_rule', 'freq', 8);
+}
+
+/**
+ * Adds "uuid" base field in smart_date_rule entity.
+ */
+function smart_date_recur_update_8302() {
+  $field_storage_definition = BaseFieldDefinition::create('uuid')
+    ->setLabel(t('UUID'))
+    ->setDescription(t('The UUID of the SmartDateRule entity.'))
+    ->setReadOnly(TRUE);
+  \Drupal::entityDefinitionUpdateManager()
+    ->installFieldStorageDefinition('uuid', 'smart_date_rule', 'smart_date_rule', $field_storage_definition);
+}
+
+/**
+ * Generate an UUID for all rules.
+ */
+function smart_date_recur_update_8303(&$sandbox) {
+  if (!isset($sandbox['progress'])) {
+    $sandbox['progress'] = 0;
+    $sandbox['last'] = 0;
+    $sandbox['max'] = \Drupal::database()->query('SELECT COUNT(rid) FROM {smart_date_rule} WHERE uuid IS NULL')->fetchField();
+  }
+
+  $uuid_service = \Drupal::service('uuid');
+  $rids = \Drupal::database()->queryRange('SELECT rid FROM {smart_date_rule} WHERE rid > :rid AND uuid IS NULL ORDER BY rid ASC', 0, 10, [':rid' => $sandbox['last']])->fetchCol();
+  foreach ($rids as $value) {
+    \Drupal::database()->update('smart_date_rule')
+      ->fields([
+        'uuid' => $uuid_service->generate(),
+      ])
+      ->condition('rid', $value)
+      ->isNull('uuid')
+      ->execute();
+    $sandbox['progress']++;
+    $sandbox['last'] = $value;
+  }
+
+  $sandbox['#finished'] = empty($sandbox['max']) ? 1 : ($sandbox['progress'] / $sandbox['max']);
+}
+
+if (!function_exists('db_change_varchar_field')) {
+
+  /**
+   * Change length of varchar entity field with data, safe with entity-updates.
+   *
+   * This updates the storage schema, the database schema, and the last
+   * installed schema.
+   *
+   * The entity schema must also be changed in code in the entities
+   * baseFieldDefinitions() or in an alter.
+   *
+   * @param string $entity_type_id
+   *   The entity type.
+   * @param string $field_name
+   *   The field name to change.
+   * @param int $field_length
+   *   The new length of the field, must be larger than the previous value.
+   */
+  function db_change_varchar_field($entity_type_id, $field_name, $field_length) {
+    /** @var \Drupal\Core\Entity\EntityLastInstalledSchemaRepositoryInterface $schema_repository */
+    $schema_repository = \Drupal::service('entity.last_installed_schema.repository');
+    /** @var \Drupal\Core\Entity\EntityFieldManager $entity_field_manager */
+    $entity_field_manager = \Drupal::service('entity_field.manager');
+    $base_field_definitions = $entity_field_manager->getBaseFieldDefinitions($entity_type_id);
+    $schema_repository->setLastInstalledFieldStorageDefinition($base_field_definitions[$field_name]);
+    $field_storage_definitions = $schema_repository->getLastInstalledFieldStorageDefinitions($entity_type_id);
+    $field_storage_definitions[$field_name]->setSetting('max_length', $field_length);
+
+    // Update the field definition in the last installed schema repository.
+    $schema_repository->setLastInstalledFieldStorageDefinitions($entity_type_id, $field_storage_definitions);
+
+    // Update the storage schema.
+    $key_value = \Drupal::keyValue('entity.storage_schema.sql');
+    $key_name = $entity_type_id . '.field_schema_data.' . $field_name;
+    $storage_schema = $key_value->get($key_name);
+    // Update all tables where the field is present.
+    foreach ($storage_schema as &$table_schema) {
+      $table_schema['fields'][$field_name]['length'] = $field_length;
+    }
+    $key_value->set($key_name, $storage_schema);
+
+    // Update the database tables where the field is part of.
+    $db = Drupal::database();
+    foreach ($storage_schema as $table_name => $table_schema) {
+      $db->schema()->changeField($table_name, $field_name, $field_name, $table_schema['fields'][$field_name]);
+    }
+  }
+
+}

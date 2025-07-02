@@ -1,0 +1,3 @@
+.ui-dialog ~ .ck-body-wrapper {
+  --ck-z-panel: 1261;
+}

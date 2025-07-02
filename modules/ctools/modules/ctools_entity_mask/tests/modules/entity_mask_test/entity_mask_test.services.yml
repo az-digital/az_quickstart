@@ -1,0 +1,5 @@
+services:
+  config.update:
+    class: Drupal\entity_mask_test\EventSubscriber\ConfigUpdateSubscriber
+    tags:
+      - { name: event_subscriber }

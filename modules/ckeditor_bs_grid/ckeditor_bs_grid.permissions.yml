@@ -1,0 +1,3 @@
+administer ckeditor_bs_grid:
+  title: 'Administer settings for CKEditor BS Grid'
+  description: 'Gives access to settings forms'

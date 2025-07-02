@@ -1,0 +1,46 @@
+config_ignore.settings:
+  type: config_object
+  label: 'Config Ignore Settings'
+  mapping:
+    mode:
+      type: string
+      label: 'Operational mode'
+      constraints:
+        AllowedValues:
+          - simple
+          - intermediate
+          - advanced
+    ignored_config_entities:
+      type: config_ignore.type.[%parent.mode]
+
+config_ignore.type.simple:
+  type: sequence
+  label: 'List of ignored configurations'
+  orderby: value
+  sequence:
+    type: string
+
+config_ignore.type.intermediate:
+  type: mapping
+  label: 'lists for import and export ignoring'
+  mapping:
+    import:
+      type: config_ignore.type.simple
+      label: 'List of ignored configurations on import'
+    export:
+      type: config_ignore.type.simple
+      label: 'List of ignored configurations on export'
+
+config_ignore.type.advanced:
+  type: mapping
+  label: 'Settings for advanced ignoring'
+  mapping:
+    create:
+      type: config_ignore.type.intermediate
+      label: 'List of created ignored configurations'
+    update:
+      type: config_ignore.type.intermediate
+      label: 'List of updated ignored configurations'
+    delete:
+      type: config_ignore.type.intermediate
+      label: 'List of deleted ignored configurations'

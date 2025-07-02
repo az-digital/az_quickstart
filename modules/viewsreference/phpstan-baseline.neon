@@ -1,0 +1,6 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Access to an undefined property Drupal\\\\viewsreference\\\\Plugin\\\\Field\\\\FieldType\\\\ViewsReferenceItem\\:\\:\\$display_id\\.$#"
+			count: 1
+			path: src/Plugin/Field/FieldType/ViewsReferenceItem.php

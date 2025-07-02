@@ -1,0 +1,59 @@
+quality: 75
+binaries: 'imagemagick'
+imagemagick_version: 'v6'
+path_to_binaries: ''
+prepend: ''
+log_warnings: TRUE
+debug: FALSE
+advanced:
+  density: 0
+  colorspace: '0'
+  profile: ''
+  coalesce: FALSE
+image_formats:
+  PNG:
+    mime_type: image/png
+  JPEG:
+    mime_type: image/jpeg
+  JPG:
+    mime_type: image/jpeg
+    weight: 10
+    enabled: false
+  GIF:
+    mime_type: image/gif
+  GIF87:
+    mime_type: image/gif
+    weight: 10
+    enabled: false
+  SVG:
+    mime_type: image/svg+xml
+    enabled: false
+  WEBP:
+    mime_type: image/webp
+  AVIF:
+    mime_type: image/avif
+    enabled: false
+  TIFF:
+    mime_type: image/tiff
+    enabled: false
+  PDF:
+    mime_type: application/pdf
+    enabled: false
+  HEIC:
+    mime_type: image/heif
+    enabled: false
+  BMP:
+    mime_type: image/x-ms-bmp
+    enabled: false
+  PSD:
+    mime_type: image/x-photoshop
+    enabled: false
+  WBMP:
+    mime_type: image/vnd.wap.wbmp
+    enabled: false
+  XBM:
+    mime_type: image/x-xbitmap
+    enabled: false
+  ICO:
+    mime_type: image/vnd.microsoft.icon
+    enabled: false

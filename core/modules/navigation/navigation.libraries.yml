@@ -1,0 +1,96 @@
+internal.navigation:
+  # Internal library. Do not depend on it outside core nor add core usage
+  # beyond the Navigation module.
+  version: VERSION
+  js:
+    js/toolbar-menu.js: {}
+    js/tooltip.js: {}
+    js/sidebar.js: {}
+    js/admin-toolbar-wrapper.js: {}
+    js/arrow-navigation.js: {}
+  css:
+    theme:
+      css/base/fonts.css: {}
+      css/base/variables.css: {}
+      css/components/admin-toolbar.css: {}
+      css/components/top-bar.css: {}
+      css/components/admin-toolbar-control-bar.css: {}
+      css/components/toolbar-menu.css: {}
+      css/components/toolbar-block.css: {}
+  dependencies:
+    - core/drupal.displace
+    - core/once
+    - core/tabbable
+    - navigation/admin-reset-styles
+    - navigation/body-scroll-lock
+    - navigation/internal.dropdown
+    - navigation/internal.tooltip
+    - navigation/internal.popover
+    - navigation/internal.safe-triangle
+
+admin-reset-styles:
+  css:
+    base:
+      css/base/admin-reset-styles.css: {}
+
+navigation.layout:
+  dependencies:
+    - navigation/internal.navigation
+
+body-scroll-lock:
+  version: VERSION
+  css:
+    base:
+      css/components/body-scroll-lock.css: {}
+
+internal.popover:
+  # Internal library. Do not depend on it outside core nor add core usage
+  # beyond the Navigation module.
+  js:
+    js/toolbar-popover.js: {}
+  css:
+    base:
+      css/components/toolbar-popover.css: {}
+  dependencies:
+    - core/once
+
+internal.tooltip:
+  # Internal library. Do not depend on it outside core nor add core usage
+  # beyond the Navigation module.
+  js:
+    js/tooltip.js: {}
+  css:
+    base:
+      css/components/tooltip.css: {}
+  dependencies:
+    - core/once
+    - core/internal.floating-ui
+
+internal.dropdown:
+  # Internal library. Do not depend on it outside core nor add core usage
+  # beyond the Navigation module.
+  js:
+    js/toolbar-dropdown.js: {}
+  css:
+    base:
+      css/components/toolbar-dropdown.css: {}
+  dependencies:
+    - core/once
+    - core/internal.floating-ui
+
+navigation.layoutBuilder:
+  css:
+    base:
+      css/base/layout-builder.css: {}
+
+internal.safe-triangle:
+  # Internal library. Do not depend on it outside core nor add core usage
+  # beyond the Navigation module.
+  js:
+    js/safe-triangle.js: {}
+  css:
+    base:
+      css/components/safe-triangle.css: {}
+  dependencies:
+    - core/drupal
+    - core/once

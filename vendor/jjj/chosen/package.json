@@ -1,0 +1,93 @@
+{
+  "author": "jjj",
+  "name": "chosen",
+  "version": "2.2.1",
+  "description": "Chosen is a JavaScript plugin that makes select boxes user-friendly. It is currently available in both jQuery and Prototype flavors.",
+  "keywords": [
+    "select",
+    "multiselect",
+    "dropdown",
+    "form",
+    "input",
+    "ui"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jjj/chosen.git"
+  },
+  "engines": {
+    "node": ">=4"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "devDependencies": {
+    "autoprefixer": "^7.1.2",
+    "coffee-script": ">= 1.6",
+    "grunt": "^1.2.1",
+    "grunt-contrib-coffee": "^2.1.0",
+    "grunt-contrib-concat": "~1.0",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-cssmin": "~2.2",
+    "grunt-contrib-jasmine": "^2.2.0",
+    "grunt-contrib-uglify": "4.0.1",
+    "grunt-contrib-uglify-es": "git://github.com/gruntjs/grunt-contrib-uglify.git#harmony",
+    "grunt-contrib-watch": "^1.1.0",
+    "grunt-gh-pages": "^4.0.0",
+    "grunt-postcss": "^0.9.0",
+    "grunt-sass": "3.1.0",
+    "grunt-zip": "~0.17.1",
+    "grunt1.0-dom-munger": "~3.4",
+    "load-grunt-tasks": "^3.5.2",
+    "node-sass": "^4.14.1",
+    "simulant": "^0.2.2"
+  },
+  "contributors": [
+    {
+      "name": "John James Jacoby",
+      "url": "https://github.com/jjj"
+    },
+    {
+      "name": "Patrick Filler",
+      "url": "https://github.com/pfiller"
+    },
+    {
+      "name": "Christophe Coevoet",
+      "url": "https://github.com/stof"
+    },
+    {
+      "name": "Ken Earley",
+      "url": "https://github.com/kenearley"
+    },
+    {
+      "name": "Koen Punt",
+      "url": "https://github.com/koenpunt"
+    }
+  ],
+  "license": "MIT",
+  "homepage": "https://jjj.github.io/chosen/",
+  "bugs": "https://github.com/jjj/chosen/issues",
+  "_extra": {
+    "title": "Chosen",
+    "license": {
+      "type": "MIT",
+      "url": "https://github.com/jjj/chosen/blob/master/LICENSE.md"
+    },
+    "links": {
+      "download": "https://github.com/jjj/chosen/releases",
+      "docs": "https://jjj.github.io/chosen/"
+    },
+    "main": [
+      "chosen.jquery.js",
+      "chosen.css"
+    ],
+    "files": [
+      "chosen.jquery.js",
+      "chosen.jquery.min.js",
+      "chosen.proto.js",
+      "chosen.proto.min.js",
+      "chosen.css",
+      "chosen.min.css"
+    ]
+  }
+}

@@ -1,0 +1,137 @@
+<?php
+
+/**
+ * @file
+ * Enables Drupal to send e-mail directly to an SMTP server.
+ *
+ * This module uses a customized extract of the PHPMailer
+ * library (originally by Brent R. Matzelle, now maintained
+ *  by Codeworx Tech.) relicensed from LGPL to GPL, included
+ * as a part of the module.
+ *
+ * Overriding mail handling in Drupal to make SMTP the default
+ * transport layer, requires to change the 'system.mail.interface'
+ * default value ['default' => 'Drupal\Core\Mail\PhpMail'].
+ * This module uses ['default' => 'SMTPMailSystem'].
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_modules_installed().
+ */
+function smtp_modules_installed($modules, $is_syncing = FALSE) {
+  // Disable the SMTP mailsystem if the mailsystem module is installed.
+  if (in_array('mailsystem', $modules) && !$is_syncing) {
+    // If mailsystem module is enabled, make sure SMTP is disabled.
+    \Drupal::moduleHandler()->loadInclude('smtp', 'install');
+    _disable_smtp();
+  }
+}
+
+/**
+ * Implements hook_help().
+ */
+function smtp_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.smtp':
+      return t('Allow for site emails to be sent through an SMTP server of your choice.');
+  }
+}
+
+/**
+ * Implements hook_mail().
+ */
+function smtp_mail($key, &$message, $params) {
+  if ($key == 'smtp-test') {
+    $message['subject'] = $params['subject'];
+    $message['body'] = $params['body'];
+  }
+}
+
+/**
+ * Implements hook_queue_info().
+ */
+function smtp_queue_info() {
+  $queues['smtp_send_queue'] = [
+    'worker callback' => 'smtp_send_queue_runner',
+    'cron' => [
+      'time' => 60,
+    ],
+  ];
+  return $queues;
+}
+
+/**
+ * Smtp_send_queue queuer.
+ */
+function smtp_send_queue($mailerObj) {
+  $queue = Drupal::queue('smtp_send_queue');
+  $queue->createItem($mailerObj);
+}
+
+/**
+ * SMTP queue runner function.
+ *
+ * @param array $variables
+ *   Variables to send trought runner.
+ */
+function smtp_send_queue_runner(array $variables) {
+  _smtp_mailer_send($variables);
+}
+
+/**
+ * Helper function to send mails.
+ *
+ * @param array $variables
+ *   Variables to send email.
+ *
+ * @return bool
+ *   True if email was sent. False otherwise.
+ */
+function _smtp_mailer_send(array $variables) {
+
+  $smtp_config = \Drupal::config('smtp.settings');
+
+  $mailer = $variables['mailer'];
+  $to = $variables['to'];
+  $from = $variables['from'];
+  $system = $variables['mail_system'];
+
+  $logger = \Drupal::logger('smtp');
+
+  // Let the people know what is going on.
+  $logger->info('Sending mail to: @to (subject: %subject)', ['@to' => $to, '%subject' => $mailer->Subject]);
+
+  // Try to send e-mail. If it fails, set watchdog entry.
+  try {
+    $mailer->Send();
+  }
+  catch (\Exception $e) {
+    $logger->error('Error sending e-mail from @from to @to: @error_message', [
+      '@from' => $from,
+      '@to' => $to,
+      '@error_message' => $mailer->ErrorInfo,
+    ]);
+    return FALSE;
+  }
+  finally {
+    $system->debug();
+  }
+
+  if (!$smtp_config->get('smtp_keepalive')) {
+    $mailer->SmtpClose();
+  }
+  return TRUE;
+}
+
+/**
+ * Implements hook_migration_plugins_alter().
+ *
+ * Adds mapping for SmtpMailSystem in d7_system_mail.
+ */
+function smtp_migration_plugins_alter(array &$migrations) {
+  if (isset($migrations['d7_system_mail'])) {
+    $migrations['d7_system_mail']['process']['interface/default']['map']['SmtpMailSystem'] = 'SMTPMailSystem';
+  }
+}

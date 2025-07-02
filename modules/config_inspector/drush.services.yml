@@ -1,0 +1,6 @@
+services:
+  config_inspector.commands:
+    class: Drupal\config_inspector\Commands\InspectorCommands
+    arguments: ['@config_inspector.manager', '@config.storage']
+    tags:
+      - { name: drush.command }

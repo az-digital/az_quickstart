@@ -1,0 +1,22 @@
+services:
+  logger.channel.ib_dam:
+    class: Drupal\Core\Logger\LoggerChannel
+    factory: logger.factory:get
+    arguments: ['ib_dam']
+
+  ib_dam.api:
+    class: Drupal\ib_dam\IbDamApi
+    arguments: ['@http_client_factory', '@logger.channel.ib_dam']
+
+  ib_dam.downloader:
+    class: Drupal\ib_dam\Downloader
+    arguments:
+      - '@ib_dam.api'
+      - '@config.factory'
+      - '@logger.channel.ib_dam'
+      - '@file_system'
+      - '@uuid'
+
+  plugin.manager.ib_dam.asset_validation:
+    class: Drupal\ib_dam\AssetValidation\AssetValidationManager
+    parent: default_plugin_manager

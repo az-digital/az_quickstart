@@ -1,0 +1,19 @@
+services:
+  Drupal\performance_test\PerformanceDataCollector:
+    tags:
+      - { name: event_subscriber }
+      - { name: needs_destruction, priority: -1000 }
+  Drupal\performance_test\DatabaseEventEnabler:
+    arguments: ['@database']
+    tags:
+      - { name: http_middleware, priority: 1000, responder: true }
+  performance_test.cache_factory:
+    class: Drupal\performance_test\Cache\CacheFactoryDecorator
+    public: false
+    decorates: cache_factory
+    arguments: ['@performance_test.cache_factory.inner', '@Drupal\performance_test\PerformanceDataCollector']
+  performance_test.cache_tags.invalidator.checksum:
+    class: Drupal\performance_test\Cache\CacheTagsChecksumDecorator
+    public: false
+    decorates: cache_tags.invalidator.checksum
+    arguments: ['@performance_test.cache_tags.invalidator.checksum.inner', '@Drupal\performance_test\PerformanceDataCollector']

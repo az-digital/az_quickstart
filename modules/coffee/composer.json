@@ -1,0 +1,47 @@
+{
+    "name": "drupal/coffee",
+    "description": "Provides an Alfred like search box to navigate within your site.",
+    "type": "drupal-module",
+    "homepage": "https://drupal.org/project/coffee",
+    "authors": [
+        {
+            "name": "Michael Mol",
+            "homepage": "https://www.drupal.org/u/michaelmol",
+            "role": "Maintainer"
+        },
+        {
+            "name": "Marco",
+            "homepage": "https://www.drupal.org/u/willzyx",
+            "role": "Maintainer"
+        },
+        {
+            "name": "Oliver Köhler",
+            "homepage": "https://www.drupal.org/u/nebel54",
+            "role": "Maintainer"
+        },
+        {
+            "name": "Alli Price",
+            "homepage": "https://www.drupal.org/u/heylookalive",
+            "role": "Maintainer"
+        },
+        {
+            "name": "See other contributors",
+            "homepage": "https://www.drupal.org/node/1356930/committers",
+            "role": "contributor"
+        }
+    ],
+    "support": {
+        "issues": "https://drupal.org/project/issues/coffee",
+        "irc": "irc://irc.freenode.org/drupal-contribute",
+        "source": "https://git.drupalcode.org/project/coffee"
+    },
+    "keywords": ["Drupal"],
+    "license": "GPL-2.0-or-later",
+    "minimum-stability": "dev",
+    "require": {},
+    "extra": {
+        "branch-alias": {
+            "dev-8.x-1.x": "8.1.x-dev"
+        }
+    }
+}

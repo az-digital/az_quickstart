@@ -1,0 +1,13 @@
+name: 'Entity Mask test'
+type: module
+package: Testing
+dependencies:
+  - drupal:block_content
+  - ctools_entity_mask:ctools_entity_mask
+  - drupal:image
+  - drupal:text
+
+# Information added by Drupal.org packaging script on 2024-06-11
+version: '4.1.0'
+project: 'ctools'
+datestamp: 1718144953

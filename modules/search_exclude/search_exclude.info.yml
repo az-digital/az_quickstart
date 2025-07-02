@@ -1,0 +1,13 @@
+name: 'Search Exclude'
+type: module
+description: 'Exclude content types from node search.'
+core_version_requirement: ^9.1 || ^10 || ^11
+package: Search
+dependencies:
+  - drupal:search
+configure: entity.search_page.collection
+
+# Information added by Drupal.org packaging script on 2025-02-14
+version: '3.0.0-beta2'
+project: 'search_exclude'
+datestamp: 1739560644

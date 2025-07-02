@@ -1,0 +1,83 @@
+<?php
+
+/**
+ * @file
+ * Contains install and uninstall hooks.
+ */
+
+use Drupal\Core\File\FileSystemInterface;
+
+/**
+ * Implements hook_requirements().
+ */
+function asset_injector_requirements($phase) {
+  $requirements = [];
+  $uri = 'public://asset_injector';
+  $directory = \Drupal::service('stream_wrapper_manager')->normalizeUri($uri);
+  \Drupal::service('file_system')
+    ->prepareDirectory($directory, FileSystemInterface::CREATE_DIRECTORY | FileSystemInterface::MODIFY_PERMISSIONS);
+  $requirements['asset_injector'] = [
+    'title' => t('Asset Injector'),
+    'value' => is_writable($directory) ? t('Directory is writable') : t('Directory not writable'),
+    'description' => t('%directory should have write access.', ['%directory' => $directory]),
+    'severity' => is_writable($directory) ? REQUIREMENT_OK : REQUIREMENT_ERROR,
+  ];
+  return $requirements;
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function asset_injector_uninstall() {
+  $uri = 'public://asset_injector';
+  $directory = \Drupal::service('stream_wrapper_manager')->normalizeUri($uri);
+  \Drupal::service('file_system')->deleteRecursive($directory);
+}
+
+/**
+ * Change the entities from css_injector to asset_injector_css.
+ */
+function asset_injector_update_8200() {
+  $query = "UPDATE {config} SET name = REPLACE(name, 'asset_injector.css_injector', 'asset_injector.asset_injector_css') WHERE name LIKE 'asset_injector.css_injector%'";
+  \Drupal::database()->query($query);
+  $query = "UPDATE {config} SET name = REPLACE(name, 'asset_injector.js_injector', 'asset_injector.asset_injector_js') WHERE name LIKE 'asset_injector.js_injector%'";
+  \Drupal::database()->query($query);
+}
+
+/**
+ * Config objects from asset_injector.asset_injector_css to asset_injector.css.
+ */
+function asset_injector_update_8201() {
+  $query = "UPDATE {config} SET name = REPLACE(name, 'asset_injector.asset_injector_css', 'asset_injector.css') WHERE name LIKE 'asset_injector.asset_injector_css%'";
+  \Drupal::database()->query($query);
+  $query = "UPDATE {config} SET name = REPLACE(name, 'asset_injector.asset_injector_js', 'asset_injector.js') WHERE name LIKE 'asset_injector.asset_injector_js%'";
+  \Drupal::database()->query($query);
+}
+
+/**
+ * Replace the entity type name in key_value.
+ */
+function asset_injector_update_8202() {
+  $key_value_exists = \Drupal::database()
+    ->select('key_value', 'k')
+    ->fields('k')
+    ->condition('name', [
+      'asset_injector_css.entity_type',
+      'asset_injector_js.entity_type',
+    ], 'IN')
+    ->execute()
+    ->fetchAssoc();
+  if (!$key_value_exists) {
+    $query = "UPDATE {key_value} SET name = 'asset_injector_css.entity_type' WHERE name = 'css_injector.entity_type'";
+    \Drupal::database()->query($query);
+    $query = "UPDATE {key_value} SET name = 'asset_injector_js.entity_type' WHERE name = 'js_injector.entity_type'";
+    \Drupal::database()->query($query);
+  }
+  \Drupal::database()
+    ->delete('key_value')
+    ->condition('name', [
+      'css_injector.entity_type',
+      'js_injector.entity_type',
+    ], 'IN')
+    ->execute();
+}

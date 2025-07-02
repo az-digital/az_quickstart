@@ -1,0 +1,70 @@
+entity.google_tag_container.single_form:
+  path: '/admin/config/services/google-tag'
+  defaults:
+    _controller: '\Drupal\google_tag\GoogleTagController::tagEditForm'
+    _entity_form: 'google_tag_container'
+    _title: 'Default Tag Settings'
+    entity_type_id: 'google_tag_container'
+  requirements:
+    _permission: 'administer google_tag_container'
+
+# default settings
+google_tag.settings_form:
+  path: '/admin/config/services/google-tag/settings'
+  defaults:
+    _title: 'Google Tag Global settings'
+    _form: '\Drupal\google_tag\Form\SettingsForm'
+  requirements:
+    _permission: 'administer google_tag_container'
+
+# container management
+entity.google_tag_container.collection:
+  path: '/admin/config/services/google-tag/containers'
+  defaults:
+    _entity_list: 'google_tag_container'
+    _title: 'Google Tag containers'
+  requirements:
+    _custom_access: '\Drupal\google_tag\GoogleTagController::containerListingAccess'
+
+entity.google_tag_container.add_form:
+  path: '/admin/config/services/google-tag/add'
+  defaults:
+    _entity_form: 'google_tag_container'
+    _title: 'Add tag container'
+    entity_type_id: 'google_tag_container' # 'entity.google_tag argument'
+  requirements:
+    _custom_access: '\Drupal\google_tag\GoogleTagController::addContainerAccess'
+
+entity.google_tag_container.enable:
+  path: '/admin/config/services/google-tag/manage/{google_tag_container}/enable'
+  defaults:
+    _controller: '\Drupal\google_tag\GoogleTagController::enable'
+    entity_type: 'google_tag_container'
+  requirements:
+    _permission: 'administer google_tag_container'
+    _csrf_token: 'TRUE'
+
+entity.google_tag_container.disable:
+  path: '/admin/config/services/google-tag/manage/{google_tag_container}/disable'
+  defaults:
+    _controller: '\Drupal\google_tag\GoogleTagController::disable'
+    entity_type: 'google_tag_container'
+  requirements:
+    _permission: 'administer google_tag_container'
+    _csrf_token: 'TRUE'
+
+entity.google_tag_container.edit_form:
+  path: '/admin/config/services/google-tag/manage/{google_tag_container}'
+  defaults:
+    _entity_form: 'google_tag_container'
+    _title: 'Edit tag container'
+  requirements:
+    _permission: 'administer google_tag_container'
+
+entity.google_tag_container.delete_form:
+  path: '/admin/config/services/google-tag/manage/{google_tag_container}/delete'
+  defaults:
+    _entity_form: 'google_tag_container.delete'
+  requirements:
+    _permission: 'administer google_tag_container'
+    _csrf_token: 'TRUE'

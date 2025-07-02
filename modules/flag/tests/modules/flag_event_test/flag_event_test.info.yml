@@ -1,0 +1,11 @@
+name: 'Flag event test module'
+description: 'Functionality to assist Flag event testing.'
+type: module
+dependencies:
+  - flag
+package: Testing
+
+# Information added by Drupal.org packaging script on 2025-04-05
+version: '8.x-4.0-beta7'
+project: 'flag'
+datestamp: 1743851263

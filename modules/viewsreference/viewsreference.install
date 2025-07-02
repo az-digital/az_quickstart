@@ -1,0 +1,286 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the viewsreference module.
+ */
+
+declare(strict_types=1);
+
+use Drupal\Core\Entity\Sql\SqlContentEntityStorage;
+use Drupal\Core\Entity\Sql\SqlContentEntityStorageException;
+
+/**
+ * Update node fields already created with argument field.
+ */
+function viewsreference_update_8100() {
+  viewsreference_update_viewsreference_fields(['argument']);
+}
+
+/**
+ * Update node fields already created with title field.
+ */
+function viewsreference_update_8101() {
+  viewsreference_update_viewsreference_fields(['title']);
+}
+
+/**
+ * Update node fields already created with data field.
+ */
+function viewsreference_update_8102() {
+  viewsreference_update_viewsreference_fields(['data']);
+}
+
+/**
+ * Migrate title and argument columns to the new data field.
+ */
+function viewsreference_update_8103() {
+  $field_type = 'viewsreference';
+  $entity_type_manager = \Drupal::entityTypeManager();
+  /** @var \Drupal\Core\Entity\EntityFieldManagerInterface $entity_field_manager */
+  $entity_field_manager = \Drupal::service('entity_field.manager');
+  $entity_field_map = $entity_field_manager->getFieldMapByFieldType($field_type);
+  $database = \Drupal::database();
+  $entity_def_manager = \Drupal::entityDefinitionUpdateManager();
+  /** @var \Drupal\Core\Entity\EntityDisplayRepositoryInterface $entity_display_manager */
+  $entity_display_manager = \Drupal::service('entity_display.repository');
+
+  foreach ($entity_field_map as $entity_type_id => $field_map) {
+    $entity_storage = $entity_type_manager->getStorage($entity_type_id);
+
+    // Only SQL storage based entities are supported / throw known exception.
+    if (!($entity_storage instanceof SqlContentEntityStorage)) {
+      continue;
+    }
+
+    $entity_type = $entity_type_manager->getDefinition($entity_type_id);
+    $field_storage_definitions = $entity_field_manager->getFieldStorageDefinitions($entity_type_id);
+    /** @var Drupal\Core\Entity\Sql\DefaultTableMapping $table_mapping */
+    $table_mapping = $entity_storage->getTableMapping($field_storage_definitions);
+    // Only need field storage definitions of viewsreference fields.
+    /** @var \Drupal\Core\Field\FieldStorageDefinitionInterface $field_storage_definition */
+    foreach (array_intersect_key($field_storage_definitions, $field_map) as $field_storage_definition) {
+      $field_name = $field_storage_definition->getName();
+
+      try {
+        $table = $table_mapping->getFieldTableName($field_name);
+      }
+      catch (SqlContentEntityStorageException $e) {
+        // Custom storage? Broken site? No matter what, if there is no table
+        // or column, there's little we can do.
+        continue;
+      }
+
+      // See if the field has a revision table.
+      $revision_table = FALSE;
+      if ($entity_type->isRevisionable() && $field_storage_definition->isRevisionable()) {
+        if ($table_mapping->requiresDedicatedTableStorage($field_storage_definition)) {
+          $revision_table = $table_mapping->getDedicatedRevisionTableName($field_storage_definition);
+        }
+        elseif ($table_mapping->allowsSharedTableStorage($field_storage_definition)) {
+          $revision_table = $entity_type->getRevisionDataTable() ?: $entity_type->getRevisionTable();
+        }
+      }
+
+      $existing_data = [];
+      foreach (array_filter([$table, $revision_table]) as $_table) {
+        $existing_data[$_table] = $database
+          ->select($_table)
+          ->fields($_table)
+          ->execute()
+          ->fetchAll(PDO::FETCH_ASSOC);
+
+        // Don't continue if no existing data.
+        if (empty($existing_data[$_table])) {
+          continue;
+        }
+
+        // Truncate the table.
+        $database->truncate($_table)->execute();
+      }
+
+      // Install the schema updates.
+      $entity_def_manager->updateFieldStorageDefinition(
+        $entity_def_manager->getFieldStorageDefinition($field_name, $entity_type_id)
+      );
+
+      foreach (array_filter([$table, $revision_table]) as $_table) {
+        if (!empty($existing_data[$_table])) {
+          // Build and execute the insert query.
+          $insert_query = $database->insert($_table);
+          $did_fields = FALSE;
+          foreach (array_keys($existing_data[$_table]) as $stack_id) {
+            $row_data = $existing_data[$_table][$stack_id];
+            // Data can empty because it was for advanced use.
+            // phpcs:disable DrupalPractice.FunctionCalls.InsecureUnserialize.InsecureUnserialize
+            $existing_data_row = is_string($row_data["{$field_name}_data"]) ? unserialize($row_data["{$field_name}_data"], ['allowed_class' => FALSE]) : [];
+            // phpcs:enable
+            $existing_data_row['title'] = $row_data["{$field_name}_title"];
+            $existing_data_row['argument'] = $row_data["{$field_name}_argument"];
+            $existing_data[$_table][$stack_id]["{$field_name}_data"] = serialize(array_filter($existing_data_row));
+            unset(
+              $existing_data[$_table][$stack_id]["{$field_name}_argument"],
+              $existing_data[$_table][$stack_id]["{$field_name}_title"]
+            );
+            if (!$did_fields) {
+              $did_fields = TRUE;
+              $insert_query->fields(array_keys($existing_data[$_table][$stack_id]));
+            }
+            $insert_query->values($existing_data[$_table][$stack_id]);
+          }
+
+          $insert_query->execute();
+        }
+
+        // Drop existing argument and title fields.
+        $database->schema()->dropField($_table, "{$field_name}_argument");
+        $database->schema()->dropField($_table, "{$field_name}_title");
+      }
+
+      // Update field definition settings to enable the title/argument plugins.
+      foreach ((array) $field_map[$field_name]['bundles'] as $bundle) {
+        $bundle_fields = $entity_field_manager->getFieldDefinitions($entity_type_id, $bundle);
+        /** @var \Drupal\core\Field\FieldConfigInterface $field_definition */
+        $field_definition = $bundle_fields[$field_name];
+        $settings = $field_definition->getSettings();
+        $keys = ['plugin_types', 'preselect_views'];
+        foreach ($keys as $key) {
+          if (array_key_exists($key, $settings)) {
+            // Remove not enabled options for a valid schema. Unchecked option
+            // was a integer 0. Allows are only strings.
+            $settings[$key] = is_array($settings[$key]) ? array_filter($settings[$key]) : [];
+          }
+        }
+
+        $settings['enabled_settings'] = [
+          'argument' => 'argument',
+          'title' => 'title',
+        ];
+        $field_definition->setSettings($settings);
+        $field_definition->save();
+
+        // Remove not enabled options for a valid schema. Unchecked option was
+        // an integer 0. Allows are only strings.
+        $view_modes = $entity_display_manager->getViewModeOptionsByBundle($entity_type_id, $bundle);
+        foreach (array_keys($view_modes) as $view_mode) {
+          $viewDisplay = $entity_display_manager->getViewDisplay($entity_type_id, $bundle, $view_mode);
+          $renderer = $viewDisplay->getRenderer($field_name);
+          if ($renderer === NULL) {
+            continue;
+          }
+
+          $plugin_types = $renderer->getSetting('plugin_types');
+          if (is_array($plugin_types)) {
+            $renderer->setSetting('plugin_types', array_filter($plugin_types));
+          }
+          $viewDisplay->save();
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Update database columns for viewsreference field.
+ *
+ * @param array $columns_to_add
+ *   The names of the new fields to be added.
+ */
+function viewsreference_update_viewsreference_fields(array $columns_to_add = []) {
+  $field_type = 'viewsreference';
+  $processed_fields = [];
+  $field_type_manager = \Drupal::service('plugin.manager.field.field_type');
+  $field_definition = $field_type_manager->getDefinition($field_type);
+  $field_item_class = $field_definition['class'];
+
+  $schema = \Drupal::database()->schema();
+  $entity_type_manager = \Drupal::entityTypeManager();
+  $entity_field_manager = \Drupal::service('entity_field.manager');
+  $entity_field_map = $entity_field_manager->getFieldMapByFieldType($field_type);
+  // The key-value collection for tracking installed storage schema.
+  $entity_storage_schema_sql = \Drupal::keyValue('entity.storage_schema.sql');
+  $entity_definitions_installed = \Drupal::keyValue('entity.definitions.installed');
+
+  foreach ($entity_field_map as $entity_type_id => $field_map) {
+    $entity_storage = $entity_type_manager->getStorage($entity_type_id);
+
+    // Only SQL storage based entities are supported / throw known exception.
+    if (!($entity_storage instanceof SqlContentEntityStorage)) {
+      continue;
+    }
+
+    $entity_type = $entity_type_manager->getDefinition($entity_type_id);
+    $field_storage_definitions = $entity_field_manager->getFieldStorageDefinitions($entity_type_id);
+    /** @var Drupal\Core\Entity\Sql\DefaultTableMapping $table_mapping */
+    $table_mapping = $entity_storage->getTableMapping($field_storage_definitions);
+    // Only need field storage definitions of address fields.
+    /** @var \Drupal\Core\Field\FieldStorageDefinitionInterface $field_storage_definition */
+    foreach (array_intersect_key($field_storage_definitions, $field_map) as $field_storage_definition) {
+      $field_name = $field_storage_definition->getName();
+      try {
+        $table = $table_mapping->getFieldTableName($field_name);
+      }
+      catch (SqlContentEntityStorageException $e) {
+        // Custom storage? Broken site? No matter what, if there is no table
+        // or column, there's little we can do.
+        continue;
+      }
+      // See if the field has a revision table.
+      $revision_table = NULL;
+      if ($entity_type->isRevisionable() && $field_storage_definition->isRevisionable()) {
+        if ($table_mapping->requiresDedicatedTableStorage($field_storage_definition)) {
+          $revision_table = $table_mapping->getDedicatedRevisionTableName($field_storage_definition);
+        }
+        elseif ($table_mapping->allowsSharedTableStorage($field_storage_definition)) {
+          $revision_table = $entity_type->getRevisionDataTable() ?: $entity_type->getRevisionTable();
+        }
+      }
+      // Load the installed field schema so that it can be updated.
+      $schema_key = "$entity_type_id.field_schema_data.$field_name";
+      $field_schema_data = $entity_storage_schema_sql->get($schema_key);
+
+      $processed_fields[] = [$entity_type_id, $field_name];
+      // Loop over each new column and add it as a schema column change.
+      foreach ($columns_to_add as $column_id) {
+        $column = $table_mapping->getFieldColumnName($field_storage_definition, $column_id);
+        // Add `initial_from_field` to the new spec, as this will copy over
+        // the entire data.
+        $field_schema = $field_item_class::schema($field_storage_definition);
+        $spec = $field_schema['columns'][$column_id];
+
+        // Add the new column.
+        $schema->addField($table, $column, $spec);
+        if ($revision_table) {
+          $schema->addField($revision_table, $column, $spec);
+        }
+
+        // Add the new column to the installed field schema.
+        if ($field_schema_data) {
+          $field_schema_data[$table]['fields'][$column] = $field_schema['columns'][$column_id];
+          $field_schema_data[$table]['fields'][$column]['not null'] = FALSE;
+          if ($revision_table) {
+            $field_schema_data[$revision_table]['fields'][$column] = $field_schema['columns'][$column_id];
+            $field_schema_data[$revision_table]['fields'][$column]['not null'] = FALSE;
+          }
+        }
+      }
+
+      // Save changes to the installed field schema.
+      if ($field_schema_data) {
+        $recipient_column = $table_mapping->getFieldColumnName($field_storage_definition, 'recipient');
+        unset($field_schema_data[$table]['fields'][$recipient_column]);
+        if ($revision_table) {
+          unset($field_schema_data[$revision_table]['fields'][$recipient_column]);
+        }
+        $entity_storage_schema_sql->set($schema_key, $field_schema_data);
+      }
+      if ($table_mapping->allowsSharedTableStorage($field_storage_definition)) {
+        $key = "$entity_type_id.field_storage_definitions";
+        if ($definitions = $entity_definitions_installed->get($key)) {
+          $definitions[$field_name] = $field_storage_definition;
+          $entity_definitions_installed->set($key, $definitions);
+        }
+      }
+    }
+  }
+}

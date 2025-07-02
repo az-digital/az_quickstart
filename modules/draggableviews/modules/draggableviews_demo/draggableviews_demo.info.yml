@@ -1,0 +1,21 @@
+name: Draggableviews Demo
+type: module
+description: 'Demo module for Draggableviews.'
+core_version_requirement: ^9 || ^10 || ^11
+dependencies:
+  - drupal:block
+  - drupal:draggableviews
+  - drupal:menu_ui
+  - drupal:node
+  - drupal:user
+  - drupal:views
+  - drupal:system
+  - drupal:filter
+  - drupal:field
+hidden: false
+package: Views
+
+# Information added by Drupal.org packaging script on 2024-06-01
+version: '2.1.4'
+project: 'draggableviews'
+datestamp: 1717236721

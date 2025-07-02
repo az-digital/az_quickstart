@@ -1,0 +1,9 @@
+# Plugin helper for drupal-check.
+parameters:
+    entityMapping:
+      access_scheme:
+        class: Drupal\workbench_access\Entity\AccessScheme
+        storage: Drupal\Core\Entity\ContentEntityStorageBase
+      section_association:
+          class: Drupal\workbench_access\Entity\SectionAssociation
+          storage: Drupal\workbench_access\SectionAssociationStorage

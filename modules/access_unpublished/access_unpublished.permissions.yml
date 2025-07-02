@@ -1,0 +1,14 @@
+permission_callbacks:
+  - Drupal\access_unpublished\AccessUnpublishedPermissions::permissions
+
+renew token:
+  title: 'Renew tokens'
+  description: 'Renew expired tokens.'
+
+delete token:
+  title: 'Delete tokens'
+  description: 'Delete expired tokens.'
+
+access tokens overview:
+  title: 'Access the overview page'
+  description: 'Access the tokens overview page'

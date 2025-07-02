@@ -1,0 +1,19 @@
+config_distro_ignore.settings:
+  type: config_object
+  label: 'Config Distro Ignore Settings'
+  mapping:
+    all_collections:
+      type: sequence
+      label: 'List of permanently ignored configurations for all collections'
+      sequence:
+        type: string
+    default_collection:
+      type: sequence
+      label: 'List of ignored configurations for the default collection, possibly for a specific hash'
+      sequence:
+        type: string
+    custom_collections:
+      type: sequence
+      label: 'List of ignored configurations for other collections, possibly for a specific hash'
+      sequence:
+        type: config_object

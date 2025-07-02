@@ -1,0 +1,52 @@
+# @see: https://www.drupal.org/docs/develop/git/using-git-to-contribute-to-drupal/using-live-previews-on-drupal-core-and-contrib-merge-requests#s-adding-live-previews-to-a-contributed-module
+services:
+  php:
+    image: q0rban/tugboat-drupal:10
+    default: true
+    http: false
+    depends: mysql
+    commands:
+      update: |
+        set -eux
+        # Check out a branch using the unique Tugboat ID for this repository, to
+        # ensure we don't clobber an existing branch.
+        git checkout -b $TUGBOAT_REPO_ID
+        # Composer is hungry. You need a Tugboat project with a pretty sizeable
+        # chunk of memory.
+        export COMPOSER_MEMORY_LIMIT=-1
+        # This is an environment variable we added in the Dockerfile that
+        # provides the path to Drupal composer root (not the web root).
+        cd $DRUPAL_COMPOSER_ROOT
+        # We configure the Drupal project to use the checkout of the module as a
+        # Composer package repository.
+        composer config repositories.tugboat vcs $TUGBOAT_ROOT
+        # Now we can require this module, specifing the branch name we created
+        # above that uses the $TUGBOAT_REPO_ID environment variable.
+        composer require drupal/linkit:dev-$TUGBOAT_REPO_ID
+        # Install Drupal on the site.
+        vendor/bin/drush \
+          --yes \
+          --db-url=mysql://tugboat:tugboat@mysql:3306/tugboat \
+          --site-name="Live preview for ${TUGBOAT_PREVIEW_NAME}" \
+          --account-pass=admin \
+          site:install standard
+        # Set up the files directory permissions.
+        mkdir -p $DRUPAL_DOCROOT/sites/default/files
+        chgrp -R www-data $DRUPAL_DOCROOT/sites/default/files
+        chmod 2775 $DRUPAL_DOCROOT/sites/default/files
+        chmod -R g+w $DRUPAL_DOCROOT/sites/default/files
+        # Enable the module.
+        vendor/bin/drush --yes pm:enable linkit
+      build: |
+        set -eux
+        # Delete and re-check out this branch in case this is built from a Base Preview.
+        git branch -D $TUGBOAT_REPO_ID && git checkout -b $TUGBOAT_REPO_ID || true
+        export COMPOSER_MEMORY_LIMIT=-1
+        cd $DRUPAL_COMPOSER_ROOT
+        composer install --optimize-autoloader
+        # Update this module, including all dependencies.
+        composer update drupal/linkit --with-all-dependencies
+        vendor/bin/drush --yes updb
+        vendor/bin/drush cache:rebuild
+  mysql:
+    image: tugboatqa/mariadb

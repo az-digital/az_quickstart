@@ -1,0 +1,27 @@
+settings:
+  default_form_submit_label: Отправить
+  default_preview_next_button_label: 'Предварительный просмотр'
+  default_form_open_message: 'Эта форма еще не был открыт для представлений.'
+  default_form_close_message: 'Извините… Эта форма закрыта для новых представлений.'
+  default_form_exception_message: 'Не удается отобразить эту веб-форму. Пожалуйста, свяжитесь с администратором сайта.'
+  default_form_confidential_message: 'Эта форма является конфиденциальной. Вы должны <a href="[site:login-url]/logout?destination=[current-page:url:relative]">выйти из</a> представить его.'
+  default_wizard_prev_button_label: '&lt; Предыдущая страница'
+  default_wizard_next_button_label: 'Следующая страница настроек'
+  default_wizard_start_label: Начало
+  default_wizard_confirmation_label: Полный
+  default_preview_prev_button_label: '&lt; Предыдущих'
+  default_preview_message: 'Пожалуйста, просмотрите ваши представления. Ваше представление не является полным, пока вы не нажмете на кнопку «Отправить»!'
+  default_draft_button_label: 'Сохранить черновик'
+  default_draft_saved_message: 'Представления сохраняются. Вы можете вернуться к этой форме позже, и он будет восстановить текущие значения.'
+  default_draft_loaded_message: 'Частично заполненные формы был найден. Пожалуйста, заполните все остальные части.'
+  default_confirmation_message: 'Новое представление добавляется [webform:title].'
+  default_confirmation_back_label: 'Вернуться к форме'
+  default_limit_total_message: 'Допускаются не более представлений.'
+  default_limit_user_message: 'Допускаются не более представлений.'
+mail:
+  default_from_name: ': [название сайта]'
+  default_reply_to: ''
+  default_return_path: ''
+  default_subject: 'WebForm представления от: [webform_submission:source-сущность]'
+  default_body_text: 'Опубликовано в [webform_submission: создан] представленный: [webform_submission:user] представленный значениями являются: [webform_submission:values]'
+  default_body_html: "<p>Представленный на [webform_submission: создан]</p>\n<p>Представлено: [webform_submission:user]</p>\n<p>Представленные значения являются следующими:</p>[webform_submission:values]"

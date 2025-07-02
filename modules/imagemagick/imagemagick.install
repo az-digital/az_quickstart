@@ -1,0 +1,126 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * @file
+ * ImageMagick installation scripts.
+ */
+
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_requirements().
+ */
+function imagemagick_requirements($phase) {
+
+  $requirements = [];
+
+  if ($phase === 'install' && stripos(ini_get('disable_functions'), 'proc_open') !== FALSE) {
+    $reported_info = [];
+    // proc_open() is disabled.
+    $severity = REQUIREMENT_ERROR;
+    $reported_info[] = t("The <a href=':proc_open_url'>proc_open()</a> PHP function is disabled. It must be enabled for the toolkit to be installed. Edit the <a href=':disable_functions_url'>disable_functions</a> entry in your php.ini file, or consult your hosting provider.", [
+      ':proc_open_url' => 'http://php.net/manual/en/function.proc-open.php',
+      ':disable_functions_url' => 'http://php.net/manual/en/ini.core.php#ini.disable-functions',
+    ]);
+
+    $requirements = [
+      'imagemagick' => [
+        'title' => t('ImageMagick'),
+        'description' => [
+          '#markup' => implode('<br />', $reported_info),
+        ],
+        'severity' => $severity,
+      ],
+    ];
+  }
+
+  if (\Drupal::entityTypeManager()->hasDefinition('image_style')) {
+    $imageRotateEffectsCount = \Drupal::entityTypeManager()->getStorage('image_style')->getQuery()
+      ->condition('effects.*.id', 'image_rotate')
+      ->count()
+      ->accessCheck(TRUE)
+      ->execute();
+    if ((int) $imageRotateEffectsCount > 0) {
+      $requirements = [
+        'imagemagick_image_rotate' => [
+          'title' => t('ImageMagick rotate'),
+          'value' => t("There are <a href=':image_styles'>Image Styles</a> using Drupal standard's Rotate effect.", [
+            ':image_styles' => Url::fromRoute('entity.image_style.collection')->toString(),
+          ]),
+          'description' => t("The ImageMagick module does not support it. Use the Rotate effect provided by the <a href=':image_effects'>Image Effects</a> module instead. Check your <a href=':migration_options'>migration options</a>.", [
+            ':image_effects' => 'https://www.drupal.org/project/image_effects',
+            ':migration_options' => 'https://www.drupal.org/project/image_effects/releases/8.x-3.2#introduce-rotate',
+          ]),
+          // @todo Consider turning this into an error once the toolkit op is
+          //   removed.
+          'severity' => REQUIREMENT_WARNING,
+        ],
+      ];
+    }
+  }
+
+  return $requirements;
+}
+
+/**
+ * Minimum 2.x schema version to allow upgrading from.
+ */
+function imagemagick_update_last_removed() {
+  return 8203;
+}
+
+/**
+ * Adds the 'advanced.coalesce' config setting.
+ */
+function imagemagick_update_8301() {
+  $config_factory = \Drupal::configFactory();
+  $config_factory->getEditable('imagemagick.settings')
+    ->set('advanced.coalesce', FALSE)
+    ->save(TRUE);
+}
+
+/**
+ * Remove the 'prepend_pre_source' and 'use_identify' config settings.
+ */
+function imagemagick_update_8302() {
+  $config_factory = \Drupal::configFactory();
+  $config_factory->getEditable('imagemagick.settings')
+    ->clear('prepend_pre_source')
+    ->clear('use_identify')
+    ->save(TRUE);
+}
+
+/**
+ * Enable the Sophron module.
+ */
+function imagemagick_update_8303() {
+  \Drupal::service('module_installer')->install(['sophron']);
+}
+
+/**
+ * Force caches rebuild to reflect changes to service parameters.
+ */
+function imagemagick_update_8304() {
+}
+
+/**
+ * Remove the 'locale' config setting.
+ */
+function imagemagick_update_8305() {
+  $config_factory = \Drupal::configFactory();
+  $config_factory->getEditable('imagemagick.settings')
+    ->clear('locale')
+    ->save(TRUE);
+}
+
+/**
+ * Adds the 'imagemagick_version' config setting.
+ */
+function imagemagick_update_8306() {
+  $config_factory = \Drupal::configFactory();
+  $config_factory->getEditable('imagemagick.settings')
+    ->set('imagemagick_version', 'v6')
+    ->save(TRUE);
+}

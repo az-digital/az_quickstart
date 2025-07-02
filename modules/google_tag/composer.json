@@ -1,0 +1,20 @@
+{
+    "name": "drupal/google_tag",
+    "description": "Provides support for Google Tag and Google Tag Manager in Drupal.",
+    "type": "drupal-module",
+    "license": "GPL-2.0-or-later",
+    "require-dev": {
+        "drupal/csp": "^1.0 || ~2.1.1",
+        "drupal/commerce": "^2.0 || ^3.0",
+        "drupal/commerce_wishlist": "^3.0@beta",
+        "drupal/webform": "^6.0",
+        "drupal/search_api": "^1.28.0",
+        "drupal/token": "^1.11.0",
+        "drupal/google_analytics": "^4.0"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "2.x-dev"
+        }
+    }
+}

@@ -1,0 +1,17 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - slick
+name: slick_media
+label: 'Slick media'
+effects:
+  4b434ce0-90cc-44c3-9423-35d7cccc7d93:
+    uuid: 4b434ce0-90cc-44c3-9423-35d7cccc7d93
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 853
+      height: 480
+      anchor: center-center

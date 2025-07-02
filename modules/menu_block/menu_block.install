@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the Menu Block module.
+ */
+
+use Drupal\menu_block\Plugin\Block\MenuBlock;
+
+/**
+ * Issue #2932048: Config schema mismatch for expand(ed).
+ */
+function menu_block_update_8101() {
+  $config_factory = \Drupal::configFactory();
+  $config_factory->rename('expanded', 'expand');
+}
+
+/**
+ * Add default config.
+ */
+function menu_block_update_8102() {
+  $config_factory = \Drupal::configFactory();
+  foreach ($config_factory->listAll('block.block.') as $block_config_name) {
+    $block = $config_factory->getEditable($block_config_name);
+    $settings = $block->get('settings');
+    // Only update system_menu_block config.
+    if (strpos($settings['id'], 'system_menu_block:') === 0) {
+      // Set default config for existing menu block config.
+      $settings['label_link'] ?? FALSE;
+      $settings['label_type'] ?? MenuBlock::LABEL_BLOCK;
+      $block->set('settings', $settings)
+        ->save(TRUE);
+    }
+  }
+}

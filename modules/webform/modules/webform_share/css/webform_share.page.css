@@ -1,0 +1,33 @@
+/**
+ * @file
+ * Webform share (iframe source) page styling.
+ *
+ * @see page--webform-share.html.twig
+ */
+
+/**
+ * Fix IFrame not downsizing.
+ * @see http://davidjbradshaw.github.io/iframe-resizer/#iframe-not-downsizing
+ */
+html.webform-share-page-html {
+  height: auto !important; /** Ensure iframe resizing works as expected **/
+}
+
+/**
+ * Make sure the page is using a transparent background with margins.
+ */
+body.webform-share-page-body,
+[dir] body.webform-share-page-body {
+  background-color: transparent;
+  background-image: none;
+  margin: 0;
+  padding: 1em;
+}
+
+/**
+ * Make sure the page title is the default font color.
+ */
+body.webform-share-page-body .page-title {
+  margin-top: 0;
+  color: inherit;
+}

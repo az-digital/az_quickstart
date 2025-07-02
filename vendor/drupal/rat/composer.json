@@ -1,0 +1,28 @@
+{
+    "name": "drupal/rat",
+    "type": "library",
+    "license": "gpl-2.0-or-later",
+    "authors": [
+        {
+            "name": "Merlin",
+            "email": "merlin@geeks4change.net"
+        }
+    ],
+    "require": {
+        "php": "^7.4 || ^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Drupal\\rat\\": "src/"
+        }
+    },
+    "require-dev": {
+        "drupal/core": "^9.4",
+        "drupal/core-dev": "^9.4"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}

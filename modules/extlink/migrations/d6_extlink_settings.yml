@@ -1,0 +1,72 @@
+id: d6_extlink_settings
+label: Extlink settings
+migration_tags:
+  - Drupal 6
+  - Configuration
+source:
+  plugin: variable
+  variables:
+    - extlink_alert
+    - extlink_alert_text
+    - extlink_class
+    - extlink_css_exclude
+    - extlink_css_explicit
+    - extlink_exclude
+    - extlink_include
+    - extlink_mailto_class
+    - extlink_subdomains
+    - extlink_target
+  source_module: extlink
+process:
+  extlink_alert: extlink_alert
+  extlink_alert_text: extlink_alert_text
+  extlink_class: extlink_class
+  extlink_css_exclude: extlink_css_exclude
+  extlink_css_explicit: extlink_css_explicit
+  extlink_exclude: extlink_exclude
+  extlink_exclude_admin_routes:
+    - plugin: default_value
+      default_value: false
+  extlink_follow_no_override:
+    - plugin: default_value
+      default_value: false
+  extlink_font_awesome_classes:
+    - plugin: default_value
+      default_value: { }
+  extlink_icon_placement:
+    - plugin: default_value
+      default_value: 'append'
+  extlink_img_class:
+    - plugin: default_value
+      default_value: false
+  extlink_include: extlink_include
+  extlink_label:
+    - plugin: default_value
+      default_value: '(link is external)'
+  extlink_mailto_class: extlink_mailto_class
+  extlink_mailto_label:
+    - plugin: default_value
+      default_value: '(link sends email)'
+  extlink_nofollow:
+    - plugin: default_value
+      default_value: false
+  extlink_noreferrer:
+    - plugin: default_value
+      default_value: true
+  extlink_subdomains: extlink_subdomains
+  extlink_target: extlink_target
+  extlink_target_no_override:
+    - plugin: default_value
+      default_value: false
+  extlink_use_external_js_file:
+    - plugin: default_value
+      default_value: false
+  extlink_use_font_awesome:
+    - plugin: default_value
+      default_value: false
+  whitelisted_domains:
+    - plugin: default_value
+      default_value: { }
+destination:
+  plugin: config
+  config_name: extlink.settings

@@ -1,0 +1,5 @@
+draggableviews:
+  js:
+    js/draggableviews.js: {}
+  dependencies:
+    - core/drupal

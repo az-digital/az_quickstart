@@ -1,0 +1,29 @@
+{
+  "name": "drupal/better_exposed_filters",
+  "description": "Loading libraries for better_exposed_filters",
+  "type": "drupal-module",
+  "license": "GPL-2.0-or-later",
+  "minimum-stability": "dev",
+  "homepage": "https://drupal.org/project/better_exposed_filters",
+  "require": {
+    "leongersen/nouislider": "15.5.1"
+  },
+  "repositories": {
+    "nouislider": {
+      "type": "package",
+      "package": {
+        "name": "leongersen/nouislider",
+        "version": "15.5.1",
+        "type": "drupal-library",
+        "extra": {
+          "installer-name": "nouislider"
+        },
+        "dist": {
+          "url": "https://github.com/leongersen/noUiSlider/archive/refs/tags/15.5.1.tar.gz",
+          "type": "tar"
+        },
+        "license": "MIT"
+      }
+    }
+  }
+}

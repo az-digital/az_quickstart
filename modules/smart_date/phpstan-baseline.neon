@@ -1,0 +1,36 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^\\\\Drupal calls should be avoided in classes, use dependency injection instead$#"
+			count: 1
+			path: src/Form/SmartDateFormatDeleteForm.php
+
+		-
+			message: "#^Method Drupal\\\\smart_date\\\\Form\\\\SmartDateFormatForm\\:\\:save\\(\\) should return int but return statement is missing\\.$#"
+			count: 1
+			path: src/Form/SmartDateFormatForm.php
+
+		-
+			message: "#^Class Drupal\\\\smart_date\\\\Normalizer\\\\SmartDateNormalizer extends @internal class Drupal\\\\serialization\\\\Normalizer\\\\TimestampNormalizer\\.$#"
+			count: 1
+			path: src/Normalizer/SmartDateNormalizer.php
+
+		-
+			message: "#^\\\\Drupal calls should be avoided in classes, use dependency injection instead$#"
+			count: 1
+			path: src/Plugin/Field/FieldFormatter/SmartDateDefaultFormatter.php
+
+		-
+			message: "#^\\\\Drupal calls should be avoided in classes, use dependency injection instead$#"
+			count: 3
+			path: src/Plugin/Field/FieldFormatter/SmartDateDurationFormatter.php
+
+		-
+			message: "#^Method Drupal\\\\smart_date\\\\Plugin\\\\Field\\\\FieldType\\\\SmartDateFieldItemList\\:\\:defaultValuesForm\\(\\) should return array but return statement is missing\\.$#"
+			count: 1
+			path: src/Plugin/Field/FieldType/SmartDateFieldItemList.php
+
+		-
+			message: "#^Method Drupal\\\\smart_date\\\\Plugin\\\\Field\\\\FieldType\\\\SmartDateListItemBase\\:\\:validateAllowedValue\\(\\) should return string but return statement is missing\\.$#"
+			count: 1
+			path: src/Plugin/Field/FieldType/SmartDateListItemBase.php

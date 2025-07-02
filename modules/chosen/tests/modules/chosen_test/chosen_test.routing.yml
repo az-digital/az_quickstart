@@ -1,0 +1,7 @@
+chosen.test:
+  path: 'chosen-test'
+  defaults:
+    _form: '\Drupal\chosen_test\Form\ChosenTestForm'
+    _title: 'Chosen test'
+  requirements:
+    _access: 'TRUE'

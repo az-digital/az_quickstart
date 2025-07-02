@@ -1,0 +1,16 @@
+/**
+ * @file
+ * HTML editor element styles.
+ *
+ * @see /webform/test_element_html_editor
+ */
+
+div.webform-html-editor-default-filter-format.form-item,
+div.webform-html-editor-default-filter-format .form-item {
+  margin: 0;
+}
+
+div.webform-html-editor-default-filter-format > .filter-wrapper,
+div.webform-html-editor-default-filter-format .cke_bottom {
+  display: none;
+}

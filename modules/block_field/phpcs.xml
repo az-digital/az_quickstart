@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<ruleset name="Block field coding standards">
+  <description>Drupal 8 coding standards</description>
+
+  <file>.</file>
+  <arg name="extensions" value="inc,install,module,php,profile,test,theme,yml"/>
+
+  <!-- Ignore markdown. -->
+  <exclude-pattern>README\.md</exclude-pattern>
+  <exclude-pattern>NOTES\.md</exclude-pattern>
+
+  <rule ref="Drupal"/>
+</ruleset>

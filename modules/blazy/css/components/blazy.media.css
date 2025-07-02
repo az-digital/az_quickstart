@@ -1,0 +1,193 @@
+/**
+ * @file
+ * Provides media integration with pure CSS fluid video wrapper.
+ */
+
+/* stylelint-disable selector-max-id, declaration-no-important */
+.media--player {
+  position: relative;
+}
+
+/** Ensures not affecting iframe only without media switcher */
+.media--switch iframe {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.media.b-html iframe,
+.media--rendered iframe {
+  visibility: visible;
+  opacity: 1;
+}
+
+.media__icon,
+.media--ratio iframe {
+  transition: visibility 0s linear 0.5s, opacity 0.5s linear;
+}
+
+.media__icon {
+  position: absolute;
+  z-index: 8;
+  display: block;
+  visibility: hidden;
+  cursor: pointer;
+  opacity: 0;
+}
+
+.media__icon--play,
+.media__icon--close,
+.media__icon--spinner {
+  top: 50%;
+  left: 50%;
+  width: 80px;
+  height: 80px;
+  -ms-transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+button.media__icon--close {
+  background: none;
+}
+
+.media__icon--play,
+button.media__icon--play {
+  background: rgba(0, 0, 0, 0.2);
+  /* box-shadow: 0 0 0 26px rgba(0, 0, 0, .2) inset; */
+}
+
+button.media__icon--close {
+  border: 0;
+}
+
+.media__icon--close::before,
+.media__icon--close::after,
+.media__icon--play::before {
+  position: absolute;
+  display: block;
+  content: "";
+  pointer-events: none;
+}
+
+.media__icon--close::before,
+.media__icon--close::after {
+  top: 50%;
+  left: 50%;
+  width: 80px;
+  height: 8px;
+  margin: -4px 0 0 -40px;
+  -ms-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+  border-radius: 4px;
+  background: white;
+}
+
+.media__icon--close::after {
+  -ms-transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+.media__icon--close:hover::before,
+.media__icon--close:hover::after,
+.is-playing:hover .media__icon--close::before,
+.is-playing:hover .media__icon--close::after {
+  background-color: #ff6d2c;
+}
+
+.media__icon--play {
+  border: 8px solid white;
+  border-radius: 50%;
+}
+
+.media__icon--play::before {
+  top: 50%;
+  left: 50%;
+  margin: -16px 0 0 -6px;
+  border: 16px solid transparent;
+  border-left: 24px solid white;
+  line-height: 60px;
+}
+
+.media__icon--play:hover {
+  border-color: #ff6d2c;
+}
+
+.media__icon--play:hover::before {
+  border-left-color: #ff6d2c;
+}
+
+.is-playing:hover .media__icon {
+  transition-delay: 0s;
+}
+
+.is-playing .media__icon--close {
+  visibility: hidden;
+}
+
+.is-playing:hover .media__icon--close {
+  visibility: visible;
+}
+
+.media__icon--play,
+.media:hover .media__icon--litebox,
+.media--switch img,
+.media--switch.is-playing iframe,
+.media--switch.is-playing:hover .media__icon--close {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Ensures to not conflict with blazy.lightbox.css. */
+.media--player.is-playing img.media__element {
+  transition: opacity 0.4s, visibility 0.4s;
+}
+
+.media--switch.is-playing img,
+.media--switch.is-playing img.media__element,
+.media--switch.is-playing .media__icon--play,
+.media--switch.is-playing:hover .media__icon--play {
+  position: absolute;
+  z-index: -1;
+  visibility: hidden;
+  opacity: 0;
+}
+
+/** Prevents potential dimmed iframes when being played. */
+.media--switch.is-playing {
+  opacity: 1 !important; /* csslint allow: known-properties, important */
+}
+
+.media--switch.is-playing iframe {
+  z-index: 3;
+}
+
+/** @requires coder shutup, front-end complication with inline styles. */
+/** Prevents Twitter iframe from breaking grid, even if unholy. */
+.grid .twitter-tweet-rendered {
+  min-width: 1px !important; /* csslint allow: known-properties, important */
+  margin: 0 !important; /* csslint allow: known-properties, important */
+}
+
+/** Fix for overflowing Facebook/ Twitter iframes. */
+.grid .media,
+.grid .fb_iframe_widget {
+  overflow: hidden;
+}
+
+.grid .fb_iframe_widget span {
+  width: 100% !important; /* csslint allow: known-properties, important */
+}
+
+.grid .fb_iframe_widget iframe {
+  position: relative !important; /* csslint allow: known-properties, important */
+}
+
+/** Instagram is only one way off, if this player is ever used. */
+.media--instagram iframe ~ .media__icon,
+.media--instagram.is-playing .media__icon,
+.media--instagram.is-playing:hover .media__icon--play,
+.media .b-error.b-checked {
+  display: none;
+}

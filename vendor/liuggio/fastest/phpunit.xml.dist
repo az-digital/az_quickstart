@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit bootstrap="vendor/autoload.php" colors="true" backupGlobals="true">
+    <testsuites>
+        <testsuite name="Fastest Test Suite">
+            <directory>tests/Queue/</directory>
+            <directory>tests/Process/</directory>
+            <directory>tests/Environment/</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist>
+            <directory suffix=".php">src</directory>
+        </whitelist>
+    </filter>
+</phpunit>

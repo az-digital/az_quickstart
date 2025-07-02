@@ -1,0 +1,15 @@
+services:
+  plugin.manager.paragraphs.behavior:
+    class: Drupal\paragraphs\ParagraphsBehaviorManager
+    parent: default_plugin_manager
+    arguments: ['@entity_type.manager', '@config.factory']
+  paragraphs_type.uuid_lookup:
+    class: \Drupal\paragraphs\ParagraphsTypeIconUuidLookup
+    arguments: ['@cache.bootstrap', '@lock', '@entity_type.manager']
+    tags:
+      - { name: needs_destruction }
+  plugin.manager.paragraphs.conversion:
+    class: Drupal\paragraphs\ParagraphsConversionManager
+    parent: default_plugin_manager
+    arguments: ['@entity_type.manager']
+

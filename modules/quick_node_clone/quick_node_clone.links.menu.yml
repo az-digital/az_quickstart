@@ -1,0 +1,5 @@
+quick_node_clone.config_menu:
+  title: "Quick Node Clone Settings"
+  route_name: quick_node_clone.settings
+  parent: system.admin_config_content
+  description: 'Configure settings related to cloning nodes with the Quick Node Clone module.'

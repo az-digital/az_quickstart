@@ -1,0 +1,25 @@
+uuid: 5600b759-8f91-49fa-88f0-a69f4c8ed440
+langcode: en
+status: true
+dependencies:
+  config:
+    - filter.format.format_3
+  module:
+    - ckeditor
+format: format_3
+editor: ckeditor
+settings:
+  toolbar:
+    rows:
+      -
+        -
+          name: Links
+          items:
+            - Linkit
+  plugins:
+    stylescombo:
+      styles: ''
+    language:
+      language_list: un
+    linkit:
+      linkit_profile: test_profile

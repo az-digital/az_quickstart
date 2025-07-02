@@ -1,0 +1,153 @@
+<?php
+
+/**
+ * @file
+ * Add installation messages to help users get started and update.
+ */
+
+use Drupal\easy_breadcrumb\EasyBreadcrumbConstants;
+
+/**
+ * Implements hook_update().
+ *
+ * Force an update because we removed an unused service.
+ */
+function easy_breadcrumb_update_8001() {
+
+  // Do nothing because database updates run cache rebuild.
+}
+
+/**
+ * Implements hook_update().
+ *
+ * Update home_segment_keep config from integer to boolean.
+ */
+function easy_breadcrumb_update_8002() {
+  $config = \Drupal::configFactory()->getEditable(EasyBreadcrumbConstants::MODULE_SETTINGS);
+  $home_segment_keep = $config->get(EasyBreadcrumbConstants::HOME_SEGMENT_KEEP);
+
+  // If the setting is enabled, store it as TRUE.
+  if ($home_segment_keep === 1) {
+    $config->set(EasyBreadcrumbConstants::HOME_SEGMENT_KEEP, TRUE);
+  }
+
+  // Otherwise, store it as FALSE.
+  else {
+    $config->set(EasyBreadcrumbConstants::HOME_SEGMENT_KEEP, FALSE);
+  }
+
+  $config->save();
+}
+
+/**
+ * Implements hook_update().
+ *
+ * Force an update because we updated the dependency injection which requires a
+ * cache clear.
+ */
+function easy_breadcrumb_update_8003() {
+
+  // Do nothing because database updates run cache rebuild.
+}
+
+/**
+ * Implements hook_update().
+ *
+ * Force a cache update because we changed service dependencies.
+ */
+function easy_breadcrumb_update_8004() {
+
+  // Do nothing because database updates run cache rebuild.
+}
+
+/**
+ * Force cache rebuild for newly added service to be picked up.
+ */
+function easy_breadcrumb_update_8005() {
+
+  drupal_flush_all_caches();
+}
+
+/**
+ * Fix configuration.
+ */
+function easy_breadcrumb_update_8006() {
+  $config = \Drupal::configFactory()->getEditable(EasyBreadcrumbConstants::MODULE_SETTINGS);
+
+  $config
+    // This key is now named 'add_structured_data_json_ld'.
+    ->clear('add_structured_data_jsonld')
+    // This key is unnecessary.
+    ->clear('dependencies');
+
+  // Add missing keys if not present.
+  $potentially_missing_keys = [
+    EasyBreadcrumbConstants::ADD_STRUCTURED_DATA_JSON_LD => FALSE,
+    EasyBreadcrumbConstants::CAPITALIZATOR_FORCED_WORDS => [],
+    EasyBreadcrumbConstants::INCLUDE_INVALID_PATHS => FALSE,
+    EasyBreadcrumbConstants::EXCLUDED_PATHS => '',
+    EasyBreadcrumbConstants::REPLACED_TITLES => '',
+    EasyBreadcrumbConstants::CUSTOM_PATHS => '',
+    EasyBreadcrumbConstants::TITLE_SEGMENT_AS_LINK => FALSE,
+  ];
+  $data = $config->get();
+  foreach ($potentially_missing_keys as $key => $default) {
+    if (!isset($data[$key])) {
+      $config->set($key, $default);
+    }
+  }
+
+  // Fix variable types.
+  $config->set(EasyBreadcrumbConstants::CAPITALIZATOR_FORCED_WORDS_FIRST_LETTER, (bool) $config->get(EasyBreadcrumbConstants::CAPITALIZATOR_FORCED_WORDS_FIRST_LETTER));
+  $config->set(EasyBreadcrumbConstants::CAPITALIZATOR_FORCED_WORDS_CASE_SENSITIVITY, (bool) $config->get(EasyBreadcrumbConstants::CAPITALIZATOR_FORCED_WORDS_CASE_SENSITIVITY));
+  $config->set(EasyBreadcrumbConstants::ADD_STRUCTURED_DATA_JSON_LD, (bool) $config->get(EasyBreadcrumbConstants::ADD_STRUCTURED_DATA_JSON_LD));
+
+  // Change 'capitalizator_ignored_words' and 'capitalizator_forced_words' to be
+  // lists rather than maps.
+  $config->set(EasyBreadcrumbConstants::CAPITALIZATOR_IGNORED_WORDS, array_values([$config->get(EasyBreadcrumbConstants::CAPITALIZATOR_IGNORED_WORDS)] ?: []));
+  $config->set(EasyBreadcrumbConstants::CAPITALIZATOR_FORCED_WORDS, array_values([$config->get(EasyBreadcrumbConstants::CAPITALIZATOR_FORCED_WORDS)] ?: []));
+
+  $config->save(TRUE);
+}
+
+/**
+ * Enable follow redirects.
+ */
+function easy_breadcrumb_update_8007() {
+  $config = \Drupal::configFactory()->getEditable(EasyBreadcrumbConstants::MODULE_SETTINGS);
+  $config->set(EasyBreadcrumbConstants::FOLLOW_REDIRECTS, TRUE);
+  $config->save(TRUE);
+}
+
+/**
+ * Re-save string-formatted settings as arrays.
+ */
+function easy_breadcrumb_update_8008() {
+  $config = \Drupal::configFactory()->getEditable('easy_breadcrumb.settings');
+  $settings_to_update = [
+    'capitalizator_ignored_words',
+    'capitalizator_forced_words',
+  ];
+  foreach ($settings_to_update as $setting) {
+    $config_setting = $config->get($setting);
+    if ($config_setting === NULL || $config_setting === '') {
+      $config->set($setting, []);
+    }
+    elseif (is_string($config_setting)) {
+      $config->set($setting, explode(' ', $config_setting));
+    }
+  }
+  $config->save(TRUE);
+}
+
+/**
+ * Set default value for breadcrumb segment minimum count.
+ */
+function easy_breadcrumb_update_8009() {
+  $config = \Drupal::configFactory()->getEditable(EasyBreadcrumbConstants::MODULE_SETTINGS);
+  if (is_null($config->get(EasyBreadcrumbConstants::SEGMENT_DISPLAY_MINIMUM))) {
+    $config->set(EasyBreadcrumbConstants::SEGMENT_DISPLAY_MINIMUM, 1);
+    $config->save(TRUE);
+    return t('Breadcrumb segment minimum count has been set to 1 to maintain the existing behavior when rendering breadcrumbs.');
+  }
+}

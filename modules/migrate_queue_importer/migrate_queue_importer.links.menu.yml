@@ -1,0 +1,5 @@
+migrate_queue_importer.cron_migration:
+  title: 'Cron migration'
+  description: 'Administer cron migration configurations.'
+  route_name: entity.cron_migration.collection
+  parent: system.admin_config_development

@@ -1,0 +1,89 @@
+//
+// @file
+// Paragraphs summary CSS.
+//
+
+@import "variables";
+
+.paragraphs {
+  &-badge {
+    display: inline-block;
+    padding: $badge-padding-y $badge-padding-x;
+    background: $badge-color;
+    border-radius: $border-radius;
+    color: #fff;
+    cursor: default;
+    font-size: 90%;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    margin: 3px 0;
+
+    // Empty badges collapse automatically
+    &:empty {
+      display: none;
+    }
+  }
+}
+
+// We are using .js prefix here mainly because we want to apply this style rules
+// only for JS version of the element.
+.js {
+  .paragraphs-description {
+    .paragraphs-content-wrapper,
+    .paragraphs-plugin-wrapper {
+      position: relative;
+      height: 1.538em;
+      overflow: hidden;
+      word-break: break-all;
+      line-height: 1.538em;
+      text-overflow: ellipsis;
+    }
+
+    .summary-plugin-label::after {
+      content: ": ";
+    }
+
+    .summary-content {
+      color: $content-summary-color;
+    }
+
+    .summary-plugin {
+      display: inline-block;
+      padding-right: 5px;
+      font-size: 0.7rem;
+      color: $behavior-summary-color;
+
+      &:not(:last-child) {
+        border-right: 2px solid $light-grey;
+      }
+
+      &:not(:first-child) {
+        padding: 0 5px;
+      }
+    }
+  }
+
+  // Behavior tab is active.
+  .behavior-active {
+    // Hide plugin summary.
+    .paragraphs-expanded-description .paragraphs-plugin-wrapper,
+    .paragraphs-content {
+      display: none;
+    }
+
+    // Display paragraphs behavior.
+    .paragraphs-behavior {
+      display: block;
+    }
+  }
+
+  // Content tab is active.
+  .content-active {
+    // Hide content summary.
+    .paragraphs-expanded-description .paragraphs-content-wrapper {
+      display: none;
+    }
+  }
+}

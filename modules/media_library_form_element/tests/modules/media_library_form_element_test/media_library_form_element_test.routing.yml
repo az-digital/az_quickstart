@@ -1,0 +1,7 @@
+media_library_form_element_test.config:
+  path: '/media-library-form-element-test-form'
+  defaults:
+    _form: '\Drupal\media_library_form_element_test\Form\TestForm'
+    _title: 'Test Form'
+  requirements:
+    _permission: 'access content'

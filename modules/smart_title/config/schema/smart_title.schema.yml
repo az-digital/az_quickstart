@@ -1,0 +1,32 @@
+smart_title.settings:
+  type: config_object
+  label: 'Smart Title settings'
+  mapping:
+    smart_title:
+      type: sequence
+      label: 'Smart Title enabled entity bundles'
+      sequence:
+        type: string
+
+core.entity_view_display.*.*.*.third_party.smart_title:
+  type: mapping
+  label: 'Smart Title'
+  mapping:
+    enabled:
+      type: boolean
+      label: 'Whether to enable Smart Title on this entity type'
+    settings:
+      type: mapping
+      label: 'Smart Title extra field settings'
+      mapping:
+        smart_title__link:
+          type: boolean
+          label: 'Link Smart Title to the entity'
+        smart_title__tag:
+          type: string
+          label: 'HTML tag used for the Smart Title'
+        smart_title__classes:
+          type: sequence
+          label: 'Classes of the Smart Title'
+          sequence:
+            type: string

@@ -1,0 +1,146 @@
+<?php
+
+/**
+ * @file
+ * The installation instructions for the SMTP Authentication Support.
+ */
+
+use PHPMailer\PHPMailer\PHPMailer;
+
+/**
+ * Implements hook_uninstall().
+ */
+function smtp_uninstall() {
+
+  // Restore previous mail system.
+  _disable_smtp();
+
+  // Cleaning garbage.
+  $config = \Drupal::service('config.factory');
+  $smtp_config = $config->getEditable('smtp.settings');
+  $smtp_config->delete();
+}
+
+/**
+ * Add SMTP timeout configuration and change default to 30.
+ */
+function smtp_update_8001() {
+  \Drupal::configFactory()->getEditable('smtp.settings')
+    ->set('smtp_timeout', 30)
+    ->save(TRUE);
+}
+
+/**
+ * Add SMTP keepalive configuration and set default to FALSE.
+ */
+function smtp_update_8002() {
+  \Drupal::configFactory()->getEditable('smtp.settings')
+    ->set('smtp_keepalive', FALSE)
+    ->save(TRUE);
+}
+
+/**
+ * If mailsystem exists, disable smtp mailsystem automatically.
+ */
+function smtp_update_8004() {
+  $mailsystem_enabled = \Drupal::moduleHandler()->moduleExists('mailsystem');
+  if ($mailsystem_enabled) {
+    _disable_smtp();
+  }
+}
+
+/**
+ * Add SMTP debug level and set default to 1.
+ */
+function smtp_update_8005() {
+  \Drupal::configFactory()->getEditable('smtp.settings')
+    ->set('smtp_debug_level', 1)
+    ->save(TRUE);
+}
+
+/**
+ * Convert smtp_allowhtml to a boolean.
+ */
+function smtp_update_8006() {
+  $config = \Drupal::configFactory()->getEditable('smtp.settings');
+  $config->set('smtp_allowhtml', (bool) $config->get('smtp_allowhtml'))
+    ->save(TRUE);
+}
+
+/**
+ * Implements hook_requirements().
+ */
+function smtp_requirements(string $phase) {
+  $requirements = [];
+
+  if ($phase == 'runtime') {
+    // Ensure PHPMailer exists.
+    if (class_exists(PHPMailer::class)) {
+      $mail = new PHPMailer();
+    }
+    if (empty($mail)) {
+      $requirements['smtp_phpmailer'] = [
+        'title' => (string) t('SMTP: PHPMailer Library'),
+        'value' => (string) t('Missing'),
+        'severity' => REQUIREMENT_ERROR,
+        'description' => t('PHPMailer is Required for SMTP to function.'),
+      ];
+      // If PHPMailer is not found, SMTP should not be set as the mail system.
+      _disable_smtp();
+
+      return $requirements;
+    }
+    else {
+      $required_version = '6.1.7';
+      $installed_version = $mail::VERSION;
+      $reflector = new \ReflectionClass('\PHPMailer\PHPMailer\PHPMailer');
+
+      $requirements['smtp_phpmailer'] = [
+        'title' => (string) t('SMTP: PHPMailer library'),
+        'value' => $installed_version,
+        'description' => t('PHPMailer is located at %path', ['%path' => $reflector->getFileName()]),
+      ];
+      if (!version_compare($installed_version, $required_version, '>=')) {
+        $requirements['smtp_phpmailer']['severity'] = REQUIREMENT_ERROR;
+        $requirements['smtp_phpmailer']['description'] = (string) t("PHPMailer library @version or higher is required. Please install a newer version by executing 'composer update' in your site's root directory.", [
+          '@version' => $required_version,
+        ]);
+        // If incorrect version, SMTP should not be set as the mail system.
+        _disable_smtp();
+      }
+      else {
+        $requirements['smtp_phpmailer']['severity'] = REQUIREMENT_INFO;
+        /** @var \Drupal\smtp\ConnectionTester\ConnectionTester $tester */
+        $tester = \Drupal::service('smtp.connection_tester');
+        $tester->testConnection();
+        $requirements = array_merge($requirements, $tester->hookRequirements($phase));
+      }
+    }
+  }
+  return $requirements;
+}
+
+/**
+ * Helper function to disable SMTP and restore the default mailsystem.
+ */
+function _disable_smtp() {
+  $config = \Drupal::service('config.factory');
+  // Always make sure SMTP is disabled.
+  $smtp_config = $config->getEditable('smtp.settings');
+  if (!$smtp_config->get('smtp_on')) {
+    return;
+  }
+  // Set the internal SMTP module config off.
+  $smtp_config->set('smtp_on', FALSE)->save();
+
+  // Set the default back to either the previous mail system or php_mail.
+  $mail_config = $config->getEditable('system.mail');
+  $current_default = $mail_config->get('interface.default');
+  $system_default = 'php_mail';
+  $previous_mail_system = $smtp_config->get('prev_mail_system') ?? NULL;
+  if ($current_default == 'SMTPMailSystem') {
+    $default_interface = ($previous_mail_system && $previous_mail_system !== 'SMTPMailSystem') ? $previous_mail_system : $system_default;
+    $mail_config->set('interface.default', $default_interface)
+      ->save();
+  }
+}

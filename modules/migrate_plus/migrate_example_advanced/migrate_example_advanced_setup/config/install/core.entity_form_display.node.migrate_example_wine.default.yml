@@ -1,0 +1,121 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.migrate_example_wine.body
+    - field.field.node.migrate_example_wine.field_migrate_example_comments
+    - field.field.node.migrate_example_wine.field_migrate_example_adv_image
+    - field.field.node.migrate_example_wine.field_migrate_example_top_vintag
+    - field.field.node.migrate_example_wine.field_migrate_example_wine_best
+    - field.field.node.migrate_example_wine.field_migrate_example_wine_ratin
+    - field.field.node.migrate_example_wine.field_migrate_example_wine_regio
+    - field.field.node.migrate_example_wine.field_migrate_example_wine_var
+    - node.type.migrate_example_wine
+  module:
+    - comment
+    - image
+    - path
+    - text
+id: node.migrate_example_wine.default
+targetEntityType: node
+bundle: migrate_example_wine
+mode: default
+content:
+  body:
+    type: text_textarea_with_summary
+    weight: 31
+    settings:
+      rows: 9
+      summary_rows: 3
+      placeholder: ''
+    third_party_settings: {  }
+  created:
+    type: datetime_timestamp
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+  field_migrate_example_comments:
+    weight: 38
+    settings: {  }
+    third_party_settings: {  }
+    type: comment_default
+  field_migrate_example_adv_image:
+    weight: 35
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    type: image_image
+  field_migrate_example_top_vintag:
+    weight: 37
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+  field_migrate_example_wine_best:
+    weight: 34
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete_tags
+  field_migrate_example_wine_ratin:
+    weight: 36
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+  field_migrate_example_wine_regio:
+    weight: 33
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+  field_migrate_example_wine_var:
+    weight: 32
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+  path:
+    type: path
+    weight: 30
+    settings: {  }
+    third_party_settings: {  }
+  promote:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 15
+    third_party_settings: {  }
+  sticky:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 16
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: -5
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 5
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden: {  }

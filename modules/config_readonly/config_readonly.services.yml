@@ -1,0 +1,6 @@
+services:
+  config_readonly_form_subscriber:
+    class: Drupal\config_readonly\EventSubscriber\ReadOnlyFormSubscriber
+    arguments: ['@module_handler']
+    tags:
+      - { name: event_subscriber }

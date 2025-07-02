@@ -1,0 +1,19 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.crop_responsive_example
+_core:
+  default_config_hash: s8OG5Bs7QOe9lIN5e0iQHH0_exP99yX7MZZUwkE6iGA
+id: node.crop_responsive_example.title
+field_name: title
+entity_type: node
+bundle: crop_responsive_example
+label: Title
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

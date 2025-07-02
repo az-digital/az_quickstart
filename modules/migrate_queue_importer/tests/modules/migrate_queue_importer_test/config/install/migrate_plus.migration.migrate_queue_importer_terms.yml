@@ -1,0 +1,30 @@
+langcode: en
+status: true
+dependencies: {  }
+id: migrate_queue_importer_terms
+label: Terms
+migration_tags: {  }
+migration_group: migrate_queue_importer_default
+source:
+  plugin: embedded_data
+  data_rows:
+    -
+      name: Term A
+    -
+      name: Term B
+    -
+      name: Term C
+  ids:
+    name:
+      type: string
+  constants:
+    vocabulary: migrate_queue_importer_terms
+process:
+  name: name
+  vid: constants/vocabulary
+destination:
+  plugin: entity:taxonomy_term
+migration_dependencies:
+  required:
+    - migrate_queue_importer_nodes
+  optional: {  }

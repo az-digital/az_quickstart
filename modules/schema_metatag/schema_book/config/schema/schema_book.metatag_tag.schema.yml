@@ -1,0 +1,36 @@
+# The 'type' should be "label" for short meta tags and "text" for ones which
+# could get longer, especially ones which use a textarea field instead of a
+# textfield.
+metatag.metatag_tag.schema_book_author:
+  type: text
+  label: 'author'
+metatag.metatag_tag.schema_book_id:
+  type: text
+  label: '@id'
+metatag.metatag_tag.schema_book_name:
+  type: text
+  label: 'name'
+metatag.metatag_tag.schema_book_description:
+  type: text
+  label: 'description'
+metatag.metatag_tag.schema_book_same_as:
+  type: text
+  label: 'sameAs'
+metatag.metatag_tag.schema_book_type:
+  type: string
+  label: '@type'
+metatag.metatag_tag.schema_book_url:
+  type: text
+  label: 'url'
+metatag.metatag_tag.schema_book_work_example:
+  type: text
+  label: 'workExample'
+metatag.metatag_tag.schema_book_review:
+  type: text
+  label: 'review'
+metatag.metatag_tag.schema_book_aggregate_rating:
+  type: text
+  label: 'aggregateRating'
+metatag.metatag_tag.schema_book_image:
+  type: text
+  label: 'image'

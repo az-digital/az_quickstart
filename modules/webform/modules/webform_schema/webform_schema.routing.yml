@@ -1,0 +1,14 @@
+entity.webform.schema_form:
+  path: '/admin/structure/webform/manage/{webform}/schema'
+  defaults:
+    _entity_form: 'webform.schema'
+    _title_callback: '\Drupal\webform\Controller\WebformEntityController::title'
+  requirements:
+    _permission: 'access webform schema'
+
+webform_schema.export:
+  path: '/admin/structure/webform/manage/{webform}/schema/export'
+  defaults:
+    _controller: '\Drupal\webform_schema\Controller\WebformSchemaController::index'
+  requirements:
+    _permission: 'access webform schema'

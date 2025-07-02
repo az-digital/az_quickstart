@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mime-info [
+  <!ELEMENT mime-info (mime-type)+>
+  <!ATTLIST mime-info xmlns CDATA #FIXED "http://www.freedesktop.org/standards/shared-mime-info">
+
+  <!ELEMENT mime-type (comment+, (acronym,expanded-acronym)? , (icon? | generic-icon? | glob | magic | treemagic | root-XML | alias | sub-class-of)*)>
+  <!ATTLIST mime-type type CDATA #REQUIRED>
+
+  <!-- a comment describing a document with the respective MIME type. Example: "WMV video" -->
+  <!ELEMENT comment (#PCDATA)>
+  <!ATTLIST comment xml:lang CDATA #IMPLIED>
+
+  <!-- a comment describing the respective unexpanded MIME type acronym. Example: "WMV" -->
+  <!ELEMENT acronym (#PCDATA)>
+  <!ATTLIST acronym xml:lang CDATA #IMPLIED>
+
+  <!-- a comment describing the respective expanded MIME type acronym. Example: "Windows Media Video" -->
+  <!ELEMENT expanded-acronym (#PCDATA)>
+  <!ATTLIST expanded-acronym xml:lang CDATA #IMPLIED>
+
+  <!ELEMENT icon EMPTY>
+  <!ATTLIST icon name CDATA #REQUIRED>
+
+  <!-- a generic icon name as per the Icon Naming Specification, only required if computing
+  it from the mime-type would not work, See "generic-icon" in the Shared Mime Specification -->
+  <!ELEMENT generic-icon EMPTY>
+  <!ATTLIST generic-icon name (application-x-executable|audio-x-generic|folder|font-x-generic|image-x-generic|package-x-generic|text-html|text-x-generic|text-x-generic-template|text-x-script|video-x-generic|x-office-address-book|x-office-calendar|x-office-document|x-office-presentation|x-office-spreadsheet) #REQUIRED>
+
+  <!ELEMENT glob EMPTY>
+  <!ATTLIST glob pattern CDATA #REQUIRED>
+  <!ATTLIST glob weight CDATA "50">
+  <!ATTLIST glob case-sensitive CDATA #IMPLIED>
+
+  <!ELEMENT magic (match)+>
+  <!ATTLIST magic priority CDATA "50">
+
+  <!ELEMENT match (match)*>
+  <!ATTLIST match offset CDATA #REQUIRED>
+  <!ATTLIST match type (string|big16|big32|little16|little32|host16|host32|byte) #REQUIRED>
+  <!ATTLIST match value CDATA #REQUIRED>
+  <!ATTLIST match mask CDATA #IMPLIED>
+
+  <!ELEMENT treemagic (treematch)+>
+  <!ATTLIST treemagic priority CDATA "50">
+
+  <!ELEMENT treematch (treematch)*>
+  <!ATTLIST treematch path CDATA #REQUIRED>
+  <!ATTLIST treematch type (file|directory|link) #IMPLIED>
+  <!ATTLIST treematch match-case (true|false) #IMPLIED>
+  <!ATTLIST treematch executable (true|false) #IMPLIED>
+  <!ATTLIST treematch non-empty (true|false) #IMPLIED>
+  <!ATTLIST treematch mimetype CDATA #IMPLIED>
+
+  <!ELEMENT root-XML EMPTY>
+  <!ATTLIST root-XML namespaceURI CDATA #REQUIRED>
+  <!ATTLIST root-XML localName CDATA #REQUIRED>
+
+  <!ELEMENT alias EMPTY>
+  <!ATTLIST alias type CDATA #REQUIRED>
+
+  <!ELEMENT sub-class-of EMPTY>
+  <!ATTLIST sub-class-of type CDATA #REQUIRED>
+]>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+  <mime-type type="application/x-atari-2600-rom">
+    <comment>Atari 2600</comment>
+    <comment xml:lang="ast">Atari 2600</comment>
+    <comment xml:lang="ca">Atari 2600</comment>
+    <comment xml:lang="cs">Atari 2600</comment>
+    <comment xml:lang="da">Atari 2600</comment>
+    <comment xml:lang="de">Atari 2600</comment>
+    <comment xml:lang="en_GB">Atari 2600</comment>
+    <comment xml:lang="es">Atari 2600</comment>
+    <comment xml:lang="eu">Atari 2600</comment>
+    <comment xml:lang="fi">Atari 2600</comment>
+    <comment xml:lang="fr">Atari 2600</comment>
+    <comment xml:lang="ga">Atari 2600</comment>
+    <comment xml:lang="he">אטארי 2600</comment>
+    <comment xml:lang="hr">Atari 2600</comment>
+    <comment xml:lang="hu">Atari 2600</comment>
+    <comment xml:lang="id">Atari 2600</comment>
+    <comment xml:lang="it">Atari 2600</comment>
+    <comment xml:lang="kk">Atari 2600</comment>
+    <comment xml:lang="ko">Atari 2600</comment>
+    <comment xml:lang="oc">Atari 2600</comment>
+    <comment xml:lang="pl">Atari 2600</comment>
+    <comment xml:lang="pt_BR">Atari 2600</comment>
+    <comment xml:lang="ru">Atari 2600</comment>
+    <comment xml:lang="sk">Atari 2600</comment>
+    <comment xml:lang="sr">Атари 2600</comment>
+    <comment xml:lang="sv">Atari 2600</comment>
+    <comment xml:lang="tr">Atari 2600</comment>
+    <comment xml:lang="uk">Atari 2600</comment>
+    <comment xml:lang="zh_CN">雅达利 2600</comment>
+    <comment xml:lang="zh_TW">Atari 2600</comment>
+    <generic-icon name="application-x-executable"/>
+    <glob pattern="*.a26"/>
+  </mime-type>
+  <mime-type type="text/htmlh">
+    <comment>help page</comment>
+    <comment xml:lang="ar">صفحة المساعدة</comment>
+    <comment xml:lang="az">yardım səhifəsi</comment>
+    <comment xml:lang="be@latin">staronka dapamohi</comment>
+    <comment xml:lang="bg">Страница от помощта</comment>
+    <comment xml:lang="ca">pàgina d'ajuda</comment>
+    <comment xml:lang="cs">stránka nápovědy</comment>
+    <comment xml:lang="cy">tudalen gymorth</comment>
+    <comment xml:lang="da">hjælpeside</comment>
+    <comment xml:lang="de">Hilfeseite</comment>
+    <comment xml:lang="el">Σελίδα βοήθειας</comment>
+    <comment xml:lang="en_GB">help page</comment>
+    <comment xml:lang="eo">help-paĝo</comment>
+    <comment xml:lang="es">página de ayuda</comment>
+    <comment xml:lang="eu">laguntzako orria</comment>
+    <comment xml:lang="fi">ohjesivu</comment>
+    <comment xml:lang="fo">hjálparsíða</comment>
+    <comment xml:lang="fr">page d'aide</comment>
+    <comment xml:lang="ga">leathanach cabhrach</comment>
+    <comment xml:lang="gl">páxina de axuda</comment>
+    <comment xml:lang="he">דף עזרה</comment>
+    <comment xml:lang="hr">Stranica pomoći</comment>
+    <comment xml:lang="hu">súgóoldal</comment>
+    <comment xml:lang="ia">Pagina de adjuta</comment>
+    <comment xml:lang="id">halaman bantuan</comment>
+    <comment xml:lang="it">Pagina di aiuto</comment>
+    <comment xml:lang="ja">ヘルプページ</comment>
+    <comment xml:lang="kk">анықтама парағы</comment>
+    <comment xml:lang="ko">도움말 페이지</comment>
+    <comment xml:lang="lt">žinyno puslapis</comment>
+    <comment xml:lang="lv">palīdzības lapa</comment>
+    <comment xml:lang="ms">Halaman bantuan</comment>
+    <comment xml:lang="nb">hjelpside</comment>
+    <comment xml:lang="nl">hulppagina</comment>
+    <comment xml:lang="nn">hjelpeside</comment>
+    <comment xml:lang="oc">pagina d'ajuda</comment>
+    <comment xml:lang="pl">Strona pomocy</comment>
+    <comment xml:lang="pt">página de ajuda</comment>
+    <comment xml:lang="pt_BR">Página de ajuda</comment>
+    <comment xml:lang="ro">pagină de ajutor</comment>
+    <comment xml:lang="ru">Страница справки</comment>
+    <comment xml:lang="sk">Stránka Pomocníka</comment>
+    <comment xml:lang="sl">stran pomoči</comment>
+    <comment xml:lang="sq">Faqe ndihme</comment>
+    <comment xml:lang="sr">страница помоћи</comment>
+    <comment xml:lang="sv">hjälpsida</comment>
+    <comment xml:lang="tr">yardım sayfası</comment>
+    <comment xml:lang="uk">сторінка довідки</comment>
+    <comment xml:lang="vi">trang trợ giúp</comment>
+    <comment xml:lang="zh_CN">帮助页面</comment>
+    <comment xml:lang="zh_TW">求助頁面</comment>
+    <sub-class-of type="text/plain"/>
+  </mime-type>
+  <mime-type type="text/plain">
+    <comment>plain text document</comment>
+    <comment xml:lang="ar">مستند نصي مجرد</comment>
+    <comment xml:lang="ast">documentu de testu planu</comment>
+    <comment xml:lang="be@latin">prosty tekstavy dakument</comment>
+    <comment xml:lang="bg">Документ с неформатиран текст</comment>
+    <comment xml:lang="ca">document de text pla</comment>
+    <comment xml:lang="cs">prostý textový dokument</comment>
+    <comment xml:lang="da">rent tekstdokument</comment>
+    <comment xml:lang="de">Einfaches Textdokument</comment>
+    <comment xml:lang="el">Έγγραφο απλού κειμένου</comment>
+    <comment xml:lang="en_GB">plain text document</comment>
+    <comment xml:lang="eo">plata teksta dokumento</comment>
+    <comment xml:lang="es">documento de texto sencillo</comment>
+    <comment xml:lang="eu">testu soileko dokumentua</comment>
+    <comment xml:lang="fi">perustekstiasiakirja</comment>
+    <comment xml:lang="fr">document texte brut</comment>
+    <comment xml:lang="ga">cáipéis ghnáth-théacs</comment>
+    <comment xml:lang="gl">documento de texto sinxelo</comment>
+    <comment xml:lang="he">מסמך טקסט פשוט</comment>
+    <comment xml:lang="hr">Običan tekstovni dokument</comment>
+    <comment xml:lang="hu">egyszerű szöveg</comment>
+    <comment xml:lang="ia">Documento de texto simple</comment>
+    <comment xml:lang="id">dokumen teks polos</comment>
+    <comment xml:lang="it">Documento in testo semplice</comment>
+    <comment xml:lang="ja">平文テキストドキュメント</comment>
+    <comment xml:lang="kk">мәтіндік құжаты</comment>
+    <comment xml:lang="ko">일반 텍스트 문서</comment>
+    <comment xml:lang="lt">paprastas tekstinis dokumentas</comment>
+    <comment xml:lang="lv">vienkāršs teksta dokuments</comment>
+    <comment xml:lang="ms">Dokumen teks jernih</comment>
+    <comment xml:lang="nb">vanlig tekstdokument</comment>
+    <comment xml:lang="nl">plattetekst-document</comment>
+    <comment xml:lang="nn">vanleg tekstdokument</comment>
+    <comment xml:lang="oc">document tèxte brut</comment>
+    <comment xml:lang="pl">Zwykły dokument tekstowy</comment>
+    <comment xml:lang="pt">documento em texto simples</comment>
+    <comment xml:lang="pt_BR">Documento de Texto</comment>
+    <comment xml:lang="ro">document text simplu</comment>
+    <comment xml:lang="ru">Текстовый документ</comment>
+    <comment xml:lang="sk">Obyčajný textový dokument</comment>
+    <comment xml:lang="sl">običajna besedilna datoteka</comment>
+    <comment xml:lang="sq">Dokument në tekst të thjeshtë</comment>
+    <comment xml:lang="sr">обичан текстуални документ</comment>
+    <comment xml:lang="sv">vanligt textdokument</comment>
+    <comment xml:lang="tr">düz metin belgesi</comment>
+    <comment xml:lang="uk">звичайний текстовий документ</comment>
+    <comment xml:lang="vi">tài liệu nhập thô</comment>
+    <comment xml:lang="zh_CN">纯文本文档</comment>
+    <comment xml:lang="zh_TW">純文字文件</comment>
+    <magic priority="50">
+      <match value="This is TeX," type="string" offset="0"/>
+      <match value="This is METAFONT," type="string" offset="0"/>
+    </magic>
+    <glob pattern="*.txt"/>
+    <glob pattern="*.asc"/>
+    <glob pattern="*,v"/>
+  </mime-type>
+  <mime-type type="application/pdf">
+    <comment>PDF document</comment>
+    <comment xml:lang="ar">مستند PDF</comment>
+    <comment xml:lang="ast">Documentu PDF</comment>
+    <comment xml:lang="be@latin">Dakument PDF</comment>
+    <comment xml:lang="bg">Документ — PDF</comment>
+    <comment xml:lang="ca">document PDF</comment>
+    <comment xml:lang="cs">dokument PDF</comment>
+    <comment xml:lang="cy">Dogfen PDF</comment>
+    <comment xml:lang="da">PDF-dokument</comment>
+    <comment xml:lang="de">PDF-Dokument</comment>
+    <comment xml:lang="el">Έγγραφο PDF</comment>
+    <comment xml:lang="en_GB">PDF document</comment>
+    <comment xml:lang="eo">PDF-dokumento</comment>
+    <comment xml:lang="es">documento PDF</comment>
+    <comment xml:lang="eu">PDF dokumentua</comment>
+    <comment xml:lang="fi">PDF-asiakirja</comment>
+    <comment xml:lang="fo">PDF skjal</comment>
+    <comment xml:lang="fr">document PDF</comment>
+    <comment xml:lang="ga">cáipéis PDF</comment>
+    <comment xml:lang="gl">documento PDF</comment>
+    <comment xml:lang="he">מסמך PDF</comment>
+    <comment xml:lang="hr">PDF dokument</comment>
+    <comment xml:lang="hu">PDF-dokumentum</comment>
+    <comment xml:lang="ia">Documento PDF</comment>
+    <comment xml:lang="id">Dokumen PDF</comment>
+    <comment xml:lang="it">Documento PDF</comment>
+    <comment xml:lang="ja">PDF ドキュメント</comment>
+    <comment xml:lang="kk">PDF құжаты</comment>
+    <comment xml:lang="ko">PDF 문서</comment>
+    <comment xml:lang="lt">PDF dokumentas</comment>
+    <comment xml:lang="lv">PDF dokuments</comment>
+    <comment xml:lang="ms">Dokumen PDF</comment>
+    <comment xml:lang="nb">PDF-dokument</comment>
+    <comment xml:lang="nl">PDF-document</comment>
+    <comment xml:lang="nn">PDF-dokument</comment>
+    <comment xml:lang="oc">document PDF</comment>
+    <comment xml:lang="pl">Dokument PDF</comment>
+    <comment xml:lang="pt">documento PDF</comment>
+    <comment xml:lang="pt_BR">Documento PDF</comment>
+    <comment xml:lang="ro">Document PDF</comment>
+    <comment xml:lang="ru">Документ PDF</comment>
+    <comment xml:lang="sk">Dokument PDF</comment>
+    <comment xml:lang="sl">Dokument PDF</comment>
+    <comment xml:lang="sq">Dokument PDF</comment>
+    <comment xml:lang="sr">ПДФ документ</comment>
+    <comment xml:lang="sv">PDF-dokument</comment>
+    <comment xml:lang="tr">PDF belgesi</comment>
+    <comment xml:lang="uk">документ PDF</comment>
+    <comment xml:lang="vi">Tài liệu PDF</comment>
+    <comment xml:lang="zh_CN">PDF 文档</comment>
+    <comment xml:lang="zh_TW">PDF 文件</comment>
+    <acronym>PDF</acronym>
+    <expanded-acronym>Portable Document Format</expanded-acronym>
+    <generic-icon name="x-office-document"/>
+    <magic priority="50">
+      <match value="%PDF-" type="string" offset="0:1024"/>
+    </magic>
+    <glob pattern="*.pdf"/>
+    <alias type="application/x-pdf"/>
+    <alias type="image/pdf"/>
+    <alias type="application/acrobat"/>
+    <alias type="application/nappdf"/>
+  </mime-type>
+</mime-info>

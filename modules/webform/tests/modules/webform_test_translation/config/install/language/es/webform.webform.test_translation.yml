@@ -1,0 +1,73 @@
+title: 'Prueba: Traducción'
+description: 'Prueba de la traducción de un formulario.'
+elements: |
+  processed_text:
+    '#text': '<p><strong>Algún texto</strong></p>'
+  textfield:
+    '#title': 'Campo de texto'
+  select_options:
+    '#title': 'Seleccione (opciones)'
+  select_custom:
+    '#title': 'Seleccione (personalizado)'
+    '#options':
+      4: 'Las cuatro'
+      5: Cinco
+      6: Seis
+    '#other__option_label': 'Número personalizado…'
+  webform_image_select:
+    '#title': 'Seleccionar imagen'
+    '#images':
+      kitten_1:
+        text: 'Lindo gatito 1'
+        src: 'http://placekitten.com/220/200'
+      kitten_2:
+        text: 'Lindo gatito 2'
+        src: 'http://placekitten.com/220/200'
+      kitten_3:
+        text: 'Lindo gatito 3'
+        src: 'http://placekitten.com/220/200'
+  details:
+    '#title': Detalles
+  markup:
+    '#markup': 'Esto es un poco de marcado HTML.'
+  composite:
+    '#title': Compuesto
+    '#element':
+      first_name:
+        '#title': Nombre
+      last_name:
+        '#title': Apellido
+      age:
+        '#title': Edad
+        '#field_suffix': 'años. antiguo'
+  address:
+    '#title': Dirección
+    '#address__title': Dirección
+    '#address_2__title': 'Dirección 2'
+    '#city__title': 'Ciudad / Pueblo'
+    '#state_province__title': 'Estado / Provincia'
+    '#postal_code__title': 'ZIP / Código Postal'
+    '#country__title': 'Acciones de país'
+  computed_token:
+    '#title': 'Computado (token)'
+  actions:
+    '#type': webform_actions
+    '#title': 'Enviar botón (s)'
+    '#submit__label': 'Enviar mensaje'
+settings:
+  confirmation_message: 'Tu mensaje ha sido enviado.'
+handlers:
+  email_confirmation:
+    label: ' Confirmación de correo electrónico'
+variants:
+  test:
+    settings:
+      elements: |
+        textfield:
+          '#title': 'Campo de texto - Variante'
+        
+˚weight: 0
+dependencies:
+  enforced:
+    module:
+      - webform_test_translation

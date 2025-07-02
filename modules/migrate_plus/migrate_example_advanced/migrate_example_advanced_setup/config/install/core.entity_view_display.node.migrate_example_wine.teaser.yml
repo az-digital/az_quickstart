@@ -1,0 +1,39 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.migrate_example_wine.body
+    - field.field.node.migrate_example_wine.field_migrate_example_comments
+    - field.field.node.migrate_example_wine.field_migrate_example_adv_image
+    - field.field.node.migrate_example_wine.field_migrate_example_top_vintag
+    - field.field.node.migrate_example_wine.field_migrate_example_wine_best
+    - field.field.node.migrate_example_wine.field_migrate_example_wine_ratin
+    - field.field.node.migrate_example_wine.field_migrate_example_wine_regio
+    - field.field.node.migrate_example_wine.field_migrate_example_wine_var
+    - node.type.migrate_example_wine
+  module:
+    - text
+    - user
+id: node.migrate_example_wine.teaser
+targetEntityType: node
+bundle: migrate_example_wine
+mode: teaser
+content:
+  body:
+    label: hidden
+    type: text_summary_or_trimmed
+    weight: 101
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+  links:
+    weight: 100
+hidden:
+  field_migrate_example_comments: true
+  field_migrate_example_adv_image: true
+  field_migrate_example_top_vintag: true
+  field_migrate_example_wine_best: true
+  field_migrate_example_wine_ratin: true
+  field_migrate_example_wine_regio: true
+  field_migrate_example_wine_var: true

@@ -1,0 +1,40 @@
+{#
+/**
+ * @file
+ * Default theme implementation for the webform help support.
+ */
+#}
+{{ attach_library('webform/webform.help.support') }}
+
+<div class="webform-help-support">
+  <h2 class="webform-help-support__header">{{ 'Getting involved and support options'|t }} <span class="webform-help-support__header-more">(<a href="https://www.drupal.org/project/webform">more information</a>)</span></h2>
+  <div class="webform-help-support__items">
+    <div class="webform-help-support__item">
+      <span class="webform-help-support__item-icon webform-help-support__item-icon--contribute" id="contribute-info-account"></span>
+      <div class="webform-help-support__item-details">
+        <h3 class="webform-help-support__item-title">{{ 'Get involved'|t }}</h3>
+        {{ 'Get involved in the Drupal community and the Webform module. Review a patch, write documentation, contribute code, volunteer at an event, and more...'|t }}<br/>
+        <a href="https://drupal.org/contribute" class="button button--small button--primary webform-help-support__button">{{ 'Contribute'|t }}</a><br/>
+        <em>{{ 'Open to all'|t }}</em>
+      </div>
+    </div>
+    <div class="webform-help-support__item">
+      <span class="webform-help-support__item-icon webform-help-support__item-icon--join" id="contribute-info-association"></span>
+      <div class="webform-help-support__item-details">
+        <h3 class="webform-help-support__item-title">{{ 'Drupal Association'|t }}</h3>
+        {{ "The Drupal Association is an educational non-profit organization that tasks itself with fostering and supporting the Drupal software project, the community and its growth."|t }}<br/>
+        <a href="https://www.drupal.org/association" class="button button--small button--primary webform-help-support__button">{{ 'Join'|t }}</a><br/>
+        <em>{{ 'Starting at $5 a month'|t }}</em>
+      </div>
+    </div>
+    <div class="webform-help-support__item">
+      <span class="webform-help-support__item-icon webform-help-support__item-icon--fund" id="contribute-info-membership"></span>
+      <div class="webform-help-support__item-details">
+        <h3 class="webform-help-support__item-title">{{ 'Fund development'|t }}</h3>
+        {{ 'Help fund the day-to-day tasks required to maintain the Webform module. Funds are used to triage issues, resolve security issues, and tag new releases.'|t }}<br/>
+        <a href="https://opencollective.com/webform" class="button button--small button--primary webform-help-support__button">{{ 'Fund'|t }}</a><br/>
+        <em>{{ 'Starting at $5 a month'|t }}</em>
+      </div>
+    </div>
+  </div>
+</div>

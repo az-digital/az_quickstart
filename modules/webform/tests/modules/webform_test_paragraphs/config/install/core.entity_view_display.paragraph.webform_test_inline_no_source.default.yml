@@ -1,0 +1,43 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.webform_test_inline_no_source.field_webform_test
+    - field.field.paragraph.webform_test_inline_no_source.field_webform_test_para_value
+    - field.field.paragraph.webform_test_inline_no_source.field_webform_test_value
+    - paragraphs.paragraphs_type.webform_test_inline_no_source
+  module:
+    - webform
+id: paragraph.webform_test_inline_no_source.default
+targetEntityType: paragraph
+bundle: webform_test_inline_no_source
+mode: default
+content:
+  field_webform_test:
+    type: webform_entity_reference_entity_view
+    label: above
+    settings:
+      source_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_webform_test_para_value:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_webform_test_value:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden:
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true

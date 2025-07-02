@@ -1,0 +1,205 @@
+<?php
+
+/**
+ * @file
+ * Implements the antibot module.
+ */
+
+use Drupal\antibot\AntibotFormAlter;
+use Drupal\Core\Cache\CacheableMetadata;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Component\Utility\Crypt;
+use Drupal\Core\Site\Settings;
+use Drupal\views\ViewExecutable;
+
+/**
+ * Implements hook_help().
+ */
+function antibot_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the antibot module.
+    case 'help.page.antibot':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Prevent forms from being submitted without JavaScript enabled') . '</p>';
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function antibot_theme($existing, $type, $theme, $path) {
+  return [
+    'antibot_no_js' => [
+      'template'  => 'antibot-no-js',
+      'variables' => [
+        'message' => NULL,
+      ],
+      'path' => $path . '/templates',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function antibot_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  $skip_antibot = FALSE;
+
+  // Set skip antibot to true if user has appropriate permission.
+  if (\Drupal::currentUser()->hasPermission('skip antibot')) {
+    $skip_antibot = TRUE;
+  }
+
+  $protection = FALSE;
+
+  // Load module config.
+  $config = \Drupal::config('antibot.settings');
+
+  // Get the configured active form IDs for antibot.
+  if ($form_ids = $config->get('form_ids')) {
+    $excluded_form_ids = $config->get('excluded_form_ids') ?? [];
+
+    // Check if this form is a match.
+    $pathMatcher = \Drupal::service('path.matcher');
+    $included = $pathMatcher->matchPath($form_id, implode("\n", $form_ids)) || $pathMatcher->matchPath($form['#id'], implode("\n", $form_ids));
+    $excluded = $pathMatcher->matchPath($form_id, implode("\n", $excluded_form_ids)) || $pathMatcher->matchPath($form['#id'], implode("\n", $excluded_form_ids));
+
+    if ($included && !$excluded) {
+      // Enable protection for this form if user doesn't have skip permission.
+      if (!$skip_antibot) {
+        antibot_protect_form($form);
+      }
+
+      // Track that protection was added.
+      $protection = TRUE;
+    }
+  }
+
+  // Determine if we should display the form ID.
+  if ($config->get('show_form_ids')) {
+    // Check if the user has permission to view these messages.
+    if (\Drupal::currentUser()->hasPermission('administer antibot configuration')) {
+      // Set a message with the form ID and status.
+      \Drupal::messenger()->addMessage(t('Antibot (:id): :status', [
+        ':id' => $form_id,
+        ':status' => $protection ? t('enabled') : t('disabled'),
+      ]));
+    }
+  }
+
+  // Tag this form with Antibot settings config so that if the list of forms is
+  // changing the form cache is invalidated. Note that also the unprotected
+  // forms are tagged as they might be protected with the new Antibot settings.
+  $cache_metadata = CacheableMetadata::createFromRenderArray($form);
+  $cache_metadata->addCacheableDependency($config);
+  $cache_metadata->applyTo($form);
+}
+
+/**
+ * Implements hook_page_attachments().
+ */
+function antibot_page_attachments(array &$page) {
+  // Adds noscript style to HEAD.
+  $noscript_style = [
+    '#tag' => 'style',
+    '#value' => 'form.antibot * :not(.antibot-message) { display: none !important; }',
+    '#noscript' => TRUE,
+  ];
+  $page['#attached']['html_head'][] = [$noscript_style, 'antibot_style'];
+}
+
+/**
+ * Helper function to enable Antibot protection for a given form.
+ *
+ * @param array &$form
+ *   The form to enable Antibot protection on.
+ */
+function antibot_protect_form(array &$form) {
+  // Stop if the form is already protected.
+  if (!empty($form['#antibot_key'])) {
+    return;
+  }
+
+  // Generate a key for this form.
+  $key = _antibot_generate_key($form['#form_id']);
+  $shuffled_key = strrev(implode('', array_map('implode', array_map('array_reverse', array_chunk(str_split($key), 2)))));
+
+  // Store the key in the form.
+  $form['#antibot_key'] = $shuffled_key;
+
+  // Add a hidden value which will receive the key via JS.
+  // The point of this is to add an additional layer of protection for remotely
+  // POSTed forms. Since the key will not be present in that scenario, the
+  // remote post will fail.
+  $form['antibot_key'] = [
+    '#type' => 'hidden',
+    '#value' => '',
+  ];
+
+  // Provide a message in the event that the user does not have JavaScript.
+  $form['antibot_no_js'] = [
+    '#theme' => 'antibot_no_js',
+    '#message' => t('You must have JavaScript enabled to use this form.'),
+    '#weight' => -500,
+  ];
+
+  // Add a pre-render function.
+  $form['#pre_render'][] = [AntibotFormAlter::class, 'preRender'];
+
+  // Add validation for the key.
+  $form['#validate'][] = 'antibot_form_validation';
+}
+
+/**
+ * Validation callback for Antibot-enabled forms.
+ *
+ * @see antibot_form_alter()
+ */
+function antibot_form_validation($form, FormStateInterface $form_state) {
+  // Stop validation if the form was submitted programmatically.
+  if ($form_state->isProgrammed()) {
+    return;
+  }
+
+  // Get the user input.
+  $input = $form_state->getUserInput();
+
+  // Extract the submitted key.
+  $submitted_key = $input['antibot_key'] ?? NULL;
+
+  // Get the expected key.
+  $expected_key = _antibot_generate_key($form['#form_id']);
+
+  // Views exposed forms will initially load and submit without the key.
+  if (($form['#form_id'] == 'views_exposed_form') && ($submitted_key === NULL)) {
+    // We must allow this.
+    return;
+  }
+
+  // Check if the key is missing or is not a match.
+  if (!$submitted_key || ($submitted_key != $expected_key)) {
+    $form_state->setErrorByName('', t('Submission failed. Please reload the page, ensure JavaScript is enabled and try again.'));
+  }
+}
+
+/**
+ * Implements hook_views_pre_render().
+ *
+ * Unset antibot_key from exposed_raw_input to remove it from pagers link.
+ */
+function antibot_views_pre_render(ViewExecutable $view) {
+  if (isset($view->exposed_raw_input['antibot_key'])) {
+    unset($view->exposed_raw_input['antibot_key']);
+  }
+}
+
+/**
+ * Helper function to generate a key for a given form.
+ */
+function _antibot_generate_key($form_id): string {
+  return Crypt::hmacBase64($form_id, Settings::getHashSalt());
+}

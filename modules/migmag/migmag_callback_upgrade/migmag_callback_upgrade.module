@@ -1,0 +1,42 @@
+<?php
+
+/**
+ * @file
+ * Replaces the callback process plugin with the version from Drupal core 9.2+.
+ */
+
+declare(strict_types=1);
+
+use Drupal\migmag_callback_upgrade\MigMagCallback;
+
+/**
+ * Implements hook_help().
+ */
+function migmag_callback_upgrade_help($route_name) {
+  switch ($route_name) {
+    case 'help.page.migmag_callback_upgrade':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>';
+      $output .= t(
+        'Migrate Magician Callback Process Plugin Upgrade replaces the callback process plugin with the version from Drupal core 9.2+. See the <a href=":documentation">online documentation for Migrate Magician Callback Process Plugin module</a>.',
+        [
+          ':documentation' => 'https://drupal.org/docs/contributed-modules/migrate-magician/migrate-magician-callback-process-plugin-upgrade-120',
+        ]
+      );
+      $output .= '</p>';
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_migrate_process_info_alter().
+ */
+function migmag_callback_upgrade_migrate_process_info_alter(&$definitions) {
+  if (
+    version_compare(\Drupal::VERSION, '9.2.0', 'lt')
+    && !empty($definitions['callback'])
+  ) {
+    $definitions['callback']['class'] = MigMagCallback::class;
+  }
+}

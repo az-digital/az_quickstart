@@ -1,0 +1,69 @@
+<?php
+
+/**
+ * @file
+ * Installation and uninstallation functions.
+ */
+
+use Drupal\Core\Url;
+use Drupal\Core\Link;
+
+/**
+ * Implements hook_requirements().
+ */
+function chosen_requirements($phase) {
+  $requirements = [];
+
+  switch ($phase) {
+    case 'runtime':
+      $chosen_path = _chosen_lib_get_chosen_path();
+
+      if (!$chosen_path) {
+        $url = Url::fromUri(CHOSEN_WEBSITE_URL);
+        $link = Link::fromTextAndUrl(t('Chosen JavaScript file'), $url)->toString();
+
+        $requirements['chosen_js'] = [
+          'title' => t('Chosen JavaScript file'),
+          'value' => t('Not Installed'),
+          'severity' => REQUIREMENT_ERROR,
+          'description' => t('You need to <a href="@url">download</a> the @chosen and extract the entire contents of the archive into the %path directory in your Drupal installation directory.', ['@chosen' => $link, '%path' => 'libraries/chosen', '@url' => 'https://github.com/JJJ/chosen/archive/refs/tags/2.2.1.zip']),
+        ];
+      }
+      else {
+        $requirements['chosen_js'] = [
+          'title' => t('Chosen JavaScript file'),
+          'severity' => REQUIREMENT_OK,
+          'value' => t('Installed <br/>The chosen.jquery.js is under %path.', ['%path' => $chosen_path]),
+        ];
+      }
+      break;
+  }
+
+  return $requirements;
+}
+
+/**
+ * Renames config to remove redundant 'chosen_' prefix.
+ */
+function chosen_update_8001() {
+  $config = \Drupal::configFactory()->getEditable('chosen.settings');
+  $raw_data = $config->getRawData();
+  foreach ($raw_data as $name => $data) {
+    if (strpos($name, 'chosen_') === 0) {
+      unset($raw_data[$name]);
+      $name = str_replace('chosen_', '', $name);
+      $raw_data[$name] = $data;
+    }
+  }
+  $config->setData($raw_data);
+  $config->save();
+}
+
+/**
+ * Set default value for chosen for admin pages and/or front end pages.
+ */
+function chosen_update_8002() {
+  $config = \Drupal::configFactory()->getEditable('chosen.settings');
+  $config->set('chosen_include', CHOSEN_INCLUDE_EVERYWHERE);
+  $config->save();
+}

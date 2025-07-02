@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - webform_image_select_test
+id: bears
+label: Bears
+category: Animals
+images: |
+  bear_1:
+    text: 'Bear 1'
+    src: 'https://placebear.com/220/200'
+  bear_2:
+    text: 'Bear 2'
+    src: 'https://placebear.com/180/200'
+  bear_3:
+    text: 'Bear 3'
+    src: 'https://placebear.com/130/200'
+  bear_4:
+    text: 'Bear 4'
+    src: 'https://placebear.com/270/200'

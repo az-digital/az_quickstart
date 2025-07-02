@@ -1,0 +1,88 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the Webform module.
+ */
+
+// Webform install helper functions.
+include_once __DIR__ . '/includes/webform.install.inc';
+
+// Webform requirements.
+include_once __DIR__ . '/includes/webform.install.requirements.inc';
+
+// Webform update hooks.
+include_once __DIR__ . '/includes/webform.install.update.inc';
+
+/**
+ * Implements hook_install().
+ */
+function webform_install() {
+  // Automatically install sub-modules to improve the UX via SimplyTest.me.
+  $tugboat_project = $_ENV['TUGBOAT_PROJECT'] ?? '';
+  if ($tugboat_project === 'SimplyTest.me') {
+    /** @var \Drupal\Core\Extension\ModuleInstallerInterface $module_installer */
+    $module_installer = \Drupal::service('module_installer');
+    $module_installer->install([
+      'webform_ui',
+      'webform_templates',
+      'webform_examples',
+      'webform_image_select',
+      'webform_node',
+      'webform_share',
+      'webform_submission_log',
+    ]);
+  }
+
+  // Update the HTML Editor.
+  _webform_update_html_editor();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function webform_uninstall() {
+  // Issue #2793597: uninstall error You have requested a non-existent service
+  // "webform.email_provider".
+  // Workaround: Don't use the webform.email_provider in hook_uninstall().
+  // @see \Drupal\webform\WebformEmailProvider::uninstall()
+  $config = \Drupal::configFactory()->getEditable('system.mail');
+  $mail_plugins = $config->get('interface');
+  unset($mail_plugins['webform']);
+  $config->set('interface', $mail_plugins)->save();
+
+  // Delete editor uploaded files.
+  $config = \Drupal::configFactory()->get('webform.settings');
+  _webform_config_delete($config);
+}
+
+/**
+ * Implements hook_schema().
+ *
+ * Even though Webform's are config entities we need to create a 'webform' table
+ * to track webform submission serial numbers using DB transaction locking.
+ *
+ * @see \Drupal\webform\WebformEntityStorage
+ */
+function webform_schema() {
+  $schema['webform'] = [
+    'description' => 'Stores all webform data.',
+    'fields' => [
+      'webform_id' => [
+        'description' => 'The webform id.',
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+      ],
+      'next_serial' => [
+        'description' => 'The serial number to give to the next submission to this webform.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 1,
+      ],
+    ],
+    'primary key' => ['webform_id', 'next_serial'],
+  ];
+  return $schema;
+}

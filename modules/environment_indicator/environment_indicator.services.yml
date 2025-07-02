@@ -1,0 +1,10 @@
+services:
+  environment_indicator.toolbar_handler:
+    class: Drupal\environment_indicator\ToolbarHandler
+    arguments:
+      - '@module_handler'
+      - '@config.factory'
+      - '@current_user'
+      - '@state'
+      - '@settings'
+      - '@entity_type.manager'

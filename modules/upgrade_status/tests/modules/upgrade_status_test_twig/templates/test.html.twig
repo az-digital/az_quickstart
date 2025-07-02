@@ -1,0 +1,10 @@
+{{ attach_library('upgrade_status_test_library/deprecated_library') }}
+{{ attach_library('core/dynamic_value_is_skipped'|raw, 'upgrade_status_test_twig/deprecated_library') }}
+
+
+
+
+
+{# Moving the deprecated filter use to line 10 on purpose. #}
+{% set kitten = 'Kitten' %}
+{{kitten|deprecatedfilter}}

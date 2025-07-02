@@ -1,0 +1,3 @@
+field.formatter.settings.blazy_entity_test:
+  type: blazy_base
+  label: 'Blazy entity reference test display format settings'

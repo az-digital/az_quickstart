@@ -1,0 +1,9 @@
+services:
+  extlink.setting_save.subscriber:
+    class: Drupal\extlink\EventSubscriber\ExtlinkSettingsSaveEventSubscriber
+    arguments:
+      - '@library.discovery'
+      - '@asset.js.collection_optimizer'
+      - '@asset.query_string'
+    tags:
+      - { name: event_subscriber }

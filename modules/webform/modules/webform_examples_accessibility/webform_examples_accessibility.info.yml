@@ -1,0 +1,12 @@
+name: 'Webform Examples Accessibility'
+type: module
+description: 'Provides example webforms for reviewing and testing accessibility.'
+package: 'Webform example'
+core_version_requirement: ^10.2
+dependencies:
+  - 'drupal:webform'
+
+# Information added by Drupal.org packaging script on 2024-12-10
+version: '6.2.9'
+project: 'webform'
+datestamp: 1733851071

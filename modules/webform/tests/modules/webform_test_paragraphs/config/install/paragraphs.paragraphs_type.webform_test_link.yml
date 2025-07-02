@@ -1,0 +1,12 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - webform_test_paragraphs
+id: webform_test_link
+label: 'Webform test link'
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

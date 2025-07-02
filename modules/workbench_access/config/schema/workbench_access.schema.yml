@@ -1,0 +1,85 @@
+workbench_access.settings:
+  type: config_object
+  label: 'Workbench Access settings'
+  mapping:
+    deny_on_empty:
+      type: boolean
+      label: 'Deny access to unassigned content'
+    deny_strict:
+      type: boolean
+      label: 'When multiple schemes apply, deny access if any scheme does not provide access'
+
+entity_reference_selection.workbench_access:
+  type: entity_reference_selection.default
+  label: 'Default selection handler settings'
+
+entity_reference_selection.workbench_access:taxonomy_term:*:
+  type: entity_reference_selection.workbench_access
+
+entity_reference_selection.workbench_access:user:*:
+  type: entity_reference_selection.workbench_access
+
+workbench_access.access_scheme.*:
+  type: config_entity
+  label: 'Access scheme config'
+  mapping:
+    id:
+      type: string
+      label: 'ID'
+    plural_label:
+      type: text
+      label: 'Label shown to define a set of Workbench Access control groups.'
+    label:
+      type: label
+      label: 'Label'
+    scheme:
+      type: string
+      label: 'Access scheme'
+    scheme_settings:
+      type: workbench_access.scheme_settings.[%parent.scheme]
+
+workbench_access_scheme_settings:
+  type: mapping
+  label: 'Settings'
+
+workbench_access.scheme_settings.taxonomy:
+  type: workbench_access_scheme_settings
+  mapping:
+    vocabularies:
+      type: sequence
+      label: 'Vocabularies'
+      sequence:
+        type: string
+        label: 'Vocabulary'
+    fields:
+      type: sequence
+      label: 'Fields'
+      sequence:
+        type: mapping
+        label: 'Field'
+        mapping:
+          entity_type:
+            type: string
+            label: 'Entity type ID'
+          bundle:
+            type: string
+            label: 'Bundle'
+          field:
+            type: string
+            label: 'Field'
+
+workbench_access.scheme_settings.menu:
+  type: workbench_access_scheme_settings
+  mapping:
+    menus:
+      type: sequence
+      label: 'Menus'
+      sequence:
+        type: string
+        label: 'Menu'
+    bundles:
+      type: sequence
+      label: 'Bundles'
+      sequence:
+        type: string
+        label: 'Bundle'

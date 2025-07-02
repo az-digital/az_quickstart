@@ -1,0 +1,15 @@
+user_expire.admin:
+  path: '/admin/config/people/user-expire'
+  defaults:
+    _form: '\Drupal\user_expire\Form\UserExpireSettingsForm'
+    _title: 'User expire'
+  requirements:
+    _permission: 'administer user expire settings'
+
+expiring_users.admin:
+  path: '/admin/reports/expiring-users'
+  defaults:
+    _controller: '\Drupal\user_expire\Controller\UserExpireReport::listOfUsers'
+    _title: 'Expiring users'
+  requirements:
+    _permission: 'view expiring users report'

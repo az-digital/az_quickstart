@@ -1,0 +1,28 @@
+{
+    "name": "drupal/config_sync",
+    "description": "Synchronize your site with updated configuration provided by modules and themes.",
+    "type": "drupal-module",
+    "homepage": "https://www.drupal.org/project/config_sync",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Nedjo Rogers (nedjo)",
+            "email": "nedjo@4481.no-reply.drupal.org",
+            "homepage": "https://www.drupal.org/u/nedjo",
+            "role": "Maintainer"
+        }
+    ],
+    "support": {
+        "issues": "https://drupal.org/project/issues/config_sync",
+        "source": "https://git.drupalcode.org/project/config_sync"
+    },
+    "require": {
+        "drupal/config_distro": "^2.0.0-alpha2",
+        "drupal/config_filter": "^2.7",
+        "drupal/config_merge": "^2.0.0-alpha2",
+        "drupal/config_normalizer": "^1.0-beta2",
+        "drupal/config_provider": "^3.0.0-alpha2",
+        "drupal/config_snapshot": "^2.0",
+        "drupal/config_update": "^2.0.0-alpha4"
+    }
+}

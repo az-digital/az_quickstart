@@ -1,0 +1,39 @@
+uuid: 5f122f82-d8e0-46a7-bb89-6e393749a699
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.crop_media_example.body
+    - field.field.node.crop_media_example.field_image_crop_media
+    - node.type.crop_media_example
+  module:
+    - text
+    - user
+id: node.crop_media_example.default
+targetEntityType: node
+bundle: crop_media_example
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 101
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_image_crop_media:
+    weight: 102
+    label: hidden
+    settings:
+      link: true
+      view_mode: default
+    third_party_settings: {  }
+    type: entity_reference_entity_view
+    region: content
+  links:
+    weight: 100
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  langcode: true

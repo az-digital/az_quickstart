@@ -1,0 +1,6 @@
+embed:
+  js:
+    js/embed.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal.ajax

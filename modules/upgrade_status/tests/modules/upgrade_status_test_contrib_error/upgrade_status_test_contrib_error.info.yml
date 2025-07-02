@@ -1,0 +1,11 @@
+name: 'Upgrade status test contrib error'
+type: module
+description: 'Support module for upgrade status module testing.'
+package: Testing
+# Project name is intentionally set to test this as a contrib project.
+# project: 'upgrade_status_test_contrib_error'
+
+# Information added by Drupal.org packaging script on 2025-05-02
+version: '4.3.7'
+project: 'upgrade_status'
+datestamp: 1746203413

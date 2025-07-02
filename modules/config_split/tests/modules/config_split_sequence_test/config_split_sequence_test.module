@@ -1,0 +1,20 @@
+<?php
+
+/**
+ * @file
+ * Hooks to test config splits sequence api.
+ */
+
+/**
+ * Implements hook_config_schema_info_alter().
+ */
+function config_split_sequence_test_config_schema_info_alter(&$definitions) {
+  // This illustrates how to set a patch index callback. It works with any
+  // callable that can be serialized.
+  $definitions['config_split_sequence_test.nested_sequences']['mapping']['nested']['settings']['patch index'] = '0.0';
+  $definitions['config_split_sequence_test.nested_sequences']['mapping']['nested']['sequence']['settings']['patch index'] = '0';
+  // This is redundant because the third layer contains strings which will be
+  // used as values anyway. But this demonstrates that instead of a callable
+  // one can just specify "*" and it will take the value.
+  $definitions['config_split_sequence_test.nested_sequences']['mapping']['nested']['sequence']['sequence']['settings']['patch index'] = '*';
+}

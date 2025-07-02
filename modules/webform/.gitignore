@@ -1,0 +1,11 @@
+*.patch
+interdiff-*.txt
+*.diff
+
+# Ignore the HTML and reports directory used for generate Webform documentation.
+/html
+/reports/accessiblity/html
+/reports/accessiblity/pdf
+
+# Ignore all *.features.yml files.
+*.features.yml

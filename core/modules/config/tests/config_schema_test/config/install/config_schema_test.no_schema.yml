@@ -1,0 +1,4 @@
+test_item: "Whatever structure there is in this file"
+test_list:
+  - "the main file has no schema, so individual items"
+  - "will not have any schema information."

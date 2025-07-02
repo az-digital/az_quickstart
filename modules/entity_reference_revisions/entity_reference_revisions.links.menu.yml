@@ -1,0 +1,6 @@
+entity_reference_revisions.delete_orphans:
+  title: 'Delete orphaned composite entities'
+  parent: system.admin_config_system
+  description: 'Delete revisions of entities that are no longer used in Entity Reference Revisions fields.'
+  route_name: entity_reference_revisions.delete_orphans
+  weight: 30

@@ -1,0 +1,57 @@
+/**
+ * @file
+ * Styles for system messages.
+ */
+
+.messages {
+  padding: 20px;
+  word-wrap: break-word;
+  color: inherit;
+  overflow-wrap: break-word;
+}
+.messages__content {
+  padding-inline-start: 24px;
+  background-image: var(--umami-message-icon);
+  background-repeat: no-repeat;
+  background-position-x: left;
+  background-position-y: center;
+}
+[dir="rtl"] .messages__content {
+  background-position-x: right;
+}
+.messages--status {
+  --umami-message-icon: url(/core/misc/icons/73b355/check.svg);
+
+  border: 1px solid #cbdebc;
+  background-color: #e6eee0;
+}
+.messages--warning {
+  --umami-message-icon: url(/core/misc/icons/e29700/warning.svg);
+
+  border: 1px solid #fae2a4;
+  background-color: #fcf1d4;
+}
+.messages--error {
+  --umami-message-icon: url(/core/misc/icons/e32700/error.svg);
+
+  border: 1px solid #f8c8d5;
+  background-color: #f9e6eb;
+}
+.messages--error .error {
+  color: inherit;
+}
+.messages a {
+  color: #cc2a00;
+}
+.messages__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.messages__item + .messages__item {
+  margin-top: 0.769em;
+}
+.messages__wrapper {
+  display: grid;
+  gap: 1.538em;
+}

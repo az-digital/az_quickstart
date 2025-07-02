@@ -1,0 +1,5 @@
+file_mdm.settings:
+  title: 'File metadata manager'
+  route_name: file_mdm.settings
+  description: 'Configure file metadata settings.'
+  parent: system.admin_config_system

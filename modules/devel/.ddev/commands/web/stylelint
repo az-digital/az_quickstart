@@ -1,0 +1,15 @@
+#!/bin/bash
+
+#ddev-generated
+## Command provided by https://github.com/ddev/ddev-drupal-contrib
+## Description: Run stylelint inside the web container
+## Usage: stylelint [flags] [args]
+## Example: "ddev stylelint"
+## ExecRaw: true
+
+if yarn --cwd "$DDEV_DOCROOT/core" stylelint --version >/dev/null ; then
+  yarn --color --cwd "$DDEV_DOCROOT/core" --config ./.stylelintrc.json stylelint ../modules/custom/**/*.css "$@"
+else
+  echo "stylelint is not available. You may need to 'ddev yarn --cwd $DDEV_DOCROOT/core install'"
+  exit 1
+fi

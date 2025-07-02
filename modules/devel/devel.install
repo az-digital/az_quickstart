@@ -1,0 +1,53 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the devel module.
+ */
+
+use Drupal\devel\Plugin\Devel\Dumper\Kint;
+use Drupal\devel\Plugin\Devel\Dumper\VarDumper;
+
+/**
+ * Implements hook_install().
+ */
+function devel_install() {
+  $rich_dumper = NULL;
+  if (VarDumper::checkRequirements()) {
+    $rich_dumper = 'var_dumper';
+  }
+  elseif (Kint::checkRequirements()) {
+    $rich_dumper = 'kint';
+  }
+  if (isset($rich_dumper)) {
+    \Drupal::configFactory()->getEditable('devel.settings')
+      ->set('devel_dumper', $rich_dumper)
+      ->save(TRUE);
+  }
+}
+
+/**
+ * Implements hook_requirements().
+ */
+function devel_requirements($phase) {
+  $requirements = [];
+
+  if ($phase == 'runtime') {
+    // To understand the reasons why this message is marked as info see
+    // https://www.drupal.org/node/2834400.
+    $requirements['devel'] = [
+      'title' => t('Devel module enabled'),
+      'description' => t("The Devel module provides access to internal debugging information; therefore it's recommended to disable this module on sites in production."),
+      'severity' => REQUIREMENT_INFO,
+    ];
+  }
+
+  return $requirements;
+}
+
+/**
+ * Implements hook_update_last_removed().
+ */
+function devel_update_last_removed(): int {
+  return 8002;
+}

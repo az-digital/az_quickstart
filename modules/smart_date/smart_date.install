@@ -1,0 +1,174 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for smart_date module.
+ */
+
+declare(strict_types=1);
+
+use Drupal\Core\Entity\Sql\SqlContentEntityStorage;
+use Drupal\node\NodeStorage;
+
+/**
+ * Implements hook_install().
+ */
+function smart_date_update_8201() {
+  $field_type = 'smartdate';
+  // Define the columns we want to add.
+  $specs = [
+    'rrule' => [
+      'type' => 'int',
+      'label' => t('RRule ID'),
+      'unsigned' => TRUE,
+      'not null' => FALSE,
+    ],
+    'timezone' => [
+      'type' => 'varchar',
+      'label' => t('Timezone'),
+      'length' => 32,
+    ],
+  ];
+
+  _smart_date_field_columns_add($field_type, $specs, FALSE);
+}
+
+/**
+ * Add rule index column for recurring dates.
+ */
+function smart_date_update_8202() {
+  $field_type = 'smartdate';
+  // Define the columns we want to add.
+  $specs = [
+    'rrule_index' => [
+      'type' => 'int',
+      'label' => t('RRule Index'),
+      'unsigned' => TRUE,
+      'not null' => FALSE,
+    ],
+  ];
+
+  _smart_date_field_columns_add($field_type, $specs);
+
+  // If Smart Date Recur isn't enabled, nothing more to do.
+  if (!\Drupal::moduleHandler()->moduleExists('smart_date_recur')) {
+    return;
+  }
+
+  // Now, populate the new column.
+  $rules = \Drupal::entityTypeManager()->getStorage('smart_date_rule')->loadMultiple();
+  if (empty($rules)) {
+    return;
+  }
+  $manager = \Drupal::entityDefinitionUpdateManager();
+  $database = \Drupal::database();
+  foreach ($rules as $rule) {
+    // @todo Need to populate $before here?
+    $instances = $rule->getRuleInstances();
+    if (!$instances) {
+      continue;
+    }
+    $rid = $rule->id();
+    $entity_type_id = $rule->entity_type->getString();
+    $field_name = $rule->field_name->getString();
+    // Get db table.
+    $field_storage_definition = $manager->getFieldStorageDefinition($field_name, $entity_type_id);
+    $storage = \Drupal::entityTypeManager()->getStorage($entity_type_id);
+    $table_mapping = $storage->getTableMapping([
+      $field_name => $field_storage_definition,
+    ]);
+    $table_name = $table_mapping->getDedicatedDataTableName($field_storage_definition);
+    foreach ($instances as $index => $instance) {
+      // Update the row.
+      $database->update($table_name)
+        ->fields([
+          $field_name . '_rrule_index' => $index,
+        ])
+        ->condition($field_name . '_value', $instance['value'])
+        ->condition($field_name . '_end_value', $instance['end_value'])
+        ->condition($field_name . '_rrule', $rid)
+        ->condition($field_name . '_rrule_index', NULL, 'IS NULL')
+        ->execute();
+    }
+  }
+}
+
+/**
+ * Set site_time_toggle value on Smart Date Formats to match previous behavior.
+ */
+function smart_date_update_8301() {
+  $format_storage = \Drupal::entityTypeManager()
+    ->getStorage('smart_date_format');
+  $formats = $format_storage
+    ->loadMultiple(NULL);
+  foreach ($formats as $format) {
+    $format->set('site_time_toggle', 1);
+    $format->save();
+  }
+}
+
+/**
+ * Helper function to find all instances of our field type and add a column.
+ *
+ * @param string $field_type
+ *   The type of field to look for.
+ * @param array $specs
+ *   An array of columns to add.
+ */
+function _smart_date_field_columns_add($field_type, array $specs, $update_definitions = TRUE) {
+  // If there are no instances of the field, nothing to do.
+  if (!$field_storage_configs = \Drupal::entityTypeManager()
+    ->getStorage('field_storage_config')
+    ->loadByProperties(['type' => $field_type])) {
+    return;
+  }
+
+  $manager = \Drupal::entityDefinitionUpdateManager();
+
+  // Iterate through each instance of FieldStorageConfig returned.
+  foreach ($field_storage_configs as $field_storage) {
+    // Extract the properties needed for other calls.
+    $field_name = $field_storage->getName();
+    $entity_type_id = $field_storage->getTargetEntityTypeId();
+    // Now collect the objects we need.
+    $field_storage_definition = $manager->getFieldStorageDefinition($field_name, $entity_type_id);
+    $storage = \Drupal::entityTypeManager()->getStorage($entity_type_id);
+    if (!($storage instanceof NodeStorage) && !($storage instanceof SqlContentEntityStorage)) {
+      return;
+    }
+
+    $table_mapping = $storage->getTableMapping([
+      $field_name => $field_storage_definition,
+    ]);
+    $table_names = $table_mapping->getDedicatedTableNames();
+
+    foreach ($table_names as $table_name) {
+      $schema = \Drupal::database()->schema();
+      // If the table doesn't exist, no need to go any further.
+      $table_exists = $schema->tableExists($table_name);
+      if (!$table_exists) {
+        continue;
+      }
+      // Step through the columns to add.
+      foreach ($specs as $name => $spec) {
+        // Only add the column if it isn't there already.
+        $new_column = $field_name . '_' . $name;
+        $field_exists = $schema->fieldExists($table_name, $new_column);
+
+        if (!$field_exists) {
+          $schema->addField($table_name, $new_column, $spec, [
+            'fields' => [
+              $new_column => $spec,
+            ],
+            'indexes' => [
+              $new_column => [$new_column],
+            ],
+          ]);
+        }
+      }
+    }
+    if ($update_definitions) {
+      $manager->updateFieldStorageDefinition($field_storage_definition);
+    }
+  }
+}

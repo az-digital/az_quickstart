@@ -1,0 +1,36 @@
+{
+  "name": "drupal/date_ap_style",
+  "type": "drupal-module",
+  "description": "Provides a field formatter to display dates in AP style formats.",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "https://www.drupal.org/project/date_ap_style",
+  "authors": [
+    {
+      "name": "Chris Green (trackleft2)",
+      "homepage": "https://www.drupal.org/u/trackleft2",
+      "role": "Maintainer"
+    },
+    {
+      "name": "Shelane French (shelane)",
+      "homepage": "https://www.drupal.org/u/shelane",
+      "role": "Co-maintainer"
+    },
+    {
+      "name": "Joe Parsons (joegraduate)",
+      "homepage": "https://www.drupal.org/u/joegraduate",
+      "role": "Co-maintainer"
+    },
+    {
+      "name": "Brian Osborne (bkosborne)",
+      "homepage": "https://www.drupal.org/u/bkosborne",
+      "role": "Co-maintainer"
+    }
+  ],
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/date_ap_style",
+    "source": "http://cgit.drupalcode.org/date_ap_style"
+  },
+  "require": { }
+}

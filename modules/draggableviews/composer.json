@@ -1,0 +1,37 @@
+{
+  "name": "drupal/draggableviews",
+  "description": "DraggableViews module makes views draggable.",
+  "type": "drupal-module",
+  "homepage": "https://www.drupal.org/project/draggableviews",
+  "authors": [
+    {
+      "name": "Tyler Struyk (iStryker)",
+      "email": "tyler.struyk@gmail.com",
+      "homepage": "https://www.drupal.org/u/istryker",
+      "role": "Maintainer"
+    },
+    {
+      "name": "Andrii Podanenko (podarok)",
+      "email": "podarokua@gmail.com",
+      "homepage": "https://www.drupal.org/u/podarok",
+      "role": "Drupal 10+, maintenance."
+    },
+    {
+      "name": "Yuriy Gerasimov (ygerasimov)",
+      "email": "yuriy.gerasimov@gmail.com",
+      "homepage": "https://www.drupal.org/u/ygerasimov",
+      "role": "Ex Maintainer (D7)"
+    },
+    {
+      "name": "Severin Unger (sevi)",
+      "homepage": "https://www.drupal.org/u/sevi",
+      "role": "Ex Maintainer (D6)"
+    }
+  ],
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/draggableviews",
+    "source": "https://cgit.drupalcode.org/draggableviews"
+  },
+  "license": "GPL-2.0-or-later",
+  "minimum-stability": "dev"
+}

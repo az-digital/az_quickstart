@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<oembed>
+  <type>video</type>
+  <version>1.0</version>
+  <title>#d8rules - Support the Rules module for Drupal 8</title>
+  <https/>
+  <author_name>Leepchic</author_name>
+  <author_url>https://www.dailymotion.com/leepchic</author_url>
+  <provider_name>Dailymotion</provider_name>
+  <provider_url>https://www.dailymotion.com</provider_url>
+  <width>610</width>
+  <height>343</height>
+  <html><h1>Dailymotion works!</h1>
+  </html>
+  <!-- The thumbnail URL does not contain a file extension, so we use
+  this to test the oEmbed source plugin's thumbnail handling;
+  see \Drupal\Tests\media\FunctionalJavascript\MediaSourceOEmbedVideoTest. -->
+  <thumbnail_url>internal:/media_test_oembed/thumbnail</thumbnail_url>
+  <thumbnail_width>88</thumbnail_width>
+  <thumbnail_height>100</thumbnail_height>
+</oembed>

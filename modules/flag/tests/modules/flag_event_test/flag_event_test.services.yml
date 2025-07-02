@@ -1,0 +1,6 @@
+services:
+  flag_event_test.flag_subscriber:
+    class: \Drupal\flag_event_test\EventSubscriber\FlagEvents
+    arguments: ['@flag', '@state']
+    tags:
+      - { name: event_subscriber }

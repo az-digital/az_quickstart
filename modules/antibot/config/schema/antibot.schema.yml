@@ -1,0 +1,19 @@
+antibot.settings:
+  type: config_object
+  label: 'Antibot settings.'
+  mapping:
+    form_ids:
+      type: sequence
+      label: 'The protected form IDs'
+      sequence:
+        type: string
+        label: 'The form ID'
+    excluded_form_ids:
+      type: sequence
+      label: 'The form IDs that should never be protected'
+      sequence:
+        type: string
+        label: 'The form ID'
+    show_form_ids:
+      type: boolean
+      label: 'Show form IDs to admins'

@@ -1,0 +1,106 @@
+name: 'Standard'
+description: 'Provides a standard site with commonly used features pre-configured.'
+type: 'Site'
+recipes:
+  - basic_block_type
+  - basic_shortcuts
+  - article_comment
+  - article_tags
+  - feedback_contact_form
+  - article_content_type
+  - page_content_type
+  - basic_html_format_editor
+  - full_html_format_editor
+  - content_search
+  - core_recommended_performance
+  - core_recommended_maintenance
+  - core_recommended_admin_theme
+  - core_recommended_front_end_theme
+  - user_picture
+  # Provides a fallback text format which is available to all users.
+  - restricted_html_format
+  - administrator_role
+  - content_editor_role
+install:
+  - image
+  - help
+  - history
+  - config
+  - contextual
+  - menu_link_content
+  - datetime
+  - menu_ui
+  - options
+  - toolbar
+  - field_ui
+  - views_ui
+  - shortcut
+config:
+  # This recipe is intended to set up a full site from scratch, fulfilling certain
+  # expectations. It's not really designed to be a building block. Therefore, treat
+  # all of the config strictly.
+  strict: true
+  import:
+    claro:
+      - block.block.claro_help
+    help:
+      - search.page.help_search
+      - block.block.claro_help_search
+    image:
+      - image.style.large
+      - image.style.thumbnail
+    node:
+      - views.view.archive
+      - views.view.content
+      - views.view.content_recent
+      - views.view.frontpage
+      - views.view.glossary
+    olivero:
+      - block.block.olivero_help
+      - block.block.olivero_search_form_narrow
+      - block.block.olivero_search_form_wide
+      - block.block.olivero_syndicate
+    user:
+      - core.entity_view_mode.user.compact
+      - search.page.user_search
+      - views.view.user_admin_people
+      - views.view.who_s_new
+      - views.view.who_s_online
+  actions:
+    node.settings:
+      simpleConfigUpdate:
+        use_admin_theme: true
+    system.site:
+      simpleConfigUpdate:
+        page.front: /node
+    user.role.anonymous:
+      grantPermission: 'access content'
+    user.role.authenticated:
+      grantPermissions:
+        - 'access content'
+        - 'delete own files'
+    user.role.content_editor:
+      grantPermissions:
+        - 'access content overview'
+        - 'access contextual links'
+        - 'access files overview'
+        - 'access toolbar'
+        - 'administer url aliases'
+        - 'create terms in tags'
+        - 'create url aliases'
+        - 'edit own comments'
+        - 'edit terms in tags'
+        - 'delete own files'
+        - 'revert all revisions'
+        - 'view all revisions'
+        - 'view the administration theme'
+      grantPermissionsForEachNodeType:
+        - 'create %bundle content'
+        - 'delete %bundle revisions'
+        - 'delete own %bundle content'
+        - 'edit own %bundle content'
+    user.settings:
+      simpleConfigUpdate:
+        verify_mail: true
+        register: visitors_admin_approval
+        cancel_method: user_cancel_block

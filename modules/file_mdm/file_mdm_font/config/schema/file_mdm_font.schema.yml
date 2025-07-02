@@ -1,0 +1,9 @@
+# file_mdm_font module schema
+
+file_mdm_font.file_metadata_plugin.font:
+  type: config_object
+  label: 'font file metadata plugin settings'
+  mapping:
+    configuration:
+      type: file_mdm.plugin.configuration
+      label: 'font plugin settings'

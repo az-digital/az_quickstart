@@ -1,0 +1,25 @@
+#!/usr/bin/env php
+<?php declare(strict_types=1);
+/**
+ * A Symfony CLI utility application for MimeMap.
+ */
+
+use Composer\InstalledVersions;
+use FileEye\MimeMap\Command\UpdateCommand;
+use FileEye\MimeMap\Version;
+use Symfony\Component\Console\Application;
+
+$packageAutoloader = __DIR__ . '/../vendor/autoload.php';
+$standaloneAutoloader = __DIR__ . '/../../../autoload.php';
+if (file_exists($packageAutoloader)) {
+    require_once $packageAutoloader;
+} else {
+    require_once $standaloneAutoloader;
+}
+
+$application = new Application(
+    'fileeye-mimemap',
+    InstalledVersions::getPrettyVersion('fileeye/mimemap') ?? 'n/a'
+);
+$application->add(new UpdateCommand());
+$application->run();

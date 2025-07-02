@@ -1,0 +1,7 @@
+webform_jqueryui_buttons.element:
+  version: VERSION
+  js:
+    js/webform_jqueryui_buttons.element.js: {}
+  dependencies:
+    - jquery_ui_button/button
+  deprecated: The "%library_id%" asset library is deprecated. jQueryUI is no longer maintained. See https://www.drupal.org/node/3064015

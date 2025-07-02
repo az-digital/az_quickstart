@@ -1,0 +1,60 @@
+# The 'type' should be "label" for short meta tags and "text" for ones which
+# could get longer, especially ones which use a textarea field instead of a
+# textfield.
+metatag.metatag_tag.schema_event_description:
+  type: text
+  label: 'description'
+metatag.metatag_tag.schema_event_door_time:
+  type: text
+  label: 'doorTime'
+metatag.metatag_tag.schema_event_end_date:
+  type: text
+  label: 'endDate'
+metatag.metatag_tag.schema_event_image:
+  type: text
+  label: 'image'
+metatag.metatag_tag.schema_event_id:
+  type: text
+  label: '@id'
+metatag.metatag_tag.schema_event_location:
+  type: text
+  label: 'location'
+metatag.metatag_tag.schema_event_name:
+  type: text
+  label: 'name'
+metatag.metatag_tag.schema_event_offers:
+  type: text
+  label: 'offers'
+metatag.metatag_tag.schema_event_performer:
+  type: text
+  label: 'performer'
+metatag.metatag_tag.schema_event_start_date:
+  type: text
+  label: 'startDate'
+metatag.metatag_tag.schema_event_type:
+  type: string
+  label: '@type'
+metatag.metatag_tag.schema_event_url:
+  type: text
+  label: 'url'
+metatag.metatag_tag.schema_event_aggregate_rating:
+  type: text
+  label: 'aggregateRating'
+metatag.metatag_tag.schema_event_review:
+  type: text
+  label: 'review'
+metatag.metatag_tag.schema_event_is_accessible_for_free:
+  type: text
+  label: 'isAccessibleForFree'
+metatag.metatag_tag.schema_event_previous_start_date:
+  type: text
+  label: 'previousStartDate'
+metatag.metatag_tag.schema_event_event_status:
+  type: text
+  label: 'eventStatus'
+metatag.metatag_tag.schema_event_event_attendance_mode:
+  type: text
+  label: 'eventAttendanceMode'
+metatag.metatag_tag.schema_event_organizer:
+  type: text
+  label: 'organizer'

@@ -1,0 +1,28 @@
+{
+    "name": "dekor/php-array-table",
+    "description": "PHP Library for printing associative arrays as text table (similar to mysql terminal console)",
+    "keywords": [
+        "php",
+        "library"
+    ],
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Denis Koronets",
+            "email": "deniskoronets@woo.zp.ua",
+            "homepage": "https://woo.zp.ua/"
+        }
+    ],
+    "require": {
+        "php": ">=5.6.0",
+        "ext-mbstring": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10"
+    },
+    "autoload": {
+        "psr-4" : {
+            "dekor\\" : "src"
+        }
+    }
+}

@@ -1,0 +1,7 @@
+#
+# ESLint ignore file for the Field Group project.
+#
+
+# Ignore deprecated DrupalCI configuration file which should be
+# removed when DrupalCI is decommissioned in favor of GitlabCI.
+drupalci.yml

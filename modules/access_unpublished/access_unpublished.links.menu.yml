@@ -1,0 +1,6 @@
+access_unpublished.settings_form:
+  title: 'Access Unpublished'
+  route_name: access_unpublished.settings_form
+  description: 'Configure settings for unpublished access.'
+  parent: system.admin_config_content
+  weight: 99

@@ -1,0 +1,27 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the Workbench Access module.
+ */
+
+/**
+ * Implements hook_update_last_removed().
+ */
+function workbench_access_update_last_removed(): int {
+  return 8004;
+}
+
+/**
+ * Update general configuration with new multi-scheme variable.
+ */
+function workbench_access_update_8005() {
+  /** @var Drupal\Core\Config\ConfigFactoryInterface $config_factory */
+  $config_factory = \Drupal::service('config.factory');
+
+  $config = $config_factory->getEditable('workbench_access.settings');
+  // This is not the new default value, but we don't want to change behavior
+  // for existing sites.
+  $config->set('deny_strict', TRUE);
+  $config->save();
+}

@@ -1,0 +1,11 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - migrate_example_advanced_setup
+name: 'Migrate Example Wine Best With'
+vid: migrate_example_wine_best_with
+description: 'Foods the wine goes best with'
+hierarchy: 0
+weight: 0

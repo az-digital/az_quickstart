@@ -1,0 +1,6 @@
+quick_node_clone.node.quick_clone:
+  route_name: quick_node_clone.node.quick_clone
+  base_route: entity.node.canonical
+  group: node
+  title: Clone
+  weight: 5

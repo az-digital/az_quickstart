@@ -1,0 +1,12 @@
+name: Media Entity File Replace
+type: module
+description: Allows content editors to easily replace source files associated with any file-based media entity, preserving the original filename.
+core_version_requirement: ^10 || ^11
+package: Media
+dependencies:
+  - drupal:media
+
+# Information added by Drupal.org packaging script on 2024-08-22
+version: '8.x-1.3'
+project: 'media_entity_file_replace'
+datestamp: 1724335998

@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - migrate_example_advanced_setup
+name: Wine
+type: migrate_example_wine
+description: 'Wine is what we drink.'
+help: ''
+new_revision: false
+preview_mode: 1
+display_submitted: true

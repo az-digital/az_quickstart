@@ -1,0 +1,42 @@
+webform_share.admin:
+  version: VERSION
+  css:
+    theme:
+      css/webform_share.admin.css: {}
+  js:
+    js/webform_share.admin.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal.announce
+
+webform_share.page:
+  version: VERSION
+  css:
+    theme:
+      css/webform_share.page.css: {}
+
+# Below is every version of the iFrame Resizer used by the webform share module.
+#
+# Including multiple versions of the iFrame Resizer ensures that any website
+# embedding an iframe with specific iFrame Resizer version will be able to
+# always access the older versions of the webform share page
+# (/webform/{webform}/share/{library}/{version}).
+#
+# When updating the iframe-resizer, please make sure to update
+# the below constants.
+#
+# @see \Drupal\webform_share\Element\WebformShareIframe::LIBRARY
+# @see \Drupal\webform_share\Element\WebformShareIframe::VERSION
+
+libraries.iframe-resizer.4.2.10:
+  # Inserting the iframe-resizer in the page's <head> provides the best
+  # UX because it allows the iframe to resize as the form is loaded.
+  header: true
+  remote: https://github.com/davidjbradshaw/iframe-resizer
+  version: '4.2.10'
+  license:
+    name: MIT
+    url: http://opensource.org/licenses/mit-license.php
+    gpl-compatible: true
+  js:
+    '//cdn.jsdelivr.net/gh/davidjbradshaw/iframe-resizer@v4.2.10/js/iframeResizer.contentWindow.min.js': { type: external, minified: true }

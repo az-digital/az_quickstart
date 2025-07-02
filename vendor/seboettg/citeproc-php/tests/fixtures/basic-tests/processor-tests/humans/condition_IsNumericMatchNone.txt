@@ -1,0 +1,57 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+
+
+>>===== RESULT =====>>
+ITEM-1: no numeric values; ITEM-2: numeric values; ITEM-3: numeric values
+<<===== RESULT =====<<
+
+
+>>===== CSL =====>>
+<style 
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="note"
+      version="1.0">
+  <info>
+    <id />
+    <title />
+    <updated>2009-08-10T04:49:00+09:00</updated>
+  </info>
+  <citation>
+    <layout delimiter="; ">
+      <text variable="id" suffix=": "/>
+      <choose>
+        <if is-numeric="volume page" match="none">
+          <text value="no numeric values"/>
+        </if>
+        <else>
+          <text value="numeric values"/>
+        </else>
+      </choose>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "id": "ITEM-1",
+        "page": "trf",
+        "volume": "dsa"
+    },
+    {
+        "id": "ITEM-2",
+        "page": "5",
+        "volume": "V"
+    },
+    {
+        "id": "ITEM-3",
+        "page": "jdhal",
+        "volume": "V"
+    }
+]
+<<===== INPUT =====<<

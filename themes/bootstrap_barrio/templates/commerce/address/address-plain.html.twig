@@ -1,0 +1,64 @@
+{#
+/**
+ * @file
+ * Default template for the 'plain' address formatter.
+ *
+ * Available variables:
+ *   - given_name: Given name.
+ *   - additional_name: Additional name.
+ *   - family_name: Family name.
+ *   - organization: Organization.
+ *   - address_line1: First address line.
+ *   - address_line2: Second address line.
+ *   - postal_code: Postal code.
+ *   - sorting_code: Sorting code.
+ *   - dependent_locality: The dependent locality.
+ *     - dependent_locality.code: Dependent locality code.
+ *     - dependent_locality.name: Dependent locality name.
+ *   - locality: The locality subdivision.
+ *     - locality.code: Locality code.
+ *     - locality.name: Locality name.
+ *   - administrative_area: The administrative area subdivision.
+ *     - administrative_area.code: Administrative area code.
+ *     - administrative_area.name: Administrative area name.
+ *   - country: The country.
+ *     - country.code: Country code.
+ *     - country.name: Country name.
+ *
+ * if a subdivision (dependent_locality, locality, administrative_area) was
+ * entered, the array will always have a code. If it's a predefined subdivision,
+ * it will also have a name. The code is always prefered.
+ *
+ * @ingroup themeable
+ */
+#}
+<div class="address" translate="no">
+  {% if given_name or family_name %}
+    <h2>{{ given_name }} {{ family_name }}</h2>
+  {% endif %}
+  <dl class="row">
+    {% if organization %}
+      <dt class="col-sm-3">{% trans %}Organization{% endtrans %}:</dt>
+      <dd class="col-sm-9">{{ organization }}</dd>
+    {% endif %}
+    {% if address_line1 %}
+      <dt class="col-sm-3">{% trans %}Address{% endtrans %}:</dt>
+      <dd class="col-sm-9">
+        <p>{{ address_line1 }}</p>
+        {% if address_line2 %}
+          <p>{{ address_line2 }}</p>
+        {% endif %}
+      </dd>
+    {% endif %}
+    <dt class="col-sm-3">{% trans %}Locality{% endtrans %}:</dt>
+    <dd class="col-sm-9">
+      {% if dependent_locality.code %}
+        <p>{{ dependent_locality.code }}</p>
+      {% endif %}
+      {% if locality.code or postal_code or administrative_area.code %}
+        <p>{{ locality.code }} {{ postal_code }} {{ administrative_area.code }}</p>
+      {% endif %}
+      <p>{{ country.name }}</p>
+    </dd>
+  </dl>
+</div>

@@ -1,0 +1,9 @@
+smart_date_recur:
+  version: 3.x
+  css:
+    component:
+      css/smart_date_recur.css: {}
+  js:
+    js/smart_date_recur.js: {}
+  dependencies:
+    - core/drupal

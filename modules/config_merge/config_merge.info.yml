@@ -1,0 +1,10 @@
+name: 'Config Merge'
+type: module
+description: 'Enables three-way merges of configuration items. This is useful for safely merging configuration updates while retaining any customizations.'
+core_version_requirement: ^9.3 || ^10 || ^11
+package: Configuration
+
+# Information added by Drupal.org packaging script on 2025-03-27
+version: '2.0.0-alpha2'
+project: 'config_merge'
+datestamp: 1743089780

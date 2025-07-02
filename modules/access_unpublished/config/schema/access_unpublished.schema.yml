@@ -1,0 +1,22 @@
+access_unpublished.settings:
+  type: config_object
+  label: 'Access unpublished settings'
+  mapping:
+    hash_key:
+      type: string
+      label: 'Hash key'
+    duration:
+      type: integer
+      label: 'Default lifetime of token'
+    cleanup_expired_tokens:
+      type: boolean
+      label: 'Cleanup expired tokens'
+    cleanup_expired_tokens_period:
+      type: string
+      label: 'Period of time after the cron deletes expired tokens'
+    modify_http_headers:
+      type: sequence
+      label: 'Modify HTTP headers'
+      sequence:
+        type: string
+        label: 'Headers'

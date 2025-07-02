@@ -1,0 +1,110 @@
+/**
+ * @file
+ * Thumbnails hoverable inside dots.
+ */
+
+/* The main thumbnail container is slick-dots modifier */
+.slick .slick-dots--thumbnail-hover {
+  position: relative;
+  z-index: 3;
+  overflow: visible;
+  width: 100%;
+  list-style: none;
+  text-align: center;
+}
+
+.slick .slick-dots--thumbnail-hover::after {
+  display: table;
+  clear: both;
+  content: "";
+}
+
+.slick .slick-dots--thumbnail-hover li {
+  position: relative;
+  overflow: hidden;
+  vertical-align: top;
+  /* Individual thumbnail, adjust accordingly to actual thumbnail size */
+}
+
+.slick .slick-dots--thumbnail-hover li img {
+  display: block;
+  margin: auto;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  /* Overrides core > 1.3.11, otherwise thumbnails are non-clickable */
+  pointer-events: auto;
+  opacity: 0.6;
+  border: 2px solid transparent;
+  background: #fff;
+}
+
+.slick .slick-dots--thumbnail-hover li .slick-dots__thumbnail {
+  position: absolute;
+  z-index: -1;
+  bottom: 140%;
+  left: 50%;
+  visibility: hidden;
+  overflow: visible;
+  width: 120px;
+  min-width: 120px;
+  margin: 0;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  -webkit-transform: translate(-50%, 0);
+  transform: translate(-50%, 0);
+  opacity: 0;
+}
+
+.slick .slick-dots--thumbnail-hover li .slick-dots__thumbnail img {
+  pointer-events: none;
+}
+
+.slick .slick-dots--thumbnail-hover li .slick-dots__thumbnail::after {
+  position: absolute;
+  bottom: -7px;
+  left: 50%;
+  display: block;
+  width: 0;
+  height: 0;
+  margin: 0 0 0 -7px;
+  content: "";
+  border: 7px solid transparent;
+  border-top-color: #ff6d2c;
+  border-bottom: 0;
+}
+
+.slick .slick-dots--thumbnail-hover li:hover {
+  overflow: visible;
+}
+
+.slick .slick-dots--thumbnail-hover li:hover .slick-dots__thumbnail {
+  z-index: 3;
+  bottom: 120%;
+  visibility: visible;
+  margin-top: -20px;
+  -webkit-transition-delay: 0s;
+  transition-delay: 0s;
+  opacity: 1;
+}
+
+.slick .slick-dots--thumbnail-hover li:hover img,
+.slick .slick-dots--thumbnail-hover .slick-active img {
+  -webkit-transition-delay: 0s;
+  transition-delay: 0s;
+  opacity: 1;
+  border: 2px solid #ff6d2c;
+}
+
+/**
+ * Misc.
+ */
+.block .slick .slick-dots--thumbnail-hover {
+  margin-left: 0;
+  padding: 0;
+}
+
+@media (min-width: 720px) {
+  .slick .slick-dots--thumbnail-hover {
+    position: absolute;
+  }
+}

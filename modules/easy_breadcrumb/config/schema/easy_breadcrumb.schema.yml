@@ -1,0 +1,123 @@
+easy_breadcrumb.settings:
+  type: config_object
+  label: 'Easy Breadcrumb'
+  mapping:
+    applies_admin_routes:
+      type: boolean
+      label: 'Applies to administration pages'
+    include_invalid_paths:
+      type: boolean
+      label: 'Include invalid paths alias as plain-text segments'
+    excluded_paths:
+      type: text
+      label: 'Paths to be excluded while generating segments'
+    replaced_titles:
+      type: text
+      label: 'Titles to be replaced with synonyms'
+    custom_paths:
+      type: text
+      label: 'Paths requiring custom breadcrumbs'
+    include_home_segment:
+      type: boolean
+      label: 'Include the front page as a segment in the breadcrumb'
+    alternative_title_field:
+      type: label
+      label: 'Alternative title field for the breadcrumb'
+      translatable: true
+    home_segment_title:
+      type: label
+      label: 'Title for the front page segment in the breadcrumb'
+      translatable: true
+    home_segment_keep:
+      type: boolean
+      label: 'Display the front page segment on the front page'
+    include_title_segment:
+      type: boolean
+      label: 'Include the current page as a segment in the breadcrumb'
+    title_from_page_when_available:
+      type: boolean
+      label: 'Use the real page title when available'
+    title_segment_as_link:
+      type: boolean
+      label: 'Make the page title segment a link'
+    segments_separator:
+      type: text
+      label: 'Segments Separator'
+    use_menu_title_as_fallback:
+      type: boolean
+      label: 'Use menu title as fallback instead of raw path component'
+    use_page_title_as_menu_title_fallback:
+      type: boolean
+      label: 'Use the page title as a fallback if the menu title is not set'
+    menu_title_preferred_menu:
+      type: string
+      label: 'Preferred menu to use as menu title source'
+    remove_repeated_segments:
+      type: boolean
+      label: 'Remove repeated identical segments'
+    language_path_prefix_as_segment:
+      type: boolean
+      label: 'Use language path prefix as segment'
+    absolute_paths:
+      type: boolean
+      label: 'Use absolute path for Breadcrumb links'
+    hide_single_home_item:
+      type: boolean
+      label: 'Hide the breadcrumb when it only links to the home page and nothing more'
+    term_hierarchy:
+      type: boolean
+      label: 'Use term hierarchy'
+    use_site_title:
+      type: boolean
+      label: 'Use site title for the front page segment in the breadcrumb'
+    add_structured_data_json_ld:
+      type: boolean
+      label: 'Add current breadcrumb as structured data in JSON-LD to the HTML head'
+    capitalizator_mode:
+      type: string
+      label: 'Transformation mode for the segments titles'
+    capitalizator_ignored_words:
+      type: sequence
+      label: 'Words to be ignored by the capitalizator'
+      sequence:
+        type: text
+        label: 'Ignored word'
+    capitalizator_forced_words:
+      type: sequence
+      label: 'Words to be forced to capitalized by the capitalizator'
+      sequence:
+        type: text
+        label: 'Forced word'
+    capitalizator_forced_words_case_sensitivity:
+      type: boolean
+      label: 'Use case sensitivity when matching words to be forced to capitalization.'
+    capitalizator_forced_words_first_letter:
+      type: boolean
+      label: 'Make the first letters of each segment capitalized.'
+    follow_redirects:
+      type: boolean
+      label: 'Follow redirects if the redirect module is enabled.'
+    limit_segment_display:
+      type: boolean
+      label: 'Limit breadcrumb trail segments'
+    segment_display_limit:
+      type: integer
+      label: 'Breadcrumb segment count'
+    segment_display_minimum:
+      type: integer
+      label: 'Breadcrumb segment minimum count'
+    truncator_mode:
+      type: boolean
+      label: 'Enable truncation for titles.'
+    truncator_length:
+      type: integer
+      label: 'Set the limit for truncation.'
+    truncator_dots:
+      type: boolean
+      label: 'Enable dots at the end of truncation.'
+    remove_repeated_segments_text_only:
+      type: boolean
+      label: 'Remove repeated identical segments - only validate on the text'
+    home_segment_validation_skip:
+      type: boolean
+      label: 'Do not check for path, that is duplicate of home page.'

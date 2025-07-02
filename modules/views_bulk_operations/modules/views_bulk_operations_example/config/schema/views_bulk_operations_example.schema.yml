@@ -1,0 +1,9 @@
+# Since 4.x preliminary configuration schema should be defined for actions
+# that have additional configuration.
+views_bulk_operations.action_config.views_bulk_operations_example_simple:
+  type: views_bulk_operations_action_config
+  label: 'Example preliminary configuration'
+  mapping:
+    example_preconfig_setting:
+      type: string
+      label: 'Example setting'

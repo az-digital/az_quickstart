@@ -1,0 +1,178 @@
+# The 'type' should be "label" for short meta tags and "text" for ones which
+# could get longer, especially ones which use a textarea field instead of a
+# textfield.
+
+metatag.metatag_tag.article_author:
+  type: text
+  label: 'Article author'
+metatag.metatag_tag.article_expiration_time:
+  type: text
+  label: 'Article expiration time'
+metatag.metatag_tag.article_modified_time:
+  type: text
+  label: 'Article modified time'
+metatag.metatag_tag.article_published_time:
+  type: text
+  label: 'Article published time'
+metatag.metatag_tag.article_publisher:
+  type: text
+  label: 'Article publisher'
+metatag.metatag_tag.article_section:
+  type: text
+  label: 'Article section'
+metatag.metatag_tag.article_tag:
+  type: text
+  label: 'Article tag(s)'
+metatag.metatag_tag.book_author:
+  type: text
+  label: 'Book Author'
+metatag.metatag_tag.book_isbn:
+  type: text
+  label: 'Book ISBN'
+metatag.metatag_tag.book_release_date:
+  type: text
+  label: 'Book Release Date'
+metatag.metatag_tag.book_tag:
+  type: text
+  label: 'Book Tags'
+metatag.metatag_tag.og_audio:
+  type: text
+  label: 'Audio URL'
+metatag.metatag_tag.og_audio_secure_url:
+  type: text
+  label: 'Audio secure URL'
+metatag.metatag_tag.og_audio_type:
+  type: text
+  label: 'Audio type'
+metatag.metatag_tag.og_country_name:
+  type: text
+  label: 'Open Graph: Country name'
+metatag.metatag_tag.og_description:
+  type: text
+  label: 'Open Graph: Description'
+metatag.metatag_tag.og_determiner:
+  type: text
+  label: 'Open Graph: Determiner'
+metatag.metatag_tag.og_email:
+  type: text
+  label: 'Open Graph: Email'
+metatag.metatag_tag.og_fax_number:
+  type: text
+  label: 'Open Graph: Fax number'
+metatag.metatag_tag.og_image:
+  type: text
+  label: 'Open Graph: Image'
+metatag.metatag_tag.og_image_alt:
+  type: text
+  label: 'Open Graph: Image alt'
+metatag.metatag_tag.og_image_height:
+  type: text
+  label: 'Open Graph: Image height'
+metatag.metatag_tag.og_image_secure_url:
+  type: text
+  label: 'Open Graph: Image secure URL'
+metatag.metatag_tag.og_image_type:
+  type: text
+  label: 'Open Graph: Image type'
+metatag.metatag_tag.og_image_url:
+  type: text
+  label: 'Open Graph: Image URL'
+metatag.metatag_tag.og_image_width:
+  type: text
+  label: 'Open Graph: Image width'
+metatag.metatag_tag.og_latitude:
+  type: text
+  label: 'Open Graph: Latitude'
+metatag.metatag_tag.og_locale:
+  type: text
+  label: 'Open Graph: Locale'
+metatag.metatag_tag.og_locale_alternative:
+  type: text
+  label: 'Open Graph: Alternative locale'
+metatag.metatag_tag.og_locality:
+  type: text
+  label: 'Open Graph: Locality'
+metatag.metatag_tag.og_longitude:
+  type: text
+  label: 'Open Graph: Longitude'
+metatag.metatag_tag.og_phone_number:
+  type: text
+  label: 'Open Graph: Phone number'
+metatag.metatag_tag.og_postal_code:
+  type: text
+  label: 'Open Graph: Postal code'
+metatag.metatag_tag.og_region:
+  type: text
+  label: 'Open Graph: Region'
+metatag.metatag_tag.og_see_also:
+  type: text
+  label: 'Open Graph: See also'
+metatag.metatag_tag.og_site_name:
+  type: text
+  label: 'Open Graph: Site name'
+metatag.metatag_tag.og_street_address:
+  type: text
+  label: 'Open Graph: Street address'
+metatag.metatag_tag.og_title:
+  type: text
+  label: 'Open Graph: Title'
+metatag.metatag_tag.og_type:
+  type: text
+  label: 'Open Graph: Type'
+metatag.metatag_tag.og_updated_time:
+  type: text
+  label: 'Open Graph: Updated time'
+metatag.metatag_tag.og_url:
+  type: text
+  label: 'Open Graph: URL'
+metatag.metatag_tag.og_video:
+  type: text
+  label: 'Open Graph: Video URL'
+metatag.metatag_tag.og_video_duration:
+  type: text
+  label: 'Open Graph: Video duration'
+metatag.metatag_tag.og_video_height:
+  type: text
+  label: 'Open Graph: Video height'
+metatag.metatag_tag.og_video_secure_url:
+  type: text
+  label: 'Open Graph: Video Secure URL'
+metatag.metatag_tag.og_video_type:
+  type: text
+  label: 'Open Graph: Video type'
+metatag.metatag_tag.og_video_width:
+  type: text
+  label: 'Open Graph: Video width'
+metatag.metatag_tag.profile_first_name:
+  type: text
+  label: 'First name'
+metatag.metatag_tag.profile_gender:
+  type: text
+  label: 'Gender'
+metatag.metatag_tag.profile_last_name:
+  type: text
+  label: 'Last name'
+metatag.metatag_tag.profile_username:
+  type: text
+  label: 'Username'
+metatag.metatag_tag.video_actor:
+  type: text
+  label: 'Actor(s)'
+metatag.metatag_tag.video_actor_role:
+  type: text
+  label: "Actor's role"
+metatag.metatag_tag.video_director:
+  type: text
+  label: 'Director(s)'
+metatag.metatag_tag.video_release_date:
+  type: text
+  label: 'Release date'
+metatag.metatag_tag.video_series:
+  type: text
+  label: 'Series'
+metatag.metatag_tag.video_tag:
+  type: text
+  label: 'Tag words'
+metatag.metatag_tag.video_writer:
+  type: text
+  label: 'Scriptwriter(s)'

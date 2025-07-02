@@ -1,0 +1,10 @@
+name: External Authentication
+type: module
+description: Helper module to authenticate users using an external site / service and storing identification details
+core_version_requirement: ^9.5 || ^10 || ^11
+package: 'User authentication'
+
+# Information added by Drupal.org packaging script on 2025-04-02
+version: '2.0.8'
+project: 'externalauth'
+datestamp: 1743603498

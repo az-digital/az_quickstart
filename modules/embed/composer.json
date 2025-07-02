@@ -1,0 +1,9 @@
+{
+    "name": "drupal/embed",
+    "description": "Provides a framework for different types of embeds in text editors.",
+    "type": "drupal-module",
+    "license": "GPL-2.0-or-later",
+    "require-dev": {
+        "drupal/ckeditor": "^1.0"
+    }
+}

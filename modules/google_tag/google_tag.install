@@ -1,0 +1,102 @@
+<?php
+
+/**
+ * @file
+ * Provides google_tag install, update, and uninstall functions.
+ */
+
+use Drupal\google_tag\Migration\GoogleAnalyticsMigrator;
+use Drupal\google_tag\Migration\GoogleTagUpgradeManager;
+
+/**
+ * Update permissions from old google tag module.
+ *
+ * @param mixed $sandbox
+ *   Sandbox.
+ *
+ * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+ * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+ * @throws \Drupal\Core\Entity\EntityStorageException
+ */
+function google_tag_update_8200(&$sandbox) {
+  $roles = \Drupal::entityTypeManager()->getStorage('user_role')->loadMultiple();
+  /** @var \Drupal\user\RoleInterface $role */
+  foreach ($roles as $role) {
+    if ($role->hasPermission('administer google tag manager')) {
+      $role->revokePermission('administer google tag manager');
+      $role->grantPermission('administer google_tag_container');
+      $role->save();
+    }
+  }
+}
+
+/**
+ * Updates google tag entities from old google tag module.
+ *
+ * @param mixed $sandbox
+ *   Sandbox.
+ *
+ * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+ * @throws \Drupal\Component\Plugin\Exception\PluginException
+ * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+ * @throws \Drupal\Core\Entity\EntityStorageException
+ */
+function google_tag_update_8201(&$sandbox) {
+  // Upgrade existing google tag 1.x entities if available.
+  $gt_upgrade_manager = new GoogleTagUpgradeManager(
+    \Drupal::service('plugin.manager.google_tag_event'),
+    \Drupal::service('plugin.manager.condition'),
+    \Drupal::service('config.factory'),
+    \Drupal::service('entity_type.manager')
+  );
+  $gt_upgrade_manager->upgradeGoogleTagEntities();
+}
+
+/**
+ * Implements hook_install().
+ */
+function google_tag_install() {
+  // Migrate available google analytics configuration.
+  if (!\Drupal::moduleHandler()->moduleExists('google_analytics')) {
+    return;
+  }
+  $ga_migrator = new GoogleAnalyticsMigrator(
+    \Drupal::service('plugin.manager.google_tag_event'),
+    \Drupal::service('plugin.manager.condition'),
+    \Drupal::service('config.factory'),
+    \Drupal::service('entity_type.manager')
+  );
+  $ga_migrator->migrateGaToGoogleTag();
+}
+
+/**
+ * Implements hook_requirements().
+ */
+function google_tag_requirements($phase) {
+  $requirements = [];
+  $incompatible = FALSE;
+
+  if ($phase === 'update') {
+    $entities = \Drupal::entityTypeManager()->getStorage('google_tag_container')->loadMultiple();
+    if (\Drupal::moduleHandler()->moduleExists('google_analytics')) {
+      $ga_settings = \Drupal::config('google_analytics.settings');
+      $accounts = $ga_settings->get('account');
+      $metrics_dimensions = $ga_settings->get('custom.parameters');
+      if ($entities && $accounts !== '' && $metrics_dimensions !== []) {
+        $incompatible = TRUE;
+      }
+    }
+    if ($incompatible) {
+      // @todo provide a drush command usage example here.
+      // Where users can choose between google_tag 1.x
+      // and google_analytics for migration.
+      $requirements['google_tag'] = [
+        'title' => t('Google Tag'),
+        'description' => t('In order to use Google Tag 2.x, you must decide the upgrade path between Google Tag 1.x and Google Analytics.'),
+        'severity' => REQUIREMENT_ERROR,
+        'value' => 'Google Tag 2.x is incompatible with Google Analytics while upgrading from 1.x.',
+      ];
+    }
+  }
+  return $requirements;
+}

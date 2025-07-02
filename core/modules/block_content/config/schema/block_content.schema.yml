@@ -1,0 +1,24 @@
+# Schema for the configuration files of the Content Block module.
+
+block_content.type.*:
+  type: config_entity
+  label: 'Block type settings'
+  mapping:
+    id:
+      type: machine_name
+      label: 'ID'
+    label:
+      type: required_label
+      label: 'Label'
+    revision:
+      type: boolean
+      label: 'Whether a new revision should be created by default'
+    description:
+      type: text
+      label: 'Description'
+      nullable: true
+      constraints:
+        NotBlank:
+          allowNull: true
+  constraints:
+    FullyValidatable: ~

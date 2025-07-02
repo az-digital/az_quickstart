@@ -1,0 +1,16 @@
+/**
+ * @file
+ * Makes oembed iframe responsive, leaving the rest to media/oembed.iframe.
+ */
+
+/** This class ensures Blazy does not interfere non-blazy oembed iframes. */
+.is-b-oembed {
+  overflow: hidden;
+}
+
+.is-b-oembed iframe {
+  overflow: hidden;
+  max-width: 100%;
+  height: 100vh;
+  border: 0;
+}

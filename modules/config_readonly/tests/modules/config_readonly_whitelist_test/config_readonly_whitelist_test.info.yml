@@ -1,0 +1,11 @@
+name: 'Config Readonly Whitelist test'
+type: module
+description: 'Provides test whitelist.'
+package: Testing
+dependencies:
+  - config_readonly
+
+# Information added by Drupal.org packaging script on 2024-07-02
+version: '8.x-1.0'
+project: 'config_readonly'
+datestamp: 1719963460

@@ -1,0 +1,37 @@
+umami.mobile:
+  label: mobile
+  mediaQuery: ''
+  weight: 0
+  multipliers:
+    - 1x
+    - 2x
+umami.narrow:
+  label: narrow
+  mediaQuery: 'all and (min-width: 768px)'
+  weight: 1
+  multipliers:
+    - 1x
+    - 2x
+umami.wide:
+  label: wide
+  mediaQuery: 'all and (min-width: 960px)'
+  weight: 2
+  multipliers:
+    - 1x
+    - 2x
+umami.hero_tiny:
+  label: Hero tiny
+  mediaQuery: 'all'
+  weight: 0
+umami.hero_medium:
+  label: Hero medium
+  mediaQuery: 'all and (min-width: 500px) and (max-width: 800px)'
+  weight: 1
+umami.hero_large:
+  label: Hero large
+  mediaQuery: 'all and (min-width: 800px) and (max-width: 1400px)'
+  weight: 2
+umami.hero_wide:
+  label: Hero wide
+  mediaQuery: 'all and (min-width: 1400px)'
+  weight: 3

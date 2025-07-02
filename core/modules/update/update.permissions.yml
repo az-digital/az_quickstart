@@ -1,0 +1,3 @@
+view update notifications:
+  title: 'View software update notifications'
+  description: 'Ensure that site administrators have this permission so that security updates are applied promptly.'

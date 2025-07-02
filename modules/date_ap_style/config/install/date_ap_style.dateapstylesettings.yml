@@ -1,0 +1,14 @@
+date_ap_style_settings: null
+always_display_year: 0
+use_today: 0
+cap_today: 0
+display_day: 0
+display_time: 0
+hide_date: 0
+time_before_date: 0
+display_noon_and_midnight: 0
+capitalize_noon_and_midnight: 0
+use_all_day: 0
+separator: 'to'
+timezone: ''
+month_only: 0

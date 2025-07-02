@@ -1,0 +1,122 @@
+/**
+ * @file
+ * Provides Magnific Popup integration.
+ */
+
+.mfp-title {
+  padding-left: 15px;
+}
+
+.mfp-title h2 {
+  color: #f3f3f3;
+  font-size: 1rem;
+}
+
+.mfp-title h2,
+.mfp-title p {
+  margin: 0;
+  line-height: 1.25rem;
+}
+
+.mfp-figure > figure,
+.mfp-figure > figure figcaption {
+  background: none;
+}
+
+.mfp-content .mfp-figure figcaption {
+  margin: 0;
+  padding: 0;
+  /* Overrides embedded-media.css */
+  padding-inline-start: 0;
+  padding-inline-end: 0;
+  cursor: auto;
+  padding-block: 0;
+}
+
+/* HTML content other than IMG: Picture/Responsive image, SVG, Video,
+Remote video, Pinterest, Twitter, Instagram, etc. */
+.mfp-html {
+  pointer-events: none;
+}
+
+.mfp-content .media,
+.mfp-content .mfp-html {
+  margin: auto;
+}
+
+.mfp-content .mfp-html {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  max-width: 92%;
+  max-width: 92vw;
+  height: 100%;
+  height: 100vh;
+  min-height: auto;
+  max-height: 92%;
+  max-height: 92vh;
+}
+
+.mfp-html > .mfp-inner {
+  position: relative;
+  display: block;
+  align-self: center;
+  max-width: 92vw;
+  max-height: 92vh;
+  pointer-events: auto;
+}
+
+.mfp-bottom-bar {
+  min-height: 46px;
+}
+
+.mfp-html .mfp-bottom-bar {
+  position: relative;
+  margin-top:0;
+}
+
+.mfp-html .mfp-counter,
+.mfp-html .mfp-title {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.mfp-html .mfp-counter {
+  right: 15px;
+}
+
+.mfp-html .mfp-title {
+  width: 100%;
+}
+
+/* Zoom effect */
+.mfp-with-zoom .mfp-container,
+.mfp-with-zoom.mfp-bg {
+  /* ideally, transition speed should match zoom duration */
+  transition: all 0.3s ease-out;
+  opacity: 0;
+  backface-visibility: hidden;
+}
+
+.mfp-with-zoom.mfp-ready .mfp-container {
+  opacity: 1;
+}
+
+.mfp-with-zoom.mfp-ready.mfp-bg {
+  opacity: 0.8;
+}
+
+.mfp-with-zoom.mfp-removing .mfp-container,
+.mfp-with-zoom.mfp-removing.mfp-bg {
+  opacity: 0;
+}
+
+/** 641px with 16px base font. */
+@media only screen and (min-width: 40.063em) {
+  .mfp-content .mfp-html {
+    min-height: 80vh;
+  }
+}

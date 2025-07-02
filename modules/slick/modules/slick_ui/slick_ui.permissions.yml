@@ -1,0 +1,4 @@
+administer slick:
+  title: 'Administer the Slick carousel module'
+  # Minor housekeeping till xchecks. Consider helping frontend vurns for now.
+  restrict access: true

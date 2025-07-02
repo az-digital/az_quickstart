@@ -1,0 +1,21 @@
+{
+    "name": "drupal/exclude_node_title",
+    "description": "Provides the option of excluding node title(s) from display by individual node, node bundle, and view mode.",
+    "type": "drupal-module",
+    "license": "GPL-2.0-or-later",
+    "homepage": "https://www.drupal.org/project/exclude_node_title",
+    "authors": [
+        {
+            "name": "Neslee Canil Pinto",
+            "homepage": "https://www.drupal.org/u/neslee-canil-pinto",
+            "role": "Maintainer"
+        }
+    ],
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/exclude_node_title",
+        "source": "https://git.drupalcode.org/project/exclude_node_title"
+    },
+    "require": {
+        "drupal/core": "^8 || ^9 || ^10"
+    }
+}

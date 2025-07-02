@@ -1,0 +1,15 @@
+ckeditor_bs_grid.dialog:
+  path: '/ckeditor_bs_grid/dialog/{editor}'
+  defaults:
+    _form: '\Drupal\ckeditor_bs_grid\Form\GridDialog'
+    _title: 'Grid Dialog'
+  requirements:
+    _permission: 'access content'
+
+ckeditor_bs_grid.settings:
+  path: '/admin/config/content/ckeditor_bs_grid'
+  defaults:
+    _form: '\Drupal\ckeditor_bs_grid\Form\Settings'
+    _title: 'CKEditor BS Grid'
+  requirements:
+    _permission: 'administer ckeditor_bs_grid'

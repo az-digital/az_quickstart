@@ -1,0 +1,233 @@
+<?php
+
+/**
+ * @file
+ * Contains better_exposed_filters.install.
+ */
+
+/**
+ * Implements hook_requirements().
+ */
+function better_exposed_filters_requirements($phase): array {
+  if ($phase !== 'runtime') {
+    return [];
+  }
+
+  // Check installed libraries.
+  $libraries_directory_file_finder = \Drupal::service('library.libraries_directory_file_finder');
+  $lib_slider_internal = $libraries_directory_file_finder->find('nouislider');
+
+  if ($lib_slider_internal) {
+    $requirements['bef_nouislider'] = [
+      'title' => t('BEF: library noUiSlider'),
+      'value' => t('Better exposed filters library noUiSlider is installed locally.'),
+      'description' => 'The library is installed and will be loaded from this Drupal site.',
+      'severity' => REQUIREMENT_OK,
+    ];
+  }
+  else {
+    $requirements['bef_nouislider'] = [
+      'title' => t('BEF: library noUiSlider'),
+      'value' => t('Better exposed filters library noUiSlider is not installed locally and will be loaded from CDN. Loading external files from a CDN may be a data protection violation.'),
+      'description' => 'Please install the library. For more information see README.md',
+      'severity' => REQUIREMENT_WARNING,
+    ];
+  }
+
+  return $requirements;
+}
+
+/**
+ * Implements hook_update_last_removed().
+ */
+function better_exposed_filters_update_last_removed(): int {
+  return 8003;
+}
+
+/**
+ * Set default value of filter_rewrite_values_key.
+ */
+function better_exposed_filters_update_8005(): void {
+  $config_factory = \Drupal::configFactory();
+  foreach ($config_factory->listAll('views.view.') as $config_name) {
+    $config = $config_factory->getEditable($config_name);
+    $needs_update = FALSE;
+    // Go through each display on each view.
+    $displays = $config->get('display');
+    foreach ($displays as $display_name => $display) {
+      if (!empty($display['display_options']['exposed_form'])) {
+        $exposed_form = $display['display_options']['exposed_form'];
+        // Find BEF exposed forms.
+        if (isset($exposed_form['type']) && $exposed_form['type'] === 'bef') {
+          $bef_settings = $exposed_form['options']['bef'];
+          foreach ($exposed_form['options']['bef'] as $type => $options) {
+            // General settings.
+            if ($type === 'filter') {
+              foreach ($options as $field_name => $option) {
+                if (isset($bef_settings['filter'][$field_name]['advanced']['rewrite'])) {
+                  // Update filter_rewrite_values_key setting.
+                  $bef_settings['filter'][$field_name]['advanced']['rewrite']['filter_rewrite_values_key'] = FALSE;
+                  $needs_update = TRUE;
+                }
+              }
+            }
+          }
+          // Update BEF settings.
+          $config->set("display.$display_name.display_options.exposed_form.options.bef", $bef_settings);
+        }
+      }
+    }
+
+    if ($needs_update) {
+      $config->save(TRUE);
+    }
+  }
+}
+
+/**
+ * Set default opt-out of collapsible_disable_automatic_open.
+ */
+function better_exposed_filters_update_8006(): void {
+  $config_factory = \Drupal::configFactory();
+  foreach ($config_factory->listAll('views.view.') as $config_name) {
+    $config = $config_factory->getEditable($config_name);
+
+    // Go through each display on each view.
+    $displays = $config->get('display');
+    foreach ($displays as $display_name => $display) {
+      if (!empty($display['display_options']['exposed_form'])) {
+        $exposed_form = $display['display_options']['exposed_form'];
+        // Find BEF exposed forms.
+        if (isset($exposed_form['type']) && $exposed_form['type'] === 'bef') {
+          $bef_settings = $exposed_form['options']['bef'];
+          foreach ($bef_settings as $type => &$option) {
+
+            // Collapsible disable automatic opening option is available for
+            // the filter type only.
+            if ($type === 'filter') {
+              foreach ($option as &$field_settings) {
+
+                // Final check to ensure that we are where we are expecting to
+                // be in the configuration, otherwise leave untouched.
+                if (!isset($field_settings['advanced']) || !isset($field_settings['advanced']['collapsible'])) {
+                  continue;
+                }
+
+                // Update advanced settings.
+                $field_settings['advanced']['collapsible_disable_automatic_open'] = FALSE;
+              }
+            }
+          }
+
+          // Update BEF settings.
+          $config->set("display.$display_name.display_options.exposed_form.options.bef", $bef_settings);
+        }
+      }
+    }
+
+    $config->save(TRUE);
+  }
+}
+
+/**
+ * Set default value for new "hide_label" option.
+ */
+function better_exposed_filters_update_8007(): void {
+  $config_factory = \Drupal::configFactory();
+
+  foreach ($config_factory->listAll('views.view.') as $config_name) {
+    $needs_update = FALSE;
+    $config = $config_factory->getEditable($config_name);
+
+    // Go through each display on each view.
+    $displays = $config->get('display');
+    foreach ($displays as $display_name => $display) {
+      if (empty($display['display_options']['exposed_form'])) {
+        // This view display doesn't use an exposed form.
+        continue;
+      }
+
+      $exposed_form = $display['display_options']['exposed_form'];
+      if (!isset($exposed_form['type']) || $exposed_form['type'] !== 'bef') {
+        // This exposed form is not managed by Better Exposed Filters.
+        continue;
+      }
+
+      $bef_settings = $exposed_form['options']['bef'];
+      foreach ($bef_settings as $type => &$option) {
+        if ($type !== 'filter') {
+          // "Hide label" option is available for the "filter" type only.
+          continue;
+        }
+
+        foreach ($option as &$field_settings) {
+          if (!isset($field_settings['advanced'])) {
+            // No advanced options configured.
+            continue;
+          }
+          if (isset($field_settings['advanced']['hide_label'])) {
+            // "Hide label" option already configured.
+            continue;
+          }
+
+          // Update advanced settings.
+          $field_settings['advanced']['hide_label'] = FALSE;
+          $needs_update = TRUE;
+        }
+      }
+
+      // Update BEF settings.
+      $config->set("display.$display_name.display_options.exposed_form.options.bef", $bef_settings);
+    }
+
+    if ($needs_update) {
+      // Save configuration.
+      $config->save(TRUE);
+    }
+  }
+}
+
+/**
+ * Set default value for new "autosubmit_textfield_minimum_length" option.
+ */
+function better_exposed_filters_update_10001(): void {
+  $config_factory = \Drupal::configFactory();
+
+  foreach ($config_factory->listAll('views.view.') as $config_name) {
+    $needs_update = FALSE;
+    $config = $config_factory->getEditable($config_name);
+
+    // Go through each display on each view.
+    $displays = $config->get('display');
+    foreach ($displays as $display_name => $display) {
+      if (empty($display['display_options']['exposed_form'])) {
+        // This view display doesn't use an exposed form.
+        continue;
+      }
+
+      $exposed_form = $display['display_options']['exposed_form'];
+      if (!isset($exposed_form['type']) || $exposed_form['type'] !== 'bef') {
+        // This exposed form is not managed by Better Exposed Filters.
+        continue;
+      }
+
+      $bef_settings = $exposed_form['options']['bef'];
+      if (isset($bef_settings['general']['autosubmit_textfield_minimum_length'])) {
+        // "autosubmit_textfield_minimum_length" option already configured.
+        continue;
+      }
+
+      // Update advanced settings.
+      $bef_settings['general']['autosubmit_textfield_minimum_length'] = 3;
+      $needs_update = TRUE;
+
+      // Update BEF settings.
+      $config->set("display.$display_name.display_options.exposed_form.options.bef", $bef_settings);
+    }
+
+    if ($needs_update) {
+      // Save configuration.
+      $config->save(TRUE);
+    }
+  }
+}

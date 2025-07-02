@@ -1,0 +1,26 @@
+{
+    "name": "az-digital/az-icons",
+    "description": "Supplementary Icon Set for the University of Arizonap.",
+    "homepage": "https://github.com/az-digital/az-icons",
+    "authors": [
+        {
+            "name": "Arizona Digital",
+            "homepage": "https://digital.arizona.edu",
+            "role": "Team"
+        }
+    ],
+    "support": {
+      "issues": "https://github.com/az-digital/az-icons/issues"
+    },
+    "license": "proprietary",
+    "type": "drupal-library",
+    "require": {
+        "composer/installers": "*"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "1.x-dev"
+        }
+    }
+  }
+  

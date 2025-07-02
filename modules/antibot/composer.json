@@ -1,0 +1,9 @@
+{
+  "name": "drupal/antibot",
+  "type": "drupal-module",
+  "license": "GPL-2.0+",
+  "description": "Prevent forms from being submitted without JavaScript enabled.",
+  "require": {
+    "drupal/core": "^8.8 || ^9 || ^10 || ^11"
+  }
+}

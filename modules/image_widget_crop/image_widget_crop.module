@@ -1,0 +1,216 @@
+<?php
+
+/**
+ * @file
+ * Contains image_widget_crop.module.
+ */
+
+define('IMAGE_WIDGET_CROP_JS_CDN', 'https://cdnjs.cloudflare.com/ajax/libs/cropper/4.0.0/cropper.min.js');
+define('IMAGE_WIDGET_CROP_CSS_CDN', 'https://cdnjs.cloudflare.com/ajax/libs/cropper/4.0.0/cropper.min.css');
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function image_widget_crop_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.image_widget_crop':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Implement CROP API into the fields image');
+      $output .= '<h3>' . t('Try module') . '</h3>';
+      $output .= '<p>' . t('You can Test ImageWidgetCrop in action directly with the sub-module, "ImageWidgetCrop example" to test different use case of this module');
+      $output .= '</dl>';
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_field_widget_info_alter().
+ */
+function image_widget_cropfield_widget_info_alter(array &$info) {
+  // Let a new field type re-use an existing widget.
+  $info['image_image']['field_types'][] = 'image_widget_crop';
+}
+
+/**
+ * Implements hook_libraries_info().
+ */
+function image_widget_crop_libraries_info() {
+  $libraries = [
+    'cropper' => [
+      'name' => 'cropper',
+      'vendor url' => 'https://github.com/fengyuanchen/cropper',
+      'download url' => 'https://cdnjs.com/libraries/cropper',
+      'version arguments' => [
+        'file' => 'cropper.min.js',
+        'pattern' => '/Cropper v(.*)/',
+        'lines' => 2,
+      ],
+      'files' => [
+        'js' => [
+          'cropper.min.js' => [],
+        ],
+        'css' => [
+          'cropper.min.css' => [],
+        ],
+      ],
+    ],
+  ];
+  return $libraries;
+}
+
+/**
+ * Implements hook_library_info_alter().
+ */
+function image_widget_crop_library_info_alter(&$libraries, $extension) {
+  if ($extension != 'image_widget_crop') {
+    return;
+  }
+
+  $config = \Drupal::config('image_widget_crop.settings');
+  $js = $config->get('settings.library_url');
+  $css = $config->get('settings.css_url');
+  // Explicit configuration takes priority.
+  if (!empty($js) && !empty($css)) {
+    $files = ['js' => $js, 'css' => $css];
+    foreach ($files as $type => $file_path) {
+      // Evaluate if the path are an local or external.
+      $is_local = parse_url($file_path, PHP_URL_SCHEME) === NULL && strpos($file_path, '//') !== 0;
+      // In that location $file_path are placed on root of module.
+      // not in drupal root.
+      $data = ($is_local && substr($file_path, 0, 1) !== '/') ? '/' . $file_path : $file_path;
+      if ($type === 'js') {
+        $libraries['cropper'][$type][$data] = [
+          'type' => $is_local ? 'file' : 'external',
+          'minified' => TRUE,
+        ];
+      }
+      else {
+        $libraries['cropper'][$type]['component'][$data] = [
+          'type' => $is_local ? 'file' : 'external',
+          'minified' => TRUE,
+        ];
+      }
+    }
+  }
+  // If Libraries exist and cropper library is available via Libraries API.
+  elseif (\Drupal::moduleHandler()->moduleExists('libraries')
+    && ($info = libraries_detect('cropper'))
+    && $info['installed']) {
+    $libraries['cropper']['version'] = $info['version'];
+    foreach ($info['files'] as $type => $files) {
+      // Fetch all possible entry.
+      foreach ($files as $data => $option) {
+        if (is_numeric($data)) {
+          $option = "/{$info['library path']}/{$option}";
+        }
+        elseif (empty($option['type']) || $option['type'] == 'file') {
+          $data = "/{$info['library path']}/{$data}";
+        }
+      }
+
+      if ($type == 'css') {
+        $libraries['cropper']['css']['theme'][$data] = $option;
+      }
+      else {
+        $libraries['cropper'][$type][$data] = $option;
+        $libraries['cropper'][$type][$data] = $option;
+      }
+    }
+  }
+  else {
+    // Fallback to CDN.
+    $js = IMAGE_WIDGET_CROP_JS_CDN;
+    $libraries['cropper']['js'][$js] = [
+      'type' => 'external',
+      'minified' => TRUE,
+    ];
+    $css = IMAGE_WIDGET_CROP_CSS_CDN;
+    $libraries['cropper']['css']['component'][$css] = [
+      'type' => 'external',
+      'minified' => TRUE,
+    ];
+    $libraries['cropper']['version'] = 'web-hosted';
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function image_widget_crop_form_file_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  /** @var \Drupal\file_entity\Entity\FileEntity $file */
+  $file = $form_state->getFormObject()->getEntity();
+  list($mime_type, ) = explode('/', $file->getMimeType(), 2);
+
+  $operation = $form_state->getFormObject()->getOperation();
+  $crop_config = \Drupal::config('image_widget_crop.settings');
+  if ($mime_type == 'image' && ($operation == 'edit' || $operation == 'inline_edit')) {
+    $form['image_crop'] = [
+      '#type' => 'image_crop',
+      '#file' => $file,
+      '#crop_type_list' => $crop_config->get('settings.crop_list'),
+      '#crop_preview_image_style' => $crop_config->get('settings.crop_preview_image_style'),
+      '#show_default_crop' => $crop_config->get('settings.show_default_crop'),
+      '#warn_mupltiple_usages' => $crop_config->get('settings.warn_mupltiple_usages'),
+    ];
+    $form['actions']['submit']['#submit'][] = 'image_widget_crop_form_submit';
+  }
+}
+
+/**
+ * Implements hook_entity_extra_field_info().
+ */
+function image_widget_crop_entity_extra_field_info() {
+  $return = [];
+  $return['file']['image']['form']['crop_preview_wrapper'] = [
+    'label' => t('Crop image'),
+    'weight' => 10,
+  ];
+
+  return $return;
+}
+
+/**
+ * Implements hook_entity_insert().
+ */
+function image_widget_crop_entity_insert(EntityInterface $entity) {
+  \Drupal::service('image_widget_crop.manager')->buildCropToEntity($entity);
+}
+
+/**
+ * Implements hook_entity_update().
+ */
+function image_widget_crop_entity_update(EntityInterface $entity) {
+  \Drupal::service('image_widget_crop.manager')->buildCropToEntity($entity);
+}
+
+/**
+ * Form submission handler for image_widget_crop_form_file_form_alter.
+ *
+ * @param array $form
+ *   The complete form array.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The current state of the form.
+ */
+function image_widget_crop_form_submit(array &$form, FormStateInterface $form_state) {
+  \Drupal::service('image_widget_crop.manager')->buildCropToForm($form_state);
+}
+
+/**
+ * Implements hook_filefield_sources_widgets().
+ */
+function image_widget_crop_filefield_sources_widgets() {
+  return ['image_widget_crop'];
+}
+
+/**
+ * Implements hook_imce_supported_widgets_alter().
+ */
+function image_widget_crop_imce_supported_widgets_alter(array &$widgets) {
+  $widgets[] = 'image_widget_crop';
+  return $widgets;
+}

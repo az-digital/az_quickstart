@@ -1,0 +1,15 @@
+image_widget_crop_examples.front_page:
+  path: '/image_widget_crop_examples'
+  defaults:
+    _controller: '\Drupal\image_widget_crop_examples\Controller\FrontPage::content'
+    _title: 'Image Widget Crop examples'
+  requirements:
+    _permission: 'access content'
+
+image_widget_crop_examples.form:
+  path: '/admin/config/media/image_widget_crop_examples/form'
+  defaults:
+    _form: 'Drupal\image_widget_crop_examples\Form\ImageWidgetCropExamplesForm'
+    _title: 'Image Crop Widget Example Form'
+  requirements:
+    _permission: 'access content'

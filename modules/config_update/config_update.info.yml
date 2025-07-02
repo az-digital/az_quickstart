@@ -1,0 +1,12 @@
+name: 'Configuration Update Base'
+type: module
+description: 'Provides basic revert and update functionality for other modules.'
+core_version_requirement: ^9.4 || ^10 || ^11
+php: 8.1
+dependencies:
+  - drupal:config
+
+# Information added by Drupal.org packaging script on 2024-08-25
+version: '2.0.0-alpha4'
+project: 'config_update'
+datestamp: 1724596933

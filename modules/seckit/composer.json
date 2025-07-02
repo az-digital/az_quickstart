@@ -1,0 +1,14 @@
+{
+  "name": "drupal/seckit",
+  "type": "drupal-module",
+  "description": "SecKit provides Drupal with various security-hardening options.",
+  "keywords": ["Drupal", "security"],
+  "license": "GPL-2.0-or-later",
+  "homepage": "https://www.drupal.org/project/seckit",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "http://drupal.org/project/issues/seckit",
+    "source": "https://git.drupalcode.org/project/seckit"
+  },
+  "require": { }
+}

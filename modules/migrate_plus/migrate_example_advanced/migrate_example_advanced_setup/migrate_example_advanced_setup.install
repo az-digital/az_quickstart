@@ -1,0 +1,1210 @@
+<?php
+
+/**
+ * @file
+ * Install setup for the migration example module.
+ *
+ * Set up source data and destination configuration for the migration example
+ * module. We do this in a separate module so migrate_example_advanced itself is
+ * a pure migration module.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function migrate_example_advanced_setup_schema(): array {
+  $schema = [];
+  $schema['migrate_example_advanced_account'] = migrate_example_advanced_schema_account();
+  $schema['migrate_example_advanced_account_updates'] = migrate_example_advanced_schema_account_updates();
+  $schema['migrate_example_advanced_categories'] = migrate_example_advanced_schema_categories();
+  $schema['migrate_example_advanced_vintages'] = migrate_example_advanced_schema_vintages();
+  $schema['migrate_example_advanced_variety_updates'] = migrate_example_advanced_schema_variety_updates();
+  $schema['migrate_example_wine'] = migrate_example_advanced_schema_wine();
+  $schema['migrate_example_advanced_updates'] = migrate_example_advanced_schema_updates();
+  $schema['migrate_example_advanced_producer'] = migrate_example_advanced_schema_producer();
+  $schema['migrate_example_advanced_category_wine'] = migrate_example_advanced_schema_category_wine();
+  $schema['migrate_example_advanced_category_producer'] = migrate_example_advanced_schema_category_producer();
+  $schema['migrate_example_advanced_comment'] = migrate_example_advanced_schema_comment();
+  $schema['migrate_example_advanced_comment_updates'] = migrate_example_advanced_schema_comment_updates();
+  $schema['migrate_example_advanced_files'] = migrate_example_advanced_schema_files();
+  $schema['migrate_example_advanced_blobs'] = migrate_example_advanced_schema_blobs();
+  $schema['migrate_example_advanced_table_source'] = migrate_example_advanced_schema_table_source();
+  $schema['migrate_example_advanced_table_dest'] = migrate_example_advanced_schema_table_dest();
+
+  return $schema;
+}
+
+/**
+ * Implements hook_install().
+ */
+function migrate_example_advanced_setup_install(): void {
+  // Populate our tables.
+  migrate_example_advanced_data_account();
+  migrate_example_advanced_data_account_updates();
+  migrate_example_advanced_data_categories();
+  migrate_example_advanced_data_vintages();
+  migrate_example_advanced_data_variety_updates();
+  migrate_example_advanced_data_wine();
+  migrate_example_advanced_data_updates();
+  migrate_example_advanced_data_producer();
+  migrate_example_advanced_data_category_wine();
+  migrate_example_advanced_data_category_producer();
+  migrate_example_advanced_data_comment();
+  migrate_example_advanced_data_comment_updates();
+  migrate_example_advanced_data_files();
+  migrate_example_advanced_data_blobs();
+  migrate_example_advanced_data_table_source();
+}
+
+/**
+ * The hook_schema definition for wine.
+ *
+ * @return array
+ *   The schema definition.
+ */
+function migrate_example_advanced_schema_wine(): array {
+  return [
+    'description' => 'Wines of the world',
+    'fields' => [
+      'wineid'  => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Wine ID',
+      ],
+      'name'  => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ],
+      'body' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'description' => 'Full description of the wine.',
+      ],
+      'excerpt' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'description' => 'Abstract for this wine.',
+      ],
+      'accountid' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+        'description' => 'ID of the author.',
+      ],
+      'posted' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Original creation date',
+      ],
+      'last_changed' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Last change date',
+      ],
+      'variety' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Wine variety',
+      ],
+      'region' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Wine region',
+      ],
+      'rating' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+        'description' => 'Rating (100-point scale)',
+      ],
+    ],
+    'primary key' => ['wineid'],
+  ];
+}
+
+/**
+ * The hook_schema definition for updates.
+ *
+ * @return array
+ *   The schema definition.
+ */
+function migrate_example_advanced_schema_updates(): array {
+  return [
+    'description' => 'Updated wine ratings',
+    'fields' => [
+      'wineid'  => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Wine ID',
+      ],
+      'rating' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+        'description' => 'Rating (100-point scale)',
+      ],
+    ],
+    'primary key' => ['wineid'],
+  ];
+}
+
+/**
+ * The hook_schema definition for producer.
+ *
+ * @return array
+ *   The schema definition.
+ */
+function migrate_example_advanced_schema_producer(): array {
+  return [
+    'description' => 'Wine producers of the world',
+    'fields' => [
+      'producerid'  => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Producer ID',
+      ],
+      'name'  => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ],
+      'body' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'description' => 'Full description of the producer.',
+      ],
+      'excerpt' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'description' => 'Abstract for this producer.',
+      ],
+      'accountid' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+        'description' => 'Account ID of the author.',
+      ],
+    ],
+    'primary key' => ['producerid'],
+  ];
+}
+
+/**
+ * The hook_schema definition for categories.
+ *
+ *   The schema definition.
+ */
+function migrate_example_advanced_schema_categories(): array {
+  return [
+    'description' => 'Categories',
+    'fields' => [
+      'categoryid' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'unsigned' => TRUE,
+        'description' => 'Category ID',
+      ],
+      'type' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'description' => 'Type of category: variety, region, best_with',
+      ],
+      'name'  => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ],
+      'details' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+      ],
+      'category_parent' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+        'description' => 'Parent category, if any',
+      ],
+      'ordering' => [
+        'type' => 'int',
+        'unsigned' => FALSE,
+        'not null' => FALSE,
+        'description' => 'Order in which to display categories',
+      ],
+    ],
+    'primary key' => ['categoryid'],
+  ];
+}
+
+/**
+ * The hook_schema definition for vintages.
+ *
+ *   The schema definition.
+ */
+function migrate_example_advanced_schema_vintages(): array {
+  return [
+    'description' => 'Wine vintages',
+    'fields' => [
+      'wineid'  => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'description' => 'Wine ID',
+      ],
+      'vintage'  => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Vintage (year)',
+      ],
+    ],
+    'primary key' => ['wineid', 'vintage'],
+  ];
+}
+
+/**
+ * The hook_schema definition for variety updates.
+ *
+ *   The schema definition.
+ */
+function migrate_example_advanced_schema_variety_updates(): array {
+  return [
+    'description' => 'Variety updates',
+    'fields' => [
+      'categoryid' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'unsigned' => TRUE,
+        'description' => 'Category ID',
+      ],
+      'details' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+      ],
+    ],
+    'primary key' => ['categoryid'],
+  ];
+}
+
+/**
+ * The hook_schema definition for category wine.
+ *
+ *   The schema definition.
+ */
+function migrate_example_advanced_schema_category_wine(): array {
+  return [
+    'description' => 'Wine category assignments',
+    'fields' => [
+      'wineid'  => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'description' => 'Wine ID',
+      ],
+      'categoryid'  => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Category ID',
+      ],
+    ],
+    'primary key' => ['categoryid', 'wineid'],
+  ];
+}
+
+/**
+ * The hook_schema definition for category producer.
+ *
+ *   The schema definition.
+ */
+function migrate_example_advanced_schema_category_producer(): array {
+  return [
+    'description' => 'Producer category assignments',
+    'fields' => [
+      'producerid'  => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'description' => 'Producer ID',
+      ],
+      'categoryid'  => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Category ID',
+      ],
+    ],
+    'primary key' => ['categoryid', 'producerid'],
+  ];
+}
+
+/**
+ * The hook_schema definition for comment.
+ *
+ *   The schema definition.
+ */
+function migrate_example_advanced_schema_comment(): array {
+  return [
+    'description' => 'Wine comments',
+    'fields' => [
+      'commentid'  => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Comment ID',
+      ],
+      'wineid'  => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Wine ID that is being commented upon',
+      ],
+      'comment_parent' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+        'description' => 'Parent comment ID in case of comment replies.',
+      ],
+      'subject' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'description' => 'Comment subject',
+      ],
+      'body' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'description' => 'Comment body',
+      ],
+      'name' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'description' => 'Comment name (if anon)',
+      ],
+      'mail' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'description' => 'Comment email (if anon)',
+      ],
+      'accountid' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+        'description' => 'Account ID (if any).',
+      ],
+      'commenthost' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'description' => 'IP/domain of host posted from',
+      ],
+      'userpage' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'description' => 'User homepage',
+      ],
+      'posted' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Date comment posted',
+      ],
+      'lastchanged' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Date comment last changed',
+      ],
+    ],
+    'primary key' => ['commentid'],
+  ];
+}
+
+/**
+ * The hook_schema definition for comment updates.
+ *
+ *   The schema definition.
+ */
+function migrate_example_advanced_schema_comment_updates(): array {
+  return [
+    'description' => 'Wine comment updates',
+    'fields' => [
+      'commentid'  => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Comment ID',
+      ],
+      'subject' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'description' => 'Comment subject',
+      ],
+    ],
+    'primary key' => ['commentid'],
+  ];
+}
+
+/**
+ * The hook_schema definition for account.
+ *
+ *   The schema definition.
+ */
+function migrate_example_advanced_schema_account(): array {
+  return [
+    'description' => 'Wine accounts.',
+    'fields' => [
+      'accountid'  => [
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Account ID',
+      ],
+      'status'  => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'description' => 'Blocked_Allowed',
+      ],
+      'posted' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'description' => 'Registration date',
+      ],
+      'last_access' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'description' => 'Last access date',
+      ],
+      'last_login' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'description' => 'Last login date',
+      ],
+      'name' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'description' => 'Account name (for login)',
+      ],
+      'sex' => [
+        'type' => 'char',
+        'length' => 1,
+        'not null' => FALSE,
+        'description' => 'Gender',
+      ],
+      'password' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'description' => 'Account password (raw)',
+      ],
+      'mail' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'description' => 'Account email',
+      ],
+      'original_mail' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'description' => 'Original account email',
+      ],
+      'sig' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'description' => 'Signature for comments',
+      ],
+      'imageid'  => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+        'description' => 'Image ID',
+      ],
+      'positions' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'description' => 'Positions held',
+      ],
+    ],
+    'primary key' => ['accountid'],
+  ];
+}
+
+/**
+ * The hook_schema definition for account updates.
+ *
+ *   The schema definition.
+ */
+function migrate_example_advanced_schema_account_updates(): array {
+  return [
+    'description' => 'Wine account updates',
+    'fields' => [
+      'accountid'  => [
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Account ID',
+      ],
+      'sex' => [
+        'type' => 'char',
+        'length' => 1,
+        'not null' => FALSE,
+        'description' => 'Gender',
+      ],
+    ],
+    'primary key' => ['accountid'],
+  ];
+}
+
+/**
+ * The hook_schema definition for blobs.
+ *
+ *   The schema definition.
+ */
+function migrate_example_advanced_schema_blobs(): array {
+  return [
+    'description' => 'Wine blobs to be migrated to file entities',
+    'fields' => [
+      'imageid'  => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Image ID',
+      ],
+      'imageblob' => [
+        'type' => 'blob',
+        'size' => 'normal',
+        'description' => 'binary image data',
+      ],
+    ],
+    'primary key' => ['imageid'],
+  ];
+}
+
+/**
+ * The hook_schema definition for files.
+ *
+ *   The schema definition.
+ */
+function migrate_example_advanced_schema_files(): array {
+  return [
+    'description' => 'Wine and account files',
+    'fields' => [
+      'imageid'  => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Image ID',
+      ],
+      'url'  => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'description' => 'Image URL',
+      ],
+      'image_alt'  => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'description' => 'Image alt',
+      ],
+      'image_title'  => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'description' => 'Image title',
+      ],
+      'wineid'  => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+        'description' => 'Wine node this is associated with',
+      ],
+    ],
+    'primary key' => ['imageid'],
+  ];
+}
+
+/**
+ * The hook_schema definition for table source.
+ *
+ *   The schema definition.
+ */
+function migrate_example_advanced_schema_table_source(): array {
+  return [
+    'description' => 'Source data to go into a custom Drupal table',
+    'fields' => [
+      'fooid'  => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Primary key',
+      ],
+      'field1'  => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'description' => 'First field',
+      ],
+      'field2'  => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Second field',
+      ],
+    ],
+    'primary key' => ['fooid'],
+  ];
+}
+
+/**
+ * The hook_schema definition for table destination.
+ *
+ *   The schema definition.
+ */
+function migrate_example_advanced_schema_table_dest(): array {
+  return [
+    'description' => 'Custom Drupal table to receive source data directly',
+    'fields' => [
+      'recordid'  => [
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Primary key',
+      ],
+      'drupal_text'  => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'description' => 'First field',
+      ],
+      'drupal_int'  => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Second field',
+      ],
+    ],
+    'primary key' => ['recordid'],
+  ];
+}
+
+/**
+ * Populate wine table.
+ */
+function migrate_example_advanced_data_wine() {
+  $fields = [
+    'wineid',
+    'name',
+    'body',
+    'excerpt',
+    'accountid',
+    'posted',
+    'last_changed',
+    'variety',
+    'region',
+    'rating',
+  ];
+  $query = \Drupal::database()->insert('migrate_example_wine')
+    ->fields($fields);
+  $data = [
+    [
+      1,
+      'Montes Classic Cabernet Sauvignon',
+      'Intense ruby-red color',
+      'Great!',
+      9,
+      strtotime('2010-01-02 03:04:05'),
+      strtotime('2010-03-04 05:06:07'),
+      25,
+      17,
+      95,
+    ],
+    [
+      2,
+      'Archeo Ruggero di Tasso Nero d\'Avola',
+      'Lots of berry character',
+      'Pair with red sauced dishes',
+      3,
+      strtotime('2010-09-03 18:23:58'),
+      strtotime('2010-09-03 18:23:58'),
+      26,
+      2,
+      85,
+    ],
+  ];
+  foreach ($data as $row) {
+    $query->values(array_combine($fields, $row));
+  }
+  $query->execute();
+}
+
+/**
+ * Populate updates table.
+ */
+function migrate_example_advanced_data_updates() {
+  $fields = ['wineid', 'rating'];
+  $query = \Drupal::database()->insert('migrate_example_advanced_updates')
+    ->fields($fields);
+  $data = [
+    [1, 93],
+    [2, NULL],
+  ];
+  foreach ($data as $row) {
+    $query->values(array_combine($fields, $row));
+  }
+  $query->execute();
+}
+
+/**
+ * Populate producer table.
+ */
+function migrate_example_advanced_data_producer() {
+  $fields = ['producerid', 'name', 'body', 'excerpt', 'accountid'];
+  $query = \Drupal::database()->insert('migrate_example_advanced_producer')
+    ->fields($fields);
+  $data = [
+    [1, 'Montes', 'Fine Chilean winery', 'Great!', 9],
+    [2, 'Archeo', 'Sicilia!', NULL, 3],
+  ];
+  foreach ($data as $row) {
+    $query->values(array_combine($fields, $row));
+  }
+  $query->execute();
+}
+
+/**
+ * Populate account table.
+ */
+function migrate_example_advanced_data_account() {
+  $fields = [
+    'accountid',
+    'status',
+    'posted',
+    'last_access',
+    'last_login',
+    'name',
+    'sex',
+    'password',
+    'mail',
+    'original_mail',
+    'sig',
+    'imageid',
+    'positions',
+  ];
+  $query = \Drupal::database()->insert('migrate_example_advanced_account')
+    ->fields($fields);
+  $data = [
+    [
+      1,
+      1,
+      '2010-03-30 10:31:05',
+      '2010-04-30 18:25:24',
+      '2010-04-30 14:01:02',
+      'darren',
+      'M',
+      'dpass',
+      'ddarren@example.com',
+      'darren@example.com',
+      'All about the Australians',
+      NULL,
+      '5',
+    ],
+    [
+      3,
+      0,
+      '2007-03-15 10:31:05',
+      '2007-06-10 04:11:38',
+      '2007-06-10 04:11:38',
+      'emily',
+      'F',
+      'insecure',
+      'emily@example.com',
+      'emily@example.com',
+      'Sommelier to the stars',
+      NULL,
+      '18',
+    ],
+    [
+      9,
+      1,
+      '2004-02-29 10:31:05',
+      '2004-02-29 10:31:05',
+      '2004-02-29 10:31:05',
+      'fonzie',
+      NULL,
+      'bike',
+      'thefonz@example.com',
+      'arthur@example.com',
+      'Aaay!',
+      1,
+      '5,18',
+    ],
+  ];
+  foreach ($data as $row) {
+    $query->values(array_combine($fields, $row));
+  }
+  $query->execute();
+}
+
+/**
+ * Populate account updates table.
+ */
+function migrate_example_advanced_data_account_updates() {
+  $fields = ['accountid', 'sex'];
+  $query = \Drupal::database()->insert('migrate_example_advanced_account_updates')
+    ->fields($fields);
+  $data = [
+    [1, NULL],
+    [3, 'M'],
+    [9, 'F'],
+  ];
+  foreach ($data as $row) {
+    $query->values(array_combine($fields, $row));
+  }
+  $query->execute();
+}
+
+/**
+ * Populate comment table.
+ */
+function migrate_example_advanced_data_comment() {
+  $fields = [
+    'commentid',
+    'wineid',
+    'comment_parent',
+    'subject',
+    'body',
+    'name',
+    'mail',
+    'accountid',
+    'commenthost',
+    'userpage',
+    'posted',
+    'lastchanged',
+  ];
+  $query = \Drupal::database()->insert('migrate_example_advanced_comment')
+    ->fields($fields);
+  $data = [
+    [
+      1,
+      1,
+      NULL,
+      'im first',
+      'Tasty',
+      'grace',
+      'grace@example.com',
+      0,
+      '123.456.78.9',
+      'http:://grace.example.com/',
+      strtotime('2010-01-02 03:04:05'),
+      strtotime('2010-04-05 06:07:08'),
+    ],
+    [
+      2,
+      1,
+      NULL,
+      'im second',
+      'Delicious',
+      'horace',
+      'horace@example.com',
+      0,
+      'example.com',
+      NULL,
+      strtotime('2010-02-02 03:04:05'),
+      strtotime('2010-05-05 06:07:08'),
+    ],
+    [
+      3,
+      1,
+      NULL,
+      'im parent',
+      'Don\'t care for it',
+      'irene',
+      'irene@example.com',
+      0,
+      '254.0.2.5',
+      'http:://www.example.com/irene',
+      strtotime('2010-03-02 03:04:05'),
+      strtotime('2010-03-02 03:04:05'),
+    ],
+    [
+      4,
+      1,
+      3,
+      'im child',
+      'But it\'s so good!',
+      'emily',
+      NULL,
+      3,
+      '58.29.126.1',
+      'http:://www.wine.com/',
+      strtotime('2010-01-02 03:04:05'),
+      strtotime('2010-01-02 03:04:05'),
+    ],
+    [
+      5,
+      1,
+      4,
+      'im grandchild',
+      'Right on, Emily!',
+      'thefonz@example.com',
+      NULL,
+      9,
+      '123.456.78.9',
+      NULL,
+      strtotime('2010-06-02 03:04:05'),
+      strtotime('2010-06-02 03:04:05'),
+    ],
+  ];
+  foreach ($data as $row) {
+    $query->values(array_combine($fields, $row));
+  }
+  $query->execute();
+}
+
+/**
+ * Populate comment updates table.
+ */
+function migrate_example_advanced_data_comment_updates() {
+  $fields = ['commentid', 'subject'];
+  $query = \Drupal::database()->insert('migrate_example_advanced_comment_updates')
+    ->fields($fields);
+  $data = [
+    [1, 'I am first'],
+    [2, 'I am second'],
+    [3, 'I am parent'],
+    [4, ''],
+    [5, 'I am Spartacus'],
+  ];
+  foreach ($data as $row) {
+    $query->values(array_combine($fields, $row));
+  }
+  $query->execute();
+}
+
+/**
+ * Populate categories table.
+ */
+function migrate_example_advanced_data_categories() {
+  $fields = [
+    'categoryid',
+    'type',
+    'name',
+    'category_parent',
+    'details',
+    'ordering',
+  ];
+  $query = \Drupal::database()->insert('migrate_example_advanced_categories')
+    ->fields($fields);
+  $data = [
+    [
+      1,
+      'variety',
+      'White wine',
+      NULL,
+      'White wines are generally simpler and sweeter than red',
+      3,
+    ],
+    [
+      3,
+      'variety',
+      'Red wine',
+      NULL,
+      'Red wines are generally more complex and "dry" than white',
+      1,
+    ],
+    [8, 'variety', 'Riesling', 1, 'Associated with Germany', 2],
+    [9, 'variety', 'Chardonnay', 1, 'One of the most popular whites', 1],
+    [13, 'variety', 'Merlot', 3, 'Very drinkable', 4],
+    [14, 'variety', 'Syrah', 3, 'A.k.a. shiraz', -3],
+    [25, 'variety', 'Cabernet Sauvignon', 3, 'A basic', -5],
+    [26, 'variety', "Nero d'Avola", 3, 'Sicilian specialty', 2],
+    [2, 'region', 'Italy', NULL, 'Largest producer of wine', 5],
+    [11, 'region', 'Tuscany', 2, NULL, 2],
+    [18, 'region', 'Chianti', 11, NULL, -1],
+    [19, 'region', 'Elba', 11, NULL, 5],
+    [4, 'region', 'France', NULL, 'C\'est bon', 6],
+    [5, 'region', 'Bordeaux', 4, NULL, 1],
+    [6, 'region', 'Barsac', 5, NULL, 3],
+    [7, 'region', 'Pomerol', 5, NULL, 2],
+    [16, 'region', 'Chile', NULL, NULL, 3],
+    [17, 'region', 'Colchagua Valley', 16, NULL, 1],
+    [20, 'region', 'California', NULL, NULL, 5],
+    [21, 'region', 'Redwood Valley', 20, NULL, 1],
+    [10, 'best_with', 'Beef', NULL, NULL, 5],
+    [12, 'best_with', 'Pork', NULL, NULL, -3],
+    [15, 'best_with', 'Chicken', NULL, NULL, -5],
+  ];
+  foreach ($data as $row) {
+    $query->values(array_combine($fields, $row));
+  }
+  $query->execute();
+}
+
+/**
+ * Populate vintages table.
+ */
+function migrate_example_advanced_data_vintages() {
+  $fields = ['wineid', 'vintage'];
+  $query = \Drupal::database()->insert('migrate_example_advanced_vintages')
+    ->fields($fields);
+  $data = [
+    [1, 2006],
+    [1, 2007],
+    [2, 2001],
+  ];
+  foreach ($data as $row) {
+    $query->values(array_combine($fields, $row));
+  }
+  $query->execute();
+}
+
+/**
+ * Populate variety updates table.
+ */
+function migrate_example_advanced_data_variety_updates() {
+  $fields = ['categoryid', 'details'];
+  $query = \Drupal::database()->insert('migrate_example_advanced_variety_updates')
+    ->fields($fields);
+  $data = [
+    [1, 'White wines are simpler and sweeter than red'],
+    [3, 'Red wines are generally more complex and dry than white'],
+    [8, 'Usually associated with Germany'],
+    [9, NULL],
+    [13, 'Common, very drinakable'],
+    [14, 'AKA Shiraz'],
+    [25, 'Basic'],
+    [26, 'A specialty of Sicily'],
+  ];
+  foreach ($data as $row) {
+    $query->values(array_combine($fields, $row));
+  }
+  $query->execute();
+}
+
+/**
+ * Populate category wine table.
+ */
+function migrate_example_advanced_data_category_wine() {
+  $fields = ['wineid', 'categoryid'];
+  $query = \Drupal::database()->insert('migrate_example_advanced_category_wine')
+    ->fields($fields);
+  $data = [
+    [1, 12],
+    [1, 15],
+    [2, 10],
+  ];
+  foreach ($data as $row) {
+    $query->values(array_combine($fields, $row));
+  }
+  $query->execute();
+}
+
+/**
+ * Populate category producer table.
+ */
+function migrate_example_advanced_data_category_producer() {
+  $fields = ['producerid', 'categoryid'];
+  $query = \Drupal::database()->insert('migrate_example_advanced_category_producer')
+    ->fields($fields);
+  $data = [
+    [1, 17],
+  ];
+  foreach ($data as $row) {
+    $query->values(array_combine($fields, $row));
+  }
+  $query->execute();
+}
+
+/**
+ * Populate files table.
+ */
+function migrate_example_advanced_data_files() {
+  $fields = ['imageid', 'url', 'image_alt', 'image_title', 'wineid'];
+  $query = \Drupal::database()->insert('migrate_example_advanced_files')
+    ->fields($fields);
+  $data = [
+    [
+      1,
+      'http://placekitten.com/200/200',
+      NULL,
+      NULL,
+      NULL,
+    ],
+    [
+      2,
+      'http://cyrve.com/files/penguin.jpeg',
+      'Penguin alt',
+      'Penguin title',
+      1,
+    ],
+    [3, 'http://cyrve.com/files/rioja.jpeg', 'Rioja alt', 'Rioja title', 2],
+    [
+      4,
+      'http://cyrve.com/files/boutisse_0.jpeg',
+      'Boutisse alt',
+      'Boutisse title',
+      2,
+    ],
+  ];
+  foreach ($data as $row) {
+    $query->values(array_combine($fields, $row));
+  }
+  $query->execute();
+}
+
+/**
+ * Populate blobs table.
+ */
+function migrate_example_advanced_data_blobs() {
+  $blob = file_get_contents('core/misc/druplicon.png');
+  $fields = ['imageid', 'imageblob'];
+  $query = \Drupal::database()->insert('migrate_example_advanced_blobs')
+    ->fields($fields);
+  $data = [
+    [1, $blob],
+  ];
+  foreach ($data as $row) {
+    $query->values(array_combine($fields, $row));
+  }
+  $query->execute();
+}
+
+/**
+ * Populate table source table.
+ */
+function migrate_example_advanced_data_table_source() {
+  $fields = ['fooid', 'field1', 'field2'];
+  $query = \Drupal::database()->insert('migrate_example_advanced_table_source')
+    ->fields($fields);
+  $data = [
+    [3, 'Some sample data', 58],
+    [15, 'Whatever', 2],
+    [646, 'More sample data', 34989],
+  ];
+  foreach ($data as $row) {
+    $query->values(array_combine($fields, $row));
+  }
+  $query->execute();
+}

@@ -1,0 +1,43 @@
+workbench_access.admin:
+  path: '/admin/config/workflow/workbench_access/settings'
+  defaults:
+    _form: 'Drupal\workbench_access\Form\WorkbenchAccessConfigForm'
+    _title: 'Workbench Access'
+  requirements:
+    _permission: 'administer workbench access'
+
+entity.access_scheme.by_role:
+  path: '/admin/config/workflow/workbench_access/{access_scheme}/sections/{id}/roles'
+  defaults:
+    _form: 'Drupal\workbench_access\Form\WorkbenchAccessByRoleForm'
+    _title_callback: 'Drupal\workbench_access\Form\WorkbenchAccessByRoleForm::pageTitle'
+  requirements:
+    _permission: 'assign workbench access'
+  options:
+      parameters:
+        access_scheme:
+          type: 'entity:access_scheme'
+
+entity.access_scheme.by_user:
+  path: '/admin/config/workflow/workbench_access/{access_scheme}/sections/{id}/users'
+  defaults:
+    _form: 'Drupal\workbench_access\Form\WorkbenchAccessByUserForm'
+    _title_callback: 'Drupal\workbench_access\Form\WorkbenchAccessByUserForm::pageTitle'
+  requirements:
+    _permission: 'assign workbench access'
+  options:
+    parameters:
+      access_scheme:
+        type: 'entity:access_scheme'
+
+entity.section_association.edit:
+  path: '/user/{user}/workbench_access'
+  defaults:
+    _form: 'Drupal\workbench_access\Form\AssignUserForm'
+    _title: 'Workbench Access'
+  requirements:
+    _custom_access: 'Drupal\workbench_access\Form\AssignUserForm::access'
+    _permission: 'assign workbench access+assign selected workbench access'
+  options:
+    _admin_route: TRUE
+    user: \d+

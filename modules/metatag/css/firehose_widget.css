@@ -1,0 +1,9 @@
+/**
+ * @file
+ * Custom CSS for the Firehose widget.
+ */
+
+.metatags {
+  overflow-y: overlay;
+  max-height: 500px;
+}

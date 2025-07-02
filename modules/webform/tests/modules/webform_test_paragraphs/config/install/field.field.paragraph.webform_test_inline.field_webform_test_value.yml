@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_webform_test_value
+    - paragraphs.paragraphs_type.webform_test_inline
+id: paragraph.webform_test_inline.field_webform_test_value
+field_name: field_webform_test_value
+entity_type: paragraph
+bundle: webform_test_inline
+label: 'Webform test value'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

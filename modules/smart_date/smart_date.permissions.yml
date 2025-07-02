@@ -1,0 +1,4 @@
+administer smart date formats:
+  title: 'Administer smart date formats'
+  description: 'Allow to access the administration form to configure smart date formats.'
+  restrict access: true

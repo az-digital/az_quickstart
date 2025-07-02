@@ -1,0 +1,15 @@
+services:
+  # Helpers
+  better_exposed_filters.bef_helper:
+    class: Drupal\better_exposed_filters\BetterExposedFiltersHelper
+
+  # Plugins
+  plugin.manager.better_exposed_filters_filter_widget:
+    class: Drupal\better_exposed_filters\Plugin\BetterExposedFiltersWidgetManager
+    arguments: [filter, '@container.namespaces', '@cache.discovery', '@module_handler']
+  plugin.manager.better_exposed_filters_pager_widget:
+    class: Drupal\better_exposed_filters\Plugin\BetterExposedFiltersWidgetManager
+    arguments: [pager, '@container.namespaces', '@cache.discovery', '@module_handler']
+  plugin.manager.better_exposed_filters_sort_widget:
+    class: Drupal\better_exposed_filters\Plugin\BetterExposedFiltersWidgetManager
+    arguments: [sort, '@container.namespaces', '@cache.discovery', '@module_handler']

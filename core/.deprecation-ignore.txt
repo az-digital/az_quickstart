@@ -1,0 +1,71 @@
+# This file contains patterns to be ignored while testing for use of
+# deprecated code.
+# See https://www.drupal.org/node/3285162 for more details.
+
+%The "Symfony\\Component\\Validator\\Context\\ExecutionContextInterface::.*\(\)" method is considered internal Used by the validator engine\. (Should not be called by user\W+code\. )?It may change without further notice\. You should not extend it from "[^"]+"\.%
+%The "PHPUnit\\Framework\\TestCase::addWarning\(\)" method is considered internal%
+
+# Skip some dependencies' DebugClassLoader forward compatibility warnings.
+%Method "Behat\\[^"]+" might add "[^"]+" as a native return type declaration in the future. Do the same in (child class|implementation) "[^"]+" now to avoid errors or add an explicit @return annotation to suppress this message%
+%Method "Composer\\EventDispatcher\\EventSubscriberInterface::getSubscribedEvents\(\)" might add "[^"]+" as a native return type declaration in the future. Do the same in (child class|implementation) "[^"]+" now to avoid errors or add an explicit @return annotation to suppress this message%
+%Method "Composer\\Plugin\\PluginInterface::(activate|deactivate|uninstall)\(\)" might add "[^"]+" as a native return type declaration in the future. Do the same in (child class|implementation) "[^"]+" now to avoid errors or add an explicit @return annotation to suppress this message%
+%Method "Doctrine\\Common\\Annotations\\Reader::[^"]+" might add "[^"]+" as a native return type declaration in the future. Do the same in (child class|implementation) "[^"]+" now to avoid errors or add an explicit @return annotation to suppress this message%
+%Method "Twig\\Extension\\ExtensionInterface::[^"]+" might add "[^"]+" as a native return type declaration in the future. Do the same in (child class|implementation) "[^"]+" now to avoid errors or add an explicit @return annotation to suppress this message%
+%Method "Twig\\Loader\\FilesystemLoader::findTemplate\(\)" might add "[^"]+" as a native return type declaration in the future. Do the same in (child class|implementation) "[^"]+" now to avoid errors or add an explicit @return annotation to suppress this message%
+%Method "Twig\\Loader\\LoaderInterface::exists\(\)" might add "[^"]+" as a native return type declaration in the future. Do the same in (child class|implementation) "[^"]+" now to avoid errors or add an explicit @return annotation to suppress this message%
+%Method "Twig\\Node\\Node::compile\(\)" might add "[^"]+" as a native return type declaration in the future. Do the same in (child class|implementation) "[^"]+" now to avoid errors or add an explicit @return annotation to suppress this message%
+%Method "Twig\\NodeVisitor\\AbstractNodeVisitor::[^"]+" might add "[^"]+" as a native return type declaration in the future. Do the same in (child class|implementation) "[^"]+" now to avoid errors or add an explicit @return annotation to suppress this message%
+%Method "Twig\\NodeVisitor\\NodeVisitorInterface::[^"]+" might add "[^"]+" as a native return type declaration in the future. Do the same in (child class|implementation) "[^"]+" now to avoid errors or add an explicit @return annotation to suppress this message%
+%Method "Twig\\TokenParser\\TokenParserInterface::[^"]+" might add "[^"]+" as a native return type declaration in the future. Do the same in (child class|implementation) "[^"]+" now to avoid errors or add an explicit @return annotation to suppress this message%
+%Method "WebDriver\\Service\\CurlServiceInterface::[^"]+" might add "[^"]+" as a native return type declaration in the future. Do the same in implementation "[^"]+" now to avoid errors or add an explicit @return annotation to suppress this message%
+
+# Skip root namespace native DebugClassLoader forward compatibility warnings.
+# These mostly refer to PHP native classes, could be fixed for PHP 8.1.
+%Method "[^\\]+::\w+\(\)" might add "[^"]+" as a native return type declaration in the future. Do the same in (child class|implementation) "[^"]+" now to avoid errors or add an explicit @return annotation to suppress this message%
+
+# The following deprecation is listed for Twig 2 compatibility when unit
+# testing using \Symfony\Component\ErrorHandler\DebugClassLoader.
+%The "Twig\\Environment::getTemplateClass\(\)" method is considered internal\. It may change without further notice\. You should not extend it from "Drupal\\Core\\Template\\TwigEnvironment"\.%
+
+# Drupal 11.
+%Drupal\\Core\\Form\\FormBuilder::getForm\(\).* will require a new "mixed \.\.\. \$args" argument in the next major version of its interface%
+%Drupal\\Core\\Form\\FormBuilder::submitForm\(\).* will require a new "mixed \.\.\. \$args" argument in the next major version of its interface%
+%The core/tabbable.jquery.shim asset library is deprecated in Drupal 10.3.0 and will be removed in Drupal 11.0.0. See https://www.drupal.org/node/3441616%
+%The core/internal.shepherd asset library is deprecated in Drupal 10.3.0 and will be removed in Drupal 11.0.0. See https://www.drupal.org/node/3442299%
+
+# PHPUnit 9.
+%"PHPUnit\\Framework\\TestListener".*is deprecated%
+%"PHPUnit\\Framework\\TestListenerDefaultImplementation".*is deprecated%
+%"PHPUnit\\Framework\\TestSuite".*is considered internal%
+%"PHPUnit\\TextUI\\DefaultResultPrinter".*is considered internal%
+
+# PHPUnit 9.6.
+%Expecting E_WARNING and E_USER_WARNING is deprecated and will no longer be possible in PHPUnit 10%
+%Expecting E_ERROR and E_USER_ERROR is deprecated and will no longer be possible in PHPUnit 10%
+
+# Skip deprecations for EditorMediaDialog, EditorImageDialog and EditorLinkDialog triggered by
+# \Drupal\Core\Entity\EntityResolverManager::setRouteOptions().
+%Drupal\\media\\Form\\EditorMediaDialog is deprecated in drupal:10.1.0 and is removed from drupal:11.0.0. There is no replacement. See https://www.drupal.org/node/3291493%
+%Drupal\\editor\\Form\\EditorImageDialog is deprecated in drupal:10.1.0 and is removed from drupal:11.0.0. There is no replacement. See https://www.drupal.org/node/3291493%
+%Drupal\\editor\\Form\\EditorLinkDialog is deprecated in drupal:10.1.0 and is removed from drupal:11.0.0. There is no replacement. See https://www.drupal.org/node/3291493%
+
+# In Drupal 10, skip deprecations for the "yaml_parser_class" setting.
+# This is retained with a BC layer, but removed in Drupal 11.
+%The "yaml_parser_class" setting is deprecated in drupal:10.3.0. This setting should be removed from the settings file, since its usage has been removed. See https://www.drupal.org/node/3415489.%
+
+# Symfony 7.
+%Method "Symfony\\Contracts\\Service\\ResetInterface::reset\(\)" might add "void" as a native return type declaration in the future. Do the same in implementation "Drupal\\Component\\DependencyInjection\\Container" now to avoid errors or add an explicit @return annotation to suppress this message.%
+
+# Temporarily for testing Symfony 6.4.
+%Since symfony/dependency-injection 6.4: "Symfony\\Component\\DependencyInjection\\ContainerAwareTrait" is deprecated, use dependency injection instead.%
+%The "Drupal\\Core\\DrupalKernelInterface" interface extends "Symfony\\Component\\DependencyInjection\\ContainerAwareInterface" that is deprecated since Symfony 6.4, use dependency injection instead.%
+%The "Drupal\\Core\\Logger\\LoggerChannelFactory" class implements "Symfony\\Component\\DependencyInjection\\ContainerAwareInterface" that is deprecated since Symfony 6.4, use dependency injection instead.%
+%The "Drupal\\Core\\Logger\\LoggerChannelFactory" class uses "Symfony\\Component\\DependencyInjection\\ContainerAwareTrait" that is deprecated since Symfony 6.4, use dependency injection instead.%
+%The "Drupal\\Core\\Queue\\QueueFactory" class implements "Symfony\\Component\\DependencyInjection\\ContainerAwareInterface" that is deprecated since Symfony 6.4, use dependency injection instead.%
+%The "Drupal\\Core\\Queue\\QueueFactory" class uses "Symfony\\Component\\DependencyInjection\\ContainerAwareTrait" that is deprecated since Symfony 6.4, use dependency injection instead.%
+%The "Drupal\\Tests\\Core\\Controller\\MockContainerAware" class implements "Symfony\\Component\\DependencyInjection\\ContainerAwareInterface" that is deprecated since Symfony 6.4, use dependency injection instead.%
+%The "Drupal\\Tests\\Core\\DependencyInjection\\DependencySerializationTestDummy" class implements "Symfony\\Component\\DependencyInjection\\ContainerAwareInterface" that is deprecated since Symfony 6.4, use dependency injection instead.%
+%The "Drupal\\Tests\\Core\\Utility\\MockContainerAware" class implements "Symfony\\Component\\DependencyInjection\\ContainerAwareInterface" that is deprecated since Symfony 6.4, use dependency injection instead.%
+
+# Twig 3.
+%Since twig/twig 3.12: Twig Filter "spaceless" is deprecated%

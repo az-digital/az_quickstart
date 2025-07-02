@@ -1,0 +1,9 @@
+name: XML Sitemap engines test
+type: module
+description: Support module for XML Sitemap engines testing.
+package: Testing
+
+# Information added by Drupal.org packaging script on 2023-08-06
+version: '8.x-1.5'
+project: 'xmlsitemap'
+datestamp: 1691341089

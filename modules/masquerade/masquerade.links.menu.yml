@@ -1,0 +1,6 @@
+masquerade.unmasquerade:
+  title: 'Unmasquerade'
+  menu_name: account
+  description: 'Switch back to your user account.'
+  route_name: masquerade.unmasquerade
+  weight: -50

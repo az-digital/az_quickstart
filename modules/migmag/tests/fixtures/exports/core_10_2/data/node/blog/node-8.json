@@ -1,0 +1,125 @@
+[
+    {
+        "nid": 8,
+        "uuid": "18468875-d3e8-483a-8300-86e3fbc6e574",
+        "vid": 10,
+        "langcode": "en",
+        "type": "blog",
+        "revision_timestamp": 1552126363,
+        "revision_uid": 1,
+        "revision_log": null,
+        "status": "1",
+        "uid": 1,
+        "title": "The number 47",
+        "created": 1551000341,
+        "changed": 1552126247,
+        "promote": "1",
+        "sticky": "0",
+        "default_langcode": "1",
+        "revision_default": "1",
+        "revision_translation_affected": null,
+        "content_translation_source": "en",
+        "content_translation_outdated": "0",
+        "body": [
+            {
+                "value": "'Tis everywhere.",
+                "summary": "",
+                "format": "filtered_html"
+            }
+        ],
+        "comment_node_blog": [
+            {
+                "status": 2,
+                "cid": 0,
+                "last_comment_timestamp": 1552126247,
+                "last_comment_name": null,
+                "last_comment_uid": 1,
+                "comment_count": 0
+            }
+        ],
+        "field_boolean": null,
+        "field_color": "0",
+        "field_file_mfw": null,
+        "field_image_miw": null,
+        "field_link": null,
+        "field_rating": "1",
+        "field_termplain": null,
+        "field_termrss": null
+    },
+    {
+        "nid": 8,
+        "uuid": "18468875-d3e8-483a-8300-86e3fbc6e574",
+        "vid": 10,
+        "langcode": "fr",
+        "type": "blog",
+        "revision_timestamp": 1552126363,
+        "revision_uid": 1,
+        "revision_log": null,
+        "status": "1",
+        "uid": 1,
+        "title": "fr - The number 47",
+        "created": 1552126296,
+        "changed": 1552126296,
+        "promote": "1",
+        "sticky": "0",
+        "default_langcode": "0",
+        "revision_default": "1",
+        "revision_translation_affected": null,
+        "content_translation_source": "en",
+        "content_translation_outdated": "0",
+        "body": [
+            {
+                "value": "fr - 'Tis everywhere.",
+                "summary": "",
+                "format": "filtered_html"
+            }
+        ],
+        "comment_node_blog": 2,
+        "field_boolean": null,
+        "field_color": "1",
+        "field_file_mfw": null,
+        "field_image_miw": null,
+        "field_link": null,
+        "field_rating": "3",
+        "field_termplain": null,
+        "field_termrss": null
+    },
+    {
+        "nid": 8,
+        "uuid": "18468875-d3e8-483a-8300-86e3fbc6e574",
+        "vid": 10,
+        "langcode": "is",
+        "type": "blog",
+        "revision_timestamp": 1552126363,
+        "revision_uid": 1,
+        "revision_log": null,
+        "status": "1",
+        "uid": 1,
+        "title": "is - The number 47",
+        "created": 1552126363,
+        "changed": 1552126363,
+        "promote": "1",
+        "sticky": "0",
+        "default_langcode": "0",
+        "revision_default": "1",
+        "revision_translation_affected": "1",
+        "content_translation_source": "en",
+        "content_translation_outdated": "0",
+        "body": [
+            {
+                "value": "is - 'Tis everywhere.",
+                "summary": "",
+                "format": "filtered_html"
+            }
+        ],
+        "comment_node_blog": 2,
+        "field_boolean": null,
+        "field_color": "0",
+        "field_file_mfw": null,
+        "field_image_miw": null,
+        "field_link": null,
+        "field_rating": "2",
+        "field_termplain": null,
+        "field_termrss": null
+    }
+]

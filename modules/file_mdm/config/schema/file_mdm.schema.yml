@@ -1,0 +1,21 @@
+# file_mdm module schema
+
+# Schema for settings.
+file_mdm.settings:
+  type: config_object
+  label: 'file_mdm settings'
+  mapping:
+    metadata_cache:
+      type: file_mdm.cache_settings
+      label: 'Main metadata caching'
+    missing_file_log_level:
+      type: integer
+      label: 'Log level to use if a file does not exist'
+
+file_mdm.file_metadata_plugin.getimagesize:
+  type: config_object
+  label: 'getimagesize file metadata plugin settings'
+  mapping:
+    configuration:
+      type: file_mdm.plugin.configuration
+      label: 'getimagesize plugin settings'

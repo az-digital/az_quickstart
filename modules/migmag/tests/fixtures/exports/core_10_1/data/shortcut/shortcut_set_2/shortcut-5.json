@@ -1,0 +1,18 @@
+[
+    {
+        "id": 5,
+        "uuid": "ab6dfcbb-47a8-4d65-83f1-5096b1826130",
+        "langcode": "en",
+        "shortcut_set": "shortcut_set_2",
+        "title": "Help",
+        "weight": -49,
+        "link": [
+            {
+                "uri": "internal:/admin/help",
+                "title": null,
+                "options": []
+            }
+        ],
+        "default_langcode": "1"
+    }
+]

@@ -1,0 +1,39 @@
+{#
+/**
+ * @file
+ * Theme override for Menu footer block.
+ */
+#}
+{%
+  set classes = [
+    'block',
+    'block-' ~ configuration.provider|clean_class,
+    'block-' ~ plugin_id|clean_class,
+  ]
+%}
+
+{% embed "umami:footer-block" with {
+  attributes: attributes.addClass(classes),
+  content,
+  label,
+  title_attributes,
+  title_prefix,
+  title_suffix,
+} only %}
+  {% block content %}
+    {% embed "umami:title" with {
+      attributes: title_attributes.addClass('footer-block__title'),
+      label: label ? label : content.field_title,
+      title_prefix,
+      title_suffix,
+    } only %}
+      {% block title_prefix %}
+        {{ title_prefix }}
+      {% endblock %}
+      {% block title_suffix %}
+        {{ title_suffix }}
+      {% endblock %}
+    {% endembed %}
+    {{ content }}
+  {% endblock %}
+{% endembed %}

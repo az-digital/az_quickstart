@@ -1,0 +1,7 @@
+# Both of our plugins have the same schema as the node flag type plugin.
+flag.flag_type.plugin.test_access_denied:
+  type: flag.flag_type.plugin.entity:node
+  label: 'Flag type that returns access denied'
+flag.flag_type.plugin.test_access_granted:
+  type: flag.flag_type.plugin.entity:node
+  label: 'Flag type that returns access granted'

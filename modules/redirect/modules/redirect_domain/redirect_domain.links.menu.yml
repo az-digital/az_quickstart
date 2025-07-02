@@ -1,0 +1,6 @@
+redirect_domain.domain_list:
+  title: 'Domain redirects'
+  parent: redirect.list
+  route_name: redirect_domain.domain_list
+  description: 'Configure domain redirects.'
+  menu_name: admin

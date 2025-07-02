@@ -1,0 +1,7 @@
+environment_indicator_ui.settings:
+  path: '/admin/config/development/environment-indicator/current'
+  defaults:
+    _form: '\Drupal\environment_indicator_ui\Form\EnvironmentIndicatorUISettingsForm'
+    _title: 'Environment Indicator UI Settings'
+  requirements:
+    _permission: 'administer environment indicator settings'

@@ -1,0 +1,5 @@
+environment_switcher_crate:
+  route_name: entity.environment_indicator.add
+  title: 'Add environment'
+  appears_on:
+    - entity.environment_indicator.collection

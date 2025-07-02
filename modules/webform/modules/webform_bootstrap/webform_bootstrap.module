@@ -1,0 +1,263 @@
+<?php
+
+/**
+ * @file
+ * Helps support Webform to Bootstrap integration.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\webform\Utility\WebformArrayHelper;
+use Drupal\webform\Utility\WebformElementHelper;
+use Drupal\webform_bootstrap\WebformBootstrapRenderCallbacks;
+
+// phpcs:disable Drupal.Classes.FullyQualifiedNamespace.UseStatementMissing
+
+/**
+ * Implements hook_page_attachments().
+ */
+function webform_bootstrap_page_attachments(array &$attachments) {
+  if (!_webform_bootstrap_is_active_theme()) {
+    return;
+  }
+
+  $attachments['#attached']['library'][] = 'webform_bootstrap/webform_bootstrap';
+}
+
+/**
+ * Implements hook_webform_element_ELEMENT_TYPE_alter().
+ */
+function webform_bootstrap_webform_element_webform_terms_of_service_alter(array &$element, FormStateInterface $form_state, array $context) {
+  // Terms of service agreement must always be displayed, so disable
+  // smart description.
+  $element['#smart_description'] = FALSE;
+}
+
+/**
+ * Implements hook_webform_element_ELEMENT_TYPE_alter().
+ */
+function webform_bootstrap_webform_element_webform_likert_alter(array &$element, FormStateInterface $form_state, array $context) {
+  $element['#pre_render'] = array_merge([[WebformBootstrapRenderCallbacks::class, 'webformLikertPreRender']], $element['#pre_render']);
+}
+
+/**
+ * Implements hook_webform_element_alter().
+ */
+function webform_bootstrap_webform_element_alter(array &$element, FormStateInterface $form_state, array $context) {
+  if (!_webform_bootstrap_is_active_theme()) {
+    return;
+  }
+
+  // Convert #description are being changed smart descriptions which
+  // contain render arrays to rendered markup.
+  // @see \Drupal\bootstrap\Utility\Element::smartDescription
+  static $smart_description_enabled;
+  if (!isset($smart_description_enabled)) {
+    $theme = \Drupal\bootstrap\Bootstrap::getTheme();
+    $smart_description_enabled = $theme->getSetting('tooltip_enabled') && $theme->getSetting('forms_smart_descriptions');
+  }
+
+  // We need to set $element['#smart_description'] to false if the element's
+  // description_display is set to 'before' or 'after' otherwise Bootstrap will
+  // display as a tooltip regardless of the setting.
+  if ($smart_description_enabled
+    && isset($element['#description'])
+    && isset($element['#description_display'])
+    && empty($element['#smart_description'])
+    && ($element['#description_display'] === 'after' || $element['#description_display'] === 'before')) {
+    $element['#smart_description'] = FALSE;
+  }
+
+  if ($smart_description_enabled && isset($element['#description']) && is_array($element['#description']) && (empty($element['#smart_description']) || $element['#smart_description'] === TRUE)) {
+    $element['#description'] = \Drupal::service('renderer')->renderPlain($element['#description']);
+  }
+
+  // Enable Bootstrap .input-group wrapper for #field_prefix.
+  // and/or #field_suffix support.
+  // @see \Drupal\bootstrap\Plugin\ProcessManager::process
+  if (isset($element['#field_prefix']) || isset($element['#field_suffix'])) {
+    $element['#input_group'] = TRUE;
+  }
+
+  // Tweak element types.
+  if (isset($element['#type'])) {
+    $element_info = \Drupal::service('element_info')->getInfo($element['#type']);
+    if (isset($element_info['#pre_render'])) {
+      foreach ($element_info['#pre_render'] as $pre_render) {
+        if (is_array($pre_render) && in_array($pre_render[1], ['preRenderCompositeFormElement', 'preRenderWebformCompositeFormElement'])) {
+          // Prevent elements that extend radios and checkboxes from being wrapped
+          // in a fieldset.
+          // @see \Drupal\bootstrap\Plugin\Alter\ElementInfo::alter
+          $element['#bootstrap_panel'] = FALSE;
+          break;
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_link_alter().
+ */
+function webform_bootstrap_link_alter(&$variables) {
+  if (!_webform_bootstrap_is_active_theme()) {
+    return;
+  }
+
+  // Convert .button classes to .btn CSS classes.
+  if (isset($variables['options']['attributes']['class']) && is_array($variables['options']['attributes']['class'])) {
+    _webform_bootstrap_convert_button_classes($variables['options']['attributes']['class']);
+  }
+}
+
+/**
+ * Implements template_preprocess_input().
+ */
+function webform_bootstrap_preprocess_input(&$variables) {
+  if (!_webform_bootstrap_is_active_theme()) {
+    return;
+  }
+
+  $element = &$variables['element'];
+
+  // Bootstrap theme does not support image buttons so we are going to use
+  // Bootstrap's icon buttons.
+  // @see themes/bootstrap/templates/input/input--button.html.twig
+  // @see \Drupal\webform\Element\WebformElementStates::buildOperations
+  // @see \Drupal\webform\Element\WebformMultiple::buildElementRow
+  if (isset($element['#type']) && $element['#type'] === 'image_button' && strpos($variables['attributes']['src'], '/webform/images/icons/') !== FALSE) {
+    $element['#icon_only'] = TRUE;
+    if (strpos($variables['attributes']['src'], '/webform/images/icons/plus.svg') !== FALSE) {
+      $element['#title'] = t('Add');
+      $element['#icon'] = \Drupal\bootstrap\Bootstrap::glyphicon('plus-sign');
+    }
+    elseif (strpos($variables['attributes']['src'], '/webform/images/icons/minus.svg') !== FALSE) {
+      $element['#title'] = t('Remove');
+      $element['#icon'] = \Drupal\bootstrap\Bootstrap::glyphicon('minus-sign');
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_form_element() for form element templates.
+ */
+function webform_bootstrap_preprocess_form_element(&$variables) {
+  if (!_webform_bootstrap_is_active_theme()) {
+    return;
+  }
+
+  if (!WebformElementHelper::isWebformElement($variables['element'])) {
+    return;
+  }
+
+  // Do not display phone number using inline form.
+  // @see https://www.drupal.org/project/webform/issues/2910776s
+  // @see https://www.drupal.org/project/bootstrap/issues/2829634
+  if (WebformElementHelper::isType($variables['element'], 'tel')
+    && isset($variables['attributes']['class'])) {
+    WebformArrayHelper::removeValue($variables['attributes']['class'], 'form-inline');
+  }
+}
+
+/**
+ * Implements template_preprocess_fieldset().
+ */
+function webform_bootstrap_preprocess_fieldset(&$variables) {
+  if (!_webform_bootstrap_is_active_theme()) {
+    return;
+  }
+
+  // Make sure that the core/modules/system/templates/fieldset.html.twig
+  // template is being used because this the template that we are fixing.
+  // Caching the info just-in-case there are a lot of fieldsets.
+  static $is_system_fieldset;
+  if (!isset($is_system_fieldset)) {
+    /** @var \Drupal\Core\Utility\ThemeRegistry $theme_registry */
+    $theme_registry = \Drupal::service('theme.registry')->getRuntime();
+    $info = $theme_registry->get('fieldset');
+    $is_system_fieldset = ($info['path'] === 'core/modules/system/templates') ? TRUE : FALSE;
+  }
+  if (!$is_system_fieldset) {
+    return;
+  }
+
+  // Style fieldset error messages to match form element error messages.
+  // @see form-element.html.twig
+  if (!empty($variables['errors'])) {
+    $variables['errors'] = [
+      '#type' => 'container',
+      '#attributes' => [
+        'class' => ['form-item--error-message', 'alert', 'alert-danger', 'alert-sm'],
+      ],
+      'content' => ['#markup' => $variables['errors']],
+    ];
+  }
+}
+
+/**
+ * Implements template_preprocess_file_managed_file().
+ *
+ * @see webform_preprocess_file_managed_file()
+ */
+function webform_bootstrap_preprocess_file_managed_file(&$variables) {
+  if (!_webform_bootstrap_is_active_theme()) {
+    return;
+  }
+
+  $element = &$variables['element'];
+  if (empty($element['#button'])) {
+    return;
+  }
+
+  // Convert .button classes to .btn CSS classes.
+  if (isset($element['label']['#attributes']['class'])) {
+    _webform_bootstrap_convert_button_classes($element['label']['#attributes']['class']);
+  }
+}
+
+/**
+ * Convert .button classes to .btn CSS classes.
+ *
+ * @param array $classes
+ *   An array of CSS classes.
+ */
+function _webform_bootstrap_convert_button_classes(array &$classes) {
+  $drupal_to_bootstrap = [
+    // Convert Drupal's button classes to Bootstrap's btn classes.
+    'button-action' => 'btn-primary',
+    'button--small' => 'btn-sm',
+    'button--primary' => 'btn-primary',
+    'button--danger' => 'btn-danger',
+    'button' => 'btn',
+  ];
+  foreach ($classes as $index => $class) {
+    if (isset($drupal_to_bootstrap[$class])) {
+      $classes[$index] = $drupal_to_bootstrap[$class];
+    }
+  }
+}
+
+/**
+ * Determine if Bootstrap is the active theme.
+ *
+ * @return bool
+ *   TRUE if Bootstrap is the active theme.
+ */
+function _webform_bootstrap_is_active_theme() {
+  $is_active_theme = &drupal_static(__FUNCTION__);
+  if (isset($is_active_theme)) {
+    return $is_active_theme;
+  }
+
+  // Catch 'TypeError' in Drupal\webform\WebformThemeManager::__construct()
+  // which is triggered by service argument changes before the cache is cleared.
+  try {
+    /** @var \Drupal\webform\WebformThemeManagerInterface $theme_manager */
+    $theme_manager = \Drupal::service('webform.theme_manager');
+    $is_active_theme = $theme_manager->isActiveTheme('bootstrap');
+  }
+  catch (\TypeError $error) {
+    $is_active_theme = FALSE;
+  }
+
+  return $is_active_theme;
+}

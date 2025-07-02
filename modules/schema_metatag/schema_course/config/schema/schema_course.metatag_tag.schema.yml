@@ -1,0 +1,27 @@
+# The 'type' should be "label" for short meta tags and "text" for ones which
+# could get longer, especially ones which use a textarea field instead of a
+# textfield.
+metatag.metatag_tag.schema_course_course_code:
+  type: text
+  label: 'courseCode'
+metatag.metatag_tag.schema_course_course_prerequisites:
+  type: text
+  label: 'coursePrerequisites'
+metatag.metatag_tag.schema_course_description:
+  type: text
+  label: 'description'
+metatag.metatag_tag.schema_course_educational_credential_awarded:
+  type: text
+  label: 'educationalCredentialAwarded'
+metatag.metatag_tag.schema_course_id:
+  type: text
+  label: '@id'
+metatag.metatag_tag.schema_course_name:
+  type: text
+  label: 'name'
+metatag.metatag_tag.schema_course_provider:
+  type: text
+  label: 'provider'
+metatag.metatag_tag.schema_course_type:
+  type: string
+  label: '@type'

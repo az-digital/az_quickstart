@@ -1,0 +1,23 @@
+/**
+ * @file
+ * AJAX specific styles for flag links.
+ *
+ * @see flag.html.twig.
+ */
+.js-flag-message {
+  display: inline;
+  margin-left: 1.2em;
+  animation: flag-flash 3s ease-in-out 1;
+}
+
+@keyframes flag-flash {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

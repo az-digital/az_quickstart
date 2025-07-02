@@ -1,0 +1,30 @@
+build:
+  environment:
+    startcontainers:
+      runcontainers:
+    create_db:
+      dbcreate:
+  codebase:
+    assemble_codebase:
+      checkout_core:
+      checkout.contrib:
+      fetch:
+      patch:
+      composer.core_install:
+      gather_dependencies:
+      update_build:
+      yarn_install:
+      start_phantomjs:
+  assessment:
+    validate_codebase:
+      phplint:
+      container_composer:
+      csslint:
+      eslint:
+      phpcs:
+    testing:
+      run_tests.standard:
+        types: 'Simpletest,PHPUnit-Unit,PHPUnit-Kernel,PHPUnit-Functional'
+      run_tests.js:
+        concurrency: 1
+        types: 'PHPUnit-FunctionalJavascript'

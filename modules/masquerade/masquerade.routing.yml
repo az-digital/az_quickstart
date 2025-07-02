@@ -1,0 +1,26 @@
+masquerade.block:
+  path: '/masquerade'
+  defaults:
+    _form: '\Drupal\masquerade\Form\MasqueradeForm'
+    _title: 'Masquerade'
+  options:
+    no_cache: TRUE
+  requirements:
+    _masquerade_switch_access: 'TRUE'
+
+entity.user.masquerade:
+  path: '/user/{user}/masquerade'
+  defaults:
+    _controller: '\Drupal\masquerade\Controller\SwitchController::switchTo'
+    _title: 'Masquerade'
+  requirements:
+    _csrf_token: 'TRUE'
+
+masquerade.unmasquerade:
+  path: '/unmasquerade'
+  defaults:
+    _controller: '\Drupal\masquerade\Controller\SwitchController::switchBack'
+    _title: 'Unmasquerade'
+  requirements:
+    _user_is_masquerading: 'TRUE'
+    _csrf_token: 'TRUE'

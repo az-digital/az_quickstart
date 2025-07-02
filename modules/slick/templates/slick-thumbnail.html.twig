@@ -1,0 +1,35 @@
+{#
+/**
+ * @file
+ * Default theme implementation for the slick-thumbnail item template.
+ *
+ * Available variables:
+ * - attributes: An array of attributes to apply to the element.
+ * - item.slide: A renderable array of the thumbnail image/background.
+ * - item.caption: A renderable array containing caption text.
+ * - settings: An array containing the given settings.
+ *
+ * @see template_preprocess_slick_thumbnail()
+ */
+#}
+{%
+  set classes = [
+    'slide--' ~ delta
+  ]
+%}
+{% set use_blazy = blazies.use.theme_thumbnail %}
+{% block slick_thumbnail %}
+  <div{{ attributes.addClass(classes) }}>
+    {%- if use_blazy -%}
+      {{- item -}}
+    {% else %}
+      {# @todo remove all below at 3.x to use blazy thumbnail. #}
+      {%- if item.slide is not empty -%}
+        <div class="slide__thumbnail">{{- item.slide -}}</div>
+      {%- endif -%}
+      {% if item.caption is not empty %}
+        <div class="slide__caption">{{- item.caption -}}</div>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+{% endblock %}

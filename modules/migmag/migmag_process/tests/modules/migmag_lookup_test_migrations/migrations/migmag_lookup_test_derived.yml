@@ -1,0 +1,28 @@
+id: migmag_lookup_test_derived
+deriver: Drupal\migmag_lookup_test_migrations\MigMagLookupTestMigrationDeriver
+source:
+  plugin: embedded_data
+  data_rows:
+    -
+      derived_id: 5
+      derived_subid: 5
+  ids:
+    derived_id:
+      type: integer
+    derived_subid:
+      type: integer
+process:
+  value:
+    -
+      plugin: concat
+      source:
+        - derived_id
+        - derived_subid
+    -
+      plugin: callback
+      callable: intval
+    -
+      plugin: callback
+      callable: decbin
+destination:
+  plugin: dummy

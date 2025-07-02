@@ -1,0 +1,12 @@
+type: module
+name: URL Source edit test
+description: 'Test editing of URL source plugin via the UI.'
+package: Testing
+dependencies:
+  - drupal:migrate
+  - migrate_plus:migrate_plus
+
+# Information added by Drupal.org packaging script on 2024-11-05
+version: '6.0.5'
+project: 'migrate_tools'
+datestamp: 1730824459

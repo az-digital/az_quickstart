@@ -1,0 +1,119 @@
+#
+# Schema for the Better Exposed Filters filter widgets.
+#
+better_exposed_filters_filter_widget:
+  type: mapping
+  mapping:
+    plugin_id:
+      type: string
+      label: 'Plugin id'
+    advanced:
+      type: mapping
+      mapping:
+        sort_options:
+          type: boolean
+          label: 'Sort filter options alphabetically'
+        placeholder_text:
+          type: label
+          label: 'Placeholder text for the filter'
+        rewrite:
+          type: mapping
+          label: 'Rewrite filter options'
+          mapping:
+            filter_rewrite_values:
+              type: text
+              label: 'Rewrite filter option'
+            filter_rewrite_values_key:
+              type: boolean
+              label: 'Rewrite the text displayed based on key'
+        collapsible:
+          type: boolean
+          label: 'Make sort options collapsible'
+        collapsible_disable_automatic_open:
+          type: boolean
+          label: 'Disable the automatic opening of collapsed filters with selections'
+        is_secondary:
+          type: boolean
+          label: 'This filter is a secondary option'
+        hide_label:
+          type: boolean
+          label: 'Hide the label'
+
+# BEF exposed filter widgets
+better_exposed_filters.filter.*:
+  label: 'Exposed filter BEF settings'
+  type: better_exposed_filters_filter_widget
+
+better_exposed_filters.filter.default:
+  label: 'Default'
+  type: better_exposed_filters_filter_widget
+
+better_exposed_filters.filter.bef:
+  label: 'Checkboxes/Radio Buttons'
+  type: better_exposed_filters_filter_widget
+  mapping:
+    select_all_none:
+      type: boolean
+      label: 'Add select all/none links'
+    select_all_none_nested:
+      type: boolean
+      label: 'Add select all/none links to hierarchical lists'
+    display_inline:
+      type: boolean
+      label: 'Display checkbox/radio options inline'
+
+better_exposed_filters.filter.bef_links:
+  label: 'Links'
+  type: better_exposed_filters_filter_widget
+  mapping:
+    select_all_none:
+      type: boolean
+      label: 'Add select all/none links'
+
+better_exposed_filters.filter.bef_hidden:
+  label: 'Hidden'
+  type: better_exposed_filters_filter_widget
+
+better_exposed_filters.filter.bef_sliders:
+  label: 'jQuery UI Slider'
+  type: better_exposed_filters_filter_widget
+  mapping:
+    min:
+      type: string
+      label: 'Range minimum'
+    max:
+      type: string
+      label: 'Range maximum'
+    step:
+      type: string
+      label: 'Step'
+    animate:
+      type: string
+      label: 'Animation speed'
+    animate_ms:
+      type: string
+      label: 'Custom animation speed in milliseconds'
+    orientation:
+      type: string
+      label: 'Orientation'
+
+better_exposed_filters.filter.bef_datepickers:
+  label: 'jQuery UI Date Picker'
+  type: better_exposed_filters_filter_widget
+
+better_exposed_filters.filter.bef_number:
+  label: 'Number'
+  type: better_exposed_filters_filter_widget
+  mapping:
+    max:
+      type: integer
+      label: 'Max'
+      nullable: true
+      constraints:
+        FullyValidatable: ~
+    min:
+      type: integer
+      label: 'Min'
+      nullable: true
+      constraints:
+        FullyValidatable: ~

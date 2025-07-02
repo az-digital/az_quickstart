@@ -1,0 +1,162 @@
+flag.flag.*:
+  type: config_entity
+  label: 'Flag'
+  mapping:
+    id:
+      type: string
+      label: 'Flag identifier'
+    uuid:
+      type: string
+      label: 'UUID'
+    label:
+      type: label
+      label: 'Name'
+    bundles:
+      type: sequence
+      label: 'The entity bundles this flag applies to'
+      sequence:
+        type: string
+    entity_type:
+      type: string
+      label: 'Flaggable entity type'
+    global:
+      type: boolean
+      label: 'Whether the flag is global'
+    flag_short:
+      type: label
+      label: 'Flag link text'
+    flag_long:
+      type: label
+      label: 'Flag link description text'
+    flag_message:
+      type: label
+      label: 'Flag message'
+    unflag_short:
+      type: label
+      label: 'Unflag link text'
+    unflag_long:
+      type: label
+      label: 'Unflag link description text'
+    unflag_message:
+      type: label
+      label: 'Unflag message'
+    unflag_denied_text:
+      type: label
+      label: 'Unflag denied text'
+    weight:
+      type: integer
+      label: 'Weight'
+    flag_type:
+      type: string
+      label: 'ID of the Flag Type plugin'
+    link_type:
+      type: string
+      label: 'ID of the Link Type plugin'
+    flagTypeConfig:
+      type: flag.flag_type.plugin.[%parent.flag_type]
+      label: 'Flag type configuration'
+    linkTypeConfig:
+      type: flag.link_type.plugin.[%parent.link_type]
+      label: 'Link type configuration'
+
+"flag.flag_type.plugin.entity:*":
+  type: mapping
+  label: 'Flag type for all entity types'
+  mapping:
+    show_in_links:
+      type: sequence
+      label: 'Show in links'
+      sequence:
+        type: string
+        label: 'View mode'
+    show_as_field:
+      type: boolean
+      label: 'Show as field'
+    show_on_form:
+      type: boolean
+      label: 'Show on form'
+    show_contextual_link:
+      type: boolean
+      label: 'Show contextual link'
+    extra_permissions:
+      type: sequence
+      label: 'Extra permissions'
+      sequence:
+        type: string
+        label: 'Extra permission option'
+
+flag.flag_type.plugin.entity:user:
+  type: "flag.flag_type.plugin.entity:*"
+  label: 'Flag type for user entities'
+  mapping:
+    show_on_profile:
+      type: boolean
+      label: 'Show on profile'
+
+flag.link_type.plugin.*:
+  type: mapping
+  label: 'Link type configuration'
+
+flag.link_type.plugin.confirm:
+  type: mapping
+  label: 'Confirm Form link type'
+  mapping:
+    flag_confirmation:
+      type: label
+      label: 'Flag confirmation'
+    unflag_confirmation:
+      type: label
+      label: 'Unflag confirmation'
+    flag_create_button:
+      type: label
+      label: 'Create flagging button text'
+    flag_delete_button:
+      type: label
+      label: 'Delete flagging button text'
+    flag_update_button:
+      type: label
+      label: 'Update flagging button text'
+    form_behavior:
+      type: string
+      label: 'Where should the form open (new page, modal, etc)'
+
+flag.link_type.plugin.field_entry:
+  type: mapping
+  label: 'Field Entry link type'
+  mapping:
+    flag_confirmation:
+      type: label
+      label: 'Flag confirmation'
+    edit_flagging:
+      type: label
+      label: 'Edit flagging'
+    unflag_confirmation:
+      type: label
+      label: 'Unflag confirmation'
+    flag_create_button:
+      type: label
+      label: 'Create flagging button text'
+    flag_delete_button:
+      type: label
+      label: 'Delete flagging button text'
+    flag_update_button:
+      type: label
+      label: 'Update flagging button text'
+    form_behavior:
+      type: string
+      label: 'Where should the form open (new page, modal, etc)'
+
+action.configuration.flag_action:*:
+  type: mapping
+  label: 'Configuration for flag actions'
+  mapping:
+    flag_id:
+      type: string
+      label: 'The flag ID'
+    flag_action:
+      type: string
+      label: 'Flag action (flag or unflag)'
+
+action.configuration.flag_delete_flagging:
+  type: action_configuration_default
+  label: 'Delete flagging entities'

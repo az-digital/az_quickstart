@@ -1,0 +1,74 @@
+entity.linkit_profile.collection:
+  path: '/admin/config/content/linkit'
+  defaults:
+    _entity_list: 'linkit_profile'
+    _title: 'Linkit profiles'
+  requirements:
+    _permission: 'administer linkit profiles'
+
+entity.linkit_profile.add_form:
+  path: '/admin/config/content/linkit/add'
+  defaults:
+    _entity_form: linkit_profile.add
+    _title: 'Add profile'
+  requirements:
+    _permission: 'administer linkit profiles'
+
+entity.linkit_profile.edit_form:
+  path: '/admin/config/content/linkit/manage/{linkit_profile}'
+  defaults:
+    _entity_form: linkit_profile.edit
+    _title_callback: 'Drupal\linkit\Controller\LinkitController::profileTitle'
+  requirements:
+    _permission: 'administer linkit profiles'
+
+entity.linkit_profile.delete_form:
+  path: '/admin/config/content/linkit/manage/{linkit_profile}/delete'
+  defaults:
+    _entity_form: linkit_profile.delete
+  requirements:
+    _permission: 'administer linkit profiles'
+
+linkit.matchers:
+  path: '/admin/config/content/linkit/manage/{linkit_profile}/matchers'
+  defaults:
+    _form: '\Drupal\linkit\Form\Matcher\OverviewForm'
+    _title: 'Manage matchers'
+  requirements:
+    _permission: 'administer linkit profiles'
+
+linkit.matcher.add:
+  path: '/admin/config/content/linkit/manage/{linkit_profile}/matchers/add'
+  defaults:
+    _form: '\Drupal\linkit\Form\Matcher\AddForm'
+    _title: 'Add matcher'
+  requirements:
+    _permission: 'administer linkit profiles'
+
+linkit.matcher.delete:
+  path: '/admin/config/content/linkit/manage/{linkit_profile}/matchers/{plugin_instance_id}/delete'
+  defaults:
+    _form: '\Drupal\linkit\Form\Matcher\DeleteForm'
+  requirements:
+    _permission: 'administer linkit profiles'
+
+linkit.matcher.edit:
+  path: '/admin/config/content/linkit/manage/{linkit_profile}/matchers/{plugin_instance_id}'
+  defaults:
+    _form: '\Drupal\linkit\Form\Matcher\EditForm'
+    _title_callback: 'Drupal\linkit\Controller\LinkitController::matcherTitle'
+  requirements:
+    _permission: 'administer linkit profiles'
+
+linkit.autocomplete:
+  path: '/linkit/autocomplete/{linkit_profile_id}'
+  defaults:
+    _controller: '\Drupal\linkit\Controller\AutocompleteController::autocomplete'
+  requirements:
+    # Access is handled by the matchers.
+    _access: 'TRUE'
+  options:
+    _theme: ajax_base_page
+    parameters:
+      linkit_profile_id:
+        type: entity:linkit_profile

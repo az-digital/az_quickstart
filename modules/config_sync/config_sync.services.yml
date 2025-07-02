@@ -1,0 +1,45 @@
+services:
+  config_sync.snapshotter:
+    class: Drupal\config_sync\ConfigSyncSnapshotter
+    arguments:
+      - '%app.root%'
+      - '@config_sync.collector'
+      - '@config_provider.storage'
+      - '@config.manager'
+      - '@config.storage'
+      - '@config_sync.lister'
+      - '@extension.list.module'
+      - '@extension.path.resolver'
+  config_sync.collector:
+    class: Drupal\config_sync\Plugin\SyncConfigCollector
+    arguments:
+      - '@config.factory'
+      - '@config.storage'
+      - '@config.manager'
+      - '@config_provider.storage'
+      - '@plugin.manager.config_provider.processor'
+      - '%install_profile%'
+  config_sync.lister:
+    class: Drupal\config_sync\ConfigSyncLister
+    arguments:
+      - '@config_sync.collector'
+      - '@config_update.config_list'
+      - '@plugin.manager.config_normalizer'
+      - '@config.storage'
+      - '@config_provider.storage'
+      - '@config.manager'
+      - '@state'
+      - '@extension.path.resolver'
+      - '%app.root%'
+  config_sync_snapshot_subscriber:
+    class: Drupal\config_sync\EventSubscriber\ConfigSyncSnapshotSubscriber
+    tags:
+      - { name: event_subscriber }
+    arguments:
+      - '@config_sync.snapshotter'
+      - '@plugin.manager.config_filter'
+      - '@state'
+  config_sync.route_subscriber:
+    class: Drupal\config_sync\Routing\RouteSubscriber
+    tags:
+      - { name: event_subscriber }

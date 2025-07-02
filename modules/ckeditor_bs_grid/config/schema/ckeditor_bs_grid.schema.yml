@@ -1,0 +1,58 @@
+ckeditor.plugin.bs_grid:
+  type: mapping
+  label: 'CKEditor Bootstrap Grid configuration'
+  mapping:
+    use_cdn:
+      type: boolean
+      label: 'Whether to use CDN or not'
+    cdn_url:
+      type: string
+      label: 'CDN URL'
+    available_columns:
+      type: sequence
+      label: 'Allowed columns.'
+    available_breakpoints:
+      type: sequence
+      label: 'Allowed Breakpoints.'
+
+ckeditor_bs_grid.settings:
+  type: config_object
+  mapping:
+    breakpoints:
+      type: sequence
+      label: 'List of breakpoint configurations'
+      sequence:
+        type: mapping
+        mapping:
+          label:
+            type: string
+          prefix:
+            type: string
+          columns:
+            type: sequence
+
+# Plugin \Drupal\ckeditor_bs_grid\Plugin\CKEditor5Plugin\BsGrid
+ckeditor5.plugin.ckeditor_bs_grid_grid:
+  type: mapping
+  label: Bootstrap Grid
+  mapping:
+    use_cdn:
+      type: boolean
+      label: 'Whether to use CDN or not'
+      constraints:
+        NotNull: [ ]
+    cdn_url:
+      type: string
+      label: 'CDN URL'
+    available_columns:
+      type: sequence
+      label: 'Allowed columns.'
+      sequence:
+        type: string
+        label: 'Columns'
+    available_breakpoints:
+      type: sequence
+      label: 'Allowed Breakpoints.'
+      sequence:
+        type: string
+        label: 'Breakpoint'

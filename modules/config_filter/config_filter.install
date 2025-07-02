@@ -1,0 +1,37 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the config_filter module.
+ */
+
+/**
+ * Implements hook_requirements().
+ */
+function config_filter_requirements($phase) {
+  if ($phase !== 'runtime') {
+    return [];
+  }
+
+  $requirements = [];
+  $module_handler = \Drupal::moduleHandler();
+  $config_filter_extension = \Drupal::service('extension.list.module')->get('config_filter');
+
+  $modules_requiring_config_filter = [];
+  if (isset($config_filter_extension->required_by)) {
+    foreach (array_keys($config_filter_extension->required_by) as $module) {
+      if ($module_handler->moduleExists($module)) {
+        $modules_requiring_config_filter[] = $module;
+      }
+    }
+  }
+  if (empty($modules_requiring_config_filter)) {
+    $requirements['config_filter_disable'] = [
+      'title' => t('Configuration Filter'),
+      'value' => t('Configuration Filter is enabled, but no modules require this module. You can safely disable Config Filter.'),
+      'severity' => REQUIREMENT_WARNING,
+    ];
+  }
+
+  return $requirements;
+}

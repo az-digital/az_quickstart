@@ -1,0 +1,23 @@
+{
+  "name": "drupal/easy_breadcrumb",
+  "type": "drupal-module",
+  "description": "Adds configuration to the system breadcrumbs.",
+  "homepage": "https://www.drupal.org/project/easy_breadcrumb",
+  "license": "GPL-2.0-or-later",
+  "authors": [
+    {
+      "name": "Neslee Canil Pinto",
+      "homepage": "https://www.drupal.org/u/neslee-canil-pinto",
+      "role": "Maintainer"
+    },
+    {
+      "name": "Greg Boggs",
+      "homepage": "https://www.drupal.org/u/greg-boggs",
+      "role": "Maintainer"
+    }
+  ],
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/easy_breadcrumb",
+    "source": "https://git.drupalcode.org/project/easy_breadcrumb"
+  }
+}

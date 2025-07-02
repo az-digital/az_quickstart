@@ -1,0 +1,11 @@
+user_expire.admin:
+  title: 'User expire'
+  description: 'Configure global account expiration settings.'
+  parent: user.admin_index
+  route_name: user_expire.admin
+  weight: 100
+expiring_users.admin:
+  title: 'Expiring accounts'
+  description: 'View expiring accounts report.'
+  parent: system.admin_reports
+  route_name: expiring_users.admin

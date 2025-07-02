@@ -1,0 +1,34 @@
+exclude_node_title.settings:
+  type: config_object
+  label: 'Exclude Node Title settings'
+  mapping:
+    nid_list:
+      type: sequence
+      label: 'Nodes with excluded titles'
+      sequence:
+        type: integer
+        label: 'Node ID'
+    translation_sync:
+      type: boolean
+      label: 'Translation sync (deprecated)'
+    search:
+      type: boolean
+      label: 'Exclude title from search results'
+    type:
+      type: string
+      label: 'Type of rendering to conduct on hide'
+    content_types:
+      type: sequence
+      label: 'Exclude type'
+      sequence:
+        type: string
+        label: 'Machine name of type to be excluded'
+    content_type_modes:
+      type: sequence
+      label: 'View modes with Exclude Node Title enabled'
+      sequence:
+        type: sequence
+        label: 'Node type'
+        sequence:
+          type: string
+          label: 'View mode name'

@@ -1,0 +1,16 @@
+name: BEF Test
+type: module
+description: Test module for Better Exposed Filters
+package: Testing
+dependencies:
+  - better_exposed_filters:better_exposed_filters
+  - drupal:datetime
+  - drupal:node
+  - drupal:options
+  - drupal:user
+  - drupal:path
+
+# Information added by Drupal.org packaging script on 2025-01-31
+version: '7.0.5'
+project: 'better_exposed_filters'
+datestamp: 1738353784

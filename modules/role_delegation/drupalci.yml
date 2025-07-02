@@ -1,0 +1,16 @@
+build:
+  assessment:
+    validate_codebase:
+      phpcs:
+        sniff-all-files: true
+        halt-on-fail: true
+      phpstan:
+        halt-on-fail: true
+    testing:
+      run_tests.standard:
+        types: 'PHPUnit-Unit,PHPUnit-Kernel,PHPUnit-Functional'
+        suppress-deprecations: false
+      run_tests.js:
+        concurrency: 1
+        types: 'PHPUnit-FunctionalJavascript'
+        suppress-deprecations: false

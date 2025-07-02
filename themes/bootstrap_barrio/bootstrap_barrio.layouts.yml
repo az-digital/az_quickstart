@@ -1,0 +1,187 @@
+barrio_cardbasic:
+  label: Card basic
+  category: Barrio Cards
+  path: layouts
+  template: card-basic
+  default_region: first
+  icon_map:
+    - [first]
+  regions:
+    first:
+      label: Content
+barrio_cardtopimage:
+  label: Card top image
+  category: Barrio Cards
+  path: layouts
+  template: card-top-image
+  default_region: second
+  icon_map:
+    - [top]
+    - [middle]
+  regions:
+    first:
+      label: Image
+    second:
+      label: Content
+barrio_cardimageoverlay:
+  label: Card image overlay
+  category: Barrio Cards
+  path: layouts
+  template: card-image-overlay
+  default_region: second
+  icon_map:
+    - [top]
+    - [middle]
+  regions:
+    first:
+      label: Image
+    second:
+      label: Content
+barrio_cardheaderfooter:
+  label: Card header footer
+  category: Barrio Cards
+  path: layouts
+  template: card-header-footer
+  default_region: second
+  icon_map:
+    - [top]
+    - [middle]
+    - [bottom]
+  regions:
+    first:
+      label: Header
+    second:
+      label: Content
+    third:
+      label: Footer
+barrio_card3stack:
+  label: Card three block stacked
+  category: Barrio Cards
+  path: layouts
+  template: card-3stack
+  default_region: second
+  icon_map:
+    - [top]
+    - [middle]
+    - [bottom]
+  regions:
+    first:
+      label: First
+    second:
+      label: Image
+    third:
+      label: Second
+barrio_media:
+  label: Media
+  category: Barrio Media
+  path: layouts
+  template: bootstrap-media
+  default_region: second
+  icon_map:
+    - [first, second]
+  regions:
+    first:
+      label: Image
+    second:
+      label: Content
+barrio_col2-equal:
+  label: 2 Columns Equal
+  category: Barrio Columns
+  path: layouts
+  template: col2-equal
+  default_region: first
+  icon_map:
+    - [top]
+    - [first, second]
+    - [bottom]
+  regions:
+    top:
+      label: Top
+    first:
+      label: First
+    second:
+      label: Second
+    bottom:
+      label: Bottom
+barrio_col2-3-9:
+  label: 2 Columns 3 and 9
+  category: Barrio Columns
+  path: layouts
+  template: col2-3-9
+  default_region: first
+  icon_map:
+    - [top]
+    - [first, second]
+    - [bottom]
+  regions:
+    top:
+      label: Top
+    first:
+      label: First
+    second:
+      label: Second
+    bottom:
+      label: Bottom
+barrio_col2-9-3:
+  label: 2 Columns 9 and 3
+  category: Barrio Columns
+  path: layouts
+  template: col2-9-3
+  default_region: first
+  icon_map:
+    - [top]
+    - [first, second]
+    - [bottom]
+  regions:
+    top:
+      label: Top
+    first:
+      label: First
+    second:
+      label: Second
+    bottom:
+      label: Bottom
+barrio_col3-equal:
+  label: 3 Columns Equal
+  category: Barrio Columns
+  path: layouts
+  template: col3-equal
+  default_region: first
+  icon_map:
+    - [top]
+    - [first, second, third]
+    - [bottom]
+  regions:
+    top:
+      label: Top
+    first:
+      label: First
+    second:
+      label: Second
+    third:
+      label: Third
+    bottom:
+      label: Bottom
+barrio_col4-equal:
+  label: 4 Columns Equal
+  category: Barrio Columns
+  path: layouts
+  template: col4-equal
+  default_region: first
+  icon_map:
+    - [top]
+    - [first, second, third, fourth]
+    - [bottom]
+  regions:
+    top:
+      label: Top
+    first:
+      label: First
+    second:
+      label: Second
+    third:
+      label: Third
+    fourth:
+      label: Fourth
+    bottom:
+      label: Bottom

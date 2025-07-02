@@ -1,0 +1,15 @@
+[
+    {
+        "fid": 2,
+        "uuid": "78ec4124-a0d7-466b-b4c3-de7347aded06",
+        "langcode": "en",
+        "uid": 1,
+        "filename": "ds9.txt",
+        "uri": "public://ds9.txt",
+        "filemime": "text/plain",
+        "filesize": 4,
+        "status": "1",
+        "created": 1421727516,
+        "changed": 1421727516
+    }
+]

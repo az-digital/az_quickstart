@@ -1,0 +1,72 @@
+{#
+/**
+ * @file
+ * Default theme implementation for displaying a view as a bootstrap carousel.
+ *
+ * Available variables:
+ * - view: The view object.
+ * - rows: A list of the view's row items.
+ * - id: A valid HTML ID and guaranteed to be unique.
+ * - interval: The amount of time to delay between automatically cycling a
+ *   slide item. If false, carousel will not automatically cycle.
+ * - pause: Pauses the cycling of the carousel on mouseenter and
+ *   resumes the cycling of the carousel on mouseleave.
+ * - wrap: Whether the carousel should cycle continuously or have
+ *   hard stops.
+ *
+ * @see template_preprocess_views_bootstrap_carousel()
+ *
+ * @ingroup themeable
+ */
+#}
+
+<div id="{{ id }}" class="carousel {{ effect }}"
+    data-interval="{{ interval }}"
+    {% if ride %} data-ride="carousel" {% endif %}
+    data-pause="{% if pause %}hover{% else %}false{% endif %}"
+>
+  {# Show indicators if set in view. #}
+  {%  if indicators %}
+  <ol class="carousel-indicators">
+      {% for key, row in rows %}
+          {% set indicator_classes = [loop.first ? 'active'] %}
+          <li class="{{ indicator_classes|join(' ') }}" data-target="#{{ id }}" data-slide-to="{{ key }}"></li>
+      {% endfor %}
+  </ol>
+  {% endif %}
+
+  {# Carousel body. #}
+  <div class="carousel-inner">
+    {% for row in rows %}
+        {% set row_classes = ['carousel-item', loop.first ? 'active'] %}
+        <div class="{{ row_classes|join(' ') }}">
+        {{ row.image }}
+        {% if row.title or row.description %}
+            {%  if use_caption %}
+            <div class="carousel-caption d-none d-md-block">
+            {% endif %}
+            {% if row.title %}
+                <h3>{{ row.title }}</h3>
+            {% endif %}
+            {% if row.description %}
+                <p>{{ row.description }}</p>
+            {% endif %}
+            {%  if use_caption %}
+            </div>
+            {% endif %}
+        {% endif %}
+        </div>
+    {% endfor %}
+  </div>
+  {# Controls #}
+  {% if navigation %}
+    <a class="carousel-control-prev" href="#{{ id }}" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">{{ 'Previous'|t }}</span>
+    </a>
+    <a class="carousel-control-next" href="#{{ id }}" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">{{ 'Next'|t }}</span>
+    </a>
+  {% endif %}
+</div>

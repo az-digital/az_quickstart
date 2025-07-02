@@ -1,0 +1,14 @@
+services:
+  plugin.manager.field_group.formatters:
+    class: Drupal\field_group\FieldGroupFormatterPluginManager
+    parent: default_plugin_manager
+    arguments: ['@service_container']
+  field_group.subscriber:
+    class: Drupal\field_group\Routing\RouteSubscriber
+    arguments: ['@entity_type.manager']
+    tags:
+      - { name: event_subscriber }
+  field_group.param_converter:
+    class: Drupal\field_group\Routing\FieldGroupConverter
+    tags:
+      - { name: paramconverter }

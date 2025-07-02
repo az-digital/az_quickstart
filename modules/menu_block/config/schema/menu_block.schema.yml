@@ -1,0 +1,37 @@
+block.settings.menu_block:*:
+  type: block_settings
+  label: 'Menu block'
+  mapping:
+    follow:
+      type: boolean
+      label: 'The initial visibility level follows the active menu item'
+    follow_parent:
+      type: string
+      label: 'Set initial visibility level to the active menu item, or its children'
+    label_link:
+      type: boolean
+      label: 'If the block label should be a link'
+    label_type:
+      type: string
+      label: 'Label type'
+    level:
+      type: integer
+      label: 'Starting level'
+    depth:
+      type: integer
+      label: 'Maximum number of levels'
+    expand_all_items:
+      type: boolean
+      label: 'Expand all items'
+    parent:
+      type: string
+      label: 'Parent menu link'
+    render_parent:
+      type: boolean
+      label: 'Render parent menu link'
+    suggestion:
+      type: string
+      label: 'Theme suggestion'
+    hide_on_nonactive:
+      type: boolean
+      label: 'Hide on pages not included in the menu'

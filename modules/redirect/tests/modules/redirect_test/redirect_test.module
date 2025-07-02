@@ -1,0 +1,20 @@
+<?php
+
+/**
+ * @file
+ * A test module for testing the redirect module.
+ */
+
+use Drupal\Core\Routing\TrustedRedirectResponse;
+use Drupal\redirect\Entity\Redirect;
+
+/**
+ * Implements hook_redirect_response_alter().
+ */
+function redirect_test_redirect_response_alter(TrustedRedirectResponse $response, Redirect $redirect) {
+  $path = 'test/redirect/2/successful';
+  $replace = 'test/redirect/other';
+  if ($redirect->getRedirect()['uri'] == "internal:/" . $path) {
+    $response->setTargetUrl(str_replace($path, $replace, $redirect->getRedirectUrl()->setAbsolute()->toString()));
+  }
+}

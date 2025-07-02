@@ -1,0 +1,70 @@
+<?php
+
+/**
+ * @file
+ * CKEditor IndentBlock install file.
+ */
+
+/**
+ * Implements hook_requirements().
+ */
+function ckeditor_indentblock_requirements($phase) {
+  $requirements = [];
+
+  if (($phase == 'install' || $phase == 'runtime') && \Drupal::moduleHandler()->moduleExists('ckeditor')) {
+
+    // Search for the path under the current site for multisites.
+    $directories[] = \Drupal::getContainer()->getParameter('site.path') . "/libraries/";
+
+    // Search also the root 'libraries' directory.
+    $directories[] = 'libraries/';
+
+    // Search also at the path for ckeditor plugins.
+    $directories[] = 'libraries/ckeditor/plugins/';
+
+    // Installation profiles can place libraries into a 'libraries' directory,
+    // so search for that option too.
+    if ($installProfile = \Drupal::installProfile()) {
+      $profile_path = \Drupal::service('extension.list.profile')->getPath($installProfile);
+      $directories[] = "$profile_path/libraries/";
+    }
+
+    // Search for Indentblock plugin URL including the default URL.
+    $plugin_url = 'libraries/indentblock/plugin.js';
+    foreach ($directories as $dir) {
+      if (file_exists(DRUPAL_ROOT . '/' . $dir . 'indentblock/plugin.js')) {
+        $plugin_url = $dir . 'indentblock/plugin.js';
+        break;
+      }
+    }
+
+    // Is the library found in the root libraries path.
+    $plugin_detected = file_exists($plugin_url);
+
+    if ($plugin_detected) {
+      $requirements['indentblock'] = [
+        'title' => t('CKEditor IndentBlock'),
+        'value' => t('Plugin detected'),
+        'severity' => REQUIREMENT_OK,
+      ];
+    }
+    else {
+      $requirements['indentblock'] = [
+        'title' => t('CKEditor IndentBlock'),
+        'value' => t('Plugin not detected'),
+        'severity' => REQUIREMENT_ERROR,
+        'description' => t('You will need to install the "Indent Block" CKEditor plugin under the libraries path before enabling this module. <a href=":plugin_url">Get the plugin from CKEditor.com</a>.', [':plugin_url' => 'http://ckeditor.com/addon/indentblock']),
+      ];
+    }
+  }
+  // Indentblock functionality is included in core CKEditor5.
+  elseif (($phase == 'install' || $phase == 'runtime') && \Drupal::moduleHandler()->moduleExists('ckeditor5')) {
+    $requirements['indentblock'] = [
+      'title' => t('CKEditor IndentBlock'),
+      'value' => t('Plugin functionality included in CKEditor 5.'),
+      'severity' => REQUIREMENT_OK,
+    ];
+  }
+
+  return $requirements;
+}

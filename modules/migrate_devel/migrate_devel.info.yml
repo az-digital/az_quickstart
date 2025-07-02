@@ -1,0 +1,12 @@
+name: Migrate Devel
+description: Migrate Development Tools
+package: Migrate
+type: module
+core_version_requirement: ^9.5 || ^10 || ^11
+dependencies:
+  - drupal:migrate
+
+# Information added by Drupal.org packaging script on 2024-08-30
+version: '3.0.0'
+project: 'migrate_devel'
+datestamp: 1725055515

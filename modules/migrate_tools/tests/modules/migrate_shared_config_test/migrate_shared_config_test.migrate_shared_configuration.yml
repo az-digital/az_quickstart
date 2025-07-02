@@ -1,0 +1,6 @@
+my_default_configuration:
+  source:
+    batch_size: 2
+one_off_configuration:
+  destination:
+    batch_size: 2

@@ -1,0 +1,16 @@
+/**
+ * @file
+ * Block grid based on Foundation.
+ *
+ * The actual grid rule is now stored at blazy.grid.css.
+ */
+
+.slide--grid .slide__content {
+  margin: 0 -0.625rem;
+  padding: 0;
+  list-style: none;
+}
+
+.slide--grid .slide__caption {
+  max-width: 100%;
+}

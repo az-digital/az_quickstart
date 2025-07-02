@@ -1,0 +1,5 @@
+easy_breadcrumb.general_settings_form:
+  title: 'Easy Breadcrumb'
+  base_route_name: easy_breadcrumb.general_settings_form
+  names:
+    - easy_breadcrumb.settings

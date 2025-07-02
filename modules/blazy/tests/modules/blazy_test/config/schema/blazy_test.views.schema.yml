@@ -1,0 +1,3 @@
+views.style.blazy_test:
+  type: blazy_base
+  label: 'Blazy Test'

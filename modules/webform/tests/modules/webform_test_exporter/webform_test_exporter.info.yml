@@ -1,0 +1,12 @@
+name: 'Webform Exporter test'
+type: module
+description: 'Support module for webform exporter plugin testing.'
+package: 'Webform Testing'
+core_version_requirement: ^10.2
+dependencies:
+  - 'webform:webform'
+
+# Information added by Drupal.org packaging script on 2024-12-10
+version: '6.2.9'
+project: 'webform'
+datestamp: 1733851071

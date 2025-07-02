@@ -1,0 +1,20 @@
+services:
+  honeypot:
+    class: \Drupal\honeypot\HoneypotService
+    autowire: true
+    arguments:
+      $key_value: '@keyvalue.expirable'
+  Drupal\honeypot\HoneypotServiceInterface: '@honeypot'
+
+  Drupal\honeypot\Hook\HoneypotCronHooks:
+    class: \Drupal\honeypot\Hook\HoneypotCronHooks
+    autowire: true
+  Drupal\honeypot\Hook\HoneypotFormHooks:
+    class: \Drupal\honeypot\Hook\HoneypotFormHooks
+    autowire: true
+  Drupal\honeypot\Hook\HoneypotHelpHooks:
+    class: \Drupal\honeypot\Hook\HoneypotHelpHooks
+    autowire: true
+  Drupal\honeypot\Hook\HoneypotHoneypotHooks:
+    class: \Drupal\honeypot\Hook\HoneypotHoneypotHooks
+    autowire: true

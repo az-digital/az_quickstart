@@ -1,0 +1,17 @@
+entity.webform.templates:
+  title: 'Templates'
+  route_name: entity.webform.templates
+  base_route: entity.webform.collection
+  weight: 10
+
+entity.webform.templates.view:
+  title: 'List'
+  route_name: entity.webform.templates
+  parent_id: entity.webform.templates
+  weight: 0
+
+entity.webform.templates.manage:
+  title: 'Manage'
+  route_name: entity.webform.templates.manage
+  parent_id: entity.webform.templates
+  weight: 10

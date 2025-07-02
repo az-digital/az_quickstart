@@ -1,0 +1,6 @@
+services:
+  migrate_tools_test.commands:
+    class: \Drupal\migrate_tools_test\Commands\MigrateToolsTestCommands
+    arguments: ['@plugin.manager.migration']
+    tags:
+      - { name: drush.command }

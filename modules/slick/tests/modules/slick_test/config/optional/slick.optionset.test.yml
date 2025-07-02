@@ -1,0 +1,19 @@
+uuid: 5af59993-195c-4554-ad26-c3a63bd48313
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - slick_test
+id: test
+name: test
+label: 'Test'
+weight: 9
+group: 'main'
+skin: ''
+breakpoints: 0
+optimized: true
+options:
+  settings:
+    lazyLoad: progressive
+    slidesToShow: 1

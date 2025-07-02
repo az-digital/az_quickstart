@@ -1,0 +1,86 @@
+@media only screen and (min-width: 768px) {
+  .bs_grid-dialog {
+    min-width: 600px;
+  }
+}
+
+#bs_grid-dialog-form .bs_grid-dialog-step--select {
+  max-width: 520px;
+}
+
+#bs_grid-dialog-form .bs_grid-dialog-step--select .form-radios,
+#bs_grid-dialog-form .bs_grid-dialog-step--select .form-boolean-group {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+#bs_grid-dialog-form .bs_grid-dialog-step--select .form-radios .form-item-num-columns,
+#bs_grid-dialog-form .bs_grid-dialog-step--select .form-boolean-group .form-item-num-columns {
+  margin: 0 0 10px;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 25%;
+  flex: 0 0 25%;
+  max-width: 25%;
+  position: relative;
+  width: 100%;
+  min-height: 1px;
+}
+
+#bs_grid-dialog-form .bs_grid-dialog-step--select .form-radios input,
+#bs_grid-dialog-form .bs_grid-dialog-step--select .form-boolean-group input {
+  display: none;
+}
+
+#bs_grid-dialog-form .bs_grid-dialog-step--select .form-radios input:checked ~ label,
+#bs_grid-dialog-form .bs_grid-dialog-step--select .form-boolean-group input:checked ~ label {
+  background: powderblue;
+}
+
+#bs_grid-dialog-form .bs_grid-dialog-step--select .form-radios input:checked:disabled ~ label,
+#bs_grid-dialog-form .bs_grid-dialog-step--select .form-boolean-group input:checked:disabled ~ label {
+  background: lightgrey;
+}
+
+#bs_grid-dialog-form .bs_grid-dialog-step--select .form-radios label,
+#bs_grid-dialog-form .bs_grid-dialog-step--select .form-boolean-group label {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+#bs_grid-dialog-form .bs_grid-dialog-step--select .form-radios label p,
+#bs_grid-dialog-form .bs_grid-dialog-step--select .form-boolean-group label p {
+  margin: 0;
+}
+
+#bs_grid-dialog-form .bs_grid-dialog-step--layout .bs-grid-option input[type="radio"] {
+  display: none;
+}
+
+#bs_grid-dialog-form .bs_grid-dialog-step--layout .bs-grid-option input[type="radio"]:checked ~ label .bs-col {
+  background: lightgreen;
+}
+
+#bs_grid-dialog-form .bs_grid-dialog-step--layout .bs-grid-option label {
+  cursor: pointer;
+}
+
+#bs_grid-dialog-form .bs_grid-dialog-step--layout .bs-grid-option label .row {
+  box-sizing: border-box;
+}
+
+#bs_grid-dialog-form .bs_grid-dialog-step--layout .bs-grid-option label .bs-option-label {
+  font-weight: bold;
+}
+
+#bs_grid-dialog-form .bs_grid-dialog-step--layout .bs-grid-option label .bs-col {
+  border: 1px solid whitesmoke;
+  border-radius: 5px;
+  background: lightgray;
+}
+
+#bs_grid-dialog-form .bs_grid-dialog-step--layout .bs-grid-option label:hover .bs-col, #bs_grid-dialog-form .bs_grid-dialog-step--layout .bs-grid-option label:focus .bs-col {
+  background: lightsteelblue;
+}

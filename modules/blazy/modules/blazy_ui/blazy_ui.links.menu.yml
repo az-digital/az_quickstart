@@ -1,0 +1,5 @@
+blazy.settings:
+  title: Blazy UI
+  route_name: blazy.settings
+  description: 'Manage Blazy UI.'
+  parent: system.admin_config_media

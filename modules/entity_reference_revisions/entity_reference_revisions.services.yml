@@ -1,0 +1,4 @@
+services:
+  entity_reference_revisions.orphan_purger:
+    class: Drupal\entity_reference_revisions\EntityReferenceRevisionsOrphanPurger
+    arguments: ['@entity_type.manager', '@entity_field.manager', '@date.formatter', '@datetime.time', '@database', '@messenger']

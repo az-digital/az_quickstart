@@ -1,0 +1,12 @@
+name: Config Filter Test
+type: module
+description: Test module with a simple filter.
+core_version_requirement: ^8.8 || ^9 || ^10 || ^11
+package: Testing
+dependencies:
+  - config_filter:config_filter
+
+# Information added by Drupal.org packaging script on 2024-09-27
+version: '8.x-2.7'
+project: 'config_filter'
+datestamp: 1727472460

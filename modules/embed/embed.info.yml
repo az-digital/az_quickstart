@@ -1,0 +1,13 @@
+name: Embed
+type: module
+description: 'Provides a framework for different types of embeds in text editors.'
+core_version_requirement: ^10.2 || ^11
+package: Filters
+configure: entity.embed_button.collection
+test_dependencies:
+  - drupal:ckeditor5
+
+# Information added by Drupal.org packaging script on 2025-01-23
+version: '8.x-1.10'
+project: 'embed'
+datestamp: 1737662979

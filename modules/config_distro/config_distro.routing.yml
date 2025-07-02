@@ -1,0 +1,23 @@
+config_distro.import:
+  path: '/admin/config/development/distro'
+  defaults:
+    _form: '\Drupal\config_distro\Form\ConfigDistroImportForm'
+    _title: 'Synchronize from extensions'
+  requirements:
+    _permission: 'synchronize distro configuration'
+
+config_distro.diff:
+  path: '/admin/config/development/distro/diff/{source_name}/{target_name}'
+  defaults:
+    _controller: '\Drupal\config_distro\Controller\ConfigDistroController::diff'
+    target_name: NULL
+  requirements:
+    _permission: 'synchronize distro configuration'
+
+config_distro.diff_collection:
+  path: '/admin/config/development/distro/diff_collection/{collection}/{source_name}/{target_name}'
+  defaults:
+    _controller: '\Drupal\config_distro\Controller\ConfigDistroController::diff'
+    target_name: NULL
+  requirements:
+    _permission: 'synchronize distro configuration'

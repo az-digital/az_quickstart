@@ -1,0 +1,20 @@
+pipelines:
+  default:
+    - step:
+        name: Drupal 8 PHP 7.3
+        image: php:7.3
+        caches:
+          - composer
+        script:
+          - source ./tests/install_drupal.sh
+          - prepare
+          - INSTALL_PATH=${BITBUCKET_CLONE_DIR}
+          - DRUPAL_INSTALL_TYPE="composer"
+          - installDrupal 8.x-dev
+          - installDrupalModule entity_browser drupal/entity_browser:^2.1 8.x-dev
+          - installDrupalModule ib_dam_media ib_dam_media 8.x-dev
+          - installDrupalModule ib_dam_wysiwyg ib_dam_wysiwyg 8.x-dev
+          - installDrupal 8.x-dev 8.7.0-alpha2
+          - installDrupalModule entity_browser drupal/entity_browser:2.x-dev 8.x-dev 8.7.0-alpha2
+          - installDrupalModule ib_dam_media ib_dam_media 8.x-dev 8.7.0-alpha2
+          - installDrupalModule ib_dam_wysiwyg ib_dam_wysiwyg 8.x-dev 8.7.0-alpha2

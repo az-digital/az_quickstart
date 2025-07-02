@@ -1,0 +1,36 @@
+<?php
+
+/**
+ * @file
+ * Adds a 'Schema' tab to the webform builder UI.
+ */
+
+/**
+ * Implements hook_webform_help_info().
+ */
+function webform_schema_webform_help_info() {
+  $help = [];
+  $help['webform_schema'] = [
+    'group' => 'schema',
+    'title' => t('Webform Schema'),
+    'content' => t("The <strong>Schema</strong> page displays an overview of a webform's elements and specified data types, which can be used to map webform submissions to an external API."),
+    'routes' => [
+      // @see /admin/structure/webform/manage/{webform}/schema
+      'entity.webform.schema_form',
+    ],
+  ];
+  return $help;
+}
+
+/**
+ * Implements hook_entity_type_alter().
+ */
+function webform_schema_entity_type_alter(array &$entity_types) {
+  if (isset($entity_types['webform'])) {
+    /** @var \Drupal\Core\Entity\ContentEntityTypeInterface $entity_type */
+    $entity_type = $entity_types['webform'];
+    $handlers = $entity_type->getHandlerClasses();
+    $handlers['form']['schema'] = 'Drupal\webform_schema\Form\WebformSchemaEntitySchemaForm';
+    $entity_type->setHandlerClass('form', $handlers['form']);
+  }
+}

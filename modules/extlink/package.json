@@ -1,0 +1,24 @@
+{
+  "name": "extlint",
+  "version": "1.0.0",
+  "author": "Stephen Mustgrave",
+  "description": "Packages to help check css/js for extlint.",
+  "license": "ISC",
+  "browserslist": [
+    "defaults"
+  ],
+  "scripts": {
+    "lint:css": "stylelint \"**/*.css\"",
+    "lint:css:fix": "stylelint \"**/*.css\" --fix",
+    "prettier": "prettier . --write"
+  },
+  "devDependencies": {
+    "prettier": "3.3.2",
+    "stylelint": "^16.3.0",
+    "stylelint-config-sass-guidelines": "^11.1.0",
+    "stylelint-config-standard": "^36.0.0",
+    "stylelint-prettier": "^5.0.0",
+    "stylelint-order": "^6.0.3",
+    "stylelint-scss": "^6.2.0"
+  }
+}

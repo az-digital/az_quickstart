@@ -1,0 +1,6 @@
+services:
+  plugin.manager.viewsreference.setting:
+    class: Drupal\viewsreference\Plugin\ViewsReferenceSettingManager
+    parent: default_plugin_manager
+  viewsreference.compression:
+    class: Drupal\viewsreference\ViewsReferenceCompression

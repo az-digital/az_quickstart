@@ -1,0 +1,19 @@
+name: 'Webform Node Multiple test'
+type: module
+description: 'Support module for webform nodes with multiple webforms testing.'
+package: 'Webform Testing'
+core_version_requirement: ^10.2
+dependencies:
+  - 'drupal:field'
+  - 'drupal:menu_ui'
+  - 'drupal:node'
+  - 'drupal:path'
+  - 'drupal:text'
+  - 'drupal:user'
+  - 'webform:webform'
+  - 'webform:webform_node'
+
+# Information added by Drupal.org packaging script on 2024-12-10
+version: '6.2.9'
+project: 'webform'
+datestamp: 1733851071

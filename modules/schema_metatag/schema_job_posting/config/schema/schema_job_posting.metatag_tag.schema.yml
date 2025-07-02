@@ -1,0 +1,51 @@
+# The 'type' should be "label" for short meta tags and "text" for ones which
+# could get longer, especially ones which use a textarea field instead of a
+# textfield.
+metatag.metatag_tag.schema_job_posting_base_salary:
+  type: text
+  label: baseSalary'
+metatag.metatag_tag.schema_job_posting_date_posted:
+  type: text
+  label: 'datePosted'
+metatag.metatag_tag.schema_job_posting_description:
+  type: text
+  label: 'description'
+metatag.metatag_tag.schema_job_posting_employment_type:
+  type: text
+  label: 'employmentType'
+metatag.metatag_tag.schema_job_posting_hiring_organization:
+  type: text
+  label: 'hiringOrganization'
+metatag.metatag_tag.schema_job_posting_id:
+  type: text
+  label: '@id'
+metatag.metatag_tag.schema_job_posting_identifier:
+  type: text
+  label: 'identifier'
+metatag.metatag_tag.schema_job_posting_industry:
+  type: text
+  label: 'industry'
+metatag.metatag_tag.schema_job_posting_job_benefits:
+  type: text
+  label: 'jobBenefits'
+metatag.metatag_tag.schema_job_posting_job_location:
+  type: text
+  label: 'jobLocation'
+metatag.metatag_tag.schema_job_posting_occupational_category:
+  type: text
+  label: 'occupationalCategory'
+metatag.metatag_tag.schema_job_posting_qualifications:
+  type: text
+  label: 'qualifications'
+metatag.metatag_tag.schema_job_posting_responsibilities:
+  type: text
+  label: 'responsibilities'
+metatag.metatag_tag.schema_job_posting_title:
+  type: text
+  label: 'title'
+metatag.metatag_tag.schema_job_posting_type:
+  type: string
+  label: '@type'
+metatag.metatag_tag.schema_job_posting_valid_through:
+  type: text
+  label: 'validThrough'

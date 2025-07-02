@@ -1,0 +1,5 @@
+entity.cron_migration.add_form:
+  route_name: 'entity.cron_migration.add_form'
+  title: 'Add cron migration'
+  appears_on:
+    - entity.cron_migration.collection

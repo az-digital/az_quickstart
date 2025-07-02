@@ -1,0 +1,29 @@
+<?php
+
+/**
+ * Implements hook_theme().
+ */
+function upgrade_status_test_theme_functions_theme() {
+  return [
+    'upgrade_status_test_theme_function' => [
+      'function' => 'upgrade_status_test_theme_function'
+    ],
+    'upgrade_status_test_theme_function_another_function' => [],
+    'upgrade_status_test_theme_function_theme_function_override' => [],
+  ];
+}
+
+/**
+ * Implements hook_theme_registry_alter().
+ */
+function upgrade_status_test_theme_functions_theme_registry_alter(&$theme_registry) {
+  $theme_registry['upgrade_status_test_theme_function_another_function']['function'] = 'upgrade_status_test_theme_function';
+  $theme_registry['upgrade_status_test_theme_function_non_existing_function']['function'] = sprintf('upgrade_status_test_theme_function');
+}
+
+/**
+ * Theme function used for testing.
+ */
+function upgrade_status_test_theme_function() {
+  return 'kitten';
+}

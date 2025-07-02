@@ -1,0 +1,34 @@
+/**
+ * @file
+ * More element styles.
+ */
+
+.webform-element-more--link {
+  display: none;
+}
+
+.webform-element-more--link:before {
+  content: "► ";
+  font-size: 0.8em;
+  cursor: pointer;
+}
+
+.webform-element-more.is-open .webform-element-more--link:before {
+  content: "▼ ";
+}
+
+html.js .webform-element-more--link {
+  display: inline-block;
+}
+
+html.js .webform-element-more--content {
+  display: none;
+}
+
+.webform-element-more--content p:first-child {
+  margin-top: 0;
+}
+
+.webform-element-more--content p:last-child {
+  margin-bottom: 0;
+}

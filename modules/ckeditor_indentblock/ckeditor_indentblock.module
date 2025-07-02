@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * @file
+ * Adds a hook for attaching a css file with indentation to each page.
+ */
+
+/**
+ * Implements hook_page_attachments().
+ *
+ * Adds the ckeditor.indentblock.css with indentation css to each page.
+ */
+function ckeditor_indentblock_page_attachments(array &$page) {
+  $page['#attached']['library'][] = 'ckeditor_indentblock/indentblock';
+}

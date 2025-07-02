@@ -1,0 +1,23 @@
+/* ---------- Vollkorn, Exo ---------- */
+
+h1,
+h2,
+h1 a,
+h2 a {
+  font-family: "Vollkorn",serif;
+  font-weight: 700;
+}
+h3,
+h4,
+h5,
+h6,
+h3 a {
+  font-family: "Vollkorn",serif;
+}
+body,
+p,
+a,
+li {
+  font-family: "Exo",sans-serif;
+  font-weight: 400;
+}

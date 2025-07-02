@@ -1,0 +1,12 @@
+config_inspector:
+  css:
+    theme:
+      css/config_inspector.css: {}
+  js:
+    js/config_inspector.js: {}
+  dependencies:
+    - core/jquery
+    - core/once
+    - core/drupal
+    - core/drupal.debounce
+    - core/drupalSettings

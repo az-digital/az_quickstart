@@ -1,0 +1,14 @@
+# These are the publicly available libraries that other modules can depend on.
+
+core:
+  js: {}
+
+widget:
+  js: {}
+
+mouse:
+  js: {}
+
+position:
+  js: {}
+

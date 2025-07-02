@@ -1,0 +1,17 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - ib_dam_media
+
+id: ib_dam_embed
+label: 'IntelligenceBank Embed'
+description: 'Used to embed digital assets from IntelligenceBank DAM service.'
+source: ib_dam_embed
+queue_thumbnail_downloads: false
+new_revision: false
+source_configuration:
+  source_field: field_media_ib_dam_embed
+field_map:
+  resource_title: name
+  resource_url: field_media_ib_dam_embed

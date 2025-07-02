@@ -1,0 +1,36 @@
+<?php
+
+/**
+ * @file
+ * Install, uninstall, requirements and schema hooks for Config Read-only mode.
+ */
+
+use Drupal\Core\Site\Settings;
+
+/**
+ * Implements hook_requirements().
+ */
+function config_readonly_requirements($phase) {
+  $requirements = [];
+
+  if ($phase == 'runtime') {
+    if (!Settings::get('config_readonly')) {
+      $requirements['config_readonly'] = [
+        'title' => t('Config Read-only mode'),
+        'description' => t('The Config Read-only module is enabled but not active.'),
+        'severity' => REQUIREMENT_WARNING,
+        'value' => t('Config is writable'),
+      ];
+    }
+    else {
+      $requirements['config_readonly'] = [
+        'title' => t('Config Read-only mode'),
+        'description' => t('The Config Read-only module is enabled and active.'),
+        'severity' => REQUIREMENT_INFO,
+        'value' => t('Config is readonly'),
+      ];
+    }
+  }
+
+  return $requirements;
+}

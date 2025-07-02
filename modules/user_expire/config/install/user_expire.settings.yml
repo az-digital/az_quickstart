@@ -1,0 +1,12 @@
+frequency: 172800
+offset: 604800
+user_expire_roles: {}
+send_expiration_warnings: true
+expiration_warning_mail:
+  subject: "[site:name]: Account expiration warning"
+  body: |-
+    Hello [user:display-name]
+
+    Because you have not logged in recently, your account at [site:name] will be blocked in the near future. If you still use this site, log in now [site:login-url] to prevent your account being blocked.
+
+    -- [site:name] team

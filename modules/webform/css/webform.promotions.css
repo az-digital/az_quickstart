@@ -1,0 +1,24 @@
+/**
+ * @file
+ * Promotions styles.
+ */
+
+/**
+ * Webform message with logo.
+ */
+.webform-message .messages.messages--webform {
+  min-height: 20px;
+  padding-left: 56px; /* LTR */
+  color: #000;
+  border-color: #a6a6a6 #a6a6a6 #a6a6a6 transparent; /* LTR */
+  background: #e0e0d8 url(../images/logo/webform_icon_36.png) 10px center no-repeat;
+  background-size: auto;
+  box-shadow: -8px 0 0 #a6a6a6; /* LTR */
+}
+
+[dir="rtl"] .webform-message .messages.messages--webform {
+  margin-left: 0;
+  padding-right: 56px;
+  border-color: #a6a6a6 transparent #a6a6a6 #a6a6a6;
+  box-shadow: 8px 0 0 #a6a6a6;
+}

@@ -1,0 +1,272 @@
+<?php
+
+/**
+ * @file
+ * Module implementation file.
+ */
+
+use Drupal\Core\Cache\Cache;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Url;
+use Drupal\environment_indicator\ToolbarHandler;
+
+/**
+ * Implements hook_help().
+ */
+function environment_indicator_help($route_name, RouteMatchInterface $route_match) {
+  $permissions_url = Url::fromRoute('user.admin_permissions', [], ['fragment' => 'module-environment_indicator'])->toString();
+  $settings_url = Url::fromRoute('environment_indicator.settings')->toString();
+  // Define reusable variables for common strings and links.
+  $access_permission_text = t('The Environment Indicator\'s visibility depends upon the permissions of the viewer. The <a href=":permissions">access environment indicator</a> permission must be enabled for a user role in order for users of that role to see the indicator.', [':permissions' => $permissions_url]);
+  $deployment_identifier_info = '<p>' . t('<strong>Deployment Identifier:</strong> The deployment identifier mechanism is provided by Drupal core and is used by various hosting providers. It is a string that can be used to identify a particular deployment of your site. This is useful for identifying the specific code or configuration version currently deployed. The deployment identifier can be set in the <code>settings.php</code> file or through other mechanisms in your deployment process.') . '</p>';
+  $version_identifier_info = '<p>' . t('<strong>Source of Version Identifier to Display:</strong> You can configure the source of the version identifier to display in the environment indicator through the <a href=":settings">settings page</a>. The available options are:', [
+    ':settings' => $settings_url,
+  ]) . '</p>';
+  $version_identifier_info .= '<ul>';
+  $version_identifier_info .= '<li><strong>' . t('Environment Indicator Current Release (Default):') . '</strong> ' . t('Set the "environment_indicator.current_release" state using Drush: <code>drush sset environment_indicator.current_release v1.2.44</code>.') . '</li>';
+  $version_identifier_info .= '<li><strong>' . t('Deployment Identifier:') . '</strong> ' . t('Typically set in the <code>settings.php</code> file or through your deployment process.') . '</li>';
+  $version_identifier_info .= '<li><strong>' . t('Drupal Version:') . '</strong> ' . t('Displays the current Drupal version.') . '</li>';
+  $version_identifier_info .= '<li><strong>' . t('None:') . '</strong> ' . t('No version identifier is displayed.') . '</li>';
+  $version_identifier_info .= '</ul>';
+  $fallback_identifier_info = '<p>' . t('<strong>Fallback Source of Version Identifier to Display:</strong> Configure a fallback source for the version identifier to ensure version information is always available. Selecting "none" for the primary source disallows a fallback source.') . '</p>';
+
+  switch ($route_name) {
+    case 'environment_indicator.settings':
+      $output = '<p>' . t('The Environment Indicator adds a coloured strip to the site informing you which environment you are currently in (Development, Staging, Production, etc.)') . '</p>';
+      $output .= '<p>' . $access_permission_text . '</p>';
+      $output .= $version_identifier_info;
+      $output .= $fallback_identifier_info;
+      $output .= $deployment_identifier_info;
+      return $output;
+
+    case 'entity.environment_indicator.collection':
+      $output = '<p>' . t('The environment indicator switcher allows you to create a menu to switch between your environments easily.') . '</p>';
+      $output .= '<p>' . t("You will need to declare all the environments you want to switch. It is advisable that you set your environments in the switcher with the same colors that you use in every environment's settings.php.") . '</p>';
+      return $output;
+
+    case 'help.page.environment_indicator':
+      $output = '<p>' . t('The Environment Indicator adds a coloured strip to the site informing you which environment you are currently in (Development, Staging, Production, etc.)') . '</p>';
+      $output .= '<p>' . t('The Environment Indicator <a href=":settings">settings page</a> allows you to modify some elements of the indicator\'s behavior and appearance. Since the appearance of the indicator is dependent on your site theme, substantial customisations require modifications to your site\'s theme and CSS files.', [
+        ':settings' => $settings_url,
+      ]) . '</p>';
+      $output .= '<p>' . $access_permission_text . '</p>';
+      $output .= '<p>' . t('Modify the "environment_indicator.indicator" configuration object to control how the environment indicator is presented:') . '</p>';
+      $output .= '<dl>';
+      $output .= '<dt><em>$config[\'environment_indicator.indicator\'][\'bg_color\']</em></dt><dd>';
+      $output .= t('A valid CSS color for the background of the indicator.') . '<br/>';
+      $output .= '$config[\'environment_indicator.indicator\'][\'bg_color\'];<br /></dd></dt>';
+      $output .= '<dt><em>$config[\'environment_indicator.indicator\'][\'fg_color\']</em></dt><dd>';
+      $output .= t('A valid CSS color for the text of the indicator.') . '<br/>';
+      $output .= '$config[\'environment_indicator.indicator\'][\'fg_color\'] = \'#555533\';<br /></dd></dt>';
+      $output .= '<dt><em>$config[\'environment_indicator.indicator\'][\'name\']</em></dt><dd>';
+      $output .= t('The text that will be displayed on the indicator.') . '<br/>';
+      $output .= '$config[\'environment_indicator.indicator\'][\'name\'] = \'Staging\';<br /></dd></dt>';
+      $output .= '</dl>';
+      $output .= $version_identifier_info;
+      $output .= $fallback_identifier_info;
+      $output .= $deployment_identifier_info;
+
+      return $output;
+  }
+
+  return NULL;
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for page templates.
+ */
+function environment_indicator_preprocess_html(&$variables) {
+  if (_environment_indicator_external_integration_is_enabled('toolbar')) {
+    return;
+  }
+  $active_environment = \Drupal::config('environment_indicator.indicator');
+  $title = $active_environment->get('name');
+  if (empty($title) || !\Drupal::currentUser()->hasPermission('access environment indicator')) {
+    return;
+  }
+  $variables['attributes']['class'][] = 'environment-indicator';
+
+}
+
+/**
+ * Implements hook_page_top().
+ */
+function environment_indicator_page_top(array &$page_top) {
+  if (_environment_indicator_external_integration_is_enabled('toolbar')) {
+    return;
+  }
+  $active_environment = \Drupal::config('environment_indicator.indicator');
+  $title = $active_environment->get('name');
+  $page_top['indicator'] = [
+    '#type' => 'environment_indicator',
+    '#title' => $title,
+    '#fg_color' => $active_environment->get('fg_color'),
+    '#bg_color' => $active_environment->get('bg_color'),
+    '#description' => \Drupal::state()->get('environment_indicator.current_release'),
+    '#access' => !empty($title) && \Drupal::currentUser()
+      ->hasPermission('access environment indicator'),
+    '#attached' => [
+      'library' => ['environment_indicator/drupal.environment_indicator'],
+      'drupalSettings' => [
+        'environmentIndicator' => [
+          'name' => $title ? $title : ' ',
+          'fgColor' => $active_environment->get('fg_color'),
+          'bgColor' => $active_environment->get('bg_color'),
+          'addFavicon' => \Drupal::config('environment_indicator.settings')
+            ->get('favicon'),
+        ],
+      ],
+    ],
+  ];
+
+  // Only add the environment indicator switcher if there are environments to
+  // switch to.
+  if ($items = _environment_indicator_switcher_links()) {
+    uasort($items, 'Drupal\Component\Utility\SortArray::sortByWeightElement');
+    $page_top['indicator']['switcher'] = [
+      '#theme' => 'links',
+      '#links' => $items,
+      '#attributes' => [
+        'class' => ['environment-switcher-container'],
+        'style' => 'border-top: 1px solid ' . \Drupal::config('environment_indicator.indicator')
+          ->get('fg_color'),
+      ],
+    ];
+    $page_top['indicator']['#attributes'] = [
+      'style' => 'cursor: pointer',
+      'title' => t('Show the environment switcher.'),
+    ];
+    $page_top['indicator'] += [
+      '#cache' => [
+        'tags' => Cache::mergeTags(['config:environment_indicator.settings'], _environment_indicator_switcher_cache_tags()),
+      ],
+    ];
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function environment_indicator_theme($existing, $type, $theme, $path): array {
+  return [
+    'environment_indicator' => [
+      'render element' => 'element',
+    ],
+  ];
+}
+
+/**
+ * Prepares variables for environment indicator element templates.
+ *
+ * Default template: environment-indicator.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - element: An associative array containing the properties of the element.
+ *     Properties used: #title, #value, #description, #required, #attributes.
+ */
+function template_preprocess_environment_indicator(array &$variables) {
+  $element = $variables['element'];
+  $variables['title'] = empty($element['#title']) ? '' : $element['#title'];
+  $variables['fg_color'] = empty($element['#fg_color']) ? '' : $element['#fg_color'];
+  if (!empty($element['#description'])) {
+    $variables['description'] = $element['#description'];
+  }
+  // Ensure #attributes is set.
+  $element += ['#attributes' => []];
+  $attributes = $element['#attributes'];
+  // Make sure to override existing colors.
+  $style = empty($attributes['style']) ? '' : $attributes['style'];
+  $structured_styles = _environment_indicator_parse_style($style);
+  $structured_styles['background-color'] = empty($element['#bg_color']) ? '' : $element['#bg_color'];
+  $structured_styles['color'] = empty($element['#fg_color']) ? '' : $element['#fg_color'];
+  // Now put everything back together as an string.
+  $data = [];
+  foreach ($structured_styles as $css_property => $css_value) {
+    $data[] = sprintf('%s: %s', $css_property, $css_value);
+  }
+  $attributes['style'] = implode('; ', $data);
+  $attributes['id'] = (empty($attributes['id']) ? (empty($attributes['#id']) ? 'environment-indicator' : $attributes['#id']) : $attributes['id']);
+  $variables['attributes'] = $attributes;
+  $variables['switcher'] = $element['switcher'] ?? '';
+}
+
+/**
+ * Helper function that takes a styles string and parses the individual items.
+ *
+ * @param string $style
+ *   The style string for the HTML element.
+ *
+ * @return array
+ *   An structured array with key value pairs with the CSS properties and their
+ *   values.
+ */
+function _environment_indicator_parse_style(string $style): array {
+  $structured_styles = [];
+  // Get every individual style.
+  $styles = array_filter(explode(';', $style));
+  foreach ($styles as $item) {
+    [$item_name, $item_value] = explode(':', $item);
+    $structured_styles[trim($item_name)] = trim($item_value);
+  }
+  return $structured_styles;
+}
+
+/**
+ * Implements hook_toolbar().
+ */
+function environment_indicator_toolbar() {
+  return \Drupal::service('environment_indicator.toolbar_handler')
+    ->toolbar();
+}
+
+/**
+ * Helper function that generates the environment switcher links.
+ *
+ * @return array
+ *   A renderable array with the links.
+ */
+function _environment_indicator_switcher_links(): array {
+  return \Drupal::service('environment_indicator.toolbar_handler')
+    ->getLinks();
+}
+
+/**
+ * Helper function that checks if there is external integration.
+ *
+ * @param string $integration
+ *   Name of the integration: toolbar, admin_menu, ...
+ *
+ * @return bool
+ *   TRUE if integration is enabled. FALSE otherwise.
+ */
+function _environment_indicator_external_integration_is_enabled(string $integration): bool {
+  return \Drupal::service('environment_indicator.toolbar_handler')
+    ->externalIntegration($integration);
+}
+
+/**
+ * Get the cache tags for the environment indicator switcher.
+ *
+ * @return string[]
+ *   The cache tags.
+ */
+function _environment_indicator_switcher_cache_tags(): array {
+  return \Drupal::service('environment_indicator.toolbar_handler')
+    ->getCacheTags();
+}
+
+/**
+ * Loads an environment indicator in a procedural way.
+ *
+ * @param string $environment_id
+ *   The entity ID.
+ *
+ * @return \Drupal\Core\Entity\EntityInterface|null
+ *   The loaded entity or null otherwise.
+ */
+function environment_indicator_load(string $environment_id) {
+  return \Drupal::entityTypeManager()
+    ->getStorage('environment_indicator')
+    ->load($environment_id);
+}

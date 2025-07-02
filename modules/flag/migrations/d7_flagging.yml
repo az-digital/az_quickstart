@@ -1,0 +1,32 @@
+id: d7_flagging
+label: Flagging
+migration_group: flag
+migration_tags:
+  - Drupal 7
+dependencies:
+  enforced:
+    module:
+      - flag
+migration_dependencies:
+  required:
+    - d7_flag
+    - d7_user
+source:
+  plugin: d7_flagging
+process:
+  id: flagging_id
+  flag_id: name
+  entity_type: entity_type
+  entity_id: entity_id
+  global: global
+  uid:
+    -
+      plugin: migration_lookup
+      migration: d7_user
+      source: uid
+    -
+      plugin: skip_on_empty
+      method: row
+  created: timestamp
+destination:
+  plugin: entity:flagging

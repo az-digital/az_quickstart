@@ -1,0 +1,37 @@
+{
+    "name": "drupal/migrate_plus",
+    "description": "Enhancements to core migration support.",
+    "type": "drupal-module",
+    "license": "GPL-2.0-or-later",
+    "homepage": "https://www.drupal.org/project/migrate_plus",
+    "authors": [
+        {
+            "name": "Mike Ryan",
+            "homepage":"https://www.drupal.org/u/mikeryan",
+            "role": "Maintainer"
+        },
+        {
+            "name": "Lucas Hedding",
+            "homepage": "https://www.drupal.org/u/heddn",
+            "role": "Maintainer"
+        }
+    ],
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/migrate_plus",
+        "slack": "#migrate",
+        "source": "https://git.drupalcode.org/project/migrate_plus"
+    },
+    "suggest": {
+        "sainsburys/guzzle-oauth2-plugin": "3.0 required for the OAuth2 authentication plugin",
+        "ext-soap": "*"
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "config": {
+        "preferred-install": "dist"
+    },
+    "require": {
+        "php": ">=7.4",
+        "drupal/core": ">=9.1"
+    }
+}

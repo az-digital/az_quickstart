@@ -1,0 +1,20 @@
+/**
+ * @file
+ * Addons styles.
+ */
+
+.webform-addons-summary {
+  float: left;
+  margin: 0 0 0.5em 0;
+}
+
+/**
+ * Projects.
+ */
+.webform-addons-projects details {
+  background-color: #f8f8f8;
+}
+
+.webform-addons .admin-list li {
+  clear: both;
+}

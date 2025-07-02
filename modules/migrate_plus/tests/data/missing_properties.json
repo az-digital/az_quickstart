@@ -1,0 +1,21 @@
+[
+  {
+    "id": "1",
+    "title": "Title",
+    "video": {
+      "title": "Video title",
+      "url": "https://localhost/"
+    }
+  },
+  {
+    "id": "2",
+    "video": {
+      "title": "Video title",
+      "url": "https://localhost/"
+    }
+  },
+  {
+    "id": "3",
+    "title": "Title 3"
+  }
+]

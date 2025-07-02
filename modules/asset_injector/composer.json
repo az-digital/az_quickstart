@@ -1,0 +1,23 @@
+{
+  "name": "drupal/asset_injector",
+  "description": "Adds CSS or JS to the page output based on configurable rules.",
+  "type": "drupal-module",
+  "homepage": "http://drupal.org/project/asset_injector",
+  "authors": [
+    {
+      "name": "Mike Decker",
+      "homepage": "https://www.drupal.org/u/pookmish"
+    },
+    {
+      "name": "Axel Rutz",
+      "homepage": "https://www.drupal.org/u/axelrutz"
+    }
+  ],
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/asset_injector"
+  },
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "drupal/core": "^10.3 || ^11"
+  }
+}

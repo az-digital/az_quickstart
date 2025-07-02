@@ -1,0 +1,118 @@
+# Schema for the configuration files of the exlink module.
+
+extlink.settings:
+  type: config_object
+  label: 'External Links Settings'
+  mapping:
+    extlink_use_external_js_file:
+      type: boolean
+      label: 'Load exclusions and inclusions externally'
+    extlink_exclude_admin_routes:
+      type: boolean
+      label: 'Disable module on admin routes.'
+    extlink_target:
+      type: boolean
+      label: 'Open external links in a new tab'
+    extlink_target_no_override:
+      type: boolean
+      label: 'Do not override target="*" if set'
+    extlink_title_no_override:
+      type: boolean
+      label: 'Do not override title="" if set'
+    extlink_nofollow:
+      type: boolean
+      label: 'Tag external links as "no follow"'
+    extlink_noreferrer:
+      type: boolean
+      label: 'Tag external links as "noreferrer"'
+    extlink_follow_no_override:
+      type: boolean
+      label: 'Do not override rel="follow" if set'
+    extlink_subdomains:
+      type: boolean
+      label: 'Consider subdomains internal'
+    extlink_alert:
+      type: boolean
+      label: 'Enable Pop-up warnings'
+    extlink_alert_text:
+      type: text
+      label: 'Message to display when Pop-up warning is shown'
+    extlink_hide_icons:
+      type: boolean
+      label: 'Enable hide decorative icons from screen readers'
+    extlink_additional_link_classes:
+      type: string
+      label: 'Custom CSS classes that will be added on to every external link.'
+    extlink_additional_mailto_classes:
+      type: string
+      label: 'Custom CSS classes that will be added onto every external mailto link.'
+    extlink_additional_tel_classes:
+      type: string
+      label: 'Custom CSS classes that will be added onto every external tel link.'
+    extlink_exclude:
+      type: string
+      label: 'Exclude links matching the pattern'
+    extlink_include:
+      type: string
+      label: 'Include links matching the pattern'
+    extlink_exclude_noreferrer:
+      type: string
+      label: 'Exclude links matching the pattern from having "noreferrer" applied'
+    extlink_class:
+      type: string
+      label: 'Add icon to external links'
+    extlink_label:
+      type: label
+      label: 'Alternative text for external link icon'
+    extlink_img_class:
+      type: boolean
+      label: 'Treat images wrapped in an anchor tag as external links'
+    extlink_css_exclude:
+      type: string
+      label: 'Comma-separated list of CSS selectors to exclude'
+    extlink_css_include:
+      type: string
+      label: 'Comma-separated list of CSS selectors to include'
+    extlink_css_explicit:
+      type: string
+      label: 'Comma-separated list of CSS selectors to include'
+    extlink_mailto_class:
+      type: string
+      label: 'Add icon to mailto links'
+    extlink_mailto_label:
+      type: label
+      label: 'Alternative text for mailto icon'
+    extlink_tel_class:
+      type: string
+      label: 'Add icon to tel links'
+    extlink_tel_label:
+      type: label
+      label: 'Alternative text for tel icon'
+    extlink_use_font_awesome:
+      type: boolean
+      label: 'Use Font Awesome icons instead of images.'
+    extlink_font_awesome_classes:
+      type: mapping
+      label: 'Font Awesome icon classes'
+      mapping:
+        links:
+          type: string
+          label: 'External link classes'
+        mailto:
+          type: string
+          label: 'Mailto link classes'
+        tel:
+          type: string
+          label: 'Tel link classes'
+    extlink_icon_placement:
+      type: string
+      label: 'Add icon in front of any processed link.'
+    extlink_prevent_orphan:
+      type: boolean
+      label: 'Prevent text wrapping separating the last word from the icon.'
+    whitelisted_domains:
+      type: sequence
+      label: 'Whitelisted domains'
+      sequence:
+        type: string
+        label: 'Domain'

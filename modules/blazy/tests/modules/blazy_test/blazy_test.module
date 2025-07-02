@@ -1,0 +1,56 @@
+<?php
+
+/**
+ * @file
+ * Testing various Blazy hooks, etc.
+ */
+
+use Drupal\blazy\BlazyDefault;
+
+/**
+ * Implements hook_theme().
+ */
+function blazy_test_theme() {
+  return ['blazy_test' => ['render element' => 'element']];
+}
+
+/**
+ * Prepares variables for blazy-test.html.twig templates.
+ */
+function template_preprocess_blazy_test(&$variables) {
+  $element = $variables['element'];
+
+  $variables['content'] = $element['#children'];
+  $variables['settings'] = $element['#settings'] ?? [];
+}
+
+/**
+ * Implements hook_blazy_attach_alter().
+ */
+function blazy_test_blazy_attach_alter(array &$load, array $settings = []) {
+  if (!empty($settings['blazy_test'])) {
+    $load['library'][] = 'foo/fake_library';
+
+    $manager = \Drupal::service('blazy.manager');
+    $template = ['#theme' => 'blazy_test'];
+    $load['drupalSettings']['blazy_test'] = [
+      'options' => ['slideshow' => TRUE],
+      'container' => $manager->renderInIsolation($template),
+    ];
+  }
+}
+
+/**
+ * Implements hook_blazy_lightboxes_alter().
+ */
+function blazy_test_blazy_lightboxes_alter(array &$lightboxes) {
+  $lightboxes[] = 'blazy_test';
+}
+
+/**
+ * Implements hook_config_schema_info_alter().
+ */
+function blazy_test_config_schema_info_alter(array &$definitions) {
+  $extra = ['thumbnail' => ''] + BlazyDefault::gridSettings();
+  blazy()->configSchemaInfoAlter($definitions, 'blazy_base', BlazyDefault::extendedSettings() + $extra);
+}

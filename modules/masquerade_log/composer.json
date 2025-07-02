@@ -1,0 +1,22 @@
+{
+  "name": "drupal/masquerade_log",
+  "description": "Allows to record also the original user in logger event.",
+  "type": "drupal-module",
+  "homepage": "https://www.drupal.org/project/masquerade_log",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/masquerade_log",
+    "source": "https://git.drupalcode.org/project/masquerade_log"
+  },
+  "authors": [
+    {
+      "name": "Claudiu Cristea",
+      "email": "clau.cristea@gmail.com",
+      "role": "Maintainer"
+    }
+  ],
+  "license": "GPL-2.0+",
+  "minimum-stability": "dev",
+  "require": {
+    "drupal/masquerade": ">2.0-rc4"
+  }
+}

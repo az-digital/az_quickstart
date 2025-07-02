@@ -1,0 +1,5 @@
+webform_schema:
+  version: VERSION
+  css:
+    theme:
+      css/webform_schema.module.css: {}

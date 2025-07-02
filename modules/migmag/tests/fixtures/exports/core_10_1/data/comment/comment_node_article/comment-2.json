@@ -1,0 +1,31 @@
+[
+    {
+        "cid": 2,
+        "uuid": "0ac9b81a-6f9f-4a35-9434-f9d77c386d90",
+        "langcode": "en",
+        "comment_type": "comment_node_article",
+        "status": "1",
+        "uid": 1,
+        "pid": null,
+        "entity_id": 2,
+        "subject": "TNG for the win!",
+        "name": null,
+        "mail": null,
+        "homepage": null,
+        "hostname": "127.0.0.1",
+        "created": 1532789252,
+        "changed": 1532789252,
+        "thread": "01/",
+        "entity_type": "node",
+        "field_name": "comment_node_article",
+        "default_langcode": "1",
+        "content_translation_source": "und",
+        "content_translation_outdated": "0",
+        "comment_body": [
+            {
+                "value": "TNG is better than DS9.",
+                "format": "filtered_html"
+            }
+        ]
+    }
+]

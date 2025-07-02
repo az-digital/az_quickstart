@@ -1,0 +1,11 @@
+paragraphs_admin.delete_paragraph:
+  path: '/paragraph/{paragraph}/delete'
+  defaults:
+    _title: 'Delete paragraph'
+    _controller: '\Drupal\paragraphs_admin\Controller\ParagraphController::deleteParagraph'
+  options:
+    _node_operation_route: TRUE
+  requirements:
+    _permission: 'administer paragraphs'
+    paragraph: \d+
+    _csrf_token: 'TRUE'

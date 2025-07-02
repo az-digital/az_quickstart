@@ -1,0 +1,138 @@
+/**
+ * @file
+ * Re-used rules for Fullscreen and Fullwidth.
+ */
+
+.slide__constrained {
+  z-index: 2;
+  top: 0;
+  box-sizing: border-box; /* dups due to csslint ignoring inheritance */
+  height: 100%;
+  min-height: 210px;
+  padding-top: 10%;
+  pointer-events: none;
+}
+
+.slide__constrained::after {
+  display: table;
+  clear: both;
+  content: "";
+}
+
+.slide__constrained > .slide__caption {
+  pointer-events: auto;
+}
+
+.slide__constrained .slide__link a {
+  text-decoration: none;
+}
+
+@media (min-width: 64em) {
+  .slide__constrained > .slide__caption {
+    position: absolute;
+  }
+
+  .slide--caption--center .slide__constrained > .slide__caption {
+    top: 50%;
+  }
+
+  .slide--caption--center .slide__constrained > .slide__caption,
+  .slide--caption--center-top .slide__constrained > .slide__caption {
+    left: 50%;
+    padding: 0;
+    transform: translateX(-50%);
+    text-align: center;
+  }
+
+  .slide--caption--center .slide__constrained > .slide__caption {
+    transform: translate(-50%, -50%);
+  }
+
+  .slide--caption--right .slide__constrained > .slide__caption {
+    right: 0;
+    left: auto;
+  }
+
+  .slide--caption--top .slide__constrained > .slide__caption,
+  .slide--caption--bottom .slide__constrained > .slide__caption {
+    width: 100%;
+  }
+
+  .slide--caption--top .slide__constrained > .slide__caption {
+    top: 0;
+  }
+
+  .slide--caption--bottom .slide__constrained > .slide__caption {
+    top: auto;
+    bottom: 0;
+  }
+
+  .slick--has-arrow-down
+    .slide--caption--bottom
+    .slide__constrained
+    > .slide__caption {
+    padding-bottom: 80px;
+  }
+
+  .slide--caption--stage-left .slide__constrained > .slide__caption,
+  .slide--caption--stage-right .slide__constrained > .slide__caption,
+  .slide--caption--stage-zebra .slide__constrained > .slide__caption {
+    left: 50%;
+    width: 82%;
+    padding: 0;
+    transform: translateX(-50%);
+  }
+
+  .slide--caption--stage-left
+    .slide__constrained
+    > .slide__caption
+    > .slide__data,
+  .slide--caption--stage-zebra:nth-child(odd)
+    .slide__constrained
+    > .slide__caption
+    > .slide__data {
+    margin-right: 56%;
+  }
+
+  .slide--caption--stage-right
+    .slide__constrained
+    > .slide__caption
+    > .slide__data,
+  .slide--caption--stage-zebra:nth-child(even)
+    .slide__constrained
+    > .slide__caption
+    > .slide__data {
+    margin-left: 56%;
+  }
+
+  .slide--caption--stage-left
+    .slide__constrained
+    > .slide__caption
+    > .slide__overlay,
+  .slide--caption--stage-zebra:nth-child(odd)
+    .slide__constrained
+    > .slide__caption
+    > .slide__overlay {
+    float: right;
+    width: 52%;
+  }
+
+  .slide--caption--stage-right
+    .slide__constrained
+    > .slide__caption
+    > .slide__overlay,
+  .slide--caption--stage-zebra:nth-child(even)
+    .slide__constrained
+    > .slide__caption
+    > .slide__overlay {
+    float: left;
+    width: 52%;
+  }
+
+  .slide--caption--below .slide__constrained > .slide__caption {
+    position: relative;
+    top: auto;
+    width: 100%;
+    padding: 20px 0;
+  }
+}

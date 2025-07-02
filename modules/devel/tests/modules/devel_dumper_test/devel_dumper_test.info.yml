@@ -1,0 +1,9 @@
+name: 'Devel dumper test module'
+type: module
+description: 'Test pluggable dumpers.'
+package: Testing
+
+# Information added by Drupal.org packaging script on 2024-08-10
+version: '5.3.1'
+project: 'devel'
+datestamp: 1723258449

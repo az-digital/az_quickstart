@@ -1,0 +1,5 @@
+entity.smart_date_format.add_form:
+  route_name: entity.smart_date_format.add_form
+  title: 'Add smart date format'
+  appears_on:
+    - entity.smart_date_format.collection

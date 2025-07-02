@@ -1,0 +1,7 @@
+MAINTAINERS
+-----------
+
+Current maintainers:
+
+ * Dave Reid (https://drupal.org/user/53892)
+ * Sascha Grossenbacher (Berdir) (https://www.drupal.org/user/214652)

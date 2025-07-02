@@ -1,0 +1,47 @@
+{
+  // Located at /modules/contrib/blazy, run:
+  // eslint . -o ../../eslint/blazy.html -f html
+  // @todo enable when are all JS files are converted into ES6 ~D10+.
+  // "extends": "../../../core/.eslintrc.json",
+  "extends": "../../../core/.eslintrc.legacy.json",
+  // Eslint reading unwanted .yml?
+  "ignorePatterns": ["*.yml", "config/**/*", "tests/*", "js/*.min.js", "js/*/*.min.js", "js/*/*/*.min.js"],
+  "root": true,
+  "globals": {
+    "once": true,
+    "Promise": true,
+    "Symbol": true,
+    "Blazy": true,
+    "dBlazy": true,
+    "Bio": true,
+    "BioMedia": true,
+    "cash": true,
+    "DOMPurify": true,
+    "Sanitizer": true
+  },
+  "rules": {
+    "consistent-this": [0, "me"],
+    "max-params": 0,
+    "id-length": [1, {"min": 1}],
+    "object-shorthand": [2, "consistent"],
+    "max-nested-callbacks": [1, 4],
+    // @todo remove when all JS files are converted into ES6 ~D10+.
+    "no-var": 0,
+    "func-names": 0,
+    "strict": 0,
+    "prefer-template": 0,
+    "prefer-destructuring": 0,
+    "no-undef": 0,
+    "prettier/prettier": 0,
+    "no-lonely-if": 0,
+    "no-shadow": 0,
+    "vars-on-top": 0,
+    "no-plusplus": 0,
+    "no-bitwise": 0
+  },
+  "overrides": [
+    {
+      "files": ["js/src/*.js", "js/src/**/*.js", "js/src/**/**/*.js"]
+    }
+  ]
+}

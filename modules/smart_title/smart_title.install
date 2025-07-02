@@ -1,0 +1,40 @@
+<?php
+
+/**
+ * @file
+ * Install and update functions for Smart Title.
+ */
+
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+
+/**
+ * Implements hook_uninstall().
+ */
+function smart_title_uninstall() {
+  $smart_title_bundles = \Drupal::configFactory()
+    ->get('smart_title.settings')
+    ->get('smart_title');
+
+  if (empty($smart_title_bundles)) {
+    return;
+  }
+
+  $entity_resave = function (EntityViewDisplayInterface $entity_view_display) {
+    $display_array = $entity_view_display->toArray() + ['hidden' => []];
+    unset($display_array['hidden']['smart_title']);
+    $entity_view_display
+      ->removeComponent('smart_title')
+      ->trustData()
+      ->save();
+  };
+
+  foreach ($smart_title_bundles as $smart_title_bundle) {
+    [$target_entity_id, $bundle] = explode(':', $smart_title_bundle);
+    array_map($entity_resave, \Drupal::entityTypeManager()
+      ->getStorage('entity_view_display')
+      ->loadByProperties([
+        'targetEntityType' => $target_entity_id,
+        'bundle' => $bundle,
+      ]));
+  }
+}

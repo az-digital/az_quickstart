@@ -1,0 +1,12 @@
+name: Entity Reference Revisions
+type: module
+description: Adds a Entity Reference field type with revision support.
+core_version_requirement: ^9 || ^10 || ^11
+package: Field types
+dependencies:
+  - drupal:field
+
+# Information added by Drupal.org packaging script on 2024-08-04
+version: '8.x-1.12'
+project: 'entity_reference_revisions'
+datestamp: 1722804499

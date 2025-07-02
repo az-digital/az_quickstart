@@ -1,0 +1,93 @@
+<?php
+
+/**
+ * @file
+ * Install, update, and uninstall functions of "migmag_rollbackable".
+ */
+
+declare(strict_types=1);
+
+use Drupal\migmag_rollbackable\RollbackableInterface;
+
+/**
+ * Implements hook_schema().
+ */
+function migmag_rollbackable_schema() {
+  $schema[RollbackableInterface::ROLLBACK_DATA_TABLE] = [
+    'description' => 'Stores the previous config values for migration rollback',
+    'fields' => [
+      RollbackableInterface::ROLLBACK_MIGRATION_PLUGIN_ID_COL => [
+        'type' => 'varchar_ascii',
+        'length' => 192,
+        'not null' => TRUE,
+        'description' => 'The ID of the migration plugin',
+      ],
+      RollbackableInterface::ROLLBACK_TARGET_ID_COL => [
+        'type' => 'varchar_ascii',
+        'length' => 255,
+        'not null' => TRUE,
+        'description' => 'The ID of the configuration',
+      ],
+      RollbackableInterface::ROLLBACK_LANGCODE_COL => [
+        'type' => 'varchar_ascii',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'The language code for this data item.',
+      ],
+      RollbackableInterface::ROLLBACK_COMPONENT_COL => [
+        'type' => 'varchar_ascii',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'The name of the component',
+      ],
+      RollbackableInterface::ROLLBACK_DATA_COL => [
+        'type' => 'blob',
+        'size' => 'big',
+        'description' => 'The previous state of the changed configuration values',
+      ],
+    ],
+    'indexes' => [],
+    'primary key' => [
+      RollbackableInterface::ROLLBACK_MIGRATION_PLUGIN_ID_COL,
+      RollbackableInterface::ROLLBACK_TARGET_ID_COL,
+      RollbackableInterface::ROLLBACK_LANGCODE_COL,
+      RollbackableInterface::ROLLBACK_COMPONENT_COL,
+    ],
+  ];
+
+  $schema[RollbackableInterface::ROLLBACK_STATE_TABLE] = [
+    'description' => 'Stores those configuration IDs that where created by a rollbackable migration',
+    'fields' => [
+      RollbackableInterface::ROLLBACK_TARGET_ID_COL => [
+        'type' => 'varchar_ascii',
+        'length' => 192,
+        'not null' => TRUE,
+        'description' => 'The ID of the configuration',
+      ],
+      RollbackableInterface::ROLLBACK_LANGCODE_COL => [
+        'type' => 'varchar_ascii',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'The language code of the configuration',
+      ],
+      RollbackableInterface::ROLLBACK_COMPONENT_COL => [
+        'type' => 'varchar_ascii',
+        'length' => 192,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'The name of the component, if any',
+      ],
+    ],
+    'indexes' => [],
+    'primary key' => [
+      RollbackableInterface::ROLLBACK_TARGET_ID_COL,
+      RollbackableInterface::ROLLBACK_LANGCODE_COL,
+      RollbackableInterface::ROLLBACK_COMPONENT_COL,
+    ],
+  ];
+
+  return $schema;
+}

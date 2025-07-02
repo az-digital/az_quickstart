@@ -1,0 +1,5 @@
+flag.admin.structure.flag:
+  title: 'Flags'
+  description: 'Configure flags for marking content with arbitrary information (such as <em>offensive</em> or <em>bookmarked</em>).'
+  parent: system.admin_structure
+  route_name: entity.flag.collection

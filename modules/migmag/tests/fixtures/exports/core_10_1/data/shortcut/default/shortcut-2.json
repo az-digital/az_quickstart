@@ -1,0 +1,18 @@
+[
+    {
+        "id": 2,
+        "uuid": "0254d768-66a7-4c51-81bc-dca42798023e",
+        "langcode": "en",
+        "shortcut_set": "default",
+        "title": "All content",
+        "weight": -19,
+        "link": [
+            {
+                "uri": "internal:/admin/content",
+                "title": null,
+                "options": []
+            }
+        ],
+        "default_langcode": "1"
+    }
+]

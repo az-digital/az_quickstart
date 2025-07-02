@@ -1,0 +1,4 @@
+services:
+  metatag_routes.helper:
+    class: Drupal\metatag_routes\Helper\MetatagRoutesHelper
+    arguments: ['@current_route_match']

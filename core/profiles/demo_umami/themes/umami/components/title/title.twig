@@ -1,0 +1,5 @@
+{% block title_prefix %}{% endblock %}
+<{{ html_tag|default('h2') }}{{ attributes.addClass('umami-title') }}>
+  {{ label }}
+</{{ html_tag|default('h2') }}>
+{% block title_suffix %}{% endblock %}

@@ -1,0 +1,11 @@
+services:
+  smart_date.manager:
+    class: Drupal\smart_date\SmartDateManager
+  smart_date.route_subscriber:
+    class: Drupal\smart_date\Routing\RouteSubscriber
+    tags:
+      - { name: event_subscriber }
+  smart_date_format.twig_extension:
+    class: Drupal\smart_date\TwigExtension\SmartDateFormat
+    tags:
+      - { name: twig.extension }

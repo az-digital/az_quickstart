@@ -1,0 +1,14 @@
+dependencies:
+  enforced:
+    module:
+      - migrate_example_advanced_setup
+id: migrate_example_advanced_variety_items
+plugin_id: 'migrate_example_advanced_variety_items'
+granularity: method
+configuration:
+  GET:
+    supported_formats:
+      - json
+      - xml
+    supported_auth:
+      - cookie

@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * @file
+ * Test module file.
+ */
+
+use Drupal\Core\Config\Config;
+
+/**
+ * Implements hook_workbench_access_scheme_update_alter().
+ */
+function workbench_access_hooks_workbench_access_scheme_update_alter(array &$settings, Config $config) {
+  if ($config->get('scheme')) {
+    $settings = [
+      'test' => 'test',
+    ];
+  }
+}

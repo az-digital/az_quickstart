@@ -1,0 +1,16 @@
+{#
+/**
+ * @file antibot-no-js.html.twig
+ * Theme implementation to present markup inside Antibot-protected forms.
+ *
+ * The purpose is to show a message to users without Javascript.
+ *
+ * Available variables:
+ * - message: The message text that is shown to non-JS users.
+ *
+ * @ingroup themeable
+ */
+#}
+<noscript>
+  <div class="antibot-no-js antibot-message antibot-message-warning">{{ message }}</div>
+</noscript>

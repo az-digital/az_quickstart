@@ -1,0 +1,10 @@
+.access-unpublished-form .form-item-duration label {
+  float: left;
+}
+.access-unpublished-form .form-item-duration select {
+  float: left;
+  margin-left: 10px;
+}
+.access-unpublished-form .access-unpublished-expired {
+  color: red;
+}

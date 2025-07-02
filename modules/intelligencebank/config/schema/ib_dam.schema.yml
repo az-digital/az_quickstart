@@ -1,0 +1,22 @@
+ib_dam.settings:
+  type: config_object
+  label: 'IntelligenceBank DAM configuration'
+  mapping:
+    debug:
+      type: boolean
+      label: 'Enable debug mode'
+    staging:
+      type: boolean
+      label: 'Enable staging mode'
+    allow_embedding:
+      type: boolean
+      label: 'Allow embed assets in addition to download'
+    login_url:
+      type: string
+      label: 'Platform URL login'
+    login_enable_browser_login:
+      type: boolean
+      label: 'Enable browser login'
+    login_enable_custom_url:
+      type: boolean
+      label: 'Enable custom URL'

@@ -1,0 +1,3 @@
+delete orphan revisions:
+  title: 'Delete orphan revisions'
+  description: 'Allow to access to the Entity Reference Revisions orphan deletion form.'

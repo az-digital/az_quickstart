@@ -1,0 +1,5 @@
+image_widget_crop.crop_widget_settings:
+  title: 'ImageWidgetCrop settings'
+  description: 'Configure common settings for ImageWidgetCrop.'
+  parent: system.admin_config_media
+  route_name: image_widget_crop.crop_widget_settings

@@ -1,0 +1,95 @@
+[
+    {
+        "nid": 1,
+        "uuid": "d81b2898-cbb7-4e7a-a6cf-d2ed0d2dc54a",
+        "vid": 1,
+        "langcode": "en",
+        "type": "test_content_type",
+        "revision_timestamp": 1529615790,
+        "revision_uid": 1,
+        "revision_log": null,
+        "status": "1",
+        "uid": 2,
+        "title": "An English Node",
+        "created": 1529615790,
+        "changed": 1529615790,
+        "promote": "1",
+        "sticky": "0",
+        "default_langcode": "1",
+        "revision_default": "1",
+        "revision_translation_affected": "1",
+        "content_translation_source": "",
+        "content_translation_outdated": "0",
+        "comment_node_test_content_type": [
+            {
+                "status": 2,
+                "cid": 4,
+                "last_comment_timestamp": 1426781880,
+                "last_comment_name": "",
+                "last_comment_uid": 3,
+                "comment_count": 2
+            }
+        ],
+        "field_boolean": "1",
+        "field_date": "2015-01-20T04:15:00",
+        "field_date_with_end_time": 1421727300,
+        "field_date_without_time": "2015-01-20",
+        "field_datetime_without_time": "2015-01-20",
+        "field_email": [
+            {
+                "value": "default@example.com"
+            },
+            {
+                "value": "another@example.com"
+            }
+        ],
+        "field_file": [
+            {
+                "target_id": 2,
+                "display": "1",
+                "description": "file desc"
+            }
+        ],
+        "field_float": "1",
+        "field_float_list": "3.1416",
+        "field_images": [
+            {
+                "target_id": 1,
+                "alt": "alt text",
+                "title": "title text",
+                "width": 93,
+                "height": 93
+            }
+        ],
+        "field_integer": 5,
+        "field_integer_list": 7,
+        "field_link": [
+            {
+                "uri": "http://google.com",
+                "title": "Click Here",
+                "options": {
+                    "attributes": {
+                        "title": "Click Here"
+                    }
+                }
+            }
+        ],
+        "field_long_text": null,
+        "field_node_entityreference": 2,
+        "field_phone": "99-99-99-99",
+        "field_private_file": null,
+        "field_telephone": "99-99-99-99",
+        "field_term_entityreference": [
+            {
+                "target_id": 17
+            },
+            {
+                "target_id": 15
+            }
+        ],
+        "field_term_reference": 4,
+        "field_text": "qwerty",
+        "field_text_list": "Some more text",
+        "field_user_entityreference": null
+    }
+]

@@ -1,0 +1,48 @@
+<?php
+
+/**
+ * @file
+ * Default hook implementations for the Metatag Routes module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function metatag_routes_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the ok_metatag_custom module.
+    case 'help.page.metatag_routes':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Enables metatags for custom routes') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_metatags_alter().
+ */
+function metatag_routes_metatags_alter(array &$metatags, array $context) {
+  // Ignore some system routes that are not appropriate for meta tags.
+  if (metatag_is_current_route_supported()) {
+    // Look to see if a configuration was assigned for this route.
+    /** @var \Drupal\metatag_routes\Helper\MetatagRoutesHelperInterface $metatag_routes_helper */
+    $metatag_routes_helper = \Drupal::service('metatag_routes.helper');
+    $current_route = $metatag_routes_helper->getCurrentMetatagRouteId();
+    if (!empty($current_route)) {
+      $defaults = \Drupal::entityTypeManager()
+        ->getStorage('metatag_defaults')
+        ->load($current_route);
+      if (!empty($defaults)) {
+        $tags = $defaults->get('tags');
+
+        // Replace the new values and keep on the global values.
+        $metatags = array_merge($metatags, $tags);
+      }
+    }
+  }
+}

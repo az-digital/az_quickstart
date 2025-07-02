@@ -1,0 +1,13 @@
+name: "IEF translation test"
+type: module
+description: "Support module for the Inline entity form module tests."
+package: Testing
+dependencies:
+  - inline_entity_form_test:inline_entity_form_test
+  - drupal:language
+  - drupal:content_translation
+
+# Information added by Drupal.org packaging script on 2025-05-05
+version: '3.0.0-rc21'
+project: 'inline_entity_form'
+datestamp: 1746459783

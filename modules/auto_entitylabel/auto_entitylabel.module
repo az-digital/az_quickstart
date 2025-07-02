@@ -1,0 +1,398 @@
+<?php
+
+/**
+ * @file
+ * Allows hiding of entity label fields and automatic label creation.
+ */
+
+use Drupal\auto_entitylabel\AutoEntityLabelManager;
+use Drupal\Component\Render\MarkupInterface;
+use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\Core\Entity\ContentEntityType;
+use Drupal\Core\Entity\EntityFormInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Render\Markup;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_help().
+ */
+function auto_entitylabel_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.auto_entitylabel':
+      $output = '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('This is a small and efficient module that allows hiding of entity label fields. To prevent empty labels it can be configured to generate the label automatically by a given pattern. The module can be used for any entity type that has a label, including e.g. for node titles, comment subjects, taxonomy term names and profile2 labels.') . '</p>';
+      $output .= '<p>' . t('Patterns for automatic labels are constructed with the help of tokens. Drupal core provides a basic set of <a href="@url_tokens" target="blank">tokens</a>. For a token selection widget install the token. Some entity types (e.g. profile2) provide tokens via the entity_token, which is part of the entity module.', ['@url_tokens' => 'https://www.drupal.org/project/token']) . '</p>';
+      $output .= '<p>' . t('Watch the <a href="@url_daily_dose_of_drupal" target="blank">Daily Dose of Drupal</a> screencast by <a href="@url_shane_thomas" target="blank">Shane Thomas</a> for a short introduction and demonstration of the module and some of its features. Demonstration made in D7 but can help a lot.',
+          [
+            '@url_daily_dose_of_drupal' => 'http://codekarate.com/daily-dose-of-drupal/drupal-7-automatic-entity-label-module',
+            '@url_shane_thomas' => 'https://www.drupal.org/user/506260',
+          ]) . '</p>';
+      $output .= '<h3>' . t('Usage') . '</h3>';
+      $output .= '<p>' . t('The configuration can be accessed with the <i>Manage automatic entity labels</i> operation or the <i>Automatic label</i> tab when editing entity types. For example, when configuring a node type, visit <i>Administration</i> » <i>Structure</i> » <i>Content types</i> (/admin/structure/types). You can also configure automatic labels for other entity types such as <i>Media<i>, in which case you would visit <i>Administration</i> » <i>Structure</i> » <i>Media</i> (/admin/structure/media).') . '</p>';
+
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_entity_type_alter().
+ *
+ * Adds the Auto Label tab to the entity configuration page.
+ */
+function auto_entitylabel_entity_type_alter(array &$entity_types) {
+  /** @var \Drupal\Core\Entity\EntityTypeInterface $entity_type */
+  foreach ($entity_types as $entity_type) {
+    if ($entity_type->getBundleOf() && $entity_type->hasLinkTemplate('edit-form')) {
+      $entity_type->setLinkTemplate('auto-label', $entity_type->getLinkTemplate('edit-form') . "/auto-label");
+    }
+    // Also enable for Core's fieldable ContentEntityTypes without bundles.
+    // Currently can't be solved generically as Routing table isn't available
+    // at this point, see #2924075.
+    elseif ($entity_type instanceof ContentEntityType && !empty($entity_type->get('field_ui_base_route')) && empty($entity_type->getBundleEntityType())) {
+      switch ($entity_type->id()) {
+        case 'aggregator_feed':
+          $entity_type->setLinkTemplate('auto-label', '/admin/config/services/aggregator/auto-label');
+          break;
+
+        case 'user':
+          $entity_type->setLinkTemplate('auto-label', '/admin/config/people/accounts/auto-label');
+          break;
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function auto_entitylabel_form_alter(&$form, FormStateInterface $form_state) {
+  /** @var \Drupal\Core\Entity\EntityFormInterface $formObject */
+  $formObject = $form_state->getFormObject();
+  if ($formObject instanceof EntityFormInterface) {
+    $entity = $formObject->getEntity();
+    if ($entity instanceof ContentEntityInterface) {
+      auto_entitylabel_prepare_entityform($form, $entity);
+    }
+  }
+}
+
+/**
+ * Implements hook_inline_entity_form_entity_form_alter().
+ */
+function auto_entitylabel_inline_entity_form_entity_form_alter(&$form, &$form_state) {
+  $entity = $form['#entity'];
+  auto_entitylabel_prepare_entityform($form, $entity);
+}
+
+/**
+ * Implements hook_inline_entity_form_table_fields_alter().
+ */
+function auto_entitylabel_inline_entity_form_table_fields_alter(&$fields, $context) {
+  // Replace label field behavior.
+  if (isset($fields['label'])) {
+    $fields['label']['type'] = 'callback';
+    $fields['label']['callback'] = 'auto_entitylabel_inline_entity_label_callback';
+  }
+}
+
+/**
+ * A callback function to provide autoentitylabel for inline entity form.
+ */
+function auto_entitylabel_inline_entity_label_callback($entity, $variables) {
+  $autolabel = $entity->label();
+  if ($entity instanceof ContentEntityInterface) {
+    $decorator = \Drupal::service('auto_entitylabel.entity_decorator');
+    /** @var \Drupal\auto_entitylabel\AutoEntityLabelManager $decorated_entity */
+    $decorated_entity = $decorator->decorate($entity);
+    if ($decorated_entity->hasLabel() && $decorated_entity->autoLabelNeeded()) {
+      $autolabel = $decorated_entity->setLabel();
+    }
+
+  }
+
+  return $autolabel;
+}
+
+/**
+ * Prepares the label replacement in the entity form.
+ *
+ * @param array $form
+ *   Form array.
+ * @param \Drupal\Core\Entity\ContentEntityInterface $entity
+ *   The entity which title will be replaced.
+ */
+function auto_entitylabel_prepare_entityform(array &$form, ContentEntityInterface $entity) {
+  if (empty($form['#auto_entitylabel_processed'])) {
+    $decorator = \Drupal::service('auto_entitylabel.entity_decorator');
+    $entity_type_id = $entity->getEntityTypeId();
+    /** @var \Drupal\auto_entitylabel\AutoEntityLabelManager $entity */
+    $entity = $decorator->decorate($entity);
+    $label = $entity->getLabelName();
+
+    // Special treatment for Core's user entity.
+    if ($entity_type_id == 'user') {
+      $widget = &$form['account']['name'];
+    }
+    else {
+      $widget = &$form[$label]['widget'][0]['value'];
+    }
+
+    switch ($entity->getStatus()) {
+      case AutoEntityLabelManager::ENABLED:
+        // Hide the label field. It will be automatically generated in
+        // hook_entity_presave().
+        $widget['#type'] = 'hidden';
+        $widget['#required'] = FALSE;
+        if (empty($widget['#default_value'])) {
+          $widget['#default_value'] = '.AutoEntityLabel.';
+        }
+        break;
+
+      case AutoEntityLabelManager::OPTIONAL:
+        // Allow label field to be empty. It will be automatically generated
+        // in hook_entity_presave().
+        $widget['#required'] = FALSE;
+        break;
+
+      case AutoEntityLabelManager::PREFILLED:
+        if (empty($widget['#default_value'])) {
+          $widget['#default_value'] = $entity->setLabel();
+        }
+        break;
+    }
+
+    $form['#auto_entitylabel_processed'] = TRUE;
+  }
+}
+
+/**
+ * Implements hook_entity_prepare_view().
+ */
+function auto_entitylabel_entity_prepare_view($entity_type_id, array $entities, array $displays, $view_mode) {
+  foreach ($entities as $entity) {
+    if (isset($entity->in_preview) && $entity->in_preview === TRUE && $entity instanceof ContentEntityInterface) {
+      $decorator = \Drupal::service('auto_entitylabel.entity_decorator');
+      /** @var \Drupal\auto_entitylabel\AutoEntityLabelManager $decorated_entity */
+      $decorated_entity = $decorator->decorate($entity);
+
+      if ($decorated_entity->hasLabel() && $decorated_entity->autoLabelNeeded()) {
+        $decorated_entity->setLabel();
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_entity_presave().
+ */
+function auto_entitylabel_entity_presave(EntityInterface $entity) {
+  if ($entity instanceof ContentEntityInterface) {
+    $decorator = \Drupal::service('auto_entitylabel.entity_decorator');
+    /** @var \Drupal\auto_entitylabel\AutoEntityLabelManager $decorated_entity */
+    $decorated_entity = $decorator->decorate($entity);
+    if ($decorated_entity->hasLabel() && $decorated_entity->autoLabelNeeded()) {
+
+      // Need to generate a label for this entity.
+      //
+      // There's a few cases we need to handle.
+      // I'm going to lay these out explicitly so that the logic is
+      // clear. I expect we can optimize these at a later point.
+      //
+      // Two of the scenarios need the placeholder label, so
+      // always generate it.
+      // Make the placeholder unique for this entity. Handles the case
+      // where both a paragraph on a node and a node have an auto label.
+      $placeholder = strtr('%AutoEntityLabel: @entityId%', ['@entityId' => $entity->uuid()]);
+
+      // Check to see if this is a new entity.
+      if ($entity->isNew()) {
+        // Handle the case where the automatic label is optional.
+        // Check to see if isTitlePreserved is set. If the autolabel is
+        // optional AND the user has filled this title in then the
+        // the autolabel should not be set.
+        if (!$decorated_entity->isTitlePreserved() || $entity->label() == '%AutoEntityLabel%') {
+          // For a new entity check to see whether the automatic label
+          // is configured to be generated before we've saved the node
+          // to the database or after. While the entity is flagged as
+          // new this presave is running before the entity has been saved
+          // to the database.
+          if ($decorated_entity->getNewContentBehavior() === AutoEntityLabelManager::BEFORE_SAVE) {
+            // Generate the automatic label during this run of the presave
+            // hook. Note that not all tokens are available during the
+            // first presave hook run for new entities (most notably the
+            // entity id token).
+            $decorated_entity->setLabel();
+          }
+          else {
+            // Generate the label after the first save, when the entity has
+            // been written to the database and all tokens are available.
+            // When the after first save option is selected code in the
+            // autoentity_entity_insert function will trigger a resave of the
+            // entity, which will in turn trigger another run of this presave
+            // hook (but during the second run the entity will not be new).
+            // To allow the entity to save we'll set a placeholder title,
+            // one that will be replaced once the entity is resaved.
+            // Using Drupal functions so as not to trigger two runs of
+            // setLabel().
+            $label_field = $entity->getEntityType()->getKey('label');
+            $entity->set($label_field, $placeholder);
+          }
+        }
+      }
+      else {
+        // This is an update of an existing entity.
+        // Check to see whether the existing title needs to be
+        // preserved.
+        if ($decorated_entity->isTitlePreserved()) {
+          // The existing title needs to be preserved.
+          // Now check whether or not the title is the new entity
+          // placeholder. Because if it is we want to ignore
+          // the isTitlePreserved flag and update the label anyway
+          // (the code assumes that the only way the entity will
+          // have the placeholder title is if we've configured this entity
+          // to set its auto label during the second run of the presave
+          // hook and this is that second run).
+          $oldLabel = $entity->label();
+          if ($oldLabel == $placeholder) {
+            $decorated_entity->setLabel();
+          }
+        }
+        else {
+          // Don't preserve the exiting title. Update the label.
+          $decorated_entity->setLabel();
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_entity_insert().
+ */
+function auto_entitylabel_entity_insert(EntityInterface $entity) {
+  // AutoEntityLabel only supports content entities.
+  if ($entity instanceof ContentEntityInterface) {
+    // To support tokens that are only available after the entity has
+    // been created (like id tokens) trigger a second save.
+    // To do this without corrupting the entity run the
+    // save operation at the end of the entity insert transaction.
+    // To run code at the entity of the entity insert transaction
+    // we need to register a transaction shutdown function.
+    // Check the autolabel settings for the entity to see if we
+    // need to register the shutdown function.
+    $decorator = \Drupal::service('auto_entitylabel.entity_decorator');
+    /** @var \Drupal\auto_entitylabel\AutoEntityLabelManager $decorated_entity */
+    $decorated_entity = $decorator->decorate($entity);
+    if ($decorated_entity->hasLabel()
+      && $decorated_entity->autoLabelNeeded()
+      && $decorated_entity->getNewContentBehavior() === AutoEntityLabelManager::AFTER_SAVE
+    ) {
+      // This new entity has an autolabel and it needs to be generated
+      // after the entity has been saved in the database. Register the
+      // shutdown function.
+      drupal_register_shutdown_function('_auto_entitylabel_post_insert', $entity);
+
+      // Set entity label in memory so messages and such can use what will be
+      // saved during shutdown.
+      $decorator = \Drupal::service('auto_entitylabel.entity_decorator');
+      /** @var \Drupal\auto_entitylabel\AutoEntityLabelManager $decorated_entity */
+      $decorated_entity = $decorator->decorate($entity);
+      if ($decorated_entity->hasLabel() && $decorated_entity->autoLabelNeeded()) {
+        $placeholder = strtr('%AutoEntityLabel: @entityId%', ['@entityId' => $entity->uuid()]);
+        if (!$decorated_entity->isTitlePreserved() || $entity->label() == $placeholder) {
+          if ($decorated_entity->getNewContentBehavior() === AutoEntityLabelManager::AFTER_SAVE) {
+            // Update entity's label in memory for anything running after us.
+            $label = $decorated_entity->setLabel();
+
+            // Update messages that were using the placeholder label.
+            $messenger = Drupal::messenger();
+            $all_messages = $messenger->all();
+            $messenger->deleteAll();
+            foreach ($all_messages as $type => $messages) {
+              foreach ($messages as $message) {
+                if (strpos($message, $placeholder) >= 0) {
+                  if ($message instanceof MarkupInterface) {
+                    $message = Markup::create(str_replace($placeholder, $label, $message));
+                  }
+                  else {
+                    $message = str_replace($placeholder, $label, $message);
+                  }
+                }
+                $messenger->addMessage($message, $type);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Re-save the entity to trigger creation of the automatic label if necessary.
+ */
+function _auto_entitylabel_post_insert(EntityInterface $entityArg) {
+  if ($entityArg instanceof ContentEntityInterface) {
+    // Because of the way PHP shutdown functions work this operation may
+    // be called during an entity delete operation (as demonstrated by
+    // the Kernel test). Reload the entity from the database to check that
+    // it hasn't been deleted.
+    if ($entity = \Drupal::entityTypeManager()->getStorage($entityArg->getEntityTypeId())->loadUnchanged($entityArg->id())) {
+
+      // The entity hasn't been deleted, continue processing.
+      // Again because of the way shutdown functions work this
+      // function may be called for entities that don't have an
+      // autolabel or ones that do but don't need to be saved
+      // again. Run the same checks that were run during the
+      // insert hook to be sure that this entity really needs the
+      // second save.
+      $decorator = \Drupal::service('auto_entitylabel.entity_decorator');
+      /** @var \Drupal\auto_entitylabel\AutoEntityLabelManager $decorated_entity */
+      $decorated_entity = $decorator->decorate($entity);
+
+      if ($decorated_entity->hasLabel()
+      && $decorated_entity->autoLabelNeeded()
+      && $decorated_entity->getNewContentBehavior() === AutoEntityLabelManager::AFTER_SAVE) {
+        if ($entity->getEntityType()->isRevisionable()) {
+          $entity->setNewRevision(FALSE);
+        }
+        $entity->save();
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_validation_constraint_alter().
+ *
+ * Override core NotNull constraint to allow entities that use Auto Entity
+ * Labels to validate when their label is empty before being set automatically.
+ */
+function auto_entitylabel_validation_constraint_alter(array &$definitions) {
+  $definitions['NotNull']['class'] = 'Drupal\auto_entitylabel\Plugin\Validation\EntityLabelNotNullConstraint';
+}
+
+/**
+ * Implements hook_entity_operation().
+ */
+function auto_entitylabel_entity_operation(EntityInterface $entity) {
+  $operations = [];
+  $entity_type = $entity->getEntityType();
+  $entity_type_id = $entity_type->id();
+  $entity_id = $entity->id();
+  if ($entity->hasLinkTemplate('auto-label') &&
+    \Drupal::currentUser()
+      ->hasPermission('administer ' . $entity_type_id . ' labels')) {
+
+    $operations['auto-label'] = [
+      'title' => t('Manage automatic entity labels'),
+      'weight' => 100,
+      'url' => Url::fromRoute("entity.{$entity_type_id}.auto_label", [$entity_type_id => $entity_id]),
+    ];
+  }
+
+  return $operations;
+}

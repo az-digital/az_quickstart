@@ -1,0 +1,266 @@
+<?php
+
+/**
+ * @file
+ * Core file of the Menu Link Attributes module.
+ */
+
+use Drupal\Component\Utility\NestedArray;
+use Drupal\Component\Utility\Unicode;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
+use Drupal\menu_link_content\MenuLinkContentInterface;
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter().
+ */
+function menu_link_attributes_form_menu_link_content_form_alter(array &$form, FormStateInterface $form_state, $form_id) {
+  $form['#entity_builders']['menu_link_attributes'] = 'menu_link_attributes_menu_link_content_form_entity_builder';
+
+  $account = \Drupal::currentUser();
+  $attributes = \Drupal::config('menu_link_attributes.config')->get('attributes') ?: [];
+  /** @var \Drupal\menu_link_content\MenuLinkContentInterface $menu_link  */
+  $menu_link = $form_state->getFormObject()->getEntity();
+
+  $menu_link_options = $menu_link->link ? $menu_link->link->first()->options : [];
+
+  if (!$account->hasPermission('use menu link attributes')) {
+    $form_state->set('menu_link_options', $menu_link_options);
+    return;
+  }
+
+  if ($menu_link->isDefaultTranslationAffectedOnly() && !$menu_link->isDefaultTranslation()) {
+    return;
+  }
+
+  $form['options']['attributes'] = [
+    '#type' => 'details',
+    '#title' => t('Attributes'),
+    '#weight' => -3,
+    '#tree' => TRUE,
+  ];
+
+  $form['options']['container_attributes'] = [
+    '#type' => 'details',
+    '#title' => t('Container attributes'),
+    '#description' => t('These attributes are applied to the container element (<code>&lt;li&gt;</code>) of the menu link.'),
+    '#weight' => -2,
+    '#tree' => TRUE,
+    '#access' => FALSE,
+  ];
+
+  $config_path = Url::fromRoute('menu_link_attributes.config')->toString();
+  $referrer = \Drupal::request()->headers->get('referer');
+  $referrer_path = $referrer ? parse_url($referrer)['path'] : '';
+
+  $coming_from_config = $config_path == $referrer_path;
+
+  // Open <details> element if coming from config page.
+  if ($coming_from_config) {
+    $form['options']['attributes']['#open'] = TRUE;
+  }
+
+  $destination = \Drupal::destination()->getAsArray();
+  $config_path = Url::fromRoute('menu_link_attributes.config', [], ['query' => $destination])->toString();
+
+  if ($account->hasPermission('administer menu link attributes')) {
+    if (count($attributes)) {
+      $form['options']['attributes']['#description'] = '<small>' . t('Manage available attributes <a href="@config">here</a>.', ['@config' => $config_path]) . '</small>';
+    }
+    else {
+      $form['options']['attributes']['help'] = [
+        '#markup' => t('Manage available attributes <a href="@config">here</a>.', ['@config' => $config_path]),
+      ];
+    }
+  }
+
+  $autofocus = FALSE;
+
+  // Iterate all defined attributes and create text field for them.
+  foreach ($attributes as $attribute => $info) {
+    $is_container_attribute = menu_link_attributes_is_container_attribute($attribute);
+    $attribute_formatted = $attribute;
+    $attributes_key = 'attributes';
+
+    if ($is_container_attribute) {
+      $attributes_key = 'container_attributes';
+      $attribute_formatted = preg_replace('/^container_/', '', $attribute);
+    }
+
+    // Provide default label / description for attributes.
+    if (empty($info['label'])) {
+      $info['label'] = str_replace('-', ' ', Unicode::ucfirst($attribute_formatted));
+    }
+
+    if (empty($info['description'])) {
+      $info['description'] = t('Enter value for <code>@attribute</code> attribute.', ['@attribute' => $attribute_formatted]);
+    }
+
+    // Determine type based on options field.
+    if (empty($info['type'])) {
+      $type = !empty($info['options']) ? 'select' : 'textfield';
+    }
+    else {
+      $type = $info['type'];
+    }
+
+    $form['options']['attributes'][$attribute] = [
+      '#type' => $type,
+      '#title' => $info['label'],
+      '#description' => $info['description'],
+      '#default_value' => $menu_link_options[$attributes_key][$attribute_formatted] ?? ($info['default_value'] ?? ''),
+    ];
+
+    // Fill options for types that use it.
+    if (in_array($type, ['select', 'checkboxes', 'radios'], TRUE)) {
+      $form['options']['attributes'][$attribute]['#empty_option'] = t('- Select -');
+      $form['options']['attributes'][$attribute]['#options'] = $info['options'];
+    }
+
+    // Handle multivalue types.
+    if (in_array($type, ['checkboxes'], TRUE) && is_scalar($form['options']['attributes'][$attribute]['#default_value'])) {
+      // Reverse what \Drupal\Core\Template\AttributeArray::__toString() does.
+      $array = array_filter(explode(' ', $form['options']['attributes'][$attribute]['#default_value']));
+      $form['options']['attributes'][$attribute]['#default_value'] = $array;
+    }
+
+    // Fill options if type is "managed_file".
+    if ($type === 'managed_file' && !empty($info['upload_location'])) {
+      $form['options']['attributes'][$attribute]['#upload_location'] = $info['upload_location'];
+    }
+
+    // Add "autofocus" attribute for first attribute input field
+    // if coming from config page.
+    if ($coming_from_config && !$autofocus) {
+      $form['options']['attributes'][$attribute]['#attributes'] = ['autofocus' => 'autofocus'];
+      $autofocus = TRUE;
+    }
+  }
+}
+
+/**
+ * Submit function for menu add / edit form.
+ */
+function menu_link_attributes_menu_link_content_form_entity_builder($entity_type, MenuLinkContentInterface $menu_link, &$form, &$form_state) {
+  if (!$menu_link->link || $menu_link->link->isEmpty()) {
+    return;
+  }
+
+  if (!\Drupal::currentUser()->hasPermission('use menu link attributes')) {
+    $menu_link_options = $form_state->get('menu_link_options');
+  }
+  elseif ($menu_link->isDefaultTranslation() || !$menu_link->isDefaultTranslationAffectedOnly()) {
+    $menu_link_attributes = ['attributes' => $form_state->getValue('attributes')];
+
+    foreach ($menu_link_attributes['attributes'] as $attribute_name => &$attribute_value) {
+      // Make "class" attributes an array.
+      if (in_array($attribute_name, ['class', 'container_class']) && !is_array($attribute_value)) {
+        $attribute_value = [(string) $attribute_value];
+      }
+
+      $is_container_attribute = menu_link_attributes_is_container_attribute($attribute_name);
+
+      if ($is_container_attribute) {
+        unset($menu_link_attributes['attributes'][$attribute_name]);
+
+        $attribute_name = preg_replace('/^container_/', '', $attribute_name);
+        $menu_link_attributes['container_attributes'][$attribute_name] = $attribute_value;
+      }
+    }
+
+    // Remove empty attribute values.
+    foreach ($menu_link_attributes as $attribute_group => $grouped_attributes) {
+      foreach ($grouped_attributes as $group_attribute_name => $group_attribute_value) {
+        if (is_array($group_attribute_value)) {
+          $filtered = array_filter($group_attribute_value);
+          if ($filtered) {
+            $menu_link_attributes[$attribute_group][$group_attribute_name] = $filtered;
+          }
+          else {
+            // Do not save empty attributes.
+            unset($menu_link_attributes[$attribute_group][$group_attribute_name]);
+          }
+        }
+        elseif (mb_strlen($group_attribute_value) === 0) {
+          unset($menu_link_attributes[$attribute_group][$group_attribute_name]);
+        }
+      }
+    }
+
+    $menu_link_options = array_filter($menu_link_attributes);
+  }
+  else {
+    /** @var \Drupal\menu_link_content\MenuLinkContentStorageInterface $menuLinkStorage */
+    $menuLinkStorage = \Drupal::entityTypeManager()->getStorage($menu_link->getEntityTypeId());
+    $original = $menuLinkStorage->loadRevision($menu_link->getLoadedRevisionId());
+
+    $menu_link_options = $original->get('link')->first()->options;
+  }
+
+  // Merge with existing options:
+  $existing_options = $menu_link->link->first()->options;
+  $menu_link->link->first()->options = NestedArray::mergeDeep($existing_options, $menu_link_options);
+
+  // Set for other languages.
+  if ($menu_link->isDefaultTranslation() || !$menu_link->isDefaultTranslationAffectedOnly()) {
+    foreach ($menu_link->getTranslationLanguages() as $language) {
+      if ($language->getId() != $menu_link->language()->getId()) {
+        // Merge with existing translation options:
+        $existing_translation_options = $menu_link->getTranslation($language->getId())->link->first()->options;
+        $menu_link->getTranslation($language->getId())->link->first()->options = NestedArray::mergeDeep($existing_translation_options, $menu_link_options);
+      }
+    }
+  }
+}
+
+/**
+ * Helper function to determine if attribute is a container attribute.
+ *
+ * @param string $attribute_name
+ *   The name of the attribute.
+ *
+ * @return bool
+ *   TRUE if the attribute is a container attribute.
+ */
+function menu_link_attributes_is_container_attribute($attribute_name) {
+  $attributes = \Drupal::config('menu_link_attributes.config')->get('attributes') ?: [];
+  $info = $attributes[$attribute_name];
+  $possible_container_attribute = strpos($attribute_name, 'container_') === 0;
+  $disabled_container = isset($info['container']) && !$info['container'];
+  $possible_container_attribute = $possible_container_attribute && !$disabled_container;
+  $container_attribute_enabled = isset($info['container']) && $info['container'];
+  $is_container_attribute = $possible_container_attribute || $container_attribute_enabled;
+
+  return $is_container_attribute;
+}
+
+/**
+ * Implements template_preprocess_menu().
+ */
+function menu_link_attributes_preprocess_menu(&$variables) {
+  _menu_link_attributes_preprocess_menu_items($variables['items']);
+}
+
+/**
+ * Helper function to recursively set list item attributes.
+ */
+function _menu_link_attributes_preprocess_menu_items(&$items) {
+  foreach ($items as $item) {
+    /** @var \Drupal\Core\Menu\MenuLinkInterface $menu_link */
+    $menu_link = $item['original_link'] ?? NULL;
+    if (!empty($menu_link)) {
+      $options = ($menu_link instanceof MenuLinkContentInterface) ?
+        $menu_link->link->first()->options : $menu_link->getOptions();
+
+      // Apply container attributes on <li> element.
+      if ($options && isset($options['container_attributes'])) {
+        foreach ($options['container_attributes'] as $attribute => $value) {
+          $item['attributes']->setAttribute($attribute, $value);
+        }
+      }
+    }
+    if (!empty($item['below'])) {
+      _menu_link_attributes_preprocess_menu_items($item['below']);
+    }
+  }
+}

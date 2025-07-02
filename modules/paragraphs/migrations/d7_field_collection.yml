@@ -1,0 +1,21 @@
+id: d7_field_collection
+label: Field Collections
+migration_tags:
+  - Drupal 7
+  - Content
+  - Field Collection Content
+deriver: Drupal\paragraphs\Plugin\migrate\D7FieldCollectionItemDeriver
+source:
+  plugin: d7_field_collection_item
+process:
+  type: bundle
+  # @todo Get the langcode from the parent entity.
+  # See https://drupal.org/i/3146632.
+  # langcode: langcode
+destination:
+  plugin: entity_reference_revisions:paragraph
+migration_dependencies:
+  required:
+    - d7_field_collection_type
+  optional:
+    - d7_field_instance

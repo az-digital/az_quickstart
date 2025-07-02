@@ -1,0 +1,36 @@
+/vendor/
+vendor
+/web/
+/node_modules/
+.env
+composer.lock
+yarn.lock
+/.editorconfig
+/.gitattributes
+
+#PHPUnit output
+junit.xml
+.phpunit.result.cache
+
+# Ignore local overrides.
+docker-compose.override.yml
+/.csslintrc
+/.eslintignore
+/.eslintrc.json
+/.ht.router.php
+/.htaccess
+/INSTALL.txt
+/README.txt
+/autoload.php
+/example.gitignore
+/index.php
+/robots.txt
+/update.php
+/web.config
+/composer.spoons.json
+/composer.spoons.lock
+/.env
+.envrc
+.envrc.local
+.composer-plugin.env
+.idea/

@@ -1,0 +1,26 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the Environment Indicator module.
+ */
+
+/**
+ * Initialize the version_identifier and version_identifier_fallback settings for the environment indicator.
+ */
+function environment_indicator_update_8101() {
+  $config_factory = \Drupal::configFactory();
+  $settings = $config_factory->getEditable('environment_indicator.settings');
+
+  // Check if the version_identifier setting exists, and set a default value if it does not.
+  if ($settings->get('version_identifier') === NULL) {
+    $settings->set('version_identifier', 'environment_indicator_current_release');
+  }
+
+  // Initialize version_identifier_fallback with the old default fallback value.
+  if ($settings->get('version_identifier_fallback') === NULL) {
+    $settings->set('version_identifier_fallback', 'deployment_identifier');
+  }
+
+  $settings->save();
+}

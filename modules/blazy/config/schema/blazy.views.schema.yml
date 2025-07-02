@@ -1,0 +1,41 @@
+blazy_views_field:
+  type: views_field
+  label: Blazy
+  mapping:
+    box_caption:
+      type: string
+      label: 'Lightbox caption'
+    box_caption_custom:
+      type: string
+      label: 'Lightbox custom caption'
+    box_style:
+      type: string
+      label: 'Lightbox image style'
+    box_media_style:
+      type: string
+      label: 'Lightbox video style'
+    image_style:
+      type: string
+      label: 'Image style'
+    media_switch:
+      type: string
+      label: 'Media switch'
+    ratio:
+      type: string
+      label: 'Aspect ratio'
+    thumbnail_style:
+      type: string
+      label: 'Thumbnail style'
+    view_mode:
+      type: string
+      label: 'View mode'
+
+views.field.blazy_file:
+  type: blazy_views_field
+
+views.field.blazy_media:
+  type: blazy_views_field
+
+views.style.blazy:
+  type: blazy_base
+  label: 'Blazy Grid'

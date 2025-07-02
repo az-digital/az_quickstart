@@ -1,0 +1,201 @@
+<?php
+
+/**
+ * @file
+ * Update scripts for the Schema Metatag module.
+ */
+
+use Drupal\metatag\Entity\MetatagDefaults;
+use Drupal\schema_metatag\SchemaMetatagManager;
+
+/**
+ * Implementations of hook_update_N().
+ */
+
+/**
+ * Rename aggregate_rating tags.
+ *
+ * The "MODULE_aggregate_rating" meta tag is renamed to "MODULE_rating".
+ */
+function schema_metatag_update_8101() {
+
+  /**
+   * Metatag default values.
+   *
+   * @var Drupal\metatag\Entity\MetatagDefaults
+   */
+  $configs = MetatagDefaults::loadMultiple();
+
+  foreach ($configs as $config) {
+    $changed = FALSE;
+    $tags = $config->get('tags');
+    foreach ($tags as $tag_name => $tag) {
+      if (strpos($tag_name, '_aggregate_rating') !== FALSE) {
+        $new_name = str_replace('_aggregate_rating', '_rating', $tag_name);
+        $tags[$new_name] = $tags[$tag_name];
+        unset($tags[$tag_name]);
+        $changed = TRUE;
+      }
+    }
+    if ($changed) {
+      $config->set("tags", $tags);
+      $config->save();
+    }
+  }
+}
+
+/**
+ * Warning about deprecation of the Schema.org VotingAPI module.
+ */
+function schema_metatag_update_8102() {
+  return (string) t("The Schema.org VotingAPI module has been deprecated and will be removed in a future release. Please uninstall it.");
+}
+
+/**
+ * Rename aggregate_rating tags again.
+ *
+ * The "MODULE_rating" meta tag is renamed to "MODULE_aggregate_rating" and
+ * review:rating should be review:reviewRating.
+ */
+function schema_metatag_update_8103() {
+
+  /**
+   * Metatag default values.
+   *
+   * @var Drupal\metatag\Entity\MetatagDefaults
+   */
+  $configs = MetatagDefaults::loadMultiple();
+
+  foreach ($configs as $config) {
+    $changed = FALSE;
+    $tags = $config->get('tags');
+    foreach ($tags as $tag_name => $tag) {
+      if ($tag_name == 'schema_review_rating') {
+        $tags['schema_review_review_rating'] = $tags['schema_review_rating'];
+        unset($tags['schema_review_rating']);
+        $changed = TRUE;
+      }
+      elseif (strpos($tag_name, '_rating') !== FALSE) {
+        $new_name = str_replace('_rating', '_aggregate_rating', $tag_name);
+        $tags[$new_name] = $tags[$tag_name];
+        unset($tags[$tag_name]);
+        $changed = TRUE;
+      }
+    }
+    if ($changed) {
+      $config->set("tags", $tags);
+      $config->save();
+    }
+  }
+}
+
+/**
+ * Uninstall the deprecated SchemaVotingAPI and SchemaProgramMembership modules.
+ */
+function schema_metatag_update_8104(&$sandbox) {
+  \Drupal::service('module_installer')->uninstall([
+    'schema_votingapi',
+    'schema_program_membership',
+  ]);
+  return (string) t("The Schema.org ProgramMembership and Schema.org VotingAPI modules have been deprecated and will be removed in a future release. They have been uninstalled");
+
+}
+
+/**
+ * Fix broken review tags.
+ *
+ * ItemReviewed and reviewBody were using the wrong classes. Previous values
+ * need to be emptied out because they contain invalid data.
+ */
+function schema_metatag_update_8105() {
+
+  /**
+   * Metatag default values.
+   *
+   * @var Drupal\metatag\Entity\MetatagDefaults
+   */
+  $configs = MetatagDefaults::loadMultiple();
+
+  foreach ($configs as $config) {
+    $changed = FALSE;
+    $tags = $config->get('tags');
+    foreach ($tags as $tag_name => $tag) {
+      if ($tag_name == 'schema_review_item_reviewed' || $tag_name == 'schema_review_review_body') {
+        unset($tags[$tag_name]);
+        $changed = TRUE;
+      }
+    }
+    if ($changed) {
+      $config->set("tags", $tags);
+      $config->save();
+    }
+  }
+  return (string) t("Fields on the Schema.org Review object have been emptied since the original values are invalid. Please re-configure them.");
+}
+
+/**
+ * Delete unneeded tags.
+ */
+function schema_metatag_update_8106() {
+
+  /**
+   * Metatag default values.
+   *
+   * @var Drupal\metatag\Entity\MetatagDefaults
+   */
+  $configs = MetatagDefaults::loadMultiple();
+
+  $delete = [
+    'schema_event_actor',
+    'schema_event_is_accessible_for_free',
+    'schema_organization_main_entity_of_page',
+    'schema_video_object_main_entity_of_page',
+  ];
+
+  foreach ($configs as $config) {
+    $changed = FALSE;
+    $tags = $config->get('tags');
+    foreach ($tags as $tag_name => $tag) {
+      if (in_array($tag_name, $delete)) {
+        unset($tags[$tag_name]);
+        $changed = TRUE;
+      }
+    }
+    if ($changed) {
+      $config->set("tags", $tags);
+      $config->save();
+    }
+  }
+  return (string) t("Deleted some unneeded tags.");
+}
+
+/**
+ * Update the schema_product_brand tag.
+ */
+function schema_metatag_update_8107() {
+
+  /**
+   * Metatag default values.
+   *
+   * @var Drupal\metatag\Entity\MetatagDefaults
+   */
+  $configs = MetatagDefaults::loadMultiple();
+
+  foreach ($configs as $config) {
+    $tags = $config->get('tags');
+    foreach ($tags as $tag_name => $tag) {
+      if ($tag_name == 'schema_product_brand') {
+        $value = [
+          '@type' => 'Brand',
+          'name' => $tag,
+        ];
+        $new_tag = SchemaMetatagManager::serialize($value);
+        $tags[$tag_name] = $new_tag;
+        $config->set('tags', $tags);
+        $config->save();
+      }
+    }
+  }
+  return (string) t("Options for Product brands have been expanded and brand options have been added to Organization and Person, please review and update your configuration if you use brands.");
+
+}

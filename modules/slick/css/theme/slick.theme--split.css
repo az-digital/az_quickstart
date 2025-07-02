@@ -1,0 +1,105 @@
+/**
+ * @file
+ * Detailed stylings are all yours, get yourself dirty.
+ */
+.slick--skin--split .slide__caption {
+  top: 0;
+}
+
+@media (min-width: 64em) {
+  .slide--caption--split-left .slide__caption,
+  .slide--caption--split-right .slide__caption {
+    position: relative;
+    top: 10%;
+    left: 0;
+    box-sizing: border-box; /* dups due to csslint ignoring inheritance */
+    width: 42%;
+    padding: 20px;
+  }
+
+  .slick--skin--split .slide--caption--split-left .slide__media,
+  .slick--skin--split
+    .slide--caption--split-zebra:nth-child(odd)
+    .slide__media {
+    float: left;
+    width: 48%;
+  }
+
+  .slick--skin--split .slide--caption--split-right .slide__media,
+  .slick--skin--split
+    .slide--caption--split-zebra:nth-child(even)
+    .slide__media {
+    float: right;
+    width: 48%;
+  }
+
+  .slick--skin--split .slide--caption--split-left .slide__caption,
+  .slick--skin--split
+    .slide--caption--split-zebra:nth-child(odd)
+    .slide__caption {
+    width: auto;
+    margin-left: 52%;
+    text-align: right;
+  }
+
+  .slick--skin--split .slide--caption--split-right .slide__caption,
+  .slick--skin--split
+    .slide--caption--split-zebra:nth-child(even)
+    .slide__caption {
+    width: auto;
+    margin-right: 52%;
+    text-align: left;
+  }
+
+  .slick--skin--split .slide--caption--split-left .slide__media,
+  .slick--skin--split
+    .slide--caption--split-zebra:nth-child(odd)
+    .slide__media {
+    float: left;
+    width: 48%;
+  }
+
+  .slick--skin--split .slide--caption--split-right .slide__media,
+  .slick--skin--split
+    .slide--caption--split-zebra:nth-child(even)
+    .slide__media {
+    float: right;
+    width: 48%;
+  }
+
+  .slick--skin--split
+    .slide--caption--split-left
+    .slide__constrained
+    > .slide__caption,
+  .slick--skin--split
+    .slide--caption--split-zebra:nth-child(odd)
+    .slide__constrained
+    > .slide__caption,
+  .slick--skin--split .slide--caption--split-left .slide__caption,
+  .slick--skin--split
+    .slide--caption--split-zebra:nth-child(odd)
+    .slide__caption {
+    width: auto;
+    margin-left: 52%;
+  }
+
+  .slick--skin--split
+    .slide--caption--split-right
+    .slide__constrained
+    > .slide__caption,
+  .slick--skin--split
+    .slide--caption--split-zebra:nth-child(even)
+    .slide__constrained
+    > .slide__caption,
+  .slick--skin--split .slide--caption--split-right .slide__caption,
+  .slick--skin--split
+    .slide--caption--split-zebra:nth-child(even)
+    .slide__caption {
+    width: auto;
+    margin-right: 52%;
+  }
+
+  .slick--skin--split .slide__caption .clearfix::after {
+    clear: none;
+  }
+}

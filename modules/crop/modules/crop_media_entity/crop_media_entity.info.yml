@@ -1,0 +1,11 @@
+name: Media entity crop
+description: 'Deprecated.'
+core_version_requirement: '^9.3 || ^10 || ^11'
+package: Media
+type: module
+hidden: true
+
+# Information added by Drupal.org packaging script on 2024-07-08
+version: '8.x-2.4'
+project: 'crop'
+datestamp: 1720455741

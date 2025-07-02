@@ -1,0 +1,28 @@
+/**
+ * Dumpers
+ */
+.devel-dumper .details-wrapper {
+  overflow: auto;
+  max-height: 450px;
+  margin-right: 3px;
+}
+
+/**
+ * Switch User block
+ */
+.region-content .block-devel-switch-user ul,
+.site-footer .block-devel-switch-user ul {
+  display: flex;
+  flex-flow: row wrap;
+  padding: 0;
+}
+
+.region-content .block-devel-switch-user ul li,
+.site-footer .block-devel-switch-user ul li {
+  display: block;
+  padding-right: 2em;
+}
+
+.devel-switchuser-form {
+  margin-top: 0.5em;
+}

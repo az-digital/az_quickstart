@@ -1,0 +1,4 @@
+services:
+  block_class.helper:
+    class: Drupal\block_class\Service\BlockClassHelperService
+    arguments: ['@language_manager', '@config.factory', '@database', '@request_stack', '@path.matcher', '@uuid', '@path_alias.manager', '@path.current', '@entity.repository', '@current_user', '@entity_type.manager', '@extension.list.module']

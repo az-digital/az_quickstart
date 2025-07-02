@@ -1,0 +1,54 @@
+chosen.settings:
+  type: config_object
+  label: 'Chosen settings'
+  mapping:
+    minimum_single:
+      type: integer
+      label: 'Minimum number of options for single select'
+    minimum_multiple:
+      type: integer
+      label: 'Minimum number of options for multi select'
+    disable_search_threshold:
+      type: integer
+      label: 'Minimum number to show Search on Single Select'
+    minimum_width:
+      type: integer
+      label: 'The minimum width of the Chosen widget.'
+    max_shown_results:
+      type: integer
+      label: 'Only show the first (n) matching options in the results. This can be used to increase performance for selects with very many options.'
+    use_relative_width:
+      type: boolean
+      label: 'The relative width (% instead of px) of the Chosen widget.'
+    jquery_selector:
+      type: string
+      label: 'Apply Chosen to the following elements'
+    search_contains:
+      type: boolean
+      label: 'Search also in the middle of words'
+    disable_search:
+      type: boolean
+      label: 'Disable search box'
+    allow_single_deselect:
+      type: boolean
+      label: 'Allow deselect on single selects.'
+    add_helper_buttons:
+      type: boolean
+      label: 'Add "none" and "all" buttons.'
+    disabled_themes:
+      type: sequence
+      label: 'Disable the default Chosen theme for the following themes'
+      sequence:
+        type: string
+    chosen_include:
+      type: integer
+      label: 'Use chosen for admin pages and/or front end pages'
+    placeholder_text_multiple:
+      type: label
+      label: 'Placeholder text of multiple selects'
+    placeholder_text_single:
+      type: label
+      label: 'Placeholder text of single selects'
+    no_results_text:
+      type: label
+      label: 'No results text'

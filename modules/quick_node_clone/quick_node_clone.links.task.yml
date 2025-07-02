@@ -1,0 +1,17 @@
+quick_node_clone.node.quick_clone:
+  route_name: quick_node_clone.node.quick_clone
+  base_route: entity.node.canonical
+  title: 'Clone'
+  weight: 30
+
+quick_node_clone.node.settings:
+  route_name: quick_node_clone.settings
+  base_route: quick_node_clone.settings
+  title: 'Node'
+  weight: -10
+
+quick_node_clone.paragraph_settings_form:
+  route_name: quick_node_clone.paragraph_settings_form
+  base_route: quick_node_clone.settings
+  title: 'Paragraph'
+  weight: 10

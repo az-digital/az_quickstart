@@ -1,0 +1,57 @@
+<?php
+
+/**
+ * @file
+ * Installation actions for Slick.
+ */
+
+/**
+ * Implements hook_requirements().
+ */
+function slick_requirements($phase) {
+  if ($phase != 'runtime') {
+    return [];
+  }
+
+  $exists = FALSE;
+
+  /* @phpstan-ignore-next-line */
+  $path = slick('skin')->getSlickPath();
+  if ($path && is_dir($path)) {
+    $exists = is_file($path . '/slick/slick.min.js');
+  }
+
+  if (slick('skin')->config('library') == 'accessible-slick') {
+    $name = 'Accessible Slick';
+    $url = 'https://github.com/Accessible360/accessible-slick';
+    $libpath = '<strong>/libraries/accessible-slick/slick/slick.min.js</strong>';
+  }
+  else {
+    $name = 'Slick';
+    $url = 'https://github.com/kenwheeler/slick/';
+    $libpath = '<strong>/libraries/slick-carousel/slick/slick.min.js</strong>, or <strong>/libraries/slick/slick/slick.min.js</strong>';
+  }
+
+  return [
+    'slick_library' => [
+      'title'       => t('Slick library'),
+      'description' => $exists ? '' : t('The <a href=":url">@name library</a> should be installed at @libpath, or any path supported by libraries.module if installed. Check out file or folder permissions if troubled.', [
+        ':url' => $url,
+        '@name' => $name,
+        '@libpath' => $libpath,
+      ]),
+      'severity'    => $exists ? REQUIREMENT_OK : REQUIREMENT_ERROR,
+      'value'       => $exists ? t('@name library installed at @path', [
+        '@name' => $name,
+        '@path' => $path,
+      ]) : t('@name library not installed', ['@name' => $name]),
+    ],
+  ];
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function slick_uninstall() {
+  blazy_filter_cleanup('slick');
+}

@@ -1,0 +1,9 @@
+services:
+  xmlsitemap.commands:
+    class: \Drupal\xmlsitemap\Commands\XmlSitemapCommands
+    arguments:
+      - '@config.factory'
+      - '@module_handler'
+      - '@database'
+    tags:
+      - { name: drush.command }

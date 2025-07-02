@@ -1,0 +1,43 @@
+<?php
+
+/**
+ * @file
+ * Sophron - MIME types management API.
+ */
+
+declare(strict_types=1);
+
+use Drupal\sophron\MimeMapManagerInterface;
+
+/**
+ * Implements hook_requirements().
+ */
+function sophron_requirements(string $phase) {
+  if ($phase === 'runtime') {
+    return \Drupal::service(MimeMapManagerInterface::class)->requirements($phase);
+  }
+  return [];
+}
+
+/**
+ * Convert map commands to named schema.
+ */
+function sophron_update_8001() {
+  $config = \Drupal::configFactory()->getEditable('sophron.settings');
+  $commands = $config->get('map_commands');
+  /** @var list<array{method: string, arguments?: list<mixed>}> $converted_commands */
+  $converted_commands = [];
+  foreach ($commands as $command) {
+    if (isset($command[0])) {
+      /** @var array{method: string, arguments?: list<mixed>} $converted_command */
+      $converted_command['method'] = $command[0];
+      $converted_command['arguments'] = $command[1] ?? [];
+      $converted_commands[] = $converted_command;
+    }
+    else {
+      $converted_commands[] = $command;
+    }
+  }
+  $config->set('map_commands', $converted_commands);
+  $config->save();
+}

@@ -1,0 +1,14 @@
+.redirect-table {
+  table-layout: fixed;
+}
+
+.redirect-table__operations {
+  width: 30%;
+}
+
+.redirect-table__path {
+  overflow: hidden;
+  width: 70%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

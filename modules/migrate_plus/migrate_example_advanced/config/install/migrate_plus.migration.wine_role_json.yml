@@ -1,0 +1,58 @@
+# This migration demonstrates importing from a monolithic JSON file.
+id: wine_role_json
+label: JSON feed of roles (positions)
+migration_group: wine
+migration_tags:
+  - advanced example
+source:
+  # We use the JSON source plugin.
+  plugin: url
+  data_fetcher_plugin: http
+  data_parser_plugin: json
+  # The data_parser normally limits the fields passed on to the source plugin
+  # to fields configured to be used as part of the migration. To support more
+  # dynamic migrations, the JSON data parser supports including the original
+  # data for the current row. Simply include the 'include_raw_data' flag set
+  # to `true` to enable this. This option is disabled by default to minimize
+  # memory footprint for migrations that do not need this capability.
+  # include_raw_data: true
+  # Normally, this is one or more fully-qualified URLs or file paths. Because
+  # we can't hardcode your local URL, we provide a relative path here which
+  # hook_install() will rewrite to a full URL for the current site.
+  urls:
+    - /migrate_example_advanced_position?_format=json
+  # An xpath-like selector corresponding to the items to be imported.
+  item_selector: position
+  # Under 'fields', we list the data items to be imported. The first level keys
+  # are the source field names we want to populate (the names to be used as
+  # sources in the process configuration below). For each field we're importing,
+  # we provide a label (optional - this is for display in migration tools) and
+  # an xpath for retrieving that value. It's important to note that this xpath
+  # is relative to the elements retrieved by item_selector.
+  fields:
+    -
+      name: machine_name
+      label: 'Unique position identifier'
+      selector: sourceid
+    -
+      name: friendly_name
+      label: 'Position name'
+      selector: name
+  # Under 'ids', we identify source fields populated above which will uniquely
+  # identify each imported item. The 'type' makes sure the migration map table
+  # uses the proper schema type for stored the IDs.
+  ids:
+    machine_name:
+      type: string
+process:
+  # Note that the source field names here (machine_name and friendly_name) were
+  # defined by the 'fields' configuration for the source plugin above.
+  id: machine_name
+  label: friendly_name
+destination:
+  plugin: entity:user_role
+migration_dependencies: {}
+dependencies:
+  enforced:
+    module:
+      - migrate_example_advanced

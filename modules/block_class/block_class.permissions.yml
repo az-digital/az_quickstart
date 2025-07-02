@@ -1,0 +1,3 @@
+administer block classes:
+  title: 'Administer block classes'
+  restrict access: true

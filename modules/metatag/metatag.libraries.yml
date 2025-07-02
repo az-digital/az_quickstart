@@ -1,0 +1,6 @@
+# Custom libraries for the Metatag module.
+
+firehose_widget:
+  css:
+    theme:
+      css/firehose_widget.css: {}

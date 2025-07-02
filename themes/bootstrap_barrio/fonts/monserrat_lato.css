@@ -1,0 +1,22 @@
+/* ---------- Monserrat, Lato ---------- */
+
+body,
+p,
+a,
+li {
+  font-family: 'Lato', arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+h1 a,
+h2 a,
+h3 a {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+}

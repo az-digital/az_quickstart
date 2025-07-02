@@ -1,0 +1,5 @@
+entity.webform.schema_form:
+  title: 'Schema'
+  route_name: entity.webform.schema_form
+  parent_id: entity.webform.edit_form
+  weight: 20

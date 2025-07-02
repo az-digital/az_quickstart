@@ -1,0 +1,8 @@
+services:
+  config_inspector.manager:
+    class: Drupal\config_inspector\ConfigInspectorManager
+    arguments:
+      - '@config.factory'
+      - '@config.typed'
+      - '@cache.discovery'
+      - '@cache.bootstrap'

@@ -1,0 +1,9 @@
+smart_title_ui.settings:
+  path: '/admin/config/content/smart-title'
+  defaults:
+    _form: '\Drupal\smart_title_ui\Form\SmartTitleConfigForm'
+    _title: 'Smart Title Settings'
+  requirements:
+    _permission: 'administer smart title'
+  options:
+    _admin_route: TRUE

@@ -1,0 +1,12 @@
+include: 
+  - project: $_GITLAB_TEMPLATES_REPO
+    ref: $_GITLAB_TEMPLATES_REF
+    file:
+      - '/includes/include.drupalci.main.yml'
+      - '/includes/include.drupalci.variables.yml'
+      - '/includes/include.drupalci.workflows.yml'
+
+variables:
+  _SHOW_ENVIRONMENT_VARIABLES: 1
+  _TARGET_PHP: "$CORE_PHP_MAX"
+  _TARGET_DB_VERSION: "$CORE_MYSQL_MAX"

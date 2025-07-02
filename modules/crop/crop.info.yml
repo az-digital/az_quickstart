@@ -1,0 +1,14 @@
+name: Crop API
+description: 'Provides storage and API for image crops.'
+core_version_requirement: '^9.3 || ^10 || ^11'
+package: Media
+type: module
+dependencies:
+  - drupal:image
+  - drupal:user
+configure: crop.overview_types
+
+# Information added by Drupal.org packaging script on 2024-07-08
+version: '8.x-2.4'
+project: 'crop'
+datestamp: 1720455741

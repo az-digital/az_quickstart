@@ -1,0 +1,40 @@
+entity.smart_date_format.canonical:
+  path: '/admin/config/regional/smart-date/{smart_date_format}'
+  defaults:
+    _entity_view: 'smart_date_format'
+    _title_callback: '\Drupal\Core\Entity\Controller\EntityController::title'
+
+entity.smart_date_format.collection:
+  path: '/admin/config/regional/smart-date'
+  defaults:
+    _entity_list: 'smart_date_format'
+    _title: 'Smart date formats'
+  requirements:
+    _permission: 'administer site configuration'
+
+entity.smart_date_format.add_form:
+  path: '/admin/config/regional/smart-date/add'
+  defaults:
+    _entity_form: 'smart_date_format.add'
+    _title_callback: '\Drupal\Core\Entity\Controller\EntityController::addTitle'
+    entity_type_id: 'smart_date_format'
+  requirements:
+    _permission: 'administer site configuration'
+
+entity.smart_date_format.edit_form:
+  path: '/admin/config/regional/smart-date/{smart_date_format}/configure'
+  defaults:
+    _entity_form: 'smart_date_format.edit'
+    _title_callback: '\Drupal\Core\Entity\Controller\EntityController::editTitle'
+    entity_type_id: 'smart_date_format'
+  requirements:
+    _permission: 'administer site configuration'
+
+entity.smart_date_format.delete_form:
+  path: '/admin/config/regional/smart-date/{smart_date_format}/delete'
+  defaults:
+    _entity_form: 'smart_date_format.delete'
+    _title_callback: '\Drupal\Core\Entity\Controller\EntityController::deleteTitle'
+    entity_type_id: 'smart_date_format'
+  requirements:
+    _permission: 'administer site configuration'

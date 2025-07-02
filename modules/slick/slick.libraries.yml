@@ -1,0 +1,125 @@
+# All libraries supported by Slick module.
+slick.mousewheel:
+  remote: https://github.com/brandonaaron/jquery-mousewheel
+  license:
+    name: MIT
+    url: https://github.com/brandonaaron/jquery-mousewheel/blob/master/LICENSE.txt
+    gpl-compatible: true
+  version: 3.1.11
+  js:
+    /libraries/mousewheel/jquery.mousewheel.min.js: { weight: -4, minified: true }
+  dependencies:
+    - core/jquery
+
+slick.easing:
+  remote: https://github.com/gdsmith/jquery.easing
+  license:
+    name: MIT
+    url: https://www.opensource.org/licenses/mit-license.php
+    gpl-compatible: true
+  version: 1.3
+  js:
+    /libraries/easing/jquery.easing.min.js: { weight: -4, minified: true }
+  dependencies:
+    - core/jquery
+
+slick:
+  remote: https://kenwheeler.github.io/slick/
+  version: 1.x
+  license:
+    name: MIT
+    url: https://github.com/kenwheeler/slick/blob/master/LICENSE
+    gpl-compatible: true
+  js:
+    /libraries/slick/slick/slick.min.js: { weight: -3, minified: true }
+  css:
+    base:
+      /libraries/slick/slick/slick.css: {}
+  dependencies:
+    - core/jquery
+
+accessible-slick:
+  remote: https://accessible360.github.io/accessible-slick/
+  version: 1.x
+  license:
+    name: MIT
+    url: https://github.com/Accessible360/accessible-slick/blob/master/LICENSE
+    gpl-compatible: true
+  js:
+    /libraries/accessible-slick/slick/slick.min.js: { weight: -3, minified: true }
+  css:
+    base:
+      /libraries/accessible-slick/slick/slick.min.css: {}
+  dependencies:
+    - core/jquery
+
+base:
+  version: VERSION
+  css:
+    layout:
+      css/layout/slick.module.css: {}
+  dependencies:
+    - core/drupal
+    - core/drupalSettings
+    # @todo min D9.2 - core/once
+    - blazy/dblazy
+    - slick/slick
+
+slick.load:
+  version: VERSION
+  js:
+    js/slick.load.min.js: { weight: 0, minified: true }
+  dependencies:
+    - slick/base
+
+slick.theme:
+  version: VERSION
+  css:
+    theme:
+      css/theme/slick.theme.css: {}
+  dependencies:
+    - slick/slick.load
+
+slick.thumbnail.hover:
+  version: VERSION
+  css:
+    component:
+      css/components/slick.thumbnail--hover.css: {}
+  dependencies:
+    - slick/slick.theme
+
+slick.thumbnail.grid:
+  version: VERSION
+  css:
+    component:
+      css/components/slick.thumbnail--grid.css: {}
+  dependencies:
+    - slick/slick.theme
+
+slick.arrow.down:
+  version: VERSION
+  css:
+    component:
+      css/components/slick.arrows--down.css: {}
+  dependencies:
+    - slick/slick.theme
+
+# This file is safe to not depend on colorbox, as it doesn't initialize it, it
+# reacts on its events. It can even run before the colorbox library is loaded.
+# In order to fix for indices with Slick clones, it must run before slick.load.
+slick.colorbox:
+  version: VERSION
+  js:
+    js/slick.colorbox.min.js: { weight: -0.04, minified: true }
+  dependencies:
+    - core/drupal
+    # @todo min D9.2 - core/once
+    - blazy/colorbox
+    - slick/slick
+
+vanilla:
+  version: VERSION
+  js:
+    js/slick.vanilla.min.js: { weight: -0.003, minified: true }
+  dependencies:
+    - slick/base

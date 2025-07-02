@@ -1,0 +1,6 @@
+services:
+  entity_reference_revisions.commands:
+    class: \Drupal\entity_reference_revisions\Commands\EntityReferenceRevisionsCommands
+    arguments: ['@entity_reference_revisions.orphan_purger']
+    tags:
+      - { name: drush.command }

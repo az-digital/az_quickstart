@@ -1,0 +1,12 @@
+{
+    "name": "drupal/decorative_image_widget",
+    "description": "Modifies image widgets to require alt text OR be marked as decorative.",
+    "type": "drupal-module",
+    "license": "GPL-2.0-or-later",
+    "minimum-stability": "dev",
+    "homepage": "https://drupal.org/project/decorative_image_widget",
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/decorative_image_widget",
+        "source": "https://git.drupalcode.org/project/decorative_image_widget"
+    }
+}

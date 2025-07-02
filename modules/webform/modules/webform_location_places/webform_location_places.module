@@ -1,0 +1,58 @@
+<?php
+
+/**
+ * @file
+ * Provides a form element to collect valid location information (address, longitude, latitude, geolocation) using Algolia Places.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_webform_libraries_info().
+ */
+function webform_location_places_webform_libraries_info() {
+  $libraries = [];
+  $libraries['algolia.places'] = [
+    'title' => t('Algolia Places'),
+    'description' => t('Algolia Places provides a fast, distributed and easy way to use an address search autocomplete JavaScript library on your website.'),
+    'notes' => t('Algolia Places is by the location places elements.'),
+    'homepage_url' => Url::fromUri('https://github.com/algolia/places'),
+    'issues_url' => Url::fromUri('https://github.com/algolia/places/issues'),
+    // NOTE: Using NPM/JsDelivr because it contains the '/dist/cdn/' directory.
+    // @see https://asset-packagist.org/package/detail?fullname=npm-asset/places.js
+    // @see https://www.jsdelivr.com/package/npm/places.js
+    'download_url' => Url::fromUri('https://registry.npmjs.org/places.js/-/places.js-1.19.0.tgz'),
+    'version' => '1.19.0',
+    'elements' => ['webform_location_places'],
+    'license' => 'MIT',
+  ];
+  return $libraries;
+}
+
+/**
+ * Implements hook_webform_admin_third_party_settings_form_alter().
+ */
+function webform_location_places_webform_admin_third_party_settings_form_alter(&$form, FormStateInterface $form_state) {
+  /** @var \Drupal\webform\WebformThirdPartySettingsManagerInterface $third_party_settings_manager */
+  $third_party_settings_manager = \Drupal::service('webform.third_party_settings_manager');
+  $default_algolia_places_app_id = $third_party_settings_manager->getThirdPartySetting('webform_location_places', 'default_algolia_places_app_id');
+  $default_algolia_places_api_key = $third_party_settings_manager->getThirdPartySetting('webform_location_places', 'default_algolia_places_api_key');
+
+  $form['third_party_settings']['webform_location_places'] = [
+    '#type' => 'details',
+    '#title' => t('Webform Algolia Places'),
+    '#open' => TRUE,
+  ];
+  $form['third_party_settings']['webform_location_places']['default_algolia_places_app_id'] = [
+    '#type' => 'textfield',
+    '#title' => t('Algolia application id'),
+    '#description' => t('Algolia requires users to use a valid application id and API key for more than 1,000 requests per day. By <a href="https://www.algolia.com/users/sign_up/places">signing up</a>, you can create a free Places app and access your API keys.'),
+    '#default_value' => $default_algolia_places_app_id,
+  ];
+  $form['third_party_settings']['webform_location_places']['default_algolia_places_api_key'] = [
+    '#type' => 'textfield',
+    '#title' => t('Algolia API key'),
+    '#default_value' => $default_algolia_places_api_key,
+  ];
+}

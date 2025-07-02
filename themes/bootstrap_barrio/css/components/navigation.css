@@ -1,0 +1,98 @@
+/**
+ * @file
+ * Enables Bootstrap 4 multi-level flyout
+ */
+
+/* Only for mobile */
+@media (max-width: 767px) {
+
+  nav.menu--main {
+    margin-left: 16px;
+    width: 100%;
+    padding-bottom: 12px;
+  }
+
+  /* Enables first level dropdown from main nav links */
+  a.nav-link .dropdown>.dropdown-menu.show {
+      display: block;
+      border: 0;
+      margin-top: 5px !important;
+  }
+
+  ul.dropdown-menu {
+    border: 0;
+  }
+
+  .dropdown-menu .menu-item--expanded>a:after {
+    visibility: hidden;
+  }
+
+  ul.dropdown-menu.show li.menu-item--expanded>ul.dropdown-menu {
+    display: block;
+    border: 0;
+  }
+
+}
+
+/* Only for non-mobile */
+@media (min-width: 768px) {
+
+  /* Enables first level dropdown from main nav links */
+  .dropdown:hover>.dropdown-menu {
+    display: block;
+  }
+
+}
+
+/* Force manu items with no link to still use pointer */
+span.nav-link {
+  cursor: pointer;
+}
+
+.dropdown-menu .menu-item--expanded:hover>a:after {
+  visibility: hidden;
+}
+
+.dropdown-menu .menu-item--expanded:hover {
+  border-right: 1px solid #fff;
+}
+
+/* Enables next level dropdowns to go horizontal */
+.dropdown-menu .menu-item--expanded>.dropdown-menu {
+  top: 0px;
+  left: 100%;
+  margin-top: -1px;
+  margin-left: 0px;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+}
+
+/* Creates right arrow which vanishes on rollover/expansion */
+.dropdown-menu .menu-item--expanded>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #ccc;
+  margin-top: 7px;
+  margin-right: -5px;
+}
+
+.dropdown-item {
+  padding: 5px 15px;
+}
+/* Remove margin and padding around each flyout's containing UL, so that there is no "gap" where hover does not function, and flyouts vanish as you roll over the gap */
+ul.dropdown-menu {
+  padding: 0;
+  margin: 0;
+}
+
+/* Make sure links in the active trail reverse out to white so that they do not diappear when the LIs highlight */
+.dropdown-menu li.active>a {
+  color: #fff;
+}

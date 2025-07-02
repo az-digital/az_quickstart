@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * @file
+ * Intelligence DAM primary module file.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function ib_dam_theme() {
+  return [
+    'ib_dam_embed_playable_resource' => [
+      'variables' => [
+        'resource_type' => NULL,
+        'url' => NULL,
+        'title' => NULL,
+        'mimetype' => NULL,
+        'attributes' => NULL,
+      ],
+    ],
+  ];
+}

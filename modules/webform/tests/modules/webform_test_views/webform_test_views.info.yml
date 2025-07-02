@@ -1,0 +1,15 @@
+name: 'Webform Views test'
+type: module
+description: 'Support module for webform views integration testing.'
+package: 'Webform Testing'
+core_version_requirement: ^10.2
+dependencies:
+  - 'drupal:node'
+  - 'drupal:user'
+  - 'drupal:views'
+  - 'webform:webform'
+
+# Information added by Drupal.org packaging script on 2024-12-10
+version: '6.2.9'
+project: 'webform'
+datestamp: 1733851071

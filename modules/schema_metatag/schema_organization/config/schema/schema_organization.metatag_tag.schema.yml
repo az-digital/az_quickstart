@@ -1,0 +1,78 @@
+# The 'type' should be "label" for short meta tags and "text" for ones which
+# could get longer, especially ones which use a textarea field instead of a
+# textfield.
+metatag.metatag_tag.schema_organization_additional_type:
+  type: text
+  label: 'additionalType'
+metatag.metatag_tag.schema_organization_address:
+  type: text
+  label: 'address'
+metatag.metatag_tag.schema_organization_description:
+  type: text
+  label: 'description'
+metatag.metatag_tag.schema_organization_geo:
+  type: text
+  label: 'geo'
+metatag.metatag_tag.schema_organization_id:
+  type: text
+  label: '@id'
+metatag.metatag_tag.schema_organization_image:
+  type: text
+  label: 'image'
+metatag.metatag_tag.schema_organization_logo:
+  type: text
+  label: 'logo'
+metatag.metatag_tag.schema_organization_name:
+  type: text
+  label: 'name'
+metatag.metatag_tag.schema_organization_price_range:
+  type: text
+  label: 'priceRange'
+metatag.metatag_tag.schema_organization_same_as:
+  type: text
+  label: 'sameAs'
+metatag.metatag_tag.schema_organization_telephone:
+  type: text
+  label: 'telephone'
+metatag.metatag_tag.schema_organization_type:
+  type: string
+  label: '@type'
+metatag.metatag_tag.schema_organization_url:
+  type: text
+  label: 'url'
+metatag.metatag_tag.schema_organization_menu:
+  type: text
+  label: 'menu'
+metatag.metatag_tag.schema_organization_star_rating:
+  type: text
+  label: 'starRating'
+metatag.metatag_tag.schema_organization_aggregate_rating:
+  type: text
+  label: 'aggregateRating'
+metatag.metatag_tag.schema_organization_review:
+  type: text
+  label: 'review'
+metatag.metatag_tag.schema_organization_potential_action:
+  type: text
+  label: 'potentialAction'
+metatag.metatag_tag.schema_organization_member_of:
+  type: text
+  label: 'memberOf'
+metatag.metatag_tag.schema_organization_accepts_reservations:
+  type: text
+  label: 'acceptsReservations'
+metatag.metatag_tag.schema_organization_opening_hours_specification:
+  type: text
+  label: 'openingHoursSpecification'
+metatag.metatag_tag.schema_organization_contact_point:
+  type: text
+  label: 'contactPoint'
+metatag.metatag_tag.schema_organization_brand:
+  type: text
+  label: 'brand'
+metatag.metatag_tag.schema_organization_parent_organization:
+  type: string
+  label: 'parentOrganization'
+metatag.metatag_tag.schema_organization_sub_organization:
+  type: string
+  label: 'subOrganization'

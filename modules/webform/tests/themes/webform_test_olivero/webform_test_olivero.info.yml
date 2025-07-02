@@ -1,0 +1,11 @@
+core_version_requirement: ^10.2
+type: theme
+base theme: olivero
+name: 'Webform Olivero test'
+description: 'Support theme for webform Olivero integration testing.'
+package: 'Webform Testing'
+
+# Information added by Drupal.org packaging script on 2024-12-10
+version: '6.2.9'
+project: 'webform'
+datestamp: 1733851071

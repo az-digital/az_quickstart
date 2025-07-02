@@ -1,0 +1,27 @@
+blazy_layout:
+  label: Blazy dynamic layout
+  library: blazy_layout/layout
+  class: '\Drupal\blazy_layout\Plugin\Layout\BlazyLayout'
+  category: Blazy
+  default_region: blzyr_0
+  icon_map:
+    - [blzyr_0]
+  regions:
+    blzyr_0:
+      label: Main
+    blzyr_1:
+      label: Feature
+    blzyr_2:
+      label: Sidetop
+    blzyr_3:
+      label: Sidebar
+    blzyr_4:
+      label: Sidebelow
+    blzyr_5:
+      label: Footer middle first
+    blzyr_6:
+      label: Footer middle last
+    blzyr_7:
+      label: Footer first
+    blzyr_8:
+      label: Footer last

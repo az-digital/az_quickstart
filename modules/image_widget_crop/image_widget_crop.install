@@ -1,0 +1,66 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the ImageWidgetCrop module.
+ */
+
+/**
+ * Implements hook_requirements().
+ */
+function image_widget_crop_requirements($phase) {
+  $requirements = [];
+
+  if ($phase === 'runtime') {
+    $error = [];
+    $config = \Drupal::config('image_widget_crop.settings');
+    $files = [
+      'js' => $config->get('settings.library_url'),
+      'css' => $config->get('settings.css_url'),
+    ];
+
+    foreach ($files as $type => $file) {
+      $is_local = !empty($file) && parse_url($file, PHP_URL_SCHEME) === NULL && strpos($file, '//') !== 0;
+      // If libraries module is active check if folder is malformed.
+      if ($is_local
+        && \Drupal::moduleHandler()->moduleExists('libraries')
+        && ($info = libraries_detect('cropper'))
+        && (!file_exists($info['library path'] . '/dist/cropper.min.' . $type) && !file_exists($info['library path'] . '/cropper.min.' . $type))) {
+        $error[] = t("<strong>:type</strong> file : Libraries module is active but an error detected with your cropper libraries configuration. To use cropper library with <i>'libraries'</i> module you must have the following structure <i>`:libraries_cropper`</i>", [
+          ':type' => strtoupper($type),
+          ':libraries_cropper' => '/libraries/cropper/dist/cropper.min.' . $type,
+        ]);
+      }
+    }
+
+    $requirements['iwc_libraries'] = [
+      'title' => t('ImageWidgetCrop library'),
+      'value' => empty($error) ? t('Correctly configured') : t('Files not found'),
+    ];
+
+    if (!empty($error)) {
+      $requirements['iwc_libraries']['severity'] = REQUIREMENT_ERROR;
+      $requirements['iwc_libraries']['description'][] = [
+        '#theme' => 'item_list',
+        '#items' => $error,
+      ];
+    }
+    else {
+      $requirements['iwc_libraries']['severity'] = REQUIREMENT_OK;
+      $requirements['iwc_libraries']['description'] = t('ImageWidgetCrop libraries files are correctly configured to use <strong>:library</strong> files', [
+        ':library' => !$is_local ? 'CDN' : 'Libraries API',
+      ]);
+    }
+  }
+  return $requirements;
+}
+
+/**
+ * Set as default new settings to control IWC verbose.
+ */
+function image_widget_crop_update_8001() {
+  \Drupal::service('config.factory')->getEditable('image_widget_crop.settings')
+    ->set('settings.notify_update', TRUE)
+    ->set('settings.notify_apply', FALSE)
+    ->save();
+}

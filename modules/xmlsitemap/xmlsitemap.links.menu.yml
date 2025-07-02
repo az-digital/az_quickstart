@@ -1,0 +1,5 @@
+xmlsitemap.admin_search:
+  title: 'XML Sitemap'
+  description: 'Configure your site''s XML Sitemaps to help search engines find and index pages on your site.'
+  route_name: xmlsitemap.admin_search
+  parent: system.admin_config_search

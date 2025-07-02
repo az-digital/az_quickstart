@@ -1,0 +1,15 @@
+linkit_extension:
+  ckeditor5:
+    plugins:
+      - linkit.Linkit
+  drupal:
+    label: Linkit
+    library: linkit/ckeditor5
+    class: Drupal\linkit\Plugin\CKEditor5Plugin\Linkit
+    elements:
+      - <a data-entity-type data-entity-uuid data-entity-substitution>
+    conditions:
+      requiresConfiguration:
+        linkit_enabled: true
+      plugins:
+        - ckeditor5_link

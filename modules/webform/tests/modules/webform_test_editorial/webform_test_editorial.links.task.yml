@@ -1,0 +1,41 @@
+webform_test_editorial.index:
+  title: 'Editorial'
+  route_name: webform_test_editorial.index
+  base_route: entity.webform.collection
+  weight: 90
+
+webform_test_editorial.help:
+  title: 'Help'
+  description: 'Review and download Webform help titles and descriptions.'
+  parent_id: webform_test_editorial.index
+  route_name: webform_test_editorial.help
+
+webform_test_editorial.videos:
+  title: 'Videos'
+  description: 'Review and download Webform video titles and descriptions.'
+  parent_id: webform_test_editorial.index
+  route_name: webform_test_editorial.videos
+
+webform_test_editorial.elements:
+  title: 'Elements'
+  description: 'Review and download Webform element titles and descriptions.'
+  parent_id: webform_test_editorial.index
+  route_name: webform_test_editorial.elements
+
+webform_test_editorial.libraries:
+  title: 'Libraries'
+  description: 'Review and download Webform libraries titles and descriptions.'
+  parent_id: webform_test_editorial.index
+  route_name: webform_test_editorial.libraries
+
+webform_test_editorial.schema:
+  title: 'Schema'
+  description: 'Review and download Webform schema.'
+  parent_id: webform_test_editorial.index
+  route_name: webform_test_editorial.schema
+
+webform_test_editorial.drush:
+  title: 'Drush'
+  description: 'Review and download Webform drush documents.'
+  parent_id: webform_test_editorial.index
+  route_name: webform_test_editorial.drush

@@ -1,0 +1,123 @@
+/* MIXINS */
+
+//
+// Alternate buttons
+//
+@each $color,
+$value in $theme-colors {
+	.btn-#{$color} a {
+		@include button-variant($value, $value);
+	}
+}
+
+@each $color,
+$value in $theme-colors {
+	.btn-outline-#{$color} a {
+		@include button-outline-variant($value);
+	}
+}
+
+// SVG
+
+@mixin svg-icon-background($name, $color, $hover-color:null, $position:null, $size:null) {
+	background-image: svg-load('#{$name}.svg', fill='#{$color}');
+	background-position: $position;
+	background-size: $size;
+	background-repeat: no-repeat;
+
+	&:hover {
+		background-image: svg-load('#{$name}.svg', fill='#{$hover-color}');
+	}
+}
+  
+@mixin svg-inline($name, $position, $color, $hover-color, $size, $margin) {
+	&::#{$position} {
+    content: '';
+    width: $size;
+    height: $size;
+    display: inline-block;
+    background-image: svg-load('#{$name}.svg', fill='#{$color}');
+    background-position: 0 center;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    vertical-align: middle;
+    
+		&:hover {
+			background-image: svg-load('#{$name}.svg', fill='#{$hover-color}');
+		}
+
+    @if $position == after {
+    margin-left: $margin;
+    } @else {
+    margin-right: $margin;
+    }
+	}
+}
+
+@mixin svg-icon-replace($name, $color, $hover-color, $size:null) {
+	background-image: svg-load('#{$name}.svg', fill='#{$color}');
+	background-repeat: no-repeat;
+	overflow: hidden;
+	text-indent: -9999px;
+	display: block;
+	width: $size;
+	height: $size;
+	&:hover {
+		background-image: svg-load('#{$name}.svg', fill='#{$hover-color}');
+	}
+}
+
+// Box shadow
+@mixin box-shadow( $h: 10px , $v: 10px , $b: 10px , $s: 0px , $c: rgba(0,0,0,0.75) ) {
+  -webkit-box-shadow: $h $v $b $s $c;
+  -moz-box-shadow: $h $v $b $s $c;
+  box-shadow: $h $v $b $s $c;
+}
+
+// Gradient
+@mixin gradient($start-color, $end-color, $orientation) {
+	background: $start-color;
+	@if $orientation == vertical {
+		// vertical
+		background: -moz-linear-gradient(top,  $start-color 0%, $end-color 100%);
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,$start-color), color-stop(100%,$end-color));
+		background: -webkit-linear-gradient(top,  $start-color 0%,$end-color 100%);
+		background: -o-linear-gradient(top,  $start-color 0%,$end-color 100%);
+		background: -ms-linear-gradient(top,  $start-color 0%,$end-color 100%);
+		background: linear-gradient(to bottom,  $start-color 0%,$end-color 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$start-color', endColorstr='$end-color',GradientType=0 );
+	}
+	@else if $orientation == horizontal	{
+		// horizontal
+		background: -moz-linear-gradient(left,  $start-color 0%, $end-color 100%);
+		background: -webkit-gradient(linear, left top, right top, color-stop(0%,$start-color), color-stop(100%,$end-color));
+		background: -webkit-linear-gradient(left,  $start-color 0%,$end-color 100%);
+		background: -o-linear-gradient(left,  $start-color 0%,$end-color 100%);
+		background: -ms-linear-gradient(left,  $start-color 0%,$end-color 100%);
+		background: linear-gradient(to right,  $start-color 0%,$end-color 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$start-color', endColorstr='$end-color',GradientType=1 );
+	}
+	@else	{
+		// radial
+		background: -moz-radial-gradient(center, ellipse cover,  $start-color 0%, $end-color 100%);
+		background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,$start-color), color-stop(100%,$end-color));
+		background: -webkit-radial-gradient(center, ellipse cover,  $start-color 0%,$end-color 100%);
+		background: -o-radial-gradient(center, ellipse cover,  $start-color 0%,$end-color 100%);
+		background: -ms-radial-gradient(center, ellipse cover,  $start-color 0%,$end-color 100%);
+		background: radial-gradient(ellipse at center,  $start-color 0%,$end-color 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$start-color', endColorstr='$end-color',GradientType=1 );
+	}
+}
+
+// Fade
+@mixin fade($type) {
+  @if $type== "hide" {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 1s, opacity 1s;
+  } @else if $type== "show" {
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 1s, opacity 1s;
+  }
+}

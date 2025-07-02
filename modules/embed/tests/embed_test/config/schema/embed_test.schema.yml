@@ -1,0 +1,27 @@
+# Schema for the configuration files of the Embed test module.
+
+embed.embed_type_settings.embed_test_animal:
+  type: mapping
+  label: 'Schema for the animal embed type additions to an embed button entity'
+  mapping:
+    animal_type:
+      type: string
+      label: 'Animal type'
+    allowed_vertebrates:
+      type: sequence
+      label: 'Allowed vertebrates'
+      sequence:
+        type: string
+        label: 'Vertebrate type'
+
+embed.embed_type_settings.embed_test_aircraft:
+  type: mapping
+  label: 'Schema for the embed_test_validation embed type additions to an embed button entity'
+  mapping:
+    aircraft_type:
+      type: string
+      label: 'Airplane type'
+
+embed.embed_type_settings.embed_test_default:
+  type: mapping
+  label: 'Schema for the embed_test_default embed type additions to an embed button entity'

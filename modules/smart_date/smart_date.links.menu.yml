@@ -1,0 +1,9 @@
+
+# Smart date menu items definition
+entity.smart_date_format.collection:
+  title: 'Smart date formats'
+  route_name: entity.smart_date_format.collection
+  description: 'Manage smart date formats'
+  parent: system.admin_config_regional
+  menu_name: admin
+  weight: 100

@@ -1,0 +1,32 @@
+{
+    "name": "open-telemetry/sem-conv",
+    "description": "Semantic conventions for OpenTelemetry PHP.",
+    "keywords": ["opentelemetry", "otel", "metrics", "tracing", "logging", "apm", "semconv", "semantic conventions"],
+    "type": "library",
+    "support": {
+        "issues": "https://github.com/open-telemetry/opentelemetry-php/issues",
+        "source": "https://github.com/open-telemetry/opentelemetry-php",
+        "docs": "https://opentelemetry.io/docs/php",
+        "chat": "https://app.slack.com/client/T08PSQ7BQ/C01NFPCV44V"
+    },
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "opentelemetry-php contributors",
+            "homepage": "https://github.com/open-telemetry/opentelemetry-php/graphs/contributors"
+        }
+    ],
+    "require": {
+        "php": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "OpenTelemetry\\SemConv\\": "."
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "1.x-dev"
+        }
+    }
+}

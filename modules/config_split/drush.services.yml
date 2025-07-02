@@ -1,0 +1,6 @@
+services:
+  config_split.commands:
+    class: Drupal\config_split\Commands\ConfigSplitCommands
+    arguments: ['@config_split.cli']
+    tags:
+      - { name: drush.command }

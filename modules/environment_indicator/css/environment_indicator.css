@@ -1,0 +1,106 @@
+:root {
+  --enviroment-indicator-border-width: 6px;
+}
+
+#environment-indicator {
+  text-align: center;
+  white-space: nowrap;
+  color: white;
+  text-shadow: 0 -1px 1px #333;
+  font-weight: bold;
+  z-index: 10;
+  left: 0;
+  right: 0;
+  padding: 5px;
+  background-image: linear-gradient(bottom, rgba(207,207,207,0.3) 19%, rgba(250,250,250,0.3) 60%, rgba(255,255,255,0.3) 80%);
+}
+
+#environment-indicator .description { font-size: 0.85em; }
+#environment-indicator .description::before { content: "("; }
+#environment-indicator .description::after { content: ")"; }
+
+#environment-indicator ul { overflow: hidden; margin: 0; }
+
+#environment-indicator ul.environment-switcher-container li {
+  list-style: none;
+  float: left;
+}
+
+#environment-indicator ul.environment-switcher-container li a {
+  margin: 0 3px;
+  padding: 3px 8px;
+  -moz-border-radius: 15px;
+  -webkit-border-radius: 15px;
+  border-radius: 15px;
+  font-size: 0.8em;
+  text-shadow: none;
+  border: none;
+}
+
+#environment-indicator ul.environment-switcher-container li a:hover {
+  background-color: #DDD;
+  box-shadow: inset 0 1px 5px #333;
+}
+
+#environment-indicator ul.environment-switcher-container {
+  display: none;
+  padding: 8px 10px 6px 10px;
+  margin-top: 1px;
+}
+
+.environment-indicator-color {
+  font-size: 1em;
+  text-align: center;
+  border-radius: 5px;
+  background-color: #EDEDE0;
+}
+
+.toolbar .toolbar-bar .toolbar-tab > a.toolbar-icon.is-active::before {
+  filter: invert(0%);
+}
+
+.toolbar .toolbar-bar .toolbar-tab > a.toolbar-icon.is-active {
+  background-image: linear-gradient(rgba(255,255,255,0.25) 20%,transparent 200%);
+}
+
+.toolbar-bar .toolbar-icon-environment:before {
+  background-image: url("../images/env-bebebe.svg");
+}
+.no-svg .toolbar-bar .toolbar-icon-environment:before {
+  background-image: url("../images/env-bebebe.png");
+}
+.toolbar-bar .toolbar-icon-environment.is-active:before {
+  background-image: url("../images/env-ffffff.svg");
+}
+.no-svg .toolbar-bar .toolbar-icon-environment.is-active:before {
+  background-image: url("../images/env-ffffff.png");
+}
+.toolbar .toolbar-tray-vertical .edit-environments {
+  text-align: right;
+  padding: 1em;
+}
+.toolbar .toolbar-tray-horizontal .edit-environments {
+  float: right;
+}
+
+/* Style fixes for gin_toolbar */
+.gin--vertical-toolbar .toolbar-menu-administration {
+  border-left: var(--enviroment-indicator-border-width) solid;
+}
+
+.gin--horizontal-toolbar #toolbar-item-administration-tray {
+  border-top: var(--enviroment-indicator-border-width) solid;
+  border-bottom: 0;
+}
+
+.gin--horizontal-toolbar .gin-secondary-toolbar {
+  margin-top: var(--enviroment-indicator-border-width);
+}
+
+[dir="ltr"] .gin--vertical-toolbar .toolbar-menu-administration > .toolbar-menu > .menu-item .toolbar-menu {
+  margin-left: calc(var(--gin-toolbar-width-collapsed, var(--ginToolbarWidthCollapsed)) - 4px);
+}
+
+[dir="rtl"] .gin--vertical-toolbar .toolbar-menu-administration > .toolbar-menu > .menu-item .toolbar-menu {
+  margin-right: calc(var(--gin-toolbar-width-collapsed, var(--ginToolbarWidthCollapsed)) - 4px);
+}

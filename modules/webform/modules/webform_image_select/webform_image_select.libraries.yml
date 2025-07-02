@@ -1,0 +1,32 @@
+webform_image_select.element:
+  version: VERSION
+  css:
+    component:
+      css/webform_image_select.element.css: {}
+  js:
+    js/webform_image_select.element.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/once
+    - webform_image_select/libraries.jquery.image-picker
+
+# External libraries.
+
+libraries.jquery.image-picker:
+  remote: https://rvera.github.io/image-picker/
+  version: '0.3.1'
+  license:
+    name: MIT
+    url: https://github.com/rvera/image-picker/blob/master/LICENSE
+    gpl-compatible: true
+  directory: jquery.image-picker
+  cdn:
+    /libraries/jquery.image-picker/image-picker/: https://cdnjs.cloudflare.com/ajax/libs/image-picker/0.3.1/
+  css:
+    component:
+      /libraries/jquery.image-picker/image-picker/image-picker.css: {}
+  js:
+    /libraries/jquery.image-picker/image-picker/image-picker.js: {}
+  dependencies:
+    - core/jquery

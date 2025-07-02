@@ -1,0 +1,22 @@
+/**
+ * @file
+ * better_exposed_filters.css
+ */
+
+/*
+ * Basic styling for features added by Better Exposed Filters
+ */
+.bef-exposed-form .form--inline .form-item {
+  float: none;
+}
+.bef-exposed-form .form--inline > .form-item,
+.bef-exposed-form .form--inline .js-form-wrapper > .form-item {
+  float: left; /* LRT */
+}
+.bef-exposed-form .form--inline .bef--secondary {
+  clear: left;
+}
+
+.bef-exposed-form .noUi-vertical {
+  height: 150px;
+}

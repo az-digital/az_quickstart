@@ -1,0 +1,4 @@
+ib_dam_media.configuration_form:
+  title: 'Media settings'
+  route_name: ib_dam_media.configuration_form
+  base_route: ib_dam.settings_form

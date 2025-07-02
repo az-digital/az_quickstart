@@ -1,0 +1,153 @@
+/**
+ * @file
+ * Styles used by the Upgrade Status module.
+ */
+
+/* Upgrade Status summary of the whole site */
+.upgrade-status-of-site tr:hover {
+  color: inherit;
+  background-color: inherit;
+}
+.upgrade-status-of-site th {
+  width: 33%;
+}
+.upgrade-status-of-site td {
+  vertical-align: top;
+}
+/* Make space for SVG circle */
+.upgrade-status-of-site td:nth-child(3) .item-list ul li {
+  margin-right: 6em;
+}
+
+/* Upgrade Status environment table layout */
+.upgrade-status-of-environment th.requirement-label {
+  width: 70%;
+}
+.upgrade-status-of-environment th.status-info {
+  width: 30%;
+}
+
+/* Upgrade Status next step table layout */
+.upgrade-status-next-step th {
+  width: 8%;
+}
+.upgrade-status-next-step th.project-label {
+  width: 20%;
+}
+
+/* Based on --gin-border-m and --gin-border-color-table-header */
+.upgrade-status-of-environment .gin-layer-wrapper thead tr,
+.upgrade-status-next-step .gin-layer-wrapper thead tr {
+  border-left: 0.5rem solid rgba(0, 0, 0, 0.2);
+}
+html.gin--dark-mode .upgrade-status-of-environment .gin-layer-wrapper thead tr,
+html.gin--dark-mode .upgrade-status-next-step .gin-layer-wrapper thead tr {
+  border-left: 0.5rem solid rgba(255, 255, 255, 0.12);
+}
+
+/* Project specific results layout */
+.upgrade-status-project-result-group h3 {
+  margin: 30px 0 0 0;
+}
+.upgrade-status-project-result-group tr td:nth-child(1),
+.upgrade-status-project-result-group tr td:nth-child(3) {
+  width: 40%;
+}
+.upgrade-status-project-result-group tr td:nth-child(2) {
+  width: 10%;
+}
+
+.upgrade-status-of-environment td.requirement-label,
+.upgrade-status-next-step td.project-label {
+  font-weight: bold;
+}
+
+.upgrade-status-project-result-group tr > td.status-info,
+.upgrade-status-next-step tr > td.status-info,
+.upgrade-status-of-environment tr > td.status-info {
+  padding-left: 35px; /* LTR */
+  background-repeat: no-repeat;
+  background-position-x: 10px; /* LTR */
+  background-position-y: center;
+}
+
+[dir="rtl"] .upgrade-status-project-result-group tr > td.status-info,
+[dir="rtl"] .upgrade-status-next-step tr > td.status-info,
+[dir="rtl"] .upgrade-status-of-environment tr > td.status-info {
+  padding-right: 35px; /* LTR */
+  padding-left: 0;
+  /* @todo x background position for RTL */
+}
+
+.upgrade-status-project-result-group tr.color-error > td.status-info,
+.upgrade-status-of-environment tr.color-error > td.status-info {
+  background-image: url(../icons/error.svg);
+}
+
+.upgrade-status-project-result-group tr.color-warning > td.status-info,
+.upgrade-status-next-step td.status-info-incompatible,
+.upgrade-status-of-environment tr.color-warning > td.status-info {
+  background-image: url(../icons/warning.svg);
+}
+
+.upgrade-status-project-result-group
+  tr.color-warning.known-later
+  > td.status-info,
+.upgrade-status-next-step td.status-info-na {
+  background-image: url(../icons/ex.svg);
+}
+
+.upgrade-status-project-result-group tr.color-success > td.status-info,
+.upgrade-status-next-step td.status-info-compatible,
+.upgrade-status-of-environment tr.color-success > td.status-info {
+  background-image: url(../icons/check.svg);
+}
+
+.upgrade-status-project-result-group
+  tr.color-warning.rector-covered
+  > td.status-info {
+  background-image: url(../icons/wrench.svg);
+}
+
+.upgrade-status-next-step td.status-info-unchecked {
+  background-image: url(../icons/questionmark-disc.svg);
+}
+html.gin--dark-mode .upgrade-status-next-step td.status-info-unchecked {
+  background-image: url(../icons/questionmark-disc-white.svg);
+}
+
+/* Result circle styling in the status of site summary */
+.upgrade-status-of-site-circle {
+  display: block;
+  float: right;
+  height: 5em;
+  margin: 0 0 1em 1em;
+}
+.upgrade-status-of-site-circle .circle-bg {
+  fill: none;
+  stroke: #f5f5f2;
+  stroke-width: 3.8;
+}
+.upgrade-status-of-site-circle .circle {
+  fill: none;
+  stroke-width: 2.8;
+  stroke-linecap: round;
+  animation-duration: 1s;
+  animation-timing-function: ease-out;
+  animation-direction: forwards;
+  stroke: #325e1c;
+}
+.upgrade-status-of-site-circle .percentage {
+  font-size: 0.5em;
+  text-anchor: middle;
+  font-weight: bold;
+}
+html.gin--dark-mode .upgrade-status-of-site-circle .percentage {
+  fill: #fff;
+}
+
+/* Gin dialog does not have top and bottom padding by default */
+.ui-dialog .ui-widget-content.ui-dialog-content {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}

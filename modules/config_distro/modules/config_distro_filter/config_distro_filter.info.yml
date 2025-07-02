@@ -1,0 +1,15 @@
+name: Config Distro Filter
+type: module
+description: "Bridge between Config Filter and Config Distro's use of Transform API to keep backwards compatibility."
+package: Configuration
+core_version_requirement: ^10.3 || ^11
+lifecycle: deprecated
+lifecycle_link: https://www.drupal.org/project/config_distro/issues/3466112
+dependencies:
+  - config_distro:config_distro
+  - config_filter:config_filter
+
+# Information added by Drupal.org packaging script on 2025-03-27
+version: '2.1.0-alpha1'
+project: 'config_distro'
+datestamp: 1743102882

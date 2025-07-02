@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="imagemagick">
+  <description>PHP CodeSniffer configuration.</description>
+  <file>.</file>
+  <arg name="extensions" value="inc,install,module,php,profile,test,theme"/>
+
+  <!--Exclude README.md.-->
+  <exclude-pattern>README.md</exclude-pattern>
+
+  <!--Use Drupal code rule.-->
+  <rule ref="vendor/drupal/coder/coder_sniffer/Drupal"></rule>
+
+  <!--Use DrupalPractice code rule.-->
+  <rule ref="vendor/drupal/coder/coder_sniffer/DrupalPractice"></rule>
+
+  <rule ref="Drupal.Commenting.FunctionComment">
+    <exclude name="Drupal.Commenting.FileComment.Missing"/>
+    <exclude name="Drupal.Commenting.FunctionComment.Missing"/>
+  </rule>
+
+</ruleset>

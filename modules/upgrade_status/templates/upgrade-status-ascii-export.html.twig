@@ -1,0 +1,31 @@
+{% if projects.custom %}
+{{ "CUSTOM PROJECTS"|t }}
+{% for project in projects.custom %}
+--------------------------------------------------------------------------------
+{{ project.name }}
+{{ project.date }}
+
+{% if project.summary %}
+{{ project.summary }}
+
+{% endif %}
+{{ project.data|raw }}
+
+{% endfor %}
+{% endif %}
+
+{% if projects.contrib %}
+{{ "CONTRIBUTED PROJECTS"|t }}
+{% for project in projects.contrib %}
+--------------------------------------------------------------------------------
+{{ project.name }}
+{{ project.date }}
+
+{% if project.summary %}
+{{ project.summary }}
+
+{% endif %}
+{{ project.data|raw }}
+
+{% endfor %}
+{% endif %}

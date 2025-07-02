@@ -1,0 +1,16 @@
+<?php
+
+/**
+ * @file
+ * Installation information for the 'Webform clientside validation' module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function webform_clientside_validation_install() {
+  // 'Webform clientside validation' module must execute before the
+  // 'Clientside validation' module.
+  // @see webform_clientside_validation_element_info_alter()
+  module_set_weight('webform_clientside_validation', -1);
+}

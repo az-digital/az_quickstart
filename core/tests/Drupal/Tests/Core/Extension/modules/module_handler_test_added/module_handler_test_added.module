@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * @file
+ * Test module.
+ */
+
+declare(strict_types=1);
+
+/**
+ * Test function.
+ */
+function module_handler_test_added_helper($arg) {
+  return $arg;
+}

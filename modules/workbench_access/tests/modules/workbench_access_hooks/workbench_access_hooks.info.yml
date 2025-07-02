@@ -1,0 +1,12 @@
+name: Workbench access hooks test
+description: Test code for workbench access hooks and events
+type: module
+core_version_requirement: ^9 || ^10 || ^11
+hidden: true
+dependencies:
+  - workbench_access:workbench_access
+
+# Information added by Drupal.org packaging script on 2025-04-15
+version: '2.0.4'
+project: 'workbench_access'
+datestamp: 1744760022

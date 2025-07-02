@@ -1,0 +1,60 @@
+[
+    {
+        "tid": 19,
+        "uuid": "581aea05-f0e6-48b4-b0d5-bd1436490f5b",
+        "revision_id": 19,
+        "langcode": "en",
+        "vid": "vocablocalized",
+        "revision_created": 1623674336,
+        "revision_user": null,
+        "revision_log_message": null,
+        "status": "1",
+        "name": "Jupiter Station",
+        "description": [
+            {
+                "value": "Holographic research.",
+                "format": "filtered_html"
+            }
+        ],
+        "weight": 0,
+        "parent": 0,
+        "changed": 1623674336,
+        "default_langcode": "1",
+        "revision_default": "1",
+        "revision_translation_affected": "1",
+        "content_translation_source": "und",
+        "content_translation_outdated": "0",
+        "content_translation_uid": 1,
+        "content_translation_created": 1623674336,
+        "field_sector": null
+    },
+    {
+        "tid": 19,
+        "uuid": "581aea05-f0e6-48b4-b0d5-bd1436490f5b",
+        "revision_id": 19,
+        "langcode": "is",
+        "vid": "vocablocalized",
+        "revision_created": 1623674336,
+        "revision_user": null,
+        "revision_log_message": null,
+        "status": "1",
+        "name": "Jupiter Station",
+        "description": [
+            {
+                "value": "is - Holographic research. (localized)",
+                "format": null
+            }
+        ],
+        "weight": 0,
+        "parent": 0,
+        "changed": 1623674342,
+        "default_langcode": "0",
+        "revision_default": "1",
+        "revision_translation_affected": "1",
+        "content_translation_source": "und",
+        "content_translation_outdated": "0",
+        "content_translation_uid": 1,
+        "content_translation_created": 1623674342,
+        "field_sector": null
+    }
+]

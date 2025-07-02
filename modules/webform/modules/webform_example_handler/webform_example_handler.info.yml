@@ -1,0 +1,12 @@
+name: 'Webform Handler Example'
+type: module
+description: 'Provides an example of a webform handler.'
+package: 'Webform example'
+core_version_requirement: ^10.2
+dependencies:
+  - 'webform:webform'
+
+# Information added by Drupal.org packaging script on 2024-12-10
+version: '6.2.9'
+project: 'webform'
+datestamp: 1733851071

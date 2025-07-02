@@ -1,0 +1,70 @@
+<?php
+
+/**
+ * @file
+ * Install and update hooks for Exclude Node Title.
+ */
+
+use Drupal\user\Entity\Role;
+
+/**
+ * Implements hook_install().
+ */
+function exclude_node_title_install() {
+  // Attaches default permission to use exclude node title.
+  $roles = Role::loadMultiple();
+  foreach ($roles as $role) {
+    $role->grantPermission('use exclude node title');
+    $role->save();
+  }
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function exclude_node_title_uninstall() {
+  // Uninstall old configuration.
+  \Drupal::configFactory()->getEditable('exclude_node_title.settings')->delete();
+
+  // Uninstall state configuration.
+  \Drupal::state()->delete('exclude_node_title_nid_list');
+
+}
+
+/**
+ * Implements hook_update_N().
+ */
+function exclude_node_title_update_8001() {
+  $config = \Drupal::configFactory()
+    ->getEditable('exclude_node_title.settings');
+
+  $config
+    ->set('nid_list', $config->get('exclude_node_title_nid_list'))
+    ->set('translation_sync', $config->get('exclude_node_title_translation_sync'))
+    ->set('search', $config->get('exclude_node_title_search'))
+    ->set('content_types', $config->get('exclude_node_title_content_type_value'));
+
+  $content_types = $config->get('exclude_node_title_content_type_modes');
+  foreach ($content_types as $content_type => $modes) {
+    $modes = array_filter(unserialize($modes));
+    $config->set('content_type_modes.' . $content_type, array_keys($modes));
+  }
+
+  $config
+    ->clear('exclude_node_title_nid_list')
+    ->clear('exclude_node_title_translation_sync')
+    ->clear('exclude_node_title_search')
+    ->clear('exclude_node_title_content_type_value')
+    ->clear('exclude_node_title_content_type_modes')
+    ->save();
+}
+
+/**
+ * Defaults render type to 'remove' for retroactivity.
+ */
+function exclude_node_title_update_8002() {
+  \Drupal::configFactory()
+    ->getEditable('exclude_node_title.settings')
+    ->set('type', 'remove')
+    ->save();
+}

@@ -1,0 +1,6 @@
+services:
+  chosen_lib.commands:
+    class: \Drupal\chosen_lib\Commands\ChosenLibCommands
+    arguments: ['@file_system']
+    tags:
+      - { name: drush.command }

@@ -1,0 +1,9 @@
+services:
+  views_remote_data_pokeapi.pokeapi:
+    class: Drupal\views_remote_data_pokeapi\PokeApi
+    arguments: ['@http_client', '@cache.data']
+  views_remote_data_pokeapi.event_subscriber:
+    class: Drupal\views_remote_data_pokeapi\EventSubscriber\ViewsRemoteDataSubscriber
+    arguments: ['@views_remote_data_pokeapi.pokeapi']
+    tags:
+      - { name: event_subscriber }

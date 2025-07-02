@@ -1,0 +1,18 @@
+# List of words excluded from cspell validation for the project Field Group.
+# Mostly contains custom names: variables, modules, users, etc...
+
+# User names: contributors, maintainers, users.
+Duael
+huzooka
+stalski
+swentel
+yched
+zuuperman
+
+# Custom variable names, mostly key values used in format types, or CSS rules.
+htab
+htabs
+multipage
+vtab
+# Ignore keyword 'bounceslide' used for Accordion formatter display effect.
+bounceslide

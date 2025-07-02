@@ -1,0 +1,23 @@
+{
+  "name": "drupal/ckeditor_indentblock",
+  "type": "drupal-module",
+  "description": "Provides integration of the CKEditor IndentBlock plugin with CKEditor.",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "https://www.drupal.org/project/ckeditor_indentblock",
+  "minimum-stability": "stable",
+  "authors": [
+    {
+      "name": "Christian Meilinger (meichr)",
+      "homepage": "https://www.drupal.org/u/meichr",
+      "role": "Maintainer"
+    }
+  ],
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/ckeditor_indentblock",
+    "source": "http://cgit.drupalcode.org/ckeditor_indentblock/"
+  },
+  "require": {
+    "drupal/core": "^10.1 || ^11"
+  }
+}

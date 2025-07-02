@@ -1,0 +1,14 @@
+name: Views Bootstrap 4
+type: module
+description: Allows for different styles to be used in views to work with Bootstrap 4 components.
+package: Views
+core_version_requirement: ^9 || ^10 || ^11
+dependencies:
+  - drupal:views
+libraries:
+  - views_bootstrap/components
+
+# Information added by Drupal.org packaging script on 2024-08-01
+version: '5.4.1'
+project: 'views_bootstrap'
+datestamp: 1722552104

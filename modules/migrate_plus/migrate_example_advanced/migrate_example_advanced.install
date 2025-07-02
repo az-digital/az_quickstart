@@ -1,0 +1,60 @@
+<?php
+
+declare(strict_types = 1);
+
+/**
+ * @file
+ * Install, update and uninstall functions for migrate_example_advanced module.
+ */
+
+use Drupal\migrate_plus\Entity\Migration;
+
+/**
+ * Implements hook_install().
+ *
+ * We need the urls to be absolute for the XML source plugin to read them, but
+ * the static configuration files on disk can't know the server and port to
+ * use. So, in the .yml files we provide the REST resources relative to the
+ * site root and here rewrite them to fully-qualified paths.
+ */
+function migrate_example_advanced_install(): void {
+  /** @var \Drupal\migrate_plus\Entity\MigrationInterface $wine_role_xml_migration */
+  $wine_role_xml_migration = Migration::load('wine_role_xml');
+  if ($wine_role_xml_migration) {
+    $source = $wine_role_xml_migration->get('source');
+    $request = \Drupal::request();
+    $urls = [];
+    foreach ($source['urls'] as $url) {
+      $urls[] = 'http://' . $request->getHttpHost() . $url;
+    }
+    $source['urls'] = $urls;
+    $wine_role_xml_migration->set('source', $source);
+    $wine_role_xml_migration->save();
+  }
+  /** @var \Drupal\migrate_plus\Entity\MigrationInterface $wine_role_json_migration */
+  $wine_role_json_migration = Migration::load('wine_role_json');
+  if ($wine_role_json_migration) {
+    $source = $wine_role_json_migration->get('source');
+    $request = \Drupal::request();
+    $urls = [];
+    foreach ($source['urls'] as $url) {
+      $urls[] = 'http://' . $request->getHttpHost() . $url;
+    }
+    $source['urls'] = $urls;
+    $wine_role_json_migration->set('source', $source);
+    $wine_role_json_migration->save();
+  }
+  /** @var \Drupal\migrate_plus\Entity\MigrationInterface $wine_variety_multi_xml_migration */
+  $wine_variety_multi_xml_migration = Migration::load('wine_variety_multi_xml');
+  if ($wine_variety_multi_xml_migration) {
+    $source = $wine_variety_multi_xml_migration->get('source');
+    $request = \Drupal::request();
+    $urls = [];
+    foreach ($source['urls'] as $url) {
+      $urls[] = 'http://' . $request->getHttpHost() . $url;
+    }
+    $source['urls'] = $urls;
+    $wine_variety_multi_xml_migration->set('source', $source);
+    $wine_variety_multi_xml_migration->save();
+  }
+}

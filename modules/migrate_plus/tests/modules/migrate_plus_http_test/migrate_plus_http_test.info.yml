@@ -1,0 +1,13 @@
+type: module
+name: Migrate Plus Http Test
+description: 'Test module to test Migrate Plus Http data_source.'
+package: Testing
+core_version_requirement: '>=9.1'
+dependencies:
+  - drupal:migrate
+  - migrate_plus:migrate_plus
+
+# Information added by Drupal.org packaging script on 2024-11-20
+version: '6.0.5'
+project: 'migrate_plus'
+datestamp: 1732124626

@@ -1,0 +1,53 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for this module.
+ */
+
+use Drupal\Core\Link;
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_requirements().
+ */
+function config_inspector_requirements($phase) {
+  if ($phase !== 'runtime') {
+    return [];
+  }
+
+  $requirements = [];
+
+  $errors = [];
+  foreach (\Drupal::service('config.storage')->listAll() as $name) {
+    $result = \Drupal::service('config_inspector.manager')->checkValues($name);
+    if (is_array($result)) {
+      $text = \Drupal::translation()->formatPlural(count($result), '@configuration_key: @count error', '@configuration_key: @count errors', [
+        '@configuration_key' => $name,
+      ]);
+      $url = Url::fromRoute('config_inspector.list_page', ['name' => $name]);
+      $errors[] = Link::fromTextAndUrl($text, $url)->toString();
+    }
+  }
+
+  if (!empty($errors)) {
+    $requirements['config_inspector_report'] = [
+      'title' => t('Configuration inspector'),
+      'value' => t("The site's configuration does not match the associated schema."),
+      'description' => [
+        '#theme' => 'item_list',
+        '#items' => $errors,
+      ],
+      'severity' => REQUIREMENT_ERROR,
+    ];
+  }
+  else {
+    $requirements['config_inspector_report'] = [
+      'title' => t('Configuration inspector'),
+      'value' => t("The site's configuration matches the associated schema."),
+      'severity' => REQUIREMENT_OK,
+    ];
+  }
+
+  return $requirements;
+}

@@ -1,0 +1,4 @@
+services:
+  exclude_node_title.manager:
+    class: Drupal\exclude_node_title\ExcludeNodeTitleManager
+    arguments: ['@config.factory', '@entity_type.manager', '@entity_type.bundle.info']

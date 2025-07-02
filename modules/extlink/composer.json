@@ -1,0 +1,32 @@
+{
+  "name": "drupal/extlink",
+  "description": "Modify behavior and appearance of external links.",
+  "type": "drupal-module",
+  "license": "GPL-2.0-or-later",
+  "keywords": ["Drupal", "External Links"],
+  "homepage": "https://www.drupal.org/project/extlink",
+  "authors": [
+    {
+      "name": "Nate Lampton",
+      "homepage": "https://www.drupal.org/u/quicksketch",
+      "role": "Maintainer"
+    },
+    {
+      "name": "Lachlan Ennis",
+      "homepage": "https://www.drupal.org/u/elachlan",
+      "role": "Maintainer"
+    },
+    {
+      "name": "Neslee Canil Pinto",
+      "homepage": "https://www.drupal.org/u/neslee-canil-pinto",
+      "role": "Maintainer"
+    }
+  ],
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/extlink",
+    "source": "https://git.drupalcode.org/project/extlink"
+  },
+  "require": {
+    "drupal/core": "^10 || ^11"
+  }
+}

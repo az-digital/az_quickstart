@@ -1,0 +1,8 @@
+id: url_test
+label: URL source plugin edit test
+description: Test editing of URL source plugin via the UI
+source_type: URL
+dependencies:
+  enforced:
+    module:
+      - url_source_test

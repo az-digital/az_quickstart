@@ -1,0 +1,5 @@
+chosen.settings:
+  title: 'Chosen settings'
+  base_route_name: chosen.admin
+  names:
+    - chosen.settings

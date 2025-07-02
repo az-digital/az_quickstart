@@ -1,0 +1,15 @@
+{#
+/**
+ * @file
+ * Default theme implementation for a summary of a webform debug handler.
+ *
+ * Available variables:
+ * - settings: The current configuration for this debug handler.
+ * - handler: The debug handler.
+ *
+ * @ingroup themeable
+ */
+#}
+<strong class="color-error">{{ 'Submission values will be displayed onscreen.'|t }}</strong><br/>
+<b>{{ 'Data format:'|t }}</b> {{ settings.format }}<br />
+<b>{{ 'Include submission properties:'|t }}</b> {{ settings.submission ? 'Yes'|t : 'No'|t }}<br />

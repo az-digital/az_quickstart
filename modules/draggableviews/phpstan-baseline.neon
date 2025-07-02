@@ -1,0 +1,16 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^\\\\Drupal calls should be avoided in classes, use dependency injection instead$#"
+			count: 1
+			path: src/Plugin/views/join/WithArgs.php
+
+		-
+			message: "#^Access to an undefined property Drupal\\\\Tests\\\\draggableviews\\\\Functional\\\\DraggableviewsTest\\:\\:\\$adminUser\\.$#"
+			count: 2
+			path: tests/src/Functional/DraggableviewsTest.php
+
+		-
+			message: "#^Access to an undefined property Drupal\\\\Tests\\\\draggableviews\\\\Functional\\\\DraggableviewsTest\\:\\:\\$authUser\\.$#"
+			count: 1
+			path: tests/src/Functional/DraggableviewsTest.php

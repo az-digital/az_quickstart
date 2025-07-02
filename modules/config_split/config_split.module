@@ -1,0 +1,129 @@
+<?php
+
+/**
+ * @file
+ * Configuration split module functions.
+ */
+
+use Drupal\Core\Config\Entity\ConfigEntityInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Link;
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function config_split_form_config_admin_import_form_alter(&$form, FormStateInterface $form_state) {
+
+  $enabled = [];
+  $used_config_split_text = t('You are not using any config split configuration');
+  /** @var \Drupal\config_split\ConfigSplitManager $manager */
+  $manager = \Drupal::service('config_split.manager');
+  $sync = \Drupal::service('config.storage.sync');
+  $splits = $manager->loadMultiple($manager->listAll($sync), $sync);
+  foreach ($splits as $split) {
+    if ($split->get('status')) {
+      $entity = $manager->getSplitEntity($split->getName());
+      if ($entity instanceof ConfigEntityInterface) {
+        $enabled[] = Link::fromTextAndUrl($entity->label(), $entity->toUrl())->toString();
+      }
+      else {
+        $enabled[] = $split->get('label') . ' (new)';
+      }
+    }
+  }
+  if (!empty($enabled)) {
+    $used_config_split_text = t('Used config split configuration:') . ' ' . implode(', ', $enabled);
+  }
+
+  $form['config_split']['#weight'] = -10;
+  $form['config_split']['#markup'] = '<p>' . $used_config_split_text . '</p>';
+
+}
+
+/**
+ * Implements hook_help().
+ */
+function config_split_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.config_split':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('
+The Drupal 8 configuration management works best when importing and exporting
+the whole set of the sites configuration. However, sometimes developers like to
+opt out of the robustness of CM and have a super-set of configuration active on
+their development machine. The canonical example for this is to have the
+<code>devel</code> module enabled or having a few block placements or views in
+the development environment and then not export them into the set of
+configuration to be deployed, yet still being able to share the development
+configuration with colleagues.
+
+This module allows to define sets of configuration that will get exported to
+separate directories when exporting, and get merged together when importing.
+It is possible to define in settings.php which of these sets should be active
+and considered for the export and import.
+
+For more information, see the <a href=":online-documentation">online documentation for the Config Split module</a>.',
+          [
+            ':online-documentation' => 'https://www.drupal.org/docs/8/modules/configuration-split',
+          ])
+        . '</p>';
+      $output .= '<h3>' . t('Uses') . '</h3>';
+      $output .= '<dl>';
+      $output .= '<dt>' . t('Setting up a split') . '</dt>';
+      $output .= '<dd>' . t('
+Let us assume that you configured your sync directory as follows:
+<code>
+$settings["config_sync_directory"] = \'../config/sync\';
+</code>
+Create a split with the folder `../config/my-split-folder` and create that
+directory. Now add a module that is currently active that you wish not to
+export, say `devel`. Next export all the configuration.
+This should have removed devel from `core.extensions` and moved the devel
+configuration to the split folder.') . '</dd>';
+      $output .= '<dt>' . t('Deploy splits') . '</dt>';
+      $output .= '<dd>' . t('
+Now deploy the configuration and devel will be un-installed.
+On another developers machine just import the configuration, add the override,
+clear the cache, and import again to have devel enabled on that environment.
+
+You should only edit active splits as inactive splits will not take effect when
+exporting the configuration.') . '</dd>';
+      $output .= '</dl>';
+
+      return $output;
+
+    case 'entity.config_split.add_form':
+    case 'entity.config_split.edit_form':
+      $output = '';
+      $output .= '<p>' . t('Config Split Help') . '</p>';
+      $output .= '<p>' . t('The configuration listed as part of a split
+      are exported to the split storage rather than the usual sync directory
+      when exporting the whole configuration. When importing the whole
+      configuration, the configuration in the split storages is merged with
+      the default sync directory and overrides the configuration.
+      The configuration does not end up being overwritten in the sense of
+      configuration overrides such as the overrides from settings.php.') . '</p>';
+
+      return $output;
+  }
+
+  return NULL;
+}
+
+/**
+ * Implements hook_config_readonly_whitelist_patterns().
+ *
+ * Automatically add any enabled database config splits' partial and complete
+ * entries as whitelisted patterns for config_readonly.
+ */
+function config_split_config_readonly_whitelist_patterns() {
+  $patterns = [];
+  /** @var \Drupal\config_split\Entity\ConfigSplitEntityInterface[] $splits */
+  $splits = \Drupal::entityTypeManager()->getStorage('config_split')->loadByProperties(['storage' => 'database', 'status' => TRUE]);
+  foreach ($splits as $split) {
+    $patterns = array_merge($patterns, $split->get('partial_list'), $split->get('complete_list'));
+  }
+  return $patterns;
+}

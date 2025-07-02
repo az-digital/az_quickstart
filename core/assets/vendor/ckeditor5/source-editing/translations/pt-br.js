@@ -1,0 +1,1 @@
+!function(o){const i=o["pt-br"]=o["pt-br"]||{};i.dictionary=Object.assign(i.dictionary||{},{"Show source":"Exibir fonte",Source:"Código-Fonte"})}(window.CKEDITOR_TRANSLATIONS||(window.CKEDITOR_TRANSLATIONS={}));

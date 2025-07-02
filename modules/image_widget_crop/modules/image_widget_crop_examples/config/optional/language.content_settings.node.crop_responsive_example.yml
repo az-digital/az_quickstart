@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.crop_responsive_example
+id: node.crop_responsive_example
+target_entity_type_id: node
+target_bundle: crop_responsive_example
+default_langcode: site_default
+language_alterable: false

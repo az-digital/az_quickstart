@@ -1,0 +1,127 @@
+<?php
+
+/**
+ * @file
+ * Defines a field type to embed views in an entity reference field.
+ */
+
+use Drupal\Component\Utility\Html;
+use Drupal\Component\Utility\Xss;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\views\ViewExecutable;
+
+/**
+ * Implements hook_help().
+ */
+function viewsreference_help($route_name, RouteMatchInterface $arg) {
+  if ($route_name === 'help.page.viewsreference') {
+    $output = file_get_contents(\Drupal::service('extension.list.module')->getPath('viewsreference') . '/README.md');
+    return \Drupal::moduleHandler()->moduleExists('markdown') ?
+      Xss::filterAdmin(\Drupal::moduleHandler()->invoke(
+        'markdown',
+        'filter',
+        ['process', 0, -1, $output]
+      )) :
+      '<h3>Viewsreference README</h3><pre>' . Html::escape($output) . '</pre>';
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK().
+ */
+function viewsreference_theme_suggestions_viewsreference__view_title(array $variables) {
+  $suggestions = [];
+
+  if (!empty($variables['variables']['#view']) && $variables['variables']['#view'] instanceof ViewExecutable) {
+    $suggestions = $variables['variables']['#view']->buildThemeFunctions('viewsreference__view_title');
+  }
+
+  return $suggestions;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function viewsreference_theme($existing, $type, $theme, $path) {
+  return [
+    'viewsreference__view_title' => [
+      'template' => 'viewsreference--view-title',
+      'render element' => 'variables',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function template_preprocess_viewsreference__view_title(&$variables) {
+  $variables['title'] = ['#markup' => $variables['variables']['#title']];
+  if (!empty($variables['variables']['#view'])) {
+    \Drupal::service('renderer')->addCacheableDependency($variables, $variables['variables']['#view']->storage);
+  }
+}
+
+/**
+ * Implements hook_module_implements_alter().
+ */
+function viewsreference_module_implements_alter(&$implementations, $hook) {
+  if ($hook === 'views_pre_render') {
+    // Move viewsreference_views_pre_render() to the end of the list.
+    $viewsreference_hook = $implementations['viewsreference'];
+    unset($implementations['viewsreference']);
+    $implementations['viewsreference'] = $viewsreference_hook;
+  }
+}
+
+/**
+ * Implements hook_views_pre_view().
+ */
+function viewsreference_views_pre_view(ViewExecutable $view, $display_id, array &$args) {
+  if (!isset($view->element['#viewsreference']) && empty($view->getRequest()->query->all('viewsreference'))) {
+    return;
+  }
+
+  if (!empty($view->getRequest()->query->all('viewsreference'))) {
+    $view->element['#viewsreference'] = $view->getRequest()->query->all('viewsreference');
+    // For ajax views we reset all handlers and make the view initialize again
+    // to allow changes from the settings plugins.
+    $view->display_handler->handlers = [];
+    $view->inited = FALSE;
+  }
+
+  // Decompress the Views Reference settings.
+  /** @var \Drupal\viewsreference\ViewsReferenceCompression $compression */
+  $compression = \Drupal::service('viewsreference.compression');
+  $view->element['#viewsreference'] = $compression->uncompress($view->element['#viewsreference'], $view);
+
+  // Let all settings plugins alter the view.
+  $viewsreference_plugin_manager = \Drupal::service('plugin.manager.viewsreference.setting');
+  $plugin_definitions = $viewsreference_plugin_manager->getDefinitions();
+  if (isset($view->element['#viewsreference']['enabled_settings'])) {
+    foreach ($view->element['#viewsreference']['enabled_settings'] as $enabled_setting) {
+      if (!empty($plugin_definitions[$enabled_setting])) {
+        $plugin_definition = $plugin_definitions[$enabled_setting];
+        /** @var \Drupal\viewsreference\Plugin\ViewsReferenceSettingInterface $plugin_instance */
+        $plugin_instance = $viewsreference_plugin_manager->createInstance($plugin_definition['id']);
+        $value = $view->element['#viewsreference']['data'][$plugin_definition['id']] ?? $plugin_definition['default_value'];
+        $plugin_instance->alterView($view, $value);
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_views_pre_render().
+ */
+function viewsreference_views_pre_render($view) {
+  // If using AJAX, forward the viewsreference data and settings in the request.
+  if (isset($view->element['#viewsreference']) && $view->ajaxEnabled() && empty($view->is_attachment) && empty($view->live_preview)) {
+
+    // Compress the Views Reference settings to reduce the risk of 414 errors.
+    // @see https://www.drupal.org/node/3396530.
+    /** @var \Drupal\viewsreference\ViewsReferenceCompression $compression */
+    $compression = \Drupal::service('viewsreference.compression');
+    $view->element['#attached']['drupalSettings']['views']['ajaxViews']['views_dom_id:' . $view->dom_id]['viewsreference'] = $compression->compress($view->element['#viewsreference'], $view);
+  }
+  return $view;
+}

@@ -1,0 +1,77 @@
+{#
+/**
+ * @file
+ * Template for a Blazy layout.
+ */
+#}
+{% set wrapper_classes = [
+    'b-layout-wrapper',
+    settings.ete ? 'b-layout-wrapper--ete',
+   ]
+%}
+{%
+  set classes = [
+    'b-layout',
+    settings.ete ? 'b-layout--ete',
+    settings.id ? 'b-layout--' ~ settings.id|clean_class,
+    settings.background ? 'b-layout--bg',
+  ]
+%}
+{% set common_classes = [
+    'grid',
+    'blazy__region',
+    'region',
+   ]
+%}
+{% set MAIN_TAG = settings.wrapper|default('div') %}
+{% if content %}
+  <div{{ wrapper_attributes.addClass(wrapper_classes) }}>
+    <{{ MAIN_TAG }}{{ attributes.addClass(classes) }}>
+      {% if settings.background %}
+        {% set REGSETS = settings.regions.bg %}
+        {% set CUSTOM_CLASSES = REGSETS.settings.classes %}
+        {% set IS_EMPTY = REGSETS.settings.empty %}
+        {%
+          set bg_classes = common_classes | merge([
+            'region--bg',
+            IS_EMPTY ? 'region--empty',
+            CUSTOM_CLASSES is not empty ? CUSTOM_CLASSES|join(' '),
+          ])
+        %}
+        <div{{ region_attributes.bg.addClass(bg_classes) }}>
+          {% if in_preview and IS_EMPTY %}
+            <p class="blazy__warning">{% trans %}Any backgrounds require Blazy or builtin Image/Media with Use CSS Background, or just Background color.{% endtrans %}</p>
+          {% endif %}
+          {{ content.bg }}
+        </div>
+      {% endif %}
+      {% for region in regions %}
+        {% set REGSETS = settings.regions[region] %}
+        {% set NAME = REGSETS.label %}
+        {% set USE_BG = REGSETS.settings.background is not empty %}
+        {% set CUSTOM_CLASSES = REGSETS.settings.classes %}
+        {% set REGION_TAG = (REGSETS.settings.wrapper|default('div')) %}
+        {% set IS_EMPTY = REGSETS.settings.empty %}
+        {%
+          set region_classes = common_classes | merge([
+            'region--' ~ region|clean_class,
+            NAME is not empty ? 'region--' ~ NAME|clean_class,
+            USE_BG ? 'region--b-bg',
+            IS_EMPTY ? 'region--empty',
+            CUSTOM_CLASSES is not empty ? CUSTOM_CLASSES|join(' '),
+          ])
+        %}
+        <{{ REGION_TAG }}{{ region_attributes[region].addClass(region_classes) }}>
+          {# @todo remove check when core draggable works with inner DIV. #}
+          {% if in_preview %}
+            {{ content[region] }}
+          {% else %}
+            <div{{ region_content_attributes[region].addClass('grid__content') }}>
+              {{ content[region] }}
+            </div>
+          {% endif %}
+        </{{ REGION_TAG }}>
+      {% endfor %}
+    </{{ MAIN_TAG }}>
+  </div>
+{% endif %}

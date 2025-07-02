@@ -1,0 +1,32 @@
+[
+    {
+        "tid": 3,
+        "uuid": "964af523-56bf-4b8e-b680-5ce5b810bdb5",
+        "revision_id": 3,
+        "langcode": "en",
+        "vid": "test_vocabulary",
+        "revision_created": 1623674336,
+        "revision_user": null,
+        "revision_log_message": null,
+        "status": "1",
+        "name": "Term2",
+        "description": [
+            {
+                "value": "The second term.",
+                "format": "filtered_html"
+            }
+        ],
+        "weight": 0,
+        "parent": 0,
+        "changed": 1623674336,
+        "default_langcode": "1",
+        "revision_default": "1",
+        "revision_translation_affected": "1",
+        "content_translation_source": "und",
+        "content_translation_outdated": "0",
+        "content_translation_uid": 1,
+        "content_translation_created": 1623674336,
+        "field_integer": null,
+        "field_term_reference": null
+    }
+]

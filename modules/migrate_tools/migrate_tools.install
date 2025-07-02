@@ -1,0 +1,48 @@
+<?php
+
+/**
+ * Implements hook_schema().
+ */
+function migrate_tools_schema(): array {
+  $schema['migrate_tools_sync_source_ids'] = [
+    'description' => 'Table storing SyncSourceIds entries for the --sync option.',
+    'fields' => [
+      'id' => array(
+        'description' => 'Primary Key: Unique ID.',
+        'type' => 'serial',
+        'not null' => TRUE,
+      ),
+      'migration_id' => [
+        'description' => 'The migration ID.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ],
+      'source_ids' => [
+        'description' => 'Array of source IDs, in the same order as defined in \Drupal\migrate\Row::$sourceIds.',
+        'type' => 'blob',
+        // "normal" size for "blob" is 16KB on MySQL, and 4GB or unlimited on
+        // other DBMS. That should more than enough for a single set of IDs.
+        // @see https://www.drupal.org/node/159605
+        'size' => 'normal',
+        'not null' => TRUE,
+        'serialize' => TRUE,
+      ],
+    ],
+    'indexes' => [
+      'migration_id' => ['migration_id'],
+    ],
+    'primary key' => ['id'],
+  ];
+  return $schema;
+}
+
+/**
+ * Adds a table in the database dedicated to SyncSourceIds entries.
+ */
+function migrate_tools_update_10000(): void {
+  $schema = migrate_tools_schema();
+  foreach($schema as $tableName => $schemaDefinition) {
+    \Drupal::database()->schema()->createTable($tableName, $schemaDefinition);
+  }
+}

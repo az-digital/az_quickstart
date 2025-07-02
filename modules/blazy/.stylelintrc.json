@@ -1,0 +1,4 @@
+{
+  "extends": "../../../core/.stylelintrc.json",
+  "custom-property-pattern": "^--[a-z][-_a-z0-9IE]*$"
+}

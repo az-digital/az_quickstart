@@ -1,0 +1,39 @@
+<?php
+
+/**
+ * @file
+ * Contains hooks implemented by Migrate Language Content Settings Fix module.
+ */
+
+declare(strict_types=1);
+
+/**
+ * Implements hook_migration_plugins_alter().
+ */
+function migmag_language_content_settings_fix_migration_plugins_alter(array &$migrations): void {
+  if (!empty($migrations['d7_user'])) {
+    $migrations['d7_user']['migration_dependencies']['optional'] = array_unique(
+      array_merge(
+        $migrations['d7_user']['migration_dependencies']['optional'] ?? [],
+        ['d7_entity_translation_settings']
+      )
+    );
+  }
+
+  $et_settings_migrations = array_filter(
+    $migrations,
+    function (array $definition) {
+      return $definition['destination']['plugin'] === 'entity:language_content_settings' && in_array('Drupal 7', $definition['migration_tags'] ?? [], TRUE);
+    }
+  );
+  if (!empty($et_settings_migrations['d7_entity_translation_settings'])) {
+    unset($et_settings_migrations['d7_entity_translation_settings']);
+
+    $migrations['d7_entity_translation_settings']['migration_dependencies']['required'] = array_unique(
+      array_merge(
+        $migrations['d7_entity_translation_settings']['migration_dependencies']['required'] ?? [],
+        array_keys($et_settings_migrations)
+      )
+    );
+  }
+}

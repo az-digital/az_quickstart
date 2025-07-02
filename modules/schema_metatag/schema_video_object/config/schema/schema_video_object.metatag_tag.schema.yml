@@ -1,0 +1,45 @@
+# The 'type' should be "label" for short meta tags and "text" for ones which
+# could get longer, especially ones which use a textarea field instead of a
+# textfield.
+metatag.metatag_tag.schema_video_object_content_url:
+  type: text
+  label: 'contentUrl'
+metatag.metatag_tag.schema_video_object_description:
+  type: text
+  label: 'description'
+metatag.metatag_tag.schema_video_object_duration:
+  type: text
+  label: 'duration'
+metatag.metatag_tag.schema_video_object_embed_url:
+  type: text
+  label: 'embedUrl'
+metatag.metatag_tag.schema_video_object_expires:
+  type: text
+  label: 'expires'
+metatag.metatag_tag.schema_video_object_id:
+  type: text
+  label: '@id'
+metatag.metatag_tag.schema_video_object_interaction_count:
+  type: text
+  label: 'interactionCount'
+metatag.metatag_tag.schema_video_object_name:
+  type: text
+  label: 'name'
+metatag.metatag_tag.schema_video_object_thumbnail_url:
+  type: text
+  label: 'thumbnailUrl'
+metatag.metatag_tag.schema_video_object_type:
+  type: string
+  label: '@type'
+metatag.metatag_tag.schema_video_object_upload_date:
+  type: text
+  label: 'uploadDate'
+metatag.metatag_tag.schema_video_object_aggregate_rating:
+  type: text
+  label: 'aggregateRating'
+metatag.metatag_tag.schema_video_object_review:
+  type: text
+  label: 'review'
+metatag.metatag_tag.schema_video_object_transcript:
+  type: text
+  label: 'transcript'

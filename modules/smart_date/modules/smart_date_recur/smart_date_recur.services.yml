@@ -1,0 +1,7 @@
+services:
+  smart_date_recur.manager:
+    class: Drupal\smart_date_recur\SmartDateRecurManager
+  # smart_date_recur.rule:
+  #     class: Drupal\smart_date_recur\Entity\SmartDateRule
+  # smart_date_recur.format:
+  #     class: Drupal\smart_date_recur\Plugin\Field\FieldFormatter\SmartDateRecurrenceFormatter

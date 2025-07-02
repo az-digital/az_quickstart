@@ -1,0 +1,34 @@
+<div id="{{ id }}" {{ attributes.addClass(classes) }}>
+  {% set i = 0 %}
+  {% set len = rows | length %}
+  {% for key, row in rows -%}
+    {% set i = i + 1 %}
+    {% set collapse_class = (
+        (i == 1 and options.collapse.first is defined and options.collapse.first > 0)
+        or (i == len and options.collapse.last is defined and options.collapse.last > 0)
+        or (i != 1 and i != len and options.collapse.middle is defined and options.collapse.middle > 0)
+        ) ? 'collapse show' : 'collapse'
+    %}
+    {% set collapse_class_boolean = (
+        (i == 1 and options.collapse.first is defined and options.collapse.first > 0)
+        or (i == len and options.collapse.last is defined and options.collapse.last > 0)
+        or (i != 1 and i != len and options.collapse.middle is defined and options.collapse.middle > 0)
+        ) ? 'true' : 'false'
+    %}
+      <div class="card">
+        <div class="class-header" id="heading{{ key }}">
+          <h5 class="mb-0">
+            <button class="btn btn-link" data-toggle="collapse" data-target="#{{ id }}-collapse-{{ key }}" aria-expanded="{{collapse_class_boolean}}" aria-controls="collapseOne">
+              {{ row.title }}
+            </button>
+          </h5>
+        </div>
+
+        <div id="{{ id }}-collapse-{{ key }}" class="{{collapse_class}}" aria-labelledby="heading{{ key }}" data-parent="#{{ id }}">
+          <div class="card-body">
+              {{row.content}}
+          </div>
+        </div>
+      </div>
+  {%- endfor %}
+</div>

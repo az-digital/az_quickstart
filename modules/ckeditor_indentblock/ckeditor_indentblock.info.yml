@@ -1,0 +1,13 @@
+name: CKEditor IndentBlock
+type: module
+description: 'Enables IndentBlock functionality for Drupal CKEditor 5.'
+package: CKEditor
+core_version_requirement: ^10.1 || ^11
+
+dependencies:
+  - drupal:ckeditor5
+
+# Information added by Drupal.org packaging script on 2024-11-20
+version: '8.x-1.1'
+project: 'ckeditor_indentblock'
+datestamp: 1732133168

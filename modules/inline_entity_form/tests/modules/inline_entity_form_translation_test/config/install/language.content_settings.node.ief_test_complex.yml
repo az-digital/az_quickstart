@@ -1,0 +1,17 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.ief_test_complex
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+id: node.ief_test_complex
+target_entity_type_id: node
+target_bundle: ief_test_complex
+default_langcode: site_default
+language_alterable: true

@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs
+    - webform
+  enforced:
+    module:
+      - webform_test_paragraphs
+id: paragraph.field_webform_test
+field_name: field_webform_test
+entity_type: paragraph
+type: webform
+settings:
+  target_type: webform
+module: webform
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

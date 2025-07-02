@@ -1,0 +1,25 @@
+[
+    {
+        "tid": 1,
+        "uuid": "1098fcc5-2e2b-40cf-8790-18fbaf4e5914",
+        "revision_id": 1,
+        "langcode": "en",
+        "vid": "forums",
+        "revision_created": 1623674252,
+        "revision_user": null,
+        "revision_log_message": null,
+        "status": "1",
+        "name": "General discussion",
+        "description": null,
+        "weight": 2,
+        "parent": 0,
+        "changed": null,
+        "default_langcode": "1",
+        "revision_default": "1",
+        "revision_translation_affected": "1",
+        "content_translation_source": "und",
+        "content_translation_outdated": "0",
+        "content_translation_uid": null,
+        "content_translation_created": null
+    }
+]

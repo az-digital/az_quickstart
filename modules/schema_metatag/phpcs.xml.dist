@@ -1,0 +1,18 @@
+<ruleset name="drupal/schema_metatag">
+    <description>Schema.org Metatag module CodeSniffer configuration.</description>
+    <arg name="extensions" value="php,module,inc,install,test,profile,theme,css,info,txt,md,yml"/>
+    <arg name="basepath" value="."/>
+    <arg name="colors"/>
+    <arg name="parallel" value="75"/>
+    <arg value="p"/>
+
+    <config name="drupal_core_version" value="9"/>
+    <config name="testVersion" value="7.2-" />
+
+    <file>.</file>
+    <exclude-pattern>vendor</exclude-pattern>
+
+    <rule ref="./vendor/drupal/coder/coder_sniffer/Drupal"/>
+    <rule ref="./vendor/drupal/coder/coder_sniffer/DrupalPractice"/>
+    <rule ref="./vendor/phpcompatibility/php-compatibility/PHPCompatibility"/>
+</ruleset>

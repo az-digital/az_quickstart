@@ -1,0 +1,8 @@
+id: csv_test
+label: CSV source plugin edit test
+description: Test editing of source plugin via the UI
+source_type: CSV
+dependencies:
+  enforced:
+    module:
+      - csv_source_test

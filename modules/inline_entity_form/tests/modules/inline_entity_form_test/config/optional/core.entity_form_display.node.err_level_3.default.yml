@@ -1,0 +1,23 @@
+trimIefIdParentslangcode: en
+status: true
+dependencies:
+  config:
+    - node.type.err_level_3
+id: node.err_level_3.default
+targetEntityType: node
+bundle: err_level_3
+mode: default
+content:
+  title:
+    type: string_textfield
+    weight: -5
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  path: true
+  promote: true
+  sticky: true
+  uid: true

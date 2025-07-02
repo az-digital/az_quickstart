@@ -1,0 +1,47 @@
+{
+  "name": "drupal/user_expire",
+  "description": "Allows an administrator to define a date on which to expire a user account.",
+  "type": "drupal-module",
+  "homepage": "https://www.drupal.org/project/user_expire",
+  "authors": [
+    {
+      "name": "Erik Webb (erikwebb)",
+      "homepage": "https://www.drupal.org/u/erikwebb",
+      "role": "Maintainer"
+    },
+    {
+      "name": "Greg Knaddison (greggles)",
+      "homepage": "https://www.drupal.org/u/greggles",
+      "role": "Co-maintainer"
+    },
+    {
+      "name": "Shelane French (shelane)",
+      "homepage": "https://www.drupal.org/u/shelane",
+      "role": "Co-maintainer"
+    },
+    {
+      "name": "Joe Parsons (joegraduate)",
+      "homepage": "https://www.drupal.org/u/joegraduate",
+      "role": "Co-maintainer"
+    },
+    {
+      "name": "Troy Dean (tadean)",
+      "homepage": "https://www.drupal.org/u/tadean",
+      "role": "Co-maintainer"
+    },
+    {
+      "name": "Chris Green (trackleft2)",
+      "homepage": "https://www.drupal.org/u/trackleft2",
+      "role": "Co-maintainer"
+    }
+  ],
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/user_expire",
+    "source": "https://git.drupal.org/project/user_expire.git"
+  },
+  "require-dev": {
+    "drupal/rules": "^4.0"
+  },
+  "license": "GPL-2.0+",
+  "minimum-stability": "dev"
+}

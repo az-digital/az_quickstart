@@ -1,0 +1,10 @@
+{
+    "name": "drupal/access_unpublished",
+    "description": "Grants access to view unpublished content to anyone who has a unique URL and appropriate permissions.",
+    "type": "drupal-module",
+    "license": "GPL-2.0+",
+    "require-dev": {
+        "drupal/graphql": "4.x-dev"
+    }
+}
+

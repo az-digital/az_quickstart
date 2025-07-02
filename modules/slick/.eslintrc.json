@@ -1,0 +1,35 @@
+{
+  // Located at /modules/contrib/slick, run:
+  // eslint . -o ../../eslint/slick.html -f html
+  // @fixme, the correct local, but failed on gitlab:
+  // "extends": "../blazy/.eslintrc.json",
+  // Temporary till blazy:2.17:
+  "extends": "../../../core/.eslintrc.legacy.json",
+  "ignorePatterns": ["*.yml", "config/**/*", "tests/*", "js/*.min.js", "js/*/*.min.js", "js/*/*/*.min.js"],
+  "rules": {
+    "consistent-this": [0, "me"],
+    "max-params": 0,
+    "id-length": [1, {"min": 1}],
+    "object-shorthand": [2, "consistent"],
+    "max-nested-callbacks": [1, 4],
+    // @todo remove when all JS files are converted into ES6 ~D10+.
+    "no-var": 0,
+    "func-names": 0,
+    "strict": 0,
+    "prefer-template": 0,
+    "prefer-destructuring": 0,
+    "no-undef": 0,
+    "prettier/prettier": 0,
+    "no-lonely-if": 0,
+    "no-shadow": 0,
+    "vars-on-top": 0,
+    "no-plusplus": 0,
+    "no-bitwise": 0,
+    "object-shorthand": 0
+  },
+  "overrides": [
+    {
+      "files": ["js/src/*.js", "js/src/**/*.js", "js/src/**/**/*.js"]
+    }
+  ]
+}

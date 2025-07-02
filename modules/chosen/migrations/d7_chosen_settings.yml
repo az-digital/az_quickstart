@@ -1,0 +1,90 @@
+id: d7_chosen_settings
+label: Chosen settings
+migration_tags:
+  - Drupal 7
+  - Configuration
+source:
+  plugin: variable
+  variables:
+    - chosen_minimum_single
+    - chosen_minimum_multiple
+    - chosen_disable_search_threshold
+    - chosen_minimum_width
+    - chosen_jquery_selector
+    - chosen_search_contains
+    - chosen_disable_search
+    - chosen_include
+    - chosen_allow_single_deselect
+    - chosen_placeholder_text_multiple
+    - chosen_placeholder_text_single
+    - chosen_no_results_text
+    - chosen_disabled_themes
+  source_module: chosen
+process:
+  minimum_single:
+    plugin: default_value
+    source: chosen_minimum_single
+    strict: true
+    default_value: 20
+  minimum_multiple:
+    plugin: default_value
+    source: chosen_minimum_multiple
+    strict: true
+    default_value: 20
+  disable_search_threshold:
+    plugin: default_value
+    source: chosen_disable_search_threshold
+    strict: true
+    default_value: 0
+  minimum_width:
+    plugin: default_value
+    source: chosen_minimum_width
+    strict: true
+    default_value: ''
+  jquery_selector:
+    plugin: default_value
+    source: chosen_jquery_selector
+    strict: true
+    default_value: 'select:visible'
+  search_contains:
+    plugin: default_value
+    source: chosen_search_contains
+    strict: true
+    default_value: FALSE
+  disable_search:
+    plugin: default_value
+    source: chosen_disable_search
+    strict: true
+    default_value: FALSE
+  chosen_include:
+    plugin: default_value
+    source: chosen_include
+    strict: true
+    default_value: 2
+  allow_single_deselect:
+    plugin: default_value
+    source: chosen_allow_single_deselect
+    strict: true
+    default_value: FALSE
+  placeholder_text_multiple:
+    plugin: default_value
+    source: chosen_placeholder_text_multiple
+    strict: true
+    default_value: 'Choose some options'
+  placeholder_text_single:
+    plugin: default_value
+    source: chosen_placeholder_text_single
+    strict: true
+    default_value: 'No results match'
+  no_results_text:
+    plugin: default_value
+    source: chosen_no_results_text
+    strict: true
+    default_value: 'No results match'
+  disabled_themes:
+    plugin: default_value
+    source: chosen_disabled_themes
+    default_value: []
+destination:
+  plugin: config
+  config_name: 'chosen.settings'

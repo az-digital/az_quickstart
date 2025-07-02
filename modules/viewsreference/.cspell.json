@@ -1,0 +1,21 @@
+{
+    "dictionaries": [
+      "dictionary",
+      "drupal",
+      "companies",
+      "fonts",
+      "html",
+      "php",
+      "softwareTerms",
+      "viewsreference",
+      "viewsrefere"
+    ],
+     "dictionaryDefinitions": [
+      { "name": "viewsreference", "path": "./dictionary.txt"}
+    ],
+    "ignorePaths": [
+      "README.md"
+    ]
+  }
+    
+  

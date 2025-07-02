@@ -1,0 +1,63 @@
+# Schema for the configuration files of the Environment Indicator module.
+
+environment_indicator.switcher.*:
+  type: config_entity
+  label: 'Environment switcher settings'
+  mapping:
+    machine:
+      type: string
+      label: 'Machine name'
+    description:
+      type: text
+      label: 'Description'
+    name:
+      type: label
+      label: 'Name'
+    weight:
+      type: integer
+      label: 'Weight'
+    url:
+      type: uri
+      label: 'URL'
+    fg_color:
+      type: string
+      label: 'Foreground color'
+    bg_color:
+      type: string
+      label: 'Background color'
+
+environment_indicator.settings:
+  type: config_object
+  label: 'Environment indicator settings'
+  mapping:
+    toolbar_integration:
+      type: sequence
+      label: 'Integrate with the toolbars if present'
+      sequence:
+        type: string
+        label: 'Toolbar identifier'
+    favicon:
+      type: boolean
+      label: 'Show a colored favicon for environment'
+    version_identifier:
+      type: string
+      label: 'Source of version identifier to display'
+      default_value: 'environment_indicator_current_release'
+    version_identifier_fallback:
+      type: string
+      label: 'Fallback source of version identifier to display'
+      default_value: 'deployment_identifier'
+
+environment_indicator.indicator:
+  type: config_object
+  label: 'Environment indicator local environment'
+  mapping:
+    name:
+      type: string
+      label: 'Environment name'
+    fg_color:
+      type: string
+      label: 'Foreground color'
+    bg_color:
+      type: string
+      label: 'Background color'

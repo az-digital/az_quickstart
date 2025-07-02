@@ -1,0 +1,8 @@
+/**
+ * @file
+ * Styles for the Drupal Entity in CKEditor 5.
+ */
+
+.ck .drupal-entity [data-drupal-entity-preview] {
+  pointer-events: none;
+}

@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - bef_test
+name: 'BEF Test'
+type: bef_test
+description: 'Test content type for the Better Exposed Filters module.'
+help: ''
+new_revision: false
+preview_mode: 1
+display_submitted: true

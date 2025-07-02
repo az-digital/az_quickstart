@@ -1,0 +1,86 @@
+# Schema for the Inline Entity Reference module display settings.
+
+field.widget.settings.inline_entity_form_simple:
+  type: mapping
+  label: 'Inline entity reference display format settings'
+  mapping:
+    form_mode:
+      type: string
+      label: "Form mode"
+    override_labels:
+      type: boolean
+      label: "Override labels"
+    label_singular:
+      type: label
+      label: "Label (singular)"
+    label_plural:
+      type: label
+      label: "Label (plural)"
+    allow_new:
+      type: boolean
+      label: "Allow new"
+    allow_existing:
+      type: boolean
+      label: "Allow existing"
+    multiple_use:
+      type: boolean
+      label: "Allow multiple use of same entity"
+    match_operator:
+      type: string
+      label: "Match operator"
+    collapsible:
+      type: boolean
+      label: "Collapsible"
+    collapsed:
+      type: boolean
+      label: "Collapsed by default"
+    revision:
+      type: boolean
+      label: "Create new revision"
+    removed_reference:
+      type: string
+      label: "Keep or delete unreferenced items"
+
+field.widget.settings.inline_entity_form_complex:
+  type: mapping
+  label: 'Inline entity reference display format settings'
+  mapping:
+    form_mode:
+      type: string
+      label: "Form mode"
+    override_labels:
+      type: boolean
+      label: "Override labels"
+    label_singular:
+      type: label
+      label: "Label (singular)"
+    label_plural:
+      type: label
+      label: "Label (plural)"
+    allow_new:
+      type: boolean
+      label: "Allow new"
+    allow_existing:
+      type: boolean
+      label: "Allow existing"
+    multiple_use:
+      type: boolean
+      label: "Allow multiple use of same entity"
+    match_operator:
+      type: string
+      label: "Match operator"
+    allow_duplicate:
+      type: boolean
+      label: "Allow duplicate"
+    collapsible:
+      type: boolean
+      label: "Collapsible"
+    collapsed:
+      type: boolean
+      label: "Collapsed by default"
+    revision:
+      type: boolean
+      label: "Create new revision"
+    removed_reference:
+      type: string
+      label: "Keep or delete unreferenced items"

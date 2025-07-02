@@ -1,0 +1,69 @@
+# Enable and disable just switch the status, but do not change other config
+entity.config_split.enable:
+  path: '/admin/config/development/configuration/config-split/{config_split}/enable'
+  defaults:
+    _controller: '\Drupal\config_split\Controller\ConfigSplitController::enableEntity'
+  requirements:
+    _permission: 'administer configuration split'
+    _csrf_token: 'TRUE'
+
+entity.config_split.disable:
+  path: '/admin/config/development/configuration/config-split/{config_split}/disable'
+  defaults:
+    _controller: '\Drupal\config_split\Controller\ConfigSplitController::disableEntity'
+  requirements:
+    _permission: 'administer configuration split'
+    _csrf_token: 'TRUE'
+
+# Importing or activating the split writes the split config to the active one.
+entity.config_split.activate:
+  path: '/admin/config/development/configuration/config-split/{config_split}/activate'
+  defaults:
+    _form: '\Drupal\config_split\Form\ConfigSplitActivateForm'
+    _title: 'Activate'
+  requirements:
+    _custom_access: '\Drupal\config_split\Form\ConfigSplitActivateForm::access'
+
+# Deactivating the split will remove the splits config from the active storage.
+entity.config_split.deactivate:
+  path: '/admin/config/development/configuration/config-split/{config_split}/deactivate'
+  defaults:
+    _form: '\Drupal\config_split\Form\ConfigSplitDeactivateForm'
+    _title: 'Deactivate'
+  requirements:
+    _custom_access: '\Drupal\config_split\Form\ConfigSplitDeactivateForm::access'
+
+# Importing or activating the split writes the split config to the active one.
+entity.config_split.import:
+  path: '/admin/config/development/configuration/config-split/{config_split}/import'
+  defaults:
+    _form: '\Drupal\config_split\Form\ConfigSplitImportForm'
+    _title: 'Import'
+  requirements:
+    _custom_access: '\Drupal\config_split\Form\ConfigSplitImportForm::access'
+
+# Exporting the split writes the split config to the split storage.
+entity.config_split.export:
+  path: '/admin/config/development/configuration/config-split/{config_split}/export'
+  defaults:
+    _form: '\Drupal\config_split\Form\ConfigSplitExportForm'
+    _title: 'Export'
+  requirements:
+    _custom_access: '\Drupal\config_split\Form\ConfigSplitExportForm::access'
+
+# Diff path to see what is importing.
+config_split.diff:
+  path: '/admin/config/development/configuration/config-split/{config_split}/{operation}/diff/{source_name}/{target_name}'
+  defaults:
+    _controller: '\Drupal\config_split\Controller\ConfigSplitDiffController::diff'
+    target_name: NULL
+  requirements:
+    _permission: 'administer configuration split'
+
+config_split.diff_collection:
+  path: '/admin/config/development/configuration/config-split/{config_split}/{operation}/diff_collection/{collection}/{source_name}/{target_name}'
+  defaults:
+    _controller: '\Drupal\config_split\Controller\ConfigSplitDiffController::diff'
+    target_name: NULL
+  requirements:
+    _permission: 'administer configuration split'

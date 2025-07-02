@@ -1,0 +1,25 @@
+trimIefIdParentslangcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.err_level_2.field_level_3_items
+    - node.type.err_level_2
+  module:
+    - entity_reference_revisions
+    - user
+id: node.err_level_2.default
+targetEntityType: node
+bundle: err_level_2
+mode: default
+content:
+  field_level_3_items:
+    weight: 101
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    type: entity_reference_revisions_entity_view
+  links:
+    weight: 100
+hidden: {  }

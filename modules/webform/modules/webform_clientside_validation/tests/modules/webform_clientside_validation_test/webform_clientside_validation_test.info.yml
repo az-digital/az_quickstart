@@ -1,0 +1,12 @@
+name: 'Webform Clientside Validation test'
+type: module
+description: 'Support module for webform clientside validation testing.'
+package: Webform
+core_version_requirement: ^10.2
+dependencies:
+  - 'webform:webform_clientside_validation'
+
+# Information added by Drupal.org packaging script on 2024-12-10
+version: '6.2.9'
+project: 'webform'
+datestamp: 1733851071

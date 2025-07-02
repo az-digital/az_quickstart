@@ -1,0 +1,12 @@
+badjava
+browserscope
+clickjacking
+deje
+eduardovela
+hsts
+jweowu
+mcdruid
+MITM
+navigations
+Xframe
+Xxss

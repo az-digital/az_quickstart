@@ -1,0 +1,151 @@
+# Schema for the configuration files of the Linkit module.
+
+linkit.linkit_profile.*:
+  type: config_entity
+  mapping:
+    label:
+      type: label
+      label: 'Name'
+    id:
+      type: string
+    description:
+      type: string
+    matchers:
+      type: sequence
+      sequence:
+        type: linkit.matcher
+
+linkit.matcher:
+  type: mapping
+  mapping:
+    id:
+      type: string
+    uuid:
+      type: string
+    settings:
+      type: linkit.matcher.[%parent.id]
+    weight:
+      type: integer
+
+linkit.matcher.*:
+  type: mapping
+  label: 'Matcher settings'
+
+linkit.matcher.entity:
+  type: mapping
+  mapping:
+    metadata:
+      type: string
+    bundles:
+      type: sequence
+      sequence:
+        type: string
+      nullable: true
+    group_by_bundle:
+      type: boolean
+    substitution_type:
+      type: string
+    limit:
+      type: integer
+
+linkit.matcher.entity:*:
+  type: linkit.matcher.entity
+
+# Plugin \Drupal\linkit\Plugin\Linkit\Matcher\FileMatcher
+linkit.matcher.entity:file:
+  type: linkit.matcher.entity
+  mapping:
+    file_extensions:
+      type: string
+    file_status:
+      type: integer
+      default: 1
+    images:
+      type: mapping
+      mapping:
+        show_dimensions:
+          type: boolean
+        show_thumbnail:
+          type: boolean
+        thumbnail_image_style:
+          type: string
+          nullable: true
+
+# Plugin \Drupal\linkit\Plugin\Linkit\Matcher\NodeMatcher
+linkit.matcher.entity:node:
+  type: linkit.matcher.entity
+  mapping:
+    include_unpublished:
+      type: boolean
+
+# Plugin \Drupal\linkit\Plugin\Linkit\Matcher\UserMatcher
+linkit.matcher.entity:user:
+  type: linkit.matcher.entity
+  mapping:
+    roles:
+      type: sequence
+      sequence:
+        type: string
+      nullable: true
+    include_blocked:
+      type: boolean
+
+# Plugin \Drupal\linkit\Plugin\Filter\LinkitFilter
+filter_settings.linkit:
+  type: filter
+  label: 'Linkit'
+  mapping:
+    title:
+      type: boolean
+      label: 'Automatically set the "title" attribute'
+
+# Plugin \Drupal\ckeditor\Plugin\CKEditorPlugin\DrupalLink
+# Linkit alters the plugin to save Linkit specific information used by the
+# altered plugin.
+ckeditor.plugin.drupallink:
+  type: mapping
+  label: 'Drupal link'
+  mapping:
+    linkit_enabled:
+      type: boolean
+      label: 'Use Linkit'
+    linkit_profile:
+      type: string
+      label: 'Linkit profile'
+
+# Schema for the Linkit widget.
+field.widget.settings.linkit:
+  type: field.widget.settings.link_default
+  label: 'Linkit widget settings'
+  mapping:
+    linkit_profile:
+      type: string
+      label: 'Linkit profile'
+    linkit_auto_link_text:
+      type: boolean
+      label: 'Automatically populate link text from entity label'
+
+# Schema for the Linkit formatter.
+field.formatter.settings.linkit:
+  type: field.formatter.settings.link
+  label: 'Linkit format settings'
+  mapping:
+    linkit_profile:
+      type: string
+      label: 'Linkit profile'
+
+ckeditor5.plugin.linkit_extension:
+  type: mapping
+  label: Linkit
+  constraints:
+    Callback: [\Drupal\linkit\Plugin\CKEditor5Plugin\Linkit, requireProfileIfEnabled]
+  mapping:
+    linkit_enabled:
+      type: boolean
+      label: 'Use Linkit'
+    linkit_profile:
+      type: string
+      label: 'Linkit profile'
+      constraints:
+        Choice:
+          callback: \Drupal\linkit\Plugin\CKEditor5Plugin\Linkit::validChoices

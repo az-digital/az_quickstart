@@ -1,0 +1,18 @@
+<?php
+
+/**
+ * @file
+ * Configuration structure inspector module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function config_inspector_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'config_inspector.overview':
+      return '<p>' . t('List of configuration keys to review with their configuration schema. Keys that have no schema are displayed but only raw data review is possible. Check out the <a href=":schema_link">configuration schema documentation</a> for more details.', [':schema_link' => 'https://drupal.org/node/1905070']) . '</p>';
+  }
+}

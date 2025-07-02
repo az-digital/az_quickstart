@@ -1,0 +1,4 @@
+config_distro.import:
+  route_name: config_distro.import
+  base_route: config_distro.import
+  title: 'Synchronize'

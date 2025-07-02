@@ -1,0 +1,12 @@
+entity.slick.collection:
+  title: Slick
+  route_name: entity.slick.collection
+  description: 'Manage Slick optionset.'
+  parent: system.admin_config_media
+
+slick.settings:
+  title: Slick UI
+  route_name: slick.settings
+  description: 'Manage Slick UI.'
+  parent: entity.slick.collection
+  weight: 21

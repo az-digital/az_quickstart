@@ -1,0 +1,17 @@
+name: 'Block field module widget tests'
+type: module
+description: 'Support module for block field that provides some default configuration to test the field widget.'
+package: Testing
+dependencies:
+  - drupal:block
+  - drupal:block_field
+  - drupal:field
+  - drupal:node
+  - drupal:path
+  - drupal:user
+  - drupal:views
+
+# Information added by Drupal.org packaging script on 2024-08-13
+version: '8.x-1.0-rc5'
+project: 'block_field'
+datestamp: 1723550579

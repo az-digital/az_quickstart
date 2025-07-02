@@ -1,0 +1,18 @@
+name: 'Upgrade status test theme'
+type: theme
+description: 'Theme for testing deprecations in themes'
+base theme: false
+core_version_requirement: ^9 || ^10 || ^11
+libraries-override:
+  upgrade_status_test_library/deprecated_library:
+    css:
+      component:
+        assets/test.css: assets/test.css
+libraries-extend:
+  upgrade_status_test_twig/deprecated_library:
+    - upgrade_status_test_theme/library
+
+# Information added by Drupal.org packaging script on 2025-05-02
+version: '4.3.7'
+project: 'upgrade_status'
+datestamp: 1746203413

@@ -1,0 +1,77 @@
+# The 'type' should be "label" for short meta tags and "text" for ones which
+# could get longer, especially ones which use a textarea field instead of a
+# textfield.
+
+metatag.metatag_tag.shortcut_icon:
+  type: text
+  label: 'Default shortcut icon'
+metatag.metatag_tag.mask_icon:
+  type: mapping
+  label: 'Icon: SVG'
+  mapping:
+    href:
+      type: text
+      label: 'href'
+    color:
+      type: text
+      label: 'Color'
+metatag.metatag_tag.icon_16x16:
+  type: text
+  label: 'Icon: 16px x 16px'
+metatag.metatag_tag.icon_32x32:
+  type: text
+  label: 'Icon: 32px x 32px'
+metatag.metatag_tag.icon_96x96:
+  type: text
+  label: 'Icon: 96px x 96px'
+metatag.metatag_tag.icon_192x192:
+  type: text
+  label: 'Icon: 192px x 192px'
+metatag.metatag_tag.apple_touch_icon:
+  type: text
+  label: 'Apple touch icon: 60px x 60px'
+metatag.metatag_tag.apple_touch_icon_72x72:
+  type: text
+  label: 'Apple touch icon: 72px x 72px'
+metatag.metatag_tag.apple_touch_icon_76x76:
+  type: text
+  label: 'Apple touch icon: 76px x 76px'
+metatag.metatag_tag.apple_touch_icon_114x114:
+  type: text
+  label: 'Apple touch icon: 114px x 114px'
+metatag.metatag_tag.apple_touch_icon_120x120:
+  type: text
+  label: 'Apple touch icon: 120px x 120px'
+metatag.metatag_tag.apple_touch_icon_144x144:
+  type: text
+  label: 'Apple touch icon: 144px x 144px'
+metatag.metatag_tag.apple_touch_icon_152x152:
+  type: text
+  label: 'Apple touch icon: 152px x 152px'
+metatag.metatag_tag.apple_touch_icon_180x180:
+  type: text
+  label: 'Apple touch icon: 180px x 180px'
+metatag.metatag_tag.apple_touch_icon_precomposed:
+  type: text
+  label: 'Apple touch icon (precomposed): 57px x 57px'
+metatag.metatag_tag.apple_touch_icon_precomposed_72x72:
+  type: text
+  label: 'Apple touch icon (precomposed): 72px x 72px'
+metatag.metatag_tag.apple_touch_icon_precomposed_76x76:
+  type: text
+  label: 'Apple touch icon (precomposed): 76px x 76px'
+metatag.metatag_tag.apple_touch_icon_precomposed_114x114:
+  type: text
+  label: 'Apple touch icon (precomposed): 114px x 114px'
+metatag.metatag_tag.apple_touch_icon_precomposed_120x120:
+  type: text
+  label: 'Apple touch icon (precomposed): 120px x 120px'
+metatag.metatag_tag.apple_touch_icon_precomposed_144x144:
+  type: text
+  label: 'Apple touch icon (precomposed): 144px x 144px'
+metatag.metatag_tag.apple_touch_icon_precomposed_152x152:
+  type: text
+  label: 'Apple touch icon (precomposed): 152px x 152px'
+metatag.metatag_tag.apple_touch_icon_precomposed_180x180:
+  type: text
+  label: 'Apple touch icon (precomposed): 180px x 180px'

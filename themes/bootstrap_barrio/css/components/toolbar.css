@@ -1,0 +1,15 @@
+body.toolbar-horizontal #navbar-top.fixed-top,
+body.toolbar-vertical #navbar-top.fixed-top,
+body.toolbar-vertical.toolbar-tray-open #navbar-top.fixed-top,
+body.toolbar-horizontal #navbar-main.fixed-top,
+body.toolbar-vertical #navbar-main.fixed-top,
+body.toolbar-vertical.toolbar-tray-open #navbar-main.fixed-top {
+  top: 40px;
+}
+body.toolbar-horizontal.toolbar-tray-open #navbar-top.fixed-top,
+body.toolbar-horizontal.toolbar-tray-open #navbar-main.fixed-top {
+  top: 80px;
+}
+body.toolbar-fixed .toolbar-oriented .toolbar-bar {
+  z-index: 1040;
+}

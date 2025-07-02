@@ -1,0 +1,28 @@
+settings:
+  default_form_submit_label: Enviar
+  default_preview_next_button_label: 'Vista previa'
+  default_form_close_message: 'Lo siento… Este formulario está cerrado a nuevas presentaciones.'
+  default_form_exception_message: 'No se puede mostrar este formulario Web. Póngase en contacto con el administrador del sitio.'
+  default_preview_prev_button_label: '&lt; Anterior'
+  default_preview_message: 'Por favor revise su presentación. Su solicitud no está completa hasta que usted oprima el botón &quot;Enviar&quot;!'
+  default_draft_button_label: 'Guardar borrador'
+  default_draft_saved_message: 'Presentación guardado. Es posible volver a esta forma más tarde y restaurará los valores actuales.'
+  default_draft_loaded_message: 'Se encontró una forma parcialmente completado. Por favor complete las porciones restantes.'
+  default_confirmation_message: 'Presentación nuevo añadido a [webform:title].'
+  default_limit_total_message: 'No se permiten más presentaciones.'
+  default_limit_user_message: 'No se permiten más presentaciones.'
+  default_form_open_message: 'Esta forma aún no ha sido abierta para las presentaciones.'
+  default_form_confidential_message: 'Este formulario es confidencial. Debe desco<a href="[site:login-url]/logout?destination=[current-page:url:relative]">nectarse </a>para presentarlo.'
+  default_wizard_prev_button_label: '&lt; Página anterior'
+  default_wizard_next_button_label: 'Página siguiente &amp;gt;'
+  default_wizard_start_label: Inicio
+  default_wizard_confirmation_label: Complete
+  default_confirmation_back_label: 'A forma'
+mail:
+  default_subject: 'Presentación de formulario de: [webform_submission:source-entidad]'
+  default_body: "Enviada [webform_submission:created]\nPresentado por:[webform_submission:user]\n\nLos valores presentados son:\n\n[webform_submission:values]\n"
+  default_from_name: '[nombre del sitio:]'
+  default_reply_to: ''
+  default_return_path: ''
+  default_body_text: 'Enviado el [webform_submission: creado] enviado por: valores [webform_submission:user] enviado: [webform_submission:values]'
+  default_body_html: "<p>Presentado en [webform_submission: creado]</p>\n<p>Enviado por: [webform_submission:user]</p>\n<p>Los valores presentados son:</p>[webform_submission:values]"

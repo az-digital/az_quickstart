@@ -1,0 +1,75 @@
+/**
+ * @file
+ * Webform cards styles.
+ */
+
+.webform-card {
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin-bottom: 1em;
+}
+
+html.js .webform-card,
+html.js .webform-card[style*="display: block"] {
+  display: none !important;
+}
+
+html.js .webform-card.webform-card--active,
+html.js .webform-card.webform-card--error,
+html.js .webform-card.webform-card--active[style*="display: block"],
+html.js .webform-card.webform-card--error[style*="display: block"] {
+  display: block !important;
+}
+
+html.js .webform-cards .form-actions {
+  display: none;
+}
+
+.webform-preview .webform-card-edit {
+  display: none;
+}
+
+.webform-wizard-pages-links {
+  display: none;
+}
+
+/**
+ * Toggle.
+ */
+.webform-cards-toggle-wrapper {
+  margin-top: 1em;
+  text-align: right; /* LTR */
+}
+
+[dir="rtl"] .webform-cards-toggle-wrapper {
+  text-align: left;
+}
+
+.webform-cards-toggle {
+  margin-top: 0;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  color: #337ab7;
+  cursor: pointer;
+  font-size: 1em;
+  text-decoration: none;
+}
+
+.webform-cards-toggle:hover,
+.webform-cards-togglelink:focus {
+  text-decoration: underline;
+}
+
+html.js form.webform-cards-toggle-show .webform-card,
+html.js form.webform-cards-toggle-show .webform-card[style*="display: block"] {
+  display: block !important;
+}
+
+html.js form.webform-cards-toggle-show .webform-card[style*="display: none"] {
+  display: none !important;
+}
+
+html.js form.webform-cards-toggle-show .webform-progress {
+  display: none;
+}

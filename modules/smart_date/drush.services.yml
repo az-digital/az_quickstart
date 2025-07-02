@@ -1,0 +1,6 @@
+services:
+  smart_date.commands:
+    class: \Drupal\smart_date\Commands\SmartDateDrushCommands
+    arguments: ['@config.factory', '@database', '@entity_type.manager']
+    tags:
+      - { name: drush.command }

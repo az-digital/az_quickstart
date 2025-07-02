@@ -1,0 +1,13 @@
+uuid: 9a3480e3-c670-4e50-8305-34c9305dfd46
+langcode: en
+status: true
+dependencies: {  }
+id: image_with_crop
+label: 'Image with crop'
+description: 'Use local images with crop for reusable media.'
+source: image
+queue_thumbnail_downloads: false
+new_revision: false
+source_configuration:
+  source_field: field_media_image
+field_map: {  }

@@ -1,0 +1,18 @@
+parameters:
+    level: max
+
+    paths:
+        - src
+        - tests
+
+    typeAliases:
+        GenericMap: """
+          array<string,array<string,array<string,array<int<0,max>,string>>>>
+        """
+        MimeMap: """
+          array{
+            't': array<'e'|'desc'|'a',array<string,array<int<0,max>,string>>>,
+            'e': array<'t',array<string,array<int<0,max>,string>>>,
+            'a': array<'t',array<string,array<int<0,max>,string>>>
+          }
+        """

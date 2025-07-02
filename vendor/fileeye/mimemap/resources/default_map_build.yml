@@ -1,0 +1,113 @@
+# MimeMap
+#
+# This file provides the default script to build the MIME-type to file extension
+# map. It is used as input to the 'fileeye-mimemap' utility.
+#
+# The script fetches a mapping source available from the Apache's documentation
+# website, merges it with another mapping source from the freedesktop.org
+# project, integrates the result with any overrides specified by
+# 'applyOverrides', and finally updates the PHP file where the
+# '\FileEye\MimeMap\Map\DefaultMap' class is stored.
+#
+# The entries are executed sequentially; each entry indicates a MapUpdater
+# method to be invoked and the arguments to be passed in.
+
+
+# The Apache httpd project contains the most complete list of file extension to
+# mime type mapping on the planet. We use it to update our own list.
+-
+    - 'Loading MIME type information from svn.apache.org'
+    - loadMapFromApacheFile
+    - [http://svn.apache.org/viewvc/httpd/httpd/trunk/docs/conf/mime.types?view=co]
+
+# Extend Apache table with the Freedesktop.org database.
+-
+    - 'Removing redundant svn.apache.org types'
+    - applyOverrides
+    -
+        -
+            - [removeType, [application/x-msaccess]]
+            - [removeType, [application/vnd.ms-xpsdocument]]
+            - [removeType, [application/vnd.stardivision.writer-global]]
+            - [removeType, [application/x-bzip2]]
+            - [removeType, [application/x-cbr]]
+            - [removeType, [application/x-iso9660-image]]
+            - [removeType, [application/x-chess-pgn]]
+            - [removeType, [application/x-debian-package]]
+            - [removeType, [application/java-archive]]
+            - [removeType, [application/java-vm]]
+            - [removeType, [application/x-lzh-compressed]]
+            - [removeType, [application/x-pkcs12]]
+            - [removeType, [application/x-rar-compressed]]
+            - [removeType, [application/x-shockwave-flash]]
+            - [removeType, [application/vnd.smaf]]
+            - [removeType, [application/x-gtar]]
+            - [removeType, [audio/x-flac]]
+            - [removeType, [audio/x-aac]]
+            - [removeType, [video/x-m4v]]
+            - [removeType, [video/x-ms-wvx]]
+            - [removeType, [video/x-ms-wmx]]
+            - [removeType, [audio/x-pn-realaudio]]
+            - [removeType, [application/vnd.rn-realmedia-vbr]]
+            - [removeType, [application/docbook+xml]]
+            - [removeType, [image/g3fax]]
+            - [removeType, [image/x-icon]]
+            - [removeType, [image/x-pcx]]
+            - [removeType, [application/x-msmetafile]]
+            - [removeType, [text/x-vcalendar]]
+            - [removeType, [text/x-vcard]]
+            - [removeType, [text/x-opml]]
+            - [removeType, [text/x-c]]
+            - [removeType, [application/x-tex]]
+            - [removeType, [video/x-fli]]
+            - [removeType, [video/x-ms-wm]]
+            - [removeType, [video/x-ms-asf]]
+            - [removeType, [audio/x-wav]]
+            - [removeType, [video/x-msvideo]]
+            - [removeType, [image/vnd.ms-photo]]
+            - [removeType, [application/x-bzip]]
+            - [removeType, [application/vnd.oasis.opendocument.database]]
+
+-
+    - 'Updating with information from freedesktop.org'
+    - loadMapFromFreedesktopFile
+    - [https://gitlab.freedesktop.org/xdg/shared-mime-info/raw/master/data/freedesktop.org.xml.in]
+
+-
+    - 'Cleanup video/x-anim'
+    - applyOverrides
+    -
+        -
+            - [removeTypeExtensionMapping, [application/x-sharedlib, "so.[0-9]*"]]
+            - [removeTypeExtensionMapping, [application/x-troff-man, "[1-9]"]]
+            - [removeTypeExtensionMapping, [video/x-anim, "anim[1-9j]"]]
+            - [addTypeExtensionMapping, [video/x-anim, anim1]]
+            - [addTypeExtensionMapping, [video/x-anim, anim2]]
+            - [addTypeExtensionMapping, [video/x-anim, anim3]]
+            - [addTypeExtensionMapping, [video/x-anim, anim4]]
+            - [addTypeExtensionMapping, [video/x-anim, anim5]]
+            - [addTypeExtensionMapping, [video/x-anim, anim6]]
+            - [addTypeExtensionMapping, [video/x-anim, anim7]]
+            - [addTypeExtensionMapping, [video/x-anim, anim8]]
+            - [addTypeExtensionMapping, [video/x-anim, anim9]]
+            - [addTypeExtensionMapping, [video/x-anim, animj]]
+
+-
+    - 'Adding back selected svn.apache.org mappings'
+    - applyOverrides
+    -
+        -
+            - [addTypeExtensionMapping, [application/x-bzip2, boz]]
+            - [addTypeExtensionMapping, [application/vnd.comicbook-rar, cba]]
+            - [addTypeExtensionMapping, [text/x-csrc, dic]]
+            - [addTypeExtensionMapping, [image/wmf, emz]]
+            - [addTypeExtensionMapping, [application/vnd.ms-asf, wm]]
+
+# MimeMap overrides.
+-
+    - 'Applying MimeMap overrides'
+    - applyOverrides
+    -
+        -
+            - [setExtensionDefaultType, [sub, text/vnd.dvb.subtitle]]
+            - [setExtensionDefaultType, [md, text/markdown]]

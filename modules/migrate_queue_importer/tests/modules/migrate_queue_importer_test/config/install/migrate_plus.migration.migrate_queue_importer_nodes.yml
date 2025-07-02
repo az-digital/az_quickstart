@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies: {  }
+id: migrate_queue_importer_nodes
+label: Nodes
+migration_tags: {  }
+migration_group: migrate_queue_importer_default
+source:
+  plugin: embedded_data
+  data_rows:
+    -
+      name: Node A
+    -
+      name: Node B
+    -
+      name: Node C
+  ids:
+    name:
+      type: string
+  constants:
+    node_type: migrate_queue_importer_node_type
+process:
+  title: name
+  type: constants/node_type
+destination:
+  plugin: entity:node
+migration_dependencies:
+  required: {  }
+  optional: {  }

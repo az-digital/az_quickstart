@@ -1,0 +1,6 @@
+# Configuration Split setting menu items definition
+entity.config_split.collection:
+  title: 'Configuration Split settings'
+  description: 'List Configuration Split settings.'
+  route_name: entity.config_split.collection
+  parent: system.admin_config_development

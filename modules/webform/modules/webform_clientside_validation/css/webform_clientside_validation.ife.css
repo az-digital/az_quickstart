@@ -1,0 +1,15 @@
+/**
+ * @file
+ * Webform clientside validation styles.
+ */
+
+.form-item.js-form-type-tel + strong.error.form-item--error-message,
+.form-item.js-form-type-tel + strong.error.form-item--error-message + strong.error.form-item--error-message {
+  margin-top: -1em;
+}
+
+.select2.error .select2-selection,
+.chosen-container.error .chosen-single,
+.chosen-container.error .chosen-choices {
+  border: 1px solid #d72222;
+}

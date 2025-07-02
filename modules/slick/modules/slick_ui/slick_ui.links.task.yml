@@ -1,0 +1,15 @@
+entity.slick.collection:
+  title: List
+  route_name: entity.slick.collection
+  base_route: entity.slick.collection
+
+entity.slick.edit_form:
+  title: Edit
+  route_name: entity.slick.edit_form
+  base_route: entity.slick.edit_form
+
+slick.settings:
+  title: UI
+  route_name: slick.settings
+  base_route: entity.slick.collection
+  # parent_id: entity.slick.collection

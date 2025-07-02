@@ -1,0 +1,9 @@
+services:
+  _defaults:
+    autoconfigure: true
+    autowire: true
+  Drupal\imagemagick\ImagemagickFormatMapperInterface:
+    class: Drupal\imagemagick\ImagemagickFormatMapper
+  Drupal\imagemagick\ImagemagickExecManagerInterface:
+    class: Drupal\imagemagick\ImagemagickExecManager
+  Drupal\imagemagick\EventSubscriber\ImagemagickEventSubscriber: ~

@@ -1,0 +1,29 @@
+id: d6_flag
+label: Flag configuration
+migration_group: flag
+dependencies:
+  enforced:
+    module:
+      - flag
+source:
+  plugin: d6_flag_source
+  source_module: flag
+process:
+  id: name
+  label: title
+  bundles: bundles
+  entity_type: content_type
+  global: global
+  weight: '0'
+  flag_short: 'options/flag_short'
+  flag_long: 'options/flag_long'
+  flag_message: 'options/flag_message'
+  unflag_short: 'options/unflag_short'
+  unflag_long: 'options/unflag_long'
+  unflag_message: 'options/unflag_message'
+  flag_type: flag_type
+  link_type: ajax_link
+  flagTypeConfig: flagTypeConfig
+  linkTypeConfig: linkTypeConfig
+destination:
+  plugin: entity:flag

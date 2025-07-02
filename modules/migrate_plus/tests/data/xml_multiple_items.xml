@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items>
+  <item>
+    <Id>item_1</Id>
+    <Name>Item 1</Name>
+    <Values1>
+      <SubItem>
+        <Id>1</Id>
+        <Name>Name 1</Name>
+      </SubItem>
+      <SubItem>
+        <Id>2</Id>
+        <Name>Name 2</Name>
+      </SubItem>
+    </Values1>
+    <Values2>
+      <SubItem>3</SubItem>
+      <SubItem>4</SubItem>
+    </Values2>
+  </item>
+</items>

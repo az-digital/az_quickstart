@@ -1,0 +1,51 @@
+services:
+  devel.error_subscriber:
+    class: Drupal\devel\EventSubscriber\ErrorHandlerSubscriber
+    arguments: ['@current_user']
+    tags:
+      - { name: event_subscriber }
+
+  devel.theme_rebuild_subscriber:
+    class: Drupal\devel\EventSubscriber\ThemeInfoRebuildSubscriber
+    arguments: ['@config.factory', '@current_user', '@theme_handler', '@messenger', '@string_translation', '@theme.registry']
+    tags:
+      - { name: event_subscriber }
+
+  devel.route_subscriber:
+    class: Drupal\devel\Routing\RouteSubscriber
+    arguments: ['@entity_type.manager', '@router.route_provider']
+    tags:
+      - { name: event_subscriber }
+
+  plugin.manager.devel_dumper:
+    class: Drupal\devel\DevelDumperPluginManager
+    arguments: []
+    parent: default_plugin_manager
+
+  devel.dumper:
+    class: Drupal\devel\DevelDumperManager
+    arguments: ['@config.factory', '@current_user', '@plugin.manager.devel_dumper', '@entity_type.manager', '@messenger', '@string_translation']
+
+  devel.twig.debug_extension:
+    class: Drupal\devel\Twig\Extension\Debug
+    arguments: ['@devel.dumper']
+    tags:
+      - { name: twig.extension }
+
+  devel.switch_user_list_helper:
+    class: Drupal\devel\SwitchUserListHelper
+    arguments: ['@current_user', '@entity_type.manager', '@redirect.destination', '@string_translation']
+
+  logger.channel.devel:
+    parent: logger.channel_base
+    arguments: ['devel']
+
+  consolidation.site_alias:
+    class: Consolidation\SiteAlias\SiteAliasManager
+
+  consolidation.site_process:
+    class: Consolidation\SiteProcess\ProcessManager
+
+  devel.lazy_builders:
+    class: Drupal\devel\DevelLazyBuilders
+    arguments: ['@menu.link_tree', '@config.factory']

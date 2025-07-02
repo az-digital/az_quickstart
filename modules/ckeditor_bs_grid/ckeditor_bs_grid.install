@@ -1,0 +1,63 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the ckeditor_bs_grid module.
+ */
+
+use Drupal\Core\Config\FileStorage;
+
+/**
+ * Add the CKEditor BS Grid updated configuration.
+ */
+function ckeditor_bs_grid_update_8201() {
+  // Load the entire install file.
+  $config_path = \Drupal::service('extension.list.module')->getPath('ckeditor_bs_grid') . '/config/install';
+  $source = new FileStorage($config_path);
+  $config_storage = \Drupal::service('config.storage');
+  $config_storage->write('ckeditor_bs_grid.settings', $source->read('ckeditor_bs_grid.settings'));
+
+  // Load editors with BS Grid enabled and add default options.
+  $editor_config = \Drupal::entityTypeManager()->getStorage('editor')->loadMultiple();
+  /** @var \Drupal\editor\EditorInterface $editor */
+  foreach ($editor_config as $editor) {
+    $settings = $editor->getSettings();
+    if (isset($settings['plugins']['bs_grid'])) {
+
+      // All columns for BC.
+      $settings['plugins']['bs_grid']['available_columns'] = [
+        1 => 1,
+        2 => 2,
+        3 => 3,
+        4 => 4,
+        5 => 5,
+        6 => 6,
+        7 => 7,
+        8 => 8,
+        9 => 9,
+        10 => 10,
+        11 => 11,
+        12 => 12,
+      ];
+
+      // Don't enable XXL by default as is new.
+      $settings['plugins']['bs_grid']['available_breakpoints'] = [
+        'xs' => 'xs',
+        'sm' => 'sm',
+        'md' => 'md',
+        'lg' => 'lg',
+        'xl' => 'xl',
+        'xxl' => 0,
+      ];
+      $editor->setSettings($settings);
+      $editor->save();
+    }
+  }
+}
+
+/**
+ * Rebuild caches to recognize plugin changes.
+ */
+function ckeditor_bs_grid_update_9001(&$sandbox) {
+  // Nothing, just rebuild cache.
+}

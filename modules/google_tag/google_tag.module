@@ -1,0 +1,261 @@
+<?php
+
+/**
+ * @file
+ * Provides google_tag hook implementations.
+ */
+
+declare(strict_types=1);
+
+/**
+ * @file
+ * Integration between Drupal and Google Tag.
+ */
+
+use Drupal\commerce_checkout\Plugin\Commerce\CheckoutFlow\CheckoutFlowInterface;
+use Drupal\commerce_product\Entity\ProductInterface;
+use Drupal\commerce_product\ProductVariationStorageInterface;
+use Drupal\Core\Cache\CacheableDependencyInterface;
+use Drupal\Core\Cache\CacheableMetadata;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Url;
+use Drupal\search\SearchPageInterface;
+
+/**
+ * Implements hook_theme().
+ */
+function google_tag_theme() {
+  return [
+    'google_tag_gtm_iframe' => [
+      'variables' => [
+        'url' => NULL,
+      ],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_module_implements_alter().
+ */
+function google_tag_module_implements_alter(&$implementations, $hook) {
+  if ($hook === 'page_attachments') {
+    // Ensure this module's implementation of the `page_attachments` hook runs
+    // last to capture all events.
+    $group = $implementations['google_tag'];
+    unset($implementations['google_tag']);
+    $implementations['google_tag'] = $group;
+    // Unset google_analytics' hook implementation for page_attachments.
+    if (isset($implementations['google_analytics'])) {
+      unset($implementations['google_analytics']);
+    }
+  }
+}
+
+/**
+ * Implements hook_page_top().
+ */
+function google_tag_page_top(array &$page) {
+  $definition = \Drupal::entityTypeManager()->getDefinition('google_tag_container');
+  $cacheable_metadata = new CacheableMetadata();
+  $cacheable_metadata->addCacheTags($definition->getListCacheTags());
+
+  /** @var \Drupal\google_tag\Entity\TagContainer|null $config */
+  $config = \Drupal::service('google_tag.tag_container_resolver')->resolve();
+
+  if ($config === NULL || $config->getGtmId() === '') {
+    $cacheable_metadata->applyTo($page);
+    return;
+  }
+
+  $cacheable_metadata->addCacheableDependency($config);
+  $cacheable_metadata->applyTo($page);
+  $gtm_ids = $config->getGtmIds();
+
+  foreach ($gtm_ids as $gtm_id) {
+    $adv_settings = $config->getGtmSettings($gtm_id);
+    if ($gtm_id !== '') {
+      $query_params = [
+        'id' => $gtm_id,
+      ];
+      if ($adv_settings['include_environment']) {
+        // Gather data.
+        $query_params['gtm_auth'] = $adv_settings['environment_token'];
+        $query_params['gtm_preview'] = $adv_settings['environment_id'];
+        $query_params['gtm_cookies_win'] = 'x';
+      }
+
+      $page['google_tag_gtm_iframe'][] = [
+        '#theme' => 'google_tag_gtm_iframe',
+        '#url' => Url::fromUri('https://www.googletagmanager.com/ns.html', ['query' => $query_params]),
+      ];
+    }
+  }
+}
+
+/**
+ * Implements hook_page_attachments().
+ */
+function google_tag_page_attachments(array &$attachments) {
+  $definition = \Drupal::entityTypeManager()->getDefinition('google_tag_container');
+  $cacheable_metadata = CacheableMetadata::createFromRenderArray($attachments);
+  $cacheable_metadata->addCacheTags($definition->getListCacheTags());
+
+  /** @var \Drupal\google_tag\Entity\TagContainer|null $config */
+  $config = \Drupal::service('google_tag.tag_container_resolver')->resolve();
+
+  if ($config === NULL) {
+    $cacheable_metadata->applyTo($attachments);
+    return;
+  }
+  $cacheable_metadata->addCacheableDependency($config);
+  $cacheable_metadata->applyTo($attachments);
+
+  // @todo Put this data into their own respective methods?
+  // GTM JS embed.
+  if ($config->getGtmIds() !== []) {
+    $attachments['#attached']['library'][] = 'google_tag/gtm';
+    $gtm = [
+      'tagIds' => $config->getGtmIds(),
+    ];
+    $settings = $config->getGtmSettings();
+    $gtm['settings'] = $settings;
+    if (isset($settings['include_classes']) && $settings['include_classes'] === TRUE) {
+      $gtm['settings']['allowlist_classes'] = explode(PHP_EOL, $settings['allowlist_classes']);
+      $gtm['settings']['blocklist_classes'] = explode(PHP_EOL, $settings['blocklist_classes']);
+    }
+    $attachments['#attached']['drupalSettings']['gtm'] = $gtm;
+  }
+
+  // ^ returns the config which is active and the main tag ID.
+  // @todo if no config, only send events to datalayer.
+  $attachments['#attached']['library'][] = 'google_tag/gtag';
+  $attachments['#attached']['library'][] = 'google_tag/gtag.ajax';
+  $attachments['#attached']['drupalSettings']['gtag'] = [
+    'tagId' => $config->getDefaultTagId(),
+    'otherIds' => $config->getAdditionalIds(),
+    'consentMode' => $config->getConsentMode(),
+    'events' => [],
+    'additionalConfigInfo' => \Drupal::service('google_tag.dimensions_metrics_processor')->getValues($config),
+  ];
+
+  $collector = \Drupal::getContainer()->get('google_tag.event_collector');
+  foreach ($collector->getEvents() as $event) {
+    $attachments['#attached']['drupalSettings']['gtag']['events'][] = [
+      'name' => $event->getName(),
+      'data' => $event->getData(),
+    ];
+    if ($event instanceof CacheableDependencyInterface) {
+      $cacheable_metadata->addCacheableDependency($event);
+    }
+  }
+  $cacheable_metadata->applyTo($attachments);
+}
+
+/**
+ * Implements hook_help().
+ */
+function google_tag_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.google_tag':
+    case 'google_tag.settings_form':
+      return t('<a href=":url">Google Tag</a> is a free service (registration required) to manage the insertion of tags for capturing website analytics.', [':url' => 'https://tagmanager.google.com/']);
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function google_tag_form_user_login_form_alter(&$form, FormStateInterface $form_state) {
+  $form['#submit'][] = '_google_tag_user_login_form_event';
+}
+
+/**
+ * Adds login event to the collector.
+ */
+function _google_tag_user_login_form_event(&$form, FormStateInterface $form_state) {
+  \Drupal::service('google_tag.event_collector')->addEvent('login');
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function google_tag_form_user_register_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $form['actions']['submit']['#submit'][] = '_google_tag_user_register_form_event';
+}
+
+/**
+ * Adds sign up event to the collector.
+ */
+function _google_tag_user_register_form_event(&$form, FormStateInterface $form_state): void {
+  \Drupal::service('google_tag.event_collector')->addEvent('sign_up');
+}
+
+/**
+ * Implements hook_form_google_analytics_admin_settings_alter().
+ */
+function google_tag_form_google_analytics_admin_settings_alter(&$form, FormStateInterface $form_state, $form_id) {
+  \Drupal::messenger()->addWarning(t('Google Analytics functionality has been rolled into <a href=":url">Google Tag</a>. You should disable this module.', [':url' => Url::fromRoute('entity.google_tag_container.single_form')->toString()]));
+  $form['actions']['submit']['#disabled'] = TRUE;
+  $form['actions']['submit']['#value'] = t('Save configuration (disabled)');
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function google_tag_form_commerce_checkout_flow_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $form_object = $form_state->getFormObject();
+  assert($form_object instanceof CheckoutFlowInterface);
+  $step_id = $form['#step_id'];
+
+  $collector = \Drupal::getContainer()->get('google_tag.event_collector');
+  assert($collector !== NULL);
+  if ($form_object->getPreviousStepId($step_id) === NULL) {
+    $collector->addEvent('commerce_begin_checkout', [
+      'order' => $form_object->getOrder(),
+    ]);
+  }
+  if ($step_id === 'complete') {
+    $collector->addEvent('commerce_purchase', [
+      'order' => $form_object->getOrder(),
+    ]);
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function google_tag_preprocess_item_list__search_results(&$variables) {
+  $search_page = \Drupal::routeMatch()->getParameter('entity');
+  if ($search_page instanceof SearchPageInterface) {
+    $plugin = $search_page->getPlugin();
+    if ($plugin->isSearchExecutable()) {
+      \Drupal::service('google_tag.event_collector')->addEvent('search', [
+        'search_term' => $plugin->getKeywords(),
+      ]);
+    }
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_view().
+ */
+function google_tag_commerce_product_view(array &$build, ProductInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+  // Workaround to prevent sending an event if the add to cart form is
+  // causing a render, or if a product has no published variations.
+  if (!\Drupal::request()->isMethodSafe() || !$entity->hasVariations()) {
+    return;
+  }
+
+  if ($view_mode === 'full') {
+    $product_variation_storage = \Drupal::entityTypeManager()->getStorage('commerce_product_variation');
+    assert($product_variation_storage instanceof ProductVariationStorageInterface);
+    $variation = $product_variation_storage->loadFromContext($entity);
+    if ($variation !== NULL) {
+      \Drupal::service('google_tag.event_collector')->addEvent('commerce_view_item', [
+        'item' => $variation,
+      ]);
+    }
+  }
+}

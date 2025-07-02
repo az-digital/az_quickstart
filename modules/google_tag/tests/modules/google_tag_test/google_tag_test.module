@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * @file
+ * Provides google_tag_test hook implementation to add route name event.
+ */
+
+declare(strict_types=1);
+
+/**
+ * Implements hook_page_attachments().
+ */
+function google_tag_test_page_attachments(array &$attachments) {
+  \Drupal::getContainer()->get('google_tag.event_collector')->addEvent('route_name');
+}

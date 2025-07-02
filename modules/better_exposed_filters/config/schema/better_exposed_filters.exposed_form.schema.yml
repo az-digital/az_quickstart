@@ -1,0 +1,80 @@
+#
+# Schema for the Better Exposed Filters configuration files.
+#
+
+# Views exposed form.
+views.exposed_form.bef:
+  type: views_exposed_form
+  label: 'Better Exposed Filters'
+  mapping:
+    input_required:
+      type: boolean
+      label: 'Input required before showing results'
+    text_input_required:
+      type: text
+      label: 'Text shown if a filter option has not been selected'
+    text_input_required_format:
+      type: text
+      label: 'Text format for the text_input_required field'
+    bef:
+      type: mapping
+      label: 'BEF options'
+      mapping:
+        general:
+          type: better_exposed_filters.general
+        sort:
+          type: better_exposed_filters.sort.[plugin_id]
+        pager:
+          type: better_exposed_filters.pager.[plugin_id]
+        filter:
+          type: sequence
+          label: 'Filters'
+          sequence:
+            type: better_exposed_filters.filter.[plugin_id]
+
+#
+# BEF general settings.
+#
+better_exposed_filters.general:
+  label: 'General BEF settings'
+  type: mapping
+  mapping:
+    autosubmit:
+      type: boolean
+      label: 'Auto-submit'
+    autosubmit_exclude_textfield:
+      type: boolean
+      label: 'Exclude Textfield'
+    autosubmit_textfield_delay:
+      type: integer
+      label: 'Delay for textfield autosubmit'
+    autosubmit_textfield_minimum_length:
+      type: integer
+      label: 'Textfield autosubmit minimum length'
+      constraints:
+        Range:
+          min: 1
+    autosubmit_hide:
+      type: boolean
+      label: 'Hide submit button'
+    input_required:
+      type: boolean
+      label: 'Only display results after the user has selected a filter option'
+    allow_secondary:
+      type: boolean
+      label: 'Enable secondary exposed form options'
+    secondary_label:
+      type: label
+      label: 'Secondary options label'
+    secondary_open:
+      type: boolean
+      label: 'Secondary options is open'
+    text_input_required:
+      type: text
+      label: 'Text shown if a filter option has not been selected'
+    text_input_required_format:
+      type: text
+      label: 'Text format for the text_input_required field'
+    reset_button_always_show:
+      type: boolean
+      label: 'Always show reset button'

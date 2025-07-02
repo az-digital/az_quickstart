@@ -1,0 +1,97 @@
+<?php
+
+/**
+ * @file
+ * Slick carousel integration, the last carousel you'll ever need.
+ */
+
+use Drupal\slick\SlickDefault;
+
+/**
+ * Provides a convenient shortcut for procedural hooks.
+ *
+ * @param string $key
+ *   Identifier of the service.
+ *
+ * @return \Drupal\slick\SlickManagerInterface
+ *   |\Drupal\slick\SlickSkinManagerInterface
+ *   The required Slick class instance.
+ */
+// @codingStandardsIgnoreStart
+function slick($key = 'manager') {
+  static $manager;
+  static $skin_manager;
+
+  if (!isset($manager)) {
+    $manager = \Drupal::service('slick.manager');
+    $skin_manager = \Drupal::service('slick.skin_manager');
+  }
+
+  switch ($key) {
+    case 'skin':
+      return $skin_manager;
+
+    default:
+      return $manager;
+  }
+}
+// @codingStandardsIgnoreEnd
+
+/**
+ * Implements hook_theme().
+ */
+function slick_theme() {
+  $themes = [];
+  $items = ['slick', 'slide', 'grid', 'thumbnail', 'vanilla', 'wrapper'];
+  foreach ($items as $item) {
+    $key = $item == 'slick' ? $item : 'slick_' . $item;
+    $themes[$key] = [
+      'render element' => 'element',
+      'file' => 'templates/slick.theme.inc',
+    ];
+  }
+  return $themes;
+}
+
+/**
+ * Implements hook_library_info_build().
+ */
+function slick_library_info_build() {
+  /* @phpstan-ignore-next-line */
+  return slick('skin')->libraryInfoBuild();
+}
+
+/**
+ * Implements hook_config_schema_info_alter().
+ */
+function slick_config_schema_info_alter(array &$definitions) {
+  slick()->configSchemaInfoAlter($definitions, 'slick_base', SlickDefault::extendedSettings());
+}
+
+/**
+ * Implements hook_library_info_alter().
+ */
+function slick_library_info_alter(&$libraries, $extension) {
+  if ($extension === 'slick') {
+    /* @phpstan-ignore-next-line */
+    slick('skin')->libraryInfoAlter($libraries, $extension);
+  }
+}
+
+/**
+ * Implements hook_page_attachments().
+ */
+function slick_page_attachments(array &$attachments) {
+  $sitewide = slick()->config('sitewide', 'slick.settings') ?: 0;
+
+  if ($sitewide > 0) {
+    if (!\Drupal::service('router.admin_context')->isAdminRoute()) {
+      $data = slick()->attach([
+        '_unload' => $sitewide == 2 || $sitewide == 3,
+        '_vanilla' => $sitewide == 2,
+      ]);
+
+      $attachments['#attached'] = slick()->merge($data, $attachments, '#attached');
+    }
+  }
+}

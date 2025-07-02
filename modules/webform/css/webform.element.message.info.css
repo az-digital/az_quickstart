@@ -1,0 +1,21 @@
+/**
+ * @file
+ * Message element info styles.
+ *
+ * @see /webform/test_element_message
+ */
+
+.messages.messages--info {
+  color: #31708f;
+  border-color: #0074bd #0074bd #0074bd transparent; /* LTR */
+  background-color: #d9edf7;
+  background-image: url(../images/icons/info.svg);
+  background-repeat: no-repeat;
+  background-position: 10px 17px;
+  box-shadow: -8px 0 0 #0074bd; /* LTR */
+}
+[dir="rtl"] .messages.messages--info {
+  margin-left: 0;
+  border-color: #0074bd transparent #0074bd #0074bd;
+  box-shadow: 8px 0 0 #0074bd;
+}

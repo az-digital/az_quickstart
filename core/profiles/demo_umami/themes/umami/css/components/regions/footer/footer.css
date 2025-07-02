@@ -1,0 +1,66 @@
+/**
+ * @file
+ * This file is used to style the footer.
+ *
+ * It styles the footer as a global component; it does not style individual
+ * footer items, such as a menu, which are styled by their own CSS files.
+ */
+
+.footer {
+  padding: 2rem 4%;
+  text-align: center;
+  color: #fff;
+  background-color: #5f635d;
+  font-size: 0.9rem;
+}
+.region-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.28rem;
+}
+/* Large */
+@media screen and (min-width: 60rem) {
+  /* 960px */
+  .footer {
+    text-align: left; /* LTR */
+  }
+  [dir="rtl"] .footer {
+    text-align: right;
+  }
+  .region-footer {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 0;
+  }
+}
+/* Extra large + side margins */
+@media screen and (min-width: 80rem) {
+  /* 1200px (large) + 80px (side margins) = 1280px */
+  .footer {
+    padding: 2rem 0;
+  }
+}
+
+:where(.footer) a {
+  color: #fff;
+  background-color: inherit;
+  font-weight: 400;
+}
+
+:where(.footer) a:active,
+:where(.footer) a:focus,
+:where(.footer) a:hover {
+  outline-color: #fff;
+  background-color: #000;
+}
+
+@media screen and (min-width: 60rem) {
+  .block-type-footer-promo-block {
+    overflow: hidden;
+    flex-basis: 60%;
+  }
+
+  .block-system-menu-blockfooter {
+    flex-basis: 25%;
+  }
+}

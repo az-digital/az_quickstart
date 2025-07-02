@@ -1,0 +1,16 @@
+# Schema for the views plugins of the flag module.
+
+views.filter.flag_filter:
+  type: views.filter.boolean
+  label: 'Flag filter'
+
+views.relationship.flag_relationship:
+  type: views_relationship
+  label: 'Display options for flag relationship'
+  mapping:
+    flag:
+      type: string
+      label: 'The flag'
+    user_scope:
+      type: string
+      label: 'The user scope'

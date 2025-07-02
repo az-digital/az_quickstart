@@ -1,0 +1,7 @@
+blazy.settings:
+  path: '/admin/config/media/blazy'
+  defaults:
+    _form: '\Drupal\blazy_ui\Form\BlazyConfigForm'
+    _title: 'Blazy UI'
+  requirements:
+    _permission: 'administer blazy'

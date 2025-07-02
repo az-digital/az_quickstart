@@ -1,0 +1,39 @@
+id: wine_terms
+label: Migrate all categories into Drupal taxonomy terms
+migration_group: wine
+migration_tags:
+  - advanced example
+source:
+  plugin: wine_term
+destination:
+  plugin: entity:taxonomy_term
+process:
+  name: name
+  description: details
+  # Usually, one wants to have a separate migration for each entity_type/bundle
+  # combination - e.g., separate migrations for articles and blog posts, as
+  # opposed to a single monolithic node migration. This affords maximum
+  # control - the ability to import just one bundle at a time, and most
+  # importantly to have distinct field mappings (because different node types
+  # usually have different fields). In this case, though, because all of the
+  # vocabularies we're importing come from a common table, and on the Drupal
+  # side there are no distinct custom fields, we are able to import them all in
+  # one migration. The static_map tells the migration in which vocabulary to
+  # place each term, based on the incoming 'type' column.
+  vid:
+    plugin: static_map
+    source: type
+    map:
+      best_with: migrate_example_wine_best_with
+      region: migrate_example_wine_regions
+      variety: migrate_example_wine_varieties
+  parent:
+    plugin: migration_lookup
+    migration: wine_terms
+    source: category_parent
+  weight: ordering
+migration_dependencies: {}
+dependencies:
+  enforced:
+    module:
+      - migrate_example_advanced

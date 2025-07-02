@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="phpcs-standard">
+  <description>Codestyle ruleset for Drupal</description>
+
+  <!-- Specify standards. These assume "composer global require drupal/coder"-->
+  <rule ref="Drupal"/>
+  <rule ref="DrupalPractice"/>
+
+  <!-- Set ignore extensions. -->
+  <!-- @todo remove .css to check also the css files. -->
+  <!-- @see https://www.drupal.org/node/2867601#comment-12075633 -->
+  <arg name="ignore" value="*.css,*.md,*.txt"/>
+
+</ruleset>

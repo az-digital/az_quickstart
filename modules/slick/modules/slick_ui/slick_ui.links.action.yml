@@ -1,0 +1,6 @@
+slick.optionset_page_add:
+  route_name: slick.optionset_page_add
+  title: 'Add slick optionset'
+  weight: 10
+  appears_on:
+    - entity.slick.collection

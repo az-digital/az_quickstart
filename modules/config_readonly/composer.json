@@ -1,0 +1,16 @@
+{
+  "name": "drupal/config_readonly",
+  "description": "Config Readonly module allows to lock any configuration changes done via the Drupal admin UI.",
+  "type": "drupal-module",
+  "license": "GPL-2.0-or-later",
+  "homepage": "https://www.drupal.org/project/config_readonly",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/config_readonly",
+    "source": "https://git.drupalcode.org/project/config_readonly"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-8.x-1.x": "1.x-dev"
+    }
+  }
+}

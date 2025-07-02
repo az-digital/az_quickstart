@@ -1,0 +1,4 @@
+read_only: true
+maintenance_header_retry_seconds:
+  min: 5
+  max: 10

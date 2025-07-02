@@ -1,0 +1,13 @@
+honeypot.form_submission_rejected:
+  label: 'After rejecting a form submission'
+  category: 'Honeypot'
+  context_definitions:
+    form_id:
+      type: string
+      label: 'Rejected form ID'
+    uid:
+      type: integer
+      label: 'Rejected user ID'
+    type:
+      type: string
+      label: 'Reason for rejection'

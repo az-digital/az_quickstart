@@ -1,0 +1,13 @@
+name: Schema.org Metatag
+type: module
+description: 'Base module for creating Schema.org JSON-LD structured data defined with Metatag module.'
+core_version_requirement: ^9 || ^10 || ^11
+package: SEO
+php: 8.0
+dependencies:
+  - metatag:metatag
+
+# Information added by Drupal.org packaging script on 2024-07-16
+version: '3.0.3'
+project: 'schema_metatag'
+datestamp: 1721141810

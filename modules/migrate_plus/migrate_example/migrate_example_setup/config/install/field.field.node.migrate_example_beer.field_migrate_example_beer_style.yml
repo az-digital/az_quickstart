@@ -1,0 +1,26 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_migrate_example_beer_style
+    - node.type.migrate_example_beer
+    - taxonomy.vocabulary.migrate_example_beer_styles
+id: node.migrate_example_beer.field_migrate_example_beer_style
+field_name: field_migrate_example_beer_style
+entity_type: node
+bundle: migrate_example_beer
+label: 'Migrate Example Beer Styles'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      migrate_example_beer_styles: migrate_example_beer_styles
+    sort:
+      field: _none
+    auto_create: false
+field_type: entity_reference

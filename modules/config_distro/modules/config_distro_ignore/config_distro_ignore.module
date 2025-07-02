@@ -1,0 +1,43 @@
+<?php
+
+/**
+ * @file
+ * Hooks implemented by the config_distro_ignore module.
+ */
+
+use Drupal\Core\Config\StorageComparer;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function config_distro_ignore_form_config_distro_import_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  $storage_comparer = $form_state->get('storage_comparer');
+  if (!isset($storage_comparer)) {
+    $storage_comparer = new StorageComparer(\Drupal::service('config_distro.storage.distro'), \Drupal::service('config.storage'), \Drupal::service('config.manager'));
+  }
+
+  foreach ($storage_comparer->getAllCollectionNames() as $collection) {
+    if (isset($form[$collection])) {
+      foreach (array_keys($form[$collection]) as $config_change_type) {
+        if (isset($form[$collection][$config_change_type]['list'])) {
+          foreach ($form[$collection][$config_change_type]['list']['#rows'] as &$row) {
+            $route_options = [
+              'config_name' => $row['name'],
+              'collection' => $collection,
+            ];
+
+            // Add the new link to retain the item.
+            $row['operations']['data']['#links']['ignore'] = [
+              'title' => t('Retain configuration'),
+              'url' => Url::fromRoute('config_distro_ignore.add_item', $route_options),
+            ];
+          }
+        }
+      }
+    }
+  }
+
+}

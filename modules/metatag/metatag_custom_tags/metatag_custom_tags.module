@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * @file
+ * Contains metatag_custom_tags.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_help().
+ */
+function metatag_custom_tags_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the Metatag: Custom Tags module.
+    case 'help.page.metatag_custom_tags':
+      $output = '<h2>' . (string) new TranslatableMarkup('About') . '</h2>';
+      $output .= '<p>' . (string) new TranslatableMarkup('This module provides support to define and manage custom meta tags.');
+      $output .= '<h3>' . (string) new TranslatableMarkup('Intended workflow') . '</h3>';
+      $output .= '<p>' . (string) new TranslatableMarkup('The module provides the option to create different <a href=":metatag_custom_tag">"Custom Tags"</a> to use for different purposes.', [':metatag_custom_tag' => Url::fromRoute('entity.metatag_custom_tag.collection')->toString()]) . '</p>';
+      $output .= '<p>' . (string) new TranslatableMarkup('The best way of using Metatag: Custom Tags is as follows:') . '</p>';
+      $output .= '<ol>';
+      $output .= '<li>' . (string) new TranslatableMarkup('Create the <a href=":metatag_custom_tag_create">"Custom Tag"</a>, fill in the specific values that every page should have.', [':metatag_custom_tag_create' => Url::fromRoute('entity.metatag_custom_tag.admin_add')->toString()]) . '</li>';
+      $output .= '<li>' . (string) new TranslatableMarkup('Customize the <a href=":defaults">global defaults</a>, fill in the specific values and tokens that every page should have.', [':defaults' => Url::fromRoute('entity.metatag_defaults.edit_form', ['metatag_defaults' => 'global'])->toString()]) . '</li>';
+      $output .= '</ol>';
+      return $output;
+
+    // The main configuration page.
+    case 'entity.metatag_custom_tag.collection':
+      $output = '<p>' . (string) new TranslatableMarkup('Configure Custom tags below.') . '</p>';
+      return $output;
+  }
+}

@@ -1,0 +1,4 @@
+#seckit-settings-form textarea,
+#seckit-settings-form input[type="text"] {
+  width: 60em;
+}

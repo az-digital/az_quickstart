@@ -1,0 +1,5 @@
+workbench_access.settings:
+  title: 'Workbench Access'
+  description: 'Configure Workbench Access.'
+  parent: system.admin_config_workflow
+  route_name: entity.access_scheme.collection

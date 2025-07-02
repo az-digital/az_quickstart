@@ -1,0 +1,33 @@
+upgrade_status.report:
+  path: '/admin/reports/upgrade-status'
+  defaults:
+    _form: '\Drupal\upgrade_status\Form\UpgradeStatusForm'
+    _title_callback: '\Drupal\upgrade_status\Form\UpgradeStatusForm::getTitle'
+  requirements:
+    _permission: 'administer software updates'
+
+upgrade_status.project:
+  path: '/admin/reports/upgrade-status/project/{project_machine_name}'
+  defaults:
+    _controller: '\Drupal\upgrade_status\Controller\ScanResultController::resultPage'
+    _title: 'Upgrade status'
+  requirements:
+    _permission: 'administer software updates'
+
+upgrade_status.export:
+  path: '/admin/reports/upgrade-status/export/{project_machine_name}/{format}'
+  defaults:
+    _controller: '\Drupal\upgrade_status\Controller\ScanResultController::resultExport'
+    _title: 'Upgrade status'
+  requirements:
+    _permission: 'administer software updates'
+
+upgrade_status.analyze:
+  path: '/admin/reports/upgrade-status/analyze/{project_machine_name}'
+  defaults:
+    _controller: '\Drupal\upgrade_status\Controller\ScanResultController::analyze'
+  requirements:
+    _permission: 'administer software updates'
+  # Support only POST so nothing accidental happens on GET.
+  methods:
+    - POST

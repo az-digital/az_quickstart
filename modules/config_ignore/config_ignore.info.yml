@@ -1,0 +1,11 @@
+name: Config Ignore
+type: module
+description: Ignore certain configuration during imports and exports
+core_version_requirement: ^8.8 || ^9 || ^10 || ^11
+package: Config
+configure: config_ignore.settings
+
+# Information added by Drupal.org packaging script on 2024-04-16
+version: '8.x-3.3'
+project: 'config_ignore'
+datestamp: 1713299497

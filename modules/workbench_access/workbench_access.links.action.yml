@@ -1,0 +1,5 @@
+entity.access_scheme.add_form:
+  route_name: entity.access_scheme.add_form
+  title: 'Add Access scheme'
+  appears_on:
+    - entity.access_scheme.collection

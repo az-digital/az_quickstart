@@ -1,0 +1,44 @@
+{
+  "name": "drupal/config_split",
+  "type": "drupal-module",
+  "description": "Configuration filter for importing and exporting extra config",
+  "keywords": ["Drupal", "configuration", "configuration management"],
+  "authors": [
+    {
+      "name": "Fabian Bircher",
+      "email": "opensource@fabianbircher.com",
+      "homepage": "https://www.drupal.org/u/bircher",
+      "role": "Maintainer"
+    },
+    {
+      "name": "Nuvole Web",
+      "email": "info@nuvole.org",
+      "homepage": "http://nuvole.org",
+      "role": "Maintainer"
+    }
+  ],
+  "homepage": "https://www.drupal.org/project/config_split",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/config_split",
+    "slack": "https://drupal.slack.com/archives/C45342CDD",
+    "source": "https://git.drupalcode.org/project/config_split"
+  },
+  "license": "GPL-2.0-or-later",
+  "require-dev": {
+    "drupal/config_filter": "^1||^2"
+  },
+  "conflict": {
+    "drush/drush": "<10"
+  },
+  "suggest": {
+    "drupal/chosen": "Chosen uses the Chosen jQuery plugin to make the <select> elements more user-friendly.",
+    "drupal/select2_all": "Applies the Select2 library to all select fields on the site similar to the Chosen module."
+  },
+  "extra": {
+    "drush": {
+      "services": {
+        "drush.services.yml": "^10 || ^11"
+      }
+    }
+  }
+}

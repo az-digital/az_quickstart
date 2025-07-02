@@ -1,0 +1,69 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the webform demo event registration module.
+ */
+
+use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\field\Entity\FieldConfig;
+use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\node\Entity\Node;
+use Drupal\webform\Utility\WebformDateHelper;
+use Drupal\webform\WebformInterface;
+
+/**
+ * Implements hook_install().
+ */
+function webform_demo_event_registration_install() {
+  for ($i = 1; $i <= 3; $i++) {
+    // Create a webform demo event node.
+    $webform_node = Node::create([
+      'type' => 'webform_demo_event',
+      'title' => t('Demo: Event @index', ['@index' => $i]),
+      'status' => 1,
+    ]);
+    $webform_node->webform->target_id = 'demo_event_registration';
+    $webform_node->webform->status = WebformInterface::STATUS_OPEN;
+    $webform_node->field_webform_entity_limit_total->value = rand(3, 10);
+    $webform_node->webform->open = '';
+    $webform_node->webform->close = '';
+    $webform_node->body->value = '<p>' . t('This is example of event with a registration form that sends an email confirmation and an email reminder 1 day before the event.') . '</p>';
+    $webform_node->body->format = filter_default_format();
+    $webform_node->field_webform_demo_event_date->value = WebformDateHelper::formatStorage(DrupalDateTime::createFromTimestamp(strtotime('+1 months')));
+    $webform_node->save();
+  }
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function webform_demo_event_registration_uninstall() {
+  // Delete all webform:demo_event_registration nodes.
+  $entity_ids = \Drupal::entityQuery('node')
+    ->accessCheck(TRUE)
+    ->condition('type', 'webform_demo_event')
+    ->condition('webform.target_id', 'demo_event_registration')
+    ->execute();
+  if ($entity_ids) {
+    /** @var \Drupal\node\Entity\Node[] $nodes */
+    $nodes = Node::loadMultiple($entity_ids);
+    foreach ($nodes as $node) {
+      $node->delete();
+    }
+  }
+
+  // Delete field configuration manually.
+  $field_names = ['field_webform_demo_event_date', 'field_webform_entity_limit_total'];
+  foreach ($field_names as $field_name) {
+    $field_config = FieldConfig::loadByName('node', 'webform_demo_event', $field_name);
+    if ($field_config) {
+      $field_config->delete();
+    }
+
+    $field_storage_config = FieldStorageConfig::loadByName('node', $field_name);
+    if ($field_storage_config) {
+      $field_storage_config->delete();
+    }
+  }
+}

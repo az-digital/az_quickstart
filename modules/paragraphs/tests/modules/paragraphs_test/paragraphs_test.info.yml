@@ -1,0 +1,13 @@
+name: Paragraphs test
+type: module
+description: Resources for Paragraphs tests
+hidden: true
+package: Testing
+
+dependencies:
+  - paragraphs:paragraphs
+
+# Information added by Drupal.org packaging script on 2025-03-02
+version: '8.x-1.19'
+project: 'paragraphs'
+datestamp: 1740907078

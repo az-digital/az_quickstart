@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies: {  }
+name: medium_21_9
+label: 'Medium 21:9 (1024x440)'
+effects:
+  52985ed4-81d6-4ecf-90c1-4e8c651f76ba:
+    uuid: 52985ed4-81d6-4ecf-90c1-4e8c651f76ba
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 1024
+      height: 440
+      anchor: center-center
+  dd8d02b0-2ae5-4e0c-988f-730711911c49:
+    uuid: dd8d02b0-2ae5-4e0c-988f-730711911c49
+    id: image_convert
+    weight: 2
+    data:
+      extension: webp

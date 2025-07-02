@@ -1,0 +1,13 @@
+upgrade_status_test_error.node.version_history:
+  path: '/node/{node}/upgrade_status_test_error'
+  defaults:
+    _title: 'Revisions'
+    _controller: '\Drupal\node\Controller\NodeController::revisionOverview'
+  requirements:
+    _access_node_revision: 'view'
+    node: \d+
+  options:
+    _node_operation_route: TRUE
+    parameters:
+      node:
+        type: entity:node

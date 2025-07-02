@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_migrate_example_country
+    - node.type.migrate_example_beer
+id: node.migrate_example_beer.field_migrate_example_country
+field_name: field_migrate_example_country
+entity_type: node
+bundle: migrate_example_beer
+label: Countries
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

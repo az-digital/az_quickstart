@@ -1,0 +1,21 @@
+# This is a simple docker-relay configuration.
+# See: https://github.com/bircher/docker-relay
+
+# In order to run docker-relay with ddev simply symlink the ddev docker compose file to the root
+# ln -s .ddev/.ddev-docker-compose-full.yaml docker-compose.yml
+
+docker-relay:
+  version: 0.1.0
+
+drush:
+  container: web
+  cmd: 'vendor/bin/drush'
+
+composer:
+  container: web
+  cmd: composer
+
+php:
+  container: web
+  path: '.'
+  cmd: php

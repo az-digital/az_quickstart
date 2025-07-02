@@ -1,0 +1,21 @@
+{#
+/**
+ * @file
+ * Default theme implementation for a media layout.
+ *
+ * Available variables:
+ * - content: The content for this layout.
+ * - attributes: HTML attributes for the layout <div>.
+ *
+ * @ingroup themeable
+ */
+#}
+<div {{ attributes.addClass('media') }}>
+
+  {{ content.first }}
+
+  <div{{ region_attributes.second.addClass('media-body') }}>
+    {{ content.second }}
+  </div>
+
+</div>

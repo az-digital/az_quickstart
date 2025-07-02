@@ -1,0 +1,121 @@
+/**
+ * @file
+ * Seven theme specific styles for the Contribute System Status Community info.
+ *
+ * @see core/themes/seven/css/components/system-status-report-general-info.css
+ */
+
+.webform-help-support {
+  margin-bottom: 25px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.webform-help-support__header {
+  overflow: hidden;
+  margin: 0;
+  padding: 10px;
+  text-transform: uppercase;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  background-color: #f5f5f2;
+  font-size: 14px;
+}
+
+.webform-help-support__header-more {
+  text-transform: none;
+  font-size: 12px;
+  font-weight: normal;
+}
+
+.webform-help-support__item {
+  overflow-x: auto;
+  box-sizing: border-box;
+  padding: 10px 10px 20px;
+  border-top: 1px solid #ccc;
+  background: #fcfcfa;
+}
+
+.webform-help-support__item-icon {
+  display: inline-block;
+  width: 55px;
+  height: 55px;
+  vertical-align: top;
+}
+.webform-help-support__item-icon:before {
+  display: block;
+  width: 100%;
+  height: 100%;
+  content: "";
+  background-repeat: no-repeat;
+  background-position: 50% center;
+  background-size: 45px;
+}
+.webform-help-support__item-icon--contribute:before {
+  background-image: url(../icons/cccccc/drupal.svg);
+}
+.webform-help-support__item-icon--join:before {
+  background-image: url(../icons/cccccc/drupal-association.svg);
+}
+.webform-help-support__item-icon--fund:before {
+  background-image: url(../icons/cccccc/webform.svg);
+}
+
+.webform-help-support__item-details {
+  position: relative;
+  display: inline-block;
+  box-sizing: border-box;
+  width: calc(100% - 60px);
+  padding-left: 10px; /* LTR */
+}
+[dir="rtl"] .webform-help-support__item-details {
+  padding-right: 10px;
+  padding-left: 0;
+}
+
+.webform-help-support__item-details .button {
+  margin: 10px 0 10px 0;
+}
+
+@media screen and (min-width: 48em) {
+  .webform-help-support__items {
+    display: flex;
+    overflow-x: hidden;
+    flex-wrap: wrap;
+  }
+
+  .webform-help-support__item {
+    flex: 1;
+    flex-basis: 33%;
+    width: 33%;
+  }
+
+  .webform-help-support__item:nth-child(2),
+  .webform-help-support__item:nth-child(3) {
+    border-left: 1px solid #ccc; /* LTR */
+  }
+  [dir="rtl"] .webform-help-support__item:nth-child(1),
+  [dir="rtl"] .webform-help-support__item:nth-child(2) {
+    border-left: 1px solid #ccc;
+  }
+}
+
+@media screen and (min-width: 60em) {
+  .webform-help-support__item-icon {
+    width: 55px;
+    height: 55px;
+  }
+  .webform-help-support__item-icon:before {
+    background-size: 45px;
+  }
+}
+
+@media screen and (max-width: 48em) {
+  .webform-help-support__header {
+    display: none;
+  }
+  .webform-help-support {
+    margin-top: 25px;
+    border-top: 0;
+  }
+}

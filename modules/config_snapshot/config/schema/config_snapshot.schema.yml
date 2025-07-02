@@ -1,0 +1,34 @@
+config_snapshot.snapshot.*:
+  type: config_entity
+  label: 'Config snapshot config'
+  mapping:
+    id:
+      type: string
+      label: 'ID'
+    snapshotSet:
+      type: string
+      label: 'Snapshot set'
+    extensionType:
+      type: string
+      label: 'Extension type'
+    extensionName:
+      type: string
+      label: 'Extension name'
+    items:
+      type: sequence
+      label: 'Items'
+      sequence:
+        type: mapping
+        label: 'Item'
+        mapping:
+          collection:
+            type: string
+            label: 'Configuration collection'
+          name:
+            type: text
+            label: 'Name'
+          # We have arbitrary config data here that has been snapshotted. We
+          # can't give it a better type.
+          data:
+            type: ignore
+            label: 'Data'

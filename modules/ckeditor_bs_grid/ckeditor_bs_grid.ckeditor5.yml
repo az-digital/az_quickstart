@@ -1,0 +1,33 @@
+ckeditor_bs_grid_grid:
+  # Configuration that will be sent to CKEditor 5 JavaScript plugins.
+  ckeditor5:
+    plugins:
+      - bootstrapGrid.BootstrapGrid
+    config:
+      bootstrapGrid:
+        openDialog:
+          func:
+            name: Drupal.ckeditor5.openDialog
+            invoke: false
+        dialogSettings:
+          height: 75%
+          width: 75%
+          dialogClass: grid-widget-modal
+          title: Grid Settings
+
+  # Configuration that will be used directly by Drupal.
+  drupal:
+    label: Bootstrap Grid
+    # The library loaded while using the editor.
+    library: ckeditor_bs_grid/cke5.bsgrid
+    # The library loaded when configuring the text format using this plugin.
+    admin_library: ckeditor_bs_grid/cke5.admin
+    class: Drupal\ckeditor_bs_grid\Plugin\CKEditor5Plugin\BsGrid
+    toolbar_items:
+      bootstrapGrid:
+        label: Bootstrap Grid
+    # If the plugin does not provide elements, set this as
+    # `elements: false`
+    elements:
+      - <div>
+      - <div class data-*>

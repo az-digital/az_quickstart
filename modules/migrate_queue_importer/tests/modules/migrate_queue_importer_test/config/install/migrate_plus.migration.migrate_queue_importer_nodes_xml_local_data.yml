@@ -1,0 +1,34 @@
+langcode: en
+status: true
+dependencies: {  }
+id: migrate_queue_importer_nodes_xml_local_data
+label: Nodes XML local data
+migration_tags: {  }
+migration_group: migrate_queue_importer_default
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: simple_xml
+  urls:
+    - public://import.xml
+  item_selector: /root/row
+  fields:
+    - name: title
+      label: 'Title'
+      selector: title
+    - name: id
+      label: 'ID'
+      selector: id
+  ids:
+    id:
+      type: string
+  constants:
+    node_type: node_type_local
+process:
+  title: title
+  type: constants/node_type
+destination:
+  plugin: entity:node
+migration_dependencies:
+  required: {  }
+  optional: {  }
