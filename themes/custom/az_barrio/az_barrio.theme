@@ -173,7 +173,7 @@ function az_barrio_preprocess_page(&$variables, $hook) {
  */
 function az_barrio_preprocess_image_style(&$variables) {
   if (!\Drupal::moduleHandler()->moduleExists('image_class')) {
-    $variables['image']['#attributes']['class'][] = 'img-fluid';
+    $variables['image']['#attributes']['class'][] = 'img-fluid rounded';
   }
 }
 
