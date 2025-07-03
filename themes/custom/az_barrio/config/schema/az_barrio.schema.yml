@@ -331,7 +331,7 @@ az_barrio.settings:
     az_barrio_material_symbols_rounded:
       type: boolean
       label: 'Use Material Symbols Rounded Icons'
-    az_barrio_material_design_icons_rounded:
+    az_barrio_material_design_sharp_icons:
       type: boolean
       label: '(Deprecated) Use Material Design Sharp Icons'
     az_barrio_az_icons:
