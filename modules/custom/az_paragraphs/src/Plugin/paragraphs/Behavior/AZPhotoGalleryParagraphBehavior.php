@@ -32,7 +32,7 @@ class AZPhotoGalleryParagraphBehavior extends AZDefaultParagraphsBehavior {
         'grid' => $this->t('Grid'),
       ],
       '#required' => TRUE,
-      '#default_value' => $config['gallery_display'] ?? 'slider',
+      '#default_value' => $config['gallery_display'] ?? 'grid',
       '#description' => $this->t('The type of display to use for the photo gallery.'),
     ];
 
