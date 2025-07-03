@@ -55,21 +55,23 @@ function az_paragraphs_cards_update_1130001(&$sandbox) {
         $field_items = $paragraph->get('field_az_cards');
 
         foreach ($field_items as $delta => $item) {
-          $options = $item->options;
+          if (isset($item->options)) {
+            $options = $item->options;
 
-          // Update card link_style for AZ Bootstrap 5.
-          if (isset($options['link_style']) && $options['link_style'] === 'sr-only') {
-            $updated = TRUE;
-            $options['link_style'] = 'visually-hidden';
-            $item->options = $options;
-          }
+            // Update card link_style for AZ Bootstrap 5.
+            if (isset($options['link_style']) && $options['link_style'] === 'sr-only') {
+              $updated = TRUE;
+              $options['link_style'] = 'visually-hidden';
+              $item->options = $options;
+            }
 
-          // Update cards bg color for AZ Bootstrap 5.
-          if (isset($options['class']) && strpos($options['class'], 'bg-') === 0) {
-            $updated = TRUE;
-            $card_class = 'text-' . $options['class'];
-            $options['class'] = $card_class;
-            $item->options = $options;
+            // Update cards bg color for AZ Bootstrap 5.
+            if (isset($options['class']) && strpos($options['class'], 'bg-') === 0) {
+              $updated = TRUE;
+              $card_class = 'text-' . $options['class'];
+              $options['class'] = $card_class;
+              $item->options = $options;
+            }
           }
         }
       }
