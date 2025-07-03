@@ -12,7 +12,7 @@
   text-decoration: inherit;
 }
 
-.card-body .sr-only {
+.card-body .visually-hidden {
   display: block;
   position: static;
 }

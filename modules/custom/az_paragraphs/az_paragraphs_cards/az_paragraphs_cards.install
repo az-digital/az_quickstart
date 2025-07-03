@@ -1,0 +1,101 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for az_paragraphs_cards module.
+ */
+
+/**
+ * Update card paragraphs for Bootstrap 5 compatibility.
+ */
+function az_paragraphs_cards_update_1130001(&$sandbox) {
+
+  if (!isset($sandbox['total'])) {
+    $count = \Drupal::entityQuery('paragraph')
+      ->accessCheck(FALSE)
+      ->condition('type', 'az_cards')
+      ->count()
+      ->execute();
+    // Set the total number of paragraphs to be updated.
+    $sandbox['total'] = $count;
+    // Set current to 0.
+    $sandbox['current'] = 0;
+    // Set updated_count to 0.
+    $sandbox['updated_count'] = 0;
+    // If there are no paragraphs to be updated, set the finished flag to 1.
+    if (empty($sandbox['total'])) {
+      \Drupal::messenger()
+        ->addMessage('No broken behavior settings found.');
+      $sandbox['#finished'] = 1;
+      return;
+    }
+  }
+  // Set the number of paragraphs to be updated per batch.
+  $paragraphs_per_batch = 25;
+  // Get the paragraph ids to be updated.
+  $paragraph_ids = \Drupal::entityQuery('paragraph')
+    ->accessCheck(FALSE)
+    ->condition('type', 'az_cards')
+    // Update 25 paragraphs per batch.
+    ->range($sandbox['current'], $sandbox['current'] + $paragraphs_per_batch)
+    ->execute();
+
+  $paragraphs = \Drupal::entityTypeManager()->getStorage('paragraph')->loadMultiple($paragraph_ids);
+  foreach ($paragraphs as $paragraph) {
+    $needs_update = FALSE;
+    $behavior_settings = $paragraph->getAllBehaviorSettings();
+
+    // Update cards card_style for AZ Bootstrap 5.
+    if (isset($behavior_settings['az_cards_paragraph_behavior']['card_style'])) {
+      $needs_update = TRUE;
+      $card_style = $behavior_settings['az_cards_paragraph_behavior']['card_style'];
+
+      if ($card_style === 'card card-borderless') {
+        $behavior_settings['az_cards_paragraph_behavior']['card_style'] = 'card border-0';
+      }
+    }
+
+    // TODO: Fix to work for az_cards.
+    // Update cards bg_color for AZ Bootstrap 5.
+    if (isset($behavior_settings['az_cards_paragraph_behavior']['options'])) {
+      $needs_update = TRUE;
+      $card_options = $behavior_settings['az_cards_paragraph_behavior']['options'];
+      $option_mappings = [
+        'bg-white' => 'text-bg-white',
+        'bg-red' => 'text-bg-red',
+        'bg-blue' => 'text-bg-blue',
+        'bg-sky' => 'text-bg-sky',
+        'bg-oasis' => 'text-bg-oasis',
+        'bg-azurite' => 'text-bg-azurite',
+        'bg-midnight' => 'text-bg-midnight',
+        'bg-bloom' => 'text-bg-bloom',
+        'bg-chili' => 'text-bg-chili',
+        'bg-cool-gray' => 'text-bg-cool-gray',
+        'bg-warm-gray' => 'text-bg-warm-gray',
+        'bg-gray-100' => 'text-bg-gray-100',
+        'bg-gray-200' => 'text-bg-gray-200',
+        'bg-gray-300' => 'text-bg-gray-300',
+        'bg-leaf' => 'text-bg-leaf',
+        'bg-river' => 'text-bg-river',
+        'bg-silver' => 'text-bg-silver',
+        'bg-ash' => 'text-bg-ash',
+        'bg-mesa' => 'text-bg-mesa',
+      ];
+
+      if (isset($option_mappings[$card_options])) {
+        $behavior_settings['az_cards_paragraph_behavior']['options'] = $option_mappings[$card_options];
+      }
+    }
+
+    // TODO: Replace card link_style sr-only with visually-hidden.
+
+    if ($needs_update) {
+      $paragraph->setAllBehaviorSettings($behavior_settings);
+      $paragraph->save();
+      $sandbox['updated_count']++;
+    }
+    $sandbox['current']++;
+  }
+  $sandbox['#finished'] = ($sandbox['total'] === '0') ? 1 : ($sandbox['current'] / $sandbox['total']);
+  return t('Paragraph behavior settings fixed on %count paragraphs.', ['%count' => $sandbox['updated_count']]);
+}

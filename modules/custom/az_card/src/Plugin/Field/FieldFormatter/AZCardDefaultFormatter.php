@@ -192,7 +192,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
             if (!empty($link_render_array)) {
               $link_render_array['#attributes']['class'][] = 'stretched-link';
             }
-            $card_classes .= ' shadow';
+            $card_classes .= ' shadow overflow-hidden';
             if ($item->link_uri) {
               $card_classes .= ' card-with-link';
             }
