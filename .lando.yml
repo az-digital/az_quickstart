@@ -1,7 +1,7 @@
 name: az_quickstart
 recipe: drupal11
 config:
-  php: '8.3'
+  php: '8.4'
   via: apache:2.4
   webroot: web
   database: mariadb:10.6
