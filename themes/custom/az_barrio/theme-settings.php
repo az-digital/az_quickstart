@@ -126,13 +126,29 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#collapsed' => FALSE,
   ];
   $form['fonts']['icons']['az_barrio_icons']['az_barrio_material_symbols_rounded'] = [
-    '#type' => 'checkbox',
+    '#type' => 'radio',
     '#title' => t('Use Material Symbols Rounded Icons'),
     '#description' => t(
         'If selected, a Google Fonts CDN <code>&lt;link&gt;</code> will be added to every page importing the @material_symbols_rounded_icons_docs_link CSS.', [
           '@material_symbols_rounded_docs_link' => Link::fromTextAndUrl(
             'Material Symbols Rounded icons', Url::fromUri(
                 'https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0', [
+                  'attributes' => [
+                    'target' => '_blank',
+                  ],
+                ]
+            )
+          )->toString(),
+        ]
+    ),
+    $form['fonts']['icons']['az_barrio_icons']['az_barrio_material_design_sharp_icons'] = [
+    '#type' => 'radio',
+    '#title' => t('(Deprecated) Use Material Symbols Rounded Icons'),
+    '#description' => t(
+        'If selected, a Google Fonts CDN <code>&lt;link&gt;</code> will be added to every page importing the @material_design_sharp_icons_docs_link CSS.', [
+          '@material_design_sharp_icons_docs_link' => Link::fromTextAndUrl(
+            'Material Design Sharp icons', Url::fromUri(
+                'https://material.io/resources/icons/?style=sharp', [
                   'attributes' => [
                     'target' => '_blank',
                   ],
