@@ -132,7 +132,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
         'If selected, a Google Fonts CDN <code>&lt;link&gt;</code> will be added to every page importing the @material_symbols_rounded_icons_docs_link CSS.', [
           '@material_symbols_rounded_docs_link' => Link::fromTextAndUrl(
             'Material Symbols Rounded icons', Url::fromUri(
-                'https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0', [
+                'https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0', [
                   'attributes' => [
                     'target' => '_blank',
                   ],
