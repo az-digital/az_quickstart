@@ -58,10 +58,10 @@ content:
         - az_full_width_bg_medium
         - az_full_width_bg_small
         - az_large
+        - az_modal_image
         - az_marketing_cloud_30_70_layout
         - az_marketing_cloud_50_50_layout
         - az_marketing_cloud_hero_layout
-        - az_modal_image
         - az_square_aspect_ratio
       crop_types_required: {  }
       warn_multiple_usages: true
