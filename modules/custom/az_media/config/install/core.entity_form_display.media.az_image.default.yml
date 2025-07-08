@@ -1,3 +1,4 @@
+uuid: 3682dd23-7edd-4de2-81ea-4e3709ad3c84
 langcode: en
 status: true
 dependencies:
@@ -8,9 +9,12 @@ dependencies:
     - image.style.thumbnail
     - media.type.az_image
   module:
+    - decorative_image_widget
     - image_widget_crop
     - path
     - text
+_core:
+  default_config_hash: 7Kuh_X1QDa1Fe6z1X3UIf1wyeoxofkTngvJTnDquzu0
 id: media.az_image.default
 targetEntityType: media
 bundle: az_image
@@ -55,16 +59,14 @@ content:
         - az_full_width_bg_small
         - az_large
         - az_modal_image
-        - az_marketing_cloud_30_70_layout
-        - az_marketing_cloud_50_50_layout
-        - az_marketing_cloud_hero_layout
-        - az_modal_image
         - az_square_aspect_ratio
       crop_types_required: {  }
       warn_multiple_usages: true
       show_crop_area: false
       show_default_crop: true
-    third_party_settings: {  }
+    third_party_settings:
+      decorative_image_widget:
+        use_decorative_checkbox: true
   path:
     type: path
     weight: 3

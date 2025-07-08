@@ -9,8 +9,11 @@ dependencies:
     - image.style.thumbnail
     - media.type.az_image
   module:
+    - decorative_image_widget
     - image_widget_crop
     - text
+_core:
+  default_config_hash: l6qFYXMGOQaDSjgFbAmFWTGCTJeQ-1yBCTld9IZg9CY
 id: media.az_image.media_library
 targetEntityType: media
 bundle: az_image
@@ -48,16 +51,15 @@ content:
         - az_full_width_bg_medium
         - az_full_width_bg_small
         - az_large
-        - az_marketing_cloud_30_70_layout
-        - az_marketing_cloud_50_50_layout
-        - az_marketing_cloud_hero_layout
         - az_modal_image
         - az_square_aspect_ratio
       crop_types_required: {  }
       warn_multiple_usages: true
       show_crop_area: false
       show_default_crop: true
-    third_party_settings: {  }
+    third_party_settings:
+      decorative_image_widget:
+        use_decorative_checkbox: true
 hidden:
   created: true
   name: true
