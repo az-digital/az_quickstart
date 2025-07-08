@@ -18,9 +18,13 @@
 
 /* CKEditor widget view mode specific sizing using data-view-mode */
 .drupal-media.ck-widget figure[data-view-mode="default"],
-figure[data-view-mode="default"] {
-  max-width: 100% !important;
-  min-height: 360px;
+.drupal-media.ck-widget figure:not([data-view-mode]),
+figure[data-view-mode="default"],
+figure:not([data-view-mode]) {
+  width: 220px;
+  max-width: 220px !important;
+  margin: 0 auto;
+  min-height: 200px;
 }
 
 .drupal-media.ck-widget figure[data-view-mode="az_medium"],
@@ -28,7 +32,7 @@ figure[data-view-mode="az_medium"] {
   width: 760px;
   max-width: 760px !important;
   margin: 0 auto;
-  min-height: 360px;
+  min-height: 200px;
 }
 
 .drupal-media.ck-widget figure[data-view-mode="az_small"],
@@ -36,7 +40,7 @@ figure[data-view-mode="az_small"] {
   width: 360px;
   max-width: 360px !important;
   margin: 0 auto;
-  min-height: 360px;
+  min-height: 200px;
 }
 
 .drupal-media.ck-widget figure[data-view-mode="az_very_small"],
@@ -44,7 +48,7 @@ figure[data-view-mode="az_very_small"] {
   width: 220px;
   max-width: 220px !important;
   margin: 0 auto;
-  min-height: 220px;
+  min-height: 200px;
 }
 
 .drupal-media.ck-widget figure[data-view-mode="az_natural_size"],
@@ -72,14 +76,14 @@ figure[data-view-mode="az_natural_size"] {
 }
 
 /* Loading state */
-.fa-form:empty::after {
+/* .fa-form:empty::after {
   content: "Loading Trellis form...";
   display: block;
   text-align: center;
   padding: 2rem;
   color: #666;
   font-style: italic;
-}
+} */
 
 /* View mode specific sizing - increased specificity for editing contexts */
 .fa-form.fa-form--default,
