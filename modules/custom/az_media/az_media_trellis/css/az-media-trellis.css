@@ -76,6 +76,16 @@ figure[data-view-mode="az_natural_size"] {
   }
 }
 
+/* Loading state */
+.drupal-media.ck-widget .az-media-trellis:empty::after {
+  content: "Trellis Form";
+  display: block;
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+  font-style: italic;
+}
+
 /* View mode specific sizing - increased specificity for editing contexts */
 .az-media-trellis.az-media-trellis--default,
 .paragraph .az-media-trellis.az-media-trellis--default,
