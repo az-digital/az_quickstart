@@ -45,5 +45,7 @@
     <!-- MissingShort has false positives. See https://www.drupal.org/project/drupal/issues/2572635  -->
     <exclude name="Drupal.Commenting.DocComment.MissingShort"/>
   </rule>
-  <rule ref="DrupalPractice"/>
+  <rule ref="DrupalPractice">
+    <exclude name="DrupalPractice.Objects.StrictSchemaDisabled.StrictConfigSchema"/>
+  </rule>
 </ruleset>
