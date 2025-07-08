@@ -259,12 +259,12 @@ class AZCardWidget extends WidgetBase {
     $element['title_alignment'] = [
       '#type' => 'select',
       '#options' => [
-        'text-left' => $this->t('Title left'),
+        'text-start' => $this->t('Title left'),
         'text-center' => $this->t('Title center'),
-        'text-right' => $this->t('Title right'),
+        'text-end' => $this->t('Title right'),
       ],
       '#title' => $this->t('Card Title Alignment'),
-      '#default_value' => (!empty($item->options['title_alignment'])) ? $item->options['title_alignment'] : 'text-left',
+      '#default_value' => (!empty($item->options['title_alignment'])) ? $item->options['title_alignment'] : 'text-start',
     ];
 
     $element['body'] = [

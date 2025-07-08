@@ -14,5 +14,5 @@
 
 .card-body .visually-hidden {
   display: block;
-  position: static;
+  position: static !important;
 }

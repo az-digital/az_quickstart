@@ -72,6 +72,21 @@ function az_paragraphs_cards_update_1130001(&$sandbox) {
               $options['class'] = $card_class;
               $item->options = $options;
             }
+
+            // Update card title alignment for AZ Bootstrap 5.
+            if (isset($options['title_alignment'])) {
+              if ($options['title_alignment'] === 'text-left') {
+                $updated = TRUE;
+                $options['title_alignment'] = 'text-start';
+                $item->options = $options;
+              }
+
+              if ($options['title_alignment'] === 'text-right') {
+                $updated = TRUE;
+                $options['title_alignment'] = 'text-end';
+                $item->options = $options;
+              }
+            }
           }
         }
       }
