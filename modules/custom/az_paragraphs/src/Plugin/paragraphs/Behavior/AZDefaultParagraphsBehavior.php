@@ -129,9 +129,6 @@ class AZDefaultParagraphsBehavior extends ParagraphsBehaviorBase {
     /** @var \Drupal\paragraphs\Entity\Paragraph $paragraph */
     $paragraph = $variables['paragraph'];
 
-    // Get plugin configuration.
-    $config = $this->getSettings($paragraph);
-
     // Get the paragraph bundle name and compute name of potential library.
     $bundle = $paragraph->bundle();
     $libraries[] = 'az_paragraphs.' . $bundle;

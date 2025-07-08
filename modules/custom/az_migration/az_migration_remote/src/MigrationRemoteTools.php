@@ -90,10 +90,10 @@ final class MigrationRemoteTools {
 
     // Set messages.
     $labels = implode(', ', $labels);
-    $batch_builder->setTitle(t('Migrating %labels', ['%labels' => $labels]))
-      ->setInitMessage(t('Start migrating %labels', ['%labels' => $labels]))
-      ->setProgressMessage(t('Migrating %labels', ['%labels' => $labels]))
-      ->setErrorMessage(t('An error occurred while migrating %labels', ['%labels' => $labels]));
+    $batch_builder->setTitle($this->t('Migrating %labels', ['%labels' => $labels]))
+      ->setInitMessage($this->t('Start migrating %labels', ['%labels' => $labels]))
+      ->setProgressMessage($this->t('Migrating %labels', ['%labels' => $labels]))
+      ->setErrorMessage($this->t('An error occurred while migrating %labels', ['%labels' => $labels]));
 
     // Set the constructed batch as a batch operation.
     // Typically the batch is actually executed later by the Form API.

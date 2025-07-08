@@ -141,7 +141,7 @@ class AZEventTrellisViewsDateFilter extends FilterPluginBase {
       '#default_value' => $this->value['end'],
     ];
     // Compute conditional fields using states array.
-    if ($exposed = $form_state->get('exposed')) {
+    if ($form_state->get('exposed')) {
       $identifier = $this->options['expose']['identifier'];
       $source = ':input[name="' . $identifier . '[value]"]';
       $state = [$source => ['value' => 'Custom']];
