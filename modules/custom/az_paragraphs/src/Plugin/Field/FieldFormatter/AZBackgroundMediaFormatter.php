@@ -374,7 +374,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     $options = [];
 
     if ($withNone && empty($styles)) {
-      $options[''] = t('- Defined None -');
+      $options[''] = $this->t('- Defined None -');
     }
     foreach ($styles as $name => $style) {
       $options[$name] = $style->label();
@@ -411,9 +411,6 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     // Get settings from parent paragraph.
     if ($parent instanceof ParagraphInterface) {
       $paragraph_settings = $parent->getAllBehaviorSettings();
-      if (!empty($paragraph_settings['az_text_media_paragraph_behavior'])) {
-        $paragraph_settings_all = $paragraph_settings['az_text_media_paragraph_behavior'];
-      }
     }
     return $paragraph_settings;
   }

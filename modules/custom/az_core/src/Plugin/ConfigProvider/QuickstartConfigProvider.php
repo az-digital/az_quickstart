@@ -126,7 +126,7 @@ class QuickstartConfigProvider extends ConfigProviderBase {
             foreach ($profile_perms as $perm) {
               // @todo Use injection on user.permissions.
               // @phpstan-ignore-next-line
-              \Drupal::messenger()->addMessage(t("Added permission %perm to %label",
+              \Drupal::messenger()->addMessage($this->t("Added permission %perm to %label",
               [
                 '%perm' => $perm,
                 '%label' => $label,

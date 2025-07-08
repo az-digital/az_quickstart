@@ -130,7 +130,7 @@ class CourseImportForm extends ConfigFormBase {
 
     $form['run'] = [
       '#type' => 'submit',
-      '#value' => t('Save and Import Courses'),
+      '#value' => $this->t('Save and Import Courses'),
       '#attributes' => [
         'title' => $this->t("Import the listed courses. This may time out for very large subject codes."),
       ],
@@ -140,7 +140,7 @@ class CourseImportForm extends ConfigFormBase {
 
     $form['rollback'] = [
       '#type' => 'submit',
-      '#value' => t('Rollback'),
+      '#value' => $this->t('Rollback'),
       '#attributes' => [
         'title' => $this->t("Remove courses imported by this form from the site."),
       ],
@@ -160,7 +160,7 @@ class CourseImportForm extends ConfigFormBase {
 
     $courses = preg_split("/[\n\r]+/", $courses);
     if ($courses === FALSE) {
-      $form_state->setErrorByName('courses', t('Enter search terms to locate a course to import.'));
+      $form_state->setErrorByName('courses', $this->t('Enter search terms to locate a course to import.'));
     }
     else {
       foreach ($courses as $course) {
@@ -171,7 +171,7 @@ class CourseImportForm extends ConfigFormBase {
         elseif (preg_match("/^[[:space:]]*[[:alpha:]]+[[:space:]]*$/", $course)) {
         }
         else {
-          $form_state->setErrorByName('courses', t('Use format "MATH 123 or MATH" for courses.'));
+          $form_state->setErrorByName('courses', $this->t('Use format "MATH 123 or MATH" for courses.'));
         }
       }
     }

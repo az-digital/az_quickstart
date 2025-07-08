@@ -94,7 +94,7 @@ final class AZRecurringImportModalController extends ControllerBase {
     // Forms generated during ajax calls do not have the right action path.
     $config_form['#action'] = Url::fromRoute('entity.az_recurring_import_rule.add_form')->toString();
     // Add an ajax command to open the modal.
-    $response->addCommand(new OpenModalDialogCommand(t('Create Recurring Import'), $config_form, ['width' => '1000']));
+    $response->addCommand(new OpenModalDialogCommand($this->t('Create Recurring Import'), $config_form, ['width' => '1000']));
     return $response;
   }
 
