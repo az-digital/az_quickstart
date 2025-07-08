@@ -14,7 +14,7 @@ function az_paragraphs_text_media_update_last_removed() {
 }
 
 /**
- * Update text_media paragraphs for Bootstrap 5 compatibility.
+ * Update text on media paragraphs for Bootstrap 5 compatibility.
  */
 function az_paragraphs_text_media_update_1130001(&$sandbox) {
 
@@ -53,7 +53,7 @@ function az_paragraphs_text_media_update_1130001(&$sandbox) {
     $needs_update = FALSE;
     $behavior_settings = $paragraph->getAllBehaviorSettings();
 
-    // Update text_media position for AZ Bootstrap 5.
+    // Update text on media position for AZ Bootstrap 5.
     if (isset($behavior_settings['az_text_media_paragraph_behavior']['position'])) {
       $needs_update = TRUE;
       $text_media_position = $behavior_settings['az_text_media_paragraph_behavior']['position'];
@@ -67,7 +67,7 @@ function az_paragraphs_text_media_update_1130001(&$sandbox) {
       }
     }
 
-    // Update text_media bg_color for AZ Bootstrap 5.
+    // Update text on media bg color for AZ Bootstrap 5.
     if (isset($behavior_settings['az_text_media_paragraph_behavior']['bg_color'])) {
       $needs_update = TRUE;
       $text_media_bg_color = $behavior_settings['az_text_media_paragraph_behavior']['bg_color'];
@@ -77,6 +77,18 @@ function az_paragraphs_text_media_update_1130001(&$sandbox) {
       ];
       if (isset($bg_color_mappings[$text_media_bg_color])) {
         $behavior_settings['az_text_media_paragraph_behavior']['bg_color'] = $bg_color_mappings[$text_media_bg_color];
+      }
+    }
+
+    // Update text on media text alignment for AZ Bootstrap 5.
+    if (isset($behavior_settings['az_text_media_paragraph_behavior']['title_alignment'])) {
+      $needs_update = TRUE;
+      if ($behavior_settings['az_text_media_paragraph_behavior']['title_alignment'] === 'text-left') {
+        $behavior_settings['az_text_media_paragraph_behavior']['title_alignment'] = 'text-start';
+      }
+
+      if ($behavior_settings['az_text_media_paragraph_behavior']['title_alignment'] === 'text-right') {
+        $behavior_settings['az_text_media_paragraph_behavior']['title_alignment'] = 'text-end';
       }
     }
 

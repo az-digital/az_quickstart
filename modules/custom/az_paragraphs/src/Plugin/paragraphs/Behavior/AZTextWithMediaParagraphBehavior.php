@@ -167,9 +167,9 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#title' => $this->t('Title alignment'),
       '#type' => 'select',
       '#options' => [
-        'text-left' => $this->t('Title left'),
+        'text-start' => $this->t('Title left'),
         'text-center' => $this->t('Title center'),
-        'text-right' => $this->t('Title right'),
+        'text-end' => $this->t('Title right'),
       ],
       '#default_value' => $config['title_alignment'],
       '#description' => $this->t('The alignment of the title.'),
