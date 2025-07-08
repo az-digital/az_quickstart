@@ -5,6 +5,7 @@ namespace Drupal\az_core\Plugin\ConfigProvider;
 use Drupal\Component\Diff\Diff;
 use Drupal\Core\Config\InstallStorage;
 use Drupal\Core\Config\StorageInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\config_provider\Plugin\ConfigProviderBase;
 use Drupal\config_snapshot\ConfigSnapshotStorageTrait;
 use Drupal\config_sync\ConfigSyncSnapshotterInterface;
@@ -22,6 +23,7 @@ use Drupal\config_sync\ConfigSyncSnapshotterInterface;
 class QuickstartConfigProvider extends ConfigProviderBase {
 
   use ConfigSnapshotStorageTrait;
+  use StringTranslationTrait;
 
   /**
    * The configuration provider ID.
