@@ -8,7 +8,7 @@
       const editing = config.editing || false;
 
       // Find form containers that haven't been processed yet
-      const formContainers = context.querySelectorAll('.fa-form:not([data-az-processed])');
+      const formContainers = context.querySelectorAll('.az-media-trellis:not([data-az-processed])');
       
       formContainers.forEach(container => {
         // Mark as processed to avoid duplicate initialization
