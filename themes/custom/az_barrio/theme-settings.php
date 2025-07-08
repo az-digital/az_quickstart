@@ -504,7 +504,6 @@ function az_barrio_validate_file_path($path) {
   }
 
   // A path relative to the Drupal root or a fully qualified URI is valid.
-  //phpcs:ignore Security.BadFunctions.FilesystemFunctions.WarnFilesystem
   if (is_file($path)) {
     return $path;
   }
@@ -513,7 +512,6 @@ function az_barrio_validate_file_path($path) {
   if (StreamWrapperManager::getScheme($path) === FALSE) {
     $path = 'public://' . $path;
   }
-  //phpcs:ignore Security.BadFunctions.FilesystemFunctions.WarnFilesystem
   if (is_file($path)) {
     return $path;
   }
