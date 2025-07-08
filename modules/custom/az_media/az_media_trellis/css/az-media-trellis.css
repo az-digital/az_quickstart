@@ -9,29 +9,49 @@
   position: relative;
 }
 
-/* Style any content that gets injected by FormAssembly JavaScript */
-.fa-form > * {
-  width: 100%;
-  transition: height 0.3s ease;
-}
-
-/* Common FormAssembly form styling */
-.fa-form .form-group,
-.fa-form .form-field,
-.fa-form .field-group {
-  margin-bottom: 1rem;
-}
-
-.fa-form input,
-.fa-form textarea,
-.fa-form select {
-  max-width: 100%;
-}
-
 /* Handle CKEditor specific issues */
 .cke_dialog .fa-form,
-.cke_wysiwyg_frame .fa-form {
+.cke_wysiwyg_frame .fa-form,
+.drupal-media.ck-widget .fa-form {
   min-height: 300px;
+}
+
+/* CKEditor widget view mode specific sizing using data-view-mode */
+.drupal-media.ck-widget figure[data-view-mode="default"],
+figure[data-view-mode="default"] {
+  max-width: 100% !important;
+  min-height: 360px;
+}
+
+.drupal-media.ck-widget figure[data-view-mode="az_medium"],
+figure[data-view-mode="az_medium"] {
+  width: 760px;
+  max-width: 760px !important;
+  margin: 0 auto;
+  min-height: 360px;
+}
+
+.drupal-media.ck-widget figure[data-view-mode="az_small"],
+figure[data-view-mode="az_small"] {
+  width: 360px;
+  max-width: 360px !important;
+  margin: 0 auto;
+  min-height: 360px;
+}
+
+.drupal-media.ck-widget figure[data-view-mode="az_very_small"],
+figure[data-view-mode="az_very_small"] {
+  width: 220px;
+  max-width: 220px !important;
+  margin: 0 auto;
+  min-height: 220px;
+}
+
+.drupal-media.ck-widget figure[data-view-mode="az_natural_size"],
+figure[data-view-mode="az_natural_size"] {
+  max-width: none !important;
+  width: auto !important;
+  min-height: 360px;
 }
 
 /* Handle collapsed paragraph/accordion scenarios */
@@ -99,13 +119,6 @@
   max-width: none !important;
   width: auto !important;
   min-height: 300px;
-}
-
-/* Adjust content width within sized containers */
-.fa-form--az-medium > *,
-.fa-form--az-small > *,
-.fa-form--az-very-small > * {
-  max-width: 100%;
 }
 
 /* Responsive adjustments for view modes */
