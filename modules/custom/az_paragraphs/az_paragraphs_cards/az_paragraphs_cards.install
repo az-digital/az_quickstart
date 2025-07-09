@@ -66,7 +66,7 @@ function az_paragraphs_cards_update_1130001(&$sandbox) {
             }
 
             // Update cards bg color for AZ Bootstrap 5.
-            if (isset($options['class']) && strpos($options['class'], 'bg-') === 0) {
+            if (isset($options['class']) && str_starts_with($options['class'], 'bg-') && $options['class'] !== 'bg-transparent') {
               $updated = TRUE;
               $card_class = 'text-' . $options['class'];
               $options['class'] = $card_class;
