@@ -127,7 +127,7 @@ figure[data-view-mode="az_natural_size"] {
 }
 
 /* Responsive adjustments for view modes */
-/* @media (max-width: 768px) {
+@media (max-width: 768px) {
   .az-media-trellis--az-medium {
     max-width: 100%;
     min-height: 200px;
@@ -142,4 +142,4 @@ figure[data-view-mode="az_natural_size"] {
     max-width: 220px;
     min-height: 200px;
   }
-} */
+}
