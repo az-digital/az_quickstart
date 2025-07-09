@@ -142,6 +142,9 @@
             "drupal/auto_entitylabel": {
                 "Support entities without bundles (2945387)": "https://www.drupal.org/files/issues/2024-06-07/2945387-28.patch"
             },
+            "drupal/bootstrap_barrio": {
+                "Js error if table not found (3519060)": "https://www.drupal.org/files/issues/2025-04-14/bootstrap-barrio-table-not-found-3519060-1.patch"
+            },
             "drupal/cas": {
                 "ServiceNotFoundException when logging out (2948185)": "https://www.drupal.org/files/issues/cas_logout_error-2948185-2.patch"
             },
