@@ -32,8 +32,11 @@ function az_media_trellis_theme($existing, $type, $theme, $path) {
         'type' => NULL,
         // The Trellis form embed URL.
         'url' => NULL,
-        // Current view mode for responsive sizing.
-        'view_mode' => NULL,
+        'attributes' => [
+          // HTML attributes for the container element.
+          'id' => NULL,
+          'class' => [],
+        ],
         // Whether user is in editing context.
         'editing' => NULL,
       ],
