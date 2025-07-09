@@ -262,7 +262,6 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase {
             Html::getClass('az-media-trellis'),
             Html::getClass('az-media-trellis--' . $view_mode),
           ],
-          'data-az-media-trellis-rfi' => 'true',
         ]),
         '#cache' => [
           // Cache varies by URL query arguments for form prefilling.
@@ -280,7 +279,6 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase {
             'type' => 'text/javascript',
             'defer' => 'defer',
             'data-qp-target-id' => $unique_element_id,
-            'data-chris-green-az-media-trellis' => 'true',
           ],
         ],
         'trellis_embed_script_' . $unique_element_id,

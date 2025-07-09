@@ -13,7 +13,6 @@
       formContainers.forEach((container) => {
         // Mark as processed to avoid duplicate initialization
         container.setAttribute('data-az-processed', 'true');
-
         new TrellisFormHandler(container, queryParams, editing);
       });
     },
