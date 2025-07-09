@@ -12,8 +12,6 @@ dependencies:
     - image_widget_crop
     - path
     - text
-_core:
-  default_config_hash: 7Kuh_X1QDa1Fe6z1X3UIf1wyeoxofkTngvJTnDquzu0
 id: media.az_image.default
 targetEntityType: media
 bundle: az_image
