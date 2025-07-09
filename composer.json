@@ -155,7 +155,7 @@
                 "Storage comparer issue": "https://gist.githubusercontent.com/tadean/e2e0dd57f1a9c4eae28d8e713cb01d82/raw/e114987d4a76c183208c763de4dbfecbf41b7f35/config_distro_storage_comparer_issue.patch"
             },
             "drupal/config_provider": {
-                "Drupal 11.2 compatibility issues (3532693)": "https://git.drupalcode.org/project/config_provider/-/merge_requests/22.diff"
+                "Drupal 11.2 compatibility issues (3532693)": "https://git.drupalcode.org/project/config_provider/-/merge_requests/20.diff"
             },
             "drupal/core": {
                 "Views Date Filter Datetime Granularity Option (2868014)": "https://www.drupal.org/files/issues/2025-06-25/2868014-139-11-x.patch",
