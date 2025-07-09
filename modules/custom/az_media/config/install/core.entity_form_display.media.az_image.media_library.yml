@@ -12,8 +12,6 @@ dependencies:
     - decorative_image_widget
     - image_widget_crop
     - text
-_core:
-  default_config_hash: l6qFYXMGOQaDSjgFbAmFWTGCTJeQ-1yBCTld9IZg9CY
 id: media.az_image.media_library
 targetEntityType: media
 bundle: az_image
