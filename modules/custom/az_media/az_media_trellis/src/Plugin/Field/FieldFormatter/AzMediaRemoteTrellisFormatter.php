@@ -284,7 +284,6 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase {
         'trellis_embed_script_' . $unique_element_id,
       ];
 
-      // Add ids to loop through the elements in JavaScript.
     }
   // Attach the necessary JavaScript library for Trellis form embedding.
     $elements[$delta]['#attached']['library'][] = 'az_media_trellis/az-media-trellis';
