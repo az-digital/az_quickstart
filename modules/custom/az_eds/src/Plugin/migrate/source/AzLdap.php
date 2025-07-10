@@ -2,7 +2,6 @@
 
 namespace Drupal\az_eds\Plugin\migrate\source;
 
-use Drupal\migrate\Attribute\MigrateSource;
 use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate\Plugin\migrate\source\SourcePluginBase;
 
@@ -12,8 +11,12 @@ use Drupal\migrate\Plugin\migrate\source\SourcePluginBase;
  * For additional configuration keys, refer to the parent class:
  *
  * @see \Drupal\migrate\Plugin\migrate\source\SourcePluginBase
+ *
+ * @MigrateSource(
+ *   id = "az_ldap",
+ *   source_module = "migrate"
+ * )
  */
-#[MigrateSource('az_ldap')]
 class AzLdap extends SourcePluginBase {
 
   /**
