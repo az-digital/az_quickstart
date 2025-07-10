@@ -3,18 +3,15 @@
 namespace Drupal\az_migration\Plugin\migrate\source;
 
 use Drupal\file\Plugin\migrate\source\d7\File;
+use Drupal\migrate\Attribute\MigrateSource;
 use Drupal\migrate\Row;
 
 /**
  * Drupal 7 file source from database.
  *
  * @todo Support file migration, copy all fid files.
- *
- * @MigrateSource(
- *   id = "az_file_migration",
- *   source_provider = "file"
- * )
  */
+#[MigrateSource('az_file_migration')]
 class AZFileHandle extends File {
 
   /**
