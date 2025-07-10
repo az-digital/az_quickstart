@@ -219,7 +219,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     $variables['attributes']['class'][] = HTML::getClass($config['full_width']);
     $variables['attributes']['class'][] = HTML::getClass($config['bg_attachment']);
 
-    // Add rounded style to content-width paragraphs.
+    // Add rounded corners to content-width paragraphs.
     if (!isset($config['full_width']) || $config['full_width'] !== 'full-width-background') {
       $variables['attributes']['class'][] = 'rounded';
     }
@@ -240,10 +240,14 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     $content_classes = [
       'content',
       'az-full-width-column-content',
-      'rounded',
       HTML::getClass($config['bg_color']),
       HTML::getClass($config['style']),
     ];
+
+    // Add rounded corners to content boxes that are not column style.
+    if (!empty($config['style']) && $config['style'] !== 'column') {
+      $content_classes[] = 'rounded';
+    }
 
     // If this paragraph is full-width, add the full-width library.
     if (isset($config['full_width']) && $config['full_width'] === 'full-width-background') {
