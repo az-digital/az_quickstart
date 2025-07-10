@@ -556,12 +556,22 @@ a.nolink + ul .sf-clone-parent {
     margin-right: 0;
 }
 .region .az-full-width-row {
+  --bs-gutter-x: 1.5rem;
+  --bs-gutter-y: 0;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
-  margin-right: -15px;
-  margin-left: -15px;
+  margin-top: calc(-1 * var(--bs-gutter-y));
+  margin-right: calc(-.5 * var(--bs-gutter-x));
+  margin-left: calc(-.5 * var(--bs-gutter-x));
+}
+.region .az-full-width-row>* {
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  padding-right: calc(var(--bs-gutter-x) * .5);
+  padding-left: calc(var(--bs-gutter-x) * .5);
+  margin-top: var(--bs-gutter-y);
 }
 
 .region-sidebar-first .block,
