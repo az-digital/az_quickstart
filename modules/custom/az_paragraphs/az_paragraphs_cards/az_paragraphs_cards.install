@@ -6,7 +6,7 @@
  */
 
 /**
- * Update az_cards link_style from 'sr-only' to 'visually-hidden'.
+ * Update az cards for AZ Bootstrap 5 compatibility.
  */
 function az_paragraphs_cards_update_1130001(&$sandbox) {
   // Initialize batch processing if this is the first run.
