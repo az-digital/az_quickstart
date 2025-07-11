@@ -91,7 +91,7 @@
         "drupal/media_entity_file_replace": "1.3.0",
         "drupal/media_library_edit": "3.0.4",
         "drupal/media_library_form_element": "2.1.1",
-        "drupal/menu_block": "1.13.0",
+        "drupal/menu_block": "1.14.0",
         "drupal/menu_link_attributes": "1.5.0",
         "drupal/metatag": "2.1.0",
         "drupal/migmag": "1.8.3",
@@ -188,7 +188,7 @@
                 "Support Referencing the same entity multiple times (3363988)": "https://gist.githubusercontent.com/tadean/d3c4969f0c8dd7bacc3a3c0ba0521b3e/raw/f5ad64286fdcfcc23b2bf147656b012bba6a4872/inline_entity_form_multiple.patch"
             },
             "drupal/menu_block": {
-                "Menu blocks disappear randomly on sites for anonymous users. (3475039)": "https://www.drupal.org/files/issues/2024-09-17/revert-3271218-for-3475039.patch"
+                "Performance issue caused by build in access check (3509045)": "https://www.drupal.org/files/issues/2025-03-05/3509045-13.patch"
             },
             "drupal/metatag": {
                 "MetatagManager uasort() TypeError (3503253)": "https://www.drupal.org/files/issues/2025-02-17/3503253-4.patch"
