@@ -6,4 +6,5 @@ package: 'The University of Arizona - Experimental'
 dependencies:
   - az_secrets
   - key:key
+  - ldap_query:ldap_query
   - ldap_servers:ldap_servers
