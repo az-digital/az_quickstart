@@ -90,6 +90,7 @@ final class AZPersonEDSImportForm extends FormBase {
       '#type' => 'select',
       '#title' => $this->t('Choose how profiles are imported'),
       '#options' => [
+        'track' => $this->t('Import new/changed persons'),
         'normal' => $this->t('Import new persons only'),
         'update' => $this->t('Import all persons'),
       ],
@@ -116,6 +117,7 @@ final class AZPersonEDSImportForm extends FormBase {
     $query = $form_state->getValue('query');
     $mode = $form_state->getValue('mode');
     $update = $mode === 'update';
+    $track = $mode === 'track';
 
     // Create an instance of the EDS import.
     $migration = $this->pluginManagerMigration->createInstance('az_person_eds_import');
@@ -129,6 +131,7 @@ final class AZPersonEDSImportForm extends FormBase {
       'configuration' => [
         'source' => [
           'queries' => [$query],
+          'track_changes' => $track,
         ],
       ],
     ];
