@@ -509,6 +509,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
             'class' => [
               'az-video-background',
               'az-js-video-background',
+              'rounded',
             ],
             'data-youtubeid' => $video_oembed_id,
             'data-style' => $settings['style'],
@@ -533,6 +534,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
             'class' => [
               'az-video-background',
               'az-js-vimeo-video-background',
+              'rounded',
             ],
             'data-vimeo-video-id' => $video_oembed_id,
             'data-style' => $settings['style'],
@@ -553,7 +555,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
             '#responsive_image_style_id' => 'az_full_width_background',
             '#item' => $media->get('thumbnail'),
             '#item_attributes' => [
-              'class' => ['img-fluid', ' w-100', 'invisible'],
+              'class' => ['img-fluid', 'rounded', ' w-100', 'invisible'],
             ],
           ];
           $az_background_media[] = $image_renderable;
@@ -565,7 +567,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
           '#responsive_image_style_id' => 'az_full_width_background',
           '#item' => $media->get('thumbnail'),
           '#item_attributes' => [
-            'class' => ['img-fluid'],
+            'class' => ['img-fluid', 'rounded'],
           ],
         ];
         $text_on_bottom = [
@@ -628,7 +630,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
           '#responsive_image_style_id' => 'az_full_width_background',
           '#item' => $media->get('field_media_az_image'),
           '#item_attributes' => [
-            'class' => ['img-fluid', ' w-100', 'invisible'],
+            'class' => ['img-fluid', 'rounded', ' w-100', 'invisible'],
           ],
         ];
         $az_background_media[] = $image_renderable;
@@ -642,7 +644,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
         '#responsive_image_style_id' => 'az_full_width_background',
         '#item' => $media->get('field_media_az_image'),
         '#item_attributes' => [
-          'class' => ['img-fluid'],
+          'class' => ['img-fluid', 'rounded'],
         ],
       ];
       $text_on_bottom = [
