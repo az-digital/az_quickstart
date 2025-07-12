@@ -393,6 +393,27 @@ function az_core_library_info_alter(array &$libraries, $module) {
   if ($module === 'chosen' && isset($libraries['chosen.claro'])) {
     $libraries['chosen.claro']['dependencies'][] = 'az_core/az-core-chosen';
   }
+
+  // Downgrade jQuery to 3.x for Bootstrap 4 JS compatibility.
+  // @todo Remove this once we upgrade to Bootstrap 5.
+  if ($module === 'core' && isset($libraries['jquery'])) {
+    $libraries['jquery'] = [
+      'remote' => 'https://github.com/jquery/jquery',
+      'version' => '3.7.1',
+      'license' => [
+        'name' => 'MIT',
+        'url' => 'https://raw.githubusercontent.com/jquery/jquery/3.7.1/LICENSE.txt',
+        'gpl-compatible' => TRUE,
+      ],
+      'js' => [
+        'https://code.jquery.com/jquery-3.7.1.min.js' => [
+          'type' => 'external',
+          'minified' => TRUE,
+          'weight' => -20,
+        ],
+      ],
+    ];
+  }
 }
 
 /**
@@ -472,8 +493,7 @@ function az_core_node_access(NodeInterface $node, $op, AccountInterface $account
     if ($bundle === 'az_person') {
       // Determine if netid field exists.
       if ($node->hasField('field_az_netid')) {
-        /** @var \Drupal\Core\Entity\ContentEntityBase $node */
-        $netid = $node->field_az_netid->value;
+        $netid = $node->get('field_az_netid')->getValue();
         try {
           // Look up user mapping for CAS.
           $auth = \Drupal::service('externalauth.authmap')->get($account->id(), 'cas');
