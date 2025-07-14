@@ -4,8 +4,6 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-    reviewers:
-      - "az-digital/developers"
     # Allow up to 10 open pull requests
     open-pull-requests-limit: 10
   - package-ecosystem: "github-actions"
@@ -13,5 +11,3 @@ updates:
     schedule:
       # Check for updates to GitHub Actions every week
       interval: "weekly"
-    reviewers:
-      - "az-digital/developers"
