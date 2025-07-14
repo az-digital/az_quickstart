@@ -3,6 +3,7 @@ type: module
 description: 'Provides access credentials for EDS via environment.'
 core_version_requirement: ^10 || ^11
 package: 'The University of Arizona - Experimental'
+lifecycle: experimental
 dependencies:
   - az_secrets
   - key:key
