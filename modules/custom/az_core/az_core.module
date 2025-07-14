@@ -505,6 +505,32 @@ function az_core_form_taxonomy_vocabulary_confirm_reset_alphabetical_alter(&$for
 }
 
 /**
+ * Implements hook_preprocess_container__text_format_filter_guidelines().
+ *
+ * Hides Plain Text format tips from fields using AZSummaryFormatter.
+ */
+function az_core_preprocess_container__text_format_filter_guidelines(&$variables) {
+  if (isset($variables['element']['#parents'][0])) {
+    if ($variables['element']['#parents'][0] === 'field_az_summary') {
+      unset($variables['children']);
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_container__text_format_filter_help().
+ *
+ * Hides "About text formats" tips link from fields using AZSummaryFormatter.
+ */
+function az_core_preprocess_container__text_format_filter_help(&$variables) {
+  if (isset($variables['element']['#parents'][0])) {
+    if ($variables['element']['#parents'][0] === 'field_az_summary') {
+      unset($variables['children']);
+    }
+  }
+}
+
+/**
  * Implements hook_form_BASE_FORM_ID_alter() for Drupal\az_core\MobileNavForm.
  *
  * Adds style overrides for mobile nav form.
