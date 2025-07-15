@@ -9,7 +9,6 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Path\PathValidatorInterface;
 use Drupal\Core\Routing\RequestContext;
 use Drupal\Core\Routing\RouteBuilderInterface;
-use Drupal\Core\Routing\RouteProviderInterface;
 use Drupal\path_alias\AliasManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -47,13 +46,6 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
   protected $routeBuilder;
 
   /**
-   * The route provider.
-   *
-   * @var \Drupal\Core\Routing\RouteProviderInterface
-   */
-  protected $routeProvider;
-
-  /**
    * Constructs a QuickstartCoreSettingsForm object.
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
@@ -62,8 +54,6 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
    *   The typed config manager.
    * @param \Drupal\Core\Routing\RouteBuilderInterface $route_builder
    *   The route builder.
-   * @param \Drupal\Core\Routing\RouteProviderInterface $route_provider
-   *   The route provider.
    * @param \Drupal\path_alias\AliasManagerInterface $alias_manager
    *   The path alias manager.
    * @param \Drupal\Core\Path\PathValidatorInterface $path_validator
@@ -71,11 +61,10 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
    * @param \Drupal\Core\Routing\RequestContext $request_context
    *   The request context.
    */
-  public function __construct(ConfigFactoryInterface $config_factory, TypedConfigManagerInterface|null $typedConfigManager, RouteBuilderInterface $route_builder, RouteProviderInterface $route_provider, AliasManagerInterface $alias_manager, PathValidatorInterface $path_validator, RequestContext $request_context) {
+  public function __construct(ConfigFactoryInterface $config_factory, TypedConfigManagerInterface|null $typedConfigManager, RouteBuilderInterface $route_builder, AliasManagerInterface $alias_manager, PathValidatorInterface $path_validator, RequestContext $request_context) {
     parent::__construct($config_factory, $typedConfigManager);
 
     $this->routeBuilder = $route_builder;
-    $this->routeProvider = $route_provider;
     $this->aliasManager = $alias_manager;
     $this->pathValidator = $path_validator;
     $this->requestContext = $request_context;
@@ -133,7 +122,7 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
     $form['site_name'] = [
       '#type' => 'textfield',
       '#title' => t('Site name'),
-      '#default_value' => $site_config->get('name'),
+      '#config_target' => 'system.site:name',
       '#required' => TRUE,
     ];
 
@@ -143,11 +132,10 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
       '#open' => TRUE,
     ];
 
-    $front_page = $site_config->get('page.front') !== '/user/login' ? $this->aliasManager->getAliasByPath($site_config->get('page.front')) : '';
     $form['front_page']['site_frontpage'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Default front page'),
-      '#default_value' => $front_page,
+      '#config_target' => 'system.site:page.front',
       '#size' => 40,
       '#description' => $this->t('Optionally, specify a relative URL to display as the front page. Leave blank to display the default front page.'),
       '#field_prefix' => $this->requestContext->getCompleteBaseUrl(),
@@ -162,7 +150,7 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
     $form['error_page']['site_403'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Default 403 (access denied) page'),
-      '#default_value' => $site_config->get('page.403'),
+      '#config_target' => 'system.site:page.403',
       '#size' => 40,
       '#description' => $this->t('This page is displayed when the requested document is denied to the current user. Leave blank to display a generic "access denied" page.'),
     ];
@@ -170,7 +158,7 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
     $form['error_page']['site_404'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Default 404 (not found) page'),
-      '#default_value' => $site_config->get('page.404'),
+      '#config_target' => 'system.site:page.404',
       '#size' => 40,
       '#description' => $this->t('This page is displayed when no other content matches the requested document. Leave blank to display a generic "page not found" page.'),
     ];
@@ -186,15 +174,15 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
       '#title' => t('Enable monitoring page'),
       '#type' => 'checkbox',
       '#description' => t("Provides an uncacheable page intended for use with uptime monitoring tools to check the health of the site, bypassing any edge cache layer (e.g. varnish)."),
-      '#default_value' => $az_core_config->get('monitoring_page.enabled'),
+      '#config_target' => 'az_core.settings:monitoring_page.enabled',
+
     ];
 
     $form['monitoring_page']['monitoring_page_path'] = [
       '#title' => t('Monitoring page path'),
       '#type' => 'textfield',
       '#description' => t('Path for monitoring page.'),
-      '#default_value' => $az_core_config->get('monitoring_page.path'),
-      '#element_validate' => ['::monitoringPagePathValidate'],
+      '#config_target' => 'az_core.settings:monitoring_page.path',
       '#states' => [
         'visible' => [':input[name="monitoring_page_enabled"]' => ['checked' => TRUE]],
         'enabled' => [':input[name="monitoring_page_enabled"]' => ['checked' => TRUE]],
@@ -213,7 +201,7 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
       '#title' => t('Enterprise attributes edits prohibited'),
       '#type' => 'checkbox',
       '#description' => t("With this setting enabled, edits to the enterprise attributes taxonomy will be prohibited (recommended)."),
-      '#default_value' => $az_core_config->get('enterprise_attributes.locked'),
+      '#config_target' => 'az_core.settings:enterprise_attributes.locked',
     ];
 
     return parent::buildForm($form, $form_state);
@@ -266,48 +254,9 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
   }
 
   /**
-   * Validates the monitoring page path.
-   *
-   * @param array $element
-   *   An associative array containing the properties and children of the
-   *   generic form element.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   The current state of the form.
-   * @param array $complete_form
-   *   The complete form structure.
-   */
-  public function monitoringPagePathValidate(array &$element, FormStateInterface $form_state, array &$complete_form) {
-    if ($form_state->getValue('monitoring_page_enabled')) {
-      $submitted_value = $form_state->getValue('monitoring_page_path');
-      if (empty($submitted_value)) {
-        $form_state->setError($element, t('A monitoring page path must be provided.'));
-      }
-
-      $path = strtolower(trim(trim($submitted_value), " \\/"));
-      if (!empty($path) && $submitted_value !== $element['#default_value']) {
-        if ($this->routeProvider->getRoutesByPattern($path)->count()) {
-          $form_state->setError($element, t('The path is already in use.'));
-        }
-      }
-    }
-  }
-
-  /**
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $this->config('system.site')
-      ->set('name', $form_state->getValue('site_name'))
-      ->set('page.front', $form_state->getValue('site_frontpage'))
-      ->set('page.403', $form_state->getValue('site_403'))
-      ->set('page.404', $form_state->getValue('site_404'))
-      ->save();
-
-    $this->config('az_core.settings')
-      ->set('monitoring_page.enabled', $form_state->getValue('monitoring_page_enabled'))
-      ->set('monitoring_page.path', $form_state->getValue('monitoring_page_path'))
-      ->set('enterprise_attributes.locked', $form_state->getValue('enterprise_attributes_locked'))
-      ->save();
 
     $this->routeBuilder->setRebuildNeeded();
 
