@@ -169,7 +169,7 @@
                 "[Apache only] Wrong file header returned, when converting an image for example to webp (3310963)": "https://www.drupal.org/files/issues/2024-05-15/3310963-32.patch",
                 "Hardcode a higher WebP conversion quality setting (3320689)": "https://gist.githubusercontent.com/joeparsons/d99b6c6eef240e8eaf768ba79e1c9f1b/raw/9b99325bd20907db0506969fc4f5823b46065c6b/3320689-10-3-x-hardcoded.patch",
                 "user_user_role_insert should not exist (2672340)": "https://gist.githubusercontent.com/joeparsons/f31108ee18aaed01e03ef3005ecd3d92/raw/0fdd114d79083ea7c6d962a061d09d81d58a0bea/2672340-11.x.patch",
-                "[Regression] missing menu active trail since Drupal 9.5.9 (3359511)" : "https://www.drupal.org/files/issues/2025-07-15/3359511-11.x-118.patch"                 
+                "[Regression] missing menu active trail since Drupal 9.5.9 (3359511)" : "https://www.drupal.org/files/issues/2025-07-15/3359511-11-x-no-tests.patch"
             },
             "drupal/draggableviews": {
                 "Row weights not displaying on sort view (3252365)": "https://www.drupal.org/files/issues/2023-08-25/3252365-check-remove-select-all-class.patch",
