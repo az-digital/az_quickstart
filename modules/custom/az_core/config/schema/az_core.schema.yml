@@ -12,6 +12,11 @@ az_core.settings:
         path:
           type: string
           label: 'Monitoring page path'
+          nullable: true
+          constraints:
+            NotBlank:
+              allowNull: true
+            AZUniqueRoutePath: []
     enterprise_attributes:
       type: mapping
       label: 'Enterprise attributes'

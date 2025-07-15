@@ -9,7 +9,6 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Path\PathValidatorInterface;
 use Drupal\Core\Routing\RequestContext;
 use Drupal\Core\Routing\RouteBuilderInterface;
-use Drupal\Core\Routing\RouteProviderInterface;
 use Drupal\path_alias\AliasManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -47,13 +46,6 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
   protected $routeBuilder;
 
   /**
-   * The route provider.
-   *
-   * @var \Drupal\Core\Routing\RouteProviderInterface
-   */
-  protected $routeProvider;
-
-  /**
    * Constructs a QuickstartCoreSettingsForm object.
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
@@ -62,8 +54,6 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
    *   The typed config manager.
    * @param \Drupal\Core\Routing\RouteBuilderInterface $route_builder
    *   The route builder.
-   * @param \Drupal\Core\Routing\RouteProviderInterface $route_provider
-   *   The route provider.
    * @param \Drupal\path_alias\AliasManagerInterface $alias_manager
    *   The path alias manager.
    * @param \Drupal\Core\Path\PathValidatorInterface $path_validator
@@ -71,11 +61,10 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
    * @param \Drupal\Core\Routing\RequestContext $request_context
    *   The request context.
    */
-  public function __construct(ConfigFactoryInterface $config_factory, TypedConfigManagerInterface|null $typedConfigManager, RouteBuilderInterface $route_builder, RouteProviderInterface $route_provider, AliasManagerInterface $alias_manager, PathValidatorInterface $path_validator, RequestContext $request_context) {
+  public function __construct(ConfigFactoryInterface $config_factory, TypedConfigManagerInterface|null $typedConfigManager, RouteBuilderInterface $route_builder, AliasManagerInterface $alias_manager, PathValidatorInterface $path_validator, RequestContext $request_context) {
     parent::__construct($config_factory, $typedConfigManager);
 
     $this->routeBuilder = $route_builder;
-    $this->routeProvider = $route_provider;
     $this->aliasManager = $alias_manager;
     $this->pathValidator = $path_validator;
     $this->requestContext = $request_context;
@@ -194,7 +183,6 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
       '#type' => 'textfield',
       '#description' => t('Path for monitoring page.'),
       '#config_target' => 'az_core.settings:monitoring_page.path',
-      '#element_validate' => ['::monitoringPagePathValidate'],
       '#states' => [
         'visible' => [':input[name="monitoring_page_enabled"]' => ['checked' => TRUE]],
         'enabled' => [':input[name="monitoring_page_enabled"]' => ['checked' => TRUE]],
@@ -263,33 +251,6 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
     }
 
     parent::validateForm($form, $form_state);
-  }
-
-  /**
-   * Validates the monitoring page path.
-   *
-   * @param array $element
-   *   An associative array containing the properties and children of the
-   *   generic form element.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   The current state of the form.
-   * @param array $complete_form
-   *   The complete form structure.
-   */
-  public function monitoringPagePathValidate(array &$element, FormStateInterface $form_state, array &$complete_form) {
-    if ($form_state->getValue('monitoring_page_enabled')) {
-      $submitted_value = $form_state->getValue('monitoring_page_path');
-      if (empty($submitted_value)) {
-        $form_state->setError($element, t('A monitoring page path must be provided.'));
-      }
-
-      $path = strtolower(trim(trim($submitted_value), " \\/"));
-      if (!empty($path) && $submitted_value !== $element['#default_value']) {
-        if ($this->routeProvider->getRoutesByPattern($path)->count()) {
-          $form_state->setError($element, t('The path is already in use.'));
-        }
-      }
-    }
   }
 
   /**
