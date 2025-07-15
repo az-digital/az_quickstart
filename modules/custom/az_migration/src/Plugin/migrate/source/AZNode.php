@@ -3,6 +3,7 @@
 namespace Drupal\az_migration\Plugin\migrate\source;
 
 use Drupal\migrate\Row;
+use Drupal\migrate\Attribute\MigrateSource;
 use Drupal\node\Plugin\migrate\source\d7\Node as D7Node;
 
 /**
@@ -29,11 +30,8 @@ use Drupal\node\Plugin\migrate\source\d7\Node as D7Node;
  *    node_type: uagc_page
  *    filter_date: "2016-01-01"
  * @endcode
- *
- * @MigrateSource(
- *   id = "az_node"
- * )
  */
+#[MigrateSource('az_node')]
 class AZNode extends D7Node {
 
   /**
