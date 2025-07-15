@@ -60,7 +60,7 @@ class AZUniqueRoutePathConstraintValidator extends ConstraintValidator implement
     }
     $config_name = $this->context->getRoot();
     $property_path = $this->context->getPropertyPath();
-    $existing_value = $this->configFactory()->get($root)->get($property_path);
+    $existing_value = $this->configFactory->get($config_name)->get($property_path);
     $path = strtolower(trim(trim($value), " \\/"));
 
     if (!empty($path) && $value !== $existing_value) {
