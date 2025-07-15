@@ -16,6 +16,13 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 final class AZPersonProfilesImportForm extends FormBase {
 
   /**
+   * The entity type manager service.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $entityTypeManager;
+
+  /**
    * @var \Drupal\Core\Messenger\Messenger
    */
   protected $messenger;
@@ -32,6 +39,7 @@ final class AZPersonProfilesImportForm extends FormBase {
    */
   public static function create(ContainerInterface $container) {
     $instance = parent::create($container);
+    $instance->entityTypeManager = $container->get('entity_type.manager');
     $instance->messenger = $container->get('messenger');
     $instance->migrationRemoteTools = $container->get('az_migration_remote.tools');
     return $instance;
@@ -60,11 +68,44 @@ final class AZPersonProfilesImportForm extends FormBase {
 
     $form['netid'] = [
       '#type' => 'textarea',
-      '#title' => $this->t('List of NetID(s)'),
+      '#title' => $this->t('Manual List of NetID(s)'),
       '#description' => $this->t('Enter the NetIDs of the individuals you wish to import, one per line.'),
       '#disabled' => !$has_key,
-      '#required' => TRUE,
+      '#required' => FALSE,
     ];
+
+    try {
+      // Optionally, get enabled LDAP queries.
+      // This may throw an exception if ldap_query isn't enabled.
+      $queries = $this->entityTypeManager->getStorage('ldap_query_entity')->loadByProperties([
+        // Only look at enabled queries.
+        'status' => 1,
+        // Only look at queries for EDS.
+        'server_id' => 'az_eds',
+      ]);
+      if (!empty($queries)) {
+        $options = [];
+        foreach ($queries as $query) {
+          $options[$query->id()] = $query->label();
+        }
+        // Phpstan doesn't realize this can be empty.
+        // @phpstan-ignore-next-line
+        if (!empty($options)) {
+          // Add a form element to the form that allows selection of a query.
+          $form['query'] = [
+            '#type' => 'radios',
+            '#title' => $this->t('EDS Query'),
+            '#options' => $options,
+            '#description' => $this->t('If selected, the NetIDs found in the query will be used to determine what profiles to import.'),
+            '#disabled' => !$has_key,
+            '#required' => FALSE,
+          ];
+        }
+      }
+    }
+    catch (\Exception $e) {
+
+    }
 
     $form['mode'] = [
       '#type' => 'select',
@@ -96,8 +137,11 @@ final class AZPersonProfilesImportForm extends FormBase {
   public function submitForm(array &$form, FormStateInterface $form_state): void {
     $urls = [];
     $netids = $form_state->getValue('netid');
+    $query = $form_state->getValue('query');
     $mode = $form_state->getValue('mode');
     $netids = preg_split("(\r\n?|\n)", $netids);
+    // Remove case where no netid was specified.
+    $netids = array_filter($netids);
     $update = $mode === 'update';
     $track = $mode === 'track_changes';
 
@@ -105,6 +149,30 @@ final class AZPersonProfilesImportForm extends FormBase {
       // For the profiles API fetcher, the url is the netid.
       $netid = trim($netid);
       $urls[] = $netid;
+    }
+
+    try {
+      if (!empty($query)) {
+        // This service may not exist if ldap_query is not enabled.
+        // This shouldn't occur, because the element only appears if enabled.
+        $ldapQueryController = \Drupal::service('ldap.query');
+        // Attempt to execute the specified query.
+        $ldapQueryController->load($query);
+        $ldapQueryController->execute();
+        $results = $ldapQueryController->getRawResults();
+        // For each person we find, add them as a net id to the profile import.
+        foreach ($results as $result) {
+          $row = $result->getAttributes();
+          $uid = $row['uid'] ?? [];
+          $uid = reset($uid);
+          if (!empty($uid)) {
+            \Drupal::logger('my_module')->notice($uid);
+            $urls[] = trim($uid);
+          }
+        }
+      }
+    }
+    catch (\Exception $e) {
     }
 
     $migrations = [
