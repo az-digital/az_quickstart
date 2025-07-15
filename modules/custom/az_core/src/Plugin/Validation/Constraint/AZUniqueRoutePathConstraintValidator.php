@@ -55,6 +55,8 @@ class AZUniqueRoutePathConstraintValidator extends ConstraintValidator implement
    * {@inheritdoc}
    */
   public function validate($value, Constraint $constraint): void {
+    assert($constraint instanceof AZUniqueRoutePathConstraint);
+
     if (empty($value)) {
       return;
     }
