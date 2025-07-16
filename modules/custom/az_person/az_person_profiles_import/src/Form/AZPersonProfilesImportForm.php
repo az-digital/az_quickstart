@@ -175,7 +175,6 @@ final class AZPersonProfilesImportForm extends FormBase {
         $uid = $row['uid'] ?? [];
         $uid = reset($uid);
         if (!empty($uid)) {
-          \Drupal::logger('my_module')->notice($uid);
           $urls[] = trim($uid);
         }
       }
