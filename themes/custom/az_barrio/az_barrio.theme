@@ -511,7 +511,7 @@ function az_barrio_az_bootstrap_css_path() {
     $az_bootstrap_path = 'https://cdn.digital.arizona.edu/lib/arizona-bootstrap/' . $az_bootstrap_cdn_version;
   }
   else {
-    $az_bootstrap_path = base_path() . 'libraries/arizona-bootstrap';
+    $az_bootstrap_path = base_path() . 'libraries/arizona-bootstrap/dist';
   }
 
   $az_bootstrap_path .= '/' . $type . '/arizona-bootstrap';
@@ -543,7 +543,7 @@ function az_barrio_az_bootstrap_js_path() {
     $az_bootstrap_path = 'https://cdn.digital.arizona.edu/lib/arizona-bootstrap/' . $az_bootstrap_cdn_version;
   }
   else {
-    $az_bootstrap_path = base_path() . 'libraries/arizona-bootstrap';
+    $az_bootstrap_path = base_path() . 'libraries/arizona-bootstrap/dist';
   }
 
   $az_bootstrap_path .= '/' . $type . '/arizona-bootstrap';
