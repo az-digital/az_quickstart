@@ -50,7 +50,7 @@ final class AZPersonProfilesImportForm extends FormBase {
       // This service may not exist if ldap_query is not enabled.
       $instance->ldapQueryController = $container->get('ldap.query');
     }
-    catch (Exception $e) {
+    catch (\Exception $e) {
       $instance->ldapQueryController = NULL;
     }
     $instance->messenger = $container->get('messenger');
