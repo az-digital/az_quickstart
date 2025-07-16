@@ -23,6 +23,12 @@ final class AZPersonProfilesImportForm extends FormBase {
   protected $entityTypeManager;
 
   /**
+   * The LDAP query controller service (if available).
+   *
+   * @var \Drupal\ldap_query\Controller\QueryController|null
+   */
+  protected $ldapQueryController;
+  /**
    * @var \Drupal\Core\Messenger\Messenger
    */
   protected $messenger;
@@ -40,6 +46,13 @@ final class AZPersonProfilesImportForm extends FormBase {
   public static function create(ContainerInterface $container) {
     $instance = parent::create($container);
     $instance->entityTypeManager = $container->get('entity_type.manager');
+    try {
+      // This service may not exist if ldap_query is not enabled.
+      $instance->ldapQueryController = $container->get('ldap.query');
+    }
+    catch (Exception $e) {
+      $instance->ldapQueryController = NULL;
+    }
     $instance->messenger = $container->get('messenger');
     $instance->migrationRemoteTools = $container->get('az_migration_remote.tools');
     return $instance;
@@ -151,28 +164,21 @@ final class AZPersonProfilesImportForm extends FormBase {
       $urls[] = $netid;
     }
 
-    try {
-      if (!empty($query)) {
-        // This service may not exist if ldap_query is not enabled.
-        // This shouldn't occur, because the element only appears if enabled.
-        $ldapQueryController = \Drupal::service('ldap.query');
-        // Attempt to execute the specified query.
-        $ldapQueryController->load($query);
-        $ldapQueryController->execute();
-        $results = $ldapQueryController->getRawResults();
-        // For each person we find, add them as a net id to the profile import.
-        foreach ($results as $result) {
-          $row = $result->getAttributes();
-          $uid = $row['uid'] ?? [];
-          $uid = reset($uid);
-          if (!empty($uid)) {
-            \Drupal::logger('my_module')->notice($uid);
-            $urls[] = trim($uid);
-          }
+    if (!empty($query) && $this->ldapQueryController instanceof \Drupal\ldap_query\Controller\QueryController) {
+      // Attempt to execute the specified query.
+      $this->ldapQueryController->load($query);
+      $this->ldapQueryController->execute();
+      $results = $this->ldapQueryController->getRawResults();
+      // For each person we find, add them as a net id to the profile import.
+      foreach ($results as $result) {
+        $row = $result->getAttributes();
+        $uid = $row['uid'] ?? [];
+        $uid = reset($uid);
+        if (!empty($uid)) {
+          \Drupal::logger('my_module')->notice($uid);
+          $urls[] = trim($uid);
         }
       }
-    }
-    catch (\Exception $e) {
     }
 
     $migrations = [
