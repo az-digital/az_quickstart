@@ -4,3 +4,11 @@
 .page-wrapper .paragraph--type--az-photo-gallery.paragraph--view-mode--preview *:focus {
   box-shadow: none;
 }
+
+#az-photo-gallery-id .az-gallery-caption {
+    margin-bottom: 1.5rem;
+}
+
+#az-photo-gallery-id .carousel-indicators {
+    margin-bottom: 0;
+}
