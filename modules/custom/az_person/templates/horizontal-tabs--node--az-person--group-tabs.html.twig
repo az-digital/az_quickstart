@@ -25,7 +25,7 @@
     <ul class="nav nav-tabs bg-gray-200 az-horizontal-tabs rounded-top" role="tablist">
       {% set isFirstTab = true %}
       {% for key, value in tabElements %}
-        <li class="nav-item ml-nmin mt-nmin border-end" role="presentation">
+        <li class="nav-item ml-nmin mt-nmin border-end ms-0" role="presentation">
           <a class="nav-link{{ isFirstTab ? ' active border-start-0' }}" id="{{ (key) }}_tab" data-bs-toggle="tab" href="#{{ (value['#id']) }}" role="tab" aria-controls="{{ (value['#id']) }}" aria-selected="{{ isFirstTab ? 'true' : 'false' }}">{{ (value['#title']) }}</a>
         </li>
         {% set isFirstTab = false %}
