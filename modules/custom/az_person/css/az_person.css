@@ -14,6 +14,12 @@ ul.az-horizontal-tabs > li.nav-item > a:hover {
   background-color: #ffffff;
 }
 
+/* Display - Card */
+.node--type-az-person.node--view-mode-az-card .image-style-az-card-image {
+	border-top-left-radius: var(--bs-card-inner-border-radius);
+	border-top-right-radius: var(--bs-card-inner-border-radius);
+}
+
 /* Views */
 .az-person-row {
 	margin: 0 0 1rem;
