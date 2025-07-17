@@ -5,10 +5,10 @@
   box-shadow: none;
 }
 
-#az-photo-gallery-id .az-gallery-caption {
-    margin-bottom: 1.5rem;
+.paragraph--type--az-photo-gallery .az-gallery-caption {
+  padding-bottom: 1.5rem;
 }
 
-#az-photo-gallery-id .carousel-indicators {
-    margin-bottom: 0;
+.paragraph--type--az-photo-gallery .carousel-indicators {
+  margin-bottom: 0;
 }
