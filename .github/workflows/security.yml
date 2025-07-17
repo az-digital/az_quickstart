@@ -44,7 +44,7 @@ jobs:
           composer config repositories.az_quickstart vcs https://github.com/az-digital/az_quickstart.git
           composer config use-github-api false
           ./quickstart_branch.sh --branch ${AZ_TRIMMED_REF}
-          if [[ ${DEV_PACKAGE_BRANCH} =~ ^[0-9]\. ]]; then
+          if [[ ${DEV_PACKAGE_BRANCH} =~ ^[0-9]\.[0-9x] ]]; then
             DEV_PACKAGE_VERSION="${DEV_PACKAGE_BRANCH}-dev"
           else
             DEV_PACKAGE_VERSION="dev-${DEV_PACKAGE_BRANCH}"
