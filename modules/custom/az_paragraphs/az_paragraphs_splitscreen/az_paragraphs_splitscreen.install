@@ -8,9 +8,15 @@
 use Drupal\paragraphs\Entity\Paragraph;
 
 /**
+ * Empty update to change update release version.
+ */
+function az_paragraphs_splitscreen_update_1021201() {
+}
+
+/**
  * Add default splitscreen text width behavior setting.
  */
-function az_paragraphs_splitscreen_update_1021201(&$sandbox) {
+function az_paragraphs_splitscreen_update_1021401(&$sandbox) {
   if (!isset($sandbox['total'])) {
     $count = \Drupal::entityQuery('paragraph')
       ->accessCheck(FALSE)
