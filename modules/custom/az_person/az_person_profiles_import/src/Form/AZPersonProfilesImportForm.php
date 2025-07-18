@@ -164,7 +164,7 @@ final class AZPersonProfilesImportForm extends FormBase {
       $urls[] = $netid;
     }
 
-    if (!empty($query) && $this->ldapQueryController instanceof \Drupal\ldap_query\Controller\QueryController) {
+    if (!empty($query) && !is_null($this->ldapQueryController)) {
       // Attempt to execute the specified query.
       $this->ldapQueryController->load($query);
       $this->ldapQueryController->execute();
