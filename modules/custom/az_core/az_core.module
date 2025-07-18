@@ -335,6 +335,16 @@ function az_core_form_node_form_alter(&$form, FormStateInterface $form_state) {
 }
 
 /**
+ * Implements hook_form_BASE_FORM_ID_alter() for Drupal\menu_link_content\MenuLinkContentForm.
+ *
+ * Adds style overrides for claro/node-form and arizona-bootstrap.
+ */
+function az_core_form_menu_link_content_form_alter(&$form, FormStateInterface $form_state) {
+  $form['#attached']['library'][] = 'az_core/claro-node-form-overrides';
+  $form['#attached']['library'][] = 'az_core/arizona-bootstrap-node-form-overrides';
+}
+
+/**
  * Perform alterations before attribute forms are rendered.
  *
  * @param array $form
@@ -371,6 +381,17 @@ function _az_core_check_attribute_form(array &$form, FormStateInterface $form_st
         ]), MessengerInterface::TYPE_ERROR);
         throw new AccessDeniedHttpException();
     }
+  }
+}
+
+/**
+ * Implements hook_library_info_alter().
+ *
+ * Add style overrides for Chosen.
+ */
+function az_core_library_info_alter(array &$libraries, $module) {
+  if ($module === 'chosen' && isset($libraries['chosen.claro'])) {
+    $libraries['chosen.claro']['dependencies'][] = 'az_core/az-core-chosen';
   }
 }
 
@@ -480,5 +501,31 @@ function az_core_form_taxonomy_vocabulary_confirm_reset_alphabetical_alter(&$for
   $form_object = $form_state->getformObject();
   if ($form_object->getEntity()->id() === 'az_enterprise_attributes') {
     _az_core_check_attribute_form($form, $form_state, $form_id);
+  }
+}
+
+/**
+ * Implements hook_preprocess_container__text_format_filter_guidelines().
+ *
+ * Hides Plain Text format tips from fields using AZSummaryFormatter.
+ */
+function az_core_preprocess_container__text_format_filter_guidelines(&$variables) {
+  if (isset($variables['element']['#parents'][0])) {
+    if ($variables['element']['#parents'][0] === 'field_az_summary') {
+      unset($variables['children']);
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_container__text_format_filter_help().
+ *
+ * Hides "About text formats" tips link from fields using AZSummaryFormatter.
+ */
+function az_core_preprocess_container__text_format_filter_help(&$variables) {
+  if (isset($variables['element']['#parents'][0])) {
+    if ($variables['element']['#parents'][0] === 'field_az_summary') {
+      unset($variables['children']);
+    }
   }
 }

@@ -35,25 +35,30 @@
       var distanceFromLeft = contentRegionPosition.left;
       var distanceFromRight = contentRegionPosition.right;
       var negativeLeftMargin = 0 - distanceFromLeft;
-      var negativeRightMargin = 0 - distanceFromRight;
+      var negativeRightMargin = distanceFromRight - document.documentElement.clientWidth;
       document.documentElement.style.setProperty('--full-width-left-distance', "".concat(negativeLeftMargin, "px"));
       document.documentElement.style.setProperty('--full-width-right-distance', "".concat(negativeRightMargin, "px"));
     }
+    var contentTopAndBottomBlocks = document.querySelectorAll('.region-content-top > .block, .region-content-bottom > .block');
+    if (contentTopAndBottomBlocks.length > 0) {
+      var negativeAutoMargin = -(document.documentElement.clientWidth - contentTopAndBottomBlocks[0].getBoundingClientRect().width) / 2;
+      document.documentElement.style.setProperty('--full-width-auto-distance', "".concat(negativeAutoMargin, "px"));
+    }
   }
-  function initialize() {
+  function calculateFullWidthSidebarWidth() {
+    var sidebarRegion = document.querySelectorAll('.sidebar');
+    if (sidebarRegion.length > 0) {
+      var sidebarRegionPosition = sidebarRegion[0].getBoundingClientRect();
+      document.documentElement.style.setProperty('--full-width-sidebar-width', "".concat(sidebarRegionPosition.width, "px"));
+    }
+  }
+  function setFullWidthLayout() {
     calculateScrollbarWidth();
     calculateFullWidthNegativeMargins();
+    calculateFullWidthSidebarWidth();
     pushSidebarsDown();
   }
-  document.addEventListener('DOMContentLoaded', initialize);
-  window.addEventListener('resize', function () {
-    calculateScrollbarWidth();
-    calculateFullWidthNegativeMargins();
-    pushSidebarsDown();
-  });
-  window.addEventListener('azVideoPlay', function () {
-    calculateScrollbarWidth();
-    calculateFullWidthNegativeMargins();
-    pushSidebarsDown();
-  });
+  document.addEventListener('DOMContentLoaded', setFullWidthLayout);
+  window.addEventListener('resize', setFullWidthLayout);
+  window.addEventListener('azVideoPlay', setFullWidthLayout);
 })();

@@ -10,6 +10,11 @@ on:
         required: false
         default: false
         type: boolean
+      make_latest:
+        description: Should this be made the latest release?
+        required: false
+        default: false
+        type: boolean
 jobs:
   build:
     name: Upload Release Asset
@@ -34,9 +39,21 @@ jobs:
           git push
           git tag ${{ github.event.inputs.version }}
           git push origin ${{ github.event.inputs.version }}
-      - name: Build project # This would actually build your project, using zip for an example artifact
+      - name: Set variables
         run: |
-          git clone https://github.com/az-digital/az-quickstart-scaffolding.git az_quickstart
+          if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $GITHUB_REF_NAME | wc -l) = 1 ]; then
+            echo "SCAFFOLD_BRANCH=${GITHUB_REF_NAME}" >> ${GITHUB_ENV}
+          else
+            echo "SCAFFOLD_BRANCH=main" >> ${GITHUB_ENV}
+          fi
+      - name: Clone scaffolding repo
+        uses: actions/checkout@v4
+        with:
+          repository: az-digital/az-quickstart-scaffolding
+          path: az_quickstart
+          ref: ${{ env.SCAFFOLD_BRANCH }}
+      - name: Build project
+        run: |
           cd az_quickstart
           composer config repositories.az_quickstart vcs https://github.com/az-digital/az_quickstart.git
           composer config use-github-api false
@@ -56,10 +73,12 @@ jobs:
           tag_name: ${{ github.event.inputs.version }}
           name: ${{ github.event.inputs.version }}
           draft: false
+          make_latest: ${{ github.event.inputs.make_latest }}
           prerelease: ${{ github.event.inputs.pre_release }}
           files: |
             ./az_quickstart.zip
             ./az_quickstart.tar.gz
+
       - name: Remove version from info file
         run: |
           git config user.name github-actions
@@ -83,4 +102,4 @@ jobs:
           token: ${{ secrets.REPO_DISPATCH_TOKEN }}
           repository: ${{ matrix.repo }}
           event-type: az_quickstart_release
-          client-payload: '{"version": "${{ github.event.inputs.version }}"}'
+          client-payload: '{"version": "${{ github.event.inputs.version }}", "make_latest": "${{ github.event.inputs.make_latest }}"}'

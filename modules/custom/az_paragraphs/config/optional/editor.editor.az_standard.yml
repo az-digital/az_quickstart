@@ -21,7 +21,6 @@ settings:
       - specialCharacters
       - '|'
       - link
-      - anchor
       - '|'
       - bulletedList
       - numberedList
@@ -260,11 +259,8 @@ settings:
           label: 'Text Align Bottom'
           element: '<span class="align-bottom">'
         -
-          label: 'Zero Margin Top'
-          element: '<span class="mt-0">'
-        -
           label: 'Zero Margin Bottom'
-          element: '<span class="mb-0">'
+          element: '<p class="mb-0">'
         -
           label: Blockquote
           element: '<blockquote class="blockquote">'

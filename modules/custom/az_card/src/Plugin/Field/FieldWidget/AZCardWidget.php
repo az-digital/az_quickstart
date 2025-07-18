@@ -12,6 +12,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StreamWrapper\PublicStream;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
+use Drupal\paragraphs\ParagraphInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 
@@ -142,6 +143,26 @@ class AZCardWidget extends WidgetBase {
         ],
       ];
 
+      $card_classes = 'card';
+      $parent = $item->getEntity();
+
+      // Get settings from parent paragraph.
+      if ($parent instanceof ParagraphInterface) {
+        // Get the behavior settings for the parent.
+        $parent_config = $parent->getAllBehaviorSettings();
+
+        // See if the parent behavior defines some card-specific settings.
+        if (!empty($parent_config['az_cards_paragraph_behavior'])) {
+          $card_defaults = $parent_config['az_cards_paragraph_behavior'];
+          $card_classes = $card_defaults['card_style'] ?? 'card';
+        }
+      }
+
+      // Add card class from options.
+      if (!empty($item->options['class'])) {
+        $card_classes .= ' ' . $item->options['class'];
+      }
+
       // Card item.
       $element['preview_container']['card_preview'] = [
         '#theme' => 'az_card',
@@ -149,13 +170,8 @@ class AZCardWidget extends WidgetBase {
         '#body' => check_markup(
           $item->body ?? '',
           $item->body_format ?? self::AZ_CARD_DEFAULT_TEXT_FORMAT),
-        '#attributes' => ['class' => ['card']],
+        '#attributes' => ['class' => $card_classes],
       ];
-
-      // Add card class from options.
-      if (!empty($item->options['class'])) {
-        $element['preview_container']['card_preview']['#attributes']['class'][] = $item->options['class'];
-      }
 
       // Check and see if we can construct a valid image to preview.
       $media_id = $item->media ?? NULL;
@@ -170,7 +186,7 @@ class AZCardWidget extends WidgetBase {
 
       // Check and see if there's a valid link to preview.
       if ($item->link_title || $item->link_uri) {
-        if (str_starts_with($item->link_uri, '/' . PublicStream::basePath())) {
+        if (!empty($item->link_uri) && str_starts_with($item->link_uri, '/' . PublicStream::basePath())) {
           // Link to public file: use fromUri() to get the URL.
           $link_url = Url::fromUri(urldecode('base:' . $item->link_uri));
         }
@@ -225,7 +241,7 @@ class AZCardWidget extends WidgetBase {
     ];
 
     $element['media'] = [
-      '#type' => 'media_library',
+      '#type' => 'az_media_library',
       '#title' => $this->t('Card Media'),
       '#default_value' => $item->media ?? NULL,
       '#allowed_bundles' => ['az_image'],

@@ -5,6 +5,8 @@
  * Install, update and uninstall functions for az_seo module.
  */
 
+use Drupal\Core\Config\FileStorage;
+
 /**
  * Implements hook_update_last_removed().
  */
@@ -19,4 +21,46 @@ function az_seo_update_last_removed() {
  * @see https://github.com/az-digital/az_quickstart/issues/3647
  */
 function az_seo_update_1021001() {
+}
+
+/**
+ * Ensure schema_metatag module is installed.
+ */
+function az_seo_update_1021101() {
+  \Drupal::service('module_installer')->install(['schema_metatag']);
+}
+
+/**
+ * Install xmlsitemap config for AZ Event, News, Person and Publication.
+ */
+function az_seo_update_1021301() {
+  $config_names = [
+    'xmlsitemap.settings.node.az_event',
+    'xmlsitemap.settings.node.az_news',
+    'xmlsitemap.settings.node.az_person',
+    'xmlsitemap.settings.node.az_publication',
+  ];
+
+  $module_handler = \Drupal::service('module_handler');
+  $config_path = $module_handler->getModule('az_seo')->getPath() . '/config/quickstart';
+  $storage = new FileStorage($config_path);
+  $config_storage = \Drupal::service('config.storage');
+
+  foreach ($config_names as $name) {
+    if (!\Drupal::config($name)->get()) {
+      $config_storage->write($name, $storage->read($name));
+    }
+  }
+
+  // Build a list of rebuildable link types.
+  $rebuild_types = xmlsitemap_get_rebuildable_link_types();
+  $batch = xmlsitemap_rebuild_batch($rebuild_types, TRUE);
+  batch_set($batch);
+}
+
+/**
+ * Ensure schema_organization module is installed.
+ */
+function az_seo_update_1021302() {
+  \Drupal::service('module_installer')->install(['schema_organization']);
 }
