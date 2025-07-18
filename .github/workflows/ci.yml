@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - 'main'
+      - '2.x'
       - '2.13.x'
       - '2.12.x'
       - '2.11.x'
@@ -55,22 +56,41 @@ jobs:
         with:
           php-version: '8.3'
       - name: Find the push source branch name
-        if: ${{ github.event_name != 'pull_request' }}
-        run: echo "AZ_TRIMMED_REF=${GITHUB_REF#refs/*/}" >> ${GITHUB_ENV}
+        if: github.event_name != 'pull_request'
+        run: |
+          echo "AZ_SOURCE_REF=${GITHUB_REF#refs/*/}" >> ${GITHUB_ENV}
+          echo "AZ_TARGET_REF=${GITHUB_REF#refs/*/}" >> ${GITHUB_ENV}
       - name: Find the pull request source branch name
-        if: ${{ github.event_name == 'pull_request' }}
-        run: echo "AZ_TRIMMED_REF=${GITHUB_HEAD_REF}" >> ${GITHUB_ENV}
+        if: github.event_name == 'pull_request'
+        run: |
+          echo "AZ_SOURCE_REF=${GITHUB_HEAD_REF}" >> ${GITHUB_ENV}
+          echo "AZ_TARGET_REF=${GITHUB_BASE_REF}" >> ${GITHUB_ENV}
+      - name: Set default branches for scaffolding and dev repos if ref is 2.* 
+        if: startsWith(github.base_ref, '2.') || startsWith(github.ref_name, '2.')
+        id: test-2-x
+        run: |
+          echo "DEFAULT_SCAFFOLD_BRANCH=2.x" >> ${GITHUB_ENV}
+          echo "DEFAULT_DEV_BRANCH=1.x" >> ${GITHUB_ENV}
+      - name: Fallback to main branch 
+        if: steps.test-2-x.outcome == 'skipped'
+        run: |
+          echo "DEFAULT_SCAFFOLD_BRANCH=main" >> ${GITHUB_ENV}
+          echo "DEFAULT_DEV_BRANCH=main" >> ${GITHUB_ENV}
       - name: Set variables
         run: |
-          if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $AZ_TRIMMED_REF | wc -l) = 1 ]; then
-            echo "SCAFFOLD_BRANCH=${AZ_TRIMMED_REF}" >> ${GITHUB_ENV}
+          if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $AZ_SOURCE_REF | wc -l) = 1 ]; then
+            echo "SCAFFOLD_BRANCH=${AZ_SOURCE_REF}" >> ${GITHUB_ENV}
+          elif [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $AZ_TARGET_REF | wc -l) = 1 ]; then
+            echo "SCAFFOLD_BRANCH=${AZ_TARGET_REF}" >> ${GITHUB_ENV}
           else
-            echo "SCAFFOLD_BRANCH=main" >> ${GITHUB_ENV}
+            echo "SCAFFOLD_BRANCH=${DEFAULT_SCAFFOLD_BRANCH}" >> ${GITHUB_ENV}
           fi
-          if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-dev.git $AZ_TRIMMED_REF | wc -l) = 1 ]; then
-            echo "DEV_PACKAGE_BRANCH=${AZ_TRIMMED_REF}" >> ${GITHUB_ENV}
+          if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-dev.git $AZ_SOURCE_REF | wc -l) = 1 ]; then
+            echo "DEV_PACKAGE_BRANCH=${AZ_SOURCE_REF}" >> ${GITHUB_ENV}
+          elif [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-dev.git $AZ_TARGET_REF | wc -l) = 1 ]; then
+            echo "DEV_PACKAGE_BRANCH=${AZ_TARGET_REF}" >> ${GITHUB_ENV}
           else
-            echo "DEV_PACKAGE_BRANCH=main" >> ${GITHUB_ENV}
+            echo "DEV_PACKAGE_BRANCH=${DEFAULT_DEV_BRANCH}" >> ${GITHUB_ENV}
           fi
       - name: Clone scaffolding repo
         uses: actions/checkout@v4
@@ -83,8 +103,13 @@ jobs:
           cd az-quickstart-scaffolding
           composer config repositories.az_quickstart vcs https://github.com/az-digital/az_quickstart.git
           composer config use-github-api false
-          ./quickstart_branch.sh --branch ${AZ_TRIMMED_REF}
-          composer require --no-update --dev az-digital/az-quickstart-dev:dev-${DEV_PACKAGE_BRANCH}
+          ./quickstart_branch.sh --branch ${AZ_SOURCE_REF}
+          if [[ ${DEV_PACKAGE_BRANCH} =~ ^[0-9]\.[0-9x] ]]; then
+            DEV_PACKAGE_VERSION="${DEV_PACKAGE_BRANCH}-dev"
+          else
+            DEV_PACKAGE_VERSION="dev-${DEV_PACKAGE_BRANCH}"
+          fi
+          composer require --no-update --dev az-digital/az-quickstart-dev:${DEV_PACKAGE_VERSION}
           composer install -o
       - name: Save build artifact
         uses: actions/cache/save@v4
