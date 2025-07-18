@@ -11,6 +11,18 @@ source:
       type: string
 
 process:
+  # Intentionally set the defined nid if the person already exists.
+  nid:
+    - 
+      plugin: entity_lookup
+      entity_type: node
+      bundle_key: type
+      bundle: az_person
+      value_key: field_az_netid
+      source: uid
+    - 
+      plugin: skip_on_empty
+      method: process
   type:
     plugin: default_value
     default_value: az_person
