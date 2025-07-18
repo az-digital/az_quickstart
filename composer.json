@@ -190,9 +190,6 @@
             "drupal/menu_block": {
                 "Menu blocks disappear randomly on sites for anonymous users. (3475039)": "https://www.drupal.org/files/issues/2024-09-17/revert-3271218-for-3475039.patch"
             },
-            "drupal/metatag": {
-                "MetatagManager uasort() TypeError (3503253)": "https://www.drupal.org/files/issues/2025-02-17/3503253-4.patch"
-            },
             "drupal/migrate_plus": {
                 "XML namespacing issue (2933531)": "https://www.drupal.org/files/issues/2019-08-22/register_namespaces-2933531-7.patch",
                 "entity_lookup plugin fails if $value is empty (2830058)": "https://www.drupal.org/files/issues/2022-10-11/migrate_plus-lookup-2830058-10.patch",
