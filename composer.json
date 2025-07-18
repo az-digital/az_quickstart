@@ -57,7 +57,7 @@
         "drupal/config_split": "2.0.2",
         "drupal/config_sync": "3.0.0-alpha4",
         "drupal/config_update": "2.0.0-alpha4",
-        "drupal/core-recommended": "10.4.7",
+        "drupal/core-recommended": "10.4.8",
         "drupal/crop": "2.4.0",
         "drupal/date_ap_style": "2.0.2",
         "drupal/draggableviews": "2.1.4",
@@ -68,7 +68,7 @@
         "drupal/exclude_node_title": "1.4.0",
         "drupal/externalauth": "2.0.8",
         "drupal/extlink": "2.0.4",
-        "drupal/field_group": "3.6.0",
+        "drupal/field_group": "4.0.0",
         "drupal/field_group_link": "3.3.0",
         "drupal/flag": "4.0.0-beta7",
         "drupal/google_tag": "2.0.8",
@@ -89,7 +89,7 @@
         "drupal/menu_block": "1.13.0",
         "drupal/menu_link_attributes": "1.5.0",
         "drupal/metatag": "2.1.0",
-        "drupal/migmag": "1.8.3",
+        "drupal/migmag": "1.8.4",
         "drupal/migrate_plus": "6.0.5",
         "drupal/migrate_queue_importer": "2.1.2",
         "drupal/migrate_tools": "6.0.5",
@@ -172,9 +172,6 @@
                 "Row weights not displaying on sort view (3252365)": "https://www.drupal.org/files/issues/2023-08-25/3252365-check-remove-select-all-class.patch",
                 "Reset button, to reset the weight all back to 0 (3388659)": "https://www.drupal.org/files/issues/2023-09-21/3388659-reset-button-2.patch",
                 "Contextual Link throws RouteNotFoundException: Route 'view.this' does not exist (3316975)": "https://www.drupal.org/files/issues/2024-06-10/3316975-32-MR40.patch"
-            },
-            "drupal/field_group": {
-                "Fix Drupal 10.4 RC1 error with field_ui.js (3491233)":"https://www.drupal.org/files/issues/2025-01-16/field_group-drupal-10.4-rc1-error-with-field_ui.js--3491233--14.patch"
             },
             "drupal/image_widget_crop": {
                 "Can't save image widget crop settings (ImmutableConfigException) (3491004)": "https://www.drupal.org/files/issues/2025-03-06/image_widget_crop_fix.patch"
