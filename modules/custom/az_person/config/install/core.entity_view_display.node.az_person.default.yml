@@ -138,9 +138,10 @@ third_party_settings:
       weight: 5
       format_type: html_element
       format_settings:
-        classes: 'card mb-4 mb-md-0'
+        classes: 'card mb-4 mb-md-0 overflow-hidden'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3

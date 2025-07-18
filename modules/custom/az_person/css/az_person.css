@@ -14,14 +14,6 @@ ul.az-horizontal-tabs > li.nav-item > a:hover {
   background-color: #ffffff;
 }
 
-/* Default view mode, card view mode, and card image used in modal views */
-.node--type-az-person.node--view-mode-az-card .image-style-az-card-image,
-.az-person-modal .image-style-az-card-image,
-.node--type-az-person.node--view-mode-full .field--name-field-az-media-image .img-fluid {
-	border-top-left-radius: var(--bs-card-inner-border-radius);
-	border-top-right-radius: var(--bs-card-inner-border-radius);
-}
-
 /* Display - Row */
 .node--type-az-person.node--view-mode-az-row .image-style-az-medium {
 	border-radius: var(--bs-border-radius);
