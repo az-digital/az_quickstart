@@ -1,21 +1,43 @@
 version: 2
 updates:
+  # Composer udpates for main branch
   - package-ecosystem: "composer"
-    directory: "/"
     target-branch: "main"
-    schedule:
-      interval: "daily"
-    # Allow up to 10 open pull requests
-    open-pull-requests-limit: 10
-  - package-ecosystem: "composer"
     directory: "/"
-    target-branch: "2.x"
     schedule:
       interval: "daily"
-    # Allow up to 10 open pull requests
     open-pull-requests-limit: 10
+    ignore:
+      - dependency-name: "drupal/core*"
+        update-types:
+          - "version-update:semver-major"
+          - "version-update:semver-minor"
+
+  # Composer udpates for 2.x branch
+  - package-ecosystem: "composer"
+    target-branch: "2.x"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    ignore:
+      - dependency-name: "drupal/core*"
+        update-types:
+          - "version-update:semver-major"
+          - "version-update:semver-minor"
+      - dependency-name: "drupal/*"
+        update-types: ["version-update:semver-major"]
+    labels:
+      - "dependencies"
+      - "php"
+      - "2.x only"
+
+  # GitHub Actions updates
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      # Check for updates to GitHub Actions every week
       interval: "weekly"
+    labels:
+      - "dependencies"
+      - "github_actions"
+      - "ci"
