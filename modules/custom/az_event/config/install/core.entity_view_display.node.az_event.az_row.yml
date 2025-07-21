@@ -142,7 +142,7 @@ third_party_settings:
       weight: 19
       format_type: html_element
       format_settings:
-        classes: 'text-bg-gray-100 p-3 text-body-secondary'
+        classes: 'text-bg-gray-100 p-3 text-body-secondary rounded'
         id: ''
         element: div
         show_label: false
@@ -218,7 +218,7 @@ third_party_settings:
       weight: 4
       format_type: html_element
       format_settings:
-        classes: 'row g-0 text-bg-gray-100 ms-n3 ms-md-0'
+        classes: 'row g-0 text-bg-gray-100 ms-n3 ms-md-0 rounded'
         show_empty_fields: false
         id: ''
         element: div

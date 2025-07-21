@@ -180,7 +180,7 @@
               updateCalendarFilters(newDate, newDate);
             },
           });
-          $calendar.children('.ui-corner-all').removeClass('ui-corner-all');
+          $calendar.children('.ui-corner-all').removeClass('ui-widget ui-corner-all').addClass('rounded overflow-hidden');
 
           // Create the range selection buttons.
           $buttonWrapper.append(
