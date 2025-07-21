@@ -86,7 +86,7 @@ function az_event_preprocess_field(&$variables, $hook) {
   $element = $variables['element'];
   if ($element['#field_name'] === 'field_az_event_category') {
     foreach ($variables['items'] as $key => $item) {
-      $variables['items'][$key]['content']['#options']['attributes']['class'][] = 'badge badge-link badge-light float-left mr-2 mb-2';
+      $variables['items'][$key]['content']['#options']['attributes']['class'][] = 'badge badge-link text-bg-light float-start me-2 mb-2';
     }
   }
 }
