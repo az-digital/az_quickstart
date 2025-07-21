@@ -180,13 +180,16 @@
               updateCalendarFilters(newDate, newDate);
             },
           });
-          $calendar.children('.ui-corner-all').removeClass('ui-widget ui-corner-all').addClass('rounded overflow-hidden');
+          $calendar
+            .children('.ui-corner-all')
+            .removeClass('ui-widget ui-corner-all')
+            .addClass('rounded overflow-hidden');
 
           // Create the range selection buttons.
           $buttonWrapper.append(
             '<div class="d-grid gap-2"><button type="button" class="btn btn-outline-blue calendar-filter-button calendar-filter-today">Today</button>' +
             '<button type="button" class="btn btn-outline-blue calendar-filter-button calendar-filter-week">This Week</button>' +
-            '<button type="button" class="btn btn-outline-blue calendar-filter-button calendar-filter-month mb-2">This Month</button></div>'
+              '<button type="button" class="btn btn-outline-blue calendar-filter-button calendar-filter-month mb-2">This Month</button></div>'
           );
 
           // Handle button presses for calendar range selection buttions.

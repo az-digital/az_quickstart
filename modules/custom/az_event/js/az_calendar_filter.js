@@ -115,7 +115,10 @@
             updateCalendarFilters(newDate, newDate);
           }
         });
-        $calendar.children('.ui-corner-all').removeClass('ui-widget ui-corner-all').addClass('rounded overflow-hidden');
+        $calendar
+          .children('.ui-corner-all')
+          .removeClass('ui-widget ui-corner-all')
+          .addClass('rounded overflow-hidden');
         $buttonWrapper.append(
     '<div class="d-grid gap-2"><button type="button" class="btn btn-outline-blue calendar-filter-button calendar-filter-today">Today</button>' +
           '<button type="button" class="btn btn-outline-blue calendar-filter-button calendar-filter-week">This Week</button>' +
