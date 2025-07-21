@@ -46,7 +46,9 @@ services:
       - |
         BRANCH_NAME=$(git -C /usr/local/quickstart-install-profile rev-parse --abbrev-ref HEAD)
         if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-dev.git $BRANCH_NAME | wc -l) = 1 ]; then
-          DEV_PACKAGE_BRANCH="$BRANCH_NAME"; else DEV_PACKAGE_BRANCH=main
+          DEV_PACKAGE_BRANCH="$BRANCH_NAME"
+        else
+          DEV_PACKAGE_BRANCH=main
         fi
         if [[ $DEV_PACKAGE_BRANCH =~ ^[0-9]\.[0-9x] ]]; then
           DEV_PACKAGE_VERSION="${DEV_PACKAGE_BRANCH}-dev"
