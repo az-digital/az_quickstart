@@ -117,7 +117,7 @@ third_party_settings:
       weight: 5
       format_type: html_element
       format_settings:
-        classes: 'col-12 col-md-8 float-md-start'
+        classes: 'col-12 col-md-8 float-md-end'
         show_empty_fields: false
         id: ''
         label_as_html: false
