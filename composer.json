@@ -125,7 +125,7 @@
         "npm-asset/jquery-ui-touch-punch": "*",
         "npm-asset/slick-carousel": "1.8.0",
         "renanbr/bibtex-parser": "2.2.0",
-        "seboettg/citeproc-php": "2.6.2"
+        "seboettg/citeproc-php": "2.7.0"
     },
     "require-dev": {
         "az-digital/az-quickstart-dev": "~3"
