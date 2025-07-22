@@ -5,7 +5,6 @@
  * Functions to support theming in the Arizona Barrio theme.
  */
 
-//phpcs:ignore Security.BadFunctions.EasyRFI.WarnEasyRFI
 include_once \Drupal::service('extension.list.theme')->getPath('az_barrio') . '/includes/common.inc';
 
 use Drupal\block\Entity\Block;
@@ -852,4 +851,3 @@ function az_barrio_preprocess_block(&$variables) {
   }
 
 }
-
