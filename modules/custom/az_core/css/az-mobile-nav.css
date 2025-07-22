@@ -2,27 +2,13 @@
   padding: 0.5rem 1rem;
   min-height: unset;
 }
-#az_mobile_nav_menu .nav-item > button {
+#az_mobile_nav_menu .nav-item > .az-mobile-nav-link {
   padding-left: .75rem;
   padding-right: .75rem;
 }
 #az_mobile_nav_menu > h2.az-mobile-nav-current {
   box-shadow:inset 6px 0 #378dbd;
 }
-
-/* CSS for the new mobile nav using AJAX links */
-/* @todo Update these rules with the correct ID and delete those above. */
-#az_mobile_nav_menu_new .nav-item .nav-link {
-  padding: 0.5rem 1rem;
-  min-height: unset;
-}
-#az_mobile_nav_menu_new .nav-item > .az-mobile-nav-link {
-  padding-left: .75rem;
-  padding-right: .75rem;
-}
-#az_mobile_nav_menu_new > h2.az-mobile-nav-current {
-  box-shadow:inset 6px 0 #378dbd;
-}
-#az_mobile_nav_menu_new .ajax-progress-throbber {
+#az_mobile_nav_menu .ajax-progress-throbber {
   display: none;
 }

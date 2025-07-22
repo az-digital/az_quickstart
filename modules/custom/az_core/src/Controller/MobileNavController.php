@@ -52,11 +52,11 @@ class MobileNavController implements ContainerInjectionInterface {
    *   An AjaxResponse object.
    */
   public function mobileNavCallback($menu_root = '') {
-    $mobile_nav_block = $this->blockManager->createInstance('mobile_nav_block_new', ['menu_root' => $menu_root]);
+    $mobile_nav_block = $this->blockManager->createInstance('mobile_nav_block', ['menu_root' => $menu_root]);
     $mobile_nav_block_build = $mobile_nav_block->build();
 
     $response = new AjaxResponse();
-    $response->addCommand(new ReplaceCommand('#az_mobile_nav_menu_new', $mobile_nav_block_build));
+    $response->addCommand(new ReplaceCommand('#az_mobile_nav_menu', $mobile_nav_block_build));
     return $response;
   }
 

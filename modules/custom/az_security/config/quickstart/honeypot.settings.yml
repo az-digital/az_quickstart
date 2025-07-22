@@ -5,7 +5,6 @@ unprotected_forms:
   - search_block_form
   - views_exposed_form
   - honeypot_settings_form
-  - mobile_nav_form
 log: false
 element_name: url
 time_limit: 5

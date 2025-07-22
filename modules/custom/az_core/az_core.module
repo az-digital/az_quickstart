@@ -529,12 +529,3 @@ function az_core_preprocess_container__text_format_filter_help(&$variables) {
     }
   }
 }
-
-/**
- * Implements hook_form_BASE_FORM_ID_alter() for Drupal\az_core\MobileNavForm.
- *
- * Adds style overrides for mobile nav form.
- */
-function az_core_form_mobile_nav_form_alter(&$form, FormStateInterface $form_state) {
-  $form['#attached']['library'][] = 'az_core/az-mobile-nav';
-}
