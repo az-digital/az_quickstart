@@ -7,7 +7,7 @@ source:
   # Replace with formalized settings that allow a defined query to be selected for import.
   queries: []
   ids:
-    uid:
+    dn:
       type: string
 
 process:

@@ -77,10 +77,8 @@ class AzLdap extends SourcePluginBase {
       $results = $this->ldapQuery->getRawResults();
       foreach ($results as $result) {
         $row = $result->getAttributes();
-        // Make sure UID is a scalar.
-        // @todo apply general logic to convert single-value arrays to scalars.
-        $uid = $row['uid'] ?? [];
-        $row['uid'] = reset($uid);
+        // DN is the preferred id for LDAP migrations.
+        $row['dn'] = $result->getDn();
         $rows[] = $row;
       }
     }
