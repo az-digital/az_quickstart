@@ -529,3 +529,17 @@ function az_core_preprocess_container__text_format_filter_help(&$variables) {
     }
   }
 }
+
+/**
+ * Implements hook_preprocess_entity_embed_container().
+ * 
+ * Prevents double-submit button ajax errors in edit pages
+ * by swapping embedded webforms with a custom preview when in collapsed mode.
+ */
+function az_core_preprocess_entity_embed_container(array &$variables) {
+  if(isset($variables["element"]["entity"]["webform"])) {
+    if(\Drupal::routeMatch()->getRouteName() === 'entity.node.edit_form') {
+      $variables["children"] = "Webform Content (Preview)";
+    }
+  }
+}
