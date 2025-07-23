@@ -4,7 +4,8 @@ namespace Drupal\az_core\Plugin\Block;
 
 use Drupal\Core\Block\Attribute\Block;
 use Drupal\Core\Block\BlockBase;
-use Drupal\Core\KeyValueStore\KeyValueStoreExpirableInterface;
+use Drupal\Core\KeyValueStore\KeyValueExpirableFactoryInterface;
+use Drupal\Core\Menu\MenuLinkTreeElement;
 use Drupal\Core\Menu\MenuLinkTreeInterface;
 use Drupal\Core\Menu\MenuTreeParameters;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
@@ -46,25 +47,18 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
   protected $routeMatch;
 
   /**
-   * The key/value store for the menu tree.
+   * The key value expirable factory.
    *
-   * @var \Drupal\Core\KeyValueStore\KeyValueStoreExpirableInterface
+   * @var \Drupal\Core\KeyValueStore\KeyValueExpirableFactoryInterface
    */
-  protected $menuTreeStore;
+  protected $keyValueFactory;
 
   /**
-   * The menu link tree array.
+   * The menu link_tree  service.
    *
-   * @var array
+   * @var \Drupal\Core\Menu\MenuLinkTreeInterface
    */
-  protected $tree;
-
-  /**
-   * The menu link ID for the root of the nav menu.
-   *
-   * @var string
-   */
-  protected $menuRoot;
+  protected $menuLinkTree;
 
   /**
    * Constructs a MobileNavBlock object.
@@ -75,28 +69,25 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
    *   The plugin ID for the plugin instance.
    * @param mixed $plugin_definition
    *   The plugin implementation definition.
-   * @param \Drupal\Core\Routing\RouteMatchInterface $routeMatch
+   * @param \Drupal\Core\Routing\RouteMatchInterface $route_match
    *   The route match object.
-   * @param \Drupal\Core\KeyValueStore\KeyValueStoreExpirableInterface $key_value_expirable
+   * @param \Drupal\Core\KeyValueStore\KeyValueExpirableFactoryInterface $key_value_factory
    *   The key value expirable factory.
-   * @param \Drupal\Core\Menu\MenuLinkTreeInterface $menuTree
+   * @param \Drupal\Core\Menu\MenuLinkTreeInterface $menu_link_tree
    *   The menu link tree service.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, RouteMatchInterface $routeMatch, KeyValueStoreExpirableInterface $key_value_expirable, MenuLinkTreeInterface $menuTree) {
+  public function __construct(
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    RouteMatchInterface $route_match,
+    KeyValueExpirableFactoryInterface $key_value_factory,
+    MenuLinkTreeInterface $menu_link_tree,
+  ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-    if (isset($configuration['menu_root'])) {
-      $this->menuRoot = $configuration['menu_root'];
-    }
-    $this->routeMatch = $routeMatch;
-    $this->menuTreeStore = $key_value_expirable;
-    $treeFromStorage = $this->menuTreeStore->get('menu');
-    if (is_array($treeFromStorage) && count($treeFromStorage) > 1) {
-      $this->tree = $treeFromStorage;
-    }
-    else {
-      // Refresh menu tree if it's empty or only contains the front page.
-      $this->tree = $this->initMenuTree($menuTree);
-    }
+    $this->routeMatch = $route_match;
+    $this->keyValueFactory = $key_value_factory;
+    $this->menuLinkTree = $menu_link_tree;
   }
 
   /**
@@ -108,7 +99,7 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
       $plugin_id,
       $plugin_definition,
       $container->get('current_route_match'),
-      $container->get('keyvalue.expirable')->get('az_core.az_mobile_nav_new'),
+      $container->get('keyvalue.expirable'),
       $container->get('menu.link_tree')
     );
   }
@@ -116,29 +107,31 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
   /**
    * Load the main menu tree and save it to key/value storage.
    *
-   * @param \Drupal\Core\Menu\MenuLinkTreeInterface $menuTree
-   *   The menu link tree service.
-   *
-   * @return array
-   *   An array containing the full main menu tree.
+   * @return \Drupal\Core\Menu\MenuLinkTreeElement[]
+   *   An array of MenuLinkTreeElements containing the full main menu tree.
    */
-  protected function initMenuTree(MenuLinkTreeInterface $menuTree) {
+  protected function initMenuTree(): array {
+    if ($tree = $this->keyValueFactory->get('az_core.az_mobile_nav')->get('menu', FALSE)) {
+      return $tree;
+    }
     $parameters = new MenuTreeParameters();
     // Skip disabled links in the menu.
     $parameters->onlyEnabledLinks();
 
     // Load the menu tree.
-    $tree = $menuTree->load('main', $parameters);
+    /** @var MenuLinkTreeElement[] $tree */
+    $tree = $this->menuLinkTree->load('main', $parameters);
 
     // Apply manipulators.
     $manipulators = [
       ['callable' => 'menu.default_tree_manipulators:checkAccess'],
       ['callable' => 'menu.default_tree_manipulators:generateIndexAndSort'],
     ];
-    $tree = $menuTree->transform($tree, $manipulators);
+    $tree = $this->menuLinkTree->transform($tree, $manipulators);
 
     // Save the tree to key value storage.
-    $this->menuTreeStore->setWithExpire('menu', $tree, self::EXPIRE_TIME);
+    $this->keyValueFactory->get('az_core.az_mobile_nav')
+      ->setWithExpire('menu', $tree, self::EXPIRE_TIME);
     return $tree;
   }
 
@@ -212,16 +205,20 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
     ];
 
     // On initial load, set the menu root as the current page (if possible).
-    if (!isset($this->menuRoot)) {
-      $tree = $this->getSubtreeAndParentTextByRoute($this->tree, $this->routeMatch->getRouteName(), $this->routeMatch->getRawParameters()->all());
+    /** @var MenuLinkTreeElement[] $tree */
+    $tree = $this->initMenuTree();
+    $treeWithText = [];
+    $menuRoot = $this->configuration['menu_root'] ?? FALSE;
+    if (!$menuRoot) {
+      $treeWithText = $this->getSubtreeAndParentTextByRoute($tree, $this->routeMatch->getRouteName(), $this->routeMatch->getRawParameters()->all());
     }
-    elseif ($this->menuRoot && !empty($this->tree) && $this->menuRoot !== self::MENU_ROOT_ID) {
-      $tree = $this->getSubtreeAndParentText($this->tree, $this->menuRoot);
+    elseif ($menuRoot && !empty($tree) && $menuRoot !== self::MENU_ROOT_ID) {
+      $treeWithText = $this->getSubtreeAndParentText($tree, $menuRoot);
     }
 
     // Build the heading links to the parent and current root (if available).
-    if (empty($tree)) {
-      $tree = $this->tree;
+    if (empty($treeWithText)) {
+      $treeWithText = $tree;
       $isMainMenu = TRUE;
       $build['az_mobile_nav_menu']['heading']['#attributes']['class'][] = 'pl-3';
       $build['az_mobile_nav_menu']['heading']['selected_page'] = [
@@ -239,17 +236,18 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
     else {
       $isMainMenu = FALSE;
       $build['az_mobile_nav_menu']['heading']['#attributes']['class'][] = 'pl-4';
-      $rootElement = $tree[array_key_first($tree)];
+      $rootElement = $treeWithText[array_key_first($treeWithText)];
       $parent = $rootElement->link->getParent();
       $title = $chevronLeft;
       $parent === '' ?
         $title['#suffix'] = $this->t('Back to Main Menu') :
-        $title['#suffix'] = $this->t('Back to @parentText', ['@parentText' => $tree['parentText']]);
+        $title['#suffix'] = $this->t('Back to @parentText', ['@parentText' => $treeWithText['parentText']]);
       $build['az_mobile_nav_menu']['back'] = [
         '#type' => 'link',
         '#name' => $parent,
         '#title' => $title,
-        '#url' => Url::fromRoute('az_core.mobile_nav_callback',
+        '#url' => Url::fromRoute(
+          'az_core.mobile_nav_callback',
           [
             'menu_root' => $parent === '' ? self::MENU_ROOT_ID : $parent,
           ],
@@ -302,11 +300,11 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
         }
       }
 
-      $tree = $rootElement->subtree;
+      $treeWithText = $rootElement->subtree;
     }
 
     // Build the list of menu links.
-    foreach ($tree as $item) {
+    foreach ($treeWithText as $item) {
       if ($item->link->getRouteName() === '<button>') {
         $pageLink = [
           '#type' => 'html_tag',
