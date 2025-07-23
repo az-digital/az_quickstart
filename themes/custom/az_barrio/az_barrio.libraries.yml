@@ -4,6 +4,7 @@ global-styling:
       css/style.css: {}
   dependencies:
     - az_barrio/arizona-bootstrap-css
+    - az_barrio/arizona-bootstrap-js
 az-ajax:
   js:
     js/az-ajax.js: {}
@@ -19,8 +20,6 @@ az-barrio-off-canvas-nav:
       css/az-barrio-off-canvas-nav.css: {}
   js:
     js/az-barrio-off-canvas-nav.js: {}
-  dependencies:
-    - az_barrio/arizona-bootstrap-js
 az-proxima-nova:
   css:
     theme:
@@ -35,7 +34,7 @@ arizona-bootstrap:
       /libraries/arizona-bootstrap/css/arizona-bootstrap.min.css: { minified: true }
   js:
     /libraries/arizona-bootstrap/js/arizona-bootstrap.bundle.min.js: { minified: true }
-  deprecated: The combined "%library_id%" CSS and Javascript library is deprecated in az_quickstart:2.13.x and is removed from drupal:2.14.x. For CSS, use az_barrrio/arizona-bootstrap-css, and for Javascript use az_barrrio/arizona-bootstrap-js. See https://github.com/az-digital/az_quickstart/issues/1251
+  deprecated: The combined "%library_id%" CSS and Javascript library is deprecated in az_quickstart:2.13.x and is removed from az_quickstart:2.14.x. For CSS, use az_barrio/arizona-bootstrap-css, and for Javascript use az_barrio/arizona-bootstrap-js. See https://github.com/az-digital/az_quickstart/issues/1251
 arizona-bootstrap-css:
   css:
     theme:
