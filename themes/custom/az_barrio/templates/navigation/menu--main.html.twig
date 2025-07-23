@@ -56,7 +56,7 @@
             ]
           %}
           {% if item.below %}
-	    <button{{ item.attributes.addClass(link_classes).setAttribute('data-toggle','dropdown').setAttribute('aria-expanded', 'false').setAttribute('aria-haspopup', 'true').setAttribute('data-display', 'static') }}>{{ item.title }}</button>
+	    <button{{ item.attributes.addClass(link_classes).setAttribute('data-bs-toggle','dropdown').setAttribute('aria-expanded', 'false').setAttribute('aria-haspopup', 'true').setAttribute('data-bs-display', 'static') }}>{{ item.title }}</button>
             {% if item.in_active_trail %}
             {% endif %}
             {{ menus.menu_links(item.below, attributes, menu_level + 1) }}

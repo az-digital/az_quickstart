@@ -107,6 +107,10 @@ audio:not([controls]) {
 /**
  * Branding header.
  */
+.arizona-header .row > * {
+  width: unset;
+}
+
 /* Wrapping link for logo. */
 .qs-site-logo {
   margin: 40px 0;
@@ -417,11 +421,20 @@ a.btn.btn-redbar {
   border: 2px solid #8b0015;
 }
 
+/*
+ * Search
+ */
+.navbar-offcanvas .navbar-offcanvas-search .form-control {
+  height: 60px;
+  margin: 0;
+  border: none;
+}
+
 #block-az-barrio-offcanvas-searchform .form-search {
   height: unset;
 }
 
-#block-az-barrio-offcanvas-searchform .material-icons-sharp {
+#block-az-barrio-offcanvas-searchform .material-symbols-rounded {
   font-size: 24px;
 }
 
@@ -433,7 +446,9 @@ a.btn.btn-redbar {
   height: 43px;
 }
 
-.az-search-block form.search-block-form .input-group .input-group-append button {
+.az-search-block form.search-block-form .input-group button {
+  display: flex;
+  align-items: center;
   font-size: 20px;
   color: #8B0015;
   background-color: #ffffff;
@@ -441,8 +456,8 @@ a.btn.btn-redbar {
   padding: 0 8px;
 }
 
-.az-search-block form.search-block-form .input-group .input-group-append button:hover,
-.az-search-block form.search-block-form .input-group .input-group-append button:focus {
+.az-search-block form.search-block-form .input-group button:hover,
+.az-search-block form.search-block-form .input-group button:focus {
     background-color: #8B0015;
     color: #ffffff;
 }
