@@ -41,6 +41,9 @@ source:
       name: ordering
       selector: ordering
     -
+      name: text_width
+      selector: text_width
+    -
       name: bottom_spacing
       selector: bottom_spacing
 
@@ -76,4 +79,5 @@ process:
         full_width: full_width
         ordering: ordering
         az_display_settings:
+          text_width: text_width
           bottom_spacing: bottom_spacing

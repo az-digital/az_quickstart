@@ -20,6 +20,8 @@ az-barrio-off-canvas-nav:
       css/az-barrio-off-canvas-nav.css: {}
   js:
     js/az-barrio-off-canvas-nav.js: {}
+  dependencies:
+    - az_barrio/global-styling
 az-proxima-nova:
   css:
     theme:
@@ -51,9 +53,17 @@ button-no-conflict:
     - core/drupal
     - core/jquery
 material-design-icons-sharp:
+  deprecated: The "%library_id%" CSS library is deprecated in az_quickstart:2.14.x and is removed from az_quickstart:3.x. Use `az_barrio/material-symbols-rounded` instead. See https://github.com/az-digital/az_quickstart/issues/4385
   css:
     theme:
       # Appends `#.css` as workaround for known issue with loadjs library.
       # see https://github.com/kubetail-org/loadjs/issues/39
       # see https://github.com/az-digital/az_quickstart/issues/2772
       https://fonts.googleapis.com/css?family=Material+Icons+Sharp#.css: { external: true, preprocess: false }
+material-symbols-rounded:
+  css:
+    theme:
+      # Appends `#.css` as workaround for known issue with loadjs library.
+      # see https://github.com/kubetail-org/loadjs/issues/39
+      # see https://github.com/az-digital/az_quickstart/issues/2772
+      https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0#.css: { external: true, preprocess: false }

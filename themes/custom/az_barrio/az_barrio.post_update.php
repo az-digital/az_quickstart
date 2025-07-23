@@ -6,7 +6,7 @@
  */
 
 /**
- * Migrates az_bootstrap_cdn_version to separate CSS/JS keys and removes it.
+ * Adds az_bootstrap_cdn_version_css and az_bootstrap_cdn_version_js settings.
  */
 function az_barrio_post_update_split_bootstrap_cdn_version(&$sandbox = NULL) {
   $config_factory = \Drupal::configFactory();
@@ -23,9 +23,6 @@ function az_barrio_post_update_split_bootstrap_cdn_version(&$sandbox = NULL) {
     if ($theme_settings->get('az_bootstrap_cdn_version_js') === NULL) {
       $theme_settings->set('az_bootstrap_cdn_version_js', $old_version);
     }
-
-    // Remove old value.
-    $theme_settings->clear('az_bootstrap_cdn_version');
 
     // Save all changes.
     $theme_settings->save();
