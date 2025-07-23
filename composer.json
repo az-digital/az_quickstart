@@ -21,11 +21,6 @@
         {
             "type": "composer",
             "url": "https://asset-packagist.org"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/az-digital/phpcs-security-audit",
-            "no-api": true
         }
     ],
     "require": {
@@ -133,14 +128,15 @@
         "seboettg/citeproc-php": "2.6.2"
     },
     "require-dev": {
-        "az-digital/az-quickstart-dev": "~1"
+        "az-digital/az-quickstart-dev": "~3"
     },
     "conflict": {
         "drush/drush": "<12.4.3"
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "2.14.x-dev"
+            "dev-main": "3.0.x-dev",
+            "2.x-dev": "2.14.x-dev"
         },
         "patches": {
             "drupal/auto_entitylabel": {

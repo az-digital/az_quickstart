@@ -7,7 +7,6 @@
  * Provides theme settings for Arizona Barrio.
  */
 
-//phpcs:ignore Security.BadFunctions.EasyRFI.WarnEasyRFI
 require_once \Drupal::service('extension.list.theme')->getPath('az_barrio') . '/includes/common.inc';
 
 use Drupal\Core\File\Exception\FileException;
@@ -456,7 +455,6 @@ function az_barrio_form_system_theme_settings_submit($form, FormStateInterface &
   $default_scheme = \Drupal::config('system.file')->get('default_scheme');
   try {
     if (!empty($values['footer_logo_upload'])) {
-      //phpcs:ignore Security.BadFunctions.FilesystemFunctions.WarnFilesystem
       $filename = \Drupal::service('file_system')->copy($values['footer_logo_upload']->getFileUri(), $default_scheme . '://');
       $form_state->setValue('footer_logo_path', $filename);
       $form_state->setValue('footer_default_logo', 0);
@@ -501,13 +499,11 @@ function az_barrio_form_system_theme_settings_validate($form, FormStateInterface
 function az_barrio_validate_file_path($path) {
 
   // Absolute local file paths are invalid.
-  //phpcs:ignore Security.BadFunctions.FilesystemFunctions.WarnFilesystem
   if (\Drupal::service('file_system')->realpath($path) === $path) {
     return FALSE;
   }
 
   // A path relative to the Drupal root or a fully qualified URI is valid.
-  //phpcs:ignore Security.BadFunctions.FilesystemFunctions.WarnFilesystem
   if (is_file($path)) {
     return $path;
   }
@@ -516,7 +512,6 @@ function az_barrio_validate_file_path($path) {
   if (StreamWrapperManager::getScheme($path) === FALSE) {
     $path = 'public://' . $path;
   }
-  //phpcs:ignore Security.BadFunctions.FilesystemFunctions.WarnFilesystem
   if (is_file($path)) {
     return $path;
   }
