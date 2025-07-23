@@ -313,6 +313,9 @@ az_barrio.settings:
     az_bootstrap_source:
       type: string
       label: 'AZ Bootstrap source'
+    az_bootstrap_cdn_version:
+      type: string
+      label: 'AZ Bootstrap CDN version'
     az_bootstrap_cdn_version_css:
       type: string
       label: 'AZ Bootstrap CDN version CSS'
@@ -325,9 +328,12 @@ az_barrio.settings:
     az_barrio_font:
       type: boolean
       label: 'Use the centrally-managed Typekit webfont, Proxima Nova'
+    az_barrio_material_symbols_rounded:
+      type: boolean
+      label: 'Use Material Symbols Rounded Icons'
     az_barrio_material_design_sharp_icons:
       type: boolean
-      label: 'Use Material Design Sharp Icons'
+      label: '(Deprecated) Use Material Design Sharp Icons'
     az_barrio_az_icons:
       type: boolean
       label: 'Use Arizona Icons'
