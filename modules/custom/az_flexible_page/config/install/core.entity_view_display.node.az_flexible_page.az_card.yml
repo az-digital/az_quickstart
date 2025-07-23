@@ -67,7 +67,7 @@ third_party_settings:
       weight: 2
       format_type: html_element
       format_settings:
-        classes: 'card-img-top mb-0'
+        classes: 'card-img-top mb-0 overflow-hidden'
         id: ''
         element: div
         show_label: false
