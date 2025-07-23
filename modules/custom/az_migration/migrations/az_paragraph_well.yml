@@ -33,7 +33,7 @@ process:
   field_az_cards/options:
     plugin: default_value
     default_value:
-      class: 'bg-cool-gray'
+      class: 'text-bg-cool-gray'
 
   behavior_settings:
     plugin: az_paragraphs_behavior_settings
