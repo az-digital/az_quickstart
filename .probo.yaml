@@ -15,9 +15,9 @@ steps:
       - cd az-quickstart-scaffolding
       - composer config repositories.az_quickstart vcs https://github.com/az-digital/az_quickstart.git
       - composer config use-github-api false
-      - if [[ ${BRANCH_NAME} =~ ^[0-9]\. ]]; then VERSION="${BRANCH_NAME}-dev"; else VERSION="dev-${BRANCH_NAME}"; fi
+      - if [[ ${BRANCH_NAME} =~ ^[0-9]\.[0-9x] ]]; then VERSION="${BRANCH_NAME}-dev"; else VERSION="dev-${BRANCH_NAME}"; fi
       - composer require --no-update az-digital/az_quickstart:${VERSION}
-      - if [[ ${DEV_PACKAGE_BRANCH} =~ ^[0-9]\. ]]; then DEV_PACKAGE_VERSION="${DEV_PACKAGE_BRANCH}-dev"; else DEV_PACKAGE_VERSION="dev-${DEV_PACKAGE_BRANCH}"; fi
+      - if [[ ${DEV_PACKAGE_BRANCH} =~ ^[0-9]\.[0-9x] ]]; then DEV_PACKAGE_VERSION="${DEV_PACKAGE_BRANCH}-dev"; else DEV_PACKAGE_VERSION="dev-${DEV_PACKAGE_BRANCH}"; fi
       - composer require --no-update --dev az-digital/az-quickstart-dev:${DEV_PACKAGE_VERSION}
       - composer install -o
   - name: Setup drush

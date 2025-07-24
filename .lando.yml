@@ -38,15 +38,32 @@ services:
         # Instead share our host working directory as a standalone package.
         - .:/usr/local/quickstart-install-profile
     build:
-      # Create a new quickstart project and use the installation profile as a non-packagist repository.
-      # Use the matching scaffolding branch if available.
-      - BRANCH_NAME=$(git -C /usr/local/quickstart-install-profile rev-parse --abbrev-ref HEAD); if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $BRANCH_NAME | wc -l) = 1 ]; then SCAFFOLD_BRANCH="$BRANCH_NAME"; else SCAFFOLD_BRANCH="main"; fi; git clone --branch $SCAFFOLD_BRANCH https://github.com/az-digital/az-quickstart-scaffolding.git /app
+      # Create a new Quickstart project. Use the matching scaffolding branch if available.
+      - |
+        BRANCH_NAME=$(git -C /usr/local/quickstart-install-profile rev-parse --abbrev-ref HEAD)
+        if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $BRANCH_NAME | wc -l) = 1 ]; then
+          SCAFFOLD_BRANCH="$BRANCH_NAME"
+        else
+          SCAFFOLD_BRANCH="main"
+        fi
+        git clone --branch $SCAFFOLD_BRANCH https://github.com/az-digital/az-quickstart-scaffolding.git /app
+      # Use the installation profile as a non-packagist repository.
       - composer config repositories.localdev path /usr/local/quickstart-install-profile && composer require --no-update az-digital/az_quickstart:\*@dev
       # Use the matching require-dev metapackage branch if available.
-      - BRANCH_NAME=$(git -C /usr/local/quickstart-install-profile rev-parse --abbrev-ref HEAD); if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-dev.git $BRANCH_NAME | wc -l) = 1 ]; then DEV_PACKAGE_BRANCH="$BRANCH_NAME"; else DEV_PACKAGE_BRANCH=main; fi
-      - if [[ ${DEV_PACKAGE_BRANCH} =~ ^[0-9]\. ]]; then DEV_PACKAGE_VERSION="${DEV_PACKAGE_BRANCH}-dev"; else DEV_PACKAGE_VERSION="dev-${DEV_PACKAGE_BRANCH}"; fi
-      - composer require --no-update --dev az-digital/az-quickstart-dev:dev-${DEV_PACKAGE_VERSION}
-      - composer install
+      - |
+        BRANCH_NAME=$(git -C /usr/local/quickstart-install-profile rev-parse --abbrev-ref HEAD)
+        if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-dev.git $BRANCH_NAME | wc -l) = 1 ]; then
+          DEV_PACKAGE_BRANCH="$BRANCH_NAME"
+        else
+          DEV_PACKAGE_BRANCH=main
+        fi
+        if echo "$DEV_PACKAGE_BRANCH" | grep -Eq "^[0-9]\.[0-9x]"; then
+          DEV_PACKAGE_VERSION="${DEV_PACKAGE_BRANCH}-dev"
+        else
+          DEV_PACKAGE_VERSION="dev-${DEV_PACKAGE_BRANCH}"
+        fi
+        composer require --no-update --dev az-digital/az-quickstart-dev:$DEV_PACKAGE_VERSION
+      - composer install --no-interaction
       - ln -s /usr/local/quickstart-install-profile/.vscode /app/.vscode
   node:
     type: node:20
