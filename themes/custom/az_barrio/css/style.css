@@ -107,6 +107,10 @@ audio:not([controls]) {
 /**
  * Branding header.
  */
+.arizona-header .row > * {
+  width: unset;
+}
+
 /* Wrapping link for logo. */
 .qs-site-logo {
   margin: 40px 0;
@@ -417,13 +421,16 @@ a.btn.btn-redbar {
   border: 2px solid #8b0015;
 }
 
+/*
+ * Search
+ */
 .navbar-offcanvas .navbar-offcanvas-search .form-control {
     height: 60px;
     margin: 0;
     border: none;
 }
 
-#block-az-barrio-offcanvas-searchform .material-icons-sharp {
+#block-az-barrio-offcanvas-searchform .material-symbols-rounded {
   font-size: 24px;
 }
 
@@ -435,7 +442,9 @@ padding: 0.625rem .75rem;
   height: 43px;
 }
 
-.az-search-block form.search-block-form .input-group .input-group-append button {
+.az-search-block form.search-block-form .input-group button {
+  display: flex;
+  align-items: center;
   font-size: 20px;
   color: #8B0015;
   background-color: #ffffff;
@@ -443,8 +452,8 @@ padding: 0.625rem .75rem;
   padding: 0 8px;
 }
 
-.az-search-block form.search-block-form .input-group .input-group-append button:hover,
-.az-search-block form.search-block-form .input-group .input-group-append button:focus {
+.az-search-block form.search-block-form .input-group button:hover,
+.az-search-block form.search-block-form .input-group button:focus {
     background-color: #8B0015;
     color: #ffffff;
 }
@@ -543,6 +552,25 @@ a.nolink + ul .sf-clone-parent {
 .item-list ul.pager li a:hover,
 .item-list ul.pager li a:active {
   background: none 0 0 scroll no-repeat transparent;
+}
+
+/* Styling for full-width regions and paragraphs. */
+.full-width-background,
+.region-alert .paragraph,
+.region-content-featured .paragraph,
+.region-full-width-content-bottom .paragraph,
+.region-az-page-bottom .paragraph {
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+}
+.region .az-full-width-row {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
 }
 
 .region-sidebar-first .block,

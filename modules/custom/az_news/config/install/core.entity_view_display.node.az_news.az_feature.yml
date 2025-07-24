@@ -22,11 +22,11 @@ dependencies:
     - image.style.az_medium
     - node.type.az_news
   module:
+    - az_core
     - date_ap_style
     - field_group
     - media
     - smart_title
-    - text
     - user
   enforced:
     module:
@@ -253,7 +253,7 @@ content:
     weight: 1
     region: content
   field_az_summary:
-    type: text_default
+    type: az_text_summary
     label: hidden
     settings: {  }
     third_party_settings: {  }

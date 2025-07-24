@@ -65,14 +65,14 @@ third_party_settings:
         speed: fast
     group_photo_container:
       children:
-        - field_az_media_image
+        - field_az_media_thumbnail_image
       label: 'Card Image'
       parent_name: group_link
       region: content
       weight: 3
       format_type: html_element
       format_settings:
-        classes: card-img
+        classes: 'card-img mb-1'
         id: ''
         element: div
         show_label: false
@@ -188,14 +188,14 @@ content:
     third_party_settings: {  }
     weight: 1
     region: content
-  field_az_media_image:
+  field_az_media_thumbnail_image:
     type: entity_reference_entity_view
     label: hidden
     settings:
-      view_mode: az_large
+      view_mode: az_card_image
       link: false
     third_party_settings: {  }
-    weight: 1
+    weight: 0
     region: content
   field_az_published:
     type: timestamp_ap_style
@@ -211,6 +211,8 @@ content:
       time_before_date: 0
       use_all_day: 0
       capitalize_noon_and_midnight: 0
+      month_only: 0
+      hide_date: 0
     third_party_settings: {  }
     weight: 6
     region: content
@@ -229,7 +231,7 @@ hidden:
   field_az_featured_image_as_thumb: true
   field_az_link: true
   field_az_main_content: true
-  field_az_media_thumbnail_image: true
+  field_az_media_image: true
   field_az_news_tags: true
   field_az_short_title: true
   field_az_subheading: true

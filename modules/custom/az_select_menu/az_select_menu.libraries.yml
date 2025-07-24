@@ -1,5 +1,4 @@
 az_select_menu:
-  version: 1.x
   css:
     theme:
       css/az-select-menu.css: {}
@@ -9,4 +8,4 @@ az_select_menu:
     - core/jquery
     - core/drupal
     - core/once
-    - az_barrio/arizona-bootstrap
+    - az_barrio/arizona-bootstrap-css

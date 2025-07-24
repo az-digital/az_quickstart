@@ -2,6 +2,7 @@
 
 namespace Drupal\az_select_menu\Plugin\Block;
 
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Block\Attribute\Block;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
@@ -129,19 +130,20 @@ class AzSelectMenu extends MenuBlock {
   public function build() {
 
     $build = parent::build();
+    $menu_name = Html::getUniqueId('az-' . $build['#menu_name']);
 
     $form_attributes = new Attribute([
-      'id' => 'az-select-menu-' . $build['#menu_name'] . '-form',
-      'data-toggle' => 'popover',
-      'data-trigger' => 'focus',
-      'data-placement' => 'top',
-      'data-content' => t('Please make a selection.'),
+      'id' => $menu_name . '-form',
+      'data-bs-toggle' => 'popover',
+      'data-bs-trigger' => 'focus',
+      'data-bs-placement' => 'top',
+      'data-bs-content' => t('Please make a selection.'),
     ]);
 
     $build['#form_attributes'] = $form_attributes;
 
     $select_attributes = new Attribute([
-      'id' => 'az-select-menu-' . $build['#menu_name'] . '-select',
+      'id' => $menu_name . '-select',
       'class' => [
         'form-control',
         'select-primary',
@@ -152,7 +154,7 @@ class AzSelectMenu extends MenuBlock {
     $build['#select_attributes'] = $select_attributes;
 
     $button_attributes = new Attribute([
-      'id' => 'az-select-menu-' . $build['#menu_name'] . '-button',
+      'id' => $menu_name . '-button',
       'class' => [
         'btn',
         'btn-primary',
@@ -168,7 +170,7 @@ class AzSelectMenu extends MenuBlock {
     $build['#button_attributes'] = $button_attributes;
 
     $build['#attached']['library'][] = 'az_select_menu/az_select_menu';
-    $build['#attached']['drupalSettings']['azSelectMenu']['ids'][] = 'az-select-menu-' . $build['#menu_name'] . '-form';
+    $build['#attached']['drupalSettings']['azSelectMenu']['ids'][$menu_name] = $menu_name . '-form';
 
     return $build;
   }

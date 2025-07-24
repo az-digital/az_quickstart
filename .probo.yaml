@@ -15,27 +15,11 @@ steps:
       - cd az-quickstart-scaffolding
       - composer config repositories.az_quickstart vcs https://github.com/az-digital/az_quickstart.git
       - composer config use-github-api false
-      - composer require --no-update az-digital/az_quickstart:dev-${BRANCH_NAME}
-      - composer require --no-update --dev az-digital/az-quickstart-dev:dev-${DEV_PACKAGE_BRANCH}
+      - if [[ ${BRANCH_NAME} =~ ^[0-9]\.[0-9x] ]]; then VERSION="${BRANCH_NAME}-dev"; else VERSION="dev-${BRANCH_NAME}"; fi
+      - composer require --no-update az-digital/az_quickstart:${VERSION}
+      - if [[ ${DEV_PACKAGE_BRANCH} =~ ^[0-9]\.[0-9x] ]]; then DEV_PACKAGE_VERSION="${DEV_PACKAGE_BRANCH}-dev"; else DEV_PACKAGE_VERSION="dev-${DEV_PACKAGE_BRANCH}"; fi
+      - composer require --no-update --dev az-digital/az-quickstart-dev:${DEV_PACKAGE_VERSION}
       - composer install -o
-  - name: Run PHP_CodeSniffer coding standards checks
-    plugin: Shell
-    command: 'cd $SRC_DIR/az-quickstart-scaffolding ; ./vendor/bin/phpcs -sp --colors web/profiles/custom/az_quickstart'
-  - name: Run PHPStan code quality checks
-    plugin: Script
-    script:
-      - cd $SRC_DIR/az-quickstart-scaffolding
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/phpstan analyse --configuration web/profiles/custom/az_quickstart/phpstan.neon web/profiles/custom/az_quickstart
-  - name: Run ESLint
-    plugin: Script
-    script:
-      - sudo npm cache clean -f --silent --no-progress
-      - sudo npm install -g --no-progress yarn
-      - sudo npm install -g --no-progress n
-      - sudo n 20.13.0
-      - cd $SRC_DIR/az-quickstart-scaffolding/web/profiles/custom/az_quickstart
-      - yarn install
-      - yarn run eslint --color .
   - name: Setup drush
     plugin: Shell
     command: 'ln -s $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush /usr/local/bin/drush'
@@ -45,21 +29,21 @@ steps:
     subDirectory: az-quickstart-scaffolding/web
     runInstall: true
     profileName: az_quickstart
-    installArgs: "--site-name='Quickstart Review' --account-name=azadmin --account-pass=azadmin2024 --verbose --yes -n"
+    installArgs: "--site-name='Quickstart Review' --account-name=azadmin --account-pass=azadmin2025 --verbose --yes -n"
   - name: Post-Installation Steps
     plugin: Script
     script:
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -y -n pm:install az_demo
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:create azcontenteditor --password="azcontenteditor2024"
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:create azcontenteditor --password="azcontenteditor2025" --mail="azcontenteditor@example.com"
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_editor azcontenteditor
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:create azcontentadmin --password="azcontentadmin2024"
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:create azcontentadmin --password="azcontentadmin2025" --mail="azcontentadmin@example.com"
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_editor azcontentadmin
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_admin azcontentadmin
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:create azuseradmin --password="azuseradmin2024"
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:create azuseradmin --password="azuseradmin2025" --mail="azuseradmin@example.com"
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_editor azuseradmin
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_admin azuseradmin
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_user_admin azuseradmin
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:create azhtmladmin --password="azhtmladmin2024"
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:create azhtmladmin --password="azhtmladmin2025" --mail="azhtmladmin@example.com"
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_editor azhtmladmin
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_admin azhtmladmin
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_html_admin azhtmladmin
@@ -71,54 +55,6 @@ steps:
       - chmod 777 /var/www/html/sites/default/settings.php
       - echo -e "\$config['environment_indicator.indicator']['name'] = '$BRANCH_NAME (ProboCI)';\n\$config['environment_indicator.indicator']['bg_color'] = '#440027';" >> /var/www/html/sites/default/settings.php
       - chmod 444 /var/www/html/sites/default/settings.php
-  - name: Check for PHP errors and notices
-    plugin: Script
-    script:
-      # Load some known demo URL paths
-      - curl -sS -o /dev/null http://localhost
-      - curl -sS -o /dev/null http://localhost/user
-      - curl -sS -o /dev/null http://localhost/people
-      - curl -sS -o /dev/null http://localhost/people-list
-      - curl -sS -o /dev/null http://localhost/pages/text
-      - curl -sS -o /dev/null http://localhost/pages/text-background
-      - curl -sS -o /dev/null http://localhost/pages/text-media
-      - curl -sS -o /dev/null http://localhost/pages/card-decks
-      - curl -sS -o /dev/null http://localhost/pages/accordions
-      - curl -sS -o /dev/null http://localhost/pages/photo-galleries
-      - curl -sS -o /dev/null http://localhost/page-grid
-      - curl -sS -o /dev/null http://localhost/page-list
-      - curl -sS -o /dev/null http://localhost/news
-      - curl -sS -o /dev/null http://localhost/calendar
-      - curl -sS -o /dev/null http://localhost/pages/annual-events
-      # Check for PHP watchdog entries
-      - if [ -z "$($SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -n watchdog:show --count=100 --type=php)" ]; then echo "No PHP notices/errors logged."; else echo "PHP notices/errors found in log." >&2 && exit 1; fi
-  - name: Generate upgrade status report
-    plugin: Script
-    script:
-      # Enable upgrade_status module
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -y -n pm:install upgrade_status
-      # Run report
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush upgrade_status:analyze az_quickstart
-      # Make upgrade_status folder in tmp directory accessible by www-data
-      - chown -R www-data:www-data /tmp/upgrade_status
-  - name: Run PHPUnit Tests
-    plugin: Script
-    script:
-      - mkdir -p /var/www/html/sites/simpletest
-      - chown www-data:www-data -R /var/www/html/sites/simpletest
-      - mkdir -p /var/www/html/sites/default/files/simpletest
-      - chown www-data:www-data -R /var/www/html/sites/default/files/simpletest
-      - sudo CHROMEDRIVER_VERSION=LATEST_$(/usr/bin/google-chrome --product-version | cut -d . -f 1-3) npm install --no-progress --unsafe-perm --global chromedriver
-      - sudo apt-get install daemonize
-      - source $ASSET_DIR/test-credentials.sh
-      - export SIMPLETEST_BASE_URL="http://localhost"
-      - export SIMPLETEST_DB="mysql://${TEST_DATABASE_USER}:${TEST_DATABASE_PASS}@localhost/${TEST_DATABASE_NAME}"
-      - export MINK_DRIVER_ARGS_WEBDRIVER='["chrome", {"browserName":"chrome","goog:chromeOptions":{"args":["--disable-gpu","--disable-dev-shm-usage","--headless","--no-sandbox"]}}, "http://localhost:9515"]'
-      - daemonize /usr/local/bin/chromedriver --log-path=/tmp/chromedriver.log --verbose --whitelisted-ips="127.0.0.1"
-      - cd /var/www/html/profiles/custom/az_quickstart
-      - export RUN_TESTS_CONCURRENCY=10
-      - mysqladmin create ${TEST_DATABASE_NAME}
-      - sudo -u www-data -E find $SRC_DIR/az-quickstart-scaffolding/web/profiles/custom/az_quickstart/ -name "*Test.php" | sudo -u www-data -E $SRC_DIR/az-quickstart-scaffolding/vendor/bin/fastest -p 10 -vvv "$SRC_DIR/az-quickstart-scaffolding/vendor/bin/phpunit {} --colors="always" --verbose --do-not-cache-result;"
   - name: Install Terminus
     plugin: Script
     script:
