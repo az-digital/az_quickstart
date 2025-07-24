@@ -555,9 +555,15 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
             '#responsive_image_style_id' => 'az_full_width_background',
             '#item' => $media->get('thumbnail'),
             '#item_attributes' => [
-              'class' => ['img-fluid', 'rounded', ' w-100', 'invisible'],
+              'class' => ['img-fluid', ' w-100', 'invisible'],
             ],
           ];
+
+          // Remove rounded corners on full-width paragraphs.
+          if (isset($settings['full_width']) && $settings['full_width'] === 'full-width-background') {
+            $image_renderable['#item_attributes']['class'][] = 'rounded-0';
+          }
+
           $az_background_media[] = $image_renderable;
         }
       }
@@ -567,9 +573,15 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
           '#responsive_image_style_id' => 'az_full_width_background',
           '#item' => $media->get('thumbnail'),
           '#item_attributes' => [
-            'class' => ['img-fluid', 'rounded'],
+            'class' => ['img-fluid'],
           ],
         ];
+
+        // Remove rounded corners on full-width paragraphs.
+        if (isset($settings['full_width']) && $settings['full_width'] === 'full-width-background') {
+          $image_renderable['#item_attributes']['class'][] = 'rounded-0';
+        }
+
         $text_on_bottom = [
           '#type' => 'html_tag',
           '#tag' => 'div',
@@ -630,9 +642,15 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
           '#responsive_image_style_id' => 'az_full_width_background',
           '#item' => $media->get('field_media_az_image'),
           '#item_attributes' => [
-            'class' => ['img-fluid', 'rounded', ' w-100', 'invisible'],
+            'class' => ['img-fluid', ' w-100', 'invisible'],
           ],
         ];
+
+        // Remove rounded corners on full-width paragraphs.
+        if (isset($settings['full_width']) && $settings['full_width'] === 'full-width-background') {
+          $image_renderable['#item_attributes']['class'][] = 'rounded-0';
+        }
+
         $az_background_media[] = $image_renderable;
       }
 
@@ -644,9 +662,15 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
         '#responsive_image_style_id' => 'az_full_width_background',
         '#item' => $media->get('field_media_az_image'),
         '#item_attributes' => [
-          'class' => ['img-fluid', 'rounded'],
+          'class' => ['img-fluid'],
         ],
       ];
+
+      // Remove rounded corners on full-width paragraphs.
+      if (isset($settings['full_width']) && $settings['full_width'] === 'full-width-background') {
+        $image_renderable['#item_attributes']['class'][] = 'rounded-0';
+      }
+
       $text_on_bottom = [
         '#type' => 'html_tag',
         '#tag' => 'div',

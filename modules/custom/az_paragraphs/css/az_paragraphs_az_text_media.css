@@ -7,6 +7,9 @@
 .text-on-media-bottom img {
   width: 100%;
 }
+.paragraph--type--az-text-media:not(.full-width-background) .text-on-media-bottom.text-on-video {
+  border-radius: var(--bs-border-radius) !important;
+}
 .text-on-media-bottom.text-on-video img {
   opacity:0;
 }
