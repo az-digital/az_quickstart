@@ -131,7 +131,7 @@ class AZEntityRoleReferenceItem extends EntityReferenceItem implements OptionsPr
     $list = array_map('trim', $list);
     $list = array_filter($list, 'strlen');
 
-    foreach ($list as $position => $text) {
+    foreach ($list as $text) {
       $matches = [];
       if (preg_match('/(.*)\|(.*)/', $text, $matches)) {
         // Trim key and value to avoid unwanted spaces issues.

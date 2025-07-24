@@ -1,5 +1,7 @@
 <?php
 
+// phpcs:disable DrupalPractice.Commenting.AuthorTag.AuthorFound
+
 namespace Drupal\az_publication_bibtex\Processor;
 
 use RenanBr\BibTexParser\Processor\TagCoverageTrait;

@@ -59,7 +59,6 @@ class NodeWithFieldCollection extends D7Node {
     // Get Item Id and revision Id of paragraph.
     $nid = $row->getSourceProperty('nid');
     $vid = $row->getSourceProperty('vid');
-    $type = $row->getSourceProperty('type');
 
     // Checking the field collection fields present in the paragraph.
     if (!empty($row->getSourceProperty('field_collection_names'))) {
