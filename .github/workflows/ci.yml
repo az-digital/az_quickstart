@@ -227,11 +227,14 @@ jobs:
         run: |
           cd az-quickstart-scaffolding
           php -S 172.17.0.1:8080 -t web &
-      - name: Ensure sites/simpletest directory
+      - name: Prepare test directories
         run: |
-          cd az-quickstart-scaffolding
-          mkdir -p web/sites/simpletest
-          chmod 777 web/sites/simpletest
+          mkdir -pv $GITHUB_WORKSPACE/az-quickstart-scaffolding/reports
+          mkdir -pv $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/sites/simpletest
+          mkdir -pv $BROWSERTEST_OUTPUT_DIRECTORY
+          chmod 755 $GITHUB_WORKSPACE/az-quickstart-scaffolding/reports
+          chmod 755 $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/sites/simpletest
+          chmod 755 $BROWSERTEST_OUTPUT_DIRECTORY
       - name: Run phpunit test (${{ matrix.test.file }})
         run: |
           $GITHUB_WORKSPACE/az-quickstart-scaffolding/vendor/bin/phpunit \
@@ -244,6 +247,7 @@ jobs:
           SYMFONY_DEPRECATIONS_HELPER: weak
           SIMPLETEST_DB: mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3306] }}/db
           SIMPLETEST_BASE_URL: http://172.17.0.1:8080
+          BROWSERTEST_OUTPUT_DIRECTORY: $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/sites/simpletest/browser_output
           MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--headless", "--no-sandbox"]}}, "http://127.0.0.1:${{ job.services.chromedriver.ports[9515] }}"]'
       - name: Upload PHPUnit Artifacts
         uses: actions/upload-artifact@v4
