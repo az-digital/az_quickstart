@@ -231,10 +231,10 @@ jobs:
         run: |
           mkdir -pv $GITHUB_WORKSPACE/az-quickstart-scaffolding/reports
           mkdir -pv $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/sites/simpletest
-          mkdir -pv $BROWSERTEST_OUTPUT_DIRECTORY
+          mkdir -pv $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/sites/simpletest/browser_output
           chmod 755 $GITHUB_WORKSPACE/az-quickstart-scaffolding/reports
           chmod 755 $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/sites/simpletest
-          chmod 755 $BROWSERTEST_OUTPUT_DIRECTORY
+          chmod 755 $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/sites/simpletest/browser_output
       - name: Run phpunit test (${{ matrix.test.file }})
         run: |
           $GITHUB_WORKSPACE/az-quickstart-scaffolding/vendor/bin/phpunit \
