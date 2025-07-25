@@ -20,7 +20,7 @@
 <div{{ attributes }}>
   {# Button trigger modal #}
   <button type="button" class="btn btn-hollow-primary btn-sm d-flex mr-2" style="text-transform: none" data-toggle="modal" data-target="#{{ modal }}">
-    <span aria-hidden="true" class="material-icons-sharp mr-2">event</span>
+    <span aria-hidden="true" class="material-symbols-rounded mr-2">event</span>
     <span class="my-auto">{{ 'Add to Calendar'|t }}</span>
   </button>
 
@@ -34,7 +34,7 @@
             <p class="mb-0">{{ title }}</p>
             <p class="mb-0">{{ start_date|date('g:i a, F j, Y') }}</p>
           </div>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>

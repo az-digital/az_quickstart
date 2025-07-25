@@ -42,7 +42,7 @@ class AZCardsParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#type' => 'select',
       '#options' => [
         'card' => $this->t('Bordered cards'),
-        'card card-borderless' => $this->t('Borderless cards'),
+        'card border-0' => $this->t('Borderless cards'),
       ],
       '#default_value' => $config['card_style'] ?? 'card',
       '#description' => $this->t('Select a card style.'),

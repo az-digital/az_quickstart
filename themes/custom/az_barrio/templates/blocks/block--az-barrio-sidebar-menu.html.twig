@@ -43,7 +43,7 @@
 <nav role="navigation" aria-labelledby="{{ heading_id }}"{{ attributes.addClass(classes)|without('role', 'aria-labelledby') }}>
   {# Label. If not displayed, we still provide it for screen readers. #}
   {% if not configuration.label_display %}
-    {% set title_attributes = title_attributes.addClass('sr-only') %}
+    {% set title_attributes = title_attributes.addClass('visually-hidden') %}
   {% endif %}
   {% if content['#items'] %}
     {{ title_prefix }}
@@ -56,4 +56,3 @@
     {{ content }}
   {% endblock %}
 </nav>
-
