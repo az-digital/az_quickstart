@@ -231,8 +231,8 @@ jobs:
         run: |
           mkdir -pv $GITHUB_WORKSPACE/az-quickstart-scaffolding/reports
           mkdir -pv $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/sites/simpletest/browser_output
-          chmod -R 755 $GITHUB_WORKSPACE/az-quickstart-scaffolding/reports
-          chmod -R 755 $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/sites/simpletest
+          chmod -R 777 $GITHUB_WORKSPACE/az-quickstart-scaffolding/reports
+          chmod -R 777 $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/sites/simpletest
       - name: Run phpunit test (${{ matrix.test.file }})
         run: |
           $GITHUB_WORKSPACE/az-quickstart-scaffolding/vendor/bin/phpunit \
@@ -246,6 +246,7 @@ jobs:
           SIMPLETEST_DB: mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3306] }}/db
           SIMPLETEST_BASE_URL: http://172.17.0.1:8080
           BROWSERTEST_OUTPUT_DIRECTORY: ${{ github.workspace }}/az-quickstart-scaffolding/web/sites/simpletest/browser_output
+          BROWSERTEST_OUTPUT_VERBOSE: true
           MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--headless", "--no-sandbox"]}}, "http://127.0.0.1:${{ job.services.chromedriver.ports[9515] }}"]'
       - name: Upload PHPUnit Artifacts
         if: always()
@@ -253,8 +254,8 @@ jobs:
         with:
           name: phpunit-results-${{ matrix.test.name }}
           path: |
-            ./az-quickstart-scaffolding/reports/junit.xml
             ./az-quickstart-scaffolding/web/sites/simpletest/browser_output/
+            ./az-quickstart-scaffolding/reports/junit.xml
 
   install:
     name: drush site:install
