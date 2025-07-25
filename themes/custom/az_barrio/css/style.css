@@ -237,7 +237,7 @@ span.field-label {
   border-bottom-left-radius: var(--bs-pagination-border-radius);
 }
 
-.page-item:has(+ .pager__item--ellipsis.d-none) .page-link {
+.page-item:nth-last-child(2):has(+ .pager__item--ellipsis.d-none) .page-link {
   border-top-right-radius: var(--bs-pagination-border-radius);
   border-bottom-right-radius: var(--bs-pagination-border-radius);
 }
