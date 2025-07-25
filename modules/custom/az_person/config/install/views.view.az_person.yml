@@ -1412,7 +1412,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: "<div class=\"card mt-2\">\r\n   {{ field_az_media_image }}\r\n   <div class=\"card-body\">\r\n      {{ title }}\r\n      {{ field_az_titles }}\r\n      <div class=\"mt-3\">\r\n         {{ field_az_phones }}\r\n         {{ field_az_email }}\r\n      </div>\r\n   </div>\r\n</div>"
+            text: "<div class=\"card mt-2 overflow-hidden\">\r\n   {{ field_az_media_image }}\r\n   <div class=\"card-body\">\r\n      {{ title }}\r\n      {{ field_az_titles }}\r\n      <div class=\"mt-3\">\r\n         {{ field_az_phones }}\r\n         {{ field_az_email }}\r\n      </div>\r\n   </div>\r\n</div>"
             make_link: false
             path: ''
             absolute: false
@@ -2375,7 +2375,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: "<div class=\"card mt-2\">\r\n   {{ field_az_media_image }}\r\n   <div class=\"card-body\">\r\n      {{ title }}\r\n      {{ field_az_titles }}\r\n      <div class=\"mt-3\">\r\n         {{ field_az_phones }}<br>\r\n         {{ field_az_email }}\r\n      </div>\r\n   </div>\r\n</div>"
+            text: "<div class=\"card mt-2 overflow-hidden\">\r\n   {{ field_az_media_image }}\r\n   <div class=\"card-body\">\r\n      {{ title }}\r\n      {{ field_az_titles }}\r\n      <div class=\"mt-3\">\r\n         {{ field_az_phones }}<br>\r\n         {{ field_az_email }}\r\n      </div>\r\n   </div>\r\n</div>"
             make_link: false
             path: ''
             absolute: false
