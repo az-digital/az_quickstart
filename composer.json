@@ -60,6 +60,7 @@
         "drupal/core-recommended": "10.4.8",
         "drupal/crop": "2.4.0",
         "drupal/date_ap_style": "2.0.2",
+        "drupal/decorative_image_widget": "1.0.2",
         "drupal/draggableviews": "2.1.4",
         "drupal/easy_breadcrumb": "2.0.9",
         "drupal/embed": "1.10.0",
