@@ -13,7 +13,7 @@ updates:
           - "version-update:semver-major"
           - "version-update:semver-minor"
 
-  # Composer udpates for 2.x branch
+  # Composer updates for 2.x branch
   - package-ecosystem: "composer"
     target-branch: "2.x"
     directory: "/"
