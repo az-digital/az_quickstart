@@ -76,7 +76,6 @@ install:
   - masquerade:masquerade
   - masquerade_log:masquerade_log
   - quick_node_clone:quick_node_clone
-  - decorative_image_widget:decorative_image_widget
 
 themes:
   - az_barrio
