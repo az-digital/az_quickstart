@@ -74,7 +74,7 @@ class PhoneProcess extends ProcessPluginBase implements ContainerFactoryPluginIn
         // Get default region.
         $region = $this->configFactory->get('system.date')->get('country.default') ?? 'US';
         $number = $util->parse($phone, $region);
-        $phone = $util->format($number, PhoneNumberFormat::E164);
+        $phone = $util->format($number, PhoneNumberFormat::NATIONAL);
       }
       catch (\Exception $e) {
         // If we couldn't match, just continue with the number as-is.
