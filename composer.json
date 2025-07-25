@@ -119,6 +119,7 @@
         "drupal/webform": "6.2.9",
         "drupal/workbench_access": "2.0.4",
         "drupal/xmlsitemap": "1.5.0",
+        "giggsey/libphonenumber-for-php": "^8.5",
         "jjj/chosen": "2.2.1",
         "kevinrob/guzzle-cache-middleware": "6.0.0",
         "npm-asset/blazy": "1.8.2",
