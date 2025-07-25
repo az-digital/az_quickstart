@@ -1,6 +1,6 @@
 version: 2
 updates:
-  # Composer udpates for main branch
+  # Composer updates for main branch
   - package-ecosystem: "composer"
     target-branch: "main"
     directory: "/"
