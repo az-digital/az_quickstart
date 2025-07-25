@@ -20,17 +20,18 @@ updates:
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 5
+    allow:
+      - dependency-name: "drupal/core*"
     ignore:
       - dependency-name: "drupal/core*"
         update-types:
           - "version-update:semver-major"
           - "version-update:semver-minor"
-      - dependency-name: "drupal/*"
-        update-types: ["version-update:semver-major"]
     labels:
       - "dependencies"
       - "php"
       - "2.x only"
+      - "Drupal"
 
   # GitHub Actions updates
   - package-ecosystem: "github-actions"
