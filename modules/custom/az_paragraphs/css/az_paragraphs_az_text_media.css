@@ -101,6 +101,7 @@
 }
 
 .az-aspect-ratio .column .az-full-width-column-content-wrapper {
+  width: 100%;
   align-self: center;
 }
 .region-content .container .az-full-width-row {
