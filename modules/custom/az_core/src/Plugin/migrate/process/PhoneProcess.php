@@ -2,10 +2,15 @@
 
 namespace Drupal\az_core\Plugin\migrate\process;
 
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\MigrateExecutableInterface;
+use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
+use libphonenumber\PhoneNumberUtil;
+use libphonenumber\PhoneNumberFormat;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Attempts to convert a string to a phone number.
@@ -23,7 +28,27 @@ use Drupal\migrate\Row;
   id: 'az_phone',
   handle_multiples: TRUE,
 )]
-class PhoneProcess extends ProcessPluginBase {
+class PhoneProcess extends ProcessPluginBase implements ContainerFactoryPluginInterface {
+
+  /**
+   * The config factory.
+   *
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
+   */
+  protected $configFactory;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $pluginId, $pluginDefinition, ?MigrationInterface $migration = NULL) {
+    $instance = new static(
+      $configuration,
+      $pluginId,
+      $pluginDefinition
+    );
+    $instance->configFactory = $container->get('config.factory');
+    return $instance;
+  }
 
   /**
    * {@inheritdoc}
@@ -44,12 +69,15 @@ class PhoneProcess extends ProcessPluginBase {
       // Profiles API phones are nested.
       $phone = $phone['number'] ?? $phone;
       // We'll attempt to do some formatting on the phone number.
-      // Match hoping to split up the relevant digits.
-      if (preg_match('/^(\+\d{1,2}\s?)?(\(?\d{3}\)?)[\s.-]?(\d{3})[\s.-]?(\d{4})$/', $phone, $formatted)) {
-        array_shift($formatted);
-        $number = vsprintf("%s (%s) %s-%s", $formatted);
-        // Area code might be empty.
-        $phone = trim(str_replace('()', '', $number));
+      try {
+        $util = PhoneNumberUtil::getInstance();
+        // Get default region.
+        $region = $this->configFactory->get('system.date')->get('country.default') ?? 'US';
+        $number = $util->parse($phone, $region);
+        $phone = $util->format($number, PhoneNumberFormat::E164);
+      }
+      catch (\Exception $e) {
+        // If we couldn't match, just continue with the number as-is.
       }
       $phones[] = $phone;
     }
