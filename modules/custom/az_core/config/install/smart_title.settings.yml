@@ -11,3 +11,4 @@ smart_title:
   - 'taxonomy_term:az_page_categories'
   - 'taxonomy_term:az_person_categories'
   - 'taxonomy_term:az_person_categories_secondary'
+  - 'taxonomy_term:az_publication_categories'
