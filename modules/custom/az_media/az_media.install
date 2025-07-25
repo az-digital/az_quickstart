@@ -15,3 +15,10 @@ function az_media_update_last_removed() {
   // Remove updates added before 2.6.0.
   return 9201;
 }
+
+  /**
+ * Enable decorative_image_widget module by default.
+ */
+function az_quickstart_update_1021303() {
+  \Drupal::service('module_installer')->install(['decorative_image_widget']);
+}
