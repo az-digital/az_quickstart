@@ -39,13 +39,13 @@ ul.az-horizontal-tabs > li.nav-item > a:hover {
 	border-radius: 0;
 }
 
-.az-person-modal .modal .close {
+/* .az-person-modal .modal .btn-close {
 	right: 0;
 	z-index: 30;
 	color: #ffffff;
 	text-shadow: none;
 	opacity: 1;
-}
+} */
 
 .az-person-modal .az-person-modal-close {
 	mix-blend-mode: difference;
