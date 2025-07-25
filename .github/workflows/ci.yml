@@ -253,7 +253,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: phpunit-results-${{ matrix.test.file }}
+          name: phpunit-results-${{ matrix.test.name }}
           path: |
             ./az-quickstart-scaffolding/reports/junit.xml
             ./az-quickstart-scaffolding/web/sites/simpletest/browser_output
