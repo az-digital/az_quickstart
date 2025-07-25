@@ -227,10 +227,3 @@ function az_quickstart_update_1021301() {
 function az_quickstart_update_1021302() {
   \Drupal::service('module_installer')->install(['quick_node_clone']);
 }
-
-/**
- * Enable decorative_image_widget module by default.
- */
-function az_quickstart_update_1021303() {
-  \Drupal::service('module_installer')->install(['decorative_image_widget']);
-}
