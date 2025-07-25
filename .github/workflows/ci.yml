@@ -256,7 +256,7 @@ jobs:
           name: phpunit-results-${{ matrix.test.name }}
           path: |
             ./az-quickstart-scaffolding/reports/junit.xml
-            ./az-quickstart-scaffolding/web/sites/simpletest/browser_output
+            ./az-quickstart-scaffolding/web/sites/simpletest/browser_output/
 
   install:
     name: drush site:install
