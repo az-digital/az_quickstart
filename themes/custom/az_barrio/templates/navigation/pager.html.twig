@@ -64,7 +64,7 @@
           {% set hide_ellipsis_class = ' d-none' %}
         {% endif %}
       {% endif %}
-      <li class="page-item pager__item--ellipsis{{ hide_ellipsis_class }}" aria-label="additional pages">&hellip;</li>
+      <li class="page-item pager__item--ellipsis{{ hide_ellipsis_class }}">&hellip;</li>
       {# Now generate the actual pager piece. #}
       {% for key, item in items.pages %}
         {% 
