@@ -425,9 +425,13 @@ a.btn.btn-redbar {
  * Search
  */
 .navbar-offcanvas .navbar-offcanvas-search .form-control {
-    height: 60px;
-    margin: 0;
-    border: none;
+  height: 60px;
+  margin: 0;
+  border: none;
+}
+
+#block-az-barrio-offcanvas-searchform .form-search {
+  height: unset;
 }
 
 #block-az-barrio-offcanvas-searchform .material-symbols-rounded {
@@ -435,7 +439,7 @@ a.btn.btn-redbar {
 }
 
 #block-az-barrio-offcanvas-searchform .btn {
-padding: 0.625rem .75rem;
+  padding: 0.25rem .75rem;
 }
 
 .search-block-form input {
