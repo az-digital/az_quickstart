@@ -16,7 +16,7 @@ function az_media_update_last_removed() {
   return 9201;
 }
 
-  /**
+/**
  * Enable decorative_image_widget module by default.
  */
 function az_media_update_1021301() {
