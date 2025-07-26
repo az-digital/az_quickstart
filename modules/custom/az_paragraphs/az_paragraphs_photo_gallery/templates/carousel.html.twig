@@ -11,6 +11,14 @@
 #}
 
 <div id="{{ gallery }}" class="carousel slide az-gallery">
+  {# Carousel indicators #}
+  <div class="carousel-indicators">
+    {% for key, item in photos %}
+      {% if key|first != '#' %}
+        <button type="button" data-bs-target="#{{ gallery }}" data-bs-slide-to="{{ loop.index0 }}" {% if loop.first %}class="active" aria-current="true"{% endif %} aria-label="Slide {{ loop.index }}"></button>
+      {% endif %}
+    {% endfor %}
+  </div>
   <div class="carousel-inner h-100">
     {% for key, item in photos %}
       {% if key|first != '#' %}
