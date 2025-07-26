@@ -90,7 +90,7 @@
               {% for key, item in paragraph.field_az_photos %}
                 <button type="button" data-bs-target="#{{ gallery }}" data-bs-slide-to="{{ key }}"{% if key == 0 %} class="active" aria-current="true"{% endif %} aria-label="Slide {{ key + 1 }}"></button>
               {% endfor %}
-            </ol>
+            </div>
             <div class="carousel-inner{% if grid %} az-gallery-inner{% endif %}">
               {% for key, item in paragraph.field_az_photos %}
                 {% if key|first != '#' %}
