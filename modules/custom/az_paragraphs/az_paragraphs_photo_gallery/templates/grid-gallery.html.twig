@@ -1,0 +1,51 @@
+{#
+/**
+ * @file
+ * Template for grid photo gallery display.
+ *
+ * Available variables:
+ * - photos: Array of photo entities
+ * - modal: Unique ID for the modal element
+ * - gallery: Unique ID for the carousel element
+ */
+#}
+
+<div class="az-gallery-container container">
+  <div class="row g-1">
+    {# Grid thumbnails #}
+    {% for key, item in photos %}
+      {% if key|first != '#' %}
+        {% set thumbnail_image = {
+          '#theme': 'image_style',
+          '#style_name': 'az_card_image',
+          '#uri': item.entity.field_media_az_image.0.entity.uri.value,
+          '#alt': item.entity.field_media_az_image.alt,
+          '#attributes': { class: ['photo-gallery-grid-img'] },
+        } %}
+        <div class="col-sm-6 col-md-4 col-lg-3" data-bs-toggle="modal" data-bs-target="#{{ modal }}">
+          <a role="button" data-bs-target="#{{ gallery }}" data-bs-slide-to="{{ loop.index0 }}">
+            <picture class="card-img img-fluid">{{ thumbnail_image }}</picture>
+          </a>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  {# Modal with carousel #}
+  <div id="{{ modal }}" class="modal fade az-gallery-modal" tabindex="-1" role="dialog" aria-label="Photo Gallery Modal" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+      <div class="modal-content text-bg-transparent-black">
+        <div class="modal-header border-0">
+          <button type="button" data-bs-theme="dark" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          {% include '@az_paragraphs_photo_gallery/carousel.html.twig' with {
+            'photos': photos,
+            'gallery': gallery,
+            'style_name': 'az_natural'
+          } %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
