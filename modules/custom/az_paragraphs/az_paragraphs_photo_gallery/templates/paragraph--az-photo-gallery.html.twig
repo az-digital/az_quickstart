@@ -86,6 +86,11 @@
                 <span aria-hidden="true">×</span>
               </button>
             {% endif %}
+            <ol class="carousel-indicators">
+              {% for key, item in paragraph.field_az_photos %}
+                <li data-target="#{{ gallery }}" data-slide-to="{{ key }}"{% if key == 0 %} class="active"{% endif %} aria-label="Slide {{ key + 1 }}"></li>
+              {% endfor %}
+            </ol>
             <div class="carousel-inner{% if grid %} az-gallery-inner{% endif %}">
               {% for key, item in paragraph.field_az_photos %}
                 {% if key|first != '#' %}
