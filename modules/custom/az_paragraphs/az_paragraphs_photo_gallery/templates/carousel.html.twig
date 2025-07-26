@@ -1,0 +1,59 @@
+{#
+/**
+ * @file
+ * Reusable carousel component for photo galleries.
+ *
+ * Available variables:
+ * - photos: Array of photo entities
+ * - gallery: Unique ID for the carousel element
+ * - style_name: Image style to use for the carousel images
+ */
+#}
+
+<div id="{{ gallery }}" class="carousel slide az-gallery">
+  <div class="carousel-inner h-100">
+    {% for key, item in photos %}
+      {% if key|first != '#' %}
+        {% set carousel_image = {
+          '#theme': 'image_style',
+          '#style_name': style_name,
+          '#uri': item.entity.field_media_az_image.0.entity.uri.value,
+          '#alt': item.entity.field_media_az_image.alt,
+          '#attributes': { class: ['h-100', 'w-100', 'object-fit-contain'] },
+        } %}
+
+        <div class="carousel-item az-gallery-item h-100{% if loop.first %} active{% endif %}">
+          <div class="d-flex flex-column h-100 justify-content-center">
+            <div class="carousel-image az-gallery-image">
+              <div class="h-100">{{ carousel_image }}</div>
+            </div>
+
+            {# Caption and credit #}
+            {% set caption = item.entity.field_az_caption.value %}
+            {% set credit = item.entity.field_az_credit.value %}
+            {% if caption or credit %}
+              <div class="carousel-caption az-gallery-caption">
+                {% if caption %}
+                  <p class="mb-0">{{ caption }}</p>
+                {% endif %}
+                {% if credit %}
+                  <cite class="small mb-0">{{ credit }}</cite>
+                {% endif %}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  {# Navigation controls #}
+  <button class="carousel-control-prev" type="button" data-bs-target="#{{ gallery }}" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#{{ gallery }}" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
