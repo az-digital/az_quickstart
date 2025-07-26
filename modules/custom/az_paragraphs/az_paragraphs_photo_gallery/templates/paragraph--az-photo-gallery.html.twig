@@ -61,7 +61,7 @@
                 {% if key|first != '#' %}
                   {% set modalimage = {
                     '#theme':      'image_style',
-                    '#style_name': 'az_card_image',
+                    '#style_name': grid ? 'az_natural' : 'az_carousel_item',
                     '#uri':        item.entity.field_media_az_image.0.entity.uri.value,
                     '#alt':        item.entity.field_media_az_image.alt,
                     '#attributes': { class: [ 'photo-gallery-grid-img' ] },
