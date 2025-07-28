@@ -77,7 +77,7 @@ class CourseImportForm extends ConfigFormBase {
     $instance->courseSearch = $container->get('az_course.search');
     $instance->cron = $container->get('cron');
     $instance->keyValue = $container->get('keyvalue');
-    $instance->dateTime = $container->get('datetime.time');
+    $instance->time = $container->get('datetime.time');
     $instance->translation = $container->get('string_translation');
     return $instance;
   }
@@ -291,13 +291,7 @@ class CourseImportForm extends ConfigFormBase {
       $migration->setStatus(MigrationInterface::STATUS_IDLE);
     }
 
-    $executable = new MigrateExecutable(
-      $migration,
-      new MigrateMessage(),
-      $this->keyValue,
-      $this->time,
-      $this->translation,
-    );
+    $executable = new MigrateExecutable($migration, new MigrateMessage());
     $result = $executable->rollback();
 
     if ($result === MigrationInterface::RESULT_COMPLETED) {
