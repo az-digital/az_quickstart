@@ -94,7 +94,7 @@ final class AZFinderIcons {
     }
     $svg_render_template = [
       '#type' => 'inline_template',
-      '#template' => '<svg title="{{ title }}" xmlns="http://www.w3.org/2000/svg" width="{{ size }}" height="{{ size }}" viewBox="0 0 24 24"><path fill="{{ fill_color }}" d="{{ icon_path }}"/></svg>',
+      '#template' => '<svg title="{{ title }}" xmlns="http://www.w3.org/2000/svg" width="{{ size }}" height="{{ size }}" viewBox="0 -960 960 960"><path fill="{{ fill_color }}" d="{{ icon_path }}"/></svg>',
       '#context' => $attributes,
     ];
 
@@ -115,12 +115,12 @@ final class AZFinderIcons {
   protected function getIconPath($depth, $action): ?string {
     $icon_paths = [
       'expand' => [
-        '0' => 'M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6-1.41-1.41z',
-        '1' => 'M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z',
+        '0' => 'M480-362q-8 0-15-2.5t-13-8.5L268-557q-11-11-11.5-27.5T268-613q11-11 28-11t28 11l156 155 156-155q11-11 27.5-11.5T692-613q11 11 11 28t-11 28L508-373q-6 6-13 8.5t-15 2.5Z',
+        '1' => 'M440-440H240q-17 0-28.5-11.5T200-480q0-17 11.5-28.5T240-520h200v-200q0-17 11.5-28.5T480-760q17 0 28.5 11.5T520-720v200h200q17 0 28.5 11.5T760-480q0 17-11.5 28.5T720-440H520v200q0 17-11.5 28.5T480-200q-17 0-28.5-11.5T440-240v-200Z',
       ],
       'collapse' => [
-        '0' => 'm12 8-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14l-6-6z',
-        '1' => 'M19 13H5v-2h14v2z',
+        '0' => 'M480-528 324-373q-11 11-27.5 11.5T268-373q-11-11-11-28t11-28l184-184q6-6 13-8.5t15-2.5q8 0 15 2.5t13 8.5l184 184q11 11 11.5 27.5T692-373q-11 11-28 11t-28-11L480-528Z',
+        '1' => 'M240-440q-17 0-28.5-11.5T200-480q0-17 11.5-28.5T240-520h480q17 0 28.5 11.5T760-480q0 17-11.5 28.5T720-440H240Z',
       ],
     ];
 
