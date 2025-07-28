@@ -2,8 +2,11 @@
 
 namespace Drupal\az_course\Form;
 
+use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\KeyValueStore\KeyValueFactoryInterface;
+use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\az_course\CourseMigrateBatchExecutable;
 use Drupal\migrate\MigrateExecutable;
 use Drupal\migrate\MigrateMessage;
@@ -288,7 +291,7 @@ class CourseImportForm extends ConfigFormBase {
       $migration->setStatus(MigrationInterface::STATUS_IDLE);
     }
 
-    $executable = new MigrateBatchExecutable(
+    $executable = new MigrateExecutable(
       $migration,
       new MigrateMessage(),
       $this->keyValue,
