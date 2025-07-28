@@ -52,7 +52,7 @@ class AZEnterpriseAttributesImportForm extends ConfigFormBase {
     $instance = parent::create($container);
     $instance->pluginManagerMigration = $container->get('plugin.manager.migration');
     $instance->keyValue = $container->get('keyvalue');
-    $instance->dateTime = $container->get('datetime.time');
+    $instance->time = $container->get('datetime.time');
     $instance->translation = $container->get('string_translation');
     return $instance;
   }
