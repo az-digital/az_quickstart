@@ -28,12 +28,36 @@ class AZPublicationBibtexForm extends FormBase {
   protected $fileSystem;
 
   /**
+   * The key/value factory.
+   *
+   * @var \Drupal\Core\KeyValueStore\KeyValueFactoryInterface
+   */
+  protected KeyValueFactoryInterface $keyValue;
+
+  /**
+   * The time service.
+   *
+   * @var \Drupal\Component\Datetime\TimeInterface
+   */
+  protected TimeInterface $time;
+
+  /**
+   * The translation manager.
+   *
+   * @var \Drupal\Core\StringTranslation\TranslationInterface
+   */
+  protected TranslationInterface $translation;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
     $instance = parent::create($container);
     $instance->fileSystem = $container->get('file_system');
     $instance->pluginManagerMigration = $container->get('plugin.manager.migration');
+    $instance->keyValue = $container->get('keyvalue');
+    $instance->dateTime = $container->get('datetime.time');
+    $instance->translation = $container->get('string_translation');
     return $instance;
   }
 
@@ -95,7 +119,14 @@ class AZPublicationBibtexForm extends FormBase {
             ],
           ],
         ];
-        $executable = new MigrateBatchExecutable($migration, new MigrateMessage(), $options);
+        $executable = new MigrateBatchExecutable(
+          $migration,
+          new MigrateMessage(),
+          $this->keyValue,
+          $this->time,
+          $this->translation,
+          $options,
+        );
         $executable->batchImport();
       }
     }

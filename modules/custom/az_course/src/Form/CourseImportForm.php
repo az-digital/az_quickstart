@@ -44,6 +44,27 @@ class CourseImportForm extends ConfigFormBase {
   protected $courseSearch;
 
   /**
+   * The key/value factory.
+   *
+   * @var \Drupal\Core\KeyValueStore\KeyValueFactoryInterface
+   */
+  protected KeyValueFactoryInterface $keyValue;
+
+  /**
+   * The time service.
+   *
+   * @var \Drupal\Component\Datetime\TimeInterface
+   */
+  protected TimeInterface $time;
+
+  /**
+   * The translation manager.
+   *
+   * @var \Drupal\Core\StringTranslation\TranslationInterface
+   */
+  protected TranslationInterface $translation;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
@@ -52,6 +73,9 @@ class CourseImportForm extends ConfigFormBase {
     $instance->pluginManagerMigration = $container->get('plugin.manager.migration');
     $instance->courseSearch = $container->get('az_course.search');
     $instance->cron = $container->get('cron');
+    $instance->keyValue = $container->get('keyvalue');
+    $instance->dateTime = $container->get('datetime.time');
+    $instance->translation = $container->get('string_translation');
     return $instance;
   }
 
@@ -240,7 +264,14 @@ class CourseImportForm extends ConfigFormBase {
         ],
       ],
     ];
-    $executable = new CourseMigrateBatchExecutable($migration, new MigrateMessage(), $options);
+    $executable = new CourseMigrateBatchExecutable(
+      $migration,
+      new MigrateMessage(),
+      $this->keyValue,
+      $this->time,
+      $this->translation,
+      $options,
+    );
     $executable->batchImport();
   }
 
@@ -257,7 +288,13 @@ class CourseImportForm extends ConfigFormBase {
       $migration->setStatus(MigrationInterface::STATUS_IDLE);
     }
 
-    $executable = new MigrateExecutable($migration, new MigrateMessage());
+    $executable = new MigrateBatchExecutable(
+      $migration,
+      new MigrateMessage(),
+      $this->keyValue,
+      $this->time,
+      $this->translation,
+    );
     $result = $executable->rollback();
 
     if ($result === MigrationInterface::RESULT_COMPLETED) {

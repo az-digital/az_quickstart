@@ -22,11 +22,35 @@ class AZEnterpriseAttributesImportForm extends ConfigFormBase {
   protected $pluginManagerMigration;
 
   /**
+   * The key/value factory.
+   *
+   * @var \Drupal\Core\KeyValueStore\KeyValueFactoryInterface
+   */
+  protected KeyValueFactoryInterface $keyValue;
+
+  /**
+   * The time service.
+   *
+   * @var \Drupal\Component\Datetime\TimeInterface
+   */
+  protected TimeInterface $time;
+
+  /**
+   * The translation manager.
+   *
+   * @var \Drupal\Core\StringTranslation\TranslationInterface
+   */
+  protected TranslationInterface $translation;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
     $instance = parent::create($container);
     $instance->pluginManagerMigration = $container->get('plugin.manager.migration');
+    $instance->keyValue = $container->get('keyvalue');
+    $instance->dateTime = $container->get('datetime.time');
+    $instance->translation = $container->get('string_translation');
     return $instance;
   }
 
@@ -88,7 +112,14 @@ class AZEnterpriseAttributesImportForm extends ConfigFormBase {
       ];
 
       // Run the migration.
-      $executable = new MigrateBatchExecutable($migration, new MigrateMessage(), $options);
+      $executable = new MigrateBatchExecutable(
+        $migration,
+        new MigrateMessage(),
+        $this->keyValue,
+        $this->time,
+        $this->translation,
+        $options,
+      );
       $executable->batchImport();
     }
   }
