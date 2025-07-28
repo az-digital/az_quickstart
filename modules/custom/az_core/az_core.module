@@ -541,7 +541,12 @@ function az_core_preprocess_entity_embed_container(array &$variables) {
   if (isset($variables['element']['entity']['webform'])) {
     $embedded_webform_preview = $variables['element']['entity']['title'][0]['#context']['value'];
     if (\Drupal::routeMatch()->getRouteName() === 'entity.node.edit_form') {
-      $variables["children"] = Markup::create('<hr><p><h3>' . $embedded_webform_preview . ' (Preview)</h3></p><hr>');
+      // Get the view builder for the entity.
+      $entity = $variables["element"]['#entity'];
+      $type_id = $entity->getEntityTypeId();
+      $builder = \Drupal::entityTypeManager()->getViewBuilder($type_id);
+      // Render the entity as a teaser.
+      $variables['children'] = $builder->view($entity, 'teaser');    
     }
   }
 }
