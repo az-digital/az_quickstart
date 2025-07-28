@@ -2,11 +2,8 @@
 
 namespace Drupal\az_course;
 
-use Drupal\Component\Datetime\TimeInterface;
 use Drupal\migrate\MigrateMessage;
 use Drupal\migrate_tools\MigrateBatchExecutable;
-use Drupal\Core\KeyValueStore\KeyValueFactoryInterface;
-use Drupal\Core\StringTranslation\TranslationInterface;
 
 /**
  * Defines a migrate executable class for multi-URL batches.
@@ -47,10 +44,6 @@ class CourseMigrateBatchExecutable extends MigrateBatchExecutable {
           '\Drupal\az_course\CourseMigrateBatchExecutable::batchProcessImport',
           [
             $migration->id(),
-            new MigrateMessage(),
-            $this->keyValue,
-            $this->time,
-            $this->translation,
             [
               'configuration' => ['source' => ['urls' => [$url]]],
             ],
@@ -68,15 +61,7 @@ class CourseMigrateBatchExecutable extends MigrateBatchExecutable {
 
   /**
    * @phpstan-ignore-next-line */
-  public static function batchProcessImport(
-    $migration_id,
-    MigrateMessage $message,
-    KeyValueFactoryInterface $key_value,
-    TimeInterface $date_time,
-    TranslationInterface $translation,
-    array $options,
-    &$context
-  ): void {
+  public static function batchProcessImport($migration_id, array $options, &$context): void {
     if (empty($context['sandbox'])) {
       $context['finished'] = 0;
       $context['sandbox'] = [];
@@ -100,9 +85,9 @@ class CourseMigrateBatchExecutable extends MigrateBatchExecutable {
     $executable = new CourseMigrateBatchExecutable(
       $migration,
       $message,
-      $key_value,
-      $time,
-      $translation,
+      \Drupal::getContainer()->get('keyvalue'),
+      \Drupal::getContainer()->get('datetime.time'),
+      \Drupal::getContainer()->get('string_translation'),
       $options,
     );
 
