@@ -68,7 +68,8 @@ class CourseMigrateBatchExecutable extends MigrateBatchExecutable {
     KeyValueFactoryInterface $key_value,
     TimeInterface $date_time,
     TranslationInterface $translation,
-    array $options, &$context
+    array $options,
+    &$context
   ): void {
     if (empty($context['sandbox'])) {
       $context['finished'] = 0;
