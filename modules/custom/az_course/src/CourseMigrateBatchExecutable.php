@@ -74,20 +74,21 @@ class CourseMigrateBatchExecutable extends MigrateBatchExecutable {
     // Prepare the migration executable.
     $message = new MigrateMessage();
     /** @var \Drupal\migrate\Plugin\MigrationInterface $migration */
-    $migration = \Drupal::getContainer()->get('plugin.manager.migration')->createInstance($migration_id, $options['configuration'] ?? []);
+    $migration = \Drupal::service('plugin.manager.migration')->createInstance($migration_id, $options['configuration'] ?? []);
     unset($options['configuration']);
 
     // Each batch run we need to reinitialize the counter for the migration.
-    if (!empty($options['limit']) && isset($context['results'][$migration->id()]['@numitems'])) {
-      $options['limit'] = $options['limit'] - $context['results'][$migration->id()]['@numitems'];
+    if (!empty($options['limit']) && isset($context['results'][$migration->id()]['@numItems'])) {
+      $options['limit'] = $options['limit'] - $context['results'][$migration->id()]['@numItems'];
     }
 
     $executable = new CourseMigrateBatchExecutable(
       $migration,
       $message,
-      \Drupal::getContainer()->get('keyvalue'),
-      \Drupal::getContainer()->get('datetime.time'),
-      \Drupal::getContainer()->get('string_translation'),
+      \Drupal::service('keyvalue'),
+      \Drupal::time(),
+      \Drupal::service('string_translation'),
+      \Drupal::service('plugin.manager.migration'),
       $options,
     );
 
@@ -95,7 +96,7 @@ class CourseMigrateBatchExecutable extends MigrateBatchExecutable {
       $context['sandbox']['total'] = $executable->getSource()->count();
       $context['sandbox']['batch_limit'] = $executable->calculateBatchLimit($context);
       $context['results'][$migration->id()] = [
-        '@numitems' => 0,
+        '@numItems' => 0,
         '@created' => 0,
         '@updated' => 0,
         '@failures' => 0,
@@ -115,7 +116,7 @@ class CourseMigrateBatchExecutable extends MigrateBatchExecutable {
 
     // Store the result; will need to combine the results of all our iterations.
     $context['results'][$migration->id()] = [
-      '@numitems' => $context['results'][$migration->id()]['@numitems'] + $executable->getProcessedCount(),
+      '@numItems' => $context['results'][$migration->id()]['@numItems'] + $executable->getProcessedCount(),
       '@created' => $context['results'][$migration->id()]['@created'] + $executable->getCreatedCount(),
       '@updated' => $context['results'][$migration->id()]['@updated'] + $executable->getUpdatedCount(),
       '@failures' => $context['results'][$migration->id()]['@failures'] + $executable->getFailedCount(),
@@ -130,7 +131,7 @@ class CourseMigrateBatchExecutable extends MigrateBatchExecutable {
       $context['finished'] = 1;
     }
     else {
-      $context['sandbox']['counter'] = $context['results'][$migration->id()]['@numitems'];
+      $context['sandbox']['counter'] = $context['results'][$migration->id()]['@numItems'];
       if ($context['sandbox']['counter'] <= $context['sandbox']['total']) {
         $context['finished'] = ((float) $context['sandbox']['counter'] / (float) $context['sandbox']['total']);
         $context['message'] = t('Importing %migration (@percent%).', [
