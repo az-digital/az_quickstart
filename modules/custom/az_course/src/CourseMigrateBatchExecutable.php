@@ -45,7 +45,12 @@ class CourseMigrateBatchExecutable extends MigrateBatchExecutable {
       foreach ($urls as $url) {
         $operations[] = [
           '\Drupal\az_course\CourseMigrateBatchExecutable::batchProcessImport',
-          [$migration->id(),
+          [
+            $migration->id(),
+            new MigrateMessage(),
+            $this->keyValue,
+            $this->time,
+            $this->translation,
             [
               'configuration' => ['source' => ['urls' => [$url]]],
             ],
@@ -65,6 +70,7 @@ class CourseMigrateBatchExecutable extends MigrateBatchExecutable {
    * @phpstan-ignore-next-line */
   public static function batchProcessImport(
     $migration_id,
+    MigrateMessage $message,
     KeyValueFactoryInterface $key_value,
     TimeInterface $date_time,
     TranslationInterface $translation,
