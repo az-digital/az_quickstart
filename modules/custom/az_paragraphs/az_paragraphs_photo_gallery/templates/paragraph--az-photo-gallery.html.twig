@@ -52,93 +52,22 @@
 {% block paragraph %}
   <div{{ attributes.addClass(classes) }}>
     {% block content %}
-      <div class="az-gallery-container{% if grid %} container{% else %} text-bg-gray-900 p-2{% endif %}">
-        <div class="{% if grid %}row{% else %}ratio ratio-4x3{% endif %}">
-          {% if content.field_az_photos[0] %}
-            {% if grid %}
-              {# Render the images for the grid display. #}
-              {% for key, item in paragraph.field_az_photos %}
-                {% if key|first != '#' %}
-                  {% set modalimage = {
-                    '#theme':      'image_style',
-                    '#style_name': grid ? 'az_natural' : 'az_carousel_item',
-                    '#uri':        item.entity.field_media_az_image.0.entity.uri.value,
-                    '#alt':        item.entity.field_media_az_image.alt,
-                    '#attributes': { class: [ 'photo-gallery-grid-img' ] },
-                  } %}
-                  <div class="col-sm-6 col-md-4 col-lg-3 px-min" data-bs-toggle="modal" data-bs-target="#{{ modal }}">
-                    <a role="button" data-bs-target="#{{ gallery }}" data-bs-slide-to="{{ loop.index0 }}">
-                      <picture class="card-img img-fluid">
-                        {{ modalimage }}
-                      </picture>
-                    </a>
-                  </div>
-                {% endif %}
-              {% endfor %}
-              {# Modal elements for the grid display. #}
-              <div id="{{ modal }}" class="modal fade az-gallery-modal" tabindex="-1" role="dialog" aria-label="Photo Gallery Modal" aria-hidden="true">
-                <div class="modal-dialog modal-fullscreen">
-                  <div class="modal-content text-bg-transparent-black">
-                    <div class="modal-header border-0">
-                      <button type="button" data-bs-theme="dark" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-            {% endif %}
-            <div id="{{ gallery }}" class="carousel slide az-gallery">
-              <div class="carousel-inner h-100">
-                {% for key, item in paragraph.field_az_photos %}
-                  {% if key|first != '#' %}
-                    {# Create the image for this element. #}
-                    {% set imagestyle = {
-                      '#theme':      'image_style',
-                      '#style_name': 'az_large',
-                      '#uri':        item.entity.field_media_az_image.0.entity.uri.value,
-                      '#alt':        item.entity.field_media_az_image.alt,
-                      '#attributes': { class: [ 'h-100', 'w-100', 'object-fit-contain' ] },
-                    } %}
-                    {# Wrapper for the carousel item. #}
-                    <div class="carousel-item az-gallery-item h-100{% if loop.first %} active{% endif %}">
-                      <div class="d-flex flex-column h-100 justify-content-center">
-                        <div class="carousel-image az-gallery-image">
-                          <div class="h-100">
-                            {{ imagestyle }}
-                          </div>
-                        </div>
-                        {# Render the caption/credit area, if one exists. #}
-                        {% if (item.entity.field_az_caption.value) or (item.entity.field_az_credit.value) %}
-                          <div class="carousel-caption az-gallery-caption">
-                            {% if item.entity.field_az_caption.value %}
-                              <p class="mb-0">{{ item.entity.field_az_caption.value }}</p>
-                            {% endif %}
-                            {% if item.entity.field_az_credit.value %}
-                              <cite class="small mb-0">{{ item.entity.field_az_credit.value }}</cite>
-                            {% endif %}
-                          </div>
-                        {% endif %}
-                      </div>
-                    </div>
-                  {% endif %}
-                {% endfor %}
-              </div>
-              <button class="carousel-control-prev" type="button" data-bs-target="#{{ gallery }}" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-              </button>
-              <button class="carousel-control-next" type="button" data-bs-target="#{{ gallery }}" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-              </button>
-            </div>
-            {% if grid %}
-            {# Close modal elements for the grid display. #}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            {% endif %}
-          {% endif %}
-        </div>
-      </div>
+      {% if content.field_az_photos[0] %}
+        {% if grid %}
+          {# Grid display with modal #}
+          {% include '@az_paragraphs_photo_gallery/grid-gallery.html.twig' with {
+            'photos': paragraph.field_az_photos,
+            'modal': modal,
+            'gallery': gallery
+          } %}
+        {% else %}
+          {# Carousel display #}
+          {% include '@az_paragraphs_photo_gallery/carousel-gallery.html.twig' with {
+            'photos': paragraph.field_az_photos,
+            'gallery': gallery
+          } %}
+        {% endif %}
+      {% endif %}
     {% endblock %}
   </div>
 {% endblock paragraph %}

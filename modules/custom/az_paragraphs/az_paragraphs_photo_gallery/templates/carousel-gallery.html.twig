@@ -1,0 +1,20 @@
+{#
+/**
+ * @file
+ * Template for carousel photo gallery display.
+ *
+ * Available variables:
+ * - photos: Array of photo entities
+ * - gallery: Unique ID for the carousel element
+ */
+#}
+
+<div class="az-gallery-container text-bg-gray-900">
+  <div class="ratio ratio-4x3">
+    {% include '@az_paragraphs_photo_gallery/carousel.html.twig' with {
+      'photos': photos,
+      'gallery': gallery,
+      'style_name': 'az_carousel_item'
+    } %}
+  </div>
+</div>
