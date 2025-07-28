@@ -9,6 +9,7 @@ dependencies:
     - image.style.thumbnail
     - media.type.az_image
   module:
+    - decorative_image_widget
     - image_widget_crop
     - text
 id: media.az_image.media_library
@@ -56,7 +57,10 @@ content:
       progress_indicator: throbber
       crop_types_required: {  }
       show_crop_area: false
-    third_party_settings: {  }
+      show_default_crop: true
+    third_party_settings:
+      decorative_image_widget:
+        use_decorative_checkbox: true
 hidden:
   created: true
   name: true
