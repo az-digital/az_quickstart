@@ -81,7 +81,6 @@
 */
 .az-bef-checkboxes .checkbox {
   width: 100% !important;
-  display: flex;
   align-items: center;
   line-height: 1.25rem;
   margin-top: 0.75rem;
