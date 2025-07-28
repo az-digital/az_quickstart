@@ -5,7 +5,6 @@
  * Contains az_core.module.
  */
 
-use Drupal\Core\Render\Markup;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Extension\Exception\UnknownExtensionException;
 use Drupal\Core\Form\FormStateInterface;
@@ -546,7 +545,7 @@ function az_core_preprocess_entity_embed_container(array &$variables) {
       $type_id = $entity->getEntityTypeId();
       $builder = \Drupal::entityTypeManager()->getViewBuilder($type_id);
       // Render the entity as a teaser.
-      $variables['children'] = $builder->view($entity, 'teaser');    
+      $variables['children'] = $builder->view($entity, 'teaser');
     }
   }
 }
