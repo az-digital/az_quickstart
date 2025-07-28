@@ -128,6 +128,7 @@ class AZPublicationBibtexForm extends FormBase {
           $this->keyValue,
           $this->time,
           $this->translation,
+          $this->pluginManagerMigration,
           $options,
         );
         $executable->batchImport();
