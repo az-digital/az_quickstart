@@ -38,6 +38,7 @@
   padding-top: 0;
   margin-bottom: 0;
   padding-bottom: 0;
+  float: none;
 }
 
 .js-svg-replace-level-0 svg,
