@@ -1,3 +1,4 @@
+uuid: 9f1fb9d9-d78c-4e5e-9b3c-3a90b436fd15
 langcode: en
 status: true
 dependencies:
@@ -14,6 +15,7 @@ dependencies:
     - field.field.node.az_news.field_az_main_content
     - field.field.node.az_news.field_az_media_image
     - field.field.node.az_news.field_az_media_thumbnail_image
+    - field.field.node.az_news.field_az_metatag
     - field.field.node.az_news.field_az_news_tags
     - field.field.node.az_news.field_az_published
     - field.field.node.az_news.field_az_short_title
@@ -36,15 +38,21 @@ third_party_settings:
   field_group:
     group_card_clickable:
       children:
-        - group_link
+        - field_az_media_thumbnail_image
+        - group_heading
+        - group_text_muted
+        - group_summary
+        - group_read_more
       label: 'Card Clickable'
       parent_name: ''
       region: content
-      weight: 0
+      weight: 1
       format_type: html_element
       format_settings:
-        classes: 'card card-borderless card-clickable mb-4'
+        classes: 'card card-borderless card-clickable mb-4 hover hover-img-zoom-in'
+        show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -54,19 +62,17 @@ third_party_settings:
         speed: fast
     group_link:
       children:
-        - field_az_media_thumbnail_image
-        - group_heading
-        - group_text_muted
-        - group_summary
-        - group_read_more
+        - az_news_read_more
       label: Link
-      parent_name: group_card_clickable
+      parent_name: group_read_more_text
       region: content
-      weight: 4
+      weight: 8
       format_type: link
       format_settings:
-        classes: 'card-body p-0'
+        classes: 'card-body p-0 stretched-link'
+        show_empty_fields: false
         id: ''
+        label_as_html: false
         target: custom_uri
         custom_uri: '[node:az-canonical-url]'
         target_attribute: default
@@ -74,9 +80,9 @@ third_party_settings:
       children:
         - smart_title
       label: Heading
-      parent_name: group_link
+      parent_name: group_card_clickable
       region: content
-      weight: 2
+      weight: 7
       format_type: html_element
       format_settings:
         classes: 'card-title text-midnight h5 mb-0'
@@ -92,9 +98,9 @@ third_party_settings:
       children:
         - field_az_published
       label: 'Text Muted'
-      parent_name: group_link
+      parent_name: group_card_clickable
       region: content
-      weight: 3
+      weight: 8
       format_type: html_element
       format_settings:
         classes: 'text-muted font-weight-normal small mt-2'
@@ -110,9 +116,9 @@ third_party_settings:
       children:
         - field_az_summary
       label: Summary
-      parent_name: group_link
+      parent_name: group_card_clickable
       region: content
-      weight: 4
+      weight: 9
       format_type: html_element
       format_settings:
         classes: 'card-text font-weight-normal mt-2'
@@ -128,9 +134,9 @@ third_party_settings:
       children:
         - group_read_more_text
       label: 'Read more'
-      parent_name: group_link
+      parent_name: group_card_clickable
       region: content
-      weight: 5
+      weight: 10
       format_type: html_element
       format_settings:
         classes: 'card-clickable-link mt-2'
@@ -145,11 +151,11 @@ third_party_settings:
         speed: fast
     group_read_more_text:
       children:
-        - az_news_read_more
+        - group_link
       label: 'Read more text'
       parent_name: group_read_more
       region: content
-      weight: 6
+      weight: 9
       format_type: html_element
       format_settings:
         classes: 'text-chili text-left'
@@ -162,6 +168,8 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
+_core:
+  default_config_hash: 3k-6zSnyWMEOzsuNfd1XigJ4DC5T0xCyxm6SaZRh2s0
 id: node.az_news.az_card
 targetEntityType: node
 bundle: az_news
@@ -170,7 +178,7 @@ content:
   az_news_read_more:
     settings: {  }
     third_party_settings: {  }
-    weight: 7
+    weight: 9
     region: content
   field_az_media_thumbnail_image:
     type: entity_reference_entity_view
@@ -179,7 +187,7 @@ content:
       view_mode: az_card_image
       link: false
     third_party_settings: {  }
-    weight: 0
+    weight: 6
     region: content
   field_az_published:
     type: timestamp_ap_style
@@ -195,8 +203,10 @@ content:
       time_before_date: 0
       use_all_day: 0
       capitalize_noon_and_midnight: 0
+      month_only: 0
+      hide_date: 0
     third_party_settings: {  }
-    weight: 5
+    weight: 6
     region: content
   field_az_summary:
     type: az_text_summary
@@ -221,6 +231,7 @@ hidden:
   field_az_link: true
   field_az_main_content: true
   field_az_media_image: true
+  field_az_metatag: true
   field_az_news_tags: true
   field_az_short_title: true
   field_az_subheading: true

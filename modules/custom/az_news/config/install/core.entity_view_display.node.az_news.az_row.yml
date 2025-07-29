@@ -1,3 +1,4 @@
+uuid: 4019014b-ee0c-4080-9b1e-a68066c53609
 langcode: en
 status: true
 dependencies:
@@ -14,6 +15,7 @@ dependencies:
     - field.field.node.az_news.field_az_main_content
     - field.field.node.az_news.field_az_media_image
     - field.field.node.az_news.field_az_media_thumbnail_image
+    - field.field.node.az_news.field_az_metatag
     - field.field.node.az_news.field_az_news_tags
     - field.field.node.az_news.field_az_published
     - field.field.node.az_news.field_az_short_title
@@ -98,6 +100,7 @@ third_party_settings:
         classes: 'media-body text-decoration-none text-dark-silver font-weight-normal col d-flex flex-column'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -108,7 +111,7 @@ third_party_settings:
     group_media_right:
       children:
         - field_az_media_image
-      label: 'Media'
+      label: Media
       parent_name: group_media
       region: content
       weight: 21
@@ -152,6 +155,9 @@ third_party_settings:
         - text-midnight
         - my-0
         - font-weight-bold
+        - mt-4
+_core:
+  default_config_hash: EGJLRskQDMPZ226yRht0nTMoXv5Q-KfekBi2BWCsNwo
 id: node.az_news.az_row
 targetEntityType: node
 bundle: az_news
@@ -183,6 +189,7 @@ content:
       display_noon_and_midnight: 0
       capitalize_noon_and_midnight: 0
       hide_date: 0
+      month_only: 0
     third_party_settings: {  }
     weight: 0
     region: content
@@ -210,6 +217,7 @@ hidden:
   field_az_link: true
   field_az_main_content: true
   field_az_media_thumbnail_image: true
+  field_az_metatag: true
   field_az_news_tags: true
   field_az_short_title: true
   field_az_summary: true
