@@ -63,7 +63,6 @@ content:
       progress_indicator: throbber
       crop_types_required: {  }
       show_crop_area: false
-      show_default_crop: true
     third_party_settings:
       decorative_image_widget:
         use_decorative_checkbox: true
