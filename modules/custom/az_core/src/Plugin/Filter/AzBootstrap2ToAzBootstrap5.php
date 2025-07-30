@@ -20,6 +20,7 @@ use Masterminds\HTML5;
   type: FilterInterface::TYPE_TRANSFORM_IRREVERSIBLE
 )]
 class AzBootstrap2ToAzBootstrap5 extends FilterBase {
+
   /**
    * {@inheritdoc}
    */
