@@ -64,7 +64,7 @@
           {% set hide_ellipsis_class = ' d-none' %}
         {% endif %}
       {% endif %}
-      <li class="page-item pager__item--ellipsis{{ hide_ellipsis_class }}" role="presentation">&hellip;</li>
+      <li class="page-item pager__item--ellipsis{{ hide_ellipsis_class }}">&hellip;</li>
       {# Now generate the actual pager piece. #}
       {% for key, item in items.pages %}
         {% 
@@ -98,7 +98,7 @@
           {% set hide_ellipsis_class = ' d-none' %}
         {% endif %}
       {% endif %}
-      <li class="page-item pager__item--ellipsis{{ hide_ellipsis_class }}" role="presentation">&hellip;</li>
+      <li class="page-item pager__item--ellipsis{{ hide_ellipsis_class }}">&hellip;</li>
       {# Print next item if we are not on the last page. #}
       {% if items.next %}
         <li class="page-item pager__item--next hide-pager-item-mobile">
