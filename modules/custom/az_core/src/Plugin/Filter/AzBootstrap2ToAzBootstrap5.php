@@ -84,6 +84,7 @@ class AzBootstrap2ToAzBootstrap5 extends FilterBase {
       'btn-block' => 'w-100',
       'ml-auto' => 'ms-auto',
       'mr-auto' => 'me-auto',
+      'bold' => 'fw-bold',
       // Add more as needed...
     ];
 
