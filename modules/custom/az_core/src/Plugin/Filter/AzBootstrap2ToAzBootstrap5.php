@@ -81,6 +81,9 @@ class AzBootstrap2ToAzBootstrap5 extends FilterBase {
       'sr-only' => 'visually-hidden',
       'text-left' => 'text-start',
       'text-right' => 'text-end',
+      'btn-block' => 'w-100',
+      'ml-auto' => 'ms-auto',
+      'mr-auto' => 'me-auto',
       // Add more as needed...
     ];
 
