@@ -47,12 +47,18 @@ class MobileNavController implements ContainerInjectionInterface {
    *
    * @param string $menu_root
    *   The menu link ID for the root of the nav menu.
+   * @param string $current_page
+   *   The menu link ID for the current page.
    *
    * @return \Drupal\Core\Ajax\AjaxResponse
    *   An AjaxResponse object.
    */
-  public function mobileNavCallback($menu_root = '') {
-    $mobile_nav_block = $this->blockManager->createInstance('mobile_nav_block', ['menu_root' => $menu_root]);
+  public function mobileNavCallback($menu_root = '', $current_page = 'none') {
+    $mobile_nav_block = $this->blockManager->createInstance('mobile_nav_block',
+      [
+        'menu_root' => $menu_root,
+        'current_page' => $current_page,
+      ]);
     $mobile_nav_block_build = $mobile_nav_block->build();
 
     $response = new AjaxResponse();

@@ -62,11 +62,11 @@ class AzBarrioAdminTest extends QuickstartFunctionalTestBase {
     $this->drupalGet('admin/structure/block');
     $this->cssSelect('ul[data-drupal-selector="edit-blocks-az-barrio-main-menu-operations"] li.disable a')[0]->click();
     $this->drupalGet('');
-    $this->assertSession()->elementExists('css', '#navbar-top.navbar-offcanvas.no-navigation-region');
+    $this->assertSession()->elementExists('css', '#navbar-top.navbar.no-navigation-region');
     $this->drupalGet('admin/structure/block');
     $this->cssSelect('ul[data-drupal-selector="edit-blocks-az-barrio-main-menu-operations"] li.enable a')[0]->click();
     $this->drupalGet('');
-    $this->assertSession()->elementExists('css', '#navbar-top.navbar-offcanvas.has-navigation-region');
+    $this->assertSession()->elementExists('css', '#navbar-top.navbar.has-navigation-region');
 
     // Tests that the Arizona Barrio theme can be uninstalled.
     $this->drupalGet('admin/appearance');

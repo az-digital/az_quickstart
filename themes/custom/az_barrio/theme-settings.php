@@ -341,19 +341,18 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   // Remove Navbar options.
   $form['affix']['navbar_top'] = [];
   $form['affix']['navbar'] = [];
-  $form['components']['navbar'] = [];
   // Components.
-  $form['components']['navbar_offcanvas'] = [
+  $form['components']['navbar'] = [
     '#type' => 'details',
-    '#title' => t('Navbar with Off Canvas Drawer for mobile devices.'),
+    '#title' => t('Navbar for primary navigation on desktop devices.'),
     '#collapsible' => TRUE,
     '#collapsed' => TRUE,
   ];
-  $form['components']['navbar_offcanvas']['az_barrio_navbar_offcanvas'] = [
+  $form['components']['navbar']['az_barrio_navbar'] = [
     '#type' => 'checkbox',
-    '#title' => t('Use Navbar Off Canvas'),
-    '#description' => t('Check to use the Arizona Bootstrap Off Canvas Navbar instead of the bootstrap navbar.'),
-    '#default_value' => theme_get_setting('az_barrio_navbar_offcanvas'),
+    '#title' => t('Use Arizona Bootstrap Navbar'),
+    '#description' => t('Check to use the Arizona Bootstrap Navbar instead of the Bootstrap Navbar.'),
+    '#default_value' => theme_get_setting('az_barrio_navbar'),
   ];
   // Logos.
   $form['logo']['az_barrio_logo_svg_inline'] = [

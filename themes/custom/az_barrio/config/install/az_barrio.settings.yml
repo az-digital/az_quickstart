@@ -30,7 +30,7 @@ bootstrap_barrio_region_clean_footer_sub: false
 bootstrap_barrio_region_clean_footer_sub_menus: true
 bootstrap_barrio_region_clean_az_page_bottom: false
 bootstrap_barrio_region_class_alert: ''
-bootstrap_barrio_region_class_header_ua_utilities: 'ms-auto d-none d-lg-block d-xl-block'
+bootstrap_barrio_region_class_header_ua_utilities: 'd-none d-lg-flex col-auto'
 bootstrap_barrio_region_class_branding: ''
 bootstrap_barrio_region_class_header: col-md
 bootstrap_barrio_region_class_header_2: col-md
@@ -79,7 +79,7 @@ info_security_privacy: true
 copyright_notice: 'The Arizona Board of Regents on behalf of <a href="https://www.arizona.edu" target="_blank">The University of Arizona</a>.'
 az_hide_front_title: false
 az_back_to_top: true
-az_barrio_navbar_offcanvas: true
+az_barrio_navbar: true
 az_barrio_font: true
 az_bootstrap_source: cdn
 az_bootstrap_cdn_version: stable

@@ -47,7 +47,7 @@ class AzBarrioTest extends QuickstartFunctionalTestBase {
 
     // Tests that the navbar navigation region classes are set on install.
     $this->drupalGet('');
-    $this->assertSession()->elementExists('css', '#navbar-top.navbar-offcanvas.has-navigation-region');
+    $this->assertSession()->elementExists('css', '#navbar-top.navbar.has-navigation-region');
   }
 
 }

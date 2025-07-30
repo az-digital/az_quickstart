@@ -18,7 +18,7 @@ route_callbacks:
   - '\Drupal\az_core\Routing\Routes::routes'
 
 az_core.mobile_nav_callback:
-  path: '/az_core/mobile_nav_callback/{menu_root}'
+  path: '/az_core/mobile_nav_callback/{menu_root}/{current_page}'
   defaults:
     _controller: '\Drupal\az_core\Controller\MobileNavController::mobileNavCallback'
   requirements:
