@@ -256,6 +256,7 @@ jobs:
           path: |
             ./az-quickstart-scaffolding/web/sites/simpletest/browser_output/
             ./az-quickstart-scaffolding/reports/junit.xml
+            /tmp/chromedriver.log
 
   install:
     name: drush site:install
