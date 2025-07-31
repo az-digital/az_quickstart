@@ -10,8 +10,12 @@
     },
     {
       "filename" : "Small-PDF.pdf",
-      "description" : "A Small PDF",
       "uuid" : "5cec161c-71bc-4d23-824f-a692400ee17c"
+    },
+    {
+      "filename" : "PDF-with-Description.pdf",
+      "description" : "A PDF with a set description",
+      "uuid" : "5cec161c-71bc-4d23-824f-a692400ee17d"
     }
   ]
 }
