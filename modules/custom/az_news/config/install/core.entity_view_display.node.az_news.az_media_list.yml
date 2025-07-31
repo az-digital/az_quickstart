@@ -50,14 +50,16 @@ third_party_settings:
     group_text_muted:
       children:
         - field_az_published
-      label: 'Text Muted'
+      label: 'Text Body Secondary'
       parent_name: group_text_column
       region: content
       weight: 6
       format_type: html_element
       format_settings:
-        classes: 'text-muted font-weight-normal mb-4'
+        classes: 'text-body-secondary fw-normal mb-4'
+        show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -133,9 +135,10 @@ third_party_settings:
       weight: 9
       format_type: html_element
       format_settings:
-        classes: card-clickable-link
+        classes: ''
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: ''
@@ -186,8 +189,10 @@ third_party_settings:
       weight: 7
       format_type: html_element
       format_settings:
-        classes: 'card-text font-weight-normal'
+        classes: 'card-text fw-normal'
+        show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -204,8 +209,10 @@ third_party_settings:
       weight: 0
       format_type: html_element
       format_settings:
-        classes: 'card card-borderless card-clickable'
+        classes: 'card border-0'
+        show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -238,8 +245,6 @@ third_party_settings:
       smart_title__link: false
       smart_title__tag: ''
       smart_title__classes: {  }
-_core:
-  default_config_hash: wiGk8VkjnDXHb6tiQUkpDyG5DEayIZrST3OJ8OckMdU
 id: node.az_news.az_media_list
 targetEntityType: node
 bundle: az_news
@@ -301,7 +306,6 @@ hidden:
   field_az_link: true
   field_az_main_content: true
   field_az_media_image: true
-  field_az_metatag: true
   field_az_news_tags: true
   field_az_short_title: true
   field_az_subheading: true
