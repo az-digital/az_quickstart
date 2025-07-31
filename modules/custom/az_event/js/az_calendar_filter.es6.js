@@ -191,7 +191,7 @@
           );
           $buttonWrapper
             .find('.calendar-filter-button')
-            .on('click', function (e) {
+            .on('click', (e) => {
               const $pressed = $(e.currentTarget);
               const current = new Date(Date.now());
               const today = new Date(
