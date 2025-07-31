@@ -26,6 +26,13 @@ function az_paragraphs_splitscreen_update_1021401(&$sandbox) {
     $sandbox['total'] = $count;
     $sandbox['current'] = 0;
     $sandbox['updated_count'] = 0;
+    // If there are no paragraphs to be updated, set the finished flag to 1.
+    if (empty($sandbox['total'])) {
+      \Drupal::messenger()
+        ->addMessage('No splitscreen paragraphs found.');
+      $sandbox['#finished'] = 1;
+      return;
+    }
   }
 
   $paragraphs_per_batch = 25;
