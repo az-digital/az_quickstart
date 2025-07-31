@@ -189,39 +189,37 @@
               '<button type="button" class="btn btn-outline-blue calendar-filter-button calendar-filter-week">This Week</button>' +
               '<button type="button" class="btn btn-outline-blue calendar-filter-button calendar-filter-month mb-2">This Month</button></div>',
           );
-          $buttonWrapper
-            .find('.calendar-filter-button')
-            .on('click', (e) => {
-              const $pressed = $(e.currentTarget);
-              const current = new Date(Date.now());
-              const today = new Date(
-                current.getFullYear(),
-                current.getMonth(),
-                current.getDate(),
-              );
-              const month = current.getMonth();
-              const year = current.getFullYear();
-              const day = current.getDay();
-              const diff = current.getDate() - day;
-              let startDay = today;
-              let endDay = today;
-              if ($pressed.hasClass('calendar-filter-week')) {
-                // Compute start and end days of the week.
-                startDay = new Date(year, month, diff);
-                endDay = new Date(year, month, diff + 6);
-              } else if ($pressed.hasClass('calendar-filter-month')) {
-                // Compute start and end days of the month.
-                startDay = new Date(year, month, 1);
-                endDay = new Date(year, month + 1, 0);
-              }
-              $calendar.datepicker('setDate', startDay);
-              $calendar.datepicker('setDate', null);
-              rangeStart = startDay.getTime();
-              rangeEnd = endDay.getTime();
-              updateCalendarFilters(startDay, endDay);
-              $('.az-calendar-filter-calendar').datepicker('refresh');
-              $pressed.addClass('active').attr('aria-pressed', 'true');
-            });
+          $buttonWrapper.find('.calendar-filter-button').on('click', (e) => {
+            const $pressed = $(e.currentTarget);
+            const current = new Date(Date.now());
+            const today = new Date(
+              current.getFullYear(),
+              current.getMonth(),
+              current.getDate(),
+            );
+            const month = current.getMonth();
+            const year = current.getFullYear();
+            const day = current.getDay();
+            const diff = current.getDate() - day;
+            let startDay = today;
+            let endDay = today;
+            if ($pressed.hasClass('calendar-filter-week')) {
+              // Compute start and end days of the week.
+              startDay = new Date(year, month, diff);
+              endDay = new Date(year, month, diff + 6);
+            } else if ($pressed.hasClass('calendar-filter-month')) {
+              // Compute start and end days of the month.
+              startDay = new Date(year, month, 1);
+              endDay = new Date(year, month + 1, 0);
+            }
+            $calendar.datepicker('setDate', startDay);
+            $calendar.datepicker('setDate', null);
+            rangeStart = startDay.getTime();
+            rangeEnd = endDay.getTime();
+            updateCalendarFilters(startDay, endDay);
+            $('.az-calendar-filter-calendar').datepicker('refresh');
+            $pressed.addClass('active').attr('aria-pressed', 'true');
+          });
         });
     },
   };
