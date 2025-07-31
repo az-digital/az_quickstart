@@ -34,7 +34,7 @@
     <div class="tab-content mt-card px-card pb-card">
       {% set activePane = ' show active' %}
       {% for key, value in tabElements %}
-        <div class="tab-pane fade{{ activePane }}" id="{{ (value['#id']) }}" role="tabpanel" aria-labelledby="{{ (key) }}_tab">
+        <div class="tab-pane fade{{ activePane }}" id="{{ (value['#id']) }}" role="tabpanel" aria-labelledby="{{ (key) }}_tab" tabindex="0">
           {% for childKey, childValue in value %}
             {% if childKey starts with 'field_' %}
               {{ childValue }}
