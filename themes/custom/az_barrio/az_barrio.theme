@@ -104,7 +104,8 @@ function az_barrio_preprocess_page(&$variables, $hook) {
     $variables['navbar_attributes'] = new Attribute([
       'id' => 'navbar-top',
       'class' => [
-        'navbar'
+        'navbar',
+        'navbar-expand',
       ]
     ]);
     if ($variables['page']['navigation']) {
