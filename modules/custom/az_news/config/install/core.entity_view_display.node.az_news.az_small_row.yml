@@ -14,7 +14,6 @@ dependencies:
     - field.field.node.az_news.field_az_main_content
     - field.field.node.az_news.field_az_media_image
     - field.field.node.az_news.field_az_media_thumbnail_image
-    - field.field.node.az_news.field_az_metatag
     - field.field.node.az_news.field_az_news_tags
     - field.field.node.az_news.field_az_published
     - field.field.node.az_news.field_az_short_title
@@ -221,7 +220,6 @@ hidden:
   field_az_link: true
   field_az_main_content: true
   field_az_media_image: true
-  field_az_metatag: true
   field_az_news_tags: true
   field_az_published: true
   field_az_short_title: true
