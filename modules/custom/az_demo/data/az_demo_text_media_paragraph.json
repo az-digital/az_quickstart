@@ -9,7 +9,7 @@
             "bg_attachment" : "",
             "spacing" : "y-5",
             "content_style" : "box",
-            "position" : "col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6",
+            "position" : "col-md-8 col-lg-6 offset-md-4 offset-lg-6",
             "bg_color" : "text-bg-transparent-white",
             "bottom_spacing" : "mb-0"
         },
@@ -22,7 +22,7 @@
             "bg_attachment" : "bg-fixed",
             "spacing" : "y-5",
             "content_style" : "column",
-            "position" : "col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3",
+            "position" : "col-md-8 col-lg-6 offset-md-2 offset-lg-3",
             "bg_color" : "text-bg-transparent-white",
             "bottom_spacing" : "mb-0"
         },
@@ -35,7 +35,7 @@
             "bg_attachment" : "",
             "spacing" : "y-5",
             "content_style" : "column",
-            "position" : "col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6",
+            "position" : "col-md-8 col-lg-6 offset-md-4 offset-lg-6",
             "bg_color" : "text-bg-transparent-black",
             "bottom_spacing" : "mb-0"
         },
@@ -61,7 +61,7 @@
             "bg_attachment" : "bg-fixed",
             "spacing" : "y-5",
             "content_style" : "box",
-            "position" : "col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3",
+            "position" : "col-md-8 col-lg-6 offset-md-2 offset-lg-3",
             "bg_color" : "text-bg-transparent-black",
             "bottom_spacing" : "mb-0"
         },
@@ -98,7 +98,7 @@
             "bg_attachment" : "",
             "spacing" : "y-5",
             "content_style" : "column",
-            "position" : "col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3",
+            "position" : "col-md-8 col-lg-6 offset-md-2 offset-lg-3",
             "bg_color" : "text-bg-transparent-white",
             "bottom_spacing" : "mb-0"
         },
@@ -124,7 +124,7 @@
             "bg_attachment" : "",
             "spacing" : "y-5",
             "content_style" : "box",
-            "position" : "col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3",
+            "position" : "col-md-8 col-lg-6 offset-md-2 offset-lg-3",
             "bg_color" : "text-bg-transparent-white",
             "bottom_spacing" : "mb-0"
         },
@@ -137,7 +137,7 @@
             "bg_attachment" : "",
             "spacing" : "y-5",
             "content_style" : "box",
-            "position" : "col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3",
+            "position" : "col-md-8 col-lg-6 offset-md-2 offset-lg-3",
             "bg_color" : "text-bg-transparent-white",
             "bottom_spacing" : "mb-0"
         },
@@ -174,7 +174,7 @@
             "bg_attachment" : "",
             "spacing" : "y-7",
             "content_style" : "box",
-            "position" : "col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6",
+            "position" : "col-md-8 col-lg-6 offset-md-4 offset-lg-6",
             "bg_color" : "text-bg-transparent-white",
             "bottom_spacing" : "mb-0"
         }

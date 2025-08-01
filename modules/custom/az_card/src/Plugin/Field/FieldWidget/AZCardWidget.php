@@ -259,12 +259,12 @@ class AZCardWidget extends WidgetBase {
     $element['title_alignment'] = [
       '#type' => 'select',
       '#options' => [
-        'text-left' => $this->t('Title left'),
+        'text-start' => $this->t('Title left'),
         'text-center' => $this->t('Title center'),
-        'text-right' => $this->t('Title right'),
+        'text-end' => $this->t('Title right'),
       ],
       '#title' => $this->t('Card Title Alignment'),
-      '#default_value' => (!empty($item->options['title_alignment'])) ? $item->options['title_alignment'] : 'text-left',
+      '#default_value' => (!empty($item->options['title_alignment'])) ? $item->options['title_alignment'] : 'text-start',
     ];
 
     $element['body'] = [
@@ -308,7 +308,7 @@ class AZCardWidget extends WidgetBase {
     $element['link_style'] = [
       '#type' => 'select',
       '#options' => [
-        'sr-only' => $this->t('Hidden link title'),
+        'visually-hidden' => $this->t('Hidden link title'),
         'btn-block' => $this->t('Text link'),
         'btn btn-block btn-red' => $this->t('Red button'),
         'btn btn-block btn-blue' => $this->t('Blue button'),

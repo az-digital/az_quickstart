@@ -51,7 +51,7 @@ third_party_settings:
       weight: 2
       format_type: html_element
       format_settings:
-        classes: 'row font-weight-normal'
+        classes: 'row fw-normal'
         id: ''
         element: div
         show_label: false
@@ -142,7 +142,7 @@ third_party_settings:
       weight: 19
       format_type: html_element
       format_settings:
-        classes: 'text-bg-gray-100 p-3 text-muted'
+        classes: 'text-bg-gray-100 p-3 text-body-secondary rounded'
         id: ''
         element: div
         show_label: false
@@ -162,7 +162,7 @@ third_party_settings:
       weight: 8
       format_type: html_element
       format_settings:
-        classes: 'col-lg-9 pt-lg-3 px-3 pl-lg-4 pb-3'
+        classes: 'col-lg-9 pt-lg-3 px-3 ps-lg-4 pb-3'
         show_empty_fields: false
         id: ''
         element: div
@@ -199,7 +199,7 @@ third_party_settings:
       weight: 6
       format_type: html_element
       format_settings:
-        classes: font-weight-bold
+        classes: fw-bold
         id: ''
         element: div
         show_label: false
@@ -218,7 +218,7 @@ third_party_settings:
       weight: 4
       format_type: html_element
       format_settings:
-        classes: 'row no-gutters bg-gray-100 ml-n3 ml-md-0'
+        classes: 'row g-0 text-bg-gray-100 ms-n3 ms-md-0 rounded'
         show_empty_fields: false
         id: ''
         element: div
@@ -237,7 +237,7 @@ third_party_settings:
       weight: 6
       format_type: html_element
       format_settings:
-        classes: 'col-lg-3 pt-3 px-3 pr-lg-0 mb-lg-0'
+        classes: 'col-lg-3 pt-3 px-3 pe-lg-0 mb-lg-0'
         show_empty_fields: false
         id: ''
         element: div

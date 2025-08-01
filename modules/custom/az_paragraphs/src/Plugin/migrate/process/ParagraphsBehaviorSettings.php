@@ -42,7 +42,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *     s:10:"full_width";s:21:"full-width-background";
  *     s:5:"style";s:3:"box";
  *     s:8:"bg_color";s:5:"light";
- *     s:8:"position";s:49:"col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6";
+ *     s:8:"position";s:41:"col-md-8 col-lg-6 offset-md-4 offset-lg-6";
  *     s:18:"text_media_spacing";s:4:"y-10";
  *     s:19:"az_display_settings";a:1:{
  *       s:14:"bottom_spacing";s:4:"mb-0";
@@ -82,8 +82,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *       default: 'col-md-8 col-lg-6'
  *       map:
  *         uaqs_bg_img_content_left: 'col-md-8 col-lg-6'
- *         uaqs_bg_img_content_center: 'col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3'
- *         uaqs_bg_img_content_right: 'col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6'
+ *         uaqs_bg_img_content_center: 'col-md-8 col-lg-6 offset-md-2 offset-lg-3'
+ *         uaqs_bg_img_content_right: 'col-md-8 col-lg-6 offset-md-4 offset-lg-6'
  *     - plugin: default_value
  *       default_value: 'col-md-8 col-lg-6'
  *   content_style_processed:

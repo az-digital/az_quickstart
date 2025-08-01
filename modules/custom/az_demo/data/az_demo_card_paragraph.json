@@ -34,7 +34,7 @@
       {
         "id": 81,
         "card_width": "col-lg-4",
-        "card_style": "card card-borderless",
+        "card_style": "card border-0",
         "card_title": "Clickable Borderless Cards",
         "card_title_style": "default",
         "card_clickable": true,
@@ -57,7 +57,7 @@
             "link_url": "#top",
             "media": "mans_best_friend.jpeg",
             "background": "text-bg-river",
-            "link_style": "sr-only"
+            "link_style": "visually-hidden"
           },
           {
             "delta": 2,
@@ -98,7 +98,7 @@
           "link_url": "#top",
           "media": "mans_best_friend.jpeg",
           "background": "text-bg-white",
-          "link_style": "sr-only"
+          "link_style": "visually-hidden"
         },
         {
           "delta": 2,
@@ -118,7 +118,7 @@
           "link_url": "#top",
           "media": "sea-anemone.jpg",
           "background": "text-bg-white",
-          "link_style": "sr-only"
+          "link_style": "visually-hidden"
         }
       ],
       "bottom_spacing" : "mb-5"
@@ -126,7 +126,7 @@
     {
         "id": 83,
         "card_width": "col-lg-6",
-        "card_style": "card card-borderless",
+        "card_style": "card border-0",
         "card_title": "Borderless Title-on-Image Cards",
         "card_title_style": "title-on-image",
         "card_clickable": false,
