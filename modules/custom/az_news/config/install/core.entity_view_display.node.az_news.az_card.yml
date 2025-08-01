@@ -36,7 +36,7 @@ third_party_settings:
   field_group:
     group_card_clickable:
       children:
-        - field_az_media_thumbnail_image
+        - group_card_image
         - group_heading
         - group_text_muted
         - group_summary
@@ -44,10 +44,10 @@ third_party_settings:
       label: 'Card Clickable'
       parent_name: ''
       region: content
-      weight: 1
+      weight: 0
       format_type: html_element
       format_settings:
-        classes: 'card border-0 mb-4 hover'
+        classes: 'card hover border-0 mb-4 hover'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -67,7 +67,7 @@ third_party_settings:
       weight: 8
       format_type: link
       format_settings:
-        classes: 'card-body p-0 stretched-link'
+        classes: 'card-body p-0 stretched-link link-primary link-underline link-underline-opacity-0 link-underline-opacity-100-hover'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -80,7 +80,7 @@ third_party_settings:
       label: Heading
       parent_name: group_card_clickable
       region: content
-      weight: 7
+      weight: 8
       format_type: html_element
       format_settings:
         classes: 'card-title text-midnight h5 mb-0'
@@ -98,7 +98,7 @@ third_party_settings:
       label: 'Text Body Secondary'
       parent_name: group_card_clickable
       region: content
-      weight: 8
+      weight: 9
       format_type: html_element
       format_settings:
         classes: 'text-body-secondary fw-normal small mt-2'
@@ -118,7 +118,7 @@ third_party_settings:
       label: Summary
       parent_name: group_card_clickable
       region: content
-      weight: 9
+      weight: 10
       format_type: html_element
       format_settings:
         classes: 'card-text font-weight-normal mt-2'
@@ -136,7 +136,7 @@ third_party_settings:
       label: 'Read more'
       parent_name: group_card_clickable
       region: content
-      weight: 10
+      weight: 11
       format_type: html_element
       format_settings:
         classes: mt-2
@@ -156,12 +156,33 @@ third_party_settings:
       label: 'Read more text'
       parent_name: group_read_more
       region: content
-      weight: 9
+      weight: 4
       format_type: html_element
       format_settings:
-        classes: 'text-chili text-left'
+        classes: text-left
         show_empty_fields: false
         id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_card_image:
+      children:
+        - field_az_media_thumbnail_image
+      label: 'Card Image'
+      parent_name: group_card_clickable
+      region: content
+      weight: 7
+      format_type: html_element
+      format_settings:
+        classes: 'img-fluid card-img-top hover-img-zoom-in'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -186,7 +207,7 @@ content:
       view_mode: az_card_image
       link: false
     third_party_settings: {  }
-    weight: 6
+    weight: 4
     region: content
   field_az_published:
     type: timestamp_ap_style
@@ -217,7 +238,7 @@ content:
   smart_title:
     settings: {  }
     third_party_settings: {  }
-    weight: 3
+    weight: 4
     region: content
 hidden:
   field_az_attachments: true

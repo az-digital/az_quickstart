@@ -97,7 +97,7 @@ third_party_settings:
       weight: 7
       format_type: link
       format_settings:
-        classes: 'card-body p-0 stretched-link'
+        classes: 'card-body p-0 stretched-link link-primary link-underline link-underline-opacity-0 link-underline-opacity-100-hover'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -169,9 +169,10 @@ third_party_settings:
       weight: 1
       format_type: html_element
       format_settings:
-        classes: 'text-chili text-left'
+        classes: text-left
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3

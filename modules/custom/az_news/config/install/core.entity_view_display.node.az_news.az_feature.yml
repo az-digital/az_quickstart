@@ -91,7 +91,7 @@ third_party_settings:
       weight: 22
       format_type: link
       format_settings:
-        classes: 'card-body p-0 stretched-link'
+        classes: 'card-body p-0 stretched-link text-decoration-none'
         show_empty_fields: false
         id: ''
         label_as_html: false
