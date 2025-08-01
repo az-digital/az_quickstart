@@ -51,12 +51,10 @@ function az_accordion_preprocess_field(&$variables) : void {
   if ($element['#field_type'] === 'az_accordion') {
     $variables['attributes']['class'][] = 'accordion';
 
-    // Use the accordion container ID that was calculated in the formatter.
     if (!empty($element['#accordion_container_id'])) {
       $variables['attributes']['id'] = $element['#accordion_container_id'];
     }
 
-    // Also add accordion-item class to each field item.
     foreach ($variables['items'] as $delta => $item) {
       $variables['items'][$delta]['attributes']->addClass('accordion-item');
     }

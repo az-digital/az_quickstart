@@ -91,7 +91,6 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $element = [];
 
-    // Get the entity that contains this field to use its ID for the accordion container.
     $entity = $items->getEntity();
     $accordion_container_id = 'accordion-' . $entity->id();
 
@@ -141,7 +140,6 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
 
     }
 
-    // Add the accordion container ID to the field element so preprocess can access it.
     if (!empty($element)) {
       $element['#accordion_container_id'] = $accordion_container_id;
     }
