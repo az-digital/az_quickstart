@@ -134,7 +134,7 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
         ],
         '#accordion_item_id' => $accordion_id,
         '#accordion_container_id' => $accordion_container_id,
-        '#collapsed' => $item->collapsed ? 'collapse' : 'collapse show',
+        '#collapsed' => $item->collapsed ? '' : 'show',
         '#aria_expanded' => !$item->collapsed ? 'true' : 'false',
       ];
 
