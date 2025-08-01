@@ -164,20 +164,6 @@ function az_media_entity_presave(EntityInterface $entity) {
 }
 
 /**
- * Implements hook_preprocess_media().
- */
-function az_media_preprocess_media(&$variables) {
-  /** @var \Drupal\media\Entity\Media $media */
-  $media = $variables['media'];
-
-  // Add rounded-2 class to remote video media iframes.
-  if ($media->bundle() === 'az_remote_video') {
-    // Add attributes to be passed down to the iframe.
-    $variables['attributes']['data-iframe-class'] = 'rounded-2';
-  }
-}
-
-/**
  * Implements hook_preprocess_field().
  */
 function az_media_preprocess_field(&$variables) {
