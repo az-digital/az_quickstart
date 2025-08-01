@@ -169,7 +169,7 @@ third_party_settings:
       weight: 1
       format_type: html_element
       format_settings:
-        classes: text-left
+        classes: text-start
         show_empty_fields: false
         id: ''
         label_as_html: false

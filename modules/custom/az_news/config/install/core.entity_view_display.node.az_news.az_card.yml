@@ -121,8 +121,10 @@ third_party_settings:
       weight: 10
       format_type: html_element
       format_settings:
-        classes: 'card-text font-weight-normal mt-2'
+        classes: 'card-text fw-normal mt-2'
+        show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -159,7 +161,7 @@ third_party_settings:
       weight: 4
       format_type: html_element
       format_settings:
-        classes: text-left
+        classes: text-start
         show_empty_fields: false
         id: ''
         label_as_html: false
