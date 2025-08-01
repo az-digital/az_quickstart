@@ -17,15 +17,13 @@
 
 {% set button_classes = (aria_expanded == 'false') ? 'collapsed' : '' %}
 
-<div class="accordion-header">
-  <h3 class="my-0">
-    <button class="accordion-button {{ button_classes }}" type="button" data-bs-toggle="collapse" data-bs-target="#{{ accordion_item_id }}" aria-expanded="{{ aria_expanded }}" aria-controls="{{ accordion_item_id }}">
-      {% if title %}
-        {{ title }}
-      {% endif %}
-    </button>
-  </h3>
-</div>
+<h3 class="accordion-header">
+  <button class="accordion-button {{ button_classes }}" type="button" data-bs-toggle="collapse" data-bs-target="#{{ accordion_item_id }}" aria-expanded="{{ aria_expanded }}" aria-controls="{{ accordion_item_id }}">
+    {% if title %}
+      {{ title }}
+    {% endif %}
+  </button>
+</h3>
 <div id="{{ accordion_item_id }}" class="accordion-collapse {{ collapsed }}" aria-labelledby="{{ accordion_item_id }}" data-bs-parent="#{{ accordion_item_id }}">
   <div class="accordion-body bg-white">
     {% if body %}
