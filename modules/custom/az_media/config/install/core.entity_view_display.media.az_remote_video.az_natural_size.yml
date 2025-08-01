@@ -27,7 +27,7 @@ third_party_settings:
         effect: none
         speed: fast
         id: ''
-        classes: 'ratio ratio-16x9 az-natural-size az-media rounded-2'
+        classes: 'ratio ratio-16x9 az-natural-size az-media'
       label: '16:9 Responsive'
 id: media.az_remote_video.az_natural_size
 targetEntityType: media
