@@ -238,7 +238,7 @@ jobs:
           SYMFONY_DEPRECATIONS_HELPER: weak
           SIMPLETEST_DB: mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3306] }}/db
           SIMPLETEST_BASE_URL: http://172.17.0.1:8080
-          MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","goog:chromeOptions":{"args":["--disable-gpu","--headless", "--no-sandbox"]}}, "http://127.0.0.1:${{ job.services.chromedriver.ports[9515] }}"]'
+          MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","goog:chromeOptions":{"args":["--disable-gpu","--headless","--disable-dev-shm-usage","--no-sandbox"]}}, "http://127.0.0.1:${{ job.services.chromedriver.ports[9515] }}"]'
 
   install:
     name: drush site:install
