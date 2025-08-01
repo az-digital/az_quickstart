@@ -4,24 +4,24 @@
   margin-left: auto;
 }
 .az-large.az-media {
-  width: 1140px;
-  max-width:100%;
+  width: 100%;
+  max-width:1140px;
 }
 .az-medium.az-media {
-  width: 760px;
-  max-width:100%;
+  width: 100%;
+  max-width:760px;
 }
 .az-natural-size.az-media {
   width: auto;
   max-width:100%;
 }
 .az-small.az-media {
-  width:360px;
-  max-width: 100%;
+  width: 100%;
+  max-width: 360px;
 }
 .az-square.az-media {
-  width:220px;
-  max-width: 100%;
+  width: 100%;
+  max-width: 220px;
 }
 .az-default.az-media {
   width: 100%;

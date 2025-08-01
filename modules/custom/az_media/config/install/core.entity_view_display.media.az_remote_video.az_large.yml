@@ -27,7 +27,7 @@ third_party_settings:
         effect: none
         speed: fast
         id: ''
-        classes: 'embed-responsive embed-responsive-16by9 az-large az-media'
+        classes: 'ratio ratio-16x9 az-large az-media rounded-2 w-100 mx-auto'
       label: '16:9 Responsive'
 id: media.az_remote_video.az_large
 targetEntityType: media
