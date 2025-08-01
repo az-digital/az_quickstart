@@ -174,10 +174,6 @@ function az_media_preprocess_field(&$variables) {
       if (isset($item['content']['#attributes'])) {
         $item['content']['#attributes']['class'][] = 'rounded-2';
       }
-      // Also check for iframe-specific attributes.
-      if (isset($item['content']['#iframe_attributes'])) {
-        $item['content']['#iframe_attributes']['class'][] = 'rounded-2';
-      }
     }
   }
 }
