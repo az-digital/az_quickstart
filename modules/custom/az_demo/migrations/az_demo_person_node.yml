@@ -172,13 +172,13 @@ process:
   'field_az_teaching_interests/format':
     -
       plugin: default_value
-      default_value: az_standard
+      default_value: plain_text
 
   'field_az_research_interests/value': field_az_research_interests
   'field_az_research_interests/format':
     -
       plugin: default_value
-      default_value: az_standard
+      default_value: plain_text
 
 destination:
   plugin: entity:node
