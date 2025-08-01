@@ -61,7 +61,8 @@ function az_person_form_node_az_person_edit_form_alter(&$form, FormStateInterfac
           // Migration did not exist, or migrate service not found.
           // We have no data on this person being imported or not.
         }
-        if (!empty($imported)) {
+        // Lock person if migrate map for this person points to them.
+        if (!empty($imported[0]['nid']) && ($imported[0]['nid'] === $node->id())) {
           $person_warning = t('This person has been imported from the Profiles API.');
           \Drupal::messenger()->addWarning($person_warning);
           $disabled_fields = [
