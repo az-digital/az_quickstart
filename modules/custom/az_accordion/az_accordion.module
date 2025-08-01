@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Component\Utility\Html;
 
 /**
  * Implements hook_help().
@@ -34,6 +35,7 @@ function az_accordion_theme($existing, $type, $theme, $path) {
         'title' => NULL,
         'body' => NULL,
         'accordion_item_id' => NULL,
+        'accordion_container_id' => NULL,
         'collapsed' => TRUE,
         'aria_expanded' => 'false',
       ],
@@ -47,14 +49,17 @@ function az_accordion_theme($existing, $type, $theme, $path) {
  */
 function az_accordion_preprocess_field(&$variables) : void {
   $element = $variables['element'];
-  switch ($element['#field_name']) {
-    case 'field_az_accordion':
-      $variables['attributes']['class'][] = 'accordion';
-      $delta = 0;
-      while (!empty($element[$delta])) {
-        $variables['items'][$delta]['attributes']->setAttribute('class', 'accordion-item');
-        $delta++;
-      }
-      break;
+  if ($element['#field_type'] === 'az_accordion') {
+    $variables['attributes']['class'][] = 'accordion';
+    
+    // Use the accordion container ID that was calculated in the formatter.
+    if (!empty($element['#accordion_container_id'])) {
+      $variables['attributes']['id'] = $element['#accordion_container_id'];
+    }
+    
+    // Also add accordion-item class to each field item.
+    foreach ($variables['items'] as $delta => $item) {
+      $variables['items'][$delta]['attributes']->addClass('accordion-item');
+    }
   }
 }

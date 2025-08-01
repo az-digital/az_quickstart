@@ -9,6 +9,7 @@
  * - body: The body field of a accordion.
  * - collapsed: The collapsed field of an accordion.
  * - accordion_item_id: Unique ID for an accordion item.
+ * - accordion_container_id: Unique ID for the accordion container.
  * - aria_expanded: Aria field equal to the collapsed value.
  *
  * @ingroup themeable
@@ -24,7 +25,7 @@
     {% endif %}
   </button>
 </h3>
-<div id="{{ accordion_item_id }}" class="accordion-collapse {{ collapsed }}" aria-labelledby="{{ accordion_item_id }}" data-bs-parent="#{{ accordion_item_id }}">
+<div id="{{ accordion_item_id }}" class="accordion-collapse {{ collapsed }}" aria-labelledby="{{ accordion_item_id }}" data-bs-parent="#{{ accordion_container_id }}">
   <div class="accordion-body bg-white">
     {% if body %}
       {{ body }}
