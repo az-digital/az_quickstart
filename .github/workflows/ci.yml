@@ -203,7 +203,7 @@ jobs:
       matrix: ${{ fromJson(needs.setup.outputs.matrix) }}
     services:
       chromedriver:
-        image: drupalci/webdriver-chromedriver:production
+        image: seleniarm/standalone-chromium:4.1.4-20220429
         ports:
           - 9515
       mysql:
@@ -256,7 +256,6 @@ jobs:
           path: |
             ./az-quickstart-scaffolding/web/sites/simpletest/browser_output/
             ./az-quickstart-scaffolding/reports/junit.xml
-            /tmp/chromedriver.log
 
   install:
     name: drush site:install
