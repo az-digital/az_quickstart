@@ -247,7 +247,7 @@ jobs:
           SIMPLETEST_BASE_URL: http://172.17.0.1:8080
           BROWSERTEST_OUTPUT_DIRECTORY: ${{ github.workspace }}/az-quickstart-scaffolding/web/sites/simpletest/browser_output
           BROWSERTEST_OUTPUT_VERBOSE: true
-          MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--headless", "--no-sandbox"]}}, "http://127.0.0.1:${{ job.services.chromedriver.ports[9515] }}"]'
+          MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--headless","--disable-dev-shm-usage","--no-sandbox"]}}, "http://127.0.0.1:${{ job.services.chromedriver.ports[9515] }}"]'
       - name: Upload PHPUnit Artifacts
         if: always()
         uses: actions/upload-artifact@v4
