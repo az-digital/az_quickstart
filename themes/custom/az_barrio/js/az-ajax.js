@@ -14,6 +14,6 @@
   style.textContent = "\n    .".concat(spinnerPositionClass, " {\n      position: fixed;\n      z-index: ").concat(Z_INDEX, ";\n      top: ").concat(TOP_POSITION, ";\n      left: ").concat(LEFT_POSITION, ";\n    }\n  ");
   document.head.appendChild(style);
   Drupal.theme.ajaxProgressIndicatorFullscreen = function () {
-    return "\n    <div class=\"".concat(spinnerPositionClass, "\">\n      <div class=\"spinner-border text-info\" style=\"width: ").concat(SPINNER_SIZE, "; height: ").concat(SPINNER_SIZE, ";\" role=\"status\">\n        <span class=\"sr-only\">Loading...</span>\n      </div>\n    </div>");
+    return "\n    <div class=\"".concat(spinnerPositionClass, "\">\n      <div class=\"spinner-border text-info\" style=\"width: ").concat(SPINNER_SIZE, "; height: ").concat(SPINNER_SIZE, ";\" role=\"status\">\n        <span class=\"visually-hidden\">Loading...</span>\n      </div>\n    </div>");
   };
 })(Drupal);

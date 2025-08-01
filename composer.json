@@ -21,16 +21,11 @@
         {
             "type": "composer",
             "url": "https://asset-packagist.org"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/az-digital/phpcs-security-audit",
-            "no-api": true
         }
     ],
     "require": {
         "php": ">=8.1",
-        "az-digital/arizona-bootstrap": "2.0.27",
+        "az-digital/arizona-bootstrap": "dev-main",
         "az-digital/az-icons": "1.0.2",
         "citation-style-language/locales": "0.0.27",
         "citation-style-language/styles": "0.0.668",
@@ -45,7 +40,7 @@
         "drupal/blazy": "3.0.13",
         "drupal/block_class": "4.0.1",
         "drupal/block_field": "1.0.0-rc5",
-        "drupal/bootstrap_barrio": "5.1.12",
+        "drupal/bootstrap_barrio": "5.5.20",
         "drupal/bootstrap_utilities": "3.0.1",
         "drupal/calendar_link": "3.0.4",
         "drupal/cas": "2.3.2",
@@ -86,12 +81,12 @@
         "drupal/jquery_ui": "1.7.0",
         "drupal/jquery_ui_datepicker": "2.1.1",
         "drupal/link_class": "2.2.0",
-        "drupal/linkit": "7.0.4",
+        "drupal/linkit": "7.0.7",
         "drupal/masquerade": "2.0.0",
-        "drupal/masquerade_log" : "2.0.0",
+        "drupal/masquerade_log": "2.0.0",
         "drupal/media_entity_file_replace": "1.3.0",
         "drupal/media_library_edit": "3.0.4",
-        "drupal/media_library_form_element": "2.1.1",
+        "drupal/media_library_form_element": "2.1.2",
         "drupal/menu_block": "1.13.0",
         "drupal/menu_link_attributes": "1.5.0",
         "drupal/metatag": "2.1.0",
@@ -105,24 +100,24 @@
         "drupal/pathauto": "1.13.0",
         "drupal/quick_node_clone": "1.22.0",
         "drupal/redirect": "1.11.0",
-        "drupal/role_delegation": "1.3.0",
+        "drupal/role_delegation": "1.4.0",
         "drupal/schema_metatag": "3.0.3",
         "drupal/search_exclude": "3.0.0-beta2",
         "drupal/seckit": "2.0.3",
         "drupal/slick": "3.0.4",
         "drupal/slick_views": "3.0.3",
-        "drupal/smart_date": "4.2.3",
+        "drupal/smart_date": "4.2.4",
         "drupal/smart_title": "1.0.0",
         "drupal/smtp": "1.4.0",
         "drupal/token": "1.15.0",
-        "drupal/views_bootstrap": "5.4.1",
+        "drupal/user_expire": "2.1.0",
+        "drupal/views_bootstrap": "5.5.0-rc3",
         "drupal/views_bulk_operations": "4.3.4",
         "drupal/views_remote_data": "1.0.3",
         "drupal/viewsreference": "2.0.0-beta10",
-        "drupal/user_expire": "2.1.0",
         "drupal/webform": "6.2.9",
         "drupal/workbench_access": "2.0.4",
-        "drupal/xmlsitemap": "1.5.0",
+        "drupal/xmlsitemap": "2.0.0",
         "jjj/chosen": "2.2.1",
         "kevinrob/guzzle-cache-middleware": "6.0.0",
         "npm-asset/blazy": "1.8.2",
@@ -134,7 +129,7 @@
         "seboettg/citeproc-php": "2.6.2"
     },
     "require-dev": {
-        "az-digital/az-quickstart-dev": "~1"
+        "az-digital/az-quickstart-dev": "~3"
     },
     "conflict": {
         "drush/drush": "<12.4.3"
@@ -149,9 +144,7 @@
                 "Support entities without bundles (2945387)": "https://www.drupal.org/files/issues/2024-06-07/2945387-28.patch"
             },
             "drupal/bootstrap_barrio": {
-                "Fix schema (3217958)": "https://gist.githubusercontent.com/joeparsons/7d36cefca83823e93b44cb5b36374b04/raw/c495d02fddcb8364f9d6163bcd74f75e3d47f24f/3217958-5-x.patch",
-                "Subtheme not D10 Compatible (3291051)": "https://www.drupal.org/files/issues/2023-10-27/3291051-5.1.x-subtheme-not-d10-compatible.patch",
-                "Fix The specified library bootstrap_barrio/messages does not exist issue (3471821)": "https://git.drupalcode.org/project/bootstrap_barrio/-/commit/a26e7af7c007aced43f0347553104434d11e3681.patch"
+                "Js error if table not found (3519060)": "https://www.drupal.org/files/issues/2025-04-14/bootstrap-barrio-table-not-found-3519060-1.patch"
             },
             "drupal/cas": {
                 "ServiceNotFoundException when logging out (2948185)": "https://www.drupal.org/files/issues/cas_logout_error-2948185-2.patch"
