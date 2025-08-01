@@ -92,7 +92,7 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
     $element = [];
 
     $entity = $items->getEntity();
-    $accordion_container_id = 'accordion-' . $entity->id();
+    $accordion_container_id = HTML::getUniqueId('accordion-' . $entity->id());
 
     /** @var \Drupal\az_accordion\Plugin\Field\FieldType\AZAccordionItem $item */
     foreach ($items as $delta => $item) {
