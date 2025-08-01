@@ -9,6 +9,9 @@
 figure[data-view-mode="az_natural_size"] .az-media.embed-responsive {
   width: 100%;
 }
+figure[data-view-mode="az_natural_size"].drupal-media:has(iframe) {
+  display: block;
+}
 figure[data-view-mode="az_large"] .az-media.embed-responsive {
   width: 1140px;
 }
