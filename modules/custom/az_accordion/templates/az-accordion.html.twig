@@ -15,26 +15,21 @@
  */
 #}
 
-{% set attributes = attributes.addClass('h-100') %}
+{% set button_classes = (aria_expanded == 'false') ? 'collapsed' : '' %}
 
-<div {{ attributes }}>
-  <div class="accordion-item">
-    <div class="accordion-header">
-      <h3 class="my-0">
-        <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#{{ accordion_item_id }}" aria-expanded="{{ aria_expanded }}" aria-controls="{{ accordion_item_id }}">
-          {% if title %}
-            {{ title }}
-          {% endif %}
-        </button>
-      </h3>
-    </div>
-    <div id="{{ accordion_item_id }}" class="{{ collapsed }}" aria-labelledby="{{ accordion_item_id }}" data-bs-parent="#{{ accordion_item_id }}">
-      <div class="accordion-body bg-white">
-      <div class="card-body bg-white">
-        {% if body %}
-        <div class="accordion-text">{{ body }}</div>
-        {% endif %}
-      </div>
-    </div>
+<div class="accordion-header">
+  <h3 class="my-0">
+    <button class="accordion-button {{ button_classes }}" type="button" data-bs-toggle="collapse" data-bs-target="#{{ accordion_item_id }}" aria-expanded="{{ aria_expanded }}" aria-controls="{{ accordion_item_id }}">
+      {% if title %}
+        {{ title }}
+      {% endif %}
+    </button>
+  </h3>
+</div>
+<div id="{{ accordion_item_id }}" class="accordion-collapse {{ collapsed }}" aria-labelledby="{{ accordion_item_id }}" data-bs-parent="#{{ accordion_item_id }}">
+  <div class="accordion-body bg-white">
+    {% if body %}
+      {{ body }}
+    {% endif %}
   </div>
 </div>
