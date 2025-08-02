@@ -69,3 +69,28 @@ function az_quickstart_post_update_remove_block_content_permissions_from_roles(&
     return $update;
   });
 }
+
+/**
+ * Migrate Material Design Sharp icons setting to Material Symbols Rounded.
+ */
+function az_quickstart_post_update_migrate_material_symbols_icons(&$sandbox) {
+  $config_factory = \Drupal::configFactory();
+  $theme_settings = $config_factory->getEditable('az_barrio.settings');
+
+  // Check if the old material design sharp icons setting is enabled.
+  $old_material_icons = $theme_settings->get('az_barrio_material_design_sharp_icons');
+
+  // Only migrate if the old setting was explicitly enabled.
+  if ($old_material_icons === TRUE) {
+    // Enable the new Material Symbols Rounded setting.
+    $theme_settings->set('az_barrio_material_symbols_rounded', TRUE);
+
+    // Disable the old setting.
+    $theme_settings->set('az_barrio_material_design_sharp_icons', FALSE);
+
+    // Save the changes.
+    $theme_settings->save();
+
+    \Drupal::logger('az_quickstart')->notice('Migrated Material Design Sharp icons setting to Material Symbols Rounded.');
+  }
+}
