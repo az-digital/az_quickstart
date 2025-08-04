@@ -237,6 +237,12 @@ jobs:
           git config user.name "GitHub Action"
           git config user.email "action@github.com"
 
+      - name: Setup PHP with composer v2
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: composer:v2
+
       - name: Update dev branch alias via Composer
         run: |
           composer config extra.branch-alias.${{ needs.branch_name_prep.outputs.dev_branch_source }} ${{ needs.branch_name_prep.outputs.dev_branch_alias }}
@@ -255,6 +261,7 @@ jobs:
             ${{ matrix.previous_version }} only
           add-paths: |
             composer.json
+
   update_composer_dev_branch_alias_on_dev_branch:
     needs:
       - validate_source_branch
@@ -274,6 +281,12 @@ jobs:
         run: |
           git config user.name "GitHub Action"
           git config user.email "action@github.com"
+
+      - name: Setup PHP with composer v2
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: composer:v2
 
       - name: Update dev branch alias via Composer
         run: |
