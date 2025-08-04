@@ -8,8 +8,8 @@
 #}
 <div{{ attributes }}>
   {# Button trigger modal #}
-  <button type="button" class="btn btn-hollow-primary btn-sm d-flex" style="text-transform: none" data-toggle="modal" data-target="#{{ modal }}">
-<span aria-hidden="true" class="material-symbols-rounded mr-2">event_repeat</span>
+  <button type="button" class="btn btn-outline-blue btn-sm d-flex" style="text-transform: none" data-bs-toggle="modal" data-bs-target="#{{ modal }}">
+    <span aria-hidden="true" class="material-symbols-rounded me-2">event_repeat</span>
     <span class="my-auto">{{ 'View All Occurrences'|t }}</span>
   </button>
 
@@ -21,9 +21,7 @@
           <div>
             <h2 class="h5 modal-title mt-1 mb-2" id="{{ modal }}-label">{{ title }}</h2>
           </div>
-          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body mb-1">
           {% for item in items %}
