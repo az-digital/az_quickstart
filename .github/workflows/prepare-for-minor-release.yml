@@ -17,7 +17,7 @@ jobs:
 
   validate_source_branch:
     runs-on: ubuntu-latest
-    if: ${{ ! contains(fromJSON('["main", "2.x"]'), github.ref_name) }}
+    if: ${{ !contains(fromJSON('["main", "2.x"]'), github.ref_name) }}
     steps:
       - name: Validate source branch
         run: |
@@ -41,7 +41,7 @@ jobs:
           prev_minor=($(echo $NEW_VERSION | tr $delimiter '\n'))
           prev_minor[1]=$((next_minor_branch[1]-1))
           prev_minor_branch=$(IFS=$delimiter ; echo "${prev_minor[*]}" | sed 's/\(.*\)/\1/')
-          if [ $(git ls-remote --heads https://github.com/az-digital/az_quickstart.git $NEW_VERSION | wc -l) = 0 ]; then
+          if [ $(git ls-remote --heads https://github.com/az-digital/az_quickstart.git $prev_minor_branch | wc -l) = 0 ]; then
             echo "Previous minor release branch name doesn't exist yet: $prev_minor_branch" >> $GIHUB_STEP_SUMMARY
             exit 1
           fi
