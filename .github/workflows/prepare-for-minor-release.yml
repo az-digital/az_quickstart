@@ -176,9 +176,9 @@ jobs:
          php-version: '8.3'
          tools: composer:v2
 
-    - name: Update dev branch alias via Composer
+    - name: Remove composer dev branch alias(es) (not needed for release branches)
       run: |
-        composer config extra.branch-alias.${{ needs.branch_name_prep.outputs.dev_branch_source }} ${{ needs.branch_name_prep.outputs.dev_branch_alias }}
+        composer config --unset extra.branch-alias
         composer validate
 
     - name: Create pull request for new release branch updates
@@ -199,68 +199,6 @@ jobs:
           .lando.yml
           .probo.yaml
           composer.json
-
-  update_previous_release_branches:
-    needs:
-      - validate_source_branch
-      - validate_release_branch
-      - branch_name_prep
-      - prepare_for_new_minor_release
-    runs-on: ubuntu-latest
-    name: Update `${{ matrix.previous_version }}` release branch.
-    strategy:
-      matrix:
-        previous_version:
-          - 2.0.x
-          - 2.1.x
-          - 2.2.x
-          - 2.3.x
-          - 2.4.x
-          - 2.5.x
-          - 2.6.x
-          - 2.7.x
-          - 2.8.x
-          - 2.9.x
-          - 2.10.x
-          - 2.11.x
-          - 2.12.x
-          - 2.13.x
-    steps:
-      - name: Update previous release branch `${{ matrix.previous_version }}`
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ matrix.previous_version }}
-          token: ${{ secrets.REPO_DISPATCH_TOKEN }}
-
-      - name: Set up Git
-        run: |
-          git config user.name "GitHub Action"
-          git config user.email "action@github.com"
-
-      - name: Setup PHP with composer v2
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.3'
-          tools: composer:v2
-
-      - name: Update dev branch alias via Composer
-        run: |
-          composer config extra.branch-alias.${{ needs.branch_name_prep.outputs.dev_branch_source }} ${{ needs.branch_name_prep.outputs.dev_branch_alias }}
-          composer validate
-
-      - name: Create pull request for previous release branch updates
-        uses: peter-evans/create-pull-request@v7
-        with:
-          title: Prepare ${{ matrix.previous_version }} branch for new minor release branch ${{ inputs.release_branch_name }}
-          commit-message: Prepare ${{ matrix.previous_version }} branch for new minor release branch ${{ inputs.release_branch_name }}
-          branch: update-${{ matrix.previous_version }}-for-${{ inputs.release_branch_name }}
-          base: ${{ matrix.previous_version }}
-          delete-branch: true
-          token: ${{ secrets.REPO_DISPATCH_TOKEN }}
-          labels: |
-            ${{ matrix.previous_version }} only
-          add-paths: |
-            composer.json
 
   update_composer_dev_branch_alias_on_dev_branch:
     needs:
