@@ -47,17 +47,17 @@
             badge.textContent = '0';
           }
           if (activeFilterCount > 0) {
-            badge.classList.remove('sr-only');
+            badge.classList.remove('visually-hidden');
             badge.classList.remove('position-absolute');
           } else {
-            badge.classList.add('sr-only');
+            badge.classList.add('visually-hidden');
             badge.classList.add('position-absolute');
           }
-          let srText = badge.querySelector('.sr-only');
+          let srText = badge.querySelector('.visually-hidden');
           if (!srText) {
             // Create the screen reader-only text.
             srText = document.createElement('span');
-            srText.classList.add('sr-only');
+            srText.classList.add('visually-hidden');
             srText.textContent = `Active filters: `;
             badge.appendChild(srText);
           }
