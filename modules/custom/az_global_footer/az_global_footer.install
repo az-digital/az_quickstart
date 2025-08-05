@@ -421,3 +421,38 @@ function az_global_footer_update_1021204() {
 
   return t('Updated %count Title IX / Non-Discrimination menu link(s) in the global footer.', ['%count' => $updated_count]);
 }
+
+/**
+ * Remove "Annual Security Report" link from Global Footer (#4267)
+ */
+function az_global_footer_update_1021205() {
+  $updated_count = 0;
+  $annual_security_report_link_weight = NULL;
+  $menu_link_content_ids = \Drupal::entityQuery('menu_link_content')
+    ->accessCheck(FALSE)
+    ->condition('menu_name', 'az-footer-main')
+    ->condition('title', 'Annual Security Report')
+    ->condition('link__uri', 'https://clery.arizona.edu/asr')
+    ->execute();
+
+  foreach ($menu_link_content_ids as $id) {
+    /** @var \Drupal\menu_link_content\Entity\MenuLinkContent $menu_link_content */
+    $menu_link_content = MenuLinkContent::load($id);
+    if ($menu_link_content !== NULL) {
+      if ($menu_link_content->getTitle() === 'Annual Security Report' && $menu_link_content->getUrlObject()->toString() === 'https://clery.arizona.edu/asr') {
+        $annual_security_report_link_ids[] = $id;
+        $annual_security_report_link_weight = $menu_link_content->getWeight();
+        $menu_link_content->delete();
+      }
+    }
+    // Update the weights of links to fill the gap left by
+    // the deleted 'Annual Security Report' link.
+    if ($annual_security_report_link_weight !== NULL) {
+      $weight = $menu_link_content->getWeight();
+      if ($menu_link_content->getWeight() > $annual_security_report_link_weight) {
+        $menu_link_content->set('weight', --$weight);
+        $menu_link_content->save();
+      }
+    }
+  }
+}
