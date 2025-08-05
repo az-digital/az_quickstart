@@ -50,7 +50,7 @@ jobs:
         id: validate-2-x-release-branch-name
         shell: bash
         run: |
-          if [[ ${NEW_VERSION} =~ ^2\.[0-9]*\.x$ ]]; then
+          if ! [[ ${NEW_VERSION} =~ ^2\.[0-9]*\.x$ ]]; then
             echo "Requested branch name is not valid for a 2.x minor release branch (i.e. 2.*.x): $NEW_VERSION" >> $GITHUB_STEP_SUMMARY
             exit 1
           fi
@@ -58,7 +58,7 @@ jobs:
         if: github.ref_name == 'main'
         shell: bash
         run: |
-          if [[ ${NEW_VERSION} =~ ^3\.[0-9]*\.x$ ]]; then
+          if ! [[ ${NEW_VERSION} =~ ^3\.[0-9]*\.x$ ]]; then
             echo "Requested branch name is not valid for a 3.x minor release branch (i.e. 3.*.x): $NEW_VERSION" >> $GITHUB_STEP_SUMMARY
             exit 1
           fi
