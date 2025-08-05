@@ -27,7 +27,7 @@
           var badge = filterCountDisplay.querySelector('.badge');
           if (!badge) {
             badge = document.createElement('span');
-            badge.classList.add('badge', 'badge-light');
+            badge.classList.add('badge', 'text-bg-light');
             badge.textContent = '0';
           }
           if (activeFilterCount > 0) {
