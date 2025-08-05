@@ -62,7 +62,7 @@
         },
         {
             "id":27,
-            "az_text_area" : "<h2>Embed a File<\/h2>\r\n",
+            "az_text_area" : "<h2>Embed a File<\/h2>\r\n\r\n<drupal-media data-align=\"center\" data-entity-type=\"media\" data-entity-uuid=\"5cec161c-71bc-4d23-824f-a692400ee17c\" data-view-mode=\"default\"><\/drupal-media>\r\n\r\n\r\n<drupal-media data-align=\"center\" data-entity-type=\"media\" data-entity-uuid=\"5cec161c-71bc-4d23-824f-a692400ee17d\" data-view-mode=\"default\"><\/drupal-media>\r\n",
             "bottom_spacing" : "mb-0"
         },
         {
