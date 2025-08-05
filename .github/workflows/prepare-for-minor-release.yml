@@ -34,7 +34,7 @@ jobs:
         shell: bash
         run: |
           if [ $(git ls-remote --heads https://github.com/az-digital/az_quickstart.git $NEW_VERSION | wc -l) = 1 ]; then
-            echo "Requested minor release branch name already exists: $NEW_VERSION" >> $GIHUB_STEP_SUMMARY
+            echo "Requested minor release branch name already exists: $NEW_VERSION" >> $GITHUB_STEP_SUMMARY
             exit 1
           fi
           delimiter=.
@@ -42,7 +42,7 @@ jobs:
           prev_minor[1]=$((next_minor_branch[1]-1))
           prev_minor_branch=$(IFS=$delimiter ; echo "${prev_minor[*]}" | sed 's/\(.*\)/\1/')
           if [ $(git ls-remote --heads https://github.com/az-digital/az_quickstart.git $prev_minor_branch | wc -l) = 0 ]; then
-            echo "Previous minor release branch name doesn't exist yet: $prev_minor_branch" >> $GIHUB_STEP_SUMMARY
+            echo "Previous minor release branch name doesn't exist yet: $prev_minor_branch" >> $GITHUB_STEP_SUMMARY
             exit 1
           fi
       - name: Validation for 2.x release branches
@@ -51,7 +51,7 @@ jobs:
         shell: bash
         run: |
           if [[ ${NEW_VERSION} =~ ^2\.[0-9]*\.x$ ]]; then
-            echo "Requested branch name is not valid for a 2.x minor release branch (i.e. 2.*.x): $NEW_VERSION" >> $GIHUB_STEP_SUMMARY
+            echo "Requested branch name is not valid for a 2.x minor release branch (i.e. 2.*.x): $NEW_VERSION" >> $GITHUB_STEP_SUMMARY
             exit 1
           fi
       - name: Validation for main (3.x) release branches
@@ -59,7 +59,7 @@ jobs:
         shell: bash
         run: |
           if [[ ${NEW_VERSION} =~ ^3\.[0-9]*\.x$ ]]; then
-            echo "Requested branch name is not valid for a 3.x minor release branch (i.e. 3.*.x): $NEW_VERSION" >> $GIHUB_STEP_SUMMARY
+            echo "Requested branch name is not valid for a 3.x minor release branch (i.e. 3.*.x): $NEW_VERSION" >> $GITHUB_STEP_SUMMARY
             exit 1
           fi
 
