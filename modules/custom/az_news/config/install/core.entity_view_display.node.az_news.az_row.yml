@@ -156,7 +156,7 @@ third_party_settings:
         - text-midnight
         - my-0
         - fw-bold
-        - mt-4
+        - mt-2
 id: node.az_news.az_row
 targetEntityType: node
 bundle: az_news
