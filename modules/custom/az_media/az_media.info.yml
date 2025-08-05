@@ -16,3 +16,4 @@ dependencies:
   - bootstrap_utilities:bootstrap_utilities
   - media_library_edit:media_library_edit
   - media_entity_file_replace:media_entity_file_replace
+  - decorative_image_widget:decorative_image_widget

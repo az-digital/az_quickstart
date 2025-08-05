@@ -24,6 +24,9 @@ source:
     -
       name: filename
       selector: filename
+    -
+      name: description
+      selector: description
 
 destination:
   plugin: 'entity:media'
@@ -67,6 +70,14 @@ process:
     source: '@uri'
     entity_type: file
     value_key: uri
+
+  'field_media_az_document/description':
+    -
+      plugin: get
+      source: description
+    -
+      plugin: default_value
+      default_value: null
 
 # Dependencies.
 dependencies:
