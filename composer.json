@@ -142,7 +142,7 @@
     "extra": {
         "branch-alias": {
             "dev-main": "3.0.x-dev",
-            "2.x-dev": "2.14.x-dev"
+            "2.x-dev": "2.15.x-dev"
         },
         "patches": {
             "drupal/auto_entitylabel": {
