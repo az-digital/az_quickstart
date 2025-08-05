@@ -39,7 +39,7 @@ jobs:
           fi
           delimiter=.
           prev_minor=($(echo $NEW_VERSION | tr $delimiter '\n'))
-          prev_minor[1]=$((next_minor_branch[1]-1))
+          prev_minor[1]=$((prev_minor[1]-1))
           prev_minor_branch=$(IFS=$delimiter ; echo "${prev_minor[*]}" | sed 's/\(.*\)/\1/')
           if [ $(git ls-remote --heads https://github.com/az-digital/az_quickstart.git $prev_minor_branch | wc -l) = 0 ]; then
             echo "Previous minor release branch name doesn't exist yet: $prev_minor_branch" >> $GITHUB_STEP_SUMMARY
