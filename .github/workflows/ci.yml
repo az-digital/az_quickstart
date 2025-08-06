@@ -65,13 +65,13 @@ jobs:
         run: |
           echo "AZ_SOURCE_REF=${GITHUB_HEAD_REF}" >> ${GITHUB_ENV}
           echo "AZ_TARGET_REF=${GITHUB_BASE_REF}" >> ${GITHUB_ENV}
-      - name: Set default branches for scaffolding and dev repos if ref is 2.* 
+      - name: Set default branches for scaffolding and dev repos if ref is 2.*
         if: startsWith(github.base_ref, '2.') || startsWith(github.ref_name, '2.')
         id: test-2-x
         run: |
           echo "DEFAULT_SCAFFOLD_BRANCH=2.x" >> ${GITHUB_ENV}
           echo "DEFAULT_DEV_BRANCH=1.x" >> ${GITHUB_ENV}
-      - name: Fallback to main branch 
+      - name: Fallback to main branch
         if: steps.test-2-x.outcome == 'skipped'
         run: |
           echo "DEFAULT_SCAFFOLD_BRANCH=main" >> ${GITHUB_ENV}
@@ -247,7 +247,7 @@ jobs:
           SIMPLETEST_BASE_URL: http://172.17.0.1:8080
           BROWSERTEST_OUTPUT_DIRECTORY: ${{ github.workspace }}/az-quickstart-scaffolding/web/sites/simpletest/browser_output
           BROWSERTEST_OUTPUT_VERBOSE: true
-          MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--headless", "--no-sandbox"]}}, "http://127.0.0.1:${{ job.services.chromedriver.ports[9515] }}"]'
+          MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","goog:chromeOptions":{"args":["--disable-gpu","--headless","--disable-dev-shm-usage","--no-sandbox"]}}, "http://127.0.0.1:${{ job.services.chromedriver.ports[9515] }}"]'
       - name: Upload PHPUnit Artifacts
         if: always()
         uses: actions/upload-artifact@v4
