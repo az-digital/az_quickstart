@@ -1,10 +1,18 @@
+#az_mobile_nav_menu,
+#az_mobile_nav_menu .az-mobile-nav-root {
+  font-family: proxima-nova-condensed, var(--bs-body-font-family);
+}
+#az_mobile_nav_menu a:not(.az-mobile-nav-root) {
+  font-weight: 500;
+}
 #az_mobile_nav_menu .nav-item .nav-link {
   padding: 0.5rem 1rem;
   min-height: unset;
+  background-color: revert;
 }
-#az_mobile_nav_menu .nav-item:first-child {
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
+#az_mobile_nav_menu .nav-item:first-child,
+#az_mobile_nav_menu .nav-item:last-child {
+  border-radius: 0;
 }
 #az_mobile_nav_menu .nav-item > .az-mobile-nav-link {
   padding-left: .75rem;
