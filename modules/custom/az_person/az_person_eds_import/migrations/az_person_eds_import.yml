@@ -29,7 +29,7 @@ process:
   # Placeholder: add additional fields.
   field_az_fname: preferredPriorityGivenName
   field_az_lname: preferredPrioritySn
-  field_az_titles: employeePrimaryTitle
+  field_az_titles: employeeTitle
   field_az_netid: uid
   field_az_pronouns: pronouns
   field_az_phones:
