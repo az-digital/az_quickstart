@@ -50,14 +50,16 @@ third_party_settings:
     group_text_muted:
       children:
         - field_az_published
-      label: 'Text Muted'
+      label: 'Text Body Secondary'
       parent_name: group_text_column
       region: content
       weight: 6
       format_type: html_element
       format_settings:
         classes: 'text-body-secondary fw-normal mb-4'
+        show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -113,8 +115,10 @@ third_party_settings:
       weight: 5
       format_type: html_element
       format_settings:
-        classes: 'card-title text-midnight h4'
+        classes: 'card-title text-midnight h4 mt-2'
+        show_empty_fields: false
         id: ''
+        label_as_html: false
         element: h2
         show_label: false
         label_element: h3
@@ -131,9 +135,10 @@ third_party_settings:
       weight: 9
       format_type: html_element
       format_settings:
-        classes: card-clickable-link
+        classes: ''
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: ''
@@ -143,15 +148,17 @@ third_party_settings:
         speed: fast
     group_link:
       children:
-        - group_bottom_border
+        - az_news_read_more
       label: Link
-      parent_name: group_card_clickable
+      parent_name: group_read_more_text
       region: content
-      weight: 1
+      weight: 7
       format_type: link
       format_settings:
-        classes: 'card-body p-0'
+        classes: 'card-body p-0 stretched-link link-primary link-underline link-underline-opacity-0 link-underline-opacity-100-hover'
+        show_empty_fields: false
         id: ''
+        label_as_html: false
         target: custom_uri
         custom_uri: '[node:az-canonical-url]'
         target_attribute: default
@@ -159,7 +166,7 @@ third_party_settings:
       children:
         - group_row
       label: 'Bottom Border'
-      parent_name: group_link
+      parent_name: group_card_clickable
       region: content
       weight: 6
       format_type: html_element
@@ -183,7 +190,9 @@ third_party_settings:
       format_type: html_element
       format_settings:
         classes: 'card-text fw-normal'
+        show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -193,15 +202,17 @@ third_party_settings:
         speed: fast
     group_card_clickable:
       children:
-        - group_link
+        - group_bottom_border
       label: 'Card Clickable'
       parent_name: ''
       region: content
       weight: 0
       format_type: html_element
       format_settings:
-        classes: 'card card-borderless card-clickable'
+        classes: 'card border-0'
+        show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -211,16 +222,17 @@ third_party_settings:
         speed: fast
     group_read_more_text:
       children:
-        - az_news_read_more
+        - group_link
       label: 'Read more text'
       parent_name: group_read_more
       region: content
       weight: 1
       format_type: html_element
       format_settings:
-        classes: 'text-chili my-4'
+        classes: my-4
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -242,7 +254,7 @@ content:
   az_news_read_more:
     settings: {  }
     third_party_settings: {  }
-    weight: 2
+    weight: 8
     region: content
   field_az_media_thumbnail_image:
     type: entity_reference_entity_view
@@ -268,6 +280,7 @@ content:
       use_all_day: 0
       capitalize_noon_and_midnight: 0
       hide_date: 0
+      month_only: 0
     third_party_settings: {  }
     weight: 5
     region: content

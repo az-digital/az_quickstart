@@ -44,16 +44,17 @@ third_party_settings:
   field_group:
     group_card:
       children:
-        - group_link
+        - group_row
       label: Card
       parent_name: ''
       region: content
       weight: 5
       format_type: html_element
       format_settings:
-        classes: 'card card-borderless card-clickable mb-6'
+        classes: 'card border-0 mb-6'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -66,7 +67,7 @@ third_party_settings:
         - group_photo_column
         - group_text_column
       label: Row
-      parent_name: group_link
+      parent_name: group_card
       region: content
       weight: 21
       format_type: html_element
@@ -83,16 +84,17 @@ third_party_settings:
         speed: fast
     group_link:
       children:
-        - group_row
+        - az_news_read_more
       label: Link
-      parent_name: group_card
+      parent_name: group_read_more_text
       region: content
-      weight: 20
+      weight: 22
       format_type: link
       format_settings:
-        classes: 'card-body p-0'
+        classes: 'card-body p-0 stretched-link text-decoration-none'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         target: entity
         custom_uri: ''
         target_attribute: default
@@ -130,6 +132,7 @@ third_party_settings:
         classes: 'text-body-secondary fw-normal'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -165,9 +168,10 @@ third_party_settings:
       weight: 9
       format_type: html_element
       format_settings:
-        classes: 'card-clickable-link mt-3'
+        classes: mt-3
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: ''
@@ -196,7 +200,7 @@ third_party_settings:
         speed: fast
     group_read_more_text:
       children:
-        - az_news_read_more
+        - group_link
       label: 'Read more text'
       parent_name: group_read_article
       region: content
@@ -221,7 +225,7 @@ content:
   az_news_read_more:
     settings: {  }
     third_party_settings: {  }
-    weight: 1
+    weight: 23
     region: content
   field_az_media_image:
     type: media_thumbnail
@@ -249,6 +253,7 @@ content:
       use_all_day: 0
       capitalize_noon_and_midnight: 0
       hide_date: 0
+      month_only: 0
     third_party_settings: {  }
     weight: 1
     region: content
