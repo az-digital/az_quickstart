@@ -97,7 +97,7 @@ third_party_settings:
       weight: 3
       format_type: html_element
       format_settings:
-        classes: 'text-muted fw-normal small mt-2'
+        classes: 'text-body-secondary fw-normal small mt-2'
         id: ''
         element: div
         show_label: false

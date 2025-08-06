@@ -76,7 +76,7 @@ third_party_settings:
       weight: 6
       format_type: html_element
       format_settings:
-        classes: text-muted
+        classes: text-body-secondary
         id: ''
         element: div
         show_label: false
