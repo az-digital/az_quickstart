@@ -98,7 +98,6 @@ bootstrap_barrio_region_clean_help: 0
 bootstrap_barrio_region_clean_sidebar_first: 0
 bootstrap_barrio_region_clean_sidebar_second: 0
 bootstrap_barrio_region_clean_highlighted: 0
-bootstrap_barrio_region_clean_breadcrumb: 0
 bootstrap_barrio_region_clean_branding: false
 bootstrap_barrio_region_clean_header: false
 bootstrap_barrio_region_clean_help: false
