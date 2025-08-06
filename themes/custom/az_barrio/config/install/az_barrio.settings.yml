@@ -99,7 +99,14 @@ bootstrap_barrio_region_clean_sidebar_first: 0
 bootstrap_barrio_region_clean_sidebar_second: 0
 bootstrap_barrio_region_clean_highlighted: 0
 bootstrap_barrio_region_clean_breadcrumb: 0
-bootstrap_barrio_region_clean_content: 0
+bootstrap_barrio_region_clean_branding: false
+bootstrap_barrio_region_clean_header: false
+bootstrap_barrio_region_clean_help: false
+bootstrap_barrio_region_clean_sidebar_first: false
+bootstrap_barrio_region_clean_sidebar_second: false
+bootstrap_barrio_region_clean_highlighted: false
+bootstrap_barrio_region_clean_breadcrumb: false
+bootstrap_barrio_region_clean_content: false
 bootstrap_barrio_region_class_branding: ''
 bootstrap_barrio_region_class_header: col-md
 bootstrap_barrio_region_class_header_2: col-md
