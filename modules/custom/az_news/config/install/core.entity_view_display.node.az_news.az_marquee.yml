@@ -200,7 +200,7 @@ content:
     type: entity_reference_entity_view
     label: hidden
     settings:
-      view_mode: az_card_image
+      view_mode: az_medium
       link: false
     third_party_settings: {  }
     weight: 0
