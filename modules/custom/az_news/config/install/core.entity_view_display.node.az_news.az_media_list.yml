@@ -56,7 +56,7 @@ third_party_settings:
       weight: 6
       format_type: html_element
       format_settings:
-        classes: 'text-muted font-weight-normal mb-4'
+        classes: 'text-muted fw-normal mb-4'
         id: ''
         element: div
         show_label: false
@@ -182,7 +182,7 @@ third_party_settings:
       weight: 7
       format_type: html_element
       format_settings:
-        classes: 'card-text font-weight-normal'
+        classes: 'card-text fw-normal'
         id: ''
         element: div
         show_label: false

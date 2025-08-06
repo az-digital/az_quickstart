@@ -54,7 +54,7 @@ third_party_settings:
       weight: 4
       format_type: html_element
       format_settings:
-        classes: 'text-muted font-weight-normal mb-0'
+        classes: 'text-muted fw-normal mb-0'
         id: ''
         element: div
         show_label: false
@@ -162,7 +162,7 @@ third_party_settings:
       weight: 1
       format_type: html_element
       format_settings:
-        classes: 'text-chili text-left'
+        classes: 'text-chili text-start'
         show_empty_fields: false
         id: ''
         element: div

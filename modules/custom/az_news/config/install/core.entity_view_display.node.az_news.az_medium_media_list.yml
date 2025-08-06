@@ -55,7 +55,7 @@ third_party_settings:
       weight: 5
       format_type: html_element
       format_settings:
-        classes: 'text-muted font-weight-normal mb-0'
+        classes: 'text-muted fw-normal mb-0'
         id: ''
         element: div
         show_label: false

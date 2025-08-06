@@ -45,7 +45,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       'text_media_spacing' => 'y-5',
       'bg_attachment' => '',
       'title_level' => 'h2',
-      'title_alignment' => 'text-left',
+      'title_alignment' => 'text-start',
     ];
   }
 

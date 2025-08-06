@@ -95,7 +95,7 @@ third_party_settings:
       weight: 22
       format_type: html_element
       format_settings:
-        classes: 'media-body text-decoration-none text-dark-silver font-weight-normal col d-flex flex-column'
+        classes: 'media-body text-decoration-none text-dark-silver fw-normal col d-flex flex-column'
         show_empty_fields: false
         id: ''
         element: div
@@ -151,7 +151,7 @@ third_party_settings:
       smart_title__classes:
         - text-midnight
         - my-0
-        - font-weight-bold
+        - fw-bold
 id: node.az_news.az_row
 targetEntityType: node
 bundle: az_news

@@ -97,7 +97,7 @@ third_party_settings:
       weight: 3
       format_type: html_element
       format_settings:
-        classes: 'text-muted font-weight-normal small mt-2'
+        classes: 'text-muted fw-normal small mt-2'
         id: ''
         element: div
         show_label: false
@@ -115,7 +115,7 @@ third_party_settings:
       weight: 4
       format_type: html_element
       format_settings:
-        classes: 'card-text font-weight-normal mt-2'
+        classes: 'card-text fw-normal mt-2'
         id: ''
         element: div
         show_label: false
@@ -152,7 +152,7 @@ third_party_settings:
       weight: 6
       format_type: html_element
       format_settings:
-        classes: 'text-chili text-left'
+        classes: 'text-chili text-start'
         show_empty_fields: false
         id: ''
         element: div
