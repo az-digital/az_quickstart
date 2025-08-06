@@ -36,7 +36,14 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
    *
    * @var string
    */
-  protected const MENU_ROOT_ID = 'root';
+  protected const NAV_MENU_ROOT_ID = 'root';
+
+  /**
+   * The text for the root of the Main Navigation menu.
+   *
+   * @var string
+   */
+  protected $navMenuRootText;
 
   /**
    * The current route match.
@@ -60,7 +67,7 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
   protected $tree;
 
   /**
-   * The menu link ID for the root of the nav menu.
+   * The menu link ID for the root of the MobileNavBlock menu.
    *
    * @var string
    */
@@ -105,6 +112,8 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
       // Refresh menu tree if it's empty or only contains the front page.
       $this->tree = $this->initMenuTree($menuTree);
     }
+
+    $this->navMenuRootText = $this->t('Main Menu');
   }
 
   /**
@@ -135,7 +144,7 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
     // Skip disabled links in the menu.
     $parameters->onlyEnabledLinks();
 
-    // Load the menu tree.
+    // Load the menu tree for the Main Navigation menu.
     $tree = $menuTree->load('main', $parameters);
 
     // Apply manipulators.
@@ -235,7 +244,7 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
       $tree = $this->getSubtreeAndParentTextByRoute($this->tree, $this->routeMatch->getRouteName(), $this->routeMatch->getRawParameters()->all());
     }
     else {
-      if ($this->menuRoot && !empty($this->tree) && $this->menuRoot !== self::MENU_ROOT_ID) {
+      if ($this->menuRoot && !empty($this->tree) && $this->menuRoot !== self::NAV_MENU_ROOT_ID) {
         $tree = $this->getSubtreeAndParentText($this->tree, $this->menuRoot);
       }
     }
@@ -248,11 +257,12 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
       $build['az_mobile_nav_menu']['heading_div']['heading']['selected_page'] = [
         '#type' => 'html_tag',
         '#tag' => 'span',
-        '#value' => $this->t('Main Menu'),
+        '#value' => $this->navMenuRootText,
         '#attributes' => [
           'class' => [
             'd-inline-block',
             'py-1',
+            'fw-bold',
             'az-mobile-nav-root',
           ],
         ],
@@ -278,7 +288,7 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
         '#title' => $title,
         '#url' => Url::fromRoute('az_core.mobile_nav_callback',
           [
-            'menu_root' => $parent === '' ? self::MENU_ROOT_ID : $parent,
+            'menu_root' => $parent === '' ? self::NAV_MENU_ROOT_ID : $parent,
             'current_page' => $this->currentPage,
           ],
         ),
@@ -302,7 +312,7 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
           '#tag' => 'span',
           '#value' => $rootElement->link->getTitle(),
           '#attributes' => [
-            'class' => ['d-inline-block py-1 az-mobile-nav-root'],
+            'class' => ['d-inline-block py-1 fw-bold az-mobile-nav-root'],
           ],
         ];
       }
@@ -331,7 +341,7 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
           '#url' => $rootElement->link->getUrlObject(),
         ];
         if ($rootElement->link->getPluginId() === $this->currentPage) {
-          $build['az_mobile_nav_menu']['heading_div']['heading']['#attributes']['class'][] = 'az-mobile-nav-current';
+          $build['az_mobile_nav_menu']['heading_div']['heading']['#attributes']['class'][] = 'text-bg-gray-200 az-mobile-nav-current';
         }
       }
 
@@ -399,6 +409,7 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
               'use-ajax',
               'btn',
               'btn-lg',
+              'bg-white',
               'py-0',
               'border-start',
               'rounded-0',
@@ -413,7 +424,7 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
         '#tag' => 'li',
         '#attributes' => [
           'class' => ($item->link->getPluginId() === $this->currentPage) ?
-            ['nav-item d-flex border-start-0 border-end-0 az-mobile-nav-current'] :
+            ['nav-item d-flex border-start-0 border-end-0 text-bg-gray-200 az-mobile-nav-current'] :
             ['nav-item d-flex border-start-0 border-end-0'],
         ],
         'children' => !empty($childrenLink) ? [
@@ -442,7 +453,7 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
   protected function getSubtreeAndParentText(array $tree, string $pluginId, bool $root = TRUE) {
     foreach ($tree as $menuLinkTreeElement) {
       if ($root && $menuLinkTreeElement->link->getPluginId() === $pluginId) {
-        return [$menuLinkTreeElement, 'parentText' => $this->t('Main Menu')];
+        return [$menuLinkTreeElement, 'parentText' => $this->navMenuRootText];
       }
       elseif ($menuLinkTreeElement->link->getPluginId() === $pluginId) {
         return [$menuLinkTreeElement, 'parentText' => $menuLinkTreeElement->link->getParent()];
@@ -478,17 +489,34 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
   protected function getSubtreeAndParentTextByRoute(array $tree, string $routeName, array $routeParameters, bool $root = TRUE) {
     foreach ($tree as $menuLinkTreeElement) {
       if ($root && $menuLinkTreeElement->link->getRouteName() === $routeName && $menuLinkTreeElement->link->getRouteParameters() === $routeParameters) {
-        return [$menuLinkTreeElement, 'parentText' => $this->t('Main Menu')];
+        // Save the current page ID for subsequent AJAX requests.
+        $this->currentPage = $menuLinkTreeElement->link->getPluginId();
+        if ($menuLinkTreeElement->link->hasChildren) {
+          return [$menuLinkTreeElement, 'parentText' => $this->navMenuRootText];
+        }
+        else {
+          // Leaf on the main menu: don't return a subtree.
+          return [];
+        }
       }
       elseif ($menuLinkTreeElement->link->getRouteName() === $routeName && $menuLinkTreeElement->link->getRouteParameters() === $routeParameters) {
         // Save the current page ID for subsequent AJAX requests.
         $this->currentPage = $menuLinkTreeElement->link->getPluginId();
-        return [$menuLinkTreeElement, 'parentText' => $menuLinkTreeElement->link->getParent()];
+        if ($menuLinkTreeElement->hasChildren) {
+          return [$menuLinkTreeElement, 'parentText' => $menuLinkTreeElement->link->getParent()];
+        }
+        else {
+          // Leaf menu item: use its parent as the root instead.
+          return [[], 'parentText' => 'use parent as root'];
+        }
       }
       elseif ($menuLinkTreeElement->hasChildren) {
         $subtreeFound = $this->getSubtreeAndParentTextByRoute($menuLinkTreeElement->subtree, $routeName, $routeParameters, FALSE);
         if (!empty($subtreeFound)) {
-          if ($subtreeFound['parentText'] === $menuLinkTreeElement->link->getPluginId()) {
+          if ($subtreeFound['parentText'] === 'use parent as root') {
+            return [$menuLinkTreeElement, 'parentText' => $menuLinkTreeElement->link->getParent()];
+          }
+          elseif ($subtreeFound['parentText'] === $menuLinkTreeElement->link->getPluginId()) {
             $subtreeFound['parentText'] = $menuLinkTreeElement->link->getTitle();
           }
           return $subtreeFound;
