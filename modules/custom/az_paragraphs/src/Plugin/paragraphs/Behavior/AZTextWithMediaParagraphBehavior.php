@@ -311,7 +311,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     // Get title classes.
     $title_classes = [
       'mt-0',
-      'bold',
+      'fw-bold',
       HTML::getClass($config['title_alignment']),
     ];
     if (!empty($config['bg_color']) && $config['bg_color'] !== 'text-bg-transparent-black') {
