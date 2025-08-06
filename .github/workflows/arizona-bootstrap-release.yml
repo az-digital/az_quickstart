@@ -1,5 +1,5 @@
 name: Create PR for new Arizona Bootstrap Release
-run-name: Create PR for updating ${{ github.event.client_payload.branch }} with Arizona Bootstrap ${{ github.event.client_payload.version }}
+run-name: Create PR for updating `${{ github.event.client_payload.branch }}` with Arizona Bootstrap `${{ github.event.client_payload.version }}`
 on:
   repository_dispatch:
     types: [az_bootstrap_release]
