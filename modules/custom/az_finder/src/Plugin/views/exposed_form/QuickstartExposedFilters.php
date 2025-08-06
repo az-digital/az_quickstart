@@ -53,7 +53,7 @@ class QuickstartExposedFilters extends BetterExposedFilters {
         'btn',
         'btn-sm',
         'btn-primary',
-        'btn-block',
+        'w-100',
         'js-active-filters-reset',
         'mx-1',
         'mb-3',
