@@ -4,7 +4,7 @@
   "private": true,
   "engines": {
     "yarn": ">= 1.6",
-    "node": ">= 18"
+    "node": ">= 18.0"
   },
   "scripts": {
     "build": "yarn build:js",
@@ -18,21 +18,21 @@
     "@babel/register": "^7.7.7",
     "babel-plugin-add-header-comment": "^1.0.3",
     "chalk": "^4.1.0",
-    "chokidar": "^3.3.1",
+    "chokidar": "^4.0.1",
     "chromedriver": "^119.0.1",
     "cross-env": "^7.0.2",
-    "dotenv-safe": "^8.2.0",
-    "eslint": "^8.9.0",
+    "dotenv-safe": "^9.1.0",
+    "eslint": "^8.53.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-config-prettier": "^8.4.0",
+    "eslint-config-prettier": "^9.1.2",
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-jquery": "^1.5.1",
     "eslint-plugin-prettier": "^5.0.1",
-    "eslint-plugin-yml": "^1.2.0",
-    "glob": "^8.0.3",
-    "minimist": "^1.2.2",
+    "eslint-plugin-yml": "^1.8.0",
+    "glob": "10.3.5",
+    "minimist": "^1.2.8",
     "mkdirp": "^3.0.1",
-    "nightwatch": "^2.4.2",
+    "nightwatch": "2.4.2",
     "prettier": "^3.0.3",
     "terser": "^5.19.0"
   },
