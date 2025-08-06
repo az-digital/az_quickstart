@@ -92,7 +92,6 @@ footer_logo_title_text: '[site:name] | Home'
 footer_logo_path: profiles/custom/az_quickstart/themes/custom/az_barrio/images/logo.png
 header_one_col_classes: 'col-12 col-sm-6 col-lg-4'
 header_two_col_classes: 'col-12 col-sm-6 col-lg-8'
-bootstrap_barrio_region_clean_branding: 0
 bootstrap_barrio_region_clean_header: 0
 bootstrap_barrio_region_clean_help: 0
 bootstrap_barrio_region_clean_sidebar_first: 0
