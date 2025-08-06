@@ -77,7 +77,7 @@ class QuickstartExposedFilters extends BetterExposedFilters {
           '#attributes' => [
             'class' => [
               'js-active-filter-count',
-              'ml-2',
+              'ms-2',
             ],
             'aria-live' => 'polite',
             'role' => 'status',
