@@ -152,7 +152,6 @@ bootstrap_barrio_hide_node_label: 0
 bootstrap_barrio_breadcrumb_divider: ''
 bootstrap_barrio_button_type: primary
 bootstrap_barrio_image_fluid: 0
-bootstrap_barrio_navbar_offcanvas: ''
 bootstrap_barrio_navbar_flyout: 0
 bootstrap_barrio_navbar_slide: 0
 bootstrap_barrio_tabs_style: ''
