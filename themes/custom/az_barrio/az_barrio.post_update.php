@@ -89,3 +89,21 @@ function az_barrio_post_update_update_theme_settings_schema(&$sandbox = NULL) {
 
   return t('Updated theme settings for schema compliance.');
 }
+
+/**
+ * Convert footer_default_logo from integer to boolean.
+ */
+function az_barrio_post_update_convert_footer_default_logo_to_boolean(&$sandbox = NULL) {
+  $config_factory = \Drupal::configFactory();
+  $theme_settings = $config_factory->getEditable('az_barrio.settings');
+
+  $current_value = $theme_settings->get('footer_default_logo');
+  if ($current_value !== NULL) {
+    // Convert integer value to boolean (0 = FALSE, anything else = TRUE).
+    $boolean_value = (bool) $current_value;
+    $theme_settings->set('footer_default_logo', $boolean_value);
+    $theme_settings->save();
+  }
+
+  return t('Converted footer_default_logo from integer to boolean.');
+}

@@ -124,6 +124,7 @@ az_barrio_logo_svg_inline: false
 az_barrio_footer_logo_svg_inline: false
 primary_logo_alt_text: '[site:name] | Home'
 primary_logo_title_text: '[site:name] | Home'
+footer_default_logo: true
 footer_logo_link_destination: ''
 footer_logo_alt_text: '[site:name] | Home'
 footer_logo_title_text: '[site:name] | Home'
@@ -132,4 +133,3 @@ header_one_col_classes: 'col-12 col-sm-6 col-lg-4'
 header_two_col_classes: 'col-12 col-sm-6 col-lg-8'
 az_barrio_navbar_offcanvas: true
 external_links: true
-footer_default_logo: 0
