@@ -12,6 +12,7 @@ use Drupal\block\Entity\Block;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Render\Element;
+use Drupal\Core\Render\Element\StatusMessages;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Template\Attribute;
 use Drupal\Core\Url;
@@ -166,6 +167,14 @@ function az_barrio_preprocess_page(&$variables, $hook) {
     $variables['sidebar_first_attributes']['class'][] = 'order-2 order-md-first';
     $variables['sidebar_second_attributes']['class'][] = 'order-last';
   }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for system messages.
+ */
+function az_barrio_preprocess_block__system_messages_block(&$variables) {
+  $variables['content'] = StatusMessages::renderMessages();
+  $variables['#cache']['max-age'] = 0;
 }
 
 /**
