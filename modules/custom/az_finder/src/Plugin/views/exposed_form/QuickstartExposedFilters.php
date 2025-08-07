@@ -52,7 +52,7 @@ class QuickstartExposedFilters extends BetterExposedFilters {
       $reset_button['#attributes']['class'] = array_merge($existing_classes, [
         'btn',
         'btn-sm',
-        'btn-primary',
+        'btn-secondary',
         'w-100',
         'js-active-filters-reset',
         'mx-1',
