@@ -17,13 +17,16 @@ jobs:
 
   validate_source_branch:
     runs-on: ubuntu-latest
-    if: ${{ !contains(fromJSON('["main", "2.x"]'), github.ref_name) }}
     steps:
       - name: Validate source branch
         run: |
-          echo "Workflow triggered from invalid branch: ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
-          echo "Worfklow must be triggerd from a valid development branch (i.e. main or 2.x)" >> $GITHUB_STEP_SUMMARY
-          exit 1
+          dev_branches=("main" "2.x")
+          # Check if the search_string is present in the array
+          if ! [[ " ${dev_branches[@]} " =~ " ${GITHUB_REF_NAME} " ]]; then
+            echo "Workflow triggered from invalid branch: ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+            echo "Worfklow must be triggered from a valid development branch (i.e. main or 2.x)" >> $GITHUB_STEP_SUMMARY
+            exit 1
+          fi
 
   validate_release_branch:
     runs-on: ubuntu-latest
@@ -50,7 +53,7 @@ jobs:
         id: validate-2-x-release-branch-name
         shell: bash
         run: |
-          if [[ ${NEW_VERSION} =~ ^2\.[0-9]*\.x$ ]]; then
+          if ! [[ ${NEW_VERSION} =~ ^2\.[0-9]*\.x$ ]]; then
             echo "Requested branch name is not valid for a 2.x minor release branch (i.e. 2.*.x): $NEW_VERSION" >> $GITHUB_STEP_SUMMARY
             exit 1
           fi
@@ -58,7 +61,7 @@ jobs:
         if: github.ref_name == 'main'
         shell: bash
         run: |
-          if [[ ${NEW_VERSION} =~ ^3\.[0-9]*\.x$ ]]; then
+          if ! [[ ${NEW_VERSION} =~ ^3\.[0-9]*\.x$ ]]; then
             echo "Requested branch name is not valid for a 3.x minor release branch (i.e. 3.*.x): $NEW_VERSION" >> $GITHUB_STEP_SUMMARY
             exit 1
           fi
@@ -101,7 +104,7 @@ jobs:
           echo "Dev branch alias: $DEV_BRANCH_ALIAS" >> $GITHUB_STEP_SUMMARY
 
   dispatch:
-    needs: 
+    needs:
       - validate_source_branch
       - validate_release_branch
       - branch_name_prep
