@@ -51,7 +51,13 @@ class EnterpriseAttributesImportTest extends BrowserTestBase {
     // Remove initial attributes from enabling az_enterprise_attributes_import.
     $manager = $this->container->get('plugin.manager.migration');
     $migration = $manager->createInstance('az_enterprise_attributes_import');
-    $migrate_exec = new MigrateExecutable($migration, new MigrateMessage());
+    $migrate_exec = new MigrateExecutable(
+      $migration,
+      new MigrateMessage(),
+      $this->container->get('keyvalue'),
+      $this->container->get('datetime.time'),
+      $this->container->get('string_translation'),
+    );
     $migrate_exec->rollback();
 
     // Build a test attribute list.
@@ -69,7 +75,13 @@ class EnterpriseAttributesImportTest extends BrowserTestBase {
     ];
     // Run migration.
     $migration = $manager->createInstance('az_enterprise_attributes_import', $options);
-    $migrate_exec = new MigrateExecutable($migration, new MigrateMessage());
+    $migrate_exec = new MigrateExecutable(
+      $migration,
+      new MigrateMessage(),
+      $this->container->get('keyvalue'),
+      $this->container->get('datetime.time'),
+      $this->container->get('string_translation'),
+    );
     $migrate_exec->import();
     // Get published terms.
     $terms = $term_storage->loadByProperties([
@@ -89,7 +101,14 @@ class EnterpriseAttributesImportTest extends BrowserTestBase {
       'sync' => 1,
       'update' => 1,
     ];
-    $migrate_exec = new MigrateExecutable($migration, new MigrateMessage(), $sync);
+    $migrate_exec = new MigrateExecutable(
+      $migration,
+      new MigrateMessage(),
+      $this->container->get('keyvalue'),
+      $this->container->get('datetime.time'),
+      $this->container->get('string_translation'),
+      $sync,
+    );
     $migrate_exec->import();
     // Get unpublished terms.
     $terms = $term_storage->loadByProperties([

@@ -95,7 +95,7 @@
         "drupal/migmag": "1.8.4",
         "drupal/migrate_plus": "6.0.5",
         "drupal/migrate_queue_importer": "2.1.2",
-        "drupal/migrate_tools": "6.0.5",
+        "drupal/migrate_tools": "6.1.2",
         "drupal/optional_end_date": "1.4.0",
         "drupal/paragraphs": "1.19.0",
         "drupal/paragraphs_admin": "1.6.0",
