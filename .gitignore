@@ -36,3 +36,6 @@ tags
 
 .DS_Store
 .idea
+
+# ENV Files
+.env
