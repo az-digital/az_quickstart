@@ -72,6 +72,11 @@
   margin-bottom: 1rem;
 }
 
+ .az-bef-vertical div.form-item-title,
+ .az-bef-vertical div.form-item-pubdate {
+  min-width: 100%;
+ }
+
 .az-bef-vertical .form-actions {
   margin-bottom: 0;
 }
