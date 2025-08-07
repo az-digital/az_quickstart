@@ -491,7 +491,7 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
       if ($root && $menuLinkTreeElement->link->getRouteName() === $routeName && $menuLinkTreeElement->link->getRouteParameters() === $routeParameters) {
         // Save the current page ID for subsequent AJAX requests.
         $this->currentPage = $menuLinkTreeElement->link->getPluginId();
-        if ($menuLinkTreeElement->link->hasChildren) {
+        if ($menuLinkTreeElement->hasChildren) {
           return [$menuLinkTreeElement, 'parentText' => $this->navMenuRootText];
         }
         else {
