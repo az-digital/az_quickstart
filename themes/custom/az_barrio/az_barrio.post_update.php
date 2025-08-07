@@ -107,3 +107,20 @@ function az_barrio_post_update_convert_footer_default_logo_to_boolean(&$sandbox 
 
   return t('Converted footer_default_logo from integer to boolean.');
 }
+
+/**
+ * Add langcode to az_barrio.settings.yml.
+ */
+function az_barrio_post_update_add_langcode_to_settings(&$sandbox = NULL) {
+  $config_factory = \Drupal::configFactory();
+  $theme_settings = $config_factory->getEditable('az_barrio.settings');
+
+  // Check if langcode is already set.
+  if ($theme_settings->get('langcode') === NULL) {
+    // Set default langcode to 'en'.
+    $theme_settings->set('langcode', 'en');
+    $theme_settings->save();
+  }
+
+  return t('Added langcode to az_barrio.settings.yml if it was missing.');
+}
