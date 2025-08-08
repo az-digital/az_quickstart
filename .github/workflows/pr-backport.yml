@@ -32,7 +32,7 @@ jobs:
         run: |
           # Create and checkout the backport branch from 2.x
           git checkout 2.x
-          git checkout -b "backport-2.x/pr-${{ github.event.pull_request.number }}"
+          git checkout -b "backport/pr-${{ github.event.pull_request.number }}-2.x"
 
           # Attempt cherry-pick and capture the status
           if git cherry-pick -x "${{ github.event.pull_request.merge_commit_sha }}"; then
@@ -50,26 +50,27 @@ jobs:
             Original commit: ${{ github.event.pull_request.merge_commit_sha }}"
           fi
 
-          # Push the branch in either case
-          git push origin "backport-2.x/pr-${{ github.event.pull_request.number }}"
+          # Push the branch so we can create a PR from it
+          git push origin "backport/pr-${{ github.event.pull_request.number }}-2.x"
 
       - name: Create Pull Request
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        uses: peter-evans/create-pull-request@v5
-        with:
-          base: 2.x
-          title: '${{ github.event.pull_request.title }} (2.x backport of #${{ github.event.pull_request.number }})'
-          body: |
-            Backport of #${{ github.event.pull_request.number }}
+        run: |
+          # Prepare PR body
+          BODY="Backport of #${{ github.event.pull_request.number }}
 
-            This automated PR was created to backport changes from #${{ github.event.pull_request.number }} to the 2.x branch.
+          This automated PR was created to backport changes from #${{ github.event.pull_request.number }} to the 2.x branch.
 
-            Original PR: ${{ github.event.pull_request.html_url }}
+          Original PR: ${{ github.event.pull_request.html_url }}
 
-            ${{ steps.backport.outputs.status == 'conflicts' && '⚠️ **This PR contains merge conflicts that need to be resolved manually.**' || '' }}
-          labels: |
-            2.x-only
-            backport
-          draft: ${{ steps.backport.outputs.status == 'conflicts' }}
-          branch: backport-2.x/pr-${{ github.event.pull_request.number }}
+          $([ "${{ steps.backport.outputs.status }}" == "conflicts" ] && echo "⚠️ **This PR contains merge conflicts that need to be resolved manually.**" || echo "")"
+
+          # Create the PR using GitHub CLI
+          gh pr create \
+            --base 2.x \
+            --head "backport/pr-${{ github.event.pull_request.number }}-2.x" \
+            --title "${{ github.event.pull_request.title }} (2.x backport of #${{ github.event.pull_request.number }})" \
+            --body "$BODY" \
+            --label "2.x-only,backport" \
+            $([ "${{ steps.backport.outputs.status }}" == "conflicts" ] && echo "--draft" || echo "")
