@@ -52,7 +52,6 @@ function az_barrio_post_update_update_theme_settings_schema(&$sandbox = NULL) {
     'bootstrap_barrio_sidebar_first_affix' => 0,
     'bootstrap_barrio_sidebar_second_affix' => 0,
     'bootstrap_barrio_messages_widget_toast_delay' => 0,
-    'footer_default_logo' => 0,
 
     // Convert string values.
     'bootstrap_barrio_float_label' => '',
