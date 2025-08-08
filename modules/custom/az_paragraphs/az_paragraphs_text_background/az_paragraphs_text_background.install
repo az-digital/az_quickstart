@@ -8,8 +8,6 @@
  * az_paragraphs_text_background module.
  */
 
-use Drupal\paragraphs\Entity\Paragraph;
-
 /**
  * Implements hook_update_last_removed().
  */
