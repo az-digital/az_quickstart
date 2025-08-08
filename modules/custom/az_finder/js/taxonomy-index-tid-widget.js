@@ -14,9 +14,9 @@
         var icons = settings.azFinder.icons;
         function getNewSVGMarkup(isExpanded, level) {
           if (level === 0) {
-            return isExpanded ? icons.level_0_expand : icons.level_0_collapse;
+            return isExpanded ? icons.level_0_collapse : icons.level_0_expand;
           }
-          return isExpanded ? icons.level_1_expand : icons.level_1_collapse;
+          return isExpanded ? icons.level_1_collapse : icons.level_1_expand;
         }
         function toggleSVG(event) {
           var button = event.currentTarget;
