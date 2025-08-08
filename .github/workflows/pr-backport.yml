@@ -73,4 +73,3 @@ jobs:
             backport
           draft: ${{ steps.backport.outputs.status == 'conflicts' }}
           branch: backport-2.x/pr-${{ github.event.pull_request.number }}
-          delete-branch: true
