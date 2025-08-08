@@ -71,7 +71,7 @@ process:
         - '@filename'
   uri:
     -
-      plugin: skip_on_empty
+      plugin: json_skip_on_empty
       method: row
       source: url
     -
