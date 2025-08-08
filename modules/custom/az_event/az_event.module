@@ -349,7 +349,7 @@ function az_event_preprocess_node(&$variables) {
 
       // Get row and delta for transformations.
       $row_index = $variables['elements']['#az_view_row_index'];
-      $delta = (int) $node->view->result[$row_index]->node__field_az_event_date_delta;
+      $delta = (int) ($node->view->result[$row_index]->node__field_az_event_date_delta ?? 0);
 
       // There is a field value at our computed delta.
       if (!empty($variables['content']['field_az_event_date'][$delta])) {
