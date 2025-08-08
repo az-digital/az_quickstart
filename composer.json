@@ -80,8 +80,10 @@
         "drupal/intelligencebank": "5.1.0",
         "drupal/jquery_ui": "1.7.0",
         "drupal/jquery_ui_datepicker": "2.1.1",
+        "drupal/key": "1.20",
+        "drupal/ldap": "4.12",
         "drupal/link_class": "2.2.0",
-        "drupal/linkit": "7.0.7",
+        "drupal/linkit": "7.0.8",
         "drupal/masquerade": "2.0.0",
         "drupal/masquerade_log": "2.0.0",
         "drupal/media_entity_file_replace": "1.3.0",
@@ -89,7 +91,7 @@
         "drupal/media_library_form_element": "2.1.2",
         "drupal/menu_block": "1.14.0",
         "drupal/menu_link_attributes": "1.5.0",
-        "drupal/metatag": "2.1.0",
+        "drupal/metatag": "2.1.1",
         "drupal/migmag": "1.8.4",
         "drupal/migrate_plus": "6.0.5",
         "drupal/migrate_queue_importer": "2.1.2",
@@ -182,9 +184,6 @@
             },
             "drupal/menu_block": {
                 "Performance issue caused by build in access check (3509045)": "https://www.drupal.org/files/issues/2025-03-05/3509045-13.patch"
-            },
-            "drupal/metatag": {
-                "MetatagManager uasort() TypeError (3503253)": "https://www.drupal.org/files/issues/2025-02-17/3503253-4.patch"
             },
             "drupal/migrate_plus": {
                 "XML namespacing issue (2933531)": "https://www.drupal.org/files/issues/2019-08-22/register_namespaces-2933531-7.patch",
