@@ -9,6 +9,7 @@ dependencies:
     - image.style.thumbnail
     - media.type.az_image
   module:
+    - decorative_image_widget
     - image_widget_crop
     - text
 id: media.az_image.media_library
@@ -37,13 +38,12 @@ content:
     weight: 0
     region: content
     settings:
-      show_default_crop: true
-      warn_multiple_usages: true
+      progress_indicator: throbber
       preview_image_style: thumbnail
       crop_preview_image_style: crop_thumbnail
       crop_list:
         - az_card_image
-        - az_modal_image
+        - az_carousel_image
         - az_full_width_bg_extra_small
         - az_full_width_bg_large
         - az_full_width_bg_medium
@@ -52,11 +52,15 @@ content:
         - az_marketing_cloud_30_70_layout
         - az_marketing_cloud_50_50_layout
         - az_marketing_cloud_hero_layout
+        - az_modal_image
         - az_square_aspect_ratio
-      progress_indicator: throbber
       crop_types_required: {  }
+      warn_multiple_usages: true
       show_crop_area: false
-    third_party_settings: {  }
+      show_default_crop: true
+    third_party_settings:
+      decorative_image_widget:
+        use_decorative_checkbox: true
 hidden:
   created: true
   name: true

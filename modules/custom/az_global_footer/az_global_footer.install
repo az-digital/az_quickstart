@@ -394,3 +394,64 @@ function az_global_footer_update_1021203() {
 
   return t('Updated %count Health & Medical menu link(s) in the global footer.', ['%count' => $updated_count]);
 }
+
+/**
+ * Update the Title IX / Non-Discrimination link (az_quickstart #4148).
+ */
+function az_global_footer_update_1021204() {
+  $updated_count = 0;
+  $menu_link_content_ids = \Drupal::entityQuery('menu_link_content')
+    ->accessCheck(FALSE)
+    ->condition('menu_name', 'az-footer-main')
+    ->condition('title', 'Title IX / Non-Discrimination')
+    ->condition('link__uri', 'https://www.arizona.edu/title-ix')
+    ->execute();
+  foreach ($menu_link_content_ids as $id) {
+    /** @var \Drupal\menu_link_content\Entity\MenuLinkContent $menu_link_content */
+    $menu_link_content = MenuLinkContent::load($id);
+    if ($menu_link_content !== NULL) {
+      $menu_link_content->title = 'Nondiscrimination';
+      /* @phpstan-ignore-next-line */
+      $menu_link_content->link->uri = 'https://www.arizona.edu/nondiscrimination';
+      $menu_link_content->save();
+      $updated_count++;
+    }
+  }
+
+  return t('Updated %count Title IX / Non-Discrimination menu link(s) in the global footer.', ['%count' => $updated_count]);
+}
+
+/**
+ * Remove "Annual Security Report" link from Global Footer (#4267)
+ */
+function az_global_footer_update_1021205() {
+  $updated_count = 0;
+  $annual_security_report_link_weight = NULL;
+  $menu_link_content_ids = \Drupal::entityQuery('menu_link_content')
+    ->accessCheck(FALSE)
+    ->condition('menu_name', 'az-footer-main')
+    ->condition('title', 'Annual Security Report')
+    ->condition('link__uri', 'https://clery.arizona.edu/asr')
+    ->execute();
+
+  foreach ($menu_link_content_ids as $id) {
+    /** @var \Drupal\menu_link_content\Entity\MenuLinkContent $menu_link_content */
+    $menu_link_content = MenuLinkContent::load($id);
+    if ($menu_link_content !== NULL) {
+      if ($menu_link_content->getTitle() === 'Annual Security Report' && $menu_link_content->getUrlObject()->toString() === 'https://clery.arizona.edu/asr') {
+        $annual_security_report_link_ids[] = $id;
+        $annual_security_report_link_weight = $menu_link_content->getWeight();
+        $menu_link_content->delete();
+      }
+    }
+    // Update the weights of links to fill the gap left by
+    // the deleted 'Annual Security Report' link.
+    if ($annual_security_report_link_weight !== NULL) {
+      $weight = $menu_link_content->getWeight();
+      if ($menu_link_content->getWeight() > $annual_security_report_link_weight) {
+        $menu_link_content->set('weight', --$weight);
+        $menu_link_content->save();
+      }
+    }
+  }
+}

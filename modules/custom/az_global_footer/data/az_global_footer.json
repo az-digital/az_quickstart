@@ -26,8 +26,8 @@
       "link_id": "3",
       "parent_link_id": "0",
       "menu": "az-footer-main",
-      "title": "Title IX / Non-Discrimination",
-      "urlpath": "https://www.arizona.edu/title-ix",
+      "title": "Nondiscrimination",
+      "urlpath": "https://www.arizona.edu/nondiscrimination",
       "external": true,
       "expanded": false,
       "enabled": true,
@@ -45,17 +45,6 @@
       "weight": "4"
     },
     {
-      "link_id": "5",
-      "parent_link_id": "0",
-      "menu": "az-footer-main",
-      "title": "Annual Security Report",
-      "urlpath": "https://clery.arizona.edu/asr",
-      "external": true,
-      "expanded": false,
-      "enabled": true,
-      "weight": "5"
-    },
-    {
       "link_id": "6",
       "parent_link_id": "0",
       "menu": "az-footer-main",
@@ -64,7 +53,7 @@
       "external": true,
       "expanded": false,
       "enabled": true,
-      "weight": "6"
+      "weight": "5"
     },
     {
       "link_id": "7",
@@ -75,7 +64,7 @@
       "external": true,
       "expanded": false,
       "enabled": true,
-      "weight": "7"
+      "weight": "6"
     },
     {
       "link_id": "8",
@@ -86,7 +75,7 @@
       "external": true,
       "expanded": false,
       "enabled": true,
-      "weight": "8"
+      "weight": "7"
     },
     {
       "link_id": "9",
@@ -97,7 +86,7 @@
       "external": true,
       "expanded": false,
       "enabled": true,
-      "weight": "9"
+      "weight": "8"
     },
     {
       "link_id": "10",

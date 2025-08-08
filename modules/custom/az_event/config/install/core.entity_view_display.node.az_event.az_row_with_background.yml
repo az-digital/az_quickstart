@@ -6,6 +6,7 @@ dependencies:
     - field.field.node.az_event.field_az_attachments
     - field.field.node.az_event.field_az_body
     - field.field.node.az_event.field_az_contacts
+    - field.field.node.az_event.field_az_enterprise_attributes
     - field.field.node.az_event.field_az_event_category
     - field.field.node.az_event.field_az_event_date
     - field.field.node.az_event.field_az_featured_image_as_thumb
@@ -48,7 +49,7 @@ third_party_settings:
       weight: 0
       format_type: html_element
       format_settings:
-        classes: 'bg-gray-100 card card-borderless card-clickable hover mb-4'
+        classes: 'text-bg-gray-100 card border-0 card-clickable hover mb-4'
         show_empty_fields: false
         id: ''
         element: div
@@ -165,7 +166,7 @@ third_party_settings:
       weight: 2
       format_type: html_element
       format_settings:
-        classes: 'text-muted font-weight-normal'
+        classes: 'text-body-secondary fw-normal'
         show_empty_fields: false
         id: ''
         element: div
@@ -185,7 +186,7 @@ third_party_settings:
       weight: 14
       format_type: html_element
       format_settings:
-        classes: 'bg-azurite py-3'
+        classes: 'text-bg-azurite py-3'
         show_empty_fields: false
         id: ''
         element: div
@@ -271,6 +272,7 @@ hidden:
   field_az_attachments: true
   field_az_body: true
   field_az_contacts: true
+  field_az_enterprise_attributes: true
   field_az_event_category: true
   field_az_featured_image_as_thumb: true
   field_az_link: true
