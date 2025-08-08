@@ -29,13 +29,35 @@ process:
   # Placeholder: add additional fields.
   field_az_fname: preferredPriorityGivenName
   field_az_lname: preferredPrioritySn
-  field_az_titles: employeeTitle
+  field_az_titles:
+    plugin: az_eds_opt_out
+    source: employeeTitle
+    attribute: isMemberOf
+    optout: 'arizona.edu:services:enterprise:ldap.arizona.edu:title-suppress'
   field_az_netid: uid
   field_az_pronouns: pronouns
   field_az_phones:
-    plugin: az_phone
-    source: employeePhone
-  field_az_email: mail
+    -
+      plugin: az_phone
+      source: employeePhone
+    -
+      plugin: az_eds_opt_out
+      attribute: isMemberOf
+      optout: 'arizona.edu:services:enterprise:ldap.arizona.edu:phone-suppress'
+    -
+      plugin: az_eds_opt_out
+      attribute: studentInfoReleaseCode
+      optout: 'MAIN PHONE'
+  field_az_email: 
+    -
+      plugin: az_eds_opt_out
+      source: mail
+      attribute: isMemberOf
+      optout: 'arizona.edu:services:enterprise:ldap.arizona.edu:mail-suppress'
+    -
+      plugin: az_eds_opt_out
+      attribute: studentInfoReleaseCode
+      optout: 'CAMPUS EMAIL'
 
 destination:
   plugin: entity:node
