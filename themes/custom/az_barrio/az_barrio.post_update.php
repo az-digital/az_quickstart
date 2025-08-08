@@ -30,41 +30,102 @@ function az_barrio_post_update_split_bootstrap_cdn_version(&$sandbox = NULL) {
 }
 
 /**
- * Updates theme settings for improved schema compliance.
- *
- * Updates data types, and reorganizes configuration
- * to match the updated schema.
+ * Convert boolean theme settings to proper boolean types.
  */
-function az_barrio_post_update_update_theme_settings_schema(&$sandbox = NULL) {
+function az_barrio_post_update_convert_boolean_settings(&$sandbox = NULL) {
   $config_factory = \Drupal::configFactory();
   $theme_settings = $config_factory->getEditable('az_barrio.settings');
-  // Update data types for schema compliance.
-  $type_updates = [
-    // Convert boolean values to proper types.
+  
+  // Convert boolean values to proper types.
+  $boolean_updates = [
     'bootstrap_barrio_enable_color' => FALSE,
     'bootstrap_barrio_image_fluid' => FALSE,
     'bootstrap_barrio_navbar_flyout' => FALSE,
     'bootstrap_barrio_navbar_slide' => FALSE,
+    'footer_default_logo' => TRUE,
+  ];
 
-    // Convert integer values.
+  foreach ($boolean_updates as $key => $default_value) {
+    $current_value = $theme_settings->get($key);
+    if ($current_value !== NULL) {
+      // Convert existing value to proper boolean type.
+      $theme_settings->set($key, (bool) $current_value);
+    } else {
+      // Set default value if setting doesn't exist.
+      $theme_settings->set($key, $default_value);
+    }
+  }
+
+  $theme_settings->save();
+  return t('Converted boolean theme settings to proper boolean types.');
+}
+
+/**
+ * Convert integer theme settings to proper integer types.
+ */
+function az_barrio_post_update_convert_integer_settings(&$sandbox = NULL) {
+  $config_factory = \Drupal::configFactory();
+  $theme_settings = $config_factory->getEditable('az_barrio.settings');
+  
+  // Convert integer values to proper types.
+  $integer_updates = [
     'bootstrap_barrio_sidebar_collapse' => 0,
     'bootstrap_barrio_hide_node_label' => 0,
     'bootstrap_barrio_sidebar_first_affix' => 0,
     'bootstrap_barrio_sidebar_second_affix' => 0,
     'bootstrap_barrio_messages_widget_toast_delay' => 0,
+  ];
 
-    // Convert string values.
+  foreach ($integer_updates as $key => $default_value) {
+    $current_value = $theme_settings->get($key);
+    if ($current_value !== NULL) {
+      // Convert existing value to proper integer type.
+      $theme_settings->set($key, (int) $current_value);
+    } else {
+      // Set default value if setting doesn't exist.
+      $theme_settings->set($key, $default_value);
+    }
+  }
+
+  $theme_settings->save();
+  return t('Converted integer theme settings to proper integer types.');
+}
+
+/**
+ * Convert string theme settings to proper string types.
+ */
+function az_barrio_post_update_convert_string_settings(&$sandbox = NULL) {
+  $config_factory = \Drupal::configFactory();
+  $theme_settings = $config_factory->getEditable('az_barrio.settings');
+  
+  // Convert string values to proper types.
+  $string_updates = [
     'bootstrap_barrio_float_label' => '',
     'bootstrap_barrio_navbar_offcanvas' => '',
   ];
 
-  foreach ($type_updates as $key => $value) {
+  foreach ($string_updates as $key => $default_value) {
     $current_value = $theme_settings->get($key);
     if ($current_value !== NULL) {
-      $theme_settings->set($key, $value);
+      // Convert existing value to proper string type.
+      $theme_settings->set($key, (string) $current_value);
+    } else {
+      // Set default value if setting doesn't exist.
+      $theme_settings->set($key, $default_value);
     }
   }
 
+  $theme_settings->save();
+  return t('Converted string theme settings to proper string types.');
+}
+
+/**
+ * Convert region clean settings from boolean to integer types.
+ */
+function az_barrio_post_update_convert_region_clean_settings(&$sandbox = NULL) {
+  $config_factory = \Drupal::configFactory();
+  $theme_settings = $config_factory->getEditable('az_barrio.settings');
+  
   // Update region clean settings to use integers instead of booleans.
   $region_clean_settings = [
     'bootstrap_barrio_region_clean_header',
@@ -85,26 +146,7 @@ function az_barrio_post_update_update_theme_settings_schema(&$sandbox = NULL) {
   }
 
   $theme_settings->save();
-
-  return t('Updated theme settings for schema compliance.');
-}
-
-/**
- * Convert footer_default_logo from integer to boolean.
- */
-function az_barrio_post_update_convert_footer_default_logo_to_boolean(&$sandbox = NULL) {
-  $config_factory = \Drupal::configFactory();
-  $theme_settings = $config_factory->getEditable('az_barrio.settings');
-
-  $current_value = $theme_settings->get('footer_default_logo');
-  if ($current_value !== NULL) {
-    // Convert integer value to boolean (0 = FALSE, anything else = TRUE).
-    $boolean_value = (bool) $current_value;
-    $theme_settings->set('footer_default_logo', $boolean_value);
-    $theme_settings->save();
-  }
-
-  return t('Converted footer_default_logo from integer to boolean.');
+  return t('Converted region clean settings from boolean to integer types.');
 }
 
 /**
