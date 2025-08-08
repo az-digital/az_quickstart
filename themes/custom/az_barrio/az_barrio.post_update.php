@@ -35,7 +35,7 @@ function az_barrio_post_update_split_bootstrap_cdn_version(&$sandbox = NULL) {
 function az_barrio_post_update_convert_boolean_settings(&$sandbox = NULL) {
   $config_factory = \Drupal::configFactory();
   $theme_settings = $config_factory->getEditable('az_barrio.settings');
-  
+
   // Convert boolean values to proper types.
   $boolean_updates = [
     'bootstrap_barrio_enable_color' => FALSE,
@@ -50,7 +50,8 @@ function az_barrio_post_update_convert_boolean_settings(&$sandbox = NULL) {
     if ($current_value !== NULL) {
       // Convert existing value to proper boolean type.
       $theme_settings->set($key, (bool) $current_value);
-    } else {
+    }
+    else {
       // Set default value if setting doesn't exist.
       $theme_settings->set($key, $default_value);
     }
@@ -66,7 +67,7 @@ function az_barrio_post_update_convert_boolean_settings(&$sandbox = NULL) {
 function az_barrio_post_update_convert_integer_settings(&$sandbox = NULL) {
   $config_factory = \Drupal::configFactory();
   $theme_settings = $config_factory->getEditable('az_barrio.settings');
-  
+
   // Convert integer values to proper types.
   $integer_updates = [
     'bootstrap_barrio_sidebar_collapse' => 0,
@@ -81,7 +82,8 @@ function az_barrio_post_update_convert_integer_settings(&$sandbox = NULL) {
     if ($current_value !== NULL) {
       // Convert existing value to proper integer type.
       $theme_settings->set($key, (int) $current_value);
-    } else {
+    }
+    else {
       // Set default value if setting doesn't exist.
       $theme_settings->set($key, $default_value);
     }
@@ -97,7 +99,7 @@ function az_barrio_post_update_convert_integer_settings(&$sandbox = NULL) {
 function az_barrio_post_update_convert_string_settings(&$sandbox = NULL) {
   $config_factory = \Drupal::configFactory();
   $theme_settings = $config_factory->getEditable('az_barrio.settings');
-  
+
   // Convert string values to proper types.
   $string_updates = [
     'bootstrap_barrio_float_label' => '',
@@ -109,7 +111,8 @@ function az_barrio_post_update_convert_string_settings(&$sandbox = NULL) {
     if ($current_value !== NULL) {
       // Convert existing value to proper string type.
       $theme_settings->set($key, (string) $current_value);
-    } else {
+    }
+    else {
       // Set default value if setting doesn't exist.
       $theme_settings->set($key, $default_value);
     }
@@ -125,7 +128,7 @@ function az_barrio_post_update_convert_string_settings(&$sandbox = NULL) {
 function az_barrio_post_update_convert_region_clean_settings(&$sandbox = NULL) {
   $config_factory = \Drupal::configFactory();
   $theme_settings = $config_factory->getEditable('az_barrio.settings');
-  
+
   // Update region clean settings to use integers instead of booleans.
   $region_clean_settings = [
     'bootstrap_barrio_region_clean_header',
