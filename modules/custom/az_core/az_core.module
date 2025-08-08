@@ -529,3 +529,23 @@ function az_core_preprocess_container__text_format_filter_help(&$variables) {
     }
   }
 }
+
+/**
+ * Implements hook_preprocess_entity_embed_container().
+ *
+ * Prevents competing submit button lockup errors in edit pages
+ * by swapping embedded webforms with a custom preview when in collapsed mode.
+ */
+function az_core_preprocess_entity_embed_container(array &$variables) {
+  if (isset($variables['element']['entity']['webform'])) {
+    $embedded_webform_preview = $variables['element']['entity']['title'][0]['#context']['value'];
+    if (\Drupal::routeMatch()->getRouteName() === 'entity.node.edit_form' || \Drupal::routeMatch()->getRouteName() === 'entity.block_content.edit_form') {
+      // Get the view builder for the entity.
+      $entity = $variables["element"]['#entity'];
+      $type_id = $entity->getEntityTypeId();
+      $builder = \Drupal::entityTypeManager()->getViewBuilder($type_id);
+      // Render the entity as a teaser.
+      $variables['children'] = $builder->view($entity, 'teaser');
+    }
+  }
+}
