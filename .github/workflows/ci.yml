@@ -134,7 +134,7 @@ jobs:
         continue-on-error: true
         run: |
           cd $GITHUB_WORKSPACE/az-quickstart-scaffolding
-          ./vendor/bin/phpcs --standard=web/profiles/custom/az_quickstart/phpcs.xml.dist -q --report=checkstyle | sed 's/web\/profiles\/custom\/az_quickstart\///' | cs2pr
+          ./vendor/bin/phpcs --standard=web/profiles/custom/az_quickstart/phpcs.xml.dist -sq --report=checkstyle | sed 's/web\/profiles\/custom\/az_quickstart\///' | cs2pr
       - name: Run phpcs
         run: |
           cd $GITHUB_WORKSPACE/az-quickstart-scaffolding
