@@ -1,7 +1,7 @@
 {#
 /**
  * @file
- * Default theme implementation to display a paragraph.
+ * Default theme implementation to display a Photo Gallery paragraph.
  *
  * Available variables:
  * - paragraph: Full paragraph entity.
@@ -32,7 +32,7 @@
  *   current user is a logged-in member.
  * - is_admin: Flag for admin user status. Will be true when the current user
  *   is an administrator.
- * - grid: whether the gallery is a grid, e.g. photo gallery.
+ * - grid: whether the photo gallery uses a Grid display.
  * - modal: unique id for the modal element.
  * - gallery: unique id for the carousel element.
  *
@@ -52,31 +52,20 @@
 {% block paragraph %}
   <div{{ attributes.addClass(classes) }}>
     {% block content %}
-    <div class="container">
-  		<div class="row">
-        {% if content.field_az_photos[0] %}
+      {% if content.field_az_photos[0] %}
         {% if grid %}
-          {# Render the images for the gallery grid display. #}
-          {% for key, item in paragraph.field_az_photos %}
-            {% if key|first != '#' %}
-              {% set modalimage = {
-                '#theme':      'image_style',
-                '#style_name': 'az_card_image',
-                '#uri':        item.entity.field_media_az_image.0.entity.uri.value,
-                '#alt':        item.entity.field_media_az_image.alt,
-                '#attributes': { class: [ 'photo-gallery-grid-img' ] },
-              } %}
-              <div class="col-6 col-md-4 col-lg-3 px-min py-min" data-bs-toggle="modal" data-bs-target="#{{ modal }}">
-                <a class="az-gallery-open-modal" role="button" data-bs-target="#{{ gallery }}" data-bs-slide-to="{{ loop.index0 }}">
-                  <picture class="card-img img-responsive">
-                  {{ modalimage }}
-                  </picture>
-                </a>
-              </div>
-            {% endif %}
-          {% endfor %}
-          {# Modal wrapper for grid. #}
-          <div id="{{ modal }}" class="modal bg-transparent-black az-gallery-modal" tabindex="-1" role="dialog">
+          {# Grid display with modal #}
+          {% include '@az_paragraphs_photo_gallery/grid-gallery.html.twig' with {
+            'photos': paragraph.field_az_photos,
+            'modal': modal,
+            'gallery': gallery
+          } %}
+        {% else %}
+          {# Carousel display #}
+          {% include '@az_paragraphs_photo_gallery/carousel-gallery.html.twig' with {
+            'photos': paragraph.field_az_photos,
+            'gallery': gallery
+          } %}
         {% endif %}
 
           <div id="{{ gallery }}" class="carousel slide{% if grid %} az-gallery{% endif %}">
