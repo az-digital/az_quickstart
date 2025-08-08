@@ -14,9 +14,9 @@ function az_paragraphs_text_media_update_last_removed() {
 }
 
 /**
- * Update text on media paragraphs for Bootstrap 5 compatibility.
+ * Update text on media paragraphs for Bootstrap 5 compatibility (revised).
  */
-function az_paragraphs_text_media_update_1130001(&$sandbox) {
+function az_paragraphs_text_media_update_1130002(&$sandbox) {
 
   if (!isset($sandbox['total'])) {
     $count = \Drupal::entityQuery('paragraph')
@@ -69,13 +69,13 @@ function az_paragraphs_text_media_update_1130001(&$sandbox) {
 
     // Update text on media bg color for AZ Bootstrap 5.
     if (isset($behavior_settings['az_text_media_paragraph_behavior']['bg_color'])) {
-      $needs_update = TRUE;
       $text_media_bg_color = $behavior_settings['az_text_media_paragraph_behavior']['bg_color'];
       $bg_color_mappings = [
-        'text-bg-transparent-white' => 'text-bg-transparent-white',
-        'text-bg-transparent-black' => 'text-bg-transparent-black',
+        'bg-transparent-white' => 'text-bg-transparent-white',
+        'bg-transparent-black' => 'text-bg-transparent-black',
       ];
       if (isset($bg_color_mappings[$text_media_bg_color])) {
+        $needs_update = TRUE;
         $behavior_settings['az_text_media_paragraph_behavior']['bg_color'] = $bg_color_mappings[$text_media_bg_color];
       }
     }
