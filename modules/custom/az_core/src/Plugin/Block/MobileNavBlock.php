@@ -4,7 +4,7 @@ namespace Drupal\az_core\Plugin\Block;
 
 use Drupal\Core\Block\Attribute\Block;
 use Drupal\Core\Block\BlockBase;
-use Drupal\Core\KeyValueStore\KeyValueStoreExpirableInterface;
+use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Menu\MenuLinkTreeInterface;
 use Drupal\Core\Menu\MenuTreeParameters;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
@@ -23,13 +23,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 )]
 
 class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterface {
-
-  /**
-   * The time to live for the menu tree in key/value storage, in seconds.
-   *
-   * @var int
-   */
-  protected const EXPIRE_TIME = 900;
 
   /**
    * The custom ID to denote the root of the nav menu.
@@ -53,11 +46,11 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
   protected $routeMatch;
 
   /**
-   * The key/value store for the menu tree.
+   * The cache backend.
    *
-   * @var \Drupal\Core\KeyValueStore\KeyValueStoreExpirableInterface
+   * @var \Drupal\Core\Cache\CacheBackendInterface
    */
-  protected $menuTreeStore;
+  protected $cache;
 
   /**
    * The menu link tree array.
@@ -84,19 +77,19 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
    *   The plugin implementation definition.
    * @param \Drupal\Core\Routing\RouteMatchInterface $route_match
    *   The route match object.
-   * @param \Drupal\Core\KeyValueStore\KeyValueStoreExpirableInterface $key_value_expirable
+   * @param \Drupal\Core\Cache\CacheBackendInterface $cache_backend
    *   The key value expirable factory.
    * @param \Drupal\Core\Menu\MenuLinkTreeInterface $menu_tree
    *   The menu link tree service.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, RouteMatchInterface $route_match, KeyValueStoreExpirableInterface $key_value_expirable, MenuLinkTreeInterface $menu_tree) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, RouteMatchInterface $route_match, CacheBackendInterface $cache_backend, MenuLinkTreeInterface $menu_tree) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->currentPage = $configuration['current_page'] ?? 'none';
     $this->routeMatch = $route_match;
-    $this->menuTreeStore = $key_value_expirable;
-    $treeFromStorage = $this->menuTreeStore->get('menu');
-    if (is_array($treeFromStorage) && count($treeFromStorage) > 1) {
-      $this->tree = $treeFromStorage;
+    $this->cache = $cache_backend;
+    $cachedTreeData = $this->cache->get('az_mobile_nav_menu.menu_tree');
+    if ($cachedTreeData) {
+      $this->tree = $cachedTreeData->data;
     }
     else {
       // Refresh menu tree if it's empty or only contains the front page.
@@ -116,7 +109,7 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
       $plugin_id,
       $plugin_definition,
       $container->get('current_route_match'),
-      $container->get('keyvalue.expirable')->get('az_core.az_mobile_nav_new'),
+      $container->get('cache.default'),
       $container->get('menu.link_tree')
     );
   }
@@ -146,7 +139,13 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
     $tree = $menuTree->transform($tree, $manipulators);
 
     // Save the tree to key value storage.
-    $this->menuTreeStore->setWithExpire('menu', $tree, self::EXPIRE_TIME);
+    $this->cache->set(
+      'az_mobile_nav_menu.menu_tree',
+      $tree,
+      CacheBackendInterface::CACHE_PERMANENT,
+      [
+        'config:system.menu.main',
+      ]);
     return $tree;
   }
 
