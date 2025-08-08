@@ -160,7 +160,7 @@
                 "Move content overview default task link out of content_moderation module (3199682)": "https://www.drupal.org/files/issues/2022-02-10/3199682-11-9-4-x.patch",
                 "Improve migration system performance: statically cache DrupalSqlBase::$systemData (3154156)": "https://www.drupal.org/files/issues/2022-01-24/3154156-12.patch",
                 "filter_autop returns self closing br element with slash, lets alter to br (2350049)": "https://www.drupal.org/files/issues/2024-08-15/2350049-48-reroll-against-11.x.patch",
-                "[10.2 regression] CKEditor 5 breaks when 'Source'/Source editing button is added and 'Manually editable HTML tags' are specified (3410100)": "https://git.drupalcode.org/project/drupal/-/merge_requests/12509.diff",
+                "[10.2 regression] CKEditor 5 breaks when 'Source'/Source editing button is added and 'Manually editable HTML tags' are specified (3410100)": "https://www.drupal.org/files/issues/2025-06-26/3410100-108-revert-3396628-11-x.patch",
                 "[Apache only] Wrong file header returned, when converting an image for example to webp (3310963)": "https://www.drupal.org/files/issues/2024-05-15/3310963-32.patch",
                 "Hardcode a higher WebP conversion quality setting (3320689)": "https://gist.githubusercontent.com/joeparsons/d99b6c6eef240e8eaf768ba79e1c9f1b/raw/9b99325bd20907db0506969fc4f5823b46065c6b/3320689-10-3-x-hardcoded.patch",
                 "user_user_role_insert should not exist (2672340)": "https://gist.githubusercontent.com/joeparsons/f31108ee18aaed01e03ef3005ecd3d92/raw/0fdd114d79083ea7c6d962a061d09d81d58a0bea/2672340-11.x.patch",
