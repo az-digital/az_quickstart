@@ -14,9 +14,9 @@ function az_paragraphs_text_media_update_last_removed() {
 }
 
 /**
- * Update text on media paragraphs for Bootstrap 5 compatibility (revised).
+ * Update text on media paragraphs for Bootstrap 5 compatibility.
  */
-function az_paragraphs_text_media_update_1130002(&$sandbox) {
+function az_paragraphs_text_media_update_1130001(&$sandbox) {
 
   if (!isset($sandbox['total'])) {
     $count = \Drupal::entityQuery('paragraph')
