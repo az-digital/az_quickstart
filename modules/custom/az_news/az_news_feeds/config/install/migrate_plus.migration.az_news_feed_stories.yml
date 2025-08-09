@@ -86,12 +86,6 @@ process:
       source: tags
       method: process
       message: 'No terms listed.'
-    -
-      plugin: explode
-      delimiter: ','
-    -
-      plugin: callback
-      callable: trim
   field_az_news_tags:
     -
       plugin: entity_generate
