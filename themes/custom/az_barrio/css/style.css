@@ -811,3 +811,14 @@ form.webform-submission-form {
 .hide-contextual-links .contextual button {
   display: none;
 }
+
+/* Responsive Grid: 3 columns on XXL screens when sidebar is present */
+@media (min-width: 1400px) {
+  /* When sidebar is present in layout, force 3 columns instead of 4 */
+  .layout-sidebar-first .views-view-grid .col-xxl-3,
+  .layout-sidebar-second .views-view-grid .col-xxl-3,
+  .layout-two-sidebars .views-view-grid .col-xxl-3 {
+    flex: 0 0 33.333333% !important;
+    max-width: 33.333333% !important;
+  }
+}
