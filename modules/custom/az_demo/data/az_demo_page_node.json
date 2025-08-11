@@ -283,11 +283,21 @@
     },
     {
       "id": 29,
-      "title": "People Finder - Grid",
+      "title": "AZ Person - Grid page",
       "path": "/finders/people/grid",
       "exclude_title": false,
       "az_page_category": "Views",
       "az_main_content": "401",
+      "az_media_image": "",
+      "az_summary": ""
+    },
+    {
+      "id": 30,
+      "title": "AZ Person - Grid - Modal",
+      "path": "/finders/people/grid-modal",
+      "exclude_title": false,
+      "az_page_category": "Views",
+      "az_main_content": "402",
       "az_media_image": "",
       "az_summary": ""
     }
