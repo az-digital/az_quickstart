@@ -3,6 +3,7 @@ type: module
 description: Send mail via SMTP using Amazon SES.
 core_version_requirement: ^10 || ^11
 package: The University of Arizona
+container_rebuild_required: true
 dependencies:
   - az_core
   - smtp:smtp

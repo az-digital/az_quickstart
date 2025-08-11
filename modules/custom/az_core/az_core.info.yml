@@ -3,6 +3,7 @@ type: module
 description: 'Settings and configuration common to other Quickstart componenets.'
 core_version_requirement: ^10 || ^11
 package: 'The University of Arizona'
+container_rebuild_required: true
 dependencies:
   - config_distro:config_distro
   - config_provider:config_provider

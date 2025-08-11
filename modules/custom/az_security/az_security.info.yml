@@ -3,6 +3,7 @@ type: module
 description: Provides hardened config for Quickstart sites.
 core_version_requirement: ^10 || ^11
 package: The University of Arizona
+container_rebuild_required: true
 dependencies:
   - az_core
   - honeypot:honeypot

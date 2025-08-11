@@ -3,6 +3,7 @@ description: "Provides configuration to implement metadata for search engine opt
 type: module
 core_version_requirement: ^10 || ^11
 package: The University of Arizona
+container_rebuild_required: true
 dependencies:
   - az_core
   - xmlsitemap:xmlsitemap
