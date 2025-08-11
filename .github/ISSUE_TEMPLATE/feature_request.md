@@ -7,8 +7,10 @@ assignees: ''
 
 ---
 
-**Do not disclose security vulnerabilities here, please email us instead: 
-az-digital-security@list.arizona.edu**
+**Do not disclose:** 
+
+- **security vulnerabilities**, please email us instead: az-digital-security@list.arizona.edu
+- **internal information**, this issue will be publicly available on the Internet. If sensitive information is relevant, please ...
 
 ## Motivation
 Why the feature request was filed, example use cases, etc.
