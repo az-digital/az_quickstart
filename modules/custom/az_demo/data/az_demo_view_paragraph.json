@@ -103,6 +103,14 @@
       "display_id" : "az_search",
       "data" : "",
       "bottom_spacing" : "mb-0"
+    },
+    {
+      "id" : 401,
+      "title" : "",
+      "target_id" : "az_person",
+      "display_id" : "grid",
+      "data" : "",
+      "bottom_spacing" : "mb-4"
     }
   ]
 }

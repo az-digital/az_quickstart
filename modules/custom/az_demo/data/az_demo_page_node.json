@@ -280,6 +280,16 @@
       "az_main_content" : "190",
       "az_media_image" : "",
       "az_summary" : "A page with publications."
+    },
+    {
+      "id": 29,
+      "title": "People Finder - Grid",
+      "path": "/finders/people/grid",
+      "exclude_title": false,
+      "az_page_category": "Views",
+      "az_main_content": "401",
+      "az_media_image": "",
+      "az_summary": ""
     }
   ]
 }

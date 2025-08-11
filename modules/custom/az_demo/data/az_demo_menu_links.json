@@ -394,7 +394,7 @@
       "external": false,
       "expanded": false,
       "enabled": true,
-      "weight": "18"
+      "weight": "1"
     },
     {
       "link_id": "37",
@@ -450,6 +450,17 @@
       "expanded": true,
       "enabled": true,
       "weight": "1"
+    },
+    {
+      "link_id": "400",
+      "parent_link_id": "35",
+      "menu": "main",
+      "title": "People Finder - Grid",
+      "urlpath": "/finders/people/grid",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "2"
     }
   ]
 }
