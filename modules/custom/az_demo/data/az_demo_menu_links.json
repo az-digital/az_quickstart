@@ -416,7 +416,7 @@
       "external": false,
       "expanded": false,
       "enabled": true,
-      "weight": "20"
+      "weight": "7"
     },
     {
       "link_id": "39",
@@ -505,6 +505,17 @@
       "expanded": false,
       "enabled": true,
       "weight": "6"
+    },
+    {
+      "link_id": "405",
+      "parent_link_id": "35",
+      "menu": "main",
+      "title": "Event Finder - Grid",
+      "urlpath": "/finders/events/az-grid",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "8"
     }
   ]
 }

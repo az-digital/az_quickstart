@@ -330,6 +330,16 @@
       "az_main_content": "405",
       "az_media_image": "",
       "az_summary": ""
+    },
+    {
+      "id": 34,
+      "title": "AZ Events - Grid",
+      "path": "/finders/events/az-grid",
+      "exclude_title": false,
+      "az_page_category": "Views",
+      "az_main_content": "406",
+      "az_media_image": "",
+      "az_summary": ""
     }
   ]
 }

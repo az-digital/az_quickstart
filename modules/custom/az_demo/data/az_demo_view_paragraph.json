@@ -143,6 +143,14 @@
       "display_id" : "grid_modal_3cols",
       "data" : "",
       "bottom_spacing" : "mb-4"
+    },
+    {
+      "id" : 406,
+      "title" : "",
+      "target_id" : "az_events",
+      "display_id" : "az_grid",
+      "data" : "",
+      "bottom_spacing" : "mb-4"
     }
   ]
 }
