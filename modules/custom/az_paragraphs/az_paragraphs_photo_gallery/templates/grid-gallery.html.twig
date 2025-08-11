@@ -22,10 +22,15 @@
           '#alt': item.entity.field_media_az_image.alt,
           '#attributes': { class: ['photo-gallery-grid-img'] },
         } %}
-        <div class="col-sm-6 col-md-4 col-lg-3" data-bs-toggle="modal" data-bs-target="#{{ modal }}">
-          <a role="button" data-bs-target="#{{ gallery }}" data-bs-slide-to="{{ loop.index0 }}">
+        <div class="col-sm-6 col-md-4 col-lg-3">
+          <button type="button"
+                  class="w-100 border-0 bg-transparent p-0"
+                  data-bs-toggle="modal"
+                  data-bs-target="#{{ modal }}"
+                  data-bs-slide-to="{{ loop.index0 }}"
+                  aria-label="View full image: {{ item.entity.field_media_az_image.alt }}">
             <picture class="card-img img-fluid">{{ thumbnail_image }}</picture>
-          </a>
+          </button>
         </div>
       {% endif %}
     {% endfor %}
