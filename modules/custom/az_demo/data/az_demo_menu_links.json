@@ -483,6 +483,17 @@
       "expanded": false,
       "enabled": true,
       "weight": "4"
+    },
+    {
+      "link_id": "403",
+      "parent_link_id": "35",
+      "menu": "main",
+      "title": "People Finder - Grid 3 Columns",
+      "urlpath": "/finders/people/grid-3cols",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "5"
     }
   ]
 }
