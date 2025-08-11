@@ -151,6 +151,22 @@
       "display_id" : "az_grid",
       "data" : "",
       "bottom_spacing" : "mb-4"
+    },
+    {
+      "id" : 407,
+      "title" : "",
+      "target_id" : "az_events",
+      "display_id" : "az_grid_images",
+      "data" : "",
+      "bottom_spacing" : "mb-4"
+    },
+    {
+      "id" : 408,
+      "title" : "",
+      "target_id" : "az_events",
+      "display_id" : "az_past_grid_images",
+      "data" : "",
+      "bottom_spacing" : "mb-4"
     }
   ]
 }

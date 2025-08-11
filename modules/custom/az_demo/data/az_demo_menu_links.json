@@ -516,6 +516,28 @@
       "expanded": false,
       "enabled": true,
       "weight": "8"
+    },
+    {
+      "link_id": "406",
+      "parent_link_id": "35",
+      "menu": "main",
+      "title": "Event Finder - Grid with Images",
+      "urlpath": "/finders/events/az-grid-images",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "9"
+    },
+    {
+      "link_id": "407",
+      "parent_link_id": "35",
+      "menu": "main",
+      "title": "Event Finder - Past Grid with Images",
+      "urlpath": "/finders/events/az-past-grid-images",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "10"
     }
   ]
 }

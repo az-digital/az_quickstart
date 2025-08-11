@@ -333,11 +333,31 @@
     },
     {
       "id": 34,
-      "title": "AZ Events - Grid",
+      "title": "AZ Events - Grid view",
       "path": "/finders/events/az-grid",
       "exclude_title": false,
       "az_page_category": "Views",
       "az_main_content": "406",
+      "az_media_image": "",
+      "az_summary": ""
+    },
+    {
+      "id": 35,
+      "title": "AZ Events - Grid view with images",
+      "path": "/finders/events/az-grid-images",
+      "exclude_title": false,
+      "az_page_category": "Views",
+      "az_main_content": "407",
+      "az_media_image": "",
+      "az_summary": ""
+    },
+    {
+      "id": 36,
+      "title": "AZ Events - Past grid view with images",
+      "path": "/finders/events/az-past-grid-images",
+      "exclude_title": false,
+      "az_page_category": "Views",
+      "az_main_content": "408",
       "az_media_image": "",
       "az_summary": ""
     }
