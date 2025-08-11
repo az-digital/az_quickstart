@@ -300,6 +300,16 @@
       "az_main_content": "402",
       "az_media_image": "",
       "az_summary": ""
+    },
+    {
+      "id": 31,
+      "title": "AZ Person - Row page",
+      "path": "/finders/people/row",
+      "exclude_title": false,
+      "az_page_category": "Views",
+      "az_main_content": "403",
+      "az_media_image": "",
+      "az_summary": ""
     }
   ]
 }
