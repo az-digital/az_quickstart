@@ -135,6 +135,14 @@
       "display_id" : "grid_block_3cols",
       "data" : "",
       "bottom_spacing" : "mb-4"
+    },
+    {
+      "id" : 405,
+      "title" : "",
+      "target_id" : "az_person",
+      "display_id" : "grid_modal_3cols",
+      "data" : "",
+      "bottom_spacing" : "mb-4"
     }
   ]
 }

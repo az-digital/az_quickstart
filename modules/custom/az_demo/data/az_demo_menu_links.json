@@ -494,6 +494,17 @@
       "expanded": false,
       "enabled": true,
       "weight": "5"
+    },
+    {
+      "link_id": "404",
+      "parent_link_id": "35",
+      "menu": "main",
+      "title": "People Finder - Grid - Modal 3 Columns",
+      "urlpath": "/finders/people/grid-modal-3cols",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "6"
     }
   ]
 }

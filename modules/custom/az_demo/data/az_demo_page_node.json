@@ -320,6 +320,16 @@
       "az_main_content": "404",
       "az_media_image": "",
       "az_summary": ""
+    },
+    {
+      "id": 33,
+      "title": "AZ Person - Grid - Modal 3 col",
+      "path": "/finders/people/grid-modal-3cols",
+      "exclude_title": false,
+      "az_page_category": "Views",
+      "az_main_content": "405",
+      "az_media_image": "",
+      "az_summary": ""
     }
   ]
 }
