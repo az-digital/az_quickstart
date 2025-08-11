@@ -13,13 +13,14 @@ third_party_settings:
     group_title:
       children:
         - field_az_title
+      label: Title
       parent_name: ''
+      region: content
       weight: 0
       format_type: html_element
-      region: content
       format_settings:
-        id: ''
         classes: ''
+        id: ''
         element: h2
         show_label: false
         label_element: h3
@@ -27,30 +28,29 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-      label: Title
 id: paragraph.az_view_reference.default
 targetEntityType: paragraph
 bundle: az_view_reference
 mode: default
 content:
   field_az_title:
-    weight: 1
+    type: string
     label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    type: string
+    weight: 1
     region: content
   field_az_view_reference:
-    weight: 2
+    type: viewsreference_formatter
     label: hidden
     settings:
       plugin_types:
         default: default
         page: page
         block: block
-        feed: 0
+        feed: '0'
     third_party_settings: {  }
-    type: viewsreference_formatter
+    weight: 2
     region: content
 hidden: {  }
