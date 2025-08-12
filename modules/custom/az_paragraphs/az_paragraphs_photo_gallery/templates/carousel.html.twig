@@ -19,6 +19,14 @@
       {% endif %}
     {% endfor %}
   </div>
+  
+  {# Previous button first in tab order #}
+  <button class="carousel-control-prev position-absolute" type="button" data-bs-target="#{{ gallery }}" data-bs-slide="prev" style="z-index: 1050;">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  
+  {# Carousel content #}
   <div class="carousel-inner h-100">
     {% for key, item in photos %}
       {% if key|first != '#' %}
@@ -29,13 +37,11 @@
           '#alt': item.entity.field_media_az_image.alt,
           '#attributes': { class: ['h-100', 'w-100', 'object-fit-contain'] },
         } %}
-
         <div class="carousel-item az-gallery-item h-100{% if loop.first %} active{% endif %}">
           <div class="d-flex flex-column h-100 justify-content-center">
             <div class="carousel-image az-gallery-image">
               <div class="h-100">{{ carousel_image }}</div>
             </div>
-
             {# Caption and credit #}
             {% set caption = item.entity.field_az_caption.value %}
             {% set credit = item.entity.field_az_credit.value %}
@@ -54,13 +60,9 @@
       {% endif %}
     {% endfor %}
   </div>
-
-  {# Navigation controls #}
-  <button class="carousel-control-prev" type="button" data-bs-target="#{{ gallery }}" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#{{ gallery }}" data-bs-slide="next">
+  
+  {# Next button last in tab order #}
+  <button class="carousel-control-next position-absolute" type="button" data-bs-target="#{{ gallery }}" data-bs-slide="next" style="z-index: 1050;">
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Next</span>
   </button>
