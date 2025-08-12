@@ -12,3 +12,29 @@
 .paragraph--type--az-photo-gallery .carousel-indicators {
   margin-bottom: 0;
 }
+
+/* Ensure grid thumbnail buttons display properly */
+.paragraph--type--az-photo-gallery .az-gallery-open-modal {
+  display: block;
+  width: 100%;
+  --bs-focus-ring-width: 0.25rem;
+  --bs-focus-ring-opacity: 0.25;
+  --bs-focus-ring-color: rgba(13, 110, 253, var(--bs-focus-ring-opacity));
+}
+
+.paragraph--type--az-photo-gallery .az-gallery-open-modal:focus {
+  outline: none;
+}
+
+
+.paragraph--type--az-photo-gallery .az-gallery-open-modal:focus-visible picture,
+.paragraph--type--az-photo-gallery .az-gallery-open-modal:focus-visible img {
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem rgba(171, 5, 32, 0.25); /* matches .nav-link:focus-visible */
+  border-radius: 0.375rem;
+}
+
+.paragraph--type--az-photo-gallery .az-gallery-open-modal picture {
+  display: block;
+  width: 100%;
+}

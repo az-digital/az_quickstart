@@ -33,6 +33,8 @@ az_paragraphs.az_photo_gallery:
   css:
     theme:
       css/az_paragraphs_az_photo_gallery.css: {}
+  js:
+    js/az_photo_gallery_carousel_navigation.js: {}
   dependencies:
     - az_barrio/arizona-bootstrap-css
     - az_barrio/arizona-bootstrap-js

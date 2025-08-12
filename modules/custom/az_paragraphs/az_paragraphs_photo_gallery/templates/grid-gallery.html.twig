@@ -9,9 +9,9 @@
  * - gallery: Unique ID for the carousel element
  */
 #}
-
+{{ attach_library('az_paragraphs.az_photo_gallery') }}
 <div class="az-gallery-container">
-  <div class="row g-1">
+  <div class="row">
     {# Grid thumbnails #}
     {% for key, item in photos %}
       {% if key|first != '#' %}
@@ -22,14 +22,15 @@
           '#alt': item.entity.field_media_az_image.alt,
           '#attributes': { class: ['photo-gallery-grid-img'] },
         } %}
-        <div class="col-sm-6 col-md-4 col-lg-3">
+        <div class="col-6 col-md-4 col-lg-3 px-min py-min">
           <button type="button"
-                  class="w-100 border-0 bg-transparent p-0"
+                  class="p-0 border-0 bg-transparent az-gallery-open-modal "
                   data-bs-toggle="modal"
                   data-bs-target="#{{ modal }}"
                   data-bs-slide-to="{{ loop.index0 }}"
                   aria-label="View full image: {{ item.entity.field_media_az_image.alt }}">
             <picture class="card-img img-fluid">{{ thumbnail_image }}</picture>
+
           </button>
         </div>
       {% endif %}
@@ -37,13 +38,11 @@
   </div>
 
   {# Modal with carousel #}
-  <div id="{{ modal }}" class="modal fade az-gallery-modal" tabindex="-1" role="dialog" aria-label="Photo Gallery Modal" aria-hidden="true">
+  <div id="{{ modal }}" class="modal fade az-gallery-modal text-bg-transparent-black" tabindex="-1" role="dialog" aria-hidden="true" data-bs-keyboard="true" data-bs-backdrop="true">
     <div class="modal-dialog modal-fullscreen">
-      <div class="modal-content text-bg-transparent-black">
-        <div class="modal-header border-0">
-          <button type="button" data-bs-theme="dark" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
+      <div class="modal-content bg-transparent border-0">
+        <div class="modal-body p-0 position-relative">
+          <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close" style="z-index: 1055;"></button>
           {% include '@az_paragraphs_photo_gallery/carousel.html.twig' with {
             'photos': photos,
             'gallery': gallery,
