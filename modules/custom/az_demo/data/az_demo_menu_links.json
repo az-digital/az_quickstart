@@ -427,7 +427,7 @@
       "external": false,
       "expanded": false,
       "enabled": true,
-      "weight": "21"
+      "weight": "14"
     },
     {
       "link_id": "40",
@@ -560,6 +560,28 @@
       "expanded": false,
       "enabled": true,
       "weight": "13"
+    },
+    {
+      "link_id": "410",
+      "parent_link_id": "35",
+      "menu": "main",
+      "title": "Page Finder - Row",
+      "urlpath": "/finders/pages/row",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "15"
+    },
+    {
+      "link_id": "411",
+      "parent_link_id": "35",
+      "menu": "main",
+      "title": "Page Finder - Grid",
+      "urlpath": "/finders/pages/grid",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "16"
     }
   ]
 }

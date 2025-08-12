@@ -380,6 +380,26 @@
       "az_main_content": "410",
       "az_media_image": "",
       "az_summary": ""
+    },
+    {
+      "id": 39,
+      "title": "AZ Pages - Row page",
+      "path": "/finders/pages/row",
+      "exclude_title": false,
+      "az_page_category": "Views",
+      "az_main_content": "411",
+      "az_media_image": "",
+      "az_summary": ""
+    },
+    {
+      "id": 40,
+      "title": "AZ Pages - Grid page",
+      "path": "/finders/pages/grid",
+      "exclude_title": false,
+      "az_page_category": "Views",
+      "az_main_content": "412",
+      "az_media_image": "",
+      "az_summary": ""
     }
   ]
 }

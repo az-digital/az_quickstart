@@ -183,6 +183,22 @@
       "display_id" : "az_grid",
       "data" : "",
       "bottom_spacing" : "mb-4"
+    },
+    {
+      "id" : 411,
+      "title" : "",
+      "target_id" : "az_page_by_category",
+      "display_id" : "row",
+      "data" : "",
+      "bottom_spacing" : "mb-4"
+    },
+    {
+      "id" : 412,
+      "title" : "",
+      "target_id" : "az_page_by_category",
+      "display_id" : "grid",
+      "data" : "",
+      "bottom_spacing" : "mb-4"
     }
   ]
 }
