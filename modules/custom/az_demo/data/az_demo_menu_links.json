@@ -405,7 +405,7 @@
       "external": false,
       "expanded": false,
       "enabled": true,
-      "weight": "19"
+      "weight": "11"
     },
     {
       "link_id": "38",
@@ -538,6 +538,28 @@
       "expanded": false,
       "enabled": true,
       "weight": "10"
+    },
+    {
+      "link_id": "408",
+      "parent_link_id": "35",
+      "menu": "main",
+      "title": "News Finder - Row",
+      "urlpath": "/finders/news/az-paged-row",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "12"
+    },
+    {
+      "link_id": "409",
+      "parent_link_id": "35",
+      "menu": "main",
+      "title": "News Finder - Grid",
+      "urlpath": "/finders/news/az-grid",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "13"
     }
   ]
 }

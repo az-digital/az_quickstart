@@ -360,6 +360,26 @@
       "az_main_content": "408",
       "az_media_image": "",
       "az_summary": ""
+    },
+    {
+      "id": 37,
+      "title": "AZ News - Paged row view",
+      "path": "/finders/news/az-paged-row",
+      "exclude_title": false,
+      "az_page_category": "Views",
+      "az_main_content": "409",
+      "az_media_image": "",
+      "az_summary": ""
+    },
+    {
+      "id": 38,
+      "title": "AZ News - Grid view",
+      "path": "/finders/news/az-grid",
+      "exclude_title": false,
+      "az_page_category": "Views",
+      "az_main_content": "410",
+      "az_media_image": "",
+      "az_summary": ""
     }
   ]
 }
