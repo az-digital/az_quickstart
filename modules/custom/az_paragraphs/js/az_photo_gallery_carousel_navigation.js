@@ -24,25 +24,40 @@ document.addEventListener('DOMContentLoaded', function () {
     modal.addEventListener('shown.bs.modal', function () {
       setTimeout(updateNavButtons, 50);
     });
-    var requestedSlideIndex = null;
+    function setActiveSlide(targetIndex) {
+      items.forEach(function (item, index) {
+        if (index === targetIndex) {
+          item.classList.add('active');
+        } else {
+          item.classList.remove('active');
+        }
+      });
+      var indicators = carousel.querySelectorAll('.carousel-indicators button');
+      indicators.forEach(function (indicator, index) {
+        if (index === targetIndex) {
+          indicator.classList.add('active');
+          indicator.setAttribute('aria-current', 'true');
+        } else {
+          indicator.classList.remove('active');
+          indicator.removeAttribute('aria-current');
+        }
+      });
+      updateNavButtons();
+    }
     document.querySelectorAll(".az-gallery-open-modal[data-bs-target=\"#".concat(modal.id, "\"]")).forEach(function (thumbnail) {
       thumbnail.addEventListener('mousedown', function () {
-        requestedSlideIndex = this.getAttribute('data-bs-slide-to');
+        var slideIndex = thumbnail.getAttribute('data-bs-slide-to');
+        setActiveSlide(parseInt(slideIndex, 10));
       });
       thumbnail.addEventListener('keydown', function (e) {
         if (e.key === 'Enter' || e.key === ' ') {
-          requestedSlideIndex = this.getAttribute('data-bs-slide-to');
+          var slideIndex = thumbnail.getAttribute('data-bs-slide-to');
+          setActiveSlide(parseInt(slideIndex, 10));
         }
       });
     });
     modal.addEventListener('shown.bs.modal', function () {
-      if (requestedSlideIndex !== null) {
-        var indicator = carousel.querySelector(".carousel-indicators [data-bs-slide-to=\"".concat(requestedSlideIndex, "\"]"));
-        if (indicator) {
-          indicator.click();
-        }
-        requestedSlideIndex = null;
-      }
+      updateNavButtons();
     });
     updateNavButtons();
   });
