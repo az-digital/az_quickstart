@@ -1,7 +1,7 @@
 name: 'Quickstart Paragraphs - Photo Gallery'
 type: module
 description: 'Provides a photo gallery paragraph type.'
-core_version_requirement: ^10 || ^11
+core_version_requirement: ^10 || ^11 || ^12
 dependencies:
   - az_paragraphs
   - drupal:field
