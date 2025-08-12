@@ -3,7 +3,6 @@
 namespace Drupal\az_eds;
 
 use Drupal\Core\Cache\CacheableMetadata;
-use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Config\ConfigFactoryOverrideInterface;
 use Drupal\Core\Config\StorageInterface;
@@ -28,23 +27,13 @@ class AZEDSConfigOverrides implements ConfigFactoryOverrideInterface {
   protected $configFactory;
 
   /**
-   * Cache backend.
-   *
-   * @var \Drupal\Core\Cache\CacheBackendInterface
-   */
-  protected $cacheBackend;
-
-  /**
    * Creates a new ModuleConfigOverrides instance.
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The config factory.
-   * @param \Drupal\Core\Cache\CacheBackendInterface $cache_backend
-   *   The cache backend.
    */
-  public function __construct(ConfigFactoryInterface $config_factory, CacheBackendInterface $cache_backend) {
+  public function __construct(ConfigFactoryInterface $config_factory) {
     $this->configFactory = $config_factory;
-    $this->cacheBackend = $cache_backend;
   }
 
   /**

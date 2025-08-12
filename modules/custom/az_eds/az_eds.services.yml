@@ -1,6 +1,6 @@
 services:
   az_eds.config_override:
     class: \Drupal\az_eds\AZEDSConfigOverrides
-    arguments: ['@config.factory', '@cache.data']
+    arguments: ['@config.factory']
     tags:
       - {name: config.factory.override, priority: 15}
