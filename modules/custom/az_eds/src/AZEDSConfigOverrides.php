@@ -13,7 +13,7 @@ use Drupal\Core\Config\StorageInterface;
 class AZEDSConfigOverrides implements ConfigFactoryOverrideInterface {
 
   // Attributes required by EDS import migration.
-  const ATTRIBUTES = 'uid,preferredPriorityGivenName,preferredPrioritySn,employeeTitle,pronouns,employeePhone,mail,isMemberOf,studentInfoReleaseCode';
+  const ATTRIBUTES = 'uid,eduPersonAffiliation,preferredPriorityGivenName,preferredPrioritySn,employeeTitle,pronouns,employeePhone,mail,isMemberOf,studentInfoReleaseCode';
 
   // Default filters in addition to user specified filters.
   // @todo determine scope.

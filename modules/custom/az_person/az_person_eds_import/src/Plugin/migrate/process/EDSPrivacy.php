@@ -12,6 +12,7 @@ use Drupal\migrate\Row;
  *
  * Available configuration keys:
  * - attribute: Attribute name to check for opt-out values
+ * - affiliation: (optional) eduPersonAffiliation restriction applies to
  * - privacy: The value to check for inside the attribute
  *   stops processing if encountered.
  *
@@ -28,8 +29,13 @@ class EDSPrivacy extends ProcessPluginBase {
    */
   public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
 
-    // @todo add configuration for student-only requirements.
-    // (must compare to object class, optionally)
+    // Determine if this restriction applies to this type of record.
+    $affiliation = $this->configuration['affiliation'] ?? NULL;
+    $affiliations = $row->get('eduPersonAffiliation') ?? [];
+    if (!empty($affiliation) && (!in_array($affiliation, $affiliations))) {
+      // Return the value if this rule doesn't match the record type.
+      return $value;
+    }
     // Determine which portions of the row our filter uses.
     $optout = $this->configuration['privacy'];
     $attribute = $this->configuration['attribute'];

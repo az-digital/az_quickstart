@@ -47,6 +47,7 @@ process:
     -
       plugin: az_eds_privacy
       attribute: studentInfoReleaseCode
+      affiliation: student
       privacy: 'MAIN PHONE'
   field_az_email: 
     -
@@ -57,6 +58,7 @@ process:
     -
       plugin: az_eds_privacy
       attribute: studentInfoReleaseCode
+      affiliation: student
       privacy: 'CAMPUS EMAIL'
 
 destination:
