@@ -19,6 +19,9 @@ class AZEDSConfigOverrides implements ConfigFactoryOverrideInterface {
   // @todo determine scope.
   const DIRECTORY_FILTER = '(!(isMemberOf=arizona.edu:services:enterprise:ldap.arizona.edu:phonebook-exclude))';
 
+  // Filter to exclude students.
+  const EXCLUDE_STUDENTS_FILTER = '(!(eduPersonAffiliation=student))';
+
   /**
    * Config factory.
    *
@@ -47,12 +50,15 @@ class AZEDSConfigOverrides implements ConfigFactoryOverrideInterface {
       if (str_starts_with($name, 'ldap_query.ldap_query_entity.')) {
         // Get the real query so we can make some determinations about it.
         $config = $this->configFactory->getEditable($name);
-
+        $students_allowed = $this->configFactory->get('az_eds.settings')->get('students_allowed');
         // See if this is an EDS query. If so, we have overrides.
         if ($config->get('server_id') === 'az_eds') {
           $original_filter = $config->get('filter') ?? '';
           // Concatenate our existing filters.
-          $filter = '(&' . $original_filter . self::DIRECTORY_FILTER . ')';
+          $filter = '(&' . $original_filter .
+            self::DIRECTORY_FILTER .
+            ((!$students_allowed) ? self::EXCLUDE_STUDENTS_FILTER : '') .
+            ')';
           $overrides[$name]['filter'] = $filter;
           // Add required migration attributes.
           $overrides[$name]['attributes'] = self::ATTRIBUTES;
