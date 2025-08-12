@@ -12,13 +12,10 @@ document.addEventListener('DOMContentLoaded', function () {
     var nextBtn = carousel.querySelector('.carousel-control-next');
     var items = carousel.querySelectorAll('.carousel-item');
     var updateNavButtons = function updateNavButtons() {
-      var activeIndex = Array.from(items).findIndex(function (item) {
-        return item.classList.contains('active');
-      });
-      prevBtn.disabled = activeIndex === 0;
-      nextBtn.disabled = activeIndex === items.length - 1;
-      prevBtn.querySelector('.visually-hidden').textContent = activeIndex === 0 ? 'No previous slide' : 'Previous';
-      nextBtn.querySelector('.visually-hidden').textContent = activeIndex === items.length - 1 ? 'Return to first slide' : 'Next';
+      prevBtn.disabled = false;
+      nextBtn.disabled = false;
+      prevBtn.querySelector('.visually-hidden').textContent = 'Previous';
+      nextBtn.querySelector('.visually-hidden').textContent = 'Next';
     };
     carousel.addEventListener('slid.bs.carousel', updateNavButtons);
     modal.addEventListener('shown.bs.modal', function () {
@@ -51,8 +48,10 @@ document.addEventListener('DOMContentLoaded', function () {
       });
       thumbnail.addEventListener('keydown', function (e) {
         if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
           var slideIndex = thumbnail.getAttribute('data-bs-slide-to');
           setActiveSlide(parseInt(slideIndex, 10));
+          thumbnail.click();
         }
       });
     });

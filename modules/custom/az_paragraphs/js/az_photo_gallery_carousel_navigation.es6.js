@@ -8,15 +8,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const items = carousel.querySelectorAll('.carousel-item');
 
     const updateNavButtons = () => {
-      const activeIndex = Array.from(items).findIndex((item) =>
-        item.classList.contains('active'),
-      );
-      prevBtn.disabled = activeIndex === 0;
-      nextBtn.disabled = activeIndex === items.length - 1;
-      prevBtn.querySelector('.visually-hidden').textContent =
-        activeIndex === 0 ? 'No previous slide' : 'Previous';
-      nextBtn.querySelector('.visually-hidden').textContent =
-        activeIndex === items.length - 1 ? 'Return to first slide' : 'Next';
+      // Simple navigation - always enabled, standard labels
+      prevBtn.disabled = false;
+      nextBtn.disabled = false;
+      prevBtn.querySelector('.visually-hidden').textContent = 'Previous';
+      nextBtn.querySelector('.visually-hidden').textContent = 'Next';
     };
 
     carousel.addEventListener('slid.bs.carousel', updateNavButtons);
@@ -61,8 +57,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         thumbnail.addEventListener('keydown', (e) => {
           if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault(); // Prevent default space/enter behavior
             const slideIndex = thumbnail.getAttribute('data-bs-slide-to');
             setActiveSlide(parseInt(slideIndex, 10));
+            // Trigger the modal to open
+            thumbnail.click();
           }
         });
       });
