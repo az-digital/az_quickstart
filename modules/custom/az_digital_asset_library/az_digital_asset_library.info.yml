@@ -3,6 +3,7 @@ type: module
 description: 'The connector for the centralized University of Arizona Digital Asset Library (IntelligenceBank DAM).'
 core_version_requirement: ^10 || ^11
 package: 'The University of Arizona - Experimental'
+container_rebuild_required: true
 lifecycle: experimental
 lifecycle_link: 'https://github.com/az-digital/az_quickstart/blob/main/RELEASES.md#experimental-features'
 dependencies:

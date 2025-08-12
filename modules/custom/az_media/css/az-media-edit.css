@@ -3,6 +3,9 @@
   margin-right: auto;
   margin-left: auto;
 }
-.az-media.embed-responsive {
-  width:400px;
+
+/* Edit screen sizing - provides consistent preview for editors */
+.az-media.ratio {
+  width: 400px;
+  max-width: 100%;
 }

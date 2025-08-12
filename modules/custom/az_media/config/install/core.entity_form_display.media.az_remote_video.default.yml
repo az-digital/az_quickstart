@@ -7,6 +7,7 @@ dependencies:
     - image.style.thumbnail
     - media.type.az_remote_video
   module:
+    - decorative_image_widget
     - image_widget_crop
     - media
     - path
@@ -36,7 +37,9 @@ content:
       progress_indicator: throbber
       crop_types_required: {  }
       show_crop_area: false
-    third_party_settings: {  }
+    third_party_settings:
+      decorative_image_widget:
+        use_decorative_checkbox: true
     type: image_widget_crop
     region: content
   field_media_az_oembed_video:

@@ -91,13 +91,14 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $element = [];
 
+    $entity = $items->getEntity();
+    $accordion_container_id = HTML::getUniqueId('accordion-' . $entity->id());
+
     /** @var \Drupal\az_accordion\Plugin\Field\FieldType\AZAccordionItem $item */
     foreach ($items as $delta => $item) {
-
       // Format title.
       $title = $item->title ?? '';
 
-      $accordion_classes = 'accordion';
       $column_classes = [];
       $column_classes[] = 'col-md-4 col-lg-4';
       $parent = $item->getEntity();
@@ -131,12 +132,16 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
           '#format' => $item->body_format,
           '#langcode' => $item->getLangcode(),
         ],
-        '#attributes' => ['class' => $accordion_classes],
         '#accordion_item_id' => $accordion_id,
-        '#collapsed' => $item->collapsed ? 'collapse' : 'collapse show',
+        '#accordion_container_id' => $accordion_container_id,
+        '#collapsed' => $item->collapsed ? '' : 'show',
         '#aria_expanded' => !$item->collapsed ? 'true' : 'false',
       ];
 
+    }
+
+    if (!empty($element)) {
+      $element['#accordion_container_id'] = $accordion_container_id;
     }
 
     return $element;

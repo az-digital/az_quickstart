@@ -10,8 +10,10 @@
 	margin-bottom: 0 !important;
 }
 
-ul.az-horizontal-tabs > li.nav-item > a:hover {
-  background-color: #ffffff;
+.node--type-az-person .card .img-fluid,
+.az-person-modal .card .img-fluid {
+	/* Sharpen bottom corners of images in the top img card position */
+	border-radius: 0;
 }
 
 /* Views */
@@ -29,6 +31,8 @@ ul.az-horizontal-tabs > li.nav-item > a:hover {
 	height: 100%;
 	object-fit: cover;
 	object-position: center center;
+	/* Sharpen corners on this image - rounding and overflow is captured in parent */
+	border-radius: 0;
 }
 
 .az-person-modal .modal .close {
