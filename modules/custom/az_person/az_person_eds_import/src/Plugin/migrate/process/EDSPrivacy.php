@@ -12,16 +12,16 @@ use Drupal\migrate\Row;
  *
  * Available configuration keys:
  * - attribute: Attribute name to check for opt-out values
- * - optout: The optout value to check for inside the attribute
+ * - privacy: The value to check for inside the attribute
  *   stops processing if encountered.
  *
  * @see \Drupal\migrate\Plugin\MigrateProcessInterface
  */
 #[MigrateProcess(
-  id: 'az_eds_opt_out',
+  id: 'az_eds_privacy',
   handle_multiples: TRUE,
 )]
-class OptOut extends ProcessPluginBase {
+class EDSPrivacy extends ProcessPluginBase {
 
   /**
    * {@inheritdoc}
@@ -31,7 +31,7 @@ class OptOut extends ProcessPluginBase {
     // @todo add configuration for student-only requirements.
     // (must compare to object class, optionally)
     // Determine which portions of the row our filter uses.
-    $optout = $this->configuration['optout'];
+    $optout = $this->configuration['privacy'];
     $attribute = $this->configuration['attribute'];
     $attribute = $row->get($attribute) ?? [];
     if (!is_array($attribute)) {

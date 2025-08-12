@@ -30,10 +30,10 @@ process:
   field_az_fname: preferredPriorityGivenName
   field_az_lname: preferredPrioritySn
   field_az_titles:
-    plugin: az_eds_opt_out
+    plugin: az_eds_privacy
     source: employeeTitle
     attribute: isMemberOf
-    optout: 'arizona.edu:services:enterprise:ldap.arizona.edu:title-suppress'
+    privacy: 'arizona.edu:services:enterprise:ldap.arizona.edu:title-suppress'
   field_az_netid: uid
   field_az_pronouns: pronouns
   field_az_phones:
@@ -41,23 +41,23 @@ process:
       plugin: az_phone
       source: employeePhone
     -
-      plugin: az_eds_opt_out
+      plugin: az_eds_privacy
       attribute: isMemberOf
-      optout: 'arizona.edu:services:enterprise:ldap.arizona.edu:phone-suppress'
+      privacy: 'arizona.edu:services:enterprise:ldap.arizona.edu:phone-suppress'
     -
-      plugin: az_eds_opt_out
+      plugin: az_eds_privacy
       attribute: studentInfoReleaseCode
-      optout: 'MAIN PHONE'
+      privacy: 'MAIN PHONE'
   field_az_email: 
     -
-      plugin: az_eds_opt_out
+      plugin: az_eds_privacy
       source: mail
       attribute: isMemberOf
-      optout: 'arizona.edu:services:enterprise:ldap.arizona.edu:mail-suppress'
+      privacy: 'arizona.edu:services:enterprise:ldap.arizona.edu:mail-suppress'
     -
-      plugin: az_eds_opt_out
+      plugin: az_eds_privacy
       attribute: studentInfoReleaseCode
-      optout: 'CAMPUS EMAIL'
+      privacy: 'CAMPUS EMAIL'
 
 destination:
   plugin: entity:node
