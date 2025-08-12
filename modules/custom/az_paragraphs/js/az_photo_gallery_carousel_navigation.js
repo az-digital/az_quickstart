@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
       setTimeout(updateNavButtons, 50);
     });
     var requestedSlideIndex = null;
-    document.querySelectorAll('.az-gallery-open-modal[data-bs-target="#' + modal.id + '"]').forEach(function (thumbnail) {
+    document.querySelectorAll(".az-gallery-open-modal[data-bs-target=\"#".concat(modal.id, "\"]")).forEach(function (thumbnail) {
       thumbnail.addEventListener('mousedown', function () {
         requestedSlideIndex = this.getAttribute('data-bs-slide-to');
       });
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     modal.addEventListener('shown.bs.modal', function () {
       if (requestedSlideIndex !== null) {
-        var indicator = carousel.querySelector('.carousel-indicators [data-bs-slide-to="' + requestedSlideIndex + '"]');
+        var indicator = carousel.querySelector(".carousel-indicators [data-bs-slide-to=\"".concat(requestedSlideIndex, "\"]"));
         if (indicator) {
           indicator.click();
         }
