@@ -45,7 +45,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       'text_media_spacing' => 'y-5',
       'bg_attachment' => '',
       'title_level' => 'h2',
-      'title_alignment' => 'text-left',
+      'title_alignment' => 'text-start',
     ];
   }
 
@@ -310,7 +310,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     // Get title classes.
     $title_classes = [
       'mt-0',
-      'bold',
+      'fw-bold',
       HTML::getClass($config['title_alignment']),
     ];
     if (!empty($config['bg_color']) && $config['bg_color'] !== 'text-bg-transparent-black') {
