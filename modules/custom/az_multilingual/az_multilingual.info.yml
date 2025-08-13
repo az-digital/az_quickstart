@@ -1,7 +1,7 @@
 name: 'Quickstart Multilingual'
 type: module
 description: 'Allows users to serve content in multiple languages.'
-core_version_requirement: ^10 || ^11
+core_version_requirement: ^10 || ^11 || ^12
 package: The University of Arizona
 dependencies:
   - az_core

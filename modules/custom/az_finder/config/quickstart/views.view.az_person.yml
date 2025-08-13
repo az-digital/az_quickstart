@@ -662,6 +662,7 @@ display:
           relationship: none
           view_mode: az_card
       defaults:
+        css_class: false
         exposed_form: true
         style: false
         style_options: false
@@ -671,6 +672,7 @@ display:
         sorts: false
         arguments: true
       relationships: {  }
+      css_class: 'az-person-grid add-pager-top-margin'
       display_description: ''
       style_options: null
       exposed_block: true
@@ -832,6 +834,7 @@ display:
           relationship: none
           view_mode: az_card
       defaults:
+        css_class: false
         style: false
         style_options: false
         row: false
@@ -840,6 +843,7 @@ display:
         sorts: false
         arguments: true
       relationships: {  }
+      css_class: 'az-person-grid add-pager-top-margin'
       display_description: ''
       exposed_block: true
       display_extenders: {  }
@@ -1798,7 +1802,7 @@ display:
         sorts: false
         arguments: true
       relationships: {  }
-      css_class: 'az-person-grid az-person-modal'
+      css_class: 'az-person-grid az-person-modal add-pager-top-margin'
       display_description: 'Displays Person nodes in a grid layout. On click, displays Person content in a modal instead of full node page.'
       style_options: null
       exposed_block: true
@@ -2762,7 +2766,7 @@ display:
         sorts: false
         arguments: true
       relationships: {  }
-      css_class: 'az-person-grid az-person-modal'
+      css_class: 'az-person-grid az-person-modal add-pager-top-margin'
       display_description: 'Displays Person nodes in a 3-column grid layout. On click, displays Person content in a modal instead of full node page.'
       style_options: null
       exposed_block: true
