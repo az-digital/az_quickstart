@@ -475,6 +475,7 @@ display:
           col_md: col-md-4
           col_lg: col-lg-3
           col_xl: col-xl-3
+          col_xxl: col-xxl-3
       row:
         type: 'entity:node'
         options:
@@ -656,12 +657,14 @@ display:
           col_md: col-md-4
           col_lg: col-lg-3
           col_xl: col-xl-3
+          col_xxl: col-xxl-3
       row:
         type: 'entity:node'
         options:
           relationship: none
           view_mode: az_card
       defaults:
+        css_class: false
         exposed_form: true
         style: false
         style_options: false
@@ -671,6 +674,7 @@ display:
         sorts: false
         arguments: true
       relationships: {  }
+      css_class: 'az-person-grid add-pager-top-margin'
       display_description: ''
       style_options: null
       exposed_block: true
@@ -826,12 +830,14 @@ display:
           col_md: col-md-6
           col_lg: col-lg-4
           col_xl: col-xl-4
+          col_xxl: col-xxl-4
       row:
         type: 'entity:node'
         options:
           relationship: none
           view_mode: az_card
       defaults:
+        css_class: false
         style: false
         style_options: false
         row: false
@@ -840,6 +846,7 @@ display:
         sorts: false
         arguments: true
       relationships: {  }
+      css_class: 'az-person-grid add-pager-top-margin'
       display_description: ''
       exposed_block: true
       display_extenders: {  }
@@ -1781,6 +1788,7 @@ display:
           col_md: col-md-4
           col_lg: col-lg-3
           col_xl: col-xl-3
+          col_xxl: col-xxl-3
       row:
         type: fields
         options:
@@ -1798,7 +1806,7 @@ display:
         sorts: false
         arguments: true
       relationships: {  }
-      css_class: 'az-person-grid az-person-modal'
+      css_class: 'az-person-grid az-person-modal add-pager-top-margin'
       display_description: 'Displays Person nodes in a grid layout. On click, displays Person content in a modal instead of full node page.'
       style_options: null
       exposed_block: true
@@ -2745,6 +2753,7 @@ display:
           col_md: col-md-6
           col_lg: col-lg-4
           col_xl: col-xl-4
+          col_xxl: col-xxl-4
       row:
         type: fields
         options:
@@ -2762,7 +2771,7 @@ display:
         sorts: false
         arguments: true
       relationships: {  }
-      css_class: 'az-person-grid az-person-modal'
+      css_class: 'az-person-grid az-person-modal add-pager-top-margin'
       display_description: 'Displays Person nodes in a 3-column grid layout. On click, displays Person content in a modal instead of full node page.'
       style_options: null
       exposed_block: true

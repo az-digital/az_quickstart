@@ -256,13 +256,13 @@
 
     <footer class="site-footer">
         {% if page.footer or page.footer_sub or footer_logo %}
-        <div class="bg-warm-gray py-5" role="contentinfo">
+        <div class="text-bg-warm-gray py-5" role="contentinfo">
           {% if page.footer or footer_logo %}
           <section{{ attributes.addClass(classes) }}>
             <div class="container">
               <div class="row">
                 {% if footer_logo %}
-                  <div class="col-12 col-sm-5 col-md-4 col-lg-4 text-center-xs text-left-not-xs">
+                  <div class="col-12 col-sm-5 col-md-4 col-lg-4 text-center-xs text-sm-start">
                     <div class="row bottom-buffer-30">
                       <div class="col">
                         {{ footer_logo }}
