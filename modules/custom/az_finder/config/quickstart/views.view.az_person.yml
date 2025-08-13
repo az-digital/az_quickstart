@@ -828,7 +828,7 @@ display:
           col_md: col-md-6
           col_lg: col-lg-4
           col_xl: col-xl-4
-          col_xxl: col-xxl-3
+          col_xxl: col-xxl-4
       row:
         type: 'entity:node'
         options:
@@ -2749,7 +2749,7 @@ display:
           col_md: col-md-6
           col_lg: col-lg-4
           col_xl: col-xl-4
-          col_xxl: col-xxl-3
+          col_xxl: col-xxl-4
       row:
         type: fields
         options:
