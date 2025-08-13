@@ -54,7 +54,7 @@
               <div class="select-menu-label">{{menu_block_configuration.az_select_menu.preform_text}}</div>
             </span>
           {% endif %}
-          <label class="sr-only select-menu-label-sr" for="{{ select_attributes.id }}">{{menu_block_configuration.az_select_menu.preform_text_sr_only}}</label>
+          <label class="visually-hidden select-menu-label-sr" for="{{ select_attributes.id }}">{{menu_block_configuration.az_select_menu.preform_text_sr_only}}</label>
           {% import _self as menus %}
           {% if items %}
             <select {{ select_attributes }}>
@@ -68,7 +68,7 @@
             <span class="input-group-btn">
               <button {{button_attributes}}>
                 {{menu_block_configuration.az_select_menu.button_text}}
-                <span class="sr-only">{{menu_block_configuration.az_select_menu.button_text_sr_only}}</span>
+                <span class="visually-hidden">{{menu_block_configuration.az_select_menu.button_text_sr_only}}</span>
               </button>
             </span>
           {% endif %}

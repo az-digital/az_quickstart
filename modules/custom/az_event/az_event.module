@@ -86,7 +86,7 @@ function az_event_preprocess_field(&$variables, $hook) {
   $element = $variables['element'];
   if ($element['#field_name'] === 'field_az_event_category') {
     foreach ($variables['items'] as $key => $item) {
-      $variables['items'][$key]['content']['#options']['attributes']['class'][] = 'badge badge-link badge-light float-left mr-2 mb-2';
+      $variables['items'][$key]['content']['#options']['attributes']['class'][] = 'badge badge-link text-bg-light float-start me-2 mb-2';
     }
   }
 }
@@ -121,8 +121,31 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
       }
     }
 
+    // Cache events per route to avoid cache issues from different views.
+    // Each page view has its own route.
+    // @todo do we need to be concerned about multiple view blocks of the same events per page?
+    $build['#cache']['contexts'][] = 'route.name';
+
     // For the full content view mode, modify the display of az_event_date.
     if (($view_mode === 'full') && ($entity instanceof NodeInterface)) {
+      // Compute a summary for the description.
+      // Field_az_body does not have native support for summaries.
+      // Some integrations for adding calendar events depend upon the data
+      // being able to fit into an URL. (2048 characters)
+      // Prefer field_az_summary where available.
+      $summary = '';
+      if ($entity->hasField('field_az_summary')) {
+        /** @var \Drupal\Core\Field\FieldItemList $summary_field */
+        $summary_field = $entity->get('field_az_summary');
+        $summary = $summary_field->value ?? '';
+      }
+      if (empty($summary) && $entity->hasField('field_az_body')) {
+        /** @var \Drupal\Core\Field\FieldItemList $body_field */
+        $body_field = $entity->get('field_az_body');
+        $summary = $body_field->value ?? '';
+      }
+      // By default this hinges on text.settings default_summary_length.
+      $summary = text_summary($summary, 'plain_text');
       $now = \Drupal::time()->getCurrentTime();
       /** @var \Drupal\Core\Field\FieldItemList $event_date_field */
       $event_date_field = $entity->field_az_event_date;
@@ -140,7 +163,7 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
               '#start_date' => $start,
               '#end_date' => $end,
               '#all_day' => $all_day,
-              '#description' => $entity->field_az_body->value ?? '',
+              '#description' => $summary,
               '#location' => $entity->field_az_location->title ?? '',
               '#modal' => Html::getUniqueId('calendar-link-modal'),
               '#attributes' => ['class' => 'mt-3'],
@@ -190,7 +213,7 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
           // Add help text if occurrences do not match the recurrence exactly.
           if ($are_occurrences_modified) {
             $modified_text = t("View all occurrences for exact dates and times.");
-            $modified_text_markup = "<span class='d-block font-italic'>* {$modified_text}</span>";
+            $modified_text_markup = "<span class='d-block fst-italic'>* {$modified_text}</span>";
           }
         }
 
@@ -215,7 +238,7 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
                 '#title' => $entity->getTitle(),
                 '#start_date' => $item['value'] ?? '',
                 '#end_date' => $item['end_value'] ?? '',
-                '#description' => $entity->field_az_body->value ?? '',
+                '#description' => $summary,
                 '#location' => $entity->field_az_location->title ?? '',
                 '#modal' => Html::getUniqueId('calendar-link-modal'),
                 '#attributes' => ['class' => 'mb-2'],
@@ -326,7 +349,7 @@ function az_event_preprocess_node(&$variables) {
 
       // Get row and delta for transformations.
       $row_index = $variables['elements']['#az_view_row_index'];
-      $delta = (int) $node->view->result[$row_index]->node__field_az_event_date_delta;
+      $delta = (int) ($node->view->result[$row_index]->node__field_az_event_date_delta ?? 0);
 
       // There is a field value at our computed delta.
       if (!empty($variables['content']['field_az_event_date'][$delta])) {
@@ -371,7 +394,8 @@ function az_event_preprocess_views_view(&$variables) {
   // EntityRow views do not give the entity access to a row_index.
   // We need to provide one to understand the delta relationship
   // of the row.
-  if ($variables['id'] === 'az_events') {
+  $event_views = ['az_events', 'az_finder'];
+  if (!empty($variables['id']) && in_array($variables['id'], $event_views)) {
     if (!empty($variables['rows'][0]['#rows'])) {
       foreach ($variables['rows'][0]['#rows'] as $i => $n) {
         $variables['rows'][0]['#rows'][$i]['#az_view_row_index'] = $i;
