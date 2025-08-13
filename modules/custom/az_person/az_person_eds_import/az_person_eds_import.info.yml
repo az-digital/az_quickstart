@@ -4,6 +4,7 @@ description: 'Import people via EDS Integration.'
 core_version_requirement: ^9 || ^10
 package: 'The University of Arizona - Experimental'
 lifecycle: experimental
+lifecycle_link: 'https://github.com/az-digital/az_quickstart/blob/main/RELEASES.md#experimental-features'
 dependencies:
   - az_eds
   - az_person
