@@ -213,7 +213,7 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
           // Add help text if occurrences do not match the recurrence exactly.
           if ($are_occurrences_modified) {
             $modified_text = t("View all occurrences for exact dates and times.");
-            $modified_text_markup = "<span class='d-block font-italic'>* {$modified_text}</span>";
+            $modified_text_markup = "<span class='d-block fst-italic'>* {$modified_text}</span>";
           }
         }
 
