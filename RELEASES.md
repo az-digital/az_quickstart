@@ -4,18 +4,18 @@ The overarching goal of this release policy is to ensure developers and site mai
 
 ## Release Support Policy
 
-Arizona Digital supports two minor releases of Arizona Quickstart at a time. Patch releases are issued as needed. However, we may designate specific minor releases as **Long Term Support (LTS)** versions when a future release introduces significant change. In these cases, the LTS version will continue receiving patch releases alongside a single newer release.
+Arizona Digital typically supports two minor releases of Arizona Quickstart at a time. Patch releases are issued as needed.
+
+When a new major version is planned, we may designate specific minor releases as the final **Long Term Support (LTS)** version for the existing major release. In these cases, the LTS version will continue receiving patch releases alongside a single minor release for the new major version.
 
 ### Example Support Scenario
 
 To illustrate how the LTS model works, consider the following example:
 
-- **2.13** is designated as a **Long Term Support (LTS)** release.
-- **2.14** is a regular minor release that includes more disruptive changes.
-- When **2.15** is released, **2.13 (LTS)** and **2.15** will be supported concurrently.
-- Support for **2.14** ends at that point.
+- **2.14** is designated as the final Quickstart 2.x minor release and a **Long Term Support (LTS)** release.
+- When **3.0** is released, **2.14 (LTS)** and **3.0** will be supported concurrently.
 
-Once the version of Drupal core used by the LTS release (e.g., Drupal 10 for 2.13) reaches end-of-life, support for the LTS release also ends. We then resume our standard support policy of maintaining only the two most recent minor releases unless another LTS version is designated.
+Once the version of Drupal core used by the LTS release (e.g., Drupal 10 for 2.14) reaches end-of-life, support for the LTS release also ends. We then resume our standard support policy of maintaining only the two most recent minor releases unless another LTS version is designated.
 
 ## Release Types
 
@@ -70,7 +70,7 @@ Minor releases may include all patch-level changes, as well as:
 
 #### Dependencies
 
-- Drupal core major or minor version updates
+- Drupal core minor version updates
 - Drupal contrib major version updates
 
 #### APIs
@@ -84,7 +84,8 @@ Minor releases may include all patch-level changes, as well as:
 
 ### Major Releases (`X.y.z`)
 
-No major release policy has been defined at this time.
+- Drupal core major version updates
+- Arizona Bootstrap major version updates
 
 ## Pre-Release Versions
 
