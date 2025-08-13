@@ -176,15 +176,11 @@ jobs:
     name: eslint
     runs-on: ubuntu-latest
     steps:
-      - name: Enable Corepack
-        run: corepack enable
       - uses: actions/setup-node@v4
         with:
           node-version: 20.13.0
-          cache: 'yarn'
       - name: Checkout
         uses: actions/checkout@v4
-      - run: yarn set version stable
       - run: yarn install
       - name: Generate eslint report
         continue-on-error: true
