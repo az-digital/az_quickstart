@@ -2,21 +2,33 @@
 #az_mobile_nav_menu .az-mobile-nav-root {
   font-family: proxima-nova-condensed, var(--bs-body-font-family);
 }
+#az_mobile_nav_menu .az-mobile-nav-back,
+#az_mobile_nav_menu .az-mobile-nav-root {
+  min-height: 50px;
+}
+#az_mobile_nav_menu .az-mobile-nav-back > span:last-child {
+  margin-top: .125rem;
+}
 #az_mobile_nav_menu a:not(.az-mobile-nav-root) {
   font-weight: 500;
 }
+#az_mobile_nav_menu .nav-item {
+  min-height: 52px;
+}
 #az_mobile_nav_menu .nav-item .nav-link {
-  padding: 0.5rem 1rem;
-  min-height: unset;
+  padding: 0.375rem 0.25rem 0.375rem 1rem;
   background-color: revert;
 }
 #az_mobile_nav_menu .nav-item:first-child,
 #az_mobile_nav_menu .nav-item:last-child {
   border-radius: 0;
 }
-#az_mobile_nav_menu .nav-item > .az-mobile-nav-link {
+#az_mobile_nav_menu .az-mobile-nav-link {
   padding-left: .75rem;
   padding-right: .75rem;
+}
+#az_mobile_nav_menu .material-symbols-rounded {
+  font-size: 1.625rem;
 }
 #az_mobile_nav_menu .az-mobile-nav-current {
   box-shadow:inset 6px 0 #378dbd;

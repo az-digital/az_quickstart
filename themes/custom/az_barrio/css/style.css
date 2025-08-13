@@ -99,13 +99,6 @@ audio:not([controls]) {
   overflow: auto;
 }
 
-/**
- * Branding header.
- */
-.arizona-header .row > * {
-  width: unset;
-}
-
 /* Wrapping link for logo. */
 .qs-site-logo {
   margin: 40px 0;
@@ -413,13 +406,11 @@ td.menu-disabled {
   }
 }
 
-/* Could remove this after updating buttons to match mobile nav. */
-a.btn.btn-redbar {
-  padding: .5rem 0 0 0;
-}
-
 /* ARIZONA BOOTSTRAP STYLING */
 /* TEMPORARY!!! REVIEW AND MOVE TO ARIZONA BOOTSTRAP */
+#header_arizona {
+  min-height: 50px;
+}
 @media screen and (max-width: 992px) {
   .arizona-header > .container {
     padding-right: 0;
@@ -465,7 +456,7 @@ a.btn.btn-redbar {
 }
 
 #block-az-barrio-offcanvas-searchform .btn {
-  padding: 0.5rem .75rem;
+  padding: .5rem 1rem;
 }
 
 #block-az-barrio-offcanvas-searchform .material-symbols-rounded {

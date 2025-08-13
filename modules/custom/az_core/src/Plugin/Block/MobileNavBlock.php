@@ -159,7 +159,6 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
       '#tag' => 'div',
       '#attributes' => [
         'id' => 'az_mobile_nav_menu',
-        'class' => ['mx-2'],
       ],
       '#attached' => [
         'library' => [
@@ -179,18 +178,6 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
       '#attributes' => [
         'class' => [
           'border-bottom',
-          'overflow-hidden',
-        ],
-      ],
-    ];
-    $build['az_mobile_nav_menu']['heading_div']['heading'] = [
-      '#type' => 'html_tag',
-      '#tag' => 'h2',
-      '#attributes' => [
-        'class' => [
-          'h5',
-          'py-1',
-          'my-0',
         ],
       ],
     ];
@@ -198,7 +185,7 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
       '#type' => 'html_tag',
       '#tag' => 'ul',
       '#attributes' => [
-        'id' => 'menu_links',
+        'id' => 'az_mobile_nav_menu_links',
         'class' => ['nav nav-pills flex-column bg-white mb-2'],
       ],
     ];
@@ -212,7 +199,6 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
         'class' => [
           'material-symbols-rounded',
           'text-azurite',
-          'align-top',
         ],
       ],
     ];
@@ -224,7 +210,6 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
         'class' => [
           'material-symbols-rounded',
           'text-azurite',
-          'align-bottom',
         ],
       ],
     ];
@@ -241,28 +226,34 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
       }
     }
 
-    // Build the heading links to the parent and current root (if available).
+    // Build the heading element and back link to the parent (if available).
     if (empty($treeWithText)) {
       $treeWithText = $this->tree;
       $isMainMenu = TRUE;
-      $build['az_mobile_nav_menu']['heading_div']['heading']['#attributes']['class'][] = 'ps-3';
-      $build['az_mobile_nav_menu']['heading_div']['heading']['selected_page'] = [
+      $build['az_mobile_nav_menu']['heading_div']['heading'] = [
         '#type' => 'html_tag',
-        '#tag' => 'span',
-        '#value' => $this->navMenuRootText,
+        '#tag' => 'div',
         '#attributes' => [
           'class' => [
-            'd-inline-block',
-            'py-1',
+            'd-inline-flex',
+            'align-items-center',
+            'px-3',
             'fw-bold',
             'az-mobile-nav-root',
           ],
         ],
       ];
+      $build['az_mobile_nav_menu']['heading_div']['heading']['heading_text'] = [
+        '#type' => 'html_tag',
+        '#tag' => 'h2',
+        '#value' => $this->navMenuRootText,
+        '#attributes' => [
+          'class' => ['h5 my-0'],
+        ],
+      ];
     }
     else {
       $isMainMenu = FALSE;
-      $build['az_mobile_nav_menu']['heading_div']['heading']['#attributes']['class'][] = 'ps-3';
       $rootElement = $treeWithText[array_key_first($treeWithText)];
       $parent = $rootElement->link->getParent();
       $title = [$chevronLeft];
@@ -270,9 +261,6 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
         '#type' => 'html_tag',
         '#tag' => 'span',
         '#value' => $parent === '' ? $this->t('Back to Main Menu') : $this->t('Back to @parentText', ['@parentText' => $treeWithText['parentText']]),
-        '#attributes' => [
-          'class' => ['ms-n1 align-text-top'],
-        ],
       ];
       $build['az_mobile_nav_menu']['back'] = [
         '#type' => 'link',
@@ -291,40 +279,55 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
             'use-ajax',
             'ps-0',
             'pe-3',
-            'py-1',
-            'ms-n1',
             'mb-1',
             'text-azurite',
             'text-decoration-none',
+            'd-inline-flex',
+            'align-items-center',
+            'az-mobile-nav-back',
           ],
         ],
       ];
       if ($rootElement->link->getRouteName() === '<button>') {
-        $build['az_mobile_nav_menu']['heading_div']['heading']['selected_page'] = [
+        $build['az_mobile_nav_menu']['heading_div']['heading'] = [
           '#type' => 'html_tag',
-          '#tag' => 'span',
+          '#tag' => 'div',
+          '#attributes' => [
+            'class' => [
+              'd-inline-flex',
+              'align-items-center',
+              'px-3',
+              'fw-bold',
+              'az-mobile-nav-root',
+            ],
+          ],
+        ];
+        $build['az_mobile_nav_menu']['heading_div']['heading']['heading_text'] = [
+          '#type' => 'html_tag',
+          '#tag' => 'h2',
           '#value' => $rootElement->link->getTitle(),
           '#attributes' => [
-            'class' => ['d-inline-block py-1 fw-bold az-mobile-nav-root'],
+            'class' => ['h5 my-0'],
           ],
         ];
       }
       else {
         $pageLinkTitle = [
           '#type' => 'html_tag',
-          '#tag' => 'span',
+          '#tag' => 'h2',
           '#value' => $rootElement->link->getTitle(),
           '#attributes' => [
-            'class' => ['align-text-bottom'],
+            'class' => ['h5 my-0'],
           ],
         ];
-        $build['az_mobile_nav_menu']['heading_div']['heading']['selected_page'] = [
+        $build['az_mobile_nav_menu']['heading_div']['heading'] = [
           '#type' => 'link',
           '#attributes' => [
             'role' => 'button',
             'class' => [
-              'd-inline-block',
-              'py-1',
+              'd-inline-flex',
+              'align-items-center',
+              'px-3',
               'text-blue',
               'text-decoration-none',
               'az-mobile-nav-root',
@@ -334,7 +337,7 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
           '#url' => $rootElement->link->getUrlObject(),
         ];
         if ($rootElement->link->getPluginId() === $this->currentPage) {
-          $build['az_mobile_nav_menu']['heading_div']['heading']['#attributes']['class'][] = 'text-bg-gray-200 az-mobile-nav-current';
+          $build['az_mobile_nav_menu']['heading_div']['#attributes']['class'][] = 'text-bg-gray-200 az-mobile-nav-current';
         }
       }
 
@@ -355,6 +358,9 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
               'fw-normal',
               'text-black',
               'flex-grow-1',
+              'd-flex',
+              'align-items-center',
+              'border-end',
             ],
           ],
         ];
@@ -364,9 +370,6 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
           '#type' => 'html_tag',
           '#tag' => 'span',
           '#value' => $item->link->getTitle(),
-          '#attributes' => [
-            'class' => ['align-text-top'],
-          ],
         ];
         $pageLink = [
           '#type' => 'link',
@@ -377,6 +380,9 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
               $isMainMenu ? 'ms-2' : 'ms-3',
               'text-azurite',
               'flex-grow-1',
+              'd-flex',
+              'align-items-center',
+              'border-end',
             ],
           ],
           '#title' => $pageLinkTitle,
@@ -404,8 +410,11 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
               'btn-lg',
               'bg-white',
               'py-0',
-              'border-start',
+              'border-top-0',
+              'border-bottom-0',
               'rounded-0',
+              'd-flex',
+              'align-items-center',
               'az-mobile-nav-link',
             ],
             'aria-label' => $this->t('View child pages of @itemTitle', ['@itemTitle' => $item->link->getTitle()]),
@@ -417,8 +426,8 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
         '#tag' => 'li',
         '#attributes' => [
           'class' => ($item->link->getPluginId() === $this->currentPage) ?
-            ['nav-item d-flex border-start-0 border-end-0 text-bg-gray-200 az-mobile-nav-current'] :
-            ['nav-item d-flex border-start-0 border-end-0'],
+            ['nav-item d-flex align-items-stretch border-start-0 border-end-0 text-bg-gray-200 az-mobile-nav-current'] :
+            ['nav-item d-flex align-items-stretch border-start-0 border-end-0'],
         ],
         'children' => !empty($childrenLink) ? [
           $pageLink,

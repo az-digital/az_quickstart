@@ -84,11 +84,11 @@
         {% if page.alert %}
           {{ page.alert }}
         {% endif %}
-        <div class="text-bg-red arizona-header" id="header_arizona">
+        <div class="arizona-header text-bg-red" id="header_arizona">
           <div class="{{ container }}">
             <div class="row justify-content-between">
               {% if wordmark %}
-                <a class="arizona-logo col-auto d-flex align-items-center" href="https://www.arizona.edu" title="The University of Arizona homepage">
+                <a class="arizona-logo col-auto d-flex align-items-center pe-0" href="https://www.arizona.edu" title="The University of Arizona homepage">
                   <img class="arizona-line-logo" alt="The University of Arizona Wordmark Line Logo White" src="https://cdn.digital.arizona.edu/logos/v1.0.0/ua_wordmark_line_logo_white_rgb.min.svg" fetchpriority="high" />
                 </a>
               {% endif %}
@@ -96,7 +96,7 @@
                 {{ page.header_ua_utilities }}
               {% endif %}
               {% if az_barrio_navbar %}
-                <div class="arizona-header-buttons d-lg-none d-flex col-auto pe-0">
+                <div class="arizona-header-buttons d-lg-none d-flex col-auto px-0">
                   {% if page.navigation_offcanvas.az_barrio_offcanvas_searchform %}
                     <button data-bs-toggle="offcanvas" type="button" data-bs-target="#azMobileNav" aria-controls="azMobileNav" class="btn btn-redbar" id="jsAzSearch">
                       <span aria-hidden="true" class="icon material-symbols-rounded"> search </span>
@@ -110,7 +110,7 @@
                     </button>
                   {% endif %}
                   <div class="offcanvas offcanvas-end mw-100 w-100 bg-white d-flex d-lg-none overflow-y-auto" tabindex="-1" id="azMobileNav" aria-label="Mobile navigation">
-                    <div class="offcanvas-header sticky-top px-2 py-0 mb-2 text-bg-red d-flex justify-content-between align-items-center">
+                    <div class="offcanvas-header sticky-top p-0 mb-2 text-bg-red d-flex justify-content-between align-items-center">
                       <a href="/" class="btn btn-offcanvas-header d-flex flex-column justify-content-center text-white px-3 py-1">
                         <span aria-hidden="true" class="icon material-symbols-rounded">home</span>
                         <span class="icon-text">Home</span>
