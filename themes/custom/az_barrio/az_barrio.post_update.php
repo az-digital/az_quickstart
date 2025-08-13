@@ -32,7 +32,7 @@ function az_barrio_post_update_split_bootstrap_cdn_version(&$sandbox = NULL) {
 /**
  * Migrate Material Design Sharp icons setting to Material Symbols Rounded.
  */
-function az_quickstart_post_update_migrate_material_symbols_icons(&$sandbox) {
+function az_barrio_post_update_migrate_material_symbols_icons(&$sandbox = NULL) {
   $config_factory = \Drupal::configFactory();
   $theme_settings = $config_factory->getEditable('az_barrio.settings');
 
