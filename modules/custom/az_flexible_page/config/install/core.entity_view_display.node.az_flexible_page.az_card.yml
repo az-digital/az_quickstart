@@ -123,7 +123,7 @@ third_party_settings:
       weight: 6
       format_type: html_element
       format_settings:
-        classes: 'card-clickable-link text-chili text-left'
+        classes: 'card-clickable-link text-chili text-start'
         show_empty_fields: false
         id: ''
         label_as_html: false
