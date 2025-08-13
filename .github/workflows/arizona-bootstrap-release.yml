@@ -1,19 +1,19 @@
 name: Create PR for new Arizona Bootstrap Release
+run-name: Create PR for updating `${{ github.event.client_payload.branch }}` with Arizona Bootstrap `${{ github.event.client_payload.version }}`
 on:
   repository_dispatch:
-    types: az_bootstrap_release
+    types: [az_bootstrap_release]
 
 jobs:
   release:
     name: Create PR
-    if: ${{ github.event.client_payload.branch == '2.x' }}
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        # with:
-        #   ssh-key: ${{ secrets.SELF_DEPLOY_KEY }}
+        with:
+          ref: ${{ github.event.client_payload.branch }}
 
       - name: Create new branch and PR
         run: |
@@ -28,4 +28,4 @@ jobs:
           git commit -m 'Update Arizona Bootstrap to ${{ github.event.client_payload.version }}'
           git push --set-upstream origin 'az-bootstrap-${{ github.event.client_payload.version }}'
           echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
-          gh pr create --title 'Update Arizona Bootstrap to ${{ github.event.client_payload.version }}' --body ''
+          gh pr create --base ${{ github.event.client_payload.branch }} --title 'Update Arizona Bootstrap to ${{ github.event.client_payload.version }}' --body ''
