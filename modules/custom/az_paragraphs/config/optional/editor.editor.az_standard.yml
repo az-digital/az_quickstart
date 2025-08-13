@@ -269,10 +269,10 @@ settings:
           element: '<blockquote class="blockquote text-center">'
         -
           label: 'Blockquote Right'
-          element: '<blockquote class="blockquote text-right">'
+          element: '<blockquote class="blockquote text-end">'
         -
           label: 'Blockquote Reverse'
-          element: '<blockquote class="blockquote blockquote-reverse text-right">'
+          element: '<blockquote class="blockquote blockquote-reverse text-end">'
         -
           label: 'Blockquote Footer'
           element: '<footer class="blockquote-footer">'

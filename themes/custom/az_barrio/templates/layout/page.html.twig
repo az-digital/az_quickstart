@@ -102,11 +102,11 @@
           {% if az_barrio_navbar_offcanvas %}
           <div class="redbar-buttons d-lg-none d-flex">
             <button data-bs-toggle="offcanvasmenu" type="button" data-bs-target="#navbar-top" aria-controls="navbar-top" class="btn btn-redbar" id="jsAzSearch">
-              <span class="icon material-symbols-rounded"> search </span>
+              <span aria-hidden="true" class="icon material-symbols-rounded"> search </span>
               <span class="icon-text"> search </span>
             </button>
             <button data-bs-toggle="offcanvasmenu" type="button" data-bs-target="#navbar-top" aria-controls="navbar-top" class="btn btn-redbar">
-              <span class="icon material-symbols-rounded"> menu </span>
+              <span aria-hidden="true" class="icon material-symbols-rounded"> menu </span>
               <span class="icon-text"> menu </span>
             </button>
           </div>
@@ -139,11 +139,11 @@
                   <div class="navbar-offcanvas-header">
                     <div class="bg-chili d-flex justify-content-between align-items-center">
                       <a href="/" class="btn btn-redbar">
-                        <span class="icon material-symbols-rounded"> home </span>
+                        <span aria-hidden="true" class="icon material-symbols-rounded"> home </span>
                         <span class="icon-text"> home </span>
                       </a>
                       <button data-bs-toggle="offcanvasmenu" type="button" data-bs-target="#navbar-top" aria-controls="navbar-top" class="btn btn-redbar">
-                        <span class="icon material-symbols-rounded"> close </span>
+                        <span aria-hidden="true" class="icon material-symbols-rounded"> close </span>
                         <span class="icon-text"> close </span>
                       </button>
                     </div>
@@ -264,7 +264,7 @@
             <div class="container">
               <div class="row">
                 {% if footer_logo %}
-                  <div class="col-12 col-sm-5 col-md-4 col-lg-4 text-center-xs text-left-not-xs">
+                  <div class="col-12 col-sm-5 col-md-4 col-lg-4 text-center-xs text-sm-start">
                     <div class="row bottom-buffer-30">
                       <div class="col">
                         {{ footer_logo }}
