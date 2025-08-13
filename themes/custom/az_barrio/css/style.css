@@ -431,6 +431,7 @@ td.menu-disabled {
 .navbar .nav-link.active {
   color: #001c48;
   background-color: #e9ecef;
+  font-weight: 700;
 }
 .navbar .nav-link:hover {
   color: #001c48;
