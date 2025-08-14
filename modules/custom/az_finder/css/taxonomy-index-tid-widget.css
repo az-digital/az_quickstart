@@ -38,6 +38,7 @@
   padding-top: 0;
   margin-bottom: 0;
   padding-bottom: 0;
+  float: none;
 }
 
 .js-svg-replace-level-0 svg,
@@ -70,6 +71,10 @@
   display: inline-block;
   margin-bottom: 1rem;
 }
+
+ .az-bef-vertical div.js-form-item {
+  min-width: 100%;
+ }
 
 .az-bef-vertical .form-actions {
   margin-bottom: 0;
@@ -130,6 +135,7 @@
   vertical-align: middle;
   margin-top: 0;
   margin-bottom: 0;
+  margin-right: 0.5rem;
 }
 
 .az-bef-checkboxes>li>ul>li>.checkbox {
