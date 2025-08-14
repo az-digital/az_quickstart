@@ -42,14 +42,12 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
     }
   };
   Drupal.azSelectMenu.handleEvents = function (event) {
-    var _window$bootstrap2;
+    var _window$arizonaBootst3;
     if (event.type === 'touchstart') {
-      if (event.target.classList.contains('js_select_menu_button')) {
-        event.stopPropagation();
-      } else {
+      if (event.target.classList.contains('js_select_menu_button')) {} else {
         document.querySelectorAll('.az-select-menu').forEach(function (form) {
-          var _window$bootstrap;
-          var popoverInstance = (_window$bootstrap = window.bootstrap) === null || _window$bootstrap === void 0 || (_window$bootstrap = _window$bootstrap.Popover) === null || _window$bootstrap === void 0 ? void 0 : _window$bootstrap.getInstance(form);
+          var _window$arizonaBootst2;
+          var popoverInstance = (_window$arizonaBootst2 = window.arizonaBootstrap) === null || _window$arizonaBootst2 === void 0 || (_window$arizonaBootst2 = _window$arizonaBootst2.Popover) === null || _window$arizonaBootst2 === void 0 ? void 0 : _window$arizonaBootst2.getInstance(form);
           if (popoverInstance) popoverInstance.hide();
         });
         return;
@@ -61,9 +59,11 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
       optionsSelected = _selectElement$select[0];
     var selectElementHref = optionsSelected.dataset.href;
     var button = selectForm.querySelector('button');
-    var popoverInstance = (_window$bootstrap2 = window.bootstrap) === null || _window$bootstrap2 === void 0 || (_window$bootstrap2 = _window$bootstrap2.Popover) === null || _window$bootstrap2 === void 0 ? void 0 : _window$bootstrap2.getInstance(selectForm);
+    var popoverInstance = (_window$arizonaBootst3 = window.arizonaBootstrap) === null || _window$arizonaBootst3 === void 0 || (_window$arizonaBootst3 = _window$arizonaBootst3.Popover) === null || _window$arizonaBootst3 === void 0 ? void 0 : _window$arizonaBootst3.getInstance(selectForm);
     if (selectElementHref !== '') {
-      if (popoverInstance) popoverInstance.hide();
+      if (popoverInstance) {
+        popoverInstance.dispose();
+      }
       button.classList.remove('disabled');
       button.setAttribute('aria-disabled', 'false');
       switch (event.type) {
@@ -75,11 +75,17 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
           break;
       }
     } else {
+      var _window$arizonaBootst4;
       button.classList.add('disabled');
       button.setAttribute('aria-disabled', 'true');
       selectElement.setAttribute('aria-disabled', 'true');
+      if (!popoverInstance && (_window$arizonaBootst4 = window.arizonaBootstrap) !== null && _window$arizonaBootst4 !== void 0 && _window$arizonaBootst4.Popover) {
+        new window.arizonaBootstrap.Popover(selectForm);
+        popoverInstance = window.arizonaBootstrap.Popover.getInstance(selectForm);
+      }
       switch (event.type) {
         case 'click':
+        case 'touchstart':
           if (event.target.classList.contains('js_select_menu_button')) {
             if (popoverInstance) popoverInstance.show();
             selectElement.focus();

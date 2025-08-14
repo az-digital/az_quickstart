@@ -53,11 +53,12 @@
     // select form button regardless of state.
     if (event.type === 'touchstart') {
       if (event.target.classList.contains('js_select_menu_button')) {
-        event.stopPropagation();
+        // Don't stop propagation - let it fall through to main logic
+        // This will handle disabled state and popover display for touch events
       } else {
         // Hide all popovers
         document.querySelectorAll('.az-select-menu').forEach((form) => {
-          const popoverInstance = window.bootstrap?.Popover?.getInstance(form);
+          const popoverInstance = window.arizonaBootstrap?.Popover?.getInstance(form);
           if (popoverInstance) popoverInstance.hide();
         });
         return;
@@ -69,11 +70,14 @@
     const [optionsSelected] = selectElement.selectedOptions;
     const selectElementHref = optionsSelected.dataset.href;
     const button = selectForm.querySelector('button');
-    const popoverInstance = window.bootstrap?.Popover?.getInstance(selectForm);
+    let popoverInstance = window.arizonaBootstrap?.Popover?.getInstance(selectForm);
 
     //  If a navigable link is selected in the dropdown.
     if (selectElementHref !== '') {
-      if (popoverInstance) popoverInstance.hide();
+      // Destroy popover when button is enabled
+      if (popoverInstance) {
+        popoverInstance.dispose();
+      }
       button.classList.remove('disabled');
       button.setAttribute('aria-disabled', 'false');
       switch (event.type) {
@@ -92,8 +96,18 @@
       button.classList.add('disabled');
       button.setAttribute('aria-disabled', 'true');
       selectElement.setAttribute('aria-disabled', 'true');
+
+      // Recreate popover when button becomes disabled
+      if (!popoverInstance && window.arizonaBootstrap?.Popover) {
+        // eslint-disable-next-line no-new
+        new window.arizonaBootstrap.Popover(selectForm);
+        // Get the newly created instance
+        popoverInstance = window.arizonaBootstrap.Popover.getInstance(selectForm);
+      }
+
       switch (event.type) {
         case 'click':
+        case 'touchstart':
           if (event.target.classList.contains('js_select_menu_button')) {
             if (popoverInstance) popoverInstance.show();
             selectElement.focus();
