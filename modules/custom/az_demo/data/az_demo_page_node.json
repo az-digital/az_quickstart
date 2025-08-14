@@ -234,7 +234,7 @@
     {
       "id": 29,
       "title": "AZ Person - Grid page",
-      "path": "/finders/people/grid",
+      "path": "/finders/az-person-grid",
       "exclude_title": false,
       "az_page_category": "Views",
       "az_main_content": "401",
@@ -244,7 +244,7 @@
     {
       "id": 30,
       "title": "AZ Person - Grid - Modal",
-      "path": "/finders/people/grid-modal",
+      "path": "/finders/az-person-grid-modal",
       "exclude_title": false,
       "az_page_category": "Views",
       "az_main_content": "402",
@@ -254,7 +254,7 @@
     {
       "id": 31,
       "title": "AZ Person - Row page",
-      "path": "/finders/people/row",
+      "path": "/finders/az-person-row",
       "exclude_title": false,
       "az_page_category": "Views",
       "az_main_content": "403",
@@ -264,7 +264,7 @@
     {
       "id": 32,
       "title": "AZ Person - Grid 3 col",
-      "path": "/finders/people/grid-3cols",
+      "path": "/finders/az-person-grid-block-3cols",
       "exclude_title": false,
       "az_page_category": "Views",
       "az_main_content": "404",
@@ -274,7 +274,7 @@
     {
       "id": 33,
       "title": "AZ Person - Grid - Modal 3 col",
-      "path": "/finders/people/grid-modal-3cols",
+      "path": "/finders/az-person-grid-modal-3cols",
       "exclude_title": false,
       "az_page_category": "Views",
       "az_main_content": "405",
@@ -284,7 +284,7 @@
     {
       "id": 34,
       "title": "AZ Events - Grid view",
-      "path": "/finders/events/az-grid",
+      "path": "/finders/az-events-az-grid",
       "exclude_title": false,
       "az_page_category": "Views",
       "az_main_content": "406",
@@ -294,7 +294,7 @@
     {
       "id": 35,
       "title": "AZ Events - Grid view with images",
-      "path": "/finders/events/az-grid-images",
+      "path": "/finders/az-events-az-grid-images",
       "exclude_title": false,
       "az_page_category": "Views",
       "az_main_content": "407",
@@ -304,7 +304,7 @@
     {
       "id": 36,
       "title": "AZ Events - Past grid view with images",
-      "path": "/finders/events/az-past-grid-images",
+      "path": "/finders/az-events-az-past-grid-images",
       "exclude_title": false,
       "az_page_category": "Views",
       "az_main_content": "408",
@@ -314,7 +314,7 @@
     {
       "id": 37,
       "title": "AZ News - Paged row view",
-      "path": "/finders/news/az-paged-row",
+      "path": "/finders/az-news-az-paged-row",
       "exclude_title": false,
       "az_page_category": "Views",
       "az_main_content": "409",
@@ -324,7 +324,7 @@
     {
       "id": 38,
       "title": "AZ News - Grid view",
-      "path": "/finders/news/az-grid",
+      "path": "/finders/az-news-az-grid",
       "exclude_title": false,
       "az_page_category": "Views",
       "az_main_content": "410",
@@ -334,7 +334,7 @@
     {
       "id": 39,
       "title": "AZ Pages - Row page",
-      "path": "/finders/pages/row",
+      "path": "/finders/az-page-by-category-row",
       "exclude_title": false,
       "az_page_category": "Views",
       "az_main_content": "411",
@@ -344,7 +344,7 @@
     {
       "id": 40,
       "title": "AZ Pages - Grid page",
-      "path": "/finders/pages/grid",
+      "path": "/finders/az-page-by-category-grid",
       "exclude_title": false,
       "az_page_category": "Views",
       "az_main_content": "412",
