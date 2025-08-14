@@ -19,38 +19,22 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
           var selectFormId = settings.azSelectMenu.ids[property];
           var selectForm = document.querySelector("#".concat(selectFormId));
           once('azSelectMenu', selectForm, context).forEach(function (element) {
-            $(element).popover();
-            element.addEventListener('focus', function (event) {
-              Drupal.azSelectMenu.handleEvents(event);
-            });
-            element.addEventListener('change', function (event) {
-              Drupal.azSelectMenu.handleEvents(event);
-            });
-            element.addEventListener('mouseenter', function (event) {
-              Drupal.azSelectMenu.handleEvents(event);
-            });
+            var _window$arizonaBootst;
+            if ((_window$arizonaBootst = window.arizonaBootstrap) !== null && _window$arizonaBootst !== void 0 && _window$arizonaBootst.Popover) {
+              new window.arizonaBootstrap.Popover(element);
+            }
+            var handleEvents = Drupal.azSelectMenu.handleEvents;
+            element.addEventListener('focus', handleEvents);
+            element.addEventListener('change', handleEvents);
+            element.addEventListener('mouseenter', handleEvents);
             var button = element.querySelector('button');
-            button.addEventListener('click', function (event) {
-              Drupal.azSelectMenu.handleEvents(event);
-            });
-            button.addEventListener('touchstart', function (event) {
-              Drupal.azSelectMenu.handleEvents(event);
-            });
-            button.addEventListener('mouseenter', function (event) {
-              Drupal.azSelectMenu.handleEvents(event);
-            });
-            button.addEventListener('mouseleave', function (event) {
-              Drupal.azSelectMenu.handleEvents(event);
-            });
-            button.addEventListener('focus', function (event) {
-              Drupal.azSelectMenu.handleEvents(event);
-            });
-            button.addEventListener('blur', function (event) {
-              Drupal.azSelectMenu.handleEvents(event);
-            });
-            document.addEventListener('touchstart', function (event) {
-              Drupal.azSelectMenu.handleEvents(event);
-            });
+            button.addEventListener('click', handleEvents);
+            button.addEventListener('touchstart', handleEvents);
+            button.addEventListener('mouseenter', handleEvents);
+            button.addEventListener('mouseleave', handleEvents);
+            button.addEventListener('focus', handleEvents);
+            button.addEventListener('blur', handleEvents);
+            document.addEventListener('touchstart', handleEvents);
             element.classList.add('processed');
           });
         }
@@ -58,23 +42,28 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
     }
   };
   Drupal.azSelectMenu.handleEvents = function (event) {
+    var _window$bootstrap2;
     if (event.type === 'touchstart') {
       if (event.target.classList.contains('js_select_menu_button')) {
         event.stopPropagation();
       } else {
-        $('.az-select-menu').popover('hide');
+        document.querySelectorAll('.az-select-menu').forEach(function (form) {
+          var _window$bootstrap;
+          var popoverInstance = (_window$bootstrap = window.bootstrap) === null || _window$bootstrap === void 0 || (_window$bootstrap = _window$bootstrap.Popover) === null || _window$bootstrap === void 0 ? void 0 : _window$bootstrap.getInstance(form);
+          if (popoverInstance) popoverInstance.hide();
+        });
         return;
       }
     }
     var selectForm = event.target.closest('form');
-    var $selectForm = $(selectForm);
     var selectElement = selectForm.querySelector('select');
     var _selectElement$select = _slicedToArray(selectElement.selectedOptions, 1),
       optionsSelected = _selectElement$select[0];
     var selectElementHref = optionsSelected.dataset.href;
     var button = selectForm.querySelector('button');
+    var popoverInstance = (_window$bootstrap2 = window.bootstrap) === null || _window$bootstrap2 === void 0 || (_window$bootstrap2 = _window$bootstrap2.Popover) === null || _window$bootstrap2 === void 0 ? void 0 : _window$bootstrap2.getInstance(selectForm);
     if (selectElementHref !== '') {
-      $selectForm.popover('hide');
+      if (popoverInstance) popoverInstance.hide();
       button.classList.remove('disabled');
       button.setAttribute('aria-disabled', 'false');
       switch (event.type) {
@@ -92,20 +81,20 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
       switch (event.type) {
         case 'click':
           if (event.target.classList.contains('js_select_menu_button')) {
-            $selectForm.popover('show');
+            if (popoverInstance) popoverInstance.show();
             selectElement.focus();
           }
           break;
         case 'focus':
         case 'mouseenter':
           if (event.target.classList.contains('js_select_menu_button')) {
-            $selectForm.popover('show');
-          } else {
-            $selectForm.popover('hide');
+            if (popoverInstance) popoverInstance.show();
+          } else if (popoverInstance) {
+            popoverInstance.hide();
           }
           break;
         case 'mouseleave':
-          $selectForm.popover('hide');
+          if (popoverInstance) popoverInstance.hide();
           break;
         default:
           break;
