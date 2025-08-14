@@ -15,6 +15,9 @@ class AZEDSConfigOverrides implements ConfigFactoryOverrideInterface {
   // Attributes required by EDS import migration.
   const ATTRIBUTES = 'uid,eduPersonAffiliation,preferredPriorityGivenName,preferredPrioritySn,employeeTitle,pronouns,employeePhone,mail,isMemberOf,studentInfoReleaseCode';
 
+  // Base DNs to search.
+  const BASE_DN = 'ou=People,dc=eds,dc=arizona,dc=edu';
+
   // Default filters in addition to user specified filters.
   // @todo determine scope.
   const DIRECTORY_FILTER = '(!(isMemberOf=arizona.edu:services:enterprise:ldap.arizona.edu:phonebook-exclude))';
@@ -53,6 +56,11 @@ class AZEDSConfigOverrides implements ConfigFactoryOverrideInterface {
         $students_allowed = $this->configFactory->get('az_eds.settings')->get('students_allowed');
         // See if this is an EDS query. If so, we have overrides.
         if ($config->get('server_id') === 'az_eds') {
+          // Provide the Base search DNs if there aren't any.
+          $base_dn = $config->get('base_dn') ?? '';
+          if (empty($base_dn)) {
+            $overrides[$name]['base_dn'] = self::BASE_DN;
+          }
           $original_filter = $config->get('filter') ?? '';
           // Concatenate our existing filters.
           $filter = '(&' . $original_filter .
