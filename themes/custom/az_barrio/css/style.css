@@ -232,6 +232,16 @@ span.field-label {
   border: 1px solid #dee2e6;
 }
 
+.pager__item--ellipsis.d-none:first-child + .page-item .page-link {
+  border-top-left-radius: var(--bs-pagination-border-radius);
+  border-bottom-left-radius: var(--bs-pagination-border-radius);
+}
+
+.page-item:nth-last-child(2):has(+ .pager__item--ellipsis.d-none) .page-link {
+  border-top-right-radius: var(--bs-pagination-border-radius);
+  border-bottom-right-radius: var(--bs-pagination-border-radius);
+}
+
 /* Add this class to a view display to add a top margin to the pager. */
 .add-pager-top-margin > nav:has(.pagination) {
   margin-top: 1rem;
@@ -416,7 +426,8 @@ a.btn.btn-redbar {
   padding-bottom: 4px;
 }
 
-.bg-chili .btn.btn-redbar {
+.bg-chili .btn.btn-redbar,
+.text-bg-chili .btn.btn-redbar {
   background-color: #8b0015;
   border: 2px solid #8b0015;
 }

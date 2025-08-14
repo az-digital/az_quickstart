@@ -265,6 +265,7 @@ display:
           col_md: col-md-4
           col_lg: col-lg-3
           col_xl: col-xl-3
+          col_xxl: col-xxl-3
       row:
         type: 'entity:node'
         options:
@@ -445,6 +446,7 @@ display:
           col_md: col-md-4
           col_lg: col-lg-3
           col_xl: col-xl-3
+          col_xxl: col-xxl-3
       row:
         type: 'entity:node'
         options:
@@ -613,6 +615,7 @@ display:
           col_md: col-md-6
           col_lg: col-lg-4
           col_xl: col-xl-4
+          col_xxl: col-xxl-4
       row:
         type: 'entity:node'
         options:
@@ -1412,7 +1415,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: "<div class=\"card mt-2\">\r\n   {{ field_az_media_image }}\r\n   <div class=\"card-body\">\r\n      {{ title }}\r\n      {{ field_az_titles }}\r\n      <div class=\"mt-3\">\r\n         {{ field_az_phones }}\r\n         {{ field_az_email }}\r\n      </div>\r\n   </div>\r\n</div>"
+            text: "<div class=\"card mt-2 overflow-hidden\">\r\n   {{ field_az_media_image }}\r\n   <div class=\"card-body\">\r\n      {{ title }}\r\n      {{ field_az_titles }}\r\n      <div class=\"mt-3\">\r\n         {{ field_az_phones }}\r\n         {{ field_az_email }}\r\n      </div>\r\n   </div>\r\n</div>"
             make_link: false
             path: ''
             absolute: false
@@ -1567,6 +1570,7 @@ display:
           col_md: col-md-4
           col_lg: col-lg-3
           col_xl: col-xl-3
+          col_xxl: col-xxl-3
       row:
         type: fields
         options:
@@ -2375,7 +2379,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: "<div class=\"card mt-2\">\r\n   {{ field_az_media_image }}\r\n   <div class=\"card-body\">\r\n      {{ title }}\r\n      {{ field_az_titles }}\r\n      <div class=\"mt-3\">\r\n         {{ field_az_phones }}<br>\r\n         {{ field_az_email }}\r\n      </div>\r\n   </div>\r\n</div>"
+            text: "<div class=\"card mt-2 overflow-hidden\">\r\n   {{ field_az_media_image }}\r\n   <div class=\"card-body\">\r\n      {{ title }}\r\n      {{ field_az_titles }}\r\n      <div class=\"mt-3\">\r\n         {{ field_az_phones }}<br>\r\n         {{ field_az_email }}\r\n      </div>\r\n   </div>\r\n</div>"
             make_link: false
             path: ''
             absolute: false
@@ -2530,6 +2534,7 @@ display:
           col_md: col-md-6
           col_lg: col-lg-4
           col_xl: col-xl-4
+          col_xxl: col-xxl-4
       row:
         type: fields
         options:
