@@ -1,6 +1,6 @@
 name: 'Quickstart Paragraphs - Split Screen'
 type: module
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10 || ^11 || ^12
 package: 'The University of Arizona'
 description: 'Provides a "split screen" paragraph type that is half image and half text on background.'
 dependencies:

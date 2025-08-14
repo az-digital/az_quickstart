@@ -234,6 +234,11 @@ jobs:
           composer config extra.branch-alias.${{ needs.branch_name_prep.outputs.dev_branch_source }} ${{ needs.branch_name_prep.outputs.dev_branch_alias }}
           composer validate
 
+      - name: Update version in .info.yml file
+        run: |
+          sed -i "/version: /d" az_quickstart.info.yml
+          echo -e "version: ${{ needs.branch_name_prep.outputs.dev_branch_alias }}" >> az_quickstart.info.yml
+
       - name: Create pull request for `${{ github.ref_name }}` branch updates
         uses: peter-evans/create-pull-request@v7
         with:
@@ -247,3 +252,4 @@ jobs:
           token: ${{ secrets.REPO_DISPATCH_TOKEN }}
           add-paths: |
             composer.json
+            az_quickstart.info.yml
