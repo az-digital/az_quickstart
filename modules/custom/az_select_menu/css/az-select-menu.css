@@ -1,11 +1,5 @@
-
-/* Bootstrap 5 compatible select menu styles */
-/* Using Bootstrap CSS variables for consistency and maintainability */
-/* This approach ensures our custom styles scale with Bootstrap theme changes */
-
 select.select-primary,
 select.az-select-dropdown {
-    /* Custom styling that can't be achieved with Bootstrap classes alone */
     background-color: #f4f6f9;
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAGCAYAAAD68A/GAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyNpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChNYWNpbnRvc2gpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkU4QTMzNkUyNDAwQzExRTNBOEY4OTE4N0E1NkQ4QjVCIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkU4QTMzNkUzNDAwQzExRTNBOEY4OTE4N0E1NkQ4QjVCIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6RThBMzM2RTA0MDBDMTFFM0E4Rjg5MTg3QTU2RDhCNUIiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6RThBMzM2RTE0MEBDMTFFM0E4Rjg5MTg3QTU2RDhCNUIiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4x37VGAAAAWklEQVR42mI0NjZeysDAEMWAHyxlAhKZQPwAj6L7QJwFUvgJiKOB+C8WRX+gcp+YoALHgLgZi0KQ2HEQgwlJsAWIjyLxjwBxK4yDrBBkdQwQf4DiGGTnAAQYAGJbEyV4nwHtAAAAAElFTkSuQmCC);
     background-position: calc(100% - 10px) 50%;
@@ -20,24 +14,17 @@ select.az-select-dropdown {
     font-weight: var(--bs-font-weight-bold, 700);
     letter-spacing: .25px;
     transition: var(--bs-transition, 0.15s ease-in-out);
-    /* Bootstrap .form-select handles most other styling */
 }
 
-/* Button styling - Issue requirement 3: Make the button blue */
 .az-select-button,
 .az-select-menu-container .btn {
-    /* Override Bootstrap primary to use Arizona blue */
     background-color: #0c234b !important;
     border-color: #0c234b !important;
     border-left: 0;
-    /* Use Bootstrap spacing for consistency */
     padding: var(--bs-btn-padding-y, 0.375rem) var(--bs-btn-padding-x, 0.75rem);
-    /* Use Bootstrap font sizing */
     font-size: var(--bs-btn-font-size, 1rem);
     line-height: var(--bs-btn-line-height, 1.5);
-    /* Use Bootstrap border radius (overridden by .rounded-end class) */
     border-radius: var(--bs-btn-border-radius, var(--bs-border-radius));
-    /* Use Bootstrap transitions */
     transition: var(--bs-btn-transition, color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out);
 }
 
@@ -48,14 +35,12 @@ select.az-select-dropdown {
     /* Darker blue for hover/focus states */
     background-color: #001c48 !important;
     border-color: #001c48 !important;
-    /* Use Bootstrap focus styling variables */
     box-shadow: var(--bs-btn-focus-box-shadow, 0 0 0 0.25rem rgba(12, 35, 75, 0.25));
 }
 
 /* Ensure proper connection between dropdown and button */
 .az-select-menu-container .form-control + .btn,
 .az-select-menu-container .az-select-dropdown + .az-select-button {
-    /* Use Bootstrap border width for consistent spacing */
     margin-left: calc(-1 * var(--bs-border-width, 1px));
 }
 
@@ -76,9 +61,7 @@ label.select-menu-label {
     font-weight: var(--bs-font-weight-normal, normal);
 }
 
-/* Updated for Bootstrap 5 input-group-text */
 .input-group .select-menu-label {
-    /* Use Bootstrap spacing variables for consistent margins */
     margin: calc(var(--bs-spacer, 1rem) * 0.4375) calc(var(--bs-spacer, 1rem) * 0.7) 0;
 }
 
@@ -92,16 +75,6 @@ select.select-primary:hover,
 select.az-select-dropdown:active,
 select.az-select-dropdown:focus,
 select.az-select-dropdown:hover {
-    /* Use Bootstrap focus/hover styling */
     box-shadow: var(--bs-form-select-focus-box-shadow, none);
     outline: 0;
-}
-
-/* Legacy Bootstrap support - can be removed once fully migrated */
-.input-group-addon.input-group-addon-no-border {
-    border: none;
-}
-
-.input-group-addon-no-border label {
-    line-height: 0em;
 }
