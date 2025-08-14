@@ -58,7 +58,8 @@
       } else {
         // Hide all popovers
         document.querySelectorAll('.az-select-menu').forEach((form) => {
-          const popoverInstance = window.arizonaBootstrap?.Popover?.getInstance(form);
+          const popoverInstance =
+            window.arizonaBootstrap?.Popover?.getInstance(form);
           if (popoverInstance) popoverInstance.hide();
         });
         return;
@@ -70,7 +71,8 @@
     const [optionsSelected] = selectElement.selectedOptions;
     const selectElementHref = optionsSelected.dataset.href;
     const button = selectForm.querySelector('button');
-    let popoverInstance = window.arizonaBootstrap?.Popover?.getInstance(selectForm);
+    let popoverInstance =
+      window.arizonaBootstrap?.Popover?.getInstance(selectForm);
 
     //  If a navigable link is selected in the dropdown.
     if (selectElementHref !== '') {
@@ -102,7 +104,8 @@
         // eslint-disable-next-line no-new
         new window.arizonaBootstrap.Popover(selectForm);
         // Get the newly created instance
-        popoverInstance = window.arizonaBootstrap.Popover.getInstance(selectForm);
+        popoverInstance =
+          window.arizonaBootstrap.Popover.getInstance(selectForm);
       }
 
       switch (event.type) {
