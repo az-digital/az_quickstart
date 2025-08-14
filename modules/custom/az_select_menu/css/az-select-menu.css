@@ -16,40 +16,6 @@ select.az-select-dropdown {
     transition: var(--bs-transition, 0.15s ease-in-out);
 }
 
-.az-select-button,
-.az-select-menu-container .btn {
-    background-color: #0c234b !important;
-    border-color: #0c234b !important;
-    border-left: 0;
-    padding: var(--bs-btn-padding-y, 0.375rem) var(--bs-btn-padding-x, 0.75rem);
-    font-size: var(--bs-btn-font-size, 1rem);
-    line-height: var(--bs-btn-line-height, 1.5);
-    border-radius: var(--bs-btn-border-radius, var(--bs-border-radius));
-    transition: var(--bs-btn-transition, color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out);
-}
-
-.az-select-button:hover,
-.az-select-button:focus,
-.az-select-menu-container .btn:hover,
-.az-select-menu-container .btn:focus {
-    /* Darker blue for hover/focus states */
-    background-color: #001c48 !important;
-    border-color: #001c48 !important;
-    box-shadow: var(--bs-btn-focus-box-shadow, 0 0 0 0.25rem rgba(12, 35, 75, 0.25));
-}
-
-/* Ensure proper connection between dropdown and button */
-.az-select-menu-container .form-control + .btn,
-.az-select-menu-container .az-select-dropdown + .az-select-button {
-    margin-left: calc(-1 * var(--bs-border-width, 1px));
-}
-
-/*This only works in Internet Explorer 10 and beyond. */
-select.select-primary::-ms-expand,
-select.az-select-dropdown::-ms-expand {
-    display: none;
-}
-
 select.select-primary:focus,
 select.select-primary:hover,
 select.az-select-dropdown:focus,
