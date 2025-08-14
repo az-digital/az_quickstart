@@ -25,33 +25,19 @@ dependencies:
     - user
 third_party_settings:
   field_group:
-    group_link:
-      children:
-        - group_row
-      label: Link
-      parent_name: group_card
-      region: content
-      weight: 2
-      format_type: link
-      format_settings:
-        classes: text-decoration-none
-        show_empty_fields: false
-        id: ''
-        target: custom_uri
-        custom_uri: '[node:az-canonical-url]'
-        target_attribute: default
     group_card:
       children:
-        - group_link
+        - group_row
       label: Card
       parent_name: ''
       region: content
       weight: 0
       format_type: html_element
       format_settings:
-        classes: 'text-bg-gray-100 card border-0 card-clickable hover mb-4'
+        classes: 'text-bg-gray-100 card border-0 hover mb-4'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -64,7 +50,7 @@ third_party_settings:
         - group_column_date
         - group_column_text
       label: Row
-      parent_name: group_link
+      parent_name: group_card
       region: content
       weight: 3
       format_type: html_element
@@ -106,7 +92,7 @@ third_party_settings:
       label: 'Column - Text'
       parent_name: group_row
       region: content
-      weight: 10
+      weight: 9
       format_type: html_element
       format_settings:
         classes: col-9
@@ -186,9 +172,10 @@ third_party_settings:
       weight: 14
       format_type: html_element
       format_settings:
-        classes: 'text-bg-azurite py-3'
+        classes: 'text-bg-azurite py-3 rounded'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -197,23 +184,41 @@ third_party_settings:
         effect: none
         speed: fast
     group_view_event:
-      children: {  }
+      children:
+        - group_link
       label: 'View event'
       parent_name: group_column_text
       region: content
       weight: 3
       format_type: html_element
       format_settings:
-        classes: 'card-clickable-link mt-2 pb-3'
-        show_empty_fields: true
+        classes: 'mt-2 pb-3'
+        show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
-        show_label: true
-        label_element: span
+        show_label: false
+        label_element: div
         label_element_classes: ''
         attributes: ''
         effect: none
         speed: fast
+    group_link:
+      children:
+        - az_event_view_event
+      label: Link
+      parent_name: group_view_event
+      region: content
+      weight: 4
+      format_type: link
+      format_settings:
+        classes: 'stretched-link link-underline link-underline-opacity-0 link-underline-opacity-100-hover'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        target: custom_uri
+        custom_uri: '[node:az-canonical-url]'
+        target_attribute: default
   smart_title:
     enabled: true
     settings:
@@ -239,6 +244,11 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 2
+    region: content
+  az_event_view_event:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 8
     region: content
   field_az_event_date:
     type: smartdate_default
