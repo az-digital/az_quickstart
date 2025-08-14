@@ -63,6 +63,7 @@ function az_finder_preprocess_views_view(&$variables) {
             'btn-dark',
             'position-absolute',
             'start-50',
+            'top-0',
             'translate-middle-x',
             'z-1',
             'mt-1',
