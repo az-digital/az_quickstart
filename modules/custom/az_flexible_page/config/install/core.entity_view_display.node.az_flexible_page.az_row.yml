@@ -6,6 +6,7 @@ dependencies:
     - field.field.node.az_flexible_page.field_az_main_content
     - field.field.node.az_flexible_page.field_az_marketing_page_style
     - field.field.node.az_flexible_page.field_az_media_image
+    - field.field.node.az_flexible_page.field_az_metatag
     - field.field.node.az_flexible_page.field_az_page_category
     - field.field.node.az_flexible_page.field_az_summary
     - node.type.az_flexible_page
@@ -29,14 +30,15 @@ third_party_settings:
   field_group:
     group_card_clickable:
       children:
-        - group_link
+        - group_row
+        - group_card_body
       label: 'Card Clickable'
       parent_name: ''
       region: content
       weight: 0
       format_type: html_element
       format_settings:
-        classes: 'card card-borderless card-clickable hover text-bg-gray-100 p-4'
+        classes: 'card card-borderless hover text-bg-gray-100 p-4'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -49,15 +51,17 @@ third_party_settings:
         speed: fast
     group_link:
       children:
-        - group_row
+        - az_flexible_page_read_more
       label: Link
-      parent_name: group_card_clickable
+      parent_name: group_column
       region: content
-      weight: 2
+      weight: 4
       format_type: link
       format_settings:
-        classes: 'card-body p-0'
+        classes: 'stretched-link link-underline link-underline-opacity-0 link-underline-opacity-100-hover text-start'
+        show_empty_fields: false
         id: ''
+        label_as_html: false
         target: entity
         custom_uri: ''
         target_attribute: default
@@ -66,7 +70,7 @@ third_party_settings:
         - group_media
         - group_column
       label: Row
-      parent_name: group_link
+      parent_name: group_card_clickable
       region: content
       weight: 5
       format_type: html_element
@@ -102,7 +106,7 @@ third_party_settings:
       children:
         - smart_title
         - group_summary
-        - group_read_more
+        - group_link
       label: Column
       parent_name: group_row
       region: content
@@ -123,7 +127,7 @@ third_party_settings:
       label: Heading
       parent_name: ''
       region: hidden
-      weight: 3
+      weight: 7
       format_type: html_element
       format_settings:
         classes: 'card-title text-midnight h4 mt-md-2'
@@ -133,26 +137,6 @@ third_party_settings:
         label_element: h3
         label_element_classes: ''
         attributes: ''
-        effect: none
-        speed: fast
-    group_read_more:
-      children:
-        - links
-      label: 'Read more'
-      parent_name: group_column
-      region: content
-      weight: 5
-      format_type: html_element
-      format_settings:
-        classes: 'card-clickable-link text-chili text-start'
-        show_empty_fields: false
-        id: ''
-        label_as_html: false
-        element: div
-        show_label: true
-        label_element: div
-        label_element_classes: ''
-        attributes: 'aria-hidden="true"'
         effect: none
         speed: fast
     group_summary:
@@ -173,11 +157,35 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
+    group_card_body:
+      children: {  }
+      label: 'Card body'
+      parent_name: group_card_clickable
+      region: hidden
+      weight: 1
+      format_type: html_element
+      format_settings:
+        classes: 'card-body p-0'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
 id: node.az_flexible_page.az_row
 targetEntityType: node
 bundle: az_flexible_page
 mode: az_row
 content:
+  az_flexible_page_read_more:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 4
+    region: content
   field_az_media_image:
     type: entity_reference_entity_view
     label: hidden
@@ -194,11 +202,6 @@ content:
     third_party_settings: {  }
     weight: 4
     region: content
-  links:
-    settings: {  }
-    third_party_settings: {  }
-    weight: 1
-    region: content
   smart_title:
     settings: {  }
     third_party_settings: {  }
@@ -207,4 +210,6 @@ content:
 hidden:
   field_az_main_content: true
   field_az_marketing_page_style: true
+  field_az_metatag: true
   field_az_page_category: true
+  links: true

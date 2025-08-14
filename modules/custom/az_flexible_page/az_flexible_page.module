@@ -7,6 +7,46 @@
 
 use Drupal\Core\Entity\EntityFormInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\FieldableEntityInterface;
+use Drupal\node\Entity\NodeType;
+
+/**
+ * Implements hook_entity_extra_field_info().
+ */
+function az_flexible_page_entity_extra_field_info() {
+  $extra = [];
+
+  // Check to see if our content type exists.
+  $bundle = NodeType::load('az_flexible_page');
+  if ($bundle) {
+    // Read more/View page pseudo field.
+    $extra['node'][$bundle->id()]['display']['az_flexible_page_read_more'] = [
+      'label' => t('Read more pseudo field'),
+      'description' => "This is a pseudo field from az_flexible_page",
+      'weight' => 50,
+      'visible' => FALSE,
+    ];
+  }
+
+  return $extra;
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_view().
+ */
+function az_flexible_page_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+
+  // Read more pseudo field.
+  if ($entity instanceof FieldableEntityInterface && $display->getComponent('az_flexible_page_read_more')) {
+    $text = ($view_mode === 'az_row_with_background') ? 'View page' : 'Read more';
+    $build['az_flexible_page_read_more'][] = [
+      '#type' => 'markup',
+      '#markup' => '<span aria-hidden="true">' . $text . '</span>',
+    ];
+  }
+}
 
 /**
  * Implements hook_preprocess_node().

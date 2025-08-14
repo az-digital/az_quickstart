@@ -6,6 +6,7 @@ dependencies:
     - field.field.node.az_flexible_page.field_az_main_content
     - field.field.node.az_flexible_page.field_az_marketing_page_style
     - field.field.node.az_flexible_page.field_az_media_image
+    - field.field.node.az_flexible_page.field_az_metatag
     - field.field.node.az_flexible_page.field_az_page_category
     - field.field.node.az_flexible_page.field_az_summary
     - node.type.az_flexible_page
@@ -30,16 +31,17 @@ third_party_settings:
   field_group:
     group_card:
       children:
-        - group_link
+        - group_card_body
       label: Card
       parent_name: ''
       region: content
       weight: 0
       format_type: html_element
       format_settings:
-        classes: 'text-bg-gray-100 card card-borderless card-clickable hover mb-4'
+        classes: 'text-bg-gray-100 card card-borderless hover mb-4'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -47,21 +49,6 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-    group_link:
-      children:
-        - group_card_body
-      label: Link
-      parent_name: group_card
-      region: content
-      weight: 4
-      format_type: link
-      format_settings:
-        classes: text-decoration-none
-        show_empty_fields: false
-        id: ''
-        target: custom_uri
-        custom_uri: '[node:az-canonical-url]'
-        target_attribute: default
     group_row:
       children:
         - group_column_image
@@ -86,9 +73,9 @@ third_party_settings:
       children:
         - group_row
       label: 'Card Body'
-      parent_name: group_link
+      parent_name: group_card
       region: content
-      weight: 6
+      weight: 1
       format_type: html_element
       format_settings:
         classes: 'card-body pt-4 pb-2 px-4'
@@ -161,28 +148,51 @@ third_party_settings:
         effect: none
         speed: fast
     group_view_page:
-      children: {  }
+      children:
+        - group_link
       label: 'View page'
       parent_name: group_column_text
       region: content
       weight: 3
       format_type: html_element
       format_settings:
-        classes: 'card-clickable-link mt-2 pb-3'
+        classes: 'mt-2 pb-3'
         show_empty_fields: true
         id: ''
+        label_as_html: false
         element: div
-        show_label: true
+        show_label: false
         label_element: span
         label_element_classes: ''
         attributes: ''
         effect: none
         speed: fast
+    group_link:
+      children:
+        - az_flexible_page_read_more
+      label: Link
+      parent_name: group_view_page
+      region: content
+      weight: 3
+      format_type: link
+      format_settings:
+        classes: 'stretched-link link-underline link-underline-opacity-0 link-underline-opacity-100-hover'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        target: custom_uri
+        custom_uri: '[node:az-canonical-url]'
+        target_attribute: default
 id: node.az_flexible_page.az_row_with_background
 targetEntityType: node
 bundle: az_flexible_page
 mode: az_row_with_background
 content:
+  az_flexible_page_read_more:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
   field_az_media_image:
     type: entity_reference_entity_view
     label: hidden
@@ -207,5 +217,6 @@ content:
 hidden:
   field_az_main_content: true
   field_az_marketing_page_style: true
+  field_az_metatag: true
   field_az_page_category: true
   links: true
