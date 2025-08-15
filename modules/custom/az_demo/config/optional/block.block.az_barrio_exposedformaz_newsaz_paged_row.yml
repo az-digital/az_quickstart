@@ -24,4 +24,4 @@ visibility:
   request_path:
     id: request_path
     negate: false
-    pages: /finders/news/az-paged-row
+    pages: /finders/az-news-az-paged-row

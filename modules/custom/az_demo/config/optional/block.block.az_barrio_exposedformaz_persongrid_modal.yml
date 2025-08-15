@@ -24,4 +24,4 @@ visibility:
   request_path:
     id: request_path
     negate: false
-    pages: /finders/people/grid-modal
+    pages: /finders/az-person-grid-modal

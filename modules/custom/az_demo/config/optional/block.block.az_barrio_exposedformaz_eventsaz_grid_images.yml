@@ -24,4 +24,4 @@ visibility:
   request_path:
     id: request_path
     negate: false
-    pages: /finders/events/az-grid-images
+    pages: /finders/az-events-az-grid-images

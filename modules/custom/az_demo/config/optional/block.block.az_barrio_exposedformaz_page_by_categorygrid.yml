@@ -24,4 +24,4 @@ visibility:
   request_path:
     id: request_path
     negate: false
-    pages: /finders/pages/grid
+    pages: /finders/az-page-by-category-grid

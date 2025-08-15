@@ -24,4 +24,4 @@ visibility:
   request_path:
     id: request_path
     negate: false
-    pages: /finders/people/row
+    pages: /finders/az-person-row

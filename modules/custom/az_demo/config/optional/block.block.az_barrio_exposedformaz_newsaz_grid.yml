@@ -24,4 +24,4 @@ visibility:
   request_path:
     id: request_path
     negate: false
-    pages: /finders/news/az-grid
+    pages: /finders/az-news-az-grid
