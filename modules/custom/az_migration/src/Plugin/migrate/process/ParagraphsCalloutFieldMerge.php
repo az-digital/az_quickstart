@@ -57,7 +57,7 @@ class ParagraphsCalloutFieldMerge extends ProcessPluginBase {
     if (!empty($this->configuration['background'])) {
       $field_uaqs_callout_background = $row->getSourceProperty($this->configuration['background']);
       if (!empty($field_uaqs_callout_background[0]['value'])) {
-        $bg_light = 'bg-light';
+        $bg_light = 'text-bg-light';
       }
     }
     // Color and text Mapping.
