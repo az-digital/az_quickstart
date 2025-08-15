@@ -1,4 +1,4 @@
-(($, Drupal, window, document, once) => {
+((Drupal, window, document, once) => {
   Drupal.azSelectMenu = Drupal.azSelectMenu || {};
 
   /**
@@ -126,4 +126,4 @@
       }
     }
   };
-})(jQuery, Drupal, this, this.document, once);
+})(Drupal, this, this.document, once);

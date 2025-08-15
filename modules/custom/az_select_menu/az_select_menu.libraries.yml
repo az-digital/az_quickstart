@@ -5,7 +5,6 @@ az_select_menu:
   js:
     js/az-select-menu.js: {}
   dependencies:
-    - core/jquery
     - core/drupal
     - core/once
     - az_barrio/arizona-bootstrap-css
