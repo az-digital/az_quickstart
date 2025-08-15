@@ -344,6 +344,7 @@ display:
           replica: false
           query_tags: {  }
       relationships: {  }
+      css_class: add-pager-top-margin
       use_ajax: true
       header:
         result:
@@ -912,7 +913,6 @@ display:
     cache_metadata:
       max-age: -1
       contexts:
-        - 'languages:language_content'
         - 'languages:language_interface'
         - url
         - url.query_args
