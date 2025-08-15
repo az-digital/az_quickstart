@@ -53,3 +53,39 @@ function az_barrio_post_update_migrate_material_symbols_icons(&$sandbox = NULL) 
     \Drupal::logger('az_quickstart')->notice('Migrated Material Design Sharp icons setting to Material Symbols Rounded.');
   }
 }
+
+/**
+ * Migrate Arizona Bootstrap 2.x versions to 5.x equivalents.
+ */
+function az_barrio_post_update_migrate_bootstrap_2x_to_5x(&$sandbox = NULL) {
+  $config_factory = \Drupal::configFactory();
+  $theme_settings = $config_factory->getEditable('az_barrio.settings');
+
+  $updated = FALSE;
+
+  // Migration mapping from 2.x to 5.x versions.
+  $version_mapping = [
+    'latest-2.x' => 'latest-5.x',
+    '2.x' => '5.x',
+  ];
+
+  // Update CSS version if it's a 2.x version.
+  $current_css_version = $theme_settings->get('az_bootstrap_cdn_version_css');
+  if (isset($version_mapping[$current_css_version])) {
+    $theme_settings->set('az_bootstrap_cdn_version_css', $version_mapping[$current_css_version]);
+    $updated = TRUE;
+  }
+
+  // Update JS version if it's a 2.x version.
+  $current_js_version = $theme_settings->get('az_bootstrap_cdn_version_js');
+  if (isset($version_mapping[$current_js_version])) {
+    $theme_settings->set('az_bootstrap_cdn_version_js', $version_mapping[$current_js_version]);
+    $updated = TRUE;
+  }
+
+  // Save changes if any were made.
+  if ($updated) {
+    $theme_settings->save();
+    \Drupal::logger('az_quickstart')->notice('Migrated Arizona Bootstrap 2.x versions to 5.x equivalents for Arizona Bootstrap 5 compatibility.');
+  }
+}
