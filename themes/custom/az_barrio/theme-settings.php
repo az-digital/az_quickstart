@@ -298,7 +298,6 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     ],
     '#default_value' => theme_get_setting('az_bootstrap_cdn_version_js'),
   ];
-
   $form['azbs_settings']['settings']['az_bootstrap_minified'] = [
     '#type'          => 'checkbox',
     '#title'         => t('Use minified version of AZ Bootstrap.'),
