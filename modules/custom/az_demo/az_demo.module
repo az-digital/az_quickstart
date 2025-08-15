@@ -68,7 +68,7 @@ function az_demo_blocks_to_hide_by_path(): array {
       '/finders/az-news-az-paged-row',
       '/finders/az-news-az-grid',
       '/finders/az-page-by-category-row',
-      '/finders/az-page-by-category-grid'
+      '/finders/az-page-by-category-grid',
     ],
   ];
 }
