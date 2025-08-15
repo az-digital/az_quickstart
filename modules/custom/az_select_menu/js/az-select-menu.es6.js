@@ -13,9 +13,6 @@
           const selectFormId = settings.azSelectMenu.ids[property];
           const selectForm = document.querySelector(`#${selectFormId}`);
           once('azSelectMenu', selectForm, context).forEach((element) => {
-            // Bootstrap 5 popover will be created when needed via getOrCreateInstance
-            // No need to initialize here since we handle creation in the event handler
-
             // Add event listeners using the handler function directly
             const { handleEvents } = Drupal.azSelectMenu;
             element.addEventListener('focus', handleEvents);
