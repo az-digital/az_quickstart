@@ -74,6 +74,14 @@ function az_event_entity_extra_field_info() {
       'weight' => 50,
       'visible' => FALSE,
     ];
+
+    // View event pseudo field.
+    $extra['node'][$bundle->id()]['display']['az_event_view_event'] = [
+      'label' => t('View event pseudo field'),
+      'description' => "This is a pseudo field from az_event",
+      'weight' => 50,
+      'visible' => FALSE,
+    ];
   }
 
   return $extra;
@@ -95,6 +103,14 @@ function az_event_preprocess_field(&$variables, $hook) {
  * Implements hook_ENTITY_TYPE_view().
  */
 function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+
+  // View event pseudo field.
+  if ($entity instanceof FieldableEntityInterface && $display->getComponent('az_event_view_event')) {
+    $build['az_event_view_event'][] = [
+      '#type' => 'markup',
+      '#markup' => Html::escape('View event'),
+    ];
+  }
 
   // We only know what to do with event pseudo fields if our date seems defined.
   if ($entity instanceof FieldableEntityInterface && $entity->hasField('field_az_event_date') && !empty($entity->field_az_event_date->value)) {

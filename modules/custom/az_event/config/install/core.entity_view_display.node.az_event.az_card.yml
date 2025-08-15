@@ -28,15 +28,17 @@ third_party_settings:
   field_group:
     group_card_clickable:
       children:
-        - group_link
+        - group_card_body
       label: 'Card Clickable'
       parent_name: ''
       region: content
       weight: 0
       format_type: html_element
       format_settings:
-        classes: 'card border-0 card-clickable text-bg-gray-100 mt-0 mb-4 p-0'
+        classes: 'card border-0 text-bg-gray-100 mt-0 mb-4 p-0'
+        show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -46,18 +48,17 @@ third_party_settings:
         speed: fast
     group_link:
       children:
-        - group_date
-        - group_heading
-        - group_summary
+        - links
       label: Link
-      parent_name: group_card_clickable
+      parent_name: group_card_body
       region: content
-      weight: 1
+      weight: 13
       format_type: link
       format_settings:
-        classes: 'card-body p-4'
+        classes: stretched-link
         show_empty_fields: false
         id: ''
+        label_as_html: false
         target: custom_uri
         custom_uri: '[node:az-canonical-url]'
         target_attribute: default
@@ -65,9 +66,9 @@ third_party_settings:
       children:
         - field_az_event_date
       label: Date
-      parent_name: group_link
+      parent_name: group_card_body
       region: content
-      weight: 5
+      weight: 9
       format_type: html_element
       format_settings:
         classes: 'text-body-secondary fw-bold small'
@@ -83,9 +84,9 @@ third_party_settings:
       children:
         - smart_title
       label: Heading
-      parent_name: group_link
+      parent_name: group_card_body
       region: content
-      weight: 6
+      weight: 10
       format_type: html_element
       format_settings:
         classes: 'card-title text-chili h5 mt-0 mb-2'
@@ -101,13 +102,36 @@ third_party_settings:
       children:
         - field_az_summary
       label: Summary
-      parent_name: group_link
+      parent_name: group_card_body
       region: content
-      weight: 7
+      weight: 12
       format_type: html_element
       format_settings:
         classes: 'card-text fw-normal small mb-0'
         id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_card_body:
+      children:
+        - group_date
+        - group_heading
+        - group_summary
+        - group_link
+      label: 'Card Body'
+      parent_name: group_card_clickable
+      region: content
+      weight: 11
+      format_type: html_element
+      format_settings:
+        classes: 'card-body p-4'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -145,7 +169,7 @@ content:
       hide_date: 0
       capitalize_noon_and_midnight: 1
     third_party_settings: {  }
-    weight: 1
+    weight: 5
     region: content
   field_az_summary:
     type: az_text_summary
@@ -153,6 +177,11 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 8
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 6
     region: content
   smart_title:
     settings: {  }
@@ -174,4 +203,3 @@ hidden:
   field_az_photos: true
   field_az_subheading: true
   field_az_trellis_id: true
-  links: true
