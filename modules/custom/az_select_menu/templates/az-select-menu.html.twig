@@ -48,16 +48,17 @@
     {% macro menu_links(items, attributes, menu_level, menu_block_configuration, select_attributes, form_attributes, button_attributes) %}
 
     <form {{form_attributes}}>
-        <div class="input-group">
+        <div class="input-group az-select-menu-container">
           {% if menu_block_configuration.az_select_menu.preform_text %}
-            <span class="input-group-addon input-group-addon-no-border">
+            <span class="input-group-text border-0 bg-transparent">
               <div class="select-menu-label">{{menu_block_configuration.az_select_menu.preform_text}}</div>
             </span>
           {% endif %}
           <label class="visually-hidden select-menu-label-sr" for="{{ select_attributes.id }}">{{menu_block_configuration.az_select_menu.preform_text_sr_only}}</label>
           {% import _self as menus %}
           {% if items %}
-            <select {{ select_attributes }}>
+            {% set select_classes = ['az-select-dropdown', 'form-select', 'rounded-start'] %}
+            <select {{ select_attributes.addClass(select_classes) }}>
             {% if menu_block_configuration.az_select_menu.empty_option and menu_block_configuration.az_select_menu.empty_option_label %}
               <option data-href="">{{menu_block_configuration.az_select_menu.empty_option_label}}</option>
             {% endif %}
@@ -65,12 +66,11 @@
               <option data-href="{{item.url}}">{{item.title}}</option>
             {% endfor %}
             </select >
-            <span class="input-group-btn">
-              <button {{button_attributes}}>
-                {{menu_block_configuration.az_select_menu.button_text}}
-                <span class="visually-hidden">{{menu_block_configuration.az_select_menu.button_text_sr_only}}</span>
-              </button>
-            </span>
+            {% set button_classes = ['az-select-button', 'btn', 'btn-secondary', 'rounded-end'] %}
+            <button {{button_attributes.addClass(button_classes)}}>
+              {{menu_block_configuration.az_select_menu.button_text}}
+              <span class="visually-hidden">{{menu_block_configuration.az_select_menu.button_text_sr_only}}</span>
+            </button>
           {% endif %}
       </div>
     </form>
