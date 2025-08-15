@@ -5,21 +5,27 @@ dependencies:
     - core.entity_view_mode.node.az_row_with_background
     - field.field.node.az_person.field_az_address
     - field.field.node.az_person.field_az_attachments
+    - field.field.node.az_person.field_az_awards
     - field.field.node.az_person.field_az_body
     - field.field.node.az_person.field_az_degrees
     - field.field.node.az_person.field_az_email
     - field.field.node.az_person.field_az_fname
+    - field.field.node.az_person.field_az_licensure_certification
     - field.field.node.az_person.field_az_link
     - field.field.node.az_person.field_az_links
     - field.field.node.az_person.field_az_lname
     - field.field.node.az_person.field_az_media_image
+    - field.field.node.az_person.field_az_metatag
     - field.field.node.az_person.field_az_netid
     - field.field.node.az_person.field_az_person_category
     - field.field.node.az_person.field_az_person_category_sec
     - field.field.node.az_person.field_az_phones
     - field.field.node.az_person.field_az_pronouns
+    - field.field.node.az_person.field_az_research_interests
     - field.field.node.az_person.field_az_suffix
+    - field.field.node.az_person.field_az_teaching_interests
     - field.field.node.az_person.field_az_titles
+    - field.field.node.az_person.field_az_work_experience
     - node.type.az_person
   module:
     - field_group
@@ -29,16 +35,17 @@ third_party_settings:
   field_group:
     group_card:
       children:
-        - group_link
+        - group_card_body
       label: Card
       parent_name: ''
       region: content
       weight: 0
       format_type: html_element
       format_settings:
-        classes: 'text-bg-gray-100 card border-0 card-clickable hover mb-4'
+        classes: 'text-bg-gray-100 card border-0 hover mb-4'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -50,7 +57,7 @@ third_party_settings:
       children:
         - group_row
       label: 'Card Body'
-      parent_name: group_link
+      parent_name: group_card
       region: content
       weight: 2
       format_type: html_element
@@ -65,21 +72,6 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-    group_link:
-      children:
-        - group_card_body
-      label: Link
-      parent_name: group_card
-      region: content
-      weight: 1
-      format_type: link
-      format_settings:
-        classes: text-decoration-none
-        show_empty_fields: false
-        id: ''
-        target: custom_uri
-        custom_uri: '[node:az-canonical-url]'
-        target_attribute: default
     group_row:
       children:
         - group_column_image
@@ -160,18 +152,20 @@ third_party_settings:
         effect: none
         speed: fast
     group_view_person:
-      children: {  }
+      children:
+        - group_link
       label: 'View profile'
       parent_name: group_column_text
       region: content
       weight: 4
       format_type: html_element
       format_settings:
-        classes: 'card-clickable-link mt-2 pb-3'
-        show_empty_fields: true
+        classes: 'mt-2 pb-3'
+        show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
-        show_label: true
+        show_label: false
         label_element: span
         label_element_classes: ''
         attributes: ''
@@ -198,6 +192,22 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
+    group_link:
+      children:
+        - az_person_view_profile
+      label: Link
+      parent_name: group_view_person
+      region: content
+      weight: 4
+      format_type: link
+      format_settings:
+        classes: 'stretched-link link-underline link-underline-opacity-0 link-underline-opacity-100-hover'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        target: entity
+        custom_uri: ''
+        target_attribute: default
   smart_title:
     enabled: true
     settings:
@@ -209,6 +219,11 @@ targetEntityType: node
 bundle: az_person
 mode: az_row_with_background
 content:
+  az_person_view_profile:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 4
+    region: content
   field_az_media_image:
     type: entity_reference_entity_view
     label: hidden
@@ -242,16 +257,22 @@ content:
 hidden:
   field_az_address: true
   field_az_attachments: true
+  field_az_awards: true
   field_az_body: true
   field_az_degrees: true
   field_az_email: true
   field_az_fname: true
+  field_az_licensure_certification: true
   field_az_link: true
   field_az_links: true
   field_az_lname: true
+  field_az_metatag: true
   field_az_netid: true
   field_az_person_category: true
   field_az_person_category_sec: true
   field_az_phones: true
   field_az_pronouns: true
+  field_az_research_interests: true
+  field_az_teaching_interests: true
+  field_az_work_experience: true
   links: true
