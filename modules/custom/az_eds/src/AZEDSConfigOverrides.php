@@ -22,6 +22,9 @@ class AZEDSConfigOverrides implements ConfigFactoryOverrideInterface {
   // @todo determine scope.
   const DIRECTORY_FILTER = '(!(isMemberOf=arizona.edu:services:enterprise:ldap.arizona.edu:phonebook-exclude))';
 
+  // Do not import students with PRIMARY NAME studentInfoReleaseCode.
+  const EXCLUDE_INFO_RELEASE = '(|(!(eduPersonAffiliation=student))(!(studentInfoReleaseCode=PRIMARY NAME)))';
+
   // Filter to exclude students.
   const EXCLUDE_STUDENTS_FILTER = '(!(eduPersonAffiliation=student))';
 
@@ -65,6 +68,7 @@ class AZEDSConfigOverrides implements ConfigFactoryOverrideInterface {
           // Concatenate our existing filters.
           $filter = '(&' . $original_filter .
             self::DIRECTORY_FILTER .
+            self::EXCLUDE_INFO_RELEASE .
             ((!$students_allowed) ? self::EXCLUDE_STUDENTS_FILTER : '') .
             ')';
           $overrides[$name]['filter'] = $filter;
