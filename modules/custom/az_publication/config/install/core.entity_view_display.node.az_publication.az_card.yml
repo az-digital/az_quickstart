@@ -41,9 +41,9 @@ third_party_settings:
       children:
         - az_publication_bibliography
       label: Reference
-      parent_name: group_link
+      parent_name: group_card_body
       region: content
-      weight: 7
+      weight: 4
       format_type: html_element
       format_settings:
         classes: 'text-body-secondary fw-normal small mt-2'
@@ -58,16 +58,17 @@ third_party_settings:
         speed: fast
     group_card_clickable:
       children:
-        - group_link
+        - group_card_body
       label: 'Card Clickable'
       parent_name: ''
       region: content
       weight: 0
       format_type: html_element
       format_settings:
-        classes: 'card card-borderless card-clickable mb-4'
+        classes: 'card card-borderless mb-4'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -75,30 +76,13 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-    group_link:
-      children:
-        - field_az_publication_image
-        - group_heading
-        - group_az_publication_reference
-      label: Link
-      parent_name: group_card_clickable
-      region: content
-      weight: 1
-      format_type: link
-      format_settings:
-        classes: 'card-body p-0 hide-contextual-links'
-        show_empty_fields: false
-        id: ''
-        target: entity
-        custom_uri: ''
-        target_attribute: default
     group_heading:
       children:
         - smart_title
       label: Heading
-      parent_name: group_link
+      parent_name: group_card_body
       region: content
-      weight: 6
+      weight: 3
       format_type: html_element
       format_settings:
         classes: 'card-title text-midnight h5 mb-0'
@@ -111,6 +95,45 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
+    group_card_body:
+      children:
+        - field_az_publication_image
+        - group_heading
+        - group_az_publication_reference
+        - group_link
+      label: 'Card body'
+      parent_name: group_card_clickable
+      region: content
+      weight: 5
+      format_type: html_element
+      format_settings:
+        classes: 'card-body p-0'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_link:
+      children:
+        - links
+      label: Link
+      parent_name: group_card_body
+      region: content
+      weight: 5
+      format_type: link
+      format_settings:
+        classes: stretched-link
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        target: entity
+        custom_uri: ''
+        target_attribute: default
   smart_title:
     enabled: true
     settings:
@@ -127,7 +150,7 @@ content:
   az_publication_bibliography:
     settings: {  }
     third_party_settings: {  }
-    weight: 0
+    weight: 8
     region: content
   field_az_publication_image:
     type: entity_reference_entity_view
@@ -136,7 +159,12 @@ content:
       view_mode: az_card_image
       link: false
     third_party_settings: {  }
-    weight: 5
+    weight: 2
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 10
     region: content
   smart_title:
     settings: {  }
@@ -170,4 +198,3 @@ hidden:
   field_az_publication_type: true
   field_az_publication_version: true
   field_az_publication_volume: true
-  links: true
