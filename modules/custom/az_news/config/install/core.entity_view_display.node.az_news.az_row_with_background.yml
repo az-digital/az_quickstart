@@ -157,7 +157,7 @@ third_party_settings:
       weight: 28
       format_type: link
       format_settings:
-        classes: 'text-decoration-none stretched-link'
+        classes: 'stretched-link link-underline link-underline-opacity-0 link-underline-opacity-100-hover'
         show_empty_fields: false
         id: ''
         label_as_html: false
