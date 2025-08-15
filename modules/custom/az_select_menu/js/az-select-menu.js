@@ -19,10 +19,6 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
           var selectFormId = settings.azSelectMenu.ids[property];
           var selectForm = document.querySelector("#".concat(selectFormId));
           once('azSelectMenu', selectForm, context).forEach(function (element) {
-            var _window$arizonaBootst;
-            if ((_window$arizonaBootst = window.arizonaBootstrap) !== null && _window$arizonaBootst !== void 0 && _window$arizonaBootst.Popover) {
-              new window.arizonaBootstrap.Popover(element);
-            }
             var handleEvents = Drupal.azSelectMenu.handleEvents;
             element.addEventListener('focus', handleEvents);
             element.addEventListener('change', handleEvents);
@@ -42,12 +38,12 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
     }
   };
   Drupal.azSelectMenu.handleEvents = function (event) {
-    var _window$arizonaBootst3;
+    var _window$arizonaBootst2;
     if (event.type === 'touchstart') {
       if (event.target.classList.contains('js_select_menu_button')) {} else {
         document.querySelectorAll('.az-select-menu').forEach(function (form) {
-          var _window$arizonaBootst2;
-          var popoverInstance = (_window$arizonaBootst2 = window.arizonaBootstrap) === null || _window$arizonaBootst2 === void 0 || (_window$arizonaBootst2 = _window$arizonaBootst2.Popover) === null || _window$arizonaBootst2 === void 0 ? void 0 : _window$arizonaBootst2.getInstance(form);
+          var _window$arizonaBootst;
+          var popoverInstance = (_window$arizonaBootst = window.arizonaBootstrap) === null || _window$arizonaBootst === void 0 || (_window$arizonaBootst = _window$arizonaBootst.Popover) === null || _window$arizonaBootst === void 0 ? void 0 : _window$arizonaBootst.getInstance(form);
           if (popoverInstance) popoverInstance.hide();
         });
         return;
@@ -59,7 +55,7 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
       optionsSelected = _selectElement$select[0];
     var selectElementHref = optionsSelected.dataset.href;
     var button = selectForm.querySelector('button');
-    var popoverInstance = (_window$arizonaBootst3 = window.arizonaBootstrap) === null || _window$arizonaBootst3 === void 0 || (_window$arizonaBootst3 = _window$arizonaBootst3.Popover) === null || _window$arizonaBootst3 === void 0 ? void 0 : _window$arizonaBootst3.getInstance(selectForm);
+    var popoverInstance = (_window$arizonaBootst2 = window.arizonaBootstrap) === null || _window$arizonaBootst2 === void 0 || (_window$arizonaBootst2 = _window$arizonaBootst2.Popover) === null || _window$arizonaBootst2 === void 0 ? void 0 : _window$arizonaBootst2.getInstance(selectForm);
     if (selectElementHref !== '') {
       if (popoverInstance) {
         popoverInstance.dispose();
@@ -75,13 +71,12 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
           break;
       }
     } else {
-      var _window$arizonaBootst4;
+      var _window$arizonaBootst3;
       button.classList.add('disabled');
       button.setAttribute('aria-disabled', 'true');
       selectElement.setAttribute('aria-disabled', 'true');
-      if (!popoverInstance && (_window$arizonaBootst4 = window.arizonaBootstrap) !== null && _window$arizonaBootst4 !== void 0 && _window$arizonaBootst4.Popover) {
-        new window.arizonaBootstrap.Popover(selectForm);
-        popoverInstance = window.arizonaBootstrap.Popover.getInstance(selectForm);
+      if (!popoverInstance && (_window$arizonaBootst3 = window.arizonaBootstrap) !== null && _window$arizonaBootst3 !== void 0 && _window$arizonaBootst3.Popover) {
+        popoverInstance = window.arizonaBootstrap.Popover.getOrCreateInstance ? window.arizonaBootstrap.Popover.getOrCreateInstance(selectForm) : window.arizonaBootstrap.Popover.getInstance(selectForm);
       }
       switch (event.type) {
         case 'click':

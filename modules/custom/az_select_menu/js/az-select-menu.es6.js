@@ -13,11 +13,8 @@
           const selectFormId = settings.azSelectMenu.ids[property];
           const selectForm = document.querySelector(`#${selectFormId}`);
           once('azSelectMenu', selectForm, context).forEach((element) => {
-            // Bootstrap 5 popover initialization
-            if (window.arizonaBootstrap?.Popover) {
-              // eslint-disable-next-line no-new
-              new window.arizonaBootstrap.Popover(element);
-            }
+            // Bootstrap 5 popover will be created when needed via getOrCreateInstance
+            // No need to initialize here since we handle creation in the event handler
 
             // Add event listeners using the handler function directly
             const { handleEvents } = Drupal.azSelectMenu;
@@ -101,11 +98,9 @@
 
       // Recreate popover when button becomes disabled
       if (!popoverInstance && window.arizonaBootstrap?.Popover) {
-        // eslint-disable-next-line no-new
-        new window.arizonaBootstrap.Popover(selectForm);
-        // Get the newly created instance
-        popoverInstance =
-          window.arizonaBootstrap.Popover.getInstance(selectForm);
+        popoverInstance = window.arizonaBootstrap.Popover.getOrCreateInstance
+          ? window.arizonaBootstrap.Popover.getOrCreateInstance(selectForm)
+          : window.arizonaBootstrap.Popover.getInstance(selectForm);
       }
 
       switch (event.type) {
