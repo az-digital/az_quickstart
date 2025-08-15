@@ -288,7 +288,6 @@ display:
           col_md: col-md-4
           col_lg: col-lg-4
           col_xl: col-xl-4
-          col_xxl: col-xxl-3
       row:
         type: 'entity:node'
         options:
