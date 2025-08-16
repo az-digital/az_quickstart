@@ -120,19 +120,19 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
 
     $form['clear_cache'] = [
       '#type' => 'details',
-      '#title' => t('Clear cache'),
+      '#title' => $this->t('Clear cache'),
       '#open' => TRUE,
     ];
 
     $form['clear_cache']['clear'] = [
       '#type' => 'submit',
-      '#value' => t('Clear all caches'),
+      '#value' => $this->t('Clear all caches'),
       '#submit' => ['::submitCacheClear'],
     ];
 
     $form['site_name'] = [
       '#type' => 'textfield',
-      '#title' => t('Site name'),
+      '#title' => $this->t('Site name'),
       '#default_value' => $site_config->get('name'),
       '#required' => TRUE,
     ];
@@ -177,22 +177,22 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
 
     $form['monitoring_page'] = [
       '#type' => 'details',
-      '#title' => t('Monitoring page'),
+      '#title' => $this->t('Monitoring page'),
       '#open' => TRUE,
       '#access' => $this->currentUser()->hasPermission('administer site configuration'),
     ];
 
     $form['monitoring_page']['monitoring_page_enabled'] = [
-      '#title' => t('Enable monitoring page'),
+      '#title' => $this->t('Enable monitoring page'),
       '#type' => 'checkbox',
-      '#description' => t("Provides an uncacheable page intended for use with uptime monitoring tools to check the health of the site, bypassing any edge cache layer (e.g. varnish)."),
+      '#description' => $this->t("Provides an uncacheable page intended for use with uptime monitoring tools to check the health of the site, bypassing any edge cache layer (e.g. varnish)."),
       '#default_value' => $az_core_config->get('monitoring_page.enabled'),
     ];
 
     $form['monitoring_page']['monitoring_page_path'] = [
-      '#title' => t('Monitoring page path'),
+      '#title' => $this->t('Monitoring page path'),
       '#type' => 'textfield',
-      '#description' => t('Path for monitoring page.'),
+      '#description' => $this->t('Path for monitoring page.'),
       '#default_value' => $az_core_config->get('monitoring_page.path'),
       '#element_validate' => ['::monitoringPagePathValidate'],
       '#states' => [
@@ -204,15 +204,15 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
 
     $form['enterprise_attributes'] = [
       '#type' => 'details',
-      '#title' => t('Enterprise attributes'),
+      '#title' => $this->t('Enterprise attributes'),
       '#open' => FALSE,
       '#access' => $this->currentUser()->hasPermission('administer site configuration'),
     ];
 
     $form['enterprise_attributes']['enterprise_attributes_locked'] = [
-      '#title' => t('Enterprise attributes edits prohibited'),
+      '#title' => $this->t('Enterprise attributes edits prohibited'),
       '#type' => 'checkbox',
-      '#description' => t("With this setting enabled, edits to the enterprise attributes taxonomy will be prohibited (recommended)."),
+      '#description' => $this->t("With this setting enabled, edits to the enterprise attributes taxonomy will be prohibited (recommended)."),
       '#default_value' => $az_core_config->get('enterprise_attributes.locked'),
     ];
 
@@ -280,13 +280,13 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
     if ($form_state->getValue('monitoring_page_enabled')) {
       $submitted_value = $form_state->getValue('monitoring_page_path');
       if (empty($submitted_value)) {
-        $form_state->setError($element, t('A monitoring page path must be provided.'));
+        $form_state->setError($element, $this->t('A monitoring page path must be provided.'));
       }
 
       $path = strtolower(trim(trim($submitted_value), " \\/"));
       if (!empty($path) && $submitted_value !== $element['#default_value']) {
         if ($this->routeProvider->getRoutesByPattern($path)->count()) {
-          $form_state->setError($element, t('The path is already in use.'));
+          $form_state->setError($element, $this->t('The path is already in use.'));
         }
       }
     }
