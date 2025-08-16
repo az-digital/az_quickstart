@@ -41,7 +41,7 @@ function az_barrio_theme_suggestions_input_alter(&$suggestions, $variables) {
   if (isset($variables['element']['#form_id']) && $variables['element']['#form_id'] === 'search_block_form') {
     $suggestions[] = 'input__' . $variables['element']['#form_id'];
   }
-  if (isset($variables['element']['#type']) && isset($variables['element']['#form_id']) && $variables['element']['#form_id'] === 'search_block_form') {
+  if (isset($variables['element']['#type']) && isset($variables['element']['#form_id']) && ($variables['element']['#form_id'] === 'search_block_form')) {
     $suggestions[] = 'input__' . $variables['element']['#form_id'] . '__' . $variables['element']['#type'];
   }
 }
@@ -98,26 +98,21 @@ function az_barrio_preprocess_html(&$variables) {
  * Implements hook_preprocess_HOOK() for page templates.
  */
 function az_barrio_preprocess_page(&$variables, $hook) {
-  $variables['az_barrio_navbar_offcanvas'] = (theme_get_setting('az_barrio_navbar_offcanvas')) ? TRUE : FALSE;
-  if ($variables['az_barrio_navbar_offcanvas'] === TRUE) {
+  $variables['az_barrio_navbar'] = (theme_get_setting('az_barrio_navbar')) ? TRUE : FALSE;
+  if ($variables['az_barrio_navbar'] === TRUE) {
     $variables['#attached']['library'][] = 'az_barrio/az-barrio-off-canvas-nav';
-    $variables['navbar_offcanvas_attributes'] = new Attribute([
+    $variables['navbar_attributes'] = new Attribute([
       'id' => 'navbar-top',
       'class' => [
-        'navbar-offcanvas'
+        'navbar',
+        'navbar-expand',
       ]
     ]);
     if ($variables['page']['navigation']) {
-      $variables['navbar_offcanvas_attributes']['class'][] = 'has-navigation-region';
+      $variables['navbar_attributes']['class'][] = 'has-navigation-region';
     }
     else {
-      $variables['navbar_offcanvas_attributes']['class'][] = 'no-navigation-region';
-    }
-    if ($variables['page']['navigation_offcanvas']) {
-      $variables['navbar_offcanvas_attributes']['class'][] = 'has-off-canvas-region';
-    }
-    else {
-      $variables['navbar_offcanvas_attributes']['class'][] = 'no-off-canvas-region';
+      $variables['navbar_attributes']['class'][] = 'no-navigation-region';
     }
   }
 
