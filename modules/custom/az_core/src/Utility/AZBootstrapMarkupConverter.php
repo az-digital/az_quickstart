@@ -9,7 +9,7 @@ use Masterminds\HTML5;
  */
 class AZBootstrapMarkupConverter {
 
- /**
+  /**
    * Uses DOM parser to remap old AZ Bootstrap attribute values to new values.
    *
    * @param string $text

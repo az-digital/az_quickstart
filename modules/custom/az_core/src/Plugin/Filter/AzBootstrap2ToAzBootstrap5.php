@@ -11,7 +11,7 @@ use Drupal\filter\Plugin\FilterBase;
 use Drupal\filter\Plugin\FilterInterface;
 
 /**
- * Provides a filter to convert Arizona Bootstrap 2 classes to Arizona Bootstrap 5 classes.
+ * Provides a filter to convert legacy AZ Bootstrap 2 attributes.
  */
 #[Filter(
   id: "az_bootstrap2_to_az_bootstrap5",
