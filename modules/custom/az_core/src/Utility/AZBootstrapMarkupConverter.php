@@ -5,9 +5,9 @@ namespace Drupal\az_core\Utility;
 use Masterminds\HTML5;
 
 /**
- * Convert Arizona Bootstrap 2 markup to Arizona Bootstrap 5 markup.
+ * Converts Arizona Bootstrap 2 markup to Arizona Bootstrap 5 markup.
  */
-class AZBootstrapMarkupConverter {
+final class AZBootstrapMarkupConverter {
 
   /**
    * Uses DOM parser to remap old AZ Bootstrap attribute values to new values.
