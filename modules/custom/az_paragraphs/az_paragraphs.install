@@ -109,7 +109,7 @@ function az_paragraphs_update_1130001(&$sandbox) {
   $paragraph_storage = \Drupal::service('entity_type.manager')->getStorage('paragraph');
 
   if (!isset($sandbox['progress'])) {
-    // Process paragraphs from our modules' types containing any of:
+    // Process paragraphs from our paragraph types containing any of these:
     // - field_az_text_area using az_standard or full_html format
     // - field_az_full_html with any content
     // - field_az_card.body using az_standard or full_html format
@@ -164,72 +164,45 @@ function az_paragraphs_update_1130001(&$sandbox) {
     $original_value = NULL;
 
     // Handle different field types.
-    if ($paragraph->hasField('field_az_text_area')) {
-      // Simple text area field.
-      $field_name = 'field_az_text_area';
-      $field = $paragraph->get($field_name);
-      $original_value = $field->value;
-      if (!empty($original_value)) {
-        $processed_value = AZBootstrapMarkupConverter::convert($original_value);
-        if ($processed_value !== $original_value) {
-          $paragraph->set($field_name, $processed_value);
-          $needs_update = TRUE;
+    // Simple text fields with direct value property.
+    $simple_fields = ['field_az_text_area', 'field_az_full_html'];
+    foreach ($simple_fields as $field_name) {
+      if ($paragraph->hasField($field_name)) {
+        $field = $paragraph->get($field_name);
+        $original_value = $field->value;
+        if (!empty($original_value)) {
+          $processed_value = AZBootstrapMarkupConverter::convert($original_value);
+          if ($processed_value !== $original_value) {
+            $paragraph->set($field_name, $processed_value);
+            $needs_update = TRUE;
+          }
         }
+        break;
       }
     }
-    elseif ($paragraph->hasField('field_az_full_html')) {
-      // Full HTML field.
-      $field_name = 'field_az_full_html';
-      $field = $paragraph->get($field_name);
-      $original_value = $field->value;
-      if (!empty($original_value)) {
-        $processed_value = AZBootstrapMarkupConverter::convert($original_value);
-        if ($processed_value !== $original_value) {
-          $paragraph->set($field_name, $processed_value);
-          $needs_update = TRUE;
-        }
-      }
-    }
-    elseif ($paragraph->hasField('field_az_card')) {
-      // Multi-valued compound card field.
-      $field_name = 'field_az_card';
-      $field = $paragraph->get($field_name);
-      /** @var \Drupal\az_card\Plugin\Field\FieldType\AZCardItem $card */
-      foreach ($field as $delta => $card) {
-        $format = $card->body_format;
-        if (in_array($format, ['az_standard', 'full_html'])) {
-          $original_value = $card->body;
-          if (!empty($original_value)) {
-            $processed_value = AZBootstrapMarkupConverter::convert($original_value);
-            if ($processed_value !== $original_value) {
-              $paragraph->get($field_name)
-                ->get($delta)
-                ->set('body', $processed_value);
-              $needs_update = TRUE;
+
+    // Compound fields with body/body_format properties.
+    $compound_fields = ['field_az_card', 'field_az_accordion'];
+    foreach ($compound_fields as $field_name) {
+      if ($paragraph->hasField($field_name)) {
+        $field = $paragraph->get($field_name);
+        /** @var \Drupal\az_card\Plugin\Field\FieldType\AZCardItem|\Drupal\az_accordion\Plugin\Field\FieldType\AZAccordionItem $item */
+        foreach ($field as $delta => $item) {
+          $format = $item->body_format;
+          if (in_array($format, ['az_standard', 'full_html'])) {
+            $original_value = $item->body;
+            if (!empty($original_value)) {
+              $processed_value = AZBootstrapMarkupConverter::convert($original_value);
+              if ($processed_value !== $original_value) {
+                $paragraph->get($field_name)
+                  ->get($delta)
+                  ->set('body', $processed_value);
+                $needs_update = TRUE;
+              }
             }
           }
         }
-      }
-    }
-    elseif ($paragraph->hasField('field_az_accordion')) {
-      // Multi-valued compound accordion field.
-      $field_name = 'field_az_accordion';
-      $field = $paragraph->get($field_name);
-      /** @var \Drupal\az_accordion\Plugin\Field\FieldType\AZAccordionItem $accordion */
-      foreach ($field as $delta => $accordion) {
-        $format = $accordion->body_format;
-        if (in_array($format, ['az_standard', 'full_html'])) {
-          $original_value = $accordion->body;
-          if (!empty($original_value)) {
-            $processed_value = AZBootstrapMarkupConverter::convert($original_value);
-            if ($processed_value !== $original_value) {
-              $paragraph->get($field_name)
-                ->get($delta)
-                ->set('body', $processed_value);
-              $needs_update = TRUE;
-            }
-          }
-        }
+        break;
       }
     }
 
