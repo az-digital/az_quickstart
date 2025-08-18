@@ -8,6 +8,10 @@
  * profile.
  */
 
+use Drupal\Core\Entity\RevisionableInterface;
+use Drupal\Core\Entity\RevisionLogInterface;
+use Drupal\az_core\Utility\AZBootstrapMarkupConverter;
+
 /**
  * Implements hook_update_last_removed().
  */
@@ -95,4 +99,119 @@ function az_paragraphs_update_1021001() {
  * Empty update since we reverted our addition of the anchor_link module.
  */
 function az_paragraphs_update_1021201() {
+}
+
+/**
+ * Apply Bootstrap 5 compatibility updates to paragraphs with text_area fields.
+ */
+function az_paragraphs_update_1130001(&$sandbox) {
+  $logger = \Drupal::logger('az_paragraphs');
+  $paragraph_storage = \Drupal::service('entity_type.manager')->getStorage('paragraph');
+
+  if (!isset($sandbox['progress'])) {
+    // Process paragraphs from our modules' types containing either:
+    // - field_az_text_area using az_standard format (multiple types)
+    // - field_az_full_html with any content (az_html paragraphs only)
+    $query = $paragraph_storage->getQuery()
+      ->accessCheck(FALSE)
+      ->condition(
+        $paragraph_storage->getQuery()->orConditionGroup()
+          ->condition(
+            $paragraph_storage->getQuery()->andConditionGroup()
+              ->condition('type', [
+                'az_splitscreen',
+                'az_text',
+                'az_text_background',
+                'az_text_media',
+              ], 'IN')
+              ->condition('field_az_text_area.format', 'az_standard')
+          )
+          ->condition(
+            $paragraph_storage->getQuery()->andConditionGroup()
+              ->condition('type', 'az_html')
+              ->exists('field_az_full_html')
+          )
+      );
+
+    $sandbox['ids'] = $query->execute();
+    $sandbox['max'] = count($sandbox['ids']);
+    $sandbox['progress'] = 0;
+    $sandbox['updated_count'] = 0;
+  }
+  $ids = array_slice($sandbox['ids'], $sandbox['progress'], 20);
+
+  foreach ($ids as $id) {
+    /** @var \Drupal\paragraphs\Entity\Paragraph $paragraph */
+    $paragraph = $paragraph_storage->load($id);
+    if (!$paragraph) {
+      continue;
+    }
+
+    $needs_update = FALSE;
+    $field_name = NULL;
+    $original_value = NULL;
+
+    // Fields are mutually exclusive. We only need to check which one exists.
+    if ($paragraph->hasField('field_az_text_area')) {
+      $field = $paragraph->get('field_az_text_area');
+      $field_name = 'field_az_text_area';
+      $original_value = $field->value;
+    }
+    elseif ($paragraph->hasField('field_az_full_html')) {
+      $field = $paragraph->get('field_az_full_html');
+      $field_name = 'field_az_full_html';
+      $original_value = $field->value;
+    }
+
+    // Process the field value if it exists.
+    $processed_value = '';
+    if (!empty($original_value)) {
+      $processed_value = AZBootstrapMarkupConverter::convert($original_value);
+      if ($processed_value !== $original_value) {
+        $needs_update = TRUE;
+      }
+    }
+
+    if ($needs_update) {
+      $paragraph->set($field_name, $processed_value);
+      $paragraph->setNewRevision(TRUE);
+      $paragraph->revision_log = t('Updated @field content for Arizona Bootstrap 5 compatibility.', [
+        '@field' => $field_name,
+      ]);
+
+      // Handle parent entity revision if needed.
+      $parent = $paragraph->getParentEntity();
+      if ($parent instanceof RevisionableInterface) {
+        $parent->setNewRevision(TRUE);
+        if ($parent instanceof RevisionLogInterface) {
+          $parent->setRevisionLogMessage(t('Updated child paragraph (ID: @id) content for Arizona Bootstrap 5 compatibility.', [
+            '@id' => $id,
+          ]));
+        }
+        $parent->save();
+
+        $logger->info('Updated paragraph @pid and parent entity @type @id', [
+          '@pid' => $id,
+          '@type' => $parent->getEntityTypeId(),
+          '@id' => $parent->id(),
+        ]);
+      }
+
+      $paragraph->save();
+      $sandbox['updated_count']++;
+    }
+
+    $sandbox['progress']++;
+  }
+
+  $sandbox['#finished'] = empty($sandbox['max']) ? 1 : ($sandbox['progress'] / $sandbox['max']);
+
+  if ($sandbox['#finished'] >= 1) {
+    return t('Completed processing @count total paragraphs. @paragraphs_updated paragraphs were updated for Bootstrap 5 compatibility.', [
+      '@count' => $sandbox['progress'],
+      '@paragraphs_updated' => $sandbox['updated_count'],
+    ]);
+  }
+
+  return NULL;
 }
