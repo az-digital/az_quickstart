@@ -110,10 +110,10 @@ function az_paragraphs_update_1130001(&$sandbox) {
 
   if (!isset($sandbox['progress'])) {
     // Process paragraphs from our modules' types containing any of:
-    // - field_az_text_area using az_standard format (multiple types)
-    // - field_az_full_html with any content (az_html paragraphs only)
-    // - az_card or az_accordion fields with body content using az_standard or
-    //   full_html format.
+    // - field_az_text_area using az_standard or full_html format
+    // - field_az_full_html with any content
+    // - field_az_card.body using az_standard or full_html format
+    // - field_az_accordion.body using az_standard or full_html format.
     $query = $paragraph_storage->getQuery()
       ->accessCheck(FALSE)
       ->condition(
@@ -126,7 +126,7 @@ function az_paragraphs_update_1130001(&$sandbox) {
                 'az_text_background',
                 'az_text_media',
               ], 'IN')
-              ->condition('field_az_text_area.format', 'az_standard')
+              ->condition('field_az_text_area.format', ['az_standard', 'full_html'], 'IN')
           )
           ->condition(
             $paragraph_storage->getQuery()->andConditionGroup()
