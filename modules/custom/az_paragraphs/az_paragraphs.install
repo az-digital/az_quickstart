@@ -109,9 +109,11 @@ function az_paragraphs_update_1130001(&$sandbox) {
   $paragraph_storage = \Drupal::service('entity_type.manager')->getStorage('paragraph');
 
   if (!isset($sandbox['progress'])) {
-    // Process paragraphs from our modules' types containing either:
+    // Process paragraphs from our modules' types containing any of:
     // - field_az_text_area using az_standard format (multiple types)
     // - field_az_full_html with any content (az_html paragraphs only)
+    // - az_card or az_accordion fields with body content using az_standard or
+    //   full_html format.
     $query = $paragraph_storage->getQuery()
       ->accessCheck(FALSE)
       ->condition(
@@ -130,6 +132,16 @@ function az_paragraphs_update_1130001(&$sandbox) {
             $paragraph_storage->getQuery()->andConditionGroup()
               ->condition('type', 'az_html')
               ->exists('field_az_full_html')
+          )
+          ->condition(
+            $paragraph_storage->getQuery()->andConditionGroup()
+              ->condition('type', 'az_card')
+              ->condition('field_az_card.body_format', ['az_standard', 'full_html'], 'IN')
+          )
+          ->condition(
+            $paragraph_storage->getQuery()->andConditionGroup()
+              ->condition('type', 'az_accordion')
+              ->condition('field_az_accordion.body_format', ['az_standard', 'full_html'], 'IN')
           )
       );
 
@@ -151,29 +163,77 @@ function az_paragraphs_update_1130001(&$sandbox) {
     $field_name = NULL;
     $original_value = NULL;
 
-    // Fields are mutually exclusive. We only need to check which one exists.
+    // Handle different field types.
     if ($paragraph->hasField('field_az_text_area')) {
-      $field = $paragraph->get('field_az_text_area');
+      // Simple text area field.
       $field_name = 'field_az_text_area';
+      $field = $paragraph->get($field_name);
       $original_value = $field->value;
+      if (!empty($original_value)) {
+        $processed_value = AZBootstrapMarkupConverter::convert($original_value);
+        if ($processed_value !== $original_value) {
+          $paragraph->set($field_name, $processed_value);
+          $needs_update = TRUE;
+        }
+      }
     }
     elseif ($paragraph->hasField('field_az_full_html')) {
-      $field = $paragraph->get('field_az_full_html');
+      // Full HTML field.
       $field_name = 'field_az_full_html';
+      $field = $paragraph->get($field_name);
       $original_value = $field->value;
+      if (!empty($original_value)) {
+        $processed_value = AZBootstrapMarkupConverter::convert($original_value);
+        if ($processed_value !== $original_value) {
+          $paragraph->set($field_name, $processed_value);
+          $needs_update = TRUE;
+        }
+      }
     }
-
-    // Process the field value if it exists.
-    $processed_value = '';
-    if (!empty($original_value)) {
-      $processed_value = AZBootstrapMarkupConverter::convert($original_value);
-      if ($processed_value !== $original_value) {
-        $needs_update = TRUE;
+    elseif ($paragraph->hasField('field_az_card')) {
+      // Multi-valued compound card field.
+      $field_name = 'field_az_card';
+      $field = $paragraph->get($field_name);
+      /** @var \Drupal\az_card\Plugin\Field\FieldType\AZCardItem $card */
+      foreach ($field as $delta => $card) {
+        $format = $card->body_format;
+        if (in_array($format, ['az_standard', 'full_html'])) {
+          $original_value = $card->body;
+          if (!empty($original_value)) {
+            $processed_value = AZBootstrapMarkupConverter::convert($original_value);
+            if ($processed_value !== $original_value) {
+              $paragraph->get($field_name)
+                ->get($delta)
+                ->set('body', $processed_value);
+              $needs_update = TRUE;
+            }
+          }
+        }
+      }
+    }
+    elseif ($paragraph->hasField('field_az_accordion')) {
+      // Multi-valued compound accordion field.
+      $field_name = 'field_az_accordion';
+      $field = $paragraph->get($field_name);
+      /** @var \Drupal\az_accordion\Plugin\Field\FieldType\AZAccordionItem $accordion */
+      foreach ($field as $delta => $accordion) {
+        $format = $accordion->body_format;
+        if (in_array($format, ['az_standard', 'full_html'])) {
+          $original_value = $accordion->body;
+          if (!empty($original_value)) {
+            $processed_value = AZBootstrapMarkupConverter::convert($original_value);
+            if ($processed_value !== $original_value) {
+              $paragraph->get($field_name)
+                ->get($delta)
+                ->set('body', $processed_value);
+              $needs_update = TRUE;
+            }
+          }
+        }
       }
     }
 
     if ($needs_update) {
-      $paragraph->set($field_name, $processed_value);
       $paragraph->setNewRevision(TRUE);
       $paragraph->revision_log = t('Updated @field content for Arizona Bootstrap 5 compatibility.', [
         '@field' => $field_name,
