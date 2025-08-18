@@ -431,6 +431,12 @@ td.menu-disabled {
     margin-right: 0;
   }
 }
+.arizona-logo {
+  display: flex;
+  align-items: center;
+  min-height: 50px;
+  padding-right: 0;
+}
 .btn-arizona-header {
   display: flex;
   flex-direction: column;
