@@ -86,7 +86,7 @@
         {% if page.alert %}
           {{ page.alert }}
         {% endif %}
-        <header class="bg-red arizona-header" id="header_arizona" role="banner">
+        <header class="text-bg-red arizona-header" id="header_arizona" role="banner">
           <div class="{{ container }}">
             <div class="row">
               {% if wordmark %}
@@ -101,12 +101,12 @@
           </div> <!-- /.container -->
           {% if az_barrio_navbar_offcanvas %}
           <div class="redbar-buttons d-lg-none d-flex">
-            <button data-toggle="offcanvas" type="button" data-target="#navbar-top" aria-controls="navbar-top" class="btn btn-redbar" id="jsAzSearch">
-              <span class="icon material-icons-sharp"> search </span>
+            <button data-bs-toggle="offcanvasmenu" type="button" data-bs-target="#navbar-top" aria-controls="navbar-top" class="btn btn-redbar" id="jsAzSearch">
+              <span aria-hidden="true" class="icon material-symbols-rounded"> search </span>
               <span class="icon-text"> search </span>
             </button>
-            <button data-toggle="offcanvas" type="button" data-target="#navbar-top" aria-controls="navbar-top" class="btn btn-redbar">
-              <span class="icon material-icons-sharp"> menu </span>
+            <button data-bs-toggle="offcanvasmenu" type="button" data-bs-target="#navbar-top" aria-controls="navbar-top" class="btn btn-redbar">
+              <span aria-hidden="true" class="icon material-symbols-rounded"> menu </span>
               <span class="icon-text"> menu </span>
             </button>
           </div>
@@ -137,13 +137,13 @@
               <div class="col-lg">
                 <nav{{ navbar_offcanvas_attributes }}>
                   <div class="navbar-offcanvas-header">
-                    <div class="bg-chili d-flex justify-content-between align-items-center">
+                    <div class="text-bg-chili d-flex justify-content-between align-items-center">
                       <a href="/" class="btn btn-redbar">
-                        <span class="icon material-icons-sharp"> home </span>
+                        <span aria-hidden="true" class="icon material-symbols-rounded"> home </span>
                         <span class="icon-text"> home </span>
                       </a>
-                      <button data-toggle="offcanvas" type="button" data-target="#navbar-top" aria-controls="navbar-top" class="btn btn-redbar">
-                        <span class="icon material-icons-sharp"> close </span>
+                      <button data-bs-toggle="offcanvasmenu" type="button" data-bs-target="#navbar-top" aria-controls="navbar-top" class="btn btn-redbar">
+                        <span aria-hidden="true" class="icon material-symbols-rounded"> close </span>
                         <span class="icon-text"> close </span>
                       </button>
                     </div>
@@ -258,13 +258,13 @@
 
     <footer class="site-footer">
         {% if page.footer or page.footer_sub or footer_logo %}
-        <div class="bg-warm-gray py-5" role="contentinfo">
+        <div class="text-bg-warm-gray py-5" role="contentinfo">
           {% if page.footer or footer_logo %}
           <section{{ attributes.addClass(classes) }}>
             <div class="container">
               <div class="row">
                 {% if footer_logo %}
-                  <div class="col-12 col-sm-5 col-md-4 col-lg-4 text-center-xs text-left-not-xs">
+                  <div class="col-12 col-sm-5 col-md-4 col-lg-4 text-center-xs text-sm-start">
                     <div class="row bottom-buffer-30">
                       <div class="col">
                         {{ footer_logo }}

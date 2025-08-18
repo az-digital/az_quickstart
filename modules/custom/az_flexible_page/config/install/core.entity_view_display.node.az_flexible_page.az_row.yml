@@ -36,7 +36,7 @@ third_party_settings:
       weight: 0
       format_type: html_element
       format_settings:
-        classes: 'card card-borderless card-clickable hover bg-gray-100 p-4'
+        classes: 'card card-borderless card-clickable hover text-bg-gray-100 p-4'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -144,7 +144,7 @@ third_party_settings:
       weight: 5
       format_type: html_element
       format_settings:
-        classes: 'card-clickable-link text-chili text-left'
+        classes: 'card-clickable-link text-chili text-start'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -164,7 +164,7 @@ third_party_settings:
       weight: 3
       format_type: html_element
       format_settings:
-        classes: 'card-text font-weight-normal'
+        classes: 'card-text fw-normal'
         id: ''
         element: div
         show_label: false
