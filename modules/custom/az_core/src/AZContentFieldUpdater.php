@@ -90,7 +90,15 @@ class AZContentFieldUpdater implements AZContentFieldUpdaterInterface {
       if (!empty($original_value)) {
         $processed_value = $processor($original_value);
         if ($processed_value !== $original_value) {
-          $entity->set($field_name, $processed_value);
+          if (isset($field->format)) {
+            $entity->set($field_name, [
+              'value' => $processed_value,
+              'format' => $field->format,
+            ]);
+          }
+          else {
+            $entity->set($field_name, $processed_value);
+          }
           $needs_update = TRUE;
         }
       }

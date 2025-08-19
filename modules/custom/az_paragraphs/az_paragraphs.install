@@ -183,7 +183,10 @@ function az_paragraphs_update_1130001(&$sandbox) {
         if (!empty($field->value) && in_array($field->format, ['az_standard', 'full_html'])) {
           $processed_value = AZBootstrapMarkupConverter::convert($field->value);
           if ($processed_value !== $field->value) {
-            $paragraph->set('field_az_text_area', ['value' => $processed_value]);
+            $paragraph->set('field_az_text_area', [
+              'value' => $processed_value,
+              'format' => $field->format,
+            ]);
             $needs_update = TRUE;
             $field_name = 'field_az_text_area';
           }
@@ -197,7 +200,10 @@ function az_paragraphs_update_1130001(&$sandbox) {
         if (!empty($field->value)) {
           $processed_value = AZBootstrapMarkupConverter::convert($field->value);
           if ($processed_value !== $field->value) {
-            $paragraph->set('field_az_full_html', ['value' => $processed_value]);
+            $paragraph->set('field_az_full_html', [
+              'value' => $processed_value,
+              'format' => $field->format,
+            ]);
             $needs_update = TRUE;
             $field_name = 'field_az_full_html';
           }
@@ -214,7 +220,10 @@ function az_paragraphs_update_1130001(&$sandbox) {
             if ($processed_value !== $item->body) {
               $paragraph->get('field_az_cards')
                 ->get($delta)
-                ->set('body', $processed_value);
+                ->setValue([
+                  'body' => $processed_value,
+                  'body_format' => $item->body_format,
+                ]);
               $needs_update = TRUE;
               $field_name = 'field_az_cards';
             }
@@ -232,7 +241,10 @@ function az_paragraphs_update_1130001(&$sandbox) {
             if ($processed_value !== $item->body) {
               $paragraph->get('field_az_accordion')
                 ->get($delta)
-                ->set('body', $processed_value);
+                ->setValue([
+                  'body' => $processed_value,
+                  'body_format' => $item->body_format,
+                ]);
               $needs_update = TRUE;
               $field_name = 'field_az_accordion';
             }
