@@ -43,7 +43,7 @@ function az_eds_form_alter(&$form, FormStateInterface $form_state, $form_id) {
           // Add a warning tooltip.
           $form['server_id']['az_eds_tooltip'] = [
             '#type' => 'container',
-            '#markup' => t('It is not necessary to set <b>Base DNs to search in query</b> or <b>Attributes</b> for this query.'),
+            '#markup' => t('<b>Base DNs to search in query</b> and <b>Attributes</b> will be set automatically for this query.'),
             '#attributes' => [
               'class' => ['messages messages--warning'],
             ],
