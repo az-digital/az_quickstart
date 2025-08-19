@@ -19,24 +19,27 @@ final class AZBootstrapMarkupConverter {
    *   Converted text value or FALSE if DOM parsing was unsuccessful.
    */
   public static function convert($text) {
-    $html5 = new HTML5();
-    // Create a base document
+    $html5 = new HTML5(['disable_html_ns' => TRUE]);
+    // Create a base document.
     $dom = $html5->parse('<!DOCTYPE html><html><body></body></html>');
     $body = $dom->getElementsByTagName('body')->item(0);
 
-    // Parse the fragment with proper options
-    $fragment = $html5->parseFragment($text, [], ['disable_html_ns' => TRUE]);
+    // Parse the fragment.
+    $fragment = $html5->parseFragment($text);
 
     if (!$fragment) {
       return FALSE;
     }
 
-    // Import the fragment into our document
+    // Import the fragment into our document.
     foreach ($fragment->childNodes as $child) {
       $imported = $dom->importNode($child, TRUE);
       $body->appendChild($imported);
     }
-    $xpath = new \DOMXPath($dom);    // Convert legacy Bootstrap data-* attributes to data-bs-*.
+
+    $xpath = new \DOMXPath($dom);
+
+    // Convert legacy Bootstrap data-* attributes to data-bs-*.
     foreach ($dom->getElementsByTagName('*') as $element) {
       if ($element->attributes !== NULL) {
         foreach (iterator_to_array($element->attributes) as $attr) {
