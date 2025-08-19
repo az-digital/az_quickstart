@@ -1,7 +1,7 @@
 {#
 /**
  * @file
- * Template for carousel photo gallery display.
+ * Template for Slider photo gallery display.
  *
  * Available variables:
  * - photos: Array of photo entities
@@ -9,9 +9,10 @@
  */
 #}
 
-<div class="az-gallery-container text-bg-gray-900">
-  <div class="ratio ratio-4x3">
-    {% include '@az_paragraphs_photo_gallery/carousel.html.twig' with {
+<div class="az-gallery-container">
+  <div class="ratio ratio-az-carousel">
+    {% include '@az_paragraphs_photo_gallery/photo-gallery-carousel.html.twig' with {
+      'grid': false,
       'photos': photos,
       'gallery': gallery,
       'style_name': 'az_carousel_item'
