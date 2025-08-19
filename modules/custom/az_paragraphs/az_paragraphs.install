@@ -135,13 +135,13 @@ function az_paragraphs_update_1130001(&$sandbox) {
     // Card paragraphs.
     $card_group = $query->andConditionGroup()
       ->condition('type', 'az_card')
-      ->exists('field_az_cards')
+      ->exists('field_az_cards.body')
       ->condition('field_az_cards.body_format', ['az_standard', 'full_html'], 'IN');
 
     // Accordion paragraphs.
     $accordion_group = $query->andConditionGroup()
       ->condition('type', 'az_accordion')
-      ->exists('field_az_accordion')
+      ->exists('field_az_accordion.body')
       ->condition('field_az_accordion.body_format', ['az_standard', 'full_html'], 'IN');
 
     // Combine all conditions.
