@@ -5,19 +5,14 @@
  * Install, update and uninstall functions for az_course module.
  */
 
-use Drupal\az_core\Utility\AZBootstrapMarkupConverter;
-
 /**
  * Apply Bootstrap 5 compatibility updates to az_course text fields.
  */
 function az_course_update_1130001(&$sandbox) {
-  $logger = \Drupal::logger('az_course');
-  $node_storage = \Drupal::service('entity_type.manager')->getStorage('node');
-
-  if (!isset($sandbox['progress'])) {
-    // Find all course nodes that have content in the description field
-    // and are using az_standard or full_html format.
-    $query = $node_storage->getQuery()
+  if (!isset($sandbox['ids'])) {
+    $query = \Drupal::entityTypeManager()
+      ->getStorage('node')
+      ->getQuery()
       ->condition('type', 'az_course')
       ->condition('field_az_course_description.format', ['az_standard', 'full_html'], 'IN')
       ->exists('field_az_course_description')
@@ -25,57 +20,17 @@ function az_course_update_1130001(&$sandbox) {
 
     $sandbox['ids'] = $query->execute();
     $sandbox['max'] = count($sandbox['ids']);
-    $sandbox['progress'] = 0;
-    $sandbox['updated_count'] = 0;
   }
 
-  // Process 20 nodes at a time.
-  $ids = array_slice($sandbox['ids'], $sandbox['progress'], 20);
-
-  foreach ($ids as $id) {
-    /** @var \Drupal\node\Entity\Node|null $node */
-    $node = $node_storage->load($id);
-    if (!$node) {
-      $logger->warning('Could not load course node @nid', ['@nid' => $id]);
-      continue;
-    }
-
-    $needs_update = FALSE;
-    $field = $node->get('field_az_course_description');
-    $original_value = $field->value;
-
-    if (!empty($original_value)) {
-      $processed_value = AZBootstrapMarkupConverter::convert($original_value);
-      if ($processed_value !== $original_value) {
-        $node->set('field_az_course_description', $processed_value);
-        $needs_update = TRUE;
-      }
-    }
-
-    if ($needs_update) {
-      $node->setNewRevision(TRUE);
-      $node->setRevisionLogMessage('Updated course description for Arizona Bootstrap 5 compatibility.');
-      $node->save();
-
-      $logger->info('Updated course description for node @nid (revision: @vid)', [
-        '@nid' => $id,
-        '@vid' => $node->getRevisionId(),
-      ]);
-
-      $sandbox['updated_count']++;
-    }
-
-    $sandbox['progress']++;
-  }
-
-  $sandbox['#finished'] = empty($sandbox['max']) ? 1 : ($sandbox['progress'] / $sandbox['max']);
-
-  if ($sandbox['#finished'] >= 1) {
-    return t('Completed processing @count total course nodes. @nodes_updated nodes were updated for Bootstrap 5 compatibility.', [
-      '@count' => $sandbox['progress'],
-      '@nodes_updated' => $sandbox['updated_count'],
-    ]);
-  }
-
-  return NULL;
+  return \Drupal::service('az_core.content_field_updater')
+    ->processFieldUpdates(
+      'node',
+      'field_az_course_description',
+      'Drupal\az_core\Utility\AZBootstrapMarkupConverter::convert',
+      $sandbox,
+      [
+        'description' => __FUNCTION__ . ' (updating legacy Bootstrap markup to Bootstrap 5)',
+        'create_revisions' => TRUE,
+      ]
+    );
 }
