@@ -53,3 +53,36 @@ function az_barrio_post_update_migrate_material_symbols_icons(&$sandbox = NULL) 
     \Drupal::logger('az_quickstart')->notice('Migrated Material Design Sharp icons setting to Material Symbols Rounded.');
   }
 }
+
+/**
+ * Convert boolean values to integers for bootstrap_barrio parent theme settings.
+ */
+function az_barrio_post_update_convert_boolean_to_integer_settings(&$sandbox = NULL) {
+  $config_factory = \Drupal::configFactory();
+  $theme_settings = $config_factory->getEditable('az_barrio.settings');
+
+  // Parent theme expects these as integers (0/1) not booleans
+  // Only convert settings that are defined in the parent bootstrap_barrio schema
+  $boolean_to_integer_settings = [
+    'bootstrap_barrio_region_clean_header',
+    'bootstrap_barrio_region_clean_sidebar_first',
+    'bootstrap_barrio_region_clean_sidebar_second',
+    'bootstrap_barrio_region_clean_highlighted',
+    'bootstrap_barrio_region_clean_breadcrumb',
+    'bootstrap_barrio_region_clean_content',
+  ];
+
+  $converted_count = 0;
+  foreach ($boolean_to_integer_settings as $setting) {
+    $value = $theme_settings->get($setting);
+    if (is_bool($value)) {
+      $theme_settings->set($setting, $value ? 1 : 0);
+      $converted_count++;
+    }
+  }
+  
+  if ($converted_count > 0) {
+    $theme_settings->save();
+    \Drupal::logger('az_quickstart')->notice('Converted @count boolean values to integers for bootstrap_barrio parent theme settings.', ['@count' => $converted_count]);
+  }
+}
