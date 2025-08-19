@@ -133,7 +133,7 @@ jobs:
       NEW_VERSION: ${{ inputs.release_branch_name }}
     steps:
     - name: Checkout az_quickstart
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         repository: az-digital/az_quickstart
         ref: ${{ github.ref_name }}
@@ -213,7 +213,7 @@ jobs:
     name: Update the composer dev branch alias on the `${{ github.ref_name }}` branch.
     steps:
       - name: Update `${{ github.ref_name }}` branch with new minor release branch alias.
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: ${{ github.ref_name }}
           token: ${{ secrets.REPO_DISPATCH_TOKEN }}

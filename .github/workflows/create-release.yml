@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           token: ${{ secrets.REPO_DISPATCH_TOKEN }}
       - name: Setup PHP
@@ -47,7 +47,7 @@ jobs:
             echo "SCAFFOLD_BRANCH=main" >> ${GITHUB_ENV}
           fi
       - name: Clone scaffolding repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: az-digital/az-quickstart-scaffolding
           path: az_quickstart

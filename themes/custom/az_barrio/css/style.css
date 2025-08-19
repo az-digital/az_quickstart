@@ -426,7 +426,8 @@ a.btn.btn-redbar {
   padding-bottom: 4px;
 }
 
-.bg-chili .btn.btn-redbar {
+.bg-chili .btn.btn-redbar,
+.text-bg-chili .btn.btn-redbar {
   background-color: #8b0015;
   border: 2px solid #8b0015;
 }

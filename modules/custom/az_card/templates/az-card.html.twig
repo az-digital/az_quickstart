@@ -27,7 +27,7 @@
       {{ media }}
       {% if title and title_style == 'title-on-image' %}
         <div class="card-img-overlay p-0 d-flex flex-column">
-          <{{ title_level }} class="fw-bold mt-auto card-title bg-gradient-black text-white mb-0 p-card pt-8 {{ title_alignment }} {{ title_display }}">
+          <{{ title_level }} class="fw-bold mt-auto card-title text-bg-gradient-black text-white mb-0 p-card pt-8 {{ title_alignment }} {{ title_display }}">
             {% if link|render %}
               <a href="{{ link_url }}" class="text-reset">{{ title }}</a>
             {% else %}
