@@ -5,6 +5,7 @@
  * Contains az_eds.module.
  */
 
+use Drupal\Core\Render\Element;
 use Drupal\Core\Config\Entity\ConfigEntityInterface;
 use Drupal\Core\Entity\EntityFormInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -32,6 +33,19 @@ function az_eds_form_alter(&$form, FormStateInterface $form_state, $form_id) {
         'type' => 'throbber',
       ],
     ];
+    // Get form elements of form.
+    $children = Element::children($form);
+    $weight = 0;
+    // Assign weights, since they do not already have them.
+    foreach ($children as $key) {
+      $form[$key]['#weight'] = $weight++;
+    }
+    $base_dn_weight = $form['base_dn']['#weight'] ?? 0;
+    $filter_weight = $form['filter']['#weight'] ?? 0;
+    // Swap base DN and filter weights so DN appears next to attributes.
+    $form['filter']['#weight'] = $base_dn_weight;
+    $form['base_dn']['#weight'] = $filter_weight;
+
     // Check if we can find the existing server setting.
     $form_object = $form_state->getFormObject();
     if ($form_object instanceof EntityFormInterface) {
