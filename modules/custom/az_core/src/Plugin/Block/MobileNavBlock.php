@@ -286,6 +286,7 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
             'align-items-center',
             'az-mobile-nav-back',
           ],
+          'data-ajax-http-method' => 'GET',
         ],
       ];
       if ($rootElement->link->getRouteName() === '<button>') {
@@ -417,6 +418,7 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
               'align-items-center',
               'az-mobile-nav-link',
             ],
+            'data-ajax-http-method' => 'GET',
             'aria-label' => $this->t('View child pages of @itemTitle', ['@itemTitle' => $item->link->getTitle()]),
           ],
         ];
