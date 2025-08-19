@@ -72,8 +72,10 @@ class AZEDSConfigOverrides implements ConfigFactoryOverrideInterface {
             ((!$students_allowed) ? self::EXCLUDE_STUDENTS_FILTER : '') .
             ')';
           $overrides[$name]['filter'] = $filter;
-          // Add required migration attributes.
-          $overrides[$name]['attributes'] = self::ATTRIBUTES;
+          // Add migration attributes if none are listed for the query.
+          if (empty($config->get('attributes'))) {
+            $overrides[$name]['attributes'] = self::ATTRIBUTES;
+          }
         }
       }
     }
