@@ -20,14 +20,23 @@ final class AZBootstrapMarkupConverter {
    */
   public static function convert($text) {
     $html5 = new HTML5();
-    $dom = $html5->loadHTML($text);
+    // Create a base document
+    $dom = $html5->parse('<!DOCTYPE html><html><body></body></html>');
+    $body = $dom->getElementsByTagName('body')->item(0);
 
-    if (!$dom || !$dom->documentElement) {
+    // Parse the fragment with proper options
+    $fragment = $html5->parseFragment($text, [], ['disable_html_ns' => TRUE]);
+
+    if (!$fragment) {
       return FALSE;
     }
-    $xpath = new \DOMXPath($dom);
 
-    // Convert legacy Bootstrap data-* attributes to data-bs-*.
+    // Import the fragment into our document
+    foreach ($fragment->childNodes as $child) {
+      $imported = $dom->importNode($child, TRUE);
+      $body->appendChild($imported);
+    }
+    $xpath = new \DOMXPath($dom);    // Convert legacy Bootstrap data-* attributes to data-bs-*.
     foreach ($dom->getElementsByTagName('*') as $element) {
       if ($element->attributes !== NULL) {
         foreach (iterator_to_array($element->attributes) as $attr) {
@@ -59,7 +68,12 @@ final class AZBootstrapMarkupConverter {
       }
     }
 
-    return $html5->saveHTML($dom->documentElement);
+    $body = $dom->getElementsByTagName('body')->item(0);
+    $result = '';
+    foreach ($body->childNodes as $child) {
+      $result .= $html5->saveHTML($child);
+    }
+    return $result;
   }
 
   /**
