@@ -115,32 +115,39 @@ function az_paragraphs_update_1130001(&$sandbox) {
     // - field_az_card.body using az_standard or full_html format
     // - field_az_accordion.body using az_standard or full_html format.
     $query = $paragraph_storage->getQuery();
+
+    // Text area paragraphs.
+    $text_area_group = $query->andConditionGroup()
+      ->condition('type', [
+        'az_splitscreen',
+        'az_text',
+        'az_text_background',
+        'az_text_media',
+      ], 'IN')
+      ->condition('field_az_text_area.format', ['az_standard', 'full_html'], 'IN');
+
+    // HTML paragraphs.
+    $html_group = $query->andConditionGroup()
+      ->condition('type', 'az_html')
+      ->exists('field_az_full_html');
+
+    // Card paragraphs.
+    $card_group = $query->andConditionGroup()
+      ->condition('type', 'az_card')
+      ->condition('field_az_card.body_format', ['az_standard', 'full_html'], 'IN');
+
+    // Accordion paragraphs.
+    $accordion_group = $query->andConditionGroup()
+      ->condition('type', 'az_accordion')
+      ->condition('field_az_accordion.body_format', ['az_standard', 'full_html'], 'IN');
+
+    // Combine all conditions.
     $group = $query->orConditionGroup()
-      ->condition(
-        $paragraph_storage->getQuery()->andConditionGroup()
-          ->condition('type', [
-            'az_splitscreen',
-            'az_text',
-            'az_text_background',
-            'az_text_media',
-          ], 'IN')
-          ->condition('field_az_text_area.format', ['az_standard', 'full_html'], 'IN')
-      )
-      ->condition(
-        $paragraph_storage->getQuery()->andConditionGroup()
-          ->condition('type', 'az_html')
-          ->exists('field_az_full_html')
-      )
-      ->condition(
-        $paragraph_storage->getQuery()->andConditionGroup()
-          ->condition('type', 'az_card')
-          ->condition('field_az_card.body_format', ['az_standard', 'full_html'], 'IN')
-      )
-      ->condition(
-        $paragraph_storage->getQuery()->andConditionGroup()
-          ->condition('type', 'az_accordion')
-          ->condition('field_az_accordion.body_format', ['az_standard', 'full_html'], 'IN')
-      );
+      ->condition($text_area_group)
+      ->condition($html_group)
+      ->condition($card_group)
+      ->condition($accordion_group);
+
     $query->condition($group);
     $query->accessCheck(FALSE);
 
@@ -152,9 +159,10 @@ function az_paragraphs_update_1130001(&$sandbox) {
   $ids = array_slice($sandbox['ids'], $sandbox['progress'], 20);
 
   foreach ($ids as $id) {
-    /** @var \Drupal\paragraphs\Entity\Paragraph $paragraph */
+    /** @var \Drupal\paragraphs\Entity\Paragraph|null $paragraph */
     $paragraph = $paragraph_storage->load($id);
     if (!$paragraph) {
+      $logger->warning('Could not load paragraph @pid', ['@pid' => $id]);
       continue;
     }
 
@@ -223,16 +231,28 @@ function az_paragraphs_update_1130001(&$sandbox) {
         $parent_items = $parent->get($parent_field);
 
         // Find and update just this paragraph's reference in the parent field.
-        /** @var Drupal\entity_reference_revisions\Plugin\Field\FieldType\EntityReferenceRevisionsItem $item */
+        $found_paragraph = FALSE;
+        /** @var \Drupal\entity_reference_revisions\Plugin\Field\FieldType\EntityReferenceRevisionsItem $item */
         foreach ($parent_items as $delta => $item) {
           if ($item->target_id == $paragraph->id()) {
             $parent_items->get($delta)->setValue([
               'target_id' => $paragraph->id(),
               'target_revision_id' => $paragraph->getRevisionId(),
             ]);
+            $found_paragraph = TRUE;
             break;
           }
         }
+
+        if (!$found_paragraph) {
+          $logger->warning('Could not find paragraph @pid in parent @parent_type @parent_id field @field', [
+            '@pid' => $id,
+            '@parent_type' => $parent->getEntityTypeId(),
+            '@parent_id' => $parent->id(),
+            '@field' => $parent_field,
+          ]);
+        }
+
         // Include a log revision message for the parent, if possible.
         if ($parent instanceof RevisionLogInterface) {
           $parent->setRevisionLogMessage(t('Updated child paragraph @id content (revision: @vid) for Arizona Bootstrap 5 compatibility.', [
