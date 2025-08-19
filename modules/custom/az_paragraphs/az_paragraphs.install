@@ -112,7 +112,7 @@ function az_paragraphs_update_1130001(&$sandbox) {
     // Process paragraphs from our paragraph types containing any of these:
     // - field_az_text_area using az_standard or full_html format
     // - field_az_full_html with any content
-    // - field_az_card.body using az_standard or full_html format
+    // - field_az_cards.body using az_standard or full_html format
     // - field_az_accordion.body using az_standard or full_html format.
     $query = $paragraph_storage->getQuery();
     $query->accessCheck(FALSE);
@@ -135,8 +135,8 @@ function az_paragraphs_update_1130001(&$sandbox) {
     // Card paragraphs.
     $card_group = $query->andConditionGroup()
       ->condition('type', 'az_card')
-      ->exists('field_az_card')
-      ->condition('field_az_card.body_format', ['az_standard', 'full_html'], 'IN');
+      ->exists('field_az_cards')
+      ->condition('field_az_cards.body_format', ['az_standard', 'full_html'], 'IN');
 
     // Accordion paragraphs.
     $accordion_group = $query->andConditionGroup()
@@ -206,17 +206,17 @@ function az_paragraphs_update_1130001(&$sandbox) {
 
       case 'az_card':
         // Card paragraphs.
-        $field = $paragraph->get('field_az_card');
+        $field = $paragraph->get('field_az_cards');
         /** @var \Drupal\az_card\Plugin\Field\FieldType\AZCardItem $item */
         foreach ($field as $delta => $item) {
           if (!empty($item->body) && in_array($item->body_format, ['az_standard', 'full_html'])) {
             $processed_value = AZBootstrapMarkupConverter::convert($item->body);
             if ($processed_value !== $item->body) {
-              $paragraph->get('field_az_card')
+              $paragraph->get('field_az_cards')
                 ->get($delta)
                 ->set('body', $processed_value);
               $needs_update = TRUE;
-              $field_name = 'field_az_card';
+              $field_name = 'field_az_cards';
             }
           }
         }
