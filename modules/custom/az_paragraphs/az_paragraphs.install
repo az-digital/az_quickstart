@@ -212,25 +212,39 @@ function az_paragraphs_update_1130001(&$sandbox) {
         '@field' => $field_name,
       ]);
 
+      // Save the paragraph first to create the new revision.
+      $paragraph->save();
+
       // Handle parent entity revision if needed.
       $parent = $paragraph->getParentEntity();
       if ($parent instanceof RevisionableInterface) {
         $parent->setNewRevision(TRUE);
+        // Get the parent entity field that references this paragraph.
+        $parent_field = $paragraph->get('parent_field_name')->value;
+
+        // Update the parent to point to the new revision.
+        $parent->get($parent_field)->setValue([
+          'target_id' => $paragraph->id(),
+          'target_revision_id' => $paragraph->getRevisionId(),
+        ]);
+        // Include a log revision message for the parent, if possible.
         if ($parent instanceof RevisionLogInterface) {
-          $parent->setRevisionLogMessage(t('Updated child paragraph (ID: @id) content for Arizona Bootstrap 5 compatibility.', [
+          $parent->setRevisionLogMessage(t('Updated child paragraph @id content (revision: @vid) for Arizona Bootstrap 5 compatibility.', [
             '@id' => $id,
+            '@vid' => $paragraph->getRevisionId(),
           ]));
         }
         $parent->save();
 
-        $logger->info('Updated paragraph @pid and parent entity @type @id', [
+        $logger->info('Updated @paragraph_bundle paragraph @pid (revision: @vid) and parent @parent_bundle @parent_type @parent_id', [
+          '@paragraph_bundle' => $paragraph->bundle(),
           '@pid' => $id,
-          '@type' => $parent->getEntityTypeId(),
-          '@id' => $parent->id(),
+          '@vid' => $paragraph->getRevisionId(),
+          '@parent_type' => $parent->getEntityTypeId(),
+          '@parent_bundle' => $parent->bundle(),
+          '@parent_id' => $parent->id(),
         ]);
       }
-
-      $paragraph->save();
       $sandbox['updated_count']++;
     }
 
