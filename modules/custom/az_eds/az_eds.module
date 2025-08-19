@@ -1,0 +1,73 @@
+<?php
+
+/**
+ * @file
+ * Contains az_eds.module.
+ */
+
+use Drupal\Core\Config\Entity\ConfigEntityInterface;
+use Drupal\Core\Entity\EntityFormInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Symfony\Component\HttpFoundation\Request;
+
+/**
+ * Implements hook_form_alter() for ldap query config forms.
+ *
+ * Adds hints when EDS server is selected.
+ */
+function az_eds_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // @todo should this be refactored by not a generic form alter?
+  // Only run for LDAP query forms.
+  if (in_array($form_id, ['ldap_query_entity_edit_form', 'ldap_query_entity_add_form'])) {
+    // Set up ajax callback.
+    $wrapper_id = 'az-eds-ajax';
+    $form['#prefix'] = "<div id=\"$wrapper_id\">";
+    $form['#suffix'] = "</div>";
+    $form['server_id']['#ajax'] = [
+      'callback' => '_az_eds_ajax_callback',
+      'disable-refocus' => TRUE,
+      'event' => 'change',
+      'wrapper' => $wrapper_id,
+      'progress' => [
+        'type' => 'throbber',
+      ],
+    ];
+    // Check if we can find the existing server setting.
+    $form_object = $form_state->getFormObject();
+    if ($form_object instanceof EntityFormInterface) {
+      $config_entity = $form_object->getEntity();
+      if ($config_entity instanceof ConfigEntityInterface) {
+        $server = $form_state->getValue('server_id') ?? $config_entity->get('server_id');
+        // Only run for LDAP query entities where the EDS server is selected.
+        if ($server === 'az_eds') {
+          // Add a warning tooltip.
+          $form['server_id']['az_eds_tooltip'] = [
+            '#type' => 'container',
+            '#markup' => t('It is not necessary to set <b>Base DNs to search in query</b> or <b>Attributes</b> for this query.'),
+            '#attributes' => [
+              'class' => ['messages messages--warning'],
+            ],
+            '#weight' => 10,
+          ];
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Ajax callback for ldap query server selection.
+ *
+ * @param array $form
+ *   The triggering form render array.
+ * @param Drupal\Core\Form\FormStateInterface $form_state
+ *   Form state of current form.
+ * @param \Symfony\Component\HttpFoundation\Request $request
+ *   The request object, holding current path and request uri.
+ *
+ * @return array
+ *   The built form.
+ */
+function _az_eds_ajax_callback(array &$form, FormStateInterface $form_state, Request $request) {
+  return $form;
+}
