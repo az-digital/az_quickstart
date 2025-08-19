@@ -82,6 +82,14 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#default_value' => theme_get_setting('az_hide_front_title'),
   ];
 
+  // Remove sidebar menu on mobile setting.
+  $form['az_settings']['settings']['az_remove_sidebar_menu_mobile'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Remove sidebar menu on mobile devices'),
+    '#description' => t('If checked, the sidebar menu will not be displayed on mobile devices.'),
+    '#default_value' => theme_get_setting('az_remove_sidebar_menu_mobile'),
+  ];
+
   // Back-to-top button.
   $form['az_settings']['settings']['az_back_to_top'] = [
     '#type' => 'checkbox',
