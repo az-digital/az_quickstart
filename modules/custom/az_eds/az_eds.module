@@ -12,58 +12,54 @@ use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Implements hook_form_alter() for ldap query config forms.
+ * Implements hook_form_BASE_FORM_ID_alter() for ldap query config forms.
  *
  * Adds hints when EDS server is selected.
  */
-function az_eds_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  // @todo should this be refactored by not a generic form alter?
-  // Only run for LDAP query forms.
-  if (in_array($form_id, ['ldap_query_entity_edit_form', 'ldap_query_entity_add_form'])) {
-    // Set up ajax callback.
-    $wrapper_id = 'az-eds-ajax';
-    $form['#prefix'] = "<div id=\"$wrapper_id\">";
-    $form['#suffix'] = "</div>";
-    $form['server_id']['#ajax'] = [
-      'callback' => '_az_eds_ajax_callback',
-      'disable-refocus' => TRUE,
-      'event' => 'change',
-      'wrapper' => $wrapper_id,
-      'progress' => [
-        'type' => 'throbber',
-      ],
-    ];
-    // Get form elements of form.
-    $children = Element::children($form);
-    $weight = 0;
-    // Assign weights, since they do not already have them.
-    foreach ($children as $key) {
-      $form[$key]['#weight'] = $weight++;
-    }
-    $base_dn_weight = $form['base_dn']['#weight'] ?? 0;
-    $filter_weight = $form['filter']['#weight'] ?? 0;
-    // Swap base DN and filter weights so DN appears next to attributes.
-    $form['filter']['#weight'] = $base_dn_weight;
-    $form['base_dn']['#weight'] = $filter_weight;
+function az_eds_form_ldap_query_entity_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // Set up ajax callback.
+  $wrapper_id = 'az-eds-ajax';
+  $form['#prefix'] = "<div id=\"$wrapper_id\">";
+  $form['#suffix'] = "</div>";
+  $form['server_id']['#ajax'] = [
+    'callback' => '_az_eds_ajax_callback',
+    'disable-refocus' => TRUE,
+    'event' => 'change',
+    'wrapper' => $wrapper_id,
+    'progress' => [
+      'type' => 'throbber',
+    ],
+  ];
+  // Get form elements of form.
+  $children = Element::children($form);
+  $weight = 0;
+  // Assign weights, since they do not already have them.
+  foreach ($children as $key) {
+    $form[$key]['#weight'] = $weight++;
+  }
+  $base_dn_weight = $form['base_dn']['#weight'] ?? 0;
+  $filter_weight = $form['filter']['#weight'] ?? 0;
+  // Swap base DN and filter weights so DN appears next to attributes.
+  $form['filter']['#weight'] = $base_dn_weight;
+  $form['base_dn']['#weight'] = $filter_weight;
 
-    // Check if we can find the existing server setting.
-    $form_object = $form_state->getFormObject();
-    if ($form_object instanceof EntityFormInterface) {
-      $config_entity = $form_object->getEntity();
-      if ($config_entity instanceof ConfigEntityInterface) {
-        $server = $form_state->getValue('server_id') ?? $config_entity->get('server_id');
-        // Only run for LDAP query entities where the EDS server is selected.
-        if ($server === 'az_eds') {
-          // Add a warning tooltip.
-          $form['server_id']['az_eds_tooltip'] = [
-            '#type' => 'container',
-            '#markup' => t('<b>Base DNs to search in query</b> and <b>Attributes</b> will be set automatically if these fields are left blank. If these fields have an input for this query, it will override the default settings.'),
-            '#attributes' => [
-              'class' => ['messages messages--warning'],
-            ],
-            '#weight' => 10,
-          ];
-        }
+  // Check if we can find the existing server setting.
+  $form_object = $form_state->getFormObject();
+  if ($form_object instanceof EntityFormInterface) {
+    $config_entity = $form_object->getEntity();
+    if ($config_entity instanceof ConfigEntityInterface) {
+      $server = $form_state->getValue('server_id') ?? $config_entity->get('server_id');
+      // Only run for LDAP query entities where the EDS server is selected.
+      if ($server === 'az_eds') {
+        // Add a warning tooltip.
+        $form['server_id']['az_eds_tooltip'] = [
+          '#type' => 'container',
+          '#markup' => t('<b>Base DNs to search in query</b> and <b>Attributes</b> will be set automatically if these fields are left blank. If these fields have an input for this query, it will override the default settings.'),
+          '#attributes' => [
+            'class' => ['messages messages--warning'],
+          ],
+          '#weight' => 10,
+        ];
       }
     }
   }
