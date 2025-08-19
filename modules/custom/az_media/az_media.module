@@ -127,6 +127,11 @@ function template_preprocess_az_responsive_background_image(array &$variables) {
   }
 }
 
+/**
+ * Implements hook_form_FORM_ID_alter() for media_az_image_edit_form.
+ *
+ * Adds warning message for media entities that are used in multiple places.
+ */
 function az_media_form_media_az_image_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   $count = 0;
   // Find what entity this form applies to.
