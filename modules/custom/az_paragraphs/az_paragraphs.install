@@ -221,12 +221,19 @@ function az_paragraphs_update_1130001(&$sandbox) {
         $parent->setNewRevision(TRUE);
         // Get the parent entity field that references this paragraph.
         $parent_field = $paragraph->get('parent_field_name')->value;
+        $parent_items = $parent->get($parent_field);
 
-        // Update the parent to point to the new revision.
-        $parent->get($parent_field)->setValue([
-          'target_id' => $paragraph->id(),
-          'target_revision_id' => $paragraph->getRevisionId(),
-        ]);
+        // Find and update just this paragraph's reference in the parent field.
+        /** @var Drupal\entity_reference_revisions\Plugin\Field\FieldType\EntityReferenceRevisionsItem $item */
+        foreach ($parent_items as $delta => $item) {
+          if ($item->target_id == $paragraph->id()) {
+            $parent_items->get($delta)->setValue([
+              'target_id' => $paragraph->id(),
+              'target_revision_id' => $paragraph->getRevisionId(),
+            ]);
+            break;
+          }
+        }
         // Include a log revision message for the parent, if possible.
         if ($parent instanceof RevisionLogInterface) {
           $parent->setRevisionLogMessage(t('Updated child paragraph @id content (revision: @vid) for Arizona Bootstrap 5 compatibility.', [
