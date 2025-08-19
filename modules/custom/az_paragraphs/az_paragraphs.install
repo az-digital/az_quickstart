@@ -114,36 +114,35 @@ function az_paragraphs_update_1130001(&$sandbox) {
     // - field_az_full_html with any content
     // - field_az_card.body using az_standard or full_html format
     // - field_az_accordion.body using az_standard or full_html format.
-    $query = $paragraph_storage->getQuery()
-      ->accessCheck(FALSE)
+    $query = $paragraph_storage->getQuery();
+    $group = $query->orConditionGroup()
       ->condition(
-        $paragraph_storage->getQuery()->orConditionGroup()
-          ->condition(
-            $paragraph_storage->getQuery()->andConditionGroup()
-              ->condition('type', [
-                'az_splitscreen',
-                'az_text',
-                'az_text_background',
-                'az_text_media',
-              ], 'IN')
-              ->condition('field_az_text_area.format', ['az_standard', 'full_html'], 'IN')
-          )
-          ->condition(
-            $paragraph_storage->getQuery()->andConditionGroup()
-              ->condition('type', 'az_html')
-              ->exists('field_az_full_html')
-          )
-          ->condition(
-            $paragraph_storage->getQuery()->andConditionGroup()
-              ->condition('type', 'az_card')
-              ->condition('field_az_card.body_format', ['az_standard', 'full_html'], 'IN')
-          )
-          ->condition(
-            $paragraph_storage->getQuery()->andConditionGroup()
-              ->condition('type', 'az_accordion')
-              ->condition('field_az_accordion.body_format', ['az_standard', 'full_html'], 'IN')
-          )
+        $paragraph_storage->getQuery()->andConditionGroup()
+          ->condition('type', [
+            'az_splitscreen',
+            'az_text',
+            'az_text_background',
+            'az_text_media',
+          ], 'IN')
+          ->condition('field_az_text_area.format', ['az_standard', 'full_html'], 'IN')
+      )
+      ->condition(
+        $paragraph_storage->getQuery()->andConditionGroup()
+          ->condition('type', 'az_html')
+          ->exists('field_az_full_html')
+      )
+      ->condition(
+        $paragraph_storage->getQuery()->andConditionGroup()
+          ->condition('type', 'az_card')
+          ->condition('field_az_card.body_format', ['az_standard', 'full_html'], 'IN')
+      )
+      ->condition(
+        $paragraph_storage->getQuery()->andConditionGroup()
+          ->condition('type', 'az_accordion')
+          ->condition('field_az_accordion.body_format', ['az_standard', 'full_html'], 'IN')
       );
+    $query->condition($group);
+    $query->accessCheck(FALSE);
 
     $sandbox['ids'] = $query->execute();
     $sandbox['max'] = count($sandbox['ids']);
