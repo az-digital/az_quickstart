@@ -315,6 +315,23 @@ function az_paragraphs_update_1130001(&$sandbox) {
           '@parent_bundle' => $parent->bundle(),
           '@parent_id' => $parent->id(),
         ]);
+
+        // Store both node and block_content entities for the report.
+        if (in_array($parent->getEntityTypeId(), ['node', 'block_content'])) {
+          /** @var \Drupal\az_core\AZContentUpdateTracker $update_tracker */
+          $update_tracker = \Drupal::service('az_core.content_update_tracker');
+
+          // Record the update for this parent entity.
+          $update_tracker->recordUpdate(
+            __FUNCTION__,
+            $parent->getEntityTypeId(),
+            $parent->id(),
+            [
+              'type' => $parent->bundle(),
+              'fields' => [$parent_field],
+            ]
+          );
+        }
       }
       $sandbox['updated_count']++;
     }
@@ -325,7 +342,7 @@ function az_paragraphs_update_1130001(&$sandbox) {
   $sandbox['#finished'] = empty($sandbox['max']) ? 1 : ($sandbox['progress'] / $sandbox['max']);
 
   if ($sandbox['#finished'] >= 1) {
-    return t('Completed processing @count total paragraphs. @paragraphs_updated paragraphs updated for Bootstrap 5 compatibility. @paragraphs_skipped paragraphs skipped.', [
+    return t('Completed processing @count total paragraphs. @paragraphs_updated paragraphs updated for Bootstrap 5 compatibility. @paragraphs_skipped paragraphs skipped. Check the content updates report for details.', [
       '@count' => $sandbox['progress'],
       '@paragraphs_updated' => $sandbox['updated_count'],
       '@paragraphs_skipped' => $sandbox['skipped_count'],

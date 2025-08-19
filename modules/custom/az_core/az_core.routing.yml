@@ -14,5 +14,13 @@ az_core.az_settings:
   requirements:
     _permission: 'administer quickstart configuration'
 
+az_core.content_updates_report:
+  path: '/admin/reports/quickstart-content-updates'
+  defaults:
+    _controller: '\Drupal\az_core\Controller\AZContentUpdateReportController::content'
+    _title: 'Quickstart automated content updates report'
+  requirements:
+    _permission: 'access site reports'
+
 route_callbacks:
   - '\Drupal\az_core\Routing\Routes::routes'

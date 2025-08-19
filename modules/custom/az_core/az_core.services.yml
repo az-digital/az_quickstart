@@ -41,3 +41,14 @@ services:
   az_core.content_field_updater:
     class: Drupal\az_core\AZContentFieldUpdater
     arguments: ['@entity_type.manager', '@logger.factory']
+
+  # Key/Value store for content updates
+  az_core.content_updates_storage:
+    class: Drupal\Core\KeyValueStore\KeyValueStoreInterface
+    factory: ['@keyvalue', 'get']
+    arguments: ['az_content_updates']
+
+  # Service for tracking automated content updates across multiple modules.
+  az_core.content_update_tracker:
+    class: Drupal\az_core\AZContentUpdateTracker
+    autowire: true

@@ -9,3 +9,9 @@ az_core.az_settings:
   parent: az_core.az_quickstart
   title: 'Arizona Quickstart Settings'
   description: 'Settings provided by Quickstart Core and various other Arizona Quickstart modules.'
+
+az_core.content_updates_report:
+  route_name: az_core.content_updates_report
+  parent: system.admin_reports
+  title: 'Quickstart automated content updates report'
+  description: 'Review automated content updates made by Quickstart modules.'
