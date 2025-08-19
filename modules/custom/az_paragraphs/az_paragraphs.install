@@ -115,6 +115,7 @@ function az_paragraphs_update_1130001(&$sandbox) {
     // - field_az_card.body using az_standard or full_html format
     // - field_az_accordion.body using az_standard or full_html format.
     $query = $paragraph_storage->getQuery();
+    $query->accessCheck(FALSE);
 
     // Text area paragraphs.
     $text_area_group = $query->andConditionGroup()
@@ -134,11 +135,13 @@ function az_paragraphs_update_1130001(&$sandbox) {
     // Card paragraphs.
     $card_group = $query->andConditionGroup()
       ->condition('type', 'az_card')
+      ->exists('field_az_card')
       ->condition('field_az_card.body_format', ['az_standard', 'full_html'], 'IN');
 
     // Accordion paragraphs.
     $accordion_group = $query->andConditionGroup()
       ->condition('type', 'az_accordion')
+      ->exists('field_az_accordion')
       ->condition('field_az_accordion.body_format', ['az_standard', 'full_html'], 'IN');
 
     // Combine all conditions.
@@ -149,7 +152,6 @@ function az_paragraphs_update_1130001(&$sandbox) {
       ->condition($accordion_group);
 
     $query->condition($group);
-    $query->accessCheck(FALSE);
 
     $sandbox['ids'] = $query->execute();
     $sandbox['max'] = count($sandbox['ids']);
@@ -168,49 +170,75 @@ function az_paragraphs_update_1130001(&$sandbox) {
 
     $needs_update = FALSE;
     $field_name = NULL;
-    $original_value = NULL;
 
-    // Handle different field types.
-    // Simple text fields with direct value property.
-    $simple_fields = ['field_az_text_area', 'field_az_full_html'];
-    foreach ($simple_fields as $field_name) {
-      if ($paragraph->hasField($field_name)) {
-        $field = $paragraph->get($field_name);
-        $original_value = $field->value;
-        if (!empty($original_value)) {
-          $processed_value = AZBootstrapMarkupConverter::convert($original_value);
-          if ($processed_value !== $original_value) {
-            $paragraph->set($field_name, $processed_value);
+    // Handle different field types based on paragraph type.
+    switch ($paragraph->bundle()) {
+      case 'az_splitscreen':
+      case 'az_text':
+      case 'az_text_background':
+      case 'az_text_media':
+        // Text area paragraphs.
+        /** @var \Drupal\text\Plugin\Field\FieldType\TextLongItem $field */
+        $field = $paragraph->get('field_az_text_area');
+        if (!empty($field->value) && in_array($field->format, ['az_standard', 'full_html'])) {
+          $processed_value = AZBootstrapMarkupConverter::convert($field->value);
+          if ($processed_value !== $field->value) {
+            $paragraph->set('field_az_text_area', ['value' => $processed_value]);
             $needs_update = TRUE;
+            $field_name = 'field_az_text_area';
           }
         }
         break;
-      }
-    }
 
-    // Compound fields with body/body_format properties.
-    $compound_fields = ['field_az_card', 'field_az_accordion'];
-    foreach ($compound_fields as $field_name) {
-      if ($paragraph->hasField($field_name)) {
-        $field = $paragraph->get($field_name);
-        /** @var \Drupal\az_card\Plugin\Field\FieldType\AZCardItem|\Drupal\az_accordion\Plugin\Field\FieldType\AZAccordionItem $item */
+      case 'az_html':
+        // HTML paragraphs.
+        /** @var \Drupal\text\Plugin\Field\FieldType\TextLongItem $field */
+        $field = $paragraph->get('field_az_full_html');
+        if (!empty($field->value)) {
+          $processed_value = AZBootstrapMarkupConverter::convert($field->value);
+          if ($processed_value !== $field->value) {
+            $paragraph->set('field_az_full_html', ['value' => $processed_value]);
+            $needs_update = TRUE;
+            $field_name = 'field_az_full_html';
+          }
+        }
+        break;
+
+      case 'az_card':
+        // Card paragraphs.
+        $field = $paragraph->get('field_az_card');
+        /** @var \Drupal\az_card\Plugin\Field\FieldType\AZCardItem $item */
         foreach ($field as $delta => $item) {
-          $format = $item->body_format;
-          if (in_array($format, ['az_standard', 'full_html'])) {
-            $original_value = $item->body;
-            if (!empty($original_value)) {
-              $processed_value = AZBootstrapMarkupConverter::convert($original_value);
-              if ($processed_value !== $original_value) {
-                $paragraph->get($field_name)
-                  ->get($delta)
-                  ->set('body', $processed_value);
-                $needs_update = TRUE;
-              }
+          if (!empty($item->body) && in_array($item->body_format, ['az_standard', 'full_html'])) {
+            $processed_value = AZBootstrapMarkupConverter::convert($item->body);
+            if ($processed_value !== $item->body) {
+              $paragraph->get('field_az_card')
+                ->get($delta)
+                ->set('body', $processed_value);
+              $needs_update = TRUE;
+              $field_name = 'field_az_card';
             }
           }
         }
         break;
-      }
+
+      case 'az_accordion':
+        // Accordion paragraphs.
+        $field = $paragraph->get('field_az_accordion');
+        /** @var \Drupal\az_accordion\Plugin\Field\FieldType\AZAccordionItem $item */
+        foreach ($field as $delta => $item) {
+          if (!empty($item->body) && in_array($item->body_format, ['az_standard', 'full_html'])) {
+            $processed_value = AZBootstrapMarkupConverter::convert($item->body);
+            if ($processed_value !== $item->body) {
+              $paragraph->get('field_az_accordion')
+                ->get($delta)
+                ->set('body', $processed_value);
+              $needs_update = TRUE;
+              $field_name = 'field_az_accordion';
+            }
+          }
+        }
+        break;
     }
 
     if ($needs_update) {
