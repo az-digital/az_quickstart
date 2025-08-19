@@ -144,7 +144,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   ];
   $form['fonts']['icons']['az_barrio_icons']['az_barrio_material_design_sharp_icons'] = [
     '#type' => 'checkbox',
-    '#title' => t('(Deprecated) Use Material Symbols Rounded Icons'),
+    '#title' => t('(Deprecated) Use Material Design Sharp Icons'),
     '#description' => t(
         'If selected, a Google Fonts CDN <code>&lt;link&gt;</code> will be added to every page importing the @material_design_sharp_icons_docs_link CSS.', [
           '@material_design_sharp_icons_docs_link' => Link::fromTextAndUrl(
@@ -158,6 +158,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
           )->toString(),
         ]
     ),
+    '#default_value' => theme_get_setting('az_barrio_material_design_sharp_icons'),
   ];
   $form['fonts']['icons']['az_barrio_icons']['az_barrio_az_icons'] = [
     '#type' => 'checkbox',
