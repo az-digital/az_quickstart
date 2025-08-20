@@ -167,6 +167,7 @@ function az_paragraphs_update_1130001(&$sandbox) {
     if (!$paragraph) {
       $logger->warning('Could not load paragraph @pid', ['@pid' => $id]);
       $sandbox['skipped_count']++;
+      $sandbox['progress']++;
       continue;
     }
 
@@ -183,6 +184,7 @@ function az_paragraphs_update_1130001(&$sandbox) {
       // Paragraph is not used in any current revisions of the parent type.
       $logger->info('Skipping unused paragraph @pid', ['@pid' => $id]);
       $sandbox['skipped_count']++;
+      $sandbox['progress']++;
       continue;
     }
 
