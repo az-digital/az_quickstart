@@ -47,7 +47,6 @@ class AzPublicationSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $config = $this->config('az_publication.settings');
     $options = [];
     // Build option list of citation styles.
     $styles = $this->entityTypeManager->getStorage('az_citation_style')->loadMultiple();
@@ -60,20 +59,9 @@ class AzPublicationSettingsForm extends ConfigFormBase {
       '#title' => $this->t('Default Citation Style'),
       '#description' => $this->t('Select the default citation style to use. This will be used unless another citation style is selected.'),
       '#options' => $options,
-      '#default_value' => $config->get('default_citation_style'),
+      '#config_target' => 'az_publication.settings:default_citation_style',
     ];
     return parent::buildForm($form, $form_state);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function submitForm(array &$form, FormStateInterface $form_state) {
-    parent::submitForm($form, $form_state);
-
-    $this->config('az_publication.settings')
-      ->set('default_citation_style', $form_state->getValue('default_citation_style'))
-      ->save();
   }
 
 }

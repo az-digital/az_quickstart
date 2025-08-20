@@ -5,6 +5,7 @@ namespace Drupal\az_news_feeds\Form;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Config\TypedConfigManagerInterface;
 use Drupal\Core\Form\ConfigFormBase;
+use Drupal\Core\Form\ConfigTarget;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
@@ -57,10 +58,7 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   protected function getEditableConfigNames(): array {
-    return [
-      'migrate_plus.migration_group.az_news_feeds',
-      'az_news_feeds.settings',
-    ];
+    return [];
   }
 
   /**
@@ -96,9 +94,6 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
-    $az_news_feeds_config = $this->config('az_news_feeds.settings');
-    $selected_categories = $az_news_feeds_config->get('uarizona_news_terms');
-    $selected_categories = array_keys($selected_categories);
     $term_options = $this->getRemoteTermOptions();
     $form['links'] = [
       '#type' => 'item',
@@ -111,58 +106,121 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
         )->toString(),
       ]),
     ];
-    $form['help'] = [
-      '#type' => 'item',
-      '#markup' => '<p>To import the most recent stories from <a href="https://news.arizona.edu" target="_blank">news.arizona.edu</a> regardless of tag, select "All".</p>' .
-      '<p>Deselect "All" if you want to import the most recent stories of any specific tag or tags.</p>' .
-      '<p>If you select multiple tags, this will import stories with any of the selected tags, and not just stories with all of the selected tags.</p>' .
-      '<p>This importer will create taxonomy terms from the selected tags, if they exist on a story in the feed.</p>',
+    $form['help_container'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Help'),
+      '#open' => TRUE,
     ];
+
+    $taxonomy_url = Url::fromUri('internal:/admin/structure/taxonomy/manage/az_news_tags/overview');
+    $taxonomy_link = Link::fromTextAndUrl('News Tags vocabulary', $taxonomy_url)->toString();
+
+    $markup = '<p>To import the most recent stories from <a href="https://news.arizona.edu" target="_blank">news.arizona.edu</a> regardless of tag, select "All".</p>' .
+        '<p>Deselect "All" if you want to import the most recent stories of any specific tag or tags.</p>' .
+        '<p>If you select multiple tags, this will import stories with any of the selected tags, and not just stories with all of the selected tags.</p>' .
+        '<p>This importer associates stories with existing taxonomy terms based on tags from the feed. If a story in the feed includes tags, the importer will check if these tags correspond to any existing terms in the ' . $taxonomy_link . ' on the site. It will then associate the story with those existing terms. For instance, if a story\'s tags include \'Lunar and Planetary Laboratory\' and this term exists in the ' . $taxonomy_link . ' on the site, the importer will add this term to the story. Tags that do not match any existing taxonomy terms on the site will be ignored and not added to the story.</p>';
+
+    $form['help_container']['help'] = [
+      '#type' => 'item',
+      '#markup' => $markup,
+    ];
+
     $form['term_options'] = [
       '#type' => 'value',
       '#value' => $term_options,
     ];
+
+    $form['group_configuration_hidden'] = [
+      '#type' => 'hidden',
+      '#config_target' => 'migrate_plus.migration_group.az_news_feeds:shared_configuration.source.urls',
+    ];
+
+    $group_config = $this->config('migrate_plus.migration_group.az_news_feeds');
+    $default_url = $group_config->get('shared_configuration.source.urls');
+    $url = Url::fromUri($default_url);
+
+    $link_render_array = [
+      '#type' => 'link',
+      '#title' => $this->t('@url', ['@url' => $url->toString()]),
+      '#url' => $url,
+    ];
+
+    $form['group_configuration'] = [
+      '#type' => 'container',
+      '#attributes' => ['id' => ['endpoint-wrapper']],
+      'text' => [
+        // phpcs:ignore
+        '#markup' => $this->t('Fetch news from: '),
+      ],
+      'link' => $link_render_array,
+    ];
     $form['uarizona_news_terms'] = [
-      '#title' => t('News Categories'),
+      '#title' => $this->t('News Categories'),
       '#type' => 'select',
       '#multiple' => TRUE,
-      '#required' => TRUE,
-      '#description' => 'Select which terms you want to import.',
+      '#required' => FALSE,
+      '#description' => $this->t('Select which terms you want to import.'),
       '#options' => $form['term_options']['#value'],
-      '#default_value' => $selected_categories,
+      '#config_target' => new ConfigTarget(
+        'az_news_feeds.settings',
+        'uarizona_news_terms',
+        // Converts config value to a form value.
+        fn($value) => array_keys($value),
+        // Converts form value to a config value.
+        fn($value) => array_reduce($value, function ($carry, $item) use ($term_options) {
+          if (array_key_exists($item, $term_options)) {
+            $carry[$item] = $term_options[$item];
+          }
+          return $carry;
+        }, []),
+      ),
+      '#ajax' => [
+        'callback' => '::updateEndpointCallback',
+        'wrapper' => 'endpoint-wrapper',
+      ],
     ];
 
     return parent::buildForm($form, $form_state);
   }
 
   /**
-   * {@inheritdoc}
+   * Updates the endpoint URL based on selected terms and updates form elements.
+   *
+   * @param array &$form
+   *   The form array.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form state interface.
+   *
+   * @return array
+   *   An array of updated form elements.
    */
-  public function submitForm(array &$form, FormStateInterface $form_state) {
-    $az_news_feeds_config = $this->configFactory->getEditable('az_news_feeds.settings');
-    $keys = $form_state->getValue('uarizona_news_terms');
-    $selected_terms = [];
-    foreach ($keys as $key) {
-      $selected_terms[$key] = $form['uarizona_news_terms']['#options'][$key];
-    }
-    $az_news_feeds_config
-      ->set('uarizona_news_terms', $selected_terms)
-      ->save();
-
-    // Update the news.arizona.edu feed url in the migration group config.
-    $group_config = $this->configFactory->getEditable('migrate_plus.migration_group.az_news_feeds');
+  public function updateEndpointCallback(array &$form, FormStateInterface $form_state) {
+    $az_news_feeds_config = $this->config('az_news_feeds.settings');
+    // Generate the new endpoint URL based on the selected terms.
+    $selected_terms = $form_state->getValue('uarizona_news_terms');
     $base_uri = $az_news_feeds_config->get('uarizona_news_base_uri');
     $content_path = $az_news_feeds_config->get('uarizona_news_content_path');
-    $selected_terms = $az_news_feeds_config->get('uarizona_news_terms');
+    if (!$selected_terms) {
+      $selected_terms = ['all' => 'All'];
+    }
     $views_contextual_argument = implode('+', array_keys($selected_terms));
-    $urls = $base_uri . $content_path . $views_contextual_argument;
-    $group_config
-      ->set('shared_configuration.source.urls', $urls)
-      ->save();
+    $new_endpoint_url = $base_uri . $content_path . $views_contextual_argument;
+    $url = Url::fromUri($new_endpoint_url);
+    $link_render_array = [
+      '#type' => 'link',
+      '#title' => $this->t('@url', ['@url' => $url->toString()]),
+      '#url' => $url,
+    ];
 
-    drupal_flush_all_caches();
+    // Update the hidden field's value.
+    $form['group_configuration_hidden']['#value'] = $new_endpoint_url;
+    // Update the markup field's display.
+    $form['group_configuration']['link'] = $link_render_array;
+    return [
+      $form['group_configuration_hidden'],
+      $form['group_configuration'],
+    ];
 
-    parent::submitForm($form, $form_state);
   }
 
 }
