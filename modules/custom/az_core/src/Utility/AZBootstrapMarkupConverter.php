@@ -128,7 +128,10 @@ final class AZBootstrapMarkupConverter {
     'btn-hollow-reverse' => 'btn-outline-white',
     'col-12' => 'col-12 position-relative',
     // Remove btn class when it conflicts with nav-link.
-    'btn' => '',
+    // @todo We probably need to handle this situation differently to avoid
+    // breaking legitimate usage of btn class (e.g. in combination with other
+    // btn-* classes).
+    /* 'btn' => '',*/
     // Margin class mappings for Bootstrap 5.
     'ml-0' => 'ms-0',
     'ml-1' => 'ms-1',
@@ -203,7 +206,7 @@ final class AZBootstrapMarkupConverter {
     'pr-3' => 'pe-3',
     'pr-4' => 'pe-4',
     'pr-5' => 'pe-5',
-    // Background color mappings from issue #4323.
+    // Background color mappings from az-digital/az_quickstart#4323.
     'bg-transparent-white' => 'text-bg-transparent-white',
     'bg-transparent-black' => 'text-bg-transparent-black',
     'bg-red' => 'text-bg-red',
