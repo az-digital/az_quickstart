@@ -148,7 +148,8 @@ az_barrio.settings:
     bootstrap_barrio_region_class_az_page_bottom:
       type: string
       label: 'Classes for page bottom region'
-    # Arizona-specific region width settings
+    # Add schema missing in bootstrap_barrio.
+    # See https://www.drupal.org/i/3536240
     bootstrap_barrio_region_width_alert:
       type: integer
       label: 'Width for alert region'
