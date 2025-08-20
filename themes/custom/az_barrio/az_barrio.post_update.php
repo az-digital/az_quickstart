@@ -62,7 +62,7 @@ function az_barrio_post_update_convert_boolean_to_integer_settings(&$sandbox = N
   $theme_settings = $config_factory->getEditable('az_barrio.settings');
 
   // Parent theme expects these as integers (0/1) not booleans
-  // Only convert settings that are defined in the parent bootstrap_barrio schema
+  // Only convert settings that are defined in the parent schema.
   $boolean_to_integer_settings = [
     'bootstrap_barrio_region_clean_header',
     'bootstrap_barrio_region_clean_sidebar_first',
