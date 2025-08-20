@@ -1,0 +1,101 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_alphabetical_person_index
+field_name: field_alphabetical_person_index
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: '123'
+      label: '#'
+    -
+      value: a
+      label: a
+    -
+      value: b
+      label: b
+    -
+      value: c
+      label: c
+    -
+      value: d
+      label: d
+    -
+      value: e
+      label: e
+    -
+      value: f
+      label: f
+    -
+      value: g
+      label: g
+    -
+      value: h
+      label: h
+    -
+      value: i
+      label: i
+    -
+      value: j
+      label: j
+    -
+      value: k
+      label: k
+    -
+      value: l
+      label: l
+    -
+      value: m
+      label: m
+    -
+      value: 'n'
+      label: 'n'
+    -
+      value: o
+      label: o
+    -
+      value: p
+      label: p
+    -
+      value: q
+      label: q
+    -
+      value: r
+      label: r
+    -
+      value: s
+      label: s
+    -
+      value: t
+      label: t
+    -
+      value: u
+      label: u
+    -
+      value: v
+      label: v
+    -
+      value: w
+      label: w
+    -
+      value: x
+      label: x
+    -
+      value: 'y'
+      label: 'y'
+    -
+      value: z
+      label: z
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
