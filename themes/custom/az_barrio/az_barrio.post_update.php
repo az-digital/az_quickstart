@@ -55,7 +55,7 @@ function az_barrio_post_update_migrate_material_symbols_icons(&$sandbox = NULL) 
 }
 
 /**
- * Sets az_remove_sidebar_menu_mobile to TRUE if the old setting exists.
+ * Sets az_remove_sidebar_menu_mobile to TRUE if it doesn NOT exist.
  */
 function az_barrio_post_update_set_sidebar_menu_mobile_setting(&$sandbox = NULL) {
   $config_factory = \Drupal::configFactory();
