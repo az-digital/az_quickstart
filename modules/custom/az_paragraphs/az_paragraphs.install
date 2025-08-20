@@ -232,8 +232,7 @@ function az_paragraphs_update_1130001(&$sandbox) {
             $processed_value = AZBootstrapMarkupConverter::convert($item->body);
             if ($processed_value !== $item->body) {
               $needs_update = TRUE;
-              $paragraph->get($field_name)[$delta]
-                ->set('body', $processed_value);
+              $paragraph->$field_name[$delta]['body'] = $processed_value;
             }
           }
         }
@@ -249,8 +248,7 @@ function az_paragraphs_update_1130001(&$sandbox) {
             $processed_value = AZBootstrapMarkupConverter::convert($item->body);
             if ($processed_value !== $item->body) {
               $needs_update = TRUE;
-              $paragraph->get($field_name)[$delta]
-                ->set('body', $processed_value);
+              $$paragraph->$field_name[$delta]['body'] = $processed_value;
             }
           }
         }
