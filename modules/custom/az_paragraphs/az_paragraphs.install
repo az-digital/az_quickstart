@@ -157,6 +157,7 @@ function az_paragraphs_update_1130001(&$sandbox) {
     $sandbox['max'] = count($sandbox['ids']);
     $sandbox['progress'] = 0;
     $sandbox['updated_count'] = 0;
+    $sandbox['skipped_count'] = 0;
   }
   $ids = array_slice($sandbox['ids'], $sandbox['progress'], 20);
 
@@ -165,6 +166,23 @@ function az_paragraphs_update_1130001(&$sandbox) {
     $paragraph = $paragraph_storage->load($id);
     if (!$paragraph) {
       $logger->warning('Could not load paragraph @pid', ['@pid' => $id]);
+      $sandbox['skipped_count']++;
+      continue;
+    }
+
+    // Skip unused/orphan paragraphs.
+    $parent_type = $paragraph->get('parent_type')->value;
+    $parent_field = $paragraph->get('parent_field_name')->value;
+    $query = \Drupal::service('entity_type_manager')->getStorage($parent_type)
+      ->getQuery()
+      ->condition("$parent_field.target_id", $id)
+      ->range(0, 1)
+      ->accessCheck(FALSE);
+    $parent_entity_result = $query->execute();
+    if (empty($parent_entity_result)) {
+      // Paragraph is not used in any current revisions of the parent type.
+      $logger->info('Skipping unused paragraph @pid', ['@pid' => $id]);
+      $sandbox['skipped_count']++;
       continue;
     }
 
@@ -178,54 +196,45 @@ function az_paragraphs_update_1130001(&$sandbox) {
       case 'az_text_background':
       case 'az_text_media':
         // Text area paragraphs.
+        $field_name = 'field_az_text_area';
         /** @var \Drupal\text\Plugin\Field\FieldType\TextLongItem $field */
-        $field = $paragraph->get('field_az_text_area');
+        $field = $paragraph->get($field_name);
         if (!empty($field->value) && in_array($field->format, ['az_standard', 'full_html'])) {
           $processed_value = AZBootstrapMarkupConverter::convert($field->value);
           if ($processed_value !== $field->value) {
-            $paragraph->set('field_az_text_area', [
-              'value' => $processed_value,
-              'format' => $field->format,
-            ]);
             $needs_update = TRUE;
-            $field_name = 'field_az_text_area';
+            $field->set('value', $processed_value);
           }
         }
         break;
 
       case 'az_html':
         // HTML paragraphs.
+        $field_name = 'field_az_full_html';
         /** @var \Drupal\text\Plugin\Field\FieldType\TextLongItem $field */
-        $field = $paragraph->get('field_az_full_html');
+        $field = $paragraph->get($field_name);
         if (!empty($field->value)) {
           $processed_value = AZBootstrapMarkupConverter::convert($field->value);
           if ($processed_value !== $field->value) {
-            $paragraph->set('field_az_full_html', [
-              'value' => $processed_value,
-              'format' => $field->format,
-            ]);
             $needs_update = TRUE;
-            $field_name = 'field_az_full_html';
+            $field->set('value', $processed_value);
           }
         }
         break;
 
       case 'az_card':
         // Card paragraphs.
-        $field = $paragraph->get('field_az_cards');
+        $field_name = 'field_az_cards';
+        $field = $paragraph->get($field_name);
         /** @var \Drupal\az_card\Plugin\Field\FieldType\AZCardItem $item */
         foreach ($field as $delta => $item) {
           if (!empty($item->body) && in_array($item->body_format, ['az_standard', 'full_html'])) {
             $processed_value = AZBootstrapMarkupConverter::convert($item->body);
             if ($processed_value !== $item->body) {
-              $paragraph->get('field_az_cards')
-                ->get($delta)
-                ->setValue([
-                  'body' => $processed_value,
-                  'body_format' => $item->body_format,
-                ]);
               $needs_update = TRUE;
-              $field_name = 'field_az_cards';
+              $field
+                ->get($delta)
+                ->set('body', $processed_value);
             }
           }
         }
@@ -233,20 +242,17 @@ function az_paragraphs_update_1130001(&$sandbox) {
 
       case 'az_accordion':
         // Accordion paragraphs.
-        $field = $paragraph->get('field_az_accordion');
+        $field_name = 'field_az_accordion';
+        $field = $paragraph->get($field_name);
         /** @var \Drupal\az_accordion\Plugin\Field\FieldType\AZAccordionItem $item */
         foreach ($field as $delta => $item) {
           if (!empty($item->body) && in_array($item->body_format, ['az_standard', 'full_html'])) {
             $processed_value = AZBootstrapMarkupConverter::convert($item->body);
             if ($processed_value !== $item->body) {
-              $paragraph->get('field_az_accordion')
-                ->get($delta)
-                ->setValue([
-                  'body' => $processed_value,
-                  'body_format' => $item->body_format,
-                ]);
               $needs_update = TRUE;
-              $field_name = 'field_az_accordion';
+              $field
+                ->get($delta)
+                ->set('body', $processed_value);
             }
           }
         }
@@ -295,7 +301,8 @@ function az_paragraphs_update_1130001(&$sandbox) {
 
         // Include a log revision message for the parent, if possible.
         if ($parent instanceof RevisionLogInterface) {
-          $parent->setRevisionLogMessage(t('Updated child paragraph @id content (revision: @vid) for Arizona Bootstrap 5 compatibility.', [
+          $parent->setRevisionLogMessage(t('Updated child @paragraph_bundle paragraph @id content (revision: @vid) for Arizona Bootstrap 5 compatibility.', [
+            '@paragraph_bundle' => $paragraph->bundle(),
             '@id' => $id,
             '@vid' => $paragraph->getRevisionId(),
           ]));
@@ -320,9 +327,10 @@ function az_paragraphs_update_1130001(&$sandbox) {
   $sandbox['#finished'] = empty($sandbox['max']) ? 1 : ($sandbox['progress'] / $sandbox['max']);
 
   if ($sandbox['#finished'] >= 1) {
-    return t('Completed processing @count total paragraphs. @paragraphs_updated paragraphs were updated for Bootstrap 5 compatibility.', [
+    return t('Completed processing @count total paragraphs. @paragraphs_updated paragraphs updated for Bootstrap 5 compatibility. @paragraphs_skipped paragraphs skipped.', [
       '@count' => $sandbox['progress'],
       '@paragraphs_updated' => $sandbox['updated_count'],
+      '@paragraphs_skipped' => $sandbox['skipped_count'],
     ]);
   }
 
