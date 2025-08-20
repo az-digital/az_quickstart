@@ -255,6 +255,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
           '@azbootstrap' => 'http://digital.arizona.edu/arizona-bootstrap',
         ]
     ),
+    '#description' => '<div class="alert alert-info messages info">' . t('<strong>NOTE:</strong> The AZ Bootstrap CDN is the preferred method for providing huge performance gains in load time.') . '</div>',
   ];
   $form['azbs_settings']['settings']['az_bootstrap_cdn'] = [
     '#type' => 'fieldset',
