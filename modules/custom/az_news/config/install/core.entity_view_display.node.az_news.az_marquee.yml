@@ -79,7 +79,7 @@ third_party_settings:
       weight: 3
       format_type: html_element
       format_settings:
-        classes: 'card-img mb-1'
+        classes: 'mb-1'
         id: ''
         element: div
         show_label: false
