@@ -55,7 +55,7 @@ function az_barrio_post_update_migrate_material_symbols_icons(&$sandbox = NULL) 
 }
 
 /**
- * Convert boolean values to integers for bootstrap_barrio parent theme settings.
+ * Convert boolean values to integers for bootstrap_barrio settings.
  */
 function az_barrio_post_update_convert_boolean_to_integer_settings(&$sandbox = NULL) {
   $config_factory = \Drupal::configFactory();
