@@ -80,7 +80,6 @@ function az_barrio_post_update_convert_boolean_to_integer_settings(&$sandbox = N
       $converted_count++;
     }
   }
-  
   if ($converted_count > 0) {
     $theme_settings->save();
     \Drupal::logger('az_quickstart')->notice('Converted @count boolean values to integers for bootstrap_barrio parent theme settings.', ['@count' => $converted_count]);
