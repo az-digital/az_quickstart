@@ -406,81 +406,6 @@ td.menu-disabled {
   }
 }
 
-/* ARIZONA BOOTSTRAP STYLING */
-/* TEMPORARY!!! REVIEW AND MOVE TO ARIZONA BOOTSTRAP */
-.arizona-header {
-  position: unset;  /* Removed position relative in Arizona Bootstrap. */
-}
-.arizona-header > .container > .row {
-  min-height: 50px;
-  justify-content: space-between;
-  align-items: center;
-}
-@media screen and (max-width: 992px) {
-  /* Extend sticky-top in Arizona Bootstrap. */
-  .arizona-header {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
-    z-index: 1020;
-  }
-  .arizona-header > .container {
-    padding-right: 0;
-  }
-  .arizona-header > .container > .row {
-    margin-right: 0;
-  }
-}
-.arizona-logo {
-  display: flex;
-  align-items: center;
-  min-height: 50px;
-  padding-right: 0;
-}
-.btn-arizona-header {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-width: 60px;
-  padding: 0.25rem 0;
-}
-.btn-arizona-header > .icon-text {
-  font-size: 10px;
-  line-height: 10px;
-  margin-top: 2px;
-  margin-bottom: 2px;
-}
-
-.navbar {
-  border-top: 1px solid #e9ecef;
-  border-bottom: 1px solid #e9ecef;
-  justify-content: space-between;
-}
-.navbar .nav-link {
-  color: #1e5288;
-}
-.navbar .nav-link:hover {
-  color: #001c48;
-  background-color: #f8f9fa;
-}
-.navbar .nav-link:active,
-.navbar .nav-link.active {
-  color: #001c48;
-  background-color: #e9ecef;
-}
-.navbar .nav-link.active {
-  font-weight: 700;
-}
-.arizona-logo > .arizona-line-logo {
-  margin: 0 0 0 10px;
-}
-
-/* Undo AZ Bootstrap */
-.row > .arizona-logo {
-  float: unset;
-  max-width: revert;
-}
-
 /*
  * Search
  */
@@ -854,15 +779,6 @@ form.webform-submission-form {
 .site-footer {
   padding-bottom: 0;
   color: #49595e;
-}
-
-.navbar-offcanvas.open {
-   overflow-y: scroll;
-}
-@media (min-width: 992px) {
-  .navbar-offcanvas.open {
-     overflow-y: initial;
-  }
 }
 
 /* Add ability to hide contextual links:
