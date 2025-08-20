@@ -75,10 +75,9 @@ third_party_settings:
       weight: 5
       format_type: html_element
       format_settings:
-        classes: 'ps-3 w-25'
+        classes: 'pl-3 w-25'
         show_empty_fields: false
         id: ''
-        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -113,10 +112,9 @@ third_party_settings:
       weight: 9
       format_type: html_element
       format_settings:
-        classes: ''
+        classes: card-clickable-link
         show_empty_fields: false
         id: ''
-        label_as_html: false
         element: div
         show_label: false
         label_element: ''
@@ -126,17 +124,15 @@ third_party_settings:
         speed: fast
     group_link:
       children:
-        - az_news_read_more
+        - group_bottom_border
       label: Link
-      parent_name: group_read_more_text
+      parent_name: group_card_clickable
       region: content
-      weight: 7
+      weight: 1
       format_type: link
       format_settings:
-        classes: 'card-body p-0 stretched-link link-primary link-underline link-underline-opacity-0 link-underline-opacity-100-hover'
-        show_empty_fields: false
+        classes: 'card-body p-0'
         id: ''
-        label_as_html: false
         target: custom_uri
         custom_uri: '[node:az-canonical-url]'
         target_attribute: default
@@ -144,7 +140,7 @@ third_party_settings:
       children:
         - group_row
       label: 'Bottom Border'
-      parent_name: group_card_clickable
+      parent_name: group_link
       region: content
       weight: 6
       format_type: html_element
@@ -160,17 +156,15 @@ third_party_settings:
         speed: fast
     group_card_clickable:
       children:
-        - group_bottom_border
+        - group_link
       label: 'Card Clickable'
       parent_name: ''
       region: content
       weight: 0
       format_type: html_element
       format_settings:
-        classes: 'card border-0'
-        show_empty_fields: false
+        classes: 'card card-borderless card-clickable'
         id: ''
-        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -180,17 +174,16 @@ third_party_settings:
         speed: fast
     group_read_more_text:
       children:
-        - group_link
+        - az_news_read_more
       label: 'Read more text'
       parent_name: group_read_more
       region: content
       weight: 2
       format_type: html_element
       format_settings:
-        classes: 'small mt-2 mb-4'
+        classes: 'text-chili small mt-2 mb-4 bold'
         show_empty_fields: false
         id: ''
-        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -212,7 +205,7 @@ content:
   az_news_read_more:
     settings: {  }
     third_party_settings: {  }
-    weight: 8
+    weight: 2
     region: content
   field_az_media_thumbnail_image:
     type: media_thumbnail
