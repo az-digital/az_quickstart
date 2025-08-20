@@ -53,3 +53,21 @@ function az_barrio_post_update_migrate_material_symbols_icons(&$sandbox = NULL) 
     \Drupal::logger('az_quickstart')->notice('Migrated Material Design Sharp icons setting to Material Symbols Rounded.');
   }
 }
+
+/**
+ * Sets az_remove_sidebar_menu_mobile to TRUE if the old setting exists.
+ */
+function az_barrio_post_update_set_sidebar_menu_mobile_setting(&$sandbox = NULL) {
+  $config_factory = \Drupal::configFactory();
+  $theme_settings = $config_factory->getEditable('az_barrio.settings');
+
+  // Check for the existence of the old setting.
+  $old_setting = $theme_settings->get('az_remove_sidebar_menu_mobile');
+
+  // Only set the new setting if the old one exists.
+  if ($old_setting !== NULL) {
+    $theme_settings->set('az_remove_sidebar_menu_mobile', TRUE);
+    $theme_settings->save();
+    \Drupal::logger('az_quickstart')->notice('Set az_remove_sidebar_menu_mobile to TRUE during post update.');
+  }
+}
