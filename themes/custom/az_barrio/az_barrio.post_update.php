@@ -91,7 +91,7 @@ function az_barrio_post_update_migrate_bootstrap_2x_to_5x(&$sandbox = NULL) {
 }
 
 /**
- * Sets az_remove_sidebar_menu_mobile to TRUE if it doesn NOT exist.
+ * Sets az_remove_sidebar_menu_mobile to TRUE if it does NOT exist.
  */
 function az_barrio_post_update_set_sidebar_menu_mobile_setting(&$sandbox = NULL) {
   $config_factory = \Drupal::configFactory();
