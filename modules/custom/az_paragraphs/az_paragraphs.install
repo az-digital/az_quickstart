@@ -173,7 +173,7 @@ function az_paragraphs_update_1130001(&$sandbox) {
     // Skip unused/orphan paragraphs.
     $parent_type = $paragraph->get('parent_type')->value;
     $parent_field = $paragraph->get('parent_field_name')->value;
-    $query = \Drupal::service('entity_type_manager')->getStorage($parent_type)
+    $query = \Drupal::service('entity_type.manager')->getStorage($parent_type)
       ->getQuery()
       ->condition("$parent_field.target_id", $id)
       ->range(0, 1)
