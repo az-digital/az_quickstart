@@ -147,7 +147,6 @@ function az_barrio_post_update_convert_footer_default_logo_to_boolean(&$sandbox 
 }
 
 /**
- * Add langcode to az_barrio.settings.yml.
  * Adds langcode to az_barrio.settings.yml if it was missing.
  */
 function az_barrio_post_update_add_langcode_to_settings(&$sandbox = NULL) {
