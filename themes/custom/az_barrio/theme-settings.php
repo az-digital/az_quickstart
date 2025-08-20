@@ -336,6 +336,13 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   // Add new AZ Barrio sidebar position option and help text.
   $form['layout']['sidebar_position']['bootstrap_barrio_sidebar_position']['#options']['az-barrio-both-below'] = t('Both sides below on mobile');
   $form['layout']['sidebar_position']['bootstrap_barrio_sidebar_position']['#description'] = t('Below the Bootstrap md breakpoint, the "Both sides" position places the Sidebar First region <strong>above</strong> the page content while the "Both sides below on mobile" position places both sidebar regions <strong>below</strong> the page content.');
+  // Remove sidebar menu on mobile setting.
+  $form['layout']['sidebar_position']['az_remove_sidebar_menu_mobile'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Remove sidebar menu on mobile devices'),
+    '#description' => t('If checked, the sidebar menu will not be displayed on mobile devices.'),
+    '#default_value' => theme_get_setting('az_remove_sidebar_menu_mobile'),
+  ];
   // Remove Navbar options.
   $form['affix']['navbar_top'] = [];
   $form['affix']['navbar'] = [];

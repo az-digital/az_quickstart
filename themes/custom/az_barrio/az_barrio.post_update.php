@@ -89,3 +89,21 @@ function az_barrio_post_update_migrate_bootstrap_2x_to_5x(&$sandbox = NULL) {
     \Drupal::logger('az_quickstart')->notice('Migrated Arizona Bootstrap 2.x versions to 5.x equivalents for Arizona Bootstrap 5 compatibility.');
   }
 }
+
+/**
+ * Sets az_remove_sidebar_menu_mobile to TRUE if it does NOT exist.
+ */
+function az_barrio_post_update_set_sidebar_menu_mobile_setting(&$sandbox = NULL) {
+  $config_factory = \Drupal::configFactory();
+  $theme_settings = $config_factory->getEditable('az_barrio.settings');
+
+  // Check for the existence of the new setting.
+  $current_setting = $theme_settings->get('az_remove_sidebar_menu_mobile');
+
+  // Only set the new setting if it does not exist (is NULL).
+  if ($current_setting === NULL) {
+    $theme_settings->set('az_remove_sidebar_menu_mobile', TRUE);
+    $theme_settings->save();
+    \Drupal::logger('az_quickstart')->notice('Created az_remove_sidebar_menu_mobile and set to TRUE during post update.');
+  }
+}
