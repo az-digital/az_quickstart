@@ -5,6 +5,7 @@ dependencies:
     - field.field.node.az_news.field_az_attachments
     - field.field.node.az_news.field_az_body
     - field.field.node.az_news.field_az_byline
+    - field.field.node.az_news.field_az_byline_affiliation
     - field.field.node.az_news.field_az_contacts
     - field.field.node.az_news.field_az_enterprise_attributes
     - field.field.node.az_news.field_az_expiration_date
@@ -51,7 +52,7 @@ third_party_settings:
       children:
         - smart_title
         - group_text_muted
-        - field_az_byline
+        - az_news_byline_combined
       label: 'Title Block'
       parent_name: group_title_column
       region: content
@@ -192,6 +193,11 @@ targetEntityType: node
 bundle: az_news
 mode: default
 content:
+  az_news_byline_combined:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 7
+    region: content
   field_az_attachments:
     type: file_default
     label: hidden
@@ -204,14 +210,6 @@ content:
     type: text_default
     label: hidden
     settings: {  }
-    third_party_settings: {  }
-    weight: 7
-    region: content
-  field_az_byline:
-    type: string
-    label: hidden
-    settings:
-      link_to_entity: false
     third_party_settings: {  }
     weight: 7
     region: content
@@ -275,6 +273,8 @@ content:
     region: content
 hidden:
   az_news_read_more: true
+  field_az_byline: true
+  field_az_byline_affiliation: true
   field_az_enterprise_attributes: true
   field_az_expiration_date: true
   field_az_featured_image_as_thumb: true
