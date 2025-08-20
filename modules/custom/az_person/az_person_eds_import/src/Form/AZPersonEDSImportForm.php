@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace Drupal\az_person_eds_import\Form;
 
+use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\KeyValueStore\KeyValueFactoryInterface;
+use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\Core\Url;
 use Drupal\migrate\MigrateMessage;
 use Drupal\migrate\Plugin\MigrationInterface;
@@ -37,6 +40,27 @@ final class AZPersonEDSImportForm extends FormBase {
   protected $pluginManagerMigration;
 
   /**
+   * The key/value factory.
+   *
+   * @var \Drupal\Core\KeyValueStore\KeyValueFactoryInterface
+   */
+  protected KeyValueFactoryInterface $keyValue;
+
+  /**
+   * The time service.
+   *
+   * @var \Drupal\Component\Datetime\TimeInterface
+   */
+  protected TimeInterface $time;
+
+  /**
+   * The translation manager.
+   *
+   * @var \Drupal\Core\StringTranslation\TranslationInterface
+   */
+  protected TranslationInterface $translation;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
@@ -44,6 +68,9 @@ final class AZPersonEDSImportForm extends FormBase {
     $instance->messenger = $container->get('messenger');
     $instance->entityTypeManager = $container->get('entity_type.manager');
     $instance->pluginManagerMigration = $container->get('plugin.manager.migration');
+    $instance->keyValue = $container->get('keyvalue');
+    $instance->time = $container->get('datetime.time');
+    $instance->translation = $container->get('string_translation');
     return $instance;
   }
 
@@ -136,7 +163,15 @@ final class AZPersonEDSImportForm extends FormBase {
       ],
     ];
     // Run the migration.
-    $executable = new MigrateBatchExecutable($migration, new MigrateMessage(), $options);
+    $executable = new MigrateBatchExecutable(
+      $migration,
+      new MigrateMessage(),
+      $this->keyValue,
+      $this->time,
+      $this->translation,
+      $this->pluginManagerMigration,
+      $options
+    );
     $executable->batchImport();
 
   }
