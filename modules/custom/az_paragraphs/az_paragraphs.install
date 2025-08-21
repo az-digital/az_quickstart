@@ -279,24 +279,21 @@ function az_paragraphs_update_1130001(&$sandbox) {
         $parent_field = $paragraph->get('parent_field_name')->value;
         $parent_items = $parent->get($parent_field);
 
-        // Find and update just this paragraph's reference in the parent field.
-        $found_paragraph = FALSE;
+        // Update parent field reference to point to the new paragraph revision.
+        $field_updated = FALSE;
         /** @var \Drupal\entity_reference_revisions\Plugin\Field\FieldType\EntityReferenceRevisionsItem $item */
         foreach ($parent_items as $delta => $item) {
           if ($item->target_id == $paragraph->id()) {
-            // Update the reference to point to the new paragraph revision.
+            // Update reference in the parent field items list.
             $parent_items->get($delta)->setValue([
               'target_id' => $paragraph->id(),
               'target_revision_id' => $paragraph->getRevisionId(),
             ]);
-            $found_paragraph = TRUE;
-
-            // No need to continue once we've found and updated the reference.
-            break;
+            $field_updated = TRUE;
           }
         }
 
-        if (!$found_paragraph) {
+        if (!$field_updated) {
           $logger->warning('Could not find paragraph @pid in parent @parent_type @parent_id field @field', [
             '@pid' => $id,
             '@parent_type' => $parent->getEntityTypeId(),
@@ -308,6 +305,9 @@ function az_paragraphs_update_1130001(&$sandbox) {
           continue;
         }
 
+        // Set the updated field back on the parent.
+        $parent->set($parent_field, $parent_items->getValue());
+
         // Include a log revision message for the parent, if possible.
         if ($parent instanceof RevisionLogInterface && !$parent instanceof ParagraphInterface) {
           $parent->setRevisionLogMessage(__FUNCTION__ . t(': Updated child @paragraph_bundle paragraph @id content (revision: @vid) for Arizona Bootstrap 5 compatibility.', [
@@ -315,12 +315,6 @@ function az_paragraphs_update_1130001(&$sandbox) {
             '@id' => $id,
             '@vid' => $paragraph->getRevisionId(),
           ]));
-        }
-
-        // If parent is itself a paragraph, we need to handle its parent too.
-        if ($parent instanceof ParagraphInterface) {
-          // Save without updating fields to avoid triggering additional saves.
-          $parent->setSyncing(TRUE);
         }
 
         // Save the parent entity.
