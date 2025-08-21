@@ -2,8 +2,6 @@ global-styling:
   css:
     theme:
       css/style.css: {}
-  js:
-    js/toasts.js: { preprocess: false }
   dependencies:
     - az_barrio/arizona-bootstrap-css
     - az_barrio/arizona-bootstrap-js
