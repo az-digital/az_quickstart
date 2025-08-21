@@ -12,7 +12,3 @@
 .paragraph--type--az-photo-gallery .carousel-indicators {
   margin-bottom: 0;
 }
-
-.paragraph--type--az-photo-gallery .ratio-az-carousel {
-  --bs-aspect-ratio: 45%;
-}

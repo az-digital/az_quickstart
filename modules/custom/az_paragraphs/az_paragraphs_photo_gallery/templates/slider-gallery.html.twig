@@ -10,12 +10,10 @@
 #}
 
 <div class="az-gallery-container">
-  <div class="ratio ratio-az-carousel">
-    {% include '@az_paragraphs_photo_gallery/photo-gallery-carousel.html.twig' with {
-      'grid': false,
-      'photos': photos,
-      'gallery': gallery,
-      'style_name': 'az_carousel_item'
-    } %}
-  </div>
+  {% include '@az_paragraphs_photo_gallery/photo-gallery-carousel.html.twig' with {
+    'grid': false,
+    'photos': photos,
+    'gallery': gallery,
+    'style_name': 'az_carousel_item'
+  } %}
 </div>
