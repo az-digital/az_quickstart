@@ -109,6 +109,67 @@ function az_paragraphs_update_1130001(&$sandbox) {
   $logger = \Drupal::logger('az_paragraphs');
   $paragraph_storage = \Drupal::service('entity_type.manager')->getStorage('paragraph');
 
+  $bundle_content_fields = [
+    'az_splitscreen' => [
+      'field_name' => 'field_az_text_area',
+      'field_type' => 'TextLongItem',
+      'check_format' => TRUE,
+    ],
+    'az_text' => [
+      'field_name' => 'field_az_text_area',
+      'field_type' => 'TextLongItem',
+      'check_format' => TRUE,
+    ],
+    'az_text_background' => [
+      'field_name' => 'field_az_text_area',
+      'field_type' => 'TextLongItem',
+      'check_format' => TRUE,
+    ],
+    'az_text_media' => [
+      'field_name' => 'field_az_text_area',
+      'field_type' => 'TextLongItem',
+      'check_format' => TRUE,
+    ],
+    'az_html' => [
+      'field_name' => 'field_az_full_html',
+      'field_type' => 'TextLongItem',
+      'check_format' => FALSE,
+    ],
+    'az_cards' => [
+      'field_name' => 'field_az_cards',
+      'field_type' => 'AZCardItem',
+      'check_format' => TRUE,
+    ],
+    'az_accordion' => [
+      'field_name' => 'field_az_accordion',
+      'field_type' => 'AZAccordionItem',
+      'check_format' => TRUE,
+    ],
+  ];
+
+  $field_types = [
+    'TextLongItem' => [
+      'value_prop' => 'value',
+      'format_prop' => 'format',
+      'cardinality' => 1,
+    ],
+    'AZCardItem' => [
+      'value_prop' => 'body',
+      'format_prop' => 'body_format',
+      'cardinality' => -1,
+    ],
+    'AZAccordionItem' => [
+      'value_prop' => 'body',
+      'format_prop' => 'body_format',
+      'cardinality' => -1,
+    ],
+  ];
+
+  $formats = [
+    'az_standard',
+    'full_html',
+  ];
+
   if (!isset($sandbox['progress'])) {
     // Process paragraphs from our paragraph types containing any of these:
     // - field_az_text_area using az_standard or full_html format
@@ -196,74 +257,41 @@ function az_paragraphs_update_1130001(&$sandbox) {
     $field_name = NULL;
 
     // Handle different field types based on paragraph type.
-    switch ($paragraph->bundle()) {
-      case 'az_splitscreen':
-      case 'az_text':
-      case 'az_text_background':
-      case 'az_text_media':
-        // Text area paragraphs.
-        $field_name = 'field_az_text_area';
-        /** @var \Drupal\text\Plugin\Field\FieldType\TextLongItem $field */
-        $field = $paragraph->get($field_name);
-        if (!empty($field->value) && in_array($field->format, ['az_standard', 'full_html'])) {
-          $processed_value = AZBootstrapMarkupConverter::compareProcessor($field->value);
-          if ($processed_value !== $field->value) {
+    $bundle = $paragraph->bundle();
+    $field_name = $bundle_content_fields[$bundle]['field_name'];
+    $field_type = $bundle_content_fields[$bundle]['field_type'];
+    $value_prop = $field_types[$field_type]['value_prop'];
+    $format_prop = $field_types[$field_type]['format_prop'];
+    $cardinality = $field_types[$field_type]['cardinality'];
+    $check_format = $bundle_content_fields[$bundle]['check_format'];
+
+    /** @var \Drupal\Core\Field\FieldItemInterface|\Drupal\Core\Field\FieldItemInterface[] $field */
+    $field = $paragraph->get($field_name);
+    if ($cardinality === 1) {
+      if (!empty($field->$value_prop) && (!$check_format || in_array($field->$format_prop, $formats))) {
+        $processed_value = AZBootstrapMarkupConverter::compareProcessor($field->$value_prop);
+        if ($processed_value !== $field->$value_prop) {
+          $needs_update = TRUE;
+          $field->$value_prop = $processed_value;
+        }
+      }
+    }
+    else {
+      foreach ($field as $delta => $item) {
+        if (!empty($item->$value_prop) && (!$check_format || in_array($item->$format_prop, $formats))) {
+          $processed_value = AZBootstrapMarkupConverter::compareProcessor($item->$value_prop);
+          if ($processed_value !== $item->$value_prop) {
             $needs_update = TRUE;
-            $paragraph->$field_name->value = $processed_value;
+            $field[$delta]->$value_prop = $processed_value;
           }
         }
-        break;
-
-      case 'az_html':
-        // HTML paragraphs.
-        $field_name = 'field_az_full_html';
-        /** @var \Drupal\text\Plugin\Field\FieldType\TextLongItem $field */
-        $field = $paragraph->get($field_name);
-        if (!empty($field->value)) {
-          $processed_value = AZBootstrapMarkupConverter::compareProcessor($field->value);
-          if ($processed_value !== $field->value) {
-            $needs_update = TRUE;
-            $paragraph->$field_name->value = $processed_value;
-          }
-        }
-        break;
-
-      case 'az_cards':
-        // Card paragraphs.
-        $field_name = 'field_az_cards';
-        $field = $paragraph->get($field_name);
-        /** @var \Drupal\az_card\Plugin\Field\FieldType\AZCardItem $item */
-        foreach ($field as $delta => $item) {
-          if (!empty($item->body) && in_array($item->body_format, ['az_standard', 'full_html'])) {
-            $processed_value = AZBootstrapMarkupConverter::compareProcessor($item->body);
-            if ($processed_value !== $item->body) {
-              $needs_update = TRUE;
-              $item->body = $processed_value;
-            }
-          }
-        }
-        break;
-
-      case 'az_accordion':
-        // Accordion paragraphs.
-        $field_name = 'field_az_accordion';
-        $field = $paragraph->get($field_name);
-        /** @var \Drupal\az_accordion\Plugin\Field\FieldType\AZAccordionItem $item */
-        foreach ($field as $delta => $item) {
-          if (!empty($item->body) && in_array($item->body_format, ['az_standard', 'full_html'])) {
-            $processed_value = AZBootstrapMarkupConverter::compareProcessor($item->body);
-            if ($processed_value !== $item->body) {
-              $needs_update = TRUE;
-              $item->body = $processed_value;
-            }
-          }
-        }
-        break;
+      }
     }
 
     if ($needs_update) {
       // Save the paragraph first to create the new revision.
       $paragraph->setNewRevision(TRUE);
+      $paragraph->isDefaultRevision(TRUE);
       $paragraph->save();
 
       // Handle parent entity revision if needed.
@@ -277,8 +305,6 @@ function az_paragraphs_update_1130001(&$sandbox) {
 
         // Create new default revision of parent.
         $parent->setNewRevision(TRUE);
-        $parent->setRevisionCreationTime(\Drupal::time()->getRequestTime());
-        $parent->setRevisionUserId(1);
         $parent->isDefaultRevision(TRUE);
 
         // Get the parent entity field that references this paragraph.
@@ -316,6 +342,8 @@ function az_paragraphs_update_1130001(&$sandbox) {
 
         // Include a log revision message for the parent, if possible.
         if ($parent instanceof RevisionLogInterface && !$parent instanceof ParagraphInterface) {
+          $parent->setRevisionCreationTime(\Drupal::time()->getRequestTime());
+          $parent->setRevisionUserId(1);
           $parent->setRevisionLogMessage(__FUNCTION__ . t(': Updated child @paragraph_bundle paragraph @id content (revision: @vid) for Arizona Bootstrap 5 compatibility.', [
             '@paragraph_bundle' => $paragraph->bundle(),
             '@id' => $id,
@@ -344,7 +372,7 @@ function az_paragraphs_update_1130001(&$sandbox) {
   $sandbox['#finished'] = empty($sandbox['max']) ? 1 : ($sandbox['progress'] / $sandbox['max']);
 
   if ($sandbox['#finished'] >= 1) {
-    return t('Completed processing @count total paragraphs. @paragraphs_updated paragraphs updated for Bootstrap 5 compatibility. @paragraphs_skipped paragraphs skipped.', [
+    return t('Processed @count total paragraphs. @paragraphs_updated paragraphs updated for Bootstrap 5 compatibility. @paragraphs_skipped unused paragraphs skipped.', [
       '@count' => $sandbox['progress'],
       '@paragraphs_updated' => $sandbox['updated_count'],
       '@paragraphs_skipped' => $sandbox['skipped_count'],
