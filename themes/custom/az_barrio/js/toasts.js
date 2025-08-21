@@ -98,9 +98,7 @@
       text
     } = message;
     const {
-      type
-    } = options;
-    const {
+      type,
       id
     } = options;
     const existingToastContainer = document.querySelector('.toast-container[data-drupal-messages]');

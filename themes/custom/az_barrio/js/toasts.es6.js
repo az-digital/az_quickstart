@@ -131,8 +131,7 @@
   Drupal.theme.message = function messageTheme(message, options) {
     // Handle the correct Drupal core signature: ({ text }, { type, id })
     const { text } = message;
-    const { type } = options;
-    const { id } = options;
+    const { type, id } = options;
 
     // Check if we're in a toast container
     const existingToastContainer = document.querySelector(
