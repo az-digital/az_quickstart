@@ -1,11 +1,11 @@
 langcode: en
 status: true
 dependencies: {  }
-id: az_full_width_bg_large
 label: 'Large full-width background'
-description: "Minimum crop width 1920px, or the image will be scaled up and will possibly be blurry.\t"
+id: az_full_width_bg_large
+description: 'Minimum crop width 1140px, or the image will be scaled up and will possibly be blurry.'
 aspect_ratio: ''
-soft_limit_width: 1920
+soft_limit_width: 1140
 soft_limit_height: null
 hard_limit_width: null
 hard_limit_height: null
