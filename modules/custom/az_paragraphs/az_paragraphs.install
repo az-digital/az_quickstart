@@ -274,6 +274,8 @@ function az_paragraphs_update_1130001(&$sandbox) {
 
         // Create new revision of parent.
         $parent->setNewRevision(TRUE);
+        $parent->setRevisionCreationTime(\Drupal::time()->getRequestTime());
+        $parent->setRevisionUserId(1);
 
         // Get the parent entity field that references this paragraph.
         $parent_field = $paragraph->get('parent_field_name')->value;
