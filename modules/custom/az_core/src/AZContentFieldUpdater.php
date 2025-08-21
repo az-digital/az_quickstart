@@ -4,8 +4,10 @@ namespace Drupal\az_core;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\RevisionableInterface;
+use Drupal\Core\Entity\RevisionLogInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\paragraphs\ParagraphInterface;
 
 /**
  * Service for updating content field values.
@@ -119,7 +121,9 @@ class AZContentFieldUpdater implements AZContentFieldUpdaterInterface {
 
         if ($options['create_revisions'] && $entity instanceof RevisionableInterface) {
           $entity->setNewRevision(TRUE);
-          if (method_exists($entity, 'setRevisionLogMessage')) {
+          // Only set revision log message on supported content entities that
+          // are not paragraphs.
+          if ($entity instanceof RevisionLogInterface && !$entity instanceof ParagraphInterface) {
             $entity->setRevisionLogMessage($message);
           }
         }

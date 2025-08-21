@@ -259,12 +259,8 @@ function az_paragraphs_update_1130001(&$sandbox) {
     }
 
     if ($needs_update) {
-      $paragraph->setNewRevision(TRUE);
-      $paragraph->revision_log = t('Updated @field content for Arizona Bootstrap 5 compatibility.', [
-        '@field' => $field_name,
-      ]);
-
       // Save the paragraph first to create the new revision.
+      $paragraph->setNewRevision(TRUE);
       $paragraph->save();
 
       // Handle parent entity revision if needed.
@@ -313,8 +309,8 @@ function az_paragraphs_update_1130001(&$sandbox) {
         }
 
         // Include a log revision message for the parent, if possible.
-        if ($parent instanceof RevisionLogInterface) {
-          $parent->setRevisionLogMessage(t('Updated child @paragraph_bundle paragraph @id content (revision: @vid) for Arizona Bootstrap 5 compatibility.', [
+        if ($parent instanceof RevisionLogInterface && !$parent instanceof ParagraphInterface) {
+          $parent->setRevisionLogMessage(__FUNCTION__ . t(': Updated child @paragraph_bundle paragraph @id content (revision: @vid) for Arizona Bootstrap 5 compatibility.', [
             '@paragraph_bundle' => $paragraph->bundle(),
             '@id' => $id,
             '@vid' => $paragraph->getRevisionId(),
