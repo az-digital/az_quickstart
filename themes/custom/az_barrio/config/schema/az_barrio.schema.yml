@@ -345,3 +345,13 @@ az_barrio.settings:
     header_two_col_classes:
       type: string
       label: 'Header column two classes'
+    # Bootstrap Barrio form element styling settings
+    bootstrap_barrio_radio:
+      type: string
+      label: 'Radio button style'
+    bootstrap_barrio_select:
+      type: string
+      label: 'Select element style'
+    bootstrap_barrio_file:
+      type: string
+      label: 'File input style'
