@@ -272,10 +272,11 @@ function az_paragraphs_update_1130001(&$sandbox) {
         /** @var \Drupal\Core\Entity\ContentEntityInterface $parent */
         $parent = $parent_storage->load($parent->id());
 
-        // Create new revision of parent.
+        // Create new default revision of parent.
         $parent->setNewRevision(TRUE);
         $parent->setRevisionCreationTime(\Drupal::time()->getRequestTime());
         $parent->setRevisionUserId(1);
+        $parent->isDefaultRevision(TRUE);
 
         // Get the parent entity field that references this paragraph.
         $parent_field = $paragraph->get('parent_field_name')->value;
