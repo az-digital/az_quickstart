@@ -11,6 +11,7 @@
 use Drupal\Core\Entity\RevisionableInterface;
 use Drupal\Core\Entity\RevisionLogInterface;
 use Drupal\az_core\Utility\AZBootstrapMarkupConverter;
+use Drupal\paragraphs\ParagraphInterface;
 
 /**
  * Implements hook_update_last_removed().
@@ -234,7 +235,7 @@ function az_paragraphs_update_1130001(&$sandbox) {
             $processed_value = AZBootstrapMarkupConverter::compareProcessor($item->body);
             if ($processed_value !== $item->body) {
               $needs_update = TRUE;
-              $paragraph->get($field_name)[$delta]->body = $processed_value;
+              $item->body = $processed_value;
             }
           }
         }
@@ -250,7 +251,7 @@ function az_paragraphs_update_1130001(&$sandbox) {
             $processed_value = AZBootstrapMarkupConverter::compareProcessor($item->body);
             if ($processed_value !== $item->body) {
               $needs_update = TRUE;
-              $paragraph->get($field_name)[$delta]->body = $processed_value;
+              $item->body = $processed_value;
             }
           }
         }
@@ -269,7 +270,15 @@ function az_paragraphs_update_1130001(&$sandbox) {
       // Handle parent entity revision if needed.
       $parent = $paragraph->getParentEntity();
       if ($parent instanceof RevisionableInterface) {
+        // Load latest version to ensure we're not working with an older
+        // revision.
+        $parent_storage = \Drupal::entityTypeManager()->getStorage($parent->getEntityTypeId());
+        /** @var \Drupal\Core\Entity\ContentEntityInterface $parent */
+        $parent = $parent_storage->load($parent->id());
+
+        // Create new revision of parent.
         $parent->setNewRevision(TRUE);
+
         // Get the parent entity field that references this paragraph.
         $parent_field = $paragraph->get('parent_field_name')->value;
         $parent_items = $parent->get($parent_field);
@@ -279,11 +288,14 @@ function az_paragraphs_update_1130001(&$sandbox) {
         /** @var \Drupal\entity_reference_revisions\Plugin\Field\FieldType\EntityReferenceRevisionsItem $item */
         foreach ($parent_items as $delta => $item) {
           if ($item->target_id == $paragraph->id()) {
+            // Update the reference to point to the new paragraph revision.
             $parent_items->get($delta)->setValue([
               'target_id' => $paragraph->id(),
               'target_revision_id' => $paragraph->getRevisionId(),
             ]);
             $found_paragraph = TRUE;
+
+            // No need to continue once we've found and updated the reference.
             break;
           }
         }
@@ -295,6 +307,9 @@ function az_paragraphs_update_1130001(&$sandbox) {
             '@parent_id' => $parent->id(),
             '@field' => $parent_field,
           ]);
+          // Skip saving if we couldn't find the paragraph reference.
+          $sandbox['progress']++;
+          continue;
         }
 
         // Include a log revision message for the parent, if possible.
@@ -305,6 +320,14 @@ function az_paragraphs_update_1130001(&$sandbox) {
             '@vid' => $paragraph->getRevisionId(),
           ]));
         }
+
+        // If parent is itself a paragraph, we need to handle its parent too.
+        if ($parent instanceof ParagraphInterface) {
+          // Save without updating fields to avoid triggering additional saves.
+          $parent->setSyncing(TRUE);
+        }
+
+        // Save the parent entity.
         $parent->save();
 
         $logger->info('Updated @paragraph_bundle paragraph @pid (revision: @vid) and parent @parent_bundle @parent_type @parent_id', [
