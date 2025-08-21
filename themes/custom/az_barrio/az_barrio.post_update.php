@@ -88,8 +88,6 @@ function az_barrio_post_update_convert_boolean_to_integer_settings(&$sandbox = N
 
 /**
  * Updates theme settings for schema compliance.
- * Updates data types, and reorganizes configuration
- * to match the updated schema structure.
  */
 function az_barrio_post_update_theme_settings_schema(&$sandbox = NULL) {
   $config_factory = \Drupal::configFactory();
@@ -149,7 +147,6 @@ function az_barrio_post_update_convert_footer_default_logo_to_boolean(&$sandbox 
 }
 
 /**
- * Add langcode to az_barrio.settings.yml.
  * Adds langcode to az_barrio.settings.yml if it was missing.
  */
 function az_barrio_post_update_add_langcode_to_settings(&$sandbox = NULL) {
