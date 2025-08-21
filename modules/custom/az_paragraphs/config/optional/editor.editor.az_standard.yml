@@ -190,9 +190,6 @@ settings:
           label: 'Text Ash'
           element: '<span class="text-ash">'
         -
-          label: 'Sanserif Text'
-          element: '<span class="text-sans">'
-        -
           label: 'Capitalized Text'
           element: '<span class="text-capitalize">'
         -
