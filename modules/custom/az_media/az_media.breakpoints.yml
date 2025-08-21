@@ -1,4 +1,4 @@
-# See https://digital.arizona.edu/arizona-bootstrap/docs/2.0/layout/grid/#grid-options
+# See https://digital.arizona.edu/arizona-bootstrap/v5/docs/5.0/layout/grid/#grid-options
 az_media.small:
   label: Small
   mediaQuery: 'all and (min-width: 576px)'
@@ -21,5 +21,11 @@ az_media.extra:
   label: Extra Large
   mediaQuery: 'all and (min-width: 1200px)'
   weight: 3
+  multipliers:
+    - 1x
+az_media.extra_extra:
+  label: Extra Extra Large
+  mediaQuery: 'all and (min-width: 1400px)'
+  weight: 4
   multipliers:
     - 1x
