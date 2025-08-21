@@ -208,22 +208,22 @@ settings:
           label: 'Unordered List Pills'
           element: '<ul class="nav nav-pills">'
         -
-          label: 'Label Red'
+          label: 'Badge Red'
           element: '<span class="badge text-bg-red">'
         -
-          label: 'Label Blue'
+          label: 'Badge Blue'
           element: '<span class="badge text-bg-blue">'
         -
-          label: 'Label Green'
+          label: 'Badge Green'
           element: '<span class="badge text-bg-success">'
         -
-          label: 'Label Sky'
+          label: 'Badge Sky'
           element: '<span class="badge text-bg-info">'
         -
-          label: 'Label Warning'
+          label: 'Badge Warning'
           element: '<span class="badge text-bg-warning">'
         -
-          label: 'Label Danger'
+          label: 'Badge Danger'
           element: '<span class="badge text-bg-danger">'
         -
           label: 'Text Size Small'
