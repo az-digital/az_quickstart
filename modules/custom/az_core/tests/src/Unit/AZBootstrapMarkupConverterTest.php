@@ -23,6 +23,25 @@ class AZBootstrapMarkupConverterTest extends UnitTestCase {
   }
 
   /**
+   * Test that compareProcessor returns original text when no changes needed.
+   */
+  public function testCompareProcessorNoChanges() {
+    $input = '<p>Simple text without Bootstrap classes</p>';
+    $result = AZBootstrapMarkupConverter::compareProcessor($input);
+    $this->assertEquals($input, $result, 'Text without Bootstrap classes should remain unchanged');
+  }
+
+  /**
+   * Test that compareProcessor returns converted text when changes are needed.
+   *
+   * @dataProvider provideFragments
+   */
+  public function testCompareProcessor($input, $expected) {
+    $result = AZBootstrapMarkupConverter::compareProcessor($input);
+    $this->assertEquals($expected, $result, 'Text with Bootstrap classes should be converted');
+  }
+
+  /**
    * Data provider for testFragmentConversion.
    */
   public function provideFragments() {

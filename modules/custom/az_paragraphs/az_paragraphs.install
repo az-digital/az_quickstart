@@ -202,7 +202,7 @@ function az_paragraphs_update_1130001(&$sandbox) {
         /** @var \Drupal\text\Plugin\Field\FieldType\TextLongItem $field */
         $field = $paragraph->get($field_name);
         if (!empty($field->value) && in_array($field->format, ['az_standard', 'full_html'])) {
-          $processed_value = AZBootstrapMarkupConverter::convert($field->value);
+          $processed_value = AZBootstrapMarkupConverter::compareProcessor($field->value);
           if ($processed_value !== $field->value) {
             $needs_update = TRUE;
             $paragraph->$field_name->value = $processed_value;
@@ -216,7 +216,7 @@ function az_paragraphs_update_1130001(&$sandbox) {
         /** @var \Drupal\text\Plugin\Field\FieldType\TextLongItem $field */
         $field = $paragraph->get($field_name);
         if (!empty($field->value)) {
-          $processed_value = AZBootstrapMarkupConverter::convert($field->value);
+          $processed_value = AZBootstrapMarkupConverter::compareProcessor($field->value);
           if ($processed_value !== $field->value) {
             $needs_update = TRUE;
             $paragraph->$field_name->value = $processed_value;
@@ -231,7 +231,7 @@ function az_paragraphs_update_1130001(&$sandbox) {
         /** @var \Drupal\az_card\Plugin\Field\FieldType\AZCardItem $item */
         foreach ($field as $delta => $item) {
           if (!empty($item->body) && in_array($item->body_format, ['az_standard', 'full_html'])) {
-            $processed_value = AZBootstrapMarkupConverter::convert($item->body);
+            $processed_value = AZBootstrapMarkupConverter::compareProcessor($item->body);
             if ($processed_value !== $item->body) {
               $needs_update = TRUE;
               $paragraph->get($field_name)[$delta]->body = $processed_value;
@@ -247,7 +247,7 @@ function az_paragraphs_update_1130001(&$sandbox) {
         /** @var \Drupal\az_accordion\Plugin\Field\FieldType\AZAccordionItem $item */
         foreach ($field as $delta => $item) {
           if (!empty($item->body) && in_array($item->body_format, ['az_standard', 'full_html'])) {
-            $processed_value = AZBootstrapMarkupConverter::convert($item->body);
+            $processed_value = AZBootstrapMarkupConverter::compareProcessor($item->body);
             if ($processed_value !== $item->body) {
               $needs_update = TRUE;
               $paragraph->get($field_name)[$delta]->body = $processed_value;

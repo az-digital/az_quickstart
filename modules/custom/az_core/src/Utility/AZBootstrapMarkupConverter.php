@@ -10,6 +10,77 @@ use Masterminds\HTML5;
 final class AZBootstrapMarkupConverter {
 
   /**
+   * Uses DOM parser to parse HTML without modifying it.
+   *
+   * Used for comparing original content after parsing but before conversion.
+   *
+   * @param string $text
+   *   Text containing HTML markup.
+   *
+   * @return string|bool
+   *   Parsed text value or FALSE if DOM parsing was unsuccessful.
+   */
+  public static function parse($text) {
+    $html5 = new HTML5(['disable_html_ns' => TRUE]);
+    // Create a base document.
+    $dom = $html5->parse('<!DOCTYPE html><html><body></body></html>');
+    $body = $dom->getElementsByTagName('body')->item(0);
+
+    // Parse the fragment.
+    $fragment = $html5->parseFragment($text);
+
+    if (!$fragment) {
+      return FALSE;
+    }
+
+    // Import the fragment into our document.
+    foreach ($fragment->childNodes as $child) {
+      $imported = $dom->importNode($child, TRUE);
+      $body->appendChild($imported);
+    }
+
+    // Return parsed but unconverted content.
+    $result = '';
+    foreach ($body->childNodes as $child) {
+      $result .= $html5->saveHTML($child);
+    }
+    return $result;
+  }
+
+  /**
+   * Method to be used as callable for AZContentFieldUpdater service.
+   *
+   * Compares the parsed original content with converted content.
+   *
+   * @param string $text
+   *   Text containing HTML markup.
+   *
+   * @return string
+   *   Returns the converted value if changes were made, otherwise original
+   *   value.
+   */
+  public static function compareProcessor($text) {
+    // First just parse the content.
+    $parsed = static::parse($text);
+    if ($parsed === FALSE) {
+      return $text;
+    }
+
+    // Then convert it.
+    $converted = static::convert($text);
+    if ($converted === FALSE) {
+      return $text;
+    }
+
+    // Only return converted value if it's different from parsed.
+    if ($parsed !== $converted) {
+      return $converted;
+    }
+
+    return $text;
+  }
+
+  /**
    * Uses DOM parser to remap old AZ Bootstrap attribute values to new values.
    *
    * @param string $text

@@ -26,7 +26,7 @@ function az_course_update_1130001(&$sandbox) {
     ->processFieldUpdates(
       'node',
       'field_az_course_description',
-      'Drupal\az_core\Utility\AZBootstrapMarkupConverter::convert',
+      'Drupal\az_core\Utility\AZBootstrapMarkupConverter::compareProcessor',
       $sandbox,
       [
         'description' => __FUNCTION__ . ' (updating legacy Bootstrap markup to Bootstrap 5)',
