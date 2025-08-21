@@ -209,22 +209,22 @@ settings:
           element: '<ul class="nav nav-pills">'
         -
           label: 'Label Red'
-          element: '<span class="badge badge-red">'
+          element: '<span class="badge text-bg-red">'
         -
           label: 'Label Blue'
-          element: '<span class="badge badge-blue">'
+          element: '<span class="badge text-bg-blue">'
         -
           label: 'Label Green'
-          element: '<span class="badge badge-success">'
+          element: '<span class="badge text-bg-success">'
         -
           label: 'Label Sky'
-          element: '<span class="badge badge-info">'
+          element: '<span class="badge text-bg-info">'
         -
           label: 'Label Warning'
-          element: '<span class="badge badge-warning">'
+          element: '<span class="badge text-bg-warning">'
         -
           label: 'Label Danger'
-          element: '<span class="badge badge-danger">'
+          element: '<span class="badge text-bg-danger">'
         -
           label: 'Text Size Small'
           element: '<span class="small">'
@@ -271,9 +271,6 @@ settings:
           label: 'Blockquote Right'
           element: '<blockquote class="blockquote text-end">'
         -
-          label: 'Blockquote Reverse'
-          element: '<blockquote class="blockquote blockquote-reverse text-end">'
-        -
           label: 'Blockquote Footer'
           element: '<footer class="blockquote-footer">'
         -
@@ -293,7 +290,7 @@ settings:
           element: '<table class="table table-dark">'
         -
           label: 'Dark table heading'
-          element: '<thead class="thead-dark">'
+          element: '<thead class="table-dark">'
     ckeditor_bs_grid_grid:
       use_cdn: false
       cdn_url: ''
@@ -316,6 +313,7 @@ settings:
         - md
         - lg
         - xl
+        - xxl
     ckeditor_indentblock_indent:
       enable: true
     linkit_extension:
