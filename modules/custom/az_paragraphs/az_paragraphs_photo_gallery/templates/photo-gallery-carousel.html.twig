@@ -19,7 +19,7 @@
     <span class="visually-hidden">Previous</span>
   </button>
 
-  <div class="carousel-inner h-100">
+  <div class="carousel-inner h-100{% if not grid %} rounded{% endif %}">
     {% for key, item in photos %}
       {% if key|first != '#' %}
         {% set carousel_image = {
