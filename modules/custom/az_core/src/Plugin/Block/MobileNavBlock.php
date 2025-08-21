@@ -186,7 +186,7 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
       '#tag' => 'ul',
       '#attributes' => [
         'id' => 'az_mobile_nav_menu_links',
-        'class' => ['nav nav-pills flex-column bg-white mb-2'],
+        'class' => ['nav nav-pills flex-column bg-white'],
       ],
     ];
 
@@ -235,8 +235,6 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
         '#tag' => 'div',
         '#attributes' => [
           'class' => [
-            'd-inline-flex',
-            'align-items-center',
             'px-3',
             'fw-bold',
             'az-mobile-nav-root',
@@ -281,9 +279,6 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
             'pe-3',
             'mb-1',
             'text-azurite',
-            'text-decoration-none',
-            'd-inline-flex',
-            'align-items-center',
             'az-mobile-nav-back',
           ],
           'data-ajax-http-method' => 'GET',
@@ -295,8 +290,6 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
           '#tag' => 'div',
           '#attributes' => [
             'class' => [
-              'd-inline-flex',
-              'align-items-center',
               'px-3',
               'fw-bold',
               'az-mobile-nav-root',
@@ -326,11 +319,8 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
           '#attributes' => [
             'role' => 'button',
             'class' => [
-              'd-inline-flex',
-              'align-items-center',
               'px-3',
               'text-blue',
-              'text-decoration-none',
               'az-mobile-nav-root',
             ],
           ],
@@ -354,24 +344,14 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
           '#value' => $item->link->getTitle(),
           '#attributes' => [
             'class' => [
-              'nav-link',
               $isMainMenu ? 'ms-2' : 'ms-3',
-              'fw-normal',
               'text-black',
-              'flex-grow-1',
-              'd-flex',
-              'align-items-center',
               'border-end',
             ],
           ],
         ];
       }
       else {
-        $pageLinkTitle = [
-          '#type' => 'html_tag',
-          '#tag' => 'span',
-          '#value' => $item->link->getTitle(),
-        ];
         $pageLink = [
           '#type' => 'link',
           '#attributes' => [
@@ -379,20 +359,16 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
             'class' => [
               'nav-link',
               $isMainMenu ? 'ms-2' : 'ms-3',
-              'text-azurite',
-              'flex-grow-1',
-              'd-flex',
-              'align-items-center',
-              'border-end',
             ],
           ],
-          '#title' => $pageLinkTitle,
+          '#title' => $item->link->getTitle(),
           '#url' => $item->link->getUrlObject(),
         ];
       }
 
       $childrenLink = [];
       if ($item->hasChildren) {
+        $pageLink['#attributes']['class'][] = 'border-end';
         $childrenLink = [
           '#type' => 'link',
           '#name' => $item->link->getPluginId(),
@@ -410,12 +386,6 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
               'btn',
               'btn-lg',
               'bg-white',
-              'py-0',
-              'border-top-0',
-              'border-bottom-0',
-              'rounded-0',
-              'd-flex',
-              'align-items-center',
               'az-mobile-nav-link',
             ],
             'data-ajax-http-method' => 'GET',
@@ -428,8 +398,8 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
         '#tag' => 'li',
         '#attributes' => [
           'class' => ($item->link->getPluginId() === $this->currentPage) ?
-            ['nav-item d-flex align-items-stretch border-start-0 border-end-0 text-bg-gray-200 az-mobile-nav-current'] :
-            ['nav-item d-flex align-items-stretch border-start-0 border-end-0'],
+            ['nav-item text-bg-gray-200 az-mobile-nav-current'] :
+            ['nav-item'],
         ],
         'children' => !empty($childrenLink) ? [
           $pageLink,

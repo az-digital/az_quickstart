@@ -406,6 +406,41 @@ td.menu-disabled {
   }
 }
 
+/* POTENTIAL ARIZONA BOOTSTRAP STYLING */
+/* Make Arizona Header sticky at top on mobile devices only */
+@media screen and (max-width: 992px) {
+  #page {
+    margin-top: 50px;
+  }
+  .arizona-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    height: 50px;
+  }
+  .arizona-logo {
+    flex-shrink: 1;
+  }
+  .arizona-line-logo {
+    max-width: 211px;
+    width: 100%;
+  }
+  :target {
+    scroll-margin-top: 58px;
+  }
+  .user-logged-in #page {
+    margin-top: 39px;
+  }
+  .user-logged-in .arizona-header {
+    position: static;
+  }
+}
+.btn-arizona-header {
+  padding: 4px 0;
+}
+
 /*
  * Search
  */
@@ -414,10 +449,17 @@ td.menu-disabled {
   flex-flow: row wrap;
 }
 
+#block-az-barrio-offcanvas-searchform {
+  margin-left: .25rem;
+}
+
 #block-az-barrio-offcanvas-searchform .form-search {
   height: unset;
-  margin-left: 0 !important;
-  padding-left: 1rem;
+  margin-left: 0;
+  padding-left: .75rem;
+  border: none;
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
 }
 
 #block-az-barrio-offcanvas-searchform .btn {
@@ -426,10 +468,6 @@ td.menu-disabled {
 
 #block-az-barrio-offcanvas-searchform .material-symbols-rounded {
   vertical-align: text-bottom;
-}
-
-#azMobileNav .form-search {
-  border: none;
 }
 
 .az-search-block .search-block-form .form-search {
