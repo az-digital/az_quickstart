@@ -32,9 +32,10 @@
  *   current user is a logged-in member.
  * - is_admin: Flag for admin user status. Will be true when the current user
  *   is an administrator.
- * - grid: Whether the photo gallery uses a Grid display.
+ * - gallery_display: Machine name of the display type. Can be grid, slider, or slider_full
  * - modal: Unique id for the modal element.
  * - gallery: Unique id for the carousel element.
+ * - ratio: Aspect ratio for the gallery display.
  *
  * @see template_preprocess_paragraph()
  *
@@ -53,10 +54,9 @@
   <div{{ attributes.addClass(classes) }}>
     {% block content %}
       {% if content.field_az_photos[0] %}
-        {% if grid %}
+        {% if gallery_display == 'grid' %}
           {# Grid display #}
           {% include '@az_paragraphs_photo_gallery/grid-gallery.html.twig' with {
-            'grid': grid,
             'photos': paragraph.field_az_photos,
             'modal': modal,
             'gallery': gallery
@@ -64,9 +64,10 @@
         {% else %}
           {# Slider display #}
           {% include '@az_paragraphs_photo_gallery/slider-gallery.html.twig' with {
-            'grid': grid,
+            'gallery_display' : gallery_display,
             'photos': paragraph.field_az_photos,
-            'gallery': gallery
+            'gallery': gallery,
+            'ratio' : ratio
           } %}
         {% endif %}
       {% endif %}
