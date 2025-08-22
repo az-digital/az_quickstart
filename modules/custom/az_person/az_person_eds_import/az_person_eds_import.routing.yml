@@ -1,0 +1,7 @@
+az_person_eds_import.form:
+  path: '/admin/content/eds/import'
+  defaults:
+    _title: 'Import from EDS'
+    _form: 'Drupal\az_person_eds_import\Form\AZPersonEDSImportForm'
+  requirements:
+    _permission: 'create az_person content'
