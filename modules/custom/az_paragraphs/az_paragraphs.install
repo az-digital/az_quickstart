@@ -8,10 +8,7 @@
  * profile.
  */
 
-use Drupal\Core\Entity\RevisionableInterface;
-use Drupal\Core\Entity\RevisionLogInterface;
 use Drupal\az_core\Utility\AZBootstrapMarkupConverter;
-use Drupal\paragraphs\ParagraphInterface;
 
 /**
  * Implements hook_update_last_removed().
@@ -106,277 +103,249 @@ function az_paragraphs_update_1021201() {
  * Apply Bootstrap 5 compatibility updates to paragraphs with text_area fields.
  */
 function az_paragraphs_update_1130001(&$sandbox) {
-  $logger = \Drupal::logger('az_paragraphs');
+  /** @var \Drupal\az_core\AZContentFieldUpdater $field_updater */
+  $field_updater = \Drupal::service('az_core.content_field_updater');
   $paragraph_storage = \Drupal::service('entity_type.manager')->getStorage('paragraph');
+  $logger = \Drupal::logger('az_paragraphs');
 
-  $bundle_content_fields = [
-    'az_splitscreen' => [
-      'field_name' => 'field_az_text_area',
-      'field_type' => 'TextLongItem',
-      'check_format' => TRUE,
-    ],
-    'az_text' => [
-      'field_name' => 'field_az_text_area',
-      'field_type' => 'TextLongItem',
-      'check_format' => TRUE,
-    ],
-    'az_text_background' => [
-      'field_name' => 'field_az_text_area',
-      'field_type' => 'TextLongItem',
-      'check_format' => TRUE,
-    ],
-    'az_text_media' => [
-      'field_name' => 'field_az_text_area',
-      'field_type' => 'TextLongItem',
-      'check_format' => TRUE,
-    ],
-    'az_html' => [
-      'field_name' => 'field_az_full_html',
-      'field_type' => 'TextLongItem',
-      'check_format' => FALSE,
-    ],
-    'az_cards' => [
-      'field_name' => 'field_az_cards',
-      'field_type' => 'AZCardItem',
-      'check_format' => TRUE,
-    ],
-    'az_accordion' => [
-      'field_name' => 'field_az_accordion',
-      'field_type' => 'AZAccordionItem',
-      'check_format' => TRUE,
-    ],
-  ];
-
-  $field_types = [
-    'TextLongItem' => [
-      'value_prop' => 'value',
-      'format_prop' => 'format',
-      'cardinality' => 1,
-    ],
-    'AZCardItem' => [
-      'value_prop' => 'body',
-      'format_prop' => 'body_format',
-      'cardinality' => -1,
-    ],
-    'AZAccordionItem' => [
-      'value_prop' => 'body',
-      'format_prop' => 'body_format',
-      'cardinality' => -1,
-    ],
-  ];
-
-  $formats = [
-    'az_standard',
-    'full_html',
-  ];
-
-  if (!isset($sandbox['progress'])) {
-    // Process paragraphs from our paragraph types containing any of these:
-    // - field_az_text_area using az_standard or full_html format
-    // - field_az_full_html with any content
-    // - field_az_cards.body using az_standard or full_html format
-    // - field_az_accordion.body using az_standard or full_html format.
-    $query = $paragraph_storage->getQuery();
-    $query->accessCheck(FALSE);
-
-    // Text area paragraphs.
-    $text_area_group = $query->andConditionGroup()
-      ->condition('type', [
+  // Define field configurations for different paragraph types.
+  $field_configs = [
+    // Regular text fields.
+    'text' => [
+      'bundles' => [
         'az_splitscreen',
         'az_text',
         'az_text_background',
         'az_text_media',
-      ], 'IN')
-      ->condition('field_az_text_area.format', ['az_standard', 'full_html'], 'IN');
+      ],
+      'field_name' => 'field_az_text_area',
+      'options' => [
+        'value_key' => 'value',
+        'format_key' => 'format',
+        'format_required' => TRUE,
+      ],
+      'query_conditions' => [
+        'field_name' => 'field_az_text_area.format',
+        'values' => ['az_standard', 'full_html'],
+      ],
+    ],
+    // HTML fields.
+    'html' => [
+      'bundles' => ['az_html'],
+      'field_name' => 'field_az_full_html',
+      'options' => [
+        'value_key' => 'value',
+        'format_required' => FALSE,
+      ],
+      'query_conditions' => [
+        'field_name' => 'field_az_full_html',
+        'exists' => TRUE,
+      ],
+    ],
+    // Card fields.
+    'cards' => [
+      'bundles' => ['az_cards'],
+      'field_name' => 'field_az_cards',
+      'options' => [
+        'value_key' => 'body',
+        'format_key' => 'body_format',
+        'format_required' => TRUE,
+      ],
+      'query_conditions' => [
+        'field_name' => 'field_az_cards.body',
+        'exists' => TRUE,
+        'format_field' => 'field_az_cards.body_format',
+        'values' => ['az_standard', 'full_html'],
+      ],
+    ],
+    // Accordion fields.
+    'accordion' => [
+      'bundles' => ['az_accordion'],
+      'field_name' => 'field_az_accordion',
+      'options' => [
+        'value_key' => 'body',
+        'format_key' => 'body_format',
+        'format_required' => TRUE,
+      ],
+      'query_conditions' => [
+        'field_name' => 'field_az_accordion.body',
+        'exists' => TRUE,
+        'format_field' => 'field_az_accordion.body_format',
+        'values' => ['az_standard', 'full_html'],
+      ],
+    ],
+  ];
 
-    // HTML paragraphs.
-    $html_group = $query->andConditionGroup()
-      ->condition('type', 'az_html')
-      ->exists('field_az_full_html');
+  if (!isset($sandbox['progress'])) {
+    // Initialize update tracking.
+    $query = $paragraph_storage->getQuery()
+      ->accessCheck(FALSE);
 
-    // Card paragraphs.
-    $card_group = $query->andConditionGroup()
-      ->condition('type', 'az_cards')
-      ->exists('field_az_cards.body')
-      ->condition('field_az_cards.body_format', ['az_standard', 'full_html'], 'IN');
+    // Build conditions for each field type.
+    $field_groups = [];
+    foreach ($field_configs as $config) {
+      $group = $query->andConditionGroup()
+        ->condition('type', $config['bundles'], 'IN');
 
-    // Accordion paragraphs.
-    $accordion_group = $query->andConditionGroup()
-      ->condition('type', 'az_accordion')
-      ->exists('field_az_accordion.body')
-      ->condition('field_az_accordion.body_format', ['az_standard', 'full_html'], 'IN');
+      // Add field conditions.
+      if (!empty($config['query_conditions']['exists'])) {
+        $group->exists($config['query_conditions']['field_name']);
+      }
+      if (!empty($config['query_conditions']['values'])) {
+        $field = $config['query_conditions']['format_field'] ?? $config['query_conditions']['field_name'];
+        $group->condition($field, $config['query_conditions']['values'], 'IN');
+      }
+
+      $field_groups[] = $group;
+    }
 
     // Combine all conditions.
-    $group = $query->orConditionGroup()
-      ->condition($text_area_group)
-      ->condition($html_group)
-      ->condition($card_group)
-      ->condition($accordion_group);
+    $or_group = $query->orConditionGroup();
+    foreach ($field_groups as $group) {
+      $or_group->condition($group);
+    }
+    $query->condition($or_group);
 
-    $query->condition($group);
-
+    // Initialize sandbox.
     $sandbox['ids'] = $query->execute();
     $sandbox['max'] = count($sandbox['ids']);
     $sandbox['progress'] = 0;
+    // Track overall progress separately.
+    $sandbox['total_progress'] = 0;
     $sandbox['updated_count'] = 0;
     $sandbox['skipped_count'] = 0;
-  }
-  $ids = array_slice($sandbox['ids'], $sandbox['progress'], 20);
-
-  foreach ($ids as $id) {
-    /** @var \Drupal\paragraphs\Entity\Paragraph|null $paragraph */
-    $paragraph = $paragraph_storage->load($id);
-    if (!$paragraph) {
-      $logger->warning('Could not load paragraph @pid', ['@pid' => $id]);
-      $sandbox['skipped_count']++;
-      $sandbox['progress']++;
-      continue;
+    if (empty($sandbox['max'])) {
+      $sandbox['#finished'] = 1;
+      return t('No paragraphs need to be updated.');
     }
-
-    // Skip unused/orphan paragraphs.
-    $parent_entity_result = NULL;
-    $parent_type = $paragraph->get('parent_type')->value;
-    $parent_field = $paragraph->get('parent_field_name')->value;
-    if ($parent_type && $parent_field) {
-      $query = \Drupal::service('entity_type.manager')->getStorage($parent_type)
-        ->getQuery()
-        ->condition("$parent_field.target_id", $id)
-        ->range(0, 1)
-        ->accessCheck(FALSE);
-      $parent_entity_result = $query->execute();
-    }
-    if (empty($parent_entity_result)) {
-      // Paragraph is not used in any current revisions of the parent type.
-      $logger->info('Skipping unused paragraph @pid', ['@pid' => $id]);
-      $sandbox['skipped_count']++;
-      $sandbox['progress']++;
-      continue;
-    }
-
-    $needs_update = FALSE;
-    $field_name = NULL;
-
-    // Handle different field types based on paragraph type.
-    $bundle = $paragraph->bundle();
-    $field_name = $bundle_content_fields[$bundle]['field_name'];
-    $field_type = $bundle_content_fields[$bundle]['field_type'];
-    $value_prop = $field_types[$field_type]['value_prop'];
-    $format_prop = $field_types[$field_type]['format_prop'];
-    $cardinality = $field_types[$field_type]['cardinality'];
-    $check_format = $bundle_content_fields[$bundle]['check_format'];
-
-    /** @var \Drupal\Core\Field\FieldItemInterface|\Drupal\Core\Field\FieldItemInterface[] $field */
-    $field = $paragraph->get($field_name);
-    if ($cardinality === 1) {
-      if (!empty($field->$value_prop) && (!$check_format || in_array($field->$format_prop, $formats))) {
-        $processed_value = AZBootstrapMarkupConverter::compareProcessor($field->$value_prop);
-        if ($processed_value !== $field->$value_prop) {
-          $needs_update = TRUE;
-          $field->$value_prop = $processed_value;
-        }
-      }
-    }
-    else {
-      foreach ($field as $delta => $item) {
-        if (!empty($item->$value_prop) && (!$check_format || in_array($item->$format_prop, $formats))) {
-          $processed_value = AZBootstrapMarkupConverter::compareProcessor($item->$value_prop);
-          if ($processed_value !== $item->$value_prop) {
-            $needs_update = TRUE;
-            $field[$delta]->$value_prop = $processed_value;
-          }
-        }
-      }
-    }
-
-    if ($needs_update) {
-      // Save the paragraph first to create the new revision.
-      $paragraph->setNewRevision(TRUE);
-      $paragraph->isDefaultRevision(TRUE);
-      $paragraph->save();
-
-      // Handle parent entity revision if needed.
-      $parent = $paragraph->getParentEntity();
-      if ($parent instanceof RevisionableInterface) {
-        // Load latest version to ensure we're not working with an older
-        // revision.
-        $parent_storage = \Drupal::entityTypeManager()->getStorage($parent->getEntityTypeId());
-        /** @var \Drupal\Core\Entity\ContentEntityInterface $parent */
-        $parent = $parent_storage->load($parent->id());
-
-        // Create new default revision of parent.
-        $parent->setNewRevision(TRUE);
-        $parent->isDefaultRevision(TRUE);
-
-        // Get the parent entity field that references this paragraph.
-        $parent_field = $paragraph->get('parent_field_name')->value;
-        $parent_items = $parent->get($parent_field);
-
-        // Update parent field reference to point to the new paragraph revision.
-        $field_updated = FALSE;
-        /** @var \Drupal\entity_reference_revisions\Plugin\Field\FieldType\EntityReferenceRevisionsItem $item */
-        foreach ($parent_items as $delta => $item) {
-          if ($item->target_id == $paragraph->id()) {
-            // Update reference in the parent field items list.
-            $parent_items->get($delta)->setValue([
-              'target_id' => $paragraph->id(),
-              'target_revision_id' => $paragraph->getRevisionId(),
-            ]);
-            $field_updated = TRUE;
-          }
-        }
-
-        if (!$field_updated) {
-          $logger->warning('Could not find paragraph @pid in parent @parent_type @parent_id field @field', [
-            '@pid' => $id,
-            '@parent_type' => $parent->getEntityTypeId(),
-            '@parent_id' => $parent->id(),
-            '@field' => $parent_field,
-          ]);
-          // Skip saving if we couldn't find the paragraph reference.
-          $sandbox['progress']++;
-          continue;
-        }
-
-        // Set the updated field back on the parent.
-        $parent->set($parent_field, $parent_items->getValue());
-
-        // Include a log revision message for the parent, if possible.
-        if ($parent instanceof RevisionLogInterface && !$parent instanceof ParagraphInterface) {
-          $parent->setRevisionCreationTime(\Drupal::time()->getRequestTime());
-          $parent->setRevisionUserId(1);
-          $parent->setRevisionLogMessage(__FUNCTION__ . t(': Updated child @paragraph_bundle paragraph @id content (revision: @vid) for Arizona Bootstrap 5 compatibility.', [
-            '@paragraph_bundle' => $paragraph->bundle(),
-            '@id' => $id,
-            '@vid' => $paragraph->getRevisionId(),
-          ]));
-        }
-
-        // Save the parent entity.
-        $parent->save();
-
-        $logger->info('Updated @paragraph_bundle paragraph @pid (revision: @vid) and parent @parent_bundle @parent_type @parent_id', [
-          '@paragraph_bundle' => $paragraph->bundle(),
-          '@pid' => $id,
-          '@vid' => $paragraph->getRevisionId(),
-          '@parent_type' => $parent->getEntityTypeId(),
-          '@parent_bundle' => $parent->bundle(),
-          '@parent_id' => $parent->id(),
-        ]);
-      }
-      $sandbox['updated_count']++;
-    }
-
-    $sandbox['progress']++;
   }
 
-  $sandbox['#finished'] = empty($sandbox['max']) ? 1 : ($sandbox['progress'] / $sandbox['max']);
+  if (!isset($sandbox['current_type'])) {
+    // Initialize tracking of which field config we're processing.
+    $sandbox['field_config_keys'] = array_keys($field_configs);
+    $sandbox['current_type'] = 0;
+  }
 
-  if ($sandbox['#finished'] >= 1) {
+  // Get current field configuration.
+  if ($sandbox['current_type'] >= count($sandbox['field_config_keys'])) {
+    // We've processed all field types.
+    $sandbox['#finished'] = 1;
     return t('Processed @count total paragraphs. @paragraphs_updated paragraphs updated for Bootstrap 5 compatibility. @paragraphs_skipped unused paragraphs skipped.', [
       '@count' => $sandbox['progress'],
       '@paragraphs_updated' => $sandbox['updated_count'],
       '@paragraphs_skipped' => $sandbox['skipped_count'],
     ]);
+  }
+
+  $type = $sandbox['field_config_keys'][$sandbox['current_type']];
+  $field_config = $field_configs[$type];
+
+  // Initialize processing for this field type if needed.
+  if (!isset($sandbox['type_progress'])) {
+    // Query paragraphs of current type that have parents.
+    $query = $paragraph_storage->getQuery()
+      ->condition('type', $field_config['bundles'], 'IN')
+      ->accessCheck(FALSE);
+
+    // Add field conditions from config.
+    if (!empty($field_config['query_conditions']['exists'])) {
+      $query->exists($field_config['query_conditions']['field_name']);
+    }
+    if (!empty($field_config['query_conditions']['values'])) {
+      $field = $field_config['query_conditions']['format_field'] ?? $field_config['query_conditions']['field_name'];
+      $query->condition($field, $field_config['query_conditions']['values'], 'IN');
+    }
+
+    // Only get paragraphs that have parent entities.
+    $query->exists('parent_type')
+      ->exists('parent_field_name');
+
+    $ids = $query->execute();
+
+    // Filter out orphaned paragraphs.
+    $valid_ids = [];
+    foreach (array_chunk($ids, 50) as $chunk) {
+      $paragraphs = $paragraph_storage->loadMultiple($chunk);
+      foreach ($paragraphs as $paragraph) {
+        $parent_type = $paragraph->get('parent_type')->value;
+        $parent_field = $paragraph->get('parent_field_name')->value;
+        $query = \Drupal::service('entity_type.manager')->getStorage($parent_type)
+          ->getQuery()
+          ->condition("$parent_field.target_id", $paragraph->id())
+          ->range(0, 1)
+          ->accessCheck(FALSE);
+        if ($query->execute()) {
+          $valid_ids[] = $paragraph->id();
+        }
+        else {
+          $logger->info('Skipping unused paragraph @pid', ['@pid' => $paragraph->id()]);
+          $sandbox['skipped_count']++;
+        }
+      }
+    }
+
+    // Set up tracking for this field type.
+    $sandbox['type_ids'] = $valid_ids;
+    $sandbox['type_progress'] = 0;
+    $sandbox['type_max'] = count($valid_ids);
+  }
+
+  // Set up sandbox for this batch of the current type.
+  $batch_ids = array_slice($sandbox['type_ids'], $sandbox['type_progress'], 20);
+  if (empty($batch_ids)) {
+    // Update overall progress before moving to next type.
+    $sandbox['progress'] += $sandbox['type_progress'];
+
+    // Move to next field type.
+    $sandbox['current_type']++;
+    unset($sandbox['type_progress']);
+    unset($sandbox['type_ids']);
+    unset($sandbox['type_max']);
+    return NULL;
+  }
+
+  $type_sandbox = [
+    'ids' => $batch_ids,
+    'max' => count($batch_ids),
+    'progress' => 0,
+    'updated_count' => 0,
+    'skipped_count' => 0,
+  ];
+
+  // Process this batch.
+  $options = array_merge([
+    'create_revisions' => TRUE,
+    'description' => 'Updated for Bootstrap 5 compatibility',
+    'batch_size' => 20,
+  ], $field_config['options']);
+
+  $result = $field_updater->processFieldUpdates(
+    'paragraph',
+    $field_config['field_name'],
+    [AZBootstrapMarkupConverter::class, 'compareProcessor'],
+    $type_sandbox,
+    $options
+  );
+
+  // Update progress.
+  $sandbox['type_progress'] += $type_sandbox['progress'];
+  $sandbox['updated_count'] += $type_sandbox['updated_count'];
+  $sandbox['skipped_count'] += $type_sandbox['skipped_count'];
+  $sandbox['total_progress'] += $type_sandbox['progress'];
+
+  // Calculate overall progress as we process each type.
+  $total_types = count($sandbox['field_config_keys']);
+  $current_type_progress = $sandbox['type_progress'] / ($sandbox['type_max'] ?: 1);
+  $sandbox['#finished'] = ($sandbox['current_type'] + $current_type_progress) / $total_types;
+
+  if ($sandbox['#finished'] >= 1) {
+    $message = t('Processed @count total paragraphs. @paragraphs_updated paragraphs updated for Bootstrap 5 compatibility. @paragraphs_skipped unused paragraphs skipped.', [
+      '@count' => $sandbox['progress'],
+      '@paragraphs_updated' => $sandbox['updated_count'],
+      '@paragraphs_skipped' => $sandbox['skipped_count'],
+    ]);
+    $logger->notice($message);
+    return $message;
   }
 
   return NULL;
