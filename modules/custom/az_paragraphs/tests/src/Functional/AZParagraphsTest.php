@@ -33,7 +33,7 @@ class AZParagraphsTest extends QuickstartFunctionalTestBase {
   /**
    * Modules to enable.
    *
-   * @var array
+   * @var string[]
    */
   protected static $modules = [
     'az_paragraphs',
