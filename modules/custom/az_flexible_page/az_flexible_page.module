@@ -59,9 +59,6 @@ function az_flexible_page_preprocess_page__node__az_flexible_page(&$variables) {
     unset($variables['page']['content_top']);
   }
 
-  // Set the navbar flag to FALSE since that region is disabled.
-  $variables['az_barrio_navbar'] = FALSE;
-
   // Disable site branding region on "Standard - No Site Branding" style.
   if ($marketing_page_style === 'az_marketing_page_standard_no_branding') {
     if ($variables['page']['branding']) {
