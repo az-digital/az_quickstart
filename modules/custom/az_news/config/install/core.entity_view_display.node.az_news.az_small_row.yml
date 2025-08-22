@@ -31,7 +31,7 @@ third_party_settings:
         - group_media
         - group_text_column
       label: Row
-      parent_name: group_card_clickable
+      parent_name: group_link
       region: content
       weight: 0
       format_type: html_element
@@ -68,14 +68,14 @@ third_party_settings:
         speed: fast
     group_card_clickable:
       children:
-        - group_row
+        - group_link
       label: 'Card Clickable'
       parent_name: ''
       region: content
       weight: 0
       format_type: html_element
       format_settings:
-        classes: hover
+        classes: card border-0 hover
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -88,9 +88,9 @@ third_party_settings:
         speed: fast
     group_link:
       children:
-        - az_news_read_more
+        - group_row
       label: Link
-      parent_name: group_read_more_text
+      parent_name: group_card_clickable
       region: content
       weight: 1
       format_type: link
@@ -149,7 +149,7 @@ third_party_settings:
       weight: 22
       format_type: html_element
       format_settings:
-        classes: 'hover-text-underline mt-2'
+        classes: mt-2
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -162,16 +162,17 @@ third_party_settings:
         speed: fast
     group_read_more_text:
       children:
-        - group_link
+        - az_news_read_more
       label: 'Read more text'
       parent_name: group_read_more
       region: content
       weight: 20
       format_type: html_element
       format_settings:
-        classes: text-chili
+        classes: hover-text-underline
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -193,7 +194,7 @@ content:
   az_news_read_more:
     settings: {  }
     third_party_settings: {  }
-    weight: 2
+    weight: 11
     region: content
   field_az_media_thumbnail_image:
     type: entity_reference_entity_view

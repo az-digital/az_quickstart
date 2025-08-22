@@ -2,8 +2,12 @@
 
 namespace Drupal\az_publication_bibtex\Form;
 
+use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\KeyValueStore\KeyValueFactoryInterface;
+use Drupal\Core\StringTranslation\TranslationInterface;
+use Drupal\file\Entity\File;
 use Drupal\migrate\MigrateMessage;
 use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate_tools\MigrateBatchExecutable;
@@ -34,6 +38,27 @@ class AZPublicationBibtexForm extends FormBase {
   protected $fileSystem;
 
   /**
+   * The key/value factory.
+   *
+   * @var \Drupal\Core\KeyValueStore\KeyValueFactoryInterface
+   */
+  protected KeyValueFactoryInterface $keyValue;
+
+  /**
+   * The time service.
+   *
+   * @var \Drupal\Component\Datetime\TimeInterface
+   */
+  protected TimeInterface $time;
+
+  /**
+   * The translation manager.
+   *
+   * @var \Drupal\Core\StringTranslation\TranslationInterface
+   */
+  protected TranslationInterface $translation;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
@@ -41,6 +66,9 @@ class AZPublicationBibtexForm extends FormBase {
     $instance->fileSystem = $container->get('file_system');
     $instance->pluginManagerMigration = $container->get('plugin.manager.migration');
     $instance->entityTypeManager = $container->get('entity_type.manager');
+    $instance->keyValue = $container->get('keyvalue');
+    $instance->time = $container->get('datetime.time');
+    $instance->translation = $container->get('string_translation');
     return $instance;
   }
 
@@ -102,7 +130,15 @@ class AZPublicationBibtexForm extends FormBase {
             ],
           ],
         ];
-        $executable = new MigrateBatchExecutable($migration, new MigrateMessage(), $options);
+        $executable = new MigrateBatchExecutable(
+          $migration,
+          new MigrateMessage(),
+          $this->keyValue,
+          $this->time,
+          $this->translation,
+          $this->pluginManagerMigration,
+          $options,
+        );
         $executable->batchImport();
       }
     }
