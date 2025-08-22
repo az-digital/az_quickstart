@@ -173,7 +173,7 @@ final class AZContentFieldUpdater implements AZContentFieldUpdaterInterface {
             $time = \Drupal::time()->getRequestTime();
             $entity->setRevisionCreationTime($time);
             $entity->setRevisionUserId(1);
-            $message = $this->stringTranslation->translate('Updated field @field on @bundle @type @id', [
+            $message = $this->t('Updated field @field on @bundle @type @id', [
               '@field' => $field_name,
               '@bundle' => $entity->bundle(),
               '@type' => $entity->getEntityTypeId(),
@@ -215,7 +215,7 @@ final class AZContentFieldUpdater implements AZContentFieldUpdaterInterface {
               if ($parent instanceof TranslatableRevisionableInterface) {
                 $parent->setRevisionTranslationAffected(TRUE);
               }
-              $message = $this->stringTranslation->translate('Updated child paragraph @pid (revision: @vid)', [
+              $message = $this->t('Updated child paragraph @pid (revision: @vid)', [
                 '@pid' => $entity->id(),
                 '@vid' => $entity->getRevisionId(),
               ]);
