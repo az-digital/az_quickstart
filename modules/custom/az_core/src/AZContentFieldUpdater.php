@@ -60,13 +60,13 @@ final class AZContentFieldUpdater implements AZContentFieldUpdaterInterface {
     // Set default options.
     $options += [
       'create_revisions' => FALSE,
-      'description' => NULL,
+      'prefix' => NULL,
+      'suffix' => NULL,
       'batch_size' => 20,
       'value_key' => 'value',
       'format_key' => 'format',
       'format_required' => TRUE,
       'allowed_formats' => ['az_standard', 'full_html'],
-      'conditions' => [],
     ];
 
     if (!isset($sandbox['progress'])) {
@@ -118,19 +118,6 @@ final class AZContentFieldUpdater implements AZContentFieldUpdaterInterface {
           }
         }
 
-        // Check additional conditions.
-        $meets_conditions = TRUE;
-        foreach ($options['conditions'] as $property => $allowed_values) {
-          if (!isset($field_item->$property) || !in_array($field_item->$property, $allowed_values)) {
-            $meets_conditions = FALSE;
-            break;
-          }
-        }
-
-        if (!$meets_conditions) {
-          continue;
-        }
-
         // Get current value using configured key.
         $original_value = $field_item->{$options['value_key']} ?? NULL;
         if (empty($original_value)) {
@@ -153,19 +140,6 @@ final class AZContentFieldUpdater implements AZContentFieldUpdaterInterface {
             if (!in_array($format, $options['allowed_formats'])) {
               continue;
             }
-          }
-
-          // Check additional conditions.
-          $meets_conditions = TRUE;
-          foreach ($options['conditions'] as $property => $allowed_values) {
-            if (!isset($field_item->$property) || !in_array($field_item->$property, $allowed_values)) {
-              $meets_conditions = FALSE;
-              break;
-            }
-          }
-
-          if (!$meets_conditions) {
-            continue;
           }
 
           // Get current value using configured key.
@@ -205,8 +179,12 @@ final class AZContentFieldUpdater implements AZContentFieldUpdaterInterface {
               '@type' => $entity->getEntityTypeId(),
               '@id' => $entity->id(),
             ]);
-            if ($options['description']) {
-              $message .= ': ' . $options['description'];
+            // Format and add prefix/suffix to revision log message.
+            if ($options['prefix']) {
+              $message = $options['prefix'] . ': ' . $message;
+            }
+            if ($options['suffix']) {
+              $message .= ' (' . $options['suffix'] . ')';
             }
             $entity->setRevisionLogMessage($message);
           }
@@ -241,8 +219,12 @@ final class AZContentFieldUpdater implements AZContentFieldUpdaterInterface {
                 '@pid' => $entity->id(),
                 '@vid' => $entity->getRevisionId(),
               ]);
-              if ($options['description']) {
-                $message .= ': ' . $options['description'];
+              // Format and add prefix/suffix to revision log message.
+              if ($options['prefix']) {
+                $message = $options['prefix'] . ': ' . $message;
+              }
+              if ($options['suffix']) {
+                $message .= ' (' . $options['suffix'] . ')';
               }
               $parent->setRevisionLogMessage($message);
             }
@@ -279,6 +261,11 @@ final class AZContentFieldUpdater implements AZContentFieldUpdaterInterface {
           $message .= ' and parent @parent_type @parent_id';
           $context['@parent_type'] = $parent->bundle();
           $context['@parent_id'] = $parent->id();
+        }
+
+        // Format and add suffix to logger message if provided.
+        if ($options['suffix']) {
+          $message .= ' (' . $options['suffix'] . ')';
         }
 
         $logger->info($message, $context);

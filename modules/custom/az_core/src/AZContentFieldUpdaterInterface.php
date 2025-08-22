@@ -30,8 +30,10 @@ interface AZContentFieldUpdaterInterface {
    *   - create_revisions: (bool) Whether to create new revisions. When TRUE,
    *     will also make them the default revision and update parent entity
    *     revisions for paragraphs. Defaults to FALSE.
-   *   - description: (string|null) Optional description for revision messages
-   *     and logs.
+   *   - prefix: (string|null) Optional prefix for revision log messages. Useful
+   *     for including the update hook name.
+   *   - suffix: (string|null) Optional suffix to append to both revision log
+   *     messages and logger messages.
    *   - batch_size: (int) Number of entities per batch. Defaults to 20.
    *   - value_key: (string) The property containing the value to process within
    *     the field item. Defaults to 'value'.
@@ -42,9 +44,6 @@ interface AZContentFieldUpdaterInterface {
    *   - allowed_formats: (array) Text formats that are allowed to be processed.
    *     Only used if format_required is TRUE. Defaults to ['az_standard',
    *     'full_html'].
-   *   - conditions: (array) Optional additional conditions that field items
-   *     must meet to be processed. Keys are property names, values are arrays
-   *     of allowed values.
    *
    * @return string|null
    *   A translated message when complete, NULL otherwise.

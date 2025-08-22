@@ -315,7 +315,8 @@ function az_paragraphs_update_1130001(&$sandbox) {
   // Process this batch.
   $options = array_merge([
     'create_revisions' => TRUE,
-    'description' => 'Updated for Bootstrap 5 compatibility',
+    'prefix' => __FUNCTION__,
+    'suffix' => 'for Bootstrap 5 compatibility',
     'batch_size' => 20,
   ], $field_config['options']);
 

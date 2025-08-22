@@ -29,8 +29,9 @@ function az_course_update_1130001(&$sandbox) {
       'Drupal\az_core\Utility\AZBootstrapMarkupConverter::compareProcessor',
       $sandbox,
       [
-        'description' => __FUNCTION__ . ' (updating legacy Bootstrap markup to Bootstrap 5)',
         'create_revisions' => TRUE,
+        'prefix' => __FUNCTION__,
+        'suffix' => 'for Bootstrap 5 compatibility',
       ]
     );
 }
