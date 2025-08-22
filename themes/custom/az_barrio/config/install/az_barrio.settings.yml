@@ -96,6 +96,7 @@ az_barrio_material_design_sharp_icons: false
 az_barrio_material_symbols_rounded: true
 az_barrio_logo_svg_inline: false
 az_barrio_footer_logo_svg_inline: false
+az_remove_sidebar_menu_mobile: true
 logo:
   path: profiles/custom/az_quickstart/themes/custom/az_barrio/images/logo.png
   use_default: false
