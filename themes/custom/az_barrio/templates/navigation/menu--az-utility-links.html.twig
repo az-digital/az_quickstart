@@ -46,7 +46,7 @@
       <li{{ item.attributes.addClass(classes) }}>
         {%
           set link_classes = [
-            'text-muted',
+            'text-body-secondary',
             'nav-link',
             item.in_active_trail ? 'active',
             item.url.getOption('attributes').class ? item.url.getOption('attributes').class | join(''),
