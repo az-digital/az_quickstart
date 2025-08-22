@@ -12,7 +12,7 @@ use Drupal\paragraphs\ParagraphInterface;
 /**
  * Service for updating content field values.
  */
-class AZContentFieldUpdater implements AZContentFieldUpdaterInterface {
+final class AZContentFieldUpdater implements AZContentFieldUpdaterInterface {
 
   use StringTranslationTrait;
 
