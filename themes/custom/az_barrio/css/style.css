@@ -406,12 +406,13 @@ td.menu-disabled {
   }
 }
 
-/* POTENTIAL ARIZONA BOOTSTRAP STYLING */
 /* Make Arizona Header sticky at top on mobile devices only */
 @media screen and (max-width: 992px) {
   #page {
     margin-top: 50px;
   }
+
+  /* BEGIN ARIZONA BOOTSTRAP STYLING */
   .arizona-header {
     position: fixed;
     top: 0;
@@ -423,10 +424,8 @@ td.menu-disabled {
   .arizona-logo {
     flex-shrink: 1;
   }
-  .arizona-line-logo {
-    max-width: 211px;
-    width: 100%;
-  }
+  /* END ARIZONA BOOTSTRAP STYLING */
+
   :target {
     scroll-margin-top: 58px;
   }
@@ -437,9 +436,21 @@ td.menu-disabled {
     position: static;
   }
 }
+
+/* BEGIN ARIZONA BOOTSTRAP STYLING */
+.arizona-line-logo {
+  width: 100%;
+  max-width: 211px;
+}
+@media (min-width: 576px) {
+  .arizona-line-logo {
+    max-width: 266.41px;
+  }
+}
 .btn-arizona-header {
   padding: 4px 0;
 }
+/* END ARIZONA BOOTSTRAP STYLING */
 
 /* AZ Barrio off-canvas search (Mobile) */
 #block-az-barrio-offcanvas-searchform .search-form {
