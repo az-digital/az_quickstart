@@ -67,7 +67,7 @@ third_party_settings:
       weight: 4
       format_type: html_element
       format_settings:
-        classes: 'text-muted font-weight-normal'
+        classes: 'text-body-secondary fw-normal'
         show_empty_fields: false
         id: ''
         element: div

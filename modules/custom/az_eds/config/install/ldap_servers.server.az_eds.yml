@@ -4,7 +4,7 @@ dependencies: {  }
 id: az_eds
 label: 'EDS Service'
 type: default
-address: null
+address: eds.iam.arizona.edu
 port: 636
 timeout: 10
 encryption: ssl

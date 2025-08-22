@@ -14,5 +14,4 @@ permissions:
   - 'access_unpublished node az_news'
   - 'access_unpublished node az_person'
   - 'search content'
-  - 'use exclude node title'
   - 'view media'

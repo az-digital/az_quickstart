@@ -1,0 +1,7 @@
+az_eds.settings_form:
+  path: '/admin/config/az-quickstart/settings/az-eds'
+  defaults:
+    _title: 'EDS Query Settings'
+    _form: 'Drupal\az_eds\Form\AZEDSSettingsForm'
+  requirements:
+    _permission: 'administer site configuration'

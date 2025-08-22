@@ -1,7 +1,7 @@
 name: 'Quickstart Paragraphs - HTML'
 type: module
 description: 'Provides an HTML paragraph type, and an unfiltered text formatter.'
-core_version_requirement: ^10 || ^11
+core_version_requirement: ^10 || ^11 || ^12
 dependencies:
   - az_paragraphs
   - drupal:field
