@@ -84,7 +84,7 @@ class AZPhotoGalleryParagraphBehavior extends AZDefaultParagraphsBehavior {
     // Create a unique id for the modal, if needed.
     $variables['modal'] = Html::getUniqueId('az-photo-gallery-modal-id');
 
-    // Variable to control which display to use 
+    // Variable to control which display to use.
     $variables['gallery_display'] = $config['gallery_display'] ?? 'grid';
 
     // Variable to control the aspect ratio for the gallery display.
