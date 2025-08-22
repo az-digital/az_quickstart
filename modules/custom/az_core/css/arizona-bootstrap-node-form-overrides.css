@@ -11,7 +11,7 @@ nav.breadcrumb {
   background-color: unset;
   padding: 0;
 }
-  
+
 .breadcrumb .breadcrumb__link {
   color: unset;
   font-weight: 700;
@@ -39,4 +39,9 @@ a.chosen-single {
 
 .tabledrag-cell-content .tabledrag-handle::after {
   padding: 16px 16px 16px 33px;
+}
+
+.form-item__description .placeholder {
+  background-color: initial;
+  opacity: initial;
 }

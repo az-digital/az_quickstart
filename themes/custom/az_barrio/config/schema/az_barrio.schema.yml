@@ -355,6 +355,9 @@ az_barrio.settings:
     az_barrio_footer_logo_svg_inline:
       type: boolean
       label: 'Inline footer logo SVG (Experimental)'
+    az_remove_sidebar_menu_mobile:
+      type: boolean
+      label: 'Remove sidebar menu on mobile devices'
     primary_logo_alt_text:
       type: string
       label: 'Primary logo alt text'

@@ -36,7 +36,7 @@ third_party_settings:
       label: 'Text Body Secondary'
       parent_name: group_media_body
       region: content
-      weight: 8
+      weight: 5
       format_type: html_element
       format_settings:
         classes: text-body-secondary
@@ -56,7 +56,7 @@ third_party_settings:
       label: Link
       parent_name: group_row_wrap
       region: content
-      weight: 23
+      weight: 0
       format_type: link
       format_settings:
         classes: text-decoration-none
@@ -73,7 +73,7 @@ third_party_settings:
       label: Row
       parent_name: group_story_link
       region: content
-      weight: 24
+      weight: 4
       format_type: html_element
       format_settings:
         classes: row
@@ -133,7 +133,7 @@ third_party_settings:
       label: 'row wrap'
       parent_name: ''
       region: content
-      weight: 0
+      weight: 20
       format_type: html_element
       format_settings:
         classes: 'position-relative d-block list-group-item-action'
@@ -171,7 +171,7 @@ content:
       image_loading:
         attribute: lazy
     third_party_settings: {  }
-    weight: 24
+    weight: 1
     region: content
   field_az_published:
     type: timestamp_ap_style
@@ -197,12 +197,12 @@ content:
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 10
+    weight: 7
     region: content
   smart_title:
     settings: {  }
     third_party_settings: {  }
-    weight: 9
+    weight: 6
     region: content
 hidden:
   az_news_read_more: true

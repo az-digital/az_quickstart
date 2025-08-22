@@ -16,6 +16,10 @@ ignored_config_entities:
   - az_publication.settings
   - block_class.settings
   - easy_breadcrumb.settings
-  - exclude_node_title.settings
+  - 'language.content_settings.*.*'
+  - 'language.entity.*'
+  - 'metatag.metatag_defaults.*'
+  - 'shortcut.set.*'
+  - 'system.menu.*'
   - system.site
   - xmlsitemap.settings

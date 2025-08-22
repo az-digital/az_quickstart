@@ -111,7 +111,7 @@ third_party_settings:
         speed: fast
     group_card:
       children:
-        - group_card_body
+        - group_link
       label: Card
       parent_name: ''
       region: content
@@ -133,7 +133,7 @@ third_party_settings:
       children:
         - group_row
       label: 'Card Body'
-      parent_name: group_card
+      parent_name: group_link
       region: content
       weight: 27
       format_type: html_element
@@ -150,14 +150,14 @@ third_party_settings:
         speed: fast
     group_link:
       children:
-        - az_news_read_more
+        - group_card_body
       label: Link
-      parent_name: group_read_more
+      parent_name: group_card
       region: content
-      weight: 28
+      weight: 1
       format_type: link
       format_settings:
-        classes: 'text-decoration-none stretched-link'
+        classes: 'stretched-link text-decoration-none'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -166,14 +166,14 @@ third_party_settings:
         target_attribute: default
     group_read_more:
       children:
-        - group_link
+        - az_news_read_more
       label: 'Read more'
       parent_name: group_column_text
       region: content
       weight: 3
       format_type: html_element
       format_settings:
-        classes: 'mt-2 pb-3'
+        classes: 'mt-2 pb-3 hover-text-underline'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -203,7 +203,7 @@ content:
   az_news_read_more:
     settings: {  }
     third_party_settings: {  }
-    weight: 29
+    weight: 25
     region: content
   field_az_media_thumbnail_image:
     type: entity_reference_entity_view
