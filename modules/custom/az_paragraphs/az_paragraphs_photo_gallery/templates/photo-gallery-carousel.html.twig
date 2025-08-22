@@ -11,7 +11,13 @@
  */
 #}
 
-<div id="{{ gallery }}" class="carousel slide az-gallery{% if gallery_display == 'grid' %} az-gallery-grid{% elseif gallery_display == 'slider' %} az-gallery-slider-crop{% elseif gallery_display == 'slider_full' %} az-gallery-slider-full{% endif %}">
+{% set gallery_class = {
+  'grid': 'grid',
+  'slider': 'slider-crop',
+  'slider_full': 'slider-full'
+} %}
+
+<div id="{{ gallery }}" class="carousel slide az-gallery az-gallery-{{ gallery_class[gallery_display] }}">
 
   {# Navigation control - Previous #}
   <button class="carousel-control-prev" type="button" data-bs-target="#{{ gallery }}" data-bs-slide="prev">
