@@ -5,6 +5,7 @@ namespace Drupal\az_core;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\RevisionableInterface;
 use Drupal\Core\Entity\RevisionLogInterface;
+use Drupal\Core\Entity\TranslatableRevisionableInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\paragraphs\ParagraphInterface;
@@ -233,6 +234,9 @@ final class AZContentFieldUpdater implements AZContentFieldUpdaterInterface {
               $time = \Drupal::time()->getRequestTime();
               $parent->setRevisionCreationTime($time);
               $parent->setRevisionUserId(1);
+              if ($parent instanceof TranslatableRevisionableInterface) {
+                $parent->setRevisionTranslationAffected(TRUE);
+              }
               $message = $this->stringTranslation->translate('Updated child paragraph @pid (revision: @vid)', [
                 '@pid' => $entity->id(),
                 '@vid' => $entity->getRevisionId(),
