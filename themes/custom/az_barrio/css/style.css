@@ -441,15 +441,8 @@ td.menu-disabled {
   padding: 4px 0;
 }
 
-/*
- * Search
- */
-#search-block-form {
-  padding: 5px 15px;
-  flex-flow: row wrap;
-}
-
-#block-az-barrio-offcanvas-searchform {
+/* AZ Barrio off-canvas search (Mobile) */
+#block-az-barrio-offcanvas-searchform .search-form {
   margin-left: .25rem;
 }
 
@@ -471,6 +464,12 @@ td.menu-disabled {
 
 #block-az-barrio-offcanvas-searchform .material-symbols-rounded {
   vertical-align: text-bottom;
+}
+
+/* AZ Barrio search form block (Desktop) */
+#search-block-form {
+  padding: 5px 15px;
+  flex-flow: row wrap;
 }
 
 .az-search-block .search-block-form .form-search {
