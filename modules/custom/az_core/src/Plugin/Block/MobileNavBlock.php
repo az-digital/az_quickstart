@@ -78,7 +78,7 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
    * @param \Drupal\Core\Routing\RouteMatchInterface $route_match
    *   The route match object.
    * @param \Drupal\Core\Cache\CacheBackendInterface $cache_backend
-   *   The key value expirable factory.
+   *   The cache backend to use for menu storage.
    * @param \Drupal\Core\Menu\MenuLinkTreeInterface $menu_tree
    *   The menu link tree service.
    */
