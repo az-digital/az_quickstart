@@ -28,7 +28,7 @@
         "az-digital/arizona-bootstrap": "dev-main",
         "az-digital/az-icons": "1.0.2",
         "citation-style-language/locales": "0.0.27",
-        "citation-style-language/styles": "0.0.668",
+        "citation-style-language/styles": "0.0.736",
         "composer/installers": "^2.0",
         "cweagans/composer-patches": "^1.7",
         "devanych/mime-types": "2.1.2",
