@@ -211,7 +211,7 @@ settings:
           label: 'Badge Blue'
           element: '<span class="badge text-bg-blue">'
         -
-          label: 'Badge Green'
+          label: 'Badge Success'
           element: '<span class="badge text-bg-success">'
         -
           label: 'Badge Sky'
