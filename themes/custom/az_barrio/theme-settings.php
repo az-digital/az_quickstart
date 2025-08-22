@@ -349,12 +349,6 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#collapsible' => TRUE,
     '#collapsed' => TRUE,
   ];
-  $form['components']['navbar']['az_barrio_navbar'] = [
-    '#type' => 'checkbox',
-    '#title' => t('Use Arizona Bootstrap Navbar'),
-    '#description' => t('Check to use the Arizona Bootstrap Navbar instead of the Bootstrap Navbar.'),
-    '#default_value' => theme_get_setting('az_barrio_navbar'),
-  ];
   // Logos.
   $form['logo']['az_barrio_logo_svg_inline'] = [
     '#type' => 'checkbox',
