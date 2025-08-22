@@ -464,6 +464,9 @@ td.menu-disabled {
 
 #block-az-barrio-offcanvas-searchform .btn {
   padding: .5rem 1rem;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-color: transparent;
 }
 
 #block-az-barrio-offcanvas-searchform .material-symbols-rounded {
