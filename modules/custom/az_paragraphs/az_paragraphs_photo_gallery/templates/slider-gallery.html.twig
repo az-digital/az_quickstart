@@ -4,16 +4,20 @@
  * Template for Slider photo gallery display.
  *
  * Available variables:
+ * - gallery_display: Machine name of display type. Can be grid, slider, or slider_full.
  * - photos: Array of photo entities
  * - gallery: Unique ID for the carousel element
+ * - ratio: Aspect ratio for the gallery display.
  */
 #}
 
 <div class="az-gallery-container">
-  {% include '@az_paragraphs_photo_gallery/photo-gallery-carousel.html.twig' with {
-    'grid': false,
-    'photos': photos,
-    'gallery': gallery,
-    'style_name': 'az_carousel_item'
-  } %}
+  {% if gallery_display == 'slider_full' %}<div class="ratio ratio-{{ ratio }}">{% endif %}
+    {% include '@az_paragraphs_photo_gallery/photo-gallery-carousel.html.twig' with {
+      'gallery_display': gallery_display,
+      'photos': photos,
+      'gallery': gallery,
+      'style_name': gallery_display == 'slider_full' ? 'az_full_width_bg_large' : 'az_carousel_item'
+    } %}
+  {% if gallery_display == 'slider_full' %}</div>{% endif %}
 </div>

@@ -4,14 +4,14 @@
  * Reusable carousel component for photo galleries.
  *
  * Available variables:
- * - grid: Whether the photo gallery uses a Grid display.
+ * - gallery_display: Can be grid, slider, or slider_full.
  * - photos: Array of photo entities
  * - gallery: Unique ID for the carousel element
  * - style_name: Image style to use for the carousel images
  */
 #}
 
-<div id="{{ gallery }}" class="carousel slide az-gallery{% if grid %} az-gallery-grid{% else %} az-gallery-slider-crop{% endif %}">
+<div id="{{ gallery }}" class="carousel slide az-gallery{% if gallery_display == 'grid' %} az-gallery-grid{% elseif gallery_display == 'slider' %} az-gallery-slider-crop{% elseif gallery_display == 'slider_full' %} az-gallery-slider-full{% endif %}">
 
   {# Navigation control - Previous #}
   <button class="carousel-control-prev" type="button" data-bs-target="#{{ gallery }}" data-bs-slide="prev">
@@ -19,7 +19,7 @@
     <span class="visually-hidden">Previous</span>
   </button>
 
-  <div class="carousel-inner h-100{% if not grid %} rounded{% endif %}">
+  <div class="carousel-inner h-100{% if gallery_display == 'slider' %} rounded{% endif %}">
     {% for key, item in photos %}
       {% if key|first != '#' %}
         {% set carousel_image = {
@@ -27,7 +27,7 @@
           '#style_name': style_name,
           '#uri': item.entity.field_media_az_image.0.entity.uri.value,
           '#alt': item.entity.field_media_az_image.alt,
-          '#attributes': { class: ['h-100', 'w-100', grid ? 'object-fit-contain rounded-0'] },
+          '#attributes': { class: ['h-100', 'w-100', gallery_display == 'grid' ? 'object-fit-contain rounded-0' : (gallery_display == 'slider' ? 'object-fit-cover' : 'object-fit-contain')] },
         } %}
         <div class="carousel-item h-100{% if loop.first %} active{% endif %}">
           <div class="d-flex flex-column h-100 justify-content-center">
