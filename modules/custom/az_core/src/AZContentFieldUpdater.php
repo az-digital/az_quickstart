@@ -52,6 +52,7 @@ final class AZContentFieldUpdater implements AZContentFieldUpdaterInterface {
    */
   public function processFieldUpdates(
     string $entity_type_id,
+    string $bundle,
     string $field_name,
     callable $processor,
     array &$sandbox,
@@ -279,11 +280,22 @@ final class AZContentFieldUpdater implements AZContentFieldUpdaterInterface {
     $sandbox['#finished'] = empty($sandbox['max']) ? 1 : ($sandbox['progress'] / $sandbox['max']);
 
     if ($sandbox['#finished'] >= 1) {
-      return $this->t('Processed @count total entities, updated @updated, skipped @skipped.', [
+      // Get the entity type definition for better labels.
+      $entity_type = $this->entityTypeManager->getDefinition($entity_type_id);
+      $type_label = mb_strtolower($entity_type->getPluralLabel());
+
+      $message = $this->t('Processed @count @bundle @type. @updated @type updated. @skipped unused @type skipped.', [
         '@count' => $sandbox['progress'],
+        '@type' => $type_label,
+        '@bundle' => $bundle,
         '@updated' => $sandbox['updated_count'],
         '@skipped' => $sandbox['skipped_count'],
       ]);
+
+      // Log the summary message at notice level.
+      $logger->notice($message);
+
+      return $message;
     }
 
     return NULL;

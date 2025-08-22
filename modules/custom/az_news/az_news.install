@@ -78,6 +78,7 @@ function az_news_update_1130001(&$sandbox) {
   return \Drupal::service('az_core.content_field_updater')
     ->processFieldUpdates(
       'node',
+      'az_news',
       'field_az_body',
       'Drupal\az_core\Utility\AZBootstrapMarkupConverter::compareProcessor',
       $sandbox,

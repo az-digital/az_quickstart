@@ -12,6 +12,8 @@ interface AZContentFieldUpdaterInterface {
    *
    * @param string $entity_type_id
    *   The entity type ID (e.g., 'node', 'paragraph').
+   * @param string $bundle
+   *   The bundle name (e.g., 'az_text', 'az_person').
    * @param string $field_name
    *   The name of the field to update.
    * @param callable $processor
@@ -50,6 +52,7 @@ interface AZContentFieldUpdaterInterface {
    */
   public function processFieldUpdates(
     string $entity_type_id,
+    string $bundle,
     string $field_name,
     callable $processor,
     array &$sandbox,

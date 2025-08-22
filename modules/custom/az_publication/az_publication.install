@@ -364,6 +364,7 @@ function az_publication_update_1130001(&$sandbox) {
   return \Drupal::service('az_core.content_field_updater')
     ->processFieldUpdates(
       'node',
+      'az_publication',
       'field_az_publication_abstract',
       'Drupal\az_core\Utility\AZBootstrapMarkupConverter::compareProcessor',
       $sandbox,

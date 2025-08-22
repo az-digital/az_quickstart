@@ -322,6 +322,7 @@ function az_paragraphs_update_1130001(&$sandbox) {
 
   $result = $field_updater->processFieldUpdates(
     'paragraph',
+    $field_config['bundles'][0],
     $field_config['field_name'],
     [AZBootstrapMarkupConverter::class, 'compareProcessor'],
     $type_sandbox,
@@ -340,13 +341,14 @@ function az_paragraphs_update_1130001(&$sandbox) {
   $sandbox['#finished'] = ($sandbox['current_type'] + $current_type_progress) / $total_types;
 
   if ($sandbox['#finished'] >= 1) {
-    $message = t('Processed @count total paragraphs. @paragraphs_updated paragraphs updated for Bootstrap 5 compatibility. @paragraphs_skipped unused paragraphs skipped.', [
-      '@count' => $sandbox['progress'],
-      '@paragraphs_updated' => $sandbox['updated_count'],
-      '@paragraphs_skipped' => $sandbox['skipped_count'],
-    ]);
-    $logger->notice($message);
-    return $message;
+    return $field_updater->processFieldUpdates(
+      'paragraph',
+      $field_config['bundles'][0],
+      $field_config['field_name'],
+      [AZBootstrapMarkupConverter::class, 'compareProcessor'],
+      $sandbox,
+      $options
+    );
   }
 
   return NULL;
