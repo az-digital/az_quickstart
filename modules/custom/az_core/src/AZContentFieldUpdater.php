@@ -52,7 +52,6 @@ final class AZContentFieldUpdater implements AZContentFieldUpdaterInterface {
    */
   public function processFieldUpdates(
     string $entity_type_id,
-    string $bundle,
     string $field_name,
     callable $processor,
     array &$sandbox,
@@ -68,6 +67,7 @@ final class AZContentFieldUpdater implements AZContentFieldUpdaterInterface {
       'format_key' => 'format',
       'format_required' => TRUE,
       'allowed_formats' => ['az_standard', 'full_html'],
+      'bundle_name' => NULL,
     ];
 
     if (!isset($sandbox['progress'])) {
@@ -182,12 +182,18 @@ final class AZContentFieldUpdater implements AZContentFieldUpdaterInterface {
             $time = \Drupal::time()->getRequestTime();
             $entity->setRevisionCreationTime($time);
             $entity->setRevisionUserId(1);
-            $message = $this->t('Updated field @field on @bundle @type @id', [
+            $message_args = [
               '@field' => $field_name,
-              '@bundle' => $entity->bundle(),
               '@type' => $entity->getEntityTypeId(),
               '@id' => $entity->id(),
-            ]);
+            ];
+            if (!empty($options['bundle_name'])) {
+              $message_args['@bundle'] = $options['bundle_name'];
+              $message = $this->t('Updated field @field on @bundle @type @id', $message_args);
+            }
+            else {
+              $message = $this->t('Updated field @field on @type @id', $message_args);
+            }
             // Format and add prefix/suffix to revision log message.
             if ($options['prefix']) {
               $message = $options['prefix'] . ': ' . $message;
@@ -224,7 +230,8 @@ final class AZContentFieldUpdater implements AZContentFieldUpdaterInterface {
               if ($parent instanceof TranslatableRevisionableInterface) {
                 $parent->setRevisionTranslationAffected(TRUE);
               }
-              $message = $this->t('Updated child paragraph @pid (revision: @vid)', [
+              $message = $this->t('Updated child @bundle paragraph @pid (revision: @vid)', [
+                '@bundle' => $entity->bundle(),
                 '@pid' => $entity->id(),
                 '@vid' => $entity->getRevisionId(),
               ]);
@@ -259,11 +266,11 @@ final class AZContentFieldUpdater implements AZContentFieldUpdaterInterface {
 
         // Build detailed log message.
         $context = [
-          '@type' => $entity->bundle(),
+          '@bundle' => $entity->bundle(),
           '@id' => $entity->id(),
           '@vid' => $entity->getRevisionId(),
         ];
-        $message = 'Updated @type paragraph @id (revision: @vid)';
+        $message = 'Updated @bundle paragraph @id (revision: @vid)';
 
         // Add parent entity information for paragraphs.
         if ($entity instanceof ParagraphInterface && ($parent = $entity->getParentEntity())) {
@@ -292,13 +299,20 @@ final class AZContentFieldUpdater implements AZContentFieldUpdaterInterface {
       $entity_type = $this->entityTypeManager->getDefinition($entity_type_id);
       $type_label = mb_strtolower($entity_type->getPluralLabel());
 
-      $message = $this->t('Processed @count @bundle @type. @updated @type updated. @skipped @type skipped.', [
+      $message_args = [
         '@count' => $sandbox['progress'],
         '@type' => $type_label,
-        '@bundle' => $bundle,
         '@updated' => $sandbox['updated_count'],
         '@skipped' => $sandbox['skipped_count'],
-      ]);
+      ];
+
+      if (!empty($options['bundle_name'])) {
+        $message_args['@bundle'] = $options['bundle_name'];
+        $message = $this->t('Processed @count @bundle @type. @updated @type updated. @skipped unused @type skipped.', $message_args);
+      }
+      else {
+        $message = $this->t('Processed @count @type. @updated @type updated. @skipped unused @type skipped.', $message_args);
+      }
 
       // Log the summary message at notice level.
       $logger->notice($message);

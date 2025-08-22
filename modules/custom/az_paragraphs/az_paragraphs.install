@@ -320,11 +320,10 @@ function az_paragraphs_update_1130001(&$sandbox) {
     'batch_size' => 20,
   ], $field_config['options']);
 
-  $result = $field_updater->processFieldUpdates(
+  $field_updater->processFieldUpdates(
     'paragraph',
-    $field_config['bundles'][0],
     $field_config['field_name'],
-    [AZBootstrapMarkupConverter::class, 'compareProcessor'],
+    'Drupal\az_core\Utility\AZBootstrapMarkupConverter::compareProcessor',
     $type_sandbox,
     $options
   );
@@ -343,7 +342,6 @@ function az_paragraphs_update_1130001(&$sandbox) {
   if ($sandbox['#finished'] >= 1) {
     return $field_updater->processFieldUpdates(
       'paragraph',
-      $field_config['bundles'][0],
       $field_config['field_name'],
       [AZBootstrapMarkupConverter::class, 'compareProcessor'],
       $sandbox,

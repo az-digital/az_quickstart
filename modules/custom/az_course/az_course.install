@@ -25,7 +25,6 @@ function az_course_update_1130001(&$sandbox) {
   return \Drupal::service('az_core.content_field_updater')
     ->processFieldUpdates(
       'node',
-      'az_course',
       'field_az_course_description',
       'Drupal\az_core\Utility\AZBootstrapMarkupConverter::compareProcessor',
       $sandbox,
@@ -33,6 +32,7 @@ function az_course_update_1130001(&$sandbox) {
         'create_revisions' => TRUE,
         'prefix' => __FUNCTION__,
         'suffix' => 'for Bootstrap 5 compatibility',
+        'bundle_name' => 'az_course',
       ]
     );
 }

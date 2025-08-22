@@ -12,8 +12,6 @@ interface AZContentFieldUpdaterInterface {
    *
    * @param string $entity_type_id
    *   The entity type ID (e.g., 'node', 'paragraph').
-   * @param string $bundle
-   *   The bundle name (e.g., 'az_text', 'az_person').
    * @param string $field_name
    *   The name of the field to update.
    * @param callable $processor
@@ -36,6 +34,8 @@ interface AZContentFieldUpdaterInterface {
    *     for including the update hook name.
    *   - suffix: (string|null) Optional suffix to append to both revision log
    *     messages and logger messages.
+   *   - bundle_name: (string|null) Optional bundle name (e.g., 'az_text',
+   *     'az_person') for more descriptive log messages.
    *   - batch_size: (int) Number of entities per batch. Defaults to 20.
    *   - value_key: (string) The property containing the value to process within
    *     the field item. Defaults to 'value'.
@@ -52,7 +52,6 @@ interface AZContentFieldUpdaterInterface {
    */
   public function processFieldUpdates(
     string $entity_type_id,
-    string $bundle,
     string $field_name,
     callable $processor,
     array &$sandbox,
