@@ -214,7 +214,7 @@ settings:
           label: 'Badge Success'
           element: '<span class="badge text-bg-success">'
         -
-          label: 'Badge Sky'
+          label: 'Badge Info'
           element: '<span class="badge text-bg-info">'
         -
           label: 'Badge Warning'
