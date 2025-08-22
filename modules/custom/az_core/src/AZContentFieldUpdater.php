@@ -90,7 +90,7 @@ final class AZContentFieldUpdater implements AZContentFieldUpdaterInterface {
           '@type' => $entity_type_id,
           '@id' => $id,
         ]);
-        $sandbox['skipped_count']++;
+        $sandbox['skipped']++;
         $sandbox['progress']++;
         continue;
       }
@@ -100,6 +100,8 @@ final class AZContentFieldUpdater implements AZContentFieldUpdaterInterface {
 
       // Skip if field doesn't exist or is empty.
       if (!$field || $field->isEmpty()) {
+        $sandbox['skipped']++;
+        $sandbox['progress']++;
         continue;
       }
 
@@ -108,6 +110,8 @@ final class AZContentFieldUpdater implements AZContentFieldUpdaterInterface {
         // Single-value field.
         $field_item = $field->first();
         if (!$field_item) {
+          $sandbox['skipped']++;
+          $sandbox['progress']++;
           continue;
         }
 
@@ -115,6 +119,8 @@ final class AZContentFieldUpdater implements AZContentFieldUpdaterInterface {
         if ($options['format_required']) {
           $format = $field_item->{$options['format_key']} ?? NULL;
           if (!in_array($format, $options['allowed_formats'])) {
+            $sandbox['skipped']++;
+            $sandbox['progress']++;
             continue;
           }
         }
@@ -122,6 +128,8 @@ final class AZContentFieldUpdater implements AZContentFieldUpdaterInterface {
         // Get current value using configured key.
         $original_value = $field_item->{$options['value_key']} ?? NULL;
         if (empty($original_value)) {
+          $sandbox['skipped']++;
+          $sandbox['progress']++;
           continue;
         }
 
@@ -269,7 +277,7 @@ final class AZContentFieldUpdater implements AZContentFieldUpdaterInterface {
           $message .= ' (' . $options['suffix'] . ')';
         }
 
-        $logger->info($message, $context);
+        $logger->notice($message, $context);
 
         $sandbox['updated_count']++;
       }
@@ -284,7 +292,7 @@ final class AZContentFieldUpdater implements AZContentFieldUpdaterInterface {
       $entity_type = $this->entityTypeManager->getDefinition($entity_type_id);
       $type_label = mb_strtolower($entity_type->getPluralLabel());
 
-      $message = $this->t('Processed @count @bundle @type. @updated @type updated. @skipped unused @type skipped.', [
+      $message = $this->t('Processed @count @bundle @type. @updated @type updated. @skipped @type skipped.', [
         '@count' => $sandbox['progress'],
         '@type' => $type_label,
         '@bundle' => $bundle,
