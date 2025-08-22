@@ -57,7 +57,7 @@
   </button>
 
   {# Carousel indicators #}
-  <div class="carousel-indicators">
+  <div class="carousel-indicators" {% if gallery_display == 'slider_full' %}style="filter: drop-shadow(0 0 0.5px rgb(0, 0, 0)) drop-shadow(0 0 0.5px rgb(0, 0, 0));"{% endif %}>
     {% for key, item in photos %}
       {% if key|first != '#' %}
         <button type="button" data-bs-target="#{{ gallery }}" data-bs-slide-to="{{ loop.index0 }}" {% if loop.first %}class="active" aria-current="true"{% endif %} aria-label="Slide {{ loop.index }}"></button>
