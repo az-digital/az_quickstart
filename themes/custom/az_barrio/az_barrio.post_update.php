@@ -53,6 +53,7 @@ function az_barrio_post_update_migrate_material_symbols_icons(&$sandbox = NULL) 
     \Drupal::logger('az_quickstart')->notice('Migrated Material Design Sharp icons setting to Material Symbols Rounded.');
   }
 }
+
 /**
  * Migrate Arizona Bootstrap 2.x versions to 5.x equivalents.
  */
@@ -105,6 +106,7 @@ function az_barrio_post_update_set_sidebar_menu_mobile_setting(&$sandbox = NULL)
     $theme_settings->save();
     \Drupal::logger('az_quickstart')->notice('Created az_remove_sidebar_menu_mobile and set to TRUE during post update.');
 }
+
 /**
  * Convert boolean values to integers for bootstrap_barrio settings.
  */
