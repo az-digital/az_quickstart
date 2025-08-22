@@ -44,11 +44,11 @@ function az_publication_update_1020702() {
     throw new UpdateException("The author name field is missing from the entity definition.");
   }
   $schema_repository->setLastInstalledFieldStorageDefinition($base_field_definitions[$field_name]);
+  /** @var \Drupal\Core\Field\BaseFieldDefinition[] $field_storage_definitions */
   $field_storage_definitions = $schema_repository->getLastInstalledFieldStorageDefinitions($entity_type_id);
   if (empty($field_storage_definitions[$field_name])) {
     throw new UpdateException("The author name field is missing from the storage defintion.");
   }
-  /** @var \Drupal\Core\Field\BaseFieldDefinition $field_storage_definitions[$field_name] */
   $field_storage_definitions[$field_name]->setSetting('max_length', $field_length);
   // Seems needed so that the schema is available in field storage definition.
   $field_storage_definitions[$field_name]->getSchema();

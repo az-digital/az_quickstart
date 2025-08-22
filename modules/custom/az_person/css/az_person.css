@@ -10,7 +10,8 @@
 	margin-bottom: 0 !important;
 }
 
-.node--type-az-person .card .img-fluid,
+.node--type-az-person.node--view-mode-az-card .card .img-fluid,
+.node--type-az-person.node--view-mode-full .card .img-fluid,
 .az-person-modal .card .img-fluid {
 	/* Sharpen bottom corners of images in the top img card position */
 	border-radius: 0;

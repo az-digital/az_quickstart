@@ -49,6 +49,7 @@ third_party_settings:
         classes: 'text-body-secondary fw-normal small mt-2'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: div
@@ -65,9 +66,10 @@ third_party_settings:
       weight: 0
       format_type: html_element
       format_settings:
-        classes: 'card card-borderless card-clickable mb-4'
+        classes: 'card border-0 mb-4'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -86,9 +88,10 @@ third_party_settings:
       weight: 1
       format_type: link
       format_settings:
-        classes: 'card-body p-0 hide-contextual-links'
+        classes: 'card-body p-0 hide-contextual-links text-decoration-none'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         target: entity
         custom_uri: ''
         target_attribute: default
