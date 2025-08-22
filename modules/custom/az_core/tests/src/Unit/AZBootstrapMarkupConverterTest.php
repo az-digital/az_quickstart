@@ -44,7 +44,7 @@ class AZBootstrapMarkupConverterTest extends UnitTestCase {
   /**
    * Data provider for testFragmentConversion.
    */
-  public function provideFragments() {
+  public static function provideFragments() {
     return [
       'single paragraph' => [
         '<p class="text-left mr-3">Hello</p>',
