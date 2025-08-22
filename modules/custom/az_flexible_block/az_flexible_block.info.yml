@@ -1,7 +1,7 @@
 name: 'Quickstart Flexible Block'
 description: "An embeddable content block with dynamic block elements."
 type: module
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10 || ^11 || ^12
 package: The University of Arizona
 dependencies:
   - drupal:field
