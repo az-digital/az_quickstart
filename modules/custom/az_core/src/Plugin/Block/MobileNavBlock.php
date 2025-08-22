@@ -165,8 +165,7 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
           'az_core/az-mobile-nav',
         ],
       ],
-      // @todo Temporary workaround to prevent block not updating after
-      // navigating to a new page.
+      // @todo Try using cache contexts to cache variants of this block.
       '#cache' => [
         'max-age' => 0,
       ],

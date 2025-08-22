@@ -95,7 +95,7 @@
             {% if page.header_ua_utilities %}
               {{ page.header_ua_utilities }}
             {% endif %}
-            {% if az_barrio_navbar %}
+            {% if page.navigation_offcanvas %}
               <div class="d-lg-none d-flex col-auto px-0">
                 {% if page.navigation_offcanvas.az_barrio_offcanvas_searchform %}
                   <button data-bs-toggle="offcanvas" type="button" data-bs-target="#azMobileNav" aria-controls="azMobileNav" class="btn btn-arizona-header" id="jsAzSearch">
@@ -120,9 +120,7 @@
                       <span class="icon-text">Close</span>
                     </button>
                   </div>
-                  {% if page.navigation_offcanvas %}
-                    {{ page.navigation_offcanvas }}
-                  {% endif %}
+                  {{ page.navigation_offcanvas }}
                 </div>
               </div>
             {% endif %}

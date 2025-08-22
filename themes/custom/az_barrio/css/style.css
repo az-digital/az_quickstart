@@ -431,7 +431,7 @@ td.menu-disabled {
     scroll-margin-top: 58px;
   }
   .user-logged-in #page {
-    margin-top: 39px;
+    margin-top: 0;
   }
   .user-logged-in .arizona-header {
     position: static;
@@ -467,11 +467,6 @@ td.menu-disabled {
 }
 
 /* AZ Barrio search form block (Desktop) */
-#search-block-form {
-  padding: 5px 15px;
-  flex-flow: row wrap;
-}
-
 .az-search-block .search-block-form .form-search {
   height: 43px;
   margin-left: 0 !important;
