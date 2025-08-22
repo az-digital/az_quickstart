@@ -1,7 +1,7 @@
 name: Arizona Barrio
 type: theme
 description: 'Basic structure for a Bootstrap Barrio SubTheme.'
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10 || ^11 || ^12
 dependencies:
   - az_core
 base theme: bootstrap_barrio
@@ -44,14 +44,10 @@ regions:
   footer_sub_menus: 'Footer sub menus'
   az_page_bottom: 'Page bottom'
 
-ckeditor_stylesheets:
-  - https://cdn.digital.arizona.edu/lib/az-icons/main/az-icons-styles.css
-  - https://cdn.digital.arizona.edu/lib/arizona-bootstrap/latest-2.x/css/arizona-bootstrap.min.css
-
 ckeditor5-stylesheets:
   - css/ckeditor5.css
   - https://cdn.digital.arizona.edu/lib/az-icons/main/az-icons-styles.css
-  - https://cdn.digital.arizona.edu/lib/arizona-bootstrap/latest-2.x/css/arizona-bootstrap.min.css
+  - https://cdn.digital.arizona.edu/lib/arizona-bootstrap/latest-5.x/css/arizona-bootstrap.min.css
 
 libraries-extend:
   system/base:
