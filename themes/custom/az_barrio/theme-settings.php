@@ -7,7 +7,6 @@
  * Provides theme settings for Arizona Barrio.
  */
 
-//phpcs:ignore Security.BadFunctions.EasyRFI.WarnEasyRFI
 require_once \Drupal::service('extension.list.theme')->getPath('az_barrio') . '/includes/common.inc';
 
 use Drupal\Core\File\Exception\FileException;
@@ -125,9 +124,27 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#collapsible' => TRUE,
     '#collapsed' => FALSE,
   ];
+  $form['fonts']['icons']['az_barrio_icons']['az_barrio_material_symbols_rounded'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Use Material Symbols Rounded Icons'),
+    '#description' => t(
+        'If selected, a Google Fonts CDN <code>&lt;link&gt;</code> will be added to every page importing the @material_symbols_rounded_docs_link CSS.', [
+          '@material_symbols_rounded_docs_link' => Link::fromTextAndUrl(
+            'Material Symbols Rounded icons', Url::fromUri(
+                'https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0', [
+                  'attributes' => [
+                    'target' => '_blank',
+                  ],
+                ]
+            )
+          )->toString(),
+        ]
+    ),
+    '#default_value' => theme_get_setting('az_barrio_material_symbols_rounded'),
+  ];
   $form['fonts']['icons']['az_barrio_icons']['az_barrio_material_design_sharp_icons'] = [
     '#type' => 'checkbox',
-    '#title' => t('Use Material Design Sharp Icons'),
+    '#title' => t('(Deprecated) Use Material Design Sharp Icons'),
     '#description' => t(
         'If selected, a Google Fonts CDN <code>&lt;link&gt;</code> will be added to every page importing the @material_design_sharp_icons_docs_link CSS.', [
           '@material_design_sharp_icons_docs_link' => Link::fromTextAndUrl(
@@ -251,13 +268,36 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   ];
   $form['azbs_settings']['settings']['az_bootstrap_cdn']['az_bootstrap_cdn_version'] = [
     '#type' => 'radios',
-    '#title' => t('AZ Bootstrap CDN version'),
+    '#title' => t('AZ Bootstrap CDN version (DEPRECATED)'),
+    '#description' => t('This setting is deprecated in favor of allowing choosing your CSS and JS versions separately.  <a href="@bootstrapdeprecated">This setting will be removed in a future version of AZ Barrio</a>.', [
+      '@bootstrapdeprecated' => 'https://github.com/az-digital/az_quickstart/issues/1251',
+    ]),
     '#options' => [
       'stable' => t('Stable version: This option has undergone the most testing within the az_barrio theme. Currently: %stableversion (Recommended).', ['%stableversion' => AZ_BOOTSTRAP_STABLE_VERSION]),
       'latest-2.x' => t('Latest tagged version. The most recently tagged stable release of AZ Bootstrap. While this has not been explicitly tested on this version of az_barrio, it’s probably OK to use on production sites. Please report bugs to the AZ Digital team.'),
       '2.x' => t('Latest dev version. This is the tip of the 2.x branch of AZ Bootstrap. Please do not use on production unless you are following the AZ Bootstrap project closely. Please report bugs to the AZ Digital team.'),
     ],
     '#default_value' => theme_get_setting('az_bootstrap_cdn_version'),
+  ];
+  $form['azbs_settings']['settings']['az_bootstrap_cdn']['az_bootstrap_cdn_version_css'] = [
+    '#type' => 'radios',
+    '#title' => t('AZ Bootstrap CSS CDN version'),
+    '#options' => [
+      'stable' => t('Stable version: This option has undergone the most testing within the az_barrio theme. Currently: %stableversion (Recommended).', ['%stableversion' => AZ_BOOTSTRAP_STABLE_VERSION]),
+      'latest-5.x' => t('Latest tagged version of 5.x. The most recently tagged stable release of AZ Bootstrap. While this has not been explicitly tested on this version of az_barrio, it’s probably OK to use on production sites. Please report bugs to the AZ Digital team.'),
+      '5.x' => t('Latest dev version of <code>main</code>. This is the tip of the main branch of AZ Bootstrap. Please do not use on production unless you are following the AZ Bootstrap project closely. Please report bugs to the AZ Digital team.'),
+    ],
+    '#default_value' => theme_get_setting('az_bootstrap_cdn_version_css'),
+  ];
+  $form['azbs_settings']['settings']['az_bootstrap_cdn']['az_bootstrap_cdn_version_js'] = [
+    '#type' => 'radios',
+    '#title' => t('AZ Bootstrap JS CDN version'),
+    '#options' => [
+      'stable' => t('Stable version: This option has undergone the most testing within the az_barrio theme. Currently: %stableversion (Recommended).', ['%stableversion' => AZ_BOOTSTRAP_STABLE_VERSION]),
+      'latest-5.x' => t('Latest tagged version of 5.x. The most recently tagged stable release of AZ Bootstrap. While this has not been explicitly tested on this version of az_barrio, it’s probably OK to use on production sites. Please report bugs to the AZ Digital team.'),
+      '5.x' => t('Latest dev version of <code>main</code>. This is the tip of the main branch of AZ Bootstrap. Please do not use on production unless you are following the AZ Bootstrap project closely. Please report bugs to the AZ Digital team.'),
+    ],
+    '#default_value' => theme_get_setting('az_bootstrap_cdn_version_js'),
   ];
   $form['azbs_settings']['settings']['az_bootstrap_minified'] = [
     '#type'          => 'checkbox',
@@ -296,6 +336,13 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   // Add new AZ Barrio sidebar position option and help text.
   $form['layout']['sidebar_position']['bootstrap_barrio_sidebar_position']['#options']['az-barrio-both-below'] = t('Both sides below on mobile');
   $form['layout']['sidebar_position']['bootstrap_barrio_sidebar_position']['#description'] = t('Below the Bootstrap md breakpoint, the "Both sides" position places the Sidebar First region <strong>above</strong> the page content while the "Both sides below on mobile" position places both sidebar regions <strong>below</strong> the page content.');
+  // Remove sidebar menu on mobile setting.
+  $form['layout']['sidebar_position']['az_remove_sidebar_menu_mobile'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Remove sidebar menu on mobile devices'),
+    '#description' => t('If checked, the sidebar menu will not be displayed on mobile devices.'),
+    '#default_value' => theme_get_setting('az_remove_sidebar_menu_mobile'),
+  ];
   // Remove Navbar options.
   $form['affix']['navbar_top'] = [];
   $form['affix']['navbar'] = [];
@@ -430,7 +477,6 @@ function az_barrio_form_system_theme_settings_submit($form, FormStateInterface &
   $default_scheme = \Drupal::config('system.file')->get('default_scheme');
   try {
     if (!empty($values['footer_logo_upload'])) {
-      //phpcs:ignore Security.BadFunctions.FilesystemFunctions.WarnFilesystem
       $filename = \Drupal::service('file_system')->copy($values['footer_logo_upload']->getFileUri(), $default_scheme . '://');
       $form_state->setValue('footer_logo_path', $filename);
       $form_state->setValue('footer_default_logo', 0);
@@ -475,13 +521,11 @@ function az_barrio_form_system_theme_settings_validate($form, FormStateInterface
 function az_barrio_validate_file_path($path) {
 
   // Absolute local file paths are invalid.
-  //phpcs:ignore Security.BadFunctions.FilesystemFunctions.WarnFilesystem
   if (\Drupal::service('file_system')->realpath($path) === $path) {
     return FALSE;
   }
 
   // A path relative to the Drupal root or a fully qualified URI is valid.
-  //phpcs:ignore Security.BadFunctions.FilesystemFunctions.WarnFilesystem
   if (is_file($path)) {
     return $path;
   }
@@ -490,7 +534,6 @@ function az_barrio_validate_file_path($path) {
   if (StreamWrapperManager::getScheme($path) === FALSE) {
     $path = 'public://' . $path;
   }
-  //phpcs:ignore Security.BadFunctions.FilesystemFunctions.WarnFilesystem
   if (is_file($path)) {
     return $path;
   }

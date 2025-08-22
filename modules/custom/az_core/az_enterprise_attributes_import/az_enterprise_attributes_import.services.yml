@@ -7,7 +7,7 @@ services:
     decorates: migrate_tools.migration_sync
     arguments:
       - '@event_dispatcher'
-      - '@state'
+      - '@migrate_tools.migrate_tools'
       - '@entity_type.manager'
       - '@logger.channel.az_enterprise_attributes_import'
   logger.channel.az_enterprise_attributes_import:

@@ -4,7 +4,7 @@
             "id":2,
             "az_text_area" : "<h2 class=\"text-align-center\">Background Color: Arizona Red<\/h2>\r\n\r\n<p class=\"text-align-center\"><span class=\"lead\">Background Pattern: Triangles Centered<\/span><\/p>\r\n\r\n<p class=\"text-align-center\"><span class=\"lead\">Full-width: Not checked<\/span><\/p>",
             "full_width" : false,
-            "bg_color" : "bg-red",
+            "bg_color" : "text-bg-red",
             "bg_pattern" : "bg-triangles-centered",
             "bg_padding" : "py-5",
             "bottom_spacing" : "mb-0"
@@ -13,7 +13,7 @@
             "id":3,
             "az_text_area" : "<h2>Background Color: Cool Gray<\/h2>\r\n\r\n<p><span class=\"lead\">Background Pattern: Trilines<\/span><\/p>\r\n\r\n<p><span class=\"lead\">Full-width: Checked<\/span><\/p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>\r\n",
             "full_width" : "full-width-background",
-            "bg_color" : "bg-cool-gray",
+            "bg_color" : "text-bg-cool-gray",
             "bg_pattern" : "bg-trilines",
             "bg_padding" : "py-5",
             "bottom_spacing" : "mb-0"
@@ -22,7 +22,7 @@
             "id":8,
             "az_text_area" : "<h2 class=\"text-align-right\">Background Color: Azurite<\/h2>\r\n\r\n<p class=\"text-align-right\"><span class=\"lead\">Background Pattern: Triangles Left<\/span><\/p>\r\n\r\n<p class=\"text-align-right\"><span class=\"lead\">Full-width: Not checked<\/span><\/p>\r\n\r\n<p class=\"text-align-right\">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>\r\n",
             "full_width" : false,
-            "bg_color" : "bg-azurite",
+            "bg_color" : "text-bg-azurite",
             "bg_pattern" : "bg-triangles-top-left",
             "bg_padding" : "py-5",
             "bottom_spacing" : "mb-0"
@@ -31,7 +31,7 @@
             "id":9,
             "az_text_area" : "<h2 class=\"text-align-center\">Background Color: River<\/h2>\r\n\r\n<p class=\"text-align-center\"><span class=\"lead\">Background Pattern: None<\/span><\/p>\r\n\r\n<p class=\"text-align-center\"><span class=\"lead\">Full-width: Checked<\/span><\/p>\r\n",
             "full_width" : "full-width-background",
-            "bg_color" : "bg-river",
+            "bg_color" : "text-bg-river",
             "bg_padding" : "py-5",
             "bg_pattern" : "",
             "bottom_spacing" : "mb-0"
@@ -40,43 +40,43 @@
             "id":14,
             "az_text_area" : "<h2>Background Color: Midnight<\/h2>\r\n\r\n<p><span class=\"lead\">Background Pattern: Triangles Right<\/span><\/p>\r\n\r\n<p><span class=\"lead\">Full-width: Not checked<\/span><\/p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>\r\n",
             "full_width" : false,
-            "bg_color" : "bg-midnight",
+            "bg_color" : "text-bg-midnight",
             "bg_padding" : "py-5",
             "bg_pattern" : "bg-triangles-top-right",
             "bottom_spacing" : "mb-0"
         },
         {
             "id":76,
-            "az_text_area" : "<h2 class=\"text-align-center\">Background Color: Gray 100</h2><p class=\"text-align-center\"><span class=\"lead\">Background Pattern: Triangles Left<\/span><\/p><p class=\"text-align-center\"><span class=\"lead\">Full-width: Checked<\/span><\/p>",
+            "az_text_area" : "<h2 class=\"text-align-center\">Background Color: Gray 100<\/h2><p class=\"text-align-center\"><span class=\"lead\">Background Pattern: Triangles Left<\/span><\/p><p class=\"text-align-center\"><span class=\"lead\">Full-width: Checked<\/span><\/p>",
             "full_width" : "full-width-background",
-            "bg_color" : "bg-gray-100",
+            "bg_color" : "text-bg-gray-100",
             "bg_padding" : "py-5",
             "bg_pattern" : "bg-triangles-top-left",
             "bottom_spacing" : "mb-0"
         },
         {
             "id":77,
-            "az_text_area" : "<h2 class=\"text-align-center\">Background Color: Gray 200</h2><p class=\"text-align-center\"><span class=\"lead\">Background Pattern: None<\/span><\/p><p class=\"text-align-center\"><span class=\"lead\">Full-width: Unchecked<\/span><\/p>",
+            "az_text_area" : "<h2 class=\"text-align-center\">Background Color: Gray 200<\/h2><p class=\"text-align-center\"><span class=\"lead\">Background Pattern: None<\/span><\/p><p class=\"text-align-center\"><span class=\"lead\">Full-width: Unchecked<\/span><\/p>",
             "full_width" : false,
-            "bg_color" : "bg-gray-200",
+            "bg_color" : "text-bg-gray-200",
             "bg_padding" : "py-5",
             "bg_pattern" : "",
             "bottom_spacing" : "mb-0"
         },
         {
             "id":78,
-            "az_text_area" : "<h2 class=\"text-align-center\">Background Color: Gray 300</h2><p class=\"text-align-center\"><span class=\"lead\">Background Pattern: None<\/span><\/p><p class=\"text-align-center\"><span class=\"lead\">Full-width: Checked<\/span><\/p>",
+            "az_text_area" : "<h2 class=\"text-align-center\">Background Color: Gray 300<\/h2><p class=\"text-align-center\"><span class=\"lead\">Background Pattern: None<\/span><\/p><p class=\"text-align-center\"><span class=\"lead\">Full-width: Checked<\/span><\/p>",
             "full_width" : "full-width-background",
-            "bg_color" : "bg-gray-300",
+            "bg_color" : "text-bg-gray-300",
             "bg_padding" : "py-5",
             "bg_pattern" : "",
             "bottom_spacing" : "mb-0"
         },
         {
             "id":87,
-            "az_text_area" : "<div class=\"bs_grid\"><div class=\"row\" data-row-lg=\"equal_equal_equal\" data-row-md=\"none\" data-row-none=\"none\" data-row-sm=\"12_12_12\" data-row-xl=\"\" data-row-xxl=\"\"><div class=\"col-sm-12 col-lg\"><div class=\"text-center p-0 m-0\"><p class=\"display-3 sans my-0\"><strong>100</strong></p></div><div class=\"text-sky text-center\"><p class=\"h5 my-0\"><strong>That's a big number</strong></p></div></div><div class=\"col-sm-12 col-lg\"><div class=\"text-center p-0 m-0\"><p class=\"display-3 sans my-0\"><strong>600+</strong></p></div><div class=\"text-sky text-center\"><p class=\"h5 my-0\"><strong>Even more impressive</strong></p></div></div><div class=\"col-sm-12 col-lg\"><div class=\"text-center p-0 m-0\"><p class=\"display-3 sans my-0\"><strong>100M</strong></p></div><div class=\"text-sky text-center\"><p class=\"h5 my-0\"><strong>Now we're just showing off</strong></p></div></div></div></div>",
+            "az_text_area" : "<div class=\"bs_grid\"><div class=\"row\" data-row-lg=\"equal_equal_equal\" data-row-md=\"none\" data-row-none=\"none\" data-row-sm=\"12_12_12\" data-row-xl=\"\" data-row-xxl=\"\"><div class=\"col-sm-12 col-lg\"><div class=\"text-center p-0 m-0\"><p class=\"display-3 sans my-0\"><strong>100<\/strong><\/p><\/div><div class=\"text-sky text-center\"><p class=\"h5 my-0\"><strong>That's a big number<\/strong><\/p><\/div><\/div><div class=\"col-sm-12 col-lg\"><div class=\"text-center p-0 m-0\"><p class=\"display-3 sans my-0\"><strong>600+<\/strong><\/p><\/div><div class=\"text-sky text-center\"><p class=\"h5 my-0\"><strong>Even more impressive<\/strong><\/p><\/div><\/div><div class=\"col-sm-12 col-lg\"><div class=\"text-center p-0 m-0\"><p class=\"display-3 sans my-0\"><strong>100M<\/strong><\/p><\/div><div class=\"text-sky text-center\"><p class=\"h5 my-0\"><strong>Now we're just showing off<\/strong><\/p><\/div><\/div><\/div><\/div>",
             "full_width" : "full-width-background",
-            "bg_color" : "bg-blue",
+            "bg_color" : "text-bg-blue",
             "bg_padding" : "py-5",
             "bg_pattern" : "",
             "bottom_spacing" : "mb-5"

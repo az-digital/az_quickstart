@@ -1,0 +1,52 @@
+{
+  "paragraphs": [
+    {
+      "id": 300,
+      "az_accordion": [
+        {
+         "delta": 0,
+         "title": "Title #1",
+         "body": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare nisi vitae magna venenatis sodales. Duis maximus risus sit amet metus hendrerit dapibus. Vivamus faucibus ante magna, sit amet varius dui interdum in. In a metus venenatis, euismod arcu eget, tempus arcu. Sed cursus elementum semper. Duis euismod maximus lorem, non condimentum arcu bibendum in. Praesent laoreet efficitur orci sed egestas. Curabitur vehicula metus ut lectus pulvinar faucibus. Maecenas vitae mi tristique enim interdum interdum vel a nulla. Aenean dignissim nibh a semper suscipit. Mauris fermentum interdum lectus, non porta massa malesuada non. Nulla facilisi. Aenean sagittis, erat sit amet ornare congue, metus elit dictum urna, quis tempor massa elit in leo. Fusce faucibus nunc sit amet est ultricies, in semper magna cursus. Donec bibendum ut purus in ultrices. Sed at malesuada purus.</p>",
+         "collapsed": false
+        },
+        {
+          "delta": 1,
+          "title": "Title #2 is an extremely long title that wraps to the next line and this accordion item is collapsed by default",
+          "body": "<p>Mauris at diam rhoncus, condimentum diam eu, interdum nunc. Sed ultricies ante id elit aliquet semper eget nec ex. Quisque turpis risus, porta in facilisis ut, maximus nec neque. Pellentesque volutpat nunc vel ex luctus cursus. Ut quis mauris at nibh finibus accumsan sed nec erat. Aliquam tempor augue nec luctus lacinia. Mauris vestibulum, metus in posuere feugiat, elit velit porttitor dui, quis sollicitudin massa felis ut arcu. Nulla eleifend nunc ligula, non tristique turpis sagittis quis. Nam bibendum, libero et imperdiet accumsan, risus felis auctor sem, et ornare ex massa nec dolor. Curabitur quis eleifend felis. Etiam vel tristique lectus. Pellentesque egestas elit libero, eu auctor sem fringilla eu. Praesent at accumsan tortor. Fusce dignissim pellentesque dui in pulvinar.</p>",
+          "collapsed": true
+        },
+        {
+          "delta": 2,
+          "title": "Title #3",
+          "body": "<p>Pellentesque cursus tempus lectus. Sed tempor, nisi eu egestas malesuada, tortor tortor suscipit magna, sit amet posuere est urna quis nulla. Curabitur in augue euismod, tristique eros sed, mattis est. Suspendisse malesuada nisl lobortis urna finibus vulputate. Aenean eu mauris eu dolor interdum dapibus nec consequat arcu. Nam sit amet nulla a eros malesuada vehicula vitae id nisi. Vivamus at lectus eget lorem aliquam volutpat ut id orci. Quisque et imperdiet nunc. Nullam vel neque id erat rhoncus dictum. Cras tristique ante molestie hendrerit sollicitudin. Nam vitae magna et odio dignissim consequat ut eget ipsum. Fusce ac ipsum orci. Aliquam metus justo, gravida non tellus vitae, sollicitudin eleifend diam.</p>",
+          "collapsed": true
+         },
+         {
+           "delta": 3,
+           "title": "Title #4 is an extremely long title that wraps to the next line and this accordion item is not collapsed by default",
+           "body": "<p>Donec at facilisis diam, ac ornare nisi. Praesent volutpat, ante vitae luctus hendrerit, ex urna facilisis velit, vitae congue velit tellus ac purus. Nam ullamcorper purus eu lacus scelerisque dignissim. Curabitur scelerisque purus sit amet justo pellentesque, sit amet consequat nunc accumsan. Nulla blandit quis arcu eu congue. Pellentesque risus velit, porttitor a faucibus eu, mattis sit amet magna. Nulla facilisi. Duis bibendum tempus augue eget accumsan.</p>",
+           "collapsed": false
+         },
+         {
+           "delta": 4,
+           "title": "Title #5",
+           "body": "<p>Proin fermentum, enim sed feugiat tincidunt, tortor ligula tempus arcu, et placerat justo ipsum non metus. Quisque vitae maximus risus, vitae eleifend magna. Proin tristique, neque a convallis efficitur, velit libero laoreet neque, non viverra nisl ante at lorem. Aliquam erat volutpat. Suspendisse sollicitudin, arcu eget auctor convallis, mi risus porttitor libero, ac bibendum arcu ligula a urna. Duis ac turpis varius, tempor dui eget, venenatis magna. Pellentesque sit amet libero eget justo tincidunt iaculis ac a urna. Mauris scelerisque non felis in convallis.</p>",
+           "collapsed": true
+         }
+      ],
+      "bottom_spacing": "mb-4"
+    },
+    {
+      "id": 301,
+      "az_accordion": [
+        {
+          "delta": 0,
+          "title": "Title #1",
+          "body": "<p>Nulla facilisi. Sed at libero nec enim tincidunt aliquet. Suspendisse potenti. In hac habitasse platea dictumst. Integer in ligula vel erat convallis facilisis. Donec ac felis a quam commodo eleifend. Morbi non dolor sed justo sodales tincidunt. Aenean id nunc in odio efficitur finibus. Quisque euismod, nisi a facilisis consectetur, augue enim faucibus est, nec interdum leo erat at quam.</p>",
+          "collapsed": false
+        }
+      ],
+      "bottom_spacing": "mb-4"
+    }
+  ]
+}

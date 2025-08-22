@@ -2,12 +2,22 @@ parameters:
 	customRulesetUsed: true
 	tipsOfTheDay: false
 	reportUnmatchedIgnoredErrors: false
+	paths:
+		- az_quickstart.install
+		- az_quickstart.profile
+		- az_quickstart.post_update.php
+		- modules
+		- themes
+
 	excludePaths:
 		- */tests/Drupal/Tests/Listeners/Legacy/*
 		- */tests/fixtures/*.php
 		- */settings*.php
 		- */node_modules/*
 		- */LinkExtractor/*
+
+	scanDirectories:
+		- ../../../../vendor/drush/drush/src-symfony-compatibility
 
 	ignoreErrors:
 		- '#\Drupal calls should be avoided in classes, use dependency injection instead#'

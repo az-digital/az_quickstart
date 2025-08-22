@@ -52,8 +52,8 @@ class QuickstartExposedFilters extends BetterExposedFilters {
       $reset_button['#attributes']['class'] = array_merge($existing_classes, [
         'btn',
         'btn-sm',
-        'btn-primary',
-        'btn-block',
+        'btn-secondary',
+        'w-100',
         'js-active-filters-reset',
         'mx-1',
         'mb-3',
@@ -70,16 +70,20 @@ class QuickstartExposedFilters extends BetterExposedFilters {
       // Add the reset button counter setting to the drupalSettings array.
       if ($this->options['reset_button_counter'] === TRUE) {
         $form['#attached']['library'][] = 'az_finder/active-filter-count';
+
         $count = [
           '#type' => 'html_tag',
           '#tag' => 'span',
           '#attributes' => [
             'class' => [
               'js-active-filter-count',
-              'ml-1',
+              'ms-2',
             ],
+            'aria-live' => 'polite',
+            'role' => 'status',
           ],
         ];
+
         $reset_button['count'] = $count;
         $reset_button['#type'] = 'html_tag';
         $reset_button['#tag'] = 'button';
