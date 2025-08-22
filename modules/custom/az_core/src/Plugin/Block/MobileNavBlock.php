@@ -138,7 +138,7 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
     ];
     $tree = $menuTree->transform($tree, $manipulators);
 
-    // Save the tree to key value storage.
+    // Save the tree to the cache backend.
     $this->cache->set(
       'az_mobile_nav_menu.menu_tree',
       $tree,
