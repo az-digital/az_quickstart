@@ -115,7 +115,7 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
   }
 
   /**
-   * Load the main menu tree and save it to key/value storage.
+   * Load the main menu tree and save it to the cache.
    *
    * @param \Drupal\Core\Menu\MenuLinkTreeInterface $menuTree
    *   The menu link tree service.
