@@ -147,7 +147,8 @@
                 "Support entities without bundles (2945387)": "https://www.drupal.org/files/issues/2024-06-07/2945387-28.patch"
             },
             "drupal/bootstrap_barrio": {
-                "Js error if table not found (3519060)": "https://www.drupal.org/files/issues/2025-04-14/bootstrap-barrio-table-not-found-3519060-1.patch"
+                "Js error if table not found (3519060)": "https://www.drupal.org/files/issues/2025-04-14/bootstrap-barrio-table-not-found-3519060-1.patch",
+                "Fix alerts (3485305)": "https://www.drupal.org/files/issues/2025-08-19/3485305-5.5.x-11.patch"
             },
             "drupal/config_distro": {
                 "Storage comparer issue": "https://gist.githubusercontent.com/tadean/e2e0dd57f1a9c4eae28d8e713cb01d82/raw/e114987d4a76c183208c763de4dbfecbf41b7f35/config_distro_storage_comparer_issue.patch"
