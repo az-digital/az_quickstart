@@ -34,6 +34,7 @@ content:
         - az_full_width_bg_large
         - az_full_width_bg_medium
         - az_full_width_bg_small
+        - az_full_width_bg_xlarge
       progress_indicator: throbber
       crop_types_required: {  }
       show_crop_area: false
