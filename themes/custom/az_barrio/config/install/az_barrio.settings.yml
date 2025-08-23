@@ -159,7 +159,7 @@ az_barrio_footer_logo_svg_inline: false
 az_remove_sidebar_menu_mobile: true
 primary_logo_alt_text: '[site:name] | Home'
 primary_logo_title_text: '[site:name] | Home'
-footer_logo_link_destination: ''
+footer_logo_link_destination: null
 footer_logo_alt_text: '[site:name] | Home'
 footer_logo_title_text: '[site:name] | Home'
 footer_logo_path: profiles/custom/az_quickstart/themes/custom/az_barrio/images/logo.png

@@ -330,6 +330,7 @@ az_barrio.settings:
     footer_logo_link_destination:
       type: uri
       label: 'Footer logo link destination'
+      nullable: true
     footer_logo_alt_text:
       type: label
       label: 'Footer logo alt text'
