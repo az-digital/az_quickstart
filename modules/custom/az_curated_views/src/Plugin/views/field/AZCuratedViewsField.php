@@ -154,7 +154,7 @@ class AZCuratedViewsField extends BulkForm {
     }
     catch (\Exception $e) {
       $transaction->rollback();
-      $this->messenger->addMessage(t('There was an error while saving the curation information.'), 'warning');
+      $this->messenger->addMessage($this->t('There was an error while saving the curation information.'), 'warning');
     }
   }
 
