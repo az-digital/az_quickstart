@@ -328,7 +328,7 @@ az_barrio.settings:
       type: label
       label: 'Primary logo title text'
     footer_logo_link_destination:
-      type: text
+      type: uri
       label: 'Footer logo link destination'
     footer_logo_alt_text:
       type: label
