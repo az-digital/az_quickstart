@@ -384,7 +384,7 @@ function az_paragraphs_update_1130001(&$sandbox) {
     $sandbox['type_max'] = count($sandbox['paragraphs']);
   }
 
-    // Calculate overall progress as we process each type.
+  // Calculate overall progress as we process each type.
   $total_types = count($sandbox['field_config_keys']);
   $current_type_progress = $sandbox['type_progress'] / ($sandbox['type_max'] ?: 1);
   $sandbox['#finished'] = ($sandbox['current_type'] + $current_type_progress) / $total_types;
