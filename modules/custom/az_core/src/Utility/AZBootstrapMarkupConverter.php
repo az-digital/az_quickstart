@@ -184,15 +184,25 @@ final class AZBootstrapMarkupConverter {
    * Map AZ Bootstrap 2 classes to AZ Bootstrap 5 classes.
    */
   const CLASS_MAP = [
+    // Badge classes
     'badge-primary' => 'text-bg-primary',
     'badge-secondary' => 'text-bg-secondary',
+    'badge-blue' => 'text-bg-blue',
+    'badge-red' => 'text-bg-red',
+    'badge-success' => 'text-bg-success',
+    'badge-danger' => 'text-bg-danger',
+    'badge-warning' => 'text-bg-warning',
+    'badge-info' => 'text-bg-info',
     'badge-light' => 'text-bg-light',
+    'badge-dark' => 'text-bg-dark',
+    'badge-pill' => 'rounded-pill',
     'form-group' => 'mb-3',
     'form-inline' => 'd-flex align-items-center',
     'custom-select' => 'form-select',
     'sr-only' => 'visually-hidden',
     'text-left' => 'text-start',
     'text-right' => 'text-end',
+    'text-muted' => 'text-body-secondary',
     'btn-block' => 'w-100',
     'bold' => 'fw-bold',
     'font-weight-bold' => 'fw-bold',
