@@ -561,21 +561,41 @@ final class AZBootstrapMarkupConverter {
     // Background color mappings from az-digital/az_quickstart#4323.
     'bg-transparent-white' => 'text-bg-transparent-white',
     'bg-transparent-black' => 'text-bg-transparent-black',
-    'bg-red' => 'text-bg-red',
-    'bg-blue' => 'text-bg-blue',
-    'bg-sky' => 'text-bg-sky',
-    'bg-oasis' => 'text-bg-oasis',
-    'bg-azurite' => 'text-bg-azurite',
-    'bg-midnight' => 'text-bg-midnight',
-    'bg-bloom' => 'text-bg-bloom',
-    'bg-chili' => 'text-bg-chili',
-    'bg-cool-gray' => 'text-bg-cool-gray',
-    'bg-warm-gray' => 'text-bg-warm-gray',
-    'bg-leaf' => 'text-bg-leaf',
-    'bg-river' => 'text-bg-river',
-    'bg-silver' => 'text-bg-silver',
-    'bg-ash' => 'text-bg-ash',
-    'bg-sage' => 'text-bg-sage',
+    'bg-red' => 'text-bg-red'
+    'bg-bloom' => 'text-bg-bloom'
+    'bg-chili' => 'text-bg-chili'
+    'bg-blue' => 'text-bg-blue'
+    'bg-sky' => 'text-bg-sky'
+    'bg-oasis' => 'text-bg-oasis'
+    'bg-azurite' => 'text-bg-azurite'
+    'bg-midnight' => 'text-bg-midnight'
+    'bg-cool-gray' => 'text-bg-cool-gray'
+    'bg-warm-gray' => 'text-bg-warm-gray'
+    'bg-leaf' => 'text-bg-leaf'
+    'bg-river' => 'text-bg-river'
+    'bg-silver' => 'text-bg-silver'
+    'bg-mesa' => 'text-bg-mesa'
+    'bg-ash' => 'text-bg-ash'
+    'bg-sage' => 'text-bg-sage'
+    'bg-white' => 'text-bg-white'
+    'bg-black' => 'text-bg-black'
+    'bg-primary' => 'text-bg-primary'
+    'bg-secondary' => 'text-bg-secondary'
+    'bg-success' => 'text-bg-success'
+    'bg-danger' => 'text-bg-danger'
+    'bg-warning' => 'text-bg-warning'
+    'bg-info' => 'text-bg-info'
+    'bg-light' => 'text-bg-light'
+    'bg-dark' => 'text-bg-dark'
+    'bg-gray-100' => 'text-bg-gray-100'
+    'bg-gray-200' => 'text-bg-gray-200'
+    'bg-gray-300' => 'text-bg-gray-300'
+    'bg-gray-400' => 'text-bg-gray-400'
+    'bg-gray-500' => 'text-bg-gray-500'
+    'bg-gray-600' => 'text-bg-gray-600'
+    'bg-gray-700' => 'text-bg-gray-700'
+    'bg-gray-800' => 'text-bg-gray-800'
+    'bg-gray-900' => 'text-bg-gray-900'
     // Add more as needed...
   ];
 
