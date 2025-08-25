@@ -276,7 +276,11 @@ final class AZBootstrapMarkupConverter {
     'pr-2' => 'pe-2',
     'pr-3' => 'pe-3',
     'pr-4' => 'pe-4',
-    'pr-5' => 'pe-5',
+    'pl-lg-0' => 'ps-lg-0',
+    'pr-lg-1' => 'pe-lg-1',
+    'col-lg-offset-2' => 'offset-lg-2',
+    'thead-dark' => 'table-dark',
+    'thead-light' => 'table-light',
     // Background color mappings from az-digital/az_quickstart#4323.
     'bg-transparent-white' => 'text-bg-transparent-white',
     'bg-transparent-black' => 'text-bg-transparent-black',
