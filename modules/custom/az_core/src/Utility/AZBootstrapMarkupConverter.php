@@ -233,6 +233,7 @@ final class AZBootstrapMarkupConverter {
     'text-lg-right' => 'text-lg-end',
     'text-xl-right' => 'text-xl-end',
     'text-muted' => 'text-body-secondary',
+    'ul-triangles' => 'az-list-triangles',
     /***************************************************************************
      * Button classes.
      */
@@ -267,6 +268,7 @@ final class AZBootstrapMarkupConverter {
     'border-left-0' => 'border-start-0',
     'border-right' => 'border-end',
     'border-right-0' => 'border-end-0',
+    'card-borderless' => 'border-0',
     'rounded-left' => 'rounded-start',
     'rounded-right' => 'rounded-end',
     'rounded-sm' => 'rounded-1',
@@ -658,6 +660,14 @@ final class AZBootstrapMarkupConverter {
     'pr-xl-10' => 'pe-xl-10',
     'pr-xl-20' => 'pe-xl-20',
     'pr-xl-30' => 'pe-xl-30',
+    /***************************************************************************
+     * Embed / ratio classes.
+     */
+    'embed-responsive' => 'ratio',
+    'embed-responsive-1by1' => 'ratio-1x1',
+    'embed-responsive-4by3' => 'ratio-4x3',
+    'embed-responsive-16by9' => 'ratio-16x9',
+    'embed-responsive-21by9' => 'ratio-21x9',
   ];
 
 }
