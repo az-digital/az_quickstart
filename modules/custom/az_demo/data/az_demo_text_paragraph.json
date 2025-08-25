@@ -32,7 +32,7 @@
         },
         {
             "id":20,
-            "az_text_area" : "<h2>Links and Buttons<\/h2>\r\n\r\n<p>You can add links and buttons to the Text page element. These examples are intended to reload this page.<\/p>\r\n\r\n<p><a href=\"#\">Link example<\/a><\/p>\r\n\r\n<p><a class=\"btn btn-red\" href=\"#\">Red button example<\/a><\/p>\r\n\r\n<p><a class=\"btn btn-outline-blue\" href=\"#\">Blue outline button example<\/a><\/p>\r\n",
+            "az_text_area" : "<h2>Links and Buttons<\/h2>\r\n\r\n<p>You can add links and buttons to the Text page element. These examples are intended to reload this page.<\/p>\r\n\r\n<p><a href=\"#\">Link example<\/a><\/p>\r\n\r\n<p><a class=\"btn btn-red\" href=\"#\">Red button example<\/a><\/p>\r\n\r\n<p><a class=\"btn btn-outline-blue\" href=\"#\">Blue outline button example<\/a><\/p>\r\n\r\n<p>The following link is an anchor link to the Tables section below.<\/p>\r\n\r\n<p><a href=\"#tables\">Anchor Link to Tables<\/a><\/p>\r\n",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -47,7 +47,7 @@
         },
         {
             "id":24,
-            "az_text_area" : "<h2>Tables<\/h2>\r\n\r\n<p>Tables are used when you have \"if, then\" style content that needs to be related to each other. Tables should <em>never<\/em> be used for layout (use grids instead!).<\/p>\r\n\r\n<table>\r\n\t<thead>\r\n\t\t<tr>\r\n\t\t\t<th>Row 1 Heading<\/th>\r\n\t\t\t<th>Row 2 Heading<\/th>\r\n\t\t<\/tr>\r\n\t<\/thead>\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td>Content of row 1<\/td>\r\n\t\t\t<td>Content of row 2 related to column 1<\/td>\r\n\t\t<\/tr>\r\n\t\t<tr>\r\n\t\t\t<td>Content of row 1<\/td>\r\n\t\t\t<td>Content of row 2 related to column 1<\/td>\r\n\t\t<\/tr>\r\n\t<\/tbody>\r\n<\/table>\r\n",
+            "az_text_area" : "<h2 id=\"tables\">Tables<\/h2>\r\n\r\n<p>Tables are used when you have \"if, then\" style content that needs to be related to each other. Tables should <em>never<\/em> be used for layout (use grids instead!).<\/p>\r\n\r\n<table>\r\n\t<thead>\r\n\t\t<tr>\r\n\t\t\t<th>Row 1 Heading<\/th>\r\n\t\t\t<th>Row 2 Heading<\/th>\r\n\t\t<\/tr>\r\n\t<\/thead>\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td>Content of row 1<\/td>\r\n\t\t\t<td>Content of row 2 related to column 1<\/td>\r\n\t\t<\/tr>\r\n\t\t<tr>\r\n\t\t\t<td>Content of row 1<\/td>\r\n\t\t\t<td>Content of row 2 related to column 1<\/td>\r\n\t\t<\/tr>\r\n\t<\/tbody>\r\n<\/table>\r\n",
             "bottom_spacing" : "mb-0"
         },
         {
