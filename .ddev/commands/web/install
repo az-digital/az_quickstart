@@ -10,7 +10,7 @@ mv /var/www/html/azqs/* /var/www/html
 composer config repositories.localdev path /usr/local/quickstart-install-profile && composer require --no-update az-digital/az_quickstart:\*@dev
 
 # Use the matching require-dev metapackage branch if available.
-BRANCH_NAME=$(git -C /usr/local/quickstart-install-profile rev-parse --abbrev-ref HEAD); if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-dev.git $BRANCH_NAME | wc -l) = 1 ]; then DEV_PACKAGE_BRANCH="$BRANCH_NAME"; else DEV_PACKAGE_BRANCH=main; fi
+BRANCH_NAME=$(git -C /usr/local/quickstart-install-profile rev-parse --abbrev-ref HEAD); if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-dev.git $BRANCH_NAME | wc -l) = 1 ]; then DEV_PACKAGE_BRANCH="$BRANCH_NAME"; else DEV_PACKAGE_BRANCH="1.x"; fi
 if [[ ${DEV_PACKAGE_BRANCH} =~ ^[0-9]\.[0-9x] ]]; then
   DEV_PACKAGE_VERSION="${DEV_PACKAGE_BRANCH}-dev"
 else
