@@ -8,8 +8,6 @@
  * profile.
  */
 
-use Drupal\az_core\Utility\AZBootstrapMarkupConverter;
-
 /**
  * Implements hook_update_last_removed().
  */
@@ -213,7 +211,6 @@ function az_paragraphs_update_1130001(&$sandbox) {
     // Track overall progress separately.
     $sandbox['total_progress'] = 0;
     $sandbox['updated_count'] = 0;
-    $sandbox['skipped_count'] = 0;
     if (empty($sandbox['max'])) {
       $sandbox['#finished'] = 1;
       return t('No paragraphs need to be updated.');
@@ -230,14 +227,14 @@ function az_paragraphs_update_1130001(&$sandbox) {
   if ($sandbox['current_type'] >= count($sandbox['field_config_keys'])) {
     // We've processed all field types.
     $sandbox['#finished'] = 1;
-    return t('Processed @count total paragraphs. @paragraphs_updated paragraphs updated for Bootstrap 5 compatibility. @paragraphs_skipped unused paragraphs skipped.', [
+
+    $message = t('Processed @count total paragraphs. @paragraphs_updated paragraphs updated.', [
       '@count' => $sandbox['progress'],
       '@paragraphs_updated' => $sandbox['updated_count'],
-      '@paragraphs_skipped' => $sandbox['skipped_count'],
     ]);
-  }
 
-  $type = $sandbox['field_config_keys'][$sandbox['current_type']];
+    return $message;
+  }  $type = $sandbox['field_config_keys'][$sandbox['current_type']];
   $field_config = $field_configs[$type];
 
   // Initialize processing for this field type if needed.
@@ -260,9 +257,8 @@ function az_paragraphs_update_1130001(&$sandbox) {
     $query->exists('parent_type')
       ->exists('parent_field_name');
 
-    $ids = $query->execute();
-
     // Filter out orphaned paragraphs.
+    $ids = $query->execute();
     $valid_ids = [];
     foreach (array_chunk($ids, 50) as $chunk) {
       $paragraphs = $paragraph_storage->loadMultiple($chunk);
@@ -279,7 +275,6 @@ function az_paragraphs_update_1130001(&$sandbox) {
         }
         else {
           $logger->info('Skipping unused paragraph @pid', ['@pid' => $paragraph->id()]);
-          $sandbox['skipped_count']++;
         }
       }
     }
@@ -301,6 +296,15 @@ function az_paragraphs_update_1130001(&$sandbox) {
     unset($sandbox['type_progress']);
     unset($sandbox['type_ids']);
     unset($sandbox['type_max']);
+
+    // Set progress to ensure batch continues.
+    $total_types = count($sandbox['field_config_keys']);
+    $sandbox['#finished'] = $sandbox['current_type'] / $total_types;
+    if ($sandbox['#finished'] >= 1) {
+      // Prevent premature completion.
+      $sandbox['#finished'] = 0.99;
+    }
+
     return NULL;
   }
 
@@ -309,7 +313,6 @@ function az_paragraphs_update_1130001(&$sandbox) {
     'max' => count($batch_ids),
     'progress' => 0,
     'updated_count' => 0,
-    'skipped_count' => 0,
   ];
 
   // Process this batch.
@@ -331,22 +334,16 @@ function az_paragraphs_update_1130001(&$sandbox) {
   // Update progress.
   $sandbox['type_progress'] += $type_sandbox['progress'];
   $sandbox['updated_count'] += $type_sandbox['updated_count'];
-  $sandbox['skipped_count'] += $type_sandbox['skipped_count'];
   $sandbox['total_progress'] += $type_sandbox['progress'];
 
   // Calculate overall progress as we process each type.
   $total_types = count($sandbox['field_config_keys']);
   $current_type_progress = $sandbox['type_progress'] / ($sandbox['type_max'] ?: 1);
+  // Ensure #finished only reaches 1.0 when we're actually done with all types.
   $sandbox['#finished'] = ($sandbox['current_type'] + $current_type_progress) / $total_types;
-
   if ($sandbox['#finished'] >= 1) {
-    return $field_updater->processFieldUpdates(
-      'paragraph',
-      $field_config['field_name'],
-      [AZBootstrapMarkupConverter::class, 'compareProcessor'],
-      $sandbox,
-      $options
-    );
+    // Prevent premature completion.
+    $sandbox['#finished'] = 0.99;
   }
 
   return NULL;

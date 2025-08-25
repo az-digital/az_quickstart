@@ -60,20 +60,19 @@ final class AZContentFieldUpdater implements AZContentFieldUpdaterInterface {
     // Set default options.
     $options += [
       'create_revisions' => FALSE,
-      'prefix' => NULL,
-      'suffix' => NULL,
-      'batch_size' => 20,
+      'bundle_name' => '',
+      'prefix' => '',
+      'suffix' => '',
+      'batch_size' => 50,
       'value_key' => 'value',
       'format_key' => 'format',
-      'format_required' => TRUE,
+      'format_required' => FALSE,
       'allowed_formats' => ['az_standard', 'full_html'],
-      'bundle_name' => NULL,
     ];
 
     if (!isset($sandbox['progress'])) {
       $sandbox['progress'] = 0;
       $sandbox['updated_count'] = 0;
-      $sandbox['skipped_count'] = 0;
     }
 
     $storage = $this->entityTypeManager->getStorage($entity_type_id);
@@ -162,8 +161,8 @@ final class AZContentFieldUpdater implements AZContentFieldUpdaterInterface {
           if ($processed_value !== $original_value) {
             // For multi-value fields we need to preserve all properties.
             $new_value = [];
-            foreach ($field_item->getProperties() as $property => $value) {
-              $new_value[$property] = ($property === $options['value_key']) ? $processed_value : $value;
+            foreach ($field_item->getProperties() as $property_name => $property) {
+              $new_value[$property_name] = ($property_name === $options['value_key']) ? $processed_value : $property->getValue();
             }
             $field->get($delta)->setValue($new_value);
             $needs_update = TRUE;
@@ -303,19 +302,15 @@ final class AZContentFieldUpdater implements AZContentFieldUpdaterInterface {
         '@count' => $sandbox['progress'],
         '@type' => $type_label,
         '@updated' => $sandbox['updated_count'],
-        '@skipped' => $sandbox['skipped_count'],
       ];
 
       if (!empty($options['bundle_name'])) {
         $message_args['@bundle'] = $options['bundle_name'];
-        $message = $this->t('Processed @count @bundle @type. @updated @type updated. @skipped unused @type skipped.', $message_args);
+        $message = $this->t('Processed @count @bundle @type. @updated @type updated.', $message_args);
       }
       else {
-        $message = $this->t('Processed @count @type. @updated @type updated. @skipped unused @type skipped.', $message_args);
+        $message = $this->t('Processed @count @type. @updated @type updated.', $message_args);
       }
-
-      // Log the summary message at notice level.
-      $logger->notice($message);
 
       return $message;
     }

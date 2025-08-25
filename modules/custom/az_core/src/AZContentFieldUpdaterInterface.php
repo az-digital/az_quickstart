@@ -23,8 +23,7 @@ interface AZContentFieldUpdaterInterface {
    *   - ids: Array of entity IDs to process
    *   - max: Total count of entities to process
    *   - progress: Current progress counter
-   *   - updated_count: Number of entities updated
-   *   - skipped_count: Number of entities skipped.
+   *   - updated_count: Number of entities updated.
    * @param array $options
    *   Additional options:
    *   - create_revisions: (bool) Whether to create new revisions. When TRUE,
