@@ -9,6 +9,7 @@ dependencies:
   - az_core
   - az_news
   - az_media
+  - az_migration_remote
   - migrate:migrate
   - migrate_plus:migrate_plus
   - migrate_queue_importer:migrate_queue_importer

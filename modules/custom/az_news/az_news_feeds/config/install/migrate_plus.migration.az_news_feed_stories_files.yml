@@ -16,30 +16,43 @@ migration_group: az_news_feeds
 label: 'University of Arizona News Stories - Files'
 source:
   ids:
-    fid:
-      type: integer
     uuid:
       type: uuid
   fields:
     -
       name: fid
       label: 'File ID'
-      selector: /story/img-fid
+      selector: /field_az_media_image/fid
     -
       name: uuid
       label: 'Story UUID'
-      selector: /story/uuid
+      selector: /uuid
     -
       name: image
       label: Image
-      selector: /story/img-thumb
+      selector: /field_az_media_image
+    -
+      name: url
+      label: 'Image filename'
+      selector: /field_az_media_image/original
 process:
+
   filename:
+    -
+      plugin: callback
+      callable: trim
+      source: image
     -
       plugin: skip_on_empty
       method: row
-      message: 'Cannot import empty image filename.'
-      source: image/src
+    -
+      plugin: callback
+      callable: var_dump
+    -
+      plugin: skip_on_empty
+      method: row
+      message: 'Cannot import file if no image.'
+      source: url
     -
       plugin: callback
       callable: parse_url
@@ -54,21 +67,20 @@ process:
     -
       plugin: concat
       source:
-        - constants/DRUPAL_FILE_DIRECTORY
+        - 'public://images/'
         - '@filename'
   uri:
     -
-      plugin: skip_on_empty
-      method: process
-      source: image/src
+      plugin: json_skip_on_empty
+      method: row
+      source: url
     -
-      plugin: file_copy
-      source:
-        - image/src
-        - '@destination_path'
-      file_exists: 'use existing'
-      move: false
-      skip_process_on_failure: true
+      plugin: az_migration_remote_file
+      migration: az_news_feed_stories_files
+      default_filename: '@filename'
+      directory: 'public://images/'
+      source_ids:
+        - fid
   field_media_az_image/target_id:
     -
       plugin: entity_generate

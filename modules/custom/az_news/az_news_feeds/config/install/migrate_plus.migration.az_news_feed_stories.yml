@@ -22,44 +22,44 @@ source:
     -
       name: uuid
       label: UUID
-      selector: /story/uuid
+      selector: /uuid
     -
       name: title
       label: Title
-      selector: /story/title
+      selector: /title
     -
       name: date-of-publication
       label: 'Date of Publication'
-      selector: /story/date-of-publication
+      selector: /field_az_published
     -
       name: tags
       label: 'News tags'
-      selector: /story/terms
+      selector: /field_az_news_tags
     -
       name: summary
       label: Summary
-      selector: /story/summary-med
+      selector: /field_az_summary
     -
       name: canonical-url
       label: 'Canonical URL'
-      selector: /story/url-canonical
+      selector: /canonical_url
     -
       name: body
       label: Body
-      selector: /story/body
+      selector: /field_az_body
     -
       name: fid
       label: 'File ID'
-      selector: /story/img-fid
+      selector: /field_az_media_image/fid
     -
       name: image
       label: Image
-      selector: /story/img-large
+      selector: /field_az_media_image
 process:
   title: title
   field_az_published/value:
     plugin: format_date
-    from_format: 'Y-m-d\TH:i:sP'
+    from_format: 'Y-m-d\TH:i:s'
     to_format: Y-m-d
     source: date-of-publication
   field_az_link/uri: canonical-url
@@ -67,9 +67,16 @@ process:
     plugin: default_value
     default_value: 'Read more at University of Arizona News'
   field_az_summary/value:
-    plugin: callback
-    callable: trim
-    source: summary
+    -
+      plugin: callback
+      callable: strip_tags
+      source: summary
+    -
+      plugin: callback
+      callable: html_entity_decode
+    -
+      plugin: callback
+      callable: trim
   field_az_summary/format:
     plugin: default_value
     default_value: plain_text
@@ -79,12 +86,6 @@ process:
       source: tags
       method: process
       message: 'No terms listed.'
-    -
-      plugin: explode
-      delimiter: ','
-    -
-      plugin: callback
-      callable: trim
   field_az_news_tags:
     -
       plugin: entity_generate
@@ -99,7 +100,7 @@ process:
       method: process
   field_az_media_image/target_id:
     plugin: migration_lookup
-    source: fid
+    source: uuid
     migration:
       - az_news_feed_stories_media
 destination:
