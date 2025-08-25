@@ -184,7 +184,7 @@ final class AZBootstrapMarkupConverter {
    * Map AZ Bootstrap 2 classes to AZ Bootstrap 5 classes.
    */
   const CLASS_MAP = [
-    // Badge classes
+    // Badge classes.
     'badge-primary' => 'text-bg-primary',
     'badge-secondary' => 'text-bg-secondary',
     'badge-blue' => 'text-bg-blue',
@@ -216,7 +216,7 @@ final class AZBootstrapMarkupConverter {
     // btn-* classes).
     /* 'btn' => '',*/
     // Margin class mappings for Bootstrap 5.
-    // mx-x
+    // mx-x.
     'ml-0' => 'ms-0',
     'ml-1' => 'ms-1',
     'ml-2' => 'ms-2',
@@ -245,7 +245,7 @@ final class AZBootstrapMarkupConverter {
     'mr-20' => 'me-20',
     'mr-30' => 'me-30',
     'mr-auto' => 'me-auto',
-    // mx-sm-x
+    // mx-sm-x.
     'ml-sm-0' => 'ms-sm-0',
     'ml-sm-1' => 'ms-sm-1',
     'ml-sm-2' => 'ms-sm-2',
@@ -274,7 +274,7 @@ final class AZBootstrapMarkupConverter {
     'mr-sm-20' => 'me-sm-20',
     'mr-sm-30' => 'me-sm-30',
     'mr-sm-auto' => 'me-sm-auto',
-    // mx-md-x
+    // mx-md-x.
     'ml-md-0' => 'ms-md-0',
     'ml-md-1' => 'ms-md-1',
     'ml-md-2' => 'ms-md-2',
@@ -303,7 +303,7 @@ final class AZBootstrapMarkupConverter {
     'mr-md-20' => 'me-md-20',
     'mr-md-30' => 'me-md-30',
     'mr-md-auto' => 'me-md-auto',
-    // mx-lg-x
+    // mx-lg-x.
     'ml-lg-0' => 'ms-lg-0',
     'ml-lg-1' => 'ms-lg-1',
     'ml-lg-2' => 'ms-lg-2',
@@ -332,7 +332,7 @@ final class AZBootstrapMarkupConverter {
     'mr-lg-20' => 'me-lg-20',
     'mr-lg-30' => 'me-lg-30',
     'mr-lg-auto' => 'me-lg-auto',
-    // mx-xl-x
+    // mx-xl-x.
     'ml-xl-0' => 'ms-xl-0',
     'ml-xl-1' => 'ms-xl-1',
     'ml-xl-2' => 'ms-xl-2',
@@ -362,7 +362,7 @@ final class AZBootstrapMarkupConverter {
     'mr-xl-30' => 'me-xl-30',
     'mr-xl-auto' => 'me-xl-auto',
     // Padding class mappings for Bootstrap 5.
-    // px-x
+    // px-x.
     'pl-0' => 'ps-0',
     'pl-1' => 'ps-1',
     'pl-2' => 'ps-2',
@@ -375,7 +375,7 @@ final class AZBootstrapMarkupConverter {
     'pl-9' => 'ps-9',
     'pl-10' => 'ps-10',
     'pl-20' => 'ps-20',
-    'pl-30' => 'ps-30', 
+    'pl-30' => 'ps-30',
     'pr-0' => 'pe-0',
     'pr-1' => 'pe-1',
     'pr-2' => 'pe-2',
@@ -389,7 +389,7 @@ final class AZBootstrapMarkupConverter {
     'pr-10' => 'pe-10',
     'pr-20' => 'pe-20',
     'pr-30' => 'pe-30',
-    // px-sm-x
+    // px-sm-x.
     'pl-sm-0' => 'ps-sm-0',
     'pl-sm-1' => 'ps-sm-1',
     'pl-sm-2' => 'ps-sm-2',
@@ -416,7 +416,7 @@ final class AZBootstrapMarkupConverter {
     'pr-sm-10' => 'pe-sm-10',
     'pr-sm-20' => 'pe-sm-20',
     'pr-sm-30' => 'pe-sm-30',
-    // px-md-x
+    // px-md-x.
     'pl-md-0' => 'ps-md-0',
     'pl-md-1' => 'ps-md-1',
     'pl-md-2' => 'ps-md-2',
@@ -443,7 +443,7 @@ final class AZBootstrapMarkupConverter {
     'pr-md-10' => 'pe-md-10',
     'pr-md-20' => 'pe-md-20',
     'pr-md-30' => 'pe-md-30',
-    // px-lg-x
+    // px-lg-x.
     'pl-lg-0' => 'ps-lg-0',
     'pl-lg-1' => 'ps-lg-1',
     'pl-lg-2' => 'ps-lg-2',
@@ -470,7 +470,7 @@ final class AZBootstrapMarkupConverter {
     'pr-lg-10' => 'pe-lg-10',
     'pr-lg-20' => 'pe-lg-20',
     'pr-lg-30' => 'pe-lg-30',
-    // px-xl-x
+    // px-xl-x.
     'pl-xl-0' => 'ps-xl-0',
     'pl-xl-1' => 'ps-xl-1',
     'pl-xl-2' => 'ps-xl-2',
@@ -498,7 +498,7 @@ final class AZBootstrapMarkupConverter {
     'pr-xl-20' => 'pe-xl-20',
     'pr-xl-30' => 'pe-xl-30',
     // Column offset classes
-    // col-sm-offset-x
+    // col-sm-offset-x.
     'col-sm-offset-0' => 'offset-sm-0',
     'col-sm-offset-1' => 'offset-sm-1',
     'col-sm-offset-2' => 'offset-sm-2',
@@ -512,7 +512,7 @@ final class AZBootstrapMarkupConverter {
     'col-sm-offset-10' => 'offset-sm-10',
     'col-sm-offset-20' => 'offset-sm-20',
     'col-sm-offset-30' => 'offset-sm-30',
-    // col-md-offset-x
+    // col-md-offset-x.
     'col-md-offset-0' => 'offset-md-0',
     'col-md-offset-1' => 'offset-md-1',
     'col-md-offset-2' => 'offset-md-2',
@@ -526,7 +526,7 @@ final class AZBootstrapMarkupConverter {
     'col-md-offset-10' => 'offset-md-10',
     'col-md-offset-20' => 'offset-md-20',
     'col-md-offset-30' => 'offset-md-30',
-    // col-lg-offset-x
+    // col-lg-offset-x.
     'col-lg-offset-0' => 'offset-lg-0',
     'col-lg-offset-1' => 'offset-lg-1',
     'col-lg-offset-2' => 'offset-lg-2',
@@ -540,7 +540,7 @@ final class AZBootstrapMarkupConverter {
     'col-lg-offset-10' => 'offset-lg-10',
     'col-lg-offset-20' => 'offset-lg-20',
     'col-lg-offset-30' => 'offset-lg-30',
-    // col-xl-offset-x
+    // col-xl-offset-x.
     'col-xl-offset-0' => 'offset-xl-0',
     'col-xl-offset-1' => 'offset-xl-1',
     'col-xl-offset-2' => 'offset-xl-2',
@@ -555,7 +555,7 @@ final class AZBootstrapMarkupConverter {
     'col-xl-offset-20' => 'offset-xl-20',
     'col-xl-offset-30' => 'offset-xl-30',
     'no-gutters' => 'g-0',
-    // Table classes
+    // Table classes.
     'thead-dark' => 'table-dark',
     'thead-light' => 'table-light',
     // Background color mappings from az-digital/az_quickstart#4323.
