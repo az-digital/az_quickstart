@@ -325,6 +325,9 @@ az_barrio.settings:
     az_bootstrap_minified:
       type: boolean
       label: 'Enable AZ Bootstrap minification'
+    az_bootstrap_color_mode:
+      type: string
+      label: 'Bootstrap 5 Color Mode'
     az_barrio_font:
       type: boolean
       label: 'Use the centrally-managed Typekit webfont, Proxima Nova'

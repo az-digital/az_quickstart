@@ -92,6 +92,12 @@ function az_barrio_preprocess_html(&$variables) {
   if (theme_get_setting('sticky_footer')) {
     $variables['html_attributes']->addClass('sticky-footer');
   }
+  
+  // Set Bootstrap 5 color mode based on theme setting.
+  $color_mode = theme_get_setting('az_bootstrap_color_mode');
+  if (!empty($color_mode)) {
+    $variables['html_attributes']->setAttribute('data-bs-theme', $color_mode);
+  }
 }
 
 /**
