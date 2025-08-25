@@ -175,6 +175,24 @@ function az_paragraphs_update_1130001(&$sandbox) {
   ];
 
   if (!isset($sandbox['progress'])) {
+    // Filter out field configs for bundles/fields that don't exist.
+    $field_map = \Drupal::service('entity_field.manager')->getFieldMap();
+    $bundle_info = \Drupal::service('entity_type.bundle.info')->getBundleInfo('paragraph');
+
+    foreach ($field_configs as $config_key => $config) {
+      $field_exists = isset($field_map['paragraph'][$config['field_name']]);
+      $bundles_exist = array_intersect($config['bundles'], array_keys($bundle_info));
+
+      if (!$field_exists || empty($bundles_exist)) {
+        $logger->info('Skipping @config_key config - field exists: @field_exists, valid bundles: @bundles', [
+          '@config_key' => $config_key,
+          '@field_exists' => $field_exists ? 'yes' : 'no',
+          '@bundles' => implode(', ', $bundles_exist),
+        ]);
+        unset($field_configs[$config_key]);
+      }
+    }
+
     // Initialize update tracking.
     $query = $paragraph_storage->getQuery()
       ->accessCheck(FALSE);
@@ -210,6 +228,7 @@ function az_paragraphs_update_1130001(&$sandbox) {
     $sandbox['progress'] = 0;
     // Track overall progress separately.
     $sandbox['total_progress'] = 0;
+    $sandbox['total_processed'] = 0;
     $sandbox['updated_count'] = 0;
     if (empty($sandbox['max'])) {
       $sandbox['#finished'] = 1;
@@ -219,6 +238,7 @@ function az_paragraphs_update_1130001(&$sandbox) {
 
   if (!isset($sandbox['current_type'])) {
     // Initialize tracking of which field config we're processing.
+    $sandbox['field_configs'] = $field_configs;
     $sandbox['field_config_keys'] = array_keys($field_configs);
     $sandbox['current_type'] = 0;
   }
@@ -227,15 +247,12 @@ function az_paragraphs_update_1130001(&$sandbox) {
   if ($sandbox['current_type'] >= count($sandbox['field_config_keys'])) {
     // We've processed all field types.
     $sandbox['#finished'] = 1;
-
-    $message = t('Processed @count total paragraphs. @paragraphs_updated paragraphs updated.', [
-      '@count' => $sandbox['progress'],
+    return t('Processed @count total paragraphs. @paragraphs_updated paragraphs updated.', [
+      '@count' => $sandbox['total_processed'],
       '@paragraphs_updated' => $sandbox['updated_count'],
     ]);
-
-    return $message;
   }  $type = $sandbox['field_config_keys'][$sandbox['current_type']];
-  $field_config = $field_configs[$type];
+  $field_config = $sandbox['field_configs'][$type];
 
   // Initialize processing for this field type if needed.
   if (!isset($sandbox['type_progress'])) {
@@ -297,14 +314,6 @@ function az_paragraphs_update_1130001(&$sandbox) {
     unset($sandbox['type_ids']);
     unset($sandbox['type_max']);
 
-    // Set progress to ensure batch continues.
-    $total_types = count($sandbox['field_config_keys']);
-    $sandbox['#finished'] = $sandbox['current_type'] / $total_types;
-    if ($sandbox['#finished'] >= 1) {
-      // Prevent premature completion.
-      $sandbox['#finished'] = 0.99;
-    }
-
     return NULL;
   }
 
@@ -335,16 +344,50 @@ function az_paragraphs_update_1130001(&$sandbox) {
   $sandbox['type_progress'] += $type_sandbox['progress'];
   $sandbox['updated_count'] += $type_sandbox['updated_count'];
   $sandbox['total_progress'] += $type_sandbox['progress'];
+  $sandbox['total_processed'] += $type_sandbox['progress'];
 
-  // Calculate overall progress as we process each type.
+  // If we've processed all entities for this field type, move to next type.
+  if ($sandbox['type_progress'] >= $sandbox['type_max']) {
+    $sandbox['current_type']++;
+    $sandbox['type_progress'] = 0;
+
+    // If we've processed all field types, we're done.
+    if ($sandbox['current_type'] >= count($sandbox['field_config_keys'])) {
+      $sandbox['#finished'] = 1;
+      return t('Processed @count total paragraphs. @paragraphs_updated paragraphs updated.', [
+        '@count' => $sandbox['total_processed'],
+        '@paragraphs_updated' => $sandbox['updated_count'],
+      ]);
+    }
+
+    // Initialize next field type.
+    $current_key = $sandbox['field_config_keys'][$sandbox['current_type']];
+    $field_config = $sandbox['field_configs'][$current_key];
+
+    // Build query for this field type.
+    $query = $paragraph_storage->getQuery()
+      ->condition('type', $field_config['bundles'], 'IN')
+      ->accessCheck(FALSE);
+
+    $group = $query->andConditionGroup();
+    if (!empty($field_config['query_conditions']['exists'])) {
+      $group->exists($field_config['query_conditions']['field_name']);
+    }
+    if (!empty($field_config['query_conditions']['values'])) {
+      $field = $field_config['query_conditions']['format_field'] ?? $field_config['query_conditions']['field_name'];
+      $group->condition($field, $field_config['query_conditions']['values'], 'IN');
+    }
+    $query->condition($group);
+
+    $sandbox['paragraphs'] = $query->execute();
+    $sandbox['type_ids'] = $sandbox['paragraphs'];
+    $sandbox['type_max'] = count($sandbox['paragraphs']);
+  }
+
+    // Calculate overall progress as we process each type.
   $total_types = count($sandbox['field_config_keys']);
   $current_type_progress = $sandbox['type_progress'] / ($sandbox['type_max'] ?: 1);
-  // Ensure #finished only reaches 1.0 when we're actually done with all types.
   $sandbox['#finished'] = ($sandbox['current_type'] + $current_type_progress) / $total_types;
-  if ($sandbox['#finished'] >= 1) {
-    // Prevent premature completion.
-    $sandbox['#finished'] = 0.99;
-  }
 
   return NULL;
 }

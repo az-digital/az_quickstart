@@ -73,6 +73,7 @@ final class AZContentFieldUpdater implements AZContentFieldUpdaterInterface {
     if (!isset($sandbox['progress'])) {
       $sandbox['progress'] = 0;
       $sandbox['updated_count'] = 0;
+      $sandbox['skipped'] = 0;
     }
 
     $storage = $this->entityTypeManager->getStorage($entity_type_id);
@@ -95,6 +96,20 @@ final class AZContentFieldUpdater implements AZContentFieldUpdaterInterface {
       }
 
       $needs_update = FALSE;
+
+      // Check if the field exists on this entity.
+      if (!$entity->hasField($field_name)) {
+        $logger->warning("Field @field does not exist on @type @id (@bundle)", [
+          '@field' => $field_name,
+          '@type' => $entity_type_id,
+          '@id' => $id,
+          '@bundle' => $entity->bundle(),
+        ]);
+        $sandbox['skipped']++;
+        $sandbox['progress']++;
+        continue;
+      }
+
       $field = $entity->get($field_name);
 
       // Skip if field doesn't exist or is empty.
