@@ -346,13 +346,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   // Remove Navbar options.
   $form['affix']['navbar_top'] = [];
   $form['affix']['navbar'] = [];
-  // Components.
-  $form['components']['navbar'] = [
-    '#type' => 'details',
-    '#title' => t('Navbar for primary navigation on desktop devices.'),
-    '#collapsible' => TRUE,
-    '#collapsed' => TRUE,
-  ];
+  $form['components']['navbar'] = [];
   // Logos.
   $form['logo']['az_barrio_logo_svg_inline'] = [
     '#type' => 'checkbox',
