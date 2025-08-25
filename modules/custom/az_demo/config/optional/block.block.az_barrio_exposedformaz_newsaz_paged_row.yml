@@ -2,23 +2,20 @@ langcode: en
 status: true
 dependencies:
   config:
-    - views.view.az_finder
+    - views.view.az_news
   module:
     - system
     - views
   theme:
     - az_barrio
-  enforced:
-    module:
-      - az_demo
-id: az_barrio_exposedformaz_finderperson
+id: az_barrio_exposedformaz_newsaz_paged_row
 theme: az_barrio
 region: sidebar_first
 weight: 0
 provider: null
-plugin: 'views_exposed_filter_block:az_finder-person'
+plugin: 'views_exposed_filter_block:az_news-az_paged_row'
 settings:
-  id: 'views_exposed_filter_block:az_finder-person'
+  id: 'views_exposed_filter_block:az_news-az_paged_row'
   label: ''
   label_display: visible
   provider: views
@@ -27,4 +24,4 @@ visibility:
   request_path:
     id: request_path
     negate: false
-    pages: /finders/people
+    pages: /finders/az-news-az-paged-row
