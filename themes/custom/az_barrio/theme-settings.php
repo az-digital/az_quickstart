@@ -308,6 +308,17 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#type' => 'fieldset',
     '#title' => t('AZ Bootstrap Style Settings'),
   ];
+  $form['azbs_settings']['settings']['az_bootstrap_style']['az_bootstrap_color_mode'] = [
+    '#type' => 'radios',
+    '#title' => t('Bootstrap 5 Color Mode'),
+    '#description' => t('Choose the color mode for Bootstrap 5. This sets the data-bs-theme attribute on the HTML element.'),
+    '#options' => [
+      'auto' => t('Auto - Automatically switch between light and dark based on user preferences'),
+      'light' => t('Light - Force light mode'),
+      'dark' => t('Dark - Force dark mode'),
+    ],
+    '#default_value' => theme_get_setting('az_bootstrap_color_mode'),
+  ];
   $form['azbs_settings']['settings']['az_bootstrap_style']['sticky_footer'] = [
     '#type' => 'checkbox',
     '#title' => t('Use the AZ Bootstrap sticky footer template.'),

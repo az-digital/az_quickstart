@@ -86,6 +86,7 @@ az_bootstrap_cdn_version: stable
 az_bootstrap_cdn_version_css: 5.x
 az_bootstrap_cdn_version_js: 5.x
 az_bootstrap_minified: true
+az_bootstrap_color_mode: light
 az_barrio_az_icons: true
 az_barrio_az_icons_source: cdn
 az_icons_minified: true
