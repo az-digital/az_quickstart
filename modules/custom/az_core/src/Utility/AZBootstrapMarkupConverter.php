@@ -299,7 +299,6 @@ final class AZBootstrapMarkupConverter {
     'bg-silver' => 'text-bg-silver',
     'bg-ash' => 'text-bg-ash',
     'bg-sage' => 'text-bg-sage',
-    'bg-smoke' => 'text-bg-smoke',
     // Add more as needed...
   ];
 
