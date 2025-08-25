@@ -185,9 +185,13 @@ final class AZBootstrapMarkupConverter {
    */
   const CLASS_MAP = [
     /***************************************************************************
-     * Misc classes.
+     * Screen reader / visually hidden classes.
      */
     'sr-only' => 'visually-hidden',
+    'sr-only-focusable' => 'visually-hidden-focusable',
+    /***************************************************************************
+     * Float classes.
+     */
     'float-left' => 'float-start',
     'float-right' => 'float-end',
     'float-sm-left' => 'float-start',
@@ -213,9 +217,11 @@ final class AZBootstrapMarkupConverter {
     /***************************************************************************
      * Font / text style classes.
      */
+    'font-weight-normal' => 'fw-normal',
     'bold' => 'fw-bold',
     'font-weight-bold' => 'fw-bold',
     'font-italic' => 'fst-italic',
+    'text-monospace' => 'font-monospace',
     'text-left' => 'text-start',
     'text-sm-left' => 'text-sm-start',
     'text-md-left' => 'text-md-start',
@@ -261,6 +267,10 @@ final class AZBootstrapMarkupConverter {
     'border-left-0' => 'border-start-0',
     'border-right' => 'border-end',
     'border-right-0' => 'border-end-0',
+    'rounded-left' => 'rounded-start',
+    'rounded-right' => 'rounded-end',
+    'rounded-sm' => 'rounded-1',
+    'rounded-lg' => 'rounded-2',
     /***************************************************************************
      * Badge classes.
      */
