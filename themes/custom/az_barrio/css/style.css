@@ -406,15 +406,15 @@ td.menu-disabled {
   }
 }
 
-/* Make Arizona Header sticky at top on mobile devices only */
 @media screen and (max-width: 992px) {
+  /* Adjust top margins for fixed Arizona Header on mobile devices. */
   #page {
     margin-top: 50px;
   }
-
   :target {
     scroll-margin-top: 58px;
   }
+  /* Disable fixed Arizona Header if user is logged in. */
   .user-logged-in #page {
     margin-top: 0;
   }
