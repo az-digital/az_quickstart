@@ -33,7 +33,7 @@ class EnterpriseAttributesImportTest extends BrowserTestBase {
   /**
    * Modules to enable.
    *
-   * @var array
+   * @var string[]
    */
   protected static $modules = [
     'az_core',
