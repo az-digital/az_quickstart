@@ -672,7 +672,6 @@ function az_barrio_footer_logo() {
     $token_service = \Drupal::token();
     $footer_alt_text = $token_service->replace($footer_alt_text);
     $footer_title_text = $token_service->replace($footer_title_text);
-    $footer_link_destination = $token_service->replace($footer_link_destination);
   }
 
   // Set footer logo.
