@@ -857,7 +857,7 @@ function az_barrio_preprocess_block(&$variables) {
     $variables['attributes']['class'][] = 'az-search-block';
   }
 
-  // Pass theme setting to hide sidebar menu for mobile
+  // Pass theme setting to hide sidebar menu for mobile.
   if (isset($variables['elements']['#id']) && $variables['elements']['#id'] === 'az_barrio_sidebar_menu') {
     $variables['az_remove_sidebar_menu_mobile'] = theme_get_setting('az_remove_sidebar_menu_mobile');
   }
