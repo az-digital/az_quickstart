@@ -1,6 +1,6 @@
 name: Quickstart for Marketing Cloud
 description: 'Makes Quickstart News and Events available in a raw HTML format designed for use within Marketing Cloud. Requires access to Marketing Cloud.'
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10 || ^11 || ^12
 type: module
 package: 'The University of Arizona - Experimental'
 lifecycle: experimental

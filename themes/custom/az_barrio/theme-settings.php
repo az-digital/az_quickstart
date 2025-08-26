@@ -284,8 +284,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#title' => t('AZ Bootstrap CSS CDN version'),
     '#options' => [
       'stable' => t('Stable version: This option has undergone the most testing within the az_barrio theme. Currently: %stableversion (Recommended).', ['%stableversion' => AZ_BOOTSTRAP_STABLE_VERSION]),
-      'latest-2.x' => t('Latest tagged version. The most recently tagged stable release of AZ Bootstrap. While this has not been explicitly tested on this version of az_barrio, it’s probably OK to use on production sites. Please report bugs to the AZ Digital team.'),
-      '2.x' => t('Latest dev version of 2.x. This is the tip of the 2.x branch of AZ Bootstrap. Please do not use on production unless you are following the AZ Bootstrap project closely. Please report bugs to the AZ Digital team.'),
+      'latest-5.x' => t('Latest tagged version of 5.x. The most recently tagged stable release of AZ Bootstrap. While this has not been explicitly tested on this version of az_barrio, it’s probably OK to use on production sites. Please report bugs to the AZ Digital team.'),
       '5.x' => t('Latest dev version of <code>main</code>. This is the tip of the main branch of AZ Bootstrap. Please do not use on production unless you are following the AZ Bootstrap project closely. Please report bugs to the AZ Digital team.'),
     ],
     '#default_value' => theme_get_setting('az_bootstrap_cdn_version_css'),
@@ -295,13 +294,11 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#title' => t('AZ Bootstrap JS CDN version'),
     '#options' => [
       'stable' => t('Stable version: This option has undergone the most testing within the az_barrio theme. Currently: %stableversion (Recommended).', ['%stableversion' => AZ_BOOTSTRAP_STABLE_VERSION]),
-      'latest-2.x' => t('Latest tagged version of 2.x. The most recently tagged stable release of AZ Bootstrap. While this has not been explicitly tested on this version of az_barrio, it’s probably OK to use on production sites. Please report bugs to the AZ Digital team.'),
-      '2.x' => t('Latest dev version of 2.x. This is the tip of the 2.x branch of AZ Bootstrap. Please do not use on production unless you are following the AZ Bootstrap project closely. Please report bugs to the AZ Digital team.'),
+      'latest-5.x' => t('Latest tagged version of 5.x. The most recently tagged stable release of AZ Bootstrap. While this has not been explicitly tested on this version of az_barrio, it’s probably OK to use on production sites. Please report bugs to the AZ Digital team.'),
       '5.x' => t('Latest dev version of <code>main</code>. This is the tip of the main branch of AZ Bootstrap. Please do not use on production unless you are following the AZ Bootstrap project closely. Please report bugs to the AZ Digital team.'),
     ],
     '#default_value' => theme_get_setting('az_bootstrap_cdn_version_js'),
   ];
-
   $form['azbs_settings']['settings']['az_bootstrap_minified'] = [
     '#type'          => 'checkbox',
     '#title'         => t('Use minified version of AZ Bootstrap.'),
@@ -339,6 +336,13 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   // Add new AZ Barrio sidebar position option and help text.
   $form['layout']['sidebar_position']['bootstrap_barrio_sidebar_position']['#options']['az-barrio-both-below'] = t('Both sides below on mobile');
   $form['layout']['sidebar_position']['bootstrap_barrio_sidebar_position']['#description'] = t('Below the Bootstrap md breakpoint, the "Both sides" position places the Sidebar First region <strong>above</strong> the page content while the "Both sides below on mobile" position places both sidebar regions <strong>below</strong> the page content.');
+  // Remove sidebar menu on mobile setting.
+  $form['layout']['sidebar_position']['az_remove_sidebar_menu_mobile'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Remove sidebar menu on mobile devices'),
+    '#description' => t('If checked, the sidebar menu will not be displayed on mobile devices.'),
+    '#default_value' => theme_get_setting('az_remove_sidebar_menu_mobile'),
+  ];
   // Remove Navbar options.
   $form['affix']['navbar_top'] = [];
   $form['affix']['navbar'] = [];
@@ -483,8 +487,8 @@ function az_barrio_form_system_theme_settings_submit($form, FormStateInterface &
   }
   $form_state->unsetValue('footer_logo_upload');
   // theme_settings_convert_to_config($values, $config)->save();
-  // Clear cached libraries so any Bootsrap changes take effect immmediately.
-  \Drupal::service('library.discovery')->clearCachedDefinitions();
+  // Clear cached libraries so any Bootstrap changes take effect immediately.
+  \Drupal::service('library.discovery')->clear();
 }
 
 /**
