@@ -2,6 +2,9 @@ global-styling:
   css:
     theme:
       css/style.css: {}
+      css/az-back-to-top.css: {}
+  js:
+    js/az-back-to-top.js: {}
   dependencies:
     - az_barrio/arizona-bootstrap-css
     - az_barrio/arizona-bootstrap-js
