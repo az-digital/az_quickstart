@@ -75,9 +75,10 @@ third_party_settings:
       weight: 0
       format_type: html_element
       format_settings:
-        classes: 'card-clickable hover'
+        classes: card border-0 hover
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -94,9 +95,10 @@ third_party_settings:
       weight: 1
       format_type: link
       format_settings:
-        classes: text-decoration-none
+        classes: 'text-decoration-none stretched-link'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         target: custom_uri
         custom_uri: '[node:az-canonical-url]'
         target_attribute: default
@@ -147,9 +149,10 @@ third_party_settings:
       weight: 22
       format_type: html_element
       format_settings:
-        classes: 'card-clickable-link hover-text-underline mt-2'
+        classes: mt-2
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -166,9 +169,10 @@ third_party_settings:
       weight: 20
       format_type: html_element
       format_settings:
-        classes: text-chili
+        classes: hover-text-underline
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3

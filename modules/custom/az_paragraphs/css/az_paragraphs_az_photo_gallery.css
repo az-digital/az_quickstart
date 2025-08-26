@@ -4,3 +4,15 @@
 .page-wrapper .paragraph--type--az-photo-gallery.paragraph--view-mode--preview *:focus {
   box-shadow: none;
 }
+
+.paragraph--type--az-photo-gallery .az-gallery-caption {
+  padding-bottom: 1.5rem;
+}
+
+.paragraph--type--az-photo-gallery .carousel-indicators {
+  margin-bottom: 0;
+}
+
+.az-gallery-slider-full .carousel-indicators {
+  filter: drop-shadow(0 0 0.5px rgb(0, 0, 0)) drop-shadow(0 0 0.5px rgb(0, 0, 0));
+}

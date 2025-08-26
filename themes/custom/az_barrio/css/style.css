@@ -107,6 +107,10 @@ audio:not([controls]) {
 /**
  * Branding header.
  */
+.arizona-header .row > * {
+  width: unset;
+}
+
 /* Wrapping link for logo. */
 .qs-site-logo {
   margin: 40px 0;
@@ -226,6 +230,16 @@ span.field-label {
   line-height: 1.25;
   background-color: #fff;
   border: 1px solid #dee2e6;
+}
+
+.pager__item--ellipsis.d-none:first-child + .page-item .page-link {
+  border-top-left-radius: var(--bs-pagination-border-radius);
+  border-bottom-left-radius: var(--bs-pagination-border-radius);
+}
+
+.page-item:nth-last-child(2):has(+ .pager__item--ellipsis.d-none) .page-link {
+  border-top-right-radius: var(--bs-pagination-border-radius);
+  border-bottom-right-radius: var(--bs-pagination-border-radius);
 }
 
 /* Add this class to a view display to add a top margin to the pager. */
@@ -412,18 +426,22 @@ a.btn.btn-redbar {
   padding-bottom: 4px;
 }
 
-.bg-chili .btn.btn-redbar {
+.bg-chili .btn.btn-redbar,
+.text-bg-chili .btn.btn-redbar {
   background-color: #8b0015;
   border: 2px solid #8b0015;
 }
 
+/*
+ * Search
+ */
 .navbar-offcanvas .navbar-offcanvas-search .form-control {
     height: 60px;
     margin: 0;
     border: none;
 }
 
-#block-az-barrio-offcanvas-searchform .material-icons-sharp {
+#block-az-barrio-offcanvas-searchform .material-symbols-rounded {
   font-size: 24px;
 }
 
@@ -435,7 +453,9 @@ padding: 0.625rem .75rem;
   height: 43px;
 }
 
-.az-search-block form.search-block-form .input-group .input-group-append button {
+.az-search-block form.search-block-form .input-group button {
+  display: flex;
+  align-items: center;
   font-size: 20px;
   color: #8B0015;
   background-color: #ffffff;
@@ -443,8 +463,8 @@ padding: 0.625rem .75rem;
   padding: 0 8px;
 }
 
-.az-search-block form.search-block-form .input-group .input-group-append button:hover,
-.az-search-block form.search-block-form .input-group .input-group-append button:focus {
+.az-search-block form.search-block-form .input-group button:hover,
+.az-search-block form.search-block-form .input-group button:focus {
     background-color: #8B0015;
     color: #ffffff;
 }
@@ -556,12 +576,22 @@ a.nolink + ul .sf-clone-parent {
     margin-right: 0;
 }
 .region .az-full-width-row {
+  --bs-gutter-x: 1.5rem;
+  --bs-gutter-y: 0;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
-  margin-right: -15px;
-  margin-left: -15px;
+  margin-top: calc(-1 * var(--bs-gutter-y));
+  margin-right: calc(-.5 * var(--bs-gutter-x));
+  margin-left: calc(-.5 * var(--bs-gutter-x));
+}
+.region .az-full-width-row>* {
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  padding-right: calc(var(--bs-gutter-x) * .5);
+  padding-left: calc(var(--bs-gutter-x) * .5);
+  margin-top: var(--bs-gutter-y);
 }
 
 .region-sidebar-first .block,
