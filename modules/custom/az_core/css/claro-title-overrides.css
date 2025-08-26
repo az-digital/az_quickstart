@@ -4,14 +4,13 @@
  * @see https://github.com/az-digital/az_quickstart/issues/4711
  */
 
-/* Override Claro modal title styles in admin dialogs */
+/* Restore Claro modal title styles in admin dialogs. */
 .ui-dialog .ui-dialog-titlebar .ui-dialog-title {
-  line-height: var(--ui-dialog-title-line-height, 1.25);
+  line-height: calc(var(--space-m) * 2);
   color: var(--jui-dialog-title-color);
 }
 
-/* Override messages title for admin users */
+/* Restore Claro messages title color in admin pages. */
 .messages__title {
   color: var(--messages-fg-color);
 }
-
