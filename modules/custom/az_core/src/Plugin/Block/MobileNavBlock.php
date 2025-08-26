@@ -53,7 +53,7 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
   protected $cache;
 
   /**
-   * The menu link_tree service.
+   * The menu link tree service.
    *
    * @var \Drupal\Core\Menu\MenuLinkTreeInterface
    */
@@ -244,7 +244,7 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
       $build['az_mobile_nav_menu']['heading_div']['heading']['heading_text'] = [
         '#type' => 'html_tag',
         '#tag' => 'h2',
-        '#value' => self::NAV_MENU_ROOT_TEXT,
+        '#value' => $this->t('@root', ['@root' => self::NAV_MENU_ROOT_TEXT]),
         '#attributes' => [
           'class' => ['h5 my-0'],
         ],
@@ -267,7 +267,7 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
         '#url' => Url::fromRoute(
           'az_core.mobile_nav_callback',
           [
-            'menu_root' => $parent === '' ? self::NAV_MENU_ROOT_ID : $parent,
+            'menu_root' => $parent === '' ? $this->t('@root', ['@root' => self::NAV_MENU_ROOT_TEXT]) : $parent,
             'current_page' => $this->currentPage,
           ],
         ),
@@ -427,7 +427,7 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
   protected function getSubtreeAndParentText(array $tree, string $pluginId, bool $root = TRUE) {
     foreach ($tree as $menuLinkTreeElement) {
       if ($root && $menuLinkTreeElement->link->getPluginId() === $pluginId) {
-        return [$menuLinkTreeElement, 'parentText' => self::NAV_MENU_ROOT_TEXT];
+        return [$menuLinkTreeElement, 'parentText' => $this->t('@root', ['@root' => self::NAV_MENU_ROOT_TEXT])];
       }
       elseif ($menuLinkTreeElement->link->getPluginId() === $pluginId) {
         return [$menuLinkTreeElement, 'parentText' => $menuLinkTreeElement->link->getParent()];
@@ -466,7 +466,7 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
         // Save the current page ID for subsequent AJAX requests.
         $this->currentPage = $menuLinkTreeElement->link->getPluginId();
         if ($menuLinkTreeElement->hasChildren) {
-          return [$menuLinkTreeElement, 'parentText' => self::NAV_MENU_ROOT_TEXT];
+          return [$menuLinkTreeElement, 'parentText' => $this->t('@root', ['@root' => self::NAV_MENU_ROOT_TEXT])];
         }
         else {
           // Leaf on the main menu: don't return a subtree.
