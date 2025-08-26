@@ -672,7 +672,6 @@ function az_barrio_footer_logo() {
     $token_service = \Drupal::token();
     $footer_alt_text = $token_service->replace($footer_alt_text);
     $footer_title_text = $token_service->replace($footer_title_text);
-    $footer_link_destination = $token_service->replace($footer_link_destination);
   }
 
   // Set footer logo.
@@ -857,7 +856,7 @@ function az_barrio_preprocess_block(&$variables) {
     $variables['attributes']['class'][] = 'az-search-block';
   }
 
-  // Pass theme setting to hide sidebar menu for mobile.
+  // Pass theme setting to hide sidebar menu for mobile 
   if (isset($variables['elements']['#id']) && $variables['elements']['#id'] === 'az_barrio_sidebar_menu') {
     $variables['az_remove_sidebar_menu_mobile'] = theme_get_setting('az_remove_sidebar_menu_mobile');
   }
