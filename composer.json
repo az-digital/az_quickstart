@@ -45,7 +45,7 @@
         "drupal/calendar_link": "3.0.4",
         "drupal/cas": "3.0.0-beta4",
         "drupal/chosen": "4.0.3",
-        "drupal/ckeditor_bs_grid": "2.0.12",
+        "drupal/ckeditor_bs_grid": "2.2.0-alpha1",
         "drupal/ckeditor_indentblock": "1.1.0",
         "drupal/coffee": "2.0.1",
         "drupal/config_distro": "2.1.0-alpha1",
