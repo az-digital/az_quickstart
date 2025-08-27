@@ -4,11 +4,6 @@ claro-node-form-overrides:
       css/claro-node-form-overrides.css: {}
   dependencies:
     - claro/node-form
-claro-title-overrides:
-  css:
-    component:
-      css/claro-title-overrides.css: {}
-  dependencies:
     - claro/dialog
     - claro/global-styling
 arizona-bootstrap-node-form-overrides:

@@ -398,18 +398,10 @@ function az_core_library_info_alter(array &$libraries, $module) {
 /**
  * Implements hook_page_attachments_alter().
  *
- * Alter attachments (typically assets) to a page before it is rendered.
+ * Override Drupal core generator metatag for distribution.
  */
 function az_core_page_attachments_alter(array &$page) {
-  // Attach admin overrides library on Claro-theme admin pages.
-  if (\Drupal::service('router.admin_context')->isAdminRoute()) {
-    $admin_theme = \Drupal::config('system.theme')->get('admin');
-    if ($admin_theme === 'claro') {
-      $page['#attached']['library'][] = 'az_core/claro-title-overrides';
-    }
-  }
-
-  // Override Drupal core generator metatag for distribution:
+  
   // Verify we're not trying to add tag to some page that should not have it.
   if (!empty($page['#attached']['html_head'])) {
     foreach ($page['#attached']['html_head'] as &$head_item) {
