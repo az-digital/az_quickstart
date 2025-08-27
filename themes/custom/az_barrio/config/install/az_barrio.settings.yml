@@ -58,7 +58,7 @@ bootstrap_barrio_enable_color: false
 bootstrap_barrio_region_clean_alert: 0
 bootstrap_barrio_region_class_alert: ''
 bootstrap_barrio_region_clean_header_ua_utilities: 0
-bootstrap_barrio_region_class_header_ua_utilities: 'ms-auto d-none d-lg-block d-xl-block'
+bootstrap_barrio_region_class_header_ua_utilities: 'd-none d-lg-flex col-auto'
 bootstrap_barrio_region_clean_branding: 0
 bootstrap_barrio_region_class_branding: ''
 bootstrap_barrio_region_clean_header_2: 0
