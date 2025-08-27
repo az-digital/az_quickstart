@@ -2,28 +2,20 @@
 
 /**
  * @file
- * Install, update and uninstall functions for az_person module.
+ * Install, update and uninstall functions for az_course module.
  */
 
 /**
- * Implements hook_update_last_removed().
+ * Apply Bootstrap 5 compatibility updates to az_course text fields.
  */
-function az_person_update_last_removed() {
-  // Remove updates added before 2.6.0.
-  return 920501;
-}
-
-/**
- * Apply Bootstrap 5 compatibility updates to person body fields.
- */
-function az_person_update_1130001(&$sandbox) {
+function az_course_update_1130001(&$sandbox) {
   if (!isset($sandbox['ids'])) {
     $query = \Drupal::entityTypeManager()
       ->getStorage('node')
       ->getQuery()
-      ->condition('type', 'az_person')
-      ->condition('field_az_body.format', ['az_standard', 'full_html'], 'IN')
-      ->exists('field_az_body')
+      ->condition('type', 'az_course')
+      ->condition('field_az_course_description.format', ['az_standard', 'full_html'], 'IN')
+      ->exists('field_az_course_description')
       ->accessCheck(FALSE);
 
     $sandbox['ids'] = $query->execute();
@@ -33,14 +25,14 @@ function az_person_update_1130001(&$sandbox) {
   return \Drupal::service('az_core.content_field_updater')
     ->processFieldUpdates(
       'node',
-      'field_az_body',
+      'field_az_course_description',
       'Drupal\az_core\Utility\AZBootstrapMarkupConverter::compareProcessor',
       $sandbox,
       [
         'create_revisions' => TRUE,
         'prefix' => __FUNCTION__,
         'suffix' => 'for Bootstrap 5 compatibility',
-        'bundle_name' => 'az_person',
+        'bundle_name' => 'az_course',
       ]
     );
 }
