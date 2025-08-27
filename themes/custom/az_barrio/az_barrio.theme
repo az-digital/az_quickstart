@@ -242,6 +242,8 @@ function az_barrio_library_info_alter(&$libraries, $extension) {
     unset($libraries['global-styling']['css']['component']['css/components/sidebar.css']);
     // Remove site-footer styles.
     unset($libraries['global-styling']['css']['component']['css/components/site-footer.css']);
+    // Remove search-form styles.
+    unset($libraries['global-styling']['css']['component']['css/components/search-form.css']);
   }
   if ($extension === 'az_barrio' && isset($libraries['arizona-bootstrap'])) {
     // Add AZ Bootstrap CSS & JS based on theme settings.
@@ -856,7 +858,7 @@ function az_barrio_preprocess_block(&$variables) {
     $variables['attributes']['class'][] = 'az-search-block';
   }
 
-  // Pass theme setting to hide sidebar menu for mobile 
+  // Pass theme setting to hide sidebar menu for mobile
   if (isset($variables['elements']['#id']) && $variables['elements']['#id'] === 'az_barrio_sidebar_menu') {
     $variables['az_remove_sidebar_menu_mobile'] = theme_get_setting('az_remove_sidebar_menu_mobile');
   }
