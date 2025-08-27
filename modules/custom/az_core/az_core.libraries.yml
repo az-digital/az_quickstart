@@ -22,3 +22,7 @@ az-core-chosen:
   css:
     component:
       css/az-core-chosen.css: {}
+az-mobile-nav:
+  css:
+    layout:
+      css/az-mobile-nav.css: {}

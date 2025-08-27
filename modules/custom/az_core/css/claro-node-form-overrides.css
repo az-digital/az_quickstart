@@ -26,6 +26,28 @@ tr.odd {
   background-color: #eee;
 }
 
+/** 
+ * Match styling of node form with that of style.css.
+ * See https://github.com/az-digital/az_quickstart/pull/4195.
+ */
+@media screen and (min-width: 576px) {
+  .align-left {
+    margin-right: 1em;
+    margin-bottom: 0.7em;
+  }
+  .align-right {
+    margin-left: 1em;
+    margin-bottom: 0.7em;
+  }
+}
+
+.align-left ~ ul,
+.align-left ~ ol {
+  overflow: auto;
+  overflow-wrap: anywhere;
+  padding-inline-start: revert;
+}
+
 /* Restore Claro modal title styles in admin dialogs. */
 .ui-dialog .ui-dialog-titlebar .ui-dialog-title {
   line-height: calc(var(--space-m) * 2);
