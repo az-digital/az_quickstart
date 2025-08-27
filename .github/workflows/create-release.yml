@@ -79,11 +79,12 @@ jobs:
             ./az_quickstart.zip
             ./az_quickstart.tar.gz
 
-      - name: Remove version from info file
+      - name: Set info file version back to dev
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
           sed -i "/version: /d" az_quickstart.info.yml
+          echo -e "version: ${{ github.ref_name }}-dev" >> az_quickstart.info.yml
           git add az_quickstart.info.yml
           git commit -m "Back to dev."
           git push
