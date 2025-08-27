@@ -24,7 +24,7 @@ third_party_settings:
       weight: 0
       format_type: link
       format_settings:
-        classes: 'badge badge-light badge-link'
+        classes: 'badge text-bg-light badge-link'
         show_empty_fields: false
         id: ''
         target: entity

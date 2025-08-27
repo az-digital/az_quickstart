@@ -28,12 +28,34 @@ class AZPhotoGalleryParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#title' => $this->t('Photo Gallery Display'),
       '#type' => 'select',
       '#options' => [
-        'slider' => $this->t('Slider'),
         'grid' => $this->t('Grid'),
+        'slider' => $this->t('Slider - Crop Image Style'),
+        'slider_full' => $this->t('Slider - Full Image Style'),
       ],
       '#required' => TRUE,
       '#default_value' => $config['gallery_display'] ?? 'grid',
       '#description' => $this->t('The type of display to use for the photo gallery.'),
+    ];
+
+    $form['gallery_ratio'] = [
+      '#title' => $this->t('Gallery Aspect Ratio'),
+      '#type' => 'select',
+      '#options' => [
+        '1x1' => $this->t('1x1 (Square)'),
+        '4x3' => $this->t('4x3 (Standard)'),
+        '16x9' => $this->t('16x9 (Widescreen)'),
+        '21x9' => $this->t('21x9 (Ultra-wide)'),
+      ],
+      '#default_value' => $config['gallery_ratio'] ?? '16x9',
+      '#description' => $this->t('The aspect ratio for the photo gallery.'),
+      '#states' => [
+        'visible' => [
+          ':input[name$="[behavior_plugins][az_photo_gallery_paragraph_behavior][gallery_display]"]' => ['value' => 'slider_full'],
+        ],
+        'required' => [
+          ':input[name$="[behavior_plugins][az_photo_gallery_paragraph_behavior][gallery_display]"]' => ['value' => 'slider_full'],
+        ],
+      ],
     ];
 
     parent::buildBehaviorForm($paragraph, $form, $form_state);
@@ -62,12 +84,12 @@ class AZPhotoGalleryParagraphBehavior extends AZDefaultParagraphsBehavior {
     // Create a unique id for the modal, if needed.
     $variables['modal'] = Html::getUniqueId('az-photo-gallery-modal-id');
 
-    // Variable to control whether to use the grid or slider display.
-    $variables['grid'] = FALSE;
-    // Set variable for grid.
-    if (!empty($config['gallery_display'])) {
-      $variables['grid'] = ($config['gallery_display'] === 'grid');
-    }
+    // Variable to control which display to use.
+    $variables['gallery_display'] = $config['gallery_display'] ?? 'grid';
+
+    // Variable to control the aspect ratio for the gallery display.
+    $variables['ratio'] = $config['gallery_ratio'] ?? '16x9';
+
   }
 
 }
