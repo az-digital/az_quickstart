@@ -456,8 +456,6 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
  * Submit handler for az_barrio_form_settings.
  */
 function az_barrio_form_system_theme_settings_submit($form, FormStateInterface &$form_state) {
-  $config_key = $form_state->getValue('config_key');
-  $config = \Drupal::getContainer()->get('config.factory')->getEditable($config_key);
   $values = $form_state->getValues();
   // If the user uploaded a new logo or favicon, save it to a permanent location
   // and use it in place of the default theme-provided file.

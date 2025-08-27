@@ -98,12 +98,12 @@ function template_preprocess_az_responsive_background_image(array &$variables) {
     ->getFallbackImageStyle(), $variables['uri']);
 
   // Split each source into multiple rules.
-  foreach (array_reverse($variables['sources']) as $source_i => $source) {
+  foreach (array_reverse($variables['sources']) as $source) {
     $attr = $source->toArray();
 
     $srcset = explode(', ', $attr['srcset']);
 
-    foreach ($srcset as $src_i => $src) {
+    foreach ($srcset as $src) {
       [$src, $res] = explode(' ', $src);
 
       $media = $attr['media'] ?? '';
