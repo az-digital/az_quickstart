@@ -401,7 +401,6 @@ function az_core_library_info_alter(array &$libraries, $module) {
  * Override Drupal core generator metatag for distribution.
  */
 function az_core_page_attachments_alter(array &$page) {
-  
   // Verify we're not trying to add tag to some page that should not have it.
   if (!empty($page['#attached']['html_head'])) {
     foreach ($page['#attached']['html_head'] as &$head_item) {
