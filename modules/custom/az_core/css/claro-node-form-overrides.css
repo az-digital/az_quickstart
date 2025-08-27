@@ -47,14 +47,3 @@ tr.odd {
   overflow-wrap: anywhere;
   padding-inline-start: revert;
 }
-
-/* Restore Claro modal title styles in admin dialogs. */
-.ui-dialog .ui-dialog-titlebar .ui-dialog-title {
-  line-height: calc(var(--space-m) * 2);
-  color: var(--jui-dialog-title-color);
-}
-
-/* Restore Claro messages title color in admin pages. */
-.messages__title {
-  color: var(--messages-fg-color);
-}
