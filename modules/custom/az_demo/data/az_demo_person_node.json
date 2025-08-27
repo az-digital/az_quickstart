@@ -288,7 +288,12 @@
       "az_photo" : "wilma-wildcat.jpg",
       "az_person_category" : "Undergraduates",
       "az_person_categories" : "Government and Public Service",
-      "netid" : "wilmawildcat"
+      "netid" : "wilmawildcat",
+      "az_work_experience" : "Community Ambassador, University of Arizona (2010-present)|Spirit Program Coordinator, Arizona Athletics (2008-2010)|Youth Outreach Specialist, Tucson Community Center (2005-2008)",
+      "az_awards": "Outstanding Community Service Award, University of Arizona (2020)|Mascot of the Year, National Association of Collegiate Mascots (2018)|Spirit Leadership Excellence Award, Pac-12 Conference (2015)",
+      "az_licensure_certification": "Certified Mascot Professional, National Mascot Association|Youth Safety Training Certification, American Red Cross|Community Engagement Specialist Certificate, Arizona Community Foundation",
+      "az_teaching_interests": "Community engagement and outreach, youth leadership development, school spirit and team building, public speaking and performance arts, and social media and digital communications.",
+      "az_research_interests": "Impact of mascot programs on student engagement and school spirit, community outreach effectiveness in higher education, youth development through sports and recreational activities, and social media influence on university brand awareness."
     }
   ]
 }

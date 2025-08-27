@@ -1,0 +1,37 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az_eds
+label: 'EDS Service'
+type: default
+address: eds.iam.arizona.edu
+port: 636
+timeout: 10
+encryption: ssl
+weight: null
+bind_method: service_account
+binddn: null
+bindpw: null
+basedn:
+  - ''
+user_attr: ''
+account_name_attr: ''
+mail_attr: ''
+mail_template: ''
+picture_attr: ''
+unique_persistent_attr: ''
+unique_persistent_attr_binary: false
+user_dn_expression: ''
+testing_drupal_username: ''
+testing_drupal_user_dn: ''
+grp_unused: true
+grp_object_cat: ''
+grp_nested: false
+grp_user_memb_attr_exists: false
+grp_user_memb_attr: ''
+grp_memb_attr: ''
+grp_memb_attr_match_user_attr: ''
+grp_derive_from_dn: false
+grp_derive_from_dn_attr: ''
+grp_test_grp_dn: ''
+grp_test_grp_dn_writeable: ''

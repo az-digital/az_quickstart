@@ -51,6 +51,8 @@ function az_cas_form_bulk_add_cas_users_alter(&$form, FormStateInterface $form_s
     $form['roles']['#options'] = $options;
     $form['#validate'][] = 'az_cas_validate_roles';
   }
+
+  $form['email_hostname']['#attributes']['disabled'] = 'disabled';
 }
 
 /**
