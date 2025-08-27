@@ -1,107 +1,168 @@
+langcode: en
+favicon:
+  use_default: true
+features:
+  comment_user_picture: true
+  comment_user_verification: true
+  favicon: true
+  node_user_picture: true
+logo:
+  path: profiles/custom/az_quickstart/themes/custom/az_barrio/images/logo.png
+  use_default: false
 bootstrap_barrio_library: production
-bootstrap_barrio_region_clean_alert: false
-bootstrap_barrio_region_clean_header_ua_utilities: false
-bootstrap_barrio_region_clean_branding: false
-bootstrap_barrio_region_clean_header: false
-bootstrap_barrio_region_clean_header_2: false
-bootstrap_barrio_region_clean_navigation: false
-bootstrap_barrio_region_clean_navigation_offcanvas: false
-bootstrap_barrio_region_clean_help: false
-bootstrap_barrio_region_clean_content_featured: false
-bootstrap_barrio_region_clean_sidebar_first: false
-bootstrap_barrio_region_clean_sidebar_second: false
-bootstrap_barrio_region_clean_highlighted: false
-bootstrap_barrio_region_clean_content_top: false
-bootstrap_barrio_region_clean_breadcrumb: false
-bootstrap_barrio_region_clean_content: false
-bootstrap_barrio_region_clean_content_2_col_1: false
-bootstrap_barrio_region_clean_content_2_col_2: false
-bootstrap_barrio_region_clean_content_3_col_1: false
-bootstrap_barrio_region_clean_content_3_col_2: false
-bootstrap_barrio_region_clean_content_3_col_3: false
-bootstrap_barrio_region_clean_full_width_content_bottom: false
-bootstrap_barrio_region_clean_content_4_col_1: false
-bootstrap_barrio_region_clean_content_4_col_2: false
-bootstrap_barrio_region_clean_content_4_col_3: false
-bootstrap_barrio_region_clean_content_4_col_4: false
-bootstrap_barrio_region_clean_content_bottom: false
-bootstrap_barrio_region_clean_footer: false
-bootstrap_barrio_region_clean_footer_sub: false
-bootstrap_barrio_region_clean_footer_sub_menus: true
-bootstrap_barrio_region_clean_az_page_bottom: false
-bootstrap_barrio_region_class_alert: ''
-bootstrap_barrio_region_class_header_ua_utilities: 'd-none d-lg-flex col-auto'
-bootstrap_barrio_region_class_branding: ''
+bootstrap_barrio_source: ''
+bootstrap_barrio_fluid_container: 0
+bootstrap_barrio_container: container
+bootstrap_barrio_region_clean_header: 0
 bootstrap_barrio_region_class_header: col-md
-bootstrap_barrio_region_class_header_2: col-md
-bootstrap_barrio_region_class_navigation: ''
-bootstrap_barrio_region_class_navigation_offcanvas: ''
-bootstrap_barrio_region_class_help: col-md
-bootstrap_barrio_region_class_content_featured: ''
-bootstrap_barrio_region_class_sidebar_first: ''
-bootstrap_barrio_region_class_sidebar_second: ''
+bootstrap_barrio_region_clean_highlighted: 0
 bootstrap_barrio_region_class_highlighted: col-md
-bootstrap_barrio_region_class_content_top: col-md
+bootstrap_barrio_region_clean_breadcrumb: 0
 bootstrap_barrio_region_class_breadcrumb: col-md
+bootstrap_barrio_region_clean_content: 0
 bootstrap_barrio_region_class_content: ''
-bootstrap_barrio_region_class_content_2_col_1: col-md-6
-bootstrap_barrio_region_class_content_2_col_2: col-md-6
-bootstrap_barrio_region_class_content_3_col_1: col-md-4
-bootstrap_barrio_region_class_content_3_col_2: col-md-4
-bootstrap_barrio_region_class_content_3_col_3: col-md-4
-bootstrap_barrio_region_class_full_width_content_bottom: ''
-bootstrap_barrio_region_class_content_4_col_1: col-md-3
-bootstrap_barrio_region_class_content_4_col_2: col-md-3
-bootstrap_barrio_region_class_content_4_col_3: col-md-3
-bootstrap_barrio_region_class_content_4_col_4: col-md-3
-bootstrap_barrio_region_class_content_bottom: col-md
-bootstrap_barrio_region_class_footer: 'col-12 col-sm-7 col-md-8 col-lg-8'
-bootstrap_barrio_region_class_footer_sub: col-md
-bootstrap_barrio_region_class_footer_sub_menus: col-md
-bootstrap_barrio_region_class_az_page_bottom: ''
+bootstrap_barrio_region_clean_sidebar_first: 0
+bootstrap_barrio_region_class_sidebar_first: ''
+bootstrap_barrio_region_clean_sidebar_second: 0
+bootstrap_barrio_region_class_sidebar_second: ''
 bootstrap_barrio_sidebar_position: both
 bootstrap_barrio_content_offset: 0
+bootstrap_barrio_sidebar_collapse: 0
 bootstrap_barrio_sidebar_first_width: 3
 bootstrap_barrio_sidebar_first_offset: 0
 bootstrap_barrio_sidebar_second_width: 3
 bootstrap_barrio_sidebar_second_offset: 0
-header_one_col_classes: 'col-12 col-sm-6 col-lg-4'
-header_two_col_classes: 'col-12 col-sm-6 col-lg-8'
-bootstrap_barrio_fluid_container: 0
+bootstrap_barrio_hide_node_label: 0
+bootstrap_barrio_breadcrumb_divider: ''
 bootstrap_barrio_button: 1
 bootstrap_barrio_button_size: ''
+bootstrap_barrio_button_type: primary
 bootstrap_barrio_button_outline: 0
+bootstrap_barrio_navbar_flyout: false
+bootstrap_barrio_navbar_slide: false
+bootstrap_barrio_navbar_offcanvas: ''
 bootstrap_barrio_messages_widget: default
+bootstrap_barrio_messages_widget_toast_delay: 0
+bootstrap_barrio_float_label: '0'
+bootstrap_barrio_checkbox: ''
+bootstrap_barrio_sidebar_first_affix: 0
+bootstrap_barrio_sidebar_second_affix: 0
+bootstrap_barrio_scroll_spy: ''
+bootstrap_barrio_system_messages: ''
+bootstrap_barrio_table_style: ''
 bootstrap_barrio_table_hover: 1
+bootstrap_barrio_table_head: ''
+bootstrap_barrio_image_fluid: false
+bootstrap_barrio_tabs_style: ''
+bootstrap_barrio_enable_color: false
+bootstrap_barrio_region_clean_alert: 0
+bootstrap_barrio_region_class_alert: ''
+bootstrap_barrio_region_clean_header_ua_utilities: 0
+bootstrap_barrio_region_class_header_ua_utilities: 'd-none d-lg-flex col-auto'
+bootstrap_barrio_region_clean_branding: 0
+bootstrap_barrio_region_class_branding: ''
+bootstrap_barrio_region_clean_header_2: 0
+bootstrap_barrio_region_class_header_2: row
+bootstrap_barrio_region_clean_navigation: 0
+bootstrap_barrio_region_class_navigation: ''
+bootstrap_barrio_region_clean_navigation_offcanvas: 0
+bootstrap_barrio_region_class_navigation_offcanvas: ''
+bootstrap_barrio_region_clean_help: 0
+bootstrap_barrio_region_class_help: col-md
+bootstrap_barrio_region_clean_content_featured: 0
+bootstrap_barrio_region_class_content_featured: ''
+bootstrap_barrio_region_clean_content_top: 0
+bootstrap_barrio_region_class_content_top: col-md
+bootstrap_barrio_region_clean_content_2_col_1: 0
+bootstrap_barrio_region_class_content_2_col_1: col-md-6
+bootstrap_barrio_region_clean_content_2_col_2: 0
+bootstrap_barrio_region_class_content_2_col_2: col-md-6
+bootstrap_barrio_region_clean_content_3_col_1: 0
+bootstrap_barrio_region_class_content_3_col_1: col-md-4
+bootstrap_barrio_region_clean_content_3_col_2: 0
+bootstrap_barrio_region_class_content_3_col_2: col-md-4
+bootstrap_barrio_region_clean_content_3_col_3: 0
+bootstrap_barrio_region_class_content_3_col_3: col-md-4
+bootstrap_barrio_region_clean_full_width_content_bottom: 0
+bootstrap_barrio_region_class_full_width_content_bottom: ''
+bootstrap_barrio_region_clean_content_4_col_1: 0
+bootstrap_barrio_region_class_content_4_col_1: col-md-3
+bootstrap_barrio_region_clean_content_4_col_2: 0
+bootstrap_barrio_region_class_content_4_col_2: col-md-3
+bootstrap_barrio_region_clean_content_4_col_3: 0
+bootstrap_barrio_region_class_content_4_col_3: col-md-3
+bootstrap_barrio_region_clean_content_4_col_4: 0
+bootstrap_barrio_region_class_content_4_col_4: col-md-3
+bootstrap_barrio_region_clean_content_bottom: 0
+bootstrap_barrio_region_class_content_bottom: col-md
+bootstrap_barrio_region_clean_footer: 0
+bootstrap_barrio_region_class_footer: 'col-12 col-sm-7 col-md-8 col-lg-8'
+bootstrap_barrio_region_clean_footer_sub: 0
+bootstrap_barrio_region_class_footer_sub: col-md
+bootstrap_barrio_region_clean_footer_sub_menus: 1
+bootstrap_barrio_region_class_footer_sub_menus: col-md
+bootstrap_barrio_region_clean_az_page_bottom: 0
+bootstrap_barrio_region_class_az_page_bottom: ''
+bootstrap_barrio_region_width_alert: 0
+bootstrap_barrio_region_width_header_ua_utilities: 0
+bootstrap_barrio_region_width_branding: 0
+bootstrap_barrio_region_width_header_2: 0
+bootstrap_barrio_region_width_navigation: 0
+bootstrap_barrio_region_width_navigation_offcanvas: 0
+bootstrap_barrio_region_width_help: 0
+bootstrap_barrio_region_width_content_featured: 0
+bootstrap_barrio_region_width_content_top: 0
+bootstrap_barrio_region_width_content_2_col_1: 0
+bootstrap_barrio_region_width_content_2_col_2: 0
+bootstrap_barrio_region_width_content_3_col_1: 0
+bootstrap_barrio_region_width_content_3_col_2: 0
+bootstrap_barrio_region_width_content_3_col_3: 0
+bootstrap_barrio_region_width_full_width_content_bottom: 0
+bootstrap_barrio_region_width_content_4_col_1: 0
+bootstrap_barrio_region_width_content_4_col_2: 0
+bootstrap_barrio_region_width_content_4_col_3: 0
+bootstrap_barrio_region_width_content_4_col_4: 0
+bootstrap_barrio_region_width_content_bottom: 0
+bootstrap_barrio_region_width_footer: 0
+bootstrap_barrio_region_width_footer_sub: 0
+bootstrap_barrio_region_width_footer_sub_menus: 0
+bootstrap_barrio_region_width_az_page_bottom: 0
+bootstrap_barrio_region_width_header: 0
+bootstrap_barrio_region_width_highlighted: 0
+bootstrap_barrio_region_width_breadcrumb: 0
+bootstrap_barrio_region_width_sidebar_first: 0
+bootstrap_barrio_region_width_sidebar_second: 0
+bootstrap_barrio_region_width_content: 0
+az_barrio_navbar_offcanvas: true
+external_links: true
 wordmark: true
 land_acknowledgment: true
 info_security_privacy: true
 copyright_notice: 'The Arizona Board of Regents on behalf of <a href="https://www.arizona.edu" target="_blank">The University of Arizona</a>.'
 az_hide_front_title: false
 az_back_to_top: true
-az_barrio_font: true
 az_bootstrap_source: cdn
 az_bootstrap_cdn_version: stable
 az_bootstrap_cdn_version_css: 5.x
 az_bootstrap_cdn_version_js: 5.x
 az_bootstrap_minified: true
+az_barrio_font: true
+az_barrio_material_symbols_rounded: true
+az_barrio_material_design_sharp_icons: false
 az_barrio_az_icons: true
 az_barrio_az_icons_source: cdn
 az_icons_minified: true
 az_icons_cdn_version: stable
-external_links: true
 sticky_footer: true
-az_barrio_material_design_sharp_icons: false
-az_barrio_material_symbols_rounded: true
 az_barrio_logo_svg_inline: false
 az_barrio_footer_logo_svg_inline: false
 az_remove_sidebar_menu_mobile: true
-logo:
-  path: profiles/custom/az_quickstart/themes/custom/az_barrio/images/logo.png
-  use_default: false
 primary_logo_alt_text: '[site:name] | Home'
 primary_logo_title_text: '[site:name] | Home'
-footer_logo_link_destination: ''
+footer_logo_link_destination: null
 footer_logo_alt_text: '[site:name] | Home'
 footer_logo_title_text: '[site:name] | Home'
 footer_logo_path: profiles/custom/az_quickstart/themes/custom/az_barrio/images/logo.png
+footer_default_logo: true
+header_one_col_classes: 'col-12 col-sm-6 col-lg-4'
+header_two_col_classes: 'col-12 col-sm-6 col-lg-8'
