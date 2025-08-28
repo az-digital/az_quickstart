@@ -54,3 +54,6 @@ libraries-extend:
     - az_barrio/az-media-display
   core/drupal.ajax:
     - az_barrio/az-ajax
+
+libraries-override:
+  bootstrap_barrio/toast: az_barrio/toasts
