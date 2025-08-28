@@ -49,7 +49,8 @@
     var sidebarRegion = document.querySelectorAll('.sidebar');
     if (sidebarRegion.length > 0) {
       var sidebarRegionPosition = sidebarRegion[0].getBoundingClientRect();
-      document.documentElement.style.setProperty('--full-width-sidebar-width', "".concat(sidebarRegionPosition.width, "px"));
+      var sidebarWidth = sidebarRegionPosition.width;
+      document.documentElement.style.setProperty('--full-width-sidebar-width', "".concat(sidebarWidth, "px"));
     }
   }
   function setFullWidthLayout() {

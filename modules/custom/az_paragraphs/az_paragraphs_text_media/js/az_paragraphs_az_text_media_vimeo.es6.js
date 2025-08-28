@@ -9,12 +9,15 @@
         function vimeoError(error) {
           switch (error.name) {
             case 'PasswordError':
+              // eslint-disable-next-line no-console
               console.log('The Vimeo video is password-protected.');
               break;
             case 'PrivacyError':
+              // eslint-disable-next-line no-console
               console.log('The Vimeo video is private.');
               break;
             default:
+              // eslint-disable-next-line no-console
               console.log(
                 `Some errors occurred with the Vimeo video: ${error.name}`,
               );
@@ -64,6 +67,76 @@
           }
         }
 
+        // Helper function for play button click
+        function handlePlayButtonClick(element, parentParagraph) {
+          return (event) => {
+            event.preventDefault();
+            element.player.play().catch((error) => vimeoError(error));
+            parentParagraph.classList.add('az-video-playing');
+            parentParagraph.classList.remove('az-video-paused');
+          };
+        }
+
+        // Helper function for pause button click
+        function handlePauseButtonClick(element, parentParagraph) {
+          return (event) => {
+            event.preventDefault();
+            element.player.pause().catch((error) => vimeoError(error));
+            parentParagraph.classList.add('az-video-paused');
+            parentParagraph.classList.remove('az-video-playing');
+          };
+        }
+
+        // Helper function to initialize a single Vimeo element
+        function initVimeoElement(element, defaultOptions) {
+          const parentParagraph = element.parentNode;
+          const vimeoId = element.dataset.vimeoVideoId;
+          const videoPlayer =
+            element.getElementsByClassName('az-video-player')[0];
+          const VimeoPlayer = window.Vimeo;
+
+          // Initialize Vimeo Player
+          element.player = new VimeoPlayer.Player(videoPlayer, {
+            id: vimeoId,
+            autopause: defaultOptions.autopause,
+            autoplay: element.dataset.autoplay === 'true',
+            controls: 0,
+            loop: defaultOptions.loop,
+            muted: defaultOptions.muted,
+          });
+
+          // Event listener for starting play.
+          element.player.on('bufferend', () => {
+            setDimensions(element);
+            parentParagraph.classList.add('az-video-playing');
+          });
+
+          // Play Button
+          const playButtons = element.getElementsByClassName('az-video-play');
+          if (playButtons[0]) {
+            playButtons[0].addEventListener(
+              'click',
+              handlePlayButtonClick(element, parentParagraph),
+            );
+          }
+
+          // Pause Button
+          const pauseButtons = element.getElementsByClassName('az-video-pause');
+          if (pauseButtons[0]) {
+            pauseButtons[0].addEventListener(
+              'click',
+              handlePauseButtonClick(element, parentParagraph),
+            );
+          }
+        }
+
+        // Helper function to handle API loaded callback
+        function handleVimeoAPILoaded(bgVideoParagraphs, defaultOptions) {
+          Array.from(bgVideoParagraphs).forEach((element) => {
+            initVimeoElement(element, defaultOptions);
+          });
+        }
+
         if (window.screen && window.screen.width > 768) {
           // @see https://developer.vimeo.com/player/sdk/basics
           const defaultOptions = {
@@ -87,55 +160,8 @@
 
           // Methods
           // Ensure Vimeo API is loaded before proceeding
-          tag.onload = () => {
-            Array.from(bgVideoParagraphs).forEach((element) => {
-              const parentParagraph = element.parentNode;
-              const vimeoId = element.dataset.vimeoVideoId;
-              const videoPlayer =
-                element.getElementsByClassName('az-video-player')[0];
-              const VimeoPlayer = window.Vimeo;
-
-              // Initialize Vimeo Player
-              element.player = new VimeoPlayer.Player(videoPlayer, {
-                id: vimeoId,
-                autopause: defaultOptions.autopause,
-                autoplay: element.dataset.autoplay === 'true',
-                controls: 0,
-                loop: defaultOptions.loop,
-                muted: defaultOptions.muted,
-              });
-
-              // Event listener for starting play.
-              element.player.on('bufferend', () => {
-                setDimensions(element);
-                parentParagraph.classList.add('az-video-playing');
-              });
-
-              // Play Button
-              const playButtons =
-                element.getElementsByClassName('az-video-play');
-              if (playButtons[0]) {
-                playButtons[0].addEventListener('click', (event) => {
-                  event.preventDefault();
-                  element.player.play().catch((error) => vimeoError(error));
-                  parentParagraph.classList.add('az-video-playing');
-                  parentParagraph.classList.remove('az-video-paused');
-                });
-              }
-
-              // Pause Button
-              const pauseButtons =
-                element.getElementsByClassName('az-video-pause');
-              if (pauseButtons[0]) {
-                pauseButtons[0].addEventListener('click', (event) => {
-                  event.preventDefault();
-                  element.player.pause().catch((error) => vimeoError(error));
-                  parentParagraph.classList.add('az-video-paused');
-                  parentParagraph.classList.remove('az-video-playing');
-                });
-              }
-            });
-          };
+          tag.onload = () =>
+            handleVimeoAPILoaded(bgVideoParagraphs, defaultOptions);
 
           // Resize handler updates width, height and offset
           // of player after resize/init.
