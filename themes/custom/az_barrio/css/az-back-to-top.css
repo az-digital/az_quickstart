@@ -1,9 +1,0 @@
-#az-back-to-top {
-  border: none;
-  display: none;
-  position: fixed;
-  z-index: 2147483647;
-  bottom: 20px;
-  right: 20px;
-  opacity: 0.9;
-}
