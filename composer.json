@@ -139,10 +139,6 @@
         "drush/drush": "<12.4.3"
     },
     "extra": {
-        "branch-alias": {
-            "dev-main": "3.0.x-dev",
-            "2.x-dev": "2.14.x-dev"
-        },
         "patches": {
             "drupal/auto_entitylabel": {
                 "Support entities without bundles (2945387)": "https://www.drupal.org/files/issues/2024-06-07/2945387-28.patch"
