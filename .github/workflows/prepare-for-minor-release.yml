@@ -41,12 +41,30 @@ jobs:
             exit 1
           fi
           delimiter=.
-          prev_minor=($(echo $NEW_VERSION | tr $delimiter '\n'))
-          prev_minor[1]=$((prev_minor[1]-1))
-          prev_minor_branch=$(IFS=$delimiter ; echo "${prev_minor[*]}" | sed 's/\(.*\)/\1/')
-          if [ $(git ls-remote --heads https://github.com/az-digital/az_quickstart.git $prev_minor_branch | wc -l) = 0 ]; then
-            echo "Previous minor release branch name doesn't exist yet: $prev_minor_branch" >> $GITHUB_STEP_SUMMARY
-            exit 1
+          current_parts=($(echo $NEW_VERSION | tr $delimiter '\n'))
+          major_version=${current_parts[0]}
+          minor_version=${current_parts[1]}
+
+          # Check if this is the first minor release for this major version (e.g., 3.0.x)
+          if [ "$minor_version" = "0" ]; then
+            # For x.0.x branches, ensure no other minor release branches exist for this major version
+            existing_branches=$(git ls-remote --heads https://github.com/az-digital/az_quickstart.git "${major_version}.*" | grep -E "${major_version}\.[0-9]+\.x$" | wc -l)
+            if [ "$existing_branches" -gt 0 ]; then
+              echo "Cannot create ${NEW_VERSION} - other minor release branches already exist for major version ${major_version}" >> $GITHUB_STEP_SUMMARY
+              echo "Found existing branches:" >> $GITHUB_STEP_SUMMARY
+              git ls-remote --heads https://github.com/az-digital/az_quickstart.git "${major_version}.*" | grep -E "${major_version}\.[0-9]+\.x$" | awk '{print $2}' | sed 's/refs\/heads\///' >> $GITHUB_STEP_SUMMARY
+              exit 1
+            fi
+            echo "Creating first minor release branch for major version $major_version: $NEW_VERSION" >> $GITHUB_STEP_SUMMARY
+          else
+            # For non-zero minor versions, ensure the previous minor release exists
+            prev_minor=($(echo $NEW_VERSION | tr $delimiter '\n'))
+            prev_minor[1]=$((prev_minor[1]-1))
+            prev_minor_branch=$(IFS=$delimiter ; echo "${prev_minor[*]}" | sed 's/\(.*\)/\1/')
+            if [ $(git ls-remote --heads https://github.com/az-digital/az_quickstart.git $prev_minor_branch | wc -l) = 0 ]; then
+              echo "Previous minor release branch name doesn't exist yet: $prev_minor_branch" >> $GITHUB_STEP_SUMMARY
+              exit 1
+            fi
           fi
       - name: Validation for 2.x release branches
         if: github.ref_name == '2.x'
