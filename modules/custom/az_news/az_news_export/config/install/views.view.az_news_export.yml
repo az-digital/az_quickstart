@@ -1805,6 +1805,9 @@ display:
             field_az_media_thumbnail_image:
               alias: ''
               raw_output: '1'
+            term_node_tid:
+              alias: term_node_tags
+              raw_output: 0
       display_extenders: {  }
       path: az_quickstart/export/az_news/v1/az_news.json
     cache_metadata:
