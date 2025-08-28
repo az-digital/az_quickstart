@@ -306,8 +306,9 @@
     {% if page.az_page_bottom %}
     {{ page.az_page_bottom }}
     {% endif %}
+    {{ dump() }}
     {% if az_back_to_top %}
-      <a id="az-back-to-top" href="#" class="position-fixed bottom-20 end-20 z-2147483647 text-opacity-75 btn btn-blue az-back-to-top" style="display: none;">Scroll to top</a>
+      <a id="az-back-to-top" href="#" class="sticky-bottom btn btn-blue" style="display: none; --bs-text-opacity: .9;">Scroll to top</a>
     {% endif %}
     </div>
 </div>
