@@ -99,6 +99,7 @@ function az_barrio_preprocess_html(&$variables) {
  */
 function az_barrio_preprocess_page(&$variables, $hook) {
   $variables['az_barrio_navbar_offcanvas'] = (theme_get_setting('az_barrio_navbar_offcanvas')) ? TRUE : FALSE;
+  $variables['az_back_to_top'] = (theme_get_setting('az_back_to_top')) ? TRUE : FALSE;
   if ($variables['az_barrio_navbar_offcanvas'] === TRUE) {
     $variables['#attached']['library'][] = 'az_barrio/az-barrio-off-canvas-nav';
     $variables['navbar_offcanvas_attributes'] = new Attribute([

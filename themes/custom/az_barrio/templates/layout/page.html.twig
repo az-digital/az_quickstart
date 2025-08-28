@@ -18,6 +18,7 @@
  *   administration pages.
  * - az_barrio_navbar_offcanvas: A flag indicating if the offcanvas nav is
  *   enabled.
+ * - az_back_to_top: A flag indicating if we show the Scroll to Top button.
  *
  * Site identity:
  * - front_page: The URL of the front page. Use this instead of base_path when
@@ -312,6 +313,8 @@
     {% if page.az_page_bottom %}
     {{ page.az_page_bottom }}
     {% endif %}
-  <a id="az-back-to-top" href="#" class="btn btn-blue az-back-to-top" style="display: none;">Scroll to top</a>
-  </div>
+    {% if az_back_to_top %}
+      <a id="az-back-to-top" href="#" class="btn btn-blue az-back-to-top" style="display: none;">Scroll to top</a>
+    {% endif %}
+    </div>
 </div>
