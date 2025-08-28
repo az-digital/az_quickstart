@@ -4,14 +4,18 @@
 * https://www.drupal.org/node/2815083
 * @preserve
 **/
-(function ($, Drupal) {
+(function (Drupal, once) {
   Drupal.behaviors.azBarrioOffCanvasNav = {
-    attach: function attach() {
-      $('.navbar-offcanvas').on('opened.az.offcanvasmenu', function (e) {
-        if ($(e.target.ownerDocument.activeElement).attr('id') === 'jsAzSearch') {
-          $('#block-az-barrio-offcanvas-searchform input').trigger('focus');
-        }
-      });
+    attach: function attach(context) {
+      function focusOffCanvasSearchOnShow() {
+        var offCanvasNav = document.querySelector('#azMobileNav');
+        offCanvasNav.addEventListener('shown.bs.offcanvas', function (event) {
+          if (event.relatedTarget.id === 'jsAzSearch') {
+            document.querySelector('#block-az-barrio-offcanvas-searchform input').focus();
+          }
+        });
+      }
+      once('azOffCanvasSearch', '#azMobileNav').forEach(focusOffCanvasSearchOnShow, context);
     }
   };
-})(jQuery, Drupal);
+})(Drupal, once);
