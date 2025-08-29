@@ -385,8 +385,8 @@ final class AZBootstrapMarkupConverter {
     'text-center-not-xs' => 'text-center',
     'text-center-not-sm' => 'text-center',
     'text-center-not-md' => 'text-center',
-    'text-center-not-lg' => 'text-center'
-    'text-right-not-xs' => 'text-end'
+    'text-center-not-lg' => 'text-center',
+    'text-right-not-xs' => 'text-end',
     'text-right-not-sm' => 'text-end',
     'text-right-not-md' => 'text-end',
     'text-right-not-lg' => 'text-end',
