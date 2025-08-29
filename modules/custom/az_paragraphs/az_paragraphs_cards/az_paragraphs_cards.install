@@ -65,6 +65,13 @@ function az_paragraphs_cards_update_1130001(&$sandbox) {
               $item->options = $options;
             }
 
+            // Update full-width link styles.
+            if (isset($options['link_style']) && str_contains($options['link_style'], 'btn-block')) {
+              $updated = TRUE;
+              $options['link_style'] = str_replace('btn-block', 'w-100', $options['link_style']);
+              $item->options = $options;
+            }
+
             // Update cards bg color for AZ Bootstrap 5.
             if (isset($options['class']) && str_starts_with($options['class'], 'bg-') && $options['class'] !== 'bg-transparent') {
               $updated = TRUE;
