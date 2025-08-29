@@ -21,3 +21,10 @@ function az_news_feeds_uninstall() {
     $executable->rollback();
   }
 }
+
+/**
+ * Ensure az_migration_remote is installed.
+ */
+function az_news_feeds_update_1021301() {
+  \Drupal::service('module_installer')->install(['az_migration_remote']);
+}
