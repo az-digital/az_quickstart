@@ -218,7 +218,6 @@ final class AZBootstrapMarkupConverter {
      * Font / text style classes.
      */
     'font-weight-normal' => 'fw-normal',
-    'bold' => 'fw-bold',
     'font-weight-bold' => 'fw-bold',
     'font-italic' => 'fst-italic',
     'text-monospace' => 'font-monospace',
@@ -327,6 +326,87 @@ final class AZBootstrapMarkupConverter {
     'bg-gray-700' => 'text-bg-gray-700',
     'bg-gray-800' => 'text-bg-gray-800',
     'bg-gray-900' => 'text-bg-gray-900',
+    /***************************************************************************
+     * UA Bootstrap classes deprecated in Arizona Bootstrap 2.
+     */
+    // >> Buttons
+    'btn-default' => 'btn-red',
+    'btn-primary' => 'btn-blue',
+    'btn-hollow-default' => 'btn-outline-red',
+    'btn-hollow-primary' => 'btn-outline-blue',
+    'btn-hollow-reverse' => 'btn-outline-white',
+    // >> Inputs
+    'input-group-btn' => 'input-group-prepend',
+    // >> Labels
+    'label' => 'badge',
+    'label-default' => 'text-bg-red',
+    'label-primary' => 'text-bg-blue',
+    'label-success' => 'text-bg-success',
+    'label-info' => 'text-bg-info',
+    'label-warning' => 'text-bg-warning',
+    'label-danger' => 'text-bg-danger',
+    'label-muted' => 'text-bg-light',
+    // >> Pull Left/Right
+    'pull-left' => 'float-start',
+    'pull-right' => 'float-end',
+    // >> Colors
+    // >>> Background Colors
+    'bg-silver-tint' => 'text-bg-gray-100',
+    'bg-primary' => 'text-bg-blue',
+    // >>> Card Colors
+    'card-primary' => 'text-bg-blue',
+    'card-success' => 'text-bg-success',
+    'card-info' => 'text-bg-info',
+    'card-warning' => 'text-bg-warning',
+    'card-danger' => 'text-bg-danger',
+    'card-inverse' => 'text-bg-dark text-white',
+    'card-primary-outline' => 'border-blue',
+    'card-success-outline' => 'border-success',
+    'card-info-outline' => 'border-info',
+    'card-warning-outline' => 'border-warning',
+    'card-danger-outline' => 'border-danger',
+    // >>> Text Colors
+    'text-primary' => 'text-blue',
+    // >> Navbar Default
+    'navbar-default' => 'navbar-light',
+    // >> Navbar Divider
+    'divider' => 'dropdown-divider',
+    'nav-divider' => 'dropdown-divider',
+    // >> Text
+    // >>> Fonts & Font Styles
+    'bold' => 'font-weight-bold',
+    // >>> Page Header
+    'page-header' => 'mt-5 mb-4 pb-3',
+    // >>> Responsive Text Alignment *-not Classes
+    'text-left-not-xs' => 'text-start',
+    'text-left-not-sm' => 'text-start',
+    'text-left-not-md' => 'text-start',
+    'text-left-not-lg' => 'text-start',
+    'text-center-not-xs' => 'text-center',
+    'text-center-not-sm' => 'text-center',
+    'text-center-not-md' => 'text-center',
+    'text-center-not-lg' => 'text-center'
+    'text-right-not-xs' => 'text-end'
+    'text-right-not-sm' => 'text-end',
+    'text-right-not-md' => 'text-end',
+    'text-right-not-lg' => 'text-end',
+    'text-justify-not-xs' => 'text-justify',
+    'text-justify-not-sm' => 'text-justify',
+    'text-justify-not-md' => 'text-justify',
+    'text-justify-not-lg' => 'text-justify',
+    // >>> Text Size
+    'text-size-h1' => 'h1 mb-0',
+    'text-size-h2' => 'h2 mb-0',
+    'text-size-h3' => 'h3 mb-0',
+    'text-size-h4' => 'h4 mb-0',
+    'text-size-h5' => 'h5 mb-0',
+    'text-size-h6' => 'h6 mb-0',
+    // >>> Text Vertical Align
+    'margin-align-top' => 'align-text-bottom',
+    'margin-align-middle' => 'align-middle',
+    'margin-align-bottom' => 'align-text-top',
+    'margin-zero-top' => 'mt-0',
+    'margin-zero-bottom' => 'mb-0',
     /***************************************************************************
      * Grid layout utility classes.
      */
