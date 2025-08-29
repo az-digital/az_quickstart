@@ -219,6 +219,9 @@ final class AZBootstrapMarkupConverter {
      */
     'font-weight-normal' => 'fw-normal',
     'font-weight-bold' => 'fw-bold',
+    'font-weight-bolder' => 'fw-bolder',
+    'font-weight-light' => 'fw-light',
+    'font-weight-lighter' => 'fw-lighter',
     'font-italic' => 'fst-italic',
     'text-monospace' => 'font-monospace',
     'text-left' => 'text-start',
@@ -334,8 +337,6 @@ final class AZBootstrapMarkupConverter {
     'btn-hollow-default' => 'btn-outline-red',
     'btn-hollow-primary' => 'btn-outline-blue',
     'btn-hollow-reverse' => 'btn-outline-white',
-    // >> Inputs
-    'input-group-btn' => 'input-group-prepend',
     // >> Labels
     'label' => 'badge',
     'label-default' => 'text-bg-red',
@@ -371,8 +372,8 @@ final class AZBootstrapMarkupConverter {
     'divider' => 'dropdown-divider',
     'nav-divider' => 'dropdown-divider',
     // >> Text
-    // >>> Fonts & Font Styles
-    'bold' => 'font-weight-bold',
+    'bold' => 'fw-bold',
+    'bold' => 'fw-bold',
     // >>> Page Header
     'page-header' => 'mt-5 mb-4 pb-3',
     // >>> Responsive Text Alignment *-not Classes
