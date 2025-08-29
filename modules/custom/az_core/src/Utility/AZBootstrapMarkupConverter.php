@@ -371,6 +371,16 @@ final class AZBootstrapMarkupConverter {
     // >> Navbar Divider
     'divider' => 'dropdown-divider',
     'nav-divider' => 'dropdown-divider',
+    // >> Triangles List
+    'triangle' => 'az-list-triangles',
+    // >> Panels
+    'panel' => 'card',
+    'panel-body' => 'card-body',
+    'panel-heading' => 'card-header',
+    'panel-title' => 'card-title',
+    'panel-footer' => 'card-footer',
+    // >> Wells
+    'well' => 'card text-bg-cool-gray'
     // >> Text
     'bold' => 'fw-bold',
     // >>> Page Header
