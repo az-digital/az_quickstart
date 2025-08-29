@@ -373,7 +373,6 @@ final class AZBootstrapMarkupConverter {
     'nav-divider' => 'dropdown-divider',
     // >> Text
     'bold' => 'fw-bold',
-    'bold' => 'fw-bold',
     // >>> Page Header
     'page-header' => 'mt-5 mb-4 pb-3',
     // >>> Responsive Text Alignment *-not Classes
