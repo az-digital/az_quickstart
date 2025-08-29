@@ -237,8 +237,6 @@ final class AZBootstrapMarkupConverter {
      * Button classes.
      */
     'btn-block' => 'w-100',
-    'btn-hollow' => 'btn-outline',
-    'btn-hollow-reverse' => 'btn-outline-white',
     // Remove btn class when it conflicts with nav-link.
     // @todo We probably need to handle this situation differently to avoid
     // breaking legitimate usage of btn class (e.g. in combination with other
@@ -332,6 +330,7 @@ final class AZBootstrapMarkupConverter {
     // >> Buttons
     'btn-default' => 'btn-red',
     'btn-primary' => 'btn-blue',
+    'btn-hollow' => 'btn-outline',
     'btn-hollow-default' => 'btn-outline-red',
     'btn-hollow-primary' => 'btn-outline-blue',
     'btn-hollow-reverse' => 'btn-outline-white',
@@ -352,7 +351,6 @@ final class AZBootstrapMarkupConverter {
     // >> Colors
     // >>> Background Colors
     'bg-silver-tint' => 'text-bg-gray-100',
-    'bg-primary' => 'text-bg-blue',
     // >>> Card Colors
     'card-primary' => 'text-bg-blue',
     'card-success' => 'text-bg-success',
