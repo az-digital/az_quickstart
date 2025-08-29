@@ -1,7 +1,7 @@
 name: Arizona Quickstart
 type: profile
 description: 'The University of Arizona Quickstart Installation Profile'
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10 || ^11 || ^12
 
 distribution:
   name: Arizona Quickstart
@@ -80,3 +80,4 @@ install:
 themes:
   - az_barrio
   - claro
+version: 3.1.x-dev
