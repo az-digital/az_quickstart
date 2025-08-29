@@ -380,7 +380,8 @@ final class AZBootstrapMarkupConverter {
     'panel-title' => 'card-title',
     'panel-footer' => 'card-footer',
     // >> Wells
-    'well' => 'card text-bg-cool-gray',
+    'well' => 'card p-card text-bg-cool-gray',
+    'well-hollow' => 'text-bg-white',
     // >> Text
     'bold' => 'fw-bold',
     // >>> Page Header
