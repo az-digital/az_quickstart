@@ -308,7 +308,7 @@ class AZCardWidget extends WidgetBase {
     $element['link_style'] = [
       '#type' => 'select',
       '#options' => [
-        visually-hidden' => $this->t('Hidden link title'),
+        'visually-hidden' => $this->t('Hidden link title'),
         'w-100' => $this->t('Text link'),
         'btn w-100 btn-red' => $this->t('Red button'),
         'btn w-100 btn-blue' => $this->t('Blue button'),
