@@ -11,7 +11,7 @@ services:
       init: |
         set -eux
         composer self-update
-        # echo "memory_limit = 2G" >> /usr/local/etc/php/conf.d/my-php.ini
+        echo "memory_limit = 2G" >> /usr/local/etc/php/conf.d/my-php.ini
         # Install additional PHP extensions.
         docker-php-ext-install opcache
         docker-php-ext-install intl
