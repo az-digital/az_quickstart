@@ -49,14 +49,16 @@ third_party_settings:
     group_text_muted:
       children:
         - field_az_published
-      label: 'Text Muted'
+      label: 'Text Body Secondary'
       parent_name: group_text_column
       region: content
       weight: 5
       format_type: html_element
       format_settings:
-        classes: 'text-muted font-weight-normal mb-0'
+        classes: 'text-body-secondary fw-normal mb-0'
+        show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -129,9 +131,10 @@ third_party_settings:
       weight: 7
       format_type: html_element
       format_settings:
-        classes: card-clickable-link
+        classes: ''
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: ''
@@ -148,8 +151,10 @@ third_party_settings:
       weight: 1
       format_type: link
       format_settings:
-        classes: 'card-body p-0'
+        classes: 'card-body p-0 stretched-link link-primary text-decoration-none'
+        show_empty_fields: false
         id: ''
+        label_as_html: false
         target: custom_uri
         custom_uri: '[node:az-canonical-url]'
         target_attribute: default
@@ -180,8 +185,10 @@ third_party_settings:
       weight: 0
       format_type: html_element
       format_settings:
-        classes: 'card card-borderless card-clickable'
+        classes: 'card border-0 hover'
+        show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -198,9 +205,10 @@ third_party_settings:
       weight: 10
       format_type: html_element
       format_settings:
-        classes: 'text-chili mt-1 mb-4'
+        classes: 'mt-1 mb-4 hover-text-underline'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -248,6 +256,7 @@ content:
       use_all_day: 0
       capitalize_noon_and_midnight: 0
       hide_date: 0
+      month_only: 0
     third_party_settings: {  }
     weight: 0
     region: content
