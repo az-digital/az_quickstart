@@ -1,0 +1,129 @@
+services:
+  webserver:
+    image: tugboatqa/php:8.3-apache
+    default: true
+    depends: database
+    environment:
+      AZQS_COMPOSER_ROOT: /var/www/azqs
+      AZQS_DOCROOT: /var/www/azqs/web
+      AZQS_SCAFFOLD_REPO: https://github.com/az-digital/az-quickstart-scaffolding.git
+    commands:
+      init: |
+        set -eux
+        composer self-update
+        # echo "memory_limit = 2G" >> /usr/local/etc/php/conf.d/my-php.ini
+        # Install opcache and mod-rewrite.
+        docker-php-ext-install opcache
+        a2enmod headers rewrite
+
+        # Setup AZQS Scaffolding using matching branch if available.
+        if [ $(git ls-remote --heads $AZQS_SCAFFOLD_REPO $TUGBOAT_GITHUB_HEAD | wc -l) = 1 ]; then
+          SCAFFOLD_BRANCH="$TUGBOAT_GITHUB_HEAD"
+        else
+          SCAFFOLD_BRANCH="main"
+        fi
+        git clone --branch $SCAFFOLD_BRANCH $AZQS_SCAFFOLD_REPO $AZQS_COMPOSER_ROOT
+
+        # Use the matching require-dev metapackage branch if available.
+        if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-dev.git $TUGBOAT_GITHUB_HEAD | wc -l) = 1 ]; then
+          DEV_PACKAGE_BRANCH="$TUGBOAT_GITHUB_HEAD"
+        else
+          DEV_PACKAGE_BRANCH=main
+        fi
+        if [[ ${DEV_PACKAGE_BRANCH} =~ ^[0-9]\.[0-9x] ]]; then
+          DEV_PACKAGE_VERSION="${DEV_PACKAGE_BRANCH}-dev"
+        else
+          DEV_PACKAGE_VERSION="dev-${DEV_PACKAGE_BRANCH}"
+        fi
+        composer --working-dir=$AZQS_COMPOSER_ROOT require --no-update --dev az-digital/az-quickstart-dev:${DEV_PACKAGE_VERSION}
+
+        # Require local copy of AZQS as path repo.
+        composer --working-dir=$AZQS_COMPOSER_ROOT config repositories.tugboat path $TUGBOAT_ROOT
+        composer --working-dir=$AZQS_COMPOSER_ROOT require --no-update az-digital/az_quickstart:\*@dev
+
+        # Set the tugboat-specific Drupal settings.
+        #cp "${TUGBOAT_ROOT}/.tugboat/settings.local.php" "${DOCROOT}/sites/default/settings.local.php"
+
+        # Link the document root to the expected path.
+        ln -snf "{AZQS_DOCROOT}" "${DOCROOT}"
+
+      update: |
+        set -eux
+        composer \
+          --working-dir=$AZQS_COMPOSER_ROOT \
+          --no-interaction \
+          --optimize-autoloader
+          install
+
+        cd $AZQS_COMPOSER_ROOT
+        vendor/bin/drush \
+          --yes \
+          --db-url=mysql://tugboat:tugboat@database:3306/tugboat \
+          --site-name="Live preview for ${TUGBOAT_PREVIEW_NAME}" \
+          --account-name=azadmin \
+          --account-pass=azadmin2025 \
+          --verbose \
+          site:install
+
+        # Add tugboat URLs to the Drupal trusted host patterns.
+        echo "\$settings['trusted_host_patterns'] = ['\.tugboatqa\.com\$'];" >> $DOCROOT/sites/default/settings.php
+        echo "\$config['environment_indicator.indicator']['name'] = '$TUGBOAT_GITHUB_HEAD (TugboatQA)';\n\$config['environment_indicator.indicator']['bg_color'] = '#0098cb';" >> $DOCROOT/sites/default/settings.php
+
+        vendor/bin/drush -y -n pm:install az_demo
+        vendor/bin/drush user:create azcontenteditor --password="azcontenteditor2025" --mail="azcontenteditor@example.com"
+        vendor/bin/drush user:role:add az_content_editor azcontenteditor
+        vendor/bin/drush user:create azcontentadmin --password="azcontentadmin2025" --mail="azcontentadmin@example.com"
+        vendor/bin/drush user:role:add az_content_editor azcontentadmin
+        vendor/bin/drush user:role:add az_content_admin azcontentadmin
+        vendor/bin/drush user:create azuseradmin --password="azuseradmin2025" --mail="azuseradmin@example.com"
+        vendor/bin/drush user:role:add az_content_editor azuseradmin
+        vendor/bin/drush user:role:add az_content_admin azuseradmin
+        vendor/bin/drush user:role:add az_user_admin azuseradmin
+        vendor/bin/drush user:create azhtmladmin --password="azhtmladmin2025" --mail="azhtmladmin@example.com"
+        vendor/bin/drush user:role:add az_content_editor azhtmladmin
+        vendor/bin/drush user:role:add az_content_admin azhtmladmin
+        vendor/bin/drush user:role:add az_html_admin azhtmladmin
+        vendor/bin/drush config:set -y az_cas.settings disable_login_form 0
+        vendor/bin/drush config:set -y system.logging error_level "verbose"
+        vendor/bin/drush cache:rebuild
+
+      build: |
+        set -eux
+        composer \
+          --working-dir=$AZQS_COMPOSER_ROOT \
+          --no-interaction \
+          --optimize-autoloader
+          install
+        # composer update az-digital/az_quickstart --with-all-dependencies
+
+        # # Install new configuration and database updates.
+        # cd $AZQS_COMPOSER_ROOT
+        # vendor/bin/drush cache:rebuild
+        # vendor/bin/drush config:import --yes
+        # vendor/bin/drush updatedb --yes
+
+        # # One last cache rebuild.
+        # - vendor/bin/drush cache:rebuild
+
+  # Define the database service.
+  database:
+    image: tugboatqa/mariadb:10
+
+    # # A set of commands to run while building this service
+    # commands:
+    #   # Configure the server for the site to run on.
+    #   init:
+    #     # Increase the allowed packet size to 512MB.
+    #     - mysql -e "SET GLOBAL max_allowed_packet=536870912;"
+    #     # Ensure this packet size persists even if MySQL restarts.
+    #     - echo "max_allowed_packet=536870912" >> /etc/mysql/conf.d/tugboat.cnf
+
+    #   # Commands that import files, databases,  or other assets. When an
+    #   # existing preview is refreshed, the build workflow starts here,
+    #   # skipping the init step, because the results of that step will
+    #   # already be present.
+    #   update: []
+
+    #   # Run any commands needed to prepare the site.  This is generally not needed
+    #   # for database services.
+    #   build: []
