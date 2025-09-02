@@ -15,6 +15,7 @@ services:
         # Install opcache and mod-rewrite.
         docker-php-ext-install opcache
         a2enmod headers rewrite
+        service apache2 restart
 
         # Setup AZQS Scaffolding using matching branch if available.
         if [ $(git ls-remote --heads $AZQS_SCAFFOLD_REPO $TUGBOAT_GITHUB_HEAD | wc -l) = 1 ]; then
@@ -30,7 +31,7 @@ services:
         else
           DEV_PACKAGE_BRANCH=main
         fi
-        if [[ ${DEV_PACKAGE_BRANCH} =~ ^[0-9]\.[0-9x] ]]; then
+        if echo "$DEV_PACKAGE_BRANCH" | grep -Eq "^[0-9]\.[0-9x]"; then
           DEV_PACKAGE_VERSION="${DEV_PACKAGE_BRANCH}-dev"
         else
           DEV_PACKAGE_VERSION="dev-${DEV_PACKAGE_BRANCH}"
@@ -52,8 +53,8 @@ services:
         composer \
           --working-dir=$AZQS_COMPOSER_ROOT \
           --no-interaction \
-          --optimize-autoloader
-          install
+          install --optimize-autoloader
+
 
         cd $AZQS_COMPOSER_ROOT
         vendor/bin/drush \
@@ -92,8 +93,7 @@ services:
         composer \
           --working-dir=$AZQS_COMPOSER_ROOT \
           --no-interaction \
-          --optimize-autoloader
-          install
+          install --optimize-autoloader
         # composer update az-digital/az_quickstart --with-all-dependencies
 
         # # Install new configuration and database updates.
