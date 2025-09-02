@@ -12,8 +12,10 @@ services:
         set -eux
         composer self-update
         # echo "memory_limit = 2G" >> /usr/local/etc/php/conf.d/my-php.ini
-        # Install opcache and mod-rewrite.
-        # docker-php-ext-install opcache
+        # Install additional PHP extensions.
+        docker-php-ext-install opcache
+        docker-php-ext-install intl
+        # Enable apache mod-rewrite.
         a2enmod headers rewrite
         service apache2 restart
 
@@ -46,7 +48,7 @@ services:
         #cp "${TUGBOAT_ROOT}/.tugboat/settings.local.php" "${DOCROOT}/sites/default/settings.local.php"
 
         # Link the document root to the expected path.
-        ln -snf "{AZQS_DOCROOT}" "${DOCROOT}"
+        ln -snf "${AZQS_DOCROOT}" "${DOCROOT}"
 
       update: |
         set -eux
@@ -54,7 +56,6 @@ services:
           --working-dir=$AZQS_COMPOSER_ROOT \
           --no-interaction \
           install --optimize-autoloader
-
 
         cd $AZQS_COMPOSER_ROOT
         vendor/bin/drush \
