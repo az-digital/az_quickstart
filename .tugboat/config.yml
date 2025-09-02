@@ -70,11 +70,11 @@ services:
         echo "\$settings['trusted_host_patterns'] = ['\.tugboatqa\.com\$'];" >> $DOCROOT/sites/default/settings.php
         echo "\$config['environment_indicator.indicator']['name'] = '$TUGBOAT_GITHUB_HEAD (TugboatQA)';\n\$config['environment_indicator.indicator']['bg_color'] = '#0098cb';" >> $DOCROOT/sites/default/settings.php
 
-        # Set up the files directory permissions.
-        mkdir -p $AZQS_COMPOSER_ROOT/sites/default/files
-        chgrp -R www-data $AZQS_COMPOSER_ROOT/sites/default/files
-        chmod 2775 $AZQS_COMPOSER_ROOT/sites/default/files
-        chmod -R g+w $AZQS_COMPOSER_ROOT/sites/default/files
+        # Make sure our files and translations folders exists and are writable.
+        mkdir -p "${DOCROOT}/sites/default/files/translations"
+        chgrp -R www-data "${DOCROOT}/sites/default/files"
+        find "${DOCROOT}/sites/default/files" -type d -exec chmod 2775 {} \;
+        find "${DOCROOT}/sites/default/files" -type f -exec chmod 0664 {} \;
 
         # Post-install steps.
         vendor/bin/drush -y -n pm:install az_demo environment_indicator
