@@ -344,7 +344,6 @@ display:
           col_md: col-md-4
           col_lg: col-lg-4
           col_xl: col-xl-4
-          col_xxl: col-xxl-3
       row:
         type: 'entity:node'
         options:
@@ -494,11 +493,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              az_content_editor: '0'
-              az_content_admin: '0'
-              az_user_admin: '0'
-              administrator: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -533,7 +527,6 @@ display:
           col_md: col-md-4
           col_lg: col-lg-4
           col_xl: col-xl-4
-          col_xxl: col-xxl-3
       row:
         type: 'entity:node'
         options:
@@ -999,7 +992,6 @@ display:
           col_md: col-md-4
           col_lg: col-lg-4
           col_xl: col-xl-4
-          col_xxl: col-xxl-3
       row:
         type: 'entity:node'
         options:

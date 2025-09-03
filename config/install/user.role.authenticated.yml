@@ -19,5 +19,4 @@ permissions:
   - 'search content'
   - 'skip antibot'
   - 'skip comment approval'
-  - 'use exclude node title'
   - 'view media'
