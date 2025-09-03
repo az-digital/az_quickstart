@@ -309,15 +309,15 @@ class AZCardWidget extends WidgetBase {
       '#type' => 'select',
       '#options' => [
         'visually-hidden' => $this->t('Hidden link title'),
-        'btn-block' => $this->t('Text link'),
-        'btn btn-block btn-red' => $this->t('Red button'),
-        'btn btn-block btn-blue' => $this->t('Blue button'),
-        'btn btn-block btn-outline-red' => $this->t('Red outline button'),
-        'btn btn-block btn-outline-blue' => $this->t('Blue outline button'),
-        'btn btn-block btn-outline-white' => $this->t('White outline button'),
+        'w-100' => $this->t('Text link'),
+        'btn w-100 btn-red' => $this->t('Red button'),
+        'btn w-100 btn-blue' => $this->t('Blue button'),
+        'btn w-100 btn-outline-red' => $this->t('Red outline button'),
+        'btn w-100 btn-outline-blue' => $this->t('Blue outline button'),
+        'btn w-100 btn-outline-white' => $this->t('White outline button'),
       ],
       '#title' => $this->t('Card Link Style'),
-      '#default_value' => (!empty($item->options['link_style'])) ? $item->options['link_style'] : 'btn-block',
+      '#default_value' => (!empty($item->options['link_style'])) ? $item->options['link_style'] : 'w-100',
     ];
 
     if (!$item->isEmpty()) {
