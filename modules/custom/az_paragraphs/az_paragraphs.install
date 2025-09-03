@@ -284,6 +284,14 @@ function az_paragraphs_update_1130001(&$sandbox) {
       foreach ($paragraphs as $paragraph) {
         $parent_type = $paragraph->get('parent_type')->value;
         $parent_field = $paragraph->get('parent_field_name')->value;
+        if (empty($parent_type)) {
+          $logger->warning('Paragraph @pid has no parent type', ['@pid' => $paragraph->id()]);
+          continue;
+        }
+        if (empty($parent_field)) {
+          $logger->warning('Paragraph @pid has no parent field', ['@pid' => $paragraph->id()]);
+          continue;
+        }
         try {
           $query = \Drupal::service('entity_type.manager')->getStorage($parent_type)
             ->getQuery()
