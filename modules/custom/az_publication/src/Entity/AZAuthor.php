@@ -170,6 +170,7 @@ class AZAuthor extends EditorialContentEntityBase implements AZAuthorInterface {
    * {@inheritdoc}
    */
   public function getOwner() {
+    /* @phpstan-ignore-next-line */
     return $this->get('user_id')->entity;
   }
 
@@ -177,6 +178,7 @@ class AZAuthor extends EditorialContentEntityBase implements AZAuthorInterface {
    * {@inheritdoc}
    */
   public function getOwnerId() {
+    /* @phpstan-ignore-next-line */
     return $this->get('user_id')->target_id;
   }
 
