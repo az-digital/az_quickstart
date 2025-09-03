@@ -50,11 +50,17 @@ services:
         composer --working-dir=$AZQS_COMPOSER_ROOT config repositories.tugboat path $TUGBOAT_ROOT
         composer --working-dir=$AZQS_COMPOSER_ROOT require --no-update az-digital/az_quickstart:\*@dev
 
+        composer \
+          --working-dir=$AZQS_COMPOSER_ROOT \
+          --no-interaction \
+          install --optimize-autoloader
+
         # Set the tugboat-specific Drupal settings.
         #cp "${TUGBOAT_ROOT}/.tugboat/settings.local.php" "${DOCROOT}/sites/default/settings.local.php"
 
         # Link the document root to the expected path.
         ln -snf "${AZQS_DOCROOT}" "${DOCROOT}"
+
         cd $AZQS_COMPOSER_ROOT
         vendor/bin/drush \
           --yes \
