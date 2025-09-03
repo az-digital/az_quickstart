@@ -8,6 +8,8 @@
  * profile.
  */
 
+use Drupal\Core\Entity\Query\QueryException;
+
 /**
  * Implements hook_update_last_removed().
  */
@@ -282,16 +284,26 @@ function az_paragraphs_update_1130001(&$sandbox) {
       foreach ($paragraphs as $paragraph) {
         $parent_type = $paragraph->get('parent_type')->value;
         $parent_field = $paragraph->get('parent_field_name')->value;
-        $query = \Drupal::service('entity_type.manager')->getStorage($parent_type)
-          ->getQuery()
-          ->condition("$parent_field.target_id", $paragraph->id())
-          ->range(0, 1)
-          ->accessCheck(FALSE);
-        if ($query->execute()) {
-          $valid_ids[] = $paragraph->id();
+        try {
+          $query = \Drupal::service('entity_type.manager')->getStorage($parent_type)
+            ->getQuery()
+            ->condition("$parent_field.target_id", $paragraph->id())
+            ->range(0, 1)
+            ->accessCheck(FALSE);
+          if ($query->execute()) {
+            $valid_ids[] = $paragraph->id();
+          }
+          else {
+            $logger->info('Skipping unused paragraph @pid', ['@pid' => $paragraph->id()]);
+          }
         }
-        else {
-          $logger->info('Skipping unused paragraph @pid', ['@pid' => $paragraph->id()]);
+        catch (QueryException $qe) {
+          $logger->warning('Failed to check for usage of paragraph @pid in @parent_field on type @parent_type @msg', [
+            '@pid' => $paragraph->id(),
+            '@parent_field' => $parent_field,
+            '@parent_type' => $parent_type,
+            '@msg' => $qe->getMessage(),
+          ]);
         }
       }
     }
