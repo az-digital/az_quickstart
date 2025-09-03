@@ -43,6 +43,7 @@ class MigrateExceptionsTest extends BrowserTestBase {
       ->install([
         'az_global_footer',
       ]);
+    $this->assertSession()->statusCodeEquals(200);
   }
 
 }
