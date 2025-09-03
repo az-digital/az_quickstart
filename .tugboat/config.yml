@@ -14,7 +14,7 @@ services:
         echo "memory_limit = 2G" >> /usr/local/etc/php/conf.d/my-php.ini
         # Install additional PHP extensions.
         docker-php-ext-install intl
-        # Enable apache mod-rewrite.
+        # Enable apache modules.
         a2enmod headers rewrite
         service apache2 restart
 
@@ -68,7 +68,7 @@ services:
 
         # Add tugboat URLs to the Drupal trusted host patterns.
         echo "\$settings['trusted_host_patterns'] = ['\.tugboatqa\.com\$'];" >> $DOCROOT/sites/default/settings.php
-        echo "\$config['environment_indicator.indicator']['name'] = '$TUGBOAT_GITHUB_HEAD (TugboatQA)';\n\$config['environment_indicator.indicator']['bg_color'] = '#0098cb';" >> $DOCROOT/sites/default/settings.php
+        echo "\$config['environment_indicator.indicator']['name'] = '$TUGBOAT_GITHUB_HEAD (Tugboat)';\n\$config['environment_indicator.indicator']['bg_color'] = '#07688c';" >> $DOCROOT/sites/default/settings.php
 
         # Make sure our files and translations folders exists and are writable.
         mkdir -p "${DOCROOT}/sites/default/files/translations"
