@@ -1,4 +1,5 @@
 services:
+
   webserver:
     image: tugboatqa/php:8.3-apache
     default: true
@@ -7,17 +8,23 @@ services:
       AZQS_COMPOSER_ROOT: /var/www/azqs
       AZQS_DOCROOT: /var/www/azqs/web
       AZQS_SCAFFOLD_REPO: https://github.com/az-digital/az-quickstart-scaffolding.git
+
     commands:
       init: |
         set -eux
-        composer self-update
         echo "memory_limit = 2G" >> /usr/local/etc/php/conf.d/my-php.ini
         # Install additional PHP extensions.
         docker-php-ext-install intl
         # Enable apache modules.
         a2enmod headers rewrite
         service apache2 restart
+        composer self-update
 
+      # TODO: Figure out best way to use 'update' stage.
+      update: []
+
+      build: |
+        set -eux
         # Setup AZQS Scaffolding using matching branch if available.
         if [ $(git ls-remote --heads $AZQS_SCAFFOLD_REPO $TUGBOAT_GITHUB_HEAD | wc -l) = 1 ]; then
           SCAFFOLD_BRANCH="$TUGBOAT_GITHUB_HEAD"
@@ -48,14 +55,6 @@ services:
 
         # Link the document root to the expected path.
         ln -snf "${AZQS_DOCROOT}" "${DOCROOT}"
-
-      update: |
-        set -eux
-        composer \
-          --working-dir=$AZQS_COMPOSER_ROOT \
-          --no-interaction \
-          install --optimize-autoloader
-
         cd $AZQS_COMPOSER_ROOT
         vendor/bin/drush \
           --yes \
@@ -95,12 +94,12 @@ services:
         vendor/bin/drush config:set -y system.logging error_level "verbose"
         vendor/bin/drush cache:rebuild
 
-      build: |
-        set -eux
-        composer \
-          --working-dir=$AZQS_COMPOSER_ROOT \
-          --no-interaction \
-          install --optimize-autoloader
+        # Original 'build' stage steps.
+        # set -eux
+        # composer \
+        #   --working-dir=$AZQS_COMPOSER_ROOT \
+        #   --no-interaction \
+        #   install --optimize-autoloader
         # composer update az-digital/az_quickstart --with-all-dependencies
 
         # # Install new configuration and database updates.
