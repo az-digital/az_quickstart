@@ -43,9 +43,9 @@ final class AzBs5Commands extends DrushCommands {
   /**
    * Updates block classes for Arizona Bootstrap 5 compatibility.
    *
-   * This command converts legacy Arizona Bootstrap 2 classes in block_class module
-   * settings to their Arizona Bootstrap 5 equivalents using the existing
-   * AZBootstrapMarkupConverter utility.
+   * This command converts legacy Arizona Bootstrap 2 classes in block_class
+   * module settings to their Arizona Bootstrap 5 equivalents using the
+   * existing AZBootstrapMarkupConverter utility.
    */
   #[CLI\Command(name: 'azbs5:update-block-classes', aliases: ['azbs5bc'])]
   #[CLI\Option(name: 'dry-run', description: 'Show what would be updated without making changes')]
@@ -85,7 +85,7 @@ final class AzBs5Commands extends DrushCommands {
           ];
 
           if ($interactive && !$dry_run) {
-            // Interactive mode: ask user for each block
+            // Interactive mode: ask user for each block.
             $this->output()->writeln('');
             $this->output()->writeln(sprintf('<comment>Block:</comment> %s', $config_name));
             $this->output()->writeln(sprintf('<comment>Current classes:</comment> "%s"', $original_classes));
@@ -100,20 +100,24 @@ final class AzBs5Commands extends DrushCommands {
             if ($answer === 'quit') {
               $this->output()->writeln('<info>Stopping at user request.</info>');
               break;
-            } elseif ($answer === 'yes') {
+            }
+            elseif ($answer === 'yes') {
               $data['third_party_settings']['block_class']['classes'] = $converted_classes;
               $config->setData($data);
               $config->save(TRUE);
               $updated_configs[] = $change_info;
               $this->output()->writeln('<info>✓ Updated</info>');
-            } else {
+            }
+            else {
               $skipped_configs[] = $change_info;
               $this->output()->writeln('<comment>⚬ Skipped</comment>');
             }
-          } elseif ($dry_run || $interactive) {
+          }
+          elseif ($dry_run || $interactive) {
             $preview_configs[] = $change_info;
-          } else {
-            // Non-interactive mode: update automatically
+          }
+          else {
+            // Non-interactive mode: update automatically.
             $data['third_party_settings']['block_class']['classes'] = $converted_classes;
             $config->setData($data);
             $config->save(TRUE);
@@ -123,12 +127,14 @@ final class AzBs5Commands extends DrushCommands {
       }
     }
 
-    // Display results based on mode
+    // Display results based on mode.
     if ($interactive && !$dry_run) {
       $this->displayInteractiveResults($updated_configs, $skipped_configs);
-    } elseif ($dry_run || ($interactive && $dry_run)) {
+    }
+    elseif ($dry_run || ($interactive && $dry_run)) {
       $this->displayDryRunResults($preview_configs);
-    } else {
+    }
+    else {
       $this->displayUpdateResults($updated_configs);
     }
   }
@@ -151,7 +157,8 @@ final class AzBs5Commands extends DrushCommands {
     $class_array = array_filter(array_map('trim', explode(' ', $classes)));
     $updated = FALSE;
 
-    // Convert each class using the existing CLASS_MAP from AZBootstrapMarkupConverter.
+    // Convert each class using the existing CLASS_MAP from
+    // AZBootstrapMarkupConverter.
     foreach ($class_array as $index => $class) {
       if (isset(AZBootstrapMarkupConverter::CLASS_MAP[$class])) {
         $class_array[$index] = AZBootstrapMarkupConverter::CLASS_MAP[$class];
@@ -223,7 +230,8 @@ final class AzBs5Commands extends DrushCommands {
       $this->output()->writeln(sprintf('<info>Total: %d configurations would be updated.</info>', count($preview_configs)));
       $this->output()->writeln('<info>Run without --dry-run to apply these changes.</info>');
       $this->output()->writeln('<info>Use --interactive to choose updates one by one.</info>');
-    } else {
+    }
+    else {
       $this->output()->writeln('<info>No block class configurations need updating.</info>');
     }
   }
@@ -245,7 +253,8 @@ final class AzBs5Commands extends DrushCommands {
       }
       $this->output()->writeln('');
       $this->output()->writeln(sprintf('<info>Successfully updated %d configurations.</info>', count($updated_configs)));
-    } else {
+    }
+    else {
       $this->output()->writeln('<info>No block class configurations required updating.</info>');
     }
   }
