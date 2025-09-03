@@ -116,19 +116,6 @@ function az_quickstart_update_920601() {
 }
 
 /**
- * Change Arizona Bootstrap CDN references.
- */
-function az_quickstart_update_920602() {
-  $config = \Drupal::service('config.factory')->getEditable('az_barrio.settings');
-  if ($config->get('az_bootstrap_cdn_version') === 'main') {
-    $config->set('az_bootstrap_cdn_version', '2.x')->save(TRUE);
-  }
-  if ($config->get('az_bootstrap_cdn_version') === 'latest') {
-    $config->set('az_bootstrap_cdn_version', 'latest-2.x')->save(TRUE);
-  }
-}
-
-/**
  * Uninstall deprecated Drupal core modules.
  */
 function az_quickstart_update_920603() {
