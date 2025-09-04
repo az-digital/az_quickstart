@@ -12,7 +12,8 @@ services:
     commands:
       init:
         - set -eux
-        - echo "memory_limit = 2G" >> /usr/local/etc/php/conf.d/my-php.ini
+        - echo "memory_limit = 2G" >> /usr/local/etc/php/conf.d/tugboat.ini
+        - echo "output_buffering = On" >> /usr/local/etc/php/conf.d/tugboat.ini
         - composer self-update
         # Install additional PHP extensions.
         - pecl install apcu
