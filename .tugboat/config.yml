@@ -15,7 +15,7 @@ services:
         - echo "memory_limit = 2G" >> /usr/local/etc/php/conf.d/my-php.ini
         - composer self-update
         # Install additional PHP extensions.
-        - docker-php-ext-install apcu intl
+        - pecl install apcu
         - docker-php-ext-enable apcu intl
         # Enable apache modules.
         - a2enmod headers rewrite
