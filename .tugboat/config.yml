@@ -16,7 +16,8 @@ services:
         - composer self-update
         # Install additional PHP extensions.
         - pecl install apcu
-        - docker-php-ext-enable apcu intl
+        - docker-php-ext-enable apcu
+        - docker-php-ext-install intl
         # Enable apache modules.
         - a2enmod headers rewrite
         - service apache2 restart
