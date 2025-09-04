@@ -10,17 +10,18 @@ services:
       AZQS_SCAFFOLD_REPO: https://github.com/az-digital/az-quickstart-scaffolding.git
 
     commands:
-      init: |
-        set -eux
-        echo "memory_limit = 2G" >> /usr/local/etc/php/conf.d/my-php.ini
+      init:
+        - set -eux
+        - echo "memory_limit = 2G" >> /usr/local/etc/php/conf.d/my-php.ini
+        - composer self-update
         # Install additional PHP extensions.
-        docker-php-ext-install intl
+        - docker-php-ext-install apcu intl
+        - docker-php-ext-enable apcu intl
         # Enable apache modules.
-        a2enmod headers rewrite
-        service apache2 restart
-        composer self-update
+        - a2enmod headers rewrite
+        - service apache2 restart
 
-      # TODO: Figure out best way to use 'update' stage.
+      # TODO: Determine how to best utilize the 'update' stage.
       update: []
 
       build: |
