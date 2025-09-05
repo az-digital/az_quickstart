@@ -1,6 +1,9 @@
 langcode: en
 status: true
 dependencies:
+  enforced:
+    module:
+      - az_demo
   config:
     - views.view.az_page_by_category
   module:
