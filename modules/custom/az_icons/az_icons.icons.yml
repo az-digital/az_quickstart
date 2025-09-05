@@ -94,4 +94,4 @@ material_symbols:
   template: >-
     <span class="material-symbols-rounded text-{{ color }}" style="font-size:{{ size|default(24) }}px;">{{ icon_id }}</span>
   preview: >
-    <span class="material-symbols-rounded text-{{ color }}" style="font-size:35px">{{ icon_id }}</span>
+    <span class="material-symbols-rounded text-{{ color }}" style="font-size:35px;">{{ icon_id }}</span>
