@@ -3,11 +3,12 @@
 namespace Drupal\az_course;
 
 use Drupal\Core\Url;
+use Drupal\Core\Logger\LoggerChannelInterface;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
 
 /**
- * Contructs URLs for Courses API and performs subject-wide queries.
+ * Constructs URLs for Courses API and performs subject-wide queries.
  */
 class CourseSearch {
 
@@ -17,6 +18,13 @@ class CourseSearch {
    * @var \GuzzleHttp\ClientInterface
    */
   protected $httpClient;
+
+  /**
+   * Drupal\Core\Logger\LoggerChannelInterface definition.
+   *
+   * @var \Drupal\Core\Logger\LoggerChannelInterface
+   */
+  protected $logger;
 
   /**
    * The source URLs to retrieve.
@@ -30,9 +38,12 @@ class CourseSearch {
    *
    * @param \GuzzleHttp\ClientInterface $http_client
    *   A guzzle client for making http requests.
+   * @param \Drupal\Core\Logger\LoggerChannelInterface $logger
+   *   The logger channel service.
    */
-  public function __construct(ClientInterface $http_client) {
+  public function __construct(ClientInterface $http_client, LoggerChannelInterface $logger) {
     $this->httpClient = $http_client;
+    $this->logger = $logger;
   }
 
   /**
@@ -111,7 +122,7 @@ class CourseSearch {
       }
     }
     catch (RequestException $e) {
-      \Drupal::logger('az_course')->error("Request exception.");
+      $this->logger->error("Request exception.");
     }
 
     foreach ($items as $item) {

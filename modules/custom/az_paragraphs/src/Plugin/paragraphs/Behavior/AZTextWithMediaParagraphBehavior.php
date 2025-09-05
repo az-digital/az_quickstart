@@ -196,7 +196,6 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     $config = $this->getSettings($paragraph);
     $config += $default_settings;
     $variables['text_on_media'] = $config;
-    $az_background_media = [];
 
     $style = '';
     if (!empty($config['style']) && $config['style'] !== 'bottom') {

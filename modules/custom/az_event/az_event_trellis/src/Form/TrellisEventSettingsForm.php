@@ -31,7 +31,7 @@ class TrellisEventSettingsForm extends ConfigFormBase {
     $az_event_trellis_config = $this->config('az_event_trellis.settings');
 
     $form['api_hostname'] = [
-      '#title' => t("API Hostname"),
+      '#title' => $this->t("API Hostname"),
       '#type' => 'textfield',
       '#default_value' => $az_event_trellis_config->get('api_hostname'),
     ];
