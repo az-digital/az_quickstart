@@ -229,8 +229,8 @@ function az_quickstart_update_1021302() {
 }
 
 /**
- * Enable ui_icons, ui_icons_ckeditor5, ui_icons_library, ui_icons_picker modules by default.
+ * Enable az_icons module by default.
  */
 function az_quickstart_update_11301() {
-  \Drupal::service('module_installer')->install(['ui_icons', 'ui_icons_ckeditor5', 'ui_icons_library', 'ui_icons_picker']);
+  \Drupal::service('module_installer')->install(['az_icons']);
 }
