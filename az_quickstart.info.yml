@@ -76,7 +76,10 @@ install:
   - masquerade:masquerade
   - masquerade_log:masquerade_log
   - quick_node_clone:quick_node_clone
-
+  - ui_icons:ui_icons
+  - ui_icons:ui_icons_ckeditor5
+  - ui_icons:ui_icons_library
+  - ui_icons:ui_icons_picker
 themes:
   - az_barrio
   - claro
