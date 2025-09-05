@@ -28,18 +28,12 @@
             "no-api": true
         }
     ],
-    "require": {
-<<<<<<< HEAD
-        "php": ">=8.1",
-        "az-digital/arizona-bootstrap": "2.0.27",
-        "az-digital/az-icons": "1.0.2",
-=======
-        "php": ">=8.3",
-        "az-digital/arizona-bootstrap": "5.0.0-alpha5",
-        "az-digital/az-icons": "1.0.4",
->>>>>>> 46ab303e (Update Arizona Icons to 1.0.4 (#4785))
-        "citation-style-language/locales": "0.0.27",
-        "citation-style-language/styles": "0.0.668",
+"require": {
+"php": ">=8.1",
+"az-digital/arizona-bootstrap": "2.0.27",
+"az-digital/az-icons": "1.0.4",
+"citation-style-language/locales": "0.0.27",
+"citation-style-language/styles": "0.0.668",
         "composer/installers": "^2.0",
         "cweagans/composer-patches": "^1.7",
         "devanych/mime-types": "2.1.2",
