@@ -1,0 +1,30 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - az_demo
+  config:
+    - views.view.az_news
+  module:
+    - system
+    - views
+  theme:
+    - az_barrio
+id: az_barrio_exposedformaz_newsaz_paged_row
+theme: az_barrio
+region: sidebar_first
+weight: 0
+provider: null
+plugin: 'views_exposed_filter_block:az_news-az_paged_row'
+settings:
+  id: 'views_exposed_filter_block:az_news-az_paged_row'
+  label: ''
+  label_display: visible
+  provider: views
+  views_label: ''
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: /finders/az-news-az-paged-row
