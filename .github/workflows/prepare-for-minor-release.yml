@@ -40,13 +40,27 @@ jobs:
             echo "Requested minor release branch name already exists: $NEW_VERSION" >> $GITHUB_STEP_SUMMARY
             exit 1
           fi
+
           delimiter=.
-          prev_minor=($(echo $NEW_VERSION | tr $delimiter '\n'))
-          prev_minor[1]=$((prev_minor[1]-1))
-          prev_minor_branch=$(IFS=$delimiter ; echo "${prev_minor[*]}" | sed 's/\(.*\)/\1/')
-          if [ $(git ls-remote --heads https://github.com/az-digital/az_quickstart.git $prev_minor_branch | wc -l) = 0 ]; then
-            echo "Previous minor release branch name doesn't exist yet: $prev_minor_branch" >> $GITHUB_STEP_SUMMARY
-            exit 1
+          current_parts=($(echo $NEW_VERSION | tr $delimiter '\n'))
+          major_version=${current_parts[0]}
+          minor_version=${current_parts[1]}
+
+          echo "Checking version: $NEW_VERSION (major: $major_version, minor: $minor_version)" >> $GITHUB_STEP_SUMMARY
+
+          # Check if this is the first minor release for this major version (e.g., 3.0.x)
+          if [ "$minor_version" = "0" ]; then
+            echo "Creating first minor release branch for major version $major_version: $NEW_VERSION" >> $GITHUB_STEP_SUMMARY
+          else
+            # For non-zero minor versions, ensure the previous minor release exists
+
+            prev_minor=($(echo $NEW_VERSION | tr $delimiter '\n'))
+            prev_minor[1]=$((prev_minor[1]-1))
+            prev_minor_branch=$(IFS=$delimiter ; echo "${prev_minor[*]}" | sed 's/\(.*\)/\1/')
+            if [ $(git ls-remote --heads https://github.com/az-digital/az_quickstart.git $prev_minor_branch | wc -l) = 0 ]; then
+              echo "Previous minor release branch name doesn't exist yet: $prev_minor_branch" >> $GITHUB_STEP_SUMMARY
+              exit 1
+            fi
           fi
       - name: Validation for 2.x release branches
         if: github.ref_name == '2.x'
@@ -234,6 +248,11 @@ jobs:
           composer config extra.branch-alias.${{ needs.branch_name_prep.outputs.dev_branch_source }} ${{ needs.branch_name_prep.outputs.dev_branch_alias }}
           composer validate
 
+      - name: Update version in .info.yml file
+        run: |
+          sed -i "/version: /d" az_quickstart.info.yml
+          echo -e "version: ${{ needs.branch_name_prep.outputs.dev_branch_alias }}" >> az_quickstart.info.yml
+
       - name: Create pull request for `${{ github.ref_name }}` branch updates
         uses: peter-evans/create-pull-request@v7
         with:
@@ -247,3 +266,4 @@ jobs:
           token: ${{ secrets.REPO_DISPATCH_TOKEN }}
           add-paths: |
             composer.json
+            az_quickstart.info.yml

@@ -12,3 +12,7 @@
 .paragraph--type--az-photo-gallery .carousel-indicators {
   margin-bottom: 0;
 }
+
+.az-gallery-slider-full .carousel-indicators {
+  filter: drop-shadow(0 0 0.5px rgb(0, 0, 0)) drop-shadow(0 0 0.5px rgb(0, 0, 0));
+}

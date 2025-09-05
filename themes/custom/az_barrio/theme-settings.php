@@ -347,19 +347,6 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   $form['affix']['navbar_top'] = [];
   $form['affix']['navbar'] = [];
   $form['components']['navbar'] = [];
-  // Components.
-  $form['components']['navbar_offcanvas'] = [
-    '#type' => 'details',
-    '#title' => t('Navbar with Off Canvas Drawer for mobile devices.'),
-    '#collapsible' => TRUE,
-    '#collapsed' => TRUE,
-  ];
-  $form['components']['navbar_offcanvas']['az_barrio_navbar_offcanvas'] = [
-    '#type' => 'checkbox',
-    '#title' => t('Use Navbar Off Canvas'),
-    '#description' => t('Check to use the Arizona Bootstrap Off Canvas Navbar instead of the bootstrap navbar.'),
-    '#default_value' => theme_get_setting('az_barrio_navbar_offcanvas'),
-  ];
   // Logos.
   $form['logo']['az_barrio_logo_svg_inline'] = [
     '#type' => 'checkbox',
@@ -487,8 +474,8 @@ function az_barrio_form_system_theme_settings_submit($form, FormStateInterface &
   }
   $form_state->unsetValue('footer_logo_upload');
   // theme_settings_convert_to_config($values, $config)->save();
-  // Clear cached libraries so any Bootsrap changes take effect immmediately.
-  \Drupal::service('library.discovery')->clearCachedDefinitions();
+  // Clear cached libraries so any Bootstrap changes take effect immediately.
+  \Drupal::service('library.discovery')->clear();
 }
 
 /**
