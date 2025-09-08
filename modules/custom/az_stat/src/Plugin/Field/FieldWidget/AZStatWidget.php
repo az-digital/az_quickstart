@@ -166,10 +166,11 @@ class AZStatWidget extends WidgetBase {
       // Stat item.
       $element['preview_container']['stat_preview'] = [
         '#theme' => 'az_stat',
-        '#title' => $item->title ?? '',
-        '#body' => check_markup(
-          $item->body ?? '',
-          $item->body_format ?? self::AZ_STAT_DEFAULT_TEXT_FORMAT),
+        '#stat_heading' => $item->title ?? '',
+        '#stat_description' => $item->body ?? '',
+        //        '#body' => check_markup(
+//          $item->stat_description ?? '',
+//          $item->body_format ?? self::AZ_STAT_DEFAULT_TEXT_FORMAT),
         '#attributes' => ['class' => $stat_classes],
       ];
 
@@ -185,7 +186,7 @@ class AZStatWidget extends WidgetBase {
       }
 
       // Check and see if there's a valid link to preview.
-      if ($item->link_title || $item->link_uri) {
+      if ($item->stat_source || $item->link_uri) {
         if (!empty($item->link_uri) && str_starts_with($item->link_uri, '/' . PublicStream::basePath())) {
           // Link to public file: use fromUri() to get the URL.
           $link_url = Url::fromUri(urldecode('base:' . $item->link_uri));
@@ -195,7 +196,7 @@ class AZStatWidget extends WidgetBase {
         }
         $element['preview_container']['stat_preview']['#link'] = [
           '#type' => 'link',
-          '#title' => $item->link_title ?? '',
+          '#title' => $item->stat_source ?? '',
           '#url' => $link_url ?: Url::fromRoute('<none>'),
           '#attributes' => ['class' => ['btn', 'btn-default', 'w-100']],
         ];
@@ -264,7 +265,7 @@ class AZStatWidget extends WidgetBase {
         'text-end' => $this->t('Align right'),
       ],
       '#title' => $this->t('Stat Alignment'),
-      '#default_value' => (!empty($item->options['stat_alignment'])) ? $item->options['title_alignment'] : 'text-start',
+      '#default_value' => (!empty($item->options['stat_alignment'])) ? $item->options['stat_alignment'] : 'text-start',
     ];
 
     $element['stat_description'] = [
@@ -505,7 +506,7 @@ class AZStatWidget extends WidgetBase {
         $values[$delta]['options'] = [
           'class' => $value['options'],
           'link_style' => $value['link_style'],
-          'title_alignment' => $value['title_alignment'],
+          'stat_alignment' => $value['stat_alignment'],
         ];
       }
 //      $values[$delta]['body'] = $value['body']['value'];
