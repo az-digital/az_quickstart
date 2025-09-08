@@ -4,16 +4,16 @@ field.value.az_stat:
   type: mapping
   label: Default value
   mapping:
-    title:
+    stat_heading:
       type: string
       label: Stat Title
-    body:
+    stat_description:
       type: text
       label: Stat Body
     media:
       type: integer
       label: Stat Media
-    link_title:
+    stat_source:
       type: string
       label: Stat Link Title
     link_uri:

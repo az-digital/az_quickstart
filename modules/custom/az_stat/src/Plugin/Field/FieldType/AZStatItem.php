@@ -32,10 +32,10 @@ class AZStatItem extends FieldItemBase {
    * {@inheritdoc}
    */
   public function isEmpty() {
-    $title = $this->get('title')->getValue();
-    $body = $this->get('body')->getValue();
+    $title = $this->get('stat_heading')->getValue();
+    $body = $this->get('stat_description')->getValue();
     $media = $this->get('media')->getValue();
-    $link_title = $this->get('link_title')->getValue();
+    $link_title = $this->get('stat_source')->getValue();
     $link_uri = $this->get('link_uri')->getValue();
     return empty($title) && empty($body) && empty($media) && empty($link_title) && empty($link_uri);
   }
@@ -45,16 +45,16 @@ class AZStatItem extends FieldItemBase {
    */
   public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition) {
 
-    $properties['title'] = DataDefinition::create('string')
+    $properties['stat_heading'] = DataDefinition::create('string')
       ->setLabel(t('Stat Title'));
-    $properties['body'] = DataDefinition::create('string')
+    $properties['stat_description'] = DataDefinition::create('string')
       ->setLabel(t('Stat Body'));
-    $properties['body_format'] = DataDefinition::create('string')
-      ->setLabel(t('Stat Body Text Format'));
+//    $properties['body_format'] = DataDefinition::create('string')
+//      ->setLabel(t('Stat Body Text Format'));
     $properties['media'] = DataDefinition::create('integer')
       ->setLabel(t('Stat Media'));
-    $properties['link_title'] = DataDefinition::create('string')
-      ->setLabel(t('Stat Link Title'));
+    $properties['stat_source'] = DataDefinition::create('string')
+      ->setLabel(t('Stat Source'));
     $properties['link_uri'] = DataDefinition::create('string')
       ->setLabel(t('Stat Link URI'));
     $properties['options'] = MapDataDefinition::create()
@@ -79,23 +79,23 @@ class AZStatItem extends FieldItemBase {
   public static function schema(FieldStorageDefinitionInterface $field_definition) {
 
     $columns = [
-      'title' => [
+      'stat_heading' => [
         'type' => 'varchar',
         'length' => 255,
       ],
-      'body' => [
+      'stat_description' => [
         'type' => 'text',
         'size' => 'big',
       ],
-      'body_format' => [
-        'type' => 'varchar',
-        'length' => 255,
-      ],
+      // 'body_format' => [
+      //   'type' => 'varchar',
+      //   'length' => 255,
+      // ],
       'media' => [
         'type' => 'int',
         'size' => 'normal',
       ],
-      'link_title' => [
+      'stat_source' => [
         'type' => 'varchar',
         'length' => 255,
       ],
@@ -125,13 +125,13 @@ class AZStatItem extends FieldItemBase {
 
     $random = new Random();
 
-    $values['title'] = $random->word(mt_rand(1, 255));
+    $values['stat_heading'] = $random->word(mt_rand(1, 255));
 
-    $values['body'] = $random->paragraphs(5);
+    $values['stat_description'] = $random->paragraphs(5);
 
     $values['media'] = mt_rand(-1000, 1000);
 
-    $values['link_title'] = $random->word(mt_rand(1, 255));
+    $values['stat_source'] = $random->word(mt_rand(1, 255));
 
     $tlds = ['com', 'net', 'gov', 'org', 'edu', 'biz', 'info'];
     $domain_length = mt_rand(7, 15);

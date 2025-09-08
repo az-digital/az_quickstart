@@ -486,17 +486,17 @@ class AZStatWidget extends WidgetBase {
    */
   public function massageFormValues(array $values, array $form, FormStateInterface $form_state) {
     foreach ($values as $delta => $value) {
-      if ($value['title'] === '') {
-        $values[$delta]['title'] = NULL;
+      if ($value['stat_heading'] === '') {
+        $values[$delta]['stat_heading'] = NULL;
       }
-      if ($value['body'] === '') {
-        $values[$delta]['body'] = NULL;
+      if ($value['stat_description'] === '') {
+        $values[$delta]['stat_description'] = NULL;
       }
       if (empty($value['media'])) {
         $values[$delta]['media'] = NULL;
       }
-      if ($value['link_title'] === '') {
-        $values[$delta]['link_title'] = NULL;
+      if ($value['stat_source'] === '') {
+        $values[$delta]['stat_source'] = NULL;
       }
       if ($value['link_uri'] === '') {
         $values[$delta]['link_uri'] = NULL;
@@ -508,8 +508,7 @@ class AZStatWidget extends WidgetBase {
           'title_alignment' => $value['title_alignment'],
         ];
       }
-      $values[$delta]['body'] = $value['body']['value'];
-      $values[$delta]['body_format'] = $value['body']['format'];
+//      $values[$delta]['body'] = $value['body']['value'];
     }
     return $values;
   }

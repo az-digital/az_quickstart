@@ -110,7 +110,8 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
     foreach ($items as $delta => $item) {
 
       // Format title.
-      $title = $item->title ?? '';
+      $title = $item->stat_heading ?? '';
+      $body = $item->stat_description ?? '';
 
       // Media.
       $media_render_array = [];
@@ -235,16 +236,11 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
       $element[$delta] = [
         '#theme' => 'az_stat',
         '#media' => $media_render_array,
-        '#title' => $title,
+        '#stat_heading' => $title,
         // The ProcessedText element handles cache context & tag bubbling.
         // @see \Drupal\filter\Element\ProcessedText::preRenderText()
-        '#body' => [
-          '#type' => 'processed_text',
-          '#text' => $item->body ?? '',
-          '#format' => $item->body_format,
-          '#langcode' => $item->getLangcode(),
-        ],
-        '#link' => $link_render_array,
+        '#stat_description' => $body,
+        '#stat_source' => $link_render_array,
         '#link_url' => $link_url,
         '#title_style' => $title_style ?? 'default',
         '#title_level' => $title_level ?? 'h3',
