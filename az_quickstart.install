@@ -116,17 +116,10 @@ function az_quickstart_update_920601() {
 }
 
 /**
- * Uninstall deprecated Drupal core modules.
+ * (Removed) Change Arizona Bootstrap CDN references.
  */
-function az_quickstart_update_920603() {
-  $deprecated_modules = [
-    'aggregator',
-    'color',
-    'hal',
-    'quickedit',
-    'rdf',
-  ];
-  \Drupal::service('module_installer')->uninstall($deprecated_modules);
+function az_quickstart_update_920602() {
+  // This update has been removed.
 }
 
 /**
