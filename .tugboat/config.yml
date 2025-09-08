@@ -58,9 +58,6 @@ services:
           --no-interaction \
           install --optimize-autoloader
 
-        # Set the tugboat-specific Drupal settings.
-        #cp "${TUGBOAT_ROOT}/.tugboat/settings.local.php" "${DOCROOT}/sites/default/settings.local.php"
-
         # Link the document root to the expected path.
         ln -snf "${AZQS_DOCROOT}" "${DOCROOT}"
 
@@ -103,42 +100,6 @@ services:
         vendor/bin/drush config:set -y system.logging error_level "verbose"
         vendor/bin/drush cache:rebuild
 
-        # Original 'build' stage steps.
-        # set -eux
-        # composer \
-        #   --working-dir=$AZQS_COMPOSER_ROOT \
-        #   --no-interaction \
-        #   install --optimize-autoloader
-        # composer update az-digital/az_quickstart --with-all-dependencies
-
-        # # Install new configuration and database updates.
-        # cd $AZQS_COMPOSER_ROOT
-        # vendor/bin/drush cache:rebuild
-        # vendor/bin/drush config:import --yes
-        # vendor/bin/drush updatedb --yes
-
-        # # One last cache rebuild.
-        # - vendor/bin/drush cache:rebuild
-
   # Define the database service.
   database:
     image: tugboatqa/mariadb:10
-
-    # # A set of commands to run while building this service
-    # commands:
-    #   # Configure the server for the site to run on.
-    #   init:
-    #     # Increase the allowed packet size to 512MB.
-    #     - mysql -e "SET GLOBAL max_allowed_packet=536870912;"
-    #     # Ensure this packet size persists even if MySQL restarts.
-    #     - echo "max_allowed_packet=536870912" >> /etc/mysql/conf.d/tugboat.cnf
-
-    #   # Commands that import files, databases,  or other assets. When an
-    #   # existing preview is refreshed, the build workflow starts here,
-    #   # skipping the init step, because the results of that step will
-    #   # already be present.
-    #   update: []
-
-    #   # Run any commands needed to prepare the site.  This is generally not needed
-    #   # for database services.
-    #   build: []
