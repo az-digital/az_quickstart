@@ -81,16 +81,16 @@ function az_paragraphs_stats_update_1130001(&$sandbox) {
             }
 
             // Update stat title alignment for AZ Bootstrap 5.
-            if (isset($options['title_alignment'])) {
-              if ($options['title_alignment'] === 'text-left') {
+            if (isset($options['stat_alignment'])) {
+              if ($options['stat_alignment'] === 'text-left') {
                 $updated = TRUE;
-                $options['title_alignment'] = 'text-start';
+                $options['stat_alignment'] = 'text-start';
                 $item->options = $options;
               }
 
-              if ($options['title_alignment'] === 'text-right') {
+              if ($options['stat_alignment'] === 'text-right') {
                 $updated = TRUE;
-                $options['title_alignment'] = 'text-end';
+                $options['stat_alignment'] = 'text-end';
                 $item->options = $options;
               }
             }
