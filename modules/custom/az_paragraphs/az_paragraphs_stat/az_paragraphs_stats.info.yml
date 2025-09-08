@@ -1,0 +1,10 @@
+name: 'Quickstart Paragraphs - Stats'
+type: module
+description: 'Provides a stat paragraph type.'
+core_version_requirement: ^10 || ^11 || ^12
+dependencies:
+  - az_paragraphs
+  - drupal:field
+  - paragraphs:paragraphs
+  - az_stat
+package: 'The University of Arizona'

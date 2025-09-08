@@ -1,0 +1,6 @@
+services:
+  az_stat.image:
+    class: Drupal\az_stat\AZStatImageHelper
+    arguments:
+      - '@entity_type.manager'
+      - '@renderer'

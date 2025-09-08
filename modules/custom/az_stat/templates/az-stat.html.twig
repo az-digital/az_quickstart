@@ -1,0 +1,72 @@
+{#
+/**
+ * @file
+ * Theme implementation to display an AZ Stat.
+ *
+ * Available variables:
+ * - attributes: Stat element attributes.
+ * - media: The media field of a stat.
+ * - stat_heading: The title field of a stat.
+ * - stat_description: The body field of a stat.
+ * - link: The link field on a stat.
+ * - link_url: The link URL only.
+ * - title_style: The title style to use.
+ * - stat_alignment: The title alignment to use.
+ * - title_level: The heading level to use.
+ * - title_display: The title text display size to use.
+ *
+ * @ingroup themeable
+ */
+#}
+
+{% set attributes = attributes.addClass('h-100') %}
+
+<div{{ attributes }}>
+  {% if media %}
+    <div class="position-relative overflow-hidden">
+      {{ media }}
+      {% if stat_heading and title_style == 'title-on-image' %}
+        <div class="stat-img-overlay p-0 d-flex flex-column">
+          <{{ title_level }} class="fw-bold mt-auto stat-title text-bg-gradient-black text-white mb-0 p-stat pt-8 {{ stat_alignment }} {{ title_display }}">
+            {% if link|render %}
+              <a href="{{ link_url }}" class="text-reset">{{ stat_heading }}</a>
+            {% else %}
+              {{ stat_heading }}
+            {% endif %}
+          </{{ title_level }}>
+        </div>
+      {% endif %}
+    </div>
+  {% endif %}
+  {% if title_style == 'title-on-image' and stat_description['#text'] == '' and (link['#title'] == '' or 'visually-hidden' in link['#attributes']['class'] ) %}
+    <div class="d-flex flex-column">
+      {% if link|render %}
+        {% if 'visually-hidden' in link['#attributes']['class'] and 'stretched-link' in link['#attributes']['class'] %}
+          <div class="mt-auto">
+            <a href="{{ link['#url'] }}" class="stretched-link" aria-label="{{ link['#title'] }}"></a>
+          </div>
+        {% else %}
+          <div class="mt-auto">{{ link }}</div>
+        {% endif %}
+      {% endif %}
+    </div>
+  {% else %}
+    <div class="stat-body d-flex flex-column">
+      {% if stat_heading and title_style == 'default' %}
+        <h1 class="fw-bold display-1 mt-0 mb-0 {{ stat_alignment }}">
+          {% if link|render %}
+            <a href="{{ link_url }}" class="text-reset">{{ stat_heading }}</a>
+          {% else %}
+            {{ stat_heading }}
+          {% endif %}
+        </h1>
+      {% endif %}
+      {% if stat_description['#text'] %}
+        <div class="stat-text">{{ stat_description }}</div>
+      {% endif %}
+      {% if link %}
+        <div class="mt-auto">{{ link }}</div>
+      {% endif %}
+    </div>
+  {% endif %}
+</div>

@@ -1,0 +1,197 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.az_stat
+    - field.field.node.az_flexible_page.field_az_main_content
+    - field.field.node.az_flexible_page.field_az_marketing_page_style
+    - field.field.node.az_flexible_page.field_az_media_image
+    - field.field.node.az_flexible_page.field_az_page_category
+    - field.field.node.az_flexible_page.field_az_summary
+    - node.type.az_flexible_page
+  module:
+    - az_core
+    - field_group
+    - smart_title
+    - user
+third_party_settings:
+  smart_title:
+    enabled: true
+    settings:
+      smart_title__link: false
+      smart_title__tag: ''
+      smart_title__classes:
+        - node__title
+  field_group:
+    group_stat_clickable:
+      children:
+        - group_link
+      label: 'stat Clickable'
+      parent_name: ''
+      region: content
+      weight: 0
+      format_type: html_element
+      format_settings:
+        classes: 'stat border-0 hover text-bg-gray-100 mb-0 mt-0 mb-4 p-0 overflow-hidden'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_link:
+      children:
+        - group_media
+        - group_content
+      label: Link
+      parent_name: group_stat_clickable
+      region: content
+      weight: 5
+      format_type: link
+      format_settings:
+        classes: 'stat-body p-0 stretched-link link-primary text-decoration-none'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        target: entity
+        custom_uri: ''
+        target_attribute: default
+    group_media:
+      children:
+        - field_az_media_image
+      label: Media
+      parent_name: group_link
+      region: content
+      weight: 2
+      format_type: html_element
+      format_settings:
+        classes: 'stat-img-top mb-0'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_heading:
+      children:
+        - smart_title
+      label: Heading
+      parent_name: group_content
+      region: content
+      weight: 4
+      format_type: html_element
+      format_settings:
+        classes: 'stat-title h4 text-midnight mt-0 hover-text-underline'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: h2
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_summary:
+      children:
+        - field_az_summary
+      label: Summary
+      parent_name: group_content
+      region: content
+      weight: 5
+      format_type: html_element
+      format_settings:
+        classes: 'stat-text fw-normal text-black'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_read_more:
+      children:
+        - links
+      label: 'Read more'
+      parent_name: group_content
+      region: content
+      weight: 6
+      format_type: html_element
+      format_settings:
+        classes: text-start
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: true
+        label_element: div
+        label_element_classes: hover-text-underline
+        attributes: 'aria-hidden="true"'
+        effect: none
+        speed: fast
+    group_content:
+      children:
+        - group_heading
+        - group_summary
+        - group_read_more
+      label: Content
+      parent_name: group_link
+      region: content
+      weight: 3
+      format_type: html_element
+      format_settings:
+        classes: p-4
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+id: node.az_flexible_page.az_stat
+targetEntityType: node
+bundle: az_flexible_page
+mode: az_stat
+content:
+  field_az_media_image:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: az_stat_image
+      link: false
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_az_summary:
+    type: az_text_summary
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  smart_title:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 4
+    region: content
+hidden:
+  field_az_main_content: true
+  field_az_marketing_page_style: true
+  field_az_page_category: true

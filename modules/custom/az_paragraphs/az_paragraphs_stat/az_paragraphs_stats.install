@@ -1,0 +1,118 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for az_paragraphs_stats module.
+ */
+
+/**
+ * Update az stats for AZ Bootstrap 5 compatibility.
+ */
+function az_paragraphs_stats_update_1130001(&$sandbox) {
+  // Initialize batch processing if this is the first run.
+  if (!isset($sandbox['total'])) {
+    // Get all paragraphs of type az_stats.
+    $paragraph_ids = \Drupal::entityQuery('paragraph')
+      ->accessCheck(FALSE)
+      ->condition('type', 'az_stats')
+      ->execute();
+
+    $sandbox['total'] = count($paragraph_ids);
+    $sandbox['current'] = 0;
+    $sandbox['ids'] = $paragraph_ids;
+    $sandbox['updated_count'] = 0;
+
+    // If no paragraphs to update, mark as finished.
+    if (empty($sandbox['total'])) {
+      $sandbox['#finished'] = 1;
+      return t('No paragraphs with az_stats type found.');
+    }
+  }
+
+  // Process paragraphs in batches.
+  $paragraphs_per_batch = 25;
+  $ids = array_slice($sandbox['ids'], $sandbox['current'], $paragraphs_per_batch);
+
+  if (!empty($ids)) {
+    $paragraphs = \Drupal::entityTypeManager()->getStorage('paragraph')->loadMultiple($ids);
+
+    foreach ($paragraphs as $paragraph) {
+      $updated = FALSE;
+      $behavior_settings = $paragraph->getAllBehaviorSettings();
+
+      // Update stats stat_style for AZ Bootstrap 5.
+      if (isset($behavior_settings['az_stats_paragraph_behavior']['stat_style'])) {
+        $updated = TRUE;
+        $stat_style = $behavior_settings['az_stats_paragraph_behavior']['stat_style'];
+
+        if ($stat_style === 'stat stat-borderless') {
+          $behavior_settings['az_stats_paragraph_behavior']['stat_style'] = 'stat border-0';
+        }
+      }
+
+      // Loop through az_stats for updates.
+      if ($paragraph->hasField('field_az_stats')) {
+        $field_items = $paragraph->get('field_az_stats');
+
+        foreach ($field_items as $delta => $item) {
+          if (isset($item->options)) {
+            $options = $item->options;
+
+            // Update stat link_style for AZ Bootstrap 5.
+            if (isset($options['link_style']) && $options['link_style'] === 'sr-only') {
+              $updated = TRUE;
+              $options['link_style'] = 'visually-hidden';
+              $item->options = $options;
+            }
+
+            // Update full-width link styles.
+            if (isset($options['link_style']) && str_contains($options['link_style'], 'btn-block')) {
+              $updated = TRUE;
+              $options['link_style'] = str_replace('btn-block', 'w-100', $options['link_style']);
+              $item->options = $options;
+            }
+
+            // Update stats bg color for AZ Bootstrap 5.
+            if (isset($options['class']) && str_starts_with($options['class'], 'bg-') && $options['class'] !== 'bg-transparent') {
+              $updated = TRUE;
+              $stat_class = 'text-' . $options['class'];
+              $options['class'] = $stat_class;
+              $item->options = $options;
+            }
+
+            // Update stat title alignment for AZ Bootstrap 5.
+            if (isset($options['title_alignment'])) {
+              if ($options['title_alignment'] === 'text-left') {
+                $updated = TRUE;
+                $options['title_alignment'] = 'text-start';
+                $item->options = $options;
+              }
+
+              if ($options['title_alignment'] === 'text-right') {
+                $updated = TRUE;
+                $options['title_alignment'] = 'text-end';
+                $item->options = $options;
+              }
+            }
+          }
+        }
+      }
+
+      // Save the paragraph if updated.
+      if ($updated) {
+        $paragraph->setAllBehaviorSettings($behavior_settings);
+        $paragraph->save();
+        $sandbox['updated_count']++;
+      }
+
+      $sandbox['current']++;
+    }
+
+    $sandbox['#finished'] = ($sandbox['current'] / $sandbox['total']);
+  }
+  else {
+    $sandbox['#finished'] = 1;
+  }
+
+  return t('Paragraph behavior settings fixed on %count paragraphs.', ['%count' => $sandbox['updated_count']]);
+}

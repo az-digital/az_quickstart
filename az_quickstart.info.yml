@@ -11,6 +11,7 @@ install:
   - az_paragraphs
   - az_paragraphs_accordion
   - az_paragraphs_cards
+  - az_paragraphs_stats
   - az_paragraphs_photo_gallery
   - az_paragraphs_splitscreen
   - az_paragraphs_text

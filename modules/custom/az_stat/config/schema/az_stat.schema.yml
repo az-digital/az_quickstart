@@ -1,0 +1,33 @@
+# Default value.
+# TODO: change options to type: mapping, add stat style options
+field.value.az_stat:
+  type: mapping
+  label: Default value
+  mapping:
+    title:
+      type: string
+      label: Stat Title
+    body:
+      type: text
+      label: Stat Body
+    media:
+      type: integer
+      label: Stat Media
+    link_title:
+      type: string
+      label: Stat Link Title
+    link_uri:
+      type: string
+      label: Stat Link URI
+    options:
+      type: text
+      label: Stat Options
+# Field formatter.
+# TODO: add stat style options
+field.formatter.settings.az_stat_default:
+  type: mapping
+  label: Example formatter settings
+  mapping:
+    foo:
+      type: string
+      label: Foo

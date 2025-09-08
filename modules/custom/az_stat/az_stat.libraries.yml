@@ -1,0 +1,16 @@
+az_stat:
+  css:
+    component:
+      css/az-stat-widget.css: {}
+az_stat_no_follow:
+  css:
+    component:
+      css/az-stat-no-follow.css: {}
+  js:
+    js/az-stat-no-follow.js: {}
+  dependencies:
+    - core/drupal.nodelist.foreach
+az_stat_title_hover:
+  css:
+    component:
+      css/az-stat-title-hover.css: {}

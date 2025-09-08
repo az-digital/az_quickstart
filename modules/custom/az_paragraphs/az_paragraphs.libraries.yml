@@ -59,3 +59,11 @@ az_paragraphs.az_html:
   header: true
   dependencies:
     - core/jquery
+az_paragraphs.az_stats:
+  css:
+    theme:
+      css/az_paragraphs_az_stats.css: {}
+  dependencies:
+    - az_barrio/arizona-bootstrap-css
+    - az_barrio/arizona-bootstrap-js
+    - az_barrio/button-no-conflict

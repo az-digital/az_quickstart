@@ -1,0 +1,34 @@
+tr.odd .az-stat-elements .form-item {
+  margin-bottom: 8px;
+}
+
+.az-stat-elements .media-library-form-element .description {
+  display: none;
+}
+
+.az-stat-elements .media-library-form-element {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.az-stat-elements .media-library-form-element legend {
+  display: none;
+}
+
+.az-stat-elements .media-library-selection {
+  margin: 0;
+}
+
+.az-stat-elements .stat-preview {
+  max-height: 200px;
+  overflow: hidden;
+}
+
+.az-stat-elements.az-stat-elements-closed .form-type--linkit,
+.az-stat-elements.az-stat-elements-closed .form-type--textfield,
+.az-stat-elements.az-stat-elements-closed .form-type--textarea,
+.az-stat-elements.az-stat-elements-closed .filter-wrapper,
+.az-stat-elements.az-stat-elements-closed .form-type--select,
+.az-stat-elements.az-stat-elements-closed .media-library-form-element {
+  display: none;
+}
