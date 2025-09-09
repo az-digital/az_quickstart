@@ -83,7 +83,7 @@
       {{ page.alert }}
     {% endif %}
     <header id="header" class="header" role="banner" aria-label="{{ 'Site header'|t}}">
-      <div class="arizona-header bg-red" id="header_arizona">
+      <div class="arizona-header{{ page.navigation_offcanvas ? ' az-fixed-header-on-mobile' }} bg-red" id="header_arizona">
         <div class="{{ container }}">
           <div class="row flex-nowrap">
             {% if wordmark %}
