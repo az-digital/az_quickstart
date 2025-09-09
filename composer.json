@@ -180,7 +180,9 @@
             },
             "drupal/image_widget_crop": {
                 "Can't save image widget crop settings (ImmutableConfigException) (3491004)": "https://www.drupal.org/files/issues/2025-03-06/image_widget_crop_fix.patch",
-                "Crop tool not working if the theme specifies a border-radius on images (3271182)": "https://www.drupal.org/files/issues/2022-03-23/3271182-2.patch"
+                "Crop tool not working if the theme specifies a border-radius on images (3271182)": "https://www.drupal.org/files/issues/2022-03-23/3271182-2.patch",
+                "Use up-to-date Cropper library and without jQuery dependency (3093928)": "https://www.drupal.org/files/issues/2025-07-04/3093928-33.patch",
+                "JavaScript broken when using cropper.js v1.5.12 (3305831)": "https://www.drupal.org/files/issues/2025-07-04/3305831-8.patch"
             },
             "drupal/imagemagick": {
                 "Imagemagick fails to convert animated gifs into animated webps (3295470)": "https://www.drupal.org/files/issues/2023-08-29/imagemagick-convertation-keep-animation-3295470-10.patch"
