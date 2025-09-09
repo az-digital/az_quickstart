@@ -1,0 +1,16 @@
+<?php
+
+/**
+ * @file
+ * Az_carousel.install.
+ *
+ * Install, update and uninstall functions for
+ * az_carousel module.
+ */
+
+/**
+ * Enable jquery_deprecated_functions module by default.
+ */
+function az_carousel_update_1130001() {
+  \Drupal::service('module_installer')->install(['jquery_deprecated_functions']);
+}

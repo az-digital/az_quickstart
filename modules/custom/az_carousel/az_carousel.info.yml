@@ -15,6 +15,7 @@ dependencies:
   - drupal:views
   - field_group:field_group
   - link_class:link_class
+  - jquery_deprecated_functions:jquery_deprecated_functions
   - pathauto:pathauto
   - search_exclude:search_exclude
   - slick:slick
