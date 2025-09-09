@@ -110,8 +110,8 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
     foreach ($items as $delta => $item) {
 
       // Format title.
-      $title = $item->stat_heading ?? '';
-      $body = $item->stat_description ?? '';
+      $stat_heading = $item->stat_heading ?? '';
+      $stat_description = $item->stat_description ?? '';
 
       // Media.
       $media_render_array = [];
@@ -126,7 +126,7 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
       // Link.
       $link_render_array = [];
       $link_url = '';
-      if ($item->link_title || $item->link_uri) {
+      if ($item->stat_source || $item->link_uri) {
         if (str_starts_with($item->link_uri ?? '', '/' . PublicStream::basePath())) {
           // Link to public file: use fromUri() to get the URL.
           $link_url = Url::fromUri(urldecode('base:' . $item->link_uri));
@@ -142,7 +142,7 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         }
         $link_render_array = [
           '#type' => 'link',
-          '#title' => $item->link_title ?? '',
+          '#title' => $item->stat_source ?? '',
           '#url' => $link_url ?: Url::fromRoute('<none>'),
           '#attributes' => ['class' => ['btn', 'btn-default', 'w-100']],
         ];
@@ -203,7 +203,7 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
           if (isset($stat_defaults['stat_title_style'])) {
             $title_style = $stat_defaults['stat_title_style'];
             if (!empty($media_render_array)) {
-              if ($item->title && $title_style === 'title-on-image') {
+              if ($item->stat_heading && $title_style === 'title-on-image') {
                 array_push($media_render_array['#item_attributes']['class'], 'img-fluid', 'image-style-az-stat-image');
               }
             }
@@ -236,10 +236,10 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
       $element[$delta] = [
         '#theme' => 'az_stat',
         '#media' => $media_render_array,
-        '#stat_heading' => $title,
+        '#stat_heading' => $stat_heading,
         // The ProcessedText element handles cache context & tag bubbling.
         // @see \Drupal\filter\Element\ProcessedText::preRenderText()
-        '#stat_description' => $body,
+        '#stat_description' => $stat_description,
         '#stat_source' => $link_render_array,
         '#link_url' => $link_url,
         '#title_style' => $title_style ?? 'default',

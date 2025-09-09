@@ -14,10 +14,9 @@ use Drupal\Core\TypedData\MapDataDefinition;
 /**
  * Defines the 'az_stat' field type.
  *
- * @property string $title
- * @property string $body
- * @property string $body_format
- * @property string $link_title
+ * @property string $stat_heading
+ * @property string $stat_description
+ * @property string $stat_source
  * @property string $link_uri
  */
 #[FieldType(
@@ -32,12 +31,12 @@ class AZStatItem extends FieldItemBase {
    * {@inheritdoc}
    */
   public function isEmpty() {
-    $title = $this->get('stat_heading')->getValue();
-    $body = $this->get('stat_description')->getValue();
+    $stat_heading = $this->get('stat_heading')->getValue();
+    $stat_description = $this->get('stat_description')->getValue();
     $media = $this->get('media')->getValue();
-    $link_title = $this->get('stat_source')->getValue();
+    $stat_source = $this->get('stat_source')->getValue();
     $link_uri = $this->get('link_uri')->getValue();
-    return empty($title) && empty($body) && empty($media) && empty($link_title) && empty($link_uri);
+    return empty($stat_heading) && empty($stat_description) && empty($media) && empty($stat_source) && empty($link_uri);
   }
 
   /**

@@ -166,8 +166,8 @@ class AZStatWidget extends WidgetBase {
       // Stat item.
       $element['preview_container']['stat_preview'] = [
         '#theme' => 'az_stat',
-        '#stat_heading' => $item->title ?? '',
-        '#stat_description' => $item->body ?? '',
+        '#stat_heading' => $item->stat_heading ?? '',
+        '#stat_description' => $item->stat_description ?? '',
         //        '#body' => check_markup(
 //          $item->stat_description ?? '',
 //          $item->body_format ?? self::AZ_STAT_DEFAULT_TEXT_FORMAT),
@@ -455,7 +455,7 @@ class AZStatWidget extends WidgetBase {
    */
   public function validateStatLink(&$element, FormStateInterface $form_state, &$complete_form) {
 
-    if (!empty($element['#value'])) {
+    if (!empty($element['#value'])) { 
       // Check to make sure the path can be found.
       if ($url = $this->pathValidator->getUrlIfValid($element['#value'])) {
         // Url is valid, no conversion required.

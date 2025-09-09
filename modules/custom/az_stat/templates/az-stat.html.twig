@@ -8,7 +8,7 @@
  * - media: The media field of a stat.
  * - stat_heading: The title field of a stat.
  * - stat_description: The body field of a stat.
- * - link: The link field on a stat.
+ * - stat_source: The link field on a stat.
  * - link_url: The link URL only.
  * - title_style: The title style to use.
  * - stat_alignment: The title alignment to use.
@@ -18,9 +18,7 @@
  * @ingroup themeable
  */
 #}
-
 {% set attributes = attributes.addClass('h-100') %}
-
 <div{{ attributes }}>
   {% if media %}
     <div class="position-relative overflow-hidden">
@@ -38,34 +36,34 @@
       {% endif %}
     </div>
   {% endif %}
-  {% if title_style == 'title-on-image' and stat_description['#text'] == '' and (link['#title'] == '' or 'visually-hidden' in link['#attributes']['class'] ) %}
+  {% if title_style == 'title-on-image' and stat_description['#text'] == '' and (stat_source['#title'] == '' or 'visually-hidden' in stat_source['#attributes']['class'] ) %}
     <div class="d-flex flex-column">
       {% if link|render %}
-        {% if 'visually-hidden' in link['#attributes']['class'] and 'stretched-link' in link['#attributes']['class'] %}
+        {% if 'visually-hidden' in link['#attributes']['class'] and 'stretched-link' in stat_source['#attributes']['class'] %}
           <div class="mt-auto">
-            <a href="{{ link['#url'] }}" class="stretched-link" aria-label="{{ link['#title'] }}"></a>
+            <a href="{{ stat_source['#url'] }}" class="stretched-link" aria-label="{{ stat_source['#title'] }}"></a>
           </div>
         {% else %}
-          <div class="mt-auto">{{ link }}</div>
+          <div class="mt-auto">{{ stat_source }}</div>
         {% endif %}
       {% endif %}
     </div>
   {% else %}
     <div class="stat-body d-flex flex-column">
-      {% if stat_heading and title_style == 'default' %}
+      {% if stat_heading %}
         <h1 class="fw-bold display-1 mt-0 mb-0 {{ stat_alignment }}">
-          {% if link|render %}
+          {% if stat_source|render %}
             <a href="{{ link_url }}" class="text-reset">{{ stat_heading }}</a>
           {% else %}
             {{ stat_heading }}
           {% endif %}
         </h1>
       {% endif %}
-      {% if stat_description['#text'] %}
+      {% if stat_description %}
         <div class="stat-text">{{ stat_description }}</div>
       {% endif %}
-      {% if link %}
-        <div class="mt-auto">{{ link }}</div>
+      {% if stat_source %}
+        <div class="mt-auto">{{ stat_source }}</div>
       {% endif %}
     </div>
   {% endif %}
