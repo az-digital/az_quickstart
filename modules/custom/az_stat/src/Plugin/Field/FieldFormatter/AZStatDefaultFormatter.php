@@ -157,8 +157,8 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
       }
 
       // Title alignment.
-      if (!empty($item->options['title_alignment'])) {
-        $title_alignment = $item->options['title_alignment'];
+      if (!empty($item->options['stat_alignment'])) {
+        $title_alignment = $item->options['stat_alignment'];
       }
 
       // Title display.
