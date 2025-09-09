@@ -64,7 +64,7 @@ class AZStatImageHelper {
       $media_render_array = [
         '#theme' => 'image_formatter',
         '#item' => $image,
-        '#image_style' => 'az_stat_image',
+        '#image_style' => 'az_card_image',
         // Support images smaller than stat width, eg. full width stats.
         '#item_attributes' => [
           'class' => ['stat-img-top'],

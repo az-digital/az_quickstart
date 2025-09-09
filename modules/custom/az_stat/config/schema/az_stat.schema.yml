@@ -1,5 +1,4 @@
 # Default value.
-# TODO: change options to type: mapping, add stat style options
 field.value.az_stat:
   type: mapping
   label: Default value
@@ -20,8 +19,24 @@ field.value.az_stat:
       type: string
       label: Stat Link URI
     options:
-      type: text
+      type: mapping
       label: Stat Options
+      mapping:
+        stat_type:
+          type: string
+          label: Stat Type
+        column_span:
+          type: string
+          label: Column Span
+        class:
+          type: string
+          label: CSS Class
+        link_style:
+          type: string
+          label: Link Style
+        stat_alignment:
+          type: string
+          label: Stat Alignment
 # Field formatter.
 # TODO: add stat style options
 field.formatter.settings.az_stat_default:

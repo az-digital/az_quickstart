@@ -64,7 +64,7 @@ class AZStatsParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#type' => 'select',
       '#options' => [
         'h2' => $this->t('Large block lettering'),
-        'h3' => $this->t('H3 (Regular card heading'),
+        'h3' => $this->t('H3 (Regular card heading)'),
 //        'h4' => $this->t('H4 (subsection heading)'),
 //        'h5' => $this->t('H5 (subsection heading)'),
 //        'h6' => $this->t('H6 (subsection heading)'),
