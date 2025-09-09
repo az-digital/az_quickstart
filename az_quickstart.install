@@ -36,7 +36,7 @@ function az_quickstart_install() {
   ]);
   $shortcut->save();
 
-  // Allow editors to access icon library (editors don't have access to Appearance tab)
+  // Allow editors to access icon library.
   $shortcut = Shortcut::create([
     'shortcut_set' => 'default',
     'title' => t('Icon library'),
@@ -238,7 +238,7 @@ function az_quickstart_update_1021302() {
 }
 
 /**
- * Enable az_icons module by default. Provide shortcut to icon library (editors don't have access to Appearance tab).
+ * Enable az_icons module by default. Provide shortcut to icon library.
  */
 function az_quickstart_update_11301() {
   \Drupal::service('module_installer')->install(['az_icons']);
