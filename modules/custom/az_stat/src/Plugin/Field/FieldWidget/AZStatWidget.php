@@ -169,8 +169,8 @@ class AZStatWidget extends WidgetBase {
         '#stat_heading' => $item->stat_heading ?? '',
         '#stat_description' => $item->stat_description ?? '',
         //        '#body' => check_markup(
-//          $item->stat_description ?? '',
-//          $item->body_format ?? self::AZ_STAT_DEFAULT_TEXT_FORMAT),
+        //          $item->stat_description ?? '',
+        //          $item->body_format ?? self::AZ_STAT_DEFAULT_TEXT_FORMAT),
         '#attributes' => ['class' => $stat_classes],
       ];
 
@@ -212,6 +212,50 @@ class AZStatWidget extends WidgetBase {
       $element['preview_container']['stat_preview']['#link']['#attributes']['class'][] = 'az-stat-no-follow';
     }
 
+    $stat_type_unique_id = Html::getUniqueId('az_stat_type_input');
+    $element['stat_type'] = [
+      '#type' => 'select',
+      '#options' => [
+        'standard' => $this->t('Standard'),
+        'image_only' => $this->t('Image Only'),
+      ],
+      '#title' => $this->t('Stat Type'),
+      '#default_value' => (!empty($item->options['stat_type'])) ? $item->options['stat_type'] : 'standard',
+      '#attributes' => ['data-az-stat-type-input-id' => $stat_type_unique_id],
+    ];
+
+    $element['media'] = [
+      '#type' => 'az_media_library',
+      '#title' => $this->t('Stat Media'),
+      '#default_value' => $item->media ?? NULL,
+      '#allowed_bundles' => ['az_image'],
+      '#delta' => $delta,
+      '#cardinality' => 1,
+      '#states' => [
+        'visible' => [
+          ':input[data-az-stat-type-input-id="' . $stat_type_unique_id . '"]' => ['value' => 'image_only'],
+        ],
+      ],
+    ];
+    
+    $element['column_span'] = [
+      '#type' => 'select',
+      '#options' => [
+        '1' => $this->t('1'),
+        '2' => $this->t('2'),
+        '3' => $this->t('3'),
+        '4' => $this->t('4'),
+      ],
+      '#title' => $this->t('Column Span'),
+      '#description' => $this->t('How many columns do you want this image to span?'),
+      '#default_value' => (!empty($item->options['column_span'])) ? $item->options['column_span'] : '2',
+      '#states' => [
+        'visible' => [
+          ':input[data-az-stat-type-input-id="' . $stat_type_unique_id . '"]' => ['value' => 'image_only'],
+        ],
+      ],
+    ];
+
     $element['options'] = [
       '#type' => 'select',
       '#options' => [
@@ -239,22 +283,11 @@ class AZStatWidget extends WidgetBase {
       '#required' => TRUE,
       '#title' => $this->t('Stat Background'),
       '#default_value' => (!empty($item->options['class'])) ? $item->options['class'] : 'text-bg-white',
-    ];
-
-    $element['media'] = [
-      '#type' => 'az_media_library',
-      '#title' => $this->t('Stat Media'),
-      '#default_value' => $item->media ?? NULL,
-      '#allowed_bundles' => ['az_image'],
-      '#delta' => $delta,
-      '#cardinality' => 1,
-    ];
-
-    $element['stat_heading'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Stat Heading'),
-      '#default_value' => $item->stat_heading ?? NULL,
-      '#maxlength' => 255,
+      '#states' => [
+        'visible' => [
+          ':input[data-az-stat-type-input-id="' . $stat_type_unique_id . '"]' => ['value' => 'standard'],
+        ],
+      ],
     ];
 
     $element['stat_alignment'] = [
@@ -266,6 +299,23 @@ class AZStatWidget extends WidgetBase {
       ],
       '#title' => $this->t('Stat Alignment'),
       '#default_value' => (!empty($item->options['stat_alignment'])) ? $item->options['stat_alignment'] : 'text-start',
+      '#states' => [
+        'visible' => [
+          ':input[data-az-stat-type-input-id="' . $stat_type_unique_id . '"]' => ['value' => 'standard'],
+        ],
+      ],
+    ];
+
+    $element['stat_heading'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Stat Heading'),
+      '#default_value' => $item->stat_heading ?? NULL,
+      '#maxlength' => 255,
+      '#states' => [
+        'visible' => [
+          ':input[data-az-stat-type-input-id="' . $stat_type_unique_id . '"]' => ['value' => 'standard'],
+        ],
+      ],
     ];
 
     $element['stat_description'] = [
@@ -273,6 +323,11 @@ class AZStatWidget extends WidgetBase {
       '#title' => $this->t('Stat Description'),
       '#default_value' => $item->stat_description ?? NULL,
       '#maxlength' => 255,
+      '#states' => [
+        'visible' => [
+          ':input[data-az-stat-type-input-id="' . $stat_type_unique_id . '"]' => ['value' => 'standard'],
+        ],
+      ],
     ];
 
     $element['stat_source'] = [
@@ -280,6 +335,11 @@ class AZStatWidget extends WidgetBase {
       '#title' => $this->t('Stat Source'),
       '#default_value' => $item->stat_source ?? NULL,
       '#maxlength' => 255,
+      '#states' => [
+        'visible' => [
+          ':input[data-az-stat-type-input-id="' . $stat_type_unique_id . '"]' => ['value' => 'standard'],
+        ],
+      ],
     ];
 
     $element['link_uri'] = [
@@ -292,6 +352,11 @@ class AZStatWidget extends WidgetBase {
       '#element_validate' => [[$this, 'validateStatLink']],
       '#default_value' => $item->link_uri ?? NULL,
       '#maxlength' => 2048,
+      '#states' => [
+        'visible' => [
+          ':input[data-az-stat-type-input-id="' . $stat_type_unique_id . '"]' => ['value' => 'standard'],
+        ],
+      ],
     ];
 
     // Add client side validation for link title if not collapsed.
@@ -502,11 +567,13 @@ class AZStatWidget extends WidgetBase {
       if ($value['link_uri'] === '') {
         $values[$delta]['link_uri'] = NULL;
       }
-      if (!empty($value['options']) || !empty($value['link_style'])) {
+      if (!empty($value['options']) || !empty($value['link_style']) || !empty($value['stat_alignment']) || !empty($value['stat_type']) || !empty($value['column_span'])) {
         $values[$delta]['options'] = [
           'class' => $value['options'],
           'link_style' => $value['link_style'],
           'stat_alignment' => $value['stat_alignment'],
+          'stat_type' => $value['stat_type'],
+          'column_span' => $value['column_span'],
         ];
       }
 //      $values[$delta]['body'] = $value['body']['value'];
