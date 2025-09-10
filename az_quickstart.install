@@ -240,7 +240,7 @@ function az_quickstart_update_1021302() {
 /**
  * Enable az_icons module by default. Provide shortcut to icon library.
  */
-function az_quickstart_update_11301() {
+function az_quickstart_update_1130001() {
   \Drupal::service('module_installer')->install(['az_icons']);
 
   $shortcut = Shortcut::create([
