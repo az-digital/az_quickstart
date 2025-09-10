@@ -19,10 +19,12 @@ dependencies:
     - field.field.node.az_news.field_az_short_title
     - field.field.node.az_news.field_az_subheading
     - field.field.node.az_news.field_az_summary
+    - image.style.az_medium
     - node.type.az_news
   module:
     - date_ap_style
     - field_group
+    - media
     - smart_title
     - user
 third_party_settings:
@@ -199,11 +201,13 @@ content:
     weight: 1
     region: content
   field_az_media_thumbnail_image:
-    type: entity_reference_entity_view
+    type: media_thumbnail
     label: hidden
     settings:
-      view_mode: az_card_image
-      link: false
+      image_link: ''
+      image_style: az_medium
+      image_loading:
+        attribute: lazy
     third_party_settings: {  }
     weight: 0
     region: content
