@@ -59,19 +59,34 @@ class AZStatsParagraphBehavior extends AZDefaultParagraphsBehavior {
     //   '#description' => $this->t('Select a stat title style.'),
     // ];
 
-    $form['stat_title_level'] = [
-      '#title' => $this->t('Stat title level'),
+
+    $form['stat_style'] = [
+      '#title' => $this->t('Style'),
       '#type' => 'select',
       '#options' => [
-        'h2' => $this->t('Large block lettering'),
-        'h3' => $this->t('H3 (Regular card heading)'),
+        'h3' => $this->t('Card Heading'),
+        'stat-bold-static' => $this->t('Stat Bold Static'),
+        'stat-bold-hover' => $this->t('Stat Bold Hover'),
+      ],
+      '#default_value' => $config['stat_style'] ?? 'stat-bold-static',
+      '#description' => $this->t('Gives the stats a bold look with an interactive hover effect, bold without the hover effect, or a more basic look similar to cards.'),
+    ];
+
+
+
+    // $form['stat_title_level'] = [
+    //   '#title' => $this->t('Stat title level'),
+    //   '#type' => 'select',
+    //   '#options' => [
+    //     'h2' => $this->t('Large block lettering'),
+    //     'h3' => $this->t('H3 (Regular card heading)'),
 //        'h4' => $this->t('H4 (subsection heading)'),
 //        'h5' => $this->t('H5 (subsection heading)'),
 //        'h6' => $this->t('H6 (subsection heading)'),
-      ],
-      '#default_value' => $config['stat_title_level'] ?? 'h3',
-      '#description' => $this->t('The heading level of the stat title. <a href="https://quickstart.arizona.edu/best-practices/using-headings" target="_blank">Learn about best web practices</a>.'),
-    ];
+    //   ],
+    //   '#default_value' => $config['stat_title_level'] ?? 'h3',
+    //   '#description' => $this->t('The heading level of the stat title. <a href="https://quickstart.arizona.edu/best-practices/using-headings" target="_blank">Learn about best web practices</a>.'),
+    // ];
 
     // $form['stat_title_display'] = [
     //   '#title' => $this->t('Stat title display size'),
@@ -98,13 +113,13 @@ class AZStatsParagraphBehavior extends AZDefaultParagraphsBehavior {
     //   '#description' => $this->t('Make the whole stat clickable if the link fields are populated.'),
     // ];
 
-    $form['stat_hoverable'] = [
-      '#title' => $this->t('Hoverable stats'),
-      '#type' => 'checkbox',
-      '#default_value' => $config['stat_hoverable'] ?? FALSE,
-      '#description' => $this->t('Makes the stat use hover effects and colors based on each items color choice')
-    ];
-    
+    // $form['stat_hoverable'] = [
+    //   '#title' => $this->t('Hoverable stats'),
+    //   '#type' => 'checkbox',
+    //   '#default_value' => $config['stat_hoverable'] ?? FALSE,
+    //   '#description' => $this->t('Makes the stat use hover effects and colors based on each items color choice')
+    // ];
+
     parent::buildBehaviorForm($paragraph, $form, $form_state);
 
     // Stat deck width for tablets.
