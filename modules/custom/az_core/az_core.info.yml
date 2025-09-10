@@ -11,6 +11,7 @@ dependencies:
   - config_sync:config_sync
   - config_update:config_update
   - drupal:field
+  - drupal:media
   - drupal:path
   - drupal:taxonomy
   - drupal:telephone
