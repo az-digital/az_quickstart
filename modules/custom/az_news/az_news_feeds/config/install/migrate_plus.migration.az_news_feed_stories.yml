@@ -6,6 +6,7 @@ dependencies:
       - az_news
       - az_news_feeds
       - migrate_tools
+      - migrate_plus
 id: az_news_feed_stories
 class: null
 field_plugin_method: null
@@ -14,8 +15,6 @@ migration_tags:
   - 'Quickstart News Feeds'
 migration_group: az_news_feeds
 label: 'University of Arizona News Stories'
-include:
-  - migrate_plus.migration_group.az_news_feeds
 source:
   ids:
     uuid:
@@ -110,3 +109,4 @@ destination:
 migration_dependencies:
   required:
     - az_news_feed_stories_media
+include: null

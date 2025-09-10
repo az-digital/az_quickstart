@@ -7,6 +7,7 @@ dependencies:
     module:
       - az_news_feeds
       - migrate_tools
+      - migrate_plus
 id: az_news_feeds
 label: 'AZ Quickstart News Feeds'
 description: 'Migrate News content from news.arizona.edu'
@@ -20,4 +21,4 @@ shared_configuration:
     urls: 'https://news.arizona.edu/feed/json/stories/id/all'
     constants:
       DRUPAL_FILE_DIRECTORY: 'public://images/'
-    item_selector: stories/
+    item_selector: stories
