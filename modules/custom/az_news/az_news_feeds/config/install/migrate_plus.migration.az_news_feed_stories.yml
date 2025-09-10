@@ -11,11 +11,11 @@ id: az_news_feed_stories
 class: null
 field_plugin_method: null
 cck_plugin_method: null
-migration_tags:
-  - 'Quickstart News Feeds'
+migration_tags: null
 migration_group: az_news_feeds
 label: 'University of Arizona News Stories'
 source:
+  plugin: url
   ids:
     uuid:
       type: uuid
