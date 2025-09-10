@@ -14,6 +14,8 @@ migration_tags:
   - 'Quickstart News Feeds'
 migration_group: az_news_feeds
 label: 'University of Arizona News Stories - Files'
+include:
+  - migrate_plus.migration_group.az_news_feeds
 source:
   ids:
     fid:
