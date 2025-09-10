@@ -142,8 +142,9 @@ copyright_notice: 'The Arizona Board of Regents on behalf of <a href="https://ww
 az_hide_front_title: false
 az_back_to_top: true
 az_bootstrap_source: cdn
-az_bootstrap_cdn_version_css: 5.x
-az_bootstrap_cdn_version_js: 5.x
+az_bootstrap_cdn_version: stable
+az_bootstrap_cdn_version_css: stable
+az_bootstrap_cdn_version_js: stable
 az_bootstrap_minified: true
 az_barrio_font: true
 az_barrio_material_symbols_rounded: true
