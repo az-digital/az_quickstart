@@ -5,6 +5,8 @@
  * Install, update, and uninstall functions for az_icons module.
  */
 
+use Drupal\shortcut\Entity\Shortcut;
+
 /**
  * Add shortcut to allow editors to access icon library.
  */
