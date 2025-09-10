@@ -359,7 +359,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
       $entity_id = is_numeric($child) ? $child : str_replace('tid:', '', $child);
       $state = $state_overrides[$entity_id] ?? $global_default_state;
       // If the term should be removed, exclude it.
-      if ($state === 'remove') {
+      if ($state === 'hide') {
         unset($variables['element'][$child]);
         continue;
       }
