@@ -32,6 +32,7 @@ function az_stat_theme($existing, $type, $theme, $path) {
       'variables' => [
         'attributes' => [],
         'media' => NULL,
+        'column_span' => NULL,
         'stat_heading' => NULL,
         'stat_description' => NULL,
         'stat_source' => NULL,

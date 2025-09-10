@@ -114,6 +114,7 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
       $stat_description = $item->stat_description ?? '';
 
       // Media.
+      $column_span = $item->options['column_span'] ?? '';
       $media_render_array = [];
       if (!empty($item->media)) {
         if ($media = $this->entityTypeManager->getStorage('media')->load($item->media)) {
@@ -181,23 +182,36 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
 
           // Set stat classes according to behavior settings.
           $column_classes = [];
-          if (!empty($stat_defaults['az_display_settings'])) {
-            $column_classes[] = $stat_defaults['az_display_settings']['stat_width_xs'] ?? 'col-12';
-            $column_classes[] = $stat_defaults['az_display_settings']['stat_width_sm'] ?? 'col-sm-12';
-          }
-          $column_classes[] = $stat_defaults['stat_width'] ?? 'col-md-4 col-lg-4';
+//          if (!empty($stat_defaults['az_display_settings'])) {
+//            $column_classes[] = $stat_defaults['az_display_settings']['stat_width_xs'] ?? 'col-12';
+//            $column_classes[] = $stat_defaults['az_display_settings']['stat_width_sm'] ?? 'col-sm-12';
+//          }
+         // $column_classes[] = $stat_defaults['stat_width']; ?? 'col-md-4 col-lg-4';
           $stat_classes = $stat_defaults['stat_style'] ?? 'stat';
 
-          // Is the stat clickable?
-          if (isset($stat_defaults['stat_clickable']) && $stat_defaults['stat_clickable']) {
-            if (!empty($link_render_array)) {
-              $link_render_array['#attributes']['class'][] = 'stretched-link';
-            }
-            $stat_classes .= ' shadow overflow-hidden';
-            if ($item->link_uri) {
-              $stat_classes .= ' stat-with-link';
-            }
+          //TODO: Better way to treat default as null or unset.
+          //if($item->options['column_span'] == 'default')) {
+          //  $item->options['column_span'] == '';
+          //}
+
+          //Here i need a single item, not the paragraph.
+          if (!empty($item->options['column_span']) && ($item->options['column_span'] != '')) {
+              $column_classes[] = $item->options['column_span'];
+          } else {
+            $column_classes[] = $stat_defaults['stat_width'] ?? 'col-md-4 col-lg-4';
           }
+
+          // Is the stat clickable?
+          // TODO: Uncomment this, This should always be true if there's a source link (there'll likely be no button style with a simple design???)
+          // if (isset($stat_defaults['stat_clickable']) && $stat_defaults['stat_clickable']) {
+          //   if (!empty($link_render_array)) {
+          //     $link_render_array['#attributes']['class'][] = 'stretched-link';
+          //   }
+          //   $stat_classes .= ' shadow overflow-hidden';
+          //   if ($item->link_uri) {
+          //     $stat_classes .= ' stat-with-link';
+          //   }
+          // }
 
           // Title style.
           if (isset($stat_defaults['stat_title_style'])) {
@@ -236,6 +250,7 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
       $element[$delta] = [
         '#theme' => 'az_stat',
         '#media' => $media_render_array,
+        '#column_span' => $column_span,
         '#stat_heading' => $stat_heading,
         // The ProcessedText element handles cache context & tag bubbling.
         // @see \Drupal\filter\Element\ProcessedText::preRenderText()

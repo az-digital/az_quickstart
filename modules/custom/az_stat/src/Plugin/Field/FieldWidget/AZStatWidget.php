@@ -241,14 +241,16 @@ class AZStatWidget extends WidgetBase {
     $element['column_span'] = [
       '#type' => 'select',
       '#options' => [
-        '1' => $this->t('1'),
-        '2' => $this->t('2'),
-        '3' => $this->t('3'),
-        '4' => $this->t('4'),
+        '' => $this->t('Default (No Override)'),
+        'col-md-12 col-lg-12' => $this->t('Full Width 12'),
+        'col-md-8 col-lg-8' => $this->t('8'),
+        'col-md-6 col-lg-6' => $this->t('6'),
+        'col-md-4 col-lg-4' => $this->t('4'),
+        'col-md-3 col-lg-3' => $this->t('3'),
       ],
-      '#title' => $this->t('Column Span'),
+      '#title' => $this->t('Column Span Override'),
       '#description' => $this->t('How many columns do you want this image to span?'),
-      '#default_value' => (!empty($item->options['column_span'])) ? $item->options['column_span'] : '2',
+      '#default_value' => (!empty($item->options['column_span'])) ? $item->options['column_span'] : '',
       '#states' => [
         'visible' => [
           ':input[data-az-stat-type-input-id="' . $stat_type_unique_id . '"]' => ['value' => 'image_only'],
@@ -342,6 +344,7 @@ class AZStatWidget extends WidgetBase {
       ],
     ];
 
+   
     $element['link_uri'] = [
       '#type' => 'linkit',
       '#autocomplete_route_name' => 'linkit.autocomplete',

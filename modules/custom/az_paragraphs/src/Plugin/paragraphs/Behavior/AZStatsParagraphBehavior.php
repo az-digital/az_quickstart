@@ -37,29 +37,6 @@ class AZStatsParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#description' => $this->t('Choose how many stats appear per row. Additional stats will wrap to a new row. This selection sets the stats per row on desktops with automatic defaults set for tablet and phone. Override stats per row on tablet and phone in Additional options.'),
     ];
 
-    // $form['stat_style'] = [
-    //   '#title' => $this->t('Stat style'),
-    //   '#type' => 'select',
-    //   '#options' => [
-    //     'stat' => $this->t('Bordered stats'),
-    //     'stat border-0' => $this->t('Borderless stats'),
-    //   ],
-    //   '#default_value' => $config['stat_style'] ?? 'stat',
-    //   '#description' => $this->t('Select a stat style.'),
-    // ];
-
-    // $form['stat_title_style'] = [
-    //   '#title' => $this->t('Stat title style'),
-    //   '#type' => 'select',
-    //   '#options' => [
-    //     'default' => $this->t('Title within stat (default)'),
-    //     'title-on-image' => $this->t('Title on image'),
-    //   ],
-    //   '#default_value' => $config['stat_title_style'] ?? 'default',
-    //   '#description' => $this->t('Select a stat title style.'),
-    // ];
-
-
     $form['stat_style'] = [
       '#title' => $this->t('Style'),
       '#type' => 'select',
@@ -71,54 +48,6 @@ class AZStatsParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#default_value' => $config['stat_style'] ?? 'stat-bold-hover',
       '#description' => $this->t('Gives the stats a bold look with an interactive hover effect, bold without the hover effect, or a more basic look similar to cards.'),
     ];
-
-
-
-    // $form['stat_title_level'] = [
-    //   '#title' => $this->t('Stat title level'),
-    //   '#type' => 'select',
-    //   '#options' => [
-    //     'h2' => $this->t('Large block lettering'),
-    //     'h3' => $this->t('H3 (Regular card heading)'),
-//        'h4' => $this->t('H4 (subsection heading)'),
-//        'h5' => $this->t('H5 (subsection heading)'),
-//        'h6' => $this->t('H6 (subsection heading)'),
-    //   ],
-    //   '#default_value' => $config['stat_title_level'] ?? 'h3',
-    //   '#description' => $this->t('The heading level of the stat title. <a href="https://quickstart.arizona.edu/best-practices/using-headings" target="_blank">Learn about best web practices</a>.'),
-    // ];
-
-    // $form['stat_title_display'] = [
-    //   '#title' => $this->t('Stat title display size'),
-    //   '#type' => 'select',
-    //   '#options' => [
-    //     'h6' => $this->t('Smallest (H6 size)'),
-    //     'h5' => $this->t('Default (H5 size)'),
-    //     'h4' => $this->t('Small (H4 size)'),
-    //     'h3' => $this->t('Medium (H3 size)'),
-    //     'h2' => $this->t('Large (H2 size)'),
-    //     'display-4' => $this->t('Small Display Heading'),
-    //     'display-3' => $this->t('Medium Display Heading'),
-    //     'display-2' => $this->t('Large Display Heading'),
-    //     'display-1' => $this->t('Largest Display Heading'),
-    //   ],
-    //   '#default_value' => $config['stat_title_display'] ?? 'h5',
-    //   '#description' => $this->t('Select the display size of the title. <a href="https://digital.arizona.edu/arizona-bootstrap/docs/2.0/content/typography/#display-headings" target="_blank">Learn about display heading sizes</a>.'),
-    // ];
-
-    // $form['stat_clickable'] = [
-    //   '#title' => $this->t('Clickable stats'),
-    //   '#type' => 'checkbox',
-    //   '#default_value' => $config['stat_clickable'] ?? FALSE,
-    //   '#description' => $this->t('Make the whole stat clickable if the link fields are populated.'),
-    // ];
-
-    // $form['stat_hoverable'] = [
-    //   '#title' => $this->t('Hoverable stats'),
-    //   '#type' => 'checkbox',
-    //   '#default_value' => $config['stat_hoverable'] ?? FALSE,
-    //   '#description' => $this->t('Makes the stat use hover effects and colors based on each items color choice')
-    // ];
 
     parent::buildBehaviorForm($paragraph, $form, $form_state);
 

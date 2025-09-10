@@ -48,8 +48,6 @@ class AZStatItem extends FieldItemBase {
       ->setLabel(t('Stat Title'));
     $properties['stat_description'] = DataDefinition::create('string')
       ->setLabel(t('Stat Body'));
-//    $properties['body_format'] = DataDefinition::create('string')
-//      ->setLabel(t('Stat Body Text Format'));
     $properties['media'] = DataDefinition::create('integer')
       ->setLabel(t('Stat Media'));
     $properties['stat_source'] = DataDefinition::create('string')

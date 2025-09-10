@@ -13,57 +13,40 @@
  * - title_style: The title style to use.
  * - title_level: The heading level to use.
  * - title_display: The title text display size to use.
- *
  * @ingroup themeable
  */
+
+
+/**
+ * TODO: Twig notes, delete before final push:
+ * Stat item is either image or stat. If image, column size could be variable.
+ * Stat is one of three styles.
+ *
+ */
+
 #}
 {% set attributes = attributes.addClass('h-100') %}
 <div{{ attributes }}>
   {% if media %}
     <div class="position-relative overflow-hidden">
       {{ media }}
-      {% if stat_heading and title_style == 'title-on-image' %}
-        <div class="stat-img-overlay p-0 d-flex flex-column">
-          <{{ title_level }} class="fw-bold mt-auto stat-title text-bg-gradient-black text-white mb-0 p-stat pt-8 {{ stat_alignment }} {{ title_display }}">
-            {% if link|render %}
-              <a href="{{ link_url }}" class="text-reset">{{ stat_heading }}</a>
-            {% else %}
-              {{ stat_heading }}
-            {% endif %}
-          </{{ title_level }}>
-        </div>
-      {% endif %}
     </div>
   {% endif %}
-  {% if title_style == 'title-on-image' and stat_description['#text'] == '' and (stat_source['#title'] == '' or 'visually-hidden' in stat_source['#attributes']['class'] ) %}
-    <div class="d-flex flex-column">
-      {% if link|render %}
-        {% if 'visually-hidden' in link['#attributes']['class'] and 'stretched-link' in stat_source['#attributes']['class'] %}
-          <div class="mt-auto">
-            <a href="{{ stat_source['#url'] }}" class="stretched-link" aria-label="{{ stat_source['#title'] }}"></a>
-          </div>
+  <div class="stat-body d-flex flex-column">
+    {% if stat_heading %}
+      <h1 class="fw-bold display-1 mt-0 mb-0">
+        {% if stat_source|render %}
+          <a href="{{ link_url }}" class="text-reset">{{ stat_heading }}</a>
         {% else %}
-          <div class="mt-auto">{{ stat_source }}</div>
+          {{ stat_heading }}
         {% endif %}
-      {% endif %}
-    </div>
-  {% else %}
-    <div class="stat-body d-flex flex-column">
-      {% if stat_heading %}
-        <h1 class="fw-bold display-1 mt-0 mb-0">
-          {% if stat_source|render %}
-            <a href="{{ link_url }}" class="text-reset">{{ stat_heading }}</a>
-          {% else %}
-            {{ stat_heading }}
-          {% endif %}
-        </h1>
-      {% endif %}
-      {% if stat_description %}
-        <div class="stat-text">{{ stat_description }}</div>
-      {% endif %}
-      {% if stat_source %}
-        <div class="mt-auto">{{ stat_source }}</div>
-      {% endif %}
-    </div>
-  {% endif %}
+      </h1>
+    {% endif %}
+    {% if stat_description %}
+      <div class="stat-text">{{ stat_description }}</div>
+    {% endif %}
+    {% if stat_source %}
+      <div class="mt-auto">{{ stat_source }}</div>
+    {% endif %}
+  </div>
 </div>
