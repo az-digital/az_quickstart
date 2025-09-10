@@ -36,15 +36,6 @@ function az_quickstart_install() {
   ]);
   $shortcut->save();
 
-  // Allow editors to access icon library.
-  $shortcut = Shortcut::create([
-    'shortcut_set' => 'default',
-    'title' => t('Icon library'),
-    'weight' => -18,
-    'link' => ['uri' => 'internal:/admin/appearance/ui/icons'],
-  ]);
-  $shortcut->save();
-
   // Install additional modules if site is running on Pantheon (or not).
   if (defined('PANTHEON_ENVIRONMENT')) {
     // Modules to install only on Pantheon.
@@ -242,12 +233,4 @@ function az_quickstart_update_1021302() {
  */
 function az_quickstart_update_1130001() {
   \Drupal::service('module_installer')->install(['az_icons']);
-
-  $shortcut = Shortcut::create([
-    'shortcut_set' => 'default',
-    'title' => t('Icon library'),
-    'weight' => -18,
-    'link' => ['uri' => 'internal:/admin/appearance/ui/icons'],
-  ]);
-  $shortcut->save();
 }

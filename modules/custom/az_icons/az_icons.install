@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * @file
+ * Install, update, and uninstall functions for az_icons module.
+ */
+
+/**
+ * Add shortcut to allow editors to access icon library.
+ */
+function az_icons_update_1130001() {
+  $shortcut = Shortcut::create([
+    'shortcut_set' => 'default',
+    'title' => t('Icon library'),
+    'weight' => -18,
+    'link' => ['uri' => 'internal:/admin/appearance/ui/icons'],
+  ]);
+  $shortcut->save();
+}
