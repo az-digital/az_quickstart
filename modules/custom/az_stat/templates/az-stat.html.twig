@@ -11,7 +11,6 @@
  * - stat_source: The link field on a stat.
  * - link_url: The link URL only.
  * - title_style: The title style to use.
- * - stat_alignment: The title alignment to use.
  * - title_level: The heading level to use.
  * - title_display: The title text display size to use.
  *
@@ -51,7 +50,7 @@
   {% else %}
     <div class="stat-body d-flex flex-column">
       {% if stat_heading %}
-        <h1 class="fw-bold display-1 mt-0 mb-0 {{ stat_alignment }}">
+        <h1 class="fw-bold display-1 mt-0 mb-0">
           {% if stat_source|render %}
             <a href="{{ link_url }}" class="text-reset">{{ stat_heading }}</a>
           {% else %}

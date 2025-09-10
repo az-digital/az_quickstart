@@ -290,21 +290,21 @@ class AZStatWidget extends WidgetBase {
       ],
     ];
 
-    $element['stat_alignment'] = [
-      '#type' => 'select',
-      '#options' => [
-        'text-start' => $this->t('Align left'),
-        'text-center' => $this->t('Align center'),
-        'text-end' => $this->t('Align right'),
-      ],
-      '#title' => $this->t('Stat Alignment'),
-      '#default_value' => (!empty($item->options['stat_alignment'])) ? $item->options['stat_alignment'] : 'text-start',
-      '#states' => [
-        'visible' => [
-          ':input[data-az-stat-type-input-id="' . $stat_type_unique_id . '"]' => ['value' => 'standard'],
-        ],
-      ],
-    ];
+    // $element['stat_alignment'] = [
+    //   '#type' => 'select',
+    //   '#options' => [
+    //     'text-start' => $this->t('Align left'),
+    //     'text-center' => $this->t('Align center'),
+    //     'text-end' => $this->t('Align right'),
+    //   ],
+    //   '#title' => $this->t('Stat Alignment'),
+    //   '#default_value' => (!empty($item->options['stat_alignment'])) ? $item->options['stat_alignment'] : 'text-start',
+    //   '#states' => [
+    //     'visible' => [
+    //       ':input[data-az-stat-type-input-id="' . $stat_type_unique_id . '"]' => ['value' => 'standard'],
+    //     ],
+    //   ],
+    // ];
 
     $element['stat_heading'] = [
       '#type' => 'textfield',

@@ -34,9 +34,6 @@ field.value.az_stat:
         link_style:
           type: string
           label: Link Style
-        stat_alignment:
-          type: string
-          label: Stat Alignment
 # Field formatter.
 # TODO: add stat style options
 field.formatter.settings.az_stat_default:

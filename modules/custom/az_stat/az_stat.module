@@ -37,7 +37,6 @@ function az_stat_theme($existing, $type, $theme, $path) {
         'stat_source' => NULL,
         'link_url' => NULL,
         'title_style' => 'default',
-        'stat_alignment' => 'text-start',
         'title_level' => 'h3',
         'title_display' => 'h5',
       ],
