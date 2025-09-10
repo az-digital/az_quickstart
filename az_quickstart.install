@@ -116,7 +116,7 @@ function az_quickstart_update_920601() {
 }
 
 /**
- * (Removed) Change Arizona Bootstrap CDN references.
+ * Change Arizona Bootstrap CDN references (removed).
  */
 function az_quickstart_update_920602() {
   // This update has been removed.
