@@ -31,22 +31,27 @@
     <div class="position-relative overflow-hidden">
       {{ media }}
     </div>
-  {% endif %}
-  <div class="stat-body d-flex flex-column">
-    {% if stat_heading %}
-      <h1 class="fw-bold display-1 mt-0 mb-0">
-        {% if stat_source|render %}
-          <a href="{{ link_url }}" class="text-reset">{{ stat_heading }}</a>
-        {% else %}
-          {{ stat_heading }}
+  {% else %}
+    <div class="card-body d-flex flex-column">
+      <div class="card-text">
+        {% if stat_heading %}
+          <h1 class="fw-bold display-4 mt-0 mb-0">
+            {{ stat_heading }}
+          </h1>
         {% endif %}
-      </h1>
-    {% endif %}
-    {% if stat_description %}
-      <div class="stat-text">{{ stat_description }}</div>
-    {% endif %}
-    {% if stat_source %}
-      <div class="mt-auto">{{ stat_source }}</div>
-    {% endif %}
-  </div>
+        {% if stat_description %}
+          <h4 class="m-0 stat-description">{{ stat_description }}</h4>
+        {% endif %}
+        <br><br><br>
+        {% if stat_source %}
+          <span class="align-items-end stat-source">
+            {{ stat_source['#title'] }}
+          </span>
+        {% endif %}
+      </div>
+      {% if link_url %}
+        <a href="{{ link_url }}" class="stretched-link"></a>
+      {% endif %}
+    </div>
+  {% endif %}
 </div>
