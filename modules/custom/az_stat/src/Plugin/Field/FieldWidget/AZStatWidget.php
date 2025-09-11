@@ -139,7 +139,7 @@ class AZStatWidget extends WidgetBase {
         '#type' => 'container',
         '#attributes' => [
           'class' =>
-            ['col-12', 'col-sm-6', 'col-md-6', 'col-lg-4', 'stat-preview'],
+            ['stat-preview'],
         ],
       ];
 
@@ -163,14 +163,12 @@ class AZStatWidget extends WidgetBase {
         $stat_classes .= ' ' . $item->options['class'];
       }
 
-      // Stat item.
+      // Add fields to the preview.
       $element['preview_container']['stat_preview'] = [
         '#theme' => 'az_stat',
         '#stat_heading' => $item->stat_heading ?? '',
         '#stat_description' => $item->stat_description ?? '',
-        //        '#body' => check_markup(
-        //          $item->stat_description ?? '',
-        //          $item->body_format ?? self::AZ_STAT_DEFAULT_TEXT_FORMAT),
+        '#stat_source' => $item->stat_source ?? '',
         '#attributes' => ['class' => $stat_classes],
       ];
 
@@ -213,6 +211,7 @@ class AZStatWidget extends WidgetBase {
     }
 
     $stat_type_unique_id = Html::getUniqueId('az_stat_type_input');
+
     $element['stat_type'] = [
       '#type' => 'select',
       '#options' => [
@@ -292,22 +291,6 @@ class AZStatWidget extends WidgetBase {
       ],
     ];
 
-    // $element['stat_alignment'] = [
-    //   '#type' => 'select',
-    //   '#options' => [
-    //     'text-start' => $this->t('Align left'),
-    //     'text-center' => $this->t('Align center'),
-    //     'text-end' => $this->t('Align right'),
-    //   ],
-    //   '#title' => $this->t('Stat Alignment'),
-    //   '#default_value' => (!empty($item->options['stat_alignment'])) ? $item->options['stat_alignment'] : 'text-start',
-    //   '#states' => [
-    //     'visible' => [
-    //       ':input[data-az-stat-type-input-id="' . $stat_type_unique_id . '"]' => ['value' => 'standard'],
-    //     ],
-    //   ],
-    // ];
-
     $element['stat_heading'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Stat Heading'),
@@ -343,7 +326,6 @@ class AZStatWidget extends WidgetBase {
         ],
       ],
     ];
-
    
     $element['link_uri'] = [
       '#type' => 'linkit',
@@ -366,7 +348,7 @@ class AZStatWidget extends WidgetBase {
     if ($status) {
       $link_uri_unique_id = Html::getUniqueId('az_stat_link_uri_input');
       $element['link_uri']['#attributes']['data-az-stat-link-uri-input-id'] = $link_uri_unique_id;
-      $element['link_title']['#states'] = [
+      $element['stat_source']['#states'] = [
         'required' => [
           ':input[data-az-stat-link-uri-input-id="' . $link_uri_unique_id . '"]' => ['filled' => TRUE],
         ],
