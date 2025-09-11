@@ -347,10 +347,8 @@ class AZStatWidget extends WidgetBase {
     if ($status) {
       $link_uri_unique_id = Html::getUniqueId('az_stat_link_uri_input');
       $element['link_uri']['#attributes']['data-az-stat-link-uri-input-id'] = $link_uri_unique_id;
-      $element['stat_source']['#states'] = [
-        'required' => [
-          ':input[data-az-stat-link-uri-input-id="' . $link_uri_unique_id . '"]' => ['filled' => TRUE],
-        ],
+      $element['stat_source']['#states']['required'] = [
+        ':input[data-az-stat-link-uri-input-id="' . $link_uri_unique_id . '"]' => ['filled' => TRUE],
       ];
     }
 
