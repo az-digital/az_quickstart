@@ -84,10 +84,6 @@ class AZStatItem extends FieldItemBase {
         'type' => 'text',
         'size' => 'big',
       ],
-      // 'body_format' => [
-      //   'type' => 'varchar',
-      //   'length' => 255,
-      // ],
       'media' => [
         'type' => 'int',
         'size' => 'normal',

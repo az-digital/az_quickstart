@@ -202,16 +202,15 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
           }
 
           // Is the stat clickable?
-          // TODO: Uncomment this, This should always be true if there's a source link (there'll likely be no button style with a simple design???)
-          // if (isset($stat_defaults['stat_clickable']) && $stat_defaults['stat_clickable']) {
-          //   if (!empty($link_render_array)) {
-          //     $link_render_array['#attributes']['class'][] = 'stretched-link';
-          //   }
-          //   $stat_classes .= ' shadow overflow-hidden';
-          //   if ($item->link_uri) {
-          //     $stat_classes .= ' stat-with-link';
-          //   }
-          // }
+          if (isset($stat_defaults['stat_clickable']) && $stat_defaults['stat_clickable']) {
+            if (!empty($link_render_array)) {
+              $link_render_array['#attributes']['class'][] = 'stretched-link';
+            }
+            $stat_classes .= ' shadow overflow-hidden';
+            if ($item->link_uri) {
+              $stat_classes .= ' stat-with-link';
+            }
+          }
 
           // Title style.
           if (isset($stat_defaults['stat_title_style'])) {
@@ -255,7 +254,7 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         // The ProcessedText element handles cache context & tag bubbling.
         // @see \Drupal\filter\Element\ProcessedText::preRenderText()
         '#stat_description' => $stat_description,
-        '#stat_source' => $link_render_array,
+        '#stat_source' => $item->stat_source,
         '#link_url' => $link_url,
         '#title_style' => $title_style ?? 'default',
         '#title_level' => $title_level ?? 'h3',
