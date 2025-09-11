@@ -168,7 +168,8 @@
                 "user_user_role_insert should not exist (2672340)": "https://gist.githubusercontent.com/joeparsons/f31108ee18aaed01e03ef3005ecd3d92/raw/0fdd114d79083ea7c6d962a061d09d81d58a0bea/2672340-11.x.patch",
                 "[Regression] missing menu active trail since Drupal 9.5.9 (3359511)": "https://www.drupal.org/files/issues/2025-07-15/3359511-11-x-no-tests.patch",
                 "[regression] CSS class is not added to MediaLibrary dialog (3474018)": "https://www.drupal.org/files/issues/2025-07-03/3474018-27.diff",
-                "Diffs with different line endings leads to Invalid $mode 3 specified (3389715)": "https://www.drupal.org/files/issues/2024-01-09/Diffs-with-different-line-endings-leads-to-Invalid-mode-3-specified.patch"
+                "Diffs with different line endings leads to Invalid $mode 3 specified (3389715)": "https://www.drupal.org/files/issues/2024-01-09/Diffs-with-different-line-endings-leads-to-Invalid-mode-3-specified.patch",
+                "11.2 migrate_drupal changes broke migrate_plus groups": "https://gist.githubusercontent.com/joeparsons/c5536f3d4479e02418bfcfe165302616/raw/1e6c4f71cca4e2102b8ad7aafd5d7435f6c87f78/fix_migration_groups-11-2-x.patch"
             },
             "drupal/draggableviews": {
                 "Row weights not displaying on sort view (3252365)": "https://www.drupal.org/files/issues/2023-08-25/3252365-check-remove-select-all-class.patch",
@@ -193,8 +194,7 @@
             "drupal/migrate_plus": {
                 "XML namespacing issue (2933531)": "https://www.drupal.org/files/issues/2019-08-22/register_namespaces-2933531-7.patch",
                 "entity_lookup plugin fails if $value is empty (2830058)": "https://www.drupal.org/files/issues/2022-10-11/migrate_plus-lookup-2830058-10.patch",
-                "Using the XML Data Parser with a Predicate pulls in the final xml item regardless of if the predicate matches (2891964)": "https://www.drupal.org/files/issues/fix-ignored-predicate-2891964-2.patch",
-                "Make hooks compatible with Drupal 11.2": "https://gist.githubusercontent.com/joeparsons/afc155144538c22a24e9e3e3abd68d10/raw/437c6e8cf68f770ee9fdba2a5137b34d73a2e4b2/migrate_plus_D11_hooks_fix.patch"
+                "Using the XML Data Parser with a Predicate pulls in the final xml item regardless of if the predicate matches (2891964)": "https://www.drupal.org/files/issues/fix-ignored-predicate-2891964-2.patch"
             },
             "drupal/role_delegation": {
                 "Restrict access to cancel/remove accounts with non-assignable roles (3299201)": "https://www.drupal.org/files/issues/2022-07-25/3299201-4.patch"
