@@ -115,11 +115,9 @@
             updateCalendarFilters(newDate, newDate);
           }
         });
-        $calendar.children('.ui-corner-all').removeClass('ui-corner-all');
-        $buttonWrapper.append('<button type="button" class="btn btn-hollow-primary calendar-filter-button calendar-filter-today btn-block">Today</button>');
-        $buttonWrapper.append('<button type="button" class="btn btn-hollow-primary calendar-filter-button calendar-filter-week btn-block">This Week</button>');
-        $buttonWrapper.append('<button type="button" class="btn btn-hollow-primary calendar-filter-button calendar-filter-month btn-block mb-2">This Month</button>');
-        $buttonWrapper.children('.calendar-filter-button').on('click', function (e) {
+        $calendar.children('.ui-corner-all').removeClass('ui-widget ui-corner-all').addClass('rounded overflow-hidden');
+        $buttonWrapper.append('<div class="d-grid gap-2"><button type="button" class="btn btn-outline-blue calendar-filter-button calendar-filter-today">Today</button>' + '<button type="button" class="btn btn-outline-blue calendar-filter-button calendar-filter-week">This Week</button>' + '<button type="button" class="btn btn-outline-blue calendar-filter-button calendar-filter-month mb-2">This Month</button></div>');
+        $buttonWrapper.find('.calendar-filter-button').on('click', function (e) {
           var $pressed = $(e.currentTarget);
           var current = new Date(Date.now());
           var today = new Date(current.getFullYear(), current.getMonth(), current.getDate());
