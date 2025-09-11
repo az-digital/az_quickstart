@@ -1,0 +1,28 @@
+<?php
+
+/**
+ * @file
+ * Contains az_icons.module.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function az_icons_form_ui_icons_ckeditor5_icon_dialog_alter(array &$form, FormStateInterface $form_state, $form_id) {
+  if (isset($form['icon'])) {
+    $form['icon']['#after_build'][] = 'az_icons_icon_after_build';
+  }
+}
+
+/**
+ * Form #after_build callback for form icon's sub-component.
+ */
+function az_icons_icon_after_build(array $element, FormStateInterface $form_state) {
+  // Append to field description with link to icon library.
+  if (isset($element['icon_id'])) {
+    $element['icon_id']['#description'] .= ' <a href="/admin/appearance/ui/icons">Browse the full icon library</a>.';
+  }
+  return $element;
+}
