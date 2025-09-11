@@ -182,11 +182,11 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
 
           // Set stat classes according to behavior settings.
           $column_classes = [];
-//          if (!empty($stat_defaults['az_display_settings'])) {
-//            $column_classes[] = $stat_defaults['az_display_settings']['stat_width_xs'] ?? 'col-12';
-//            $column_classes[] = $stat_defaults['az_display_settings']['stat_width_sm'] ?? 'col-sm-12';
-//          }
-         // $column_classes[] = $stat_defaults['stat_width']; ?? 'col-md-4 col-lg-4';
+          if (!empty($stat_defaults['az_display_settings'])) {
+              $column_classes[] = $stat_defaults['az_display_settings']['stat_width_xs'] ?? 'col-6';
+              $column_classes[] = $stat_defaults['az_display_settings']['stat_width_sm'] ?? 'col-md-4';
+          }
+          $column_classes[] = $stat_defaults['stat_width'] ?? 'col-md-4 col-lg-3';
           $stat_classes = $stat_defaults['stat_style'] ?? 'stat';
 
           //TODO: Better way to treat default as null or unset.
@@ -194,9 +194,33 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
           //  $item->options['column_span'] == '';
           //}
 
-          //Here i need a single item, not the paragraph.
-          if (!empty($item->options['column_span']) && ($item->options['column_span'] != '')) {
-              $column_classes[] = $item->options['column_span'];
+          // Calculate column classes for image based on column_span option (multiplier).
+          if ($item->options['stat_type'] === 'image_only' && !empty($item->options['column_span']) && ($item->options['column_span'] != '')) {
+
+            // Multiply column classes by the column_span value
+            $column_span_multiplier = (int) $item->options['column_span'];
+            if ($column_span_multiplier > 1) {
+              foreach ($column_classes as $key => $class_string) {
+                // Handle both single classes and space-separated multiple classes
+                $classes = explode(' ', $class_string);
+                $multiplied_classes = [];
+                
+                foreach ($classes as $class) {
+                  if (preg_match('/^col(-\w+)?-(\d+)$/', $class, $matches)) {
+                    $prefix = $matches[1] ?? '';
+                    $current_width = (int) $matches[2];
+                    $new_width = min(12, $current_width * $column_span_multiplier);
+                    $multiplied_classes[] = 'col' . $prefix . '-' . $new_width;
+                  } else {
+                    // Keep non-column classes as-is
+                    $multiplied_classes[] = $class;
+                  }
+                }
+                
+                $column_classes[$key] = implode(' ', $multiplied_classes);
+              }
+            }
+            
           } else {
             $column_classes[] = $stat_defaults['stat_width'] ?? 'col-md-4 col-lg-4';
           }

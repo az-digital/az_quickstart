@@ -241,16 +241,14 @@ class AZStatWidget extends WidgetBase {
     $element['column_span'] = [
       '#type' => 'select',
       '#options' => [
-        '' => $this->t('Default (No Override)'),
-        'col-md-12 col-lg-12' => $this->t('Full Width 12'),
-        'col-md-8 col-lg-8' => $this->t('8'),
-        'col-md-6 col-lg-6' => $this->t('6'),
-        'col-md-4 col-lg-4' => $this->t('4'),
-        'col-md-3 col-lg-3' => $this->t('3'),
+        1 => $this->t('1 Stat Card Width'),
+        2 => $this->t('2 Stat Card Width'),
+        3 => $this->t('3 Stat Card Width'),
+        4 => $this->t('4 Stat Card Width'),
       ],
-      '#title' => $this->t('Column Span Override'),
-      '#description' => $this->t('How many columns do you want this image to span?'),
-      '#default_value' => (!empty($item->options['column_span'])) ? $item->options['column_span'] : '',
+      '#title' => $this->t('Column Span'),
+      '#description' => $this->t('How many columns do you want this image to span (in multiples of card width)?'),
+      '#default_value' => (!empty($item->options['column_span'])) ? $item->options['column_span'] : 2,
       '#states' => [
         'visible' => [
           ':input[data-az-stat-type-input-id="' . $stat_type_unique_id . '"]' => ['value' => 'image_only'],
