@@ -1,6 +1,7 @@
 /*
   Overrides Arizona Bootstrap styling for node form.
   @see https://github.com/az-digital/az_quickstart/issues/2824
+  @see https://github.com/az-digital/az_quickstart/issues/4711
 */
 
 .toolbar-tray a {
@@ -44,4 +45,22 @@ a.chosen-single {
 .form-item__description .placeholder {
   background-color: initial;
   opacity: initial;
+}
+
+/* See https://github.com/az-digital/az_quickstart/issues/4730. */
+ul.media-library-menu,
+ul.filter-tips,
+.form-item__description > ul {
+  padding-left: 0;
+}
+
+/* Restore Claro modal title styles in admin dialogs. */
+.ui-dialog .ui-dialog-titlebar .ui-dialog-title {
+  line-height: calc(var(--space-m) * 2);
+  color: var(--jui-dialog-title-color);
+}
+
+/* Restore Claro messages title color in admin pages. */
+.messages__title {
+  color: var(--messages-fg-color);
 }
