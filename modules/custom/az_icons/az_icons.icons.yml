@@ -19,26 +19,22 @@ arizona_icons:
       title: "Color"
       type: "string"
       enum:
+        - inherit
         - red
-        - bloom
-        - chili
         - blue
-        - sky
-        - oasis
-        - azurite
-        - midnight
         - cool-gray
         - warm-gray
+        - midnight
+        - azurite
+        - oasis
+        - chili
+        - bloom
+        - sky
         - leaf
         - river
-        - silver
         - mesa
-        - ash
-        - sage
         - white
-        - dark-silver
         - black
-        - inherit
       default: inherit
   library: "az_icons/arizona_icons"
   template: >-
