@@ -8,9 +8,11 @@
 use Drupal\shortcut\Entity\Shortcut;
 
 /**
+ * Implements hook_instal().
+ *
  * Add shortcut to allow editors to access icon library.
  */
-function az_icons_update_1130001() {
+function az_icons_install() {
   $shortcut = Shortcut::create([
     'shortcut_set' => 'default',
     'title' => t('Icon library'),
