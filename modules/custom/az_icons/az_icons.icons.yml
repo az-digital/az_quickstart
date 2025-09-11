@@ -38,12 +38,13 @@ arizona_icons:
         - white
         - dark-silver
         - black
-      default: black
+        - inherit
+      default: inherit
   library: "az_icons/arizona_icons"
   template: >-
-    <i class="az-icon-{{ icon_id|clean_class }} text-{{ color }}" style="font-size: {{ size|default(24) }}px" title="{{ icon_id }}"></i>
+    <i class="az-icon-{{ icon_id|clean_class }} {% if color != 'inherit' %}text-{{ color }}{% endif %}" style="font-size: {{ size|default(24) }}px" title="{{ icon_id }}"></i>
   preview: >
-    <i class="az-icon-{{ icon_id|clean_class }} text-{{ color }}" style="font-size:35px" title="{{ icon_id }}"></i>
+    <i class="az-icon-{{ icon_id|clean_class }} {% if color != 'inherit' %}text-{{ color }}{% endif %}" style="font-size:35px" title="{{ icon_id }}"></i>
 
 # Material symbols icons
 material_symbols:
@@ -89,9 +90,10 @@ material_symbols:
         - white
         - dark-silver
         - black
-      default: black
+        - inherit
+      default: inherit
   library: "az_icons/material_symbols"
   template: >-
-    <span class="material-symbols-rounded text-{{ color }}" style="font-size:{{ size|default(24) }}px;">{{ icon_id }}</span>
+    <span class="material-symbols-rounded {% if color != 'inherit' %}text-{{ color }}{% endif %}" style="font-size:{{ size|default(24) }}px;">{{ icon_id }}</span>
   preview: >
-    <span class="material-symbols-rounded text-{{ color }}" style="font-size:35px;">{{ icon_id }}</span>
+    <span class="material-symbols-rounded {% if color != 'inherit' %}text-{{ color }}{% endif %}" style="font-size:35px;">{{ icon_id }}</span>
