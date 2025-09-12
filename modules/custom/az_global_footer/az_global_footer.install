@@ -410,6 +410,7 @@ function az_global_footer_update_1021204() {
     /** @var \Drupal\menu_link_content\Entity\MenuLinkContent $menu_link_content */
     $menu_link_content = MenuLinkContent::load($id);
     if ($menu_link_content !== NULL) {
+      /* @phpstan-ignore-next-line */
       $menu_link_content->title = 'Nondiscrimination';
       /* @phpstan-ignore-next-line */
       $menu_link_content->link->uri = 'https://www.arizona.edu/nondiscrimination';
