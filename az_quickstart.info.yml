@@ -21,6 +21,7 @@ install:
   - az_flexible_page
   - az_flexible_block
   - az_block_types_quick_links
+  - az_icons
   - az_metrics
   - az_news
   - az_person
@@ -76,7 +77,6 @@ install:
   - masquerade:masquerade
   - masquerade_log:masquerade_log
   - quick_node_clone:quick_node_clone
-
 themes:
   - az_barrio
   - claro
