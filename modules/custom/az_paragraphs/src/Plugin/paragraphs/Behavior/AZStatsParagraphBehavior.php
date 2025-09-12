@@ -60,7 +60,7 @@ class AZStatsParagraphBehavior extends AZDefaultParagraphsBehavior {
         'col-md-4' => $this->t('3'),
         'col-md-3' => $this->t('4'),
       ],
-      '#default_value' => $config['az_display_settings']['stat_width_sm'] ?? 'col-md-4',
+      '#default_value' => $config['az_display_settings']['stat_width_sm'] ?? 'col-md-6',
       '#description' => $this->t('Choose how many stats appear per row. Additional stats will wrap to a new row. This selection sets the stats per row on tablets.'),
       '#weight' => 1,
     ];
@@ -75,7 +75,7 @@ class AZStatsParagraphBehavior extends AZDefaultParagraphsBehavior {
         'col-4' => $this->t('3'),
         'col-3' => $this->t('4'),
       ],
-      '#default_value' => $config['az_display_settings']['stat_width_xs'] ?? 'col-6',
+      '#default_value' => $config['az_display_settings']['stat_width_xs'] ?? 'col-12',
       '#description' => $this->t('Choose how many stats appear per row. Additional stats will wrap to a new row. This selection sets the stats per row on phones.'),
       '#weight' => 2,
     ];
