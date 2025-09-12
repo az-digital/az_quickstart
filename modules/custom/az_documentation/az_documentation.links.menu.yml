@@ -1,0 +1,6 @@
+az_documentation.hub:
+  route_name: az_documentation.hub
+  parent: system.admin
+  title: 'Site documentation'
+  description: 'Central hub for site-specific documentation.'
+  weight: 95
