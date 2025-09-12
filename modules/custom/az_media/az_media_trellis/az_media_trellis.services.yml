@@ -1,0 +1,3 @@
+services:
+  az_media_trellis:
+    class: \Drupal\az_media_trellis\AzMediaTrellisService
