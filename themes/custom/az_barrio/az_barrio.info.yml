@@ -19,7 +19,7 @@ regions:
   header: 'Header 1'
   header_2: 'Header 2'
   navigation: 'Navigation bar'
-  navigation_offcanvas: 'Content associated with off-canvas mobile navigation'
+  navigation_offcanvas: 'Mobile navigation and search'
   help: 'Help'
   content_featured: 'Featured content'
   highlighted: 'Highlighted'
