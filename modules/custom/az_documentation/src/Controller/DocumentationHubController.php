@@ -46,27 +46,20 @@ class DocumentationHubController extends ControllerBase {
       '#markup' => Markup::create('<p>' . $this->t('You do not have permission to create any content types.') . '</p>'),
     ];
 
-    // Programmatically build the view so we can gracefully fallback.
+    // Build the az_documentation view (default display) or show a fallback.
     $view = Views::getView('az_documentation');
-    $built = FALSE;
-    if ($view) {
-      foreach (['page', 'default'] as $display_id) {
-        if ($view->storage->getDisplay($display_id) && $view->access($display_id)) {
-          $view->setDisplay($display_id);
-          $view->preExecute();
-          $view->execute();
-          $build['listing'] = $view->buildRenderable($display_id);
-          $built = TRUE;
-          break;
-        }
-      }
+    if ($view && $view->storage->getDisplay('default') && $view->access('default')) {
+      $view->setDisplay('default');
+      $view->preExecute();
+      $view->execute();
+      $build['listing'] = $view->buildRenderable('default');
     }
-    if (!$built) {
-      $reason = !$view ? 'view not found' : 'no accessible display (page/default)';
+    else {
+      $reason = !$view ? 'view not found' : 'default display not accessible';
       $build['listing'] = [
         '#type' => 'container',
         'placeholder' => [
-          '#markup' => '<p>' . $this->t('Documentation listing unavailable (@reason). Verify the view config is imported and permissions granted.', ['@reason' => $reason]) . '</p>',
+          '#markup' => '<p>' . $this->t('Documentation listing unavailable (@reason). Verify the view config and permissions.', ['@reason' => $reason]) . '</p>',
         ],
       ];
     }

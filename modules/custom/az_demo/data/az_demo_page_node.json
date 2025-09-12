@@ -252,6 +252,33 @@
       "az_main_content" : "190",
       "az_media_image" : "",
       "az_summary" : "A page with publications."
+    },
+    {
+      "id":29,
+      "title": "Documentation Overview",
+      "path": "/admin/documentation/overview",
+      "az_page_category": "Documentation",
+  "az_main_content": "193",
+      "az_media_image": "",
+      "az_summary": "Introduction to internal documentation area."
+    },
+    {
+      "id":30,
+      "title": "Editing Guidelines",
+      "path": "/admin/documentation/editing-guidelines",
+      "az_page_category": "Documentation",
+  "az_main_content": "194",
+      "az_media_image": "",
+      "az_summary": "Formatting, media, accessibility, tagging policies."
+    },
+    {
+      "id":31,
+      "title": "Publishing Workflow",
+      "path": "/admin/documentation/publishing-workflow",
+      "az_page_category": "Documentation",
+  "az_main_content": "195",
+      "az_media_image": "",
+      "az_summary": "Draft, review, and publish process overview."
     }
   ]
 }

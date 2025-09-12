@@ -1,10 +1,9 @@
 <?php
+
 /**
  * @file
  * Views integration for az_documentation.
  */
-
-use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
  * Implements hook_views_data().
