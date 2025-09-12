@@ -7,7 +7,6 @@
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\node\NodeInterface;
-use Drupal\Core\Url;
 
 /**
  * Implements hook_node_access().
@@ -36,32 +35,4 @@ function az_documentation_node_access(NodeInterface $node, $op, AccountInterface
   }
 
   return AccessResult::neutral();
-}
-
-/**
- * Implements hook_toolbar().
- */
-function az_documentation_toolbar() {
-  $items = [];
-
-  // Add a top-level toolbar tab with the same icon class used by Help.
-  $items['az_documentation'] = [
-    '#type' => 'toolbar_item',
-    'tab' => [
-      '#type' => 'link',
-      '#title' => t('Site documentation'),
-      '#url' => Url::fromRoute('az_documentation.hub'),
-      '#attributes' => [
-        'title' => t('Site documentation'),
-        'class' => [
-          'toolbar-icon',
-          // Reuse Help icon class for identical icon.
-          'toolbar-icon-help-main',
-        ],
-      ],
-    ],
-    '#weight' => 98,
-  ];
-
-  return $items;
 }

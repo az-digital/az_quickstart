@@ -4,3 +4,8 @@ az_documentation.hub:
   title: 'Site documentation'
   description: 'Central hub for site-specific documentation.'
   weight: 95
+  options:
+    attributes:
+      class:
+        - toolbar-icon
+        - toolbar-icon-help-main
