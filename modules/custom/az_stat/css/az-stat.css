@@ -1,0 +1,40 @@
+/* Responsive stat card styles */
+.az-stat-responsive {
+  /* Default aspect ratio for small viewports (1 card per row) */
+  aspect-ratio: 1.4 / 1;
+}
+
+/* Medium viewports: 2 cards per row */
+@media (min-width: 768px) {
+  .az-stat-responsive {
+    aspect-ratio: 1.25 / 1;
+  }
+}
+
+/* Large viewports: 4 cards per row */
+@media (min-width: 992px) {
+  .az-stat-responsive {
+    aspect-ratio: 1.2 / 1;
+  }
+}
+
+/* Ensure flexbox layout works properly within the aspect ratio */
+.az-stat-responsive .card-body {
+  min-height: 100%;
+}
+
+/* Stat content distribution */
+.az-stat-responsive .card-text {
+  justify-content: space-between;
+  min-height: 100%;
+}
+
+/* Ensure stat heading has proper spacing */
+.az-stat-responsive .stat-description {
+  justify-content: center;
+}
+
+/* Stat source positioning at bottom */
+.az-stat-responsive .stat-source {
+  align-self: flex-end;
+}
