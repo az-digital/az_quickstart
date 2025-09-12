@@ -343,15 +343,6 @@ class AZStatWidget extends WidgetBase {
       ],
     ];
 
-    // Add client side validation for link title if not collapsed.
-    if ($status) {
-      $link_uri_unique_id = Html::getUniqueId('az_stat_link_uri_input');
-      $element['link_uri']['#attributes']['data-az-stat-link-uri-input-id'] = $link_uri_unique_id;
-      $element['stat_source']['#states']['required'] = [
-        ':input[data-az-stat-link-uri-input-id="' . $link_uri_unique_id . '"]' => ['filled' => TRUE],
-      ];
-    }
-
     if (!$item->isEmpty()) {
       $button_name = implode('-', array_merge(
         $field_parents,
