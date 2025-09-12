@@ -13,7 +13,7 @@ field.value.az_stat:
       type: integer
       label: Stat Media
     stat_source:
-      type: string
+      type: text
       label: Stat Link Title
     link_uri:
       type: string

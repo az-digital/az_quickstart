@@ -44,9 +44,9 @@
         {% endif %}
         <br><br><br>
         {% if stat_source %}
-          <span class="align-items-end stat-source">
-            {{ stat_source }}
-          </span>
+          <div class="mt-auto stat-source">
+            {{ stat_source|nl2br }}
+          </div>
         {% endif %}
       </div>
       {% if link_url %}

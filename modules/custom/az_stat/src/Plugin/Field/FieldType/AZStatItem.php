@@ -89,8 +89,8 @@ class AZStatItem extends FieldItemBase {
         'size' => 'normal',
       ],
       'stat_source' => [
-        'type' => 'varchar',
-        'length' => 255,
+        'type' => 'text',
+        'size' => 'normal',
       ],
       'link_uri' => [
         'type' => 'varchar',

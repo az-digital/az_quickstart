@@ -315,10 +315,10 @@ class AZStatWidget extends WidgetBase {
     ];
 
     $element['stat_source'] = [
-      '#type' => 'textfield',
+      '#type' => 'textarea',
       '#title' => $this->t('Stat Source'),
       '#default_value' => $item->stat_source ?? NULL,
-      '#maxlength' => 255,
+      '#rows' => 3,
       '#states' => [
         'visible' => [
           ':input[data-az-stat-type-input-id="' . $stat_type_unique_id . '"]' => ['value' => 'standard'],
