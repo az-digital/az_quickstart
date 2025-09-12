@@ -274,6 +274,22 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         $stat_classes .= ' ' . $item->options['class'];
       }
 
+      // Set custom text classes based on background color
+      $text_color_override = '';
+      if (!empty($item->options['class'])) {
+        switch (true) {
+          case str_contains($item->options['class'], 'bg-sky'):
+            $text_color_override = 'text-midnight';
+            break;
+          case str_contains($item->options['class'], 'bg-cool-gray'):
+            $text_color_override = 'text-azurite';
+            break;
+          case str_contains($item->options['class'], 'bg-oasis'):
+            $text_color_override = 'text-white';
+            break;
+        }
+      }
+      
       $element[$delta] = [
         '#theme' => 'az_stat',
         '#media' => $media_render_array,
@@ -288,6 +304,7 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         '#title_level' => $title_level ?? 'h3',
         '#title_alignment' => $title_alignment ?? 'text-start',
         '#title_display' => $title_display ?? 'h5',
+        '#text_color_override' => $text_color_override,
         '#attributes' => ['class' => $stat_classes],
         '#attached' => $attached,
       ];

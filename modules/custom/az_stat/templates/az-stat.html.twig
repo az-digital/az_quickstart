@@ -9,6 +9,7 @@
  * - stat_heading: The title field of a stat.
  * - stat_description: The body field of a stat.
  * - stat_source: The link field on a stat.
+ * - text_color_override: Overriding default h1-h6 default text colors.
  * - link_url: The link URL only.
  * - title_style: The title style to use.
  * - title_level: The heading level to use.
@@ -35,16 +36,16 @@
     <div class="card-body d-flex flex-column">
       <div class="card-text">
         {% if stat_heading %}
-          <h1 class="fw-bold display-4 mt-0 mb-0">
+          <h1 class="fw-bold display-4 mt-0 mb-0 {% if text_color_override %}{{ text_color_override }}{% endif %}">
             {{ stat_heading }}
           </h1>
         {% endif %}
         {% if stat_description %}
-          <h4 class="m-0 stat-description">{{ stat_description }}</h4>
+          <h4 class="m-0 stat-description {% if text_color_override %}{{ text_color_override }}{% endif %}">{{ stat_description }}</h4>
         {% endif %}
         <br><br><br>
         {% if stat_source %}
-          <div class="mt-auto stat-source">
+          <div class="mt-auto stat-source {% if text_color_override %}{{ text_color_override }}{% endif %}">
             {{ stat_source|nl2br }}
           </div>
         {% endif %}
