@@ -38,7 +38,7 @@ arizona_icons:
       default: inherit
   library: "az_icons/arizona_icons"
   template: >-
-    <i class="az-icon-{{ icon_id|clean_class }} {% if color != 'inherit' %}text-{{ color }}{% endif %}" style="font-size: {{ size|default(24) }}px" title="{{ icon_id }}"></i>
+    <i class="az-icon-{{ icon_id|clean_class }} {% if color != 'inherit' %}text-{{ color }}{% endif %}" style="font-size: {{ size|default(24) }}px; line-height: {{ size|default(24) }}px;" title="{{ icon_id }}"></i>
   preview: >
     <i class="az-icon-{{ icon_id|clean_class }} {% if color != 'inherit' %}text-{{ color }}{% endif %}" style="font-size:35px" title="{{ icon_id }}"></i>
 
