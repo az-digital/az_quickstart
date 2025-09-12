@@ -113,6 +113,7 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
       $stat_heading = $item->stat_heading ?? '';
       $stat_description = $item->stat_description ?? '';
 
+
       // Media.
       $column_span = $item->options['column_span'] ?? '';
       $media_render_array = [];
@@ -123,6 +124,8 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
       }
 
       $attached = [];
+
+
 
       // Link.
       $link_render_array = [];
@@ -189,11 +192,6 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
           $column_classes[] = $stat_defaults['stat_width'] ?? 'col-md-4 col-lg-3';
           $stat_classes = $stat_defaults['stat_style'] ?? 'stat';
 
-          //TODO: Better way to treat default as null or unset.
-          //if($item->options['column_span'] == 'default')) {
-          //  $item->options['column_span'] == '';
-          //}
-
           // Calculate column classes for image based on column_span option (multiplier).
           if ($item->options['stat_type'] === 'image_only' && !empty($item->options['column_span']) && ($item->options['column_span'] != '')) {
 
@@ -223,6 +221,12 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
             
           } else {
             $column_classes[] = $stat_defaults['stat_width'] ?? 'col-md-4 col-lg-4';
+          }
+
+                // Format pg style
+          $stat_style = $stat_defaults['stat_style'] ?? '';
+          if($stat_style == 'card stat-bold-hover') {
+            $attached['library'][] = 'az_stat/az_stat_bold_hover';
           }
 
           // Is the stat clickable?

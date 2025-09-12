@@ -14,3 +14,7 @@ az_stat_title_hover:
   css:
     component:
       css/az-stat-title-hover.css: {}
+az_stat_bold_hover:
+  css:
+    component:
+      css/az-stat-bold-hover.css: {}
