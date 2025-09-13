@@ -1,0 +1,7 @@
+az_documentation.hub:
+  path: '/admin/documentation'
+  defaults:
+    _controller: '\Drupal\az_documentation\Controller\DocumentationHubController::build'
+    _title: 'Site Documentation'
+  requirements:
+    _permission: 'access az site documentation'
