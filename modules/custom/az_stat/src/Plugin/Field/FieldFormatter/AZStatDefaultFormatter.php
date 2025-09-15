@@ -113,6 +113,7 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
       $stat_heading = $item->stat_heading ?? '';
       $stat_description = $item->stat_description ?? '';
 
+      $attached = [];
 
       // Media.
       $column_span = $item->options['column_span'] ?? '';
@@ -120,12 +121,9 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
       if (!empty($item->media)) {
         if ($media = $this->entityTypeManager->getStorage('media')->load($item->media)) {
           $media_render_array = $this->statImageHelper->generateImageRenderArray($media);
+          $attached['library'][] = 'az_stat/az_stat_image';
         }
       }
-
-      $attached = [];
-
-
 
       // Link.
       $link_render_array = [];
@@ -159,11 +157,6 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         }
         $attached['library'][] = 'az_stat/az_stat_title_hover';
       }
-
-      // Title alignment.
-      // if (!empty($item->options['stat_alignment'])) {
-      //   $title_alignment = $item->options['stat_alignment'];
-      // }
 
       // Title display.
       if (!empty($item->options['title_display'])) {

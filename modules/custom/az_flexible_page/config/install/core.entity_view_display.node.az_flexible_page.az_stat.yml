@@ -69,7 +69,7 @@ third_party_settings:
       weight: 2
       format_type: html_element
       format_settings:
-        classes: 'stat-img-top mb-0'
+        classes: 'stat-img mb-0'
         show_empty_fields: false
         id: ''
         label_as_html: false

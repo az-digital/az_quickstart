@@ -1,0 +1,6 @@
+/* Override image fluid to force 100% */
+.stat-img {
+  object-fit: cover;
+  width: 100%;
+  height: 100% !important;
+}

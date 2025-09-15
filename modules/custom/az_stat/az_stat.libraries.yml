@@ -3,6 +3,10 @@ az_stat:
     component:
       css/az-stat-widget.css: {}
       css/az-stat.css: {}
+az_stat_image:
+  css:
+    component:
+      css/az-stat-image.css: {}
 az_stat_no_follow:
   css:
     component:
