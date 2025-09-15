@@ -152,6 +152,18 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
    * {@inheritdoc}
    */
   public function build() {
+    // On initial load, set the menu root as the current page (if possible).
+    $menuRoot = $this->configuration['menu_root'] ?? FALSE;
+    /** @var \Drupal\Core\Menu\MenuLinkTreeElement[] $tree */
+    $tree = $this->initMenuTree();
+    $treeWithText = [];
+    if (!$menuRoot) {
+      $treeWithText = $this->getSubtreeAndParentTextByRoute($tree, $this->routeMatch->getRouteName(), $this->routeMatch->getRawParameters()->all());
+    }
+    elseif (!empty($tree) && $menuRoot !== self::NAV_MENU_ROOT_ID) {
+      $treeWithText = $this->getSubtreeAndParentText($tree, $menuRoot);
+    }
+
     // Initialize the main render array elements.
     $build['az_mobile_nav_menu'] = [
       '#type' => 'html_tag',
@@ -164,9 +176,10 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
           'az_core/az-mobile-nav',
         ],
       ],
-      // @todo Try using cache contexts to cache variants of this block.
       '#cache' => [
-        'max-age' => 0,
+        'tags' => ['config:system.menu.main'],
+        'contexts' => ['route'],
+        'max-age' => CacheBackendInterface::CACHE_PERMANENT,
       ],
     ];
     $build['az_mobile_nav_menu']['back'] = [];
@@ -211,20 +224,6 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
         ],
       ],
     ];
-
-    // On initial load, set the menu root as the current page (if possible).
-    $menuRoot = $this->configuration['menu_root'] ?? FALSE;
-    /** @var \Drupal\Core\Menu\MenuLinkTreeElement[] $tree */
-    $tree = $this->initMenuTree();
-    $treeWithText = [];
-    if (!$menuRoot) {
-      $treeWithText = $this->getSubtreeAndParentTextByRoute($tree, $this->routeMatch->getRouteName(), $this->routeMatch->getRawParameters()->all());
-    }
-    else {
-      if ($menuRoot && !empty($tree) && $menuRoot !== self::NAV_MENU_ROOT_ID) {
-        $treeWithText = $this->getSubtreeAndParentText($tree, $menuRoot);
-      }
-    }
 
     // Build the heading element and back link to the parent (if available).
     if (empty($treeWithText)) {

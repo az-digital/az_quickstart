@@ -2,9 +2,9 @@
 
 namespace Drupal\az_core\Controller;
 
-use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Block\BlockManager;
+use Drupal\Core\Cache\CacheableAjaxResponse;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -50,8 +50,8 @@ class MobileNavController implements ContainerInjectionInterface {
    * @param string $current_page
    *   The menu link ID for the current page.
    *
-   * @return \Drupal\Core\Ajax\AjaxResponse
-   *   An AjaxResponse object.
+   * @return \Drupal\Core\Cache\CacheableAjaxResponse
+   *   An CacheableAjaxResponse object.
    */
   public function mobileNavCallback($menu_root = '', $current_page = 'none') {
     $mobile_nav_block = $this->blockManager->createInstance('mobile_nav_block',
@@ -61,9 +61,15 @@ class MobileNavController implements ContainerInjectionInterface {
       ]);
     $mobile_nav_block_build = $mobile_nav_block->build();
 
-    $response = new AjaxResponse();
-    $response->addCommand(new ReplaceCommand('#az_mobile_nav_menu', $mobile_nav_block_build));
-    return $response;
+    $cacheable_response = new CacheableAjaxResponse();
+    $cacheable_response->addCommand(new ReplaceCommand('#az_mobile_nav_menu', $mobile_nav_block_build));
+
+    // Add necessary cacheable metadata for the Mobile Nav Block.
+    $cacheableMetadata = $cacheable_response->getCacheableMetadata();
+    $cacheableMetadata->addCacheTags(['config:system.menu.main']);
+    $cacheableMetadata->addCacheContexts(['route']);
+
+    return $cacheable_response;
   }
 
 }
