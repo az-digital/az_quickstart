@@ -5,9 +5,7 @@
  *
  * Available variables:
  * - url: (string) A formatted Trellis source URL
- * - view_mode: (string) The current view mode (e.g., 'default', 'az_medium', 'az_small')
+ * - attributes: (Attribute) HTML attributes for the container element
  */
 #}
-{{ attach_library('az_media_trellis/az-media-trellis') }}
-<div id="az-media-trellis" class="az-media-trellis az-media-trellis--{{ view_mode|clean_class }}"></div>
-<script src="{{ url }}" data-qp-target-id="az-media-trellis" defer></script>
+<div {{attributes}}></div>

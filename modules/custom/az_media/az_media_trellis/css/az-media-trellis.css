@@ -132,12 +132,12 @@ figure[data-view-mode="az_natural_size"] {
     max-width: 100%;
     min-height: 200px;
   }
-  
+
   .az-media-trellis--az-small {
     max-width: 360px;
     min-height: 200px;
   }
-  
+
   .az-media-trellis--az-very-small {
     max-width: 220px;
     min-height: 200px;
