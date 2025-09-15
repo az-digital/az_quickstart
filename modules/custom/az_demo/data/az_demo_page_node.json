@@ -165,7 +165,6 @@
     },
     {
       "id":19,
-      "exclude_title" : true,
       "title" : "News Views",
       "path" : "/pages/news-view-paragraphs",
       "az_page_category" : "Views",
