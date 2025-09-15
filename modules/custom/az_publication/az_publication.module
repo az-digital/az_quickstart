@@ -122,10 +122,6 @@ function az_publication_theme() {
       'template' => 'block--block-content--views-reference--az-publications--az-author-person',
       'base hook' => 'block',
     ],
-    'views_exposed_form__az_publications' => [
-      'template' => 'views-exposed-form--az-publications',
-      'base hook' => 'views_exposed_form',
-    ],
     'az_publication_type_listing_table' => [
       'variables' => [
         'headers' => NULL,
