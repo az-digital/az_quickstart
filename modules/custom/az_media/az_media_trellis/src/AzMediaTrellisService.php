@@ -2,6 +2,8 @@
 
 namespace Drupal\az_media_trellis;
 
+use Drupal\Core\Routing\RouteMatchInterface;
+
 /**
  * Provides various helper functions for the az_media_trellis module.
  *
@@ -10,6 +12,17 @@ namespace Drupal\az_media_trellis;
  * behave differently based on the current Drupal context (editing vs viewing).
  */
 class AzMediaTrellisService {
+
+  /**
+   * The current route match.
+   *
+   * @var \Drupal\Core\Routing\RouteMatchInterface
+   */
+  private RouteMatchInterface $routeMatch;
+
+  public function __construct(RouteMatchInterface $route_match) {
+    $this->routeMatch = $route_match;
+  }
 
   /**
    * Determines if the current context is an editing environment.
@@ -32,9 +45,9 @@ class AzMediaTrellisService {
    * @see az_media_trellis_preprocess_media()
    * @see AzMediaRemoteTrellisFormatter::viewElements()
    */
-  public static function isEditingContext() {
+  public function isEditingContext(): bool {
     // Check if the current route is an editing context.
-    $route_name = \Drupal::routeMatch()->getRouteName();
+    $route_name = $this->routeMatch->getRouteName();
     return in_array($route_name, [
       // Node edit form.
       'entity.node.edit_form',
@@ -42,9 +55,9 @@ class AzMediaTrellisService {
       'entity.node.add_form',
       // Media library.
       'media_library.ui',
-      // When editing the media inline?
+      // Inline / preview editing context.
       'media.filter.preview',
-    ]);
+    ], TRUE);
   }
 
 }

@@ -7,3 +7,4 @@ az-media-trellis:
     js/az-media-trellis.js: {}
   dependencies:
     - core/drupal
+    - core/drupalSettings
