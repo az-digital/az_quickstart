@@ -3,7 +3,6 @@
 namespace Drupal\Tests\az_demo\Functional;
 
 use Drupal\Core\Url;
-use Drupal\block\Entity\Block;
 use Drupal\Core\Config\FileStorage;
 use Drupal\Tests\az_core\Functional\QuickstartFunctionalTestBase;
 
