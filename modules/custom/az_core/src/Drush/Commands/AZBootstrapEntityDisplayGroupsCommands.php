@@ -114,6 +114,8 @@ final class AZBootstrapEntityDisplayGroupsCommands extends DrushCommands {
             if (!empty(trim($value))) {
               // For classes, parse tokens by space.
               $tokens = array_filter(array_map('trim', explode(' ', $value)));
+              $updatedTokens = [];
+              $hasChanges = FALSE;
 
               // Check each token against replacement map.
               foreach ($tokens as $token) {
@@ -124,14 +126,13 @@ final class AZBootstrapEntityDisplayGroupsCommands extends DrushCommands {
                   if (!$nonInteractive && !$dryRun) {
                     $apply = $this->io()->confirm("Replace '{$token}' with '{$newToken}' in classes for group '{$groupName}' ({$configName})?");
                     if (!$apply) {
+                      $updatedTokens[] = $token; // Keep original
                       continue;
                     }
                   }
 
-                  // Apply the replacement.
-                  if (!$dryRun) {
-                    $groupConfig['format_settings'][$fieldName] = $this->replaceExactMatch($groupConfig['format_settings'][$fieldName], $token, $newToken);
-                  }
+                  $updatedTokens[] = $newToken;
+                  $hasChanges = TRUE;
 
                   $results[] = [
                     'config' => $configName,
@@ -140,9 +141,17 @@ final class AZBootstrapEntityDisplayGroupsCommands extends DrushCommands {
                     'match' => $token,
                     'new' => $newToken,
                   ];
-
-                  $groupChanged = TRUE;
+                } else {
+                  $updatedTokens[] = $token; // Keep original
                 }
+              }
+
+              // Apply the replacement if there were changes.
+              if ($hasChanges && !$dryRun) {
+                $groupConfig['format_settings'][$fieldName] = implode(' ', $updatedTokens);
+                $groupChanged = TRUE;
+              } elseif ($hasChanges) {
+                $groupChanged = TRUE; // For dry-run tracking
               }
             }
           }
@@ -203,24 +212,6 @@ final class AZBootstrapEntityDisplayGroupsCommands extends DrushCommands {
     }
 
     return new RowsOfFields($results);
-  }
-
-  /**
-   * Replace exact matches in a string.
-   */
-  protected function replaceExactMatch(string $input, string $old, string $new): string {
-    if (empty($input)) {
-      return $input;
-    }
-
-    $tokens = preg_split('/\s+/', trim($input), -1, PREG_SPLIT_NO_EMPTY);
-    $updated = [];
-
-    foreach ($tokens as $token) {
-      $updated[] = ($token === $old) ? $new : $token;
-    }
-
-    return implode(' ', array_filter($updated));
   }
 
 }
