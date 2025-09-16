@@ -38,6 +38,7 @@ settings:
       - style
       - '|'
       - drupalMedia
+      - icon
       - az_embed_content
       - az_embed_content_block
       - '|'
@@ -190,9 +191,6 @@ settings:
           label: 'Text Ash'
           element: '<span class="text-ash">'
         -
-          label: 'Sanserif Text'
-          element: '<span class="text-sans">'
-        -
           label: 'Capitalized Text'
           element: '<span class="text-capitalize">'
         -
@@ -208,23 +206,23 @@ settings:
           label: 'Unordered List Pills'
           element: '<ul class="nav nav-pills">'
         -
-          label: 'Label Red'
-          element: '<span class="badge badge-red">'
+          label: 'Badge Red'
+          element: '<span class="badge text-bg-red">'
         -
-          label: 'Label Blue'
-          element: '<span class="badge badge-blue">'
+          label: 'Badge Blue'
+          element: '<span class="badge text-bg-blue">'
         -
-          label: 'Label Green'
-          element: '<span class="badge badge-success">'
+          label: 'Badge Success'
+          element: '<span class="badge text-bg-success">'
         -
-          label: 'Label Sky'
-          element: '<span class="badge badge-info">'
+          label: 'Badge Info'
+          element: '<span class="badge text-bg-info">'
         -
-          label: 'Label Warning'
-          element: '<span class="badge badge-warning">'
+          label: 'Badge Warning'
+          element: '<span class="badge text-bg-warning">'
         -
-          label: 'Label Danger'
-          element: '<span class="badge badge-danger">'
+          label: 'Badge Danger'
+          element: '<span class="badge text-bg-danger">'
         -
           label: 'Text Size Small'
           element: '<span class="small">'
@@ -259,11 +257,8 @@ settings:
           label: 'Text Align Bottom'
           element: '<span class="align-bottom">'
         -
-          label: 'Zero Margin Top'
-          element: '<span class="mt-0">'
-        -
           label: 'Zero Margin Bottom'
-          element: '<span class="mb-0">'
+          element: '<p class="mb-0">'
         -
           label: Blockquote
           element: '<blockquote class="blockquote">'
@@ -272,10 +267,7 @@ settings:
           element: '<blockquote class="blockquote text-center">'
         -
           label: 'Blockquote Right'
-          element: '<blockquote class="blockquote text-right">'
-        -
-          label: 'Blockquote Reverse'
-          element: '<blockquote class="blockquote blockquote-reverse text-right">'
+          element: '<blockquote class="blockquote text-end">'
         -
           label: 'Blockquote Footer'
           element: '<footer class="blockquote-footer">'
@@ -296,7 +288,7 @@ settings:
           element: '<table class="table table-dark">'
         -
           label: 'Dark table heading'
-          element: '<thead class="thead-dark">'
+          element: '<thead class="table-dark">'
     ckeditor_bs_grid_grid:
       use_cdn: false
       cdn_url: ''
@@ -319,6 +311,7 @@ settings:
         - md
         - lg
         - xl
+        - xxl
     ckeditor_indentblock_indent:
       enable: true
     linkit_extension:

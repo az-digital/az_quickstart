@@ -4,7 +4,7 @@
           "id": 80,
           "card_width": "col-lg-6",
           "card_style": "card",
-          "card_title": "Borderless Cards",
+          "card_title": "Bordered Cards",
           "card_title_style": "default",
           "card_clickable": false,
           "az_cards": [
@@ -13,10 +13,10 @@
               "title": "Gray 100",
               "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>",
               "link_title": "Card link",
-              "link_url": "#",
+              "link_url": "#top",
               "media": "",
-              "background": "bg-gray-100",
-              "link_style": "btn btn-block btn-blue"
+              "background": "text-bg-gray-100",
+              "link_style": "btn w-100 btn-blue"
             },
             {
               "delta": 1,
@@ -25,8 +25,8 @@
               "link_title": "",
               "link_url": "",
               "media": "",
-              "background": "bg-chili",
-              "link_style": "btn-block"
+              "background": "text-bg-chili",
+              "link_style": "w-100"
             }
           ],
           "bottom_spacing" : "mb-0"
@@ -34,7 +34,7 @@
       {
         "id": 81,
         "card_width": "col-lg-4",
-        "card_style": "card card-borderless",
+        "card_style": "card border-0",
         "card_title": "Clickable Borderless Cards",
         "card_title_style": "default",
         "card_clickable": true,
@@ -44,20 +44,20 @@
             "title": "Arizona Blue",
             "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>",
             "link_title": "Card link",
-            "link_url": "#",
+            "link_url": "#top",
             "media": "runners_brains.jpeg",
-            "background": "bg-blue",
-            "link_style": "btn btn-block btn-outline-white"
+            "background": "text-bg-blue",
+            "link_style": "btn w-100 btn-outline-white"
           },
           {
             "delta": 1,
             "title": "Hidden link title",
             "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>",
             "link_title": "Visually hidden card link",
-            "link_url": "#",
+            "link_url": "#top",
             "media": "mans_best_friend.jpeg",
-            "background": "bg-river",
-            "link_style": "sr-only"
+            "background": "text-bg-river",
+            "link_style": "visually-hidden"
           },
           {
             "delta": 2,
@@ -66,15 +66,15 @@
             "link_title": "",
             "link_url": "",
             "media": "",
-            "background": "bg-gray-300",
-            "link_style": "btn-block"
+            "background": "text-bg-gray-300",
+            "link_style": "w-100"
           }
         ],
         "bottom_spacing" : "mb-0"
     },
     {
       "id": 82,
-      "card_width": "col-lg-4",
+      "card_width": "col-lg-6",
       "card_style": "card",
       "card_title": "Clickable Title-on-Image Cards",
       "card_title_style": "title-on-image",
@@ -85,30 +85,40 @@
           "title": "No body",
           "body":"",
           "link_title": "Card Link",
-          "link_url": "#",
+          "link_url": "#top",
           "media": "runners_brains.jpeg",
-          "background": "bg-warm-gray",
-          "link_style": "btn btn-blue btn-block"
+          "background": "text-bg-warm-gray",
+          "link_style": "btn btn-blue w-100"
         },
         {
           "delta": 1,
           "title": "Hidden link title",
           "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>",
           "link_title": "Visually hidden card link",
-          "link_url": "#",
+          "link_url": "#top",
           "media": "mans_best_friend.jpeg",
-          "background": "bg-white",
-          "link_style": "sr-only"
+          "background": "text-bg-white",
+          "link_style": "visually-hidden"
         },
         {
           "delta": 2,
           "title": "No image",
           "body":"<p>Default title style is used when no image is present.</p>",
           "link_title": "Card Link",
-          "link_url": "#",
+          "link_url": "#top",
           "media": "",
-          "background": "bg-azurite",
-          "link_style": "btn-block"
+          "background": "text-bg-azurite",
+          "link_style": "w-100"
+        },
+        {
+          "delta": 3,
+          "title": "No body with hidden link title",
+          "body": "",
+          "link_title": "Visually hidden card link",
+          "link_url": "#top",
+          "media": "sea-anemone.jpg",
+          "background": "text-bg-white",
+          "link_style": "visually-hidden"
         }
       ],
       "bottom_spacing" : "mb-5"
@@ -116,7 +126,7 @@
     {
         "id": 83,
         "card_width": "col-lg-6",
-        "card_style": "card card-borderless",
+        "card_style": "card border-0",
         "card_title": "Borderless Title-on-Image Cards",
         "card_title_style": "title-on-image",
         "card_clickable": false,
@@ -128,8 +138,8 @@
             "link_title": "",
             "link_url": "",
             "media": "mans_best_friend.jpeg",
-            "background": "bg-river",
-            "link_style": "btn-block"
+            "background": "text-bg-river",
+            "link_style": "w-100"
           },
           {
             "delta": 1,
@@ -138,8 +148,8 @@
             "link_title": "External link",
             "link_url": "https://www.arizona.edu",
             "media": "",
-            "background": "bg-cool-gray",
-            "link_style": "btn-block"
+            "background": "text-bg-cool-gray",
+            "link_style": "w-100"
           }
         ],
         "bottom_spacing" : "mb-5"

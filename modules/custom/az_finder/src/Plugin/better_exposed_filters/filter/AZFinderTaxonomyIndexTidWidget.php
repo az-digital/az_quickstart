@@ -157,6 +157,12 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
     if (!$this->view instanceof ViewExecutable) {
       return;
     }
+    // Attach contextual links to the block render array.
+    $form['#contextual_links'] = [
+      'az_finder' => [
+        'route_parameters' => [],
+      ],
+    ];
     /** @var \Drupal\views\Plugin\views\filter\FilterPluginBase $filter */
     $filter = $this->handler;
     $filter_id = $filter->options['expose']['identifier'];
@@ -421,7 +427,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
         ];
 
         $collapse_id = 'collapse-az-finder-' . $entity_id;
-        $list_title_link['#attributes']['data-toggle'] = 'collapse';
+        $list_title_link['#attributes']['data-bs-toggle'] = 'collapse';
         $list_title_link['#attributes']['href'] = '#' . $collapse_id;
         $list_title_link['#attributes']['class'][] = 'd-block';
         $list_title_link['#attributes']['role'] = 'button';
@@ -452,7 +458,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
           $list_title_link['#attributes']['class'][] = 'js-svg-replace-level-1';
           $list_title['#tag'] = "h" . ($depth + 3);
           $list_title['#attributes']['class'][] = 'text-body';
-          $list_title['#attributes']['class'][] = 'text-size-h6';
+          $list_title['#attributes']['class'][] = 'fs-6';
           $list_title['#attributes']['class'][] = 'd-flex';
           $list_title['#attributes']['class'][] = 'flex-row-reverse';
           $list_title['#attributes']['class'][] = 'justify-content-end';

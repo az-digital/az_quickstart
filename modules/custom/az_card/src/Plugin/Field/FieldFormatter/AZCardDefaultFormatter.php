@@ -131,7 +131,13 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
           $link_url = Url::fromUri(urldecode('base:' . $item->link_uri));
         }
         else {
-          $link_url = $this->pathValidator->getUrlIfValid($item->link_uri ?? '<none>');
+          // Check if the link is an anchor within the current page.
+          if (str_starts_with($item->link_uri ?? '', "#")) {
+            $link_url = Url::fromUserInput($item->link_uri);
+          }
+          else {
+            $link_url = $this->pathValidator->getUrlIfValid($item->link_uri ?? '<none>');
+          }
         }
         $link_render_array = [
           '#type' => 'link',
@@ -186,7 +192,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
             if (!empty($link_render_array)) {
               $link_render_array['#attributes']['class'][] = 'stretched-link';
             }
-            $card_classes .= ' shadow';
+            $card_classes .= ' shadow overflow-hidden';
             if ($item->link_uri) {
               $card_classes .= ' card-with-link';
             }
@@ -242,7 +248,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         '#link_url' => $link_url,
         '#title_style' => $title_style ?? 'default',
         '#title_level' => $title_level ?? 'h3',
-        '#title_alignment' => $title_alignment ?? 'text-left',
+        '#title_alignment' => $title_alignment ?? 'text-start',
         '#title_display' => $title_display ?? 'h5',
         '#attributes' => ['class' => $card_classes],
         '#attached' => $attached,

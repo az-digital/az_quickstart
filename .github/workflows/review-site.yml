@@ -60,7 +60,7 @@ jobs:
           UPSTREAM_VERSION=$(jq -r '.require."az-digital/az_quickstart"' upstream/composer.json)
           COMPOSER_MEMORY_LIMIT=-1 composer -n require "az-digital/az_quickstart:dev-main as ${UPSTREAM_VERSION}"
           git add composer.json composer.lock
-          git commit --allow-empty -m 'rebuild kitten'
+          git commit --allow-empty -m '${{ github.event.head_commit.message }}'
           git push
 
   install-azqs:

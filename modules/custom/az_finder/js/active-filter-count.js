@@ -24,7 +24,28 @@
         };
         var updateActiveFilterDisplay = function updateActiveFilterDisplay() {
           var activeFilterCount = calculateActiveFilterCount();
-          filterCountDisplay.textContent = "(".concat(activeFilterCount, ")");
+          var badge = filterCountDisplay.querySelector('.badge');
+          if (!badge) {
+            badge = document.createElement('span');
+            badge.classList.add('badge', 'text-bg-light');
+            badge.textContent = '0';
+          }
+          if (activeFilterCount > 0) {
+            badge.classList.remove('visually-hidden');
+            badge.classList.remove('position-absolute');
+          } else {
+            badge.classList.add('visually-hidden');
+            badge.classList.add('position-absolute');
+          }
+          var srText = badge.querySelector('.visually-hidden');
+          if (!srText) {
+            srText = document.createElement('span');
+            srText.classList.add('visually-hidden');
+            srText.textContent = "Active filters: ";
+            badge.appendChild(srText);
+          }
+          badge.firstChild.textContent = "".concat(activeFilterCount);
+          filterCountDisplay.replaceChildren(badge);
           var resetButton = container.querySelector('.js-active-filters-reset');
           if (resetButton) {
             if (alwaysDisplayResetButton || activeFilterCount > 0) {

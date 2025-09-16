@@ -3,7 +3,7 @@ az_publication.az_citation_style.*:
   label: 'Quickstart Citation Style config'
   mapping:
     id:
-      type: string
+      type: machine_name
       label: 'ID'
     label:
       type: label
@@ -15,4 +15,5 @@ az_publication.az_citation_style.*:
       type: boolean
       label: 'Custom'
     uuid:
-      type: string
+      type: uuid
+      label: 'Universally Unique Identifier'

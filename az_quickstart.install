@@ -72,11 +72,7 @@ function az_quickstart_requirements($phase) {
     $module_extension_list->reset();
 
     // Gather all deprecated modules that are enabled.
-    $azqs_deprecated_modules = [
-      'ctools',
-      'jquery_ui_slider',
-      'jquery_ui_touch_punch',
-    ];
+    $azqs_deprecated_modules = [];
     $enabled_deprecated_modules = [];
     $enabled_modules = \Drupal::moduleHandler()->getModuleList();
     foreach ($enabled_modules as $module => $data) {
@@ -216,4 +212,25 @@ function az_quickstart_update_1020901(&$sandbox) {
   }
   $sandbox['#finished'] = empty($sandbox['max']) ? 1 : $sandbox['progress'] / $sandbox['max'];
   return t('Updated langcode on %count menu links.', ['%count' => $sandbox['progress']]);
+}
+
+/**
+ * Enable masquerade and masquerade_log modules by default.
+ */
+function az_quickstart_update_1021301() {
+  \Drupal::service('module_installer')->install(['masquerade', 'masquerade_log']);
+}
+
+/**
+ * Enable quick_node_clone module by default.
+ */
+function az_quickstart_update_1021302() {
+  \Drupal::service('module_installer')->install(['quick_node_clone']);
+}
+
+/**
+ * Enable az_icons module by default.
+ */
+function az_quickstart_update_1130001() {
+  \Drupal::service('module_installer')->install(['az_icons']);
 }

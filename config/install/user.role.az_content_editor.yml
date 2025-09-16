@@ -3,7 +3,7 @@ status: true
 dependencies: {  }
 id: az_content_editor
 label: 'Content editor'
-weight: 3
+weight: -6
 is_admin: false
 permissions:
   - 'access administration pages'
@@ -21,6 +21,7 @@ permissions:
   - 'access own webform configuration'
   - 'access printer-friendly version'
   - 'access toolbar'
+  - 'access ui icons library'
   - 'access tour'
   - 'access webform help'
   - 'access webform overview'
@@ -31,6 +32,7 @@ permissions:
   - 'administer webform element access'
   - 'administer webform submission'
   - 'cancel smart date recur instances'
+  - 'clone az_carousel_item content'
   - 'clone az_event content'
   - 'clone az_flexible_page content'
   - 'clone az_news content'

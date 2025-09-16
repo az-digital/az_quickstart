@@ -3,15 +3,18 @@ status: true
 dependencies: {  }
 id: az_user_admin
 label: 'User administrator'
-weight: 5
+weight: -4
 is_admin: false
 permissions:
   - 'administer users'
   - 'administer workbench access'
+  - 'assign az_auto_expiring_user role'
   - 'assign az_content_admin role'
   - 'assign az_content_editor role'
   - 'assign az_profile_editor role'
   - 'assign az_user_admin role'
   - 'assign selected workbench access'
   - 'assign workbench access'
+  - 'set user expiration'
+  - 'view expiring users report'
   - 'view workbench access information'

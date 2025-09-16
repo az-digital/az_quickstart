@@ -1,11 +1,13 @@
 name: az_quickstart
-recipe: drupal10
+recipe: drupal11
 config:
   php: '8.3'
   via: apache:2.4
   webroot: web
   database: mariadb:10.6
   xdebug: false
+env_file:
+  - .env
 services:
   # Replaces default lando MariaDB image with arm64 (Apple M1) compatible one.
   # TODO: remove database service overrides once lando is updated.
@@ -19,16 +21,16 @@ services:
         - '3306'
       environment:
         MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: 'true'
-        MARIADB_DATABASE: drupal10
-        MYSQL_DATABASE: drupal10
-        MARIADB_USER: drupal10
-        MARIADB_PASSWORD: drupal10
+        MARIADB_DATABASE: drupal11
+        MYSQL_DATABASE: drupal11
+        MARIADB_USER: drupal11
+        MARIADB_PASSWORD: drupal11
   appserver:
     config:
       php: .vscode/php.ini
     overrides:
       environment:
-        SIMPLETEST_DB: 'mysql://drupal10:drupal10@database/drupal10'
+        SIMPLETEST_DB: 'mysql://drupal11:drupal11@database/drupal11'
         SIMPLETEST_BASE_URL: 'http://appserver'
         MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","goog:chromeOptions":{"args":["--disable-gpu","--disable-dev-shm-usage","--headless","--no-sandbox"],"w3c":false}},"http://chromedriver:4444/wd/hub"]'
         XDEBUG_MODE: debug
@@ -38,13 +40,32 @@ services:
         # Instead share our host working directory as a standalone package.
         - .:/usr/local/quickstart-install-profile
     build:
-      # Create a new quickstart project and use the installation profile as a non-packagist repository.
-      # Use the matching scaffolding branch if available.
-      - BRANCH_NAME=$(git -C /usr/local/quickstart-install-profile rev-parse --abbrev-ref HEAD); if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $BRANCH_NAME | wc -l) = 1 ]; then SCAFFOLD_BRANCH="$BRANCH_NAME"; else SCAFFOLD_BRANCH="main"; fi; git clone --branch $SCAFFOLD_BRANCH https://github.com/az-digital/az-quickstart-scaffolding.git /app
+      # Create a new Quickstart project. Use the matching scaffolding branch if available.
+      - |
+        BRANCH_NAME=$(git -C /usr/local/quickstart-install-profile rev-parse --abbrev-ref HEAD)
+        if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $BRANCH_NAME | wc -l) = 1 ]; then
+          SCAFFOLD_BRANCH="$BRANCH_NAME"
+        else
+          SCAFFOLD_BRANCH="main"
+        fi
+        git clone --branch $SCAFFOLD_BRANCH https://github.com/az-digital/az-quickstart-scaffolding.git /app
+      # Use the installation profile as a non-packagist repository.
       - composer config repositories.localdev path /usr/local/quickstart-install-profile && composer require --no-update az-digital/az_quickstart:\*@dev
       # Use the matching require-dev metapackage branch if available.
-      - BRANCH_NAME=$(git -C /usr/local/quickstart-install-profile rev-parse --abbrev-ref HEAD); if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-dev.git $BRANCH_NAME | wc -l) = 1 ]; then DEV_PACKAGE_BRANCH="$BRANCH_NAME"; else DEV_PACKAGE_BRANCH=main; fi; composer require --no-update --dev az-digital/az-quickstart-dev:dev-${DEV_PACKAGE_BRANCH}
-      - composer install
+      - |
+        BRANCH_NAME=$(git -C /usr/local/quickstart-install-profile rev-parse --abbrev-ref HEAD)
+        if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-dev.git $BRANCH_NAME | wc -l) = 1 ]; then
+          DEV_PACKAGE_BRANCH="$BRANCH_NAME"
+        else
+          DEV_PACKAGE_BRANCH=main
+        fi
+        if echo "$DEV_PACKAGE_BRANCH" | grep -Eq "^[0-9]\.[0-9x]"; then
+          DEV_PACKAGE_VERSION="${DEV_PACKAGE_BRANCH}-dev"
+        else
+          DEV_PACKAGE_VERSION="dev-${DEV_PACKAGE_BRANCH}"
+        fi
+        composer require --no-update --dev az-digital/az-quickstart-dev:$DEV_PACKAGE_VERSION
+      - composer install --no-interaction
       - ln -s /usr/local/quickstart-install-profile/.vscode /app/.vscode
   node:
     type: node:20
@@ -63,7 +84,7 @@ tooling:
   install:
     service: appserver
     cmd:
-      - /app/vendor/bin/drush --root=/app/web site:install --account-mail=noreply@email.arizona.edu --account-name=azadmin --account-pass=azadmin2024 --db-url=mysql://drupal10:drupal10@database:3306/drupal10 -y --verbose
+      - /app/vendor/bin/drush --root=/app/web site:install --account-mail=noreply@email.arizona.edu --account-name=azadmin --account-pass=azadmin2025 --db-url=mysql://drupal11:drupal11@database:3306/drupal11 -y --verbose
       - /app/vendor/bin/drush --root=/app/web config:set -y az_cas.settings disable_login_form 0
       - /app/vendor/bin/drush --root=/app/web cache:rebuild
   # Enable theme debugging.

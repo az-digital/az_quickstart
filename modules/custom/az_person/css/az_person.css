@@ -10,6 +10,13 @@
 	margin-bottom: 0 !important;
 }
 
+.node--type-az-person.node--view-mode-az-card .card .img-fluid,
+.node--type-az-person.node--view-mode-full .card .img-fluid,
+.az-person-modal .card .img-fluid {
+	/* Sharpen bottom corners of images in the top img card position */
+	border-radius: 0;
+}
+
 /* Views */
 .az-person-row {
 	margin: 0 0 1rem;
@@ -25,6 +32,8 @@
 	height: 100%;
 	object-fit: cover;
 	object-position: center center;
+	/* Sharpen corners on this image - rounding and overflow is captured in parent */
+	border-radius: 0;
 }
 
 .az-person-modal .modal .close {

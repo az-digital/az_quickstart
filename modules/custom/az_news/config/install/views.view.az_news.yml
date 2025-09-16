@@ -120,8 +120,36 @@ display:
       cache:
         type: tag
         options: {  }
-      empty: {  }
+      empty:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text
+          empty: true
+          content:
+            value: '<p><em>There are no news items listed.</em></p>'
+            format: az_standard
+          tokenize: false
       sorts:
+        sticky:
+          id: sticky
+          table: node_field_data
+          field: sticky
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          entity_field: sticky
+          plugin_id: standard
+          order: DESC
+          expose:
+            label: ''
+            field_identifier: ''
+          exposed: false
         field_az_published_value:
           id: field_az_published_value
           table: node__field_az_published
@@ -149,7 +177,7 @@ display:
           order: DESC
           expose:
             label: ''
-            field_identifier: created
+            field_identifier: ''
           exposed: false
           granularity: second
       arguments:
@@ -263,36 +291,6 @@ display:
         options:
           offset: 0
           items_per_page: 1
-      sorts:
-        sticky:
-          id: sticky
-          table: node_field_data
-          field: sticky
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: node
-          entity_field: sticky
-          plugin_id: standard
-          order: DESC
-          expose:
-            label: ''
-            field_identifier: sticky
-          exposed: false
-        field_az_published_value:
-          id: field_az_published_value
-          table: node__field_az_published
-          field: field_az_published_value
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: datetime
-          order: DESC
-          expose:
-            label: ''
-            field_identifier: field_az_published_value
-          exposed: false
-          granularity: second
       style:
         type: default
         options:
@@ -309,7 +307,7 @@ display:
         style: false
         style_options: false
         row: false
-        sorts: false
+        sorts: true
         pager_options: false
       display_description: ''
       pager_options: null
@@ -495,11 +493,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              az_content_editor: '0'
-              az_content_admin: '0'
-              az_user_admin: '0'
-              administrator: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -632,6 +625,37 @@ display:
         options:
           offset: 0
           items_per_page: 3
+      sorts:
+        field_az_published_value:
+          id: field_az_published_value
+          table: node__field_az_published
+          field: field_az_published_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: datetime
+          order: DESC
+          expose:
+            label: ''
+            field_identifier: field_az_published_value
+          exposed: false
+          granularity: second
+        created:
+          id: created
+          table: node_field_data
+          field: created
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          entity_field: created
+          plugin_id: date
+          order: DESC
+          expose:
+            label: ''
+            field_identifier: ''
+          exposed: false
+          granularity: second
       arguments:
         term_node_tid_depth:
           id: term_node_tid_depth
@@ -759,6 +783,7 @@ display:
         pager: false
         style: false
         row: false
+        sorts: false
         arguments: false
         filters: false
         filter_groups: false
@@ -918,7 +943,7 @@ display:
         filter_groups: false
       display_description: ''
       display_extenders: {  }
-      block_description: 'Sidebar News Block'
+      block_description: 'Small Row News Block'
     cache_metadata:
       max-age: -1
       contexts:
@@ -1005,6 +1030,20 @@ display:
         options:
           offset: 0
           items_per_page: 1
+      empty:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text
+          empty: true
+          content:
+            value: '<p class="col"><em>There are no news items listed.</em></p>'
+            format: az_standard
+          tokenize: false
       style:
         type: default
         options:
@@ -1017,6 +1056,7 @@ display:
           relationship: none
           view_mode: az_marquee
       defaults:
+        empty: false
         title: false
         css_class: false
         pager: false
@@ -1053,6 +1093,7 @@ display:
         options:
           offset: 1
           items_per_page: 3
+      empty: {  }
       style:
         type: default
         options:
@@ -1065,6 +1106,7 @@ display:
           relationship: none
           view_mode: az_medium_media_list
       defaults:
+        empty: false
         title: false
         css_class: false
         pager: false

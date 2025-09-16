@@ -24,6 +24,8 @@ services:
       - '@config_sync.snapshotter'
       - '@config_update.config_list'
       - '@module_handler'
+      - '@config.manager'
+      - '@uuid'
   # Decorates the normal user module links.
   az_core.toolbar_link_builder:
     class: Drupal\az_core\AZUserToolbarLinkBuilder
@@ -33,4 +35,9 @@ services:
     # externalauth.authmap declared optional because CAS may or may not be enabled.
     arguments:
       - '@entity_type.manager'
+      - '@entity_field.manager'
       - '@?externalauth.authmap'
+
+  az_core.content_field_updater:
+    class: Drupal\az_core\AZContentFieldUpdater
+    arguments: ['@entity_type.manager', '@logger.factory']
