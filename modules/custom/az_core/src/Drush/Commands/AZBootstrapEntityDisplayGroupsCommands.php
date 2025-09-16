@@ -127,7 +127,7 @@ final class AZBootstrapEntityDisplayGroupsCommands extends DrushCommands {
   #[CLI\Command(name: 'bs5-entity-display-groups:update', aliases: ['bs5edg:update'])]
   #[CLI\Option(name: 'dry-run', description: 'Show proposed replacements without saving.')]
   #[CLI\Option(name: 'yes', description: 'Apply all replacements non-interactively.')]
-  #[CLI\Usage(name: 'drush bs5-entity-display-groups:update', description: 'Interactively replace deprecated Arizona Bootstrap 2 classes/attributes in field_group format_settings for AZBootstrap.')]
+  #[CLI\Usage(name: 'drush bs5-entity-display-groups:update', description: 'Interactively replace deprecated Arizona Bootstrap 2 classes/attributes in field_group settings for entity displays.')]
   #[CLI\Usage(name: 'drush bs5-entity-display-groups:update --dry-run', description: 'Preview changes without modifying configs.')]
   #[CLI\Usage(name: 'drush bs5-entity-display-groups:update --yes', description: 'Apply all replacements non-interactively.')]
   #[CLI\DefaultTableFields(fields: ['entity', 'bundle', 'mode', 'group', 'old', 'new', 'fields', 'config'])]
