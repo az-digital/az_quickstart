@@ -41,3 +41,11 @@ services:
   az_core.content_field_updater:
     class: Drupal\az_core\AZContentFieldUpdater
     arguments: ['@entity_type.manager', '@logger.factory']
+
+  az_core.azbootstrap_entity_display_groups_commands:
+    class: Drupal\az_core\Commands\AZBootstrapEntityDisplayGroupsCommands
+    arguments:
+      - '@config.factory'
+      - '@config.manager'
+    tags:
+      - { name: drush.command }
