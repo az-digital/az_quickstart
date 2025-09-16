@@ -32,7 +32,7 @@ class AZDemoContentTest extends QuickstartFunctionalTestBase {
   /**
    * Modules to enable.
    *
-   * @var string[]
+   * @var array
    */
   protected static $modules = [
     'az_demo',
