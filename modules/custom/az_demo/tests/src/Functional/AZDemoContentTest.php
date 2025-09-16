@@ -109,4 +109,20 @@ class AZDemoContentTest extends QuickstartFunctionalTestBase {
     $assert->linkNotExists('Ludwig van Beethoven');
   }
 
+  /**
+   * Ensures empty sidebar blocks do not produce sidebar layout classes.
+   */
+  public function testSidebarLayoutClass() {
+    $this->drupalGet(Url::fromRoute('<front>'));
+    $assert = $this->assertSession();
+    $assert->statusCodeEquals(200);
+
+    // Assert body does not include sidebar classes when the sidebar is empty.
+    $body = $assert->elementExists('css', 'body');
+    $classes = $body->getAttribute('class');
+    $this->assertStringNotContainsString('layout-one-sidebar', $classes);
+    $this->assertStringNotContainsString('layout-sidebar-first', $classes);
+    $assert->elementAttributeContains('css', 'body', 'class', 'layout-no-sidebars');
+  }
+
 }
