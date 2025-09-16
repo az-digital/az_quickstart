@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\az_core\Commands;
+namespace Drupal\az_core\Drush\Commands;
 
 use Consolidation\OutputFormatters\StructuredData\RowsOfFields;
 use Drupal\Core\Config\ConfigFactoryInterface;
@@ -44,25 +44,6 @@ final class AZBootstrapEntityDisplayGroupsCommands extends DrushCommands {
       $container->get('config.factory'),
       $container->get('config.manager')
     );
-  }
-
-  /**
-   * Recursively collect all field IDs from a group (expanding nested groups).
-   */
-  protected function getFieldsFromGroup(array $groupConfig, array $allGroups): array {
-    $fields = [];
-    $children = $groupConfig['children'] ?? [];
-
-    foreach ($children as $child) {
-      if (isset($allGroups[$child])) {
-        $fields = array_merge($fields, $this->getFieldsFromGroup($allGroups[$child], $allGroups));
-      }
-      else {
-        $fields[] = $child;
-      }
-    }
-
-    return $fields;
   }
 
   /**
@@ -118,18 +99,32 @@ final class AZBootstrapEntityDisplayGroupsCommands extends DrushCommands {
 
         $fieldsInGroup = $this->getFieldsFromGroup($groupConfig, $fieldGroups);
 
-        foreach ($patterns as $pattern) {
-          if (stripos($classes, $pattern) !== FALSE || stripos($attributes, $pattern) !== FALSE) {
-            $matches[] = [
-              'entity' => $entityType,
-              'bundle' => $bundle,
-              'mode' => $mode,
-              'group' => $groupName,
-              'match' => $pattern,
-              'config' => $configName,
-              'fields' => implode(', ', $fieldsInGroup),
-            ];
-          }
+        // Check for exact matches in classes.
+        $classMatches = $this->findExactMatches($classes, $patterns);
+        foreach ($classMatches as $match) {
+          $matches[] = [
+            'entity' => $entityType,
+            'bundle' => $bundle,
+            'mode' => $mode,
+            'group' => $groupName,
+            'match' => $match,
+            'config' => $configName,
+            'fields' => implode(', ', $fieldsInGroup),
+          ];
+        }
+
+        // Check for exact matches in attributes.
+        $attributeMatches = $this->findExactMatches($attributes, $patterns);
+        foreach ($attributeMatches as $match) {
+          $matches[] = [
+            'entity' => $entityType,
+            'bundle' => $bundle,
+            'mode' => $mode,
+            'group' => $groupName,
+            'match' => $match,
+            'config' => $configName,
+            'fields' => implode(', ', $fieldsInGroup),
+          ];
         }
       }
     }
@@ -196,7 +191,8 @@ final class AZBootstrapEntityDisplayGroupsCommands extends DrushCommands {
         $groupChanged = FALSE;
 
         foreach ($replacementMap as $old => $new) {
-          if (stripos($classes, $old) !== FALSE) {
+          // Check for exact match in classes.
+          if ($this->findExactMatches($classes, [$old])) {
             if ($nonInteractive) {
               $apply = TRUE;
             }
@@ -217,7 +213,7 @@ final class AZBootstrapEntityDisplayGroupsCommands extends DrushCommands {
             }
 
             if ($apply) {
-              $classes = str_ireplace($old, $new, $classes);
+              $classes = $this->replaceExactMatch($classes, $old, $new);
               $groupChanged = TRUE;
               $changes[] = [
                 'entity' => $entityType,
@@ -232,7 +228,8 @@ final class AZBootstrapEntityDisplayGroupsCommands extends DrushCommands {
             }
           }
 
-          if (stripos($attributes, $old) !== FALSE) {
+          // Check for exact match in attributes.
+          if ($this->findExactMatches($attributes, [$old])) {
             if ($nonInteractive) {
               $apply = TRUE;
             }
@@ -253,7 +250,7 @@ final class AZBootstrapEntityDisplayGroupsCommands extends DrushCommands {
             }
 
             if ($apply) {
-              $attributes = str_ireplace($old, $new, $attributes);
+              $attributes = $this->replaceExactMatch($attributes, $old, $new);
               $groupChanged = TRUE;
               $changes[] = [
                 'entity' => $entityType,
@@ -272,6 +269,7 @@ final class AZBootstrapEntityDisplayGroupsCommands extends DrushCommands {
         if ($groupChanged && !$dryRun) {
           $groupConfig['format_settings']['classes'] = $classes;
           $groupConfig['format_settings']['attributes'] = $attributes;
+          $raw['third_party_settings']['field_group'][$groupName] = $groupConfig;
           $updated = TRUE;
         }
       }
@@ -288,6 +286,79 @@ final class AZBootstrapEntityDisplayGroupsCommands extends DrushCommands {
     }
 
     return new RowsOfFields($changes);
+  }
+
+  /**
+   * Recursively collect all field IDs from a group (expanding nested groups).
+   */
+  protected function getFieldsFromGroup(array $groupConfig, array $allGroups): array {
+    $fields = [];
+    $children = $groupConfig['children'] ?? [];
+
+    foreach ($children as $child) {
+      if (isset($allGroups[$child])) {
+        $fields = array_merge($fields, $this->getFieldsFromGroup($allGroups[$child], $allGroups));
+      }
+      else {
+        $fields[] = $child;
+      }
+    }
+
+    return $fields;
+  }
+
+  /**
+   * Check if any patterns match exactly within a space-delimited string.
+   *
+   * @param string $input
+   *   The input string (classes or attributes).
+   * @param array $patterns
+   *   Array of patterns to match against.
+   *
+   * @return array
+   *   Array of matching patterns found.
+   */
+  protected function findExactMatches(string $input, array $patterns): array {
+    if (empty($input)) {
+      return [];
+    }
+
+    // Split input by spaces and filter out empty values.
+    $inputTokens = array_filter(explode(' ', $input), fn($token) => !empty(trim($token)));
+    $matches = [];
+
+    foreach ($patterns as $pattern) {
+      if (in_array($pattern, $inputTokens, TRUE)) {
+        $matches[] = $pattern;
+      }
+    }
+
+    return $matches;
+  }
+
+  /**
+   * Replace exact matches in a space-delimited string.
+   *
+   * @param string $input
+   *   The input string (classes or attributes).
+   * @param string $old
+   *   The old value to replace.
+   * @param string $new
+   *   The new value to replace with.
+   *
+   * @return string
+   *   The updated string.
+   */
+  protected function replaceExactMatch(string $input, string $old, string $new): string {
+    if (empty($input)) {
+      return $input;
+    }
+
+    // Split by spaces, replace exact matches, then rejoin.
+    $tokens = explode(' ', $input);
+    $tokens = array_map(fn($token) => $token === $old ? $new : $token, $tokens);
+
+    return implode(' ', $tokens);
   }
 
 }
