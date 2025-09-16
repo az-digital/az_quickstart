@@ -10,12 +10,22 @@ use Drupal\az_core\Utility\AZBootstrapMarkupConverter;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 /**
- * Drush commands for checking and updating deprecated Arizona Bootstrap 2 classes/attributes
- * in field_group settings for entity displays.
+ * Commands for updating AZ Bootstrap 2 attributes in field_group settings.
  */
 final class AZBootstrapEntityDisplayGroupsCommands extends DrushCommands {
 
+  /**
+   * The config factory service.
+   *
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
+   */
   protected ConfigFactoryInterface $configFactory;
+
+  /**
+   * The config manager service.
+   *
+   * @var \Drupal\Core\Config\ConfigManagerInterface
+   */
   protected ConfigManagerInterface $configManager;
 
   public function __construct(ConfigFactoryInterface $configFactory, ConfigManagerInterface $configManager) {
@@ -34,7 +44,8 @@ final class AZBootstrapEntityDisplayGroupsCommands extends DrushCommands {
     foreach ($children as $child) {
       if (isset($allGroups[$child])) {
         $fields = array_merge($fields, $this->getFieldsFromGroup($allGroups[$child], $allGroups));
-      } else {
+      }
+      else {
         $fields[] = $child;
       }
     }
@@ -42,10 +53,9 @@ final class AZBootstrapEntityDisplayGroupsCommands extends DrushCommands {
     return $fields;
   }
 
-  // ------------------------------------------------------------------------
-  // Command: check
-  // ------------------------------------------------------------------------
-
+  /**
+   * Check command.
+   */
   #[CLI\Command(name: 'bs5-entity-display-groups:check', aliases: ['bs5edg:check'])]
   #[CLI\Option(name: 'patterns', description: 'Comma-separated list of patterns to check (overrides defaults).')]
   #[CLI\Usage(name: 'drush bs5-entity-display-groups:check', description: 'Scan all field_group format_settings for deprecated Arizona Bootstrap 2 classes/attributes.')]
@@ -62,7 +72,7 @@ final class AZBootstrapEntityDisplayGroupsCommands extends DrushCommands {
   public function check(array $options = []): array {
     $matches = [];
 
-    // Default patterns: Arizona Bootstrap 2 classes + data-* attributes
+    // Default patterns: Arizona Bootstrap 2 classes + data-* attributes.
     $defaultPatterns = array_merge(
       array_keys(AZBootstrapMarkupConverter::CLASS_MAP),
       array_map(fn($attr) => 'data-' . $attr, AZBootstrapMarkupConverter::LEGACY_DATA_ATTRIBUTES)
@@ -120,10 +130,9 @@ final class AZBootstrapEntityDisplayGroupsCommands extends DrushCommands {
     return $matches;
   }
 
-  // ------------------------------------------------------------------------
-  // Command: update
-  // ------------------------------------------------------------------------
-
+  /**
+   * Update command.
+   */
   #[CLI\Command(name: 'bs5-entity-display-groups:update', aliases: ['bs5edg:update'])]
   #[CLI\Option(name: 'dry-run', description: 'Show proposed replacements without saving.')]
   #[CLI\Option(name: 'yes', description: 'Apply all replacements non-interactively.')]
@@ -146,7 +155,7 @@ final class AZBootstrapEntityDisplayGroupsCommands extends DrushCommands {
     $nonInteractive = (bool) $options['yes'];
     $changes = [];
 
-    // Build replacement map: Arizona Bootstrap 2 → AZBootstrap
+    // Build replacement map: Arizona Bootstrap 2 → AZBootstrap.
     $replacementMap = AZBootstrapMarkupConverter::CLASS_MAP;
     foreach (AZBootstrapMarkupConverter::LEGACY_DATA_ATTRIBUTES as $attr) {
       $replacementMap['data-' . $attr] = 'data-bs-' . $attr;
