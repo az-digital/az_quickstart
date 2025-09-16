@@ -1,7 +1,7 @@
 name: Quickstart Media - Tableau
 type: module
 description: Tableau Visualization media entity type.
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10 || ^11 || ^12
 package: The University of Arizona
 dependencies:
   - az_core
