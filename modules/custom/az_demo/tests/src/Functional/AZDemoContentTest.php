@@ -85,7 +85,7 @@ class AZDemoContentTest extends QuickstartFunctionalTestBase {
     $assert->elementExists('xpath', "//a[@href='https://example.com/deep-learning-book' and text()='Deep Learning']");
     $assert->elementExists('xpath', "//a[@href='https://example.com/climate-change-journal' and text()='Climate Change: Impacts and Solutions']");
     $siteDirectory = $this->siteDirectory;
-    $assert->elementExists('xpath', "//a[@href='/{$siteDirectory}/files/Small-PDF.pdf' and text()='The Trissotetras: Or, a Most Exquisite Table for Resolving All Manner of Triangles. ']");
+    $assert->elementExists('xpath', "//a[@href='/{$siteDirectory}/files/Small-PDF.pdf' and text()='The Trissotetras: Or, a Most Exquisite Table for Resolving All Manner of triangles. ']");
     // If field_az_publication_link has a value, assert that the value is used
     // as the link.
     $assert->elementExists('xpath', "//a[@href='https://example.com/ai-ethics-book' and text()='Ethics in Artificial Intelligence']");
