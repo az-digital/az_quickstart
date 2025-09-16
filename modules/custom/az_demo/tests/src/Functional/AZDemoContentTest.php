@@ -32,7 +32,7 @@ class AZDemoContentTest extends QuickstartFunctionalTestBase {
   /**
    * Modules to enable.
    *
-   * @var array
+   * @var string[]
    */
   protected static $modules = [
     'az_demo',
@@ -59,7 +59,7 @@ class AZDemoContentTest extends QuickstartFunctionalTestBase {
    */
   public function testDemoContent() {
     // Go to the front page.
-    $this->drupalGet(Url::fromRoute('<front>'));
+    $this->drupalGet('/pages/split-screen-no-sidebar');
     $assert = $this->assertSession();
     $assert->statusCodeEquals(200);
 
@@ -85,7 +85,7 @@ class AZDemoContentTest extends QuickstartFunctionalTestBase {
     $assert->elementExists('xpath', "//a[@href='https://example.com/deep-learning-book' and text()='Deep Learning']");
     $assert->elementExists('xpath', "//a[@href='https://example.com/climate-change-journal' and text()='Climate Change: Impacts and Solutions']");
     $siteDirectory = $this->siteDirectory;
-    $assert->elementExists('xpath', "//a[@href='/{$siteDirectory}/files/Small-PDF.pdf' and text()='The Trissotetras: Or, a Most Exquisite Table for Resolving All Manner of triangles. ']");
+    $assert->elementExists('xpath', "//a[@href='/{$siteDirectory}/files/Small-PDF.pdf' and text()='The Trissotetras: Or, a Most Exquisite Table for Resolving All Manner of Triangles. ']");
     // If field_az_publication_link has a value, assert that the value is used
     // as the link.
     $assert->elementExists('xpath', "//a[@href='https://example.com/ai-ethics-book' and text()='Ethics in Artificial Intelligence']");
@@ -107,6 +107,23 @@ class AZDemoContentTest extends QuickstartFunctionalTestBase {
     $assert->linkNotExists('van Gogh, Vincent');
     $assert->linkNotExists('Christian Andersen, Hans');
     $assert->linkNotExists('Ludwig van Beethoven');
+  }
+
+  /**
+   * Ensures empty sidebar blocks do not produce sidebar layout classes.
+   */
+  public function testSidebarLayoutClass() {
+    $this->drupalGet('/pages/split-screen-no-sidebar');
+    $assert = $this->assertSession();
+    $assert->statusCodeEquals(200);
+
+    // Assert body does not include sidebar classes on a page that hides the
+    // sidebar block.
+    $body = $assert->elementExists('css', 'body');
+    $classes = $body->getAttribute('class');
+    $this->assertStringNotContainsString('layout-one-sidebar', $classes);
+    $this->assertStringNotContainsString('layout-sidebar-first', $classes);
+    $assert->elementAttributeContains('css', 'body', 'class', 'layout-no-sidebars');
   }
 
 }
