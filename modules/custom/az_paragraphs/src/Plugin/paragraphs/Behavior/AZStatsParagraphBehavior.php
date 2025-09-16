@@ -43,6 +43,7 @@ class AZStatsParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#options' => [
         'card stat-bold-static' => $this->t('Stat Bold Static'),
         'card stat-bold-hover' => $this->t('Stat Bold Hover'),
+        'card stat-thin' => $this->t('Stat Thin'),
       ],
       '#default_value' => $config['stat_style'] ?? 'stat-bold-hover',
       '#description' => $this->t('Gives the stats a bold look with an interactive hover effect, bold without the hover effect, or a more basic look similar to cards.'),

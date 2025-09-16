@@ -8,21 +8,11 @@
  * - media: The media field of a stat.
  * - stat_heading: The title field of a stat.
  * - stat_description: The body field of a stat.
- * - stat_source: The link field on a stat.
+ * - stat_source: The source field on a stat.
  * - text_color_override: Overriding default h1-h6 default text colors.
+ * - stat_style: Bold or thin style. If we're using Thin style set from the paragraph, use less bolder headings.
  * - link_url: The link URL only.
- * - title_style: The title style to use.
- * - title_level: The heading level to use.
- * - title_display: The title text display size to use.
  * @ingroup themeable
- */
-
-
-/**
- * TODO: Twig notes, delete before final push:
- * Stat item is either image or stat. If image, column size could be variable.
- * Stat is one of three styles.
- *
  */
 
 #}
@@ -37,9 +27,15 @@
       <div class="card-text d-flex flex-column flex-grow-1">
         <div class="stat-content">
           {% if stat_heading %}
-            <h1 class="fw-bolder display-4 m-0 {% if text_color_override %}{{ text_color_override }}{% endif %}">
-              <strong>{{ stat_heading }}</strong>
-            </h1>
+            {% if stat_style == "card stat-thin" %}
+              <h3 class="display-4 m-0 {% if text_color_override %}{{ text_color_override }}{% endif %}">
+                <strong>{{ stat_heading }}</strong>
+              </h3>
+            {% else %}
+              <h1 class="fw-bolder display-4 m-0 {% if text_color_override %}{{ text_color_override }}{% endif %}">
+                <strong>{{ stat_heading }}</strong>
+              </h1>
+            {% endif %}
           {% endif %}
           {% if stat_description %}
             <h4 class="m-0 stat-description {% if text_color_override %}{{ text_color_override }}{% endif %}">{{ stat_description }}</h4>

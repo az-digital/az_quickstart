@@ -159,9 +159,9 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
       }
 
       // Title display.
-      if (!empty($item->options['title_display'])) {
-        $title_display = $item->options['title_display'];
-      }
+      // if (!empty($item->options['title_display'])) {
+      //   $title_display = $item->options['title_display'];
+      // }
 
       $stat_classes = 'stat';
       $column_classes = [];
@@ -232,30 +232,6 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
               $stat_classes .= ' stat-with-link';
             }
           }
-
-          // Title style.
-          if (isset($stat_defaults['stat_title_style'])) {
-            $title_style = $stat_defaults['stat_title_style'];
-            if (!empty($media_render_array)) {
-              if ($item->stat_heading && $title_style === 'title-on-image') {
-                array_push($media_render_array['#item_attributes']['class'], 'img-fluid', 'image-style-az-stat-image');
-              }
-            }
-            // Force default title style if media field is not populated.
-            else {
-              $title_style = 'default';
-            }
-          }
-
-          // Title level.
-          if (isset($stat_defaults['stat_title_level'])) {
-            $title_level = $stat_defaults['stat_title_level'];
-          }
-
-          // Title display.
-          if (isset($stat_defaults['stat_title_display'])) {
-            $title_display = $stat_defaults['stat_title_display'];
-          }
         }
       }
 
@@ -291,14 +267,12 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         '#media' => $media_render_array,
         '#column_span' => $column_span,
         '#stat_heading' => $stat_heading,
+        '#stat_style' => $stat_style,
         // The ProcessedText element handles cache context & tag bubbling.
         // @see \Drupal\filter\Element\ProcessedText::preRenderText()
         '#stat_description' => $stat_description,
         '#stat_source' => $item->stat_source,
         '#link_url' => $link_url,
-        '#title_style' => $title_style ?? 'default',
-        '#title_level' => $title_level ?? 'h3',
-        // '#title_alignment' => $title_alignment ?? 'text-start',
         '#title_display' => $title_display ?? 'h5',
         '#text_color_override' => $text_color_override,
         '#attributes' => ['class' => $stat_classes],
