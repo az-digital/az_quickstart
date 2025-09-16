@@ -146,6 +146,17 @@ class AZDemoContentTest extends QuickstartFunctionalTestBase {
     $this->assertStringContainsString('layout-no-sidebars', $classes);
     $assert->elementNotExists('css', '#block-az-demo-test-sidebar-menu');
 
+    // Pages with content in the menu should render the sidebar.
+    $this->drupalGet('/pages/text');
+    $assert = $this->assertSession();
+    $assert->statusCodeEquals(200);
+    $body = $assert->elementExists('css', 'body');
+    $classes = $body->getAttribute('class');
+    $this->assertStringContainsString('layout-one-sidebar', $classes);
+    $this->assertStringContainsString('layout-sidebar-first', $classes);
+    $this->assertStringNotContainsString('layout-no-sidebars', $classes);
+    $assert->elementExists('css', '#block-az-demo-test-sidebar-menu');
+
     // Finder pages hide the menu but keep other sidebar blocks visible.
     $this->drupalGet('/finders/news');
     $assert = $this->assertSession();
