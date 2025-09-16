@@ -3,6 +3,8 @@
 namespace Drupal\Tests\az_demo\Functional;
 
 use Drupal\Core\Url;
+use Drupal\block\Entity\Block;
+use Drupal\Core\Config\FileStorage;
 use Drupal\Tests\az_core\Functional\QuickstartFunctionalTestBase;
 
 /**
@@ -113,6 +115,16 @@ class AZDemoContentTest extends QuickstartFunctionalTestBase {
    * Ensures sidebar blocks only appear when they have content.
    */
   public function testSidebarLayoutClass() {
+    $this->config('block.block.az_barrio_sidebar_menu')->set('status', FALSE)->save();
+
+    $fixture_path = __DIR__ . '/../../fixtures/config';
+    $storage = new FileStorage($fixture_path);
+    $config_name = 'block.block.az_demo_test_sidebar_menu';
+    $config_data = $storage->read($config_name);
+    $this->assertNotEmpty($config_data, 'Sidebar menu fixture config found.');
+    $this->config($config_name)->setData($config_data)->save();
+    $this->container->get('entity_type.manager')->getStorage('block')->resetCache();
+
     // Front page should not display the sidebar menu.
     $this->drupalGet(Url::fromRoute('<front>'));
     $assert = $this->assertSession();
@@ -122,7 +134,7 @@ class AZDemoContentTest extends QuickstartFunctionalTestBase {
     $this->assertStringNotContainsString('layout-one-sidebar', $classes);
     $this->assertStringNotContainsString('layout-sidebar-first', $classes);
     $this->assertStringContainsString('layout-no-sidebars', $classes);
-    $assert->elementNotExists('css', '#block-az-barrio-sidebar-menu');
+    $assert->elementNotExists('css', '#block-az-demo-test-sidebar-menu');
 
     // Demo page with an empty sidebar should not render sidebar classes.
     $this->drupalGet('/pages/combo-page-no-sidebar');
@@ -133,7 +145,7 @@ class AZDemoContentTest extends QuickstartFunctionalTestBase {
     $this->assertStringNotContainsString('layout-one-sidebar', $classes);
     $this->assertStringNotContainsString('layout-sidebar-first', $classes);
     $this->assertStringContainsString('layout-no-sidebars', $classes);
-    $assert->elementNotExists('css', '#block-az-barrio-sidebar-menu');
+    $assert->elementNotExists('css', '#block-az-demo-test-sidebar-menu');
 
     // Finder pages hide the menu but keep other sidebar blocks visible.
     $this->drupalGet('/finders/news');
@@ -144,7 +156,7 @@ class AZDemoContentTest extends QuickstartFunctionalTestBase {
     $this->assertStringContainsString('layout-one-sidebar', $classes);
     $this->assertStringContainsString('layout-sidebar-first', $classes);
     $this->assertStringNotContainsString('layout-no-sidebars', $classes);
-    $assert->elementNotExists('css', '#block-az-barrio-sidebar-menu');
+    $assert->elementNotExists('css', '#block-az-demo-test-sidebar-menu');
   }
 
 }

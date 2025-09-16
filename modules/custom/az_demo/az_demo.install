@@ -37,8 +37,6 @@ function az_demo_install() {
   $source = new FileStorage($config_path);
   \Drupal::service('config.installer')->installOptionalConfig($source);
 
-  az_demo_set_sidebar_menu_visibility();
-
   // Enable Marketing Campaign Page styles.
   \Drupal::service('config.factory')
     ->getEditable('az_flexible_page.settings')
@@ -65,38 +63,4 @@ function az_demo_uninstall() {
  */
 function az_demo_update_1021001() {
   \Drupal::service('module_installer')->install(['az_finder']);
-}
-
-/**
- * Sets sidebar menu block visibility using core path conditions.
- */
-function az_demo_update_1021002() {
-  az_demo_set_sidebar_menu_visibility();
-}
-
-/**
- * Helper to configure sidebar menu block visibility for demo pages.
- */
-function az_demo_set_sidebar_menu_visibility(): void {
-  $config = \Drupal::service('config.factory')->getEditable('block.block.az_barrio_sidebar_menu');
-  if ($config->isNew()) {
-    return;
-  }
-
-  $paths = [
-    '/pages/split-screen-no-sidebar',
-    '/pages/text-background-no-sidebar',
-    '/pages/combo-page-no-sidebar',
-    '/finders/people',
-    '/finders/news',
-    '/finders/events',
-    '/finders/pages',
-    '/finders/content',
-  ];
-
-  $config->set('visibility.request_path', [
-    'id' => 'request_path',
-    'pages' => implode("\n", $paths),
-    'negate' => TRUE,
-  ])->save();
 }
