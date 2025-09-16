@@ -5,7 +5,6 @@ namespace Drupal\az_core\Drush\Commands;
 use Consolidation\OutputFormatters\StructuredData\RowsOfFields;
 use Drupal\az_core\Utility\AZBootstrapMarkupConverter;
 use Drupal\Core\Config\ConfigFactoryInterface;
-use Drupal\Core\Config\ConfigManagerInterface;
 use Drush\Attributes as CLI;
 use Drush\Commands\DrushCommands;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -21,17 +20,11 @@ final class AZBootstrapEntityDisplayGroupsCommands extends DrushCommands {
   protected ConfigFactoryInterface $configFactory;
 
   /**
-   * The config manager service.
-   */
-  protected ConfigManagerInterface $configManager;
-
-  /**
    * Constructs the command.
    */
-  public function __construct(ConfigFactoryInterface $configFactory, ConfigManagerInterface $configManager) {
+  public function __construct(ConfigFactoryInterface $configFactory) {
     parent::__construct();
     $this->configFactory = $configFactory;
-    $this->configManager = $configManager;
   }
 
   /**
@@ -39,8 +32,7 @@ final class AZBootstrapEntityDisplayGroupsCommands extends DrushCommands {
    */
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('config.factory'),
-      $container->get('config.manager')
+      $container->get('config.factory')
     );
   }
 
