@@ -177,19 +177,6 @@
             "position" : "col-md-8 col-lg-6 offset-md-4 offset-lg-6",
             "bg_color" : "text-bg-transparent-white",
             "bottom_spacing" : "mb-0"
-        },
-        {
-            "id":196,
-            "az_title" : "",
-            "az_text_area" : "<drupal-media data-entity-type=\"media\" data-entity-uuid=\"2d1c72cf-e90b-4457-992d-55f87bf5dc46\">&nbsp;</drupal-media>",
-            "filename" : "arizona_campus_fireworks.jpg",
-            "full_width" : "full-width-background",
-            "bg_attachment" : "",
-            "spacing" : "y-0",
-            "content_style" : "column",
-            "position" : "col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6",
-            "bg_color" : "bg-transparent-white",
-            "bottom_spacing" : "mb-0"
         }
     ]
 }

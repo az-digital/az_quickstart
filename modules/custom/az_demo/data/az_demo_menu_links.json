@@ -461,28 +461,6 @@
         "expanded": false,
         "enabled": true,
         "weight": "18"
-    },
-    {
-      "link_id": "43",
-      "parent_link_id": "42",
-      "menu": "main",
-      "title": "Trellis Embed",
-      "urlpath": "/pages/media-embeds/trellis",
-      "external": false,
-      "expanded": false,
-      "enabled": true,
-      "weight": "19"
-    },
-        {
-      "link_id": "44",
-      "parent_link_id": "42",
-      "menu": "main",
-      "title": "Advanced Trellis",
-      "urlpath": "/pages/media-embeds/trellis-advanced",
-      "external": false,
-      "expanded": false,
-      "enabled": true,
-      "weight": "20"
     }
   ]
 }

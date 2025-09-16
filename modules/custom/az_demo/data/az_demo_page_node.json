@@ -183,16 +183,6 @@
     },
     {
       "id":21,
-      "title" : "Media Embeds",
-      "path" : "/pages/media-embeds",
-      "exclude_title" : true,
-      "az_page_category" : "Media Galleries",
-      "az_main_content" : "194|195",
-      "az_media_image" : "",
-      "az_summary" : "Remote media embeds."
-    },
-    {
-      "id":22,
       "title" : "Combo Page",
       "path" : "/pages/combo-page",
       "az_page_category" : "Text",
@@ -201,7 +191,7 @@
       "az_summary" : "This is a page with text and text with background elements."
     },
     {
-      "id":23,
+      "id":22,
       "title" : "Combo Page Without Sidebar",
       "path" : "/pages/combo-page-no-sidebar",
       "az_page_category" : "Text",
@@ -210,7 +200,7 @@
       "az_summary" : "This is a page with text and text with background elements."
     },
     {
-      "id":24,
+      "id":23,
       "title" : "People Finder",
       "path" : "/finders/people",
       "az_page_category" : "Views",
@@ -219,7 +209,7 @@
       "az_summary" : "A page with views better exposed filters block."
     },
     {
-      "id":25,
+      "id":24,
       "title" : "News Finder",
       "path" : "/finders/news",
       "az_page_category" : "Views",
@@ -228,7 +218,7 @@
       "az_summary" : "A page with views better exposed filters block."
     },
     {
-      "id":26,
+      "id":25,
       "title" : "Event Finder",
       "path" : "/finders/events",
       "az_page_category" : "Views|Event Listings",
@@ -237,7 +227,7 @@
       "az_summary" : "A page with views better exposed filters block."
     },
     {
-      "id":27,
+      "id":26,
       "title" : "Page Finder",
       "path" : "/finders/pages",
       "az_page_category" : "Views",
@@ -246,7 +236,7 @@
       "az_summary" : "A page with views better exposed filters block."
     },
     {
-      "id":28,
+      "id":27,
       "title" : "Content Finder",
       "path" : "/finders/content",
       "az_page_category" : "Views",
@@ -255,7 +245,7 @@
       "az_summary" : "A page with views better exposed filters block."
     },
     {
-      "id":29,
+      "id":28,
       "title" : "Publications",
       "path" : "/publications",
       "az_page_category" : "Publications",
@@ -264,24 +254,14 @@
       "az_summary" : "A page with publications."
     },
     {
-      "id":30,
-      "title" : "Trellis Embed",
-      "path" : "/pages/media-embeds/trellis",
+      "id":29,
+      "title" : "Media Embeds",
+      "path" : "/pages/media-embeds",
       "exclude_title" : true,
-      "az_page_category" : "",
-      "az_main_content" : "194|196",
+      "az_page_category" : "Media Galleries",
+      "az_main_content" : "194|195",
       "az_media_image" : "",
-      "az_summary" : "A page with a Trellis RFI used in a design."
-    },
-    {
-      "id":31,
-      "title" : "Advanced Trellis",
-      "path" : "/pages/media-embeds/trellis-advanced",
-      "exclude_title" : true,
-      "az_page_category" : "",
-      "az_main_content" : "197",
-      "az_media_image" : "",
-      "az_summary" : "A page with more complex Trellis form"
+      "az_summary" : "Remote media embeds."
     }
   ]
 }
