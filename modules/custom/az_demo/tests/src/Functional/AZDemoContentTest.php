@@ -15,7 +15,7 @@ class AZDemoContentTest extends QuickstartFunctionalTestBase {
   /**
    * The profile to install as a basis for testing.
    *
-   * @var string
+   * @var string[]
    */
   protected $profile = 'az_quickstart';
 
@@ -110,19 +110,41 @@ class AZDemoContentTest extends QuickstartFunctionalTestBase {
   }
 
   /**
-   * Ensures empty sidebar blocks do not produce sidebar layout classes.
+   * Ensures sidebar blocks only appear when they have content.
    */
   public function testSidebarLayoutClass() {
+    // Front page should not display the sidebar menu.
     $this->drupalGet(Url::fromRoute('<front>'));
     $assert = $this->assertSession();
     $assert->statusCodeEquals(200);
-
-    // Assert body does not include sidebar classes when the sidebar is empty.
     $body = $assert->elementExists('css', 'body');
     $classes = $body->getAttribute('class');
     $this->assertStringNotContainsString('layout-one-sidebar', $classes);
     $this->assertStringNotContainsString('layout-sidebar-first', $classes);
-    $assert->elementAttributeContains('css', 'body', 'class', 'layout-no-sidebars');
+    $this->assertStringContainsString('layout-no-sidebars', $classes);
+    $assert->elementNotExists('css', '#block-az-barrio-sidebar-menu');
+
+    // Demo page with an empty sidebar should not render sidebar classes.
+    $this->drupalGet('/pages/combo-page-no-sidebar');
+    $assert = $this->assertSession();
+    $assert->statusCodeEquals(200);
+    $body = $assert->elementExists('css', 'body');
+    $classes = $body->getAttribute('class');
+    $this->assertStringNotContainsString('layout-one-sidebar', $classes);
+    $this->assertStringNotContainsString('layout-sidebar-first', $classes);
+    $this->assertStringContainsString('layout-no-sidebars', $classes);
+    $assert->elementNotExists('css', '#block-az-barrio-sidebar-menu');
+
+    // Finder pages hide the menu but keep other sidebar blocks visible.
+    $this->drupalGet('/finders/news');
+    $assert = $this->assertSession();
+    $assert->statusCodeEquals(200);
+    $body = $assert->elementExists('css', 'body');
+    $classes = $body->getAttribute('class');
+    $this->assertStringContainsString('layout-one-sidebar', $classes);
+    $this->assertStringContainsString('layout-sidebar-first', $classes);
+    $this->assertStringNotContainsString('layout-no-sidebars', $classes);
+    $assert->elementNotExists('css', '#block-az-barrio-sidebar-menu');
   }
 
 }

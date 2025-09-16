@@ -5,10 +5,7 @@
  * Contains az_demo.module.
  */
 
-use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Routing\RouteMatchInterface;
-use Drupal\Core\Session\AccountInterface;
-use Drupal\block\Entity\Block;
 
 /**
  * Implements hook_help().
@@ -24,44 +21,4 @@ function az_demo_help($route_name, RouteMatchInterface $route_match) {
 
     default:
   }
-}
-
-/**
- * Implements hook_block_access().
- *
- * Hide blocks by specific path.
- */
-function az_demo_block_access(Block $block, $operation, AccountInterface $account) {
-  $current_path = \Drupal::service('path.current')->getPath();
-  $path_alias = \Drupal::service('path_alias.manager')->getAliasByPath($current_path);
-  $paths_to_hide_block_by_block_id = az_demo_blocks_to_hide_by_path();
-  if ($operation === 'view') {
-    foreach ($paths_to_hide_block_by_block_id as $block_id => $paths) {
-      if ($block->id() === $block_id && in_array($path_alias, $paths, TRUE)) {
-        return AccessResult::forbiddenIf(TRUE)->addCacheableDependency($block);
-      }
-    }
-  }
-}
-
-/**
- * Blocks to hide at specific paths.
- *
- * @return array
- *   Contains an array keyed with block ID and and an array of paths to hide the
- *   block on.
- */
-function az_demo_blocks_to_hide_by_path(): array {
-  return [
-    'az_barrio_sidebar_menu' => [
-      '/pages/split-screen-no-sidebar',
-      '/pages/text-background-no-sidebar',
-      '/pages/combo-page-no-sidebar',
-      '/finders/people',
-      '/finders/news',
-      '/finders/events',
-      '/finders/pages',
-      '/finders/content',
-    ],
-  ];
 }
