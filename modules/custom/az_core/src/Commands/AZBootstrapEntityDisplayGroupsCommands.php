@@ -2,12 +2,14 @@
 
 namespace Drupal\az_core\Commands;
 
-use Drush\Attributes as CLI;
-use Drush\Commands\DrushCommands;
+use Consolidation\OutputFormatters\StructuredData\RowsOfFields;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Config\ConfigManagerInterface;
 use Drupal\az_core\Utility\AZBootstrapMarkupConverter;
-use Symfony\Component\Console\Question\ConfirmationQuestion;
+use Drush\Attributes as CLI;
+use Drush\Commands\DrushCommands;
+use Symfony\Component\Console\Question\ChoiceQuestion;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Commands for updating AZ Bootstrap 2 attributes in field_group settings.
@@ -32,6 +34,16 @@ final class AZBootstrapEntityDisplayGroupsCommands extends DrushCommands {
     parent::__construct();
     $this->configFactory = $configFactory;
     $this->configManager = $configManager;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('config.factory'),
+      $container->get('config.manager')
+    );
   }
 
   /**
@@ -69,7 +81,7 @@ final class AZBootstrapEntityDisplayGroupsCommands extends DrushCommands {
     'config' => 'Config ID',
     'fields' => 'Fields in Group',
   ])]
-  public function check(array $options = []): array {
+  public function check(array $options = []): RowsOfFields {
     $matches = [];
 
     // Default patterns: Arizona Bootstrap 2 classes + data-* attributes.
@@ -91,7 +103,6 @@ final class AZBootstrapEntityDisplayGroupsCommands extends DrushCommands {
     foreach ($configNames as $configName) {
       $config = $this->configFactory->get($configName)->getRawData();
 
-      $id = $config['id'] ?? $configName;
       $entityType = $config['targetEntityType'] ?? '?';
       $bundle = $config['bundle'] ?? '?';
       $mode = $config['mode'] ?? '?';
@@ -115,7 +126,7 @@ final class AZBootstrapEntityDisplayGroupsCommands extends DrushCommands {
               'mode' => $mode,
               'group' => $groupName,
               'match' => $pattern,
-              'config' => $id,
+              'config' => $configName,
               'fields' => implode(', ', $fieldsInGroup),
             ];
           }
@@ -123,11 +134,7 @@ final class AZBootstrapEntityDisplayGroupsCommands extends DrushCommands {
       }
     }
 
-    if (empty($matches)) {
-      $this->io()->success('No deprecated Arizona Bootstrap 2 classes or data attributes found in field groups.');
-    }
-
-    return $matches;
+    return new RowsOfFields($matches);
   }
 
   /**
@@ -135,8 +142,7 @@ final class AZBootstrapEntityDisplayGroupsCommands extends DrushCommands {
    */
   #[CLI\Command(name: 'bs5-entity-display-groups:update', aliases: ['bs5edg:update'])]
   #[CLI\Option(name: 'dry-run', description: 'Show proposed replacements without saving.')]
-  #[CLI\Option(name: 'yes', description: 'Apply all replacements non-interactively.')]
-  #[CLI\Usage(name: 'drush bs5-entity-display-groups:update', description: 'Interactively replace deprecated Arizona Bootstrap 2 classes/attributes in field_group settings for entity displays.')]
+  #[CLI\Usage(name: 'drush bs5-entity-display-groups:update', description: 'Interactively replace deprecated Arizona Bootstrap 2 classes/attributes in field_group settings for entity displays. Choose "yes-to-all" during prompts to apply remaining changes automatically.')]
   #[CLI\Usage(name: 'drush bs5-entity-display-groups:update --dry-run', description: 'Preview changes without modifying configs.')]
   #[CLI\Usage(name: 'drush bs5-entity-display-groups:update --yes', description: 'Apply all replacements non-interactively.')]
   #[CLI\DefaultTableFields(fields: ['entity', 'bundle', 'mode', 'group', 'old', 'new', 'fields', 'config'])]
@@ -150,9 +156,9 @@ final class AZBootstrapEntityDisplayGroupsCommands extends DrushCommands {
     'fields' => 'Fields in Group',
     'config' => 'Config ID',
   ])]
-  public function update(array $options = ['dry-run' => FALSE, 'yes' => FALSE]): array {
+  public function update(array $options = ['dry-run' => FALSE]): RowsOfFields {
     $dryRun = (bool) $options['dry-run'];
-    $nonInteractive = (bool) $options['yes'];
+    $nonInteractive = $this->input()->getOption('yes');
     $changes = [];
 
     // Build replacement map: Arizona Bootstrap 2 → AZBootstrap.
@@ -191,9 +197,24 @@ final class AZBootstrapEntityDisplayGroupsCommands extends DrushCommands {
 
         foreach ($replacementMap as $old => $new) {
           if (stripos($classes, $old) !== FALSE) {
-            $apply = $nonInteractive ?: $this->io()->askQuestion(
-              new ConfirmationQuestion("Replace '{$old}' with '{$new}' in classes for group '{$groupName}' ({$id})? [y/N] ", FALSE)
-            );
+            if ($nonInteractive) {
+              $apply = TRUE;
+            }
+            else {
+              $question = new ChoiceQuestion(
+                "Replace '{$old}' with '{$new}' in classes for group '{$groupName}' ({$id})?",
+                ['no', 'yes', 'yes-to-all'],
+                0
+                          );
+              $question->setErrorMessage('Please select: %s');
+              $answer = $this->io()->askQuestion($question);
+
+              $apply = ($answer === 'yes' || $answer === 'yes-to-all');
+              if ($answer === 'yes-to-all') {
+                $nonInteractive = TRUE;
+                $this->io()->note('Applying all remaining replacements automatically...');
+              }
+            }
 
             if ($apply) {
               $classes = str_ireplace($old, $new, $classes);
@@ -212,9 +233,24 @@ final class AZBootstrapEntityDisplayGroupsCommands extends DrushCommands {
           }
 
           if (stripos($attributes, $old) !== FALSE) {
-            $apply = $nonInteractive ?: $this->io()->askQuestion(
-              new ConfirmationQuestion("Replace '{$old}' with '{$new}' in attributes for group '{$groupName}' ({$id})? [y/N] ", FALSE)
-            );
+            if ($nonInteractive) {
+              $apply = TRUE;
+            }
+            else {
+              $question = new ChoiceQuestion(
+                "Replace '{$old}' with '{$new}' in attributes for group '{$groupName}' ({$id})?",
+                ['no', 'yes', 'yes-to-all'],
+                0
+                          );
+              $question->setErrorMessage('Please select: %s');
+              $answer = $this->io()->askQuestion($question);
+
+              $apply = ($answer === 'yes' || $answer === 'yes-to-all');
+              if ($answer === 'yes-to-all') {
+                $nonInteractive = TRUE;
+                $this->io()->note('Applying all remaining replacements automatically...');
+              }
+            }
 
             if ($apply) {
               $attributes = str_ireplace($old, $new, $attributes);
@@ -251,7 +287,7 @@ final class AZBootstrapEntityDisplayGroupsCommands extends DrushCommands {
       $this->io()->success('No Arizona Bootstrap 2 classes or attributes to replace.');
     }
 
-    return $changes;
+    return new RowsOfFields($changes);
   }
 
 }
