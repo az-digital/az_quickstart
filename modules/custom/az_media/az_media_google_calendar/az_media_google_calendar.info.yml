@@ -1,7 +1,7 @@
 name: Quickstart Media - Google Calendar
 type: module
 description: Google Calendar media entity type.
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10 || ^11 || ^12
 package: The University of Arizona
 dependencies:
   - az_core
