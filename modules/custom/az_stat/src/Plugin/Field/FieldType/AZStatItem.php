@@ -18,6 +18,7 @@ use Drupal\Core\TypedData\MapDataDefinition;
  * @property string $stat_description
  * @property string $stat_source
  * @property string $link_uri
+ * @property array $options
  */
 #[FieldType(
   id: "az_stat",

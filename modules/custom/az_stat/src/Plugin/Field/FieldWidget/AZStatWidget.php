@@ -185,7 +185,6 @@ class AZStatWidget extends WidgetBase {
 
       // Check and see if there's a valid link to preview.
       if ($item->stat_source || $item->link_uri) {
-//      if ($item->link_uri) {
         if (!empty($item->link_uri) && str_starts_with($item->link_uri, '/' . PublicStream::basePath())) {
           // Link to public file: use fromUri() to get the URL.
           $link_url = Url::fromUri(urldecode('base:' . $item->link_uri));
@@ -237,7 +236,7 @@ class AZStatWidget extends WidgetBase {
         ],
       ],
     ];
-    
+
     $element['column_span'] = [
       '#type' => 'select',
       '#options' => [
@@ -325,7 +324,7 @@ class AZStatWidget extends WidgetBase {
         ],
       ],
     ];
-   
+
     $element['link_uri'] = [
       '#type' => 'linkit',
       '#autocomplete_route_name' => 'linkit.autocomplete',
@@ -493,7 +492,7 @@ class AZStatWidget extends WidgetBase {
    */
   public function validateStatLink(&$element, FormStateInterface $form_state, &$complete_form) {
 
-    if (!empty($element['#value'])) { 
+    if (!empty($element['#value'])) {
       // Check to make sure the path can be found.
       if ($url = $this->pathValidator->getUrlIfValid($element['#value'])) {
         // Url is valid, no conversion required.
@@ -549,7 +548,7 @@ class AZStatWidget extends WidgetBase {
           'column_span' => $value['column_span'],
         ];
       }
-//      $values[$delta]['body'] = $value['body']['value'];
+    // $values[$delta]['body'] = $value['body']['value'];
     }
     return $values;
   }

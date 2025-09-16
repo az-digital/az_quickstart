@@ -128,7 +128,7 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
       // Link.
       $link_render_array = [];
       $link_url = '';
-      if($item->link_uri) {
+      if ($item->link_uri) {
         if (str_starts_with($item->link_uri ?? '', '/' . PublicStream::basePath())) {
           // Link to public file: use fromUri() to get the URL.
           $link_url = Url::fromUri(urldecode('base:' . $item->link_uri));
@@ -179,8 +179,8 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
           // Set stat classes according to behavior settings.
           $column_classes = [];
           if (!empty($stat_defaults['az_display_settings'])) {
-              $column_classes[] = $stat_defaults['az_display_settings']['stat_width_xs'] ?? 'col-6';
-              $column_classes[] = $stat_defaults['az_display_settings']['stat_width_sm'] ?? 'col-md-4';
+            $column_classes[] = $stat_defaults['az_display_settings']['stat_width_xs'] ?? 'col-6';
+            $column_classes[] = $stat_defaults['az_display_settings']['stat_width_sm'] ?? 'col-md-4';
           }
           $column_classes[] = $stat_defaults['stat_width'] ?? 'col-md-4 col-lg-3';
           $stat_classes = $stat_defaults['stat_style'] ?? 'stat';
@@ -192,7 +192,7 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
             $column_span_multiplier = (int) $item->options['column_span'];
             if ($column_span_multiplier > 1) {
               foreach ($column_classes as $key => $class_string) {
-                // Handle both single classes and space-separated multiple classes
+                // Handle both single classes and space-separated multiple classes.
                 $classes = explode(' ', $class_string);
                 $multiplied_classes = [];
                 
@@ -202,23 +202,23 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
                     $current_width = (int) $matches[2];
                     $new_width = min(12, $current_width * $column_span_multiplier);
                     $multiplied_classes[] = 'col' . $prefix . '-' . $new_width;
-                  } else {
-                    // Keep non-column classes as-is
+                  } 
+                  else {
+                    // Keep non-column classes as-is.
                     $multiplied_classes[] = $class;
                   }
                 }
-                
                 $column_classes[$key] = implode(' ', $multiplied_classes);
               }
             }
-            
-          } else {
+          } 
+          else {
             $column_classes[] = $stat_defaults['stat_width'] ?? 'col-md-4 col-lg-4';
           }
 
-                // Format pg style
+          // Format pg style.
           $stat_style = $stat_defaults['stat_style'] ?? '';
-          if($stat_style == 'card stat-bold-hover') {
+          if ($stat_style == 'card stat-bold-hover') {
             $attached['library'][] = 'az_stat/az_stat_bold_hover';
           }
 
@@ -267,22 +267,25 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         $stat_classes .= ' ' . $item->options['class'];
       }
 
-      // Set custom text classes based on background color
+      // Set custom text classes based on background color.
       $text_color_override = '';
       if (!empty($item->options['class'])) {
-        switch (true) {
+        switch (TRUE) {
           case str_contains($item->options['class'], 'bg-sky'):
             $text_color_override = 'text-midnight';
             break;
+
           case str_contains($item->options['class'], 'bg-cool-gray'):
             $text_color_override = 'text-azurite';
             break;
+
           case str_contains($item->options['class'], 'bg-oasis'):
             $text_color_override = 'text-white';
             break;
+
         }
       }
-      
+
       $element[$delta] = [
         '#theme' => 'az_stat',
         '#media' => $media_render_array,
@@ -295,7 +298,7 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         '#link_url' => $link_url,
         '#title_style' => $title_style ?? 'default',
         '#title_level' => $title_level ?? 'h3',
-        '#title_alignment' => $title_alignment ?? 'text-start',
+        // '#title_alignment' => $title_alignment ?? 'text-start', # Used later in custom thin style.
         '#title_display' => $title_display ?? 'h5',
         '#text_color_override' => $text_color_override,
         '#attributes' => ['class' => $stat_classes],
