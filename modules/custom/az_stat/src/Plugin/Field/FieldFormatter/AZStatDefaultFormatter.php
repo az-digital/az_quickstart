@@ -185,24 +185,24 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
           $column_classes[] = $stat_defaults['stat_width'] ?? 'col-md-4 col-lg-3';
           $stat_classes = $stat_defaults['stat_style'] ?? 'stat';
 
-          // Calculate column classes for image based on column_span option (multiplier).
+          // Calculate column classes for image based on column_span.
           if ($item->options['stat_type'] === 'image_only' && !empty($item->options['column_span']) && ($item->options['column_span'] != '')) {
 
-            // Multiply column classes by the column_span value
+            // Multiply column classes by column_span value.
             $column_span_multiplier = (int) $item->options['column_span'];
             if ($column_span_multiplier > 1) {
               foreach ($column_classes as $key => $class_string) {
-                // Handle both single classes and space-separated multiple classes.
+                // Handle single classes AND space-separated multiple classes.
                 $classes = explode(' ', $class_string);
                 $multiplied_classes = [];
-                
+
                 foreach ($classes as $class) {
                   if (preg_match('/^col(-\w+)?-(\d+)$/', $class, $matches)) {
                     $prefix = $matches[1] ?? '';
                     $current_width = (int) $matches[2];
                     $new_width = min(12, $current_width * $column_span_multiplier);
                     $multiplied_classes[] = 'col' . $prefix . '-' . $new_width;
-                  } 
+                  }
                   else {
                     // Keep non-column classes as-is.
                     $multiplied_classes[] = $class;
@@ -211,7 +211,7 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
                 $column_classes[$key] = implode(' ', $multiplied_classes);
               }
             }
-          } 
+          }
           else {
             $column_classes[] = $stat_defaults['stat_width'] ?? 'col-md-4 col-lg-4';
           }
@@ -298,7 +298,7 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         '#link_url' => $link_url,
         '#title_style' => $title_style ?? 'default',
         '#title_level' => $title_level ?? 'h3',
-        // '#title_alignment' => $title_alignment ?? 'text-start', # Used later in custom thin style.
+        // '#title_alignment' => $title_alignment ?? 'text-start',
         '#title_display' => $title_display ?? 'h5',
         '#text_color_override' => $text_color_override,
         '#attributes' => ['class' => $stat_classes],

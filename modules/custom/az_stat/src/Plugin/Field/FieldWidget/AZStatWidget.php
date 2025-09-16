@@ -548,7 +548,7 @@ class AZStatWidget extends WidgetBase {
           'column_span' => $value['column_span'],
         ];
       }
-    // $values[$delta]['body'] = $value['body']['value'];
+      // $values[$delta]['body'] = $value['body']['value'];
     }
     return $values;
   }
