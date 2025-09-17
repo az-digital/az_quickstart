@@ -37,7 +37,8 @@ use Seboettg\CiteProc\StyleSheet;
  *     "id",
  *     "label",
  *     "style",
- *     "custom"
+ *     "custom",
+ *     "uuid"
  *   },
  *   config_prefix = "az_citation_style",
  *   admin_permission = "administer site configuration",
