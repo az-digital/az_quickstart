@@ -166,7 +166,7 @@ class AZDemoContentTest extends QuickstartFunctionalTestBase {
     $this->assertStringContainsString('layout-one-sidebar', $classes, 'The `layout-one-sidebar` class should be present on the finder page even though the block is set to not appear on finder pages.');
     $this->assertStringContainsString('layout-sidebar-first', $classes, 'The `layout-sidebar-first` class should be present on the finder page even though the block is set to not appear on finder pages.');
     $this->assertStringNotContainsString('layout-no-sidebars', $classes, 'The `layout-no-sidebars` class should NOT be present on the finder page, since there are other blocks in the sidebar.');
-    $assert->elementNotExists('css', '#block-az-demo-test-sidebar-menu', 'The sidebar menu block should NOT be present on the finder page since it is configured to not appear on finder pages.');
+    $assert->elementNotExists('css', '#block-az-demo-test-sidebar-menu');
   }
 
 }
