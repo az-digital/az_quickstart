@@ -137,7 +137,6 @@ class AzFileEntity extends FieldableEntity {
   public function prepareRow(Row $row) {
     [
       'type' => $type,
-      'scheme' => $scheme,
     ] = $row->getSource();
 
     // Get Field API field values.

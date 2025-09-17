@@ -54,7 +54,7 @@ function az_paragraphs_cards_update_1130001(&$sandbox) {
       if ($paragraph->hasField('field_az_cards')) {
         $field_items = $paragraph->get('field_az_cards');
 
-        foreach ($field_items as $delta => $item) {
+        foreach ($field_items as $item) {
           if (isset($item->options)) {
             $options = $item->options;
 

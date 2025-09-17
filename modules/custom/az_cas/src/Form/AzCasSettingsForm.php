@@ -81,23 +81,23 @@ class AzCasSettingsForm extends ConfigFormBase {
     $az_cas_config = $this->config('az_cas.settings');
 
     $form['disable_login_form'] = [
-      '#title' => t("Disable login form"),
+      '#title' => $this->t("Disable login form"),
       '#type' => 'checkbox',
-      '#description' => t("Disables the default user login form provided by Drupal core."),
+      '#description' => $this->t("Disables the default user login form provided by Drupal core."),
       '#default_value' => $az_cas_config->get('disable_login_form'),
     ];
 
     $form['disable_admin_add_user_button'] = [
-      '#title' => t("Disable 'Add user' button"),
+      '#title' => $this->t("Disable 'Add user' button"),
       '#type' => 'checkbox',
-      '#description' => t("Removes button for adding non-CAS users in admin interface."),
+      '#description' => $this->t("Removes button for adding non-CAS users in admin interface."),
       '#default_value' => $az_cas_config->get('disable_admin_add_user_button'),
     ];
 
     $form['disable_password_recovery_link'] = [
-      '#title' => t("Disable 'request new password' form"),
+      '#title' => $this->t("Disable 'request new password' form"),
       '#type' => 'checkbox',
-      '#description' => t("Disables the default password recovery functionality provided by Drupal core."),
+      '#description' => $this->t("Disables the default password recovery functionality provided by Drupal core."),
       '#default_value' => $az_cas_config->get('disable_password_recovery_link'),
     ];
 

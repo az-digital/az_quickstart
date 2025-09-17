@@ -22,7 +22,7 @@ class AZCalendarFilter extends Date {
     parent::valueForm($form, $form_state);
 
     // Only add modifications if this is the exposed filter.
-    if ($exposed = $form_state->get('exposed')) {
+    if ($form_state->get('exposed')) {
       $filter_settings = [];
 
       // Only attempt to get cell data if we're not already.
@@ -92,7 +92,7 @@ class AZCalendarFilter extends Date {
 
     $view->execute();
 
-    foreach ($view->result as $index => $row) {
+    foreach ($view->result as $row) {
       if (!empty($row->az_calendar_filter_start) && !empty($row->az_calendar_filter_end)) {
         $cells[] = [
           $row->az_calendar_filter_start,

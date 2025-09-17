@@ -31,9 +31,9 @@ class AzFlexiblePageSettingsForm extends ConfigFormBase {
     $az_flexible_page_config = $this->config('az_flexible_page.settings');
 
     $form['marketing_page']['marketing_page_styles_enabled'] = [
-      '#title' => t('Enable Marketing Campaign Page styles'),
+      '#title' => $this->t('Enable Marketing Campaign Page styles'),
       '#type' => 'checkbox',
-      '#description' => t('Allows Content Administrators to select a Marketing Campaign Page style for individual pages. These styles hide the navigation menu and other page regions to display the page as a landing page. See <a href="https://quickstart.arizona.edu/pages">Adding Pages</a> for details about each style.'),
+      '#description' => $this->t('Allows Content Administrators to select a Marketing Campaign Page style for individual pages. These styles hide the navigation menu and other page regions to display the page as a landing page. See <a href="https://quickstart.arizona.edu/pages">Adding Pages</a> for details about each style.'),
       '#default_value' => $az_flexible_page_config->get('marketing_page_styles.enabled'),
     ];
 
