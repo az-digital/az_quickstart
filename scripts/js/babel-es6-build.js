@@ -43,6 +43,12 @@ if (argv.file) {
   processFiles(null, [].concat(argv.file));
 }
 else {
-  glob(fileMatch, globOptions, processFiles);
+  // Use glob sync API for compatibility with glob v10+
+  try {
+    const filePaths = glob.sync(fileMatch, globOptions);
+    processFiles(null, filePaths);
+  } catch (error) {
+    processFiles(error, []);
+  }
 }
 process.exitCode = 0;
