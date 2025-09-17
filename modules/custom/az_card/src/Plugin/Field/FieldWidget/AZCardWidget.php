@@ -214,30 +214,30 @@ class AZCardWidget extends WidgetBase {
     $element['options'] = [
       '#type' => 'select',
       '#options' => [
-        'bg-white' => $this->t('White'),
+        'text-bg-white' => $this->t('White'),
         'bg-transparent' => $this->t('Transparent'),
-        'bg-red' => $this->t('Arizona Red'),
-        'bg-blue' => $this->t('Arizona Blue'),
-        'bg-sky' => $this->t('Sky'),
-        'bg-oasis' => $this->t('Oasis'),
-        'bg-azurite' => $this->t('Azurite'),
-        'bg-midnight' => $this->t('Midnight'),
-        'bg-bloom' => $this->t('Bloom'),
-        'bg-chili' => $this->t('Chili'),
-        'bg-cool-gray' => $this->t('Cool Gray'),
-        'bg-warm-gray' => $this->t('Warm Gray'),
-        'bg-gray-100' => $this->t('Gray 100'),
-        'bg-gray-200' => $this->t('Gray 200'),
-        'bg-gray-300' => $this->t('Gray 300'),
-        'bg-leaf' => $this->t('Leaf'),
-        'bg-river' => $this->t('River'),
-        'bg-silver' => $this->t('Silver'),
-        'bg-ash' => $this->t('Ash'),
-        'bg-mesa' => $this->t('Mesa'),
+        'text-bg-red' => $this->t('Arizona Red'),
+        'text-bg-blue' => $this->t('Arizona Blue'),
+        'text-bg-sky' => $this->t('Sky'),
+        'text-bg-oasis' => $this->t('Oasis'),
+        'text-bg-azurite' => $this->t('Azurite'),
+        'text-bg-midnight' => $this->t('Midnight'),
+        'text-bg-bloom' => $this->t('Bloom'),
+        'text-bg-chili' => $this->t('Chili'),
+        'text-bg-cool-gray' => $this->t('Cool Gray'),
+        'text-bg-warm-gray' => $this->t('Warm Gray'),
+        'text-bg-gray-100' => $this->t('Gray 100'),
+        'text-bg-gray-200' => $this->t('Gray 200'),
+        'text-bg-gray-300' => $this->t('Gray 300'),
+        'text-bg-leaf' => $this->t('Leaf'),
+        'text-bg-river' => $this->t('River'),
+        'text-bg-silver' => $this->t('Silver'),
+        'text-bg-ash' => $this->t('Ash'),
+        'text-bg-mesa' => $this->t('Mesa'),
       ],
       '#required' => TRUE,
       '#title' => $this->t('Card Background'),
-      '#default_value' => (!empty($item->options['class'])) ? $item->options['class'] : 'bg-white',
+      '#default_value' => (!empty($item->options['class'])) ? $item->options['class'] : 'text-bg-white',
     ];
 
     $element['media'] = [
@@ -259,12 +259,12 @@ class AZCardWidget extends WidgetBase {
     $element['title_alignment'] = [
       '#type' => 'select',
       '#options' => [
-        'text-left' => $this->t('Title left'),
+        'text-start' => $this->t('Title left'),
         'text-center' => $this->t('Title center'),
-        'text-right' => $this->t('Title right'),
+        'text-end' => $this->t('Title right'),
       ],
       '#title' => $this->t('Card Title Alignment'),
-      '#default_value' => (!empty($item->options['title_alignment'])) ? $item->options['title_alignment'] : 'text-left',
+      '#default_value' => (!empty($item->options['title_alignment'])) ? $item->options['title_alignment'] : 'text-start',
     ];
 
     $element['body'] = [
@@ -308,16 +308,16 @@ class AZCardWidget extends WidgetBase {
     $element['link_style'] = [
       '#type' => 'select',
       '#options' => [
-        'sr-only' => $this->t('Hidden link title'),
-        'btn-block' => $this->t('Text link'),
-        'btn btn-block btn-red' => $this->t('Red button'),
-        'btn btn-block btn-blue' => $this->t('Blue button'),
-        'btn btn-block btn-outline-red' => $this->t('Red outline button'),
-        'btn btn-block btn-outline-blue' => $this->t('Blue outline button'),
-        'btn btn-block btn-outline-white' => $this->t('White outline button'),
+        'visually-hidden' => $this->t('Hidden link title'),
+        'w-100' => $this->t('Text link'),
+        'btn w-100 btn-red' => $this->t('Red button'),
+        'btn w-100 btn-blue' => $this->t('Blue button'),
+        'btn w-100 btn-outline-red' => $this->t('Red outline button'),
+        'btn w-100 btn-outline-blue' => $this->t('Blue outline button'),
+        'btn w-100 btn-outline-white' => $this->t('White outline button'),
       ],
       '#title' => $this->t('Card Link Style'),
-      '#default_value' => (!empty($item->options['link_style'])) ? $item->options['link_style'] : 'btn-block',
+      '#default_value' => (!empty($item->options['link_style'])) ? $item->options['link_style'] : 'w-100',
     ];
 
     if (!$item->isEmpty()) {

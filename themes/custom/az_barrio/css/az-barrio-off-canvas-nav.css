@@ -1,8 +1,3 @@
-/* For structuring header utilities*/
-header#header_arizona {
-  min-height: 50px;
-}
+/* For structuring header utilities */
 
-.navbar-offcanvas.no-navigation-region {
-  border: 0;
-}
+/* @todo Confirm if this library file is still needed. */

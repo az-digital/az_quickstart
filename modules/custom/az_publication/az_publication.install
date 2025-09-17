@@ -44,11 +44,11 @@ function az_publication_update_1020702() {
     throw new UpdateException("The author name field is missing from the entity definition.");
   }
   $schema_repository->setLastInstalledFieldStorageDefinition($base_field_definitions[$field_name]);
+  /** @var \Drupal\Core\Field\BaseFieldDefinition[] $field_storage_definitions */
   $field_storage_definitions = $schema_repository->getLastInstalledFieldStorageDefinitions($entity_type_id);
   if (empty($field_storage_definitions[$field_name])) {
     throw new UpdateException("The author name field is missing from the storage defintion.");
   }
-  /** @var \Drupal\Core\Field\BaseFieldDefinition $field_storage_definitions[$field_name] */
   $field_storage_definitions[$field_name]->setSetting('max_length', $field_length);
   // Seems needed so that the schema is available in field storage definition.
   $field_storage_definitions[$field_name]->getSchema();
@@ -342,4 +342,36 @@ function az_publication_update_1021302(&$sandbox) {
 
   // Inform the batch API about the progress.
   $sandbox['#finished'] = empty($sandbox['max']) ? 1 : ($sandbox['progress'] / $sandbox['max']);
+}
+
+/**
+ * Apply Bootstrap 5 compatibility updates to publication abstract fields.
+ */
+function az_publication_update_1130001(&$sandbox) {
+  if (!isset($sandbox['ids'])) {
+    $query = \Drupal::entityTypeManager()
+      ->getStorage('node')
+      ->getQuery()
+      ->condition('type', 'az_publication')
+      ->condition('field_az_publication_abstract.format', ['az_standard', 'full_html'], 'IN')
+      ->exists('field_az_publication_abstract')
+      ->accessCheck(FALSE);
+
+    $sandbox['ids'] = $query->execute();
+    $sandbox['max'] = count($sandbox['ids']);
+  }
+
+  return \Drupal::service('az_core.content_field_updater')
+    ->processFieldUpdates(
+      'node',
+      'field_az_publication_abstract',
+      'Drupal\az_core\Utility\AZBootstrapMarkupConverter::compareProcessor',
+      $sandbox,
+      [
+        'create_revisions' => TRUE,
+        'prefix' => __FUNCTION__,
+        'suffix' => 'for Bootstrap 5 compatibility',
+        'bundle_name' => 'az_publication',
+      ]
+    );
 }
