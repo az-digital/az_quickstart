@@ -144,7 +144,7 @@ class AZDemoContentTest extends QuickstartFunctionalTestBase {
     $this->assertStringNotContainsString('layout-one-sidebar', $classes, 'The block is configured to not appear on this page, so the `layout-one-sidebar` class should NOT be present on the no-sidebar page.');
     $this->assertStringNotContainsString('layout-sidebar-first', $classes, 'The block is configured to not appear on this page, so the `layout-sidebar-first` class should NOT be present on the no-sidebar page.');
     $this->assertStringContainsString('layout-no-sidebars', $classes, 'The block is configured to not appear on this page, so the `layout-no-sidebars` class SHOULD be present on the no-sidebar page.');
-    $assert->elementNotExists('css', '#block-az-demo-test-sidebar-menu', 'The block is configured to not appear on this page, so the sidebar menu block should NOT be present on the no-sidebar page.');
+    $assert->elementNotExists('css', '#block-az-demo-test-sidebar-menu');
 
     // Pages with content in the menu should render the sidebar.
     $this->drupalGet('/pages/text');
