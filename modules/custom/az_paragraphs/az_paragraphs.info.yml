@@ -7,6 +7,7 @@ dependencies:
   - paragraphs:paragraphs
   - az_card
   - az_core
+  - az_icons
   - az_media
   - az_stat
   - ckeditor_indentblock:ckeditor_indentblock
