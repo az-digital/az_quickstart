@@ -113,7 +113,7 @@ class AZDemoContentTest extends QuickstartFunctionalTestBase {
   /**
    * Ensures sidebar blocks only appear when they have content.
    */
-  public function testSidebarLayoutClass() {
+  public function testMenuBlockVisibility() {
     $this->config('block.block.az_barrio_sidebar_menu')->set('status', FALSE)->save();
 
     $fixture_path = __DIR__ . '/../../fixtures/config';
@@ -134,6 +134,8 @@ class AZDemoContentTest extends QuickstartFunctionalTestBase {
     $this->assertStringNotContainsString('layout-one-sidebar', $classes, 'Since the block is empty, the `layout-one-sidebar` class should NOT be present on the front page.');
     $this->assertStringNotContainsString('layout-sidebar-first', $classes, 'Since the block is empty, the `layout-sidebar-first` class should NOT be present on the front page.');
     $this->assertStringContainsString('layout-no-sidebars', $classes, 'Since the block is empty, the `layout-no-sidebars` class SHOULD be present on the front page.');
+    $assert->elementNotExists('css', '#block-az-demo-test-sidebar-menu');
+
     // Demo page set in visibility conditions to not display the block.
     $this->drupalGet('/pages/combo-page-no-sidebar');
     $assert = $this->assertSession();
@@ -151,10 +153,10 @@ class AZDemoContentTest extends QuickstartFunctionalTestBase {
     $assert->statusCodeEquals(200);
     $body = $assert->elementExists('css', 'body');
     $classes = $body->getAttribute('class');
+    $assert->elementExists('css', '#block-az-demo-test-sidebar-menu');
     $this->assertStringContainsString('layout-one-sidebar', $classes, 'Since the block has content, the `layout-one-sidebar` class should be present on the page.');
     $this->assertStringContainsString('layout-sidebar-first', $classes, 'Since the block has content, the `layout-sidebar-first` class should be present on the page.');
     $this->assertStringNotContainsString('layout-no-sidebars', $classes, 'Since the block has content, the `layout-no-sidebars` class should NOT be present on the page.');
-    $assert->elementExists('css', '#block-az-demo-test-sidebar-menu');
 
     // Finder pages hide the menu but keep other sidebar blocks visible.
     $this->drupalGet('/finders/news');
