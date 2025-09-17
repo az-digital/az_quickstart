@@ -126,7 +126,8 @@ final class AZBootstrapEntityDisplayGroupsCommands extends DrushCommands {
                   if (!$nonInteractive && !$dryRun) {
                     $apply = $this->io()->confirm("Replace '{$token}' with '{$newToken}' in classes for group '{$groupName}' ({$configName})?");
                     if (!$apply) {
-                      $updatedTokens[] = $token; // Keep original
+                      // Keep original.
+                      $updatedTokens[] = $token;
                       continue;
                     }
                   }
@@ -141,8 +142,10 @@ final class AZBootstrapEntityDisplayGroupsCommands extends DrushCommands {
                     'match' => $token,
                     'new' => $newToken,
                   ];
-                } else {
-                  $updatedTokens[] = $token; // Keep original
+                }
+                else {
+                  // Keep original.
+                  $updatedTokens[] = $token;
                 }
               }
 
@@ -150,8 +153,10 @@ final class AZBootstrapEntityDisplayGroupsCommands extends DrushCommands {
               if ($hasChanges && !$dryRun) {
                 $groupConfig['format_settings'][$fieldName] = implode(' ', $updatedTokens);
                 $groupChanged = TRUE;
-              } elseif ($hasChanges) {
-                $groupChanged = TRUE; // For dry-run tracking
+              }
+              elseif ($hasChanges) {
+                // For dry-run tracking.
+                $groupChanged = TRUE;
               }
             }
           }
