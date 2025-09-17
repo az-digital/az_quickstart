@@ -114,6 +114,7 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
       $stat_description = $item->stat_description ?? '';
 
       $attached = [];
+      $attached['library'][] = 'az_stat/az_stat';
 
       // Media.
       $column_span = $item->options['column_span'] ?? '';
