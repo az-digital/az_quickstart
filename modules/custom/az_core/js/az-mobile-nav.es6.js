@@ -8,7 +8,10 @@
         );
         Array.from(mobileNavMenuLinks).some((link) => {
           if (link.getAttribute('href') === currentPagePath) {
-            link.parentNode.classList.add('text-bg-gray-200', 'az-mobile-nav-current');
+            link.parentNode.classList.add(
+              'text-bg-gray-200',
+              'az-mobile-nav-current',
+            );
             return true;
           }
           return false;
