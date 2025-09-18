@@ -156,13 +156,8 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
       $treeWithText = $this->getSubtreeAndParentText($tree, $menuRoot);
     }
 
-    // Initialize the main render array elements.
-    $build['az_mobile_nav_menu'] = [
-      '#type' => 'html_tag',
-      '#tag' => 'div',
-      '#attributes' => [
-        'id' => 'az_mobile_nav_menu',
-      ],
+    // Add library and cache properties.
+    $build = [
       '#attached' => [
         'library' => [
           'az_core/az-mobile-nav',
@@ -172,6 +167,15 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
         'tags' => ['config:system.menu.main'],
         'contexts' => ['route'],
         'max-age' => CacheBackendInterface::CACHE_PERMANENT,
+      ],
+    ];
+
+    // Initialize the main render array elements.
+    $build['az_mobile_nav_menu'] = [
+      '#type' => 'html_tag',
+      '#tag' => 'div',
+      '#attributes' => [
+        'id' => 'az_mobile_nav_menu',
       ],
     ];
     $build['az_mobile_nav_menu']['back'] = [];
