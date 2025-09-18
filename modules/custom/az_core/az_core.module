@@ -541,7 +541,6 @@ function az_core_preprocess_container__text_format_filter_help(&$variables) {
  */
 function az_core_preprocess_entity_embed_container(array &$variables) {
   if (isset($variables['element']['entity']['webform'])) {
-    $embedded_webform_preview = $variables['element']['entity']['title'][0]['#context']['value'];
     if (\Drupal::routeMatch()->getRouteName() === 'entity.node.edit_form' || \Drupal::routeMatch()->getRouteName() === 'entity.block_content.edit_form') {
       // Get the view builder for the entity.
       $entity = $variables["element"]['#entity'];
