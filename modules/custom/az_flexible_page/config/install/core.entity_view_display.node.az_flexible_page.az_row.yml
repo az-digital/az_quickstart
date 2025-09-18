@@ -91,7 +91,7 @@ third_party_settings:
       weight: 5
       format_type: html_element
       format_settings:
-        classes: 'col-12 col-md-4'
+        classes: 'col-12 position-relative col-md-4'
         id: ''
         element: div
         show_label: false

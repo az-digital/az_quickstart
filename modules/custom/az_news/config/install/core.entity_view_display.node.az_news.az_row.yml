@@ -117,7 +117,7 @@ third_party_settings:
       weight: 21
       format_type: html_element
       format_settings:
-        classes: 'col-12 col-sm-3'
+        classes: 'col-12 position-relative col-sm-3'
         show_empty_fields: false
         id: ''
         element: div
