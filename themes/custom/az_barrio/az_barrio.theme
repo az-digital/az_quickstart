@@ -98,16 +98,9 @@ function az_barrio_preprocess_html(&$variables) {
  * Implements hook_preprocess_HOOK() for page templates.
  */
 function az_barrio_preprocess_page(&$variables, $hook) {
-  $variables['#attached']['library'][] = 'az_barrio/az-barrio-off-canvas-nav';
-  $variables['navbar_attributes'] = new Attribute([
-    'id' => 'navbar-top',
-    'class' => [
-      'navbar',
-      'navbar-expand',
-    ]
-  ]);
-  $variables['navbar_attributes']['class'][] =
-    $variables['page']['navigation'] ? 'has-navigation-region' : 'no-navigation-region';
+  if (isset($variables['page']['navigation_offcanvas']['az_barrio_offcanvas_searchform'])) {
+    $variables['#attached']['library'][] = 'az_barrio/az-barrio-off-canvas-search';
+  }
 
   // Allow hiding of title of front page node.
   if (theme_get_setting('az_hide_front_title') === 1 && \Drupal::service('path.matcher')->isFrontPage()) {

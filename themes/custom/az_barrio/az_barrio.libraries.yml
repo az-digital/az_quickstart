@@ -14,12 +14,12 @@ az-media-display:
   css:
     component:
       css/az-media-display.css: {}
-az-barrio-off-canvas-nav:
+az-barrio-off-canvas-search:
   css:
     theme:
-      css/az-barrio-off-canvas-nav.css: {}
+      css/az-barrio-off-canvas-search.css: {}
   js:
-    js/az-barrio-off-canvas-nav.js: {}
+    js/az-barrio-off-canvas-search.js: {}
   dependencies:
     - az_barrio/global-styling
 az-proxima-nova:
