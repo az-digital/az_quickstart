@@ -377,8 +377,8 @@ class AZStatWidget extends WidgetBase {
     $elements = parent::formMultipleElements($items, $form, $form_state);
     $field_name = $this->fieldDefinition->getName();
     $cardinality = $this->fieldDefinition->getFieldStorageDefinition()->getCardinality();
-    $is_multiple = $this->fieldDefinition->getFieldStorageDefinition()->isMultiple();
-    $is_unlimited_not_programmed = FALSE;
+    // $is_multiple = $this->fieldDefinition->getFieldStorageDefinition()->isMultiple();
+    //    $is_unlimited_not_programmed = FALSE;
     $parents = $form['#parents'];
 
     $max = 0;
@@ -464,7 +464,7 @@ class AZStatWidget extends WidgetBase {
     // Find the widget and return it.
     $element = [];
     $triggering_element = $form_state->getTriggeringElement();
-    $oops = $triggering_element['#array_parents'];
+    // $oops = $triggering_element['#array_parents'];
     $array_parents = array_slice($triggering_element['#array_parents'], 0, -3);
     $element = NestedArray::getValue($form, $array_parents);
 
@@ -481,7 +481,7 @@ class AZStatWidget extends WidgetBase {
     array_pop($parents);
     $parent_element = NestedArray::getValue($complete_form, $parents);
     if (empty($element['#value']) && !empty($parent_element['link_uri']['#value'])) {
-      $form_state->setError($element, t('Stat Link Title field is required when a URL is provided. Stat Link Title may be visually hidden with a Stat Link Style selection.'));
+      $form_state->setError($element, $this->t('Stat Link Title field is required when a URL is provided. Stat Link Title may be visually hidden with a Stat Link Style selection.'));
     }
   }
 
@@ -494,7 +494,7 @@ class AZStatWidget extends WidgetBase {
 
     if (!empty($element['#value'])) {
       // Check to make sure the path can be found.
-      if ($url = $this->pathValidator->getUrlIfValid($element['#value'])) {
+      if ($this->pathValidator->getUrlIfValid($element['#value'])) {
         // Url is valid, no conversion required.
         return;
       }
@@ -506,7 +506,7 @@ class AZStatWidget extends WidgetBase {
         return;
       }
       $form_state
-        ->setError($element, t('This link does not exist or you do not have permission to link to %path.', [
+        ->setError($element, $this->t('This link does not exist or you do not have permission to link to %path.', [
           '%path' => $element['#value'],
         ]));
     }

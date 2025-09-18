@@ -159,11 +159,6 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         $attached['library'][] = 'az_stat/az_stat_title_hover';
       }
 
-      // Title display.
-      // if (!empty($item->options['title_display'])) {
-      //   $title_display = $item->options['title_display'];
-      // }
-
       $stat_classes = 'stat';
       $column_classes = [];
       $column_classes[] = 'col-md-4 col-lg-4';
