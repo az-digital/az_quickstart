@@ -4,6 +4,10 @@
  */
 
 
+ .text-bg-white.stat-bold-hover:hover * {
+    background-color: RGBA(var(--bs-blue-rgb),var(--bs-bg-opacity,1)) !important;
+    color: #ffffff !important;
+}
 .text-bg-blue.stat-bold-hover:hover * {
     background-color: #ffffff !important;
     color: RGBA(var(--bs-blue-rgb),var(--bs-bg-opacity,1)) !important;
@@ -16,7 +20,6 @@
     background-color: RGBA(var(--bs-blue-rgb),var(--bs-bg-opacity,1)) !important;
     color: RGBA(var(--bs-sky-rgb),var(--bs-bg-opacity,1)) !important;
 }
-
 .text-bg-oasis.stat-bold-hover:hover * {
     background-color: #ffffff!important;
     color: RGBA(var(--bs-oasis-rgb),var(--bs-bg-opacity,1)) !important;

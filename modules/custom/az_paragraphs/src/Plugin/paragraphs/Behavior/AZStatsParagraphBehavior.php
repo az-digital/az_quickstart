@@ -38,12 +38,12 @@ class AZStatsParagraphBehavior extends AZDefaultParagraphsBehavior {
     ];
 
     $form['stat_style'] = [
-      '#title' => $this->t('Style'),
+      '#title' => $this->t('Stat Style'),
       '#type' => 'select',
       '#options' => [
-        'card stat-bold-static' => $this->t('Stat Bold Static'),
-        'card stat-bold-hover' => $this->t('Stat Bold Hover'),
-        'card stat-thin' => $this->t('Stat Thin'),
+        'card stat-bold-static' => $this->t('Bold Static'),
+        'card stat-bold-hover' => $this->t('Bold Hover'),
+        'card stat-thin' => $this->t('Thin Static'),
       ],
       '#default_value' => $config['stat_style'] ?? 'stat-bold-hover',
       '#description' => $this->t('Gives the stats a bold look with an interactive hover effect, bold without the hover effect, or a more basic look similar to cards.'),
@@ -96,7 +96,7 @@ class AZStatsParagraphBehavior extends AZDefaultParagraphsBehavior {
         'text-black' => $this->t('Black'),
         'text-white' => $this->t('White'),
       ],
-      '#default_value' => $config['stat_deck_title_color'] ?? 'text-dark-silver',
+      '#default_value' => $config['stat_deck_title_color'] ?? 'text-blue',
       '#description' => $this->t('Change the color of the Stat group title.'),
     ];
 
