@@ -202,9 +202,9 @@ class AZStatWidget extends WidgetBase {
     }
 
     // Add link class from options.
-    if (!empty($item->options['link_style'])) {
-      $element['preview_container']['stat_preview']['#link']['#attributes']['class'] = explode(' ', $item->options['link_style']);
-    }
+//    if (!empty($item->options['link_style'])) {
+//      $element['preview_container']['stat_preview']['#link']['#attributes']['class'] = explode(' ', $item->options['link_style']);
+//    }
 
     if (!empty($element['preview_container']['stat_preview']['#link'])) {
       $element['preview_container']['stat_preview']['#link']['#attributes']['class'][] = 'az-stat-no-follow';
@@ -542,8 +542,8 @@ class AZStatWidget extends WidgetBase {
       if (!empty($value['options']) || !empty($value['link_style']) || !empty($value['stat_alignment']) || !empty($value['stat_type']) || !empty($value['column_span'])) {
         $values[$delta]['options'] = [
           'class' => $value['options'],
-          'link_style' => $value['link_style'],
-          'stat_alignment' => $value['stat_alignment'],
+//          'link_style' => $value['link_style'],
+    //      'stat_alignment' => $value['stat_alignment'],
           'stat_type' => $value['stat_type'],
           'column_span' => $value['column_span'],
         ];
