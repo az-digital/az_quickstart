@@ -325,6 +325,9 @@ class AZStatWidget extends WidgetBase {
       ],
     ];
 
+    // Determine whether link should be required by default (based on current parent paragraph setting).
+    $link_required_default = (strpos($stat_classes, 'stat-bold-hover') !== FALSE);
+
     $element['link_uri'] = [
       '#type' => 'linkit',
       '#autocomplete_route_name' => 'linkit.autocomplete',
@@ -335,9 +338,17 @@ class AZStatWidget extends WidgetBase {
       '#element_validate' => [[$this, 'validateStatLink']],
       '#default_value' => $item->link_uri ?? NULL,
       '#maxlength' => 2048,
+      // Required when the paragraph behavior stat_style is 'card stat-bold-hover'.
+      '#required' => $link_required_default,
       '#states' => [
+        // Visible only for standard stat type.
         'visible' => [
           ':input[data-az-stat-type-input-id="' . $stat_type_unique_id . '"]' => ['value' => 'standard'],
+        ],
+        // Dynamically required when the parent paragraph behavior select equals 'card stat-bold-hover'.
+        // Uses a name-ends-with selector to match the paragraph behavior input regardless of full parents path.
+        'required' => [
+          ':input[name$="[az_stats_paragraph_behavior][stat_style]"]' => ['value' => 'card stat-bold-hover'],
         ],
       ],
     ];
