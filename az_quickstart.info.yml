@@ -67,6 +67,7 @@ install:
   - chosen:chosen
   - ckeditor_bs_grid:ckeditor_bs_grid
   - coffee:coffee
+  - config_perms:config_perms
   - bootstrap_utilities:bootstrap_utilities
   - exclude_node_title:exclude_node_title
   - search_exclude:search_exclude

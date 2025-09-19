@@ -1,0 +1,6 @@
+langcode: en
+status: true
+dependencies: {  }
+id: delete_recent_log_messages
+label: 'Delete Recent Log Messages'
+route: dblog.confirm
