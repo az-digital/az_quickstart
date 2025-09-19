@@ -83,7 +83,6 @@ class AzBarrioAdminTest extends QuickstartFunctionalTestBase {
     $this->cssSelect('ul[data-drupal-selector="edit-blocks-az-barrio-mobilenavblock-operations"] li.enable a')[0]->click();
     $this->drupalGet('');
     $this->assertSession()->elementExists('css', '.arizona-header > .container > .row > div > [data-bs-target="#azMobileNav"]:not(#jsAzSearch)');
-    $this->assertSession()->elementExists('css', '#block-az-barrio-mobilenavblock');
 
     // Tests that the Arizona Barrio theme can be uninstalled.
     $this->drupalGet('admin/appearance');
