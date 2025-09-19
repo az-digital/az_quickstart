@@ -1,0 +1,145 @@
+/**
+ * @file
+ * Styles for az_media_trellis module.
+ */
+
+.az-media-trellis {
+  min-height: 300px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Handle CKEditor specific issues */
+.cke_dialog .az-media-trellis,
+.cke_wysiwyg_frame .az-media-trellis,
+.drupal-media.ck-widget .az-media-trellis {
+  min-height: 300px;
+}
+
+/* CKEditor widget view mode specific sizing using data-view-mode */
+.drupal-media.ck-widget figure[data-view-mode="default"],
+.drupal-media.ck-widget figure:not([data-view-mode]),
+figure[data-view-mode="default"],
+figure:not([data-view-mode]) {
+  width: 220px;
+  max-width: 220px !important;
+  margin: 0 auto;
+  min-height: 200px;
+}
+
+.drupal-media.ck-widget figure[data-view-mode="az_medium"],
+figure[data-view-mode="az_medium"] {
+  width: 760px;
+  max-width: 760px !important;
+  margin: 0 auto;
+  min-height: 200px;
+}
+
+.drupal-media.ck-widget figure[data-view-mode="az_small"],
+figure[data-view-mode="az_small"] {
+  width: 360px;
+  max-width: 360px !important;
+  margin: 0 auto;
+  min-height: 200px;
+}
+
+.drupal-media.ck-widget figure[data-view-mode="az_very_small"],
+figure[data-view-mode="az_very_small"] {
+  width: 220px;
+  max-width: 220px !important;
+  margin: 0 auto;
+  min-height: 200px;
+}
+
+.drupal-media.ck-widget figure[data-view-mode="az_natural_size"],
+figure[data-view-mode="az_natural_size"] {
+  max-width: none !important;
+  width: auto !important;
+  min-height: 200px;
+}
+
+/* Handle collapsed paragraph/accordion scenarios */
+.paragraph--collapsed .az-media-trellis {
+  display: none;
+}
+
+.paragraph--expanded .az-media-trellis,
+.paragraph:not(.paragraph--collapsed) .az-media-trellis {
+  display: block;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .az-media-trellis {
+    min-height: 200px;
+  }
+}
+
+/* Loading state */
+.drupal-media.ck-widget .az-media-trellis:empty::after {
+  content: "Trellis Form";
+  display: block;
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+  font-style: italic;
+}
+
+/* View mode specific sizing - increased specificity for editing contexts */
+.az-media-trellis.az-media-trellis--default,
+.paragraph .az-media-trellis.az-media-trellis--default,
+.js-form-wrapper .az-media-trellis.az-media-trellis--default {
+  max-width: 100% !important;
+  min-height: 200px;
+}
+
+.az-media-trellis.az-media-trellis--az-medium,
+.paragraph .az-media-trellis.az-media-trellis--az-medium,
+.js-form-wrapper .az-media-trellis.az-media-trellis--az-medium {
+  max-width: 760px !important;
+  margin: 0 auto;
+  min-height: 200px;
+}
+
+.az-media-trellis.az-media-trellis--az-small,
+.paragraph .az-media-trellis.az-media-trellis--az-small,
+.js-form-wrapper .az-media-trellis.az-media-trellis--az-small {
+  max-width: 360px !important;
+  margin: 0 auto;
+  min-height: 200px;
+}
+
+.az-media-trellis.az-media-trellis--az-very-small,
+.paragraph .az-media-trellis.az-media-trellis--az-very-small,
+.js-form-wrapper .az-media-trellis.az-media-trellis--az-very-small {
+  max-width: 220px !important;
+  margin: 0 auto;
+  min-height: 200px;
+}
+
+.az-media-trellis.az-media-trellis--az-natural-size,
+.paragraph .az-media-trellis.az-media-trellis--az-natural-size,
+.js-form-wrapper .az-media-trellis.az-media-trellis--az-natural-size {
+  max-width: none !important;
+  width: auto !important;
+  min-height: 200px;
+}
+
+/* Responsive adjustments for view modes */
+@media (max-width: 768px) {
+  .az-media-trellis--az-medium {
+    max-width: 100%;
+    min-height: 200px;
+  }
+  
+  .az-media-trellis--az-small {
+    max-width: 360px;
+    min-height: 200px;
+  }
+  
+  .az-media-trellis--az-very-small {
+    max-width: 220px;
+    min-height: 200px;
+  }
+}
