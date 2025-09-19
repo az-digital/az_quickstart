@@ -55,3 +55,14 @@ jobs:
         run: |
           cd az-quickstart-scaffolding
           composer audit
+
+  yarn-audit:
+    name: yarn audit (security)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20.13.0
+      - name: Checkout
+        uses: actions/checkout@v5
+      - run: yarn audit
