@@ -1,5 +1,5 @@
 ((Drupal, once) => {
-  Drupal.behaviors.azBarrioOffCanvasNav = {
+  Drupal.behaviors.azBarrioOffCanvasSearch = {
     attach: (context) => {
       function focusOffCanvasSearchOnShow() {
         const offCanvasNav = document.querySelector('#azMobileNav');
@@ -11,7 +11,7 @@
           }
         });
       }
-      once('azOffCanvasSearch', '#azMobileNav').forEach(
+      once('azBarrioOffCanvasSearch', '#azMobileNav').forEach(
         focusOffCanvasSearchOnShow,
         context,
       );
