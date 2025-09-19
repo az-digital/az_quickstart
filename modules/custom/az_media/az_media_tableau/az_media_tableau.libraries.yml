@@ -1,0 +1,9 @@
+api:
+  js:
+    https://bi.arizona.edu/javascripts/api/tableau-2.min.js: { type: external, minified: true }
+embed:
+  js:
+    js/embed.js: {}
+  dependencies:
+    - core/drupal
+    - az_media_tableau/api

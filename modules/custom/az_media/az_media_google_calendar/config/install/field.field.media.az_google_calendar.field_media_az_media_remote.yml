@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_media_az_media_remote
+    - media.type.az_google_calendar
+id: media.az_google_calendar.field_media_az_media_remote
+field_name: field_media_az_media_remote
+entity_type: media
+bundle: az_google_calendar
+label: 'Google Calendar URL'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

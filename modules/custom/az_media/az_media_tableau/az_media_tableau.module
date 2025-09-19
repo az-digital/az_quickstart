@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * @file
+ * Hook implementations and global functions for az_media_tableau.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function az_media_tableau_theme($existing, $type, $theme, $path) {
+  return [
+    'az_media_tableau' => [
+      'variables' => [
+        'type' => NULL,
+        'url' => NULL,
+      ],
+      'template' => 'az-media-tableau',
+    ],
+  ];
+}

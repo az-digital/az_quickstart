@@ -18,6 +18,8 @@ dependencies:
   - az_person
   - az_publication
   - az_media
+  - az_media_google_calendar
+  - az_media_tableau
   - az_finder
   - migrate:migrate
   - migrate_plus:migrate_plus
