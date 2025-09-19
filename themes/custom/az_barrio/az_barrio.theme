@@ -99,7 +99,7 @@ function az_barrio_preprocess_html(&$variables) {
  */
 function az_barrio_preprocess_page(&$variables, $hook) {
   if (isset($variables['page']['navigation_offcanvas']['az_barrio_offcanvas_searchform'])) {
-    $variables['#attached']['library'][] = 'az_barrio/az-barrio-off-canvas-search';
+    $variables['#attached']['library'][] = 'az_barrio/az-barrio-off-canvas-nav';
   }
 
   // Allow hiding of title of front page node.
