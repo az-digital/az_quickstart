@@ -65,7 +65,6 @@ class PhoneProcess extends ProcessPluginBase implements ContainerFactoryPluginIn
       $value = [$value];
     }
     foreach ($value as $phone) {
-      $formatted = [];
       // Profiles API phones are nested.
       $phone = $phone['number'] ?? $phone;
       // We'll attempt to do some formatting on the phone number.
