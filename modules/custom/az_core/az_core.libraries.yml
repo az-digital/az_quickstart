@@ -24,3 +24,5 @@ az-mobile-nav:
   css:
     layout:
       css/az-mobile-nav.css: {}
+  js:
+    js/az-mobile-nav.js: {}
