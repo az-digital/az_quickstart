@@ -1,0 +1,5 @@
+/* Do not traverse stat preview links. */
+
+.az-stat-no-follow, .az-stat-no-follow.btn:not(:disabled):not(.disabled) {
+    cursor: not-allowed;
+}
