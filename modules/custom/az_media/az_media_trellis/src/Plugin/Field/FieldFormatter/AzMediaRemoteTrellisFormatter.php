@@ -287,7 +287,12 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase implements 
 
     }
     // Attach the necessary JavaScript library for Trellis form embedding.
-    $elements[$delta]['#attached']['library'][] = 'az_media_trellis/az-media-trellis';
+    // Guard against the case where the foreach loop produced no elements (all items empty).
+    if (!empty($elements)) {
+      // Use end() to get the last element reference safely without relying on $delta.
+      $last_key = array_key_last($elements);
+      $elements[$last_key]['#attached']['library'][] = 'az_media_trellis/az-media-trellis';
+    }
 
     return $elements;
   }
