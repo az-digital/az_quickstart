@@ -286,7 +286,7 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase implements 
       ];
 
     }
-  // Attach the necessary JavaScript library for Trellis form embedding.
+    // Attach the necessary JavaScript library for Trellis form embedding.
     $elements[$delta]['#attached']['library'][] = 'az_media_trellis/az-media-trellis';
 
     return $elements;
