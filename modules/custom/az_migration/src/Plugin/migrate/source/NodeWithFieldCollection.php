@@ -2,6 +2,7 @@
 
 namespace Drupal\az_migration\Plugin\migrate\source;
 
+use Drupal\migrate\Attribute\MigrateSource;
 use Drupal\migrate\Row;
 use Drupal\node\Plugin\migrate\source\d7\Node as D7Node;
 
@@ -43,12 +44,8 @@ use Drupal\node\Plugin\migrate\source\d7\Node as D7Node;
  * @see \Drupal\migrate\Plugin\migrate\source\SqlBase
  * @see \Drupal\migrate\Plugin\migrate\source\SourcePluginBase
  * @see \Drupal\node\Plugin\migrate\source\d7\Node
- *
- * @MigrateSource(
- *   id = "az_node_with_field_collection",
- *   source_module = "node"
- * )
  */
+#[MigrateSource('az_node_with_field_collection')]
 class NodeWithFieldCollection extends D7Node {
 
   /**

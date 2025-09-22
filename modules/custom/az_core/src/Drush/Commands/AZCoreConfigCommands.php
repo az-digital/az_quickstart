@@ -146,7 +146,7 @@ class AZCoreConfigCommands extends DrushCommands {
       }
       // Load all roles.
       /** @var \Drupal\user\Entity\Role[] $roles */
-      $roles = $this->entityTypeManager->getStorage('role')->loadMultiple();
+      $roles = $this->entityTypeManager->getStorage('user_role')->loadMultiple();
       // Loop through roles by ID.
       foreach ($roles as $id => $role) {
         $name = "user.role.$id";
