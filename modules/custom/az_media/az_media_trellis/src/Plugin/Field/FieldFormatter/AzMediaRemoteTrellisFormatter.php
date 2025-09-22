@@ -8,6 +8,7 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\Core\Template\Attribute;
 use Drupal\media_remote\Plugin\Field\FieldFormatter\MediaRemoteFormatterBase;
 use Drupal\az_media_trellis\AzMediaTrellisService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -250,15 +251,19 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase implements 
 
       // Get the view mode for responsive sizing and display options.
       $view_mode = $this->configuration['view_mode'] ?? $this->viewMode ?? 'default';
-
       // Build themed render element with comprehensive metadata.
-      $target_id = Html::getUniqueId('az-media-trellis');
+      $unique_element_id = Html::getUniqueId('az-media-trellis');
       $elements[$delta] = [
         '#theme' => 'az_media_trellis',
-        '#url' => $newUrl,
         '#editing' => $is_editing_context,
-        '#view_mode' => $view_mode,
-        '#target_id' => $target_id,
+        '#url' => $newUrl,
+        '#attributes' => new Attribute([
+          'id' => $unique_element_id,
+          'class' => [
+            Html::getClass('az-media-trellis'),
+            Html::getClass('az-media-trellis--' . $view_mode),
+          ],
+        ]),
         '#cache' => [
           // Cache varies by URL query arguments for form prefilling.
           'contexts' => ['url.query_args'],
@@ -266,7 +271,31 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase implements 
           'max-age' => 3600,
         ],
       ];
+
+      $elements[$delta]['#attached']['html_head'][] = [
+        [
+          '#tag' => 'script',
+          '#attributes' => [
+            'src' => $newUrl,
+            'type' => 'text/javascript',
+            'defer' => 'defer',
+            'data-qp-target-id' => $unique_element_id,
+          ],
+        ],
+        'trellis_embed_script_' . $unique_element_id,
+      ];
+
     }
+    // Attach the necessary JavaScript library for Trellis form embedding.
+    // Guard against the case where the foreach loop produced no elements
+    // (all items empty).
+    if (!empty($elements)) {
+      // Use end() to get the last element reference safely without relying
+      // on $delta.
+      $last_key = array_key_last($elements);
+      $elements[$last_key]['#attached']['library'][] = 'az_media_trellis/az-media-trellis';
+    }
+
     return $elements;
   }
 

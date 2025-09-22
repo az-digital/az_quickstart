@@ -1,5 +1,4 @@
 az-media-trellis:
-  version: 1.x
   css:
     theme:
       css/az-media-trellis.css: {}

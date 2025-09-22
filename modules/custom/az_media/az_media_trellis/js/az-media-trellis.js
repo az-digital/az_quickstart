@@ -4,60 +4,57 @@
 * https://www.drupal.org/node/2815083
 * @preserve
 **/
-((Drupal, drupalSettings) => {
+(function azMediaTrellisIife(Drupal, drupalSettings) {
   function TrellisFormHandler(container, queryParams, editing) {
     this.container = container;
     this.queryParams = queryParams;
     this.editing = editing;
     this.processed = false;
-    this.init();
   }
-  TrellisFormHandler.prototype = {
-    init() {
-      this.setupContentObserver();
-      if (this.container.children.length > 0) {
-        this.processForm();
-      }
-    },
-    setupContentObserver() {
-      if (this.processed) return;
-      const observer = new MutationObserver(() => {
-        if (!this.processed && this.container.children.length > 0) {
-          this.processForm();
-          observer.disconnect();
-        }
-      });
-      observer.observe(this.container, {
-        childList: true,
-        subtree: true
-      });
-    },
-    processForm() {
-      if (this.processed) return;
-      this.processed = true;
-      if (this.editing) {
-        this.setupEditingMode();
-      }
-      this.prefillFields();
-    },
-    setupEditingMode() {
-      const requiredFields = this.container.querySelectorAll('input[aria-required], input.required');
-      requiredFields.forEach(field => {
-        field.removeAttribute('aria-required');
-        field.classList.remove('required');
-      });
-    },
-    prefillFields() {
-      Object.entries(this.queryParams).forEach(([name, value]) => {
-        const field = this.container.querySelector(`[name="${name}"]`);
-        if (field && field.value !== value) {
-          field.value = value;
-          field.dispatchEvent(new Event('input', {
-            bubbles: true
-          }));
-        }
-      });
+  TrellisFormHandler.prototype.init = function init() {
+    this.setupContentObserver();
+    if (this.container.children.length > 0) {
+      this.processForm();
     }
+  };
+  TrellisFormHandler.prototype.setupContentObserver = function setupContentObserver() {
+    if (this.processed) return;
+    const observer = new MutationObserver(() => {
+      if (!this.processed && this.container.children.length > 0) {
+        this.processForm();
+        observer.disconnect();
+      }
+    });
+    observer.observe(this.container, {
+      childList: true,
+      subtree: true
+    });
+  };
+  TrellisFormHandler.prototype.processForm = function processForm() {
+    if (this.processed) return;
+    this.processed = true;
+    if (this.editing) {
+      this.setupEditingMode();
+    }
+    this.prefillFields();
+  };
+  TrellisFormHandler.prototype.setupEditingMode = function setupEditingMode() {
+    const requiredFields = this.container.querySelectorAll('input[aria-required], input.required');
+    requiredFields.forEach(field => {
+      field.removeAttribute('aria-required');
+      field.classList.remove('required');
+    });
+  };
+  TrellisFormHandler.prototype.prefillFields = function prefillFields() {
+    Object.entries(this.queryParams).forEach(([name, value]) => {
+      const field = this.container.querySelector(`[name="${name}"]`);
+      if (field && field.value !== value) {
+        field.value = value;
+        field.dispatchEvent(new Event('input', {
+          bubbles: true
+        }));
+      }
+    });
   };
   Drupal.behaviors.azMediaTrellis = {
     attach(context) {
@@ -67,7 +64,8 @@
       const formContainers = context.querySelectorAll('.az-media-trellis:not([data-az-processed])');
       formContainers.forEach(container => {
         container.setAttribute('data-az-processed', 'true');
-        container._azMediaTrellis = new TrellisFormHandler(container, queryParams, editing);
+        const handler = new TrellisFormHandler(container, queryParams, editing);
+        handler.init();
       });
     }
   };
