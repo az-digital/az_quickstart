@@ -37,7 +37,9 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "daily"
+    cooldown:
+      default-days: 5
     labels:
       - "dependencies"
       - "github_actions"
