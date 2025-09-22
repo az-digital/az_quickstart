@@ -9,7 +9,6 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Template\Attribute;
-use Drupal\Component\Utility\Html;
 use Drupal\media_remote\Plugin\Field\FieldFormatter\MediaRemoteFormatterBase;
 use Drupal\az_media_trellis\AzMediaTrellisService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
