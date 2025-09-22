@@ -62,7 +62,6 @@ function az_demo_blocks_to_hide_by_path(): array {
       '/finders/events',
       '/finders/pages',
       '/finders/content',
-      '/pages/media-embeds/trellis',
     ],
   ];
 }

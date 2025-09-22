@@ -2,9 +2,11 @@
 
 namespace Drupal\az_media_trellis\Plugin\Field\FieldFormatter;
 
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Field\Attribute\FieldFormatter;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Template\Attribute;
 use Drupal\Component\Utility\Html;
@@ -44,14 +46,14 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
     'string',
   ],
 )]
-class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase {
+class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase implements ContainerFactoryPluginInterface {
 
   /**
    * The AZ Media Trellis service for context detection and URL validation.
    *
    * @var \Drupal\az_media_trellis\AzMediaTrellisService
    */
-  protected $service;
+  protected AzMediaTrellisService $trellisService;
 
   /**
    * Constructs an AzMediaRemoteTrellisFormatter object.
@@ -70,13 +72,13 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase {
    *   The view mode.
    * @param array $third_party_settings
    *   Any third party settings.
-   * @param \Drupal\az_media_trellis\AzMediaTrellisService $service
+   * @param \Drupal\az_media_trellis\AzMediaTrellisService $trellis_service
    *   The AZ Media Trellis service for context detection, URL validation,
    *   and utility functions specific to Trellis form integration.
    */
-  public function __construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings, AzMediaTrellisService $service) {
+  public function __construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings, AzMediaTrellisService $trellis_service) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
-    $this->service = $service;
+    $this->trellisService = $trellis_service;
   }
 
   /**
@@ -246,7 +248,7 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase {
       // Results: https://forms-a.trellis.arizona.edu/publish/185
       // https://trellis.tfaforms.net/publish/72
       // Determine current context for form behavior modification.
-      $is_editing_context = $this->service::isEditingContext();
+      $is_editing_context = $this->trellisService->isEditingContext();
 
       // Get the view mode for responsive sizing and display options.
       $view_mode = $this->configuration['view_mode'] ?? $this->viewMode ?? 'default';

@@ -4,9 +4,10 @@ on:
   push:
     branches:
       - 'main'
+      - '2.x'
+      - '3.0.x'
+      - '2.14.x'
       - '2.13.x'
-      - '2.12.x'
-      - '2.11.x'
 
 jobs:
   setup:
@@ -15,7 +16,7 @@ jobs:
       matrix: ${{ steps.setup-test-matrix.outputs.matrix }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Setup test matrix
         id: setup-test-matrix
         run: |
@@ -34,7 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -49,31 +50,50 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.3'
       - name: Find the push source branch name
-        if: ${{ github.event_name != 'pull_request' }}
-        run: echo "AZ_TRIMMED_REF=${GITHUB_REF#refs/*/}" >> ${GITHUB_ENV}
+        if: github.event_name != 'pull_request'
+        run: |
+          echo "AZ_SOURCE_REF=${GITHUB_REF#refs/*/}" >> ${GITHUB_ENV}
+          echo "AZ_TARGET_REF=${GITHUB_REF#refs/*/}" >> ${GITHUB_ENV}
       - name: Find the pull request source branch name
-        if: ${{ github.event_name == 'pull_request' }}
-        run: echo "AZ_TRIMMED_REF=${GITHUB_HEAD_REF}" >> ${GITHUB_ENV}
+        if: github.event_name == 'pull_request'
+        run: |
+          echo "AZ_SOURCE_REF=${GITHUB_HEAD_REF}" >> ${GITHUB_ENV}
+          echo "AZ_TARGET_REF=${GITHUB_BASE_REF}" >> ${GITHUB_ENV}
+      - name: Set default branches for scaffolding and dev repos if ref is 2.*
+        if: startsWith(github.base_ref, '2.') || startsWith(github.ref_name, '2.')
+        id: test-2-x
+        run: |
+          echo "DEFAULT_SCAFFOLD_BRANCH=2.x" >> ${GITHUB_ENV}
+          echo "DEFAULT_DEV_BRANCH=1.x" >> ${GITHUB_ENV}
+      - name: Fallback to main branch
+        if: steps.test-2-x.outcome == 'skipped'
+        run: |
+          echo "DEFAULT_SCAFFOLD_BRANCH=main" >> ${GITHUB_ENV}
+          echo "DEFAULT_DEV_BRANCH=main" >> ${GITHUB_ENV}
       - name: Set variables
         run: |
-          if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $AZ_TRIMMED_REF | wc -l) = 1 ]; then
-            echo "SCAFFOLD_BRANCH=${AZ_TRIMMED_REF}" >> ${GITHUB_ENV}
+          if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $AZ_SOURCE_REF | wc -l) = 1 ]; then
+            echo "SCAFFOLD_BRANCH=${AZ_SOURCE_REF}" >> ${GITHUB_ENV}
+          elif [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $AZ_TARGET_REF | wc -l) = 1 ]; then
+            echo "SCAFFOLD_BRANCH=${AZ_TARGET_REF}" >> ${GITHUB_ENV}
           else
-            echo "SCAFFOLD_BRANCH=main" >> ${GITHUB_ENV}
+            echo "SCAFFOLD_BRANCH=${DEFAULT_SCAFFOLD_BRANCH}" >> ${GITHUB_ENV}
           fi
-          if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-dev.git $AZ_TRIMMED_REF | wc -l) = 1 ]; then
-            echo "DEV_PACKAGE_BRANCH=${AZ_TRIMMED_REF}" >> ${GITHUB_ENV}
+          if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-dev.git $AZ_SOURCE_REF | wc -l) = 1 ]; then
+            echo "DEV_PACKAGE_BRANCH=${AZ_SOURCE_REF}" >> ${GITHUB_ENV}
+          elif [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-dev.git $AZ_TARGET_REF | wc -l) = 1 ]; then
+            echo "DEV_PACKAGE_BRANCH=${AZ_TARGET_REF}" >> ${GITHUB_ENV}
           else
-            echo "DEV_PACKAGE_BRANCH=main" >> ${GITHUB_ENV}
+            echo "DEV_PACKAGE_BRANCH=${DEFAULT_DEV_BRANCH}" >> ${GITHUB_ENV}
           fi
       - name: Clone scaffolding repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: az-digital/az-quickstart-scaffolding
           path: az-quickstart-scaffolding
@@ -83,8 +103,13 @@ jobs:
           cd az-quickstart-scaffolding
           composer config repositories.az_quickstart vcs https://github.com/az-digital/az_quickstart.git
           composer config use-github-api false
-          ./quickstart_branch.sh --branch ${AZ_TRIMMED_REF}
-          composer require --no-update --dev az-digital/az-quickstart-dev:dev-${DEV_PACKAGE_BRANCH}
+          ./quickstart_branch.sh --branch ${AZ_SOURCE_REF}
+          if [[ ${DEV_PACKAGE_BRANCH} =~ ^[0-9]\.[0-9x] ]]; then
+            DEV_PACKAGE_VERSION="${DEV_PACKAGE_BRANCH}-dev"
+          else
+            DEV_PACKAGE_VERSION="dev-${DEV_PACKAGE_BRANCH}"
+          fi
+          composer require --no-update --dev az-digital/az-quickstart-dev:${DEV_PACKAGE_VERSION}
           composer install -o
       - name: Save build artifact
         uses: actions/cache/save@v4
@@ -109,7 +134,7 @@ jobs:
         continue-on-error: true
         run: |
           cd $GITHUB_WORKSPACE/az-quickstart-scaffolding
-          ./vendor/bin/phpcs --standard=web/profiles/custom/az_quickstart/phpcs.xml.dist -q --report=checkstyle | sed 's/web\/profiles\/custom\/az_quickstart\///' | cs2pr
+          ./vendor/bin/phpcs --standard=web/profiles/custom/az_quickstart/phpcs.xml.dist -sq --report=checkstyle | sed 's/web\/profiles\/custom\/az_quickstart\///' | cs2pr
       - name: Run phpcs
         run: |
           cd $GITHUB_WORKSPACE/az-quickstart-scaffolding
@@ -155,7 +180,7 @@ jobs:
         with:
           node-version: 20.13.0
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - run: yarn install
       - name: Generate eslint report
         continue-on-error: true
@@ -182,7 +207,7 @@ jobs:
         ports:
           - 9515
       mysql:
-        image: mysql:5.7
+        image: mysql:8
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
           MYSQL_DATABASE: db
@@ -208,12 +233,12 @@ jobs:
           mkdir -p web/sites/simpletest
           chmod 777 web/sites/simpletest
       - name: Run phpunit test (${{ matrix.test.file }})
-        run: $GITHUB_WORKSPACE/az-quickstart-scaffolding/vendor/bin/phpunit --configuration $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/profiles/custom/az_quickstart/phpunit.xml.dist --bootstrap $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/core/tests/bootstrap.php --colors="always" --verbose --do-not-cache-result $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/profiles/custom/az_quickstart/"${{ matrix.test.file }}"
+        run: $GITHUB_WORKSPACE/az-quickstart-scaffolding/vendor/bin/phpunit --configuration $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/profiles/custom/az_quickstart/phpunit.xml.dist --bootstrap $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/core/tests/bootstrap.php --colors="always" --do-not-cache-result $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/profiles/custom/az_quickstart/"${{ matrix.test.file }}"
         env:
           SYMFONY_DEPRECATIONS_HELPER: weak
           SIMPLETEST_DB: mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3306] }}/db
           SIMPLETEST_BASE_URL: http://172.17.0.1:8080
-          MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--headless", "--no-sandbox"]}}, "http://127.0.0.1:${{ job.services.chromedriver.ports[9515] }}"]'
+          MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","goog:chromeOptions":{"args":["--disable-gpu","--headless","--disable-dev-shm-usage","--no-sandbox"]}}, "http://127.0.0.1:${{ job.services.chromedriver.ports[9515] }}"]'
 
   install:
     name: drush site:install
@@ -221,7 +246,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       mysql:
-        image: mysql:5.7
+        image: mysql:8
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
           MYSQL_DATABASE: db
@@ -271,7 +296,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       mysql:
-        image: mysql:5.7
+        image: mysql:8
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
           MYSQL_DATABASE: db

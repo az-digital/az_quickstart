@@ -39,6 +39,8 @@ function az_media_trellis_theme($existing, $type, $theme, $path) {
         ],
         // Whether user is in editing context.
         'editing' => NULL,
+        // Unique container id for the embed target.
+        'target_id' => NULL,
       ],
       'template' => 'az-media-trellis',
     ],
@@ -70,7 +72,7 @@ function az_media_trellis_preprocess_media(&$variables) {
       // Determine if the user is currently editing this media.
       // This affects form validation and field requirements.
       $azMediaTrellisService = \Drupal::service('az_media_trellis');
-      $is_editing_context = $azMediaTrellisService::isEditingContext();
+      $is_editing_context = $azMediaTrellisService->isEditingContext();
 
       // Extract query parameters from the Trellis URL for form prefilling.
       // These parameters (like tfa_4, tfa_7, etc.) will be used by JavaScript
