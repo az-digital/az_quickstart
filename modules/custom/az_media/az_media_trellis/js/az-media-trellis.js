@@ -4,81 +4,68 @@
 * https://www.drupal.org/node/2815083
 * @preserve
 **/
-function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
-function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
-function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-(function (Drupal, drupalSettings) {
-  Drupal.behaviors.azMediaTrellis = {
-    attach: function attach(context, settings) {
-      var config = drupalSettings.azMediaTrellis || {};
-      var queryParams = config.queryParams || {};
-      var editing = config.editing || false;
-      var formContainers = context.querySelectorAll('.az-media-trellis:not([data-az-processed])');
-      formContainers.forEach(function (container) {
-        container.setAttribute('data-az-processed', 'true');
-        new TrellisFormHandler(container, queryParams, editing);
-      });
-    }
-  };
+(function azMediaTrellisIife(Drupal, drupalSettings) {
   function TrellisFormHandler(container, queryParams, editing) {
     this.container = container;
     this.queryParams = queryParams;
     this.editing = editing;
     this.processed = false;
-    this.init();
   }
-  TrellisFormHandler.prototype = {
-    init: function init() {
-      this.setupContentObserver();
-      if (this.container.children.length > 0) {
+  TrellisFormHandler.prototype.init = function init() {
+    this.setupContentObserver();
+    if (this.container.children.length > 0) {
+      this.processForm();
+    }
+  };
+  TrellisFormHandler.prototype.setupContentObserver = function setupContentObserver() {
+    if (this.processed) return;
+    const observer = new MutationObserver(() => {
+      if (!this.processed && this.container.children.length > 0) {
         this.processForm();
+        observer.disconnect();
       }
-    },
-    setupContentObserver: function setupContentObserver() {
-      var _this = this;
-      if (this.processed) return;
-      var observer = new MutationObserver(function () {
-        if (!_this.processed && _this.container.children.length > 0) {
-          _this.processForm();
-          observer.disconnect();
-        }
-      });
-      observer.observe(this.container, {
-        childList: true,
-        subtree: true
-      });
-    },
-    processForm: function processForm() {
-      if (this.processed) return;
-      this.processed = true;
-      if (this.editing) {
-        this.setupEditingMode();
+    });
+    observer.observe(this.container, {
+      childList: true,
+      subtree: true
+    });
+  };
+  TrellisFormHandler.prototype.processForm = function processForm() {
+    if (this.processed) return;
+    this.processed = true;
+    if (this.editing) {
+      this.setupEditingMode();
+    }
+    this.prefillFields();
+  };
+  TrellisFormHandler.prototype.setupEditingMode = function setupEditingMode() {
+    const requiredFields = this.container.querySelectorAll('input[aria-required], input.required');
+    requiredFields.forEach(field => {
+      field.removeAttribute('aria-required');
+      field.classList.remove('required');
+    });
+  };
+  TrellisFormHandler.prototype.prefillFields = function prefillFields() {
+    Object.entries(this.queryParams).forEach(([name, value]) => {
+      const field = this.container.querySelector(`[name="${name}"]`);
+      if (field && field.value !== value) {
+        field.value = value;
+        field.dispatchEvent(new Event('input', {
+          bubbles: true
+        }));
       }
-      this.prefillFields();
-    },
-    setupEditingMode: function setupEditingMode() {
-      var requiredFields = this.container.querySelectorAll('input[aria-required], input.required');
-      requiredFields.forEach(function (field) {
-        field.removeAttribute('aria-required');
-        field.classList.remove('required');
-      });
-    },
-    prefillFields: function prefillFields() {
-      var _this2 = this;
-      Object.entries(this.queryParams).forEach(function (_ref) {
-        var _ref2 = _slicedToArray(_ref, 2),
-          name = _ref2[0],
-          value = _ref2[1];
-        var field = _this2.container.querySelector("[name=\"".concat(name, "\"]"));
-        if (field && field.value !== value) {
-          field.value = value;
-          field.dispatchEvent(new Event('input', {
-            bubbles: true
-          }));
-        }
+    });
+  };
+  Drupal.behaviors.azMediaTrellis = {
+    attach(context) {
+      const config = drupalSettings.azMediaTrellis || {};
+      const queryParams = config.queryParams || {};
+      const editing = config.editing || false;
+      const formContainers = context.querySelectorAll('.az-media-trellis:not([data-az-processed])');
+      formContainers.forEach(container => {
+        container.setAttribute('data-az-processed', 'true');
+        const handler = new TrellisFormHandler(container, queryParams, editing);
+        handler.init();
       });
     }
   };

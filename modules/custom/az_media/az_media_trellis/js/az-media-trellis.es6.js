@@ -1,95 +1,80 @@
-(function (Drupal, drupalSettings) {
-  Drupal.behaviors.azMediaTrellis = {
-    attach(context, drupalSettings) {
-      const config = drupalSettings.azMediaTrellis || {};
-      const queryParams = config.queryParams || {};
-      const editing = config.editing || false;
-
-      // Find form containers that haven't been processed yet
-      const formContainers = context.querySelectorAll(
-        '.az-media-trellis:not([data-az-processed])',
-      );
-
-      formContainers.forEach((container) => {
-        // Mark as processed to avoid duplicate initialization
-        container.setAttribute('data-az-processed', 'true');
-        new TrellisFormHandler(container, queryParams, editing);
-      });
-    },
-  };
-
+(function azMediaTrellisIife(Drupal, drupalSettings) {
   /**
-   * Handles a single Trellis form instance
+   * Handles a single Trellis form instance.
+   * @param {HTMLElement} container Trellis form container element.
+   * @param {Object} queryParams Key/value pairs for prefill.
+   * @param {boolean} editing Whether editing mode is active.
    */
   function TrellisFormHandler(container, queryParams, editing) {
     this.container = container;
     this.queryParams = queryParams;
     this.editing = editing;
     this.processed = false;
-
-    this.init();
   }
 
-  TrellisFormHandler.prototype = {
-    init() {
-      // Set up mutation observer to wait for FormAssembly content
-      this.setupContentObserver();
+  TrellisFormHandler.prototype.init = function init() {
+    this.setupContentObserver();
+    if (this.container.children.length > 0) {
+      this.processForm();
+    }
+  };
 
-      // If there's already content, process it immediately
-      if (this.container.children.length > 0) {
-        this.processForm();
-      }
-    },
-
-    setupContentObserver() {
+  TrellisFormHandler.prototype.setupContentObserver =
+    function setupContentObserver() {
       if (this.processed) return;
-
       const observer = new MutationObserver(() => {
         if (!this.processed && this.container.children.length > 0) {
           this.processForm();
           observer.disconnect();
         }
       });
-
       observer.observe(this.container, {
         childList: true,
         subtree: true,
       });
-    },
+    };
 
-    processForm() {
-      if (this.processed) return;
+  TrellisFormHandler.prototype.processForm = function processForm() {
+    if (this.processed) return;
+    this.processed = true;
+    if (this.editing) {
+      this.setupEditingMode();
+    }
+    this.prefillFields();
+  };
 
-      this.processed = true;
+  TrellisFormHandler.prototype.setupEditingMode = function setupEditingMode() {
+    const requiredFields = this.container.querySelectorAll(
+      'input[aria-required], input.required',
+    );
+    requiredFields.forEach((field) => {
+      field.removeAttribute('aria-required');
+      field.classList.remove('required');
+    });
+  };
 
-      // Handle editing mode adjustments
-      if (this.editing) {
-        this.setupEditingMode();
+  TrellisFormHandler.prototype.prefillFields = function prefillFields() {
+    Object.entries(this.queryParams).forEach(([name, value]) => {
+      const field = this.container.querySelector(`[name="${name}"]`);
+      if (field && field.value !== value) {
+        field.value = value;
+        field.dispatchEvent(new Event('input', { bubbles: true }));
       }
+    });
+  };
 
-      // Prefill form fields from query parameters
-      this.prefillFields();
-    },
-
-    setupEditingMode() {
-      // Remove validation requirements in editing mode
-      const requiredFields = this.container.querySelectorAll(
-        'input[aria-required], input.required',
+  Drupal.behaviors.azMediaTrellis = {
+    attach(context) {
+      const config = drupalSettings.azMediaTrellis || {};
+      const queryParams = config.queryParams || {};
+      const editing = config.editing || false;
+      const formContainers = context.querySelectorAll(
+        '.az-media-trellis:not([data-az-processed])',
       );
-
-      requiredFields.forEach((field) => {
-        field.removeAttribute('aria-required');
-        field.classList.remove('required');
-      });
-    },
-
-    prefillFields() {
-      Object.entries(this.queryParams).forEach(([name, value]) => {
-        const field = this.container.querySelector(`[name="${name}"]`);
-        if (field && field.value !== value) {
-          field.value = value;
-          field.dispatchEvent(new Event('input', { bubbles: true }));
-        }
+      formContainers.forEach((container) => {
+        container.setAttribute('data-az-processed', 'true');
+        const handler = new TrellisFormHandler(container, queryParams, editing);
+        handler.init();
       });
     },
   };
