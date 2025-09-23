@@ -70,7 +70,7 @@ services:
   node:
     type: node:20
     build:
-      - yarn install
+      - yarn install --ignore-scripts
   chromedriver:
     type: compose
     services:
