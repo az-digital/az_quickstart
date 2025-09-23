@@ -25,7 +25,7 @@ class AZStatsParagraphBehavior extends AZDefaultParagraphsBehavior {
 
     // Stat deck width for desktop.
     $form['stat_width'] = [
-      '#title' => $this->t('Stats per row on desktop'),
+      '#title' => $this->t('Rankings per row on desktop'),
       '#type' => 'select',
       '#options' => [
         'col-lg-12' => $this->t('1'),
@@ -38,7 +38,7 @@ class AZStatsParagraphBehavior extends AZDefaultParagraphsBehavior {
     ];
 
     $form['stat_style'] = [
-      '#title' => $this->t('Stat Style'),
+      '#title' => $this->t('Rankings Style'),
       '#type' => 'select',
       '#options' => [
         'card stat-bold-static' => $this->t('Bold Static'),
@@ -53,7 +53,7 @@ class AZStatsParagraphBehavior extends AZDefaultParagraphsBehavior {
 
     // Stat deck width for tablets.
     $form['az_display_settings']['stat_width_sm'] = [
-      '#title' => $this->t('Stats per row on tablet'),
+      '#title' => $this->t('Rankings per row on tablet'),
       '#type' => 'select',
       '#options' => [
         'col-md-12' => $this->t('1'),
@@ -68,7 +68,7 @@ class AZStatsParagraphBehavior extends AZDefaultParagraphsBehavior {
 
     // Stat deck width for phones.
     $form['az_display_settings']['stat_width_xs'] = [
-      '#title' => $this->t('Stats per row on phone'),
+      '#title' => $this->t('Rankings per row on phone'),
       '#type' => 'select',
       '#options' => [
         'col-12' => $this->t('1'),
@@ -83,18 +83,18 @@ class AZStatsParagraphBehavior extends AZDefaultParagraphsBehavior {
 
     // Stat deck title color.
     $form['stat_deck_title_color'] = [
-      '#title' => $this->t('Stat group title color'),
+      '#title' => $this->t('Rankings group title color'),
       '#type' => 'select',
       '#options' => [
-        'text-dark-silver' => $this->t('Dark Silver (default)'),
-        'text-blue' => $this->t('Blue'),
+        'text-blue' => $this->t('AZ Blue'),
+        'text-black' => $this->t('Black'),
+        'text-white' => $this->t('White'),
         'text-sky' => $this->t('Sky'),
         'text-oasis' => $this->t('Oasis'),
         'text-azurite' => $this->t('Azurite'),
         'text-midnight' => $this->t('Midnight'),
+        'text-dark-silver' => $this->t('Dark Silver (default)'),
         'text-ash' => $this->t('Ash'),
-        'text-black' => $this->t('Black'),
-        'text-white' => $this->t('White'),
       ],
       '#default_value' => $config['stat_deck_title_color'] ?? 'text-blue',
       '#description' => $this->t('Change the color of the Stat group title.'),

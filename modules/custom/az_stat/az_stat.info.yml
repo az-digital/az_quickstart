@@ -1,6 +1,6 @@
-name: 'Quickstart Stat'
+name: 'Quickstart Rankings'
 type: module
-description: 'Custom field plugins and theme template for stats.'
+description: 'Custom field plugins and theme template for stats and rankings.'
 core_version_requirement: ^10 || ^11 || ^12
 package: 'The University of Arizona'
 dependencies:

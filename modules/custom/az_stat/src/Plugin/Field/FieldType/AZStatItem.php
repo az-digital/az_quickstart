@@ -46,17 +46,17 @@ class AZStatItem extends FieldItemBase {
   public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition) {
 
     $properties['stat_heading'] = DataDefinition::create('string')
-      ->setLabel(t('Stat Title'));
+      ->setLabel(t('Ranking Title'));
     $properties['stat_description'] = DataDefinition::create('string')
-      ->setLabel(t('Stat Body'));
+      ->setLabel(t('Ranking Body'));
     $properties['media'] = DataDefinition::create('integer')
-      ->setLabel(t('Stat Media'));
+      ->setLabel(t('Ranking Media'));
     $properties['stat_source'] = DataDefinition::create('string')
-      ->setLabel(t('Stat Source'));
+      ->setLabel(t('Ranking Source'));
     $properties['link_uri'] = DataDefinition::create('string')
-      ->setLabel(t('Stat Link URI'));
+      ->setLabel(t('Ranking Link URI'));
     $properties['options'] = MapDataDefinition::create()
-      ->setLabel(t('Stat Options'));
+      ->setLabel(t('Ranking Options'));
 
     return $properties;
   }

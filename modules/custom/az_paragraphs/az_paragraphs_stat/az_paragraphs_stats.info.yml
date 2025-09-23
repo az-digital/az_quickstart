@@ -1,4 +1,4 @@
-name: 'Quickstart Paragraphs - Stats'
+name: 'Quickstart Paragraphs - Stats and Rankings'
 type: module
 description: 'Provides a Stats paragraph type.'
 core_version_requirement: ^10 || ^11 || ^12

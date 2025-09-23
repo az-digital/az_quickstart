@@ -218,14 +218,14 @@ class AZStatWidget extends WidgetBase {
         'standard' => $this->t('Standard'),
         'image_only' => $this->t('Image Only'),
       ],
-      '#title' => $this->t('Stat Type'),
+      '#title' => $this->t('Ranking Type'),
       '#default_value' => (!empty($item->options['stat_type'])) ? $item->options['stat_type'] : 'standard',
       '#attributes' => ['data-az-stat-type-input-id' => $stat_type_unique_id],
     ];
 
     $element['media'] = [
       '#type' => 'az_media_library',
-      '#title' => $this->t('Stat Media'),
+      '#title' => $this->t('Ranking Media'),
       '#default_value' => $item->media ?? NULL,
       '#allowed_bundles' => ['az_image'],
       '#delta' => $delta,
@@ -280,7 +280,7 @@ class AZStatWidget extends WidgetBase {
         'text-bg-mesa' => $this->t('Mesa'),
       ],
       '#required' => TRUE,
-      '#title' => $this->t('Stat Background'),
+      '#title' => $this->t('Ranking Background'),
       '#default_value' => (!empty($item->options['class'])) ? $item->options['class'] : 'text-bg-white',
       '#states' => [
         'visible' => [
@@ -291,7 +291,7 @@ class AZStatWidget extends WidgetBase {
 
     $element['stat_heading'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Stat Heading'),
+      '#title' => $this->t('Ranking Heading'),
       '#default_value' => $item->stat_heading ?? NULL,
       '#maxlength' => 255,
       '#states' => [
@@ -303,7 +303,7 @@ class AZStatWidget extends WidgetBase {
 
     $element['stat_description'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Stat Description'),
+      '#title' => $this->t('Ranking Description'),
       '#default_value' => $item->stat_description ?? NULL,
       '#maxlength' => 255,
       '#states' => [
@@ -315,7 +315,7 @@ class AZStatWidget extends WidgetBase {
 
     $element['stat_source'] = [
       '#type' => 'textarea',
-      '#title' => $this->t('Stat Source'),
+      '#title' => $this->t('Ranking Source'),
       '#default_value' => $item->stat_source ?? NULL,
       '#rows' => 3,
       '#states' => [
@@ -326,7 +326,6 @@ class AZStatWidget extends WidgetBase {
     ];
 
     // Determine whether link should be required by default (based on current parent paragraph setting).
-    $link_required_default = (strpos($stat_classes, 'stat-bold-hover') !== FALSE);
 
     $element['link_uri'] = [
       '#type' => 'linkit',
@@ -334,20 +333,16 @@ class AZStatWidget extends WidgetBase {
       '#autocomplete_route_parameters' => [
         'linkit_profile_id' => 'az_linkit',
       ],
-      '#title' => $this->t('Stat Source Link URL'),
+      '#title' => $this->t('Ranking Source Link URL'),
       '#element_validate' => [[$this, 'validateStatLink']],
       '#default_value' => $item->link_uri ?? NULL,
       '#maxlength' => 2048,
-      // Required when the paragraph behavior stat_style is 'card stat-bold-hover'.
-      '#required' => $link_required_default,
       '#states' => [
         // Visible only for standard stat type.
         'visible' => [
           ':input[data-az-stat-type-input-id="' . $stat_type_unique_id . '"]' => ['value' => 'standard'],
         ],
-        // Dynamically required when the parent paragraph behavior select equals 'card stat-bold-hover'.
-        // Uses a name-ends-with selector to match the paragraph behavior input regardless of full parents path.
-        'required' => [
+        'required' => [ // Dynamic hover behavior when type changed (required if stat-bold-hover)
           ':input[name$="[az_stats_paragraph_behavior][stat_style]"]' => ['value' => 'card stat-bold-hover'],
         ],
       ],
@@ -364,7 +359,7 @@ class AZStatWidget extends WidgetBase {
         '#limit_validation_errors' => [],
         '#attributes' => ['class' => ['button--extrasmall', 'ml-3']],
         '#submit' => [[$this, 'statSubmit']],
-        '#value' => ($status ? $this->t('Collapse Stat') : $this->t('Edit Stat')),
+        '#value' => ($status ? $this->t('Collapse Ranking') : $this->t('Edit Stat')),
         '#name' => $button_name,
         '#ajax' => [
           'callback' => [$this, 'statAjax'],

@@ -4,7 +4,7 @@ dependencies:
   module:
     - az_paragraphs
 id: az_stats
-label: Stats
+label: Rankings
 icon_uuid: null
 icon_default: null
 description: ''

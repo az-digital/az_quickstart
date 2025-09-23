@@ -10,7 +10,7 @@ id: paragraph.az_stats.field_az_stats
 field_name: field_az_stats
 entity_type: paragraph
 bundle: az_stats
-label: Stats
+label: Rankings
 description: ''
 required: false
 translatable: true
