@@ -272,6 +272,26 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase implements 
         ],
       ];
 
+      // Attach the remote Trellis script early so that document.write or
+      // other parse-time behaviors still function. We still provide the
+      // data attribute for JS (sanitization and possible future toggles) and
+      // mark that the script has been preloaded so the behavior does not
+      // attempt to load it a second time.
+      $elements[$delta]['#attributes']->setAttribute('data-trellis-embed-src', $newUrl);
+      $elements[$delta]['#attributes']->setAttribute('data-trellis-script-preloaded', '1');
+
+      // Inline CSS blocker must come before the remote script so that any
+      // <link rel="stylesheet"> insertions are intercepted. We keep it
+      // lightweight and idempotent.
+      $elements[$delta]['#attached']['html_head'][] = [
+        [
+          '#tag' => 'script',
+          '#value' => "(function(){if(window.__azTrellisCssBlockerInstalled)return;window.__azTrellisCssBlockerInstalled=true;var P=[/design\\.trellis\\.arizona\\.edu\\/css\\/form-assembly\\.css/i,/forms-a\\.trellis\\.arizona\\.edu\\/dist\\/form-builder\\//i,/forms-a\\.trellis\\.arizona\\.edu\\/uploads\\/themes\\//i,/forms-a\\.trellis\\.arizona\\.edu\\/wForms\\/3\\.11\\/css\\//i];function blocked(n){if(!n||n.tagName!=='LINK'||n.rel!=='stylesheet')return false;return P.some(function(rx){return rx.test(n.href);});}function wrapAppend(orig){return function(node){try{if(blocked(node))return node;}catch(e){}return orig.call(this,node);};}function wrapInsertBefore(orig){return function(node,ref){try{if(blocked(node))return node;}catch(e){}return orig.call(this,node,ref);};}var d=Document.prototype,h=HTMLHeadElement.prototype;if(!d.__azTrellisPatched){d.__azTrellisPatched=true;d.appendChild=wrapAppend(d.appendChild);}if(!h.__azTrellisPatchedA){h.__azTrellisPatchedA=true;h.appendChild=wrapAppend(h.appendChild);}if(!h.__azTrellisPatchedIB){h.__azTrellisPatchedIB=true;h.insertBefore=wrapInsertBefore(h.insertBefore);}new MutationObserver(function(m){m.forEach(function(mm){mm.addedNodes.forEach(function(n){if(blocked(n)&&n.parentNode){n.parentNode.removeChild(n);}});});}).observe(document.head,{childList:true});})();",
+        ],
+        'az_media_trellis_css_blocker_' . $unique_element_id,
+      ];
+
+      // Now attach the remote script.
       $elements[$delta]['#attached']['html_head'][] = [
         [
           '#tag' => 'script',
@@ -293,7 +313,10 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase implements 
       // Use end() to get the last element reference safely without relying
       // on $delta.
       $last_key = array_key_last($elements);
-      $elements[$last_key]['#attached']['library'][] = 'az_media_trellis/az-media-trellis';
+  $elements[$last_key]['#attached']['library'][] = 'az_media_trellis/az-media-trellis';
+  // Provide a Drupal setting to allow conditional behavior or future
+  // admin toggle to allow CSS again if desired.
+  $elements[$last_key]['#attached']['drupalSettings']['azMediaTrellis']['blockRemoteCss'] = TRUE;
     }
 
     return $elements;

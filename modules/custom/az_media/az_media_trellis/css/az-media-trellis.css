@@ -3,13 +3,13 @@
  * Styles for az_media_trellis module.
  */
 
-.az-media-trellis {
+/* .az-media-trellis {
   min-height: 300px;
   width: 100%;
   position: relative;
   overflow: hidden;
 }
-
+ */
 /* Handle CKEditor specific issues */
 .cke_dialog .az-media-trellis,
 .cke_wysiwyg_frame .az-media-trellis,
@@ -68,13 +68,13 @@ figure[data-view-mode="az_natural_size"] {
 .paragraph:not(.paragraph--collapsed) .az-media-trellis {
   display: block;
 }
-
+/*
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .az-media-trellis {
     min-height: 200px;
   }
-}
+} */
 
 /* Loading state */
 .drupal-media.ck-widget .az-media-trellis:empty::after {
@@ -85,6 +85,10 @@ figure[data-view-mode="az_natural_size"] {
   color: #666;
   font-style: italic;
 }
+
+/* Spinner container (absolutely centers inside the host) */
+.az-media-trellis[data-loading="true"] { position: relative; }
+.az-media-trellis__spinner-overlay { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; z-index:10; }
 
 /* View mode specific sizing - increased specificity for editing contexts */
 .az-media-trellis.az-media-trellis--default,
