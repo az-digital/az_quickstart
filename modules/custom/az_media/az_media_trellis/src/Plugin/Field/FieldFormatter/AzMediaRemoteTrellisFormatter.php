@@ -313,10 +313,10 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase implements 
       // Use end() to get the last element reference safely without relying
       // on $delta.
       $last_key = array_key_last($elements);
-  $elements[$last_key]['#attached']['library'][] = 'az_media_trellis/az-media-trellis';
-  // Provide a Drupal setting to allow conditional behavior or future
-  // admin toggle to allow CSS again if desired.
-  $elements[$last_key]['#attached']['drupalSettings']['azMediaTrellis']['blockRemoteCss'] = TRUE;
+      $elements[$last_key]['#attached']['library'][] = 'az_media_trellis/az-media-trellis';
+      // Provide a Drupal setting to allow conditional behavior or future
+      // admin toggle to allow CSS again if desired.
+      $elements[$last_key]['#attached']['drupalSettings']['azMediaTrellis']['blockRemoteCss'] = TRUE;
     }
 
     return $elements;
