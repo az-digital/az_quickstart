@@ -10,12 +10,12 @@ use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Config\InstallStorage;
 use Drupal\Core\Config\StorageException;
 use Drupal\Core\Config\StorageInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\Exception\UnknownExtensionException;
 use Drupal\Core\Extension\ModuleExtensionList;
 use Drupal\az_core\Plugin\ConfigProvider\QuickstartConfigProvider;
 use Drupal\config_provider\Plugin\ConfigCollector;
 use Drupal\config_update\ConfigDiffer;
-use Drupal\user\Entity\Role;
 use Drupal\user\PermissionHandler;
 use Drush\Commands\DrushCommands;
 use Symfony\Component\Yaml\Yaml as SymfonyYaml;
@@ -52,6 +52,13 @@ class AZCoreConfigCommands extends DrushCommands {
    * @var \Drupal\Core\Config\StorageInterface
    */
   protected $configStorage;
+
+  /**
+   * Drupal\Core\Entity\EntityTypeManagerInterface definition.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $entityTypeManager;
 
   /**
    * Drupal\Core\Extension\ModuleExtensionList definition.
@@ -94,8 +101,19 @@ class AZCoreConfigCommands extends DrushCommands {
    *   The user permissions service.
    * @param \Drupal\Core\Config\StorageInterface $configStorage
    *   The active config storage.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
+   *   The entity_type.manager service.
    */
-  public function __construct(ConfigFactory $configFactory, ConfigCollector $configCollector, ConfigDiffer $configDiffer, ModuleExtensionList $extensionLister, Yaml $yamlSerialization, PermissionHandler $permissionHandler, StorageInterface $configStorage) {
+  public function __construct(
+    ConfigFactory $configFactory,
+    ConfigCollector $configCollector,
+    ConfigDiffer $configDiffer,
+    ModuleExtensionList $extensionLister,
+    Yaml $yamlSerialization,
+    PermissionHandler $permissionHandler,
+    StorageInterface $configStorage,
+    EntityTypeManagerInterface $entityTypeManager,
+  ) {
     $this->configFactory = $configFactory;
     $this->configCollector = $configCollector;
     $this->configDiffer = $configDiffer;
@@ -103,6 +121,7 @@ class AZCoreConfigCommands extends DrushCommands {
     $this->yamlSerialization = $yamlSerialization;
     $this->permissionHandler = $permissionHandler;
     $this->configStorage = $configStorage;
+    $this->entityTypeManager = $entityTypeManager;
   }
 
   /**
@@ -126,7 +145,8 @@ class AZCoreConfigCommands extends DrushCommands {
         }
       }
       // Load all roles.
-      $roles = Role::loadMultiple();
+      /** @var \Drupal\user\Entity\Role[] $roles */
+      $roles = $this->entityTypeManager->getStorage('user_role')->loadMultiple();
       // Loop through roles by ID.
       foreach ($roles as $id => $role) {
         $name = "user.role.$id";

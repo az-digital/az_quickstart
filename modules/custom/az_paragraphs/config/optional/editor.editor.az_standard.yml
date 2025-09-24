@@ -38,6 +38,7 @@ settings:
       - style
       - '|'
       - drupalMedia
+      - icon
       - az_embed_content
       - az_embed_content_block
       - '|'
