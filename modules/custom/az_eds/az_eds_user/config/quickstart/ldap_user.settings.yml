@@ -1,0 +1,17 @@
+drupalAcctProvisionServer: az_eds
+ldapEntryProvisionServer: null
+drupalAcctProvisionTriggers: {  }
+ldapEntryProvisionTriggers: {  }
+orphanedIncludeDisabledUsers: false
+orphanedDrupalAcctBehavior: user_cancel_block
+orphanedDrupalAcctReportingInbox: ''
+orphanedCheckQty: 100
+orphanedAccountCheckInterval: weekly
+userConflictResolve: resolve
+manualAccountConflict: conflict_reject
+acctCreation: ldap_behavior
+disableAdminPasswordField: false
+userUpdateCronQuery: az_eds_user
+userUpdateCronInterval: always
+userUpdateOnly: false
+ldapUserSyncMappings: {  }
