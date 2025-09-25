@@ -99,7 +99,15 @@ class AZStatWidget extends WidgetBase {
     $container['widget']['#suffix'] = '</div>' . ($container['widget']['#suffix'] ?? '');
 
     if (isset($container['widget']['add_more']['#ajax']['wrapper'])) {
+      // Instead of using the stat widget wrapper, use a broader wrapper that includes the paragraph
+      // We need to find the paragraph wrapper id - let's use a more generic approach
       $container['widget']['add_more']['#ajax']['wrapper'] = $wrapper_id;
+      $container['widget']['add_more']['#ajax']['callback'] = [$this, 'statAjax'];
+      
+      // Debug: Log when add more button is set up
+      \Drupal::logger('az_stat')->debug('Add more button AJAX callback set to statAjax with wrapper: @wrapper', [
+        '@wrapper' => $wrapper_id
+      ]);
     }
     return $container;
   }
@@ -131,88 +139,105 @@ class AZStatWidget extends WidgetBase {
       $status = TRUE;
     }
 
-    // Generate a preview if we need one.
-    if (!$status) {
+    // Determine current stat style - needed for both preview and open edit mode.
+    $stat_classes = 'card';
+    $parent = $item->getEntity();
 
-      // Bootstrap wrapper.
-      $element['preview_container'] = [
+    // Get settings from parent paragraph.
+    if ($parent instanceof ParagraphInterface) {
+      // Get the behavior settings for the parent.
+      $parent_config = $parent->getAllBehaviorSettings();
+
+      // See if the parent behavior defines some stat-specific settings.
+      if (!empty($parent_config['az_stats_paragraph_behavior'])) {
+        $stat_defaults = $parent_config['az_stats_paragraph_behavior'];
+        $stat_classes = $stat_defaults['stat_style'] ?? 'card';
+      }
+    }
+
+    // Add stat class from options.
+    if (!empty($item->options['class'])) {
+      $stat_classes .= ' ' . $item->options['class'];
+    }
+
+    // Determine whether link should be required by default (based on current stat style).
+    $link_required_default = !empty($stat_classes) && str_starts_with($stat_classes, 'card stat-bold-hover');
+
+    // Create summary for details element (what shows when collapsed)
+    $summary_text = '';
+    if (!$item->isEmpty()) {
+      $summary_parts = array_filter([
+        $item->stat_heading,
+        $item->stat_description,
+        $item->stat_source ? $this->t('Source: @source', ['@source' => substr($item->stat_source, 0, 50) . '...']) : NULL,
+      ]);
+      $summary_text = implode(' | ', $summary_parts) ?: $this->t('Stat @delta', ['@delta' => $delta + 1]);
+    } else {
+      $summary_text = $this->t('New Stat @delta', ['@delta' => $delta + 1]);
+    }
+
+    // Wrap everything in a details element
+    $element['details'] = [
+      '#type' => 'details',
+      '#title' => $summary_text,
+      '#open' => $status, // Open when in edit mode, closed when in preview mode
+      '#attributes' => ['class' => ['az-stat-widget']],
+    ];
+
+    // When closed, add a preview of the stat after the summary
+    if (!$status) {
+      $element['preview_wrapper'] = [
         '#type' => 'container',
         '#attributes' => [
-          'class' =>
-            ['stat-preview'],
+          'class' => ['widget-preview-wrapper'],
+          'style' => 'max-width: 320px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px;'
         ],
+        '#weight' => -10, // Show before the details element
       ];
 
-      $stat_classes = 'stat';
-      $parent = $item->getEntity();
-
-      // Get settings from parent paragraph.
-      if ($parent instanceof ParagraphInterface) {
-        // Get the behavior settings for the parent.
-        $parent_config = $parent->getAllBehaviorSettings();
-
-        // See if the parent behavior defines some stat-specific settings.
-        if (!empty($parent_config['az_stats_paragraph_behavior'])) {
-          $stat_defaults = $parent_config['az_stats_paragraph_behavior'];
-          $stat_classes = $stat_defaults['stat_style'] ?? 'stat';
-        }
-      }
-
-      // Add stat class from options.
-      if (!empty($item->options['class'])) {
-        $stat_classes .= ' ' . $item->options['class'];
-      }
-
-      // Add fields to the preview.
-      $element['preview_container']['stat_preview'] = [
+      $element['preview_wrapper']['preview'] = [
         '#theme' => 'az_stat',
         '#stat_heading' => $item->stat_heading ?? '',
         '#stat_description' => $item->stat_description ?? '',
         '#stat_source' => $item->stat_source ?? '',
-        '#attributes' => ['class' => $stat_classes],
+        '#attributes' => [
+          'class' => $stat_classes . ' widget-preview-stat',
+          'style' => 'transform: scale(0.8); transform-origin: center;'
+        ],
       ];
 
-      // Check and see if we can construct a valid image to preview.
+      // Add media to preview if available
       $media_id = $item->media ?? NULL;
       if (!empty($media_id)) {
         if ($media = $this->entityTypeManager->getStorage('media')->load($media_id)) {
           $media_render_array = $this->statImageHelper->generateImageRenderArray($media);
           if (!empty($media_render_array)) {
-            $element['preview_container']['stat_preview']['#media'] = $media_render_array;
+            $element['preview_wrapper']['preview']['#media'] = $media_render_array;
           }
         }
       }
 
-      // Check and see if there's a valid link to preview.
+      // Add link to preview if available
       if ($item->stat_source || $item->link_uri) {
         if (!empty($item->link_uri) && str_starts_with($item->link_uri, '/' . PublicStream::basePath())) {
-          // Link to public file: use fromUri() to get the URL.
           $link_url = Url::fromUri(urldecode('base:' . $item->link_uri));
         }
         else {
           $link_url = $this->pathValidator->getUrlIfValid($item->link_uri ?? '<none>');
         }
-        $element['preview_container']['stat_preview']['#link'] = [
+        $element['preview_wrapper']['preview']['#link'] = [
           '#type' => 'link',
           '#title' => $item->stat_source ?? '',
           '#url' => $link_url ?: Url::fromRoute('<none>'),
-          '#attributes' => ['class' => ['btn', 'btn-default', 'w-100']],
+          '#attributes' => ['class' => ['btn', 'btn-default', 'w-100', 'az-stat-no-follow']],
         ];
       }
     }
 
-    // Add link class from options.
-//    if (!empty($item->options['link_style'])) {
-//      $element['preview_container']['stat_preview']['#link']['#attributes']['class'] = explode(' ', $item->options['link_style']);
-//    }
-
-    if (!empty($element['preview_container']['stat_preview']['#link'])) {
-      $element['preview_container']['stat_preview']['#link']['#attributes']['class'][] = 'az-stat-no-follow';
-    }
-
     $stat_type_unique_id = Html::getUniqueId('az_stat_type_input');
 
-    $element['stat_type'] = [
+    // Add all form fields inside the details element
+    $element['details']['stat_type'] = [
       '#type' => 'select',
       '#options' => [
         'standard' => $this->t('Standard'),
@@ -223,9 +248,39 @@ class AZStatWidget extends WidgetBase {
       '#attributes' => ['data-az-stat-type-input-id' => $stat_type_unique_id],
     ];
 
-    $element['media'] = [
+    // Get stat_width from parent config for help text calculation
+    $stat_width = 'col-lg-3'; // Default value
+    $parent = $item->getEntity();
+    if ($parent instanceof ParagraphInterface) {
+      $parent_config = $parent->getAllBehaviorSettings();
+      if (!empty($parent_config['az_stats_paragraph_behavior']['stat_width'])) {
+        $stat_width = $parent_config['az_stats_paragraph_behavior']['stat_width'];
+      }
+    }
+
+    $element['details']['column_span'] = [
+      '#type' => 'select',
+      '#options' => [
+        1 => $this->t('1 column'),
+        2 => $this->t('2 columns'),
+        3 => $this->t('3 columns'),
+        4 => $this->t('4 columns'),
+      ],
+      '#title' => $this->t('Column Span'),
+      '#description' => $this->t('How many columns do you want this image to span (in multiples of stat-card width)?') . '<br><br><div class="aspect-ratio-help" data-current-stat-width="' . $stat_width . '">' . $this->getAspectRatioHelpText($stat_width) . '</div>',
+      '#default_value' => (!empty($item->options['column_span'])) ? $item->options['column_span'] : 2,
+      '#states' => [
+        'visible' => [
+          ':input[data-az-stat-type-input-id="' . $stat_type_unique_id . '"]' => ['value' => 'image_only'],
+        ],
+      ],
+      '#attributes' => [
+        'data-stat-width-target' => 'true',
+      ],
+    ];
+
+    $element['details']['media'] = [
       '#type' => 'az_media_library',
-      '#title' => $this->t('Ranking Media'),
       '#default_value' => $item->media ?? NULL,
       '#allowed_bundles' => ['az_image'],
       '#delta' => $delta,
@@ -237,25 +292,7 @@ class AZStatWidget extends WidgetBase {
       ],
     ];
 
-    $element['column_span'] = [
-      '#type' => 'select',
-      '#options' => [
-        1 => $this->t('1 Stat Card Width'),
-        2 => $this->t('2 Stat Card Width'),
-        3 => $this->t('3 Stat Card Width'),
-        4 => $this->t('4 Stat Card Width'),
-      ],
-      '#title' => $this->t('Column Span'),
-      '#description' => $this->t('How many columns do you want this image to span (in multiples of card width)?'),
-      '#default_value' => (!empty($item->options['column_span'])) ? $item->options['column_span'] : 2,
-      '#states' => [
-        'visible' => [
-          ':input[data-az-stat-type-input-id="' . $stat_type_unique_id . '"]' => ['value' => 'image_only'],
-        ],
-      ],
-    ];
-
-    $element['options'] = [
+    $element['details']['options'] = [
       '#type' => 'select',
       '#options' => [
         'text-bg-white' => $this->t('White'),
@@ -289,7 +326,7 @@ class AZStatWidget extends WidgetBase {
       ],
     ];
 
-    $element['stat_heading'] = [
+    $element['details']['stat_heading'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Ranking Heading'),
       '#default_value' => $item->stat_heading ?? NULL,
@@ -301,7 +338,7 @@ class AZStatWidget extends WidgetBase {
       ],
     ];
 
-    $element['stat_description'] = [
+    $element['details']['stat_description'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Ranking Description'),
       '#default_value' => $item->stat_description ?? NULL,
@@ -313,7 +350,7 @@ class AZStatWidget extends WidgetBase {
       ],
     ];
 
-    $element['stat_source'] = [
+    $element['details']['stat_source'] = [
       '#type' => 'textarea',
       '#title' => $this->t('Ranking Source'),
       '#default_value' => $item->stat_source ?? NULL,
@@ -325,9 +362,12 @@ class AZStatWidget extends WidgetBase {
       ],
     ];
 
-    // Determine whether link should be required by default (based on current parent paragraph setting).
-
-    $element['link_uri'] = [
+    // Determine whether link should be required (based on current parent paragraph setting).
+    // This is evaluated server-side on each form build, so it will work correctly with AJAX
+    $stat_type = (!empty($item->options['stat_type'])) ? $item->options['stat_type'] : 'standard';
+    $link_required = ($stat_type === 'standard') && !empty($stat_classes) && str_starts_with($stat_classes, 'card stat-bold-hover');
+    
+    $element['details']['link_uri'] = [
       '#type' => 'linkit',
       '#autocomplete_route_name' => 'linkit.autocomplete',
       '#autocomplete_route_parameters' => [
@@ -337,41 +377,31 @@ class AZStatWidget extends WidgetBase {
       '#element_validate' => [[$this, 'validateStatLink']],
       '#default_value' => $item->link_uri ?? NULL,
       '#maxlength' => 2048,
+      // Server-side required determination - works reliably with AJAX
+      '#required' => $link_required,
       '#states' => [
         // Visible only for standard stat type.
         'visible' => [
           ':input[data-az-stat-type-input-id="' . $stat_type_unique_id . '"]' => ['value' => 'standard'],
         ],
-        'required' => [ // Dynamic hover behavior when type changed (required if stat-bold-hover)
-          ':input[name$="[az_stats_paragraph_behavior][stat_style]"]' => ['value' => 'card stat-bold-hover'],
+        // Required when BOTH visible (standard stat type) AND stat_style is 'card stat-bold-hover'
+        'required' => [
+          ':input[data-az-stat-type-input-id="' . $stat_type_unique_id . '"]' => ['value' => 'standard'],
+          ':input[name*="[behavior_plugins][az_stats_paragraph_behavior][stat_style]"]' => ['value' => 'card stat-bold-hover'],
         ],
       ],
     ];
 
-    if (!$item->isEmpty()) {
-      $button_name = implode('-', array_merge(
-        $field_parents,
-        [$field_name, $delta, 'toggle']
-      ));
-      // Extra stat_actions wrapper needed for core delete ajax submit nesting.
-      $element['stat_actions']['toggle'] = [
-        '#type' => 'submit',
-        '#limit_validation_errors' => [],
-        '#attributes' => ['class' => ['button--extrasmall', 'ml-3']],
-        '#submit' => [[$this, 'statSubmit']],
-        '#value' => ($status ? $this->t('Collapse Ranking') : $this->t('Edit Stat')),
-        '#name' => $button_name,
-        '#ajax' => [
-          'callback' => [$this, 'statAjax'],
-          'wrapper' => $wrapper,
-        ],
-      ];
-    }
-
-    $element['#theme_wrappers'] = ['container', 'form_element'];
-    $element['#attributes']['class'][] = 'az-stat-elements';
-    $element['#attributes']['class'][] = $status ? 'az-stat-elements-open' : 'az-stat-elements-closed';
+    // Attach the library and return the element
     $element['#attached']['library'][] = 'az_stat/az_stat';
+    $element['#attached']['library'][] = 'az_stat/az_stat_dynamic_helptext';
+
+      // Store delta and field name for reference
+    $element['#delta'] = $delta;
+    $element['#field_name'] = $field_name;
+
+    // Pass aspect ratio data to JavaScript
+    $element['#attached']['drupalSettings']['azStat']['aspectRatios'] = $this->getAspectRatioData();
 
     return $element;
   }
@@ -470,11 +500,117 @@ class AZStatWidget extends WidgetBase {
     // Find the widget and return it.
     $element = [];
     $triggering_element = $form_state->getTriggeringElement();
-    // $oops = $triggering_element['#array_parents'];
-    $array_parents = array_slice($triggering_element['#array_parents'], 0, -3);
-    $element = NestedArray::getValue($form, $array_parents);
+    
+    // Return the subform level as originally intended
+    // Path: field_az_main_content[widget][0][subform][field_az_stats][widget][add_more]
+    // Return: field_az_main_content[widget][0][subform]
+    $subform_parents = array_slice($triggering_element['#array_parents'], 0, 4); // field_az_main_content[widget][0][subform]
+    $element = NestedArray::getValue($form, $subform_parents);
+    
+    // Get the paragraph level to access behavior settings
+    $paragraph_parents = array_slice($triggering_element['#array_parents'], 0, 3); // field_az_main_content[widget][0]
+    $paragraph_element = NestedArray::getValue($form, $paragraph_parents);
+    
+    // The key issue: #states looks for ':input[name*="[az_stats_paragraph_behavior][stat_style]"]'
+    // Copy behavior_plugins from paragraph level to subform level so #states can find them
+    if (isset($paragraph_element['behavior_plugins'])) {
+      $element['behavior_plugins'] = $paragraph_element['behavior_plugins'];
+      \Drupal::logger('az_stat')->debug('✓ Copied behavior_plugins from paragraph to subform level');
+    } else {
+      \Drupal::logger('az_stat')->debug('✗ No behavior_plugins found at paragraph level');
+    }
+    
+    \Drupal::logger('az_stat')->debug('Returning subform-level element at path: @path', [
+      '@path' => implode('][', $subform_parents)
+    ]);
+    
+    // Log if behavior fields are present in returned element
+    if (isset($element['behavior_plugins']['az_stats_paragraph_behavior'])) {
+      \Drupal::logger('az_stat')->debug('✓ Behavior plugins accessible in AJAX response - #states should work');
+      
+      // Debug the actual field name that will be generated
+      if (isset($element['behavior_plugins']['az_stats_paragraph_behavior']['stat_style'])) {
+        $stat_style_field = $element['behavior_plugins']['az_stats_paragraph_behavior']['stat_style'];
+        if (isset($stat_style_field['#name'])) {
+          \Drupal::logger('az_stat')->debug('Stat style field name: @name', [
+            '@name' => $stat_style_field['#name']
+          ]);
+        }
+        if (isset($stat_style_field['#parents'])) {
+          \Drupal::logger('az_stat')->debug('Stat style field parents: @parents', [
+            '@parents' => implode('][', $stat_style_field['#parents'])
+          ]);
+        }
+      }
+    } else {
+      \Drupal::logger('az_stat')->debug('✗ Behavior plugins NOT accessible in AJAX response - #states will fail');
+    }
 
     return $element;
+  }
+
+  /**
+   * Get aspect ratio data array.
+   *
+   * @return array
+   *   Array of aspect ratio data keyed by stat width.
+   */
+  protected function getAspectRatioData() {
+    return [
+      'col-lg-12' => [
+        'any' => '5:1',
+      ],
+      'col-lg-6' => [
+        '1' => '2.45:1',
+        '2+' => '5:1',
+      ],
+      'col-lg-4' => [
+        '1' => '1.6:1',
+        '2' => '3.3:1',
+        '3+' => '5:1',
+      ],
+      'col-lg-3' => [
+        '1' => '1.2:1',
+        '2' => '2.45:1',
+        '3' => '3.8:1',
+        '4' => '5:1',
+      ],
+    ];
+  }
+
+  /**
+   * Get aspect ratio help text based on stat_width and column_span.
+   *
+   * @param string $stat_width
+   *   The stat width setting from parent paragraph behavior.
+   *
+   * @return string
+   *   The help text with recommended aspect ratios.
+   */
+  protected function getAspectRatioHelpText($stat_width) {
+    $aspect_ratios = $this->getAspectRatioData();
+
+    if (!isset($aspect_ratios[$stat_width])) {
+      // No help text for unknown stat_width
+      return '';
+    }
+
+    $help_text = '<strong>' . $this->t('Recommended aspect ratios (W:H):') . '</strong><br>';
+    $ratios = $aspect_ratios[$stat_width];
+    $lines = [];
+
+    foreach ($ratios as $key => $ratio) {
+      if ($key === 'any') {
+        $label = $this->t('Any column span');
+      } else {
+        $label = $key . ' ' . $this->t('column') . (strpos($key, '+') !== FALSE || (is_numeric($key) && intval($key) > 1) ? 's' : '');
+      }
+      $lines[] = $label . ': <strong>' . $ratio . '</strong>';
+    }
+
+    $help_text .= implode('<br>', $lines);
+
+    return $help_text;
   }
 
   /**
@@ -530,31 +666,49 @@ class AZStatWidget extends WidgetBase {
    */
   public function massageFormValues(array $values, array $form, FormStateInterface $form_state) {
     foreach ($values as $delta => $value) {
-      if ($value['stat_heading'] === '') {
+      // Extract values from the details element structure
+      $details_values = $value['details'] ?? [];
+
+      if (($details_values['stat_heading'] ?? '') === '') {
         $values[$delta]['stat_heading'] = NULL;
+      } else {
+        $values[$delta]['stat_heading'] = $details_values['stat_heading'] ?? NULL;
       }
-      if ($value['stat_description'] === '') {
+
+      if (($details_values['stat_description'] ?? '') === '') {
         $values[$delta]['stat_description'] = NULL;
+      } else {
+        $values[$delta]['stat_description'] = $details_values['stat_description'] ?? NULL;
       }
-      if (empty($value['media'])) {
+
+      if (empty($details_values['media'])) {
         $values[$delta]['media'] = NULL;
+      } else {
+        $values[$delta]['media'] = $details_values['media'];
       }
-      if ($value['stat_source'] === '') {
+
+      if (($details_values['stat_source'] ?? '') === '') {
         $values[$delta]['stat_source'] = NULL;
+      } else {
+        $values[$delta]['stat_source'] = $details_values['stat_source'] ?? NULL;
       }
-      if ($value['link_uri'] === '') {
+
+      if (($details_values['link_uri'] ?? '') === '') {
         $values[$delta]['link_uri'] = NULL;
+      } else {
+        $values[$delta]['link_uri'] = $details_values['link_uri'] ?? NULL;
       }
-      if (!empty($value['options']) || !empty($value['link_style']) || !empty($value['stat_alignment']) || !empty($value['stat_type']) || !empty($value['column_span'])) {
+
+      if (!empty($details_values['options']) || !empty($details_values['stat_type']) || !empty($details_values['column_span'])) {
         $values[$delta]['options'] = [
-          'class' => $value['options'],
-//          'link_style' => $value['link_style'],
-    //      'stat_alignment' => $value['stat_alignment'],
-          'stat_type' => $value['stat_type'],
-          'column_span' => $value['column_span'],
+          'class' => $details_values['options'] ?? '',
+          'stat_type' => $details_values['stat_type'] ?? '',
+          'column_span' => $details_values['column_span'] ?? '',
         ];
       }
-      // $values[$delta]['body'] = $value['body']['value'];
+
+      // Remove the details wrapper from the final values
+      unset($values[$delta]['details']);
     }
     return $values;
   }

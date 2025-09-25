@@ -3,6 +3,12 @@ az_stat:
     component:
       css/az-stat-widget.css: {}
       css/az-stat.css: {}
+  js:
+    js/az-stat-widget-preview.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/once
 az_stat_image:
   css:
     component:
@@ -23,3 +29,10 @@ az_stat_bold_hover:
   css:
     component:
       css/az-stat-bold-hover.css: {}
+az_stat_dynamic_helptext:
+  js:
+    js/az-stat-dynamic-helptext.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/once

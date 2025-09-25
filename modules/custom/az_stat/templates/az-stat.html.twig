@@ -28,11 +28,11 @@
         <div class="stat-content">
           {% if stat_heading %}
             {% if stat_style == "card stat-thin" %}
-              <h3 class="display-4 m-0 {% if text_color_override %}{{ text_color_override }}{% endif %}">
+              <h3 class="display-4 m-0 stat-heading {% if text_color_override %}{{ text_color_override }}{% endif %}">
                 <strong>{{ stat_heading }}</strong>
               </h3>
             {% else %}
-              <h1 class="fw-bolder display-4 m-0 {% if text_color_override %}{{ text_color_override }}{% endif %}">
+              <h1 class="fw-bolder display-4 m-0 stat-heading {% if text_color_override %}{{ text_color_override }}{% endif %}">
                 <strong>{{ stat_heading }}</strong>
               </h1>
             {% endif %}
