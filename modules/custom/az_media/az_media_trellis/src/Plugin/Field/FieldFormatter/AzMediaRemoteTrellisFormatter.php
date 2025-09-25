@@ -269,7 +269,7 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase implements 
             Html::getClass('az-media-trellis'),
             Html::getClass('az-media-trellis--' . $view_mode),
           ],
-          // Store query parameters as JSON data attribute for this specific form.
+          // Store query parameters as JSON data attribute for this form.
           'data-query-params' => !empty($query_params) ? json_encode($query_params) : '{}',
           'data-editing' => $is_editing_context ? 'true' : 'false',
         ]),
