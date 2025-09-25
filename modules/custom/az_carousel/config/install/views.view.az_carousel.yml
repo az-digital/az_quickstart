@@ -277,7 +277,6 @@ display:
           exposed: false
           granularity: second
       defaults:
-        access: false
         sorts: false
       display_description: ''
       display_extenders: {  }
@@ -594,12 +593,14 @@ display:
           empty_table: false
           caption: ''
           description: ''
+          class: ''
       row:
         type: 'entity:node'
         options:
           relationship: none
           view_mode: default
       defaults:
+        access: false
         cache: false
         title: false
         css_class: false

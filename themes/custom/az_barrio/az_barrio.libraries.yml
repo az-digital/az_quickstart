@@ -1,13 +1,15 @@
 global-styling:
-  version: 1.x
   css:
     theme:
       css/style.css: {}
   dependencies:
-    - az_barrio/arizona-bootstrap
+    - az_barrio/arizona-bootstrap-css
+    - az_barrio/arizona-bootstrap-js
 az-ajax:
   js:
     js/az-ajax.js: {}
+  dependencies:
+    - core/drupal
 az-media-display:
   css:
     component:
@@ -18,28 +20,56 @@ az-barrio-off-canvas-nav:
       css/az-barrio-off-canvas-nav.css: {}
   js:
     js/az-barrio-off-canvas-nav.js: {}
+  dependencies:
+    - az_barrio/global-styling
 az-proxima-nova:
   css:
     theme:
-      https://use.typekit.net/emv3zbo.css: {}
+      https://use.typekit.net/emv3zbo.css: { external: true, preprocess: false }
 az-icons:
   css:
     theme:
-      /libraries/az-icons/az-icons-styles.min.css: {}
+      /libraries/az-icons/az-icons-styles.min.css: { minified: true }
 arizona-bootstrap:
   css:
     theme:
-      /libraries/arizona-bootstrap/css/arizona-bootstrap.min.css: {}
+      /libraries/arizona-bootstrap/css/arizona-bootstrap.min.css: { minified: true }
   js:
-    /libraries/arizona-bootstrap/js/arizona-bootstrap.bundle.min.js: {}
+    /libraries/arizona-bootstrap/js/arizona-bootstrap.bundle.min.js: { minified: true }
+  deprecated: The combined "%library_id%" CSS and Javascript library is deprecated in az_quickstart:2.13.x and is removed from az_quickstart:2.14.x. For CSS, use az_barrio/arizona-bootstrap-css, and for Javascript use az_barrio/arizona-bootstrap-js. See https://github.com/az-digital/az_quickstart/issues/1251
+arizona-bootstrap-css:
+  css:
+    theme:
+      /libraries/arizona-bootstrap/css/arizona-bootstrap.min.css: { minified: true }
+arizona-bootstrap-js:
+  js:
+    /libraries/arizona-bootstrap/js/arizona-bootstrap.bundle.min.js: { minified: true }
   dependencies:
     - core/jquery
 button-no-conflict:
   js:
     js/button-no-conflict.js: {}
   dependencies:
+    - core/drupal
     - core/jquery
 material-design-icons-sharp:
+  deprecated: The "%library_id%" CSS library is deprecated in az_quickstart:2.14.x and is removed from az_quickstart:3.x. Use `az_barrio/material-symbols-rounded` instead. See https://github.com/az-digital/az_quickstart/issues/4385
   css:
     theme:
-      https://fonts.googleapis.com/css?family=Material+Icons+Sharp: {}
+      # Appends `#.css` as workaround for known issue with loadjs library.
+      # see https://github.com/kubetail-org/loadjs/issues/39
+      # see https://github.com/az-digital/az_quickstart/issues/2772
+      https://fonts.googleapis.com/css?family=Material+Icons+Sharp#.css: { external: true, preprocess: false }
+material-symbols-rounded:
+  css:
+    theme:
+      # Appends `#.css` as workaround for known issue with loadjs library.
+      # see https://github.com/kubetail-org/loadjs/issues/39
+      # see https://github.com/az-digital/az_quickstart/issues/2772
+      https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0#.css: { external: true, preprocess: false }
+toasts:
+  js:
+    js/toasts.js: {}
+  dependencies:
+    - core/drupal
+    - az_barrio/arizona-bootstrap-js

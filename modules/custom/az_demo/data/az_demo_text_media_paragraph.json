@@ -9,8 +9,8 @@
             "bg_attachment" : "",
             "spacing" : "y-5",
             "content_style" : "box",
-            "position" : "col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6",
-            "bg_color" : "bg-transparent-white",
+            "position" : "col-md-8 col-lg-6 offset-md-4 offset-lg-6",
+            "bg_color" : "text-bg-transparent-white",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -22,21 +22,21 @@
             "bg_attachment" : "bg-fixed",
             "spacing" : "y-5",
             "content_style" : "column",
-            "position" : "col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3",
-            "bg_color" : "bg-transparent-white",
+            "position" : "col-md-8 col-lg-6 offset-md-2 offset-lg-3",
+            "bg_color" : "text-bg-transparent-white",
             "bottom_spacing" : "mb-0"
         },
         {
             "id":43,
             "az_title" : "Join the Best Students in the Country",
-            "az_text_area" : "<p>Beyond employment, are you looking to design your ideal career and life?<\/p>\r\n\r\n<p><a class=\"btn btn-red\" href=\"https:\/\/www.arizona.edu\/how-apply-uarizona\">Apply<\/a> <a class=\"btn btn-blue\" href=\"https:\/\/admissions.arizona.edu\/visit\">Visit<\/a><\/p>\r\n",
+            "az_text_area" : "<p>Beyond employment, are you looking to design your ideal career and life?<\/p>\r\n\r\n<p><a class=\"btn btn-red\" href=\"https:\/\/www.arizona.edu\/admissions\/apply\">Apply<\/a> <a class=\"btn btn-blue\" href=\"https:\/\/admissions.arizona.edu\/visit\">Visit<\/a><\/p>\r\n",
             "filename" : "study.jpeg",
             "full_width" : false,
             "bg_attachment" : "",
             "spacing" : "y-5",
             "content_style" : "column",
-            "position" : "col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6",
-            "bg_color" : "bg-transparent-black",
+            "position" : "col-md-8 col-lg-6 offset-md-4 offset-lg-6",
+            "bg_color" : "text-bg-transparent-black",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -49,7 +49,7 @@
             "spacing" : "y-5",
             "content_style" : "box",
             "position" : "col-md-8 col-lg-6",
-            "bg_color" : "bg-transparent-white",
+            "bg_color" : "text-bg-transparent-white",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -61,8 +61,8 @@
             "bg_attachment" : "bg-fixed",
             "spacing" : "y-5",
             "content_style" : "box",
-            "position" : "col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3",
-            "bg_color" : "bg-transparent-black",
+            "position" : "col-md-8 col-lg-6 offset-md-2 offset-lg-3",
+            "bg_color" : "text-bg-transparent-black",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -74,7 +74,7 @@
             "bg_attachment" : "",
             "content_style" : "bottom",
             "position" : "",
-            "bg_color" : "bg-transparent-black",
+            "bg_color" : "text-bg-transparent-black",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -86,7 +86,7 @@
             "bg_attachment" : "",
             "content_style" : "bottom",
             "position" : "",
-            "bg_color" : "bg-transparent-white",
+            "bg_color" : "text-bg-transparent-white",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -98,8 +98,8 @@
             "bg_attachment" : "",
             "spacing" : "y-5",
             "content_style" : "column",
-            "position" : "col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3",
-            "bg_color" : "bg-transparent-white",
+            "position" : "col-md-8 col-lg-6 offset-md-2 offset-lg-3",
+            "bg_color" : "text-bg-transparent-white",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -112,7 +112,7 @@
             "spacing" : "y-5",
             "content_style" : "column",
             "position" : "",
-            "bg_color" : "bg-transparent-white",
+            "bg_color" : "text-bg-transparent-white",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -124,8 +124,8 @@
             "bg_attachment" : "",
             "spacing" : "y-5",
             "content_style" : "box",
-            "position" : "col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3",
-            "bg_color" : "bg-transparent-white",
+            "position" : "col-md-8 col-lg-6 offset-md-2 offset-lg-3",
+            "bg_color" : "text-bg-transparent-white",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -137,8 +137,8 @@
             "bg_attachment" : "",
             "spacing" : "y-5",
             "content_style" : "box",
-            "position" : "col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3",
-            "bg_color" : "bg-transparent-white",
+            "position" : "col-md-8 col-lg-6 offset-md-2 offset-lg-3",
+            "bg_color" : "text-bg-transparent-white",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -150,7 +150,7 @@
             "bg_attachment" : "",
             "content_style" : "bottom",
             "position" : "",
-            "bg_color" : "bg-transparent-white",
+            "bg_color" : "text-bg-transparent-white",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -162,7 +162,7 @@
             "bg_attachment" : "",
             "content_style" : "bottom",
             "position" : "",
-            "bg_color" : "bg-transparent-white",
+            "bg_color" : "text-bg-transparent-white",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -174,8 +174,8 @@
             "bg_attachment" : "",
             "spacing" : "y-7",
             "content_style" : "box",
-            "position" : "col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6",
-            "bg_color" : "bg-transparent-white",
+            "position" : "col-md-8 col-lg-6 offset-md-4 offset-lg-6",
+            "bg_color" : "text-bg-transparent-white",
             "bottom_spacing" : "mb-0"
         }
     ]

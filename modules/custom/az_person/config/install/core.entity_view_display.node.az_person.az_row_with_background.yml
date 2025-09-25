@@ -5,19 +5,26 @@ dependencies:
     - core.entity_view_mode.node.az_row_with_background
     - field.field.node.az_person.field_az_address
     - field.field.node.az_person.field_az_attachments
+    - field.field.node.az_person.field_az_awards
     - field.field.node.az_person.field_az_body
     - field.field.node.az_person.field_az_degrees
     - field.field.node.az_person.field_az_email
     - field.field.node.az_person.field_az_fname
+    - field.field.node.az_person.field_az_licensure_certification
     - field.field.node.az_person.field_az_link
     - field.field.node.az_person.field_az_links
     - field.field.node.az_person.field_az_lname
     - field.field.node.az_person.field_az_media_image
+    - field.field.node.az_person.field_az_netid
     - field.field.node.az_person.field_az_person_category
     - field.field.node.az_person.field_az_person_category_sec
     - field.field.node.az_person.field_az_phones
     - field.field.node.az_person.field_az_pronouns
+    - field.field.node.az_person.field_az_research_interests
+    - field.field.node.az_person.field_az_suffix
+    - field.field.node.az_person.field_az_teaching_interests
     - field.field.node.az_person.field_az_titles
+    - field.field.node.az_person.field_az_work_experience
     - node.type.az_person
   module:
     - field_group
@@ -34,9 +41,10 @@ third_party_settings:
       weight: 0
       format_type: html_element
       format_settings:
-        classes: 'bg-gray-100 card card-borderless card-clickable hover mb-4'
+        classes: 'text-bg-gray-100 card border-0 hover mb-4'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -72,9 +80,10 @@ third_party_settings:
       weight: 1
       format_type: link
       format_settings:
-        classes: text-decoration-none
+        classes: 'stretched-link text-decoration-none'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         target: custom_uri
         custom_uri: '[node:az-canonical-url]'
         target_attribute: default
@@ -88,9 +97,10 @@ third_party_settings:
       weight: 3
       format_type: html_element
       format_settings:
-        classes: 'row no-gutters'
+        classes: row
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -119,7 +129,7 @@ third_party_settings:
         speed: fast
     group_column_text:
       children:
-        - smart_title
+        - group_name
         - group_job_titles
         - group_view_person
       label: 'Column - Text'
@@ -144,12 +154,13 @@ third_party_settings:
       label: 'Job Title(s)'
       parent_name: group_column_text
       region: content
-      weight: 9
+      weight: 3
       format_type: html_element
       format_settings:
-        classes: 'text-muted font-weight-normal'
+        classes: 'text-body-secondary fw-normal'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -162,15 +173,37 @@ third_party_settings:
       label: 'View profile'
       parent_name: group_column_text
       region: content
-      weight: 10
+      weight: 4
       format_type: html_element
       format_settings:
-        classes: 'card-clickable-link mt-2 pb-3'
+        classes: 'mt-2 pb-3'
         show_empty_fields: true
         id: ''
+        label_as_html: false
         element: div
         show_label: true
         label_element: span
+        label_element_classes: hover-text-underline
+        attributes: ''
+        effect: none
+        speed: fast
+    group_name:
+      children:
+        - smart_title
+        - field_az_suffix
+      label: Name
+      parent_name: group_column_text
+      region: content
+      weight: 1
+      format_type: html_element
+      format_settings:
+        classes: 'text-midnight card-title h4 mt-0 mb-2 hover-text-underline d-flex'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: h3
+        show_label: false
+        label_element: h3
         label_element_classes: ''
         attributes: ''
         effect: none
@@ -179,14 +212,8 @@ third_party_settings:
     enabled: true
     settings:
       smart_title__link: false
-      smart_title__tag: h3
-      smart_title__classes:
-        - text-midnight
-        - card-title
-        - h4
-        - mt-0
-        - mb-2
-        - hover-text-underline
+      smart_title__tag: ''
+      smart_title__classes: {  }
 id: node.az_person.az_row_with_background
 targetEntityType: node
 bundle: az_person
@@ -201,31 +228,45 @@ content:
     third_party_settings: {  }
     weight: 1
     region: content
+  field_az_suffix:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 4
+    region: content
   field_az_titles:
     type: string
     label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 10
+    weight: 3
     region: content
   smart_title:
     settings: {  }
     third_party_settings: {  }
-    weight: 8
+    weight: 3
     region: content
 hidden:
   field_az_address: true
   field_az_attachments: true
+  field_az_awards: true
   field_az_body: true
   field_az_degrees: true
   field_az_email: true
   field_az_fname: true
+  field_az_licensure_certification: true
   field_az_link: true
   field_az_links: true
   field_az_lname: true
+  field_az_netid: true
   field_az_person_category: true
   field_az_person_category_sec: true
   field_az_phones: true
   field_az_pronouns: true
+  field_az_research_interests: true
+  field_az_teaching_interests: true
+  field_az_work_experience: true
   links: true

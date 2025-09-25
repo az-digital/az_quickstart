@@ -4,54 +4,58 @@ declare(strict_types=1);
 
 namespace Drupal\az_event_trellis\Entity;
 
-use Drupal\az_event_trellis\AZRecurringImportRuleInterface;
 use Drupal\Core\Config\Entity\ConfigEntityBase;
+use Drupal\Core\Entity\Attribute\ConfigEntityType;
+use Drupal\Core\Entity\EntityDeleteForm;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\az_event_trellis\AZRecurringImportRuleInterface;
+use Drupal\az_event_trellis\AZRecurringImportRuleListBuilder;
+use Drupal\az_event_trellis\Form\AZRecurringImportRuleForm;
 
 /**
  * Defines the recurring import rule entity type.
- *
- * @ConfigEntityType(
- *   id = "az_recurring_import_rule",
- *   label = @Translation("Recurring Import Rule"),
- *   label_collection = @Translation("Recurring Import Rules"),
- *   label_singular = @Translation("recurring import rule"),
- *   label_plural = @Translation("recurring import rules"),
- *   label_count = @PluralTranslation(
- *     singular = "@count recurring import rule",
- *     plural = "@count recurring import rules",
- *   ),
- *   handlers = {
- *     "list_builder" = "Drupal\az_event_trellis\AZRecurringImportRuleListBuilder",
- *     "form" = {
- *       "add" = "Drupal\az_event_trellis\Form\AZRecurringImportRuleForm",
- *       "edit" = "Drupal\az_event_trellis\Form\AZRecurringImportRuleForm",
- *       "delete" = "Drupal\Core\Entity\EntityDeleteForm",
- *     },
- *   },
- *   config_prefix = "az_recurring_import_rule",
- *   admin_permission = "administer quickstart configuration",
- *   links = {
- *     "collection" = "/admin/config/az-quickstart/settings/az-recurring-import-rule",
- *     "add-form" = "/admin/config/az-quickstart/settings/az-recurring-import-rule/add",
- *     "edit-form" = "/admin/config/az-quickstart/settings/az-recurring-import-rule/{az_recurring_import_rule}",
- *     "delete-form" = "/admin/config/az-quickstart/settings/az-recurring-import-rule/{az_recurring_import_rule}/delete",
- *   },
- *   entity_keys = {
- *     "id" = "id",
- *     "label" = "label",
- *     "uuid" = "uuid",
- *   },
- *   config_export = {
- *     "id",
- *     "label",
- *     "owner",
- *     "host",
- *     "keyword",
- *     "attributes",
- *     "approval",
- *   },
- * )
  */
+#[ConfigEntityType(
+  id: 'az_recurring_import_rule',
+  label: new TranslatableMarkup('Recurring Import Rule'),
+  label_collection: new TranslatableMarkup('Recurring Import Rules'),
+  label_singular: new TranslatableMarkup('recurring import rule'),
+  label_plural: new TranslatableMarkup('recurring import rules'),
+  handlers: [
+    'list_builder' => AZRecurringImportRuleListBuilder::class,
+    'form' => [
+      'add' => AZRecurringImportRuleForm::class,
+      'edit' => AZRecurringImportRuleForm::class,
+      'delete' => EntityDeleteForm::class,
+    ],
+  ],
+  config_prefix: 'az_recurring_import_rule',
+  admin_permission: 'administer quickstart configuration',
+  label_count: [
+    'singular' => '@count recurring import rule',
+    'plural' => '@count recurring import rules',
+  ],
+  links: [
+    'collection' => '/admin/config/az-quickstart/settings/az-recurring-import-rule',
+    'add-form' => '/admin/config/az-quickstart/settings/az-recurring-import-rule/add',
+    'edit-form' => '/admin/config/az-quickstart/settings/az-recurring-import-rule/{az_recurring_import_rule}',
+    'delete-form' => '/admin/config/az-quickstart/settings/az-recurring-import-rule/{az_recurring_import_rule}/delete',
+  ],
+  entity_keys: [
+    'id' => 'id',
+    'label' => 'label',
+    'uuid' => 'uuid',
+  ],
+  config_export: [
+    'id',
+    'label',
+    'owner',
+    'host',
+    'keyword',
+    'attributes',
+    'approval',
+  ],
+)]
 final class AZRecurringImportRule extends ConfigEntityBase implements AZRecurringImportRuleInterface {
 
   /**

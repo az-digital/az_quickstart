@@ -1,0 +1,16 @@
+az_publication.type.*:
+  type: config_entity
+  label: 'Quickstart Publication Type config'
+  mapping:
+    id:
+      type: machine_name
+      label: 'ID'
+    label:
+      type: label
+      label: 'Label'
+    type:
+      type: string
+      label: 'Mapped type'
+    uuid:
+      type: uuid
+      label: 'Universally Unique Identifier'

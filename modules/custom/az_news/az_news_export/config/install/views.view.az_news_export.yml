@@ -17,6 +17,7 @@ dependencies:
     - field.storage.node.field_az_subheading
     - field.storage.node.field_az_summary
     - node.type.az_news
+    - taxonomy.vocabulary.az_enterprise_attributes
   module:
     - az_core
     - az_news_export
@@ -1391,10 +1392,74 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
+        term_node_tid:
+          id: term_node_tid
+          table: node_field_data
+          field: term_node_tid
+          relationship: none
+          group_type: group
+          admin_label: 'All taxonomy terms'
+          entity_type: node
+          plugin_id: taxonomy_index_tid
+          label: term_node_tid
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: false
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          type: separator
+          separator: ', '
+          link_to_taxonomy: false
+          limit: false
+          vids:
+            az_enterprise_attributes: '0'
+            az_event_categories: '0'
+            az_news_tags: '0'
+            az_page_categories: '0'
+            az_person_categories: '0'
+            az_person_categories_secondary: '0'
+            az_publication_categories: '0'
+            tags: '0'
       pager:
         type: full
         options:
           offset: 0
+          pagination_heading_level: h4
           items_per_page: 10
           total_pages: null
           id: 0
@@ -1466,7 +1531,6 @@ display:
           default_argument_type: fixed
           default_argument_options:
             argument: ''
-          default_argument_skip_url: false
           summary_options:
             base_path: ''
             count: true
@@ -1553,6 +1617,51 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
+        field_az_enterprise_attributes_az_attribute_key:
+          id: field_az_enterprise_attributes_az_attribute_key
+          table: node__field_az_enterprise_attributes
+          field: field_az_enterprise_attributes_az_attribute_key
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: az_attribute_tid
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: filter
+            label: 'Content with Enterprise Attributes attribute key'
+            description: ''
+            use_operator: true
+            operator: field_az_enterprise_attributes_az_attribute_key_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: attribute
+            required: false
+            remember: false
+            multiple: true
+            remember_roles:
+              authenticated: authenticated
+            reduce: 0
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: 1
+          type: select
+          limit: true
+          vid: az_enterprise_attributes
+          hierarchy: false
+          error_message: 1
       style:
         type: default
         options:
@@ -1569,7 +1678,7 @@ display:
         options:
           query_comment: ''
           disable_sql_rewrite: false
-          distinct: false
+          distinct: true
           replica: false
           query_tags: {  }
       relationships: {  }
@@ -1609,6 +1718,7 @@ display:
         type: mini
         options:
           offset: 0
+          pagination_heading_level: h4
           items_per_page: 25
           total_pages: null
           id: 0
@@ -1695,6 +1805,9 @@ display:
             field_az_media_thumbnail_image:
               alias: ''
               raw_output: '1'
+            term_node_tid:
+              alias: term_node_tags
+              raw_output: 0
       display_extenders: {  }
       path: az_quickstart/export/az_news/v1/az_news.json
     cache_metadata:

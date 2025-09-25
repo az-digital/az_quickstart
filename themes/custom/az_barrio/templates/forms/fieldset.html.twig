@@ -33,9 +33,7 @@
 {%
   set legend_classes = [
     'col-form-label',
-    'font-weight-bold',
-    required ? 'js-form-required',
-    required ? 'form-required',
+    'fw-bold',
   ]
 %}
 <fieldset{{ attributes.addClass(classes) }}>
@@ -64,7 +62,7 @@
       <span class="field-suffix">{{ suffix }}</span>
     {% endif %}
     {% if description.content %}
-      <small{{ description.attributes.addClass('description', 'text-muted') }}>{{ description.content }}</small>
+      <small{{description.attributes.addClass('description', 'text-body-secondary') }}>{{ description.content }}</small>
     {% endif %}
   </div>
 </fieldset>

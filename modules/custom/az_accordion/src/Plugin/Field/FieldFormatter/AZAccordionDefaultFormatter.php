@@ -3,24 +3,25 @@
 namespace Drupal\az_accordion\Plugin\Field\FieldFormatter;
 
 use Drupal\Component\Utility\Html;
+use Drupal\Core\Field\Attribute\FieldFormatter;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\paragraphs\ParagraphInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Plugin implementation of the 'az_accordion_default' formatter.
- *
- * @FieldFormatter(
- *   id = "az_accordion_default",
- *   label = @Translation("Default"),
- *   field_types = {
- *     "az_accordion"
- *   }
- * )
  */
+#[FieldFormatter(
+  id: 'az_accordion_default',
+  label: new TranslatableMarkup('Default'),
+  field_types: [
+    'az_accordion',
+  ],
+)]
 class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFactoryPluginInterface {
 
   /**
@@ -90,13 +91,14 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $element = [];
 
+    $entity = $items->getEntity();
+    $accordion_container_id = HTML::getUniqueId('accordion-' . $entity->id());
+
     /** @var \Drupal\az_accordion\Plugin\Field\FieldType\AZAccordionItem $item */
     foreach ($items as $delta => $item) {
-
       // Format title.
       $title = $item->title ?? '';
 
-      $accordion_classes = 'accordion';
       $column_classes = [];
       $column_classes[] = 'col-md-4 col-lg-4';
       $parent = $item->getEntity();
@@ -117,6 +119,7 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
       $column_classes = implode(' ', $column_classes);
       $column_classes = explode(' ', $column_classes);
       $column_classes[] = 'pb-4';
+      $accordion_id = Html::getUniqueId('az_accordion');
 
       $element[$delta] = [
         '#theme' => 'az_accordion',
@@ -129,13 +132,16 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
           '#format' => $item->body_format,
           '#langcode' => $item->getLangcode(),
         ],
-        '#attributes' => ['class' => $accordion_classes],
-        '#accordion_item_id' => Html::getUniqueId('az_accordion'),
-        '#collapsed' => $item->collapsed ? 'collapse' : 'collapse show',
+        '#accordion_item_id' => $accordion_id,
+        '#accordion_container_id' => $accordion_container_id,
+        '#collapsed' => $item->collapsed ? '' : 'show',
         '#aria_expanded' => !$item->collapsed ? 'true' : 'false',
-        '#aria_controls' => Html::getUniqueId('az_accordion_aria_controls'),
       ];
 
+    }
+
+    if (!empty($element)) {
+      $element['#accordion_container_id'] = $accordion_container_id;
     }
 
     return $element;

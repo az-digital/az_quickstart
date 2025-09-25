@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Drupal\az_event_trellis\Form;
 
-use Drupal\az_event_trellis\Entity\AZRecurringImportRule;
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\taxonomy\Entity\Term;
+use Drupal\az_event_trellis\Entity\AZRecurringImportRule;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -77,7 +76,7 @@ final class AZRecurringImportRuleForm extends EntityForm {
 
     $form['query_parameters'] = [
       '#type' => 'details',
-      '#title' => t('Recurring Search Parameters'),
+      '#title' => $this->t('Recurring Search Parameters'),
       '#description' => $this->t('When this import rule runs, the following search terms will be used.'),
       '#open' => TRUE,
     ];
@@ -106,7 +105,8 @@ final class AZRecurringImportRuleForm extends EntityForm {
     $form['query_parameters']['attributes']['#tree'] = TRUE;
 
     // Get the different attributes available.
-    $query = $this->entityTypeManager->getStorage('taxonomy_term')->getQuery()
+    $term_storage = $this->entityTypeManager->getStorage('taxonomy_term');
+    $query = $term_storage->getQuery()
       ->accessCheck(TRUE)
       ->addTag('taxonomy_term_access')
       ->condition('vid', 'az_enterprise_attributes')
@@ -115,7 +115,7 @@ final class AZRecurringImportRuleForm extends EntityForm {
       // Only fetch attributes that have an API mapping.
       ->condition('field_az_attribute_key', array_keys($mappings), 'IN');
     $attributes = $query->execute();
-    $attributes = Term::loadMultiple($attributes);
+    $attributes = $term_storage->loadMultiple($attributes);
 
     // Build attribute select lists.
     foreach ($attributes as $attribute) {
@@ -124,7 +124,7 @@ final class AZRecurringImportRuleForm extends EntityForm {
       $id = $attribute->id();
 
       // Find the options the attribute has, in order.
-      $query = $this->entityTypeManager->getStorage('taxonomy_term')->getQuery()
+      $query = $term_storage->getQuery()
         ->accessCheck(TRUE)
         ->addTag('taxonomy_term_access')
         ->condition('vid', 'az_enterprise_attributes')
@@ -132,7 +132,7 @@ final class AZRecurringImportRuleForm extends EntityForm {
         ->sort('name')
         ->condition('field_az_attribute_key', '', '<>');
       $terms = $query->execute();
-      $terms = Term::loadMultiple($terms);
+      $terms = $term_storage->loadMultiple($terms);
       foreach ($terms as $term) {
         $options[$term->field_az_attribute_key->value] = $this->entityRepository->getTranslationFromContext($term)->label();
       }

@@ -45,7 +45,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       'text_media_spacing' => 'y-5',
       'bg_attachment' => '',
       'title_level' => 'h2',
-      'title_alignment' => 'text-left',
+      'title_alignment' => 'text-start',
     ];
   }
 
@@ -83,8 +83,8 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#title' => $this->t('Content background color'),
       '#type' => 'select',
       '#options' => [
-        'bg-transparent-white' => $this->t('Light'),
-        'bg-transparent-black' => $this->t('Dark'),
+        'text-bg-transparent-white' => $this->t('Light'),
+        'text-bg-transparent-black' => $this->t('Dark'),
         'bg-transparent' => $this->t('Transparent'),
       ],
       '#default_value' => $config['bg_color'],
@@ -95,9 +95,9 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#type' => 'select',
       '#options' => [
         'col-md-8 col-lg-6' => $this->t('Content left'),
-        'col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3' => $this->t('Content center'),
-        'col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6' => $this->t('Content right'),
-        'col-xs-12' => $this->t('Full-width'),
+        'col-md-8 col-lg-6 offset-md-2 offset-lg-3' => $this->t('Content center'),
+        'col-md-8 col-lg-6 offset-md-4 offset-lg-6' => $this->t('Content right'),
+        'col-12' => $this->t('Full-width'),
       ],
       '#default_value' => $config['position'],
       '#description' => $this->t('The alignment of the content on the media.'),
@@ -167,9 +167,9 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#title' => $this->t('Title alignment'),
       '#type' => 'select',
       '#options' => [
-        'text-left' => $this->t('Title left'),
+        'text-start' => $this->t('Title left'),
         'text-center' => $this->t('Title center'),
-        'text-right' => $this->t('Title right'),
+        'text-end' => $this->t('Title right'),
       ],
       '#default_value' => $config['title_alignment'],
       '#description' => $this->t('The alignment of the title.'),
@@ -196,7 +196,6 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     $config = $this->getSettings($paragraph);
     $config += $default_settings;
     $variables['text_on_media'] = $config;
-    $az_background_media = [];
 
     $style = '';
     if (!empty($config['style']) && $config['style'] !== 'bottom') {
@@ -218,16 +217,24 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     $variables['attributes']['class'][] = HTML::getClass($style);
     $variables['attributes']['class'][] = HTML::getClass($config['full_width']);
     $variables['attributes']['class'][] = HTML::getClass($config['bg_attachment']);
+
+    // Add rounded corners to content-width paragraphs.
+    if (!isset($config['full_width']) || $config['full_width'] !== 'full-width-background') {
+      $variables['attributes']['class'][] = 'rounded';
+    }
+
     // Get column classes.
     $column_classes = ['col'];
     if (!empty($config['style']) && $config['style'] === 'bottom') {
-      $column_classes[] = 'col-md-10 col-md-offset-1';
+      $column_classes[] = 'col-md-10 offset-md-1';
     }
     else {
       $column_classes[] = $config['position'];
     }
+
     // Set column classes.
     $variables['elements']['#fieldgroups']['group_az_column']->format_settings['classes'] = implode(' ', $column_classes);
+
     // Get content classes.
     $content_classes = [
       'content',
@@ -235,6 +242,11 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       HTML::getClass($config['bg_color']),
       HTML::getClass($config['style']),
     ];
+
+    // Add rounded corners to content boxes that are not column style.
+    if (!empty($config['style']) && $config['style'] !== 'column') {
+      $content_classes[] = 'rounded';
+    }
 
     // If this paragraph is full-width, add the full-width library.
     if (isset($config['full_width']) && $config['full_width'] === 'full-width-background') {
@@ -269,22 +281,25 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
           $content_classes[] = HTML::getClass($spacing_prefix . $config['text_media_spacing']);
       }
     }
+
+    // Change bottom style bg color classes.
     if ($config['style'] === 'bottom') {
-      if ($config['bg_color'] === 'bg-transparent-white') {
-        $key = array_search('bg-transparent-white', $content_classes);
+      if ($config['bg_color'] === 'text-bg-transparent-white') {
+        $key = array_search('text-bg-transparent-white', $content_classes);
         unset($content_classes[$key]);
-        $content_classes[] = 'bg-white';
+        $content_classes[] = 'text-bg-white';
         $content_classes[] = 'shadow';
         $content_classes[] = 'mb-4';
       }
-      elseif ($config['bg_color'] === 'bg-transparent-black') {
-        $key = array_search('bg-transparent-black', $content_classes);
+      elseif ($config['bg_color'] === 'text-bg-transparent-black') {
+        $key = array_search('text-bg-transparent-black', $content_classes);
         unset($content_classes[$key]);
-        $content_classes[] = 'bg-black';
+        $content_classes[] = 'text-bg-black';
         $content_classes[] = 'shadow';
         $content_classes[] = 'mb-4';
       }
     }
+
     // Set content classes.
     $variables['elements']['#fieldgroups']['group_az_content']->format_settings['classes'] = implode(' ', $content_classes);
     // Set title element if a heading level other than h2 (the default) was
@@ -295,10 +310,10 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     // Get title classes.
     $title_classes = [
       'mt-0',
-      'bold',
+      'fw-bold',
       HTML::getClass($config['title_alignment']),
     ];
-    if (!empty($config['bg_color']) && $config['bg_color'] !== 'bg-transparent-black') {
+    if (!empty($config['bg_color']) && $config['bg_color'] !== 'text-bg-transparent-black') {
       $title_classes[] = 'text-blue';
     }
     // Set title classes.

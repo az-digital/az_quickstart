@@ -1,14 +1,31 @@
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  config:
+    - crop.type.az_carousel_image
+  module:
+    - crop
 name: az_carousel_item
 label: 'Carousel Item'
 effects:
+  af6ffe2f-c14d-446b-90e2-04ddd4ef364c:
+    uuid: af6ffe2f-c14d-446b-90e2-04ddd4ef364c
+    id: crop_crop
+    weight: 1
+    data:
+      crop_type: az_carousel_image
+      automatic_crop_provider: null
   fbc7a251-9995-4603-b286-b2864b3f5698:
     uuid: fbc7a251-9995-4603-b286-b2864b3f5698
     id: image_scale_and_crop
-    weight: 1
+    weight: 2
     data:
       width: 1110
       height: 500
       anchor: center-center
+  e2397ad5-1c3a-4c7c-9dc7-32f8f5fbca33:
+    uuid: e2397ad5-1c3a-4c7c-9dc7-32f8f5fbca33
+    id: image_convert
+    weight: 3
+    data:
+      extension: webp

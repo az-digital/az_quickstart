@@ -6,21 +6,43 @@
 */
 
 @media screen and (min-width: 61rem) {
-  div.layout-node-form {
+  div.layout-form {
     grid-template-columns: calc(65% - var(--space-l)) minmax(22.5rem, 1fr);
   }
 
-  .layout-region.layout-region--node-main,
-  .layout-region.layout-region--node-footer {
+  .layout-region.layout-region--main,
+  .layout-region.layout-region--footer {
     margin-inline: 0;
     width: initial;
   }
 }
 
-.layout-region--node-main .claro-details__summary {
+.layout-region--main .claro-details__summary {
   color: unset;
 }
 
 tr.odd {
   background-color: #eee;
+}
+
+/** 
+ * Match styling of node form with that of style.css.
+ * See https://github.com/az-digital/az_quickstart/pull/4195.
+ */
+@media screen and (min-width: 576px) {
+  .align-left {
+    margin-right: 1em;
+    margin-bottom: 0.7em;
+  }
+  .align-right {
+    margin-left: 1em;
+    margin-bottom: 0.7em;
+  }
+}
+
+.align-left ~ ul,
+.align-left ~ ol {
+  overflow: auto;
+  overflow-wrap: anywhere;
+  padding-inline-start: revert;
 }

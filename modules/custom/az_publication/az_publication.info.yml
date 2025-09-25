@@ -1,12 +1,15 @@
 name: Quickstart Publication
 description: 'Provides Publication content type'
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10 || ^11 || ^12
 type: module
 package: 'The University of Arizona - Experimental'
+lifecycle: experimental
+lifecycle_link: 'https://github.com/az-digital/az_quickstart/blob/main/RELEASES.md#experimental-features'
 dependencies:
   - 'auto_entitylabel:auto_entitylabel'
   - 'az_core:az_core'
   - 'az_curated_views:az_curated_views'
+  - 'az_paragraphs:az_paragraphs'
   - 'better_exposed_filters:better_exposed_filters'
   - 'block_class:block_class'
   - 'draggableviews:draggableviews'

@@ -17,9 +17,9 @@ team of web-focused volunteers that meet weekly to create projects like [Arizona
     * Use the `#azdigital-support` channel to ask general questions related to
       Arizona Digital and get support for Arizona Digital products.
   * A basic understanding of [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).
-  * Local containerized (Docker) dev environment tool either lando or ddev
+  * Local containerized (Docker) dev environment tool either Lando or DDEV.
     * [Lando](https://docs.lando.dev/basics/installation.html)
-    * [DDev](https://www.ddev.com/get-started/)
+    * [DDEV](https://ddev.com/get-started/)
   * An IDE with the capability to attach to a remote codeserver or docker
     container. [Visual Studio Code](https://code.visualstudio.com) allows for this.
     * Generic [instructions for connecting to a docker container with Visual
@@ -89,15 +89,15 @@ Closes #123 by creating y and z. This can be a paragraph of explanation.
 
 ## Local development
 
-To create a local copy of az_quickstart and build a working Drupal 8 site from
+To create a local copy of az_quickstart and build a working Drupal site from
 it, use the following commands.
 
-**Important:** The Drupal code base will only be created inside the lando/ddev
+**Important:** The Drupal code base will only be created inside the Lando/DDEV
 container, so if you want to see the code use `lando ssh` or  `ddev ssh` to ssh
 into the container, or follow the [instructions below for accessing code via
 Visual Studio Code](#user-content-visual-studio-code-integration).
 
-**Note:** The Lando and DDEV installs create an admin Drupal user with username `azadmin` and password `azadminXXXX` (replacing `XXXX` with the current year).
+**Note:** The Lando and DDEV installers create an admin Drupal user with username `azadmin` and password `azadminXXXX` (replacing `XXXX` with the current year).
 
 ### Lando
 ```
@@ -111,39 +111,35 @@ lando install
 ```
 git clone https://github.com/az-digital/az_quickstart.git foldername
 cd foldername
-ddev config --project-type php
+ddev config --auto
 ddev start
 ddev install
 ```
 
-Note: Use `ddev pause` and `ddev start` to restart the container.
-Using `ddev restart` will require a re-install with `ddev install`.
-
 ### Visual Studio Code integration
 
-Since the codebase you'll be editing exists **inside the lando or ddev docker
+Since the codebase you'll be editing exists **inside the Lando or DDEV Docker
 container**, you may need to use an IDE to edit code, especially if you don't
-want to ssh into a docker container and use nano, or rsync code from local into
-the docker container 100 times.
-
-Note: These instructions may not work for DDEV.
+want to ssh into a Docker container and use nano, or rsync code from local into
+the Docker container 100 times.
 
 Setup:
-  1. Make sure you have [Visual Studio Code installed](https://code.visualstudio.com/docs/introvideos/basics),
-  2. Install the [Visual Studio Code Remote Development Extension Pack
-](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
-  3. In the [Command Palette](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette),
-     which can be found in View menu or (⌘⇧P on Mac) type
-     `Remote-containers: Attach to Running Container...`
-     and click on the result to bring up a list of running containers.
-  4. If using lando, find the container whose name ends with `_appserver_1`.
-  Click it to attach to that container.
-  5. The last thing you'll have to do is add a folder from within the container
-    to your workspace.
-    To do this, use the file menu within Visual Studio Code,
-    to Add Folder to Workspace.
-    Then replace `/root` with the `/app` folder.
-  6. You are ready to begin development.
+1. Make sure you have [Visual Studio Code installed](https://code.visualstudio.com/docs/introvideos/basics).
+2. Install the [Visual Studio Code Remote Development Extension Pack
+](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack).
+3. In the [Command Palette](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette),
+   which can be found in View menu (⌘⇧P on Mac, Ctrl+Shift+P on Windows), type
+   `Dev Containers: Attach to Running Container...`
+   and click on the result to bring up a list of running containers.
+4. Click on your project's container to attach VS Code to that container.
+    * If using Lando, find the container whose name ends with `_appserver_1`.
+    * If using DDEV, find your project label with a name that ends with `-web` (e.g., /ddev-azqs-web).
+    * Follow any prompts to allow code changes.
+5. The last thing you'll have to do is add a folder from within the container to your workspace. To do this, click the File menu within Visual Studio Code and click to Add Folder to Workspace.
+    * If using Lando, replace `/root` with the `/app` folder.
+    * If using DDEV, replace the path with `/var/www/html` and click Add or hit enter.
+    * Follow any prompts to reload the window.
+7. You are ready to begin development.
 
 Notes: Visual Studio Code has git integration, so you can use that to create new
 branches and push up to github.
@@ -159,7 +155,7 @@ merging new code.  **We run tests on every pull request**, but it is often up to
 each individual contributor to write tests for their new code.
 
 Here is a rudimentary guide to running tests on your code with a local
-development environment like Lando, or DDev.
+development environment like Lando, or DDEV.
 
 When you install either of the recommended environments with the configuration
 provided by this project, you will have our testing environment built in, but it
@@ -186,13 +182,13 @@ lando start
 lando phpunit
 ```
 
-### Local testing on DDev
+### Local testing on DDEV
 
 ```
 git clone https://github.com/az-digital/az_quickstart.git azqs-71
 cd azqs-71
-git checkout -b feature/71
-ddev config --project-type php
+git checkout issue/71
+ddev config --auto
 ddev start
 ddev phpunit
 ```
@@ -242,7 +238,7 @@ OR
 lando yarn watch
 ```
 
-### ES6 Transpiling on Dev
+### ES6 Transpiling on DDEV
 
 ```
 ddev yarn build
@@ -260,7 +256,7 @@ to adhere to the project's coding standards.
 ###  Running ESLint
 
 To lint all files in the project, contributors can use the command `lando
-eslint .` or `ddev eslint .`, depending on whether you're using Lando or DDev for
+eslint .` or `ddev eslint .`, depending on whether you're using Lando or DDEV for
 your local development environment.
 
 For a single file, the command changes slightly to include the filename, like
@@ -318,8 +314,119 @@ development best practices to enhance your Drupal projects.
 
 [Devel](https://www.drupal.org/project/devel) is included in the
 [development metapackage](https://github.com/az-digital/az-quickstart-dev) 
-that is downloaded when installing a site locally via Lando, or DDev.  See 
+that is downloaded when installing a site locally via Lando, or DDEV.  See 
 "Visual Studio Code Integration"
+
+## Recommendation - macOS CLI Users
+Some composer patches may not apply correctly when running `composer install` or `composer update` on macOS. This is because the version of the `patch` utility that is included with macOS differs from the version of GNU patch included with most Linux operating systems. A workaround for this problem is to install GNU patch with [homebrew](https://brew.sh/).
+We recommended installing this formula preemptively on macOS to avoid this composer complication altogether.
+`brew install gpatch` - [homebrew formula](https://formulae.brew.sh/formula/gpatch)
+[Relevant issue discussion](https://github.com/cweagans/composer-patches/issues/423)
+
+## Exporting Configuration
+
+While working on features in local development in Quickstart, there are
+situations where the local build will have configuration changes that are not
+reflected in the saved configuration files of the distribution. This means
+that the changes made will not be reflected in new site builds.
+
+In order for changes to the local site to be reflected in the file tree
+of the feature branch, configuration changes must be exported from the
+development site.
+
+### Exporting Individual Configuration Items
+
+If it is known exactly which configuration entities are changed, they 
+can be exported via the following:
+
+```
+drush az-core-config-export-single name.of.configuration.item
+```
+
+For example, to export `az_cas.settings`, use:
+
+```
+drush az-core-config-export-single az_cas.settings
+```
+
+Note that the `.yml` suffix should not be used when referring to exporting
+these items.
+
+Alternatively, configuration is also available to export through the
+Drupal UI in the local site at the path `/admin/config/development/configuration/full/export`
+or `/admin/config/development/configuration/single/export`
+
+### Exporting Complex Configuration Changes
+
+Some types of changes affect multiple configuration entities. For example, adding new
+fields to a content type typically results in changes to the form display and view display
+of that content type, along with additional field instances and field storage for the fields
+added. It can sometimes be difficult to track down all changes that need to be exported in
+these cases. Quickstart contains a Drush command to automate some of this:
+
+```
+drush az-core-distribution-config
+```
+
+This command examines the active configuration of the local build and compares them to the saved configuration
+files in the distribution, and raises an alert if changes are detected. It will prompt asking
+whether the configuration in question should be exported.
+
+```
+    -- unmodified -- core.entity_view_display.block_content.basic.default
+    -- unmodified -- core.entity_view_display.user.user.compact
+    -- unmodified -- core.entity_view_display.user.user.default
+     Update [az_quickstart/config/install] easy_breadcrumb.settings? (yes/no) [yes]:
+```
+
+When a prompt is raised, selecting `yes` will update the configuration in the source module
+with the copy that is in the current active local development site.
+
+Dependency analysis takes place to determine if new dependent configuration exists that
+does not yet exist in the module files, but may need to be exported. This happens most
+commonly in the case of new fields.
+
+```
+Examining dependencies...
+ Export NEW dependent configuration field.field.node.az_event.field_az_brand_new_field? (yes/no) [yes]:
+ > 
+```
+If `yes` is selected, the command  will prompt asking which module should receive the exported
+configuration.
+
+### Configuration Not to Export
+
+Not all changes need to be exported. Some changes are made in the local development site
+that do not necessarily relate to new features being created. If a difference is detected
+in configuration unrelated to the contribution, it may not need to be exported. Select `no`
+in these cases if they should not be exported.
+
+### Configuration from Optional Modules
+
+This can be particularly complex in the cases of overridden configuration, most notably
+in entity view displays which contain `metatag` fields or settings for the `az_finder` 
+module. This is because multiple copies of this configuration exists, copies of 
+configuration with the optional module enabled, and copies without the optional module enabled.
+These config entities still require some edits to produce the variants where the optional
+module has not been enabled. Future versions of the `az-core-distribution-config` 
+command may make this process simpler.
+
+That effect is most notable in some of the following configuration items that have
+optional overrides:
+
+```
+core.entity_form_display.node.az_flexible_page.default
+core.entity_form_display.node.az_event.default
+core.entity_form_display.node.az_person.default
+core.entity_form_display.node.az_news.default
+views.view.az_person
+views.view.az_news
+views.view.az_events
+views.view.az_page_by_category
+```
+
+When exporting these configuration items, alternate versions must be produced that
+do not have optional `metatag` or `az_finder` configuration.
 
 ## Configuration Management and Database Updates
 

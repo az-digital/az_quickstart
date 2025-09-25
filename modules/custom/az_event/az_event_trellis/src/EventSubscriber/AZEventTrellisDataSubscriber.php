@@ -2,10 +2,11 @@
 
 namespace Drupal\az_event_trellis\EventSubscriber;
 
-use Drupal\az_event_trellis\TrellisHelper;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Messenger\Messenger;
 use Drupal\Core\Session\AccountProxy;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\az_event_trellis\TrellisHelper;
 use Drupal\migrate\Event\MigrateEvents;
 use Drupal\migrate\Event\MigratePostRowSaveEvent;
 use Drupal\views\ResultRow;
@@ -16,6 +17,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  * Provides API integration for Trellis Views.
  */
 final class AZEventTrellisDataSubscriber implements EventSubscriberInterface {
+
+  use StringTranslationTrait;
 
   /**
    * @var \Drupal\Core\Session\AccountProxy
@@ -89,7 +92,7 @@ final class AZEventTrellisDataSubscriber implements EventSubscriberInterface {
         // Only show message if current user has permission.
         if ($this->currentUser->hasPermission('create az_event content')) {
           // Show status message that event was imported.
-          $this->messenger->addMessage(t('Imported <a href="@eventlink">@eventtitle</a>.', [
+          $this->messenger->addMessage($this->t('Imported <a href="@eventlink">@eventtitle</a>.', [
             '@eventlink' => $url,
             '@eventtitle' => $event->getTitle(),
           ]));

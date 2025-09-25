@@ -11,7 +11,8 @@ use Drupal\Core\Url;
  * Implements hook_toolbar_alter().
  */
 function az_google_tag_toolbar_alter(&$items) {
-  if (\Drupal::service('module_handler')->moduleExists('az_core')) {
+  if (\Drupal::service('module_handler')->moduleExists('az_core') &&
+      \Drupal::currentUser()->hasPermission('access az_quickstart_analytics')) {
     $site_url = \Drupal::request()->getHost();
     $items['az_quickstart']['tray']['az_links']['#links']['analytics'] = [
       'title' => t('Analytics Dashboard'),

@@ -1,0 +1,91 @@
+# Arizona icons
+arizona_icons:
+  enabled: true
+  label: Arizona Icons
+  description: Custom icons designed for the University of Arizona.
+  links:
+    - https://github.com/az-digital/az-icons
+  version: main
+  extractor: svg
+  config:
+    sources:
+      - /libraries/az-icons/svg/{icon_id}.svg
+  settings:
+    size:
+      title: "Size"
+      type: "integer"
+      default: 24
+    color:
+      title: "Color"
+      type: "string"
+      enum:
+        - inherit
+        - red
+        - blue
+        - cool-gray
+        - warm-gray
+        - midnight
+        - azurite
+        - oasis
+        - chili
+        - bloom
+        - sky
+        - leaf
+        - river
+        - mesa
+        - white
+        - black
+      default: inherit
+  library: "az_icons/arizona_icons"
+  template: >-
+    <i class="az-icon-{{ icon_id|clean_class }} {% if color != 'inherit' %}text-{{ color }}{% endif %}" style="font-size: {{ size|default(24) }}px; line-height: {{ size|default(24) }}px;" title="{{ icon_id }}"></i>
+  preview: >
+    <i class="az-icon-{{ icon_id|clean_class }} {% if color != 'inherit' %}text-{{ color }}{% endif %}" style="font-size:35px" title="{{ icon_id }}"></i>
+
+# Material symbols icons
+material_symbols:
+  enabled: true
+  label: Material Symbols Rounded
+  description: Material Symbols icons with the rounded style.
+  links:
+    - https://github.com/google/material-design-icons
+  version: 4.0.0
+  license:
+    name: Apache-2.0
+    url: https://github.com/google/material-design-icons/blob/master/LICENSE
+    gpl-compatible: true
+  extractor: font
+  config:
+    sources:
+      - fonts/MaterialSymbolsRounded.codepoints
+  settings:
+    size:
+      title: "Size"
+      type: "integer"
+      default: 24
+    color:
+      title: "Color"
+      type: "string"
+      enum:
+        - inherit
+        - red
+        - blue
+        - cool-gray
+        - warm-gray
+        - midnight
+        - azurite
+        - oasis
+        - chili
+        - bloom
+        - sky
+        - leaf
+        - river
+        - mesa
+        - white
+        - black
+      default: inherit
+  library: "az_icons/material_symbols"
+  template: >-
+    <span class="material-symbols-rounded {% if color != 'inherit' %}text-{{ color }}{% endif %}" style="font-size:{{ size|default(24) }}px;">{{ icon_id }}</span>
+  preview: >
+    <span class="material-symbols-rounded {% if color != 'inherit' %}text-{{ color }}{% endif %}" style="font-size:35px;">{{ icon_id }}</span>

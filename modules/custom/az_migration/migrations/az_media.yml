@@ -1,5 +1,5 @@
 id: az_media
-label: All Media (media_migration)
+label: All Media
 migration_group: az_migration
 audit: true
 migration_tags:
@@ -7,11 +7,11 @@ migration_tags:
   - Content
   - Quickstart Content Migration
 source:
-  plugin: d7_file_entity_item
+  plugin: az_file_entity
 process:
   uid:
     -
-      plugin: migration_lookup
+      plugin: migmag_lookup
       migration: az_user
       no_stub: true
       source: uid
@@ -39,7 +39,7 @@ process:
   # The mfid field is temporary, and is not present in the source.
   # Lookup fid through migration lookup. Should not depend on fid not changing.
   mfid:
-    plugin: migration_lookup
+    plugin: migmag_lookup
     migration: az_files
     source: fid
   # Bundles have different field names for their target reference.
@@ -51,7 +51,7 @@ process:
       source: filemime
       method: process
       value: 'video/oembed'
-    - plugin: default_value
+    - plugin: get
       source: '@mfid'
   # The remote_video_thumb_fid field is temporary, and is not present in the source.
   remote_video_thumb_fid:
@@ -60,7 +60,7 @@ process:
       method: process
       value: 'video/oembed'
       not_equals: true
-    - plugin: migration_lookup
+    - plugin: migmag_lookup
       source: field_uaqs_photo/0/fid
       migration:
         - az_files

@@ -8,6 +8,7 @@ seckit_xss:
     default-src: ''
     script-src: ''
     object-src: ''
+    style-src: ''
     img-src: ''
     media-src: ''
     frame-src: ''
@@ -19,10 +20,6 @@ seckit_xss:
     upgrade-req: false
     policy-uri: ''
   x_xss:
-    seckit_x_xss_option_disable: Disabled
-    seckit_x_xss_option_0: '0'
-    seckit_x_xss_option_1: 1;
-    seckit_x_xss_option_1_block: '1; mode=block'
     select: 0
 seckit_csrf:
   origin: false

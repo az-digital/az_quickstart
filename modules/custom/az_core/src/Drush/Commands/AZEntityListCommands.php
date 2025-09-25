@@ -1,12 +1,15 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\az_core\Drush\Commands;
 
 use Consolidation\OutputFormatters\StructuredData\RowsOfFields;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drush\Attributes as CLI;
+use Drush\Attributes\Command;
+use Drush\Attributes\DefaultFields;
+use Drush\Attributes\FieldLabels;
+use Drush\Attributes\Usage;
 use Drush\Commands\DrushCommands;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -26,7 +29,7 @@ final class AZEntityListCommands extends DrushCommands {
    * Constructs a new AzEntityListDrushCommands object.
    */
   public function __construct(
-    EntityTypeManagerInterface $entity_type_manager
+    EntityTypeManagerInterface $entity_type_manager,
   ) {
     parent::__construct();
     $this->entityTypeManager = $entity_type_manager;
@@ -47,22 +50,22 @@ final class AZEntityListCommands extends DrushCommands {
    * @return \Consolidation\OutputFormatters\StructuredData\RowsOfFields
    *   A table with a row for each asset type and count.
    */
-  #[CLI\Command(name: 'az-entity-list:list', aliases: ['ael'])]
-  #[CLI\DefaultFields(fields: [
+  #[Command(name: 'az-entity-list:list', aliases: ['ael'])]
+  #[DefaultFields(fields: [
     'entity_type',
     'bundle',
     'count',
     'entity_type_provider',
   ])]
-  #[CLI\FieldLabels(labels: [
+  #[FieldLabels(labels: [
     'entity_type' => 'Entity type',
     'bundle' => 'Bundle',
     'count' => 'Count',
     'entity_type_provider' => 'Entity Type Provider',
   ])]
-  #[CLI\Usage(name: 'drush az-entity-list:list', description: "List entities enabled on an Arizona Quickstart site.")]
+  #[Usage(name: 'drush az-entity-list:list', description: "List entities enabled on an Arizona Quickstart site.")]
 
-    public function list(array $options = ['format' => 'table']): RowsOfFields {
+  public function list(array $options = ['format' => 'table']): RowsOfFields {
     $all_results = [];
     $entity_types = array_keys($this->entityTypeManager->getDefinitions());
 
@@ -86,42 +89,42 @@ final class AZEntityListCommands extends DrushCommands {
     }
 
     return new RowsOfFields($all_results);
-    }
+  }
 
-    /**
-     * List entity bundles enabled on an Arizona Quickstart site.
-     */
-    private function getBundleTypes(string $entity_type): array {
-      try {
-        $entity_type_definition = $this->entityTypeManager->getDefinition($entity_type);
-        if ($bundle = $entity_type_definition->getBundleEntityType()) {
-          $bundles = $this->entityTypeManager->getStorage($bundle)->loadMultiple();
-          return array_keys($bundles);
-        }
-      }
-      catch (\Exception $e) {
-      }
-      return [$entity_type];
-
-    }
-
-    /**
-     * Get the count of entities for a given entity type and bundle.
-     */
-    private function getEntityCount(string $entity_type, string $bundle): int {
-      try {
-        $entity_type_definition = $this->entityTypeManager->getDefinition($entity_type);
-        $bundle_field = $entity_type_definition->getKey('bundle');
-        $query = $this->entityTypeManager->getStorage($entity_type)->getQuery();
-        $query->accessCheck(FALSE);
-        if ($bundle_field) {
-          $query->condition($bundle_field, $bundle);
-        }
-        return $query->count()->execute();
-      }
-      catch (\Exception $e) {
-        return 0;
+  /**
+   * List entity bundles enabled on an Arizona Quickstart site.
+   */
+  private function getBundleTypes(string $entity_type): array {
+    try {
+      $entity_type_definition = $this->entityTypeManager->getDefinition($entity_type);
+      if ($bundle = $entity_type_definition->getBundleEntityType()) {
+        $bundles = $this->entityTypeManager->getStorage($bundle)->loadMultiple();
+        return array_keys($bundles);
       }
     }
+    catch (\Exception $e) {
+    }
+    return [$entity_type];
+
+  }
+
+  /**
+   * Get the count of entities for a given entity type and bundle.
+   */
+  private function getEntityCount(string $entity_type, string $bundle): int {
+    try {
+      $entity_type_definition = $this->entityTypeManager->getDefinition($entity_type);
+      $bundle_field = $entity_type_definition->getKey('bundle');
+      $query = $this->entityTypeManager->getStorage($entity_type)->getQuery();
+      $query->accessCheck(FALSE);
+      if ($bundle_field) {
+        $query->condition($bundle_field, $bundle);
+      }
+      return $query->count()->execute();
+    }
+    catch (\Exception $e) {
+      return 0;
+    }
+  }
 
 }

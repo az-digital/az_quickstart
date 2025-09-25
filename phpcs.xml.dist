@@ -13,6 +13,8 @@
   <exclude-pattern>*/arizona-bootstrap/*</exclude-pattern>
   <exclude-pattern>*/ua-brand-icons/*</exclude-pattern>
   <exclude-pattern>*/node_modules/*</exclude-pattern>
+  <exclude-pattern>*/vendor/*</exclude-pattern>
+  <exclude-pattern>*/.ddev/*</exclude-pattern>
 
   <!-- Code is to be tested as Drupal 8. -->
   <config name="drupal_core_version" value="8"/>
@@ -43,50 +45,10 @@
     <!-- MissingShort has false positives. See https://www.drupal.org/project/drupal/issues/2572635  -->
     <exclude name="Drupal.Commenting.DocComment.MissingShort"/>
   </rule>
-
-  <!-- Security Code Reviews Rules -->
-
-  <!-- Global properties -->
-  <!-- Please note that not every sniff uses them and they can be overwritten by rule -->
-  <!-- Paranoya mode: Will generate more alerts but will miss less vulnerabilites. Good for assisting manual code review. -->
-  <config name="ParanoiaMode" value="1"/>
-
-  <!-- BadFunctions -->
-  <!-- PHP functions that can lead to security issues -->
-  <rule ref="Security.BadFunctions.Asserts"/>
-  <rule ref="Security.BadFunctions.Backticks"/>
-  <!-- <rule ref="Security.BadFunctions.CallbackFunctions"/> -->
-  <rule ref="Security.BadFunctions.CryptoFunctions"/>
-  <rule ref="Security.BadFunctions.EasyRFI"/>
-  <rule ref="Security.BadFunctions.EasyXSS">
-    <properties>
-      <!-- Comment out to follow global ParanoiaMode -->
-      <property name="forceParanoia" value="1"/>
-    </properties>
+  <rule ref="DrupalPractice">
+    <!-- See https://github.com/az-digital/az_quickstart/issues/4612 -->
+    <exclude name="DrupalPractice.Constants.GlobalConstant.GlobalConstant"/>
+    <!-- See https://github.com/az-digital/az_quickstart/issues/4613 -->
+    <exclude name="DrupalPractice.Objects.StrictSchemaDisabled.StrictConfigSchema"/>
   </rule>
-  <rule ref="Security.BadFunctions.ErrorHandling"/>
-  <!-- <rule ref="Security.BadFunctions.FilesystemFunctions"/> -->
-  <rule ref="Security.BadFunctions.FringeFunctions"/>
-  <rule ref="Security.BadFunctions.FunctionHandlingFunctions"/>
-  <rule ref="Security.BadFunctions.Mysqli"/>
-  <rule ref="Security.BadFunctions.NoEvals"/>
-  <rule ref="Security.BadFunctions.Phpinfos"/>
-  <!-- <rule ref="Security.BadFunctions.PregReplace"/> -->
-  <rule ref="Security.BadFunctions.SQLFunctions"/>
-  <rule ref="Security.BadFunctions.SystemExecFunctions"/>
-
-  <!-- CVE -->
-  <!-- Entries from CVE database from vendor PHP and bugs.php.net -->
-  <rule ref="Security.CVE.CVE20132110"/>
-  <rule ref="Security.CVE.CVE20134113"/>
-
-  <!-- Misc -->
-  <rule ref="Security.Misc.BadCorsHeader"/>
-  <rule ref="Security.Misc.IncludeMismatch"/>
-  <rule ref="Security.Misc.TypeJuggle"/>
-
-  <!-- PHPCompatibility -->
-  <rule ref="PHPCompatibility"/>
-  <config name="testVersion" value="8.2-"/>
-
 </ruleset>

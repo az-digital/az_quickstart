@@ -50,6 +50,7 @@ process:
       - az_node_flexible_page
       - az_node_news
       - az_node_person
+      - az_node_uaqs_basic_page_to_az_page
     source: link_path
   link/uri:
     plugin: link_uri
@@ -85,6 +86,7 @@ migration_dependencies:
     - az_node_flexible_page
     - az_node_news
     - az_node_person
+    - az_node_uaqs_basic_page_to_az_page
     - az_event_categories
     - az_flexible_page_categories
     - az_news_tags

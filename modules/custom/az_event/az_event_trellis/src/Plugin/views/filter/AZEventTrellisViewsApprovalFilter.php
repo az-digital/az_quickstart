@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace Drupal\az_event_trellis\Plugin\views\filter;
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\views\Attribute\ViewsFilter;
 use Drupal\views\Plugin\views\filter\FilterPluginBase;
 use Drupal\views_remote_data\Plugin\views\PropertyPluginTrait;
 use Drupal\views_remote_data\Plugin\views\query\RemoteDataQuery;
 
 /**
  * Filter Trellis event API values according to approval status.
- *
- * @ViewsFilter("az_event_trellis_views_approval_filter")
  */
+#[ViewsFilter("az_event_trellis_views_approval_filter")]
 class AZEventTrellisViewsApprovalFilter extends FilterPluginBase {
 
   use PropertyPluginTrait;

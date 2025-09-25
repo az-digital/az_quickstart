@@ -3,6 +3,7 @@
 namespace Drupal\az_marketing_cloud\Plugin\views\field;
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\views\Attribute\ViewsField;
 use Drupal\views\Plugin\views\field\Links;
 use Drupal\views\ResultRow;
 
@@ -10,9 +11,8 @@ use Drupal\views\ResultRow;
  * Renders links as a drop button.
  *
  * @ingroup views_field_handlers
- *
- * @ViewsField("az_dropbutton")
  */
+#[ViewsField("az_dropbutton")]
 class AzDropbutton extends Links {
 
   /**
@@ -43,8 +43,8 @@ class AzDropbutton extends Links {
       '#description' => $this->t('Dropbutton type.'),
       '#default_value' => $this->options['dropbutton_type'],
       '#options' => [
-        'small' => 'Small',
-        'extrasmall' => 'Extra small',
+        'small' => $this->t('Small'),
+        'extrasmall' => $this->t('Extra small'),
       ],
     ];
     $form['click_action'] = [
@@ -53,8 +53,8 @@ class AzDropbutton extends Links {
       '#description' => $this->t('Determine how links should behave.'),
       '#default_value' => $this->options['click_action'],
       '#options' => [
-        'none' => 'None',
-        'js-click2copy' => 'Click to copy to clipboard via JS',
+        'none' => $this->t('None'),
+        'js-click2copy' => $this->t('Click to copy to clipboard via JS'),
       ],
     ];
   }

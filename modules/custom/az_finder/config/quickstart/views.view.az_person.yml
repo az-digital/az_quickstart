@@ -9,6 +9,7 @@ dependencies:
     - field.storage.node.field_az_media_image
     - field.storage.node.field_az_person_category
     - field.storage.node.field_az_phones
+    - field.storage.node.field_az_suffix
     - field.storage.node.field_az_titles
     - node.type.az_person
     - taxonomy.vocabulary.az_person_categories
@@ -105,6 +106,7 @@ display:
         type: full
         options:
           offset: 0
+          pagination_heading_level: h4
           items_per_page: 0
           total_pages: null
           id: 0
@@ -586,6 +588,21 @@ display:
           separator: ', '
           field_api_classes: false
       sorts:
+        sticky:
+          id: sticky
+          table: node_field_data
+          field: sticky
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          entity_field: sticky
+          plugin_id: standard
+          order: DESC
+          expose:
+            label: ''
+            field_identifier: ''
+          exposed: false
         weight:
           id: weight
           table: draggableviews_structure
@@ -645,6 +662,7 @@ display:
           relationship: none
           view_mode: az_card
       defaults:
+        css_class: false
         exposed_form: true
         style: false
         style_options: false
@@ -654,6 +672,7 @@ display:
         sorts: false
         arguments: true
       relationships: {  }
+      css_class: 'az-person-grid add-pager-top-margin'
       display_description: ''
       style_options: null
       exposed_block: true
@@ -741,6 +760,21 @@ display:
           separator: ', '
           field_api_classes: false
       sorts:
+        sticky:
+          id: sticky
+          table: node_field_data
+          field: sticky
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          entity_field: sticky
+          plugin_id: standard
+          order: DESC
+          expose:
+            label: ''
+            field_identifier: ''
+          exposed: false
         weight:
           id: weight
           table: draggableviews_structure
@@ -800,6 +834,7 @@ display:
           relationship: none
           view_mode: az_card
       defaults:
+        css_class: false
         style: false
         style_options: false
         row: false
@@ -808,6 +843,7 @@ display:
         sorts: false
         arguments: true
       relationships: {  }
+      css_class: 'az-person-grid add-pager-top-margin'
       display_description: ''
       exposed_block: true
       display_extenders: {  }
@@ -949,6 +985,69 @@ display:
           text: 'View full profile'
           output_url_as_text: false
           absolute: false
+        field_az_suffix:
+          id: field_az_suffix
+          table: node__field_az_suffix
+          field: field_az_suffix
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: field
+          label: ''
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: false
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: false
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
         title:
           id: title
           table: node_field_data
@@ -963,7 +1062,7 @@ display:
           exclude: true
           alter:
             alter_text: true
-            text: '<h3 class="h5 mt-0 text-blue">{{ title }}</h3>'
+            text: '<h3 class="h5 mt-0 text-blue">{{ title }}{% if (field_az_suffix | length > 0) %}, {{ field_az_suffix }}{% endif %}</h3>'
             make_link: false
             path: ''
             absolute: false
@@ -1028,7 +1127,7 @@ display:
           exclude: true
           alter:
             alter_text: true
-            text: '<h3 class="text-blue my-0">{{ title_1 }}</h3>'
+            text: '<h3 class="text-blue my-0">{{ title_1 }}{% if (field_az_suffix | length > 0) %}, {{ field_az_suffix }}{% endif %}</h3>'
             make_link: false
             path: ''
             absolute: false
@@ -1091,7 +1190,7 @@ display:
           exclude: true
           alter:
             alter_text: true
-            text: '<div role="button" data-toggle="modal" data-target="#personModal{{ nid }}">{{ field_az_media_image }}</div>'
+            text: '<div role="button" data-bs-toggle="modal" data-bs-target="#personModal{{ nid }}">{{ field_az_media_image }}</div>'
             make_link: false
             path: '{{ view_node }}'
             absolute: false
@@ -1531,7 +1630,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: "<div class=\"card mt-2\">\r\n   {{ field_az_media_image }}\r\n   <div class=\"card-body\">\r\n      {{ title }}\r\n      {{ field_az_titles }}\r\n      <div class=\"mt-3\">\r\n         {{ field_az_phones }}\r\n         {{ field_az_email }}\r\n      </div>\r\n   </div>\r\n</div>"
+            text: "<div class=\"card mt-2 overflow-hidden\">\r\n   {{ field_az_media_image }}\r\n   <div class=\"card-body\">\r\n      {{ title }}\r\n      {{ field_az_titles }}\r\n      <div class=\"mt-3\">\r\n         {{ field_az_phones }}\r\n         {{ field_az_email }}\r\n      </div>\r\n   </div>\r\n</div>"
             make_link: false
             path: ''
             absolute: false
@@ -1580,7 +1679,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: "<div id=\"personModal{{ nid }}\" class=\"modal fade\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"personModal{{ nid }}Label\" aria-hidden=\"true\">\r\n    <div class=\"modal-dialog modal-xl\" role=\"document\">\r\n        <div class=\"modal-content p-0\">\r\n            <a role=\"button\" class=\"close position-absolute p-1 az-person-modal-close\" data-dismiss=\"modal\" aria-label=\"Close\">\r\n                <span aria-hidden=\"true\"><span class=\"material-icons-sharp\">close</span></span>\r\n            </a>\r\n            <div class=\"row no-gutters\">\r\n                <div class=\"col-12 col-lg-5 col-xl-4 az-person-modal-image\">\r\n                    {{ field_az_media_image_1 }}\r\n                </div>\r\n                <div class=\"col-12 col-lg-7 col-xl-8 d-flex\">\r\n                    <div class=\"modal-body d-flex flex-column justify-content-between p-3 p-lg-5 pb-0\">\r\n                        <div class=\"az-modal-person-details\">\r\n                            <div class=\"modal-title\" id=\"personModal{{ nid }}Label\">{{ title_1 }}</div>\r\n                            {{ field_az_titles }}\r\n                            <div class=\"mb-3\">\r\n                                {{ field_az_phones_1 }} {{ field_az_phones_1 is not empty and field_az_email is not empty ? \"|\" : \"\" }} {{ field_az_email }}\r\n                            </div>\r\n                            {{ field_az_body }}\r\n                        </div>\r\n                        <div class=\"az-modal-person-buttons\">\r\n                            <div class=\"modal-footer border-0 justify-content-start px-0\">\r\n                                {{ view_node }}\r\n                                <a role=\"button\" class=\"btn btn-outline-blue\" data-dismiss=\"modal\" aria-label=\"Close\">Close</a>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n            </div>        \r\n        </div>\r\n    </div>\r\n</div>\r\n    "
+            text: "<div id=\"personModal{{ nid }}\" class=\"modal fade\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"personModal{{ nid }}Label\" aria-hidden=\"true\">\r\n    <div class=\"modal-dialog modal-xl\" role=\"document\">\r\n        <div class=\"modal-content p-0 overflow-hidden\">\r\n            <a role=\"button\" class=\"close position-absolute p-1 az-person-modal-close\" data-bs-dismiss=\"modal\" aria-label=\"Close\">\r\n                <span aria-hidden=\"true\"><span class=\"material-symbols-rounded\">close</span></span>\r\n            </a>\r\n            <div class=\"row no-gutters\">\r\n                <div class=\"col-12 col-lg-5 col-xl-4 az-person-modal-image\">\r\n                    {{ field_az_media_image_1 }}\r\n                </div>\r\n                <div class=\"col-12 col-lg-7 col-xl-8 d-flex\">\r\n                    <div class=\"modal-body d-flex flex-column justify-content-between p-3 p-lg-5 pb-0\">\r\n                        <div class=\"az-modal-person-details\">\r\n                            <div class=\"modal-title\" id=\"personModal{{ nid }}Label\">{{ title_1 }}</div>\r\n                            {{ field_az_titles }}\r\n                            <div class=\"mb-3\">\r\n                                {{ field_az_phones_1 }} {{ field_az_phones_1 is not empty and field_az_email is not empty ? \"|\" : \"\" }} {{ field_az_email }}\r\n                            </div>\r\n                            {{ field_az_body }}\r\n                        </div>\r\n                        <div class=\"az-modal-person-buttons\">\r\n                            <div class=\"modal-footer border-0 justify-content-start px-0\">\r\n                                {{ view_node }}\r\n                                <a role=\"button\" class=\"btn btn-outline-blue\" data-bs-dismiss=\"modal\" aria-label=\"Close\">Close</a>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n            </div>        \r\n        </div>\r\n    </div>\r\n</div>\r\n    "
             make_link: false
             path: ''
             absolute: false
@@ -1618,6 +1717,21 @@ display:
           empty_zero: false
           hide_alter_empty: false
       sorts:
+        sticky:
+          id: sticky
+          table: node_field_data
+          field: sticky
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          entity_field: sticky
+          plugin_id: standard
+          order: DESC
+          expose:
+            label: ''
+            field_identifier: ''
+          exposed: false
         weight:
           id: weight
           table: draggableviews_structure
@@ -1688,7 +1802,7 @@ display:
         sorts: false
         arguments: true
       relationships: {  }
-      css_class: 'az-person-grid az-person-modal'
+      css_class: 'az-person-grid az-person-modal add-pager-top-margin'
       display_description: 'Displays Person nodes in a grid layout. On click, displays Person content in a modal instead of full node page.'
       style_options: null
       exposed_block: true
@@ -1707,6 +1821,7 @@ display:
         - 'config:field.storage.node.field_az_email'
         - 'config:field.storage.node.field_az_media_image'
         - 'config:field.storage.node.field_az_phones'
+        - 'config:field.storage.node.field_az_suffix'
         - 'config:field.storage.node.field_az_titles'
   grid_modal_3cols:
     id: grid_modal_3cols
@@ -1834,6 +1949,69 @@ display:
           text: 'View full profile'
           output_url_as_text: false
           absolute: false
+        field_az_suffix:
+          id: field_az_suffix
+          table: node__field_az_suffix
+          field: field_az_suffix
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: field
+          label: ''
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: false
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
         title:
           id: title
           table: node_field_data
@@ -1848,7 +2026,7 @@ display:
           exclude: true
           alter:
             alter_text: true
-            text: '<h3 class="h5 mt-0 text-blue">{{ title }}</h3>'
+            text: '<h3 class="h5 mt-0 text-blue">{{ title }}{%if ( field_az_suffix | length > 0 )%}, {{ field_az_suffix }}{% endif %}</h3>'
             make_link: false
             path: ''
             absolute: false
@@ -1913,7 +2091,7 @@ display:
           exclude: true
           alter:
             alter_text: true
-            text: '<h3 class="text-blue my-0">{{ title_1 }}</h3>'
+            text: '<h3 class="text-blue my-0">{{ title_1 }}{%if ( field_az_suffix | length > 0 )%}, {{ field_az_suffix }}{% endif %}</h3>'
             make_link: false
             path: ''
             absolute: false
@@ -1976,7 +2154,7 @@ display:
           exclude: true
           alter:
             alter_text: true
-            text: '<div role="button" data-toggle="modal" data-target="#personModal{{ nid }}">{{ field_az_media_image }}</div>'
+            text: '<div role="button" data-bs-toggle="modal" data-bs-target="#personModal{{ nid }}">{{ field_az_media_image }}</div>'
             make_link: false
             path: '{{ view_node }}'
             absolute: false
@@ -2416,7 +2594,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: "<div class=\"card mt-2\">\r\n   {{ field_az_media_image }}\r\n   <div class=\"card-body\">\r\n      {{ title }}\r\n      {{ field_az_titles }}\r\n      <div class=\"mt-3\">\r\n         {{ field_az_phones }}<br>\r\n         {{ field_az_email }}\r\n      </div>\r\n   </div>\r\n</div>"
+            text: "<div class=\"card mt-2 overflow-hidden\">\r\n   {{ field_az_media_image }}\r\n   <div class=\"card-body\">\r\n      {{ title }}\r\n      {{ field_az_titles }}\r\n      <div class=\"mt-3\">\r\n         {{ field_az_phones }}<br>\r\n         {{ field_az_email }}\r\n      </div>\r\n   </div>\r\n</div>"
             make_link: false
             path: ''
             absolute: false
@@ -2465,7 +2643,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: "<div id=\"personModal{{ nid }}\" class=\"modal fade\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"personModal{{ nid }}Label\" aria-hidden=\"true\">\r\n    <div class=\"modal-dialog modal-xl\" role=\"document\">\r\n        <div class=\"modal-content p-0\">\r\n            <a role=\"button\" class=\"close position-absolute p-1 az-person-modal-close\" data-dismiss=\"modal\" aria-label=\"Close\">\r\n                <span aria-hidden=\"true\"><span class=\"material-icons-sharp\">close</span></span>\r\n            </a>\r\n            <div class=\"row no-gutters\">\r\n                <div class=\"col-12 col-lg-5 col-xl-4 az-person-modal-image\">\r\n                    {{ field_az_media_image_1 }}\r\n                </div>\r\n                <div class=\"col-12 col-lg-7 col-xl-8 d-flex\">\r\n                    <div class=\"modal-body d-flex flex-column justify-content-between p-3 p-lg-5 pb-0\">\r\n                        <div class=\"az-modal-person-details\">\r\n                            <div class=\"modal-title\" id=\"personModal{{ nid }}Label\">{{ title_1 }}</div>\r\n                            {{ field_az_titles }}\r\n                            <div class=\"mb-3\">\r\n                                {{ field_az_phones_1 }} {{ field_az_phones_1 is not empty and field_az_email is not empty ? \"|\" : \"\" }} {{ field_az_email }}\r\n                            </div>\r\n                            {{ field_az_body }}\r\n                        </div>\r\n                        <div class=\"az-modal-person-buttons\">\r\n                            <div class=\"modal-footer border-0 justify-content-start px-0\">\r\n                                {{ view_node }}\r\n                                <a role=\"button\" class=\"btn btn-outline-blue\" data-dismiss=\"modal\" aria-label=\"Close\">Close</a>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n            </div>        \r\n        </div>\r\n    </div>\r\n</div>\r\n    "
+            text: "<div id=\"personModal{{ nid }}\" class=\"modal fade\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"personModal{{ nid }}Label\" aria-hidden=\"true\">\r\n    <div class=\"modal-dialog modal-xl\" role=\"document\">\r\n        <div class=\"modal-content p-0\">\r\n            <a role=\"button\" class=\"close position-absolute p-1 az-person-modal-close\" data-bs-dismiss=\"modal\" aria-label=\"Close\">\r\n                <span aria-hidden=\"true\"><span class=\"material-symbols-rounded\">close</span></span>\r\n            </a>\r\n            <div class=\"row no-gutters\">\r\n                <div class=\"col-12 col-lg-5 col-xl-4 az-person-modal-image\">\r\n                    {{ field_az_media_image_1 }}\r\n                </div>\r\n                <div class=\"col-12 col-lg-7 col-xl-8 d-flex\">\r\n                    <div class=\"modal-body d-flex flex-column justify-content-between p-3 p-lg-5 pb-0\">\r\n                        <div class=\"az-modal-person-details\">\r\n                            <div class=\"modal-title\" id=\"personModal{{ nid }}Label\">{{ title_1 }}</div>\r\n                            {{ field_az_titles }}\r\n                            <div class=\"mb-3\">\r\n                                {{ field_az_phones_1 }} {{ field_az_phones_1 is not empty and field_az_email is not empty ? \"|\" : \"\" }} {{ field_az_email }}\r\n                            </div>\r\n                            {{ field_az_body }}\r\n                        </div>\r\n                        <div class=\"az-modal-person-buttons\">\r\n                            <div class=\"modal-footer border-0 justify-content-start px-0\">\r\n                                {{ view_node }}\r\n                                <a role=\"button\" class=\"btn btn-outline-blue\" data-bs-dismiss=\"modal\" aria-label=\"Close\">Close</a>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n            </div>        \r\n        </div>\r\n    </div>\r\n</div>\r\n    "
             make_link: false
             path: ''
             absolute: false
@@ -2503,6 +2681,21 @@ display:
           empty_zero: false
           hide_alter_empty: false
       sorts:
+        sticky:
+          id: sticky
+          table: node_field_data
+          field: sticky
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          entity_field: sticky
+          plugin_id: standard
+          order: DESC
+          expose:
+            label: ''
+            field_identifier: ''
+          exposed: false
         weight:
           id: weight
           table: draggableviews_structure
@@ -2573,7 +2766,7 @@ display:
         sorts: false
         arguments: true
       relationships: {  }
-      css_class: 'az-person-grid az-person-modal'
+      css_class: 'az-person-grid az-person-modal add-pager-top-margin'
       display_description: 'Displays Person nodes in a 3-column grid layout. On click, displays Person content in a modal instead of full node page.'
       style_options: null
       exposed_block: true
@@ -2592,6 +2785,7 @@ display:
         - 'config:field.storage.node.field_az_email'
         - 'config:field.storage.node.field_az_media_image'
         - 'config:field.storage.node.field_az_phones'
+        - 'config:field.storage.node.field_az_suffix'
         - 'config:field.storage.node.field_az_titles'
   row:
     id: row
@@ -2600,6 +2794,21 @@ display:
     position: 3
     display_options:
       sorts:
+        sticky:
+          id: sticky
+          table: node_field_data
+          field: sticky
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          entity_field: sticky
+          plugin_id: standard
+          order: DESC
+          expose:
+            label: ''
+            field_identifier: ''
+          exposed: false
         weight:
           id: weight
           table: draggableviews_structure

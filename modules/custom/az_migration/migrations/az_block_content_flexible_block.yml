@@ -2,6 +2,7 @@ id: az_block_content_flexible_block
 label: AZ Flexible Block (Beans)
 migration_group: az_migration
 migration_tags:
+  - Drupal 7
   - Quickstart Content Migration
   - Blocks
 
@@ -42,7 +43,7 @@ destination:
 process:
   uid:
     -
-      plugin: migration_lookup
+      plugin: migmag_lookup
       migration: az_user
       no_stub: true
       source: node_uid
@@ -61,7 +62,7 @@ process:
       process:
         value:
           -
-            plugin: migration_lookup
+            plugin: migmag_lookup
             source: value
             migration:
               - az_paragraph_callout

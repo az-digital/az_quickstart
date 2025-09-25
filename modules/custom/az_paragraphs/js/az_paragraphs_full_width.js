@@ -4,7 +4,7 @@
 * https://www.drupal.org/node/2815083
 * @preserve
 **/
-(function (Drupal, window, document) {
+(function () {
   function calculateScrollbarWidth() {
     document.documentElement.style.setProperty('--scrollbar-width', "".concat(window.innerWidth - document.documentElement.clientWidth, "px"));
   }
@@ -17,7 +17,7 @@
       }
       var lastFullWidthElement = allFullWidthElements[allFullWidthElements.length - 1];
       var contentRegionPosition = contentRegion.getBoundingClientRect();
-      var style = allFullWidthElements[0].currentStyle || window.getComputedStyle(lastFullWidthElement, '');
+      var style = window.getComputedStyle(lastFullWidthElement, '');
       var bottomMargin = parseFloat(style.marginBottom);
       var contentRegionTop = contentRegionPosition.top;
       var lastFullWidthElementPosition = lastFullWidthElement.getBoundingClientRect();
@@ -30,31 +30,36 @@
   }
   function calculateFullWidthNegativeMargins() {
     var contentRegion = document.querySelectorAll('.block-system-main-block');
-    if (contentRegion !== null) {
+    if (contentRegion.length > 0) {
       var contentRegionPosition = contentRegion[0].getBoundingClientRect();
       var distanceFromLeft = contentRegionPosition.left;
       var distanceFromRight = contentRegionPosition.right;
       var negativeLeftMargin = 0 - distanceFromLeft;
-      var negativeRightMargin = 0 - distanceFromRight;
+      var negativeRightMargin = distanceFromRight - document.documentElement.clientWidth;
       document.documentElement.style.setProperty('--full-width-left-distance', "".concat(negativeLeftMargin, "px"));
       document.documentElement.style.setProperty('--full-width-right-distance', "".concat(negativeRightMargin, "px"));
     }
-  }
-  Drupal.behaviors.azParagraphsFullWidthElements = {
-    attach: function attach() {
-      calculateScrollbarWidth();
-      calculateFullWidthNegativeMargins();
-      pushSidebarsDown();
+    var contentTopAndBottomBlocks = document.querySelectorAll('.region-content-top > .block, .region-content-bottom > .block');
+    if (contentTopAndBottomBlocks.length > 0) {
+      var negativeAutoMargin = -(document.documentElement.clientWidth - contentTopAndBottomBlocks[0].getBoundingClientRect().width) / 2;
+      document.documentElement.style.setProperty('--full-width-auto-distance', "".concat(negativeAutoMargin, "px"));
     }
-  };
-  window.addEventListener('resize', function () {
+  }
+  function calculateFullWidthSidebarWidth() {
+    var sidebarRegion = document.querySelectorAll('.sidebar');
+    if (sidebarRegion.length > 0) {
+      var sidebarRegionPosition = sidebarRegion[0].getBoundingClientRect();
+      var sidebarWidth = sidebarRegionPosition.width;
+      document.documentElement.style.setProperty('--full-width-sidebar-width', "".concat(sidebarWidth, "px"));
+    }
+  }
+  function setFullWidthLayout() {
     calculateScrollbarWidth();
     calculateFullWidthNegativeMargins();
+    calculateFullWidthSidebarWidth();
     pushSidebarsDown();
-  });
-  window.addEventListener('azVideoPlay', function () {
-    calculateScrollbarWidth();
-    calculateFullWidthNegativeMargins();
-    pushSidebarsDown();
-  });
-})(Drupal, this, this.document);
+  }
+  document.addEventListener('DOMContentLoaded', setFullWidthLayout);
+  window.addEventListener('resize', setFullWidthLayout);
+  window.addEventListener('azVideoPlay', setFullWidthLayout);
+})();

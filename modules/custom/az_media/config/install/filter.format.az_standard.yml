@@ -9,6 +9,7 @@ dependencies:
     - core.entity_view_mode.media.az_square
     - core.entity_view_mode.media.az_very_small
   module:
+    - az_icons
     - bootstrap_utilities
     - entity_embed
     - linkit
@@ -17,11 +18,40 @@ name: Standard
 format: az_standard
 weight: -10
 filters:
-  filter_htmlcorrector:
-    id: filter_htmlcorrector
+  bootstrap_utilities_blockquote_filter:
+    id: bootstrap_utilities_blockquote_filter
+    provider: bootstrap_utilities
+    status: true
+    weight: -49
+    settings: {  }
+  bootstrap_utilities_table_filter:
+    id: bootstrap_utilities_table_filter
+    provider: bootstrap_utilities
+    status: true
+    weight: -48
+    settings:
+      table_remove_width_height: true
+      table_row_striping: false
+      table_bordered: false
+      table_row_hover: false
+      table_small: false
+  entity_embed:
+    id: entity_embed
+    provider: entity_embed
+    status: true
+    weight: -41
+    settings: {  }
+  filter_align:
+    id: filter_align
     provider: filter
     status: true
-    weight: -44
+    weight: -47
+    settings: {  }
+  filter_autop:
+    id: filter_autop
+    provider: filter
+    status: false
+    weight: -42
     settings: {  }
   filter_html:
     id: filter_html
@@ -29,14 +59,14 @@ filters:
     status: true
     weight: -50
     settings:
-      allowed_html: '<br> <p class> <h1 class name id> <h2 class name id> <h3 class name id> <h4 class name id> <h5 class name id> <h6 class name id> <a class target name id title href data-entity-type data-entity-uuid data-entity-substitution> <span class name id> <ul class type> <blockquote class> <footer class> <table class> <thead class> <abbr> <address> <cite> <dl> <dt> <dd> <div class name id data-*> <img src alt data-entity-type data-entity-uuid> <ol type class start> <li class> <tbody class> <tfoot class> <th class scope rowspan colspan> <td class rowspan colspan> <tr class colspan rowspan> <hr class> <drupal-entity data-entity-type data-embed-button alt title data-align data-caption data-entity-embed-display data-entity-embed-display-settings data-view-mode data-entity-uuid data-langcode> <drupal-media title data-entity-type data-entity-uuid alt data-view-mode data-align> <strong> <em> <code class="language-*"> <pre class="text-align-left text-align-center text-align-right text-align-justify"> <s> <sub> <sup> <caption>'
+      allowed_html: '<br> <p class> <h1 class name id> <h2 class name id> <h3 class name id> <h4 class name id> <h5 class name id> <h6 class name id> <a class target name id title href data-entity-type data-entity-uuid data-entity-substitution> <span class name id> <ul class type> <blockquote class> <footer class> <table class> <thead class> <abbr> <address> <cite> <dl> <dt> <dd> <div class name id data-*> <img src alt data-entity-type data-entity-uuid> <ol type class start> <li class> <tbody class> <tfoot class> <th class scope rowspan colspan> <td class rowspan colspan> <tr class colspan rowspan> <hr class> <drupal-entity data-entity-type data-embed-button alt title data-align data-caption data-entity-embed-display data-entity-embed-display-settings data-view-mode data-entity-uuid data-langcode> <drupal-media title data-entity-type data-entity-uuid alt data-view-mode data-align> <strong> <em> <code class="language-*"> <pre class="text-align-left text-align-center text-align-right text-align-justify"> <s> <sub> <sup> <caption> <drupal-icon data-icon-id data-icon-settings class role aria-label aria-hidden>'
       filter_html_help: true
       filter_html_nofollow: false
-  filter_autop:
-    id: filter_autop
+  filter_htmlcorrector:
+    id: filter_htmlcorrector
     provider: filter
     status: true
-    weight: -42
+    weight: -44
     settings: {  }
   filter_url:
     id: filter_url
@@ -45,6 +75,25 @@ filters:
     weight: -46
     settings:
       filter_url_length: 72
+  icon_embed:
+    id: icon_embed
+    provider: ui_icons_text
+    status: true
+    weight: 100
+    settings:
+      allowed_icon_pack:
+        arizona_icons: arizona_icons
+        material_symbols: material_symbols
+      result_format: grid
+      max_result: 24
+  linkit:
+    id: linkit
+    provider: linkit
+    status: true
+    weight: -45
+    settings:
+      title: true
+      media_substitution: metadata
   media_embed:
     id: media_embed
     provider: media
@@ -60,39 +109,3 @@ filters:
         az_square: az_square
         az_very_small: az_very_small
       allowed_media_types: {  }
-  entity_embed:
-    id: entity_embed
-    provider: entity_embed
-    status: true
-    weight: -41
-    settings: {  }
-  bootstrap_utilities_blockquote_filter:
-    id: bootstrap_utilities_blockquote_filter
-    provider: bootstrap_utilities
-    status: true
-    weight: -49
-    settings: {  }
-  bootstrap_utilities_table_filter:
-    id: bootstrap_utilities_table_filter
-    provider: bootstrap_utilities
-    status: true
-    weight: -48
-    settings:
-      table_remove_width_height: '1'
-      table_row_striping: '0'
-      table_bordered: '0'
-      table_row_hover: '0'
-      table_small: '0'
-  filter_align:
-    id: filter_align
-    provider: filter
-    status: true
-    weight: -47
-    settings: {  }
-  linkit:
-    id: linkit
-    provider: linkit
-    status: true
-    weight: -45
-    settings:
-      title: true

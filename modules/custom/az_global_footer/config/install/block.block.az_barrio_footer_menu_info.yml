@@ -27,11 +27,14 @@ settings:
   provider: menu_block
   follow: false
   follow_parent: child
+  display_empty: false
   level: 1
   depth: 0
   expand_all_items: false
   parent: 'az-footer-information-for:'
+  render_parent: false
   suggestion: sub_footer
   label_type: block
   label_link: false
+  hide_on_nonactive: false
 visibility: {  }

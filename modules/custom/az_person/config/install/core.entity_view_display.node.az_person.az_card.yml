@@ -5,19 +5,26 @@ dependencies:
     - core.entity_view_mode.node.az_card
     - field.field.node.az_person.field_az_address
     - field.field.node.az_person.field_az_attachments
+    - field.field.node.az_person.field_az_awards
     - field.field.node.az_person.field_az_body
     - field.field.node.az_person.field_az_degrees
     - field.field.node.az_person.field_az_email
     - field.field.node.az_person.field_az_fname
+    - field.field.node.az_person.field_az_licensure_certification
     - field.field.node.az_person.field_az_link
     - field.field.node.az_person.field_az_links
     - field.field.node.az_person.field_az_lname
     - field.field.node.az_person.field_az_media_image
+    - field.field.node.az_person.field_az_netid
     - field.field.node.az_person.field_az_person_category
     - field.field.node.az_person.field_az_person_category_sec
     - field.field.node.az_person.field_az_phones
     - field.field.node.az_person.field_az_pronouns
+    - field.field.node.az_person.field_az_research_interests
+    - field.field.node.az_person.field_az_suffix
+    - field.field.node.az_person.field_az_teaching_interests
     - field.field.node.az_person.field_az_titles
+    - field.field.node.az_person.field_az_work_experience
     - node.type.az_person
   module:
     - field_group
@@ -36,9 +43,10 @@ third_party_settings:
       weight: 0
       format_type: html_element
       format_settings:
-        classes: card
+        classes: 'card overflow-hidden'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -115,6 +123,7 @@ third_party_settings:
         classes: 'h5 mt-0'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: h3
         show_label: false
         label_element: h3
@@ -125,6 +134,7 @@ third_party_settings:
     group_title_link:
       children:
         - smart_title
+        - field_az_suffix
       label: 'Title Link'
       parent_name: group_title_heading
       region: content
@@ -134,6 +144,7 @@ third_party_settings:
         classes: ''
         show_empty_fields: false
         id: ''
+        label_as_html: false
         target: custom_uri
         custom_uri: '[node:az-canonical-url]'
         target_attribute: default
@@ -153,7 +164,7 @@ content:
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 7
+    weight: 8
     region: content
   field_az_media_image:
     type: entity_reference_entity_view
@@ -178,7 +189,15 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 8
+    weight: 9
+    region: content
+  field_az_suffix:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 5
     region: content
   field_az_titles:
     type: string
@@ -191,17 +210,23 @@ content:
   smart_title:
     settings: {  }
     third_party_settings: {  }
-    weight: 9
+    weight: 4
     region: content
 hidden:
   field_az_address: true
   field_az_attachments: true
+  field_az_awards: true
   field_az_body: true
   field_az_degrees: true
   field_az_fname: true
+  field_az_licensure_certification: true
   field_az_link: true
   field_az_links: true
   field_az_lname: true
+  field_az_netid: true
   field_az_person_category: true
   field_az_person_category_sec: true
+  field_az_research_interests: true
+  field_az_teaching_interests: true
+  field_az_work_experience: true
   links: true

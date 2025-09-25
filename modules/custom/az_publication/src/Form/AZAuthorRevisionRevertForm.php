@@ -2,10 +2,10 @@
 
 namespace Drupal\az_publication\Form;
 
-use Drupal\az_publication\Entity\AZAuthorInterface;
 use Drupal\Core\Form\ConfirmFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
+use Drupal\az_publication\Entity\AZAuthorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -122,7 +122,7 @@ class AZAuthorRevisionRevertForm extends ConfirmFormBase {
       '%title' => $this->revision->label(),
       '%revision' => $this->revision->getRevisionId(),
     ]);
-    $this->messenger()->addMessage(t('Author %title has been reverted to the revision from %revision-date.', [
+    $this->messenger()->addMessage($this->t('Author %title has been reverted to the revision from %revision-date.', [
       '%title' => $this->revision->label(),
       '%revision-date' => $this->dateFormatter->format($original_revision_timestamp),
     ]));

@@ -12,12 +12,11 @@
         var filterCountDisplay = container.querySelector('.js-active-filter-count');
         var textInputFields = container.querySelectorAll('input[type="text"], input[type="search"]');
         var checkboxesAndRadios = container.querySelectorAll('input[type="checkbox"], input[type="radio"]');
-        var minSearchLength = settings.azFinder.minSearchLength || 1;
         var alwaysDisplayResetButton = settings.azFinder.alwaysDisplayResetButton || false;
         var calculateActiveFilterCount = function calculateActiveFilterCount() {
           var count = container.querySelectorAll('input[type="checkbox"]:checked, input[type="radio"]:checked').length;
           textInputFields.forEach(function (inputField) {
-            if (inputField.value.trim().length >= minSearchLength) {
+            if (inputField.value.trim().length >= 1) {
               count += 1;
             }
           });
@@ -25,7 +24,28 @@
         };
         var updateActiveFilterDisplay = function updateActiveFilterDisplay() {
           var activeFilterCount = calculateActiveFilterCount();
-          filterCountDisplay.textContent = "(".concat(activeFilterCount, ")");
+          var badge = filterCountDisplay.querySelector('.badge');
+          if (!badge) {
+            badge = document.createElement('span');
+            badge.classList.add('badge', 'text-bg-light');
+            badge.textContent = '0';
+          }
+          if (activeFilterCount > 0) {
+            badge.classList.remove('visually-hidden');
+            badge.classList.remove('position-absolute');
+          } else {
+            badge.classList.add('visually-hidden');
+            badge.classList.add('position-absolute');
+          }
+          var srText = badge.querySelector('.visually-hidden');
+          if (!srText) {
+            srText = document.createElement('span');
+            srText.classList.add('visually-hidden');
+            srText.textContent = "Active filters: ";
+            badge.appendChild(srText);
+          }
+          badge.firstChild.textContent = "".concat(activeFilterCount);
+          filterCountDisplay.replaceChildren(badge);
           var resetButton = container.querySelector('.js-active-filters-reset');
           if (resetButton) {
             if (alwaysDisplayResetButton || activeFilterCount > 0) {

@@ -19,17 +19,19 @@ dependencies:
     - field.field.node.az_news.field_az_short_title
     - field.field.node.az_news.field_az_subheading
     - field.field.node.az_news.field_az_summary
+    - image.style.az_thumbnail
     - node.type.az_news
   module:
     - field_group
+    - media
     - smart_title
     - user
 third_party_settings:
   field_group:
     group_row:
       children:
-        - group_text_column
         - group_media
+        - group_text_column
       label: Row
       parent_name: group_bottom_border
       region: content
@@ -52,7 +54,7 @@ third_party_settings:
       label: 'Text Column'
       parent_name: group_row
       region: content
-      weight: 4
+      weight: 6
       format_type: html_element
       format_settings:
         classes: col
@@ -73,8 +75,10 @@ third_party_settings:
       weight: 5
       format_type: html_element
       format_settings:
-        classes: float-right
+        classes: 'ps-3 w-25'
+        show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -109,9 +113,10 @@ third_party_settings:
       weight: 9
       format_type: html_element
       format_settings:
-        classes: card-clickable-link
+        classes: ''
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: ''
@@ -128,8 +133,10 @@ third_party_settings:
       weight: 1
       format_type: link
       format_settings:
-        classes: 'card-body p-0'
+        classes: 'card-body p-0 stretched-link link-primary text-decoration-none'
+        show_empty_fields: false
         id: ''
+        label_as_html: false
         target: custom_uri
         custom_uri: '[node:az-canonical-url]'
         target_attribute: default
@@ -160,8 +167,10 @@ third_party_settings:
       weight: 0
       format_type: html_element
       format_settings:
-        classes: 'card card-borderless card-clickable'
+        classes: 'card border-0 hover'
+        show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -178,9 +187,10 @@ third_party_settings:
       weight: 2
       format_type: html_element
       format_settings:
-        classes: 'text-chili small mt-2 mb-4'
+        classes: 'small mt-2 mb-4 hover-text-underline'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -205,11 +215,13 @@ content:
     weight: 2
     region: content
   field_az_media_thumbnail_image:
-    type: entity_reference_entity_view
+    type: media_thumbnail
     label: hidden
     settings:
-      view_mode: az_thumbnail
-      link: false
+      image_link: ''
+      image_style: az_thumbnail
+      image_loading:
+        attribute: lazy
     third_party_settings: {  }
     weight: 5
     region: content
