@@ -195,9 +195,17 @@
       else if (tag === 'select') {
         addClass(el, 'form-select');
       }
-      else if (tag === 'textarea') {
-        addClass(el, 'form-control');
-      }
+        else if (tag === 'textarea') {
+          const name = el.getAttribute('name');
+          // tfa_7 => Campaign name
+          // tfa_9 => Campaign description
+          // These are readonly values that come from Trellis; they should not appear editable
+          if (name === 'tfa_7' || name === 'tfa_9') {
+            addClass(el, 'form-control-plaintext');
+          } else {
+            addClass(el, 'form-control');
+          }
+        }
       else if (tag === 'button') {
         addClass(el, 'btn btn-primary');
       }
@@ -322,21 +330,59 @@
     });
   };
   TrellisFormHandler.prototype.prefillFields = function prefillFields() {
+    console.log('prefillFields called with queryParams:', this.queryParams);
+    
+    if (!this.queryParams || Object.keys(this.queryParams).length === 0) {
+      console.log('No query parameters to prefill');
+      return;
+    }
+    
+    // Check if we have actual form fields loaded yet
+    const allFields = this.container.querySelectorAll('input, select, textarea');
+    console.log('Found form fields:', allFields.length);
+    
+    if (allFields.length === 0) {
+      console.log('No form fields found yet, will retry in 500ms');
+      // Retry after a delay to wait for Trellis form to load
+      setTimeout(() => {
+        this.prefillFields();
+      }, 500);
+      return;
+    }
+    
     Object.entries(this.queryParams).forEach(([name, value]) => {
+      console.log(`Looking for field with name="${name}" to set value="${value}"`);
+      
       const field = this.container.querySelector(`[name="${name}"]`);
+      console.log('Found field:', field);
+      
       if (field && field.value !== value) {
+        console.log(`Setting field ${name} from "${field.value}" to "${value}"`);
         field.value = value;
         field.dispatchEvent(new Event('input', {
           bubbles: true
         }));
+        field.dispatchEvent(new Event('change', {
+          bubbles: true
+        }));
+        console.log(`Field ${name} value after setting:`, field.value);
+      } else if (field) {
+        console.log(`Field ${name} already has correct value:`, field.value);
+      } else {
+        console.log(`Field with name="${name}" not found in container`);
+        // Log all input/select/textarea elements to see what's available
+        console.log('All form fields in container:', Array.from(allFields).map(f => ({
+          tag: f.tagName,
+          name: f.name,
+          id: f.id,
+          className: f.className
+        })));
       }
     });
   };
   Drupal.behaviors.azMediaTrellis = {
     attach(context) {
       const config = drupalSettings.azMediaTrellis || {};
-      const queryParams = config.queryParams || {};
-      const editing = config.editing || false;
       const blockRemoteCss = !!config.blockRemoteCss;
       if (blockRemoteCss) {
         installCssBlockerOnce();
@@ -344,6 +390,24 @@
       const formContainers = context.querySelectorAll('.az-media-trellis:not([data-az-processed])');
       formContainers.forEach(container => {
         container.setAttribute('data-az-processed', 'true');
+        
+        // Get query parameters and editing context specific to this container.
+        const queryParamsJson = container.getAttribute('data-query-params') || '{}';
+        console.log('Raw data-query-params attribute:', queryParamsJson);
+        
+        let queryParams = {};
+        try {
+          queryParams = JSON.parse(queryParamsJson);
+        } catch (e) {
+          console.error('Failed to parse query params JSON:', e);
+        }
+        
+        const editing = container.getAttribute('data-editing') === 'true';
+        
+        console.log('Container:', container);
+        console.log('Parsed queryParams:', queryParams);
+        console.log('Editing mode:', editing);
+        
         const handler = new TrellisFormHandler(container, queryParams, editing);
         handler.init();
         if (blockRemoteCss) {

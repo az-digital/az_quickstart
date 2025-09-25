@@ -237,6 +237,12 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase implements 
       // e.g., '/185'.
       $path = $parsedUrl['path'];
 
+      // Extract query parameters for form prefilling.
+      $query_params = [];
+      if (!empty($parsedUrl['query'])) {
+        parse_str($parsedUrl['query'], $query_params);
+      }
+
       // Insert 'publish' before the form ID for Quick Publish format.
       $pathParts = explode('/', trim($path, '/'));
       $pathParts = array_merge(['publish'], $pathParts);
@@ -263,6 +269,9 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase implements 
             Html::getClass('az-media-trellis'),
             Html::getClass('az-media-trellis--' . $view_mode),
           ],
+          // Store query parameters as JSON data attribute for this specific form.
+          'data-query-params' => !empty($query_params) ? json_encode($query_params) : '{}',
+          'data-editing' => $is_editing_context ? 'true' : 'false',
         ]),
         '#cache' => [
           // Cache varies by URL query arguments for form prefilling.
@@ -286,7 +295,7 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase implements 
       $elements[$delta]['#attached']['html_head'][] = [
         [
           '#tag' => 'script',
-          '#value' => "(function(){if(window.__azTrellisCssBlockerInstalled)return;window.__azTrellisCssBlockerInstalled=true;var P=[/design\\.trellis\\.arizona\\.edu\\/css\\/form-assembly\\.css/i,/forms-a\\.trellis\\.arizona\\.edu\\/dist\\/form-builder\\//i,/forms-a\\.trellis\\.arizona\\.edu\\/uploads\\/themes\\//i,/forms-a\\.trellis\\.arizona\\.edu\\/wForms\\/3\\.11\\/css\\//i];function blocked(n){if(!n||n.tagName!=='LINK'||n.rel!=='stylesheet')return false;return P.some(function(rx){return rx.test(n.href);});}function wrapAppend(orig){return function(node){try{if(blocked(node))return node;}catch(e){}return orig.call(this,node);};}function wrapInsertBefore(orig){return function(node,ref){try{if(blocked(node))return node;}catch(e){}return orig.call(this,node,ref);};}var d=Document.prototype,h=HTMLHeadElement.prototype;if(!d.__azTrellisPatched){d.__azTrellisPatched=true;d.appendChild=wrapAppend(d.appendChild);}if(!h.__azTrellisPatchedA){h.__azTrellisPatchedA=true;h.appendChild=wrapAppend(h.appendChild);}if(!h.__azTrellisPatchedIB){h.__azTrellisPatchedIB=true;h.insertBefore=wrapInsertBefore(h.insertBefore);}new MutationObserver(function(m){m.forEach(function(mm){mm.addedNodes.forEach(function(n){if(blocked(n)&&n.parentNode){n.parentNode.removeChild(n);}});});}).observe(document.head,{childList:true});})();",
+          '#value' => "(function(){if(window.__azTrellisCssBlockerInstalled)return;window.__azTrellisCssBlockerInstalled=true;var P=[/design\\.trellis\\.arizona\\.edu\\/css\\/form-assembly\\.css/i,/forms-a\\.trellis\\.arizona\\.edu\\/dist\\/form-builder\\//i,/forms-a\\.trellis\\.arizona\\.edu\\/uploads\\/themes\\//i,/forms-a\\.trellis\\.arizona\\.edu\\/wForms\\/3\\.11\\/css\\//i];function blocked(n){if(!n||n.tagName!=='LINK'||n.rel!=='stylesheet')return false;return P.some(function(rx){return rx.test(n.href);});}function wrapAppend(orig){return function(node){try{if(blocked(node))return node;}catch(e){}return orig.call(this,node);};}function wrapInsertBefore(orig){return function(node,ref){try{if(blocked(node))return node;}catch(e){}return orig.call(this,node,ref);};}var d=document.constructor.prototype,h=HTMLHeadElement.prototype;if(!d.__azTrellisPatched){d.__azTrellisPatched=true;d.appendChild=wrapAppend(d.appendChild);}if(!h.__azTrellisPatchedA){h.__azTrellisPatchedA=true;h.appendChild=wrapAppend(h.appendChild);}if(!h.__azTrellisPatchedIB){h.__azTrellisPatchedIB=true;h.insertBefore=wrapInsertBefore(h.insertBefore);}new MutationObserver(function(mutations){mutations.forEach(function(mutation){mutation.addedNodes.forEach(function(node){if(blocked(node)){if(node.parentNode){node.parentNode.removeChild(node);}}});});}).observe(document.head,{childList:true});})();",
         ],
         'az_media_trellis_css_blocker_' . $unique_element_id,
       ];

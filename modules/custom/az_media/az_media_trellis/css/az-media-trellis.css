@@ -147,3 +147,7 @@ figure[data-view-mode="az_natural_size"] {
     min-height: 200px;
   }
 }
+
+textarea.form-control-plaintext {
+  resize: none;
+}
