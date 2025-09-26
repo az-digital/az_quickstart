@@ -1,0 +1,10 @@
+services:
+  _defaults:
+    autoconfigure: true
+  az_eds_user.ldap_cas:
+    class: Drupal\az_eds_user\EventSubscriber\AzLdapCas
+    arguments:
+      - '@cas.user_manager'
+      - '@externalauth.authmap'
+      - '@ldap.drupal_user_processor'
+      - '@entity_type.manager'
