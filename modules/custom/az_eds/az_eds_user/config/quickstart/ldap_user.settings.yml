@@ -12,6 +12,6 @@ manualAccountConflict: conflict_reject
 acctCreation: ldap_behavior
 disableAdminPasswordField: false
 userUpdateCronQuery: az_eds_user
-userUpdateCronInterval: always
-userUpdateOnly: false
+userUpdateCronInterval: monthly
+userUpdateOnly: true
 ldapUserSyncMappings: {  }
