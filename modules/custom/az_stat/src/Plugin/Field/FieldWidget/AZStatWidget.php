@@ -371,8 +371,7 @@ class AZStatWidget extends WidgetBase {
       '#element_validate' => [[$this, 'validateStatLink']],
       '#default_value' => $item->link_uri ?? NULL,
       '#maxlength' => 2048,
-      // Server-side required determination - works reliably with AJAX
-      '#required' => $link_required,
+      '#required' => FALSE, // Don't use server-side required - let #states handle it dynamically
       '#states' => [
         // Visible only for standard stat type.
         'visible' => [
