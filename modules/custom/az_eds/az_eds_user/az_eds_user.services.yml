@@ -8,3 +8,4 @@ services:
       - '@externalauth.authmap'
       - '@ldap.drupal_user_processor'
       - '@entity_type.manager'
+      - '@ldap.query'

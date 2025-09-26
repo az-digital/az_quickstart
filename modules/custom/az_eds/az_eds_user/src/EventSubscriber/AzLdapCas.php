@@ -7,6 +7,7 @@ use Drupal\externalauth\AuthmapInterface;
 use Drupal\ldap_user\Processor\DrupalUserProcessor;
 use Drupal\cas\Event\CasPostValidateEvent;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\ldap_query\Controller\QueryController;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -41,6 +42,14 @@ class AzLdapCas implements EventSubscriberInterface {
   protected $entityTypeManager;
 
   /**
+   * Query controller.
+   *
+   * @var \Drupal\ldap_query\Controller\QueryController
+   *   Controller helper to use for LDAP queries.
+   */
+  protected $ldapQuery;
+
+  /**
    * Constructs an AZPersonProfilesImportEventSubscriber.
    *
    * @param \Drupal\cas\Service\CasUserManager $casUserManager
@@ -51,12 +60,15 @@ class AzLdapCas implements EventSubscriberInterface {
    *   Drupal user processor.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   Entity type manager.
+   * @param \Drupal\ldap_query\Controller\QueryController $ldapQuery
+   *   Controller helper to use for LDAP queries.
    */
-  public function __construct(CasUserManager $casUserManager, AuthmapInterface $authmap, DrupalUserProcessor $processor, EntityTypeManagerInterface $entityTypeManager) {
+  public function __construct(CasUserManager $casUserManager, AuthmapInterface $authmap, DrupalUserProcessor $processor, EntityTypeManagerInterface $entityTypeManager, QueryController $ldapQuery) {
     $this->casUserManager = $casUserManager;
     $this->externalAuth = $authmap;
     $this->drupalUserProcessor = $processor;
     $this->entityTypeManager = $entityTypeManager;
+    $this->ldapQuery = $ldapQuery;
   }
 
   /**
@@ -71,7 +83,40 @@ class AzLdapCas implements EventSubscriberInterface {
   }
 
   /**
-   * Respond to events on CAS validation.
+   * Check if an individual user is allowed by the ldap query.
+   *
+   * @param string $authname
+   *   The username to check against the query.
+   *
+   * @return bool
+   *   Whether or not the authname exists in the query.
+   */
+  protected function userAllowedByQuery(string $authname) {
+
+    // @todo formalize this by looking up query config from server.
+    $this->ldapQuery->load('az_eds_user');
+    // Add a clause for our authname to the existing filter.
+    $original_filter = $this->ldapQuery->getFilter();
+    $filter = '(&' . $original_filter .
+      '(uid=' .
+      ldap_escape($authname, "", LDAP_ESCAPE_FILTER) .
+      '))';
+    $this->ldapQuery->execute($filter);
+    $results = $this->ldapQuery->getRawResults();
+    foreach ($results as $result) {
+      // Make sure the result contains the user.
+      $row = $result->getAttributes();
+      $uid = $row['uid'] ?? [];
+      $uid = reset($uid);
+      if ($uid === $authname) {
+        return TRUE;
+      }
+    }
+    return FALSE;
+  }
+
+  /**
+   * Respond to events on CAS validation for JIT provisioning.
    *
    * @param \Drupal\cas\Event\CasPostValidateEvent $event
    *   The event object.
@@ -82,7 +127,12 @@ class AzLdapCas implements EventSubscriberInterface {
     $username = $bag->getUsername();
     // Check if a CAS user exists.
     if ($this->externalAuth->getUid($username, 'cas') === FALSE) {
-      // User does not exist, attempt LDAP provisioning.
+      if (!$this->userAllowedByQuery($username)) {
+        // Not allowed by query.
+        // @todo disable account if exists.
+        return;
+      }
+      // User does not exist, but is allowed, attempt LDAP provisioning.
       $result = $this->drupalUserProcessor->createDrupalUserFromLdapEntry(
         [
           'name' => $username,
