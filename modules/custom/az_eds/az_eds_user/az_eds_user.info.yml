@@ -1,0 +1,13 @@
+name: 'Quickstart EDS Users'
+type: module
+description: 'Provisions Drupal accounts from an LDAP source'
+core_version_requirement: ^10 || ^11 || ^12
+package: 'The University of Arizona - Experimental'
+lifecycle: experimental
+lifecycle_link: 'https://github.com/az-digital/az_quickstart/blob/main/RELEASES.md#experimental-features'
+dependencies:
+  - az_cas
+  - az_eds
+  - ldap_query:ldap_query
+  - ldap_user:ldap_user
+  - key:key
