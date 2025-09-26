@@ -76,7 +76,7 @@ Aliases: `azbs5bc`
 - **Interactive Mode**: Choose which blocks to update one by one with `--interactive`
 - **Automatic Mode**: Update all eligible blocks at once (default behavior)
 - **Smart Conversion**: Uses existing `AZBootstrapMarkupConverter::CLASS_MAP` for consistent conversions
-- **Safe Updates**: Only updates blocks that actually have classes requiring conversion
+- **Targeted Updates**: Only updates blocks that actually have classes requiring conversion **Warning:** This is meant to be run only once in update mode. You can do as many dry runs as you like, but actual updates should only be run once.
 
 ### Output
 
