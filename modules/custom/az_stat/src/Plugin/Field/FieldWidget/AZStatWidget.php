@@ -99,15 +99,9 @@ class AZStatWidget extends WidgetBase {
     $container['widget']['#suffix'] = '</div>' . ($container['widget']['#suffix'] ?? '');
 
     if (isset($container['widget']['add_more']['#ajax']['wrapper'])) {
-      // Instead of using the stat widget wrapper, use a broader wrapper that includes the paragraph
-      // We need to find the paragraph wrapper id - let's use a more generic approach
-      $container['widget']['add_more']['#ajax']['wrapper'] = $wrapper_id;
-      $container['widget']['add_more']['#ajax']['callback'] = [$this, 'statAjax'];
       
-      // Debug: Log when add more button is set up
-      \Drupal::logger('az_stat')->debug('Add more button AJAX callback set to statAjax with wrapper: @wrapper', [
-        '@wrapper' => $wrapper_id
-      ]);
+      $container['widget']['add_more']['#ajax']['wrapper'] = $wrapper_id;
+      //$container['widget']['add_more']['#ajax']['callback'] = [$this, 'statAjax'];
     }
     return $container;
   }
@@ -500,51 +494,9 @@ class AZStatWidget extends WidgetBase {
     // Find the widget and return it.
     $element = [];
     $triggering_element = $form_state->getTriggeringElement();
-    
-    // Return the subform level as originally intended
-    // Path: field_az_main_content[widget][0][subform][field_az_stats][widget][add_more]
-    // Return: field_az_main_content[widget][0][subform]
-    $subform_parents = array_slice($triggering_element['#array_parents'], 0, 4); // field_az_main_content[widget][0][subform]
-    $element = NestedArray::getValue($form, $subform_parents);
-    
-    // Get the paragraph level to access behavior settings
-    $paragraph_parents = array_slice($triggering_element['#array_parents'], 0, 3); // field_az_main_content[widget][0]
-    $paragraph_element = NestedArray::getValue($form, $paragraph_parents);
-    
-    // The key issue: #states looks for ':input[name*="[az_stats_paragraph_behavior][stat_style]"]'
-    // Copy behavior_plugins from paragraph level to subform level so #states can find them
-    if (isset($paragraph_element['behavior_plugins'])) {
-      $element['behavior_plugins'] = $paragraph_element['behavior_plugins'];
-      \Drupal::logger('az_stat')->debug('✓ Copied behavior_plugins from paragraph to subform level');
-    } else {
-      \Drupal::logger('az_stat')->debug('✗ No behavior_plugins found at paragraph level');
-    }
-    
-    \Drupal::logger('az_stat')->debug('Returning subform-level element at path: @path', [
-      '@path' => implode('][', $subform_parents)
-    ]);
-    
-    // Log if behavior fields are present in returned element
-    if (isset($element['behavior_plugins']['az_stats_paragraph_behavior'])) {
-      \Drupal::logger('az_stat')->debug('✓ Behavior plugins accessible in AJAX response - #states should work');
-      
-      // Debug the actual field name that will be generated
-      if (isset($element['behavior_plugins']['az_stats_paragraph_behavior']['stat_style'])) {
-        $stat_style_field = $element['behavior_plugins']['az_stats_paragraph_behavior']['stat_style'];
-        if (isset($stat_style_field['#name'])) {
-          \Drupal::logger('az_stat')->debug('Stat style field name: @name', [
-            '@name' => $stat_style_field['#name']
-          ]);
-        }
-        if (isset($stat_style_field['#parents'])) {
-          \Drupal::logger('az_stat')->debug('Stat style field parents: @parents', [
-            '@parents' => implode('][', $stat_style_field['#parents'])
-          ]);
-        }
-      }
-    } else {
-      \Drupal::logger('az_stat')->debug('✗ Behavior plugins NOT accessible in AJAX response - #states will fail');
-    }
+    // $oops = $triggering_element['#array_parents'];
+    $array_parents = array_slice($triggering_element['#array_parents'], 0, -3);
+    $element = NestedArray::getValue($form, $array_parents);
 
     return $element;
   }
