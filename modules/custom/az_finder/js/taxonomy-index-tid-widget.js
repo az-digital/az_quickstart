@@ -4,14 +4,16 @@
 * https://www.drupal.org/node/2815083
 * @preserve
 **/
-(function (Drupal) {
+(Drupal => {
   Drupal.behaviors.azFinderTaxonomyIndexTidWidget = {
-    attach: function attach(context, settings) {
-      var filterContainers = context.querySelectorAll('[data-az-better-exposed-filters]');
+    attach(context, settings) {
+      const filterContainers = context.querySelectorAll('[data-az-better-exposed-filters]');
       function setupSVGButtonListeners(container) {
-        var svgLevel0ReplaceButtons = container.querySelectorAll('.js-svg-replace-level-0');
-        var svgLevel1ReplaceButtons = container.querySelectorAll('.js-svg-replace-level-1');
-        var icons = settings.azFinder.icons;
+        const svgLevel0ReplaceButtons = container.querySelectorAll('.js-svg-replace-level-0');
+        const svgLevel1ReplaceButtons = container.querySelectorAll('.js-svg-replace-level-1');
+        const {
+          icons
+        } = settings.azFinder;
         function getNewSVGMarkup(isExpanded, level) {
           if (level === 0) {
             return isExpanded ? icons.level_0_collapse : icons.level_0_expand;
@@ -19,20 +21,20 @@
           return isExpanded ? icons.level_1_collapse : icons.level_1_expand;
         }
         function toggleSVG(event) {
-          var button = event.currentTarget;
-          var level = button.classList.contains('js-svg-replace-level-0') ? 0 : 1;
-          var isExpanded = button.getAttribute('aria-expanded') === 'true';
-          var newSVGMarkup = getNewSVGMarkup(isExpanded, level);
+          const button = event.currentTarget;
+          const level = button.classList.contains('js-svg-replace-level-0') ? 0 : 1;
+          const isExpanded = button.getAttribute('aria-expanded') === 'true';
+          const newSVGMarkup = getNewSVGMarkup(isExpanded, level);
           button.querySelector('svg').outerHTML = newSVGMarkup;
         }
-        svgLevel0ReplaceButtons.forEach(function (button) {
+        svgLevel0ReplaceButtons.forEach(button => {
           button.addEventListener('click', toggleSVG);
         });
-        svgLevel1ReplaceButtons.forEach(function (button) {
+        svgLevel1ReplaceButtons.forEach(button => {
           button.addEventListener('click', toggleSVG);
         });
       }
-      filterContainers.forEach(function (container) {
+      filterContainers.forEach(container => {
         setupSVGButtonListeners(container, settings);
       });
     }
