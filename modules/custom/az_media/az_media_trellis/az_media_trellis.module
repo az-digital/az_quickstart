@@ -1,0 +1,94 @@
+<?php
+
+/**
+ * @file
+ * Hook implementations and global functions for az_media_trellis.
+ *
+ * This module provides integration with Trellis (SalesForce) forms,
+ * allowing them to be embedded as remote media entities in Drupal.
+ *
+ * Key features:
+ * - Remote media type for Trellis forms
+ * - Responsive sizing based on view modes
+ * - Query parameter extraction and form prefilling
+ * - JavaScript embed method using FormAssembly Quick Publish
+ * - Edit mode detection for form validation removal
+ *
+ * @see https://help.formassembly.com/help/javascript-form-publishing
+ */
+
+use Drupal\media\Entity\Media;
+
+/**
+ * Implements hook_theme().
+ *
+ * Defines the theme hook for rendering Trellis form embeds.
+ */
+function az_media_trellis_theme($existing, $type, $theme, $path) {
+  return [
+    'az_media_trellis' => [
+      'variables' => [
+        // Media type (legacy, may be removed).
+        'type' => NULL,
+        // The Trellis form embed URL.
+        'url' => NULL,
+        'attributes' => [
+          // HTML attributes for the container element.
+          'id' => NULL,
+          'class' => [],
+        ],
+        // Whether user is in editing context.
+        'editing' => NULL,
+        // Unique container id for the embed target.
+        'target_id' => NULL,
+      ],
+      'template' => 'az-media-trellis',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for media entities.
+ *
+ * Adds Trellis-specific data to media entities for JavaScript processing.
+ *
+ * This preprocess function:
+ * - Extracts query parameters from Trellis form URLs
+ * - Determines if the current context is an editing environment
+ * - Passes data to the frontend via drupalSettings for form prefilling
+ *
+ * @see az-media-trellis.js
+ * @see templates/az-media-trellis.html.twig
+ */
+function az_media_trellis_preprocess_media(&$variables) {
+  // Only process media entities that have the Trellis remote field.
+  if (isset($variables['elements']['#media']) && $variables['elements']['#media'] instanceof Media) {
+    $media = $variables['elements']['#media'];
+
+    // Check if this media entity has a Trellis form URL.
+    if ($media->hasField('field_media_az_media_remote') && !$media->get('field_media_az_media_remote')->isEmpty()) {
+      $url = $media->get('field_media_az_media_remote')->value;
+
+      // Determine if the user is currently editing this media.
+      // This affects form validation and field requirements.
+      $azMediaTrellisService = \Drupal::service('az_media_trellis');
+      $is_editing_context = $azMediaTrellisService->isEditingContext();
+
+      // Extract query parameters from the Trellis URL for form prefilling.
+      // These parameters (like tfa_4, tfa_7, etc.) will be used by JavaScript
+      // to populate form fields when the Trellis form loads.
+      $query_params = [];
+      $parsed_url = parse_url($url);
+      if (isset($parsed_url['query'])) {
+        parse_str($parsed_url['query'], $query_params);
+      }
+
+      // Pass the editing state and params to JS library via drupalSettings.
+      // This data is consumed by az-media-trellis.js for form manipulation.
+      $variables['#attached']['drupalSettings']['azMediaTrellis'] = [
+        'editing' => $is_editing_context,
+        'queryParams' => $query_params,
+      ];
+    }
+  }
+}
