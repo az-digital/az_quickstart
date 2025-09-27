@@ -134,7 +134,7 @@ jobs:
         continue-on-error: true
         run: |
           cd $GITHUB_WORKSPACE/az-quickstart-scaffolding
-          ./vendor/bin/phpcs --standard=web/profiles/custom/az_quickstart/phpcs.xml.dist -q --report=checkstyle | sed 's/web\/profiles\/custom\/az_quickstart\///' | cs2pr
+          ./vendor/bin/phpcs --standard=web/profiles/custom/az_quickstart/phpcs.xml.dist -sq --report=checkstyle | sed 's/web\/profiles\/custom\/az_quickstart\///' | cs2pr
       - name: Run phpcs
         run: |
           cd $GITHUB_WORKSPACE/az-quickstart-scaffolding
@@ -181,7 +181,7 @@ jobs:
           node-version: 20.13.0
       - name: Checkout
         uses: actions/checkout@v5
-      - run: yarn install
+      - run: yarn install --ignore-scripts
       - name: Generate eslint report
         continue-on-error: true
         run: yarn run eslint . --format json --output-file eslint-report.json

@@ -4,11 +4,11 @@
 * https://www.drupal.org/node/2815083
 * @preserve
 **/
-(function (Drupal, once) {
+((Drupal, once) => {
   Drupal.behaviors.az_vimeo_video_bg = {
-    attach: function attach() {
+    attach() {
       function initVimeoBackgrounds() {
-        var defaultAspectRatio = 16 / 9;
+        const defaultAspectRatio = 16 / 9;
         function vimeoError(error) {
           switch (error.name) {
             case 'PasswordError':
@@ -18,31 +18,31 @@
               console.log('The Vimeo video is private.');
               break;
             default:
-              console.log("Some errors occurred with the Vimeo video: ".concat(error.name));
+              console.log(`Some errors occurred with the Vimeo video: ${error.name}`);
               break;
           }
         }
         function setDimensions(container) {
-          var parentParagraph = container.parentNode;
-          var parentHeight = parentParagraph.offsetHeight;
-          parentHeight = "".concat(parentHeight.toString(), "px");
+          const parentParagraph = container.parentNode;
+          let parentHeight = parentParagraph.offsetHeight;
+          parentHeight = `${parentHeight.toString()}px`;
           container.style.height = parentHeight;
           if (container.dataset.style === 'bottom') {
             container.style.top = 0;
           }
-          var thisPlayer = container.getElementsByClassName('az-video-player')[0].firstChild;
+          const thisPlayer = container.getElementsByClassName('az-video-player')[0].firstChild;
           if (thisPlayer === null) {
             return;
           }
           thisPlayer.style.zIndex = -100;
-          var width = container.offsetWidth;
-          var height = container.offsetHeight;
-          var pWidth = Math.ceil(height * defaultAspectRatio);
-          var pHeight = Math.ceil(width / defaultAspectRatio);
-          var widthMinuspWidthDividedByTwo = (width - pWidth) / 2;
-          widthMinuspWidthDividedByTwo = "".concat(widthMinuspWidthDividedByTwo.toString(), "px");
-          var pHeightRatio = (height - pHeight) / 2;
-          pHeightRatio = "".concat(pHeightRatio.toString(), "px");
+          const width = container.offsetWidth;
+          const height = container.offsetHeight;
+          const pWidth = Math.ceil(height * defaultAspectRatio);
+          const pHeight = Math.ceil(width / defaultAspectRatio);
+          let widthMinuspWidthDividedByTwo = (width - pWidth) / 2;
+          widthMinuspWidthDividedByTwo = `${widthMinuspWidthDividedByTwo.toString()}px`;
+          let pHeightRatio = (height - pHeight) / 2;
+          pHeightRatio = `${pHeightRatio.toString()}px`;
           if (width / defaultAspectRatio < height) {
             thisPlayer.width = pWidth;
             thisPlayer.height = height;
@@ -56,30 +56,26 @@
           }
         }
         function handlePlayButtonClick(element, parentParagraph) {
-          return function (event) {
+          return event => {
             event.preventDefault();
-            element.player.play().catch(function (error) {
-              return vimeoError(error);
-            });
+            element.player.play().catch(error => vimeoError(error));
             parentParagraph.classList.add('az-video-playing');
             parentParagraph.classList.remove('az-video-paused');
           };
         }
         function handlePauseButtonClick(element, parentParagraph) {
-          return function (event) {
+          return event => {
             event.preventDefault();
-            element.player.pause().catch(function (error) {
-              return vimeoError(error);
-            });
+            element.player.pause().catch(error => vimeoError(error));
             parentParagraph.classList.add('az-video-paused');
             parentParagraph.classList.remove('az-video-playing');
           };
         }
         function initVimeoElement(element, defaultOptions) {
-          var parentParagraph = element.parentNode;
-          var vimeoId = element.dataset.vimeoVideoId;
-          var videoPlayer = element.getElementsByClassName('az-video-player')[0];
-          var VimeoPlayer = window.Vimeo;
+          const parentParagraph = element.parentNode;
+          const vimeoId = element.dataset.vimeoVideoId;
+          const videoPlayer = element.getElementsByClassName('az-video-player')[0];
+          const VimeoPlayer = window.Vimeo;
           element.player = new VimeoPlayer.Player(videoPlayer, {
             id: vimeoId,
             autopause: defaultOptions.autopause,
@@ -88,26 +84,26 @@
             loop: defaultOptions.loop,
             muted: defaultOptions.muted
           });
-          element.player.on('bufferend', function () {
+          element.player.on('bufferend', () => {
             setDimensions(element);
             parentParagraph.classList.add('az-video-playing');
           });
-          var playButtons = element.getElementsByClassName('az-video-play');
+          const playButtons = element.getElementsByClassName('az-video-play');
           if (playButtons[0]) {
             playButtons[0].addEventListener('click', handlePlayButtonClick(element, parentParagraph));
           }
-          var pauseButtons = element.getElementsByClassName('az-video-pause');
+          const pauseButtons = element.getElementsByClassName('az-video-pause');
           if (pauseButtons[0]) {
             pauseButtons[0].addEventListener('click', handlePauseButtonClick(element, parentParagraph));
           }
         }
         function handleVimeoAPILoaded(bgVideoParagraphs, defaultOptions) {
-          Array.from(bgVideoParagraphs).forEach(function (element) {
+          Array.from(bgVideoParagraphs).forEach(element => {
             initVimeoElement(element, defaultOptions);
           });
         }
         if (window.screen && window.screen.width > 768) {
-          var defaultOptions = {
+          const defaultOptions = {
             vimeoId: '',
             autopause: false,
             autoplay: true,
@@ -117,19 +113,17 @@
             playButtonClass: 'az-video-play',
             pauseButtonClass: 'az-video-pause'
           };
-          var bgVideoParagraphs = document.getElementsByClassName('az-js-vimeo-video-background');
-          var tag = document.createElement('script');
+          const bgVideoParagraphs = document.getElementsByClassName('az-js-vimeo-video-background');
+          const tag = document.createElement('script');
           tag.src = 'https://player.vimeo.com/api/player.js';
           document.head.appendChild(tag);
-          tag.onload = function () {
-            return handleVimeoAPILoaded(bgVideoParagraphs, defaultOptions);
-          };
-          var resize = function resize() {
-            Array.from(bgVideoParagraphs).forEach(function (element) {
+          tag.onload = () => handleVimeoAPILoaded(bgVideoParagraphs, defaultOptions);
+          const resize = () => {
+            Array.from(bgVideoParagraphs).forEach(element => {
               setDimensions(element);
             });
           };
-          window.addEventListener('resize', function () {
+          window.addEventListener('resize', () => {
             resize();
           });
         }
