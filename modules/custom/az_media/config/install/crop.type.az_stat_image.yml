@@ -1,0 +1,11 @@
+langcode: en
+status: true
+dependencies: {  }
+label: 'Stat Image'
+id: az_stat_image
+description: 'Stat crop type is used where stat cards are displayed.'
+aspect_ratio: ''
+soft_limit_width: null
+soft_limit_height: null
+hard_limit_width: 306
+hard_limit_height: 260
