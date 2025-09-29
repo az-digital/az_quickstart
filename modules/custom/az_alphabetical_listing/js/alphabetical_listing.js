@@ -4,11 +4,11 @@
 * https://www.drupal.org/node/2815083
 * @preserve
 **/
-(function ($, Drupal) {
+(($, Drupal) => {
   Drupal.behaviors.azAlphabeticalListing = {
-    attach: function attach() {
-      $('#az-js-alpha-navigation li').each(function (index, element) {
-        var groupId = $(element).children().attr('data-href');
+    attach() {
+      $('#az-js-alpha-navigation li').each((index, element) => {
+        const groupId = $(element).children().attr('data-href');
         if ($(groupId).length !== 0) {
           $(element).removeClass('disabled');
           $(element).children().attr('tabindex', '0').attr('aria-hidden', 'false').attr('href', groupId);
@@ -18,8 +18,8 @@
         }
       });
       function azAlphabeticalListingCheckNoResults() {
-        var visibleResults = false;
-        $('.az-alphabetical-listing-group-title').each(function (index, element) {
+        let visibleResults = false;
+        $('.az-alphabetical-listing-group-title').each((index, element) => {
           if (!$(element).hasClass('hide-result')) {
             visibleResults = true;
           }
@@ -31,17 +31,17 @@
         }
       }
       function azAlphabeticalListingGroupLoop() {
-        $('.az-alphabetical-listing-group-title').each(function (index, element) {
-          var elementId = $(element).attr('id');
-          var group = elementId.toLowerCase();
-          var targetGroup = ".az-alphabetical-letter-group-".concat(group);
-          var visibleChildren = false;
-          $(targetGroup).each(function (resultIndex, resultElement) {
+        $('.az-alphabetical-listing-group-title').each((index, element) => {
+          const elementId = $(element).attr('id');
+          const group = elementId.toLowerCase();
+          const targetGroup = `.az-alphabetical-letter-group-${group}`;
+          let visibleChildren = false;
+          $(targetGroup).each((resultIndex, resultElement) => {
             if (!$(resultElement).hasClass('hide-result')) {
               visibleChildren = true;
             }
           });
-          var navTarget = $('#az-js-alpha-navigation').find(".page-link[data-href='#".concat(elementId, "']"));
+          const navTarget = $('#az-js-alpha-navigation').find(`.page-link[data-href='#${elementId}']`);
           if (!visibleChildren) {
             $(element).hide();
             $(element).addClass('hide-result');
@@ -55,10 +55,10 @@
           }
         });
       }
-      $('#az-js-alphabetical-listing-search').keyup(function (event) {
-        var filter = $(event.currentTarget).val();
-        $('.az-js-alphabetical-listing-search-result').each(function (index, element) {
-          var searchResultText = $(element).find('.az-alphabetical-listing-item').text();
+      $('#az-js-alphabetical-listing-search').keyup(event => {
+        const filter = $(event.currentTarget).val();
+        $('.az-js-alphabetical-listing-search-result').each((index, element) => {
+          const searchResultText = $(element).find('.az-alphabetical-listing-item').text();
           if (searchResultText.search(new RegExp(filter, 'i')) < 0) {
             $(element).find('az-alphabetical-listing-item').attr('tabindex', '0');
             $(element).addClass('hide-result');
@@ -72,21 +72,21 @@
         azAlphabeticalListingGroupLoop();
         azAlphabeticalListingCheckNoResults();
       });
-      var $root = $('html, body');
-      var breakpoint = 600;
-      $('#az-js-alpha-navigation a').on('click', function (event) {
+      const $root = $('html, body');
+      const breakpoint = 600;
+      $('#az-js-alpha-navigation a').on('click', event => {
         event.preventDefault();
-        var $alphaNav = $('#az-js-floating-alpha-nav-container');
-        var href = $.attr(event.currentTarget, 'data-href');
-        var fixedNavHeight = $alphaNav.outerHeight();
-        var headingHeight = $('.az-alphabetical-listing-group-title:first').outerHeight();
-        var offsetHeight = fixedNavHeight + headingHeight;
+        const $alphaNav = $('#az-js-floating-alpha-nav-container');
+        const href = $.attr(event.currentTarget, 'data-href');
+        let fixedNavHeight = $alphaNav.outerHeight();
+        const headingHeight = $('.az-alphabetical-listing-group-title:first').outerHeight();
+        const offsetHeight = fixedNavHeight + headingHeight;
         if ($(window).width() <= breakpoint) {
           fixedNavHeight = 0;
         }
         $root.animate({
           scrollTop: $(href).offset().top - offsetHeight
-        }, 500, function () {
+        }, 500, () => {
           window.location.hash = href;
         });
       });

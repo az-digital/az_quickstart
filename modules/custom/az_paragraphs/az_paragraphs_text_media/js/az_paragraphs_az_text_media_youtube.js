@@ -4,12 +4,12 @@
 * https://www.drupal.org/node/2815083
 * @preserve
 **/
-(function (Drupal, once) {
+((Drupal, once) => {
   Drupal.behaviors.az_youtube_video_bg = {
-    attach: function attach(context) {
+    attach(context) {
       function initYouTubeBackgrounds() {
         if (window.screen && window.screen.width > 768) {
-          var defaultSettings = {
+          const defaultSettings = {
             loop: true,
             mute: true,
             pauseButtonClass: 'az-video-pause',
@@ -17,22 +17,22 @@
             ratio: 16 / 9,
             width: document.documentElement.clientWidth
           };
-          var bgVideoSettings = {};
-          var tag = document.createElement('script');
-          var firstScriptTag = document.getElementsByTagName('script')[0];
+          const bgVideoSettings = {};
+          const tag = document.createElement('script');
+          const firstScriptTag = document.getElementsByTagName('script')[0];
           tag.src = 'https://www.youtube.com/iframe_api';
           firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-          var bgVideoParagraphs = document.getElementsByClassName('az-js-video-background');
-          window.onYouTubeIframeAPIReady = function () {
-            Array.from(bgVideoParagraphs).forEach(function (element) {
-              var parentParagraph = document.getElementById(element.dataset.parentid);
-              var youtubeId = element.dataset.youtubeid;
+          const bgVideoParagraphs = document.getElementsByClassName('az-js-video-background');
+          window.onYouTubeIframeAPIReady = () => {
+            Array.from(bgVideoParagraphs).forEach(element => {
+              const parentParagraph = document.getElementById(element.dataset.parentid);
+              const youtubeId = element.dataset.youtubeid;
               bgVideoSettings[youtubeId] = {
                 autoplay: element.dataset.autoplay === 'true',
                 start: element.dataset.start
               };
-              var videoPlayer = element.getElementsByClassName('az-video-player')[0];
-              var youTubePlayer = window.YT;
+              const videoPlayer = element.getElementsByClassName('az-video-player')[0];
+              const youTubePlayer = window.YT;
               element.player = new youTubePlayer.Player(videoPlayer, {
                 width: defaultSettings.width,
                 height: Math.ceil(defaultSettings.width / defaultSettings.ratio),
@@ -48,15 +48,15 @@
                   onStateChange: window.onPlayerStateChange
                 }
               });
-              var playButton = element.getElementsByClassName('az-video-play')[0];
-              playButton.addEventListener('click', function (event) {
+              const playButton = element.getElementsByClassName('az-video-play')[0];
+              playButton.addEventListener('click', event => {
                 event.preventDefault();
                 element.player.playVideo();
                 parentParagraph.classList.remove('az-video-paused');
                 parentParagraph.classList.add('az-video-playing');
               });
-              var pauseButton = element.getElementsByClassName('az-video-pause')[0];
-              pauseButton.addEventListener('click', function (event) {
+              const pauseButton = element.getElementsByClassName('az-video-pause')[0];
+              pauseButton.addEventListener('click', event => {
                 event.preventDefault();
                 element.player.pauseVideo();
                 parentParagraph.classList.remove('az-video-playing');
@@ -64,23 +64,23 @@
               });
             });
           };
-          var setDimensions = function setDimensions(container) {
-            container.style.height = "".concat(container.parentNode.offsetHeight, "px");
+          const setDimensions = container => {
+            container.style.height = `${container.parentNode.offsetHeight}px`;
             if (container.dataset.style === 'bottom') {
               container.style.top = 0;
             }
-            var thisPlayer = container.getElementsByClassName('az-video-player')[0];
+            const thisPlayer = container.getElementsByClassName('az-video-player')[0];
             if (thisPlayer === null) {
               return;
             }
             thisPlayer.style.zIndex = -100;
-            var width = container.offsetWidth;
-            var height = container.offsetHeight;
-            var pWidth = Math.ceil(height * defaultSettings.ratio);
-            var pHeight = Math.ceil(width / defaultSettings.ratio);
-            var widthMinuspWidthDividedByTwo = (width - pWidth) / 2;
-            widthMinuspWidthDividedByTwo = "".concat(widthMinuspWidthDividedByTwo.toString(), "px");
-            var pHeightRatio = "".concat((height - pHeight) / 2, "px");
+            const width = container.offsetWidth;
+            const height = container.offsetHeight;
+            const pWidth = Math.ceil(height * defaultSettings.ratio);
+            const pHeight = Math.ceil(width / defaultSettings.ratio);
+            let widthMinuspWidthDividedByTwo = (width - pWidth) / 2;
+            widthMinuspWidthDividedByTwo = `${widthMinuspWidthDividedByTwo.toString()}px`;
+            const pHeightRatio = `${(height - pHeight) / 2}px`;
             if (width / defaultSettings.ratio < height) {
               thisPlayer.width = pWidth;
               thisPlayer.height = height;
@@ -93,13 +93,13 @@
               thisPlayer.style.left = 0;
             }
           };
-          var resize = function resize() {
-            Array.from(bgVideoParagraphs).forEach(function (element) {
+          const resize = () => {
+            Array.from(bgVideoParagraphs).forEach(element => {
               setDimensions(element);
             });
           };
-          window.onPlayerReady = function (event) {
-            var id = event.target.options.videoId;
+          window.onPlayerReady = event => {
+            const id = event.target.options.videoId;
             if (!bgVideoSettings[id].autoplay) {
               return;
             }
@@ -110,10 +110,10 @@
             event.target.playVideo();
             dispatchEvent(new Event('azVideoPlay'));
           };
-          window.onPlayerStateChange = function (event) {
-            var id = event.target.options.videoId;
-            var stateChangeContainer = document.getElementById("".concat(id, "-bg-video-container"));
-            var parentContainer = document.getElementById(stateChangeContainer.dataset.parentid);
+          window.onPlayerStateChange = event => {
+            const id = event.target.options.videoId;
+            const stateChangeContainer = document.getElementById(`${id}-bg-video-container`);
+            const parentContainer = document.getElementById(stateChangeContainer.dataset.parentid);
             if (event.data === 0 && defaultSettings.loop) {
               stateChangeContainer.player.seekTo(bgVideoSettings[id].start);
             }
@@ -123,10 +123,10 @@
               parentContainer.classList.remove('az-video-loading');
             }
           };
-          window.addEventListener('load', function () {
+          window.addEventListener('load', () => {
             resize();
           });
-          window.addEventListener('resize', function () {
+          window.addEventListener('resize', () => {
             resize();
           });
         }
