@@ -126,10 +126,10 @@ class AzLdapCas implements EventSubscriberInterface {
     $bag = $event->getCasPropertyBag();
     $username = $bag->getUsername();
     // Check if a CAS user exists.
-    if ($this->externalAuth->getUid($username, 'cas') === FALSE) {
+    $cas_uid = $this->externalAuth->getUid($username, 'cas');
+    if ($cas_uid === FALSE) {
       if (!$this->userAllowedByQuery($username)) {
         // Not allowed by query.
-        // @todo disable account if exists.
         return;
       }
       // User does not exist, but is allowed, attempt LDAP provisioning.
@@ -142,13 +142,39 @@ class AzLdapCas implements EventSubscriberInterface {
       // Successfully provisioned LDAP user for which there is no cas account.
       if ($result) {
         // Get the mapped uid of the new user.
-        if ($uid = $this->externalAuth->getUid($username, 'ldap_user')) {
-          $user = $this->entityTypeManager->getStorage('user')->load($uid);
+        if ($ldap_uid = $this->externalAuth->getUid($username, 'ldap_user')) {
+          $user = $this->entityTypeManager->getStorage('user')->load($ldap_uid);
           // We have the user that ldap_user provisioned, set the cas account.
           if (!empty($user)) {
             $this->casUserManager->setCasUsernameForAccount($user, $user->getAccountName());
           }
         }
+      }
+    }
+    // CAS user existed but disallowed by query (e.g. user has lost membership.)
+    elseif (!$this->userAllowedByQuery($username)) {
+      if ($ldap_uid = $this->externalAuth->getUid($username, 'ldap_user')) {
+        $user = $this->entityTypeManager->getStorage('user')->load($ldap_uid);
+        // User originally provisioned by LDAP, therefore cancel the account.
+        // The implication is to NOT cancel an account created by hand.
+        // @todo is this workflow correct?
+        if (!empty($user) && !$user->isBlocked()) {
+          // Deactivate the account.
+          $user->block();
+          $user->save();
+          // After this event, CAS login will fail because account blocked.
+        }
+      }
+    }
+    // CAS user existed, and is still allowed by query.
+    else {
+      $user = $this->entityTypeManager->getStorage('user')->load($cas_uid);
+      // Check if user needs to be unblocked.
+      if (!empty($user) && $user->isBlocked()) {
+        // Deactivate the account.
+        $user->activate();
+        $user->save();
+        // After this event, CAS will succeed because they are active.
       }
     }
   }
