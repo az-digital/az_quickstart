@@ -94,12 +94,10 @@ class AZStatWidget extends WidgetBase {
     static::setWidgetState($field_parents, $field_name, $form_state, $field_state);
 
     $container = parent::form($items, $form, $form_state, $get_delta);
-    // We need to be sure not to clobber the parent class ajax wrapper.
     $container['widget']['#prefix'] = ($container['widget']['#prefix'] ?? '') . '<div id="' . $wrapper_id . '">';
     $container['widget']['#suffix'] = '</div>' . ($container['widget']['#suffix'] ?? '');
 
     if (isset($container['widget']['add_more']['#ajax']['wrapper'])) {
-      
       $container['widget']['add_more']['#ajax']['wrapper'] = $wrapper_id;
       //$container['widget']['add_more']['#ajax']['callback'] = [$this, 'statAjax'];
     }
@@ -118,7 +116,6 @@ class AZStatWidget extends WidgetBase {
     $field_name = $this->fieldDefinition->getName();
     $field_parents = $element['#field_parents'];
     $widget_state = static::getWidgetState($field_parents, $field_name, $form_state);
-    $wrapper = $widget_state['ajax_wrapper_id'];
     $status = (isset($widget_state['open_status'][$delta])) ? $widget_state['open_status'][$delta] : FALSE;
 
     // We may have had a deleted row. This shouldn't be necessary to check, but
@@ -153,9 +150,6 @@ class AZStatWidget extends WidgetBase {
     if (!empty($item->options['class'])) {
       $stat_classes .= ' ' . $item->options['class'];
     }
-
-    // Determine whether link should be required by default (based on current stat style).
-    $link_required_default = !empty($stat_classes) && str_starts_with($stat_classes, 'card stat-bold-hover');
 
     // Create summary for details element (what shows when collapsed)
     $summary_text = '';
@@ -228,7 +222,12 @@ class AZStatWidget extends WidgetBase {
       }
     }
 
-    $stat_type_unique_id = Html::getUniqueId('az_stat_type_input');
+    // Create a globally unique ID that includes parent entity info and field parents
+    $parent_entity = $item->getEntity();
+    $parent_id = $parent_entity ? $parent_entity->id() : 'new';
+    $field_parents_string = implode('-', $field_parents);
+
+    $stat_type_unique_id = 'stat-type-' . $parent_id . '-' . $field_parents_string . '-' . $delta;
 
     // Add all form fields inside the details element
     $element['details']['stat_type'] = [
@@ -356,11 +355,6 @@ class AZStatWidget extends WidgetBase {
       ],
     ];
 
-    // Determine whether link should be required (based on current parent paragraph setting).
-    // This is evaluated server-side on each form build, so it will work correctly with AJAX
-    $stat_type = (!empty($item->options['stat_type'])) ? $item->options['stat_type'] : 'standard';
-    $link_required = ($stat_type === 'standard') && !empty($stat_classes) && str_starts_with($stat_classes, 'card stat-bold-hover');
-    
     $element['details']['link_uri'] = [
       '#type' => 'linkit',
       '#autocomplete_route_name' => 'linkit.autocomplete',
@@ -493,7 +487,6 @@ class AZStatWidget extends WidgetBase {
     // Find the widget and return it.
     $element = [];
     $triggering_element = $form_state->getTriggeringElement();
-    // $oops = $triggering_element['#array_parents'];
     $array_parents = array_slice($triggering_element['#array_parents'], 0, -3);
     $element = NestedArray::getValue($form, $array_parents);
 
