@@ -17,6 +17,7 @@
 
 #}
 {% set attributes = attributes.addClass('h-100', 'az-stat-responsive', 'shadow', 'border-0', 'overflow-hidden') %}
+
 <div{{ attributes }}>
   {% if media %}
     <div class="position-relative overflow-hidden h-100">
@@ -27,7 +28,7 @@
       <div class="card-text d-flex flex-column flex-grow-1">
         <div class="stat-content">
           {% if stat_heading %}
-            {% if stat_style == "card stat-thin" %}
+            {% if stat_title_style == "stat-title-thin" %}
               <h3 class="display-4 m-0 stat-heading {% if text_color_override %}{{ text_color_override }}{% endif %}">
                 <strong>{{ stat_heading }}</strong>
               </h3>
@@ -42,13 +43,13 @@
           {% endif %}
         </div>
         {% if stat_source %}
-          <div class="mt-auto stat-source {% if text_color_override %}{{ text_color_override }}{% endif %}">
+          <div class="mt-auto stat-source  {% if text_color_override %}{{ text_color_override }}{% endif %}">
             {{ stat_source|nl2br }}
           </div>
         {% endif %}
       </div>
       {% if link_url %}
-        <a href="{{ link_url }}" class="stretched-link"></a>
+        <a href="{{ link_url }}"  class="stretched-link"></a>
       {% endif %}
     </div>
   {% endif %}

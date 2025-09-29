@@ -41,12 +41,34 @@ class AZStatsParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#title' => $this->t('Rankings Style'),
       '#type' => 'select',
       '#options' => [
-        'card stat-bold-static' => $this->t('Bold Static'),
         'card stat-bold-hover' => $this->t('Bold Hover'),
-        'card stat-thin' => $this->t('Thin Static'),
+        'card stat-subtle-hover' => $this->t('Subtle Hover'),
+        'card stat-thin' => $this->t('Static'),
       ],
       '#default_value' => $config['stat_style'] ?? 'card stat-bold-hover',
-      '#description' => $this->t('Gives the stats a bold look with an interactive hover effect, bold without the hover effect, or a more basic look similar to cards.'),
+      '#description' => $this->t('Gives this ranking deck a bright hover effect, a button-like hover effect, or no effects when hovering over the card. For accessibility, when using a hover effect, Links are required.'),
+    ];
+
+    $form['stat_alignment'] = [
+      '#title' => $this->t('Ranking Alignment'),
+      '#type' => 'select',
+      '#options' => [
+        'text-left' => $this->t('Left Aligned'),
+        'text-center' => $this->t('Center Aligned'),
+      ],
+      '#default_value' => $config['stat_alignment'] ?? 'text-left',
+      '#description' => $this->t('Aligns the content within rankings left or centered.'),
+    ];
+
+    $form['stat_title_style'] = [
+      '#title' => $this->t('Ranking Title Style'),
+      '#type' => 'select',
+      '#options' => [
+        'stat-title-bold' => $this->t('Bold Headers'),
+        'stat-title-thin' => $this->t('Thin Headers'),
+      ],
+      '#default_value' => $config['stat_title_style'] ?? 'stat-title-bold',
+      '#description' => $this->t('Uses large bold lettering or thin-styled font for headers'),
     ];
 
     parent::buildBehaviorForm($paragraph, $form, $form_state);

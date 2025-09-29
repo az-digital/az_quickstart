@@ -181,6 +181,9 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
           $column_classes[] = $stat_defaults['stat_width'] ?? 'col-md-4 col-lg-3';
           $stat_classes = $stat_defaults['stat_style'] ?? 'stat';
 
+          $stat_classes .= ' ' . $stat_defaults['stat_alignment'] ?? 'text-left';
+          //$stat_classes .= $stat_defaults['stat_title_style'] ?? 'stat-title-bold'
+
           // Calculate column classes for image based on column_span.
           if ($item->options['stat_type'] === 'image_only' && !empty($item->options['column_span']) && ($item->options['column_span'] != '')) {
 
@@ -214,7 +217,7 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
 
           // Format pg style.
           $stat_style = $stat_defaults['stat_style'] ?? '';
-          if ($stat_style == 'card stat-bold-hover') {
+          if ($stat_style == 'card stat-bold-hover' || $stat_style == 'card stat-subtle-hover') {
             $attached['library'][] = 'az_stat/az_stat_bold_hover';
           }
 
@@ -264,6 +267,7 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         '#column_span' => $column_span,
         '#stat_heading' => $stat_heading,
         '#stat_style' => $stat_style,
+        '#stat_title_style' => $stat_defaults['stat_title_style'],
         // The ProcessedText element handles cache context & tag bubbling.
         // @see \Drupal\filter\Element\ProcessedText::preRenderText()
         '#stat_description' => $stat_description,

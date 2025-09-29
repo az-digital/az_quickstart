@@ -4,18 +4,33 @@
  */
 
 
- .text-bg-white.stat-bold-hover:hover * {
+.text-bg-white.stat-bold-hover:hover * {
     background-color: RGBA(var(--bs-blue-rgb),var(--bs-bg-opacity,1)) !important;
     color: #ffffff !important;
 }
+.text-bg-white.stat-subtle-hover:hover * {
+    background-color: RGBA(var(--bs-cool-gray-rgb),var(--bs-bg-opacity,1)) !important;
+    color: #000000 !important;
+}
+
 .text-bg-blue.stat-bold-hover:hover * {
     background-color: #ffffff !important;
     color: RGBA(var(--bs-blue-rgb),var(--bs-bg-opacity,1)) !important;
 }
+.text-bg-blue.stat-subtle-hover:hover * {
+    background-color: RGBA(var(--bs-azurite-rgb),var(--bs-bg-opacity,1)) !important;
+    color: #ffffff;
+}
+
 .text-bg-red.stat-bold-hover:hover * {
     background-color: #ffffff !important;
     color: RGBA(var(--bs-red-rgb),var(--bs-bg-opacity,1)) !important;
 }
+.text-bg-red.stat-subtle-hover:hover * {
+    background-color: RGBA(var(--bs-chili-rgb),var(--bs-bg-opacity,1)) !important;
+    color: #ffffff !important;
+}
+
 .text-bg-sky.stat-bold-hover:hover * {
     background-color: RGBA(var(--bs-blue-rgb),var(--bs-bg-opacity,1)) !important;
     color: RGBA(var(--bs-sky-rgb),var(--bs-bg-opacity,1)) !important;
