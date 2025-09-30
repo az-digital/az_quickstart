@@ -107,12 +107,26 @@
     this.sanitized = false;
     this.spinnerInserted = false;
     this.spinnerRemoved = false;
+    this.finalized = false;
+    this.spinnerDelayTimer = null;
+    this.spinnerStartTs = 0;
+    this.prefillObserver = null;
+    this.prefillFallbackTimer = null;
   }
   TrellisFormHandler.prototype.init = function init() {
-    this.insertSpinner();
+    // Defer spinner slightly so we can skip it entirely if the form renders fast
+    // (reduces perceived load delay / flicker). If after the delay we still
+    // haven't processed content, we show the spinner.
+    const SPINNER_DELAY_MS = 120;
+    this.spinnerDelayTimer = setTimeout(() => {
+      if (!this.processed && !this.spinnerInserted) {
+        this.insertSpinner();
+      }
+    }, SPINNER_DELAY_MS);
+
     this.setupContentObserver();
     if (this.container.children.length > 0) {
-      this.processForm();
+      this.processForm(); // May finalize before spinner appears.
     }
   };
   TrellisFormHandler.prototype.setupContentObserver = function setupContentObserver() {
@@ -134,10 +148,18 @@
     if (this.editing) {
       this.setupEditingMode();
     }
-    this.prefillFields();
-    this.sanitizeAndRetheme();
-    this.observeDynamicMutations();
-    this.removeSpinner();
+    // Prefill (with retry) then finalize rendering.
+    this.prefillFields(() => {
+      this.sanitizeAndRetheme();
+      this.observeDynamicMutations();
+      this.finalized = true;
+      // If spinner delay timer still pending & spinner never shown, cancel it.
+      if (this.spinnerDelayTimer) {
+        clearTimeout(this.spinnerDelayTimer);
+        this.spinnerDelayTimer = null;
+      }
+      this.removeSpinner();
+    });
   };
   /**
    * Remove unwanted styling (external or inline) and apply Arizona Bootstrap classes.
@@ -283,7 +305,8 @@
         this.sanitized = false; // Force re-run of sanitizeAndRetheme enhancements.
         this.sanitizeAndRetheme();
       }
-      if (hasFormContent) {
+      // Only allow spinner removal here if finalization already occurred.
+      if (hasFormContent && this.finalized) {
         this.removeSpinner();
       }
     });
@@ -293,6 +316,7 @@
   TrellisFormHandler.prototype.insertSpinner = function insertSpinner() {
     if (this.spinnerInserted) return;
     this.spinnerInserted = true;
+    this.spinnerStartTs = (window.performance && performance.now) ? performance.now() : Date.now();
     this.container.setAttribute('data-loading', 'true');
     const overlay = document.createElement('div');
     overlay.className = 'az-media-trellis__spinner-overlay';
@@ -311,12 +335,15 @@
   TrellisFormHandler.prototype.removeSpinner = function removeSpinner(fallback) {
     if (this.spinnerRemoved) return;
     const overlay = this.container.querySelector('.az-media-trellis__spinner-overlay');
-    if (!overlay) return;
+    if (!overlay) return; // Spinner never displayed.
     if (!fallback) {
       // If we have actual form content keep removing; if not and fallback triggered, leave a subtle message.
       const hasForm = this.container.querySelector('form');
       if (!hasForm && !fallback) return; // wait until form appears
     }
+    // Optional: ensure spinner does not flash too briefly (< 100ms). If it
+    // was visible for a very short time, we could delay removal a touch. For
+    // now we prioritize immediate display of the ready form (no added delay).
     overlay.remove();
     this.spinnerRemoved = true;
     this.container.removeAttribute('data-loading');
@@ -329,60 +356,79 @@
       field.classList.remove('required');
     });
   };
-  TrellisFormHandler.prototype.prefillFields = function prefillFields() {
-    console.log('prefillFields called with queryParams:', this.queryParams);
-    
-    if (!this.queryParams || Object.keys(this.queryParams).length === 0) {
-      console.log('No query parameters to prefill');
-      // Even if no params provided, hide optional prefill-only fields.
+  TrellisFormHandler.prototype.prefillFields = function prefillFields(done) {
+    // Assumption: All possible prefillable field names that actually exist in the
+    // embedded form are represented as keys in this.queryParams (even if empty
+    // string). This lets us treat the presence of those input elements as the
+    // readiness signal and avoid polling loops.
+    const callback = typeof done === 'function' ? done : function(){};
+    const qp = this.queryParams || {};
+    const targetNames = Object.keys(qp);
+
+    const finalizePrefill = () => {
+      // Hide optional prefill-only fields after any attempted prefills.
       this.hideEmptyOptionalPrefillFields();
+      if (this.prefillObserver) {
+        this.prefillObserver.disconnect();
+        this.prefillObserver = null;
+      }
+      if (this.prefillFallbackTimer) {
+        clearTimeout(this.prefillFallbackTimer);
+        this.prefillFallbackTimer = null;
+      }
+      callback();
+    };
+
+    if (targetNames.length === 0) {
+      // Nothing to prefill, still perform optional hide logic.
+      finalizePrefill();
       return;
     }
-    
-    // Check if we have actual form fields loaded yet
-    const allFields = this.container.querySelectorAll('input, select, textarea');
-    console.log('Found form fields:', allFields.length);
-    
-    if (allFields.length === 0) {
-      console.log('No form fields found yet, will retry in 500ms');
-      // Retry after a delay to wait for Trellis form to load
-      setTimeout(() => {
-        this.prefillFields();
-      }, 500);
+
+    const tryApply = () => {
+      // Check that every target name has a corresponding field OR at least one field exists (remote may omit some legitimately).
+      const allPresent = targetNames.every(name => !!this.container.querySelector(`[name="${name}"]`));
+      if (!allPresent) return false;
+      targetNames.forEach(name => {
+        const value = qp[name];
+        const field = this.container.querySelector(`[name="${name}"]`);
+        if (field && value != null && field.value !== String(value)) {
+          field.value = value;
+          field.dispatchEvent(new Event('input', { bubbles: true }));
+          field.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+      });
+      return true;
+    };
+
+    // Attempt immediately in case fields already present.
+    if (tryApply()) {
+      finalizePrefill();
       return;
     }
-    
-    Object.entries(this.queryParams).forEach(([name, value]) => {
-      console.log(`Looking for field with name="${name}" to set value="${value}"`);
-      
-      const field = this.container.querySelector(`[name="${name}"]`);
-      console.log('Found field:', field);
-      
-      if (field && field.value !== value) {
-        console.log(`Setting field ${name} from "${field.value}" to "${value}"`);
-        field.value = value;
-        field.dispatchEvent(new Event('input', {
-          bubbles: true
-        }));
-        field.dispatchEvent(new Event('change', {
-          bubbles: true
-        }));
-        console.log(`Field ${name} value after setting:`, field.value);
-      } else if (field) {
-        console.log(`Field ${name} already has correct value:`, field.value);
-      } else {
-        console.log(`Field with name="${name}" not found in container`);
-        // Log all input/select/textarea elements to see what's available
-        console.log('All form fields in container:', Array.from(allFields).map(f => ({
-          tag: f.tagName,
-          name: f.name,
-          id: f.id,
-          className: f.className
-        })));
+
+    // Observe for fields to arrive; each mutation re-attempts.
+    this.prefillObserver = new MutationObserver(() => {
+      if (tryApply()) {
+        finalizePrefill();
       }
     });
-    // After attempting prefills, hide any optional fields that were not prefilled.
-    this.hideEmptyOptionalPrefillFields();
+    this.prefillObserver.observe(this.container, { childList: true, subtree: true });
+
+    // Fallback: after 2000ms, proceed even if not all fields appeared.
+    this.prefillFallbackTimer = setTimeout(() => {
+      console.warn('Prefill fallback: proceeding before all fields detected');
+      // Best-effort partial prefill for whatever exists now.
+      targetNames.forEach(name => {
+        const field = this.container.querySelector(`[name="${name}"]`);
+        if (field && qp[name] != null && field.value !== String(qp[name])) {
+          field.value = qp[name];
+          field.dispatchEvent(new Event('input', { bubbles: true }));
+          field.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+      });
+      finalizePrefill();
+    }, 2000);
   };
   /**
    * Hide optional campaign fields (tfa_7, tfa_9) if they were not prefilled.
