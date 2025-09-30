@@ -221,6 +221,9 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase implements 
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $elements = [];
+    // Determine editing context and view mode once for this build.
+    $is_editing_context = $this->trellisService->isEditingContext();
+    $view_mode = $this->configuration['view_mode'] ?? $this->viewMode ?? 'default';
     foreach ($items as $delta => $item) {
       /** @var \Drupal\Core\Field\FieldItemInterface $item */
       if ($item->isEmpty()) {
@@ -252,8 +255,37 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase implements 
       $newUrl = $parsedUrl['scheme'] . '://' . $parsedUrl['host'] . $newPath;
       // Results: https://forms-a.trellis.arizona.edu/publish/185
       // https://trellis.tfaforms.net/publish/72
-      // Determine current context for form behavior modification.
-      $is_editing_context = $this->trellisService->isEditingContext();
+      // In editing mode, render a simple placeholder container and skip
+      // remote script attachments. Provide clear classes for styling.
+      if ($is_editing_context) {
+        $unique_element_id = Html::getUniqueId('az-media-trellis-preview');
+        $elements[$delta] = [
+          '#theme' => 'az_media_trellis',
+          '#editing' => TRUE,
+          '#attributes' => new Attribute([
+            'id' => $unique_element_id,
+            'class' => [
+              Html::getClass('az-media-trellis-placeholder'),
+              Html::getClass('az-media-trellis-placeholder--' . $view_mode),
+              'placeholder',
+            ],
+            'data-editing' => 'true',
+          ]),
+          '#attached' => [
+            'library' => [
+              // Attach CSS-only library so sizing rules load in editor.
+              'az_media_trellis/az-media-trellis.styles',
+            ],
+          ],
+          '#cache' => [
+            'contexts' => ['url.query_args'],
+            'max-age' => 3600,
+          ],
+        ];
+        // Return immediately with the placeholder element in editing context.
+        return $elements;
+      }
+
 
       // Get the view mode for responsive sizing and display options.
       $view_mode = $this->configuration['view_mode'] ?? $this->viewMode ?? 'default';
@@ -318,7 +350,7 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase implements 
     // Attach the necessary JavaScript library for Trellis form embedding.
     // Guard against the case where the foreach loop produced no elements
     // (all items empty).
-    if (!empty($elements)) {
+    if (!empty($elements) && !$is_editing_context) {
       // Use end() to get the last element reference safely without relying
       // on $delta.
       $last_key = array_key_last($elements);
