@@ -16,7 +16,7 @@
               "link_url": "#top",
               "media": "",
               "background": "text-bg-gray-100",
-              "link_style": "btn btn-block btn-blue"
+              "link_style": "btn w-100 btn-blue"
             },
             {
               "delta": 1,
@@ -26,7 +26,7 @@
               "link_url": "",
               "media": "",
               "background": "text-bg-chili",
-              "link_style": "btn-block"
+              "link_style": "w-100"
             }
           ],
           "bottom_spacing" : "mb-0"
@@ -47,7 +47,7 @@
             "link_url": "#top",
             "media": "runners_brains.jpeg",
             "background": "text-bg-blue",
-            "link_style": "btn btn-block btn-outline-white"
+            "link_style": "btn w-100 btn-outline-white"
           },
           {
             "delta": 1,
@@ -67,7 +67,7 @@
             "link_url": "",
             "media": "",
             "background": "text-bg-gray-300",
-            "link_style": "btn-block"
+            "link_style": "w-100"
           }
         ],
         "bottom_spacing" : "mb-0"
@@ -88,7 +88,7 @@
           "link_url": "#top",
           "media": "runners_brains.jpeg",
           "background": "text-bg-warm-gray",
-          "link_style": "btn btn-blue btn-block"
+          "link_style": "btn btn-blue w-100"
         },
         {
           "delta": 1,
@@ -108,7 +108,7 @@
           "link_url": "#top",
           "media": "",
           "background": "text-bg-azurite",
-          "link_style": "btn-block"
+          "link_style": "w-100"
         },
         {
           "delta": 3,
@@ -139,7 +139,7 @@
             "link_url": "",
             "media": "mans_best_friend.jpeg",
             "background": "text-bg-river",
-            "link_style": "btn-block"
+            "link_style": "w-100"
           },
           {
             "delta": 1,
@@ -149,7 +149,7 @@
             "link_url": "https://www.arizona.edu",
             "media": "",
             "background": "text-bg-cool-gray",
-            "link_style": "btn-block"
+            "link_style": "w-100"
           }
         ],
         "bottom_spacing" : "mb-5"

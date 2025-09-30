@@ -54,7 +54,7 @@ function az_paragraphs_cards_update_1130001(&$sandbox) {
       if ($paragraph->hasField('field_az_cards')) {
         $field_items = $paragraph->get('field_az_cards');
 
-        foreach ($field_items as $delta => $item) {
+        foreach ($field_items as $item) {
           if (isset($item->options)) {
             $options = $item->options;
 
@@ -62,6 +62,13 @@ function az_paragraphs_cards_update_1130001(&$sandbox) {
             if (isset($options['link_style']) && $options['link_style'] === 'sr-only') {
               $updated = TRUE;
               $options['link_style'] = 'visually-hidden';
+              $item->options = $options;
+            }
+
+            // Update full-width link styles.
+            if (isset($options['link_style']) && str_contains($options['link_style'], 'btn-block')) {
+              $updated = TRUE;
+              $options['link_style'] = str_replace('btn-block', 'w-100', $options['link_style']);
               $item->options = $options;
             }
 

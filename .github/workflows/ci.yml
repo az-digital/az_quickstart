@@ -5,9 +5,9 @@ on:
     branches:
       - 'main'
       - '2.x'
+      - '3.0.x'
+      - '2.14.x'
       - '2.13.x'
-      - '2.12.x'
-      - '2.11.x'
 
 jobs:
   setup:
@@ -134,7 +134,7 @@ jobs:
         continue-on-error: true
         run: |
           cd $GITHUB_WORKSPACE/az-quickstart-scaffolding
-          ./vendor/bin/phpcs --standard=web/profiles/custom/az_quickstart/phpcs.xml.dist -q --report=checkstyle | sed 's/web\/profiles\/custom\/az_quickstart\///' | cs2pr
+          ./vendor/bin/phpcs --standard=web/profiles/custom/az_quickstart/phpcs.xml.dist -sq --report=checkstyle | sed 's/web\/profiles\/custom\/az_quickstart\///' | cs2pr
       - name: Run phpcs
         run: |
           cd $GITHUB_WORKSPACE/az-quickstart-scaffolding
@@ -181,7 +181,7 @@ jobs:
           node-version: 20.13.0
       - name: Checkout
         uses: actions/checkout@v5
-      - run: yarn install
+      - run: yarn install --ignore-scripts
       - name: Generate eslint report
         continue-on-error: true
         run: yarn run eslint . --format json --output-file eslint-report.json
@@ -207,7 +207,7 @@ jobs:
         ports:
           - 9515
       mysql:
-        image: mysql:5.7
+        image: mysql:8
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
           MYSQL_DATABASE: db
@@ -233,7 +233,7 @@ jobs:
           mkdir -p web/sites/simpletest
           chmod 777 web/sites/simpletest
       - name: Run phpunit test (${{ matrix.test.file }})
-        run: $GITHUB_WORKSPACE/az-quickstart-scaffolding/vendor/bin/phpunit --configuration $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/profiles/custom/az_quickstart/phpunit.xml.dist --bootstrap $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/core/tests/bootstrap.php --colors="always" --verbose --do-not-cache-result $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/profiles/custom/az_quickstart/"${{ matrix.test.file }}"
+        run: $GITHUB_WORKSPACE/az-quickstart-scaffolding/vendor/bin/phpunit --configuration $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/profiles/custom/az_quickstart/phpunit.xml.dist --bootstrap $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/core/tests/bootstrap.php --colors="always" --do-not-cache-result $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/profiles/custom/az_quickstart/"${{ matrix.test.file }}"
         env:
           SYMFONY_DEPRECATIONS_HELPER: weak
           SIMPLETEST_DB: mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3306] }}/db
@@ -246,7 +246,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       mysql:
-        image: mysql:5.7
+        image: mysql:8
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
           MYSQL_DATABASE: db
@@ -296,7 +296,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       mysql:
-        image: mysql:5.7
+        image: mysql:8
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
           MYSQL_DATABASE: db
