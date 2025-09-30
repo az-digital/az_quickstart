@@ -96,11 +96,11 @@ final class AZContentFieldUpdater implements AZContentFieldUpdaterInterface {
       }
 
       // Check all languages that exist for entity.
-      foreach (array_keys($entity->getTranslationLanguages()) as $langcode) {        
+      foreach (array_keys($entity->getTranslationLanguages()) as $langcode) {
         $entity = $entity->getTranslation($langcode);
 
         $needs_update = FALSE;
- 
+
         // Check if the field exists on this entity.
         if (!$entity->hasField($field_name)) {
           $logger->warning("Field @field does not exist on @type @id (@bundle)", [
