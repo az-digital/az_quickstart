@@ -286,7 +286,6 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase implements 
         return $elements;
       }
 
-
       // Get the view mode for responsive sizing and display options.
       $view_mode = $this->configuration['view_mode'] ?? $this->viewMode ?? 'default';
       // Build themed render element with comprehensive metadata.
