@@ -334,6 +334,8 @@
     
     if (!this.queryParams || Object.keys(this.queryParams).length === 0) {
       console.log('No query parameters to prefill');
+      // Even if no params provided, hide optional prefill-only fields.
+      this.hideEmptyOptionalPrefillFields();
       return;
     }
     
@@ -377,6 +379,38 @@
           id: f.id,
           className: f.className
         })));
+      }
+    });
+    // After attempting prefills, hide any optional fields that were not prefilled.
+    this.hideEmptyOptionalPrefillFields();
+  };
+  /**
+   * Hide optional campaign fields (tfa_7, tfa_9) if they were not prefilled.
+   * Criteria:
+   *  - Field exists in the rendered Trellis form.
+   *  - Query params did not supply a non-empty value for that field.
+   *  - Current field value is empty/whitespace.
+   * Adds a wrapper class 'az-trellis-hidden-prefill'. If the user types
+   * into the field (e.g., future requirement change), the wrapper is shown again.
+   */
+  TrellisFormHandler.prototype.hideEmptyOptionalPrefillFields = function hideEmptyOptionalPrefillFields() {
+    const optionalIds = ['tfa_7', 'tfa_9'];
+    optionalIds.forEach(id => {
+      const field = this.container.querySelector(`[name="${id}"]`);
+      if (!field) return;
+      const supplied = !!(this.queryParams && Object.prototype.hasOwnProperty.call(this.queryParams, id) && this.queryParams[id] && String(this.queryParams[id]).trim() !== '');
+      const emptyCurrent = !field.value || field.value.trim() === '';
+      if (!supplied && emptyCurrent) {
+        const wrapper = field.closest('.oneField') || this.container.querySelector(`#${id}-D`);
+        if (wrapper && !wrapper.classList.contains('az-trellis-hidden-prefill')) {
+          wrapper.classList.add('az-trellis-hidden-prefill');
+          // If user starts typing later (should remain hidden use-case, but be resilient).
+          field.addEventListener('input', () => {
+            if (field.value && field.value.trim() !== '') {
+              wrapper.classList.remove('az-trellis-hidden-prefill');
+            }
+          }, { once: true });
+        }
       }
     });
   };

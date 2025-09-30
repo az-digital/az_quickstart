@@ -162,6 +162,9 @@ textarea.form-control-plaintext {
   resize: none;
 }
 
+/* Hide optional Trellis prefill-only fields (campaign name/description) when not supplied */
+.oneField.az-trellis-hidden-prefill { display: none !important; }
+
 /* #tfa_7-D {
   background-color: red;
 }
