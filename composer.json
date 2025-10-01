@@ -25,7 +25,7 @@
     ],
     "require": {
         "php": ">=8.3",
-        "az-digital/arizona-bootstrap": "5.0.0-beta2",
+        "az-digital/arizona-bootstrap": "5.0.0",
         "az-digital/az-icons": "1.0.4",
         "citation-style-language/locales": "0.0.27",
         "citation-style-language/styles": "0.0.668",
@@ -151,7 +151,8 @@
             },
             "drupal/bootstrap_barrio": {
                 "Js error if table not found (3519060)": "https://www.drupal.org/files/issues/2025-04-14/bootstrap-barrio-table-not-found-3519060-1.patch",
-                "Fix alerts (3485305)": "https://www.drupal.org/files/issues/2025-08-27/3485305-22.patch"
+                "Fix alerts (3485305)": "https://www.drupal.org/files/issues/2025-08-27/3485305-22.patch",
+                "Region class field: increase maxlength from 40 to 255 (3548552)": "https://www.drupal.org/files/issues/2025-09-24/3548552-4.patch"
             },
             "drupal/config_distro": {
                 "Storage comparer issue": "https://gist.githubusercontent.com/tadean/e2e0dd57f1a9c4eae28d8e713cb01d82/raw/e114987d4a76c183208c763de4dbfecbf41b7f35/config_distro_storage_comparer_issue.patch"
