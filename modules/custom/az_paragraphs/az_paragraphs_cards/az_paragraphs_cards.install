@@ -38,60 +38,65 @@ function az_paragraphs_cards_update_1130001(&$sandbox) {
 
     foreach ($paragraphs as $paragraph) {
       $updated = FALSE;
-      $behavior_settings = $paragraph->getAllBehaviorSettings();
 
-      // Update cards card_style for AZ Bootstrap 5.
-      if (isset($behavior_settings['az_cards_paragraph_behavior']['card_style'])) {
-        $updated = TRUE;
-        $card_style = $behavior_settings['az_cards_paragraph_behavior']['card_style'];
+      foreach (array_keys($paragraph->getTranslationLanguages()) as $langcode) {
+        $paragraph = $paragraph->getTranslation($langcode);
 
-        if ($card_style === 'card card-borderless') {
-          $behavior_settings['az_cards_paragraph_behavior']['card_style'] = 'card border-0';
+        $behavior_settings = $paragraph->getAllBehaviorSettings();
+
+        // Update cards card_style for AZ Bootstrap 5.
+        if (isset($behavior_settings['az_cards_paragraph_behavior']['card_style'])) {
+          $updated = TRUE;
+          $card_style = $behavior_settings['az_cards_paragraph_behavior']['card_style'];
+
+          if ($card_style === 'card card-borderless') {
+            $behavior_settings['az_cards_paragraph_behavior']['card_style'] = 'card border-0';
+          }
         }
-      }
 
-      // Loop through az_cards for updates.
-      if ($paragraph->hasField('field_az_cards')) {
-        $field_items = $paragraph->get('field_az_cards');
+        // Loop through az_cards for updates.
+        if ($paragraph->hasField('field_az_cards')) {
+          $field_items = $paragraph->get('field_az_cards');
 
-        foreach ($field_items as $item) {
-          if (isset($item->options)) {
-            $options = $item->options;
+          foreach ($field_items as $item) {
+            if (isset($item->options)) {
+              $options = $item->options;
 
-            // Update card link_style for AZ Bootstrap 5.
-            if (isset($options['link_style']) && $options['link_style'] === 'sr-only') {
-              $updated = TRUE;
-              $options['link_style'] = 'visually-hidden';
-              $item->options = $options;
-            }
-
-            // Update full-width link styles.
-            if (isset($options['link_style']) && str_contains($options['link_style'], 'btn-block')) {
-              $updated = TRUE;
-              $options['link_style'] = str_replace('btn-block', 'w-100', $options['link_style']);
-              $item->options = $options;
-            }
-
-            // Update cards bg color for AZ Bootstrap 5.
-            if (isset($options['class']) && str_starts_with($options['class'], 'bg-') && $options['class'] !== 'bg-transparent') {
-              $updated = TRUE;
-              $card_class = 'text-' . $options['class'];
-              $options['class'] = $card_class;
-              $item->options = $options;
-            }
-
-            // Update card title alignment for AZ Bootstrap 5.
-            if (isset($options['title_alignment'])) {
-              if ($options['title_alignment'] === 'text-left') {
+              // Update card link_style for AZ Bootstrap 5.
+              if (isset($options['link_style']) && $options['link_style'] === 'sr-only') {
                 $updated = TRUE;
-                $options['title_alignment'] = 'text-start';
+                $options['link_style'] = 'visually-hidden';
                 $item->options = $options;
               }
 
-              if ($options['title_alignment'] === 'text-right') {
+              // Update full-width link styles.
+              if (isset($options['link_style']) && str_contains($options['link_style'], 'btn-block')) {
                 $updated = TRUE;
-                $options['title_alignment'] = 'text-end';
+                $options['link_style'] = str_replace('btn-block', 'w-100', $options['link_style']);
                 $item->options = $options;
+              }
+
+              // Update cards bg color for AZ Bootstrap 5.
+              if (isset($options['class']) && str_starts_with($options['class'], 'bg-') && $options['class'] !== 'bg-transparent') {
+                $updated = TRUE;
+                $card_class = 'text-' . $options['class'];
+                $options['class'] = $card_class;
+                $item->options = $options;
+              }
+
+              // Update card title alignment for AZ Bootstrap 5.
+              if (isset($options['title_alignment'])) {
+                if ($options['title_alignment'] === 'text-left') {
+                  $updated = TRUE;
+                  $options['title_alignment'] = 'text-start';
+                  $item->options = $options;
+                }
+
+                if ($options['title_alignment'] === 'text-right') {
+                  $updated = TRUE;
+                  $options['title_alignment'] = 'text-end';
+                  $item->options = $options;
+                }
               }
             }
           }

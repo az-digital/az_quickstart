@@ -95,35 +95,40 @@ function az_paragraphs_splitscreen_update_1130001(&$sandbox) {
   $paragraphs = \Drupal::entityTypeManager()->getStorage('paragraph')->loadMultiple($paragraph_ids);
   foreach ($paragraphs as $paragraph) {
     $needs_update = FALSE;
-    $behavior_settings = $paragraph->getAllBehaviorSettings();
 
-    // Update splitscreen bg color for Arizona Bootstrap 5.
-    if (isset($behavior_settings['az_split_screen']['bg_color'])) {
-      $splitscreen_bg_color = $behavior_settings['az_split_screen']['bg_color'];
-      $bg_color_mappings = [
-        'bg-red' => 'text-bg-red',
-        'bg-blue' => 'text-bg-blue',
-        'bg-sky' => 'text-bg-sky',
-        'bg-oasis' => 'text-bg-oasis',
-        'bg-azurite' => 'text-bg-azurite',
-        'bg-midnight' => 'text-bg-midnight',
-        'bg-bloom' => 'text-bg-bloom',
-        'bg-chili' => 'text-bg-chili',
-        'bg-cool-gray' => 'text-bg-cool-gray',
-        'bg-warm-gray' => 'text-bg-warm-gray',
-        'bg-gray-100' => 'text-bg-gray-100',
-        'bg-gray-200' => 'text-bg-gray-200',
-        'bg-gray-300' => 'text-bg-gray-300',
-        'bg-leaf' => 'text-bg-leaf',
-        'bg-river' => 'text-bg-river',
-        'bg-silver' => 'text-bg-silver',
-        'bg-ash' => 'text-bg-ash',
-        'bg-mesa' => 'text-bg-mesa',
-        'bg-white' => 'text-bg-white',
-      ];
-      if (isset($bg_color_mappings[$splitscreen_bg_color])) {
-        $needs_update = TRUE;
-        $behavior_settings['az_split_screen']['bg_color'] = $bg_color_mappings[$splitscreen_bg_color];
+    foreach (array_keys($paragraph->getTranslationLanguages()) as $langcode) {
+      $paragraph = $paragraph->getTranslation($langcode);
+
+      $behavior_settings = $paragraph->getAllBehaviorSettings();
+
+      // Update splitscreen bg color for Arizona Bootstrap 5.
+      if (isset($behavior_settings['az_split_screen']['bg_color'])) {
+        $splitscreen_bg_color = $behavior_settings['az_split_screen']['bg_color'];
+        $bg_color_mappings = [
+          'bg-red' => 'text-bg-red',
+          'bg-blue' => 'text-bg-blue',
+          'bg-sky' => 'text-bg-sky',
+          'bg-oasis' => 'text-bg-oasis',
+          'bg-azurite' => 'text-bg-azurite',
+          'bg-midnight' => 'text-bg-midnight',
+          'bg-bloom' => 'text-bg-bloom',
+          'bg-chili' => 'text-bg-chili',
+          'bg-cool-gray' => 'text-bg-cool-gray',
+          'bg-warm-gray' => 'text-bg-warm-gray',
+          'bg-gray-100' => 'text-bg-gray-100',
+          'bg-gray-200' => 'text-bg-gray-200',
+          'bg-gray-300' => 'text-bg-gray-300',
+          'bg-leaf' => 'text-bg-leaf',
+          'bg-river' => 'text-bg-river',
+          'bg-silver' => 'text-bg-silver',
+          'bg-ash' => 'text-bg-ash',
+          'bg-mesa' => 'text-bg-mesa',
+          'bg-white' => 'text-bg-white',
+        ];
+        if (isset($bg_color_mappings[$splitscreen_bg_color])) {
+          $needs_update = TRUE;
+          $behavior_settings['az_split_screen']['bg_color'] = $bg_color_mappings[$splitscreen_bg_color];
+        }
       }
     }
 
