@@ -86,6 +86,7 @@ function az_paragraphs_text_background_update_1130001(&$sandbox) {
         }
       }
       if ($needs_update) {
+        $updated = TRUE;
         $paragraph->setAllBehaviorSettings($behavior_settings);
         $paragraph->save();
       }
