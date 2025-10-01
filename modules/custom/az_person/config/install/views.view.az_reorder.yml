@@ -350,20 +350,6 @@ display:
           expose:
             label: ''
             field_identifier: field_az_fname_value
-          exposed: false
-        field_az_person_category_target_id:
-          id: field_az_person_category_target_id
-          table: node__field_az_person_category
-          field: field_az_person_category_target_id
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: standard
-          order: ASC
-          expose:
-            label: ''
-            field_identifier: field_az_person_category_target_id
-          exposed: false
       arguments: {  }
       filters:
         status:
