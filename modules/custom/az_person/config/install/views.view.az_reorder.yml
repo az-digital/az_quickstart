@@ -350,6 +350,7 @@ display:
           expose:
             label: ''
             field_identifier: field_az_fname_value
+          exposed: false
       arguments: {  }
       filters:
         status:
