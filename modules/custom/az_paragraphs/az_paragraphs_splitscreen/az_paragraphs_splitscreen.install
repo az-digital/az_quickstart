@@ -94,10 +94,11 @@ function az_paragraphs_splitscreen_update_1130001(&$sandbox) {
 
   $paragraphs = \Drupal::entityTypeManager()->getStorage('paragraph')->loadMultiple($paragraph_ids);
   foreach ($paragraphs as $paragraph) {
-    $needs_update = FALSE;
+    $updated = FALSE;
 
     foreach (array_keys($paragraph->getTranslationLanguages()) as $langcode) {
       $paragraph = $paragraph->getTranslation($langcode);
+      $needs_update = FALSE;
 
       $behavior_settings = $paragraph->getAllBehaviorSettings();
 
@@ -130,13 +131,16 @@ function az_paragraphs_splitscreen_update_1130001(&$sandbox) {
           $behavior_settings['az_split_screen']['bg_color'] = $bg_color_mappings[$splitscreen_bg_color];
         }
       }
+      if ($needs_update) {
+        $paragraph->setAllBehaviorSettings($behavior_settings);
+        $paragraph->save();
+      }
     }
 
-    if ($needs_update) {
-      $paragraph->setAllBehaviorSettings($behavior_settings);
-      $paragraph->save();
+    if ($updated) {
       $sandbox['updated_count']++;
     }
+
     $sandbox['current']++;
   }
 

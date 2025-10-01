@@ -48,10 +48,11 @@ function az_paragraphs_text_background_update_1130001(&$sandbox) {
 
   $paragraphs = \Drupal::entityTypeManager()->getStorage('paragraph')->loadMultiple($paragraph_ids);
   foreach ($paragraphs as $paragraph) {
-    $needs_update = FALSE;
+    $updated = FALSE;
 
     foreach (array_keys($paragraph->getTranslationLanguages()) as $langcode) {
       $paragraph = $paragraph->getTranslation($langcode);
+      $needs_update = FALSE;
 
       $behavior_settings = $paragraph->getAllBehaviorSettings();
 
@@ -84,13 +85,16 @@ function az_paragraphs_text_background_update_1130001(&$sandbox) {
           $behavior_settings['az_text_background_paragraph_behavior']['text_background_color'] = $bg_color_mappings[$text_bg_color];
         }
       }
+      if ($needs_update) {
+        $paragraph->setAllBehaviorSettings($behavior_settings);
+        $paragraph->save();
+      }
     }
 
-    if ($needs_update) {
-      $paragraph->setAllBehaviorSettings($behavior_settings);
-      $paragraph->save();
+    if ($updated) {
       $sandbox['updated_count']++;
     }
+
     $sandbox['current']++;
   }
 
