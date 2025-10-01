@@ -221,6 +221,9 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase implements 
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $elements = [];
+    // Determine editing context and view mode once for this build.
+    $is_editing_context = $this->trellisService->isEditingContext();
+    $view_mode = $this->configuration['view_mode'] ?? $this->viewMode ?? 'default';
     foreach ($items as $delta => $item) {
       /** @var \Drupal\Core\Field\FieldItemInterface $item */
       if ($item->isEmpty()) {
@@ -237,6 +240,12 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase implements 
       // e.g., '/185'.
       $path = $parsedUrl['path'];
 
+      // Extract query parameters for form prefilling.
+      $query_params = [];
+      if (!empty($parsedUrl['query'])) {
+        parse_str($parsedUrl['query'], $query_params);
+      }
+
       // Insert 'publish' before the form ID for Quick Publish format.
       $pathParts = explode('/', trim($path, '/'));
       $pathParts = array_merge(['publish'], $pathParts);
@@ -246,8 +255,36 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase implements 
       $newUrl = $parsedUrl['scheme'] . '://' . $parsedUrl['host'] . $newPath;
       // Results: https://forms-a.trellis.arizona.edu/publish/185
       // https://trellis.tfaforms.net/publish/72
-      // Determine current context for form behavior modification.
-      $is_editing_context = $this->trellisService->isEditingContext();
+      // In editing mode, render a simple placeholder container and skip
+      // remote script attachments. Provide clear classes for styling.
+      if ($is_editing_context) {
+        $unique_element_id = Html::getUniqueId('az-media-trellis-preview');
+        $elements[$delta] = [
+          '#theme' => 'az_media_trellis',
+          '#editing' => TRUE,
+          '#attributes' => new Attribute([
+            'id' => $unique_element_id,
+            'class' => [
+              Html::getClass('az-media-trellis-placeholder'),
+              Html::getClass('az-media-trellis-placeholder--' . $view_mode),
+              'placeholder',
+            ],
+            'data-editing' => 'true',
+          ]),
+          '#attached' => [
+            'library' => [
+              // Attach CSS-only library so sizing rules load in editor.
+              'az_media_trellis/az-media-trellis.styles',
+            ],
+          ],
+          '#cache' => [
+            'contexts' => ['url.query_args'],
+            'max-age' => 3600,
+          ],
+        ];
+        // Return immediately with the placeholder element in editing context.
+        return $elements;
+      }
 
       // Get the view mode for responsive sizing and display options.
       $view_mode = $this->configuration['view_mode'] ?? $this->viewMode ?? 'default';
@@ -263,6 +300,9 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase implements 
             Html::getClass('az-media-trellis'),
             Html::getClass('az-media-trellis--' . $view_mode),
           ],
+          // Store query parameters as JSON data attribute for this form.
+          'data-query-params' => !empty($query_params) ? json_encode($query_params) : '{}',
+          'data-editing' => $is_editing_context ? 'true' : 'false',
         ]),
         '#cache' => [
           // Cache varies by URL query arguments for form prefilling.
@@ -272,6 +312,26 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase implements 
         ],
       ];
 
+      // Attach the remote Trellis script early so that document.write or
+      // other parse-time behaviors still function. We still provide the
+      // data attribute for JS (sanitization and possible future toggles) and
+      // mark that the script has been preloaded so the behavior does not
+      // attempt to load it a second time.
+      $elements[$delta]['#attributes']->setAttribute('data-trellis-embed-src', $newUrl);
+      $elements[$delta]['#attributes']->setAttribute('data-trellis-script-preloaded', '1');
+
+      // Inline CSS blocker must come before the remote script so that any
+      // <link rel="stylesheet"> insertions are intercepted. We keep it
+      // lightweight and idempotent.
+      $elements[$delta]['#attached']['html_head'][] = [
+        [
+          '#tag' => 'script',
+          '#value' => "(function(){if(window.__azTrellisCssBlockerInstalled)return;window.__azTrellisCssBlockerInstalled=true;var P=[/design\\.trellis\\.arizona\\.edu\\/css\\/form-assembly\\.css/i,/forms-a\\.trellis\\.arizona\\.edu\\/dist\\/form-builder\\//i,/forms-a\\.trellis\\.arizona\\.edu\\/uploads\\/themes\\//i,/forms-a\\.trellis\\.arizona\\.edu\\/wForms\\/3\\.11\\/css\\//i];function blocked(n){if(!n||n.tagName!=='LINK'||n.rel!=='stylesheet')return false;return P.some(function(rx){return rx.test(n.href);});}function wrapAppend(orig){return function(node){try{if(blocked(node))return node;}catch(e){}return orig.call(this,node);};}function wrapInsertBefore(orig){return function(node,ref){try{if(blocked(node))return node;}catch(e){}return orig.call(this,node,ref);};}var d=document.constructor.prototype,h=HTMLHeadElement.prototype;if(!d.__azTrellisPatched){d.__azTrellisPatched=true;d.appendChild=wrapAppend(d.appendChild);}if(!h.__azTrellisPatchedA){h.__azTrellisPatchedA=true;h.appendChild=wrapAppend(h.appendChild);}if(!h.__azTrellisPatchedIB){h.__azTrellisPatchedIB=true;h.insertBefore=wrapInsertBefore(h.insertBefore);}new MutationObserver(function(mutations){mutations.forEach(function(mutation){mutation.addedNodes.forEach(function(node){if(blocked(node)){if(node.parentNode){node.parentNode.removeChild(node);}}});});}).observe(document.head,{childList:true});})();",
+        ],
+        'az_media_trellis_css_blocker_' . $unique_element_id,
+      ];
+
+      // Now attach the remote script.
       $elements[$delta]['#attached']['html_head'][] = [
         [
           '#tag' => 'script',
@@ -289,11 +349,14 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase implements 
     // Attach the necessary JavaScript library for Trellis form embedding.
     // Guard against the case where the foreach loop produced no elements
     // (all items empty).
-    if (!empty($elements)) {
+    if (!empty($elements) && !$is_editing_context) {
       // Use end() to get the last element reference safely without relying
       // on $delta.
       $last_key = array_key_last($elements);
       $elements[$last_key]['#attached']['library'][] = 'az_media_trellis/az-media-trellis';
+      // Provide a Drupal setting to allow conditional behavior or future
+      // admin toggle to allow CSS again if desired.
+      $elements[$last_key]['#attached']['drupalSettings']['azMediaTrellis']['blockRemoteCss'] = TRUE;
     }
 
     return $elements;

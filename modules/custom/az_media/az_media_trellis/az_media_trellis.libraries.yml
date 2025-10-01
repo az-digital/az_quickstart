@@ -7,3 +7,8 @@ az-media-trellis:
   dependencies:
     - core/drupal
     - core/drupalSettings
+
+az-media-trellis.styles:
+  css:
+    theme:
+      css/az-media-trellis.css: {}
