@@ -95,31 +95,29 @@ final class AZContentFieldUpdater implements AZContentFieldUpdaterInterface {
         continue;
       }
 
+      // Check if the field exists on this entity.
+      if (!$entity->hasField($field_name)) {
+        $logger->warning("Field @field does not exist on @type @id (@bundle)", [
+          '@field' => $field_name,
+          '@type' => $entity_type_id,
+          '@id' => $id,
+          '@bundle' => $entity->bundle(),
+        ]);
+        $sandbox['skipped']++;
+        $sandbox['progress']++;
+        continue;
+      }
+
       // Check all languages that exist for entity.
-      foreach (array_keys($entity->getTranslationLanguages()) as $langcode) {
+      foreach ($entity->getTranslationLanguages() as $langcode => $language) {
         $entity = $entity->getTranslation($langcode);
 
         $needs_update = FALSE;
-
-        // Check if the field exists on this entity.
-        if (!$entity->hasField($field_name)) {
-          $logger->warning("Field @field does not exist on @type @id (@bundle)", [
-            '@field' => $field_name,
-            '@type' => $entity_type_id,
-            '@id' => $id,
-            '@bundle' => $entity->bundle(),
-          ]);
-          $sandbox['skipped']++;
-          $sandbox['progress']++;
-          continue;
-        }
 
         $field = $entity->get($field_name);
 
         // Skip if field doesn't exist or is empty.
         if (!$field || $field->isEmpty()) {
-          $sandbox['skipped']++;
-          $sandbox['progress']++;
           continue;
         }
 
@@ -128,8 +126,6 @@ final class AZContentFieldUpdater implements AZContentFieldUpdaterInterface {
           // Single-value field.
           $field_item = $field->first();
           if (!$field_item) {
-            $sandbox['skipped']++;
-            $sandbox['progress']++;
             continue;
           }
 
@@ -137,8 +133,6 @@ final class AZContentFieldUpdater implements AZContentFieldUpdaterInterface {
           if ($options['format_required']) {
             $format = $field_item->{$options['format_key']} ?? NULL;
             if (!in_array($format, $options['allowed_formats'])) {
-              $sandbox['skipped']++;
-              $sandbox['progress']++;
               continue;
             }
           }
@@ -146,8 +140,6 @@ final class AZContentFieldUpdater implements AZContentFieldUpdaterInterface {
           // Get current value using configured key.
           $original_value = $field_item->{$options['value_key']} ?? NULL;
           if (empty($original_value)) {
-            $sandbox['skipped']++;
-            $sandbox['progress']++;
             continue;
           }
 
@@ -204,13 +196,14 @@ final class AZContentFieldUpdater implements AZContentFieldUpdaterInterface {
                 '@field' => $field_name,
                 '@type' => $entity->getEntityTypeId(),
                 '@id' => $entity->id(),
+                '@language' => $language->getName(),
               ];
               if (!empty($options['bundle_name'])) {
                 $message_args['@bundle'] = $options['bundle_name'];
-                $message = $this->t('Updated field @field on @bundle @type @id', $message_args);
+                $message = $this->t('Updated field @field on @bundle @type @id for @language language', $message_args);
               }
               else {
-                $message = $this->t('Updated field @field on @type @id', $message_args);
+                $message = $this->t('Updated field @field on @type @id for @language language', $message_args);
               }
               // Format and add prefix/suffix to revision log message.
               if ($options['prefix']) {
@@ -227,6 +220,8 @@ final class AZContentFieldUpdater implements AZContentFieldUpdaterInterface {
           $entity->save();
 
           // Handle parent entity revisions for paragraphs.
+          $parent_bundle = '';
+          $parent_id = '';
           if ($options['create_revisions'] &&
               $entity instanceof ParagraphInterface &&
               $parent = $entity->getParentEntity()) {
@@ -236,49 +231,68 @@ final class AZContentFieldUpdater implements AZContentFieldUpdaterInterface {
               /** @var \Drupal\Core\Entity\ContentEntityInterface $parent */
               $parent = $parent_storage->load($parent->id());
 
-              // Create new revision.
-              $parent->setNewRevision(TRUE);
-              $parent->isDefaultRevision(TRUE);
-
-              // Update revision metadata.
-              if ($parent instanceof RevisionLogInterface && !$parent instanceof ParagraphInterface) {
-                $time = \Drupal::time()->getRequestTime();
-                $parent->setRevisionCreationTime($time);
-                $parent->setRevisionUserId(1);
-                if ($parent instanceof TranslatableRevisionableInterface) {
-                  $parent->setRevisionTranslationAffected(TRUE);
-                }
-                $message = $this->t('Updated child @bundle paragraph @pid (revision: @vid)', [
-                  '@bundle' => $entity->bundle(),
+              if (!$parent->hasTranslation($langcode)) {
+                $logger->warning("Parent @bundle @type @id for @pbundle paragraph @pid does not have a translation for the @language language", [
+                  '@bundle' => $parent->bundle(),
+                  '@type' => $parent->getEntityTypeId(),
+                  '@id' => $parent->id(),
+                  '@pbundle' => $entity->bundle(),
                   '@pid' => $entity->id(),
-                  '@vid' => $entity->getRevisionId(),
+                  '@language' => $language->getName(),
                 ]);
-                // Format and add prefix/suffix to revision log message.
-                if ($options['prefix']) {
-                  $message = $options['prefix'] . ': ' . $message;
-                }
-                if ($options['suffix']) {
-                  $message .= ' (' . $options['suffix'] . ')';
-                }
-                $parent->setRevisionLogMessage($message);
               }
+              else {
+                $parent = $parent->getTranslation($langcode);
 
-              // Update parent's reference to the paragraph.
-              $parent_field = $entity->get('parent_field_name')->value;
-              $parent_items = $parent->get($parent_field);
-              /** @var \Drupal\entity_reference_revisions\Plugin\Field\FieldType\EntityReferenceRevisionsItem $item */
-              foreach ($parent_items as $delta => $item) {
-                if ($item->target_id == $entity->id()) {
-                  $parent_items->get($delta)->setValue([
-                    'target_id' => $entity->id(),
-                    'target_revision_id' => $entity->getRevisionId(),
+                // Create new revision.
+                $parent->setNewRevision(TRUE);
+                $parent->isDefaultRevision(TRUE);
+
+                // Update revision metadata.
+                if ($parent instanceof RevisionLogInterface && !$parent instanceof ParagraphInterface) {
+                  $time = \Drupal::time()->getRequestTime();
+                  $parent->setRevisionCreationTime($time);
+                  $parent->setRevisionUserId(1);
+                  if ($parent instanceof TranslatableRevisionableInterface) {
+                    $parent->setRevisionTranslationAffected(TRUE);
+                  }
+                  $message = $this->t('Updated child @bundle paragraph @pid (revision: @vid) for @language language', [
+                    '@bundle' => $entity->bundle(),
+                    '@pid' => $entity->id(),
+                    '@vid' => $entity->getRevisionId(),
+                    '@language' => $language->getName(),
                   ]);
-                  break;
+                  // Format and add prefix/suffix to revision log message.
+                  if ($options['prefix']) {
+                    $message = $options['prefix'] . ': ' . $message;
+                  }
+                  if ($options['suffix']) {
+                    $message .= ' (' . $options['suffix'] . ')';
+                  }
+                  $parent->setRevisionLogMessage($message);
                 }
-              }
 
-              // Save the parent entity.
-              $parent->save();
+                // Update parent's reference to the paragraph.
+                $parent_field = $entity->get('parent_field_name')->value;
+                $parent_items = $parent->get($parent_field);
+                /** @var \Drupal\entity_reference_revisions\Plugin\Field\FieldType\EntityReferenceRevisionsItem $item */
+                foreach ($parent_items as $delta => $item) {
+                  if ($item->target_id == $entity->id()) {
+                    $parent_items->get($delta)->setValue([
+                      'target_id' => $entity->id(),
+                      'target_revision_id' => $entity->getRevisionId(),
+                    ]);
+                    break;
+                  }
+                }
+
+                // Make parent info available for log messages.
+                $parent_bundle = $parent->bundle();
+                $parent_id = $parent->id();
+
+                // Save the parent entity.
+                $parent->save();
+              }
             }
           }
 
@@ -287,14 +301,15 @@ final class AZContentFieldUpdater implements AZContentFieldUpdaterInterface {
             '@bundle' => $entity->bundle(),
             '@id' => $entity->id(),
             '@vid' => $entity->getRevisionId(),
+            '@language' => $language->getName(),
           ];
-          $message = 'Updated @bundle paragraph @id (revision: @vid)';
+          $message = 'Updated @bundle paragraph @id (revision: @vid) for @language language';
 
           // Add parent entity information for paragraphs.
-          if ($entity instanceof ParagraphInterface && ($parent = $entity->getParentEntity())) {
-            $message .= ' and parent @parent_type @parent_id';
-            $context['@parent_type'] = $parent->bundle();
-            $context['@parent_id'] = $parent->id();
+          if (!empty($parent_bundle) && !empty($parent_id)) {
+            $message .= ' and parent @parent_bundle @parent_id';
+            $context['@parent_bundle'] = $parent_bundle;
+            $context['@parent_id'] = $parent_id;
           }
 
           // Format and add suffix to logger message if provided.
