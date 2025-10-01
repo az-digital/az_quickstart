@@ -277,7 +277,7 @@ display:
         type: none
         options:
           offset: 0
-          items_per_page: null
+          items_per_page: 0
       exposed_form:
         type: basic
         options:
@@ -445,6 +445,7 @@ display:
           empty_table: false
           caption: ''
           description: ''
+          class: ''
       row:
         type: fields
         options:
