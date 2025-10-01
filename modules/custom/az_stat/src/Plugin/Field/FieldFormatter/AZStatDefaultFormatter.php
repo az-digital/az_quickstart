@@ -179,7 +179,7 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
             $column_classes[] = $stat_defaults['az_display_settings']['stat_width_sm'] ?? 'col-md-4';
           }
           $column_classes[] = $stat_defaults['stat_width'] ?? 'col-md-4 col-lg-3';
-          $stat_classes = $stat_defaults['stat_style'] ?? 'stat';
+          $stat_classes = $stat_defaults['stat_hover_style'] ?? 'stat';
 
           $stat_classes .= ' ' . $stat_defaults['stat_alignment'] ?? 'text-left';
           //$stat_classes .= $stat_defaults['stat_title_style'] ?? 'stat-title-bold'
@@ -216,8 +216,8 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
           }
 
           // Format pg style.
-          $stat_style = $stat_defaults['stat_style'] ?? '';
-          if ($stat_style == 'card stat-bold-hover' || $stat_style == 'card stat-subtle-hover') {
+          $stat_hover_style = $stat_defaults['stat_hover_style'] ?? '';
+          if ($stat_hover_style == 'card stat-bold-hover' || $stat_hover_style == 'card stat-subtle-hover') {
             $attached['library'][] = 'az_stat/az_stat_bold_hover';
           }
 
@@ -266,14 +266,14 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         '#media' => $media_render_array,
         '#column_span' => $column_span,
         '#stat_heading' => $stat_heading,
-        '#stat_style' => $stat_style,
+        '#stat_hover_style' => $stat_hover_style,
         '#stat_title_style' => $stat_defaults['stat_title_style'],
         // The ProcessedText element handles cache context & tag bubbling.
         // @see \Drupal\filter\Element\ProcessedText::preRenderText()
         '#stat_description' => $stat_description,
         '#stat_source' => $item->stat_source,
         '#link_url' => $link_url,
-        '#title_display' => $title_display ?? 'h5',
+        //'#title_display' => $title_display ?? 'h5',
         '#text_color_override' => $text_color_override,
         '#attributes' => ['class' => $stat_classes],
         '#attached' => $attached,

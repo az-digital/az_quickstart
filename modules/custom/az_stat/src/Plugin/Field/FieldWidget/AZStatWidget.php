@@ -142,7 +142,7 @@ class AZStatWidget extends WidgetBase {
       // See if the parent behavior defines some stat-specific settings.
       if (!empty($parent_config['az_stats_paragraph_behavior'])) {
         $stat_defaults = $parent_config['az_stats_paragraph_behavior'];
-        $stat_classes = $stat_defaults['stat_style'] ?? 'card';
+        $stat_classes = $stat_defaults['stat_hover_style'] ?? 'card';
       }
     }
 
@@ -367,14 +367,18 @@ class AZStatWidget extends WidgetBase {
       '#maxlength' => 2048,
       '#required' => FALSE, // Don't use server-side required - let #states handle it dynamically
       '#states' => [
-        // Visible only for standard stat type.
+        // Visible only for Standard stat type.
         'visible' => [
           ':input[data-az-stat-type-input-id="' . $stat_type_unique_id . '"]' => ['value' => 'standard'],
         ],
-        // Required when BOTH visible (standard stat type) AND stat_style is 'card stat-bold-hover'
+        // Link URI is required when stat is a Standard type, AND the hover style is NOT static.
         'required' => [
           ':input[data-az-stat-type-input-id="' . $stat_type_unique_id . '"]' => ['value' => 'standard'],
-          ':input[name*="[behavior_plugins][az_stats_paragraph_behavior][stat_style]"]' => ['value' => 'card stat-bold-hover'],
+          ':input[name*="[behavior_plugins][az_stats_paragraph_behavior][stat_hover_style]"]' => [
+            ['value' => 'card stat-bold-hover'],
+            'or',
+            ['value' => 'card stat-subtle-hover'],
+          ],
         ],
       ],
     ];

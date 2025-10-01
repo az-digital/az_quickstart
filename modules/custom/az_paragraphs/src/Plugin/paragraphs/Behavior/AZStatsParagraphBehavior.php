@@ -37,7 +37,7 @@ class AZStatsParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#description' => $this->t('Choose how many stats appear per row. Additional stats will wrap to a new row. This selection sets the stats per row on desktops with automatic defaults set for tablet and phone. Override stats per row on tablet and phone in Additional options.'),
     ];
 
-    $form['stat_style'] = [
+    $form['stat_hover_style'] = [
       '#title' => $this->t('Rankings Style'),
       '#type' => 'select',
       '#options' => [
@@ -45,7 +45,7 @@ class AZStatsParagraphBehavior extends AZDefaultParagraphsBehavior {
         'card stat-subtle-hover' => $this->t('Subtle Hover'),
         'card stat-thin' => $this->t('Static'),
       ],
-      '#default_value' => $config['stat_style'] ?? 'card stat-bold-hover',
+      '#default_value' => $config['stat_hover_style'] ?? 'card stat-bold-hover',
       '#description' => $this->t('Gives this ranking deck a bright hover effect, a button-like hover effect, or no effects when hovering over the card. For accessibility, when using a hover effect, Links are required.'),
     ];
 

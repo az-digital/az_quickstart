@@ -33,7 +33,7 @@ function az_stat_theme($existing, $type, $theme, $path) {
         'attributes' => [],
         'media' => NULL,
         'column_span' => NULL,
-        'stat_style' => NULL,
+        'stat_hover_style' => NULL,
         'stat_heading' => NULL,
         'stat_alignment' => NULL,
         'stat_title_style' => NULL,
