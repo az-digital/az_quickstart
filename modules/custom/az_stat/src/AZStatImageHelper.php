@@ -69,7 +69,6 @@ class AZStatImageHelper {
         '#item_attributes' => [
           'class' => ['stat-img'],
         ],
-        // '#url' => '',
       ];
       // Add the file entity to the cache dependencies.
       // This will clear our cache when this entity updates.

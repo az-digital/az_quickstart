@@ -99,7 +99,6 @@ class AZStatWidget extends WidgetBase {
 
     if (isset($container['widget']['add_more']['#ajax']['wrapper'])) {
       $container['widget']['add_more']['#ajax']['wrapper'] = $wrapper_id;
-      //$container['widget']['add_more']['#ajax']['callback'] = [$this, 'statAjax'];
     }
     return $container;
   }
@@ -251,6 +250,19 @@ class AZStatWidget extends WidgetBase {
       }
     }
 
+    $element['details']['media'] = [
+      '#type' => 'az_media_library',
+      '#default_value' => $item->media ?? NULL,
+      '#allowed_bundles' => ['az_image'],
+      '#delta' => $delta,
+      '#cardinality' => 1,
+      '#states' => [
+        'visible' => [ // Media is only visible when Stat Type is "image_only"
+          ':input[data-az-stat-type-input-id="' . $stat_type_unique_id . '"]' => ['value' => 'image_only'],
+        ],
+      ],
+    ];
+
     $element['details']['column_span'] = [
       '#type' => 'select',
       '#options' => [
@@ -263,7 +275,7 @@ class AZStatWidget extends WidgetBase {
       '#description' => $this->t('How many columns do you want this image to span (in multiples of stat-card width)?') . '<br><br><div class="aspect-ratio-help" data-current-stat-width="' . $stat_width . '">' . $this->getAspectRatioHelpText($stat_width) . '</div>',
       '#default_value' => (!empty($item->options['column_span'])) ? $item->options['column_span'] : 2,
       '#states' => [
-        'visible' => [
+        'visible' => [ // Column Span is only visible when Stat Type is "image_only"
           ':input[data-az-stat-type-input-id="' . $stat_type_unique_id . '"]' => ['value' => 'image_only'],
         ],
       ],
@@ -272,18 +284,7 @@ class AZStatWidget extends WidgetBase {
       ],
     ];
 
-    $element['details']['media'] = [
-      '#type' => 'az_media_library',
-      '#default_value' => $item->media ?? NULL,
-      '#allowed_bundles' => ['az_image'],
-      '#delta' => $delta,
-      '#cardinality' => 1,
-      '#states' => [
-        'visible' => [
-          ':input[data-az-stat-type-input-id="' . $stat_type_unique_id . '"]' => ['value' => 'image_only'],
-        ],
-      ],
-    ];
+    // All other fields are NOT visible if the Stat Type is "image_only".
 
     $element['details']['options'] = [
       '#type' => 'select',
@@ -367,11 +368,10 @@ class AZStatWidget extends WidgetBase {
       '#maxlength' => 2048,
       '#required' => FALSE, // Don't use server-side required - let #states handle it dynamically
       '#states' => [
-        // Visible only for Standard stat type.
         'visible' => [
           ':input[data-az-stat-type-input-id="' . $stat_type_unique_id . '"]' => ['value' => 'standard'],
         ],
-        // Link URI is required when stat is a Standard type, AND the hover style is NOT static.
+        // Link URI is required when Stat Type is 'standard', AND the hover style is NOT static.
         'required' => [
           ':input[data-az-stat-type-input-id="' . $stat_type_unique_id . '"]' => ['value' => 'standard'],
           ':input[name*="[behavior_plugins][az_stats_paragraph_behavior][stat_hover_style]"]' => [
@@ -404,8 +404,6 @@ class AZStatWidget extends WidgetBase {
     $elements = parent::formMultipleElements($items, $form, $form_state);
     $field_name = $this->fieldDefinition->getName();
     $cardinality = $this->fieldDefinition->getFieldStorageDefinition()->getCardinality();
-    // $is_multiple = $this->fieldDefinition->getFieldStorageDefinition()->isMultiple();
-    //    $is_unlimited_not_programmed = FALSE;
     $parents = $form['#parents'];
 
     $max = 0;
