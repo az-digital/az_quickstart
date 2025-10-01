@@ -277,7 +277,7 @@ display:
         type: none
         options:
           offset: 0
-          items_per_page: null
+          items_per_page: 0
       exposed_form:
         type: basic
         options:
@@ -350,6 +350,19 @@ display:
           expose:
             label: ''
             field_identifier: field_az_fname_value
+          exposed: false
+        field_az_person_category_target_id:
+          id: field_az_person_category_target_id
+          table: node__field_az_person_category
+          field: field_az_person_category_target_id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: standard
+          order: ASC
+          expose:
+            label: ''
+            field_identifier: field_az_person_category_target_id
           exposed: false
       arguments: {  }
       filters:
@@ -445,6 +458,7 @@ display:
           empty_table: false
           caption: ''
           description: ''
+          class: ''
       row:
         type: fields
         options:
