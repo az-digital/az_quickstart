@@ -125,7 +125,7 @@
         "drupal/xmlsitemap": "2.0.0",
         "giggsey/libphonenumber-for-php": "^8.5",
         "jjj/chosen": "2.2.1",
-        "kevinrob/guzzle-cache-middleware": "6.0.0",
+        "kevinrob/guzzle-cache-middleware": "7.0.0",
         "npm-asset/blazy": "1.8.2",
         "npm-asset/bootstrap-datepicker": "1.10.0",
         "npm-asset/easepick--bundle": "1.2.1",
