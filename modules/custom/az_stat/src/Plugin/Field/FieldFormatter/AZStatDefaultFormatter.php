@@ -182,8 +182,7 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
           $stat_classes = $stat_defaults['stat_hover_style'] ?? 'stat';
 
           $stat_classes .= ' ' . $stat_defaults['stat_alignment'] ?? 'text-left';
-          //$stat_classes .= $stat_defaults['stat_title_style'] ?? 'stat-title-bold'
-
+          // $stat_classes .= $stat_defaults['stat_title_style'] ?? 'stat-title-bold'
           // Calculate column classes for image based on column_span.
           if ($item->options['stat_type'] === 'image_only' && !empty($item->options['column_span']) && ($item->options['column_span'] != '')) {
 
@@ -273,7 +272,7 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         '#stat_description' => $stat_description,
         '#stat_source' => $item->stat_source,
         '#link_url' => $link_url,
-        //'#title_display' => $title_display ?? 'h5',
+        // '#title_display' => $title_display ?? 'h5',
         '#text_color_override' => $text_color_override,
         '#attributes' => ['class' => $stat_classes],
         '#attached' => $attached,

@@ -159,27 +159,30 @@ class AZStatWidget extends WidgetBase {
         $item->stat_source ? $this->t('Source: @source', ['@source' => substr($item->stat_source, 0, 50) . '...']) : NULL,
       ]);
       $summary_text = implode(' | ', $summary_parts) ?: $this->t('Stat @delta', ['@delta' => $delta + 1]);
-    } else {
+    }
+    else {
       $summary_text = $this->t('New Stat @delta', ['@delta' => $delta + 1]);
     }
 
-    // Wrap everything in a details element
+    // Wrap everything in a details element.
     $element['details'] = [
       '#type' => 'details',
       '#title' => $summary_text,
-      '#open' => $status, // Open when in edit mode, closed when in preview mode
+    // Open when in edit mode, closed when in preview mode.
+      '#open' => $status,
       '#attributes' => ['class' => ['az-stat-widget']],
     ];
 
-    // When closed, add a preview of the stat after the summary
+    // When closed, add a preview of the stat after the summary.
     if (!$status) {
       $element['preview_wrapper'] = [
         '#type' => 'container',
         '#attributes' => [
           'class' => ['widget-preview-wrapper'],
-          'style' => 'max-width: 320px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px;'
+          'style' => 'max-width: 320px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px;',
         ],
-        '#weight' => -10, // Show before the details element
+        // Show before the details element.
+        '#weight' => -10,
       ];
 
       $element['preview_wrapper']['preview'] = [
@@ -189,11 +192,11 @@ class AZStatWidget extends WidgetBase {
         '#stat_source' => $item->stat_source ?? '',
         '#attributes' => [
           'class' => $stat_classes . ' widget-preview-stat',
-          'style' => 'transform: scale(0.8); transform-origin: center;'
+          'style' => 'transform: scale(0.8); transform-origin: center;',
         ],
       ];
 
-      // Add media to preview if available
+      // Add media to preview if available.
       $media_id = $item->media ?? NULL;
       if (!empty($media_id)) {
         if ($media = $this->entityTypeManager->getStorage('media')->load($media_id)) {
@@ -204,7 +207,7 @@ class AZStatWidget extends WidgetBase {
         }
       }
 
-      // Add link to preview if available
+      // Add link to preview if available.
       if ($item->stat_source || $item->link_uri) {
         if (!empty($item->link_uri) && str_starts_with($item->link_uri, '/' . PublicStream::basePath())) {
           $link_url = Url::fromUri(urldecode('base:' . $item->link_uri));
@@ -221,14 +224,14 @@ class AZStatWidget extends WidgetBase {
       }
     }
 
-    // Create a globally unique ID that includes parent entity info and field parents
+    // Create a globally unique ID that includes parent entity info and field parents.
     $parent_entity = $item->getEntity();
     $parent_id = $parent_entity ? $parent_entity->id() : 'new';
     $field_parents_string = implode('-', $field_parents);
 
     $stat_type_unique_id = 'stat-type-' . $parent_id . '-' . $field_parents_string . '-' . $delta;
 
-    // Add all form fields inside the details element
+    // Add all form fields inside the details element.
     $element['details']['stat_type'] = [
       '#type' => 'select',
       '#options' => [
@@ -240,8 +243,9 @@ class AZStatWidget extends WidgetBase {
       '#attributes' => ['data-az-stat-type-input-id' => $stat_type_unique_id],
     ];
 
-    // Get stat_width from parent config for help text calculation
-    $stat_width = 'col-lg-3'; // Default value
+    // Get stat_width from parent config for help text calculation.
+    // Default value.
+    $stat_width = 'col-lg-3';
     $parent = $item->getEntity();
     if ($parent instanceof ParagraphInterface) {
       $parent_config = $parent->getAllBehaviorSettings();
@@ -257,7 +261,8 @@ class AZStatWidget extends WidgetBase {
       '#delta' => $delta,
       '#cardinality' => 1,
       '#states' => [
-        'visible' => [ // Media is only visible when Stat Type is "image_only"
+    // Media is only visible when Stat Type is "image_only".
+        'visible' => [
           ':input[data-az-stat-type-input-id="' . $stat_type_unique_id . '"]' => ['value' => 'image_only'],
         ],
       ],
@@ -275,7 +280,8 @@ class AZStatWidget extends WidgetBase {
       '#description' => $this->t('How many columns do you want this image to span (in multiples of stat-card width)?') . '<br><br><div class="aspect-ratio-help" data-current-stat-width="' . $stat_width . '">' . $this->getAspectRatioHelpText($stat_width) . '</div>',
       '#default_value' => (!empty($item->options['column_span'])) ? $item->options['column_span'] : 2,
       '#states' => [
-        'visible' => [ // Column Span is only visible when Stat Type is "image_only"
+      // Column Span is only visible when Stat Type is "image_only".
+        'visible' => [
           ':input[data-az-stat-type-input-id="' . $stat_type_unique_id . '"]' => ['value' => 'image_only'],
         ],
       ],
@@ -285,7 +291,6 @@ class AZStatWidget extends WidgetBase {
     ];
 
     // All other fields are NOT visible if the Stat Type is "image_only".
-
     $element['details']['options'] = [
       '#type' => 'select',
       '#options' => [
@@ -366,7 +371,8 @@ class AZStatWidget extends WidgetBase {
       '#element_validate' => [[$this, 'validateStatLink']],
       '#default_value' => $item->link_uri ?? NULL,
       '#maxlength' => 2048,
-      '#required' => FALSE, // Don't use server-side required - let #states handle it dynamically
+      // Don't use server-side required - let #states handle it dynamically.
+      '#required' => FALSE,
       '#states' => [
         'visible' => [
           ':input[data-az-stat-type-input-id="' . $stat_type_unique_id . '"]' => ['value' => 'standard'],
@@ -383,15 +389,15 @@ class AZStatWidget extends WidgetBase {
       ],
     ];
 
-    // Attach the library and return the element
+    // Attach the library and return the element.
     $element['#attached']['library'][] = 'az_stat/az_stat';
     $element['#attached']['library'][] = 'az_stat/az_stat_dynamic_helptext';
 
-      // Store delta and field name for reference
+    // Store delta and field name for reference.
     $element['#delta'] = $delta;
     $element['#field_name'] = $field_name;
 
-    // Pass aspect ratio data to JavaScript
+    // Pass aspect ratio data to JavaScript.
     $element['#attached']['drupalSettings']['azStat']['aspectRatios'] = $this->getAspectRatioData();
 
     return $element;
@@ -537,7 +543,7 @@ class AZStatWidget extends WidgetBase {
     $aspect_ratios = $this->getAspectRatioData();
 
     if (!isset($aspect_ratios[$stat_width])) {
-      // No help text for unknown stat_width
+      // No help text for unknown stat_width.
       return '';
     }
 
@@ -548,7 +554,8 @@ class AZStatWidget extends WidgetBase {
     foreach ($ratios as $key => $ratio) {
       if ($key === 'any') {
         $label = $this->t('Any column span');
-      } else {
+      }
+      else {
         $label = $key . ' ' . $this->t('column') . (strpos($key, '+') !== FALSE || (is_numeric($key) && intval($key) > 1) ? 's' : '');
       }
       $lines[] = $label . ': <strong>' . $ratio . '</strong>';
@@ -612,36 +619,41 @@ class AZStatWidget extends WidgetBase {
    */
   public function massageFormValues(array $values, array $form, FormStateInterface $form_state) {
     foreach ($values as $delta => $value) {
-      // Extract values from the details element structure
+      // Extract values from the details element structure.
       $details_values = $value['details'] ?? [];
 
       if (($details_values['stat_heading'] ?? '') === '') {
         $values[$delta]['stat_heading'] = NULL;
-      } else {
+      }
+      else {
         $values[$delta]['stat_heading'] = $details_values['stat_heading'] ?? NULL;
       }
 
       if (($details_values['stat_description'] ?? '') === '') {
         $values[$delta]['stat_description'] = NULL;
-      } else {
+      }
+      else {
         $values[$delta]['stat_description'] = $details_values['stat_description'] ?? NULL;
       }
 
       if (empty($details_values['media'])) {
         $values[$delta]['media'] = NULL;
-      } else {
+      }
+      else {
         $values[$delta]['media'] = $details_values['media'];
       }
 
       if (($details_values['stat_source'] ?? '') === '') {
         $values[$delta]['stat_source'] = NULL;
-      } else {
+      }
+      else {
         $values[$delta]['stat_source'] = $details_values['stat_source'] ?? NULL;
       }
 
       if (($details_values['link_uri'] ?? '') === '') {
         $values[$delta]['link_uri'] = NULL;
-      } else {
+      }
+      else {
         $values[$delta]['link_uri'] = $details_values['link_uri'] ?? NULL;
       }
 
@@ -653,7 +665,7 @@ class AZStatWidget extends WidgetBase {
         ];
       }
 
-      // Remove the details wrapper from the final values
+      // Remove the details wrapper from the final values.
       unset($values[$delta]['details']);
     }
     return $values;
