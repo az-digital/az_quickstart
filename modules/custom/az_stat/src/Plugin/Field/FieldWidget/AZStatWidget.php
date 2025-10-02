@@ -129,7 +129,7 @@ class AZStatWidget extends WidgetBase {
       $status = TRUE;
     }
 
-    // Determine current stat style - needed for both preview and open edit mode.
+    // Determine current stat style needed for both preview and open edit mode.
     $stat_classes = 'card';
     $parent = $item->getEntity();
 
@@ -224,7 +224,8 @@ class AZStatWidget extends WidgetBase {
       }
     }
 
-    // Create a globally unique ID that includes parent entity info and field parents.
+    // Create a globally unique ID that includes
+    // parent entity info and field parents.
     $parent_entity = $item->getEntity();
     $parent_id = $parent_entity ? $parent_entity->id() : 'new';
     $field_parents_string = implode('-', $field_parents);
@@ -377,7 +378,8 @@ class AZStatWidget extends WidgetBase {
         'visible' => [
           ':input[data-az-stat-type-input-id="' . $stat_type_unique_id . '"]' => ['value' => 'standard'],
         ],
-        // Link URI is required when Stat Type is 'standard', AND the hover style is NOT static.
+        // Link URI is required when Stat Type is 'standard',
+        // AND the hover style is NOT static.
         'required' => [
           ':input[data-az-stat-type-input-id="' . $stat_type_unique_id . '"]' => ['value' => 'standard'],
           ':input[name*="[behavior_plugins][az_stats_paragraph_behavior][stat_hover_style]"]' => [
@@ -418,7 +420,7 @@ class AZStatWidget extends WidgetBase {
       case FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED:
         $field_state = static::getWidgetState($parents, $field_name, $form_state);
         $max = $field_state['items_count'];
-        $is_unlimited_not_programmed = !$form_state->isProgrammed();
+        // $is_unlimited_not_programmed = !$form_state->isProgrammed();
         break;
 
       default:

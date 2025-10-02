@@ -159,7 +159,10 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         $attached['library'][] = 'az_stat/az_stat_title_hover';
       }
 
+      // Define Stat Variabbles.
       $stat_classes = 'stat';
+      $stat_hover_style = '';
+      $stat_defaults = [];
       $column_classes = [];
       $column_classes[] = 'col-md-4 col-lg-4';
       $parent = $item->getEntity();
@@ -182,9 +185,10 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
           $stat_classes = $stat_defaults['stat_hover_style'] ?? 'stat';
 
           $stat_classes .= ' ' . $stat_defaults['stat_alignment'] ?? 'text-left';
-          // $stat_classes .= $stat_defaults['stat_title_style'] ?? 'stat-title-bold'
           // Calculate column classes for image based on column_span.
-          if ($item->options['stat_type'] === 'image_only' && !empty($item->options['column_span']) && ($item->options['column_span'] != '')) {
+          if ($item->options['stat_type'] === 'image_only' &&
+            !empty($item->options['column_span']) &&
+            ($item->options['column_span'] != '')) {
 
             // Multiply column classes by column_span value.
             $column_span_multiplier = (int) $item->options['column_span'];
