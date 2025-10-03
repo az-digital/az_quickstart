@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az_eds_user
+label: 'Quickstart Account Provisioning'
+server_id: az_eds
+base_dn: ''
+filter: '(isMemberOf=arizona.edu:dept:uits:uitswebservices:team)'
+attributes: ''
+size_limit: 0
+time_limit: 0
+dereference: 0
+scope: sub
