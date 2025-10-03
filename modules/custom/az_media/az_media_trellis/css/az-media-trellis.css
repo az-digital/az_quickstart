@@ -251,3 +251,21 @@ textarea.form-control-plaintext {
     box-shadow: none;
 	border: none !important;
   } */
+
+  .az-media-trellis-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: #c9c9c9;
+  min-height: 240px;
+  position: relative;
+  font-size: .95rem;
+}
+.az-media-trellis-placeholder__label {
+  font-weight: 600;
+  line-height: 1.2;
+  padding: 0 1rem;
+  color: #222;
+  word-break: break-word;
+}

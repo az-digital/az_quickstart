@@ -258,22 +258,32 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase implements 
       // In editing mode, render a simple placeholder container and skip
       // remote script attachments. Provide clear classes for styling.
       if ($is_editing_context) {
+        $media_label = $items->getEntity()->label();
         $unique_element_id = Html::getUniqueId('az-media-trellis-preview');
         $elements[$delta] = [
-          '#theme' => 'az_media_trellis',
-          '#editing' => TRUE,
-          '#attributes' => new Attribute([
+          '#type' => 'container',
+          '#attributes' => [
             'id' => $unique_element_id,
             'class' => [
               Html::getClass('az-media-trellis-placeholder'),
               Html::getClass('az-media-trellis-placeholder--' . $view_mode),
-              'placeholder',
+              // 'placeholder',
             ],
             'data-editing' => 'true',
-          ]),
+            'role' => 'img',
+            'aria-label' => $media_label,
+          ],
+          'label' => [
+            '#type' => 'html_tag',
+            '#tag' => 'span',
+            '#value' => $media_label,
+            '#attributes' => [
+              'class' => ['az-media-trellis-placeholder__label'],
+            ],
+          ],
           '#attached' => [
             'library' => [
-              // Attach CSS-only library so sizing rules load in editor.
+              // Keep sizing / placeholder styles in editor.
               'az_media_trellis/az-media-trellis.styles',
             ],
           ],
@@ -282,8 +292,8 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase implements 
             'max-age' => 3600,
           ],
         ];
-        // Return immediately with the placeholder element in editing context.
-        return $elements;
+        // Continue so additional field items also get placeholders.
+        continue;
       }
 
       // Get the view mode for responsive sizing and display options.
