@@ -276,8 +276,6 @@ final class AZBootstrapMarkupConverter {
     /***************************************************************************
      * Badge classes.
      */
-    'badge-primary' => 'text-bg-primary',
-    'badge-secondary' => 'text-bg-secondary',
     'badge-blue' => 'text-bg-blue',
     'badge-red' => 'text-bg-red',
     'badge-success' => 'text-bg-success',
@@ -310,8 +308,7 @@ final class AZBootstrapMarkupConverter {
     'bg-sage' => 'text-bg-sage',
     'bg-white' => 'text-bg-white',
     'bg-black' => 'text-bg-black',
-    'bg-primary' => 'text-bg-primary',
-    'bg-secondary' => 'text-bg-secondary',
+    'bg-primary' => 'text-bg-blue',
     'bg-success' => 'text-bg-success',
     'bg-danger' => 'text-bg-danger',
     'bg-warning' => 'text-bg-warning',
