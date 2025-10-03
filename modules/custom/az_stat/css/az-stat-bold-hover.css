@@ -3,7 +3,6 @@
  *
  */
 
-
 .text-bg-white.stat-bold-hover:hover * {
     background-color: RGBA(var(--bs-blue-rgb),var(--bs-bg-opacity,1)) !important;
     color: #ffffff !important;

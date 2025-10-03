@@ -229,7 +229,6 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
             if (!empty($link_render_array)) {
               $link_render_array['#attributes']['class'][] = 'stretched-link';
             }
-            $stat_classes .= ' shadow overflow-hidden';
             if ($item->link_uri) {
               $stat_classes .= ' stat-with-link';
             }
@@ -237,6 +236,12 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         }
       }
 
+      // Shadow class should NOT be applied on transparent.
+      $stat_classes .= ' overflow-hidden';
+      if(!str_contains($item->options['class'], 'bg-transparent')) {
+        $stat_classes .= ' shadow';
+      }
+      
       // Handle class keys that contained multiple classes.
       $column_classes = implode(' ', $column_classes);
       $column_classes = explode(' ', $column_classes);
