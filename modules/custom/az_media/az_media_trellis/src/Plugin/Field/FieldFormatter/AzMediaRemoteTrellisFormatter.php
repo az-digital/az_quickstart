@@ -220,150 +220,154 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase implements 
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $elements = [];
-    // Determine editing context and view mode once for this build.
     $is_editing_context = $this->trellisService->isEditingContext();
     $view_mode = $this->configuration['view_mode'] ?? $this->viewMode ?? 'default';
+    $entity = $items->getEntity();
+
     foreach ($items as $delta => $item) {
-      /** @var \Drupal\Core\Field\FieldItemInterface $item */
       if ($item->isEmpty()) {
         continue;
       }
 
-      // Extract the Trellis form URL from the field item.
-      $url = $item->getValue()['value'];
-      // Examples: https://forms-a.trellis.arizona.edu/185?tfa_4=value
-      // https://trellis.tfaforms.net/72?tfa_4=value
-      // Transform URL to FormAssembly Quick Publish format.
-      // Parse URL to extract components while preserving query parameters.
-      $parsedUrl = parse_url($url);
-      // e.g., '/185'.
-      $path = $parsedUrl['path'];
-
-      // Extract query parameters for form prefilling.
+      $raw_url = $item->getValue()['value'];
       $query_params = [];
-      if (!empty($parsedUrl['query'])) {
-        parse_str($parsedUrl['query'], $query_params);
-      }
+      $quick_publish_url = $this->transformToQuickPublishUrl($raw_url, $query_params);
 
-      // Insert 'publish' before the form ID for Quick Publish format.
-      $pathParts = explode('/', trim($path, '/'));
-      $pathParts = array_merge(['publish'], $pathParts);
-
-      // Reconstruct the URL for JavaScript embedding.
-      $newPath = '/' . implode('/', $pathParts);
-      $newUrl = $parsedUrl['scheme'] . '://' . $parsedUrl['host'] . $newPath;
-      // Results: https://forms-a.trellis.arizona.edu/publish/185
-      // https://trellis.tfaforms.net/publish/72
-      // In editing mode, render a simple placeholder container and skip
-      // remote script attachments. Provide clear classes for styling.
-      if ($is_editing_context) {
-        $media_label = $items->getEntity()->label();
-        $unique_element_id = Html::getUniqueId('az-media-trellis-preview');
-        $elements[$delta] = [
-          '#type' => 'container',
-          '#attributes' => [
-            'id' => $unique_element_id,
-            'class' => [
-              Html::getClass('az-media-trellis-placeholder'),
-              Html::getClass('az-media-trellis-placeholder--' . $view_mode),
-            ],
-            'data-editing' => 'true',
-            'role' => 'img',
-            'aria-label' => $media_label,
-          ],
-          'label' => [
-            '#type' => 'html_tag',
-            '#tag' => 'span',
-            '#value' => $media_label,
-            '#attributes' => [
-              'class' => ['az-media-trellis-placeholder__label'],
-            ],
-          ],
-          '#attached' => [
-            'library' => [
-              // Keep sizing / placeholder styles in editor.
-              'az_media_trellis/az-media-trellis.styles',
-            ],
-          ],
-        ];
-        // Continue so additional field items also get placeholders.
+      // Skip invalid URLs silently (parent base class already validated on
+      // save, but guards here protect against legacy data).
+      if ($quick_publish_url === NULL) {
         continue;
       }
 
-      // Get the view mode for responsive sizing and display options.
-      $view_mode = $this->configuration['view_mode'] ?? $this->viewMode ?? 'default';
-      // Build themed render element with comprehensive metadata.
-      $unique_element_id = Html::getUniqueId('az-media-trellis');
+      // Editing context: lightweight placeholder only, no remote script.
+      if ($is_editing_context) {
+        $elements[$delta] = $this->buildEditingPlaceholder(
+          $entity->label(),
+          $view_mode
+        );
+        continue;
+      }
+
+      // View context: build themed render array.
+      $unique_id = Html::getUniqueId('az-media-trellis');
+      $attr = new Attribute([
+        'id' => $unique_id,
+        'class' => [
+          Html::getClass('az-media-trellis'),
+          Html::getClass('az-media-trellis--' . $view_mode),
+        ],
+        'data-query-params' => $query_params ? json_encode($query_params) : '{}',
+        'data-editing' => 'false',
+        'data-trellis-embed-src' => $quick_publish_url,
+        'data-trellis-script-preloaded' => '1',
+      ]);
+
       $elements[$delta] = [
         '#theme' => 'az_media_trellis',
-        '#editing' => $is_editing_context,
-        '#url' => $newUrl,
-        '#attributes' => new Attribute([
-          'id' => $unique_element_id,
-          'class' => [
-            Html::getClass('az-media-trellis'),
-            Html::getClass('az-media-trellis--' . $view_mode),
-          ],
-          // Store query parameters as JSON data attribute for this form.
-          'data-query-params' => !empty($query_params) ? json_encode($query_params) : '{}',
-          'data-editing' => $is_editing_context ? 'true' : 'false',
-        ]),
+        '#editing' => FALSE,
+        '#url' => $quick_publish_url,
+        '#attributes' => $attr,
         '#cache' => [
-          // Cache varies by URL query arguments for form prefilling.
-          'contexts' => ['url.query_args'],
-          // Cache for 1 hour to balance performance and content freshness.
+          'contexts' => [
+            // Vary by query args since they influence prefill behavior.
+            'url.query_args',
+            // Vary by interface language so label / potential localized
+            // content remains accurate if extended.
+            'languages:language_interface',
+          ],
+          'tags' => $entity->getCacheTags(),
           'max-age' => 3600,
         ],
       ];
 
-      // Attach the remote Trellis script early so that document.write or
-      // other parse-time behaviors still function. We still provide the
-      // data attribute for JS (sanitization and possible future toggles) and
-      // mark that the script has been preloaded so the behavior does not
-      // attempt to load it a second time.
-      $elements[$delta]['#attributes']->setAttribute('data-trellis-embed-src', $newUrl);
-      $elements[$delta]['#attributes']->setAttribute('data-trellis-script-preloaded', '1');
-
-      // Inline CSS blocker must come before the remote script so that any
-      // <link rel="stylesheet"> insertions are intercepted. We keep it
-      // lightweight and idempotent.
+      // CSS blocker script must precede remote embed script.
       $elements[$delta]['#attached']['html_head'][] = [
         [
           '#tag' => 'script',
           '#value' => "(function(){if(window.__azTrellisCssBlockerInstalled)return;window.__azTrellisCssBlockerInstalled=true;var P=[/design\\.trellis\\.arizona\\.edu\\/css\\/form-assembly\\.css/i,/forms-a\\.trellis\\.arizona\\.edu\\/dist\\/form-builder\\//i,/forms-a\\.trellis\\.arizona\\.edu\\/uploads\\/themes\\//i,/forms-a\\.trellis\\.arizona\\.edu\\/wForms\\/3\\.11\\/css\\//i];function blocked(n){if(!n||n.tagName!=='LINK'||n.rel!=='stylesheet')return false;return P.some(function(rx){return rx.test(n.href);});}function wrapAppend(orig){return function(node){try{if(blocked(node))return node;}catch(e){}return orig.call(this,node);};}function wrapInsertBefore(orig){return function(node,ref){try{if(blocked(node))return node;}catch(e){}return orig.call(this,node,ref);};}var d=document.constructor.prototype,h=HTMLHeadElement.prototype;if(!d.__azTrellisPatched){d.__azTrellisPatched=true;d.appendChild=wrapAppend(d.appendChild);}if(!h.__azTrellisPatchedA){h.__azTrellisPatchedA=true;h.appendChild=wrapAppend(h.appendChild);}if(!h.__azTrellisPatchedIB){h.__azTrellisPatchedIB=true;h.insertBefore=wrapInsertBefore(h.insertBefore);}new MutationObserver(function(mutations){mutations.forEach(function(mutation){mutation.addedNodes.forEach(function(node){if(blocked(node)){if(node.parentNode){node.parentNode.removeChild(node);}}});});}).observe(document.head,{childList:true});})();",
         ],
-        'az_media_trellis_css_blocker_' . $unique_element_id,
+        'az_media_trellis_css_blocker_' . $unique_id,
       ];
 
-      // Now attach the remote script.
       $elements[$delta]['#attached']['html_head'][] = [
         [
           '#tag' => 'script',
           '#attributes' => [
-            'src' => $newUrl,
+            'src' => $quick_publish_url,
             'type' => 'text/javascript',
             'defer' => 'defer',
-            'data-qp-target-id' => $unique_element_id,
+            'data-qp-target-id' => $unique_id,
           ],
         ],
-        'trellis_embed_script_' . $unique_element_id,
+        'trellis_embed_script_' . $unique_id,
       ];
-
     }
-    // Attach the necessary JavaScript library for Trellis form embedding.
-    // Guard against the case where the foreach loop produced no elements
-    // (all items empty).
+
     if (!empty($elements) && !$is_editing_context) {
-      // Use end() to get the last element reference safely without relying
-      // on $delta.
       $last_key = array_key_last($elements);
       $elements[$last_key]['#attached']['library'][] = 'az_media_trellis/az-media-trellis';
-      // Provide a Drupal setting to allow conditional behavior or future
-      // admin toggle to allow CSS again if desired.
       $elements[$last_key]['#attached']['drupalSettings']['azMediaTrellis']['blockRemoteCss'] = TRUE;
     }
 
     return $elements;
+  }
+
+  /**
+   * Convert a Trellis form URL to its Quick Publish variant.
+   *
+   * Populates $query_params with any original query parameters for later
+   * embedding as JSON (prefill support). Returns NULL if URL does not match
+   * the expected Trellis pattern.
+   */
+  protected function transformToQuickPublishUrl(string $url, array &$query_params = []): ?string {
+    $pattern = static::getUrlRegexPattern();
+    if (!preg_match($pattern, $url, $matches)) {
+      return NULL;
+    }
+    $parsed = parse_url($url);
+    if (!$parsed || empty($parsed['scheme']) || empty($parsed['host']) || empty($parsed['path'])) {
+      return NULL;
+    }
+    if (!empty($parsed['query'])) {
+      parse_str($parsed['query'], $query_params);
+    }
+    $parts = explode('/', trim($parsed['path'], '/'));
+    $parts = array_merge(['publish'], $parts);
+    $new_path = '/' . implode('/', $parts);
+    return $parsed['scheme'] . '://' . $parsed['host'] . $new_path;
+  }
+
+  /**
+   * Build the lightweight edit-mode placeholder render array.
+   */
+  protected function buildEditingPlaceholder(string $label, string $view_mode): array {
+    $id = Html::getUniqueId('az-media-trellis-preview');
+    return [
+      '#type' => 'container',
+      '#attributes' => [
+        'id' => $id,
+        'class' => [
+          Html::getClass('az-media-trellis-placeholder'),
+          Html::getClass('az-media-trellis-placeholder--' . $view_mode),
+        ],
+        'data-editing' => 'true',
+        'role' => 'img',
+        'aria-label' => $label,
+      ],
+      'label' => [
+        '#type' => 'html_tag',
+        '#tag' => 'span',
+        '#value' => $label,
+        '#attributes' => [
+          'class' => ['az-media-trellis-placeholder__label'],
+        ],
+      ],
+      '#attached' => [
+        'library' => [
+          'az_media_trellis/az-media-trellis.styles',
+        ],
+      ],
+    ];
   }
 
   /**
