@@ -3,7 +3,6 @@ label: AZ Quickstart Demo Text Paragraphs
 migration_tags:
   - Quickstart Demo Content
   - Content
-  
 source:
   plugin: url
   data_fetcher_plugin: file
