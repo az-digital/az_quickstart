@@ -1,15 +1,4 @@
 (function azMediaTrellisIife(Drupal, drupalSettings) {
-  // Central debug flag; enable via drupalSettings.azMediaTrellis.debug = true.
-  const DEBUG = !!(
-    drupalSettings.azMediaTrellis && drupalSettings.azMediaTrellis.debug
-  );
-  // eslint-disable-next-line no-console
-  const log = (level, ...args) => {
-    if (DEBUG && typeof console !== 'undefined') {
-      // eslint-disable-next-line no-console
-      (console[level] || console.log)(...args);
-    }
-  };
   /**
    * Intercepts attempts by the Trellis (FormAssembly) embed script to inject
    * its default stylesheet (form-assembly.css). This must run BEFORE the
@@ -84,7 +73,7 @@
         m.addedNodes.forEach((n) => {
           if (isBlockedStylesheet(n) && n.parentNode) {
             n.parentNode.removeChild(n);
-            log('log', '[azMediaTrellis] Removed blocked stylesheet', n.href);
+            // Blocked Trellis stylesheet removed intentionally.
           }
         });
       });
@@ -627,28 +616,21 @@
         // Get query parameters and editing context specific to this container.
         const queryParamsJson =
           container.getAttribute('data-query-params') || '{}';
-        log(
-          'log',
-          '[azMediaTrellis] raw query params attribute:',
-          queryParamsJson,
-        );
 
         let queryParams = {};
         try {
           queryParams = JSON.parse(queryParamsJson);
         } catch (e) {
-          log(
-            'error',
-            '[azMediaTrellis] Failed to parse query params JSON:',
-            e,
-          );
+          if (typeof console !== 'undefined') {
+            // eslint-disable-next-line no-console
+            console.error(
+              '[azMediaTrellis] Failed to parse query params JSON:',
+              e,
+            );
+          }
         }
 
         const editing = container.getAttribute('data-editing') === 'true';
-
-        log('log', '[azMediaTrellis] container:', container);
-        log('log', '[azMediaTrellis] queryParams:', queryParams);
-        log('log', '[azMediaTrellis] editing mode:', editing);
 
         const handler = new TrellisFormHandler(container, queryParams, editing);
         handler.init();

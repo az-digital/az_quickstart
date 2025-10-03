@@ -5,12 +5,6 @@
 * @preserve
 **/
 (function azMediaTrellisIife(Drupal, drupalSettings) {
-  const DEBUG = !!(drupalSettings.azMediaTrellis && drupalSettings.azMediaTrellis.debug);
-  const log = (level, ...args) => {
-    if (DEBUG && typeof console !== 'undefined') {
-      (console[level] || console.log)(...args);
-    }
-  };
   function installCssBlockerOnce() {
     if (window.__azTrellisCssBlockerInstalled) return;
     window.__azTrellisCssBlockerInstalled = true;
@@ -60,7 +54,6 @@
         m.addedNodes.forEach(n => {
           if (isBlockedStylesheet(n) && n.parentNode) {
             n.parentNode.removeChild(n);
-            log('log', '[azMediaTrellis] Removed blocked stylesheet', n.href);
           }
         });
       });
@@ -434,17 +427,15 @@
       formContainers.forEach(container => {
         container.setAttribute('data-az-processed', 'true');
         const queryParamsJson = container.getAttribute('data-query-params') || '{}';
-        log('log', '[azMediaTrellis] raw query params attribute:', queryParamsJson);
         let queryParams = {};
         try {
           queryParams = JSON.parse(queryParamsJson);
         } catch (e) {
-          log('error', '[azMediaTrellis] Failed to parse query params JSON:', e);
+          if (typeof console !== 'undefined') {
+            console.error('[azMediaTrellis] Failed to parse query params JSON:', e);
+          }
         }
         const editing = container.getAttribute('data-editing') === 'true';
-        log('log', '[azMediaTrellis] container:', container);
-        log('log', '[azMediaTrellis] queryParams:', queryParams);
-        log('log', '[azMediaTrellis] editing mode:', editing);
         const handler = new TrellisFormHandler(container, queryParams, editing);
         handler.init();
         if (blockRemoteCss) {
