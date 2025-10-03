@@ -3,16 +3,7 @@ label: AZ Quickstart Demo Text Paragraphs
 migration_tags:
   - Quickstart Demo Content
   - Content
-migration_dependencies:
-  required:
-    - az_demo_media_trellis
-
-dependencies:
-  enforced:
-    module:
-      - az_paragraphs_text
-      - az_media_trellis
-
+  
 source:
   plugin: url
   data_fetcher_plugin: file
@@ -52,3 +43,8 @@ process:
       az_default_paragraph_behavior:
         az_display_settings:
           bottom_spacing: bottom_spacing
+
+dependencies:
+  enforced:
+    module:
+      - az_flexible_page
