@@ -1,59 +1,109 @@
 /**
  * @file
- * Styles for az_media_trellis module.
+ * Styles for az_media_trellis.
+ *
+ * Layout goal: predictable widths per "view mode" both in CKEditor (editing)
+ * and on the front end, with a simple gray placeholder while editing.
  */
 
-/* Handle CKEditor specific issues */
-.cke_dialog .az-media-trellis,
-.cke_wysiwyg_frame .az-media-trellis,
-.drupal-media.ck-widget .az-media-trellis {
-  min-height: 300px;
+/* ---------------------------------------------
+ * Variables (tweak here, reflected everywhere)
+ * --------------------------------------------- */
+:root {
+  --az-trellis-min-height: 200px;             /* Base vertical affordance. */
+  --az-trellis-placeholder-extra: 40px;       /* Extra height for placeholder only. */
+  --az-trellis-width-default: 220px;          /* Default (smallest) width. */
+  --az-trellis-width-very-small: 220px;       /* Alias; semantic clarity. */
+  --az-trellis-width-small: 360px;            /* Small view mode. */
+  --az-trellis-width-medium: 760px;           /* Medium view mode. */
 }
 
-/* CKEditor widget view mode specific sizing using data-view-mode */
-.drupal-media.ck-widget figure[data-view-mode="default"],
-.drupal-media.ck-widget figure:not([data-view-mode]),
+/* ---------------------------------------------
+ * CKEditor editing context adjustments
+ * --------------------------------------------- */
+
+/* Base sizing for figures in editor (default view mode). */
 figure[data-view-mode="default"],
-figure:not([data-view-mode]),
 .az-media-trellis-placeholder--default {
-  width: 220px;
-  max-width: 220px !important;
+  width: var(--az-trellis-width-default);
+  max-width: var(--az-trellis-width-default) !important;
   margin: 0 auto;
-  min-height: 200px !important;
+  min-height: var(--az-trellis-min-height) !important;
 }
 
-.drupal-media.ck-widget figure[data-view-mode="az_medium"],
-figure[data-view-mode="az_medium"] {
-  width: 760px;
-  max-width: 760px !important;
-  margin: 0 auto;
-  min-height: 200px;
+/* Width-constrained view modes (shared figure + placeholder). */
+figure[data-view-mode="az_very_small"],
+.az-media-trellis-placeholder--az-very-small {
+  /* Set explicit width for consistent sizing (mirrors default view mode). */
+  width: var(--az-trellis-width-very-small);
+  max-width: var(--az-trellis-width-very-small) !important;
 }
 
-.drupal-media.ck-widget figure[data-view-mode="az_small"],
-figure[data-view-mode="az_small"] {
-  width: 360px;
-  max-width: 360px !important;
-  margin: 0 auto;
-  min-height: 200px;
+figure[data-view-mode="az_small"],
+.az-media-trellis-placeholder--az-small {
+  width: var(--az-trellis-width-small);
+  max-width: var(--az-trellis-width-small) !important;
 }
 
-.drupal-media.ck-widget figure[data-view-mode="az_very_small"],
-figure[data-view-mode="az_very_small"] {
-  width: 220px;
-  max-width: 220px !important;
-  margin: 0 auto;
-  min-height: 200px;
+figure[data-view-mode="az_medium"],
+.az-media-trellis-placeholder--az-medium {
+  width: var(--az-trellis-width-medium);
+  max-width: var(--az-trellis-width-medium) !important;
 }
 
-.drupal-media.ck-widget figure[data-view-mode="az_natural_size"],
-figure[data-view-mode="az_natural_size"] {
+figure[data-view-mode="az_natural_size"],
+.az-media-trellis-placeholder--az-natural-size {
   max-width: none !important;
   width: auto !important;
-  min-height: 200px;
 }
 
-/* Handle collapsed paragraph/accordion scenarios */
+/* Minimum height across all figures & placeholders for drag/selection ease. */
+figure[data-view-mode],
+.az-media-trellis-placeholder[class*="az-"] {
+  min-height: var(--az-trellis-min-height);
+}
+
+/* ---------------------------------------------
+ * Non-edit mode sizing wrappers
+ * --------------------------------------------- */
+.az-media-trellis.az-media-trellis--default,
+.paragraph .az-media-trellis.az-media-trellis--default,
+.js-form-wrapper .az-media-trellis.az-media-trellis--default {
+  max-width: 100% !important;
+  min-height: var(--az-trellis-min-height);
+}
+
+.az-media-trellis.az-media-trellis--az-very-small,
+.paragraph .az-media-trellis.az-media-trellis--az-very-small,
+.js-form-wrapper .az-media-trellis.az-media-trellis--az-very-small {
+  max-width: var(--az-trellis-width-very-small) !important;
+  margin: 0 auto;
+}
+
+.az-media-trellis.az-media-trellis--az-small,
+.paragraph .az-media-trellis.az-media-trellis--az-small,
+.js-form-wrapper .az-media-trellis.az-media-trellis--az-small {
+  max-width: var(--az-trellis-width-small) !important;
+  margin: 0 auto;
+}
+
+.az-media-trellis.az-media-trellis--az-medium,
+.paragraph .az-media-trellis.az-media-trellis--az-medium,
+.js-form-wrapper .az-media-trellis.az-media-trellis--az-medium {
+  max-width: var(--az-trellis-width-medium) !important;
+  margin: 0 auto;
+}
+
+.az-media-trellis.az-media-trellis--az-natural-size,
+.paragraph .az-media-trellis.az-media-trellis--az-natural-size,
+.js-form-wrapper .az-media-trellis.az-media-trellis--az-natural-size {
+  max-width: none !important;
+  width: auto !important;
+}
+
+/* ---------------------------------------------
+ * Paragraph visibility helpers
+ * --------------------------------------------- */
 .paragraph--collapsed .az-media-trellis {
   display: none;
 }
@@ -62,112 +112,51 @@ figure[data-view-mode="az_natural_size"] {
 .paragraph:not(.paragraph--collapsed) .az-media-trellis {
   display: block;
 }
-/*
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .az-media-trellis {
-    min-height: 200px;
-  }
-} */
 
-/* Loading state */
-.drupal-media.ck-widget .az-media-trellis:empty::after {
-  content: "Trellis Form";
-  display: block;
-  text-align: center;
-  padding: 2rem;
-  color: #666;
-  font-style: italic;
+/* ---------------------------------------------
+ * Loading state
+ * --------------------------------------------- */
+.az-media-trellis[data-loading="true"] {
+  position: relative;
 }
 
-/* Spinner container (absolutely centers inside the host) */
-.az-media-trellis[data-loading="true"] { position: relative; }
-.az-media-trellis__spinner-overlay { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; z-index:10; }
-
-/* View mode specific sizing - increased specificity for editing contexts */
-.az-media-trellis.az-media-trellis--default,
-.paragraph .az-media-trellis.az-media-trellis--default,
-.js-form-wrapper .az-media-trellis.az-media-trellis--default {
-  max-width: 100% !important;
-  min-height: 200px;
+.az-media-trellis__spinner-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
 }
 
-.az-media-trellis.az-media-trellis--az-medium,
-.paragraph .az-media-trellis.az-media-trellis--az-medium,
-.js-form-wrapper .az-media-trellis.az-media-trellis--az-medium,
-.az-media-trellis-placeholder--az-medium {
-  max-width: 760px !important;
-  margin: 0 auto;
-  min-height: 200px;
-}
-
-.az-media-trellis.az-media-trellis--az-small,
-.paragraph .az-media-trellis.az-media-trellis--az-small,
-.js-form-wrapper .az-media-trellis.az-media-trellis--az-small,
-.az-media-trellis-placeholder--az-small {
-  max-width: 360px !important;
-  margin: 0 auto;
-  min-height: 200px;
-}
-
-.az-media-trellis.az-media-trellis--az-very-small,
-.paragraph .az-media-trellis.az-media-trellis--az-very-small,
-.js-form-wrapper .az-media-trellis.az-media-trellis--az-very-small,
-.az-media-trellis-placeholder--az-very-small {
-  max-width: 220px !important;
-  margin: 0 auto;
-  min-height: 200px;
-}
-
-.az-media-trellis.az-media-trellis--az-natural-size,
-.paragraph .az-media-trellis.az-media-trellis--az-natural-size,
-.js-form-wrapper .az-media-trellis.az-media-trellis--az-natural-size,
-.az-media-trellis-placeholder--az-natural-size {
-  max-width: none !important;
-  width: auto !important;
-  min-height: 200px;
-}
-
-/* Placeholder view mode sizing now inherits from combined selectors above */
-
-/* Responsive adjustments for view modes */
-@media (max-width: 768px) {
-  .az-media-trellis--az-medium,
-  .az-media-trellis-placeholder--az-medium {
-    max-width: 100%;
-    min-height: 200px;
-  }
-
-  .az-media-trellis--az-small,
-  .az-media-trellis-placeholder--az-small {
-    max-width: 360px;
-    min-height: 200px;
-  }
-
-  .az-media-trellis--az-very-small,
-  .az-media-trellis-placeholder--az-very-small {
-    max-width: 220px;
-    min-height: 200px;
-  }
-}
-
+/* ---------------------------------------------
+ * U0tility / structural rules
+ * --------------------------------------------- */
 textarea.form-control-plaintext {
   resize: none;
 }
 
-/* Hide optional Trellis prefill-only fields (campaign name/description) when not supplied */
-.oneField.az-trellis-hidden-prefill { display: none !important; }
+/* Hide optional prefill-only fields (campaign name/description) */
+.oneField.az-trellis-hidden-prefill {
+  display: none !important;
+}
 
+/* ---------------------------------------------
+ * 7. Editing placeholder block
+ * --------------------------------------------- */
 .az-media-trellis-placeholder {
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   background: #c9c9c9;
-  min-height: 240px;
+  min-height: calc(var(--az-trellis-min-height) + var(--az-trellis-placeholder-extra));
   position: relative;
   font-size: .95rem;
+  width: 100%;
+  box-sizing: border-box;
 }
+
 .az-media-trellis-placeholder__label {
   font-weight: 600;
   line-height: 1.2;
