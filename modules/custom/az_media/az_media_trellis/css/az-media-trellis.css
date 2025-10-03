@@ -3,13 +3,6 @@
  * Styles for az_media_trellis module.
  */
 
-/* .az-media-trellis {
-  min-height: 300px;
-  width: 100%;
-  position: relative;
-  overflow: hidden;
-}
- */
 /* Handle CKEditor specific issues */
 .cke_dialog .az-media-trellis,
 .cke_wysiwyg_frame .az-media-trellis,
@@ -165,94 +158,7 @@ textarea.form-control-plaintext {
 /* Hide optional Trellis prefill-only fields (campaign name/description) when not supplied */
 .oneField.az-trellis-hidden-prefill { display: none !important; }
 
-/* #tfa_7-D {
-  background-color: red;
-}
-
-#tfa_7-D:empty {
-  background-color: green;
-}
-
-#tfa_7-D #tfa_7 {
-  background-color: blue;
-}
-
-#tfa_7-D #tfa_7 [contenteditable="true"]:empty {
-  background-color: yellow;
-  display: none;
-}
-
-#tfa_9-D:has(textarea[name="tfa_9"] div[contenteditable="plaintext-only"]) {
-  background-color: blue;
-}
-
-#tfa_9-D:has(textarea[name="tfa_9"] div[contenteditable="plaintext-only"]:empty) {
-  background-color: orange;
-} */
-
-/* .wForm .inputWrapper {
-    width: 100%;
-  }
-  #tfa_7-DW, #tfa_7-DW .inputContainer,
-  #tfa_9-DW, #tfa_9-DW .inputContainer {
-    width: 100% !important;
-  }
-  form>:not(.wfContent) #tfa_7,
-  form>:not(.wfContent) #tfa_9 {
-    background: transparent !important;
-    border: none !important;
-    padding: 0 !important;
-    resize: none;
-    overflow: auto;
-    field-sizing: content;
-    height: fit-content;
-    font-size: 1.2rem;
-    color: #0c234b;
-    font-weight: 500;
-    line-height: 1.2;
-    outline: none;
-    cursor: default;
-  }
-  form>:not(.wfContent) #tfa_7:empty,
-  form>:not(.wfContent) #tfa_9:empty {
-    display: none;
-  }
-  .wFormContainer .oneField:has(#tfa_7:empty),
-  .wFormContainer .oneField:has(#tfa_9:empty) {
-    display: none;
-  }
-  
-  @supports not (height:fit-content) {
-    form>:not(.wfContent) #tfa_7 {
-      height: 4.6rem;
-    }
-    form>:not(.wfContent) #tfa_9 {
-      height: 6.75rem;
-    }
-    
-    @media all and (min-width: 600px) {
-      form>:not(.wfContent) #tfa_7 {
-    	  height: 3.1rem;
-      }
-      form>:not(.wfContent) #tfa_9 {
-    	  height: 3rem;
-      }
-    }
-  }
-  
-  form>:not(.wfContent) #tfa_9 {
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.3;
-    color: inherit;
-  }
-  form>:not(.wfContent) #tfa_7:focus,
-  form>:not(.wfContent) #tfa_9:focus {
-    box-shadow: none;
-	border: none !important;
-  } */
-
-  .az-media-trellis-placeholder {
+.az-media-trellis-placeholder {
   display: flex;
   align-items: center;
   justify-content: center;
