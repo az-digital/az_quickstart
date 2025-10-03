@@ -237,6 +237,36 @@
         }
       }
     });
+    const autosize = ta => {
+      if (!ta) return;
+      const rawLines = ta.value.split(/\r?\n/);
+      let lineCount = rawLines.filter((l, idx, arr) => !(idx === arr.length - 1 && l.trim() === '')).length || 1;
+      if (lineCount > 6) lineCount = 6;
+      ta.setAttribute('rows', lineCount);
+      ta.style.resize = 'none';
+      ta.style.overflow = 'hidden';
+      const adjustPixelHeight = () => {
+        ta.style.height = 'auto';
+        ta.rows = lineCount;
+        const scrollH = ta.scrollHeight;
+        ta.style.height = `${scrollH}px`;
+      };
+      adjustPixelHeight();
+      if (!ta.hasAttribute('data-az-autosize')) {
+        ta.setAttribute('data-az-autosize', 'true');
+        ta.addEventListener('input', () => {
+          const newLines = ta.value.split(/\r?\n/).filter((l, idx, arr) => !(idx === arr.length - 1 && l.trim() === '')).length || 1;
+          lineCount = Math.min(newLines, 6);
+          ta.rows = lineCount;
+          adjustPixelHeight();
+        });
+      } else {
+        adjustPixelHeight();
+      }
+    };
+    root.querySelectorAll('textarea.form-control-plaintext').forEach(ta => {
+      autosize(ta);
+    });
   };
   TrellisFormHandler.prototype.observeDynamicMutations = function observeDynamicMutations() {
     const observer = new MutationObserver(mutations => {

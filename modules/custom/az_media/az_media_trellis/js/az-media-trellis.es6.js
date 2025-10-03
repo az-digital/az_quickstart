@@ -340,6 +340,59 @@
           }
         }
       });
+
+      // 8. Autosize plaintext (readonly) short textareas so they shrink to content height.
+      // We treat the campaign fields (converted to form-control-plaintext) like static text blocks.
+      const autosize = (ta) => {
+        if (!ta) return;
+        // Determine visible line count based on hard line breaks first.
+        const rawLines = ta.value.split(/\r?\n/);
+        // Ignore trailing empty line produced by newline at end.
+        let lineCount =
+          rawLines.filter(
+            (l, idx, arr) => !(idx === arr.length - 1 && l.trim() === ''),
+          ).length || 1;
+        // Reasonable upper bound to avoid huge growth for unexpected large text.
+        if (lineCount > 6) lineCount = 6;
+
+        // Apply minimal rows then compute scroll height for wrapped long lines.
+        ta.setAttribute('rows', lineCount);
+        ta.style.resize = 'none';
+        ta.style.overflow = 'hidden';
+
+        // Use scrollHeight after temporarily resetting height to auto to shrink.
+        const adjustPixelHeight = () => {
+          ta.style.height = 'auto';
+          // Force a single row baseline then allow expansion; ensures shrink works in Safari.
+          ta.rows = lineCount; // keep explicit for consistent baseline
+          const scrollH = ta.scrollHeight;
+          ta.style.height = `${scrollH}px`;
+        };
+
+        adjustPixelHeight();
+
+        if (!ta.hasAttribute('data-az-autosize')) {
+          ta.setAttribute('data-az-autosize', 'true');
+          ta.addEventListener('input', () => {
+            // Recalculate line count if user/script changes value (editing unlikely but safe).
+            const newLines =
+              ta.value
+                .split(/\r?\n/)
+                .filter(
+                  (l, idx, arr) => !(idx === arr.length - 1 && l.trim() === ''),
+                ).length || 1;
+            lineCount = Math.min(newLines, 6);
+            ta.rows = lineCount;
+            adjustPixelHeight();
+          });
+        } else {
+          adjustPixelHeight();
+        }
+      };
+      root.querySelectorAll('textarea.form-control-plaintext').forEach((ta) => {
+        // Skip huge bodies (heuristic already above); still ensure sizing if present.
+        autosize(ta);
+      });
     };
 
   /**
