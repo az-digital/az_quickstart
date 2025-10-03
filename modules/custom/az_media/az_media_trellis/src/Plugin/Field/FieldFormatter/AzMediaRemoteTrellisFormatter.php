@@ -148,7 +148,6 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase implements 
       'https://forms-a.trellis.arizona.edu/185?tfa_4=7018N00000071eDQAQ',
       // TFA Forms Trellis forms.
       'https://trellis.tfaforms.net/72',
-      // 'https://trellis.tfaforms.net/85?tfa_4=7013n000002QlNS',
     ];
   }
 
@@ -267,7 +266,6 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase implements 
             'class' => [
               Html::getClass('az-media-trellis-placeholder'),
               Html::getClass('az-media-trellis-placeholder--' . $view_mode),
-              // 'placeholder',
             ],
             'data-editing' => 'true',
             'role' => 'img',
@@ -286,10 +284,6 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase implements 
               // Keep sizing / placeholder styles in editor.
               'az_media_trellis/az-media-trellis.styles',
             ],
-          ],
-          '#cache' => [
-            'contexts' => ['url.query_args'],
-            'max-age' => 3600,
           ],
         ];
         // Continue so additional field items also get placeholders.
