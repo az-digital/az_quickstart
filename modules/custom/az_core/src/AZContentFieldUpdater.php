@@ -299,11 +299,12 @@ final class AZContentFieldUpdater implements AZContentFieldUpdaterInterface {
           // Build detailed log message.
           $context = [
             '@bundle' => $entity->bundle(),
+            '@type' => $entity->getEntityTypeId(),
             '@id' => $entity->id(),
             '@vid' => $entity->getRevisionId(),
             '@language' => $language->getName(),
           ];
-          $message = 'Updated @bundle paragraph @id (revision: @vid) for @language language';
+          $message = 'Updated @bundle @type @id (revision: @vid) for @language language';
 
           // Add parent entity information for paragraphs.
           if (!empty($parent_bundle) && !empty($parent_id)) {
