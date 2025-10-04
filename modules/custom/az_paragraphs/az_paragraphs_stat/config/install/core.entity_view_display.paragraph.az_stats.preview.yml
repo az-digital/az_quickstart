@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.paragraph.preview
+    - field.field.paragraph.az_stats.field_az_stats
+    - field.field.paragraph.az_stats.field_az_title
+    - paragraphs.paragraphs_type.az_stats
+  module:
+    - az_stat
+id: paragraph.az_stats.preview
+targetEntityType: paragraph
+bundle: az_stats
+mode: preview
+content:
+  field_az_stats:
+    type: az_stat_default
+    label: hidden
+    settings:
+      interactive_links: 0
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  field_az_title: true

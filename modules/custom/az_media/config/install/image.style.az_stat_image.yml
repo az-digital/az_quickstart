@@ -1,0 +1,31 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - crop.type.az_stat_image
+  module:
+    - crop
+name: az_stat_image
+label: 'Stat Image'
+effects:
+  db7e5fbb-ddcc-4634-9fa8-f5ce861818b4:
+    uuid: db7e5fbb-ddcc-4634-9fa8-f5ce861818b4
+    id: image_convert
+    weight: -8
+    data:
+      extension: webp
+  f06f6520-9614-4a9b-8f91-2f452709d6f2:
+    uuid: f06f6520-9614-4a9b-8f91-2f452709d6f2
+    id: crop_crop
+    weight: -10
+    data:
+      crop_type: az_stat_image
+      automatic_crop_provider: null
+  dbe2b585-81b4-4c03-a2e6-6fa64a43289b:
+    uuid: dbe2b585-81b4-4c03-a2e6-6fa64a43289b
+    id: image_scale
+    weight: -9
+    data:
+      width: 1300
+      height: null
+      upscale: false
