@@ -1,2 +1,0 @@
-1. Create a seperate branch for [#1869](https://github.com/az-digital/az_quickstart/issues/1869) to test if the alphabetical filter (under as page display instead of block display) works when embedded in a page content
-2. Investigate issue [#4347](https://github.com/az-digital/az_quickstart/issues/4347) on why the field_az_alphabetical_index doesn't show up at all
