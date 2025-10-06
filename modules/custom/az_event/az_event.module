@@ -155,7 +155,7 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
         // Add to Calendar button for an event with a single occurrence.
         $field_item = $entity->get('field_az_event_date')->first();
         $field_render_array = $field_item ? $field_item->view('default') : [];
-        $formatted_date = \Drupal::service('renderer')->renderInIsolation($field_render_array);
+        $formatted_date = Markup::create(\Drupal::service('renderer')->renderInIsolation($field_render_array));
         foreach ($entity->field_az_event_date as $item) {
           if (($item->value >= $now) || (!empty($item->end_value) && ($item->end_value >= $now))) {
             $start = $item->value;
