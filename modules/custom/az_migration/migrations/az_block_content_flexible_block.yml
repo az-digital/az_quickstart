@@ -2,6 +2,7 @@ id: az_block_content_flexible_block
 label: AZ Flexible Block (Beans)
 migration_group: az_migration
 migration_tags:
+  - Drupal 7
   - Quickstart Content Migration
   - Blocks
 

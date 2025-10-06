@@ -16,8 +16,6 @@
  * - logged_in: A flag indicating if the user is registered and signed in.
  * - is_admin: A flag indicating if the user has permission to access
  *   administration pages.
- * - az_barrio_navbar_offcanvas: A flag indicating if the offcanvas nav is
- *   enabled.
  *
  * Site identity:
  * - front_page: The URL of the front page. Use this instead of base_path when
@@ -67,7 +65,6 @@
  * - page.az_page_bottom: Items for the very bottom of the page.
  *
  * Theme variables:
- * - navbar_offcanvas_attributes: Attributes for the navbar_top region.
  * - navbar_top_attributes: Attributes for the navbar_top region.
  * - navbar_attributes: Attributes for the navbar region.
  * - content_attributes: Attributes for the content region.
@@ -82,91 +79,88 @@
 
 <div id="page-wrapper">
   <div id="page">
+    {% if page.alert %}
+      {{ page.alert }}
+    {% endif %}
     <header id="header" class="header" role="banner" aria-label="{{ 'Site header'|t}}">
-        {% if page.alert %}
-          {{ page.alert }}
-        {% endif %}
-        <header class="bg-red arizona-header" id="header_arizona" role="banner">
-          <div class="{{ container }}">
-            <div class="row">
-              {% if wordmark %}
-              <a class="arizona-logo" href="https://www.arizona.edu" title="The University of Arizona homepage">
+      <div class="arizona-header{{ page.navigation_offcanvas ? ' az-fixed-header-on-mobile' }} bg-red" id="header_arizona">
+        <div class="{{ container }}">
+          <div class="row flex-nowrap">
+            {% if wordmark %}
+              <a class="arizona-logo col-auto" href="https://www.arizona.edu" title="The University of Arizona homepage">
                 <img class="arizona-line-logo" alt="The University of Arizona Wordmark Line Logo White" src="https://cdn.digital.arizona.edu/logos/v1.0.0/ua_wordmark_line_logo_white_rgb.min.svg" fetchpriority="high" />
               </a>
-              {% endif %}
-              {% if page.header_ua_utilities %}
-                {{ page.header_ua_utilities }}
-              {% endif %}
-            </div> <!-- /.row -->
-          </div> <!-- /.container -->
-          {% if az_barrio_navbar_offcanvas %}
-          <div class="redbar-buttons d-lg-none d-flex">
-            <button data-toggle="offcanvas" type="button" data-target="#navbar-top" aria-controls="navbar-top" class="btn btn-redbar" id="jsAzSearch">
-              <span class="icon material-icons-sharp"> search </span>
-              <span class="icon-text"> search </span>
-            </button>
-            <button data-toggle="offcanvas" type="button" data-target="#navbar-top" aria-controls="navbar-top" class="btn btn-redbar">
-              <span class="icon material-icons-sharp"> menu </span>
-              <span class="icon-text"> menu </span>
-            </button>
-          </div>
-          {% endif %}
-        </header>
-        <div class="header page-row" id="header_site" role="banner">
-          <div class="{{ container }}">
-            <div class="row">
-              <div class="{{ header_one_col_classes }}">
-                {{ page.branding }}
-              </div>
-              <div class="{{ header_two_col_classes }}">
-                <div class="row">
-                  {{ page.header }}
-                </div>
-                {% if page.header_2 %}
-                <div class="row">
-                  {{ page.header_2 }}
-                </div>
+            {% endif %}
+            {% if page.header_ua_utilities %}
+              {{ page.header_ua_utilities }}
+            {% endif %}
+            {% if page.navigation_offcanvas %}
+              <div class="d-lg-none d-flex col-auto px-0">
+                {% if page.navigation_offcanvas.az_barrio_offcanvas_searchform %}
+                  <button type="button" data-bs-toggle="offcanvas" data-bs-target="#azMobileNav" aria-controls="azMobileNav" class="btn btn-arizona-header" id="jsAzSearch">
+                    <span aria-hidden="true" class="icon material-symbols-rounded">search</span>
+                    <span class="icon-text">Search</span>
+                  </button>
                 {% endif %}
-              </div>
-            </div> <!-- /.row -->
-          </div> <!-- /.container -->
-
-          <div class="container">
-            <div class="row">
-              {% if az_barrio_navbar_offcanvas %}
-              <div class="col-lg">
-                <nav{{ navbar_offcanvas_attributes }}>
-                  <div class="navbar-offcanvas-header">
-                    <div class="bg-chili d-flex justify-content-between align-items-center">
-                      <a href="/" class="btn btn-redbar">
-                        <span class="icon material-icons-sharp"> home </span>
-                        <span class="icon-text"> home </span>
-                      </a>
-                      <button data-toggle="offcanvas" type="button" data-target="#navbar-top" aria-controls="navbar-top" class="btn btn-redbar">
-                        <span class="icon material-icons-sharp"> close </span>
-                        <span class="icon-text"> close </span>
-                      </button>
-                    </div>
-                    {% if page.navigation_offcanvas %}
-                      {{ page.navigation_offcanvas }}
-                    {% endif %}
-                </div>
+                {% if page.navigation_offcanvas.az_barrio_mobilenavblock %}
+                  <button type="button" data-bs-toggle="offcanvas" data-bs-target="#azMobileNav" aria-controls="azMobileNav" class="btn btn-arizona-header">
+                    <span aria-hidden="true" class="icon material-symbols-rounded">menu</span>
+                    <span class="icon-text">Menu</span>
+                  </button>
                 {% endif %}
-                  {% if page.navigation %}
-                    {{ page.navigation }}
-                  {% endif %}
-              {% if az_barrio_navbar_offcanvas %}
-                </nav>
-              </div>
-              {% endif %}
-            </div>
-            {% if page.help %}
-              <div class="row">
-                {{ page.help }}
+                <div class="offcanvas offcanvas-end mw-100 w-100 bg-white d-flex d-lg-none overflow-y-auto" tabindex="-1" id="azMobileNav" aria-label="Mobile navigation">
+                  <div class="offcanvas-header sticky-top p-0 mb-2 text-bg-red d-flex justify-content-between align-items-center">
+                    <a href="/" class="btn btn-arizona-header">
+                      <span aria-hidden="true" class="icon material-symbols-rounded">home</span>
+                      <span class="icon-text">Home</span>
+                    </a>
+                    <button type="button" data-bs-toggle="offcanvas" data-bs-target="#azMobileNav" aria-controls="azMobileNav" class="btn btn-arizona-header">
+                      <span aria-hidden="true" class="icon material-symbols-rounded">close</span>
+                      <span class="icon-text">Close</span>
+                    </button>
+                  </div>
+                  {{ page.navigation_offcanvas }}
+                </div>
               </div>
             {% endif %}
           </div>
         </div>
+      </div>
+      <div id="header_site">
+        <div class="{{ container }}">
+          <div class="row">
+            <div class="{{ header_one_col_classes }}">
+              {{ page.branding }}
+            </div>
+            <div class="{{ header_two_col_classes }}">
+              <div class="row">
+                {{ page.header }}
+              </div>
+              {% if page.header_2 %}
+              <div class="row">
+                {{ page.header_2 }}
+              </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          {% if page.navigation %}
+            <div class="row d-none d-lg-flex">
+              <div class="col-lg">
+                <nav id="navbar-top" class="navbar navbar-expand">
+                  {{ page.navigation }}
+                </nav>
+              </div>
+            </div>
+          {% endif %}
+          {% if page.help %}
+            <div class="row">
+              {{ page.help }}
+            </div>
+          {% endif %}
+        </div>
+      </div>
     </header>
 
     <div id="main-wrapper" class="layout-main-wrapper clearfix">
@@ -258,13 +252,13 @@
 
     <footer class="site-footer">
         {% if page.footer or page.footer_sub or footer_logo %}
-        <div class="bg-warm-gray py-5" role="contentinfo">
+        <div class="text-bg-warm-gray py-5" role="contentinfo">
           {% if page.footer or footer_logo %}
           <section{{ attributes.addClass(classes) }}>
             <div class="container">
               <div class="row">
                 {% if footer_logo %}
-                  <div class="col-12 col-sm-5 col-md-4 col-lg-4 text-center-xs text-left-not-xs">
+                  <div class="col-12 col-sm-5 col-md-4 col-lg-4 text-center-xs text-sm-start">
                     <div class="row bottom-buffer-30">
                       <div class="col">
                         {{ footer_logo }}
