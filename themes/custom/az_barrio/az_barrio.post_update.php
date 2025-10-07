@@ -230,3 +230,19 @@ function az_barrio_post_update_delete_navbar_offcanvas_setting(&$sandbox = NULL)
     \Drupal::logger('az_quickstart')->notice('Deleted obsolete az_barrio_navbar_offcanvas configuration key during post update.');
   }
 }
+
+/**
+ * Deletes obsolete az_hide_front_title key if it exists.
+ */
+function az_barrio_post_update_delete_az_hide_front_title_setting(&$sandbox = NULL) {
+  $config_factory = \Drupal::configFactory();
+  $theme_settings = $config_factory->getEditable('az_barrio.settings');
+
+  // Delete the az hide front title key if it exists.
+  if ($theme_settings->get('az_hide_front_title')) {
+    $theme_settings
+      ->clear('az_hide_front_title')
+      ->save();
+    \Drupal::logger('az_quickstart')->notice('Deleted obsolete az_hide_front_title configuration key during post update.');
+  }
+}
