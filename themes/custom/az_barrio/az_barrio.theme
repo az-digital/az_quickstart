@@ -355,7 +355,6 @@ function az_barrio_az_bootstrap_assets_path($type) {
     return FALSE;
   }
 
-  $az_bootstrap_path = '';
   // AZ Bootstrap source.
   $az_bootstrap_path = base_path() . 'libraries/arizona-bootstrap';
   $az_bootstrap_path .= '/' . $type . '/arizona-bootstrap';
