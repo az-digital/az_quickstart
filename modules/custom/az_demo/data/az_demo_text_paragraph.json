@@ -101,9 +101,15 @@
             "bottom_spacing": "mb-0"
         },
         {
-          "id": 194,
-          "az_text_area": "<h2>Trellis Form</h2><drupal-media data-entity-type='media' data-entity-uuid='2d1c72cf-e90b-4457-992d-55f87bf5dc46' data-align='center'>&nbsp;</drupal-media>",
-          "bottom_spacing": "mb-4"
+            "id": 194,
+            "az_text_area": "<h2>Trellis Form</h2><drupal-media data-entity-type='media' data-entity-uuid='2d1c72cf-e90b-4457-992d-55f87bf5dc46' data-align='center'>&nbsp;</drupal-media>",
+            "bottom_spacing": "mb-4"
+        },
+        {
+
+            "id": 193,
+            "az_text_area": "<h2>Embed a Video</h2><drupal-media data-entity-type='media' data-entity-uuid='867fbfa9-218b-4d31-8611-db87f3f4a0bf'>&nbsp;</drupal-media><hr><drupal-media data-entity-type='media' data-entity-uuid='5e4301fa-d4ef-486c-b2ca-60d257875d1e' data-view-mode='az_large'>&nbsp;</drupal-media><hr><drupal-media data-entity-type='media' data-entity-uuid='994cf496-d3fd-4e75-8f0e-46e00975ef9f' data-view-mode='az_medium'>&nbsp;</drupal-media><hr><drupal-media data-entity-type='media' data-entity-uuid='342edaf9-ccf9-4ce5-a4ec-9981a9ad6675' data-view-mode='az_small'>&nbsp;</drupal-media><hr><drupal-media data-entity-type='media' data-entity-uuid='1775b8a6-aa3d-4da9-9720-51d60f322871' data-view-mode='az_square'>&nbsp;</drupal-media><hr><drupal-media data-entity-type='media' data-entity-uuid='720173d6-33e9-4c59-a0a8-eb15136b66f0' data-view-mode='az_natural_size'>&nbsp;</drupal-media>",
+            "bottom_spacing": "mb-0"
         }
     ]
 }
