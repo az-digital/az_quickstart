@@ -102,12 +102,7 @@
         },
         {
           "id": 194,
-          "az_text_area": "<h2>Trellis Form</h2>",
-          "bottom_spacing": "mb-4"
-        },
-        {
-          "id": 197,
-          "az_text_area": "<drupal-media data-entity-type=\"media\" data-entity-uuid=\"81993594-6f23-404e-861c-770f6c076e27\">&nbsp;</drupal-media>",
+          "az_text_area": "<h2>Trellis Form</h2><drupal-media data-entity-type='media' data-entity-uuid='2d1c72cf-e90b-4457-992d-55f87bf5dc46' data-align='center'>&nbsp;</drupal-media>",
           "bottom_spacing": "mb-4"
         }
     ]
