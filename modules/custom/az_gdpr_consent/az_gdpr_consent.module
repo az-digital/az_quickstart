@@ -1,0 +1,90 @@
+<?php
+
+/**
+ * @file
+ * Contains az_gdpr_consent.module.
+ *
+ * Provides geolocation-based GDPR cookie consent management.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function az_gdpr_consent_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.az_gdpr_consent':
+      $output = '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('The Quickstart GDPR Consent Management module provides geolocation-based cookie consent management. It uses Smart IP to detect visitor location and conditionally loads the Klaro consent banner only for visitors from countries that require GDPR compliance or have similar data protection laws.') . '</p>';
+      $output .= '<h3>' . t('Configuration') . '</h3>';
+      $output .= '<p>' . t('Configure the module at Administration » Configuration » System » Quickstart GDPR Consent.') . '</p>';
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_page_attachments_alter().
+ */
+function az_gdpr_consent_page_attachments_alter(array &$attachments) {
+  // Get module configuration.
+  $config = \Drupal::config('az_gdpr_consent.settings');
+
+  // Check if module is enabled.
+  if (!$config->get('enabled')) {
+    return;
+  }
+
+  // Test mode - always show consent banner.
+  if ($config->get('test_mode')) {
+    return;
+  }
+
+  // Get visitor's country code from Smart IP.
+  $smart_ip_location = \Drupal::service('smart_ip.smart_ip_location');
+  $location = $smart_ip_location->getData();
+  $country_code = $location['countryCode'] ?? NULL;
+
+  // If country code is unknown, use fallback behavior.
+  if (empty($country_code)) {
+    if (!$config->get('show_on_unknown_location')) {
+      // Remove Klaro attachments for unknown locations.
+      az_gdpr_consent_remove_klaro_attachments($attachments);
+    }
+    return;
+  }
+
+  // Get target countries list.
+  $target_countries = $config->get('target_countries') ?? [];
+
+  // If visitor is NOT from a target country, remove Klaro.
+  if (!in_array($country_code, $target_countries)) {
+    az_gdpr_consent_remove_klaro_attachments($attachments);
+  }
+}
+
+/**
+ * Helper function to remove Klaro attachments from the page.
+ *
+ * @param array &$attachments
+ *   The page attachments array.
+ */
+function az_gdpr_consent_remove_klaro_attachments(array &$attachments) {
+  // Remove Klaro libraries.
+  if (isset($attachments['#attached']['library'])) {
+    $klaro_libraries = [];
+    foreach ($attachments['#attached']['library'] as $key => $library) {
+      if (str_starts_with($library, 'klaro/')) {
+        $klaro_libraries[] = $key;
+      }
+    }
+    foreach ($klaro_libraries as $key) {
+      unset($attachments['#attached']['library'][$key]);
+    }
+  }
+
+  // Remove Klaro drupalSettings.
+  if (isset($attachments['#attached']['drupalSettings']['klaro'])) {
+    unset($attachments['#attached']['drupalSettings']['klaro']);
+  }
+}

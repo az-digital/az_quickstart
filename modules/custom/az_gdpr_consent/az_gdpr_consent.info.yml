@@ -1,0 +1,10 @@
+name: 'Quickstart GDPR Consent Management'
+description: 'Provides geolocation-based GDPR cookie consent management using Klaro and Smart IP.'
+type: module
+core_version_requirement: ^10 || ^11 || ^12
+package: The University of Arizona
+container_rebuild_required: true
+dependencies:
+  - az_core
+  - klaro:klaro
+  - smart_ip:smart_ip
