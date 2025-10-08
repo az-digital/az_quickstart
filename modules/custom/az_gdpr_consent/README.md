@@ -32,7 +32,7 @@ This module integrates Klaro cookie consent management with Smart IP geolocation
    lando drush en klaro smart_ip az_gdpr_consent -y
    ```
 
-2. Configure Klaro module at `/admin/config/system/klaro`
+2. Configure Klaro module at `/admin/config/user-interface/klaro`
 
 3. Configure Smart IP module at `/admin/config/people/smart_ip`
    - Set up a geolocation data source (MaxMind GeoIP2 recommended)
