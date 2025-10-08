@@ -218,8 +218,10 @@ final class AZBootstrapMarkupConverter {
      * Font / text style classes.
      */
     'font-weight-normal' => 'fw-normal',
-    'bold' => 'fw-bold',
     'font-weight-bold' => 'fw-bold',
+    'font-weight-bolder' => 'fw-bolder',
+    'font-weight-light' => 'fw-light',
+    'font-weight-lighter' => 'fw-lighter',
     'font-italic' => 'fst-italic',
     'text-monospace' => 'font-monospace',
     'text-left' => 'text-start',
@@ -238,8 +240,6 @@ final class AZBootstrapMarkupConverter {
      * Button classes.
      */
     'btn-block' => 'w-100',
-    'btn-hollow' => 'btn-outline',
-    'btn-hollow-reverse' => 'btn-outline-white',
     // Remove btn class when it conflicts with nav-link.
     // @todo We probably need to handle this situation differently to avoid
     // breaking legitimate usage of btn class (e.g. in combination with other
@@ -276,8 +276,6 @@ final class AZBootstrapMarkupConverter {
     /***************************************************************************
      * Badge classes.
      */
-    'badge-primary' => 'text-bg-primary',
-    'badge-secondary' => 'text-bg-secondary',
     'badge-blue' => 'text-bg-blue',
     'badge-red' => 'text-bg-red',
     'badge-success' => 'text-bg-success',
@@ -310,8 +308,7 @@ final class AZBootstrapMarkupConverter {
     'bg-sage' => 'text-bg-sage',
     'bg-white' => 'text-bg-white',
     'bg-black' => 'text-bg-black',
-    'bg-primary' => 'text-bg-primary',
-    'bg-secondary' => 'text-bg-secondary',
+    'bg-primary' => 'text-bg-blue',
     'bg-success' => 'text-bg-success',
     'bg-danger' => 'text-bg-danger',
     'bg-warning' => 'text-bg-warning',
@@ -327,6 +324,95 @@ final class AZBootstrapMarkupConverter {
     'bg-gray-700' => 'text-bg-gray-700',
     'bg-gray-800' => 'text-bg-gray-800',
     'bg-gray-900' => 'text-bg-gray-900',
+    /***************************************************************************
+     * UA Bootstrap classes deprecated in Arizona Bootstrap 2.
+     */
+    // >> Buttons
+    'btn-default' => 'btn-red',
+    'btn-primary' => 'btn-blue',
+    'btn-hollow' => 'btn-outline',
+    'btn-hollow-default' => 'btn-outline-red',
+    'btn-hollow-primary' => 'btn-outline-blue',
+    'btn-hollow-reverse' => 'btn-outline-white',
+    // >> Labels
+    'label' => 'badge',
+    'label-default' => 'text-bg-red',
+    'label-primary' => 'text-bg-blue',
+    'label-success' => 'text-bg-success',
+    'label-info' => 'text-bg-info',
+    'label-warning' => 'text-bg-warning',
+    'label-danger' => 'text-bg-danger',
+    'label-muted' => 'text-bg-light',
+    // >> Pull Left/Right
+    'pull-left' => 'float-start',
+    'pull-right' => 'float-end',
+    // >> Colors
+    // >>> Background Colors
+    'bg-silver-tint' => 'text-bg-gray-100',
+    // >>> Card Colors
+    'card-primary' => 'text-bg-blue',
+    'card-success' => 'text-bg-success',
+    'card-info' => 'text-bg-info',
+    'card-warning' => 'text-bg-warning',
+    'card-danger' => 'text-bg-danger',
+    'card-inverse' => 'text-bg-dark text-white',
+    'card-primary-outline' => 'border-blue',
+    'card-success-outline' => 'border-success',
+    'card-info-outline' => 'border-info',
+    'card-warning-outline' => 'border-warning',
+    'card-danger-outline' => 'border-danger',
+    // >>> Text Colors
+    'text-primary' => 'text-blue',
+    // >> Navbar Default
+    'navbar-default' => 'navbar-light',
+    // >> Navbar Divider
+    'divider' => 'dropdown-divider',
+    'nav-divider' => 'dropdown-divider',
+    // >> Triangles List
+    'triangle' => 'az-list-triangles',
+    // >> Panels
+    'panel' => 'card',
+    'panel-body' => 'card-body',
+    'panel-heading' => 'card-header',
+    'panel-title' => 'card-title',
+    'panel-footer' => 'card-footer',
+    // >> Wells
+    'well' => 'card p-card text-bg-cool-gray',
+    'well-hollow' => 'text-bg-white',
+    // >> Text
+    'bold' => 'fw-bold',
+    // >>> Page Header
+    'page-header' => 'mt-5 mb-4 pb-3',
+    // >>> Responsive Text Alignment *-not Classes
+    'text-left-not-xs' => 'text-start',
+    'text-left-not-sm' => 'text-start',
+    'text-left-not-md' => 'text-start',
+    'text-left-not-lg' => 'text-start',
+    'text-center-not-xs' => 'text-center',
+    'text-center-not-sm' => 'text-center',
+    'text-center-not-md' => 'text-center',
+    'text-center-not-lg' => 'text-center',
+    'text-right-not-xs' => 'text-end',
+    'text-right-not-sm' => 'text-end',
+    'text-right-not-md' => 'text-end',
+    'text-right-not-lg' => 'text-end',
+    'text-justify-not-xs' => 'text-justify',
+    'text-justify-not-sm' => 'text-justify',
+    'text-justify-not-md' => 'text-justify',
+    'text-justify-not-lg' => 'text-justify',
+    // >>> Text Size
+    'text-size-h1' => 'h1 mb-0',
+    'text-size-h2' => 'h2 mb-0',
+    'text-size-h3' => 'h3 mb-0',
+    'text-size-h4' => 'h4 mb-0',
+    'text-size-h5' => 'h5 mb-0',
+    'text-size-h6' => 'h6 mb-0',
+    // >>> Text Vertical Align
+    'margin-align-top' => 'align-text-bottom',
+    'margin-align-middle' => 'align-middle',
+    'margin-align-bottom' => 'align-text-top',
+    'margin-zero-top' => 'mt-0',
+    'margin-zero-bottom' => 'mb-0',
     /***************************************************************************
      * Grid layout utility classes.
      */

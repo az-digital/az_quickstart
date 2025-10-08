@@ -4,52 +4,53 @@
 * https://www.drupal.org/node/2815083
 * @preserve
 **/
-(function () {
+(() => {
   function calculateScrollbarWidth() {
-    document.documentElement.style.setProperty('--scrollbar-width', "".concat(window.innerWidth - document.documentElement.clientWidth, "px"));
+    document.documentElement.style.setProperty('--scrollbar-width', `${window.innerWidth - document.documentElement.clientWidth}px`);
   }
   function pushSidebarsDown() {
-    var contentRegion = document.querySelector('main.main-content');
+    const contentRegion = document.querySelector('main.main-content');
     if (contentRegion !== null) {
-      var allFullWidthElements = contentRegion.querySelectorAll('.paragraph.full-width-background');
+      const allFullWidthElements = contentRegion.querySelectorAll('.paragraph.full-width-background');
       if (allFullWidthElements.length === 0) {
         return;
       }
-      var lastFullWidthElement = allFullWidthElements[allFullWidthElements.length - 1];
-      var contentRegionPosition = contentRegion.getBoundingClientRect();
-      var style = window.getComputedStyle(lastFullWidthElement, '');
-      var bottomMargin = parseFloat(style.marginBottom);
-      var contentRegionTop = contentRegionPosition.top;
-      var lastFullWidthElementPosition = lastFullWidthElement.getBoundingClientRect();
-      var lastFullWidthElementBottom = lastFullWidthElementPosition.bottom;
-      var sidebarTopMargin = lastFullWidthElementBottom - contentRegionTop + bottomMargin;
+      const lastFullWidthElement = allFullWidthElements[allFullWidthElements.length - 1];
+      const contentRegionPosition = contentRegion.getBoundingClientRect();
+      const style = window.getComputedStyle(lastFullWidthElement, '');
+      const bottomMargin = parseFloat(style.marginBottom);
+      const contentRegionTop = contentRegionPosition.top;
+      const lastFullWidthElementPosition = lastFullWidthElement.getBoundingClientRect();
+      const lastFullWidthElementBottom = lastFullWidthElementPosition.bottom;
+      const sidebarTopMargin = lastFullWidthElementBottom - contentRegionTop + bottomMargin;
       if (sidebarTopMargin) {
-        document.documentElement.style.setProperty('--sidebar-top-margin', "".concat(sidebarTopMargin, "px"));
+        document.documentElement.style.setProperty('--sidebar-top-margin', `${sidebarTopMargin}px`);
       }
     }
   }
   function calculateFullWidthNegativeMargins() {
-    var contentRegion = document.querySelectorAll('.block-system-main-block');
+    const contentRegion = document.querySelectorAll('.block-system-main-block');
     if (contentRegion.length > 0) {
-      var contentRegionPosition = contentRegion[0].getBoundingClientRect();
-      var distanceFromLeft = contentRegionPosition.left;
-      var distanceFromRight = contentRegionPosition.right;
-      var negativeLeftMargin = 0 - distanceFromLeft;
-      var negativeRightMargin = distanceFromRight - document.documentElement.clientWidth;
-      document.documentElement.style.setProperty('--full-width-left-distance', "".concat(negativeLeftMargin, "px"));
-      document.documentElement.style.setProperty('--full-width-right-distance', "".concat(negativeRightMargin, "px"));
+      const contentRegionPosition = contentRegion[0].getBoundingClientRect();
+      const distanceFromLeft = contentRegionPosition.left;
+      const distanceFromRight = contentRegionPosition.right;
+      const negativeLeftMargin = 0 - distanceFromLeft;
+      const negativeRightMargin = distanceFromRight - document.documentElement.clientWidth;
+      document.documentElement.style.setProperty('--full-width-left-distance', `${negativeLeftMargin}px`);
+      document.documentElement.style.setProperty('--full-width-right-distance', `${negativeRightMargin}px`);
     }
-    var contentTopAndBottomBlocks = document.querySelectorAll('.region-content-top > .block, .region-content-bottom > .block');
+    const contentTopAndBottomBlocks = document.querySelectorAll('.region-content-top > .block, .region-content-bottom > .block');
     if (contentTopAndBottomBlocks.length > 0) {
-      var negativeAutoMargin = -(document.documentElement.clientWidth - contentTopAndBottomBlocks[0].getBoundingClientRect().width) / 2;
-      document.documentElement.style.setProperty('--full-width-auto-distance', "".concat(negativeAutoMargin, "px"));
+      const negativeAutoMargin = -(document.documentElement.clientWidth - contentTopAndBottomBlocks[0].getBoundingClientRect().width) / 2;
+      document.documentElement.style.setProperty('--full-width-auto-distance', `${negativeAutoMargin}px`);
     }
   }
   function calculateFullWidthSidebarWidth() {
-    var sidebarRegion = document.querySelectorAll('.sidebar');
+    const sidebarRegion = document.querySelectorAll('.sidebar');
     if (sidebarRegion.length > 0) {
-      var sidebarRegionPosition = sidebarRegion[0].getBoundingClientRect();
-      document.documentElement.style.setProperty('--full-width-sidebar-width', "".concat(sidebarRegionPosition.width, "px"));
+      const sidebarRegionPosition = sidebarRegion[0].getBoundingClientRect();
+      const sidebarWidth = sidebarRegionPosition.width;
+      document.documentElement.style.setProperty('--full-width-sidebar-width', `${sidebarWidth}px`);
     }
   }
   function setFullWidthLayout() {
