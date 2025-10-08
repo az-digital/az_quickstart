@@ -162,6 +162,7 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
       // Define Stat Variabbles.
       $stat_classes = 'stat';
       $stat_hover_style = '';
+      $stat_source_classes = '';
       $stat_defaults = [];
       $column_classes = [];
       $column_classes[] = 'col-md-4 col-lg-4';
@@ -240,6 +241,7 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
       $stat_classes .= ' overflow-hidden';
       if(!str_contains($item->options['class'], 'bg-transparent')) {
         $stat_classes .= ' shadow';
+        $stat_source_classes = 'mt-auto'; // No mt-auto on bg-transparent rankings
       }
       
       // Handle class keys that contained multiple classes.
@@ -282,6 +284,7 @@ class AZStatDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         '#stat_source' => $item->stat_source,
         '#link_url' => $link_url,
         // '#title_display' => $title_display ?? 'h5',
+        '#stat_source_classes' => $stat_source_classes,
         '#text_color_override' => $text_color_override,
         '#attributes' => ['class' => $stat_classes],
         '#attached' => $attached,

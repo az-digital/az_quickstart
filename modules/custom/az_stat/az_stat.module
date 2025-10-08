@@ -39,6 +39,7 @@ function az_stat_theme($existing, $type, $theme, $path) {
         'stat_title_style' => NULL,
         'stat_description' => NULL,
         'stat_source' => NULL,
+        'stat_source_classes' => NULL,
         'text_color_override' => NULL,
         'link_url' => NULL,
       ],

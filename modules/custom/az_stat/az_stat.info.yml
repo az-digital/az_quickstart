@@ -2,7 +2,8 @@ name: 'Quickstart Rankings'
 type: module
 description: 'Custom field plugins and theme template for stats and rankings.'
 core_version_requirement: ^10 || ^11 || ^12
-package: 'The University of Arizona'
+package: 'The University of Arizona - Experimental'
+lifecycle: experimental
 dependencies:
   - az_core
   - az_media

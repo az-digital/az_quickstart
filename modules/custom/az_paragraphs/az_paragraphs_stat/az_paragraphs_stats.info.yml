@@ -7,4 +7,5 @@ dependencies:
   - drupal:field
   - paragraphs:paragraphs
   - az_stat
-package: 'The University of Arizona'
+package: 'The University of Arizona - Experimental'
+lifecycle: experimental

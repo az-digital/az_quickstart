@@ -10,6 +10,7 @@
  * - stat_heading: The title field of a stat.
  * - stat_description: The body field of a stat.
  * - stat_source: The source field on a stat.
+ * - stat_source_classes: Classes for the Source field of a ranking.
  * - text_color_override: Overriding default h1-h6 default text colors.
  * - link_url: The link URL only.
  * @ingroup themeable
@@ -43,7 +44,7 @@
           {% endif %}
         </div>
         {% if stat_source %}
-          <div class="mt-auto stat-source  {% if text_color_override %}{{ text_color_override }}{% endif %}">
+          <div class="{{ stat_source_classes }} stat-source  {% if text_color_override %}{{ text_color_override }}{% endif %}">
             {{ stat_source|nl2br }}
           </div>
         {% endif %}

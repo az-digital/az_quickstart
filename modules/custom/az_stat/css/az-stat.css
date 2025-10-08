@@ -18,10 +18,10 @@
   }
 }
 
-/* Check for background wrapper colors on transparent bgs */
-.background-wrapper.text-bg-blue .text-bg-transparent.az-stat-responsive {
+/* Check for contrasting background wrapper colors on transparent bgs */
+.background-wrapper.text-bg-blue .az-stat-responsive.bg-transparent * {
   color: #ffffff !important;
 }
-.background-wrapper.text-bg-red .text-bg-transparent.az-stat-responsive {
+.background-wrapper.text-bg-red .az-stat-responsive.bg-transparent * {
   color: #ffffff !important;
 }
