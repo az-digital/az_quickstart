@@ -1,0 +1,35 @@
+tr.odd .az-ranking-elements .form-item {
+  margin-bottom: 8px;
+}
+
+.az-ranking-elements .media-library-form-element .description {
+  display: none;
+}
+
+.az-ranking-elements .media-library-form-element {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.az-ranking-widget .media-library-form-element legend {
+  display: none;
+}
+
+.az-ranking-elements .media-library-selection {
+  margin: 0;
+}
+
+.az-ranking-elements .ranking-preview {
+  max-height: 200px;
+  overflow: hidden;
+}
+
+.az-ranking-elements.az-ranking-elements-closed .form-type--linkit,
+.az-ranking-elements.az-ranking-elements-closed .js-form-type-linkit,
+.az-ranking-elements.az-ranking-elements-closed .form-type--textfield,
+.az-ranking-elements.az-ranking-elements-closed .form-type--textarea,
+.az-ranking-elements.az-ranking-elements-closed .filter-wrapper,
+.az-ranking-elements.az-ranking-elements-closed .form-type--select,
+.az-ranking-elements.az-ranking-elements-closed .media-library-form-element {
+  display: none !important;
+}

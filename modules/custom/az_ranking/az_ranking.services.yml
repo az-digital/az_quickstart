@@ -1,0 +1,6 @@
+services:
+  az_ranking.image:
+    class: Drupal\az_ranking\AZRankingImageHelper
+    arguments:
+      - '@entity_type.manager'
+      - '@renderer'

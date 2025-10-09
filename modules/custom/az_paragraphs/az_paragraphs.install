@@ -158,19 +158,19 @@ function az_paragraphs_update_1130001(&$sandbox) {
         'values' => ['az_standard', 'full_html'],
       ],
     ],
-    // Stat fields.
-    'stats' => [
-      'bundles' => ['az_stats'],
-      'field_name' => 'field_az_stats',
+    // Ranking fields.
+    'rankings' => [
+      'bundles' => ['az_rankings'],
+      'field_name' => 'field_az_rankings',
       'options' => [
         'value_key' => 'body',
         'format_key' => 'body_format',
         'format_required' => TRUE,
       ],
       'query_conditions' => [
-        'field_name' => 'field_az_stats.body',
+        'field_name' => 'field_az_rankings.body',
         'exists' => TRUE,
-        'format_field' => 'field_az_stats.body_format',
+        'format_field' => 'field_az_rankings.body_format',
         'values' => ['az_standard', 'full_html'],
       ],
     ],

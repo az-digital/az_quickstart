@@ -1,0 +1,49 @@
+<?php
+
+/**
+ * @file
+ * Contains az_ranking.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function az_ranking_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the az_ranking module.
+    case 'help.page.az_ranking':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Custom field plugins and theme template for rankings.') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function az_ranking_theme($existing, $type, $theme, $path) {
+  return [
+    'az_ranking' => [
+      'variables' => [
+        'attributes' => [],
+        'media' => NULL,
+        'column_span' => NULL,
+        'ranking_hover_style' => NULL,
+        'ranking_heading' => NULL,
+        'ranking_alignment' => NULL,
+        'ranking_title_style' => NULL,
+        'ranking_description' => NULL,
+        'ranking_source' => NULL,
+        'ranking_source_classes' => NULL,
+        'text_color_override' => NULL,
+        'link_url' => NULL,
+      ],
+      'template' => 'az-ranking',
+    ],
+  ];
+}

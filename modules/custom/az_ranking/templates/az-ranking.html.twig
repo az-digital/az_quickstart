@@ -1,0 +1,57 @@
+{#
+/**
+ * @file
+ * Theme implementation to display an AZ Ranking.
+ *
+ * Available variables:
+ * - attributes: Ranking element attributes.
+ * - media: The media field of a ranking.
+ * - ranking_title_style: The title heading style of a ranking.
+ * - ranking_heading: The title field of a ranking.
+ * - ranking_description: The body field of a ranking.
+ * - ranking_source: The source field on a ranking.
+ * - ranking_source_classes: Classes for the Source field of a ranking.
+ * - text_color_override: Overriding default h1-h6 default text colors.
+ * - link_url: The link URL only.
+ * @ingroup themeable
+ */
+
+#}
+{% set attributes = attributes.addClass('h-100', 'az-ranking-responsive', 'border-0', 'overflow-hidden') %}
+
+<div{{ attributes }}>
+  {% if media %}
+    <div class="position-relative overflow-hidden h-100">
+      {{ media }}
+    </div>
+  {% else %}
+    <div class="card-body d-flex flex-column h-100">
+      <div class="card-text d-flex flex-column flex-grow-1">
+        <div class="ranking-content">
+          {% if ranking_heading %}
+            {% if ranking_title_style == "ranking-title-thin" %}
+              <h3 class="display-4 m-0 ranking-heading {% if text_color_override %}{{ text_color_override }}{% endif %}">
+                <strong>{{ ranking_heading }}</strong>
+              </h3>
+            {% else %}
+              <h1 class="fw-bolder display-4 m-0 ranking-heading {% if text_color_override %}{{ text_color_override }}{% endif %}">
+                <strong>{{ ranking_heading }}</strong>
+              </h1>
+            {% endif %}
+          {% endif %}
+          {% if ranking_description %}
+            <h4 class="m-0 ranking-description {% if text_color_override %}{{ text_color_override }}{% endif %}">{{ ranking_description }}</h4>
+          {% endif %}
+        </div>
+        {% if ranking_source %}
+          <div class="{{ ranking_source_classes }} ranking-source  {% if text_color_override %}{{ text_color_override }}{% endif %}">
+            {{ ranking_source|nl2br }}
+          </div>
+        {% endif %}
+      </div>
+      {% if link_url %}
+        <a href="{{ link_url }}"  class="stretched-link"></a>
+      {% endif %}
+    </div>
+  {% endif %}
+</div>

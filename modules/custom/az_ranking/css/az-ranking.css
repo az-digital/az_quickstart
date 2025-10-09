@@ -1,0 +1,27 @@
+/* Responsive ranking card styles */
+.az-ranking-responsive {
+  /* Small viewports. Default: 1 card per row */
+  min-height: 190px;
+}
+
+/* Medium viewports. Default: 2 cards per row */
+@media (min-width: 768px) {
+  .az-ranking-responsive {
+    min-height: 230px;
+  }
+}
+
+/* Large viewports. Default: 4 cards per row */
+@media (min-width: 992px) {
+  .az-ranking-responsive {
+    min-height: 260px;
+  }
+}
+
+/* Check for contrasting background wrapper colors on transparent bgs */
+.background-wrapper.text-bg-blue .az-ranking-responsive.bg-transparent * {
+  color: #ffffff !important;
+}
+.background-wrapper.text-bg-red .az-ranking-responsive.bg-transparent * {
+  color: #ffffff !important;
+}
