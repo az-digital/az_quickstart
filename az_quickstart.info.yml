@@ -1,7 +1,7 @@
 name: Arizona Quickstart
 type: profile
 description: 'The University of Arizona Quickstart Installation Profile'
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10 || ^11 || ^12
 
 distribution:
   name: Arizona Quickstart
@@ -21,6 +21,7 @@ install:
   - az_flexible_page
   - az_flexible_block
   - az_block_types_quick_links
+  - az_icons
   - az_metrics
   - az_news
   - az_person
@@ -54,6 +55,7 @@ install:
   - drupal:dblog
   - drupal:search
   - drupal:shortcut
+  - drupal:media_remote
   - token:token
   - drupal:toolbar
   - drupal:field_ui
@@ -76,7 +78,7 @@ install:
   - masquerade:masquerade
   - masquerade_log:masquerade_log
   - quick_node_clone:quick_node_clone
-
 themes:
   - az_barrio
   - claro
+version: 3.1.x-dev

@@ -86,7 +86,7 @@
       "title"  : "Photo Galleries",
       "path" : "/pages/photo-galleries",
       "az_page_category"  : "Photo Galleries|Image Galleries",
-      "az_main_content"  : "7|200|10|201",
+      "az_main_content"  : "7|200|10|201|90|202",
       "az_media_image"    : "",
       "az_summary" : ""
     },
@@ -252,6 +252,16 @@
       "az_main_content" : "190",
       "az_media_image" : "",
       "az_summary" : "A page with publications."
+    },
+    {
+      "id":29,
+      "title" : "Media Embeds",
+      "path" : "/pages/media-embeds",
+      "exclude_title" : true,
+      "az_page_category" : "Media Galleries",
+      "az_main_content" : "194",
+      "az_media_image" : "",
+      "az_summary" : "Remote media embeds."
     }
   ]
 }

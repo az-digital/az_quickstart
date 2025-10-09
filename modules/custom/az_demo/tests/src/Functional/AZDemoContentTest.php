@@ -3,6 +3,7 @@
 namespace Drupal\Tests\az_demo\Functional;
 
 use Drupal\Core\Url;
+use Drupal\Core\Config\FileStorage;
 use Drupal\Tests\az_core\Functional\QuickstartFunctionalTestBase;
 
 /**
@@ -15,7 +16,7 @@ class AZDemoContentTest extends QuickstartFunctionalTestBase {
   /**
    * The profile to install as a basis for testing.
    *
-   * @var string
+   * @var string[]
    */
   protected $profile = 'az_quickstart';
 
@@ -32,7 +33,7 @@ class AZDemoContentTest extends QuickstartFunctionalTestBase {
   /**
    * Modules to enable.
    *
-   * @var array
+   * @var string[]
    */
   protected static $modules = [
     'az_demo',
@@ -85,7 +86,7 @@ class AZDemoContentTest extends QuickstartFunctionalTestBase {
     $assert->elementExists('xpath', "//a[@href='https://example.com/deep-learning-book' and text()='Deep Learning']");
     $assert->elementExists('xpath', "//a[@href='https://example.com/climate-change-journal' and text()='Climate Change: Impacts and Solutions']");
     $siteDirectory = $this->siteDirectory;
-    $assert->elementExists('xpath', "//a[@href='/{$siteDirectory}/files/Small-PDF.pdf' and text()='The Trissotetras: Or, a Most Exquisite Table for Resolving All Manner of triangles. ']");
+    $assert->elementExists('xpath', "//a[@href='/{$siteDirectory}/files/Small-PDF.pdf' and text()='The Trissotetras: Or, a Most Exquisite Table for Resolving All Manner of Triangles. ']");
     // If field_az_publication_link has a value, assert that the value is used
     // as the link.
     $assert->elementExists('xpath', "//a[@href='https://example.com/ai-ethics-book' and text()='Ethics in Artificial Intelligence']");
@@ -107,6 +108,66 @@ class AZDemoContentTest extends QuickstartFunctionalTestBase {
     $assert->linkNotExists('van Gogh, Vincent');
     $assert->linkNotExists('Christian Andersen, Hans');
     $assert->linkNotExists('Ludwig van Beethoven');
+  }
+
+  /**
+   * Ensures sidebar blocks only appear when they have content.
+   */
+  public function testMenuBlockVisibility() {
+    $this->config('block.block.az_barrio_sidebar_menu')->set('status', FALSE)->save();
+
+    $fixture_path = __DIR__ . '/../../fixtures/config';
+    $storage = new FileStorage($fixture_path);
+    $config_name = 'block.block.az_demo_test_sidebar_menu';
+    $config_data = $storage->read($config_name);
+    $this->assertNotEmpty($config_data, 'Sidebar menu fixture config found.');
+    $this->config($config_name)->setData($config_data)->save();
+    $this->container->get('entity_type.manager')->getStorage('block')->resetCache();
+
+    // Front page should not display the sidebar menu.
+    $this->drupalGet(Url::fromRoute('<front>'));
+    $assert = $this->assertSession();
+    $assert->statusCodeEquals(200);
+    $body = $assert->elementExists('css', 'body');
+    $assert->elementNotExists('css', '#block-az-demo-test-sidebar-menu');
+    $classes = $body->getAttribute('class');
+    $this->assertStringNotContainsString('layout-one-sidebar', $classes, 'Since the block is empty, the `layout-one-sidebar` class should NOT be present on the front page.');
+    $this->assertStringNotContainsString('layout-sidebar-first', $classes, 'Since the block is empty, the `layout-sidebar-first` class should NOT be present on the front page.');
+    $this->assertStringContainsString('layout-no-sidebars', $classes, 'Since the block is empty, the `layout-no-sidebars` class SHOULD be present on the front page.');
+    $assert->elementNotExists('css', '#block-az-demo-test-sidebar-menu');
+
+    // Demo page set in visibility conditions to not display the block.
+    $this->drupalGet('/pages/combo-page-no-sidebar');
+    $assert = $this->assertSession();
+    $assert->statusCodeEquals(200);
+    $body = $assert->elementExists('css', 'body');
+    $classes = $body->getAttribute('class');
+    $this->assertStringNotContainsString('layout-one-sidebar', $classes, 'The block is configured to not appear on this page, so the `layout-one-sidebar` class should NOT be present on the no-sidebar page.');
+    $this->assertStringNotContainsString('layout-sidebar-first', $classes, 'The block is configured to not appear on this page, so the `layout-sidebar-first` class should NOT be present on the no-sidebar page.');
+    $this->assertStringContainsString('layout-no-sidebars', $classes, 'The block is configured to not appear on this page, so the `layout-no-sidebars` class SHOULD be present on the no-sidebar page.');
+    $assert->elementNotExists('css', '#block-az-demo-test-sidebar-menu');
+
+    // Pages with content in the menu should render the sidebar.
+    $this->drupalGet('/pages/text');
+    $assert = $this->assertSession();
+    $assert->statusCodeEquals(200);
+    $body = $assert->elementExists('css', 'body');
+    $classes = $body->getAttribute('class');
+    $assert->elementExists('css', '#block-az-demo-test-sidebar-menu');
+    $this->assertStringContainsString('layout-one-sidebar', $classes, 'Since the block has content, the `layout-one-sidebar` class should be present on the page.');
+    $this->assertStringContainsString('layout-sidebar-first', $classes, 'Since the block has content, the `layout-sidebar-first` class should be present on the page.');
+    $this->assertStringNotContainsString('layout-no-sidebars', $classes, 'Since the block has content, the `layout-no-sidebars` class should NOT be present on the page.');
+
+    // Finder pages hide the menu but keep other sidebar blocks visible.
+    $this->drupalGet('/finders/news');
+    $assert = $this->assertSession();
+    $assert->statusCodeEquals(200);
+    $body = $assert->elementExists('css', 'body');
+    $classes = $body->getAttribute('class');
+    $this->assertStringContainsString('layout-one-sidebar', $classes, 'The `layout-one-sidebar` class should be present on the finder page even though the block is set to not appear on finder pages.');
+    $this->assertStringContainsString('layout-sidebar-first', $classes, 'The `layout-sidebar-first` class should be present on the finder page even though the block is set to not appear on finder pages.');
+    $this->assertStringNotContainsString('layout-no-sidebars', $classes, 'The `layout-no-sidebars` class should NOT be present on the finder page, since there are other blocks in the sidebar.');
+    $assert->elementNotExists('css', '#block-az-demo-test-sidebar-menu');
   }
 
 }
