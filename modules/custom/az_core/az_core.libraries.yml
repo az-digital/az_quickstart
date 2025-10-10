@@ -16,8 +16,6 @@ arizona-bootstrap-css-overrides-for-claro-theme:
   css:
     theme:
       css/arizona-bootstrap-css-overrides-for-claro-theme.css: { weight: 100 }
-  dependencies:
-    - az_barrio/arizona-bootstrap-css
 az-enterprise-attributes:
   css:
     component:
