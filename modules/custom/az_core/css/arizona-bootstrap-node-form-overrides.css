@@ -64,3 +64,51 @@ ul.filter-tips,
 .messages__title {
   color: var(--messages-fg-color);
 }
+
+/* Restore Claro select width in admin pages. */
+.form-select {
+  width: unset !important;
+}
+
+/* Restore Claro font styles in admin pages. */
+.content-header,
+.region-pre-content,
+.block-help,
+.local-actions,
+.webform-ui-elements-table,
+.webform-ajax-form-wrapper {
+  font-family: var(--font-family);
+  font-size: 100%;
+  font-weight: normal;
+  font-style: normal;
+  line-height: var(--line-height);
+
+  ::after,
+  ::before {
+    box-sizing: unset !important;
+  }
+
+  ol, ul {
+    padding-left: unset !important;
+  }
+
+  /* Restore Claro table drag and webform tab link styles in admin pages. */
+  .tabledrag-cell a,
+  .webform-tabs-item-list a {
+    color: var(--color-link) !important;
+  }
+
+  /* Restore Claro breadcrumb styles in admin pages. */
+  .breadcrumb {
+    font-size: 0.79rem;
+  }
+
+  /* Restore Claro title styles in admin pages. */
+  h1.page-title {
+    font-family: unset;
+  }
+
+  .button {
+    font-family: var(--font-family);
+  }
+}
