@@ -1,8 +1,8 @@
 .placeholder {
-  display: initial;
-  min-width: initial;
-  vertical-align: initial;
-  cursor: initial;
-  background-color: initial;
-  opacity: initial;
+  display: initial !important;
+  min-width: initial !important;
+  vertical-align: initial !important;
+  cursor: initial !important;
+  background-color: initial !important;
+  opacity: initial !important;
 }
