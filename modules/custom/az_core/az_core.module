@@ -391,10 +391,18 @@ function _az_core_check_attribute_form(array &$form, FormStateInterface $form_st
 /**
  * Implements hook_library_info_alter().
  *
- * Add style overrides for Chosen.
+ * Add style overrides for Chosen and extend arizona-bootstrap-css.
  */
-function az_core_library_info_alter(array &$libraries, $module) {
-  if ($module === 'chosen' && isset($libraries['chosen.claro'])) {
+function az_core_library_info_alter(array &$libraries, $extension) {
+  // Ensure in claro theme context.
+  $theme = \Drupal::theme()->getActiveTheme();
+
+  // Extend the arizona-bootstrap-css library from az_barrio theme.
+  if ($extension === 'az_barrio' && isset($libraries['arizona-bootstrap-css']) && $theme->getName() === 'claro') {
+    $libraries['arizona-bootstrap-css']['css']['theme']['/profiles/custom/az_quickstart/modules/custom/az_core/css/arizona-bootstrap-css-overrides-for-claro-theme.css'] = ['weight' => 100];
+  }
+
+  if ($extension === 'chosen' && isset($libraries['chosen.claro'])) {
     $libraries['chosen.claro']['dependencies'][] = 'az_core/az-core-chosen';
   }
 }
