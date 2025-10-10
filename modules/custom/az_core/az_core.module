@@ -345,7 +345,6 @@ function az_core_form_node_form_alter(&$form, FormStateInterface $form_state) {
  */
 function az_core_form_menu_link_content_form_alter(&$form, FormStateInterface $form_state) {
   $form['#attached']['library'][] = 'az_core/claro-node-form-overrides';
-  $form['#attached']['library'][] = 'az_core/arizona-bootstrap-node-form-overrides';
 }
 
 /**
