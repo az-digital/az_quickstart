@@ -410,6 +410,22 @@ function az_core_library_info_alter(array &$libraries, $module) {
 }
 
 /**
+ * Implements hook_preprocess_html().
+ *
+ * Attach placeholder overrides in admin theme.
+ */
+function az_core_preprocess_html(&$variables) {
+  // Only act when in admin theme (Claro).
+  $theme = \Drupal::theme()->getActiveTheme();
+  if ($theme->getName() !== 'claro') {
+    return;
+  }
+
+  // Attach our library that includes placeholder overrides.
+  $variables['#attached']['library'][] = 'az_core/arizona-bootstrap-css-overrides-for-claro-theme';
+}
+
+/**
  * Implements hook_page_attachments_alter().
  *
  * Override Drupal core generator metatag for distribution.

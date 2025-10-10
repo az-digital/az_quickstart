@@ -12,6 +12,10 @@ arizona-bootstrap-node-form-overrides:
     - az_barrio/arizona-bootstrap-css
     - az_barrio/arizona-bootstrap-js
     - az_barrio/button-no-conflict
+arizona-bootstrap-css-overrides-for-claro-theme:
+  css:
+    theme:
+      css/arizona-bootstrap-css-overrides-for-claro-theme.css: { weight: 100 }
 az-enterprise-attributes:
   css:
     component:

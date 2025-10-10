@@ -25,7 +25,7 @@
     ],
     "require": {
         "php": ">=8.3",
-        "az-digital/arizona-bootstrap": "5.0.0",
+        "az-digital/arizona-bootstrap": "5.0.1",
         "az-digital/az-icons": "1.0.4",
         "citation-style-language/locales": "0.0.27",
         "citation-style-language/styles": "0.0.668",
@@ -72,7 +72,7 @@
         "drupal/extlink": "2.0.5",
         "drupal/field_group": "4.0.0",
         "drupal/field_group_link": "3.3.0",
-        "drupal/flag": "5.0.0",
+        "drupal/flag": "5.0.1",
         "drupal/google_tag": "2.0.8",
         "drupal/honeypot": "2.2.2",
         "drupal/image_widget_crop": "3.0.0",

@@ -42,11 +42,6 @@ a.chosen-single {
   padding: 16px 16px 16px 33px;
 }
 
-.form-item__description .placeholder {
-  background-color: initial;
-  opacity: initial;
-}
-
 /* See https://github.com/az-digital/az_quickstart/issues/4730. */
 ul.media-library-menu,
 ul.filter-tips,
