@@ -1,5 +1,5 @@
 az_gdpr_consent.settings:
-  path: '/admin/config/system/az-gdpr-consent'
+  path: '/admin/config/az-quickstart/settings/az-gdpr-consent'
   defaults:
     _form: '\Drupal\az_gdpr_consent\Form\GdprConsentSettingsForm'
     _title: 'Quickstart GDPR Consent Management'
