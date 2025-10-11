@@ -1,0 +1,6 @@
+az_gdpr_consent.settings:
+  title: 'Quickstart GDPR Consent Management'
+  description: 'Configure geolocation-based GDPR cookie consent management.'
+  route_name: az_gdpr_consent.settings
+  parent: az_core.az_settings
+  weight: 10
