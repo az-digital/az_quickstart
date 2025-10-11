@@ -29,6 +29,7 @@ install:
   - az_security
   - az_seo
   - az_google_tag
+  - az_gdpr_consent
   - drupal:node
   - drupal:history
   - drupal:block
@@ -77,6 +78,9 @@ install:
   - masquerade:masquerade
   - masquerade_log:masquerade_log
   - quick_node_clone:quick_node_clone
+  - klaro:klaro
+  - smart_ip:smart_ip
+  - smart_ip:smart_ip_maxmind_geoip2_bin_db
 themes:
   - az_barrio
   - claro
