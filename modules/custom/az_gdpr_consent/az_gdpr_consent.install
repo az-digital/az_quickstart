@@ -1,0 +1,225 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the az_gdpr_consent module.
+ */
+
+use Drupal\Core\File\FileSystemInterface;
+
+/**
+ * Implements hook_install().
+ */
+function az_gdpr_consent_install() {
+  // Configure private file path if not already set.
+  $config = \Drupal::configFactory()->getEditable('system.file');
+  if (empty($config->get('path.private'))) {
+    $config->set('path.private', 'sites/default/files/private')->save();
+    \Drupal::messenger()->addStatus(t('Private file path has been configured at sites/default/files/private'));
+  }
+  
+  // Verify private directory exists and show setup instructions.
+  _az_gdpr_consent_verify_private_directory();
+  
+  // Attempt to download MaxMind database if credentials are configured.
+  _az_gdpr_consent_download_maxmind_database();
+}
+
+/**
+ * Implements hook_requirements().
+ */
+function az_gdpr_consent_requirements($phase) {
+  $requirements = [];
+
+  if ($phase == 'runtime') {
+    // Check if private file path is configured.
+    $private_path = \Drupal::config('system.file')->get('path.private');
+    
+    $requirements['az_gdpr_consent_private_path'] = [
+      'title' => t('GDPR Consent: Private file path'),
+    ];
+
+    if (empty($private_path)) {
+      $requirements['az_gdpr_consent_private_path']['value'] = t('Not configured');
+      $requirements['az_gdpr_consent_private_path']['description'] = t('The private file path must be configured for Smart IP geolocation to work. Set it at Configuration > Media > File system or in settings.php.');
+      $requirements['az_gdpr_consent_private_path']['severity'] = REQUIREMENT_ERROR;
+    }
+    else {
+      $requirements['az_gdpr_consent_private_path']['value'] = $private_path;
+      $requirements['az_gdpr_consent_private_path']['severity'] = REQUIREMENT_OK;
+    }
+
+    // Check if smart_ip directory exists in private files.
+    /** @var \Drupal\Core\File\FileSystemInterface $file_system */
+    $file_system = \Drupal::service('file_system');
+    $private_dir = $file_system->realpath('private://');
+    
+    if ($private_dir) {
+      $smart_ip_dir = $private_dir . '/smart_ip';
+      
+      $requirements['az_gdpr_consent_smart_ip_directory'] = [
+        'title' => t('GDPR Consent: Smart IP directory'),
+      ];
+
+      if (file_exists($smart_ip_dir) && is_dir($smart_ip_dir)) {
+        $requirements['az_gdpr_consent_smart_ip_directory']['value'] = t('Exists');
+        $requirements['az_gdpr_consent_smart_ip_directory']['severity'] = REQUIREMENT_OK;
+        
+        // Check for GeoIP database file.
+        $db_file = $smart_ip_dir . '/GeoLite2-Country.mmdb';
+        if (file_exists($db_file)) {
+          $requirements['az_gdpr_consent_smart_ip_directory']['description'] = t('MaxMind GeoLite2 database found.');
+        }
+        else {
+          $requirements['az_gdpr_consent_smart_ip_directory']['description'] = t('Directory exists but GeoLite2-Country.mmdb not found. Download from <a href="@url" target="_blank">MaxMind</a>.', [
+            '@url' => 'https://dev.maxmind.com/geoip/geolite2-free-geolocation-data',
+          ]);
+          $requirements['az_gdpr_consent_smart_ip_directory']['severity'] = REQUIREMENT_WARNING;
+        }
+      }
+      else {
+        $requirements['az_gdpr_consent_smart_ip_directory']['value'] = t('Not found');
+        $requirements['az_gdpr_consent_smart_ip_directory']['description'] = t('The smart_ip directory does not exist in the private files directory. It will be created automatically, but you need to upload GeoLite2-Country.mmdb.');
+        $requirements['az_gdpr_consent_smart_ip_directory']['severity'] = REQUIREMENT_WARNING;
+      }
+    }
+  }
+
+  return $requirements;
+}
+
+/**
+ * Helper function to verify private directory structure for Smart IP.
+ */
+function _az_gdpr_consent_verify_private_directory() {
+  /** @var \Drupal\Core\File\FileSystemInterface $file_system */
+  $file_system = \Drupal::service('file_system');
+  
+  // Check if private:// stream wrapper is available.
+  $private_path = \Drupal::config('system.file')->get('path.private');
+  if (empty($private_path)) {
+    \Drupal::messenger()->addWarning(t('Private file path is not configured. Please add to settings.php: $settings[\'file_private_path\'] = \'sites/default/files/private\';'));
+    return;
+  }
+
+  // Check if private directory exists.
+  $private_dir = $file_system->realpath('private://');
+  if (!$private_dir || !file_exists($private_dir)) {
+    \Drupal::messenger()->addError(t('Private files directory does not exist at @path. Please create it or configure it in your local environment.', [
+      '@path' => $private_path,
+    ]));
+    return;
+  }
+
+  // Check if smart_ip subdirectory exists.
+  $smart_ip_dir = 'private://smart_ip';
+  $smart_ip_real_path = $file_system->realpath($smart_ip_dir);
+  
+  if (!$smart_ip_real_path || !file_exists($smart_ip_real_path)) {
+    // Try to create it.
+    try {
+      if ($file_system->prepareDirectory($smart_ip_dir, FileSystemInterface::CREATE_DIRECTORY | FileSystemInterface::MODIFY_PERMISSIONS)) {
+        \Drupal::messenger()->addStatus(t('Smart IP directory created at @dir', [
+          '@dir' => $file_system->realpath($smart_ip_dir),
+        ]));
+      }
+    }
+    catch (\Exception $e) {
+      \Drupal::messenger()->addError(t('Failed to create Smart IP directory: @error. Please create sites/default/files/private/smart_ip manually.', [
+        '@error' => $e->getMessage(),
+      ]));
+      return;
+    }
+  }
+  
+  // Check for GeoIP database file.
+  $db_file = $file_system->realpath($smart_ip_dir) . '/GeoLite2-Country.mmdb';
+  if (!file_exists($db_file)) {
+    \Drupal::messenger()->addWarning(t('MaxMind GeoLite2 database not found. Download GeoLite2-Country.mmdb from <a href="@url" target="_blank">MaxMind</a> and place it in @dir', [
+      '@url' => 'https://dev.maxmind.com/geoip/geolite2-free-geolocation-data',
+      '@dir' => $file_system->realpath($smart_ip_dir),
+    ]));
+  }
+  else {
+    \Drupal::messenger()->addStatus(t('MaxMind GeoLite2 database found. GDPR consent geolocation is ready!'));
+  }
+}
+
+/**
+ * Helper function to download MaxMind GeoLite2 database.
+ */
+function _az_gdpr_consent_download_maxmind_database() {
+  $logger = \Drupal::logger('az_gdpr_consent');
+  
+  // Check if Smart IP MaxMind module is available.
+  if (!class_exists('\Drupal\smart_ip_maxmind_geoip2_bin_db\DatabaseFileUtility')) {
+    $logger->warning('Smart IP MaxMind GeoIP2 Binary Database module is not available. Database download skipped.');
+    return;
+  }
+  
+  // Get MaxMind configuration.
+  $config = \Drupal::config('smart_ip_maxmind_geoip2_bin_db.settings');
+  $account_id = $config->get('user_account');
+  $license_key = $config->get('license_key');
+  
+  $logger->info('MaxMind credentials check: account_id=@account, license_key=@key', [
+    '@account' => $account_id ? 'configured' : 'empty',
+    '@key' => $license_key ? 'configured' : 'empty',
+  ]);
+  
+  // Check if credentials are configured.
+  if (empty($account_id) || empty($license_key)) {
+    $logger->warning('MaxMind credentials not configured. Please configure them at Configuration > People > Smart IP or import the configuration.');
+    return;
+  }
+  
+  // Check if database file already exists.
+  /** @var \Drupal\Core\File\FileSystemInterface $file_system */
+  $file_system = \Drupal::service('file_system');
+  $smart_ip_dir = 'private://smart_ip';
+  $real_path = $file_system->realpath($smart_ip_dir);
+  
+  $logger->info('Checking for existing database at: @path', [
+    '@path' => $real_path ? $real_path : 'null',
+  ]);
+  
+  if ($real_path) {
+    $db_file = $real_path . '/GeoLite2-Country.mmdb';
+    if (file_exists($db_file)) {
+      $logger->info('MaxMind GeoLite2 database already exists at @file. Skipping download.', [
+        '@file' => $db_file,
+      ]);
+      return;
+    }
+  }
+  
+  // Attempt to download the database.
+  try {
+    $logger->info('Starting MaxMind GeoLite2 database download...');
+    
+    // Use Smart IP's built-in download method.
+    \Drupal\smart_ip_maxmind_geoip2_bin_db\DatabaseFileUtility::downloadDatabaseFile();
+    
+    $logger->info('Download method called. Checking for file...');
+    
+    // Check if download was successful.
+    if ($real_path) {
+      $db_file = $real_path . '/GeoLite2-Country.mmdb';
+      if (file_exists($db_file)) {
+        $logger->info('MaxMind GeoLite2 database downloaded successfully to @file!', [
+          '@file' => $db_file,
+        ]);
+      }
+      else {
+        $logger->warning('Database download method completed but file not found at @file. Please check Smart IP settings.', [
+          '@file' => $db_file,
+        ]);
+      }
+    }
+  }
+  catch (\Exception $e) {
+    $logger->error('Failed to download MaxMind database: @error', [
+      '@error' => $e->getMessage(),
+    ]);
+  }
+}
