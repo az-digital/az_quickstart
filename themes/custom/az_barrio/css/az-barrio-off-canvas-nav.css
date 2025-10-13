@@ -1,3 +1,24 @@
-/* For structuring header utilities */
+/* AZ Barrio off-canvas search (for mobile devices) */
+#block-az-barrio-offcanvas-searchform .search-form {
+  margin-left: .25rem;
+}
 
-/* @todo Confirm if this library file is still needed. */
+#block-az-barrio-offcanvas-searchform .form-search {
+  height: unset;
+  margin-left: 0;
+  padding-left: .75rem;
+  border: none;
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+
+#block-az-barrio-offcanvas-searchform .btn {
+  padding: .5rem 1rem;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-color: transparent;
+}
+
+#block-az-barrio-offcanvas-searchform .material-symbols-rounded {
+  vertical-align: text-bottom;
+}

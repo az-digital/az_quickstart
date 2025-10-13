@@ -128,7 +128,7 @@ class AZQuickstartCitationStyleForm extends EntityForm {
     // Otherwise, check if we can successfully load the style the user entered.
     else {
       try {
-        $style = StyleSheet::loadStyleSheet($values['style']);
+        StyleSheet::loadStyleSheet($values['style']);
       }
       catch (CiteProcException $e) {
         $form_state->setErrorByName('style', $this->t('The stylesheet name is not valid.'));

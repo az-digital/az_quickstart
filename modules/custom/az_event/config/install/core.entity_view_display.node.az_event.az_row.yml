@@ -162,9 +162,10 @@ third_party_settings:
       weight: 8
       format_type: html_element
       format_settings:
-        classes: 'col-lg-9 pt-lg-3 px-3 ps-lg-4 pb-3'
+        classes: 'col-lg-9 pt-lg-3 px-3 ps-lg-4 pb-3 text-break'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3

@@ -328,6 +328,16 @@
       "az_main_content": "412",
       "az_media_image": "",
       "az_summary": "A page with views better exposed filters block."
+    },
+    {
+      "id": 41,
+      "title" : "Media Embeds",
+      "path" : "/pages/media-embeds",
+      "exclude_title" : true,
+      "az_page_category" : "Media Galleries",
+      "az_main_content" : "194",
+      "az_media_image" : "",
+      "az_summary" : "Remote media embeds."
     }
   ]
 }
