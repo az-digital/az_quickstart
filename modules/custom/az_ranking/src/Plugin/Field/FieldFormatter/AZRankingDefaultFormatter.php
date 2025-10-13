@@ -239,11 +239,12 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
 
       // Shadow class should NOT be applied on transparent.
       $ranking_classes .= ' overflow-hidden';
-      if(!str_contains($item->options['class'], 'bg-transparent')) {
+      if (!str_contains($item->options['class'], 'bg-transparent')) {
         $ranking_classes .= ' shadow';
-        $ranking_source_classes = 'mt-auto'; // No mt-auto on bg-transparent rankings
+        // No mt-auto on bg-transparent rankings.
+        $ranking_source_classes = 'mt-auto';
       }
-      
+
       // Handle class keys that contained multiple classes.
       $column_classes = implode(' ', $column_classes);
       $column_classes = explode(' ', $column_classes);

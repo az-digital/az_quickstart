@@ -37,6 +37,7 @@ class AZRankingItem extends FieldItemBase {
     $media = $this->get('media')->getValue();
     $ranking_source = $this->get('ranking_source')->getValue();
     $link_uri = $this->get('link_uri')->getValue();
+    $ranking_font_color = $this->get('ranking_font_color')->getValue();
     return empty($ranking_heading) && empty($ranking_description) && empty($media) && empty($ranking_source) && empty($link_uri);
   }
 
@@ -57,6 +58,8 @@ class AZRankingItem extends FieldItemBase {
       ->setLabel(t('Ranking Link URI'));
     $properties['options'] = MapDataDefinition::create()
       ->setLabel(t('Ranking Options'));
+    $properties['ranking_font_color'] = DataDefinition::create('string')
+      ->setLabel(t('Ranking Font Color'));
 
     return $properties;
   }

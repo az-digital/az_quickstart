@@ -150,6 +150,13 @@ class AZRankingWidget extends WidgetBase {
       $ranking_classes .= ' ' . $item->options['class'];
     }
 
+    // If a font color was previously saved, append its class and the general
+    // "text-color" marker so previews and edit rendering show correctly.
+    if (!empty($item->ranking_font_color)) {
+      // @todo Remove text-color, but for now leave it to show it worked
+      $ranking_classes .= ' ' . $item->ranking_font_color . ' text-color';
+    }
+
     // Create summary for details element (what shows when collapsed)
     $summary_text = '';
     if (!$item->isEmpty()) {
@@ -230,7 +237,9 @@ class AZRankingWidget extends WidgetBase {
     $parent_id = $parent_entity ? $parent_entity->id() : 'new';
     $field_parents_string = implode('-', $field_parents);
 
+    // Set ids for fields that are dependent on Type and Background Color.
     $ranking_type_unique_id = 'ranking-type-' . $parent_id . '-' . $field_parents_string . '-' . $delta;
+    $ranking_background_unique_id = 'ranking-bg-' . $parent_id . '-' . $field_parents_string . '-' . $delta;
 
     // Add all form fields inside the details element.
     $element['details']['ranking_type'] = [
@@ -317,11 +326,31 @@ class AZRankingWidget extends WidgetBase {
         'text-bg-mesa' => $this->t('Mesa'),
       ],
       '#required' => TRUE,
+      '#attributes' => ['data-az-ranking-bg-input-id' => $ranking_background_unique_id],
       '#title' => $this->t('Ranking Background'),
       '#default_value' => (!empty($item->options['class'])) ? $item->options['class'] : 'text-bg-white',
       '#states' => [
         'visible' => [
           ':input[data-az-ranking-type-input-id="' . $ranking_type_unique_id . '"]' => ['value' => 'standard'],
+        ],
+      ],
+    ];
+
+    $element['details']['ranking_font_color'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Ranking Font Color'),
+      '#options' => [
+        'text-white' => $this->t('White'),
+        'text-black' => $this->t('Black'),
+        'text-az-blue' => $this->t('Arizona Blue'),
+      ],
+      '#default_value' => $item->ranking_font_color ?? '',
+      '#states' => [
+        'visible' => [
+          ':input[data-az-ranking-type-input-id="' . $ranking_type_unique_id . '"]' => ['value' => 'standard'],
+          'and',
+          // Ranking Background (options) must be "bg-transparent".
+          ':input[data-az-ranking-bg-input-id="' . $ranking_background_unique_id . '"]' => ['value' => 'bg-transparent'],
         ],
       ],
     ];
@@ -657,6 +686,13 @@ class AZRankingWidget extends WidgetBase {
       }
       else {
         $values[$delta]['link_uri'] = $details_values['link_uri'] ?? NULL;
+      }
+
+      if (($details_values['ranking_font_color'] ?? '') === '') {
+        $values[$delta]['ranking_font_color'] = NULL;
+      }
+      else {
+        $values[$delta]['ranking_font_color'] = $details_values['ranking_font_color'] ?? NULL;
       }
 
       if (!empty($details_values['options']) || !empty($details_values['ranking_type']) || !empty($details_values['column_span'])) {
