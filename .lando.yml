@@ -1,4 +1,4 @@
-name: issue-1474
+name: az_quickstart
 recipe: drupal11
 config:
   php: '8.3'
