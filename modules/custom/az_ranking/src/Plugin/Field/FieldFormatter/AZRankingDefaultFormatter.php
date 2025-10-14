@@ -163,6 +163,7 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
       $ranking_classes = 'ranking';
       $ranking_hover_style = '';
       $ranking_source_classes = '';
+      $ranking_font_color = '';
       $ranking_defaults = [];
       $column_classes = [];
       $column_classes[] = 'col-md-4 col-lg-4';
@@ -243,6 +244,11 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
         $ranking_classes .= ' shadow';
         // No mt-auto on bg-transparent rankings.
         $ranking_source_classes = 'mt-auto';
+        $ranking_font_color = ' HELLO ';
+      }
+      else {
+        $ranking_font_color = ' ' . $item->ranking_font_color;
+        $ranking_classes .= ' ' . $item->ranking_font_color;
       }
 
       // Handle class keys that contained multiple classes.
@@ -284,8 +290,8 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
         '#ranking_description' => $ranking_description,
         '#ranking_source' => $item->ranking_source,
         '#link_url' => $link_url,
-        // '#title_display' => $title_display ?? 'h5',
         '#ranking_source_classes' => $ranking_source_classes,
+        '#ranking_font_color' => $ranking_font_color,
         '#text_color_override' => $text_color_override,
         '#attributes' => ['class' => $ranking_classes],
         '#attached' => $attached,

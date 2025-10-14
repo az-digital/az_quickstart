@@ -40,6 +40,7 @@ function az_ranking_theme($existing, $type, $theme, $path) {
         'ranking_description' => NULL,
         'ranking_source' => NULL,
         'ranking_source_classes' => NULL,
+        'ranking_font_color' => NULL,
         'text_color_override' => NULL,
         'link_url' => NULL,
       ],

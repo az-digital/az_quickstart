@@ -152,10 +152,10 @@ class AZRankingWidget extends WidgetBase {
 
     // If a font color was previously saved, append its class and the general
     // "text-color" marker so previews and edit rendering show correctly.
-    if (!empty($item->ranking_font_color)) {
+  //  if (!empty($item->ranking_font_color)) {
       // @todo Remove text-color, but for now leave it to show it worked
-      $ranking_classes .= ' ' . $item->ranking_font_color . ' text-color';
-    }
+  //    $ranking_classes .= ' ' . $item->ranking_font_color . ' text-color';
+  //  }
 
     // Create summary for details element (what shows when collapsed)
     $summary_text = '';
@@ -340,9 +340,9 @@ class AZRankingWidget extends WidgetBase {
       '#type' => 'select',
       '#title' => $this->t('Ranking Font Color'),
       '#options' => [
-        'text-white' => $this->t('White'),
-        'text-black' => $this->t('Black'),
-        'text-az-blue' => $this->t('Arizona Blue'),
+        'ranking-text-white' => $this->t('White'),
+        'ranking-text-black' => $this->t('Black'),
+        'ranking-text-az-blue' => $this->t('Arizona Blue'),
       ],
       '#default_value' => $item->ranking_font_color ?? '',
       '#states' => [

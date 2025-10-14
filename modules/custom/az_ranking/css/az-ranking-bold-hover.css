@@ -4,92 +4,106 @@
  */
 
 .text-bg-white.ranking-bold-hover:hover * {
-    background-color: RGBA(var(--bs-blue-rgb),var(--bs-bg-opacity,1)) !important;
-    color: #ffffff !important;
+    background-color: RGBA(var(--bs-blue-rgb),var(--bs-bg-opacity,1));
+    color: #ffffff;
 }
 .text-bg-white.ranking-subtle-hover:hover * {
-    background-color: RGBA(var(--bs-cool-gray-rgb),var(--bs-bg-opacity,1)) !important;
-    color: #000000 !important;
+    background-color: RGBA(var(--bs-cool-gray-rgb),var(--bs-bg-opacity,1));
+    color: #000000;
 }
 
 .text-bg-blue.ranking-bold-hover:hover * {
-    background-color: #ffffff !important;
-    color: RGBA(var(--bs-blue-rgb),var(--bs-bg-opacity,1)) !important;
+    background-color: #ffffff;
+    color: RGBA(var(--bs-blue-rgb),var(--bs-bg-opacity,1));
 }
 .text-bg-blue.ranking-subtle-hover:hover * {
-    background-color: RGBA(var(--bs-azurite-rgb),var(--bs-bg-opacity,1)) !important;
+    background-color: RGBA(var(--bs-azurite-rgb),var(--bs-bg-opacity,1));
     color: #ffffff;
 }
 
 .text-bg-red.ranking-bold-hover:hover * {
-    background-color: #ffffff !important;
-    color: RGBA(var(--bs-red-rgb),var(--bs-bg-opacity,1)) !important;
+    background-color: #ffffff;
+    color: RGBA(var(--bs-red-rgb),var(--bs-bg-opacity,1));
 }
 .text-bg-red.ranking-subtle-hover:hover * {
-    background-color: RGBA(var(--bs-chili-rgb),var(--bs-bg-opacity,1)) !important;
-    color: #ffffff !important;
+    background-color: RGBA(var(--bs-chili-rgb),var(--bs-bg-opacity,1));
+    color: #ffffff;
 }
 
 .text-bg-sky.ranking-bold-hover:hover * {
-    background-color: RGBA(var(--bs-blue-rgb),var(--bs-bg-opacity,1)) !important;
-    color: RGBA(var(--bs-sky-rgb),var(--bs-bg-opacity,1)) !important;
+    background-color: RGBA(var(--bs-blue-rgb),var(--bs-bg-opacity,1));
+    color: RGBA(var(--bs-sky-rgb),var(--bs-bg-opacity,1));
 }
 .text-bg-oasis.ranking-bold-hover:hover * {
     background-color: #ffffff!important;
-    color: RGBA(var(--bs-oasis-rgb),var(--bs-bg-opacity,1)) !important;
+    color: RGBA(var(--bs-oasis-rgb),var(--bs-bg-opacity,1));
 }
 .text-bg-midnight.ranking-bold-hover:hover * {
-    background-color: RGBA(var(--bs-sky-rgb),var(--bs-bg-opacity,1)) !important;
-    color: RGBA(var(--bs-midnight-rgb),var(--bs-bg-opacity,1)) !important;
+    background-color: RGBA(var(--bs-sky-rgb),var(--bs-bg-opacity,1));
+    color: RGBA(var(--bs-midnight-rgb),var(--bs-bg-opacity,1));
 }
 .text-bg-chili.ranking-bold-hover:hover * {
-    background-color: #ffffff !important;
-    color: RGBA(var(--bs-chili-rgb),var(--bs-bg-opacity,1)) !important;
+    background-color: #ffffff;
+    color: RGBA(var(--bs-chili-rgb),var(--bs-bg-opacity,1));
 }
 .text-bg-cool-gray.ranking-bold-hover:hover * {
-    background-color: RGBA(var(--bs-azurite-rgb),var(--bs-bg-opacity,1)) !important;
-    color: RGBA(var(--bs-cool-gray-rgb),var(--bs-bg-opacity,1)) !important;
+    background-color: RGBA(var(--bs-azurite-rgb),var(--bs-bg-opacity,1));
+    color: RGBA(var(--bs-cool-gray-rgb),var(--bs-bg-opacity,1));
 }
 
 
 /* Without direct referecnes */
 .text-bg-azurite.ranking-bold-hover:hover {
-    background-color: #ffffff !important;
-    color: RGBA(var(--bs-cool-azurite-rgb),var(--bs-bg-opacity,1)) !important;
+    background-color: #ffffff;
+    color: RGBA(var(--bs-cool-azurite-rgb),var(--bs-bg-opacity,1));
 }
 .text-bg-bloom.ranking-bold-hover:hover * {
-    background-color: RGBA(var(--bs-blue-rgb),var(--bs-bg-opacity,1)) !important;
-    color: RGBA(var(--bs-leaf-rgb),var(--bs-bg-opacity,1)) !important;
+    background-color: RGBA(var(--bs-blue-rgb),var(--bs-bg-opacity,1));
+    color: RGBA(var(--bs-leaf-rgb),var(--bs-bg-opacity,1));
 }
 .text-bg-leaf.ranking-bold-hover:hover * {
-    background-color: RGBA(var(--bs-blue-rgb),var(--bs-bg-opacity,1)) !important;
-    color: RGBA(var(--bs-leaf-rgb),var(--bs-bg-opacity,1)) !important;
+    background-color: RGBA(var(--bs-blue-rgb),var(--bs-bg-opacity,1));
+    color: RGBA(var(--bs-leaf-rgb),var(--bs-bg-opacity,1));
 }
 .text-bg-river.ranking-bold-hover:hover * {
-    background-color: RGBA(var(--bs-blue-rgb),var(--bs-bg-opacity,1)) !important;
-    color: RGBA(var(--bs-sky-rgb),var(--bs-bg-opacity,1)) !important;
+    background-color: RGBA(var(--bs-blue-rgb),var(--bs-bg-opacity,1));
+    color: RGBA(var(--bs-sky-rgb),var(--bs-bg-opacity,1));
 }
 .text-bg-ash.ranking-bold-hover:hover * {
-    background-color: #ffffff !important;
-    color: RGBA(var(--bs-ash-rgb),var(--bs-bg-opacity,1)) !important;
+    background-color: #ffffff;
+    color: RGBA(var(--bs-ash-rgb),var(--bs-bg-opacity,1));
 }
 .text-bg-silver.ranking-bold-hover:hover * {
-    background-color: RGBA(var(--bs-ash-rgb),var(--bs-bg-opacity,1)) !important;
-    color: RGBA(var(--bs-white-rgb),var(--bs-bg-opacity,1)) !important;
+    background-color: RGBA(var(--bs-ash-rgb),var(--bs-bg-opacity,1));
+    color: RGBA(var(--bs-white-rgb),var(--bs-bg-opacity,1));
 }
 .text-bg-mesa.ranking-bold-hover:hover * {
-    background-color: #ffffff !important;
-    color: RGBA(var(--bs-red-rgb),var(--bs-bg-opacity,1)) !important;
+    background-color: #ffffff;
+    color: RGBA(var(--bs-red-rgb),var(--bs-bg-opacity,1));
 }
 .text-bg-gray-100.ranking-bold-hover:hover * {
-    background-color: RGBA(var(--bs-ash-rgb),var(--bs-bg-opacity,1)) !important;
-    color: #ffffff !important;
+    background-color: RGBA(var(--bs-ash-rgb),var(--bs-bg-opacity,1));
+    color: #ffffff;
 }
 .text-bg-gray-200.ranking-bold-hover:hover * {
-    background-color: RGBA(var(--bs-ash-rgb),var(--bs-bg-opacity,1)) !important;
-    color: #ffffff !important;
+    background-color: RGBA(var(--bs-ash-rgb),var(--bs-bg-opacity,1));
+    color: #ffffff;
 }
 .text-bg-gray-300.ranking-bold-hover:hover * {
-    background-color: RGBA(var(--bs-ash-rgb),var(--bs-bg-opacity,1)) !important;
+    background-color: RGBA(var(--bs-ash-rgb),var(--bs-bg-opacity,1));
+    color: #ffffff;
+}
+
+/**
+ * Transparent BG Ranking font color overrides
+ */
+
+.ranking-text-white * {
     color: #ffffff !important;
+}
+.ranking-text-black * {
+    color: #000000 !important;
+}
+.ranking-text-az-blue * {
+    color: RGBA(var(--bs-blue-rgb),var(--bs-bg-opacity,1));
 }
