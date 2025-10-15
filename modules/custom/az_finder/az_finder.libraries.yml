@@ -23,3 +23,12 @@ taxonomy-index-tid-widget:
       - minified: false
   dependencies:
     - core/drupal
+gtm-events:
+  js:
+    js/gtm-events.js:
+      - type: module
+      - minified: false
+  dependencies:
+    - core/drupal
+    - core/once
+    - google_tag/gtag
