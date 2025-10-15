@@ -233,9 +233,10 @@ function az_barrio_post_update_delete_navbar_offcanvas_setting(&$sandbox = NULL)
 
 /**
  * Deletes obsolete az_barrio_navbar_offcanvas key if it exists.
+ *
  * (New version to ensure the key is deleted. See az_quickstart #4927.)
  */
-function az_barrio_post_update_delete_navbar_offcanvas_setting_fix(&$sandbox = NULL) {
+function az_barrio_post_update_delete_navbar_offcanvas_setting_fix_2(&$sandbox = NULL) {
   $config_factory = \Drupal::configFactory();
   $theme_settings = $config_factory->getEditable('az_barrio.settings');
 
