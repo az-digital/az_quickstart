@@ -19,9 +19,11 @@
 }
 
 /* Check for contrasting background wrapper colors on transparent bgs */
+/*
 .background-wrapper.text-bg-blue .az-ranking-responsive.bg-transparent * {
   color: #ffffff !important;
 }
 .background-wrapper.text-bg-red .az-ranking-responsive.bg-transparent * {
   color: #ffffff !important;
 }
+  */
