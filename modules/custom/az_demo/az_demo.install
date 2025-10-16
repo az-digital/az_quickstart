@@ -45,7 +45,6 @@ function az_demo_install() {
 
   // Import Finder view overrides so that exposed filter blocks have valid
   // references during install.
-  $config_manager = \Drupal::service('config.manager');
   $module_path = \Drupal::service('extension.list.module')->getPath('az_finder');
   $source = new FileStorage($module_path . '/config/quickstart');
 
