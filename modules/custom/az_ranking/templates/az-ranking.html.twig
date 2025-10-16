@@ -17,14 +17,12 @@
  */
 
 #}
-{% set attributes = attributes.addClass('h-100', 'az-ranking-responsive', 'border-0', 'overflow-hidden') %}
+{% set attributes = attributes.addClass('az-ranking-responsive', 'border-0', 'overflow-hidden') %}
 
-<div{{ attributes }}>
-  {% if media %}
-    <div class="position-relative overflow-hidden h-100">
-      {{ media }}
-    </div>
-  {% else %}
+{% if media %}
+  {{ media }}
+{% else %}
+  <div{{ attributes }}>
     <div class="card-body d-flex flex-column h-100">
       <div class="card-text d-flex flex-column flex-grow-1">
         <div class="ranking-content">
@@ -53,5 +51,5 @@
         <a href="{{ link_url }}"  class="stretched-link"></a>
       {% endif %}
     </div>
-  {% endif %}
-</div>
+  </div>
+{% endif %}
