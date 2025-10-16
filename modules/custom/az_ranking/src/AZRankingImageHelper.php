@@ -67,7 +67,7 @@ class AZRankingImageHelper {
         '#image_style' => 'az_ranking_image',
         // Support images smaller than ranking width, eg. full width rankings.
         '#item_attributes' => [
-          'class' => ['ranking-img'],
+          'class' => ['ranking-img shadow'],
         ],
       ];
       // Add the file entity to the cache dependencies.
