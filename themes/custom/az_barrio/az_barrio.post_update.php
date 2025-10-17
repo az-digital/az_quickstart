@@ -216,19 +216,9 @@ function az_barrio_post_update_add_langcode_to_settings(&$sandbox = NULL) {
 }
 
 /**
- * Deletes obsolete az_barrio_navbar_offcanvas key if it exists.
+ * Empty update (superseded by delete_navbar_offcanvas_setting_fix).
  */
 function az_barrio_post_update_delete_navbar_offcanvas_setting(&$sandbox = NULL) {
-  $config_factory = \Drupal::configFactory();
-  $theme_settings = $config_factory->getEditable('az_barrio.settings');
-
-  // Delete the navbar offcanvas key if it exists.
-  if ($theme_settings->get('az_barrio_navbar_offcanvas')) {
-    $theme_settings
-      ->clear('az_barrio_navbar_offcanvas')
-      ->save();
-    \Drupal::logger('az_quickstart')->notice('Deleted obsolete az_barrio_navbar_offcanvas configuration key during post update.');
-  }
 }
 
 /**
