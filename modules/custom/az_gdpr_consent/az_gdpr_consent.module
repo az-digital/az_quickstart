@@ -29,11 +29,11 @@ function az_gdpr_consent_help($route_name, RouteMatchInterface $route_match) {
  * Removes Klaro attachments if visitor is not from a target country.
  */
 function az_gdpr_consent_page_attachments_alter(array &$attachments) {
-  
+
   // Check if we should show the banner.
   if (!az_gdpr_consent_should_show_banner()) {
     \Drupal::messenger()->addStatus('GDPR Debug: Removing Klaro libraries');
-    
+
     // Remove Klaro libraries if they were attached.
     if (isset($attachments['#attached']['library'])) {
       foreach ($attachments['#attached']['library'] as $key => $library) {
@@ -42,7 +42,7 @@ function az_gdpr_consent_page_attachments_alter(array &$attachments) {
         }
       }
     }
-    
+
     // Remove Klaro drupalSettings if present.
     if (isset($attachments['#attached']['drupalSettings']['klaro'])) {
       unset($attachments['#attached']['drupalSettings']['klaro']);
@@ -76,7 +76,8 @@ function az_gdpr_consent_module_implements_alter(&$implementations, $hook) {
 function az_gdpr_consent_should_show_banner() {
   // Ensure Drupal is fully bootstrapped.
   if (!\Drupal::hasContainer()) {
-    return TRUE; // Default to showing banner if container not ready.
+    // Default to showing banner if container not ready.
+    return TRUE;
   }
 
   $config = \Drupal::config('az_gdpr_consent.settings');
@@ -115,7 +116,7 @@ function az_gdpr_consent_should_show_banner() {
   // Check if country is in target list.
   $target_countries = $config->get('target_countries') ?? [];
   $should_show = in_array($country_code, $target_countries);
-  
+
   $logger->info('Country @country is @status target list. Banner: @action', [
     '@country' => $country_code,
     '@status' => $should_show ? 'IN' : 'NOT IN',
