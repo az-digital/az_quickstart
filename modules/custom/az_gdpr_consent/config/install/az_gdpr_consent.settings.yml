@@ -1,0 +1,76 @@
+enabled: true
+target_countries:
+  # EU Member States (27)
+  - AT  # Austria
+  - BE  # Belgium
+  - BG  # Bulgaria
+  - HR  # Croatia
+  - CY  # Cyprus
+  - CZ  # Czech Republic
+  - DK  # Denmark
+  - EE  # Estonia
+  - FI  # Finland
+  - FR  # France
+  - DE  # Germany
+  - GR  # Greece
+  - HU  # Hungary
+  - IE  # Ireland
+  - IT  # Italy
+  - LV  # Latvia
+  - LT  # Lithuania
+  - LU  # Luxembourg
+  - MT  # Malta
+  - NL  # Netherlands
+  - PL  # Poland
+  - PT  # Portugal
+  - RO  # Romania
+  - SK  # Slovakia
+  - SI  # Slovenia
+  - ES  # Spain
+  - SE  # Sweden
+  # EEA Countries (3)
+  - IS  # Iceland
+  - LI  # Liechtenstein
+  - NO  # Norway
+  # UK (post-Brexit, still has GDPR-equivalent UK GDPR)
+  - GB  # United Kingdom
+  # European Countries NOT implementing GDPR but should comply
+  - AL  # Albania
+  - BY  # Belarus
+  - BA  # Bosnia and Herzegovina
+  - XK  # Kosovo
+  - MD  # Moldova
+  - ME  # Montenegro
+  - MK  # North Macedonia
+  - RU  # Russia
+  - RS  # Serbia
+  - TR  # Turkey
+  - UA  # Ukraine
+  # Countries with data protection laws similar to GDPR
+  # Europe
+  - CH  # Switzerland
+  # Middle East
+  - BH  # Bahrain
+  - IL  # Israel
+  - QA  # Qatar
+  # Africa
+  - KE  # Kenya
+  - MU  # Mauritius
+  - NG  # Nigeria
+  - ZA  # South Africa
+  - UG  # Uganda
+  # Asia
+  - JP  # Japan
+  - KR  # South Korea
+  # Oceania
+  - NZ  # New Zealand
+  # South America
+  - AR  # Argentina
+  - BR  # Brazil
+  - UY  # Uruguay
+  # North America
+  - CA  # Canada
+# If Smart IP cannot determine location, show consent banner (safer for compliance)
+show_on_unknown_location: true
+# Test mode - if enabled, always show consent banner for testing
+test_mode: false
