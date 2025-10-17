@@ -141,6 +141,24 @@ function az_barrio_preprocess_page(&$variables, $hook) {
   $variables['header_one_col_classes'] = theme_get_setting('header_one_col_classes');
   $variables['header_two_col_classes'] = theme_get_setting('header_two_col_classes');
 
+  // Calculate content width based on sidebar widths (assuming 12-column grid).
+  // Only subtract sidebar widths if the sidebars actually have content on this page.
+  $first_width = 0;
+  $second_width = 0;
+
+  if (!empty($variables['page']['sidebar_first'])) {
+    $first_width = (int) theme_get_setting('bootstrap_barrio_sidebar_first_width') ?: 3;
+  }
+
+  if (!empty($variables['page']['sidebar_second'])) {
+    $second_width = (int) theme_get_setting('bootstrap_barrio_sidebar_second_width') ?: 3;
+  }
+
+  $content_width = 12 - $first_width - $second_width;
+  $content_width_class = 'col-md-' . $content_width;
+
+  $variables['content_attributes']['class'][] = $content_width_class;
+
   // Define column layout for new AZ Barrio sidebar position.
   if (theme_get_setting('bootstrap_barrio_sidebar_position') === 'az-barrio-both-below') {
     $variables['sidebar_first_attributes']['class'][] = 'order-2 order-md-first';
@@ -837,7 +855,7 @@ function az_barrio_preprocess_block(&$variables) {
     $variables['attributes']['class'][] = 'az-search-block';
   }
 
-  // Pass theme setting to hide sidebar menu for mobile 
+  // Pass theme setting to hide sidebar menu for mobile
   if (isset($variables['elements']['#id']) && $variables['elements']['#id'] === 'az_barrio_sidebar_menu') {
     $variables['az_remove_sidebar_menu_mobile'] = theme_get_setting('az_remove_sidebar_menu_mobile');
   }
