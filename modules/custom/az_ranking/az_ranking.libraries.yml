@@ -1,0 +1,38 @@
+az_ranking:
+  css:
+    component:
+      css/az-ranking-widget.css: {}
+      css/az-ranking.css: {}
+  js:
+    js/az-ranking-widget-preview.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/once
+az_ranking_image:
+  css:
+    component:
+      css/az-ranking-image.css: {}
+az_ranking_no_follow:
+  css:
+    component:
+      css/az-ranking-no-follow.css: {}
+  js:
+    js/az-ranking-no-follow.js: {}
+  dependencies:
+    - core/drupal.nodelist.foreach
+az_ranking_title_hover:
+  css:
+    component:
+      css/az-ranking-title-hover.css: {}
+az_ranking_bold_hover:
+  css:
+    component:
+      css/az-ranking-bold-hover.css: {}
+az_ranking_dynamic_helptext:
+  js:
+    js/az-ranking-dynamic-helptext.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/once
