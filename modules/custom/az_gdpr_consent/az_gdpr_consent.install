@@ -1,0 +1,62 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the az_gdpr_consent module.
+ */
+
+use Drupal\Core\Url;
+use Symfony\Component\Yaml\Yaml;
+
+/**
+ * Implements hook_install().
+ */
+function az_gdpr_consent_install() {
+  // Get the module path.
+  $module_path = \Drupal::service('extension.list.module')->getPath('az_gdpr_consent');
+  $config_path = $module_path . '/config/overrides';
+  
+  // List of config files to apply from the overrides directory.
+  $config_files = [
+    'smart_ip.settings.yml',
+    'smart_ip_maxmind_geoip2_bin_db.settings.yml',
+    'klaro.settings.yml',
+    'klaro.texts.yml',
+    'klaro.klaro_app.facebook.yml',
+    'klaro.klaro_app.ga.yml',
+    'klaro.klaro_app.gtm.yml',
+  ];
+  
+  $config_factory = \Drupal::configFactory();
+  
+  // Apply each config file.
+  foreach ($config_files as $config_file) {
+    $file_path = $config_path . '/' . $config_file;
+    if (file_exists($file_path)) {
+      // Parse the config name from the filename (remove .yml extension).
+      $config_name = substr($config_file, 0, -4);
+      
+      // Read the YAML file.
+      $config_data = Yaml::parseFile($file_path);
+      
+      // Get the editable config and set the data.
+      $config_factory->getEditable($config_name)
+        ->setData($config_data)
+        ->save();
+      
+      \Drupal::logger('az_gdpr_consent')->info('Applied configuration: @config', ['@config' => $config_name]);
+    }
+  }
+  
+  // Display message to user.
+  $smart_ip_url = Url::fromRoute('smart_ip.settings')->toString();
+  $maxmind_url = 'https://www.maxmind.com/en/geolite2/signup';
+  $message = \Drupal::translation()->translate(
+    '<strong><em>IMPORTANT NEXT STEP:</em></strong> In order for the GDPR Consent to function properly, please <a href=":maxmind_url" target="_blank">sign up for a free MaxMind GeoLite2 account</a> to obtain a license key and account ID, then <a href=":smart_ip_url">enter your credentials in the Smart IP settings</a>.',
+    [
+      ':smart_ip_url' => $smart_ip_url,
+      ':maxmind_url' => $maxmind_url,
+    ]
+  );
+  \Drupal::messenger()->addWarning($message);
+}
