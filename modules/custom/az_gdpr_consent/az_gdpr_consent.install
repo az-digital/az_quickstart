@@ -15,7 +15,7 @@ function az_gdpr_consent_install() {
   // Get the module path.
   $module_path = \Drupal::service('extension.list.module')->getPath('az_gdpr_consent');
   $config_path = $module_path . '/config/overrides';
-  
+
   // List of config files to apply from the overrides directory.
   $config_files = [
     'smart_ip.settings.yml',
@@ -26,28 +26,28 @@ function az_gdpr_consent_install() {
     'klaro.klaro_app.ga.yml',
     'klaro.klaro_app.gtm.yml',
   ];
-  
+
   $config_factory = \Drupal::configFactory();
-  
+
   // Apply each config file.
   foreach ($config_files as $config_file) {
     $file_path = $config_path . '/' . $config_file;
     if (file_exists($file_path)) {
       // Parse the config name from the filename (remove .yml extension).
       $config_name = substr($config_file, 0, -4);
-      
+
       // Read the YAML file.
       $config_data = Yaml::parseFile($file_path);
-      
+
       // Get the editable config and set the data.
       $config_factory->getEditable($config_name)
         ->setData($config_data)
         ->save();
-      
+
       \Drupal::logger('az_gdpr_consent')->info('Applied configuration: @config', ['@config' => $config_name]);
     }
   }
-  
+
   // Display message to user.
   $smart_ip_url = Url::fromRoute('smart_ip.settings')->toString();
   $maxmind_url = 'https://www.maxmind.com/en/geolite2/signup';
