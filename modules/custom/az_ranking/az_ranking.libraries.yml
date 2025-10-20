@@ -36,3 +36,13 @@ az_ranking_dynamic_helptext:
     - core/jquery
     - core/drupal
     - core/once
+focal_point_picker:
+  js:
+    js/focal-point-picker.js: {}
+  css:
+    component:
+      css/focal-point-picker.css: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/once

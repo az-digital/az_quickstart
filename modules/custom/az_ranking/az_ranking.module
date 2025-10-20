@@ -48,3 +48,102 @@ function az_ranking_theme($existing, $type, $theme, $path) {
     ],
   ];
 }
+
+/**
+ * Implements hook_form_alter().
+ */
+function az_ranking_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  // Add focal point UI to az_image media edit form.
+  if ($form_id === 'media_az_image_edit_form' || $form_id === 'media_az_image_add_form') {
+    // Visually hide the focal point coordinate fields but keep them in DOM.
+    if (isset($form['field_focal_point_x'])) {
+      $form['field_focal_point_x']['#attributes']['class'][] = 'visually-hidden';
+      $form['field_focal_point_x']['#attributes']['style'] = 'display: none;';
+    }
+    if (isset($form['field_focal_point_y'])) {
+      $form['field_focal_point_y']['#attributes']['class'][] = 'visually-hidden';
+      $form['field_focal_point_y']['#attributes']['style'] = 'display: none;';
+    }
+
+    // Attach JavaScript for focal point picker on the main image field.
+    $form['#attached']['library'][] = 'az_ranking/focal_point_picker';
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave() for media entities.
+ * 
+ * This catches media saves from ANY context, including embedded widgets.
+ */
+function az_ranking_media_presave(\Drupal\media\MediaInterface $media) {
+  // Only process az_image media type.
+  if ($media->bundle() !== 'az_image') {
+    return;
+  }
+  
+  // Check if focal point fields have values.
+  if ($media->hasField('field_focal_point_x') && $media->hasField('field_focal_point_y')) {
+    if (!$media->get('field_focal_point_x')->isEmpty() && !$media->get('field_focal_point_y')->isEmpty()) {
+      $focal_x = (float) $media->get('field_focal_point_x')->value;
+      $focal_y = (float) $media->get('field_focal_point_y')->value;
+      
+      // Get the source image file.
+      $source_field = $media->getSource()->getConfiguration()['source_field'];
+      if (!$media->hasField($source_field) || $media->get($source_field)->isEmpty()) {
+        return;
+      }
+      
+      /** @var \Drupal\file\FileInterface $file */
+      $file = $media->get($source_field)->entity;
+      if (!$file) {
+        return;
+      }
+      
+      // Get image dimensions.
+      $image = \Drupal::service('image.factory')->get($file->getFileUri());
+      if (!$image->isValid()) {
+        return;
+      }
+      
+      $width = $image->getWidth();
+      $height = $image->getHeight();
+      
+      // Convert 0.0-1.0 coordinates to absolute pixel coordinates.
+      $absolute_x = (int) round($focal_x * $width);
+      $absolute_y = (int) round($focal_y * $height);
+      
+      // Create or update the crop entity.
+      $crop_type = 'focal_point';
+      $crop = \Drupal\crop\Entity\Crop::findCrop($file->getFileUri(), $crop_type);
+      
+      if ($crop) {
+        // Update existing crop.
+        $crop->setPosition($absolute_x, $absolute_y);
+        $crop->save();
+      }
+      else {
+        // Create new crop entity.
+        $crop = \Drupal\crop\Entity\Crop::create([
+          'type' => $crop_type,
+          'entity_id' => $file->id(),
+          'entity_type' => 'file',
+          'uri' => $file->getFileUri(),
+          'x' => $absolute_x,
+          'y' => $absolute_y,
+          'width' => $width,
+          'height' => $height,
+        ]);
+        $crop->save();
+      }
+      
+      // Flush image style derivatives.
+      image_path_flush($file->getFileUri());
+      
+      \Drupal::logger('az_ranking')->info('Focal point saved via presave for media @id: @x, @y', [
+        '@id' => $media->id(),
+        '@x' => number_format($focal_x, 2),
+        '@y' => number_format($focal_y, 2),
+      ]);
+    }
+  }
+}

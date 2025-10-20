@@ -1,0 +1,26 @@
+uuid: c91d79c9-7f8b-4fde-b7a5-febba33a77bf
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_focal_point_y
+    - media.type.az_image
+id: media.az_image.field_focal_point_y
+field_name: field_focal_point_y
+entity_type: media
+bundle: az_image
+label: 'Focal Point Y'
+description: ''
+required: false
+translatable: null
+default_value:
+  -
+    value: 0.5
+default_value_callback: ''
+settings:
+  min: 0.0
+  max: 1.0
+  prefix: ''
+  suffix: ''
+  scale: '2'
+field_type: decimal

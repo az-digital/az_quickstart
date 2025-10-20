@@ -1,0 +1,20 @@
+uuid: d166f19a-1512-456c-9725-701fd9fa9d8e
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+id: media.field_focal_point_y
+field_name: field_focal_point_y
+entity_type: media
+type: decimal
+settings:
+  precision: 10
+  scale: 2
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
