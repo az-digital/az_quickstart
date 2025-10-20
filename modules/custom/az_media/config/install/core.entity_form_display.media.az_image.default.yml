@@ -76,7 +76,6 @@ content:
         - az_marketing_cloud_50_50_layout
         - az_marketing_cloud_hero_layout
         - az_square_aspect_ratio
-        - az_ranking_image
       crop_types_required: {  }
       warn_multiple_usages: true
       show_crop_area: false

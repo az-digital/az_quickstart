@@ -101,9 +101,9 @@ class AZRankingImageHelper {
    *   The image style machine name.
    */
   protected function getImageStyleForContext($ranking_width, $column_span, $ranking_type) {
-    // For standard rankings, use the original style (no dynamic cropping needed).
+    // Standard rankings don't have images, so return NULL.
     if ($ranking_type !== 'image_only') {
-      return 'az_ranking_image';
+      return NULL;
     }
 
     // Map from aspect ratios to focal point-based image styles.
