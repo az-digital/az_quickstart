@@ -56,24 +56,26 @@ function az_ranking_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $for
   // Add focal point picker to az_image media edit form.
   if ($form_id === 'media_az_image_edit_form' || $form_id === 'media_az_image_add_form') {
     
+    // Always hide the focal point coordinate fields visually but keep them in the form
+    // so JavaScript can update them when the picker is used.
+    if (isset($form['field_focal_point_x'])) {
+      $form['field_focal_point_x']['#attributes']['class'][] = 'visually-hidden';
+      $form['field_focal_point_x']['widget'][0]['value']['#attributes']['class'][] = 'js-focal-point-x-value';
+    }
+    if (isset($form['field_focal_point_y'])) {
+      $form['field_focal_point_y']['#attributes']['class'][] = 'visually-hidden';
+      $form['field_focal_point_y']['widget'][0]['value']['#attributes']['class'][] = 'js-focal-point-y-value';
+    }
+    
     // Only show focal point picker if opened in a dialog/modal context.
     // This typically means it was opened from the media library widget.
     $request = \Drupal::request();
     $is_modal = $request->query->get('_wrapper_format') === 'drupal_dialog' || 
-                $request->query->get('_wrapper_format') === 'drupal_modal' ||
-                $request->request->get('_drupal_ajax');
+                $request->query->get('_wrapper_format') === 'drupal_modal';
     
-    // Skip if not in modal context.
+    // Skip adding the picker if not in modal context.
     if (!$is_modal) {
       return;
-    }
-    
-    // Hide the focal point coordinate fields.
-    if (isset($form['field_focal_point_x'])) {
-      $form['field_focal_point_x']['#access'] = FALSE;
-    }
-    if (isset($form['field_focal_point_y'])) {
-      $form['field_focal_point_y']['#access'] = FALSE;
     }
     
     // Get the media entity.

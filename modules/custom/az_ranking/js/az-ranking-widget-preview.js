@@ -11,19 +11,14 @@
    */
   Drupal.behaviors.azRankingWidgetPreview = {
     attach: function (context, settings) {
-      console.log('Az Ranking Widget Preview behavior attached');
       
       // Find all ranking widget details elements
       var detailsElements = once('az-ranking-widget-preview', 'details.az-ranking-widget', context);
       detailsElements.forEach(function (element) {
-        console.log('Found az-ranking-widget details element', element);
         var $details = $(element);
         var $previewWrapper = $details.siblings('.widget-preview-wrapper');
         
-        console.log('Preview wrapper found:', $previewWrapper.length);
-        
         if ($previewWrapper.length === 0) {
-          console.log('No preview wrapper found, skipping');
           return;
         }
 
