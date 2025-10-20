@@ -133,7 +133,6 @@ bootstrap_barrio_region_width_breadcrumb: 0
 bootstrap_barrio_region_width_sidebar_first: 0
 bootstrap_barrio_region_width_sidebar_second: 0
 bootstrap_barrio_region_width_content: 0
-az_barrio_navbar_offcanvas: true
 external_links: true
 wordmark: true
 land_acknowledgment: true
