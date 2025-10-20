@@ -239,7 +239,7 @@ function az_barrio_post_update_delete_az_hide_front_title_setting(&$sandbox = NU
   $theme_settings = $config_factory->getEditable('az_barrio.settings');
 
   // Delete the az hide front title key if it exists.
-  if ($theme_settings->get('az_hide_front_title') !== NULL)) {
+  if ($theme_settings->get('az_hide_front_title') !== NULL) {
     $theme_settings
       ->clear('az_hide_front_title')
       ->save();
