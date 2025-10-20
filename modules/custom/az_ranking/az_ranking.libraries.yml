@@ -25,10 +25,6 @@ az_ranking_title_hover:
   css:
     component:
       css/az-ranking-title-hover.css: {}
-az_ranking_bold_hover:
-  css:
-    component:
-      css/az-ranking-bold-hover.css: {}
 az_ranking_dynamic_helptext:
   js:
     js/az-ranking-dynamic-helptext.js: {}

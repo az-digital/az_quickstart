@@ -180,6 +180,10 @@ class AZRankingWidget extends WidgetBase {
       '#attributes' => ['class' => ['az-ranking-widget']],
     ];
 
+
+     // @TODO: Update wrapper preview here in these 4 blocks.
+
+
     // When closed, add a preview of the ranking after the summary.
     if (!$status) {
       $element['preview_wrapper'] = [
@@ -192,6 +196,7 @@ class AZRankingWidget extends WidgetBase {
         '#weight' => -10,
       ];
 
+     
       $element['preview_wrapper']['preview'] = [
         '#theme' => 'az_ranking',
         '#ranking_heading' => $item->ranking_heading ?? '',
@@ -215,7 +220,7 @@ class AZRankingWidget extends WidgetBase {
       }
 
       // Add link to preview if available.
-      if ($item->ranking_source || $item->link_uri) {
+      if ($item->link_title || $item->link_uri) {
         if (!empty($item->link_uri) && str_starts_with($item->link_uri, '/' . PublicStream::basePath())) {
           $link_url = Url::fromUri(urldecode('base:' . $item->link_uri));
         }
@@ -391,6 +396,19 @@ class AZRankingWidget extends WidgetBase {
       ],
     ];
 
+    $element['details']['link_title'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Link Title'),
+      '#default_value' => $item->link_title ?? NULL,
+      '#maxlength' => 255,
+      '#states' => [
+        'visible' => [
+          // If whole ranking is clickable, hide the title.
+          ':input[name*="[ranking_clickable]"]' => ['checked' => FALSE],
+        ],
+      ],
+    ];
+
     $element['details']['link_uri'] = [
       '#type' => 'linkit',
       '#autocomplete_route_name' => 'linkit.autocomplete',
@@ -411,11 +429,31 @@ class AZRankingWidget extends WidgetBase {
         // AND the hover style is NOT static.
         'required' => [
           ':input[data-az-ranking-type-input-id="' . $ranking_type_unique_id . '"]' => ['value' => 'standard'],
-          ':input[name*="[behavior_plugins][az_rankings_paragraph_behavior][ranking_hover_style]"]' => [
-            ['value' => 'card ranking-bold-hover'],
-            'or',
-            ['value' => 'card ranking-subtle-hover'],
+          ':input[name*="[behavior_plugins][az_rankings_paragraph_behavior][ranking_clickable]"]' => [
+            ['checked' => TRUE],
           ],
+        ],
+      ],
+    ];
+
+    $element['details']['ranking_link_style'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Link Style'),
+      '#options' => [
+        '' => $this->t('Text Link'),
+        'd-none' => $this->t('Hidden Link Title'),
+        'w-100 btn btn-red' => $this->t('Red Button'),
+        'w-100 btn btn-blue' => $this->t('Blue Button'),
+        'w-100 btn btn-outline-red' => $this->t('Red Outline Button'),
+        'w-100 btn btn-outline-blue' => $this->t('Blue Outline Button'),
+        'w-100 btn btn-outline-white' => $this->t('White Outline Button'),
+      ],
+      '#default_value' => $item->ranking_link_style ?? '',
+      '#states' => [
+        'visible' => [
+          ':input[data-az-ranking-type-input-id="' . $ranking_type_unique_id . '"]' => ['value' => 'standard'],
+          'and',
+          ':input[name*="[behavior_plugins][az_rankings_paragraph_behavior][ranking_clickable]"]' => ['checked' => FALSE],
         ],
       ],
     ];
@@ -688,11 +726,25 @@ class AZRankingWidget extends WidgetBase {
         $values[$delta]['link_uri'] = $details_values['link_uri'] ?? NULL;
       }
 
+      if (($details_values['link_title'] ?? '') === '') {
+        $values[$delta]['link_title'] = NULL;
+      }
+      else {
+        $values[$delta]['link_title'] = $details_values['link_title'];
+      }
+
       if (($details_values['ranking_font_color'] ?? '') === '') {
         $values[$delta]['ranking_font_color'] = NULL;
       }
       else {
         $values[$delta]['ranking_font_color'] = $details_values['ranking_font_color'] ?? NULL;
+      }
+
+      if (($details_values['ranking_link_style'] ?? '') === '') {
+        $values[$delta]['ranking_link_style'] = NULL;
+      }
+      else {
+        $values[$delta]['ranking_link_style'] = $details_values['ranking_link_style'];
       }
 
       if (!empty($details_values['options']) || !empty($details_values['ranking_type']) || !empty($details_values['column_span'])) {

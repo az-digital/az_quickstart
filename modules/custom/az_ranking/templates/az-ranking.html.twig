@@ -49,8 +49,12 @@
           </div>
         {% endif %}
       </div>
-      {% if link_url %}
-        <a href="{{ link_url }}"  class="stretched-link"></a>
+      {% if ranking_clickable %}
+        <a href="{{ link_url }}" class="stretched-link"></a>
+      {% else %}
+        {% if link %}
+          {{ link }}
+        {% endif %}
       {% endif %}
     </div>
   {% endif %}

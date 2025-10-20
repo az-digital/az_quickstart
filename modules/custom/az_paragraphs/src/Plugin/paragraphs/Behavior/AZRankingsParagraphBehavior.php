@@ -37,17 +37,17 @@ class AZRankingsParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#description' => $this->t('Choose how many rankings appear per row. Additional rankings will wrap to a new row. This selection sets the rankings per row on desktops with automatic defaults set for tablet and phone. Override rankings per row on tablet and phone in Additional options.'),
     ];
 
-    $form['ranking_hover_style'] = [
-      '#title' => $this->t('Rankings Style'),
-      '#type' => 'select',
-      '#options' => [
-        'card ranking-bold-hover' => $this->t('Bold Hover'),
-        'card ranking-subtle-hover' => $this->t('Subtle Hover'),
-        'card ranking-thin' => $this->t('Static'),
-      ],
-      '#default_value' => $config['ranking_hover_style'] ?? 'card ranking-bold-hover',
-      '#description' => $this->t('Gives this ranking deck a bright hover effect, a button-like hover effect, or no effects when hovering over the card. For accessibility, when using a hover effect, Links are required.'),
-    ];
+    // $form['ranking_hover_style'] = [
+    //   '#title' => $this->t('Rankings Style'),
+    //   '#type' => 'select',
+    //   '#options' => [
+    //     'card ranking-bold-hover' => $this->t('Bold Hover'),
+    //     'card ranking-subtle-hover' => $this->t('Subtle Hover'),
+    //     'card ranking-thin' => $this->t('Static'),
+    //   ],
+    //   '#default_value' => $config['ranking_hover_style'] ?? 'card ranking-bold-hover',
+    //   '#description' => $this->t('Gives this ranking deck a bright hover effect, a button-like hover effect, or no effects when hovering over the card. For accessibility, when using a hover effect, Links are required.'),
+    // ];
 
     $form['ranking_alignment'] = [
       '#title' => $this->t('Ranking Alignment'),
@@ -58,6 +58,25 @@ class AZRankingsParagraphBehavior extends AZDefaultParagraphsBehavior {
       ],
       '#default_value' => $config['ranking_alignment'] ?? 'text-left',
       '#description' => $this->t('Aligns the content within rankings left or centered.'),
+    ];
+
+    $form['ranking_clickable'] = [
+      '#title' => $this->t('Clickable Rankings'),
+      '#type' => 'checkbox',
+      '#default_value' => $config['ranking_clickable'] ?? FALSE,
+      '#description' => $this->t('Make the whole ranking clickable if the link fields are populated.'),
+    ];
+
+    $form['ranking_hover_effect'] = [
+      '#title' => $this->t('Hover Effect'),
+      '#type' => 'checkbox',
+      '#default_value' => $config['ranking_hover_effect'] ?? FALSE,
+      '#description' => $this->t('Adds a bold, contrasting hover effect.'),
+      '#states' => [
+        'visible' => [
+          ':input[name*="[ranking_clickable]"]' => ['checked' => TRUE],
+        ],
+      ],
     ];
 
     $form['ranking_title_style'] = [
