@@ -123,7 +123,6 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
       $attached = [];
 
       // Link.
-      $link_render_array = [];
       $link_url = '';
       if ($item->link_title || $item->link_uri) {
         if (str_starts_with($item->link_uri ?? '', '/' . PublicStream::basePath())) {
@@ -143,11 +142,11 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
           '#type' => 'link',
           '#title' => $item->link_title ?? '',
           '#url' => $link_url ?: Url::fromRoute('<none>'),
-          '#attributes' => ['class' => ['btn', 'btn-default', 'w-100']],
         ];
-        if (!empty($item->options['link_style'])) {
-          $link_render_array['#attributes']['class'] = explode(' ', $item->options['link_style']);
-        }
+        $link_render_array['#attributes']['class'] =
+          empty($item->options['link_style']) ?
+          ['btn', 'w-100', 'btn-red'] :
+          explode(' ', $item->options['link_style']);
         if (empty($settings['interactive_links'])) {
           $link_render_array['#attributes']['class'][] = 'az-card-no-follow';
           $attached['library'][] = 'az_card/az_card_no_follow';
@@ -244,7 +243,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
           '#format' => $item->body_format,
           '#langcode' => $item->getLangcode(),
         ],
-        '#link' => $link_render_array,
+        '#link' => $link_render_array ?? [],
         '#link_url' => $link_url,
         '#title_style' => $title_style ?? 'default',
         '#title_level' => $title_level ?? 'h3',
