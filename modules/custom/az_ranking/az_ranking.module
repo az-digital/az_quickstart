@@ -83,7 +83,11 @@ function az_ranking_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $for
     }
     
     // Get the media entity.
-    $media = $form_state->getFormObject()->getEntity();
+    $form_object = $form_state->getFormObject();
+    if (!$form_object instanceof \Drupal\Core\Entity\EntityFormInterface) {
+      return;
+    }
+    $media = $form_object->getEntity();
     
     // Only add focal point picker if there's an image.
     if ($media && $media->hasField('field_media_az_image') && !$media->get('field_media_az_image')->isEmpty()) {

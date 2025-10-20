@@ -40,9 +40,9 @@ class AZRankingImageHelper {
    *   A Drupal media entity object.
    * @param array $context
    *   Optional context array with keys:
-   *   - 'ranking_width': The parent paragraph's ranking width setting
-   *   - 'column_span': The selected column span (1-4)
-   *   - 'ranking_type': 'standard' or 'image_only'
+   *   - 'ranking_width': The parent paragraph's ranking width setting.
+   *   - 'column_span': The selected column span (1-4).
+   *   - 'ranking_type': 'standard' or 'image_only'.
    *
    * @return array
    *   An image render array.
@@ -60,9 +60,9 @@ class AZRankingImageHelper {
       $ranking_width = $context['ranking_width'] ?? 'col-lg-3';
       $column_span = $context['column_span'] ?? 1;
       $ranking_type = $context['ranking_type'] ?? 'standard';
-      
+
       $image_style = $this->getImageStyleForContext($ranking_width, $column_span, $ranking_type);
-      
+
       $image = new \stdClass();
       $image->title = NULL;
       $image->alt = $media_attributes[0]['alt'] ?? '';
@@ -110,22 +110,32 @@ class AZRankingImageHelper {
     // Based on AZRankingWidget::getAspectRatioData().
     $style_map = [
       'col-lg-12' => [
-        'default' => 'az_ranking_5_1',  // 5:1 for any span
+        // 5:1 for any span.
+        'default' => 'az_ranking_5_1',
       ],
       'col-lg-6' => [
-        '1' => 'az_ranking_2_45',  // 2.45:1
-        'default' => 'az_ranking_5_1',  // 2+ columns = 5:1
+        // 2.45:1.
+        '1' => 'az_ranking_2_45',
+        // 2+ columns = 5:1.
+        'default' => 'az_ranking_5_1',
       ],
       'col-lg-4' => [
-        '1' => 'az_ranking_1_6',   // 1.6:1
-        '2' => 'az_ranking_3_3',   // 3.3:1
-        'default' => 'az_ranking_5_1',  // 3+ columns = 5:1
+        // 1.6:1.
+        '1' => 'az_ranking_1_6',
+        // 3.3:1.
+        '2' => 'az_ranking_3_3',
+        // 3+ columns = 5:1.
+        'default' => 'az_ranking_5_1',
       ],
       'col-lg-3' => [
-        '1' => 'az_ranking_1_2',   // 1.2:1
-        '2' => 'az_ranking_2_45',  // 2.45:1
-        '3' => 'az_ranking_3_8',   // 3.8:1
-        '4' => 'az_ranking_5_1',   // 5:1
+        // 1.2:1.
+        '1' => 'az_ranking_1_2',
+        // 2.45:1.
+        '2' => 'az_ranking_2_45',
+        // 3.8:1.
+        '3' => 'az_ranking_3_8',
+         // 5:1.
+        '4' => 'az_ranking_5_1',
       ],
     ];
 

@@ -15,6 +15,19 @@ tr.odd .az-ranking-elements .form-item {
   display: none;
 }
 
+.az-ranking-widget .media-library-form-element .fieldset-wrapper .description {
+  margin-block: 0.375rem;
+  color: #55565b;
+  font-size: 0.79rem;
+  line-height: 1.0625rem;
+  font-size: 0;
+}
+
+.az-ranking-widget .media-library-form-element .fieldset-wrapper .description::before {
+  content: "To set the crop focal point, edit the image (Click on " url(/modules/contrib/media_library_edit/icons/pencil.svg) " above).";
+  font-size: 0.79rem;
+}
+
 .az-ranking-elements .media-library-selection {
   margin: 0;
 }

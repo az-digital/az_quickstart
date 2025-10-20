@@ -278,7 +278,7 @@ class AZRankingWidget extends WidgetBase {
       '#delta' => $delta,
       '#cardinality' => 1,
       '#states' => [
-    // Media is only visible when Ranking Type is "image_only".
+      // Media is only visible when Ranking Type is "image_only".
         'visible' => [
           ':input[data-az-ranking-type-input-id="' . $ranking_type_unique_id . '"]' => ['value' => 'image_only'],
         ],
@@ -295,9 +295,6 @@ class AZRankingWidget extends WidgetBase {
       ],
       '#title' => $this->t('Column Span'),
       '#description' => $this->t('How many columns should this image span?') 
-      /*   . '<br><br>' 
-      . '<strong>' . $this->t('Automatic cropping:') . '</strong> ' 
-       . $this->t('Set the focal point when uploading your image (click on the important part), and the system will automatically crop to the optimal aspect ratio for your selected column span.') */
         . '<br><br><div class="aspect-ratio-help" data-current-ranking-width="' . $ranking_width . '">' 
         . $this->getAspectRatioHelpText($ranking_width) . '</div>',
       '#default_value' => (!empty($item->options['column_span'])) ? $item->options['column_span'] : 2,
@@ -623,7 +620,7 @@ class AZRankingWidget extends WidgetBase {
       return '';
     }
 
-    $help_text = '<strong>' . $this->t('Recommended aspect ratios (W:H):') . '</strong><br>';
+    $help_text = '<strong>' . $this->t('Your image will be automatically cropped to these ratios (W:H):') . '</strong><br>';
     $ratios = $aspect_ratios[$ranking_width];
     $lines = [];
 
