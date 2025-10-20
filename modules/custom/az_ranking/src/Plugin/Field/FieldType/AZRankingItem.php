@@ -37,6 +37,7 @@ class AZRankingItem extends FieldItemBase {
     $media = $this->get('media')->getValue();
     $ranking_source = $this->get('ranking_source')->getValue();
     $link_uri = $this->get('link_uri')->getValue();
+    $ranking_link_style = $this->get('ranking_link_style')->getValue();
     return empty($ranking_heading) && empty($ranking_description) && empty($media) && empty($ranking_source) && empty($link_uri);
   }
 
@@ -56,7 +57,11 @@ class AZRankingItem extends FieldItemBase {
     $properties['ranking_font_color'] = DataDefinition::create('string')
       ->setLabel(t('Ranking Font Color For Transparent Backgrounds'));
     $properties['link_uri'] = DataDefinition::create('string')
-      ->setLabel(t('Ranking Link URI'));
+      ->setLabel(t('Link URI'));
+    $properties['link_title'] = DataDefinition::create('string')
+      ->setLabel(t('Link Title'));
+    $properties['ranking_link_style'] = DataDefinition::create('string')
+      ->setLabel(t('Link Style'));
     $properties['options'] = MapDataDefinition::create()
       ->setLabel(t('Ranking Options'));
 
@@ -99,6 +104,14 @@ class AZRankingItem extends FieldItemBase {
         'type' => 'varchar',
         'length' => 2048,
       ],
+      'link_title' => [
+        'type' => 'varchar',
+        'length' => 255,
+      ],
+      'ranking_link_style' => [
+        'type' => 'varchar',
+        'length' => 255,
+      ],
       'ranking_font_color' => [
         'type' => 'varchar',
         'length' => 64,
@@ -121,6 +134,8 @@ class AZRankingItem extends FieldItemBase {
   /**
    * {@inheritdoc}
    */
+
+  // @TODO: samplePreview
   public static function generateSampleValue(FieldDefinitionInterface $field_definition) {
 
     $random = new Random();
