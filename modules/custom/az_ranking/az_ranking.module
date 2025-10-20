@@ -53,27 +53,94 @@ function az_ranking_theme($existing, $type, $theme, $path) {
  * Implements hook_form_alter().
  */
 function az_ranking_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
-  // Add focal point UI to az_image media edit form.
+  // Add focal point picker to az_image media edit form.
   if ($form_id === 'media_az_image_edit_form' || $form_id === 'media_az_image_add_form') {
-    // Visually hide the focal point coordinate fields but keep them in DOM.
+    
+    // Only show focal point picker if opened in a dialog/modal context.
+    // This typically means it was opened from the media library widget.
+    $request = \Drupal::request();
+    $is_modal = $request->query->get('_wrapper_format') === 'drupal_dialog' || 
+                $request->query->get('_wrapper_format') === 'drupal_modal' ||
+                $request->request->get('_drupal_ajax');
+    
+    // Skip if not in modal context.
+    if (!$is_modal) {
+      return;
+    }
+    
+    // Hide the focal point coordinate fields.
     if (isset($form['field_focal_point_x'])) {
-      $form['field_focal_point_x']['#attributes']['class'][] = 'visually-hidden';
-      $form['field_focal_point_x']['#attributes']['style'] = 'display: none;';
+      $form['field_focal_point_x']['#access'] = FALSE;
     }
     if (isset($form['field_focal_point_y'])) {
-      $form['field_focal_point_y']['#attributes']['class'][] = 'visually-hidden';
-      $form['field_focal_point_y']['#attributes']['style'] = 'display: none;';
+      $form['field_focal_point_y']['#access'] = FALSE;
     }
-
-    // Attach JavaScript for focal point picker on the main image field.
-    $form['#attached']['library'][] = 'az_ranking/focal_point_picker';
+    
+    // Get the media entity.
+    $media = $form_state->getFormObject()->getEntity();
+    
+    // Only add focal point picker if there's an image.
+    if ($media && $media->hasField('field_media_az_image') && !$media->get('field_media_az_image')->isEmpty()) {
+      /** @var \Drupal\file\FileInterface $file */
+      $file = $media->get('field_media_az_image')->entity;
+      
+      if ($file) {
+        // Get current focal point values.
+        $focal_x = 0.5;
+        $focal_y = 0.5;
+        
+        if ($media->hasField('field_focal_point_x') && !$media->get('field_focal_point_x')->isEmpty()) {
+          $focal_x = (float) $media->get('field_focal_point_x')->value;
+        }
+        if ($media->hasField('field_focal_point_y') && !$media->get('field_focal_point_y')->isEmpty()) {
+          $focal_y = (float) $media->get('field_focal_point_y')->value;
+        }
+        
+        // Add focal point picker as a child of the field_media_az_image field.
+        // This nests it under the "Image" section like "Crop image".
+        if (isset($form['field_media_az_image'])) {
+          $form['field_media_az_image']['widget'][0]['focal_point_picker'] = [
+            '#type' => 'details',
+            '#title' => t('Focal Point for AZ Ranking Image'),
+            '#description' => t('Click on the image to set the focal point. This determines which part of the image should remain visible when the image is cropped for different aspect ratios.'),
+            '#open' => TRUE,
+            '#weight' => -5,
+            '#attributes' => [
+              'class' => ['az-ranking-focal-point-section'],
+            ],
+          ];
+          
+          $form['field_media_az_image']['widget'][0]['focal_point_picker']['preview'] = [
+            '#type' => 'container',
+            '#attributes' => [
+              'class' => ['focal-point-picker-wrapper'],
+              'data-focal-x' => $focal_x,
+              'data-focal-y' => $focal_y,
+            ],
+          ];
+          
+          // Add the image preview.
+          $form['field_media_az_image']['widget'][0]['focal_point_picker']['preview']['image'] = [
+            '#theme' => 'image_style',
+            '#style_name' => 'large',
+            '#uri' => $file->getFileUri(),
+            '#attributes' => [
+              'class' => ['focal-point-picker-image'],
+            ],
+          ];
+        }
+        
+        // Attach the focal point picker library.
+        $form['#attached']['library'][] = 'az_ranking/focal_point_picker';
+      }
+    }
   }
 }
 
 /**
  * Implements hook_ENTITY_TYPE_presave() for media entities.
  * 
- * This catches media saves from ANY context, including embedded widgets.
+ * This catches media saves from ANY context, including embedded widgets and AJAX requests.
  */
 function az_ranking_media_presave(\Drupal\media\MediaInterface $media) {
   // Only process az_image media type.
