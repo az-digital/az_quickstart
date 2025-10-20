@@ -1,15 +1,19 @@
 /* Mobile/Base styles */
+.az-splitscreen:not(.full-width-background) {
+  border-radius: .375rem;
+  overflow: hidden;
+}
 .az-splitscreen-content,
 .az-splitscreen-image {
   position: relative;
   width: 100%;
 }
-.az-splitscreen-image img {
+.az-splitscreen-image .img-fluid {
   position: relative;
-  max-width: 100%;
   min-width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 0;
 }
 .az-splitscreen-image .field--type-entity-reference {
   margin: 0;
