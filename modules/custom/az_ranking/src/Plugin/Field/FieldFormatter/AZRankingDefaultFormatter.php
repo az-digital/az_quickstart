@@ -327,7 +327,7 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
         '#column_span' => $column_span,
         '#ranking_heading' => $ranking_heading,
         '#ranking_clickable' => $ranking_clickable,
-        //'#ranking_hover_effect' => $ranking_hover_effect,
+        '#ranking_hover_effect' => $ranking_hover_effect,
         //'#ranking_hover_style' => $ranking_hover_style,
         '#ranking_title_style' => $ranking_defaults['ranking_title_style'],
         // The ProcessedText element handles cache context & tag bubbling.
