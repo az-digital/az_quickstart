@@ -149,6 +149,9 @@ class AZRankingWidget extends WidgetBase {
     if (!empty($item->options['class'])) {
       $ranking_classes .= ' ' . $item->options['class'];
     }
+    if (!empty($item->options_hover_effect['class'])) {
+      $ranking_classes .= ' ' . $item->options_hover_effect['class'];
+    }
 
     // If a font color was previously saved, append its class and the general
     // "text-color" marker so previews and edit rendering show correctly.
@@ -316,7 +319,7 @@ class AZRankingWidget extends WidgetBase {
         'text-bg-sky' => $this->t('Sky'),
         'text-bg-oasis' => $this->t('Oasis'),
         'text-bg-azurite' => $this->t('Azurite'),
-//        'text-bg-midnight' => $this->t('Midnight'),
+//        'text-bg-midnight' => $this->t('Midnight'), Removed unused colors
 //        'text-bg-bloom' => $this->t('Bloom'),
         'text-bg-chili' => $this->t('Chili'),
         'text-bg-cool-gray' => $this->t('Cool Gray'),
@@ -337,6 +340,34 @@ class AZRankingWidget extends WidgetBase {
       '#states' => [
         'visible' => [
           ':input[data-az-ranking-type-input-id="' . $ranking_type_unique_id . '"]' => ['value' => 'standard'],
+          'and',
+          ':input[name*="[behavior_plugins][az_rankings_paragraph_behavior][ranking_hover_effect]"]' => [
+            ['checked' => FALSE],
+          ],
+        ],
+      ],
+    ];
+
+    // All other fields are NOT visible if the Ranking Type is "image_only".
+    $element['details']['options_hover_effect'] = [
+      '#type' => 'select',
+      '#options' => [
+        'text-bg-chili' => $this->t('Chili'),
+        'text-bg-blue' => $this->t('Arizona Blue'),
+        'text-bg-sky' => $this->t('Sky'),
+        'text-bg-cool-gray' => $this->t('Cool Gray'),
+      ],
+      '#required' => TRUE,
+      '#attributes' => ['data-az-ranking-bg-input-id' => $ranking_background_unique_id],
+      '#title' => $this->t('Ranking Background Hover Effect'),
+      '#default_value' => (!empty($item->options_hover_effect['class'])) ? $item->options_hover_effect['class'] : 'text-bg-chili',
+      '#states' => [
+        'visible' => [
+          ':input[data-az-ranking-type-input-id="' . $ranking_type_unique_id . '"]' => ['value' => 'standard'],
+          'and',
+          ':input[name*="[behavior_plugins][az_rankings_paragraph_behavior][ranking_hover_effect]"]' => [
+            ['checked' => TRUE],
+          ],
         ],
       ],
     ];
@@ -404,7 +435,7 @@ class AZRankingWidget extends WidgetBase {
       '#states' => [
         'visible' => [
           // If whole ranking is clickable, hide the title.
-          ':input[name*="[ranking_clickable]"]' => ['checked' => FALSE],
+          ':input[name*="[behavior_plugins][az_rankings_paragraph_behavior][ranking_hover_effect]"]' => ['checked' => FALSE],
         ],
       ],
     ];
@@ -453,7 +484,7 @@ class AZRankingWidget extends WidgetBase {
         'visible' => [
           ':input[data-az-ranking-type-input-id="' . $ranking_type_unique_id . '"]' => ['value' => 'standard'],
           'and',
-          ':input[name*="[behavior_plugins][az_rankings_paragraph_behavior][ranking_clickable]"]' => ['checked' => FALSE],
+          ':input[name*="[behavior_plugins][az_rankings_paragraph_behavior][ranking_hover_effect]"]' => ['checked' => FALSE],
         ],
       ],
     ];
@@ -747,9 +778,10 @@ class AZRankingWidget extends WidgetBase {
         $values[$delta]['ranking_link_style'] = $details_values['ranking_link_style'];
       }
 
-      if (!empty($details_values['options']) || !empty($details_values['ranking_type']) || !empty($details_values['column_span'])) {
+      if (!empty($details_values['options']) || !empty($details_values['options_hover_effect']) || !empty($details_values['ranking_type']) || !empty($details_values['column_span'])) {
         $values[$delta]['options'] = [
           'class' => $details_values['options'] ?? '',
+          'class' => $details_values['options_hover_effect'] ?? '',
           'ranking_type' => $details_values['ranking_type'] ?? '',
           'column_span' => $details_values['column_span'] ?? '',
         ];

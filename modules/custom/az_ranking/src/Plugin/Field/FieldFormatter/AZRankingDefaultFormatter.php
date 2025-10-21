@@ -276,6 +276,9 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
       if (!empty($item->options['class'])) {
         $ranking_classes .= ' ' . $item->options['class'];
       }
+      if (!empty($item->options_hover_effect['class'])) {
+        $ranking_classes .= ' ' . $item->options_hover_effect['class'];
+      }
 
       // Set custom text classes based on background color.
       $text_color_override = '';
@@ -292,7 +295,6 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
           case str_contains($item->options['class'], 'bg-oasis'):
             $text_color_override = 'text-white';
             break;
-
         }
       }
 
