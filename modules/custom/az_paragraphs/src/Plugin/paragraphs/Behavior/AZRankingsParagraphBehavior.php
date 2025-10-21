@@ -38,7 +38,7 @@ class AZRankingsParagraphBehavior extends AZDefaultParagraphsBehavior {
     ];
 
     $form['ranking_alignment'] = [
-      '#title' => $this->t('Ranking Alignment'),
+      '#title' => $this->t('Ranking content alignment'),
       '#type' => 'select',
       '#options' => [
         'text-left' => $this->t('Left Aligned'),
@@ -48,34 +48,34 @@ class AZRankingsParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#description' => $this->t('Aligns the content within rankings left or centered.'),
     ];
 
+    $form['ranking_header_style'] = [
+      '#title' => $this->t('Ranking header style'),
+      '#type' => 'select',
+      '#options' => [
+        'ranking-title-bold' => $this->t('Bold Headers'),
+        'ranking-title-thin' => $this->t('Thin Headers'),
+      ],
+      '#default_value' => $config['ranking_header_style'] ?? 'ranking-title-bold',
+      '#description' => $this->t('Uses large bold lettering or thin-styled font for headers'),
+    ];
+
     $form['ranking_clickable'] = [
-      '#title' => $this->t('Clickable Rankings'),
+      '#title' => $this->t('Clickable rankings'),
       '#type' => 'checkbox',
       '#default_value' => $config['ranking_clickable'] ?? FALSE,
       '#description' => $this->t('Make the whole ranking clickable if the link fields are populated.'),
     ];
 
     $form['ranking_hover_effect'] = [
-      '#title' => $this->t('Hover Effect'),
+      '#title' => $this->t('Hover effect'),
       '#type' => 'checkbox',
       '#default_value' => $config['ranking_hover_effect'] ?? FALSE,
-      '#description' => $this->t('Adds a bold, contrasting hover effect.'),
+      '#description' => $this->t('Adds a contrasting hover effect.'),
       '#states' => [
         'visible' => [
           ':input[name*="[ranking_clickable]"]' => ['checked' => TRUE],
         ],
       ],
-    ];
-
-    $form['ranking_title_style'] = [
-      '#title' => $this->t('Ranking Title Style'),
-      '#type' => 'select',
-      '#options' => [
-        'ranking-title-bold' => $this->t('Bold Headers'),
-        'ranking-title-thin' => $this->t('Thin Headers'),
-      ],
-      '#default_value' => $config['ranking_title_style'] ?? 'ranking-title-bold',
-      '#description' => $this->t('Uses large bold lettering or thin-styled font for headers'),
     ];
 
     parent::buildBehaviorForm($paragraph, $form, $form_state);
@@ -90,7 +90,7 @@ class AZRankingsParagraphBehavior extends AZDefaultParagraphsBehavior {
         'col-md-4' => $this->t('3'),
         'col-md-3' => $this->t('4'),
       ],
-      '#default_value' => $config['az_display_settings']['ranking_width_sm'] ?? 'col-md-6',
+      '#default_value' => $config['az_display_settings']['ranking_width_sm'] ?? 'col-md-12',
       '#description' => $this->t('Choose how many rankings appear per row. Additional rankings will wrap to a new row. This selection sets the rankings per row on tablets.'),
       '#weight' => 1,
     ];
@@ -116,14 +116,14 @@ class AZRankingsParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#type' => 'select',
       '#options' => [
         'text-blue' => $this->t('AZ Blue'),
-        'text-black' => $this->t('Black'),
-        'text-white' => $this->t('White'),
         'text-sky' => $this->t('Sky'),
         'text-oasis' => $this->t('Oasis'),
         'text-azurite' => $this->t('Azurite'),
         'text-midnight' => $this->t('Midnight'),
-        'text-dark-silver' => $this->t('Dark Silver (default)'),
         'text-ash' => $this->t('Ash'),
+        'text-dark-silver' => $this->t('Dark Silver'),
+        'text-black' => $this->t('Black'),
+        'text-white' => $this->t('White'),
       ],
       '#default_value' => $config['ranking_deck_title_color'] ?? 'text-blue',
       '#description' => $this->t('Change the color of the Ranking group title.'),
