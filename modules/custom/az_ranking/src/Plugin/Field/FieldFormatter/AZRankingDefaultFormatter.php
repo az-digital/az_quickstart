@@ -140,7 +140,7 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
             'column_span' => $column_span,
             'ranking_type' => $ranking_type,
           ];
-          
+
           $media_render_array = $this->rankingImageHelper->generateImageRenderArray($media, $context);
           $attached['library'][] = 'az_ranking/az_ranking_image';
         }
@@ -299,7 +299,7 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
       }
       if (!empty($item->options_hover_effect['class'])) {
         $ranking_classes .= ' ' . $item->options_hover_effect['class'];
-        
+      }
 
       // Set custom text classes based on background color.
       $text_color_override = '';
