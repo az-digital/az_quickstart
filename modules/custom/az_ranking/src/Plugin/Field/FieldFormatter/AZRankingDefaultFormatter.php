@@ -253,6 +253,7 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
             else { // Ranking is not clickable
               $link_title = $item->link_title ?? '';
               $ranking_link_style = $item->ranking_link_style ?? '';
+              $ranking_hover_effect = FALSE; // Unset hover effect if not clickable
             }
           }
         }
