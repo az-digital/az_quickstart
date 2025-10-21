@@ -36,7 +36,7 @@
         } catch (e) {
           // If we can't access parent (cross-origin), assume it's valid.
           console.log('Cannot access parent document, assuming valid context');
-          isFromAzRanking = true;
+          isFromAzRanking = false;
         }
         
         // Hide the section if not from az_ranking.

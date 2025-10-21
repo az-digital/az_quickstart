@@ -215,12 +215,6 @@ function az_ranking_media_presave(\Drupal\media\MediaInterface $media) {
       
       // Flush image style derivatives.
       image_path_flush($file->getFileUri());
-      
-      \Drupal::logger('az_ranking')->info('Focal point saved via presave for media @id: @x, @y', [
-        '@id' => $media->id(),
-        '@x' => number_format($focal_x, 2),
-        '@y' => number_format($focal_y, 2),
-      ]);
     }
   }
 }

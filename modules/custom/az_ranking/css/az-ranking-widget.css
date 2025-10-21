@@ -24,7 +24,7 @@ tr.odd .az-ranking-elements .form-item {
 }
 
 .az-ranking-widget .media-library-form-element .fieldset-wrapper .description::before {
-  content: "To set the crop focal point, edit the image (Click on " url(/modules/contrib/media_library_edit/icons/pencil.svg) " above).";
+  content: "Add an image, then edit (click on " url(/modules/contrib/media_library_edit/icons/pencil.svg) ") to set crop focal point.";
   font-size: 0.79rem;
 }
 
