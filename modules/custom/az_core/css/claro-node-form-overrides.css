@@ -46,3 +46,24 @@ tr.odd {
   overflow-wrap: anywhere;
   padding-inline-start: revert;
 }
+
+.form-select {
+  width: unset !important;
+}
+
+/**
+ * Revert changes from https://www.drupal.org/project/drupal/issues/3471459.
+ * See https://github.com/az-digital/az_quickstart/issues/4916.
+ */
+table td > .form-item {
+  display: block;
+  align-items: unset;
+}
+table td > .form-item > .form-item__prefix {
+  margin-inline-end: unset;
+  white-space: unset;
+}
+table td > .form-item > .form-item__suffix {
+  margin-inline-start: unset;
+  white-space: unset;
+}
