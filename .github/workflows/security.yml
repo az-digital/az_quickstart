@@ -54,4 +54,4 @@ jobs:
       - name: Audit composer dependencies
         run: |
           cd az-quickstart-scaffolding
-          composer audit
+          composer audit --abandoned report
