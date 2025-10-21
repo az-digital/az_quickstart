@@ -314,7 +314,7 @@ class AZRankingWidget extends WidgetBase {
       '#required' => TRUE,
       '#attributes' => ['data-az-ranking-bg-input-id' => $ranking_background_unique_id],
       '#title' => $this->t('Ranking Background'),
-      '#default_value' => (!empty($item->options['class'])) ? $item->options['class'] : 'text-bg-white',
+      '#default_value' => (!empty($item->options['class'])) ? $item->options['class'] : 'text-bg-chili',
       '#states' => [
         'visible' => [
           ':input[data-az-ranking-type-input-id="' . $ranking_type_unique_id . '"]' => ['value' => 'standard'],
@@ -413,6 +413,8 @@ class AZRankingWidget extends WidgetBase {
       '#states' => [
         'visible' => [
           // If whole ranking is clickable, hide the title.
+          ':input[data-az-ranking-type-input-id="' . $ranking_type_unique_id . '"]' => ['value' => 'standard'],
+          'and',
           ':input[name*="[behavior_plugins][az_rankings_paragraph_behavior][ranking_hover_effect]"]' => ['checked' => FALSE],
         ],
       ],
@@ -757,8 +759,15 @@ class AZRankingWidget extends WidgetBase {
       }
 
       if (!empty($details_values['options']) || !empty($details_values['options_hover_effect']) || !empty($details_values['ranking_type']) || !empty($details_values['column_span'])) {
+        
         $values[$delta]['options'] = [
           'class' => $details_values['options'] ?? '',
+          'ranking_type' => $details_values['ranking_type'] ?? '',
+          'column_span' => $details_values['column_span'] ?? '',
+        ];
+      }
+      if (!empty($details_values['options_hover_effect']) || !empty($details_values['ranking_type']) || !empty($details_values['column_span'])) {
+        $values[$delta]['options_hover_effect'] = [
           'class' => $details_values['options_hover_effect'] ?? '',
           'ranking_type' => $details_values['ranking_type'] ?? '',
           'column_span' => $details_values['column_span'] ?? '',
