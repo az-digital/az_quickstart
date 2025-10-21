@@ -37,18 +37,6 @@ class AZRankingsParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#description' => $this->t('Choose how many rankings appear per row. Additional rankings will wrap to a new row. This selection sets the rankings per row on desktops with automatic defaults set for tablet and phone. Override rankings per row on tablet and phone in Additional options.'),
     ];
 
-    // $form['ranking_hover_style'] = [
-    //   '#title' => $this->t('Rankings Style'),
-    //   '#type' => 'select',
-    //   '#options' => [
-    //     'card ranking-bold-hover' => $this->t('Bold Hover'),
-    //     'card ranking-subtle-hover' => $this->t('Subtle Hover'),
-    //     'card ranking-thin' => $this->t('Static'),
-    //   ],
-    //   '#default_value' => $config['ranking_hover_style'] ?? 'card ranking-bold-hover',
-    //   '#description' => $this->t('Gives this ranking deck a bright hover effect, a button-like hover effect, or no effects when hovering over the card. For accessibility, when using a hover effect, Links are required.'),
-    // ];
-
     $form['ranking_alignment'] = [
       '#title' => $this->t('Ranking Alignment'),
       '#type' => 'select',
