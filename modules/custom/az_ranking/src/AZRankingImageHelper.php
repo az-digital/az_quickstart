@@ -141,10 +141,10 @@ class AZRankingImageHelper {
 
     // Get the width config or fall back to col-lg-3.
     $width_config = $style_map[$ranking_width] ?? $style_map['col-lg-3'];
-    
+
     // Get the specific style for this column span.
     $column_key = (string) $column_span;
-    
+
     // Return specific style or default for this width.
     return $width_config[$column_key] ?? $width_config['default'] ?? 'az_ranking_1_2';
   }

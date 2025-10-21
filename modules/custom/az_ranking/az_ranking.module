@@ -59,7 +59,7 @@ function az_ranking_theme($existing, $type, $theme, $path) {
 function az_ranking_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
   // Add focal point picker to az_image media edit form.
   if ($form_id === 'media_az_image_edit_form' || $form_id === 'media_az_image_add_form') {
-    
+
     // Always hide the focal point coordinate fields visually but keep them in the form
     // so JavaScript can update them when the picker is used.
     if (isset($form['field_focal_point_x'])) {
@@ -70,42 +70,47 @@ function az_ranking_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $for
       $form['field_focal_point_y']['#attributes']['class'][] = 'visually-hidden';
       $form['field_focal_point_y']['widget'][0]['value']['#attributes']['class'][] = 'js-focal-point-y-value';
     }
-    
+
     // Only show focal point picker if opened in a dialog/modal context.
     // This typically means it was opened from the media library widget.
     $request = \Drupal::request();
     $is_modal = $request->query->get('_wrapper_format') === 'drupal_dialog' || 
                 $request->query->get('_wrapper_format') === 'drupal_modal';
-    
+
     // Skip adding the picker if not in modal context.
     if (!$is_modal) {
       return;
     }
-    
+
     // Get the media entity.
     $form_object = $form_state->getFormObject();
     if (!$form_object instanceof \Drupal\Core\Entity\EntityFormInterface) {
       return;
     }
     $media = $form_object->getEntity();
-    
+
+    // Ensure the entity is fieldable.
+    if (!$media instanceof \Drupal\Core\Entity\FieldableEntityInterface) {
+      return;
+    }
+
     // Only add focal point picker if there's an image.
     if ($media && $media->hasField('field_media_az_image') && !$media->get('field_media_az_image')->isEmpty()) {
       /** @var \Drupal\file\FileInterface $file */
       $file = $media->get('field_media_az_image')->entity;
-      
+
       if ($file) {
         // Get current focal point values.
         $focal_x = 0.5;
         $focal_y = 0.5;
-        
+
         if ($media->hasField('field_focal_point_x') && !$media->get('field_focal_point_x')->isEmpty()) {
           $focal_x = (float) $media->get('field_focal_point_x')->value;
         }
         if ($media->hasField('field_focal_point_y') && !$media->get('field_focal_point_y')->isEmpty()) {
           $focal_y = (float) $media->get('field_focal_point_y')->value;
         }
-        
+
         // Add focal point picker as a child of the field_media_az_image field.
         // This nests it under the "Image" section like "Crop image".
         if (isset($form['field_media_az_image'])) {
@@ -119,7 +124,7 @@ function az_ranking_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $for
               'class' => ['az-ranking-focal-point-section'],
             ],
           ];
-          
+
           $form['field_media_az_image']['widget'][0]['focal_point_picker']['preview'] = [
             '#type' => 'container',
             '#attributes' => [
@@ -128,7 +133,7 @@ function az_ranking_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $for
               'data-focal-y' => $focal_y,
             ],
           ];
-          
+
           // Add the image preview.
           $form['field_media_az_image']['widget'][0]['focal_point_picker']['preview']['image'] = [
             '#theme' => 'image_style',
@@ -139,7 +144,7 @@ function az_ranking_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $for
             ],
           ];
         }
-        
+
         // Attach the focal point picker library.
         $form['#attached']['library'][] = 'az_ranking/focal_point_picker';
       }
@@ -157,42 +162,47 @@ function az_ranking_media_presave(\Drupal\media\MediaInterface $media) {
   if ($media->bundle() !== 'az_image') {
     return;
   }
-  
+
+  // Ensure the entity is fieldable (it should be, but this helps PHPStan).
+  if (!$media instanceof \Drupal\Core\Entity\FieldableEntityInterface) {
+    return;
+  }
+
   // Check if focal point fields have values.
   if ($media->hasField('field_focal_point_x') && $media->hasField('field_focal_point_y')) {
     if (!$media->get('field_focal_point_x')->isEmpty() && !$media->get('field_focal_point_y')->isEmpty()) {
       $focal_x = (float) $media->get('field_focal_point_x')->value;
       $focal_y = (float) $media->get('field_focal_point_y')->value;
-      
+
       // Get the source image file.
       $source_field = $media->getSource()->getConfiguration()['source_field'];
       if (!$media->hasField($source_field) || $media->get($source_field)->isEmpty()) {
         return;
       }
-      
+
       /** @var \Drupal\file\FileInterface $file */
       $file = $media->get($source_field)->entity;
       if (!$file) {
         return;
       }
-      
+
       // Get image dimensions.
       $image = \Drupal::service('image.factory')->get($file->getFileUri());
       if (!$image->isValid()) {
         return;
       }
-      
+
       $width = $image->getWidth();
       $height = $image->getHeight();
-      
+
       // Convert 0.0-1.0 coordinates to absolute pixel coordinates.
       $absolute_x = (int) round($focal_x * $width);
       $absolute_y = (int) round($focal_y * $height);
-      
+
       // Create or update the crop entity.
       $crop_type = 'focal_point';
       $crop = \Drupal\crop\Entity\Crop::findCrop($file->getFileUri(), $crop_type);
-      
+
       if ($crop) {
         // Update existing crop.
         $crop->setPosition($absolute_x, $absolute_y);
@@ -212,7 +222,7 @@ function az_ranking_media_presave(\Drupal\media\MediaInterface $media) {
         ]);
         $crop->save();
       }
-      
+
       // Flush image style derivatives.
       image_path_flush($file->getFileUri());
     }

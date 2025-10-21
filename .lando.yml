@@ -1,4 +1,4 @@
-name: az_quickstart
+name: issue_1474_focal_point
 recipe: drupal11
 config:
   php: '8.3'
