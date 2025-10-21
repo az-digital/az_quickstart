@@ -4,26 +4,24 @@
 * https://www.drupal.org/node/2815083
 * @preserve
 **/
-(function (Drupal) {
+(Drupal => {
   Drupal.behaviors.azFinderActiveFilterReset = {
-    attach: function attach(context) {
-      var clickHandler = function clickHandler(selector, action) {
-        var element = selector.querySelector('.js-form-submit');
+    attach(context) {
+      const clickHandler = (selector, action) => {
+        const element = selector.querySelector('.js-form-submit');
         if (element && action) action(element);
       };
-      var resetFilters = function resetFilters(container) {
-        var checkboxes = container.querySelectorAll('input[type="checkbox"]');
-        var textFields = container.querySelectorAll('input[type="text"]');
-        checkboxes.forEach(function (checkbox) {
+      const resetFilters = container => {
+        const checkboxes = container.querySelectorAll('input[type="checkbox"]');
+        const textFields = container.querySelectorAll('input[type="text"]');
+        checkboxes.forEach(checkbox => {
           checkbox.checked = false;
         });
-        textFields.forEach(function (textField) {
+        textFields.forEach(textField => {
           textField.value = '';
         });
-        clickHandler(container, function (element) {
-          return element.click();
-        });
-        var event = new CustomEvent('az-finder-filter-reset', {
+        clickHandler(container, element => element.click());
+        const event = new CustomEvent('az-finder-filter-reset', {
           bubbles: true,
           detail: {
             message: 'Filters have been reset.'
@@ -31,10 +29,10 @@
         });
         container.dispatchEvent(event);
       };
-      context.querySelectorAll('[data-az-better-exposed-filters]').forEach(function (container) {
-        var resetButton = container.querySelector('.js-active-filters-reset');
+      context.querySelectorAll('[data-az-better-exposed-filters]').forEach(container => {
+        const resetButton = container.querySelector('.js-active-filters-reset');
         if (resetButton) {
-          resetButton.addEventListener('click', function (event) {
+          resetButton.addEventListener('click', event => {
             event.preventDefault();
             resetFilters(container);
           });

@@ -54,7 +54,7 @@ jobs:
       - name: Audit composer dependencies
         run: |
           cd az-quickstart-scaffolding
-          composer audit
+          composer audit --abandoned report
 
   yarn-audit:
     name: yarn audit (security)

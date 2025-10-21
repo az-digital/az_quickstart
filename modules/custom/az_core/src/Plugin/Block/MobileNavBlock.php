@@ -278,7 +278,7 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
           'data-ajax-http-method' => 'GET',
         ],
       ];
-      if ($rootElement->link->getRouteName() === '<button>') {
+      if ($rootElement->link->getRouteName() === '<button>' || $rootElement->link->getRouteName() === '<nolink>') {
         $build['az_mobile_nav_menu']['heading_div']['heading'] = [
           '#type' => 'html_tag',
           '#tag' => 'div',
@@ -328,7 +328,7 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
 
     // Build the list of menu links.
     foreach ($treeWithText as $item) {
-      if ($item->link->getRouteName() === '<button>') {
+      if ($item->link->getRouteName() === '<button>' || $item->link->getRouteName() === '<nolink>') {
         $pageLink = [
           '#type' => 'html_tag',
           '#tag' => 'span',
