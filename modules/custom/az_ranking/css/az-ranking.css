@@ -70,7 +70,10 @@
     background-color: RGBA(var(--bs-azurite-rgb),var(--bs-bg-opacity,1)) !important;
     color: RGBA(var(--bs-cool-gray-rgb),var(--bs-bg-opacity,1)) !important;
 }
-
+.text-bg-warm-gray.ranking-bold-hover:hover * {
+    background-color: RGBA(var(--bs-ash-rgb),var(--bs-bg-opacity,1)) !important;
+    color: #ffffff !important;
+}
 
 /* Without direct referecnes */
 .text-bg-azurite.ranking-bold-hover:hover {
@@ -127,13 +130,3 @@
 .ranking-text-az-blue * {
     color: RGBA(var(--bs-blue-rgb),var(--bs-bg-opacity,1));
 }
-
-/* Check for contrasting background wrapper colors on transparent bgs */
-/*
-.background-wrapper.text-bg-blue .az-ranking-responsive.bg-transparent * {
-  color: #ffffff !important;
-}
-.background-wrapper.text-bg-red .az-ranking-responsive.bg-transparent * {
-  color: #ffffff !important;
-}
-  */

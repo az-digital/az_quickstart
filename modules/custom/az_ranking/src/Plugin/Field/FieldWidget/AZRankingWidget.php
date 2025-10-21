@@ -149,13 +149,9 @@ class AZRankingWidget extends WidgetBase {
     if (!empty($item->options['class'])) {
       $ranking_classes .= ' ' . $item->options['class'];
     }
-
-    // If a font color was previously saved, append its class and the general
-    // "text-color" marker so previews and edit rendering show correctly.
-  //  if (!empty($item->ranking_font_color)) {
-      // @todo Remove text-color, but for now leave it to show it worked
-  //    $ranking_classes .= ' ' . $item->ranking_font_color . ' text-color';
-  //  }
+    if (!empty($item->options_hover_effect['class'])) {
+      $ranking_classes .= ' ' . $item->options_hover_effect['class'];
+    }
 
     // Create summary for details element (what shows when collapsed)
     $summary_text = '';
@@ -288,15 +284,17 @@ class AZRankingWidget extends WidgetBase {
     $element['details']['column_span'] = [
       '#type' => 'select',
       '#options' => [
-        1 => $this->t('1 column'),
-        2 => $this->t('2 columns'),
-        3 => $this->t('3 columns'),
-        4 => $this->t('4 columns'),
+        1 => $this->t('1 card'),
+        2 => $this->t('2 cards'),
+        3 => $this->t('3 cards'),
+        4 => $this->t('4 cards'),
       ],
       '#title' => $this->t('Column Span'),
-      '#description' => $this->t('How many columns should this image span?') 
+      '#description' => $this->t('How many cards should this image span?') 
         . '<br><br><div class="aspect-ratio-help" data-current-ranking-width="' . $ranking_width . '">' 
         . $this->getAspectRatioHelpText($ranking_width) . '</div>',
+      '#title' => $this->t('Image Width Span'),
+      '#description' => $this->t('How many cards do you want this image to span (in multiples of ranking-card width)?') . '<br><br><div class="aspect-ratio-help" data-current-ranking-width="' . $ranking_width . '">' . $this->getAspectRatioHelpText($ranking_width) . '</div>',
       '#default_value' => (!empty($item->options['column_span'])) ? $item->options['column_span'] : 2,
       '#states' => [
       // Column Span is only visible when Ranking Type is "image_only".
@@ -313,26 +311,15 @@ class AZRankingWidget extends WidgetBase {
     $element['details']['options'] = [
       '#type' => 'select',
       '#options' => [
-        'text-bg-white' => $this->t('White'),
-        'bg-transparent' => $this->t('Transparent'),
-        'text-bg-red' => $this->t('Arizona Red'),
+        'text-bg-chili' => $this->t('Chili'),
         'text-bg-blue' => $this->t('Arizona Blue'),
         'text-bg-sky' => $this->t('Sky'),
         'text-bg-oasis' => $this->t('Oasis'),
         'text-bg-azurite' => $this->t('Azurite'),
-        'text-bg-midnight' => $this->t('Midnight'),
-        'text-bg-bloom' => $this->t('Bloom'),
-        'text-bg-chili' => $this->t('Chili'),
         'text-bg-cool-gray' => $this->t('Cool Gray'),
         'text-bg-warm-gray' => $this->t('Warm Gray'),
-        'text-bg-gray-100' => $this->t('Gray 100'),
-        'text-bg-gray-200' => $this->t('Gray 200'),
-        'text-bg-gray-300' => $this->t('Gray 300'),
-        'text-bg-leaf' => $this->t('Leaf'),
-        'text-bg-river' => $this->t('River'),
-        'text-bg-silver' => $this->t('Silver'),
-        'text-bg-ash' => $this->t('Ash'),
-        'text-bg-mesa' => $this->t('Mesa'),
+        'text-bg-white' => $this->t('White'),
+        'bg-transparent' => $this->t('Transparent'),
       ],
       '#required' => TRUE,
       '#attributes' => ['data-az-ranking-bg-input-id' => $ranking_background_unique_id],
@@ -341,6 +328,34 @@ class AZRankingWidget extends WidgetBase {
       '#states' => [
         'visible' => [
           ':input[data-az-ranking-type-input-id="' . $ranking_type_unique_id . '"]' => ['value' => 'standard'],
+          'and',
+          ':input[name*="[behavior_plugins][az_rankings_paragraph_behavior][ranking_hover_effect]"]' => [
+            ['checked' => FALSE],
+          ],
+        ],
+      ],
+    ];
+
+    // All other fields are NOT visible if the Ranking Type is "image_only".
+    $element['details']['options_hover_effect'] = [
+      '#type' => 'select',
+      '#options' => [
+        'text-bg-chili' => $this->t('Chili'),
+        'text-bg-blue' => $this->t('Arizona Blue'),
+        'text-bg-sky' => $this->t('Sky'),
+        'text-bg-cool-gray' => $this->t('Cool Gray'),
+      ],
+      '#required' => TRUE,
+      '#attributes' => ['data-az-ranking-bg-input-id' => $ranking_background_unique_id],
+      '#title' => $this->t('Ranking Background with Hover Effect'),
+      '#default_value' => (!empty($item->options_hover_effect['class'])) ? $item->options_hover_effect['class'] : 'text-bg-chili',
+      '#states' => [
+        'visible' => [
+          ':input[data-az-ranking-type-input-id="' . $ranking_type_unique_id . '"]' => ['value' => 'standard'],
+          'and',
+          ':input[name*="[behavior_plugins][az_rankings_paragraph_behavior][ranking_hover_effect]"]' => [
+            ['checked' => TRUE],
+          ],
         ],
       ],
     ];
@@ -349,11 +364,11 @@ class AZRankingWidget extends WidgetBase {
       '#type' => 'select',
       '#title' => $this->t('Ranking Font Color'),
       '#options' => [
-        'ranking-text-white' => $this->t('White'),
         'ranking-text-black' => $this->t('Black'),
+        'ranking-text-white' => $this->t('White'),
         'ranking-text-az-blue' => $this->t('Arizona Blue'),
       ],
-      '#default_value' => $item->ranking_font_color ?? '',
+      '#default_value' => $item->ranking_font_color ?? 'ranking-text-black',
       '#states' => [
         'visible' => [
           ':input[data-az-ranking-type-input-id="' . $ranking_type_unique_id . '"]' => ['value' => 'standard'],
@@ -408,7 +423,7 @@ class AZRankingWidget extends WidgetBase {
       '#states' => [
         'visible' => [
           // If whole ranking is clickable, hide the title.
-          ':input[name*="[ranking_clickable]"]' => ['checked' => FALSE],
+          ':input[name*="[behavior_plugins][az_rankings_paragraph_behavior][ranking_hover_effect]"]' => ['checked' => FALSE],
         ],
       ],
     ];
@@ -419,7 +434,7 @@ class AZRankingWidget extends WidgetBase {
       '#autocomplete_route_parameters' => [
         'linkit_profile_id' => 'az_linkit',
       ],
-      '#title' => $this->t('Ranking Source Link URL'),
+      '#title' => $this->t('Link URL'),
       '#element_validate' => [[$this, 'validateRankingLink']],
       '#default_value' => $item->link_uri ?? NULL,
       '#maxlength' => 2048,
@@ -444,20 +459,20 @@ class AZRankingWidget extends WidgetBase {
       '#type' => 'select',
       '#title' => $this->t('Link Style'),
       '#options' => [
-        '' => $this->t('Text Link'),
         'd-none' => $this->t('Hidden Link Title'),
+        'link' => $this->t('Text Link'),
         'w-100 btn btn-red' => $this->t('Red Button'),
         'w-100 btn btn-blue' => $this->t('Blue Button'),
         'w-100 btn btn-outline-red' => $this->t('Red Outline Button'),
         'w-100 btn btn-outline-blue' => $this->t('Blue Outline Button'),
         'w-100 btn btn-outline-white' => $this->t('White Outline Button'),
       ],
-      '#default_value' => $item->ranking_link_style ?? '',
+      '#default_value' => $item->ranking_link_style ?? 'w-100 btn btn-red',
       '#states' => [
         'visible' => [
           ':input[data-az-ranking-type-input-id="' . $ranking_type_unique_id . '"]' => ['value' => 'standard'],
           'and',
-          ':input[name*="[behavior_plugins][az_rankings_paragraph_behavior][ranking_clickable]"]' => ['checked' => FALSE],
+          ':input[name*="[behavior_plugins][az_rankings_paragraph_behavior][ranking_hover_effect]"]' => ['checked' => FALSE],
         ],
       ],
     ];
@@ -751,9 +766,10 @@ class AZRankingWidget extends WidgetBase {
         $values[$delta]['ranking_link_style'] = $details_values['ranking_link_style'];
       }
 
-      if (!empty($details_values['options']) || !empty($details_values['ranking_type']) || !empty($details_values['column_span'])) {
+      if (!empty($details_values['options']) || !empty($details_values['options_hover_effect']) || !empty($details_values['ranking_type']) || !empty($details_values['column_span'])) {
         $values[$delta]['options'] = [
           'class' => $details_values['options'] ?? '',
+          'class' => $details_values['options_hover_effect'] ?? '',
           'ranking_type' => $details_values['ranking_type'] ?? '',
           'column_span' => $details_values['column_span'] ?? '',
         ];

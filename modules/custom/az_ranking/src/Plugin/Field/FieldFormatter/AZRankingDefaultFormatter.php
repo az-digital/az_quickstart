@@ -253,6 +253,7 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
           if (isset($ranking_clickable)) {
             if(!empty($ranking_clickable)) {
               // Whole card is clickable
+              $ranking_classes .= ' shadow';
               if (!empty($link_render_array)) {
                 $link_render_array['#attributes']['class'][] = 'stretched-link';
               }
@@ -280,7 +281,7 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
       // Shadow class should NOT be applied on transparent.
       $ranking_classes .= ' overflow-hidden';
       if (!str_contains($item->options['class'], 'bg-transparent')) {
-        $ranking_classes .= ' shadow';
+        //$ranking_classes .= ' shadow'; --- moved to clickable
         // No mt-auto on bg-transparent rankings.
         $ranking_source_classes = 'mt-auto';
       }
@@ -296,6 +297,9 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
       if (!empty($item->options['class'])) {
         $ranking_classes .= ' ' . $item->options['class'];
       }
+      if (!empty($item->options_hover_effect['class'])) {
+        $ranking_classes .= ' ' . $item->options_hover_effect['class'];
+        
 
       // Set custom text classes based on background color.
       $text_color_override = '';
@@ -312,7 +316,6 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
           case str_contains($item->options['class'], 'bg-oasis'):
             $text_color_override = 'text-white';
             break;
-
         }
       }
 

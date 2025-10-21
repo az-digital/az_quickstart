@@ -6,7 +6,7 @@
  * Available variables:
  * - attributes: Ranking element attributes.
  * - media: The media field of a ranking.
- * - ranking_title_style: The title heading style of a ranking.
+ * - ranking_header_style: The title heading style of a ranking.
  * - ranking_heading: The title field of a ranking.
  * - ranking_description: The body field of a ranking.
  * - ranking_source: The source field on a ranking.
@@ -29,7 +29,7 @@
       <div class="card-text d-flex flex-column flex-grow-1">
         <div class="ranking-content">
           {% if ranking_heading %}
-            {% if ranking_title_style == "ranking-title-thin" %}
+            {% if ranking_header_style == "ranking-title-thin" %}
               <h3 class="display-4 m-0 ranking-heading {% if text_color_override %}{{ text_color_override }}{% endif %}">
                 <strong>{{ ranking_heading }}</strong>
               </h3>
