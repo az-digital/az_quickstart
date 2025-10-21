@@ -289,10 +289,6 @@ class AZRankingWidget extends WidgetBase {
         3 => $this->t('3 cards'),
         4 => $this->t('4 cards'),
       ],
-      '#title' => $this->t('Column Span'),
-      '#description' => $this->t('How many cards should this image span?') 
-        . '<br><br><div class="aspect-ratio-help" data-current-ranking-width="' . $ranking_width . '">' 
-        . $this->getAspectRatioHelpText($ranking_width) . '</div>',
       '#title' => $this->t('Image Width Span'),
       '#description' => $this->t('How many cards do you want this image to span (in multiples of ranking-card width)?') . '<br><br><div class="aspect-ratio-help" data-current-ranking-width="' . $ranking_width . '">' . $this->getAspectRatioHelpText($ranking_width) . '</div>',
       '#default_value' => (!empty($item->options['column_span'])) ? $item->options['column_span'] : 2,
