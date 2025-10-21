@@ -305,19 +305,38 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
 
       // Set custom text classes based on background color.
       $text_color_override = '';
-      if (!empty($item->options['class'])) {
-        switch (TRUE) {
-          case str_contains($item->options['class'], 'bg-sky'):
-            $text_color_override = 'text-midnight';
-            break;
+      if(!$ranking_hover_effect) { // 
+        if (!empty($item->options['class'])) {
+          switch (TRUE) {
+            case str_contains($item->options['class'], 'bg-sky'):
+              $text_color_override = 'text-midnight';
+              break;
 
-          case str_contains($item->options['class'], 'bg-cool-gray'):
-            $text_color_override = 'text-azurite';
-            break;
+            case str_contains($item->options['class'], 'bg-cool-gray'):
+              $text_color_override = 'text-azurite';
+              break;
 
-          case str_contains($item->options['class'], 'bg-oasis'):
-            $text_color_override = 'text-white';
-            break;
+            case str_contains($item->options['class'], 'bg-oasis'):
+              $text_color_override = 'text-white';
+              break;
+          }
+        }
+      }
+      else { // Override hover class
+        if (!empty($item->options_hover_effect['class'])) {
+          switch (TRUE) {
+            case str_contains($item->options_hover_effect['class'], 'bg-sky'):
+              $text_color_override = 'text-midnight';
+              break;
+
+            case str_contains($item->options_hover_effect['class'], 'bg-cool-gray'):
+              $text_color_override = 'text-azurite';
+              break;
+
+            case str_contains($item->options_hover_effect['class'], 'bg-oasis'):
+              $text_color_override = 'text-white';
+              break;
+          }
         }
       }
 
