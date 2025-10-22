@@ -258,6 +258,11 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
           }
         }
       }
+      
+      // Add .az-ranking-responsive to the column for image-only ranking cards.
+      if ($item->options['ranking_type'] === 'image_only') {
+        $column_classes[] = 'az-ranking-responsive';
+      }
 
       // Shadow class should NOT be applied on transparent.
       $ranking_classes .= ' overflow-hidden';

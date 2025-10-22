@@ -4,6 +4,8 @@ dependencies:
   config:
     - field.field.media.az_image.field_az_caption
     - field.field.media.az_image.field_az_credit
+    - field.field.media.az_image.field_focal_point_x
+    - field.field.media.az_image.field_focal_point_y
     - field.field.media.az_image.field_media_az_image
     - image.style.thumbnail
     - media.type.az_image
@@ -39,6 +41,20 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+  field_focal_point_x:
+    type: number
+    weight: 27
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_focal_point_y:
+    type: number
+    weight: 28
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
   field_media_az_image:
     type: image_widget_crop
     weight: 0
@@ -60,7 +76,6 @@ content:
         - az_marketing_cloud_50_50_layout
         - az_marketing_cloud_hero_layout
         - az_square_aspect_ratio
-        - az_ranking_image
       crop_types_required: {  }
       warn_multiple_usages: true
       show_crop_area: false
