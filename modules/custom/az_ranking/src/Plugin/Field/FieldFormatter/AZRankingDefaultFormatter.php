@@ -243,9 +243,9 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
               if(!empty($ranking_hover_effect)) {
                 $ranking_classes .= ' ranking-bold-hover';
               }
-              else {
-                $ranking_classes .= ' ranking-subtle-hover';
-              }
+//              else {
+//                $ranking_classes .= ' ranking-subtle-hover';
+//              }
               if (!empty($item->link_uri)) {
                 $ranking_classes .= ' ranking-with-link'; // This is working only once on the clickable.
               }
@@ -253,6 +253,7 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
             else { // Ranking is not clickable
               $link_title = $item->link_title ?? '';
               $ranking_link_style = $item->ranking_link_style ?? '';
+              $ranking_hover_effect = FALSE; // Unset hover effect if not clickable
             }
           }
         }
@@ -279,28 +280,68 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
       $column_classes = implode(' ', $column_classes);
       $column_classes = explode(' ', $column_classes);
       $column_classes[] = 'pb-4';
-      if (!empty($item->options['class'])) {
-        $ranking_classes .= ' ' . $item->options['class'];
+      
+      // Hover effect takes precedence over non-hover-effect backgrounds.
+      if ($ranking_hover_effect) {
+        // Try to read hover-specific value from the item. Widget may submit
+        // either a string or an array with 'class' key depending on context.
+        $hover_class = '';
+        if (!empty($item->options_hover_effect)) {
+          if (is_array($item->options_hover_effect) && !empty($item->options_hover_effect['class'])) {
+            $hover_class = $item->options_hover_effect['class'];
+          }
+          elseif (is_string($item->options_hover_effect)) {
+            $hover_class = $item->options_hover_effect;
+          }
+        }
+        // Fallback to the persisted background class if no hover-specific value present.
+        if (empty($hover_class) && !empty($item->options['class'])) {
+          $hover_class = $item->options['class'];
+        }
+        if (!empty($hover_class)) {
+          $ranking_classes .= ' from-hover-effect ' . $hover_class;
+        }
       }
-      if (!empty($item->options_hover_effect['class'])) {
-        $ranking_classes .= ' ' . $item->options_hover_effect['class'];
+      else {
+        if (!empty($item->options['class'])) {
+          $ranking_classes .= ' non-hover-effect ' . $item->options['class'];
+        }
       }
 
       // Set custom text classes based on background color.
       $text_color_override = '';
-      if (!empty($item->options['class'])) {
-        switch (TRUE) {
-          case str_contains($item->options['class'], 'bg-sky'):
-            $text_color_override = 'text-midnight';
-            break;
+      if(!$ranking_hover_effect) { // 
+        if (!empty($item->options['class'])) {
+          switch (TRUE) {
+            case str_contains($item->options['class'], 'bg-sky'):
+              $text_color_override = 'text-midnight';
+              break;
 
-          case str_contains($item->options['class'], 'bg-cool-gray'):
-            $text_color_override = 'text-azurite';
-            break;
+            case str_contains($item->options['class'], 'bg-cool-gray'):
+              $text_color_override = 'text-azurite';
+              break;
 
-          case str_contains($item->options['class'], 'bg-oasis'):
-            $text_color_override = 'text-white';
-            break;
+            case str_contains($item->options['class'], 'bg-oasis'):
+              $text_color_override = 'text-white';
+              break;
+          }
+        }
+      }
+      else { // Override hover class
+        if (!empty($item->options_hover_effect['class'])) {
+          switch (TRUE) {
+            case str_contains($item->options_hover_effect['class'], 'bg-sky'):
+              $text_color_override = 'text-midnight';
+              break;
+
+            case str_contains($item->options_hover_effect['class'], 'bg-cool-gray'):
+              $text_color_override = 'text-azurite';
+              break;
+
+            case str_contains($item->options_hover_effect['class'], 'bg-oasis'):
+              $text_color_override = 'text-white';
+              break;
+          }
         }
       }
 
@@ -310,7 +351,7 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
         '#column_span' => $column_span,
         '#ranking_heading' => $ranking_heading,
         '#ranking_clickable' => $ranking_clickable,
-        //'#ranking_hover_effect' => $ranking_hover_effect,
+        '#ranking_hover_effect' => $ranking_hover_effect,
         //'#ranking_hover_style' => $ranking_hover_style,
         '#ranking_title_style' => $ranking_defaults['ranking_title_style'],
         // The ProcessedText element handles cache context & tag bubbling.
@@ -346,5 +387,4 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
 
     return $element;
   }
-
 }
