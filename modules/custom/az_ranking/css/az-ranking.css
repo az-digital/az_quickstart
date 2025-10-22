@@ -47,12 +47,12 @@
  * Transparent BG Ranking font color overrides
  */
 
-.ranking-text-white * {
+.ranking-text-white *:not(a) {
     color: #ffffff !important;
 }
-.ranking-text-black * {
+.ranking-text-black *:not(a) {
     color: #000000 !important;
 }
-.ranking-text-az-blue * {
+.ranking-text-az-blue *:not(a) {
     color: RGBA(var(--bs-blue-rgb),var(--bs-bg-opacity,1));
 }

@@ -365,7 +365,8 @@ class AZRankingWidget extends WidgetBase {
           ':input[data-az-ranking-type-input-id="' . $ranking_type_unique_id . '"]' => ['value' => 'standard'],
           'and',
           // Ranking Background (options) must be "bg-transparent".
-          ':input[data-az-ranking-bg-input-id="' . $ranking_background_unique_id . '"]' => ['value' => 'bg-transparent'],
+          //':input[data-az-ranking-bg-input-id="' . $ranking_background_unique_id . '"]' => ['value' => 'bg-transparent'],
+          ':input[name*="[options]"]' => ['value' => 'bg-transparent'],
         ],
       ],
     ];

@@ -322,7 +322,7 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
               break;
 
             case str_contains($item->options['class'], 'bg-oasis'):
-              $text_color_override = 'text-white';
+              $text_color_override = 'text-black';
               break;
           }
         }
@@ -339,7 +339,7 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
               break;
 
             case str_contains($item->options_hover_effect['class'], 'bg-oasis'):
-              $text_color_override = 'text-white';
+              $text_color_override = 'text-black';
               break;
           }
         }
