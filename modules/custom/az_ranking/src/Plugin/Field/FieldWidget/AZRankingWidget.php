@@ -247,6 +247,7 @@ class AZRankingWidget extends WidgetBase {
       '#allowed_bundles' => ['az_image'],
       '#delta' => $delta,
       '#cardinality' => 1,
+      '#after_build' => [[$this, 'addAzRankingContextToMediaEdit']],
       '#states' => [
       // Media is only visible when Ranking Type is "image_only".
         'visible' => [
@@ -913,6 +914,35 @@ class AZRankingWidget extends WidgetBase {
         'style' => 'transform: scale(0.8); transform-origin: center;',
       ],
     ];
+  }
+
+  /**
+   * #after_build callback to add az_ranking_context query parameter to media edit links.
+   */
+  public function addAzRankingContextToMediaEdit(array $element, FormStateInterface $form_state) {
+    // Recursively search for media_edit links and add the query parameter.
+    $this->addQueryParamToMediaEditLinks($element);
+    return $element;
+  }
+
+  /**
+   * Recursively add query parameter to media edit links.
+   */
+  protected function addQueryParamToMediaEditLinks(array &$element) {
+    // Check if this element has a media_edit link.
+    if (isset($element['media_edit']['#url']) && $element['media_edit']['#url'] instanceof \Drupal\Core\Url) {
+      $url = $element['media_edit']['#url'];
+      $query = $url->getOption('query') ?? [];
+      $query['az_ranking_context'] = '1';
+      $url->setOption('query', $query);
+    }
+    
+    // Recursively process child elements.
+    foreach (\Drupal\Core\Render\Element::children($element) as $key) {
+      if (is_array($element[$key])) {
+        $this->addQueryParamToMediaEditLinks($element[$key]);
+      }
+    }
   }
 
 }

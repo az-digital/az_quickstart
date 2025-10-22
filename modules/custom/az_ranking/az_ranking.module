@@ -71,14 +71,15 @@ function az_ranking_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $for
       $form['field_focal_point_y']['widget'][0]['value']['#attributes']['class'][] = 'js-focal-point-y-value';
     }
 
-    // Only show focal point picker if opened in a dialog/modal context.
-    // This typically means it was opened from the media library widget.
+    // Only show focal point picker if opened from AZ Ranking context.
     $request = \Drupal::request();
-    $is_modal = $request->query->get('_wrapper_format') === 'drupal_dialog' || 
-                $request->query->get('_wrapper_format') === 'drupal_modal';
+    
+    // Check if this is from AZ Ranking widget and if it's in a modal.
+    $is_az_ranking_context = $request->query->get('az_ranking_context') === '1';
+    $is_modal = $request->query->get('_wrapper_format') === 'drupal_modal';
 
-    // Skip adding the picker if not in modal context.
-    if (!$is_modal) {
+    // Skip adding the picker if not from AZ Ranking context.
+    if (!$is_az_ranking_context || !$is_modal) {
       return;
     }
 
