@@ -138,7 +138,6 @@ wordmark: true
 land_acknowledgment: true
 info_security_privacy: true
 copyright_notice: 'The Arizona Board of Regents on behalf of <a href="https://www.arizona.edu" target="_blank">The University of Arizona</a>.'
-az_hide_front_title: false
 az_back_to_top: true
 az_bootstrap_source: cdn
 az_bootstrap_cdn_version: stable
