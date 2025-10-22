@@ -334,6 +334,7 @@ class AZRankingWidget extends WidgetBase {
         'text-bg-blue' => $this->t('Arizona Blue'),
         'text-bg-sky' => $this->t('Sky'),
         'text-bg-cool-gray' => $this->t('Cool Gray'),
+        'text-bg-oasis' => $this->t('Oasis'),
       ],
       '#required' => TRUE,
       '#attributes' => ['data-az-ranking-bg-input-id' => $ranking_background_unique_id],
@@ -354,7 +355,7 @@ class AZRankingWidget extends WidgetBase {
       '#type' => 'select',
       '#title' => $this->t('Ranking Font Color'),
       '#options' => [
-        'ranking-text-black' => $this->t('Black'),
+        'ranking-text-black' => $this->t('Black (default)'),
         'ranking-text-white' => $this->t('White'),
         'ranking-text-az-blue' => $this->t('Arizona Blue'),
       ],
