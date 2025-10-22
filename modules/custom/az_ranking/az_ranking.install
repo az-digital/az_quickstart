@@ -25,78 +25,46 @@ function az_ranking_uninstall() {
 }
 
 /**
- * Create image styles for different ranking aspect ratios.
+ * Create a single image style for ranking images.
  *
- * These styles use focal point to automatically crop images to the
- * appropriate aspect ratio based on the ranking's context (width and
- * column span).
+ * This style scales images to a minimum size without cropping,
+ * allowing CSS and JavaScript to handle positioning via object-fit/position.
  */
 function _az_ranking_create_image_styles() {
-  $styles_config = [
-    'az_ranking_1_2' => [
-      'label' => 'Ranking 1.2:1 (Internal)',
-      'width' => 600,
-      'height' => 500,
-    ],
-    'az_ranking_1_6' => [
-      'label' => 'Ranking 1.6:1 (Internal)',
-      'width' => 640,
-      'height' => 400,
-    ],
-    'az_ranking_2_45' => [
-      'label' => 'Ranking 2.45:1 (Internal)',
-      'width' => 980,
-      'height' => 400,
-    ],
-    'az_ranking_3_3' => [
-      'label' => 'Ranking 3.3:1 (Internal)',
-      'width' => 1320,
-      'height' => 400,
-    ],
-    'az_ranking_3_8' => [
-      'label' => 'Ranking 3.8:1 (Internal)',
-      'width' => 1520,
-      'height' => 400,
-    ],
-    'az_ranking_5_1' => [
-      'label' => 'Ranking 5:1 (Internal)',
-      'width' => 2000,
-      'height' => 400,
-    ],
-  ];
+  $style_id = 'az_ranking_responsive';
+  
+  // Check if style already exists.
+  $style = ImageStyle::load($style_id);
+  if (!$style) {
+    $style = ImageStyle::create([
+      'name' => $style_id,
+      'label' => 'AZ Ranking Responsive (Internal)',
+    ]);
 
-  foreach ($styles_config as $style_id => $config) {
-    // Check if style already exists.
-    $style = ImageStyle::load($style_id);
-    if (!$style) {
-      $style = ImageStyle::create([
-        'name' => $style_id,
-        'label' => $config['label'],
-      ]);
+    // Scale image to at least 1920 wide AND 1300px tall.
+    // This ensures the image is large enough for all ranking contexts
+    // while maintaining aspect ratio.
+    $style->addImageEffect([
+      'id' => 'image_scale',
+      'weight' => -10,
+      'data' => [
+        'width' => 1920,
+        'height' => 1300,
+        'upscale' => TRUE,
+      ],
+    ]);
 
-      // Add focal point scale and crop effect.
-      $style->addImageEffect([
-        'id' => 'focal_point_scale_and_crop',
-        'weight' => -10,
-        'data' => [
-          'width' => $config['width'],
-          'height' => $config['height'],
-          'crop_type' => 'focal_point',
-        ],
-      ]);
+    // Add WebP conversion for performance.
+    $style->addImageEffect([
+      'id' => 'image_convert',
+      'weight' => 0,
+      'data' => [
+        'extension' => 'webp',
+      ],
+    ]);
 
-      // Add WebP conversion.
-      $style->addImageEffect([
-        'id' => 'image_convert',
-        'weight' => 0,
-        'data' => [
-          'extension' => 'webp',
-        ],
-      ]);
-
-      $style->save();
-      \Drupal::logger('az_ranking')->info('Created image style: @style', ['@style' => $style_id]);
-    }
+    $style->save();
+    \Drupal::logger('az_ranking')->info('Created image style: @style', ['@style' => $style_id]);
   }
 }
 
@@ -104,20 +72,10 @@ function _az_ranking_create_image_styles() {
  * Remove image styles created by this module.
  */
 function _az_ranking_remove_image_styles() {
-  $style_ids = [
-    'az_ranking_1_2',
-    'az_ranking_1_6',
-    'az_ranking_2_45',
-    'az_ranking_3_3',
-    'az_ranking_3_8',
-    'az_ranking_5_1',
-  ];
-
-  foreach ($style_ids as $style_id) {
-    $style = ImageStyle::load($style_id);
-    if ($style) {
-      $style->delete();
-      \Drupal::logger('az_ranking')->info('Deleted image style: @style', ['@style' => $style_id]);
-    }
+  $style_id = 'az_ranking_responsive';
+  $style = ImageStyle::load($style_id);
+  if ($style) {
+    $style->delete();
+    \Drupal::logger('az_ranking')->info('Deleted image style: @style', ['@style' => $style_id]);
   }
 }

@@ -13,6 +13,12 @@ az_ranking_image:
   css:
     component:
       css/az-ranking-image.css: {}
+  js:
+    js/az-ranking-focal-point-calc.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/once
 az_ranking_no_follow:
   css:
     component:
@@ -34,10 +40,10 @@ az_ranking_dynamic_helptext:
     - core/once
 focal_point_picker:
   js:
-    js/focal-point-picker.js: {}
+    js/az-ranking-focal-point-picker.js: {}
   css:
     component:
-      css/focal-point-picker.css: {}
+      css/az-ranking-focal-point-picker.css: {}
   dependencies:
     - core/jquery
     - core/drupal

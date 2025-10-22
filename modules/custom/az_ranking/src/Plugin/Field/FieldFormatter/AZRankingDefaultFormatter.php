@@ -118,30 +118,10 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
 
       // Media.
       $column_span = $item->options['column_span'] ?? '';
-      $ranking_type = $item->options['ranking_type'] ?? 'standard';
       $media_render_array = [];
-
-      // We need ranking_width from parent config for context.
-      // Get it early so we can pass to image helper.
-      $parent = $item->getEntity();
-      $ranking_width = 'col-lg-3';
-      if ($parent instanceof ParagraphInterface) {
-        $parent_config = $parent->getAllBehaviorSettings();
-        if (!empty($parent_config['az_rankings_paragraph_behavior']['ranking_width'])) {
-          $ranking_width = $parent_config['az_rankings_paragraph_behavior']['ranking_width'];
-        }
-      }
-
       if (!empty($item->media)) {
         if ($media = $this->entityTypeManager->getStorage('media')->load($item->media)) {
-          // Build context for focal point-based cropping.
-          $context = [
-            'ranking_width' => $ranking_width,
-            'column_span' => $column_span,
-            'ranking_type' => $ranking_type,
-          ];
-
-          $media_render_array = $this->rankingImageHelper->generateImageRenderArray($media, $context);
+          $media_render_array = $this->rankingImageHelper->generateImageRenderArray($media);
           $attached['library'][] = 'az_ranking/az_ranking_image';
         }
       }
@@ -276,6 +256,11 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
             }
           }
         }
+      }
+      
+      // Add .az-ranking-responsive to the column for image-only ranking cards.
+      if ($item->options['ranking_type'] === 'image_only') {
+        $column_classes[] = 'az-ranking-responsive';
       }
 
       // Shadow class should NOT be applied on transparent.

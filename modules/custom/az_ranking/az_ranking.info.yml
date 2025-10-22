@@ -10,5 +10,4 @@ dependencies:
   - drupal:filter
   - drupal:image
   - drupal:media
-  - focal_point:focal_point
   - media_library_form_element:media_library_form_element

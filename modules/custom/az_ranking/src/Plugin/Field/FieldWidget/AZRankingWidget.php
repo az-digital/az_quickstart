@@ -176,16 +176,6 @@ class AZRankingWidget extends WidgetBase {
       '#attributes' => ['class' => ['az-ranking-widget']],
     ];
 
-    // Get ranking_width from parent config early (needed for preview and help text).
-    $ranking_width = 'col-lg-3';
-    $parent = $item->getEntity();
-    if ($parent instanceof ParagraphInterface) {
-      $parent_config = $parent->getAllBehaviorSettings();
-      if (!empty($parent_config['az_rankings_paragraph_behavior']['ranking_width'])) {
-        $ranking_width = $parent_config['az_rankings_paragraph_behavior']['ranking_width'];
-      }
-    }
-
     // When closed, add a preview of the ranking after the summary.
     if (!$status) {
       $element['preview_wrapper'] = [
@@ -214,14 +204,7 @@ class AZRankingWidget extends WidgetBase {
       $media_id = $item->media ?? NULL;
       if (!empty($media_id)) {
         if ($media = $this->entityTypeManager->getStorage('media')->load($media_id)) {
-          // Build context for focal point-based cropping.
-          $context = [
-            'ranking_width' => $ranking_width,
-            'column_span' => $item->options['column_span'] ?? 1,
-            'ranking_type' => $item->options['ranking_type'] ?? 'standard',
-          ];
-          
-          $media_render_array = $this->rankingImageHelper->generateImageRenderArray($media, $context);
+          $media_render_array = $this->rankingImageHelper->generateImageRenderArray($media);
           if (!empty($media_render_array)) {
             $element['preview_wrapper']['preview']['#media'] = $media_render_array;
           }
@@ -266,6 +249,17 @@ class AZRankingWidget extends WidgetBase {
       '#default_value' => (!empty($item->options['ranking_type'])) ? $item->options['ranking_type'] : 'standard',
       '#attributes' => ['data-az-ranking-type-input-id' => $ranking_type_unique_id],
     ];
+
+    // Get ranking_width from parent config for help text calculation.
+    // Default value.
+    $ranking_width = 'col-lg-3';
+    $parent = $item->getEntity();
+    if ($parent instanceof ParagraphInterface) {
+      $parent_config = $parent->getAllBehaviorSettings();
+      if (!empty($parent_config['az_rankings_paragraph_behavior']['ranking_width'])) {
+        $ranking_width = $parent_config['az_rankings_paragraph_behavior']['ranking_width'];
+      }
+    }
 
     $element['details']['media'] = [
       '#type' => 'az_media_library',

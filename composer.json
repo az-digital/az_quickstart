@@ -73,7 +73,6 @@
         "drupal/field_group": "4.0.0",
         "drupal/field_group_link": "3.3.0",
         "drupal/flag": "5.0.1",
-        "drupal/focal_point": "^2.1",
         "drupal/google_tag": "2.0.8",
         "drupal/honeypot": "2.2.2",
         "drupal/image_widget_crop": "3.0.0",

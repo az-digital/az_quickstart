@@ -1,6 +1,11 @@
-/* Override image fluid to force 100% */
+/* Ranking images use object-fit: cover with dynamic object-position.
+   JavaScript calculates the optimal object-position based on focal point,
+   image dimensions, and container dimensions to keep the focal point centered. */
 .ranking-img {
   object-fit: cover;
   width: 100%;
-  height: 100% !important;
+  min-height: 100%;
+  height: 0 !important;
+  /* Default to center; JavaScript will override with calculated position */
+  object-position: center center;
 }

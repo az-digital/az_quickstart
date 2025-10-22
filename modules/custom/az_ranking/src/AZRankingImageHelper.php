@@ -47,7 +47,7 @@ class AZRankingImageHelper {
    * @return array
    *   An image render array.
    */
-  public function generateImageRenderArray(MediaInterface $media, array $context = []) {
+  public function generateImageRenderArray(MediaInterface $media) {
     $media_render_array = [];
     $media_attributes = $media->get('field_media_az_image')->getValue();
 
@@ -56,12 +56,9 @@ class AZRankingImageHelper {
     }
 
     if ($file = $this->entityTypeManager->getStorage('file')->load($media_attributes[0]['target_id'])) {
-      // Determine the appropriate image style based on context.
-      $ranking_width = $context['ranking_width'] ?? 'col-lg-3';
-      $column_span = $context['column_span'] ?? 1;
-      $ranking_type = $context['ranking_type'] ?? 'standard';
-
-      $image_style = $this->getImageStyleForContext($ranking_width, $column_span, $ranking_type);
+      // Use single responsive image style for all rankings.
+      // JavaScript will handle focal point positioning via object-position.
+      $image_style = 'az_ranking_responsive';
 
       $image = new \stdClass();
       $image->title = NULL;
@@ -75,78 +72,47 @@ class AZRankingImageHelper {
         '#theme' => 'image_formatter',
         '#item' => $image,
         '#image_style' => $image_style,
-        // Support images smaller than ranking width, eg. full width rankings.
         '#item_attributes' => [
           'class' => ['ranking-img'],
         ],
       ];
+      // Add focal point data attributes for JavaScript to calculate
+      // object-position dynamically based on container size.
+      if ($media instanceof \Drupal\Core\Entity\FieldableEntityInterface) {
+        try {
+          if ($media->hasField('field_focal_point_x') && $media->hasField('field_focal_point_y')) {
+            if (!$media->get('field_focal_point_x')->isEmpty() && !$media->get('field_focal_point_y')->isEmpty()) {
+              $focal_x = (float) $media->get('field_focal_point_x')->value;
+              $focal_y = (float) $media->get('field_focal_point_y')->value;
+
+              // Get original image dimensions for JavaScript calculations.
+              // When image styles scale the image, naturalWidth/Height in JS
+              // will be the scaled dimensions, but focal points are relative
+              // to the original image dimensions.
+              $image_factory = \Drupal::service('image.factory');
+              $original_image = $image_factory->get($file->getFileUri());
+              $original_width = $original_image->getWidth();
+              $original_height = $original_image->getHeight();
+
+              // Store focal point as decimal values (0-1) for JavaScript,
+              // along with original image dimensions.
+              $media_render_array['#item_attributes'] += [
+                'data-focal-x' => $focal_x,
+                'data-focal-y' => $focal_y,
+                'data-original-width' => $original_width,
+                'data-original-height' => $original_height,
+              ];
+            }
+          }
+        }
+        catch (\Throwable $e) {
+          // Defensive: do not break rendering if fields are not present.
+        }
+      }
       // Add the file entity to the cache dependencies.
       // This will clear our cache when this entity updates.
       $this->renderer->addCacheableDependency($media_render_array, $file);
     }
     return $media_render_array;
   }
-
-  /**
-   * Get the appropriate image style based on ranking context.
-   *
-   * @param string $ranking_width
-   *   The ranking width class (e.g., 'col-lg-3').
-   * @param int $column_span
-   *   The column span (1-4).
-   * @param string $ranking_type
-   *   The ranking type ('standard' or 'image_only').
-   *
-   * @return string
-   *   The image style machine name.
-   */
-  protected function getImageStyleForContext($ranking_width, $column_span, $ranking_type) {
-    // Standard rankings don't have images, so return NULL.
-    if ($ranking_type !== 'image_only') {
-      return NULL;
-    }
-
-    // Map from aspect ratios to focal point-based image styles.
-    // Based on AZRankingWidget::getAspectRatioData().
-    $style_map = [
-      'col-lg-12' => [
-        // 5:1 for any span.
-        'default' => 'az_ranking_5_1',
-      ],
-      'col-lg-6' => [
-        // 2.45:1.
-        '1' => 'az_ranking_2_45',
-        // 2+ columns = 5:1.
-        'default' => 'az_ranking_5_1',
-      ],
-      'col-lg-4' => [
-        // 1.6:1.
-        '1' => 'az_ranking_1_6',
-        // 3.3:1.
-        '2' => 'az_ranking_3_3',
-        // 3+ columns = 5:1.
-        'default' => 'az_ranking_5_1',
-      ],
-      'col-lg-3' => [
-        // 1.2:1.
-        '1' => 'az_ranking_1_2',
-        // 2.45:1.
-        '2' => 'az_ranking_2_45',
-        // 3.8:1.
-        '3' => 'az_ranking_3_8',
-         // 5:1.
-        '4' => 'az_ranking_5_1',
-      ],
-    ];
-
-    // Get the width config or fall back to col-lg-3.
-    $width_config = $style_map[$ranking_width] ?? $style_map['col-lg-3'];
-
-    // Get the specific style for this column span.
-    $column_key = (string) $column_span;
-
-    // Return specific style or default for this width.
-    return $width_config[$column_key] ?? $width_config['default'] ?? 'az_ranking_1_2';
-  }
-
 }
