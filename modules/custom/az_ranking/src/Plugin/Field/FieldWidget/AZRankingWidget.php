@@ -279,7 +279,7 @@ class AZRankingWidget extends WidgetBase {
       '#type' => 'select',
       '#options' => [
         1 => $this->t('1 card'),
-        2 => $this->t('2 cards'),
+        2 => $this->t('2 cards (default)'),
         3 => $this->t('3 cards'),
         4 => $this->t('4 cards'),
       ],
@@ -301,7 +301,7 @@ class AZRankingWidget extends WidgetBase {
     $element['details']['options'] = [
       '#type' => 'select',
       '#options' => [
-        'text-bg-chili' => $this->t('Chili'),
+        'text-bg-chili' => $this->t('Chili (default)'),
         'text-bg-blue' => $this->t('Arizona Blue'),
         'text-bg-sky' => $this->t('Sky'),
         'text-bg-oasis' => $this->t('Oasis'),
@@ -330,10 +330,11 @@ class AZRankingWidget extends WidgetBase {
     $element['details']['options_hover_effect'] = [
       '#type' => 'select',
       '#options' => [
-        'text-bg-chili' => $this->t('Chili'),
+        'text-bg-chili' => $this->t('Chili (default)'),
         'text-bg-blue' => $this->t('Arizona Blue'),
         'text-bg-sky' => $this->t('Sky'),
         'text-bg-cool-gray' => $this->t('Cool Gray'),
+        'text-bg-oasis' => $this->t('Oasis'),
       ],
       '#required' => TRUE,
       '#attributes' => ['data-az-ranking-bg-input-id' => $ranking_background_unique_id],
@@ -354,7 +355,7 @@ class AZRankingWidget extends WidgetBase {
       '#type' => 'select',
       '#title' => $this->t('Ranking Font Color'),
       '#options' => [
-        'ranking-text-black' => $this->t('Black'),
+        'ranking-text-black' => $this->t('Black (default)'),
         'ranking-text-white' => $this->t('White'),
         'ranking-text-az-blue' => $this->t('Arizona Blue'),
       ],
@@ -407,7 +408,7 @@ class AZRankingWidget extends WidgetBase {
 
     $element['details']['link_title'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Link Title'),
+      '#title' => $this->t('Ranking Link Title'),
       '#default_value' => $item->link_title ?? NULL,
       '#maxlength' => 255,
       '#states' => [
@@ -426,7 +427,7 @@ class AZRankingWidget extends WidgetBase {
       '#autocomplete_route_parameters' => [
         'linkit_profile_id' => 'az_linkit',
       ],
-      '#title' => $this->t('Link URL'),
+      '#title' => $this->t('Ranking Link URL'),
       '#element_validate' => [[$this, 'validateRankingLink']],
       '#default_value' => $item->link_uri ?? NULL,
       '#maxlength' => 2048,
@@ -449,15 +450,15 @@ class AZRankingWidget extends WidgetBase {
 
     $element['details']['ranking_link_style'] = [
       '#type' => 'select',
-      '#title' => $this->t('Link Style'),
+      '#title' => $this->t('Ranking Link Style'),
       '#options' => [
-        'd-none' => $this->t('Hidden Link Title'),
-        'link' => $this->t('Text Link'),
-        'w-100 btn btn-red' => $this->t('Red Button'),
-        'w-100 btn btn-blue' => $this->t('Blue Button'),
-        'w-100 btn btn-outline-red' => $this->t('Red Outline Button'),
-        'w-100 btn btn-outline-blue' => $this->t('Blue Outline Button'),
-        'w-100 btn btn-outline-white' => $this->t('White Outline Button'),
+        'd-none' => $this->t('Hidden link title'),
+        'link' => $this->t('Text link'),
+        'w-100 btn btn-red' => $this->t('Red button (default)'),
+        'w-100 btn btn-blue' => $this->t('Blue button'),
+        'w-100 btn btn-outline-red' => $this->t('Red outline button'),
+        'w-100 btn btn-outline-blue' => $this->t('Blue outline button'),
+        'w-100 btn btn-outline-white' => $this->t('White outline button'),
       ],
       '#default_value' => $item->ranking_link_style ?? 'w-100 btn btn-red',
       '#states' => [

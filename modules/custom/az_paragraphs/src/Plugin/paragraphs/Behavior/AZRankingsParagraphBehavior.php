@@ -31,7 +31,7 @@ class AZRankingsParagraphBehavior extends AZDefaultParagraphsBehavior {
         'col-lg-12' => $this->t('1'),
         'col-lg-6' => $this->t('2'),
         'col-lg-4' => $this->t('3'),
-        'col-lg-3' => $this->t('4'),
+        'col-lg-3' => $this->t('4 (default)'),
       ],
       '#default_value' => $config['ranking_width'] ?? 'col-lg-3',
       '#description' => $this->t('Choose how many rankings appear per row. Additional rankings will wrap to a new row. This selection sets the rankings per row on desktops with automatic defaults set for tablet and phone. Override rankings per row on tablet and phone in Additional options.'),
@@ -88,7 +88,7 @@ class AZRankingsParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#title' => $this->t('Rankings per row on tablet'),
       '#type' => 'select',
       '#options' => [
-        'col-md-12' => $this->t('1'),
+        'col-md-12' => $this->t('1 (default)'),
         'col-md-6' => $this->t('2'),
         'col-md-4' => $this->t('3'),
         'col-md-3' => $this->t('4'),
@@ -103,7 +103,7 @@ class AZRankingsParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#title' => $this->t('Rankings per row on phone'),
       '#type' => 'select',
       '#options' => [
-        'col-12' => $this->t('1'),
+        'col-12' => $this->t('1 (default)'),
         'col-6' => $this->t('2'),
         'col-4' => $this->t('3'),
         'col-3' => $this->t('4'),
@@ -118,7 +118,7 @@ class AZRankingsParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#title' => $this->t('Rankings group title color'),
       '#type' => 'select',
       '#options' => [
-        'text-blue' => $this->t('AZ Blue'),
+        'text-blue' => $this->t('Arizona Blue (default)'),
         'text-sky' => $this->t('Sky'),
         'text-oasis' => $this->t('Oasis'),
         'text-azurite' => $this->t('Azurite'),
