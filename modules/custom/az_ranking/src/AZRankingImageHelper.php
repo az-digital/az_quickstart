@@ -3,6 +3,8 @@
 namespace Drupal\az_ranking;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Entity\FieldableEntityInterface;
+use Drupal\Core\Image\ImageFactory;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\media\MediaInterface;
 
@@ -26,11 +28,19 @@ class AZRankingImageHelper {
   protected $renderer;
 
   /**
+   * The image factory service.
+   *
+   * @var \Drupal\Core\Image\ImageFactory
+   */
+  protected $imageFactory;
+
+  /**
    * Constructs a new AZRankingImageHelper object.
    */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, RendererInterface $renderer) {
+  public function __construct(EntityTypeManagerInterface $entity_type_manager, RendererInterface $renderer, ImageFactory $image_factory) {
     $this->entityTypeManager = $entity_type_manager;
     $this->renderer = $renderer;
+    $this->imageFactory = $image_factory;
   }
 
   /**
@@ -69,7 +79,7 @@ class AZRankingImageHelper {
       ];
       // Add focal point data attributes for JavaScript to calculate
       // object-position dynamically based on container size.
-      if ($media instanceof \Drupal\Core\Entity\FieldableEntityInterface) {
+      if ($media instanceof FieldableEntityInterface) {
         try {
           if ($media->hasField('field_focal_point_x') && $media->hasField('field_focal_point_y')) {
             if (!$media->get('field_focal_point_x')->isEmpty() && !$media->get('field_focal_point_y')->isEmpty()) {
@@ -80,8 +90,7 @@ class AZRankingImageHelper {
               // When image styles scale the image, naturalWidth/Height in JS
               // will be the scaled dimensions, but focal points are relative
               // to the original image dimensions.
-              $image_factory = \Drupal::service('image.factory');
-              $original_image = $image_factory->get($file->getFileUri());
+              $original_image = $this->imageFactory->get($file->getFileUri());
               $original_width = $original_image->getWidth();
               $original_height = $original_image->getHeight();
 
@@ -106,4 +115,5 @@ class AZRankingImageHelper {
     }
     return $media_render_array;
   }
+
 }

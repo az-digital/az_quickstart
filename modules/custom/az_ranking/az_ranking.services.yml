@@ -4,3 +4,4 @@ services:
     arguments:
       - '@entity_type.manager'
       - '@renderer'
+      - '@image.factory'
