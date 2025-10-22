@@ -102,11 +102,6 @@ function az_barrio_preprocess_page(&$variables, $hook) {
     $variables['#attached']['library'][] = 'az_barrio/az-barrio-off-canvas-nav';
   }
 
-  // Allow hiding of title of front page node.
-  if (theme_get_setting('az_hide_front_title') === 1 && \Drupal::service('path.matcher')->isFrontPage()) {
-    // $variables['title'] = FALSE;
-  }
-
   // Check if land acknowledgment should be displayed.
   $land_acknowledgment = '';
   if (theme_get_setting('land_acknowledgment')) {
