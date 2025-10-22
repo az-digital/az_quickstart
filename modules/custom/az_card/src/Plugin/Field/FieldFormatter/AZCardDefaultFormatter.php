@@ -123,6 +123,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
       $attached = [];
 
       // Link.
+      $link_render_array = [];
       $link_url = '';
       if ($item->link_title || $item->link_uri) {
         if (str_starts_with($item->link_uri ?? '', '/' . PublicStream::basePath())) {
@@ -243,7 +244,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
           '#format' => $item->body_format,
           '#langcode' => $item->getLangcode(),
         ],
-        '#link' => $link_render_array ?? [],
+        '#link' => $link_render_array,
         '#link_url' => $link_url,
         '#title_style' => $title_style ?? 'default',
         '#title_level' => $title_level ?? 'h3',
