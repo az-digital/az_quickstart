@@ -264,7 +264,7 @@ class AZRankingWidget extends WidgetBase {
         4 => $this->t('4 cards'),
       ],
       '#title' => $this->t('Image Width Span'),
-      '#description' => $this->t('How many cards do you want this image to span (in multiples of ranking-card width)?') . '<br><br><div class="aspect-ratio-help" data-current-ranking-width="' . $ranking_width . '">' . $this->getAspectRatioHelpText($ranking_width) . '</div>',
+      '#description' => $this->t('How many cards do you want this image to span (in multiples of ranking-card width)?'),
       '#default_value' => (!empty($item->options['column_span'])) ? $item->options['column_span'] : 2,
       '#states' => [
       // Column Span is only visible when Ranking Type is "image_only".
@@ -453,14 +453,10 @@ class AZRankingWidget extends WidgetBase {
 
     // Attach the library and return the element.
     $element['#attached']['library'][] = 'az_ranking/az_ranking';
-    $element['#attached']['library'][] = 'az_ranking/az_ranking_dynamic_helptext';
 
     // Store delta and field name for reference.
     $element['#delta'] = $delta;
     $element['#field_name'] = $field_name;
-
-    // Pass aspect ratio data to JavaScript.
-    $element['#attached']['drupalSettings']['azRanking']['aspectRatios'] = $this->getAspectRatioData();
 
     return $element;
   }
@@ -595,71 +591,6 @@ class AZRankingWidget extends WidgetBase {
     $element = NestedArray::getValue($form, $array_parents);
 
     return $element;
-  }
-
-  /**
-   * Get aspect ratio data array.
-   *
-   * @return array
-   *   Array of aspect ratio data keyed by ranking width.
-   */
-  protected function getAspectRatioData() {
-    return [
-      'col-lg-12' => [
-        'any' => '5:1',
-      ],
-      'col-lg-6' => [
-        '1' => '2.45:1',
-        '2+' => '5:1',
-      ],
-      'col-lg-4' => [
-        '1' => '1.6:1',
-        '2' => '3.3:1',
-        '3+' => '5:1',
-      ],
-      'col-lg-3' => [
-        '1' => '1.2:1',
-        '2' => '2.45:1',
-        '3' => '3.8:1',
-        '4' => '5:1',
-      ],
-    ];
-  }
-
-  /**
-   * Get aspect ratio help text based on ranking_width and column_span.
-   *
-   * @param string $ranking_width
-   *   The ranking width setting from parent paragraph behavior.
-   *
-   * @return string
-   *   The help text with recommended aspect ratios.
-   */
-  protected function getAspectRatioHelpText($ranking_width) {
-    $aspect_ratios = $this->getAspectRatioData();
-
-    if (!isset($aspect_ratios[$ranking_width])) {
-      // No help text for unknown ranking_width.
-      return '';
-    }
-
-    $help_text = '<strong>' . $this->t('Your image will be automatically cropped to these ratios (W:H):') . '</strong><br>';
-    $ratios = $aspect_ratios[$ranking_width];
-    $lines = [];
-
-    foreach ($ratios as $key => $ratio) {
-      if ($key === 'any') {
-        $label = $this->t('Any column span');
-      }
-      else {
-        $label = $key . ' ' . $this->t('column') . (strpos($key, '+') !== FALSE || (is_numeric($key) && intval($key) > 1) ? 's' : '');
-      }
-      $lines[] = $label . ': <strong>' . $ratio . '</strong>';
-    }
-
-    $help_text .= implode('<br>', $lines);
-
-    return $help_text;
   }
 
   /**

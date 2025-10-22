@@ -117,7 +117,7 @@ function az_ranking_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $for
           $form['field_media_az_image']['widget'][0]['focal_point_picker'] = [
             '#type' => 'details',
             '#title' => t('Focal Point for AZ Ranking Image'),
-            '#description' => t('Click on the image to set the focal point. This determines which part of the image should remain visible when the image is cropped for different aspect ratios.'),
+            '#description' => t('Click on the image to set the focal point. This determines which part of the image should remain visible when the image is used for different aspect ratios.'),
             '#open' => TRUE,
             '#weight' => -5,
             '#attributes' => [
