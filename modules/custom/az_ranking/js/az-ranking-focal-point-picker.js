@@ -69,6 +69,12 @@
         let focalX = parseFloat($wrapper.attr('data-focal-x')) || 0.5;
         let focalY = parseFloat($wrapper.attr('data-focal-y')) || 0.5;
         
+        console.log('=== Focal Point Picker Initialized ===');
+        console.log('Wrapper data-focal-x:', $wrapper.attr('data-focal-x'));
+        console.log('Wrapper data-focal-y:', $wrapper.attr('data-focal-y'));
+        console.log('Parsed focalX:', focalX);
+        console.log('Parsed focalY:', focalY);
+        
         // Wrap the image in a positioned container to constrain the overlay
         const $imageContainer = $('<div class="focal-point-image-container"></div>');
         $imageContainer.css({
@@ -93,6 +99,10 @@
         const $focalXInput = $('.js-focal-point-x-value', context);
         const $focalYInput = $('.js-focal-point-y-value', context);
         
+        console.log('Hidden field inputs found:', $focalXInput.length, $focalYInput.length);
+        console.log('Hidden field X value:', $focalXInput.val());
+        console.log('Hidden field Y value:', $focalYInput.val());
+        
         if ($focalXInput.length === 0 || $focalYInput.length === 0) {
           console.warn('Could not find focal point input fields! Focal point changes will not be saved.');
         }
@@ -103,6 +113,11 @@
           
           const indicatorLeft = (focalX * width);
           const indicatorTop = (focalY * height);
+          
+          console.log('=== Updating Indicator Position ===');
+          console.log('Image width:', width, 'height:', height);
+          console.log('Using focalX:', focalX, 'focalY:', focalY);
+          console.log('Calculated position - left:', indicatorLeft, 'top:', indicatorTop);
           
           $indicator.css({
             left: indicatorLeft + 'px',
