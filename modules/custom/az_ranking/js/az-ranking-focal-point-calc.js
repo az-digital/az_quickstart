@@ -40,32 +40,47 @@
         const containerH = $img.height();
 
         // Get ORIGINAL image dimensions (before any image style scaling).
-        // When image styles are applied, naturalWidth/Height would be the
-        // scaled dimensions, but focal points are relative to original.
-        const imageW = parseFloat($img.attr('data-original-width')) || $img[0].naturalWidth;
-        const imageH = parseFloat($img.attr('data-original-height')) || $img[0].naturalHeight;
+        // Focal points are stored relative to original dimensions.
+        const originalW = parseFloat($img.attr('data-original-width')) || $img[0].naturalWidth;
+        const originalH = parseFloat($img.attr('data-original-height')) || $img[0].naturalHeight;
 
         // Skip if dimensions not available yet
-        if (!imageW || !imageH || !containerW || !containerH) {
+        if (!originalW || !originalH || !containerW || !containerH) {
           return;
         }
 
         // Calculate aspect ratios to determine crop direction
-        const imageRatio = imageW / imageH;
+        const imageRatio = originalW / originalH;
         const containerRatio = containerW / containerH;
+
+        // Calculate the SCALED dimensions after object-fit: cover.
+        // object-fit: cover scales the image to fill the container while maintaining aspect ratio.
+        let scaledW, scaledH;
+        
+        if (imageRatio > containerRatio) {
+          // Image is WIDER than container (will be cropped horizontally)
+          // Scale to match container HEIGHT
+          scaledH = containerH;
+          scaledW = containerH * imageRatio;
+        } else {
+          // Image is TALLER than container (will be cropped vertically)
+          // Scale to match container WIDTH
+          scaledW = containerW;
+          scaledH = containerW / imageRatio;
+        }
 
         let objectPosX, objectPosY;
 
         if (imageRatio > containerRatio) {
           // Image is WIDER than container (cropped horizontally - left/right sides cut off)
-          // Apply formula to X, use focal point directly for Y
-          objectPosX = (focalX * imageW - 0.5 * containerW) / (imageW - containerW);
+          // Apply formula to X using SCALED dimensions, use focal point directly for Y
+          objectPosX = (focalX * scaledW - 0.5 * containerW) / (scaledW - containerW);
           objectPosY = focalY;
         } else {
           // Image is TALLER than container (cropped vertically - top/bottom cut off)
-          // Use focal point directly for X, apply formula to Y
+          // Use focal point directly for X, apply formula to Y using SCALED dimensions
           objectPosX = focalX;
-          objectPosY = (focalY * imageH - 0.5 * containerH) / (imageH - containerH);
+          objectPosY = (focalY * scaledH - 0.5 * containerH) / (scaledH - containerH);
         }
 
         // Convert to percentage and clamp between 0-100%
