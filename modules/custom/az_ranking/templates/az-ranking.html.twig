@@ -19,11 +19,13 @@
 #}
 {% set attributes = attributes.addClass('h-100', 'az-ranking-responsive', 'border-0', 'overflow-hidden') %}
 
+<div{{ attributes }}>
 {% if media %}
-  {{ media }}
+  <div class="ranking-image-wrapper">
+    {{ media }}
+  </div>
 {% else %}
-  <div{{ attributes }}>
-    <div class="card-body d-flex flex-column h-100">
+  <div class="card-body d-flex flex-column h-100">
       <div class="card-text d-flex flex-column flex-grow-1">
         <div class="ranking-content">
           {% if ranking_heading %}
@@ -55,5 +57,5 @@
         {% endif %}
       {% endif %}
     </div>
-  </div>
-{% endif %}
+  {% endif %}
+</div>
