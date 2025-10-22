@@ -21,8 +21,6 @@
         return;
       }
 
-      console.log('🎯 AZ Ranking Focal Point: Processing', $images.length, 'images');
-
       /**
        * Calculate object-position for an image based on focal point and dimensions.
        */
@@ -33,7 +31,7 @@
 
         // Skip if no focal point data
         if (isNaN(focalX) || isNaN(focalY)) {
-          console.log('⚠️ No focal point data for image:', $img.attr('src'));
+          console.warn('⚠️ No focal point data for image:', $img.attr('src'));
           return;
         }
 
@@ -49,9 +47,6 @@
 
         // Skip if dimensions not available yet
         if (!imageW || !imageH || !containerW || !containerH) {
-          console.log('⏳ Waiting for dimensions:', {
-            imageW, imageH, containerW, containerH
-          });
           return;
         }
 
@@ -79,22 +74,6 @@
 
         // Apply to image
         $img.css('object-position', objectPosX + '% ' + objectPosY + '%');
-
-        console.group('📐 Calculated object-position');
-        console.log('Image src:', $img.attr('src'));
-        console.log('Focal point (0-1):', { x: focalX.toFixed(3), y: focalY.toFixed(3) });
-        console.log('Image dimensions:', { w: imageW, h: imageH });
-        console.log('Container dimensions:', { w: containerW, h: containerH });
-        console.log('Aspect ratios:', { 
-          image: imageRatio.toFixed(2), 
-          container: containerRatio.toFixed(2),
-          cropDirection: imageRatio > containerRatio ? 'horizontal' : 'vertical'
-        });
-        console.log('Calculated position:', {
-          x: objectPosX.toFixed(2) + '%',
-          y: objectPosY.toFixed(2) + '%'
-        });
-        console.groupEnd();
       }
 
       /**
@@ -124,7 +103,6 @@
       $(window).on('resize', function() {
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(function() {
-          console.log('↻ Window resized, recalculating object-position');
           $images.each(function() {
             calculateObjectPosition($(this));
           });

@@ -35,7 +35,6 @@
           }
         } catch (e) {
           // If we can't access parent (cross-origin), assume it's valid.
-          console.log('Cannot access parent document, assuming valid context');
           isFromAzRanking = false;
         }
         
@@ -69,14 +68,6 @@
         // Get current focal point values from data attributes
         let focalX = parseFloat($wrapper.attr('data-focal-x')) || 0.5;
         let focalY = parseFloat($wrapper.attr('data-focal-y')) || 0.5;
-        
-        console.group('🖼️ Focal Point Picker Initialized');
-        console.log('Initial focal point:', {
-          x: focalX + ' (' + (focalX * 100) + '%)',
-          y: focalY + ' (' + (focalY * 100) + '%)'
-        });
-        console.log('Image src:', $image.attr('src'));
-        console.groupEnd();
         
         // Wrap the image in a positioned container to constrain the overlay
         const $imageContainer = $('<div class="focal-point-image-container"></div>');
@@ -117,12 +108,6 @@
             left: indicatorLeft + 'px',
             top: indicatorTop + 'px'
           });
-          
-          console.log('🔄 Indicator position updated:', {
-            left: indicatorLeft.toFixed(2) + 'px',
-            top: indicatorTop.toFixed(2) + 'px',
-            focalPoint: { x: focalX, y: focalY }
-          });
         }
         
         // Set initial position
@@ -148,28 +133,9 @@
           focalX = Math.max(0, Math.min(1, focalX));
           focalY = Math.max(0, Math.min(1, focalY));
           
-          console.group('🎯 Focal Point Picker - Click Event');
-          console.log('Click position (page):', { x: e.pageX, y: e.pageY });
-          console.log('Image offset:', { left: offset.left, top: offset.top });
-          console.log('Image dimensions:', { width: width, height: height });
-          console.log('📍 Calculated Focal Point:', {
-            x: focalX.toFixed(4) + ' (' + (focalX * 100).toFixed(2) + '%)',
-            y: focalY.toFixed(4) + ' (' + (focalY * 100).toFixed(2) + '%)'
-          });
-          console.log('Pixel position in image:', {
-            x: (focalX * width).toFixed(2) + 'px',
-            y: (focalY * height).toFixed(2) + 'px'
-          });
-          console.groupEnd();
-          
           // Update hidden fields
           $focalXInput.val(focalX.toFixed(2)).trigger('change');
           $focalYInput.val(focalY.toFixed(2)).trigger('change');
-          
-          console.log('✅ Updated hidden fields:', {
-            'field_focal_point_x': focalX.toFixed(2),
-            'field_focal_point_y': focalY.toFixed(2)
-          });
           
           // Update indicator position
           updateIndicatorPosition();

@@ -34,15 +34,10 @@ class AZRankingImageHelper {
   }
 
   /**
-   * Prepare an image render array with context-aware aspect ratio.
+   * Prepare an image render array.
    *
    * @param \Drupal\media\MediaInterface $media
    *   A Drupal media entity object.
-   * @param array $context
-   *   Optional context array with keys:
-   *   - 'ranking_width': The parent paragraph's ranking width setting.
-   *   - 'column_span': The selected column span (1-4).
-   *   - 'ranking_type': 'standard' or 'image_only'.
    *
    * @return array
    *   An image render array.
@@ -56,10 +51,6 @@ class AZRankingImageHelper {
     }
 
     if ($file = $this->entityTypeManager->getStorage('file')->load($media_attributes[0]['target_id'])) {
-      // Use single responsive image style for all rankings.
-      // JavaScript will handle focal point positioning via object-position.
-      $image_style = 'az_ranking_responsive';
-
       $image = new \stdClass();
       $image->title = NULL;
       $image->alt = $media_attributes[0]['alt'] ?? '';
@@ -71,7 +62,7 @@ class AZRankingImageHelper {
       $media_render_array = [
         '#theme' => 'image_formatter',
         '#item' => $image,
-        '#image_style' => $image_style,
+        '#image_style' => 'az_ranking_responsive',
         '#item_attributes' => [
           'class' => ['ranking-img'],
         ],
