@@ -130,7 +130,7 @@ class AZRankingWidget extends WidgetBase {
     }
 
     // Determine current ranking style needed for both preview and open edit mode.
-    $ranking_classes = 'card';
+    $ranking_classes = 'ranking card';
     $parent = $item->getEntity();
 
     // Get settings from parent paragraph.
@@ -141,91 +141,71 @@ class AZRankingWidget extends WidgetBase {
       // See if the parent behavior defines some ranking-specific settings.
       if (!empty($parent_config['az_rankings_paragraph_behavior'])) {
         $ranking_defaults = $parent_config['az_rankings_paragraph_behavior'];
-        $ranking_classes = $ranking_defaults['ranking_hover_style'] ?? 'card';
+        $ranking_classes = $ranking_defaults['ranking_hover_style'] ?? 'ranking card';
       }
     }
 
-    // Add ranking class from options.
-    if (!empty($item->options['class'])) {
-      $ranking_classes .= ' ' . $item->options['class'];
-    }
-    if (!empty($item->options_hover_effect['class'])) {
-      $ranking_classes .= ' ' . $item->options_hover_effect['class'];
+    // Add overflow-hidden class.
+    $ranking_classes .= ' overflow-hidden';
+
+    // Handle hover effect and background classes like the formatter does.
+    $ranking_hover_effect = FALSE;
+    if ($parent instanceof ParagraphInterface) {
+      $parent_config = $parent->getAllBehaviorSettings();
+      if (!empty($parent_config['az_rankings_paragraph_behavior'])) {
+        $ranking_hover_effect = $parent_config['az_rankings_paragraph_behavior']['ranking_hover_effect'] ?? FALSE;
+      }
     }
 
-    // Create summary for details element (what shows when collapsed)
-    $summary_text = '';
-    if (!$item->isEmpty()) {
-      $summary_parts = array_filter([
-        $item->ranking_heading,
-        $item->ranking_description,
-        $item->ranking_source ? $this->t('Source: @source', ['@source' => substr($item->ranking_source, 0, 50) . '...']) : NULL,
-      ]);
-      $summary_text = implode(' | ', $summary_parts) ?: $this->t('Ranking @delta', ['@delta' => $delta + 1]);
+    // Hover effect takes precedence over non-hover-effect backgrounds.
+    if ($ranking_hover_effect) {
+      // Try to read hover-specific value from the item.
+      $hover_class = '';
+      if (!empty($item->options_hover_effect)) {
+        if (is_array($item->options_hover_effect) && !empty($item->options_hover_effect['class'])) {
+          $hover_class = $item->options_hover_effect['class'];
+        }
+        elseif (is_string($item->options_hover_effect)) {
+          $hover_class = $item->options_hover_effect;
+        }
+      }
+      // Fallback to the persisted background class if no hover-specific value present.
+      if (empty($hover_class) && !empty($item->options['class'])) {
+        $hover_class = $item->options['class'];
+      }
+      if (!empty($hover_class)) {
+        $ranking_classes .= ' from-hover-effect ' . $hover_class;
+      }
     }
     else {
-      $summary_text = $this->t('New Ranking @delta', ['@delta' => $delta + 1]);
+      if (!empty($item->options['class'])) {
+        $ranking_classes .= ' non-hover-effect ' . $item->options['class'];
+      }
     }
 
     // Wrap everything in a details element.
     $element['details'] = [
       '#type' => 'details',
-      '#title' => $summary_text,
+      '#title' => $this->t('Edit Ranking'),
     // Open when in edit mode, closed when in preview mode.
       '#open' => $status,
       '#attributes' => ['class' => ['az-ranking-widget']],
     ];
 
-    // When closed, add a preview of the ranking after the summary.
+    // When closed, show a preview of the ranking.
     if (!$status) {
       $element['preview_wrapper'] = [
         '#type' => 'container',
         '#attributes' => [
           'class' => ['widget-preview-wrapper'],
-          'style' => 'max-width: 320px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px;',
+          'style' => 'max-width: 320px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; height: 260px;',
         ],
         // Show before the details element.
         '#weight' => -10,
       ];
 
-     
-      $element['preview_wrapper']['preview'] = [
-        '#theme' => 'az_ranking',
-        '#ranking_heading' => $item->ranking_heading ?? '',
-        '#ranking_description' => $item->ranking_description ?? '',
-        '#ranking_source' => $item->ranking_source ?? '',
-        '#attributes' => [
-          'class' => $ranking_classes . ' widget-preview-ranking',
-          'style' => 'transform: scale(0.8); transform-origin: center;',
-        ],
-      ];
-
-      // Add media to preview if available.
-      $media_id = $item->media ?? NULL;
-      if (!empty($media_id)) {
-        if ($media = $this->entityTypeManager->getStorage('media')->load($media_id)) {
-          $media_render_array = $this->rankingImageHelper->generateImageRenderArray($media);
-          if (!empty($media_render_array)) {
-            $element['preview_wrapper']['preview']['#media'] = $media_render_array;
-          }
-        }
-      }
-
-      // Add link to preview if available.
-      if ($item->link_title || $item->link_uri) {
-        if (!empty($item->link_uri) && str_starts_with($item->link_uri, '/' . PublicStream::basePath())) {
-          $link_url = Url::fromUri(urldecode('base:' . $item->link_uri));
-        }
-        else {
-          $link_url = $this->pathValidator->getUrlIfValid($item->link_uri ?? '<none>');
-        }
-        $element['preview_wrapper']['preview']['#link'] = [
-          '#type' => 'link',
-          '#title' => $item->ranking_source ?? '',
-          '#url' => $link_url ?: Url::fromRoute('<none>'),
-          '#attributes' => ['class' => ['btn', 'btn-default', 'w-100', 'az-ranking-no-follow']],
-        ];
-      }
+      // Build the preview using the helper method.
+      $element['preview_wrapper']['preview'] = $this->buildRankingPreview($item, $ranking_classes);
     }
 
     // Create a globally unique ID that includes
@@ -507,6 +487,10 @@ class AZRankingWidget extends WidgetBase {
         break;
     }
 
+    // Get the wrapper ID for AJAX.
+    $field_state = static::getWidgetState($parents, $field_name, $form_state);
+    $wrapper_id = $field_state['ajax_wrapper_id'] ?? NULL;
+
     // Check to see if we have delete buttons.
     for ($delta = 0; $delta <= $max; $delta++) {
       // Let's relocate the core remove button if we can.
@@ -519,6 +503,22 @@ class AZRankingWidget extends WidgetBase {
         $elements[$delta]['ranking_actions']['delete']['#attributes']['class'][] = 'button--extrasmall';
         $elements[$delta]['ranking_actions']['delete']['#attributes']['class'][] = 'ml-3';
       }
+      
+      // Add a "Refresh Preview" button with AJAX.
+      $elements[$delta]['ranking_actions']['refresh_preview'] = [
+        '#type' => 'submit',
+        '#value' => $this->t('Preview'),
+        '#name' => 'refresh_preview_' . $delta,
+        '#submit' => [[$this, 'refreshPreviewSubmit']],
+        '#ajax' => [
+          'callback' => [$this, 'rankingAjax'],
+          'wrapper' => $wrapper_id,
+        ],
+        '#attributes' => [
+          'class' => ['button--extrasmall', 'ml-3'],
+        ],
+        '#limit_validation_errors' => [],
+      ];
     }
     return $elements;
   }
@@ -557,6 +557,20 @@ class AZRankingWidget extends WidgetBase {
 
     // Save new state and rebuild form.
     static::setWidgetState($field_parents, $field_name, $form_state, $settings);
+    $form_state->setRebuild();
+  }
+
+  /**
+   * Submit handler for refresh preview button.
+   *
+   * @param array $form
+   *   The build form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form state.
+   */
+  public function refreshPreviewSubmit(array $form, FormStateInterface $form_state) {
+    // This submit handler doesn't need to do anything special.
+    // It just triggers a form rebuild via AJAX, which will update the preview.
     $form_state->setRebuild();
   }
 
@@ -779,6 +793,194 @@ class AZRankingWidget extends WidgetBase {
       unset($values[$delta]['details']);
     }
     return $values;
+  }
+
+  /**
+   * Build the preview render array for a ranking item.
+   *
+   * @param \Drupal\az_ranking\Plugin\Field\FieldType\AZRankingItem $item
+   *   The ranking item.
+   * @param string $ranking_classes
+   *   The ranking CSS classes.
+   *
+   * @return array
+   *   The preview render array.
+   */
+  protected function buildRankingPreview($item, $ranking_classes) {
+    $parent = $item->getEntity();
+
+    // Get ranking settings from parent paragraph.
+    $ranking_hover_effect = FALSE;
+    $ranking_clickable = FALSE;
+    $ranking_title_style = NULL;
+    if ($parent instanceof ParagraphInterface) {
+      $parent_config = $parent->getAllBehaviorSettings();
+      if (!empty($parent_config['az_rankings_paragraph_behavior'])) {
+        $ranking_defaults = $parent_config['az_rankings_paragraph_behavior'];
+        $ranking_hover_effect = $ranking_defaults['ranking_hover_effect'] ?? FALSE;
+        $ranking_clickable = $ranking_defaults['ranking_clickable'] ?? FALSE;
+        $ranking_title_style = $ranking_defaults['ranking_title_style'] ?? NULL;
+      }
+    }
+
+    // Apply clickable ranking styles (like formatter does).
+    $link_title = $item->link_title ?? '';
+    $ranking_link_style = $item->ranking_link_style ?? 'w-100 btn btn-red';
+
+    if (isset($ranking_clickable)) {
+      if (!empty($ranking_clickable)) {
+        // Whole card is clickable.
+        $ranking_classes .= ' shadow';
+        $link_title = '';
+        $ranking_link_style = '';
+        // Add hover effect to ranking card.
+        if (!empty($ranking_hover_effect)) {
+          $ranking_classes .= ' ranking-bold-hover';
+        }
+        if (!empty($item->link_uri)) {
+          $ranking_classes .= ' ranking-with-link';
+        }
+      }
+      else {
+        // Ranking is not clickable.
+        $link_title = $item->link_title ?? '';
+        $ranking_link_style = $item->ranking_link_style ?? 'w-100 btn btn-red';
+        $ranking_hover_effect = FALSE;
+      }
+    }
+
+    // Determine font color and text color override.
+    $ranking_font_color = $item->ranking_font_color ?? 'ranking-text-black';
+    $text_color_override = '';
+
+    // Determine source classes based on background color (like formatter does).
+    $ranking_source_classes = '';
+    $background_class = '';
+
+    // Get the appropriate background class depending on hover effect.
+    if ($ranking_hover_effect) {
+      if (!empty($item->options_hover_effect)) {
+        if (is_array($item->options_hover_effect) && !empty($item->options_hover_effect['class'])) {
+          $background_class = $item->options_hover_effect['class'];
+        }
+        elseif (is_string($item->options_hover_effect)) {
+          $background_class = $item->options_hover_effect;
+        }
+      }
+      // Fallback to the persisted background class.
+      if (empty($background_class) && !empty($item->options['class'])) {
+        $background_class = $item->options['class'];
+      }
+    }
+    else {
+      $background_class = $item->options['class'] ?? '';
+    }
+
+    // Apply mt-auto if NOT transparent background.
+    if (!str_contains($background_class, 'bg-transparent')) {
+      $ranking_source_classes = 'mt-auto';
+    }
+    else {
+      // For transparent backgrounds, apply font color to ranking_classes and ranking_font_color.
+      $ranking_font_color = ' ' . $item->ranking_font_color;
+      $ranking_classes .= ' ' . $item->ranking_font_color;
+    }
+
+    // Set text_color_override based on background color (like formatter does).
+    if (!$ranking_hover_effect) {
+      if (!empty($item->options['class'])) {
+        switch (TRUE) {
+          case str_contains($item->options['class'], 'bg-sky'):
+            $text_color_override = 'text-midnight';
+            break;
+
+          case str_contains($item->options['class'], 'bg-cool-gray'):
+            $text_color_override = 'text-azurite';
+            break;
+
+          case str_contains($item->options['class'], 'bg-oasis'):
+            $text_color_override = 'text-white';
+            break;
+        }
+      }
+    }
+    else {
+      // Override hover class.
+      if (!empty($item->options_hover_effect['class'])) {
+        switch (TRUE) {
+          case str_contains($item->options_hover_effect['class'], 'bg-sky'):
+            $text_color_override = 'text-midnight';
+            break;
+
+          case str_contains($item->options_hover_effect['class'], 'bg-cool-gray'):
+            $text_color_override = 'text-azurite';
+            break;
+
+          case str_contains($item->options_hover_effect['class'], 'bg-oasis'):
+            $text_color_override = 'text-white';
+            break;
+        }
+      }
+    }
+
+    // Build media render array.
+    $media_render_array = NULL;
+    $media_id = $item->media ?? NULL;
+    if (!empty($media_id)) {
+      if ($media = $this->entityTypeManager->getStorage('media')->load($media_id)) {
+        $media_render_array = $this->rankingImageHelper->generateImageRenderArray($media);
+      }
+    }
+
+    // Build link render array and URL.
+    $link_render_array = NULL;
+    $link_url = NULL;
+    if ($item->link_title || $item->link_uri) {
+      if (!empty($item->link_uri) && str_starts_with($item->link_uri, '/' . PublicStream::basePath())) {
+        $link_url = Url::fromUri(urldecode('base:' . $item->link_uri));
+      }
+      else {
+        $link_url = $this->pathValidator->getUrlIfValid($item->link_uri ?? '<none>');
+      }
+
+      if ($link_url) {
+        $link_classes = explode(' ', $ranking_link_style);
+
+        // Add stretched-link class if ranking is clickable.
+        if (!empty($ranking_clickable)) {
+          $link_classes[] = 'stretched-link';
+        }
+
+        $link_render_array = [
+          '#type' => 'link',
+          '#title' => $link_title,
+          '#url' => $link_url,
+          '#attributes' => ['class' => $link_classes],
+        ];
+      }
+    }
+
+    return [
+      '#theme' => 'az_ranking',
+      '#media' => $media_render_array,
+      '#ranking_heading' => $item->ranking_heading ?? '',
+      '#ranking_description' => $item->ranking_description ?? '',
+      '#ranking_source' => $item->ranking_source ?? '',
+      '#ranking_title_style' => $ranking_title_style,
+      '#ranking_hover_effect' => $ranking_hover_effect,
+      '#ranking_clickable' => $ranking_clickable,
+      '#ranking_font_color' => $ranking_font_color,
+      '#text_color_override' => $text_color_override,
+      '#ranking_link_style' => $ranking_link_style,
+      '#ranking_source_classes' => $ranking_source_classes,
+      '#link' => $link_render_array,
+      '#link_url' => $link_url,
+      '#link_title' => $link_title,
+      '#attributes' => [
+        'class' => $ranking_classes . ' widget-preview-ranking',
+        'style' => 'transform: scale(0.8); transform-origin: center;',
+      ],
+    ];
   }
 
 }

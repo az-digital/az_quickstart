@@ -11,29 +11,8 @@
    */
   Drupal.behaviors.azRankingWidgetPreview = {
     attach: function (context, settings) {
-      
-      // Find all ranking widget details elements
-      var detailsElements = once('az-ranking-widget-preview', 'details.az-ranking-widget', context);
-      detailsElements.forEach(function (element) {
-        var $details = $(element);
-        var $previewWrapper = $details.siblings('.widget-preview-wrapper');
-        
-        if ($previewWrapper.length === 0) {
-          return;
-        }
-
-        // Listen for toggle events
-        $details.on('toggle', function () {
-          console.log('Details toggled, open:', this.open);
-          var isOpen = this.open;
-          
-          // Only update preview when closing (showing preview)
-          if (!isOpen) {
-            console.log('Updating preview...');
-            updatePreview($details, $previewWrapper);
-          }
-        });
-      });
+      // This behavior is currently not needed.
+      // Preview updates are handled by the AJAX "Refresh Preview" button.
     }
   };
 
