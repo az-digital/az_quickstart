@@ -72,5 +72,5 @@ jobs:
             --head "backport/pr-${{ github.event.pull_request.number }}-2.x" \
             --title "${{ github.event.pull_request.title }} (2.x backport of #${{ github.event.pull_request.number }})" \
             --body "$BODY" \
-            --label "2.x-only,backport" \
+            --label "2.x only,backport" \
             $([ "${{ steps.backport.outputs.status }}" == "conflicts" ] && echo "--draft" || echo "")
