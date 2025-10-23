@@ -241,10 +241,6 @@ az_barrio.settings:
     bootstrap_barrio_region_width_content:
       type: integer
       label: 'Width for content region'
-    # Arizona-specific navbar settings
-    az_barrio_navbar_offcanvas:
-      type: boolean
-      label: 'Enable navbar offcanvas'
     external_links:
       type: boolean
       label: 'Enable external links'
@@ -267,9 +263,6 @@ az_barrio.settings:
     copyright_notice:
       type: text
       label: 'Copyright notice'
-    az_hide_front_title:
-      type: boolean
-      label: 'Enable hide front page title'
     az_back_to_top:
       type: boolean
       label: 'Enable ''Back to Top'' button'
