@@ -13,6 +13,16 @@ az_finder.settings:
             Choice:
               - 'expand'
               - 'collapse'
+    gtm_enabled_views:
+      type: sequence
+      label: 'GTM Enabled Finder Views'
+      mapping:
+        value:
+          type: boolean
+          label: 'Value'
+        label:
+          type: string
+          label: 'View ID'
 
 az_finder.tid_widget.[view_id].[display_id]:
   type: config_object
