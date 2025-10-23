@@ -318,7 +318,6 @@ class AZRankingWidget extends WidgetBase {
         'text-bg-oasis' => $this->t('Oasis'),
       ],
       '#required' => TRUE,
-      '#attributes' => ['data-az-ranking-bg-input-id' => $ranking_background_unique_id],
       '#title' => $this->t('Ranking Background with Hover Effect'),
       '#default_value' => (!empty($item->options_hover_effect['class'])) ? $item->options_hover_effect['class'] : 'text-bg-chili',
       '#states' => [
@@ -345,9 +344,7 @@ class AZRankingWidget extends WidgetBase {
         'visible' => [
           ':input[data-az-ranking-type-input-id="' . $ranking_type_unique_id . '"]' => ['value' => 'standard'],
           'and',
-          // Ranking Background (options) must be "bg-transparent".
-          //':input[data-az-ranking-bg-input-id="' . $ranking_background_unique_id . '"]' => ['value' => 'bg-transparent'],
-          ':input[name*="[options]"]' => ['value' => 'bg-transparent'],
+          ':input[data-az-ranking-bg-input-id="' . $ranking_background_unique_id . '"]' => ['value' => 'bg-transparent'],
         ],
       ],
     ];
