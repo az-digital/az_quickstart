@@ -432,12 +432,12 @@ class AZRankingWidget extends WidgetBase {
       '#title' => $this->t('Ranking Link Style'),
       '#options' => [
         'visually-hidden' => $this->t('Hidden link title'),
-        'link' => $this->t('Text link'),
-        'w-100 btn btn-red' => $this->t('Red button (default)'),
-        'w-100 btn btn-blue' => $this->t('Blue button'),
-        'w-100 btn btn-outline-red' => $this->t('Red outline button'),
-        'w-100 btn btn-outline-blue' => $this->t('Blue outline button'),
-        'w-100 btn btn-outline-white' => $this->t('White outline button'),
+        'link mt-2' => $this->t('Text link'),
+        'w-100 btn btn-red mt-2' => $this->t('Red button (default)'),
+        'w-100 btn btn-blue mt-2' => $this->t('Blue button'),
+        'w-100 btn btn-outline-red mt-2' => $this->t('Red outline button'),
+        'w-100 btn btn-outline-blue mt-2' => $this->t('Blue outline button'),
+        'w-100 btn btn-outline-white mt-2' => $this->t('White outline button'),
       ],
       '#default_value' => $item->ranking_link_style ?? 'w-100 btn btn-red',
       '#states' => [
