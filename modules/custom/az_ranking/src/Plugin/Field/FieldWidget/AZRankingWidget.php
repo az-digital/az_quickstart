@@ -431,7 +431,7 @@ class AZRankingWidget extends WidgetBase {
       '#type' => 'select',
       '#title' => $this->t('Ranking Link Style'),
       '#options' => [
-        'd-none' => $this->t('Hidden link title'),
+        'visually-hidden' => $this->t('Hidden link title'),
         'link' => $this->t('Text link'),
         'w-100 btn btn-red' => $this->t('Red button (default)'),
         'w-100 btn btn-blue' => $this->t('Blue button'),
