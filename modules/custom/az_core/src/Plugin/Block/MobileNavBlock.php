@@ -2,9 +2,11 @@
 
 namespace Drupal\az_core\Plugin\Block;
 
+use Drupal\Core\Access\AccessResultInterface;
 use Drupal\Core\Block\Attribute\Block;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Cache\CacheBackendInterface;
+use Drupal\Core\Cache\Context\AccountPermissionsCacheContext;
 use Drupal\Core\Menu\MenuLinkTreeInterface;
 use Drupal\Core\Menu\MenuTreeParameters;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
@@ -60,6 +62,13 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
   protected $menuLinkTree;
 
   /**
+   * The account permissions cache context service.
+   *
+   * @var \Drupal\Core\Cache\Context\AccountPermissionsCacheContext
+   */
+  protected $accountPermissionsContext;
+
+  /**
    * Constructs a MobileNavBlock object.
    *
    * @param array $configuration
@@ -74,6 +83,8 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
    *   The cache backend to use for menu storage.
    * @param \Drupal\Core\Menu\MenuLinkTreeInterface $menu_link_tree
    *   The menu link tree service.
+   * @param \Drupal\Core\Cache\Context\AccountPermissionsCacheContext $account_permissions_context
+   *   The account permissions cache context.
    */
   public function __construct(
     array $configuration,
@@ -82,11 +93,13 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
     RouteMatchInterface $route_match,
     CacheBackendInterface $cache_backend,
     MenuLinkTreeInterface $menu_link_tree,
+    AccountPermissionsCacheContext $account_permissions_context,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->routeMatch = $route_match;
     $this->cache = $cache_backend;
     $this->menuLinkTree = $menu_link_tree;
+    $this->accountPermissionsContext = $account_permissions_context;
   }
 
   /**
@@ -99,7 +112,8 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
       $plugin_definition,
       $container->get('current_route_match'),
       $container->get('cache.default'),
-      $container->get('menu.link_tree')
+      $container->get('menu.link_tree'),
+      $container->get('cache_context.user.permissions')
     );
   }
 
@@ -110,7 +124,8 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
    *   An array of MenuLinkTreeElements containing the full main menu tree.
    */
   protected function initMenuTree(): array {
-    $cachedTreeData = $this->cache->get('az_mobile_nav_menu.menu_tree');
+    $userPermissionsContext = $this->accountPermissionsContext->getContext();
+    $cachedTreeData = $this->cache->get('az_mobile_nav_menu.menu_tree:' . $userPermissionsContext);
     if ($cachedTreeData) {
       return $cachedTreeData->data;
     }
@@ -131,7 +146,7 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
 
     // Save the tree to the cache backend.
     $this->cache->set(
-      'az_mobile_nav_menu.menu_tree',
+      'az_mobile_nav_menu.menu_tree:' . $userPermissionsContext,
       $tree,
       CacheBackendInterface::CACHE_PERMANENT,
       [
