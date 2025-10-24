@@ -45,16 +45,7 @@ function az_demo_install() {
 
   // Import Finder view overrides so that exposed filter blocks have valid
   // references during install.
-  $module_path = \Drupal::service('extension.list.module')->getPath('az_finder');
-  $source = new FileStorage($module_path . '/config/quickstart');
-
-  $config_names = $source->listAll('views.view.');
-
-  foreach ($config_names as $config_name) {
-    $config_data = $source->read($config_name);
-    $config = \Drupal::configFactory()->getEditable($config_name);
-    $config->setData($config_data)->save();
-  }
+  \Drupal::service('az_core.override_import')->importOverrides(['az_finder']);
 }
 
 /**
