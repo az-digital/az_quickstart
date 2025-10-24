@@ -335,11 +335,12 @@ class AZRankingWidget extends WidgetBase {
       '#type' => 'select',
       '#title' => $this->t('Ranking Font Color'),
       '#options' => [
-        'ranking-text-black' => $this->t('Black (default)'),
+        'ranking-text-midnight' => $this->t('Midnight (default)'),
+        'ranking-text-black' => $this->t('Black'),
         'ranking-text-white' => $this->t('White'),
         'ranking-text-az-blue' => $this->t('Arizona Blue'),
       ],
-      '#default_value' => $item->ranking_font_color ?? 'ranking-text-black',
+      '#default_value' => $item->ranking_font_color ?? 'ranking-text-midnight',
       '#states' => [
         'visible' => [
           ':input[data-az-ranking-type-input-id="' . $ranking_type_unique_id . '"]' => ['value' => 'standard'],
@@ -780,7 +781,7 @@ class AZRankingWidget extends WidgetBase {
     }
 
     // Determine font color and text color override.
-    $ranking_font_color = $item->ranking_font_color ?? 'ranking-text-black';
+    $ranking_font_color = $item->ranking_font_color ?? 'ranking-text-midnight';
     $text_color_override = '';
 
     // Determine source classes based on background color (like formatter does).

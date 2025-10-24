@@ -56,3 +56,6 @@
 .ranking-text-az-blue *:not(a) {
     color: RGBA(var(--bs-blue-rgb),var(--bs-bg-opacity,1));
 }
+.ranking-text-midnight *:not(a) {
+    color: RGBA(var(--bs-midnight-rgb),var(--bs-bg-opacity,1)) !important;
+}
