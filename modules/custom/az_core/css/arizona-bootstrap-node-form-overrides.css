@@ -42,6 +42,15 @@ a.chosen-single {
   padding: 16px 16px 16px 33px;
 }
 
+.placeholder {
+  display: initial !important;
+  min-height: initial !important;
+  vertical-align: initial !important;
+  cursor: initial !important;
+  background-color: initial !important;
+  opacity: initial !important;
+}
+
 /* See https://github.com/az-digital/az_quickstart/issues/4730. */
 ul.media-library-menu,
 ul.filter-tips,
