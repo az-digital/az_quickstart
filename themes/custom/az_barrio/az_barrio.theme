@@ -343,31 +343,6 @@ function az_barrio_library_info_alter(&$libraries, $extension) {
 }
 
 /**
- * Helper function for constructing AZ Bootstrap asset paths.
- */
-function az_barrio_az_bootstrap_assets_path($type) {
-  if (empty($type)) {
-    return FALSE;
-  }
-
-  // AZ Bootstrap source.
-  $az_bootstrap_path = base_path() . 'libraries/arizona-bootstrap';
-  $az_bootstrap_path .= '/' . $type . '/arizona-bootstrap';
-
-  // Use AZ Bootstrap Javascript bundle (contains Popper.js).
-  if ($type === 'js') {
-    $az_bootstrap_path .= '.bundle';
-  }
-
-  // AZ Bootstrap minified.
-  if (theme_get_setting('az_bootstrap_minified')) {
-    $az_bootstrap_path .= '.min';
-  }
-
-  return $az_bootstrap_path . '.' . $type;
-}
-
-/**
  * Helper function for constructing AZ Bootstrap CSS asset paths.
  */
 function az_barrio_az_bootstrap_css_path() {
