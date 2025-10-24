@@ -128,58 +128,18 @@ function template_preprocess_az_responsive_background_image(array &$variables) {
 }
 
 /**
- * Implements hook_form_FORM_ID_alter() for media_az_image_edit_form.
+ * Implements hook_field_widget_single_element_WIDGET_TYPE_form_alter() for image_widget_crop.
  *
- * Adds warning message for media entities that are used in multiple places.
+ * Modification for image_widget_crop widgets to show usage warning.
  */
-function az_media_form_media_az_image_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  $count = 0;
-  // Find what entity this form applies to.
-  $form_object = $form_state->getFormObject();
-  if ($form_object instanceof EntityFormInterface) {
-    /** @var \Drupal\media\MediaInterface $media */
-    $media = $form_object->getEntity();
-    if ($media) {
-      $entityTypeManager = \Drupal::service('entity_type.manager');
-      // Get all fields that reference media entities.
-      $media_reference_fields = $entityTypeManager->getStorage('field_storage_config')
-        ->loadByProperties([
-          'type' => 'entity_reference',
-          'settings' => ['target_type' => 'media'],
-        ]);
-
-      // Iterate through each field and check for references.
-      foreach ($media_reference_fields as $field_name => $field_storage_config) {
-        $entity_type_id = $field_storage_config->getTargetEntityTypeId();
-        $storage = $entityTypeManager->getStorage($entity_type_id);
-
-        // Get only the name of the field without the entity type.
-        $keys = explode('.', $field_name);
-        $identifier = $keys[1] ?? NULL;
-        if (!$identifier) {
-          continue;
-        }
-        // Query for entities that reference the media ID in the current field.
-        $query = $storage->getQuery()
-          ->condition($identifier, $media->id())
-          ->accessCheck(FALSE);
-
-        $count += $query->count()->execute();
-      }
-      if ($count > 1) {
-        $form['az_media_count'] = [
-          '#type' => 'container',
-          '#markup' => t('This media item is used in @places places. Exercise caution before editing it.', [
-            '@places' => $count,
-          ]),
-          '#attributes' => [
-            'class' => ['messages messages--warning'],
-          ],
-          '#weight' => -10,
-        ];
-      }
-    }
-  }
+function az_media_field_widget_single_element_image_widget_crop_form_alter(array &$element, FormStateInterface $form_state, array $context) {
+  $element['#pre_render'] = [
+    ['Drupal\az_media\AZMediaMultipleUsagesHelper', 'warnMultipleUsages'],
+    // @todo determine why this needs to be added.
+    // If this is not added, the default ManagedFile callback does not run.
+    // Perhaps our pre_render needs to be added in a later hook.
+    ['Drupal\file\Element\ManagedFile', 'preRenderManagedFile'],
+  ];
 }
 
 /**
