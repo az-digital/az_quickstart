@@ -26,3 +26,6 @@ az-mobile-nav:
       css/az-mobile-nav.css: {}
   js:
     js/az-mobile-nav.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
