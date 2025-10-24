@@ -76,3 +76,10 @@
   overflow-wrap: anywhere;
   padding-inline-start: revert;
 }
+
+/**
+ * Ensure dark table preview in style picker renders with a dark background.
+ */
+.ck-dropdown__panel .ck-style-panel .ck-content .table-dark {
+  background-color: var(--bs-table-bg);
+}
