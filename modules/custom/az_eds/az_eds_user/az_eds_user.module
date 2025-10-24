@@ -1,0 +1,33 @@
+<?php
+
+/**
+ * @file
+ * Contains az_eds_user.module.
+ */
+
+use Drupal\user\UserInterface;
+use Symfony\Component\Ldap\Entry;
+
+/**
+ * Implements hook_ldap_user_edit_user_alter().
+ */
+function az_eds_user_ldap_user_edit_user_alter(UserInterface $account, Entry $entry, array $context) {
+
+  // Make modifications to user based on LDAP Entry.
+  $roles = ['az_content_editor'];
+
+  // Check for group membership.
+  // @todo formalize this more?
+  // What maps groups to roles?
+  if ($entry->hasAttribute('isMemberOf')) {
+    $groups = $entry->getAttribute('isMemberOf');
+    if (is_array($groups) && in_array('arizona.edu:dept:uits:uitswebservices:team', $groups)) {
+      $roles = ['administrator'];
+    }
+  }
+  // Add roles for user.
+  foreach ($roles as $role) {
+    $account->addRole($role);
+  }
+
+}
