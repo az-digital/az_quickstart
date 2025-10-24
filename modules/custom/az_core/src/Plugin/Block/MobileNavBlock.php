@@ -328,6 +328,10 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
 
     // Build the list of menu links.
     foreach ($treeWithText as $item) {
+      // Do not display menu links to pages inaccessible to the current user.
+      if ($item->access === NULL || !$item->access instanceof AccessResultInterface || !$item->access->isAllowed()) {
+        continue;
+      }
       if ($item->link->getRouteName() === '<button>' || $item->link->getRouteName() === '<nolink>') {
         $pageLink = [
           '#type' => 'html_tag',
