@@ -139,6 +139,7 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
 
     // Apply manipulators.
     $manipulators = [
+      ['callable' => 'menu.default_tree_manipulators:checkNodeAccess'],
       ['callable' => 'menu.default_tree_manipulators:checkAccess'],
       ['callable' => 'menu.default_tree_manipulators:generateIndexAndSort'],
     ];
