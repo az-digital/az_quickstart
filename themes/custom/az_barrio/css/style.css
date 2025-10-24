@@ -777,10 +777,6 @@ form.webform-submission-form {
   color: #333;
 }
 
-.field--name-field-az-text-area .contextual-region {
-  display: inline-block;
-}
-
 /* Fix when using inline image text wrap bulleted text needs more left padding
  * See https://github.com/az-digital/az_quickstart/pull/4195
  */
