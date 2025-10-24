@@ -1,0 +1,26 @@
+langcode: en
+status: true
+dependencies: {  }
+id: gtm
+label: 'Google Tag Manager'
+description: 'Manages and deploys marketing tags.'
+default: false
+required: false
+opt_out: false
+only_once: false
+contextual_consent_only: null
+contextual_consent_text: null
+info_url: 'https://marketingplatform.google.com/intl/de/about/tag-manager/'
+privacy_policy_url: 'https://policies.google.com/privacy'
+purposes:
+  - advertising
+cookies: {  }
+callback_code: ''
+javascripts:
+  - gtm.js
+  - gtag.js
+  - 'https://www.googletagmanager.com/ns.html'
+wrapper_identifier: {  }
+attachments:
+  - gtm
+weight: 2

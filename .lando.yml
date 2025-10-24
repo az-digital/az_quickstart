@@ -86,6 +86,15 @@ tooling:
     cmd:
       - /app/vendor/bin/drush --root=/app/web site:install --account-mail=noreply@email.arizona.edu --account-name=azadmin --account-pass=azadmin2025 --db-url=mysql://drupal11:drupal11@database:3306/drupal11 -y --verbose
       - /app/vendor/bin/drush --root=/app/web config:set -y az_cas.settings disable_login_form 0
+      - mkdir -p /app/web/sites/default/files/private
+      - chmod 755 /app/web/sites/default/files/private
+      - chmod u+w /app/web/sites/default/settings.php
+      - |
+        if ! grep -q "file_private_path.*sites/default/files/private" /app/web/sites/default/settings.php; then
+          echo "\$settings['file_private_path'] = 'sites/default/files/private';" >> /app/web/sites/default/settings.php
+        fi
+      - chmod u-w /app/web/sites/default/settings.php
+      - /app/vendor/bin/drush --root=/app/web config:set -y system.file path.private sites/default/files/private
       - /app/vendor/bin/drush --root=/app/web cache:rebuild
   # Enable theme debugging.
   theme-debug:
