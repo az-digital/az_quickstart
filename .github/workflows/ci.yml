@@ -170,7 +170,7 @@ jobs:
       - name: Run composer audit
         run: |
           cd az-quickstart-scaffolding
-          composer audit
+          composer audit --abandoned report
 
   eslint:
     name: eslint
