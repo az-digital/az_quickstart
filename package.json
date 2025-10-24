@@ -32,9 +32,14 @@
     "glob": "10.3.5",
     "minimist": "^1.2.8",
     "mkdirp": "^3.0.1",
+<<<<<<< HEAD
     "nightwatch": "2.4.2",
     "prettier": "^3.0.3",
     "terser": "^5.19.0"
+=======
+    "prettier": "^3.5.3",
+    "terser": "^5.39.0"
+>>>>>>> 5f43555f (Closes #4880: Remove unused Nightwatch testing framework dependencies and configuration (#4907))
   },
   "babel": {
     "env": {
