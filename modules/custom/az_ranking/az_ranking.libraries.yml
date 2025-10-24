@@ -31,13 +31,6 @@ az_ranking_title_hover:
   css:
     component:
       css/az-ranking-title-hover.css: {}
-az_ranking_dynamic_helptext:
-  js:
-    js/az-ranking-dynamic-helptext.js: {}
-  dependencies:
-    - core/jquery
-    - core/drupal
-    - core/once
 focal_point_picker:
   js:
     js/az-ranking-focal-point-picker.js: {}

@@ -243,9 +243,9 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
               if(!empty($ranking_hover_effect)) {
                 $ranking_classes .= ' ranking-bold-hover';
               }
-//              else {
-//                $ranking_classes .= ' ranking-subtle-hover';
-//              }
+              // else {
+              // $ranking_classes .= ' ranking-subtle-hover';
+              // }
               if (!empty($item->link_uri)) {
                 $ranking_classes .= ' ranking-with-link'; // This is working only once on the clickable.
               }
@@ -258,11 +258,11 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
           }
         }
       }
-      
+
       // Add .az-ranking-responsive to the column for image-only ranking cards.
-      if ($item->options['ranking_type'] === 'image_only') {
-        $column_classes[] = 'az-ranking-responsive';
-      }
+      // if ($item->options['ranking_type'] === 'image_only') {
+      //   $column_classes[] = 'az-ranking-responsive';
+      // }
 
       // Shadow class should NOT be applied on transparent.
       $ranking_classes .= ' overflow-hidden';
