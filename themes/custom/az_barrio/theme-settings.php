@@ -74,14 +74,6 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#default_value' => theme_get_setting('copyright_notice'),
   ];
 
-  // Hide front page title.
-  $form['az_settings']['settings']['az_hide_front_title'] = [
-    '#type' => 'checkbox',
-    '#title' => t('Hide title of front page node'),
-    '#description' => t('If this is checked, the title of the node being displayed on the front page will not be visible'),
-    '#default_value' => theme_get_setting('az_hide_front_title'),
-  ];
-
   // Back-to-top button.
   $form['az_settings']['settings']['az_back_to_top'] = [
     '#type' => 'checkbox',

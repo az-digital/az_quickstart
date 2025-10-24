@@ -754,6 +754,10 @@ final class AZBootstrapMarkupConverter {
     'embed-responsive-4by3' => 'ratio-4x3',
     'embed-responsive-16by9' => 'ratio-16x9',
     'embed-responsive-21by9' => 'ratio-21x9',
+    /***************************************************************************
+     * Material icons classes.
+     */
+    'material-icons-sharp' => 'material-symbols-rounded',
   ];
 
 }
