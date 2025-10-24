@@ -28,5 +28,4 @@ az-mobile-nav:
     js/az-mobile-nav.js: {}
   dependencies:
     - core/drupal
-    - core/drupal.ajax
     - core/once

@@ -177,6 +177,7 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
       '#attached' => [
         'library' => [
           'az_core/az-mobile-nav',
+          'core/drupal.ajax',
         ],
       ],
       '#cache' => [
