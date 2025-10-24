@@ -10,7 +10,7 @@
   max-width: 100%;
 }
 
-figure[data-view-mode="az_natural_size"] .az-media.embed-responsive {
+figure[data-view-mode="az_natural_size"] .az-media.ratio {
   width: 100%;
 }
 
