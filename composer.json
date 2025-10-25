@@ -25,8 +25,8 @@
     ],
     "require": {
         "php": ">=8.3",
-        "az-digital/arizona-bootstrap": "dev-main",
-        "az-digital/az-icons": "1.0.2",
+        "az-digital/arizona-bootstrap": "5.0.2",
+        "az-digital/az-icons": "1.0.4",
         "citation-style-language/locales": "0.0.27",
         "citation-style-language/styles": "0.0.668",
         "composer/installers": "^2.0",
@@ -45,7 +45,7 @@
         "drupal/calendar_link": "3.0.4",
         "drupal/cas": "3.0.0-beta4",
         "drupal/chosen": "4.0.3",
-        "drupal/ckeditor_bs_grid": "2.0.12",
+        "drupal/ckeditor_bs_grid": "2.2.0-alpha1",
         "drupal/ckeditor_indentblock": "1.1.0",
         "drupal/coffee": "2.0.1",
         "drupal/config_distro": "2.1.0-alpha1",
@@ -57,10 +57,11 @@
         "drupal/config_split": "2.0.2",
         "drupal/config_sync": "3.0.0-alpha5",
         "drupal/config_update": "2.0.0-alpha4",
-        "drupal/core-recommended": "11.2.3",
+        "drupal/core-recommended": "11.2.5",
         "drupal/crop": "2.4.0",
         "drupal/date_ap_style": "2.0.2",
         "drupal/decorative_image_widget": "1.0.2",
+        "drupal/diff": "2.0.0-beta4",
         "drupal/draggableviews": "2.1.4",
         "drupal/easy_breadcrumb": "2.0.9",
         "drupal/embed": "1.10.0",
@@ -68,10 +69,10 @@
         "drupal/environment_indicator": "4.0.21",
         "drupal/exclude_node_title": "2.0.0",
         "drupal/externalauth": "2.0.8",
-        "drupal/extlink": "2.0.4",
+        "drupal/extlink": "2.0.5",
         "drupal/field_group": "4.0.0",
         "drupal/field_group_link": "3.3.0",
-        "drupal/flag": "4.0.0-beta7",
+        "drupal/flag": "5.0.1",
         "drupal/google_tag": "2.0.8",
         "drupal/honeypot": "2.2.2",
         "drupal/image_widget_crop": "3.0.0",
@@ -83,12 +84,13 @@
         "drupal/key": "1.20",
         "drupal/ldap": "4.12",
         "drupal/link_class": "2.2.0",
-        "drupal/linkit": "7.0.8",
+        "drupal/linkit": "7.0.9",
         "drupal/masquerade": "2.0.0",
         "drupal/masquerade_log": "2.0.0",
         "drupal/media_entity_file_replace": "1.3.0",
         "drupal/media_library_edit": "3.0.4",
         "drupal/media_library_form_element": "2.1.2",
+        "drupal/media_remote": "1.10",
         "drupal/menu_block": "1.14.0",
         "drupal/menu_link_attributes": "1.5.0",
         "drupal/metatag": "2.1.1",
@@ -101,7 +103,7 @@
         "drupal/paragraphs_admin": "1.6.0",
         "drupal/pathauto": "1.13.0",
         "drupal/quick_node_clone": "1.22.0",
-        "drupal/redirect": "1.11.0",
+        "drupal/redirect": "1.12.0",
         "drupal/role_delegation": "1.4.0",
         "drupal/schema_metatag": "3.0.3",
         "drupal/search_exclude": "3.0.0-beta2",
@@ -111,23 +113,24 @@
         "drupal/smart_date": "4.2.4",
         "drupal/smart_title": "1.0.0",
         "drupal/smtp": "1.4.0",
-        "drupal/token": "1.15.0",
+        "drupal/token": "1.16.0",
+        "drupal/ui_icons": "1.1.0-beta6",
         "drupal/user_expire": "2.1.2",
         "drupal/views_bootstrap": "5.5.0-rc3",
         "drupal/views_bulk_operations": "4.3.4",
         "drupal/views_remote_data": "1.0.3",
         "drupal/viewsreference": "2.0.0-beta10",
-        "drupal/webform": "6.3.0-beta2",
+        "drupal/webform": "6.3.0-beta4",
         "drupal/workbench_access": "2.0.4",
         "drupal/xmlsitemap": "2.0.0",
         "giggsey/libphonenumber-for-php": "^8.5",
         "jjj/chosen": "2.2.1",
-        "kevinrob/guzzle-cache-middleware": "6.0.0",
+        "kevinrob/guzzle-cache-middleware": "7.0.0",
         "npm-asset/blazy": "1.8.2",
         "npm-asset/bootstrap-datepicker": "1.10.0",
         "npm-asset/easepick--bundle": "1.2.1",
         "npm-asset/jquery-ui-touch-punch": "*",
-        "npm-asset/slick-carousel": "1.8.0",
+        "npm-asset/slick-carousel": "1.6.0",
         "renanbr/bibtex-parser": "2.2.0",
         "seboettg/citeproc-php": "2.7.0"
     },
@@ -139,7 +142,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "3.0.x-dev",
+            "dev-main": "3.1.x-dev",
             "2.x-dev": "2.14.x-dev"
         },
         "patches": {
@@ -147,7 +150,9 @@
                 "Support entities without bundles (2945387)": "https://www.drupal.org/files/issues/2024-06-07/2945387-28.patch"
             },
             "drupal/bootstrap_barrio": {
-                "Js error if table not found (3519060)": "https://www.drupal.org/files/issues/2025-04-14/bootstrap-barrio-table-not-found-3519060-1.patch"
+                "Js error if table not found (3519060)": "https://www.drupal.org/files/issues/2025-04-14/bootstrap-barrio-table-not-found-3519060-1.patch",
+                "Fix alerts (3485305)": "https://www.drupal.org/files/issues/2025-08-27/3485305-22.patch",
+                "Region class field: increase maxlength from 40 to 255 (3548552)": "https://www.drupal.org/files/issues/2025-09-24/3548552-4.patch"
             },
             "drupal/config_distro": {
                 "Storage comparer issue": "https://gist.githubusercontent.com/tadean/e2e0dd57f1a9c4eae28d8e713cb01d82/raw/e114987d4a76c183208c763de4dbfecbf41b7f35/config_distro_storage_comparer_issue.patch"
@@ -164,15 +169,24 @@
                 "[Apache only] Wrong file header returned, when converting an image for example to webp (3310963)": "https://www.drupal.org/files/issues/2024-05-15/3310963-32.patch",
                 "Hardcode a higher WebP conversion quality setting (3320689)": "https://gist.githubusercontent.com/joeparsons/d99b6c6eef240e8eaf768ba79e1c9f1b/raw/9b99325bd20907db0506969fc4f5823b46065c6b/3320689-10-3-x-hardcoded.patch",
                 "user_user_role_insert should not exist (2672340)": "https://gist.githubusercontent.com/joeparsons/f31108ee18aaed01e03ef3005ecd3d92/raw/0fdd114d79083ea7c6d962a061d09d81d58a0bea/2672340-11.x.patch",
-                "[Regression] missing menu active trail since Drupal 9.5.9 (3359511)" : "https://www.drupal.org/files/issues/2025-07-15/3359511-11-x-no-tests.patch"
+                "[Regression] missing menu active trail since Drupal 9.5.9 (3359511)": "https://www.drupal.org/files/issues/2025-07-15/3359511-11-x-no-tests.patch",
+                "[regression] CSS class is not added to MediaLibrary dialog (3474018)": "https://www.drupal.org/files/issues/2025-07-03/3474018-27.diff",
+                "Diffs with different line endings leads to Invalid $mode 3 specified (3389715)": "https://www.drupal.org/files/issues/2024-01-09/Diffs-with-different-line-endings-leads-to-Invalid-mode-3-specified.patch",
+                "Recent changes to migrate_drupal can break migrations that rely on hook_migration_plugins_alter() (3546325)": "https://www.drupal.org/files/issues/2025-09-11/3546325-11-2-x.patch"
             },
             "drupal/draggableviews": {
                 "Row weights not displaying on sort view (3252365)": "https://www.drupal.org/files/issues/2023-08-25/3252365-check-remove-select-all-class.patch",
                 "Reset button, to reset the weight all back to 0 (3388659)": "https://www.drupal.org/files/issues/2023-09-21/3388659-reset-button-2.patch",
                 "Contextual Link throws RouteNotFoundException: Route 'view.this' does not exist (3316975)": "https://www.drupal.org/files/issues/2024-06-10/3316975-32-MR40.patch"
             },
+            "drupal/entity_embed": {
+                "Drupal 10.5/11.2 compatability (tooltip broken, cannot edit embedded entities) (3531672)": "https://www.drupal.org/files/issues/2025-08-08/entity_embed--fix-ckeditor-icon-reference--3531672-22.patch"
+            },
             "drupal/image_widget_crop": {
-                "Can't save image widget crop settings (ImmutableConfigException) (3491004)": "https://www.drupal.org/files/issues/2025-03-06/image_widget_crop_fix.patch"
+                "Can't save image widget crop settings (ImmutableConfigException) (3491004)": "https://www.drupal.org/files/issues/2025-03-06/image_widget_crop_fix.patch",
+                "Crop tool not working if the theme specifies a border-radius on images (3271182)": "https://www.drupal.org/files/issues/2022-03-23/3271182-2.patch",
+                "Use up-to-date Cropper library and without jQuery dependency (3093928)": "https://www.drupal.org/files/issues/2025-07-04/3093928-33.patch",
+                "JavaScript broken when using cropper.js v1.5.12 (3305831)": "https://www.drupal.org/files/issues/2025-07-04/3305831-8.patch"
             },
             "drupal/imagemagick": {
                 "Imagemagick fails to convert animated gifs into animated webps (3295470)": "https://www.drupal.org/files/issues/2023-08-29/imagemagick-convertation-keep-animation-3295470-10.patch"
@@ -207,6 +221,9 @@
             },
             "drupal/xmlsitemap": {
                 "Module incorrectly assumes string, triggering PHP 8 fatal error (3355204)": "https://www.drupal.org/files/issues/2023-04-19/3355204_metatag_2.patch"
+            },
+            "npm-asset/slick-carousel": {
+                "Incompatibility with Drupal 11/jQuery 4 (3467129)": "https://www.drupal.org/files/issues/2025-02-17/compatibility_jQuery_4.patch"
             },
             "renanbr/bibtex-parser": {
                 "Parser performance issue": "https://gist.githubusercontent.com/tadean/39b90d00cd3edfff7c5653f907e15721/raw/8feb59cb4447b0f667fe5f4936a25c4d30211e1b/renanbr_bibtex_parser_performance.patch"

@@ -74,14 +74,6 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#default_value' => theme_get_setting('copyright_notice'),
   ];
 
-  // Hide front page title.
-  $form['az_settings']['settings']['az_hide_front_title'] = [
-    '#type' => 'checkbox',
-    '#title' => t('Hide title of front page node'),
-    '#description' => t('If this is checked, the title of the node being displayed on the front page will not be visible'),
-    '#default_value' => theme_get_setting('az_hide_front_title'),
-  ];
-
   // Back-to-top button.
   $form['az_settings']['settings']['az_back_to_top'] = [
     '#type' => 'checkbox',
@@ -347,19 +339,6 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   $form['affix']['navbar_top'] = [];
   $form['affix']['navbar'] = [];
   $form['components']['navbar'] = [];
-  // Components.
-  $form['components']['navbar_offcanvas'] = [
-    '#type' => 'details',
-    '#title' => t('Navbar with Off Canvas Drawer for mobile devices.'),
-    '#collapsible' => TRUE,
-    '#collapsed' => TRUE,
-  ];
-  $form['components']['navbar_offcanvas']['az_barrio_navbar_offcanvas'] = [
-    '#type' => 'checkbox',
-    '#title' => t('Use Navbar Off Canvas'),
-    '#description' => t('Check to use the Arizona Bootstrap Off Canvas Navbar instead of the bootstrap navbar.'),
-    '#default_value' => theme_get_setting('az_barrio_navbar_offcanvas'),
-  ];
   // Logos.
   $form['logo']['az_barrio_logo_svg_inline'] = [
     '#type' => 'checkbox',
@@ -469,8 +448,6 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
  * Submit handler for az_barrio_form_settings.
  */
 function az_barrio_form_system_theme_settings_submit($form, FormStateInterface &$form_state) {
-  $config_key = $form_state->getValue('config_key');
-  $config = \Drupal::getContainer()->get('config.factory')->getEditable($config_key);
   $values = $form_state->getValues();
   // If the user uploaded a new logo or favicon, save it to a permanent location
   // and use it in place of the default theme-provided file.
