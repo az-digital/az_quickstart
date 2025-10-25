@@ -1,0 +1,81 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the az_ranking module.
+ */
+
+use Drupal\image\Entity\ImageStyle;
+
+/**
+ * Implements hook_install().
+ */
+function az_ranking_install() {
+  // Create focal point-based image styles for ranking context.
+  _az_ranking_create_image_styles();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function az_ranking_uninstall() {
+  // Optionally remove the image styles we created.
+  // Comment this out if you want to keep them for reference.
+  _az_ranking_remove_image_styles();
+}
+
+/**
+ * Create a single image style for ranking images.
+ *
+ * This style scales images to a minimum size without cropping,
+ * allowing CSS and JavaScript to handle positioning via object-fit/position.
+ */
+function _az_ranking_create_image_styles() {
+  $style_id = 'az_ranking_responsive';
+  
+  // Check if style already exists.
+  $style = ImageStyle::load($style_id);
+  if (!$style) {
+    $style = ImageStyle::create([
+      'name' => $style_id,
+      'label' => 'AZ Ranking Responsive (Internal)',
+    ]);
+
+    // Scale image to at least 1920 wide AND 1300px tall.
+    // This ensures the image is large enough for all ranking contexts
+    // while maintaining aspect ratio.
+    $style->addImageEffect([
+      'id' => 'image_scale',
+      'weight' => -10,
+      'data' => [
+        'width' => 1920,
+        'height' => 1300,
+        'upscale' => TRUE,
+      ],
+    ]);
+
+    // Add WebP conversion for performance.
+    $style->addImageEffect([
+      'id' => 'image_convert',
+      'weight' => 0,
+      'data' => [
+        'extension' => 'webp',
+      ],
+    ]);
+
+    $style->save();
+    \Drupal::logger('az_ranking')->info('Created image style: @style', ['@style' => $style_id]);
+  }
+}
+
+/**
+ * Remove image styles created by this module.
+ */
+function _az_ranking_remove_image_styles() {
+  $style_id = 'az_ranking_responsive';
+  $style = ImageStyle::load($style_id);
+  if ($style) {
+    $style->delete();
+    \Drupal::logger('az_ranking')->info('Deleted image style: @style', ['@style' => $style_id]);
+  }
+}

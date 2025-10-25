@@ -1,0 +1,48 @@
+tr.odd .az-ranking-elements .form-item {
+  margin-bottom: 8px;
+}
+
+.az-ranking-elements .media-library-form-element .description {
+  display: none;
+}
+
+.az-ranking-elements .media-library-form-element {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.az-ranking-widget .media-library-form-element legend {
+  display: none;
+}
+
+.az-ranking-widget .media-library-form-element .fieldset-wrapper .description {
+  margin-block: 0.375rem;
+  color: #55565b;
+  font-size: 0.79rem;
+  line-height: 1.0625rem;
+  font-size: 0;
+}
+
+.az-ranking-widget .media-library-form-element .fieldset-wrapper .description::before {
+  content: "Add an image, then edit (click on " url(/modules/contrib/media_library_edit/icons/pencil.svg) ") to set crop focal point.";
+  font-size: 0.79rem;
+}
+
+.az-ranking-elements .media-library-selection {
+  margin: 0;
+}
+
+.az-ranking-elements .ranking-preview {
+  max-height: 200px;
+  overflow: hidden;
+}
+
+.az-ranking-elements.az-ranking-elements-closed .form-type--linkit,
+.az-ranking-elements.az-ranking-elements-closed .js-form-type-linkit,
+.az-ranking-elements.az-ranking-elements-closed .form-type--textfield,
+.az-ranking-elements.az-ranking-elements-closed .form-type--textarea,
+.az-ranking-elements.az-ranking-elements-closed .filter-wrapper,
+.az-ranking-elements.az-ranking-elements-closed .form-type--select,
+.az-ranking-elements.az-ranking-elements-closed .media-library-form-element {
+  display: none !important;
+}
