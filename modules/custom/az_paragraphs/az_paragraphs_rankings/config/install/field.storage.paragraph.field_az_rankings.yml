@@ -6,6 +6,7 @@ dependencies:
     - paragraphs
 id: paragraph.field_az_rankings
 field_name: field_az_rankings
+bundle: az_rankings
 entity_type: paragraph
 type: az_ranking
 settings: {  }

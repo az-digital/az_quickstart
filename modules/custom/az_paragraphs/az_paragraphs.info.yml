@@ -9,7 +9,6 @@ dependencies:
   - az_core
   - az_icons
   - az_media
-  - az_ranking
   - ckeditor_indentblock:ckeditor_indentblock
   - drupal:text
   - drupal:telephone
