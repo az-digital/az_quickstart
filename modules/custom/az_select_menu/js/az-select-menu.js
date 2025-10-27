@@ -4,26 +4,22 @@
 * https://www.drupal.org/node/2815083
 * @preserve
 **/
-function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
-function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
-function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-(function (Drupal, window, document, once) {
+((Drupal, window, document, once) => {
   Drupal.azSelectMenu = Drupal.azSelectMenu || {};
   Drupal.behaviors.azSelectMenu = {
-    attach: function attach(context, settings) {
-      Object.keys(settings.azSelectMenu.ids).forEach(function (property) {
+    attach(context, settings) {
+      Object.keys(settings.azSelectMenu.ids).forEach(property => {
         if (settings.azSelectMenu.ids.hasOwnProperty(property)) {
-          var selectFormId = settings.azSelectMenu.ids[property];
-          var selectForm = document.querySelector("#".concat(selectFormId));
-          once('azSelectMenu', selectForm, context).forEach(function (element) {
-            var handleEvents = Drupal.azSelectMenu.handleEvents;
+          const selectFormId = settings.azSelectMenu.ids[property];
+          const selectForm = document.querySelector(`#${selectFormId}`);
+          once('azSelectMenu', selectForm, context).forEach(element => {
+            const {
+              handleEvents
+            } = Drupal.azSelectMenu;
             element.addEventListener('focus', handleEvents);
             element.addEventListener('change', handleEvents);
             element.addEventListener('mouseenter', handleEvents);
-            var button = element.querySelector('button');
+            const button = element.querySelector('button');
             button.addEventListener('click', handleEvents);
             button.addEventListener('touchstart', handleEvents);
             button.addEventListener('mouseenter', handleEvents);
@@ -37,25 +33,22 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
       });
     }
   };
-  Drupal.azSelectMenu.handleEvents = function (event) {
-    var _window$arizonaBootst2;
+  Drupal.azSelectMenu.handleEvents = event => {
     if (event.type === 'touchstart') {
       if (event.target.classList.contains('js_select_menu_button')) {} else {
-        document.querySelectorAll('.az-select-menu').forEach(function (form) {
-          var _window$arizonaBootst;
-          var popoverInstance = (_window$arizonaBootst = window.arizonaBootstrap) === null || _window$arizonaBootst === void 0 || (_window$arizonaBootst = _window$arizonaBootst.Popover) === null || _window$arizonaBootst === void 0 ? void 0 : _window$arizonaBootst.getInstance(form);
+        document.querySelectorAll('.az-select-menu').forEach(form => {
+          const popoverInstance = window.arizonaBootstrap?.Popover?.getInstance(form);
           if (popoverInstance) popoverInstance.hide();
         });
         return;
       }
     }
-    var selectForm = event.target.closest('form');
-    var selectElement = selectForm.querySelector('select');
-    var _selectElement$select = _slicedToArray(selectElement.selectedOptions, 1),
-      optionsSelected = _selectElement$select[0];
-    var selectElementHref = optionsSelected.dataset.href;
-    var button = selectForm.querySelector('button');
-    var popoverInstance = (_window$arizonaBootst2 = window.arizonaBootstrap) === null || _window$arizonaBootst2 === void 0 || (_window$arizonaBootst2 = _window$arizonaBootst2.Popover) === null || _window$arizonaBootst2 === void 0 ? void 0 : _window$arizonaBootst2.getInstance(selectForm);
+    const selectForm = event.target.closest('form');
+    const selectElement = selectForm.querySelector('select');
+    const [optionsSelected] = selectElement.selectedOptions;
+    const selectElementHref = optionsSelected.dataset.href;
+    const button = selectForm.querySelector('button');
+    let popoverInstance = window.arizonaBootstrap?.Popover?.getInstance(selectForm);
     if (selectElementHref !== '') {
       if (popoverInstance) {
         popoverInstance.dispose();
@@ -71,11 +64,10 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
           break;
       }
     } else {
-      var _window$arizonaBootst3;
       button.classList.add('disabled');
       button.setAttribute('aria-disabled', 'true');
       selectElement.setAttribute('aria-disabled', 'true');
-      if (!popoverInstance && (_window$arizonaBootst3 = window.arizonaBootstrap) !== null && _window$arizonaBootst3 !== void 0 && _window$arizonaBootst3.Popover) {
+      if (!popoverInstance && window.arizonaBootstrap?.Popover) {
         popoverInstance = window.arizonaBootstrap.Popover.getOrCreateInstance ? window.arizonaBootstrap.Popover.getOrCreateInstance(selectForm) : window.arizonaBootstrap.Popover.getInstance(selectForm);
       }
       switch (event.type) {
