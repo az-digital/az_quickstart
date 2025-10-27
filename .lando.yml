@@ -70,7 +70,7 @@ services:
   node:
     type: node:20
     build:
-      - yarn install
+      - yarn install --ignore-scripts
   chromedriver:
     type: compose
     services:
@@ -100,7 +100,7 @@ tooling:
   # Provide phpcs tooling to check coding standards.
   phpcs:
     service: appserver
-    cmd: /app/vendor/bin/phpcs --colors --standard=web/profiles/custom/az_quickstart/phpcs.xml.dist web/profiles/custom/az_quickstart
+    cmd: /app/vendor/bin/phpcs -s --colors --standard=web/profiles/custom/az_quickstart/phpcs.xml.dist web/profiles/custom/az_quickstart
   # Provide PHPCBF tooling to fix coding standards.
   phpcbf:
     service: appserver

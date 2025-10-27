@@ -65,7 +65,7 @@ third_party_settings:
       weight: 20
       format_type: html_element
       format_settings:
-        classes: 'col-12 col-md-3 pb-3 pb-md-0'
+        classes: 'col-12 position-relative col-md-3 pb-3 pb-md-0'
         show_empty_fields: false
         id: ''
         element: div
@@ -85,7 +85,7 @@ third_party_settings:
       weight: 21
       format_type: html_element
       format_settings:
-        classes: 'col-12 col-md-5'
+        classes: 'col-12 position-relative col-md-5'
         show_empty_fields: false
         id: ''
         element: div
@@ -106,7 +106,7 @@ third_party_settings:
       weight: 22
       format_type: html_element
       format_settings:
-        classes: 'col-12 col-md-4'
+        classes: 'col-12 position-relative col-md-4'
         show_empty_fields: false
         id: ''
         element: div

@@ -5,59 +5,65 @@ declare(strict_types=1);
 namespace Drupal\az_publication\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBase;
+use Drupal\Core\Entity\Attribute\ConfigEntityType;
+use Drupal\Core\Entity\EntityViewBuilder;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\az_publication\AZPublicationTypeHtmlRouteProvider;
+use Drupal\az_publication\AZPublicationTypeListBuilder;
+use Drupal\az_publication\Form\AZPublicationTypeDeleteForm;
+use Drupal\az_publication\Form\AZPublicationTypeForm;
 
 /**
  * Defines the publication type entity.
- *
- * @ConfigEntityType(
- *   id = "az_publication_type",
- *   label = @Translation("Publication type"),
- *   label_collection = @Translation("Publication types"),
- *   label_singular = @Translation("publication type"),
- *   label_plural = @Translation("publication types"),
- *   label_count = @PluralTranslation(
- *     singular = "@count publication type",
- *     plural = "@count publication types"
- *   ),
- *   handlers = {
- *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
- *     "list_builder" = "Drupal\az_publication\AZPublicationTypeListBuilder",
- *     "form" = {
- *       "add" = "Drupal\az_publication\Form\AZPublicationTypeForm",
- *       "edit" = "Drupal\az_publication\Form\AZPublicationTypeForm",
- *       "delete" = "Drupal\az_publication\Form\AZPublicationTypeDeleteForm"
- *     },
- *     "route_provider" = {
- *       "html" = "Drupal\az_publication\AZPublicationTypeHtmlRouteProvider",
- *     },
- *   },
- *   config_export = {
- *     "id",
- *     "label",
- *     "type",
- *     "uuid",
- *     "status"
- *   },
- *   config_prefix = "type",
- *   admin_permission = "administer publication type entities",
- *   entity_keys = {
- *     "id" = "id",
- *     "label" = "label",
- *     "type" = "type",
- *     "uuid" = "uuid",
- *     "status" = "status",
- *   },
- *   links = {
- *     "canonical" = "/admin/config/az-quickstart/settings/az-publication/type/{az_publication_type}",
- *     "add-form" = "/admin/config/az-quickstart/settings/az-publication/type/add",
- *     "edit-form" = "/admin/config/az-quickstart/settings/az-publication/type/{az_publication_type}/edit",
- *     "delete-form" = "/admin/config/az-quickstart/settings/az-publication/type/{az_publication_type}/delete",
- *     "enable" = "/admin/config/az-quickstart/settings/az-publication/type/{az_publication_type}/enable",
- *     "disable" = "/admin/config/az-quickstart/settings/az-publication/type/{az_publication_type}/disable",
- *     "collection" = "/admin/config/az-quickstart/settings/az-publication/types"
- *   }
- * )
  */
+#[ConfigEntityType(
+  id: 'az_publication_type',
+  label: new TranslatableMarkup('Publication type'),
+  label_collection: new TranslatableMarkup('Publication types'),
+  label_singular: new TranslatableMarkup('publication type'),
+  label_plural: new TranslatableMarkup('publication types'),
+  handlers: [
+    'view_builder' => EntityViewBuilder::class,
+    'list_builder' => AZPublicationTypeListBuilder::class,
+    'form' => [
+      'add' => AZPublicationTypeForm::class,
+      'edit' => AZPublicationTypeForm::class,
+      'delete' => AZPublicationTypeDeleteForm::class,
+    ],
+    'route_provider' => [
+      'html' => AZPublicationTypeHtmlRouteProvider::class,
+    ],
+  ],
+  config_export: [
+    'id',
+    'label',
+    'type',
+    'uuid',
+    'status',
+  ],
+  config_prefix: 'type',
+  admin_permission: 'administer publication type entities',
+  label_count: [
+    'singular' => '@count publication type',
+    'plural' => '@count publication types',
+  ],
+  entity_keys: [
+    'id' => 'id',
+    'label' => 'label',
+    'type' => 'type',
+    'uuid' => 'uuid',
+    'status' => 'status',
+  ],
+  links: [
+    'canonical' => '/admin/config/az-quickstart/settings/az-publication/type/{az_publication_type}',
+    'add-form' => '/admin/config/az-quickstart/settings/az-publication/type/add',
+    'edit-form' => '/admin/config/az-quickstart/settings/az-publication/type/{az_publication_type}/edit',
+    'delete-form' => '/admin/config/az-quickstart/settings/az-publication/type/{az_publication_type}/delete',
+    'enable' => '/admin/config/az-quickstart/settings/az-publication/type/{az_publication_type}/enable',
+    'disable' => '/admin/config/az-quickstart/settings/az-publication/type/{az_publication_type}/disable',
+    'collection' => '/admin/config/az-quickstart/settings/az-publication/types',
+  ],
+)]
 class AZPublicationType extends ConfigEntityBase implements AZPublicationTypeInterface {
 
   /**

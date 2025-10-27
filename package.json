@@ -31,7 +31,6 @@
     "glob": "11.0.0",
     "minimist": "^1.2.8",
     "mkdirp": "^3.0.1",
-    "nightwatch": "^3.12.1",
     "prettier": "^3.5.3",
     "terser": "^5.39.0"
   },
