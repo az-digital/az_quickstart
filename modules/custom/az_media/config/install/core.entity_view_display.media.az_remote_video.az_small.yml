@@ -23,7 +23,7 @@ third_party_settings:
         show_label: false
         label_element: h3
         label_element_classes: ''
-        attributes: 'style="max-width: 360px;"'
+        attributes: ''
         effect: none
         speed: fast
         id: ''
