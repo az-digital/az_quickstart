@@ -1,0 +1,127 @@
+<?php
+
+/**
+ * @file
+ * Contains az_gdpr_consent.module.
+ *
+ * Provides geolocation-based GDPR cookie consent management.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function az_gdpr_consent_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.az_gdpr_consent':
+      $output = '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('The Quickstart GDPR Consent Management module provides geolocation-based cookie consent management. It uses Smart IP to detect visitor location and conditionally loads the Klaro consent banner only for visitors from countries that require GDPR compliance or have similar data protection laws.') . '</p>';
+      $output .= '<h3>' . t('Configuration') . '</h3>';
+      $output .= '<p>' . t('Configure the module at Administration » Configuration » Arizona Quickstart » Arizona Quickstart Settings » Quickstart GDPR Consent Management.') . '</p>';
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_page_attachments_alter().
+ *
+ * Removes Klaro attachments if visitor is not from a target country.
+ */
+function az_gdpr_consent_page_attachments_alter(array &$attachments) {
+
+  // Check if we should show the banner.
+  if (!az_gdpr_consent_should_show_banner()) {
+    \Drupal::messenger()->addStatus('GDPR Debug: Removing Klaro libraries');
+
+    // Remove Klaro libraries if they were attached.
+    if (isset($attachments['#attached']['library'])) {
+      foreach ($attachments['#attached']['library'] as $key => $library) {
+        if (strpos($library, 'klaro/') === 0) {
+          unset($attachments['#attached']['library'][$key]);
+        }
+      }
+    }
+
+    // Remove Klaro drupalSettings if present.
+    if (isset($attachments['#attached']['drupalSettings']['klaro'])) {
+      unset($attachments['#attached']['drupalSettings']['klaro']);
+    }
+  }
+  else {
+    \Drupal::messenger()->addStatus('GDPR Debug: Keeping Klaro libraries');
+  }
+}
+
+/**
+ * Implements hook_module_implements_alter().
+ *
+ * Ensures our page_attachments_alter runs after Klaro's.
+ */
+function az_gdpr_consent_module_implements_alter(&$implementations, $hook) {
+  if ($hook === 'page_attachments_alter') {
+    // Move our implementation to run last, after Klaro.
+    $group = $implementations['az_gdpr_consent'];
+    unset($implementations['az_gdpr_consent']);
+    $implementations['az_gdpr_consent'] = $group;
+  }
+}
+
+/**
+ * Determine if the consent banner should be shown based on visitor location.
+ *
+ * @return bool
+ *   TRUE if the banner should be shown, FALSE otherwise.
+ */
+function az_gdpr_consent_should_show_banner() {
+  // Ensure Drupal is fully bootstrapped.
+  if (!\Drupal::hasContainer()) {
+    // Default to showing banner if container not ready.
+    return TRUE;
+  }
+
+  $config = \Drupal::config('az_gdpr_consent.settings');
+  $logger = \Drupal::logger('az_gdpr_consent');
+
+  // If module is disabled, don't show banner.
+  if (!$config->get('enabled')) {
+    return FALSE;
+  }
+
+  // If test mode is enabled, always show banner.
+  if ($config->get('test_mode')) {
+    return TRUE;
+  }
+
+  // Get visitor's country from Smart IP.
+  $location = \Drupal::service('smart_ip.smart_ip_location');
+  $data = $location->getData();
+  $country_code = $data['countryCode'] ?? NULL;
+  $ip_address = $data['ipAddress'] ?? 'unknown';
+
+  $logger->info('Visitor location check: IP=@ip, Country=@country', [
+    '@ip' => $ip_address,
+    '@country' => $country_code ?? 'NULL',
+  ]);
+
+  // If we can't determine location, use fallback setting.
+  if (empty($country_code)) {
+    $show = $config->get('show_on_unknown_location');
+    $logger->info('Location unknown, fallback setting: @show', [
+      '@show' => $show ? 'show banner' : 'hide banner',
+    ]);
+    return $show;
+  }
+
+  // Check if country is in target list.
+  $target_countries = $config->get('target_countries') ?? [];
+  $should_show = in_array($country_code, $target_countries);
+
+  $logger->info('Country @country is @status target list. Banner: @action', [
+    '@country' => $country_code,
+    '@status' => $should_show ? 'IN' : 'NOT IN',
+    '@action' => $should_show ? 'SHOW' : 'HIDE',
+  ]);
+
+  return $should_show;
+}
