@@ -197,15 +197,15 @@ class AZCardWidget extends WidgetBase {
           '#type' => 'link',
           '#title' => $item->link_title ?? '',
           '#url' => $link_url ?: Url::fromRoute('<none>'),
-          '#attributes' => ['class' => ['btn', 'btn-default', 'w-100']],
         ];
       }
     }
 
-    // Add link class from options.
-    if (!empty($item->options['link_style'])) {
-      $element['preview_container']['card_preview']['#link']['#attributes']['class'] = explode(' ', $item->options['link_style']);
-    }
+    // Add link style classes.
+    $element['preview_container']['card_preview']['#link']['#attributes']['class'] =
+      empty($item->options['link_style']) ?
+      ['btn', 'w-100', 'btn-red'] :
+      explode(' ', $item->options['link_style']);
 
     if (!empty($element['preview_container']['card_preview']['#link'])) {
       $element['preview_container']['card_preview']['#link']['#attributes']['class'][] = 'az-card-no-follow';
@@ -317,7 +317,7 @@ class AZCardWidget extends WidgetBase {
         'btn w-100 btn-outline-white' => $this->t('White outline button'),
       ],
       '#title' => $this->t('Card Link Style'),
-      '#default_value' => (!empty($item->options['link_style'])) ? $item->options['link_style'] : 'w-100',
+      '#default_value' => (!empty($item->options['link_style'])) ? $item->options['link_style'] : 'btn w-100 btn-red',
     ];
 
     if (!$item->isEmpty()) {
