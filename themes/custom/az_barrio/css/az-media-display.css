@@ -12,7 +12,7 @@
   max-width:100%;
 }
 .az-medium.az-media {
-  width: 760px;
+  width: 740px;
   max-width:100%;
 }
 .az-small.az-media {
@@ -35,10 +35,10 @@
   margin-bottom: 0 !important;
 }
 @media (min-width:576px) {
-  .align-left .az-natural-size.az-media,
-  .align-right .az-natural-size.az-media,
   .align-left .az-default.az-media,
-  .align-right .az-default.az-media {
+  .align-left .az-natural-size.az-media,
+  .align-right .az-default.az-media,
+  .align-right .az-natural-size.az-media {
     width: 400px;
   }
 }
