@@ -7,12 +7,6 @@
   width: 100%;
   max-width: 100%;
 }
-.align-left .az-natural-size.az-media.ratio,
-.align-right .az-natural-size.az-media.ratio,
-.align-left .az-default.az-media.ratio,
-.align-right .az-default.az-media.ratio {
-  width: 400px;
-}
 .az-large.az-media {
   width: 1140px;
   max-width:100%;
@@ -39,4 +33,12 @@
 }
 .field--type-entity-reference.field--name-field-az-media-image {
   margin-bottom: 0 !important;
+}
+@media (min-width:576px) {
+  .align-left .az-natural-size.az-media,
+  .align-right .az-natural-size.az-media,
+  .align-left .az-default.az-media,
+  .align-right .az-default.az-media {
+    width: 400px;
+  }
 }
