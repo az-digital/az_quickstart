@@ -4,19 +4,19 @@
 * https://www.drupal.org/node/2815083
 * @preserve
 **/
-(function (window, document) {
+((window, document) => {
   function init() {
-    var copyLinks = document.querySelectorAll('.js-click2copy a');
+    const copyLinks = document.querySelectorAll('.js-click2copy a');
     function removeClass(element) {
-      setTimeout(function () {
+      setTimeout(() => {
         element.classList.remove('js-click-copy--copied');
       }, 3000);
     }
     function _handleClick(event) {
-      var baseUrl = window.location.origin;
+      const baseUrl = window.location.origin;
       if (event.type === 'click') {
         event.preventDefault();
-        var href = event.target.getAttribute('href');
+        const href = event.target.getAttribute('href');
         navigator.clipboard.writeText(baseUrl + href);
         event.target.classList.add('js-click-copy--copied');
         removeClass(event.target);
@@ -24,7 +24,7 @@
         return false;
       }
     }
-    copyLinks.forEach(function (element) {
+    copyLinks.forEach(element => {
       element.addEventListener('click', _handleClick, false);
     });
   }

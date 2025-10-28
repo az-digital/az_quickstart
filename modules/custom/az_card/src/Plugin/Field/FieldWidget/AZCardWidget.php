@@ -197,15 +197,15 @@ class AZCardWidget extends WidgetBase {
           '#type' => 'link',
           '#title' => $item->link_title ?? '',
           '#url' => $link_url ?: Url::fromRoute('<none>'),
-          '#attributes' => ['class' => ['btn', 'btn-default', 'w-100']],
         ];
       }
     }
 
-    // Add link class from options.
-    if (!empty($item->options['link_style'])) {
-      $element['preview_container']['card_preview']['#link']['#attributes']['class'] = explode(' ', $item->options['link_style']);
-    }
+    // Add link style classes.
+    $element['preview_container']['card_preview']['#link']['#attributes']['class'] =
+      empty($item->options['link_style']) ?
+      ['btn', 'w-100', 'btn-red'] :
+      explode(' ', $item->options['link_style']);
 
     if (!empty($element['preview_container']['card_preview']['#link'])) {
       $element['preview_container']['card_preview']['#link']['#attributes']['class'][] = 'az-card-no-follow';
@@ -309,15 +309,15 @@ class AZCardWidget extends WidgetBase {
       '#type' => 'select',
       '#options' => [
         'visually-hidden' => $this->t('Hidden link title'),
-        'btn-block' => $this->t('Text link'),
-        'btn btn-block btn-red' => $this->t('Red button'),
-        'btn btn-block btn-blue' => $this->t('Blue button'),
-        'btn btn-block btn-outline-red' => $this->t('Red outline button'),
-        'btn btn-block btn-outline-blue' => $this->t('Blue outline button'),
-        'btn btn-block btn-outline-white' => $this->t('White outline button'),
+        'w-100' => $this->t('Text link'),
+        'btn w-100 btn-red' => $this->t('Red button'),
+        'btn w-100 btn-blue' => $this->t('Blue button'),
+        'btn w-100 btn-outline-red' => $this->t('Red outline button'),
+        'btn w-100 btn-outline-blue' => $this->t('Blue outline button'),
+        'btn w-100 btn-outline-white' => $this->t('White outline button'),
       ],
       '#title' => $this->t('Card Link Style'),
-      '#default_value' => (!empty($item->options['link_style'])) ? $item->options['link_style'] : 'btn-block',
+      '#default_value' => (!empty($item->options['link_style'])) ? $item->options['link_style'] : 'btn w-100 btn-red',
     ];
 
     if (!$item->isEmpty()) {
@@ -355,8 +355,6 @@ class AZCardWidget extends WidgetBase {
     $elements = parent::formMultipleElements($items, $form, $form_state);
     $field_name = $this->fieldDefinition->getName();
     $cardinality = $this->fieldDefinition->getFieldStorageDefinition()->getCardinality();
-    $is_multiple = $this->fieldDefinition->getFieldStorageDefinition()->isMultiple();
-    $is_unlimited_not_programmed = FALSE;
     $parents = $form['#parents'];
 
     $max = 0;
@@ -365,7 +363,6 @@ class AZCardWidget extends WidgetBase {
       case FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED:
         $field_state = static::getWidgetState($parents, $field_name, $form_state);
         $max = $field_state['items_count'];
-        $is_unlimited_not_programmed = !$form_state->isProgrammed();
         break;
 
       default:
@@ -442,7 +439,6 @@ class AZCardWidget extends WidgetBase {
     // Find the widget and return it.
     $element = [];
     $triggering_element = $form_state->getTriggeringElement();
-    $oops = $triggering_element['#array_parents'];
     $array_parents = array_slice($triggering_element['#array_parents'], 0, -3);
     $element = NestedArray::getValue($form, $array_parents);
 
@@ -459,7 +455,7 @@ class AZCardWidget extends WidgetBase {
     array_pop($parents);
     $parent_element = NestedArray::getValue($complete_form, $parents);
     if (empty($element['#value']) && !empty($parent_element['link_uri']['#value'])) {
-      $form_state->setError($element, t('Card Link Title field is required when a URL is provided. Card Link Title may be visually hidden with a Card Link Style selection.'));
+      $form_state->setError($element, $this->t('Card Link Title field is required when a URL is provided. Card Link Title may be visually hidden with a Card Link Style selection.'));
     }
   }
 
@@ -472,7 +468,7 @@ class AZCardWidget extends WidgetBase {
 
     if (!empty($element['#value'])) {
       // Check to make sure the path can be found.
-      if ($url = $this->pathValidator->getUrlIfValid($element['#value'])) {
+      if ($this->pathValidator->getUrlIfValid($element['#value'])) {
         // Url is valid, no conversion required.
         return;
       }
@@ -484,7 +480,7 @@ class AZCardWidget extends WidgetBase {
         return;
       }
       $form_state
-        ->setError($element, t('This link does not exist or you do not have permission to link to %path.', [
+        ->setError($element, $this->t('This link does not exist or you do not have permission to link to %path.', [
           '%path' => $element['#value'],
         ]));
     }

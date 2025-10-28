@@ -35,8 +35,10 @@ third_party_settings:
       weight: 0
       format_type: html_element
       format_settings:
-        classes: 'card card-borderless card-clickable bg-gray-100 mt-0 mb-4 p-0'
+        classes: 'card border-0 text-bg-gray-100 mt-0 mb-4 p-0'
+        show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -55,9 +57,10 @@ third_party_settings:
       weight: 1
       format_type: link
       format_settings:
-        classes: 'card-body p-4'
+        classes: 'card-body p-4 stretched-link text-decoration-none'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         target: custom_uri
         custom_uri: '[node:az-canonical-url]'
         target_attribute: default
@@ -70,7 +73,7 @@ third_party_settings:
       weight: 5
       format_type: html_element
       format_settings:
-        classes: 'text-muted font-weight-bold small'
+        classes: 'text-body-secondary fw-bold small'
         id: ''
         element: div
         show_label: false
@@ -106,7 +109,7 @@ third_party_settings:
       weight: 7
       format_type: html_element
       format_settings:
-        classes: 'card-text font-weight-normal small mb-0'
+        classes: 'card-text fw-normal small mb-0'
         id: ''
         element: div
         show_label: false

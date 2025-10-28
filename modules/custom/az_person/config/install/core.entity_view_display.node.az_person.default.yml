@@ -74,7 +74,7 @@ third_party_settings:
       weight: 3
       format_type: html_element
       format_settings:
-        classes: 'col-12 col-md-8 float-md-end'
+        classes: 'col-12 position-relative col-md-8 float-md-end'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -94,7 +94,7 @@ third_party_settings:
       weight: 4
       format_type: html_element
       format_settings:
-        classes: 'col-12 col-md-4 float-md-start'
+        classes: 'col-12 position-relative col-md-4 float-md-start'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -117,7 +117,7 @@ third_party_settings:
       weight: 5
       format_type: html_element
       format_settings:
-        classes: 'col-12 col-md-8 float-md-end'
+        classes: 'col-12 position-relative col-md-8 float-md-end'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -279,7 +279,7 @@ third_party_settings:
       weight: 6
       format_type: tabs
       format_settings:
-        classes: az-horizontal-tabs
+        classes: ''
         show_empty_fields: false
         id: ''
         label_as_html: false

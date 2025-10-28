@@ -1,0 +1,76 @@
+name: PR Backport
+run-name: "Backport PR #${{ github.event.pull_request.number }} to 2.x"
+
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  backport:
+    name: Backport to 2.x
+    # Only run if PR is merged into main and has the backport-2.x label
+    if: >
+      github.event.pull_request.merged == true &&
+      github.event.pull_request.base.ref == 'main' &&
+      contains(github.event.pull_request.labels.*.name, 'backport-2.x')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          fetch-depth: 0
+
+      - name: Set up Git config
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Create backport branch
+        id: backport
+        run: |
+          # Create and checkout the backport branch from 2.x
+          git checkout 2.x
+          git checkout -b "backport/pr-${{ github.event.pull_request.number }}-2.x"
+
+          # Attempt cherry-pick and capture the status
+          if git cherry-pick -x "${{ github.event.pull_request.merge_commit_sha }}"; then
+            echo "status=success" >> "$GITHUB_OUTPUT"
+            echo "Successfully cherry-picked the changes"
+          else
+            echo "status=conflicts" >> "$GITHUB_OUTPUT"
+            echo "Cherry-pick resulted in conflicts"
+            # Instead of aborting, stage the conflicted files
+            git add .
+            # Create a commit with the conflicted state
+            git commit -m "Automated backport of PR #${{ github.event.pull_request.number }} (with conflicts)
+
+            This commit contains unresolved conflicts that need manual resolution.
+            Original commit: ${{ github.event.pull_request.merge_commit_sha }}"
+          fi
+
+          # Push the branch so we can create a PR from it
+          git push origin "backport/pr-${{ github.event.pull_request.number }}-2.x"
+
+      - name: Create Pull Request
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Prepare PR body
+          BODY="Backport of #${{ github.event.pull_request.number }}
+
+          This automated PR was created to backport changes from #${{ github.event.pull_request.number }} to the 2.x branch.
+
+          Original PR: ${{ github.event.pull_request.html_url }}
+
+          $([ "${{ steps.backport.outputs.status }}" == "conflicts" ] && echo "⚠️ **This PR contains merge conflicts that need to be resolved manually.**" || echo "")"
+
+          # Create the PR using GitHub CLI
+          gh pr create \
+            --base 2.x \
+            --head "backport/pr-${{ github.event.pull_request.number }}-2.x" \
+            --title "${{ github.event.pull_request.title }} (2.x backport of #${{ github.event.pull_request.number }})" \
+            --body "$BODY" \
+            --label "2.x only,backport" \
+            $([ "${{ steps.backport.outputs.status }}" == "conflicts" ] && echo "--draft" || echo "")

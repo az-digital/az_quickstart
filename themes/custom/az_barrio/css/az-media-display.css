@@ -19,6 +19,10 @@
   width:360px;
   max-width: 100%;
 }
+.az-very-small.az-media {
+  width:220px;
+  max-width: 100%;
+}
 .az-square.az-media {
   width:220px;
   max-width: 100%;
@@ -27,7 +31,6 @@
   width: 100%;
   max-width:100%;
 }
-
 .field--type-entity-reference.field--name-field-az-media-image {
   margin-bottom: 0 !important;
 }

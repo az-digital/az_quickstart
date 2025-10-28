@@ -72,8 +72,7 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
     AZFinderOverrides $az_finder_overrides,
     EntityTypeManagerInterface $entity_type_manager,
   ) {
-    parent::__construct($config_factory);
-    $this->typedConfigManager = $typed_config_manager;
+    parent::__construct($config_factory, $typed_config_manager);
     $this->azFinderViewOptions = $az_finder_view_options;
     $this->azFinderVocabulary = $az_finder_vocabulary;
     $this->azFinderOverrides = $az_finder_overrides;
@@ -338,8 +337,6 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
         ],
       ];
 
-      $config_name = "az_finder.tid_widget.{$view_id}.{$display_id}";
-      $config = $this->config($config_name);
       $vocabulary_ids = $this->azFinderVocabulary->getVocabularyIdsForFilter($view_id, $display_id, 'taxonomy_index_tid');
 
       foreach ($vocabulary_ids as $vocabulary_id) {

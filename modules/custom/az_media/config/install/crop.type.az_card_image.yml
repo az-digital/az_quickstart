@@ -1,11 +1,11 @@
 langcode: en
 status: true
 dependencies: {  }
-id: az_card_image
 label: 'Card Image'
+id: az_card_image
 description: 'This cropping style is used where card images are displayed.'
 aspect_ratio: '4:3'
-soft_limit_width: 568
-soft_limit_height: 426
+soft_limit_width: 640
+soft_limit_height: 480
 hard_limit_width: null
 hard_limit_height: null

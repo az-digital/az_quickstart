@@ -41,7 +41,7 @@ function az_barrio_theme_suggestions_input_alter(&$suggestions, $variables) {
   if (isset($variables['element']['#form_id']) && $variables['element']['#form_id'] === 'search_block_form') {
     $suggestions[] = 'input__' . $variables['element']['#form_id'];
   }
-  if (isset($variables['element']['#type']) && isset($variables['element']['#form_id']) && $variables['element']['#form_id'] === 'search_block_form') {
+  if (isset($variables['element']['#type']) && isset($variables['element']['#form_id']) && ($variables['element']['#form_id'] === 'search_block_form')) {
     $suggestions[] = 'input__' . $variables['element']['#form_id'] . '__' . $variables['element']['#type'];
   }
 }
@@ -98,38 +98,14 @@ function az_barrio_preprocess_html(&$variables) {
  * Implements hook_preprocess_HOOK() for page templates.
  */
 function az_barrio_preprocess_page(&$variables, $hook) {
-  $variables['az_barrio_navbar_offcanvas'] = (theme_get_setting('az_barrio_navbar_offcanvas')) ? TRUE : FALSE;
-  if ($variables['az_barrio_navbar_offcanvas'] === TRUE) {
+  if (isset($variables['page']['navigation_offcanvas']['az_barrio_offcanvas_searchform'])) {
     $variables['#attached']['library'][] = 'az_barrio/az-barrio-off-canvas-nav';
-    $variables['navbar_offcanvas_attributes'] = new Attribute([
-      'id' => 'navbar-top',
-      'class' => [
-        'navbar-offcanvas'
-      ]
-    ]);
-    if ($variables['page']['navigation']) {
-      $variables['navbar_offcanvas_attributes']['class'][] = 'has-navigation-region';
-    }
-    else {
-      $variables['navbar_offcanvas_attributes']['class'][] = 'no-navigation-region';
-    }
-    if ($variables['page']['navigation_offcanvas']) {
-      $variables['navbar_offcanvas_attributes']['class'][] = 'has-off-canvas-region';
-    }
-    else {
-      $variables['navbar_offcanvas_attributes']['class'][] = 'no-off-canvas-region';
-    }
-  }
-
-  // Allow hiding of title of front page node.
-  if (theme_get_setting('az_hide_front_title') === 1 && \Drupal::service('path.matcher')->isFrontPage()) {
-    // $variables['title'] = FALSE;
   }
 
   // Check if land acknowledgment should be displayed.
   $land_acknowledgment = '';
   if (theme_get_setting('land_acknowledgment')) {
-    $land_acknowledgment = '<p class="font-weight-light"><em>We respectfully acknowledge <a href="https://www.arizona.edu/university-arizona-land-acknowledgment">the University of Arizona is on the land and territories of Indigenous peoples</a>. Today, Arizona is home to 22 federally recognized tribes, with Tucson being home to the O’odham and the Yaqui. The university strives to build sustainable relationships with sovereign Native Nations and Indigenous communities through education offerings, partnerships, and community service.</em></p><hr>';
+    $land_acknowledgment = '<p class="fw-light"><em>We respectfully acknowledge <a href="https://www.arizona.edu/university-arizona-land-acknowledgment">the University of Arizona is on the land and territories of Indigenous peoples</a>. Today, Arizona is home to 22 federally recognized tribes, with Tucson being home to the O’odham and the Yaqui. The university strives to build sustainable relationships with sovereign Native Nations and Indigenous communities through education offerings, partnerships, and community service.</em></p><hr>';
   }
 
   // Check if information security policy should be displayed.
@@ -854,6 +830,11 @@ function az_barrio_preprocess_block(&$variables) {
  */
   if ($variables['base_plugin_id'] === 'search_form_block' && $variables['elements']['#id'] === 'az_barrio_search') {
     $variables['attributes']['class'][] = 'az-search-block';
+  }
+
+  // Pass theme setting to hide sidebar menu for mobile 
+  if (isset($variables['elements']['#id']) && $variables['elements']['#id'] === 'az_barrio_sidebar_menu') {
+    $variables['az_remove_sidebar_menu_mobile'] = theme_get_setting('az_remove_sidebar_menu_mobile');
   }
 
 }

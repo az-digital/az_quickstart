@@ -7,7 +7,7 @@
         },
         {
             "id":10,
-            "az_text_area" : "<hr \/>\r\n<h2>Slider<\/h2>\r\n\r\n<p>The&nbsp;<strong>Slider<\/strong>&nbsp;display shows each of your images + caption&nbsp;as a slide in a slideshow. The slideshow is the same width as the rest of your page content.<\/p>\r\n",
+            "az_text_area" : "<hr \/>\r\n<h2>Slider - Crop Image Style<\/h2>\r\n\r\n<p>The <strong>Slider - Crop Image Style<\/strong> display is a slideshow in which each image fills the container. The images use the same cropping as Quickstart Carousel images, so the cropping can be manually adjusted.<\/p>\r\n",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -32,7 +32,7 @@
         },
         {
             "id":20,
-            "az_text_area" : "<h2>Links and Buttons<\/h2>\r\n\r\n<p>You can add links and buttons to the Text page element. These examples are intended to reload this page.<\/p>\r\n\r\n<p><a href=\"#\">Link example<\/a><\/p>\r\n\r\n<p><a class=\"btn btn-red\" href=\"#\">Red button example<\/a><\/p>\r\n\r\n<p><a class=\"btn btn-outline-blue\" href=\"#\">Blue outline button example<\/a><\/p>\r\n",
+            "az_text_area" : "<h2>Links and Buttons<\/h2>\r\n\r\n<p>You can add links and buttons to the Text page element. These examples are intended to reload this page.<\/p>\r\n\r\n<p><a href=\"#\">Link example<\/a><\/p>\r\n\r\n<p><a class=\"btn btn-red\" href=\"#\">Red button example<\/a><\/p>\r\n\r\n<p><a class=\"btn btn-outline-blue\" href=\"#\">Blue outline button example<\/a><\/p>\r\n\r\n<p>The following link is an anchor link to the Tables section below.<\/p>\r\n\r\n<p><a href=\"#tables\">Anchor Link to Tables<\/a><\/p>\r\n",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -47,7 +47,7 @@
         },
         {
             "id":24,
-            "az_text_area" : "<h2>Tables<\/h2>\r\n\r\n<p>Tables are used when you have \"if, then\" style content that needs to be related to each other. Tables should <em>never<\/em> be used for layout (use grids instead!).<\/p>\r\n\r\n<table>\r\n\t<thead>\r\n\t\t<tr>\r\n\t\t\t<th>Row 1 Heading<\/th>\r\n\t\t\t<th>Row 2 Heading<\/th>\r\n\t\t<\/tr>\r\n\t<\/thead>\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td>Content of row 1<\/td>\r\n\t\t\t<td>Content of row 2 related to column 1<\/td>\r\n\t\t<\/tr>\r\n\t\t<tr>\r\n\t\t\t<td>Content of row 1<\/td>\r\n\t\t\t<td>Content of row 2 related to column 1<\/td>\r\n\t\t<\/tr>\r\n\t<\/tbody>\r\n<\/table>\r\n",
+            "az_text_area" : "<h2 id=\"tables\">Tables<\/h2>\r\n\r\n<p>Tables are used when you have \"if, then\" style content that needs to be related to each other. Tables should <em>never<\/em> be used for layout (use grids instead!).<\/p>\r\n\r\n<table>\r\n\t<thead>\r\n\t\t<tr>\r\n\t\t\t<th>Row 1 Heading<\/th>\r\n\t\t\t<th>Row 2 Heading<\/th>\r\n\t\t<\/tr>\r\n\t<\/thead>\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td>Content of row 1<\/td>\r\n\t\t\t<td>Content of row 2 related to column 1<\/td>\r\n\t\t<\/tr>\r\n\t\t<tr>\r\n\t\t\t<td>Content of row 1<\/td>\r\n\t\t\t<td>Content of row 2 related to column 1<\/td>\r\n\t\t<\/tr>\r\n\t<\/tbody>\r\n<\/table>\r\n",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -62,7 +62,7 @@
         },
         {
             "id":27,
-            "az_text_area" : "<h2>Embed a File<\/h2>\r\n",
+            "az_text_area" : "<h2>Embed a File<\/h2>\r\n\r\n<drupal-media data-align=\"center\" data-entity-type=\"media\" data-entity-uuid=\"5cec161c-71bc-4d23-824f-a692400ee17c\" data-view-mode=\"default\"><\/drupal-media>\r\n\r\n\r\n<drupal-media data-align=\"center\" data-entity-type=\"media\" data-entity-uuid=\"5cec161c-71bc-4d23-824f-a692400ee17d\" data-view-mode=\"default\"><\/drupal-media>\r\n",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -86,6 +86,11 @@
             "bottom_spacing": "mb-0"
         },
         {
+            "id": 90,
+            "az_text_area" : "<hr \/>\r\n<h2>Slider - Full Image Style<\/h2>\r\n\r\n<p>The <strong>Slider - Full Image Style<\/strong> display is a slideshow in which each image is shown in its entirety, without cropping or being covered by any caption text.<\/p>\r\n",
+            "bottom_spacing" : "mb-0"
+        },
+        {
             "id": 191,
             "az_text_area": "<strong>Howdy Wildcats!</strong> It's your favorite mascot, Wilbur Wildcat, here to pounce on a new book review. Today, we're diving into <em>The Life of Leonardo da Vinci</em> by Serge Bramly, and let me tell you, this book is as fierce as a last-minute game-winning touchdown!<br><br>If you've ever been curious about what made one of history's greatest geniuses tick, this book will give you all the insight you need. Bramly paints a vivid picture of da Vinci's life, from his early years in Italy to his revolutionary work as an artist, scientist, and inventor. You'll discover how Leonardo's boundless curiosity led to amazing creations and how his relentless drive pushed the boundaries of what was possible during the Renaissance.<br><br>Right from the start, you're catapulted back to Renaissance Italy, and I gotta say, Leonardo was a true top cat of his time. He wasn't just a painter; he was a thinker, an inventor, and a dreamer—the kind of guy who made everything from mechanical lions to famous paintings like the <em>Mona Lisa</em>. And let me tell ya, folks, he had more interests than I have stripes! The book really digs into his life and lets you see that the dude was a total genius, but also, just like us, he sometimes struggled with unfinished projects (anyone else still trying to finish last semester's paper?).<br><br>The author brings da Vinci to life, showing not only the strokes of his brush but also his scribbles and sketches—which by the way, would look great on the walls of our library. I think what really clawed my attention was how Leonardo never stopped exploring, never stopped wondering, and always had the heart of a curious wildcat. If you're looking for a tale of passion, creativity, and a bit of mystery, this is the book to sink your claws into.<br><br>So, if you're prowling for something that makes you feel inspired to tackle big ideas or just curious to know more about the cat who drew Vitruvian Man, grab this book from the library and give it a read. You might just discover a little Leonardo in you too!<br><br>Stay curious, Wildcats!<br><br>— Wilbur Wildcat",
             "bottom_spacing": "mb-0"
@@ -94,6 +99,11 @@
             "id": 192,
             "az_text_area": "<strong>Howdy Wildcats!</strong> It's Wilma Wildcat here, ready to share my thoughts on <em>The Life of Leonardo da Vinci</em> by Serge Bramly! Let me tell you, Wildcats, this book is an absolute masterpiece, much like the man himself!<br><br>Leonardo da Vinci wasn't just a painter—he was an inventor, a scientist, and a dreamer with paws in so many different pursuits. Bramly does an incredible job of showing just how curious and adventurous Leonardo was. Each chapter takes you deeper into his life, from his early days in Florence to his groundbreaking sketches and ideas. It’s like taking a stroll through the Renaissance, and believe me, the sights are spectacular!<br><br>What really grabbed my attention was Leonardo's determination. He faced obstacles, sure, but he always kept pushing the limits of what could be done. Whether he was dissecting bodies to better understand anatomy or designing machines centuries ahead of his time, Leonardo’s passion is infectious. It made me want to tackle some big projects of my own—like making sure every Wildcat knows the magic of learning and creativity!<br><br>The book doesn’t just tell you about Leonardo’s famous works like the <em>Mona Lisa</em> or <em>The Last Supper</em>. It also gives you a glimpse into his unfinished works and constant experimenting. Just like us Wildcats when we're trying to perfect our game, Leonardo never stopped striving for more. His sketches and notes are everywhere in this book, and it’s amazing to see how his mind worked.<br><br>If you're looking for a book that will inspire you to be curious, explore new ideas, and take on challenges head-first, this one is for you. So grab your library card, Wildcats, and check it out! Trust me, you'll come away feeling like anything is possible.<br><br>Stay adventurous, and keep that curiosity alive!<br><br>— Wilma Wildcat",
             "bottom_spacing": "mb-0"
+        },
+        {
+          "id": 194,
+          "az_text_area": "<h2>Trellis Form</h2><drupal-media data-entity-type='media' data-entity-uuid='2d1c72cf-e90b-4457-992d-55f87bf5dc46' data-align='center'>&nbsp;</drupal-media>",
+          "bottom_spacing": "mb-4"
         }
     ]
 }
