@@ -142,7 +142,9 @@ class AZRankingItem extends FieldItemBase {
    * {@inheritdoc}
    */
 
-  // @TODO: samplePreview
+  /**
+   * @todo samplePreview
+   */
   public static function generateSampleValue(FieldDefinitionInterface $field_definition) {
 
     $random = new Random();

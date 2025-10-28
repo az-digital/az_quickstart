@@ -126,7 +126,7 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
         }
       }
 
-      // Link and link style
+      // Link and link style.
       $link_render_array = [];
       $link_url = '';
       $link_title = $item->link_title ?? '';
@@ -157,7 +157,7 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
           $link_render_array['#attributes']['class'][] = 'az-ranking-no-follow';
           $attached['library'][] = 'az_ranking/az_ranking_no_follow';
         }
-        //$attached['library'][] = 'az_ranking/az_ranking_title_hover';
+        // $attached['library'][] = 'az_ranking/az_ranking_title_hover';
       }
 
       // Define Ranking Variabbles.
@@ -224,29 +224,31 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
 
           // Is the ranking clickable?
           if (isset($ranking_clickable)) {
-            if(!empty($ranking_clickable)) {
-              // Whole card is clickable
+            if (!empty($ranking_clickable)) {
+              // Whole card is clickable.
               $ranking_classes .= ' shadow';
               if (!empty($link_render_array)) {
                 $link_render_array['#attributes']['class'][] = 'stretched-link';
               }
               $link_title = '';
               $ranking_link_style = '';
-              if(!empty($ranking_hover_effect)) {
-                // Add hover effect to ranking card
+              if (!empty($ranking_hover_effect)) {
+                // Add hover effect to ranking card.
                 $ranking_classes .= ' ranking-bold-hover';
               }
               else {
-                // Add unique classes if no hover effect but ranking is still clickable
+                // Add unique classes if no hover effect but ranking is still clickable.
                 if (!empty($item->link_uri)) {
-                  $ranking_classes .= ' ranking-with-link hover'; 
+                  $ranking_classes .= ' ranking-with-link hover';
                 }
               }
             }
-            else { // If ranking is not clickable
+            // If ranking is not clickable.
+            else {
               $link_title = $item->link_title ?? '';
               $ranking_link_style = $item->ranking_link_style ?? '';
-              $ranking_hover_effect = FALSE; // Unset hover effect if not clickable
+              // Unset hover effect if not clickable.
+              $ranking_hover_effect = FALSE;
             }
           }
         }
@@ -266,7 +268,7 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
       $column_classes = implode(' ', $column_classes);
       $column_classes = explode(' ', $column_classes);
       $column_classes[] = 'pb-4';
-      
+
       // Hover effect takes precedence over non-hover-effect backgrounds.
       if ($ranking_hover_effect) {
         // Try to read hover-specific value from the item. Widget may submit
@@ -288,15 +290,16 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
           $ranking_classes .= $hover_class;
         }
       }
-      else { // If ranking has no hover effect...
+      // If ranking has no hover effect...
+      else {
         if (!empty($item->options['class'])) {
-          $ranking_classes .=  $item->options['class'];
+          $ranking_classes .= $item->options['class'];
         }
       }
 
       // Set custom text classes based on background color.
       $text_color_override = '';
-      if(!$ranking_hover_effect) {
+      if (!$ranking_hover_effect) {
         if (!empty($item->options['class'])) {
           switch (TRUE) {
             case str_contains($item->options['class'], 'bg-sky'):
@@ -313,7 +316,8 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
           }
         }
       }
-      else { // Override hover class
+      // Override hover class.
+      else {
         if (!empty($item->options_hover_effect['class'])) {
           switch (TRUE) {
             case str_contains($item->options_hover_effect['class'], 'bg-sky'):
@@ -368,4 +372,5 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
 
     return $element;
   }
+
 }

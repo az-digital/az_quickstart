@@ -5,6 +5,9 @@
  * Contains az_ranking.module.
  */
 
+use Drupal\Core\Entity\FieldableEntityInterface;
+use Drupal\Core\Entity\EntityFormInterface;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 
 /**
@@ -57,7 +60,7 @@ function az_ranking_theme($existing, $type, $theme, $path) {
 /**
  * Implements hook_form_alter().
  */
-function az_ranking_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+function az_ranking_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   // Add focal point picker to az_image media edit form.
   if ($form_id === 'media_az_image_edit_form' || $form_id === 'media_az_image_add_form') {
 
@@ -74,7 +77,7 @@ function az_ranking_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $for
 
     // Only show focal point picker if opened from AZ Ranking context.
     $request = \Drupal::request();
-    
+
     // Check if this is from AZ Ranking widget and if it's in a modal.
     $is_az_ranking_context = $request->query->get('az_ranking_context') === '1';
     $is_modal = $request->query->get('_wrapper_format') === 'drupal_modal';
@@ -86,13 +89,13 @@ function az_ranking_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $for
 
     // Get the media entity.
     $form_object = $form_state->getFormObject();
-    if (!$form_object instanceof \Drupal\Core\Entity\EntityFormInterface) {
+    if (!$form_object instanceof EntityFormInterface) {
       return;
     }
     $media = $form_object->getEntity();
 
     // Ensure the entity is fieldable.
-    if (!$media instanceof \Drupal\Core\Entity\FieldableEntityInterface) {
+    if (!$media instanceof FieldableEntityInterface) {
       return;
     }
 

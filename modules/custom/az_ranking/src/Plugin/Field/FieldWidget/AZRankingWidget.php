@@ -2,6 +2,7 @@
 
 namespace Drupal\az_ranking\Plugin\Field\FieldWidget;
 
+use Drupal\Core\Render\Element;
 use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Field\Attribute\FieldWidget;
@@ -279,7 +280,6 @@ class AZRankingWidget extends WidgetBase {
     ];
 
     // All other fields are only visible when Ranking Type is "standard".
-
     $element['details']['options'] = [
       '#type' => 'select',
       '#options' => [
@@ -499,7 +499,7 @@ class AZRankingWidget extends WidgetBase {
         $elements[$delta]['ranking_actions']['delete']['#attributes']['class'][] = 'button--extrasmall';
         $elements[$delta]['ranking_actions']['delete']['#attributes']['class'][] = 'ml-3';
       }
-      
+
       // Add a "Refresh Preview" button with AJAX.
       $elements[$delta]['ranking_actions']['refresh_preview'] = [
         '#type' => 'submit',
@@ -705,7 +705,7 @@ class AZRankingWidget extends WidgetBase {
       }
 
       if (!empty($details_values['options']) || !empty($details_values['options_hover_effect']) || !empty($details_values['ranking_type']) || !empty($details_values['column_span'])) {
-        
+
         $values[$delta]['options'] = [
           'class' => $details_values['options'] ?? '',
           'ranking_type' => $details_values['ranking_type'] ?? '',
@@ -760,7 +760,7 @@ class AZRankingWidget extends WidgetBase {
 
     if (isset($ranking_clickable)) {
       if (!empty($ranking_clickable)) {
-        // Add shadow when ranking is clickable, unset link title and styles
+        // Add shadow when ranking is clickable, unset link title and styles.
         $ranking_classes .= ' shadow';
         $link_title = '';
         $ranking_link_style = '';
@@ -768,9 +768,9 @@ class AZRankingWidget extends WidgetBase {
         if (!empty($ranking_hover_effect)) {
           $ranking_classes .= ' ranking-bold-hover';
         }
-        // if (!empty($item->link_uri)) {
+        // If (!empty($item->link_uri)) {
         //   $ranking_classes .= ' ranking-with-link card-with-link';
-        // }
+        // }.
       }
       else {
         // Ranking is not clickable.
@@ -928,15 +928,15 @@ class AZRankingWidget extends WidgetBase {
    */
   protected function addQueryParamToMediaEditLinks(array &$element) {
     // Check if this element has a media_edit link.
-    if (isset($element['media_edit']['#url']) && $element['media_edit']['#url'] instanceof \Drupal\Core\Url) {
+    if (isset($element['media_edit']['#url']) && $element['media_edit']['#url'] instanceof Url) {
       $url = $element['media_edit']['#url'];
       $query = $url->getOption('query') ?? [];
       $query['az_ranking_context'] = '1';
       $url->setOption('query', $query);
     }
-    
+
     // Recursively process child elements.
-    foreach (\Drupal\Core\Render\Element::children($element) as $key) {
+    foreach (Element::children($element) as $key) {
       if (is_array($element[$key])) {
         $this->addQueryParamToMediaEditLinks($element[$key]);
       }
