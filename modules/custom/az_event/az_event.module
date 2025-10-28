@@ -172,7 +172,7 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
               '#location' => $entity->field_az_location->title ?? '',
               '#modal' => Html::getUniqueId('calendar-link-modal'),
               '#attributes' => ['class' => 'mt-3'],
-              '#formatted_date' => $formatted_date,
+              '#formatted_date' => $field_render_array,
             ];
             break;
           }
