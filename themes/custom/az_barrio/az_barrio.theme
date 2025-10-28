@@ -12,7 +12,6 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Render\Markup;
-use Drupal\Core\Template\Attribute;
 use Drupal\Core\Url;
 
 /**
@@ -59,7 +58,7 @@ function az_barrio_preprocess_form_element(array &$variables) {
  * Implements hook_form_alter().
  */
 function az_barrio_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  if( $form_id === 'search_block_form') {
+  if ($form_id === 'search_block_form') {
     az_barrio_attach_form_id($form, $form_id);
   }
 }
@@ -174,7 +173,7 @@ function az_barrio_theme_suggestions_container_alter(array &$suggestions, array 
     $suggestions[] = 'container__' . $element['#type'];
   }
   if (isset($element['submit']) && isset($element['submit']['#form_id'])) {
-    $suggestions[] = 'container__' . $element['submit']['#form_id'] . '__' .  $element['#type']  ;
+    $suggestions[] = 'container__' . $element['submit']['#form_id'] . '__' . $element['#type'];
   }
   if (isset($element['#type']) && $element['#type'] === 'container' && isset($element['children']['#type'])) {
     $suggestions[] = 'container__' . $element['children']['#type'];
@@ -503,6 +502,7 @@ function az_barrio_az_bootstrap_css_path() {
 
   return $az_bootstrap_path . '.' . $type;
 }
+
 /**
  * Helper function for constructing AZ Bootstrap JS asset paths.
  */
@@ -548,7 +548,7 @@ function az_barrio_az_icons_assets_path($type) {
 
   // AZ Icons source.
   if (theme_get_setting('az_barrio_az_icons_source') === 'cdn') {
-    $az_icons_path = 'https://cdn.digital.arizona.edu/lib/az-icons/'  . $az_icons_cdn_version;
+    $az_icons_path = 'https://cdn.digital.arizona.edu/lib/az-icons/' . $az_icons_cdn_version;
   }
   else {
     $az_icons_path = base_path() . 'libraries/az-icons';
@@ -613,11 +613,11 @@ function az_barrio_primary_logo() {
         '#attributes' => [
           'class' => ['img-fluid'],
           'fetchpriority' => 'high',
-        ]
+        ],
       ];
       $renderer = \Drupal::service('renderer');
       $renderer->addCacheableDependency($image_renderable, $config);
-      $return = Link::createFromRoute($image_renderable,'<front>', [], [
+      $return = Link::createFromRoute($image_renderable, '<front>', [], [
         'attributes' => [
           'title' => $primary_title_text,
           'class' => $primary_logo_link_classes,
@@ -633,7 +633,6 @@ function az_barrio_primary_logo() {
 /**
  * Helper function for the secondary footer logo option.
  */
-
 function az_barrio_footer_logo() {
   $return = '';
   $footer_logo_link_classes = ['qs-site-logo', 'd-block', 'mt-0'];
@@ -671,7 +670,7 @@ function az_barrio_footer_logo() {
       if ($footer_link_destination === '<front>') {
         $return = Link::fromTextAndUrl($image_markup, Url::fromRoute($footer_link_destination, [], $attr));
       }
-      // An external URL was entered
+      // An external URL was entered.
       else {
         $return = Link::fromTextAndUrl($image_markup, Url::fromUri($footer_link_destination, $attr));
       }
@@ -683,7 +682,7 @@ function az_barrio_footer_logo() {
         '#alt' => $footer_alt_text,
         '#attributes' => [
           'class' => ['img-fluid'],
-        ]
+        ],
       ];
       $renderer = \Drupal::service('renderer');
       $renderer->addCacheableDependency($image_renderable, $config);
@@ -691,7 +690,7 @@ function az_barrio_footer_logo() {
       if ($footer_link_destination === '<front>') {
         $return = Link::fromTextAndUrl($image_renderable, Url::fromRoute($footer_link_destination, [], $attr));
       }
-      // An external URL was entered
+      // An external URL was entered.
       else {
         $return = Link::fromTextAndUrl($image_renderable, Url::fromUri($footer_link_destination, $attr));
       }
@@ -767,7 +766,7 @@ function az_barrio_preprocess_block(&$variables) {
 
           // Add classes to interior <li> elements and <a> elements.
           if (!empty($variables['elements']['content']['#items'])) {
-            foreach ($variables['elements']['content']['#items'] as $key => $item) {
+            foreach ($variables['elements']['content']['#items'] as $item) {
 
               // Merge existing url options with transparent.
               $options = $item['url']->getOptions();
@@ -798,7 +797,7 @@ function az_barrio_preprocess_block(&$variables) {
 
           // Add classes to interior <li> elements and <a> elements.
           if (!empty($variables['elements']['content']['#items'])) {
-            foreach ($variables['elements']['content']['#items'] as $key => $item) {
+            foreach ($variables['elements']['content']['#items'] as $item) {
               $item['attributes']->addClass('d-flex', 'px-0', 'mb-1', 'mb-md-2');
 
               // Merge existing url options with transparent.
@@ -822,17 +821,15 @@ function az_barrio_preprocess_block(&$variables) {
     }
   }
 
-/**
- * Closes #2251 Remove block_class config for az_barrio_search block and add
- * az-search-block class via preprocess hook.
- *
- * @link https://github.com/az-digital/az_quickstart/issues/2251
- */
+  // Closes #2251 Remove block_class config for az_barrio_search block and
+  // add az-search-block class via preprocess hook.
+  //
+  // @link https://github.com/az-digital/az_quickstart/issues/2251
   if ($variables['base_plugin_id'] === 'search_form_block' && $variables['elements']['#id'] === 'az_barrio_search') {
     $variables['attributes']['class'][] = 'az-search-block';
   }
 
-  // Pass theme setting to hide sidebar menu for mobile 
+  // Pass theme setting to hide sidebar menu for mobile.
   if (isset($variables['elements']['#id']) && $variables['elements']['#id'] === 'az_barrio_sidebar_menu') {
     $variables['az_remove_sidebar_menu_mobile'] = theme_get_setting('az_remove_sidebar_menu_mobile');
   }
