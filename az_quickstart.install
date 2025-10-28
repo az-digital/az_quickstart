@@ -80,6 +80,20 @@ function az_quickstart_update_920602() {
 }
 
 /**
+ * Uninstall deprecated Drupal core modules.
+ */
+function az_quickstart_update_920603() {
+  $deprecated_modules = [
+    'aggregator',
+    'color',
+    'hal',
+    'quickedit',
+    'rdf',
+  ];
+  \Drupal::service('module_installer')->uninstall($deprecated_modules);
+}
+
+/**
  * Ensure block_class module is installed.
  */
 function az_quickstart_update_920604() {
