@@ -242,7 +242,6 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
               $next_occurrence_item = $entity->field_az_event_date[$key];
               $field_render_array = $next_occurrence_item->view('default');
               $field_render_array['#prefix'] = '<strong>' . t('Next event:') . '</strong> ';
-              $occurrence_formatted_date = $field_render_array;
 
               // Add to Calendar button for an event with multiple occurrences.
               $add_to_calendar_button = [
