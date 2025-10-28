@@ -222,7 +222,7 @@ function az_barrio_library_info_alter(&$libraries, $extension) {
   
   if ($extension === 'az_barrio' && isset($libraries['arizona-bootstrap-css'])) {
     // Add AZ Bootstrap CSS based on theme settings.
-    $az_bootstrap_css_path = az_barrio_az_bootstrap_css_path();
+    $az_bootstrap_css_path = az_barrio_az_bootstrap_assets_path('css');
 
     if (!$az_bootstrap_css_path) {
       return;
@@ -309,7 +309,7 @@ function az_barrio_library_info_alter(&$libraries, $extension) {
 
   if ($extension === 'az_barrio' && isset($libraries['arizona-bootstrap-js'])) {
     // Add AZ Bootstrap JS based on theme settings.
-    $az_bootstrap_js_path = az_barrio_az_bootstrap_js_path();
+    $az_bootstrap_js_path = az_barrio_az_bootstrap_assets_path('js');
     if (!$az_bootstrap_js_path) {
       return;
     }
@@ -343,46 +343,18 @@ function az_barrio_library_info_alter(&$libraries, $extension) {
 }
 
 /**
- * Helper function for constructing AZ Bootstrap CSS asset paths.
+ * Helper function for constructing AZ Bootstrap asset paths.
  */
-function az_barrio_az_bootstrap_css_path() {
-  $type = 'css';
+function az_barrio_az_bootstrap_assets_path($type) {
+  if (empty($type)) {
+    return FALSE;
+  }
+
   $az_bootstrap_path = '';
   // AZ Bootstrap source.
   if (theme_get_setting('az_bootstrap_source') === 'cdn') {
-    $az_bootstrap_cdn_version = theme_get_setting('az_bootstrap_cdn_version_css');
-    if ($az_bootstrap_cdn_version === 'stable') {
-      $az_bootstrap_cdn_version = AZ_BOOTSTRAP_STABLE_VERSION;
-    }
-    $az_bootstrap_path = 'https://cdn.digital.arizona.edu/lib/arizona-bootstrap/' . $az_bootstrap_cdn_version;
-  }
-  else {
-    $az_bootstrap_path = base_path() . 'libraries/arizona-bootstrap';
-  }
-
-  $az_bootstrap_path .= '/' . $type . '/arizona-bootstrap';
-
-  // Use AZ Bootstrap Javascript bundle (contains Popper.js).
-  if ($type === 'js') {
-    $az_bootstrap_path .= '.bundle';
-  }
-
-  // AZ Bootstrap minified.
-  if (theme_get_setting('az_bootstrap_minified')) {
-    $az_bootstrap_path .= '.min';
-  }
-
-  return $az_bootstrap_path . '.' . $type;
-}
-/**
- * Helper function for constructing AZ Bootstrap JS asset paths.
- */
-function az_barrio_az_bootstrap_js_path() {
-  $type = 'js';
-  $az_bootstrap_path = '';
-  // AZ Bootstrap source.
-  if (theme_get_setting('az_bootstrap_source') === 'cdn') {
-    $az_bootstrap_cdn_version = theme_get_setting('az_bootstrap_cdn_version_js');
+    $version_setting = 'az_bootstrap_cdn_version_' . $type;
+    $az_bootstrap_cdn_version = theme_get_setting($version_setting);
     if ($az_bootstrap_cdn_version === 'stable') {
       $az_bootstrap_cdn_version = AZ_BOOTSTRAP_STABLE_VERSION;
     }
