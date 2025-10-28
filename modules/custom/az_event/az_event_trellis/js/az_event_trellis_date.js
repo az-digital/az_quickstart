@@ -4,15 +4,15 @@
 * https://www.drupal.org/node/2815083
 * @preserve
 **/
-(function (Drupal, drupalSettings, once) {
+((Drupal, drupalSettings, once) => {
   Drupal.behaviors.trellisDatePicker = {
-    attach: function attach(context) {
-      var elements = once('aztrellisdate', '.az-trellis-daterange', context);
-      elements.forEach(function (element) {
-        var begin = element;
-        var id = element.dataset.azTrellisDaterangeEnd;
-        var end = document.getElementById(id);
-        var picker = new easepick.create({
+    attach(context) {
+      const elements = once('aztrellisdate', '.az-trellis-daterange', context);
+      elements.forEach(element => {
+        const begin = element;
+        const id = element.dataset.azTrellisDaterangeEnd;
+        const end = document.getElementById(id);
+        const picker = new easepick.create({
           element: begin,
           css: drupalSettings.trellisDatePicker.css,
           zIndex: 10,
