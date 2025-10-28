@@ -4,6 +4,6 @@ description: 'An embeddable content block with a block field that accepts menu b
 core_version_requirement: ^10 || ^11 || ^12
 package: The University of Arizona
 dependencies:
-  - az_block_types
+  - az_block_types:az_block_types
   - block_field:block_field
   - menu_block:menu_block
