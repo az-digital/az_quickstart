@@ -171,7 +171,7 @@ class AzLdapCas implements EventSubscriberInterface {
       $user = $this->entityTypeManager->getStorage('user')->load($cas_uid);
       // Check if user needs to be unblocked.
       if (!empty($user) && $user->isBlocked()) {
-        // Deactivate the account.
+        // Reactivate the account.
         $user->activate();
         $user->save();
         // After this event, CAS will succeed because they are active.
