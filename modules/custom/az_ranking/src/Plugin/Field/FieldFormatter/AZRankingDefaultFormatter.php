@@ -223,33 +223,31 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
           }
 
           // Is the ranking clickable?
-          if (isset($ranking_clickable)) {
-            if (!empty($ranking_clickable)) {
-              // Whole card is clickable.
-              $ranking_classes .= ' shadow';
-              if (!empty($link_render_array)) {
-                $link_render_array['#attributes']['class'][] = 'stretched-link';
-              }
-              $link_title = '';
-              $ranking_link_style = '';
-              if (!empty($ranking_hover_effect)) {
-                // Add hover effect to ranking card.
-                $ranking_classes .= ' ranking-bold-hover';
-              }
-              else {
-                // Add unique classes if no hover effect but ranking is still clickable.
-                if (!empty($item->link_uri)) {
-                  $ranking_classes .= ' ranking-with-link hover';
-                }
-              }
+          if ($ranking_clickable) {
+            // Whole card is clickable.
+            $ranking_classes .= ' shadow';
+            if (!empty($link_render_array)) {
+              $link_render_array['#attributes']['class'][] = 'stretched-link';
             }
-            // If ranking is not clickable.
+            $link_title = '';
+            $ranking_link_style = '';
+            if (!empty($ranking_hover_effect)) {
+              // Add hover effect to ranking card.
+              $ranking_classes .= ' ranking-bold-hover';
+            }
             else {
-              $link_title = $item->link_title ?? '';
-              $ranking_link_style = $item->ranking_link_style ?? '';
-              // Unset hover effect if not clickable.
-              $ranking_hover_effect = FALSE;
+              // Add unique classes if no hover effect but ranking is still clickable.
+              if (!empty($item->link_uri)) {
+                $ranking_classes .= ' ranking-with-link hover';
+              }
             }
+          }
+          // If ranking is not clickable.
+          else {
+            $link_title = $item->link_title ?? '';
+            $ranking_link_style = $item->ranking_link_style ?? '';
+            // Unset hover effect if not clickable.
+            $ranking_hover_effect = FALSE;
           }
         }
       }
@@ -309,15 +307,15 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
             case str_contains($item->options['class'], 'bg-cool-gray'):
               $text_color_override = 'text-azurite';
               break;
-            
+
             case str_contains($item->options['class'], 'bg-warm-gray'):
               $text_color_override = 'text-midnight';
               break;
-            
+
             case str_contains($item->options['class'], 'bg-white'):
               $text_color_override = 'text-midnight';
               break;
-            
+
             case str_contains($item->options['class'], 'bg-oasis'):
               $text_color_override = 'text-midnight';
               break;

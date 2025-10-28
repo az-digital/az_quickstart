@@ -75,9 +75,6 @@ class AZRankingsParagraphBehavior extends AZDefaultParagraphsBehavior {
         'visible' => [
           ':input[name*="[ranking_clickable]"]' => ['checked' => TRUE],
         ],
-        // 'unchecked' => [
-        //   ':input[name*="[ranking_clickable]"]' => ['unchecked' => TRUE],
-        // ],
       ],
     ];
 

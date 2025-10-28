@@ -758,23 +758,21 @@ class AZRankingWidget extends WidgetBase {
     $link_title = $item->link_title ?? '';
     $ranking_link_style = $item->ranking_link_style ?? 'w-100 btn btn-red';
 
-    if (isset($ranking_clickable)) {
-      if (!empty($ranking_clickable)) {
-        // Add shadow when ranking is clickable, unset link title and styles.
-        $ranking_classes .= ' shadow';
-        $link_title = '';
-        $ranking_link_style = '';
-        // Add hover effect to ranking card.
-        if (!empty($ranking_hover_effect)) {
-          $ranking_classes .= ' ranking-bold-hover';
-        }
+    if ($ranking_clickable) {
+      // Add shadow when ranking is clickable, unset link title and styles.
+      $ranking_classes .= ' shadow';
+      $link_title = '';
+      $ranking_link_style = '';
+      // Add hover effect to ranking card.
+      if (!empty($ranking_hover_effect)) {
+        $ranking_classes .= ' ranking-bold-hover';
       }
-      else {
-        // Ranking is not clickable.
-        $link_title = $item->link_title ?? '';
-        $ranking_link_style = $item->ranking_link_style ?? 'w-100 btn btn-red';
-        $ranking_hover_effect = FALSE;
-      }
+    }
+    else {
+      // Ranking is not clickable.
+      $link_title = $item->link_title ?? '';
+      $ranking_link_style = $item->ranking_link_style ?? 'w-100 btn btn-red';
+      $ranking_hover_effect = FALSE;
     }
 
     // Determine font color and text color override.
@@ -829,7 +827,7 @@ class AZRankingWidget extends WidgetBase {
           case str_contains($item->options['class'], 'bg-warm-gray'):
             $text_color_override = 'text-midnight';
             break;
-          
+
           case str_contains($item->options['class'], 'bg-white'):
             $text_color_override = 'text-midnight';
             break;
