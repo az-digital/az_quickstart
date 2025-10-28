@@ -156,7 +156,8 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
         // Add to Calendar button for an event with a single occurrence.
         $field_item = $entity->get('field_az_event_date')->first();
         $field_render_array = $field_item ? $field_item->view('default') : [];
-        $formatted_date = Markup::create(\Drupal::service('renderer')->renderInIsolation($field_render_array));
+        $formatted_date = $field_render_array;
+
         foreach ($entity->field_az_event_date as $item) {
           if (($item->value >= $now) || (!empty($item->end_value) && ($item->end_value >= $now))) {
             $start = $item->value;
@@ -241,7 +242,8 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
               // Render just the next occurrence's date for the modal.
               $next_occurrence_item = $entity->field_az_event_date[$key];
               $field_render_array = $next_occurrence_item->view('default');
-              $occurrence_formatted_date = \Drupal::service('renderer')->renderInIsolation($field_render_array);
+              $field_render_array['#prefix'] = '<strong>' . t('Next event:') . '</strong> ';
+              $occurrence_formatted_date = $field_render_array;
 
               // Add to Calendar button for an event with multiple occurrences.
               $add_to_calendar_button = [
@@ -253,7 +255,7 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
                 '#location' => $entity->field_az_location->title ?? '',
                 '#modal' => Html::getUniqueId('calendar-link-modal'),
                 '#attributes' => ['class' => 'mb-2'],
-                '#formatted_date' => Markup::create('<strong>' . t('Next event:') . '</strong> ' . $occurrence_formatted_date),
+                '#formatted_date' => $occurrence_formatted_date,
               ];
             }
             $occurrences_modal[$item_index++] = $occurrence_items[$key]['render'];
