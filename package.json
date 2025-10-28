@@ -20,7 +20,7 @@
     "chalk": "^4.1.0",
     "chokidar": "^4.0.3",
     "chromedriver": "^119.0.1",
-    "cross-env": "^7.0.2",
+    "cross-env": "^10.1.0",
     "dotenv-safe": "^9.1.0",
     "eslint": "^8.57.1",
     "eslint-config-airbnb-base": "^15.0.0",
