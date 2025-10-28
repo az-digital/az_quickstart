@@ -35,6 +35,7 @@ function az_ranking_theme($existing, $type, $theme, $path) {
         'column_span' => NULL,
         'ranking_clickable' => NULL,
         'ranking_hover_effect' => NULL,
+        'ranking_clickable' => NULL,
         'ranking_heading' => NULL,
         'ranking_alignment' => NULL,
         'ranking_header_style' => NULL,

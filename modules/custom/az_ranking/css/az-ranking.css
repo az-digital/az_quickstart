@@ -1,3 +1,8 @@
+/* Header styles */
+.header-with-link:hover * {
+  text-decoration: underline !important;
+}
+
 /* Responsive ranking card styles */
 .az-ranking-responsive {
   /* Small viewports. Default: 1 card per row */
@@ -44,7 +49,7 @@
 }
 
 /**
- * Transparent BG Ranking font color overrides
+ * Transparent BG Ranking font color overrides, ignoring user-set links
  */
 
 .ranking-text-white *:not(a) {

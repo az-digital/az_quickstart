@@ -126,7 +126,7 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
         }
       }
 
-      // Link.
+      // Link and link style
       $link_render_array = [];
       $link_url = '';
       $link_title = $item->link_title ?? '';
@@ -151,20 +151,17 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
           '#url' => $link_url ?: Url::fromRoute('<none>'),
           '#attributes' => ['class' => ['']],
         ];
-      //  if (!empty($item->ranking_link_style)) {
         $ranking_link_style = $item->ranking_link_style;
         $link_render_array['#attributes']['class'] = explode(' ', $ranking_link_style);
-      //  }
         if (empty($settings['interactive_links'])) {
           $link_render_array['#attributes']['class'][] = 'az-ranking-no-follow';
           $attached['library'][] = 'az_ranking/az_ranking_no_follow';
         }
-        $attached['library'][] = 'az_ranking/az_ranking_title_hover';
+        //$attached['library'][] = 'az_ranking/az_ranking_title_hover';
       }
 
       // Define Ranking Variabbles.
       $ranking_classes = 'ranking card';
-      //$ranking_hover_style = '';
       $ranking_clickable = FALSE;
       $ranking_hover_effect = FALSE;
       $ranking_source_classes = '';
@@ -189,10 +186,8 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
             $column_classes[] = $ranking_defaults['az_display_settings']['ranking_width_sm'] ?? 'col-md-4';
           }
           $column_classes[] = $ranking_defaults['ranking_width'] ?? 'col-md-4 col-lg-3';
-          //$ranking_classes = $ranking_defaults['ranking_hover_style'] ?? 'ranking';
           $ranking_clickable = $ranking_defaults['ranking_clickable'] ?? FALSE;
           $ranking_hover_effect = $ranking_defaults['ranking_hover_effect'] ?? FALSE;
-
           $ranking_classes .= ' ' . $ranking_defaults['ranking_alignment'] ?? 'text-left';
           // Calculate column classes for image based on column_span.
           if ($item->options['ranking_type'] === 'image_only' &&
@@ -227,8 +222,6 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
             $column_classes[] = $ranking_defaults['ranking_width'] ?? 'col-md-4 col-lg-4';
           }
 
-          // Format pg style.
-
           // Is the ranking clickable?
           if (isset($ranking_clickable)) {
             if(!empty($ranking_clickable)) {
@@ -239,18 +232,18 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
               }
               $link_title = '';
               $ranking_link_style = '';
-              //Add hover effect to ranking card
               if(!empty($ranking_hover_effect)) {
+                // Add hover effect to ranking card
                 $ranking_classes .= ' ranking-bold-hover';
               }
-              // else {
-              // $ranking_classes .= ' ranking-subtle-hover';
-              // }
-              if (!empty($item->link_uri)) {
-                $ranking_classes .= ' ranking-with-link'; // This is working only once on the clickable.
+              else {
+                // Add unique classes if no hover effect but ranking is still clickable
+                if (!empty($item->link_uri)) {
+                  $ranking_classes .= ' ranking-with-link hover'; 
+                }
               }
             }
-            else { // Ranking is not clickable
+            else { // If ranking is not clickable
               $link_title = $item->link_title ?? '';
               $ranking_link_style = $item->ranking_link_style ?? '';
               $ranking_hover_effect = FALSE; // Unset hover effect if not clickable
@@ -259,16 +252,9 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
         }
       }
 
-      // Add .az-ranking-responsive to the column for image-only ranking cards.
-      // if ($item->options['ranking_type'] === 'image_only') {
-      //   $column_classes[] = 'az-ranking-responsive';
-      // }
-
-      // Shadow class should NOT be applied on transparent.
-      $ranking_classes .= ' overflow-hidden';
+      $ranking_classes .= ' overflow-hidden ';
       if (!str_contains($item->options['class'], 'bg-transparent')) {
-        //$ranking_classes .= ' shadow'; --- moved to clickable
-        // No mt-auto on bg-transparent rankings.
+        // Add mt-auto class to source on all styles, except bg-transparent.
         $ranking_source_classes = 'mt-auto';
       }
       else {
@@ -299,18 +285,18 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
           $hover_class = $item->options['class'];
         }
         if (!empty($hover_class)) {
-          $ranking_classes .= ' from-hover-effect ' . $hover_class;
+          $ranking_classes .= $hover_class;
         }
       }
-      else {
+      else { // If ranking has no hover effect...
         if (!empty($item->options['class'])) {
-          $ranking_classes .= ' non-hover-effect ' . $item->options['class'];
+          $ranking_classes .=  $item->options['class'];
         }
       }
 
       // Set custom text classes based on background color.
       $text_color_override = '';
-      if(!$ranking_hover_effect) { // 
+      if(!$ranking_hover_effect) {
         if (!empty($item->options['class'])) {
           switch (TRUE) {
             case str_contains($item->options['class'], 'bg-sky'):
@@ -322,7 +308,7 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
               break;
 
             case str_contains($item->options['class'], 'bg-oasis'):
-              $text_color_override = 'text-black';
+              $text_color_override = 'text-midnight';
               break;
           }
         }
@@ -339,7 +325,7 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
               break;
 
             case str_contains($item->options_hover_effect['class'], 'bg-oasis'):
-              $text_color_override = 'text-black';
+              $text_color_override = 'text-midnight';
               break;
           }
         }
@@ -352,13 +338,11 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
         '#ranking_heading' => $ranking_heading,
         '#ranking_clickable' => $ranking_clickable,
         '#ranking_hover_effect' => $ranking_hover_effect,
-        //'#ranking_hover_style' => $ranking_hover_style,
         '#ranking_header_style' => $ranking_defaults['ranking_header_style'],
         // The ProcessedText element handles cache context & tag bubbling.
         // @see \Drupal\filter\Element\ProcessedText::preRenderText()
         '#ranking_description' => $ranking_description,
         '#ranking_source' => $item->ranking_source,
-        //'#link_url' => $link_url,
         '#link' => $link_render_array,
         '#link_url' => $link_url,
         '#link_title' => $link_title,
@@ -369,9 +353,6 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
         '#attributes' => ['class' => $ranking_classes],
         '#attached' => $attached,
       ];
-      //        <a href="{{ link_url }}" class="{{ ranking_link_style }}">{{ link_title }}</a>
-
-
 
       $element['#items'][$delta] = new \stdClass();
       $element['#items'][$delta]->_attributes = [

@@ -1,6 +1,6 @@
 name: 'Quickstart Paragraphs - Rankings'
 type: module
-description: 'Provides a Rankings paragraph type.'
+description: 'Provides a rankings paragraph type.'
 core_version_requirement: ^10 || ^11 || ^12
 dependencies:
   - az_paragraphs

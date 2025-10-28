@@ -187,7 +187,7 @@ class AZRankingWidget extends WidgetBase {
     $element['details'] = [
       '#type' => 'details',
       '#title' => $this->t('Edit Ranking'),
-    // Open when in edit mode, closed when in preview mode.
+      // Open when in edit mode, closed when in preview mode.
       '#open' => $status,
       '#attributes' => ['class' => ['az-ranking-widget']],
     ];
@@ -249,7 +249,7 @@ class AZRankingWidget extends WidgetBase {
       '#cardinality' => 1,
       '#after_build' => [[$this, 'addAzRankingContextToMediaEdit']],
       '#states' => [
-      // Media is only visible when Ranking Type is "image_only".
+        // Media is only visible when Ranking Type is "image_only".
         'visible' => [
           ':input[data-az-ranking-type-input-id="' . $ranking_type_unique_id . '"]' => ['value' => 'image_only'],
         ],
@@ -268,7 +268,7 @@ class AZRankingWidget extends WidgetBase {
       '#description' => $this->t('How many cards do you want this image to span (in multiples of ranking-card width)?'),
       '#default_value' => (!empty($item->options['column_span'])) ? $item->options['column_span'] : 2,
       '#states' => [
-      // Column Span is only visible when Ranking Type is "image_only".
+        // Column Span is only visible when Ranking Type is "image_only".
         'visible' => [
           ':input[data-az-ranking-type-input-id="' . $ranking_type_unique_id . '"]' => ['value' => 'image_only'],
         ],
@@ -278,7 +278,8 @@ class AZRankingWidget extends WidgetBase {
       ],
     ];
 
-    // All other fields are NOT visible if the Ranking Type is "image_only".
+    // All other fields are only visible when Ranking Type is "standard".
+
     $element['details']['options'] = [
       '#type' => 'select',
       '#options' => [
@@ -307,7 +308,6 @@ class AZRankingWidget extends WidgetBase {
       ],
     ];
 
-    // All other fields are NOT visible if the Ranking Type is "image_only".
     $element['details']['options_hover_effect'] = [
       '#type' => 'select',
       '#options' => [
@@ -393,7 +393,7 @@ class AZRankingWidget extends WidgetBase {
       '#maxlength' => 255,
       '#states' => [
         'visible' => [
-          // If whole ranking is clickable, hide the title.
+          // If ranking is clickable, hide the title.
           ':input[data-az-ranking-type-input-id="' . $ranking_type_unique_id . '"]' => ['value' => 'standard'],
           'and',
           ':input[name*="[behavior_plugins][az_rankings_paragraph_behavior][ranking_hover_effect]"]' => ['checked' => FALSE],
@@ -418,7 +418,7 @@ class AZRankingWidget extends WidgetBase {
           ':input[data-az-ranking-type-input-id="' . $ranking_type_unique_id . '"]' => ['value' => 'standard'],
         ],
         // Link URI is required when Ranking Type is 'standard',
-        // AND the hover style is NOT static.
+        // AND the ranking is clickable.
         'required' => [
           ':input[data-az-ranking-type-input-id="' . $ranking_type_unique_id . '"]' => ['value' => 'standard'],
           ':input[name*="[behavior_plugins][az_rankings_paragraph_behavior][ranking_clickable]"]' => [
@@ -503,7 +503,7 @@ class AZRankingWidget extends WidgetBase {
       // Add a "Refresh Preview" button with AJAX.
       $elements[$delta]['ranking_actions']['refresh_preview'] = [
         '#type' => 'submit',
-        '#value' => $this->t('Preview'),
+        '#value' => $this->t('Update Preview'),
         '#name' => 'refresh_preview_' . $delta,
         '#submit' => [[$this, 'refreshPreviewSubmit']],
         '#ajax' => [
@@ -760,7 +760,7 @@ class AZRankingWidget extends WidgetBase {
 
     if (isset($ranking_clickable)) {
       if (!empty($ranking_clickable)) {
-        // Whole card is clickable.
+        // Add shadow when ranking is clickable, unset link title and styles
         $ranking_classes .= ' shadow';
         $link_title = '';
         $ranking_link_style = '';
@@ -768,9 +768,9 @@ class AZRankingWidget extends WidgetBase {
         if (!empty($ranking_hover_effect)) {
           $ranking_classes .= ' ranking-bold-hover';
         }
-        if (!empty($item->link_uri)) {
-          $ranking_classes .= ' ranking-with-link';
-        }
+        // if (!empty($item->link_uri)) {
+        //   $ranking_classes .= ' ranking-with-link card-with-link';
+        // }
       }
       else {
         // Ranking is not clickable.
@@ -830,7 +830,7 @@ class AZRankingWidget extends WidgetBase {
             break;
 
           case str_contains($item->options['class'], 'bg-oasis'):
-            $text_color_override = 'text-white';
+            $text_color_override = 'text-midnight';
             break;
         }
       }
@@ -848,7 +848,7 @@ class AZRankingWidget extends WidgetBase {
             break;
 
           case str_contains($item->options_hover_effect['class'], 'bg-oasis'):
-            $text_color_override = 'text-white';
+            $text_color_override = 'text-midnight';
             break;
         }
       }

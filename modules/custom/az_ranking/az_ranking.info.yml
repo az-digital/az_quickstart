@@ -1,6 +1,6 @@
-name: 'Quickstart Rankings'
+name: 'Quickstart Ranking'
 type: module
-description: 'Custom field plugins and theme template for rankings and rankings.'
+description: 'Custom field plugins and theme template for rankings.'
 core_version_requirement: ^10 || ^11 || ^12
 package: 'The University of Arizona - Experimental'
 lifecycle: experimental

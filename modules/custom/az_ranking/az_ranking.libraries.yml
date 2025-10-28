@@ -27,10 +27,6 @@ az_ranking_no_follow:
     js/az-ranking-no-follow.js: {}
   dependencies:
     - core/drupal.nodelist.foreach
-az_ranking_title_hover:
-  css:
-    component:
-      css/az-ranking-title-hover.css: {}
 focal_point_picker:
   js:
     js/az-ranking-focal-point-picker.js: {}

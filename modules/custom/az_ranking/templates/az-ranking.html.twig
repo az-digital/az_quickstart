@@ -4,15 +4,19 @@
  * Theme implementation to display an AZ Ranking.
  *
  * Available variables:
- * - attributes: Ranking element attributes.
- * - media: The media field of a ranking.
+ * - attributes: Ranking element wrapper attributes.
+ * - media: The media field of a ranking. Displays either media, or image.
  * - ranking_header_style: The title heading style of a ranking.
  * - ranking_heading: The title field of a ranking.
+ * - ranking_header_style: The header font style choice for a ranking.
  * - ranking_description: The body field of a ranking.
  * - ranking_source: The source field on a ranking.
  * - ranking_source_classes: Classes for the Source field of a ranking.
- * - text_color_override: Overriding default h1-h6 default text colors.
- * - link_url: The link URL only.
+ * - ranking_hover_effect: If we're using the contrasting hover effect on this ranking.
+ * - ranking_clickable: If the ranking card is clickable.
+ * - text_color_override: Overriding default text colors.
+ * - link_url: The link URL only. Used when ranking is clickable.
+ * - link: The rendered link as a styled link. Cannot be customized when ranking is clickable.
  * @ingroup themeable
  */
 
@@ -31,11 +35,19 @@
           {% if ranking_heading %}
             {% if ranking_header_style == "ranking-title-thin" %}
               <h3 class="display-4 m-0 ranking-heading {% if text_color_override %}{{ text_color_override }}{% endif %}">
-                <strong>{{ ranking_heading }}</strong>
+                {% if ranking_clickable %}
+                  <strong class="hover-text-underline">{{ ranking_heading }}</strong>
+                {% else %}
+                  <strong>{{ ranking_heading }}</strong>
+                {% endif %}
               </h3>
             {% else %}
               <h1 class="fw-bolder display-4 m-0 ranking-heading {% if text_color_override %}{{ text_color_override }}{% endif %}">
-                <strong>{{ ranking_heading }}</strong>
+                {% if ranking_clickable %}
+                  <strong class="hover-text-underline">{{ ranking_heading }}</strong>
+                {% else %}
+                  <strong>{{ ranking_heading }}</strong>
+                {% endif %}
               </h1>
             {% endif %}
           {% endif %}
