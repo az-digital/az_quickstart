@@ -9,6 +9,12 @@
   min-height: 190px;
 }
 
+/* Stretched Link fix for hidden cards */
+.card-body .visually-hidden {
+  display: block;
+  position: static !important;
+}
+
 /* Medium viewports. Default: 2 cards per row */
 @media (min-width: 768px) {
   .az-ranking-responsive {
@@ -44,7 +50,7 @@
   color: RGBA(var(--bs-cool-gray-rgb), var(--bs-bg-opacity, 1)) !important;
 }
 .text-bg-oasis.ranking-bold-hover:hover * {
-    background-color: #000000!important;
+    background-color: RGBA(var(--bs-midnight-rgb),var(--bs-bg-opacity,1)) !important;
     color: RGBA(var(--bs-oasis-rgb),var(--bs-bg-opacity,1)) !important;
 }
 

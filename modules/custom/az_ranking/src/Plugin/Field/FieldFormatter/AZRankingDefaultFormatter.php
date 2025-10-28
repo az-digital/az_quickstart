@@ -309,7 +309,15 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
             case str_contains($item->options['class'], 'bg-cool-gray'):
               $text_color_override = 'text-azurite';
               break;
-
+            
+            case str_contains($item->options['class'], 'bg-warm-gray'):
+              $text_color_override = 'text-midnight';
+              break;
+            
+            case str_contains($item->options['class'], 'bg-white'):
+              $text_color_override = 'text-midnight';
+              break;
+            
             case str_contains($item->options['class'], 'bg-oasis'):
               $text_color_override = 'text-midnight';
               break;

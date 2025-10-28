@@ -768,9 +768,6 @@ class AZRankingWidget extends WidgetBase {
         if (!empty($ranking_hover_effect)) {
           $ranking_classes .= ' ranking-bold-hover';
         }
-        // If (!empty($item->link_uri)) {
-        //   $ranking_classes .= ' ranking-with-link card-with-link';
-        // }.
       }
       else {
         // Ranking is not clickable.
@@ -827,6 +824,14 @@ class AZRankingWidget extends WidgetBase {
 
           case str_contains($item->options['class'], 'bg-cool-gray'):
             $text_color_override = 'text-azurite';
+            break;
+
+          case str_contains($item->options['class'], 'bg-warm-gray'):
+            $text_color_override = 'text-midnight';
+            break;
+          
+          case str_contains($item->options['class'], 'bg-white'):
+            $text_color_override = 'text-midnight';
             break;
 
           case str_contains($item->options['class'], 'bg-oasis'):
