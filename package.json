@@ -22,7 +22,7 @@
     "chromedriver": "^119.0.1",
     "cross-env": "^7.0.2",
     "dotenv-safe": "^9.1.0",
-    "eslint": "^8.53.0",
+    "eslint": "^9.38.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^9.1.2",
     "eslint-plugin-import": "^2.25.4",
