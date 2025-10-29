@@ -285,12 +285,12 @@ class AZRankingWidget extends WidgetBase {
       '#options' => [
         'text-bg-chili' => $this->t('Chili (default)'),
         'text-bg-blue' => $this->t('Arizona Blue'),
-        'text-bg-sky' => $this->t('Sky'),
-        'text-bg-oasis' => $this->t('Oasis'),
+        'bg-sky' => $this->t('Sky'),
+        'bg-oasis' => $this->t('Oasis'),
         'text-bg-azurite' => $this->t('Azurite'),
-        'text-bg-cool-gray' => $this->t('Cool Gray'),
-        'text-bg-warm-gray' => $this->t('Warm Gray'),
-        'text-bg-white' => $this->t('White'),
+        'bg-cool-gray' => $this->t('Cool Gray'),
+        'bg-warm-gray' => $this->t('Warm Gray'),
+        'bg-white' => $this->t('White'),
         'bg-transparent' => $this->t('Transparent'),
       ],
       '#required' => TRUE,
@@ -313,9 +313,9 @@ class AZRankingWidget extends WidgetBase {
       '#options' => [
         'text-bg-chili' => $this->t('Chili (default)'),
         'text-bg-blue' => $this->t('Arizona Blue'),
-        'text-bg-sky' => $this->t('Sky'),
-        'text-bg-cool-gray' => $this->t('Cool Gray'),
-        'text-bg-oasis' => $this->t('Oasis'),
+        'bg-sky' => $this->t('Sky'),
+        'bg-cool-gray' => $this->t('Cool Gray'),
+        'bg-oasis' => $this->t('Oasis'),
       ],
       '#required' => TRUE,
       '#title' => $this->t('Ranking Background with Hover Effect'),
@@ -440,7 +440,7 @@ class AZRankingWidget extends WidgetBase {
         'w-100 btn btn-outline-blue mt-2' => $this->t('Blue outline button'),
         'w-100 btn btn-outline-white mt-2' => $this->t('White outline button'),
       ],
-      '#default_value' => $item->ranking_link_style ?? 'w-100 btn btn-red',
+      '#default_value' => $item->ranking_link_style ?? 'w-100 btn btn-red mt-2',
       '#states' => [
         'visible' => [
           ':input[data-az-ranking-type-input-id="' . $ranking_type_unique_id . '"]' => ['value' => 'standard'],
@@ -765,7 +765,7 @@ class AZRankingWidget extends WidgetBase {
       $ranking_link_style = '';
       // Add hover effect to ranking card.
       if (!empty($ranking_hover_effect)) {
-        $ranking_classes .= ' ranking-bold-hover';
+        $ranking_classes .= ' ranking-bold-hover ';
       }
     }
     else {

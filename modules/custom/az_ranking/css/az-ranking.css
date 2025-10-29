@@ -41,15 +41,15 @@
     background-color: #ffffff !important;
     color: RGBA(var(--bs-blue-rgb),var(--bs-bg-opacity,1)) !important;
 }
-.text-bg-sky.ranking-bold-hover:hover * {
+.bg-sky.ranking-bold-hover:hover * {
     background-color: RGBA(var(--bs-blue-rgb),var(--bs-bg-opacity,1)) !important;
     color: RGBA(var(--bs-sky-rgb),var(--bs-bg-opacity,1)) !important;
 }
-.text-bg-cool-gray.ranking-bold-hover:hover * {
+.bg-cool-gray.ranking-bold-hover:hover * {
   background-color: RGBA(var(--bs-azurite-rgb), var(--bs-bg-opacity, 1)) !important;
   color: RGBA(var(--bs-cool-gray-rgb), var(--bs-bg-opacity, 1)) !important;
 }
-.text-bg-oasis.ranking-bold-hover:hover * {
+.bg-oasis.ranking-bold-hover:hover * {
     background-color: RGBA(var(--bs-midnight-rgb),var(--bs-bg-opacity,1)) !important;
     color: RGBA(var(--bs-oasis-rgb),var(--bs-bg-opacity,1)) !important;
 }

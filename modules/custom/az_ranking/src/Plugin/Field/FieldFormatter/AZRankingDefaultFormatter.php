@@ -233,12 +233,12 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
             $ranking_link_style = '';
             if (!empty($ranking_hover_effect)) {
               // Add hover effect to ranking card.
-              $ranking_classes .= ' ranking-bold-hover';
+              $ranking_classes .= ' ranking-bold-hover hover ';
             }
             else {
               // Add unique classes if no hover effect but ranking is still clickable.
               if (!empty($item->link_uri)) {
-                $ranking_classes .= ' ranking-with-link hover';
+                $ranking_classes .= ' ranking-with-link hover ';
               }
             }
           }
@@ -252,14 +252,14 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
         }
       }
 
-      $ranking_classes .= ' overflow-hidden ';
+//      $ranking_classes .= ' overflow-hidden';
       if (!str_contains($item->options['class'], 'bg-transparent')) {
         // Add mt-auto class to source on all styles, except bg-transparent.
         $ranking_source_classes = 'mt-auto';
       }
       else {
         $ranking_font_color = ' ' . $item->ranking_font_color;
-        $ranking_classes .= ' ' . $item->ranking_font_color;
+        $ranking_classes .= ' ' . $item->ranking_font_color . ' ';
       }
 
       // Handle class keys that contained multiple classes.
