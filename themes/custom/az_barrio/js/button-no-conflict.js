@@ -4,11 +4,11 @@
 * https://www.drupal.org/node/2815083
 * @preserve
 **/
-(function ($, Drupal) {
+(($, Drupal) => {
   Drupal.behaviors.azBarrioButtonNoConflict = {
-    attach: function attach() {
+    attach: () => {
       if ($.fn.button && $.fn.button.noConflict !== undefined) {
-        var bootstrapButton = $.fn.button.noConflict();
+        const bootstrapButton = $.fn.button.noConflict();
         $.fn.bootstrapBtn = bootstrapButton;
       }
     }

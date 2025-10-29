@@ -11,6 +11,7 @@ dependencies:
     - field.field.node.az_course.field_az_course_term
     - field.field.node.az_course.field_az_course_title
     - field.field.node.az_course.field_az_course_types
+    - field.field.node.az_course.field_az_course_units
     - field.field.node.az_course.field_az_subject_and_catalog
     - field.field.node.az_course.field_az_subject_code
     - node.type.az_course
@@ -39,6 +40,7 @@ hidden:
   field_az_course_term: true
   field_az_course_title: true
   field_az_course_types: true
+  field_az_course_units: true
   field_az_subject_and_catalog: true
   field_az_subject_code: true
   smart_title: true

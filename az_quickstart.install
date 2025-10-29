@@ -6,11 +6,7 @@
  */
 
 use Drupal\Core\Extension\MissingDependencyException;
-use Drupal\Core\Link;
-use Drupal\Core\Render\Markup;
-use Drupal\Core\Url;
 use Drupal\shortcut\Entity\Shortcut;
-use Drupal\user\Entity\User;
 
 /**
  * Implements hook_install().
@@ -20,11 +16,6 @@ use Drupal\user\Entity\User;
  * @see system_install()
  */
 function az_quickstart_install() {
-  // Assign user 1 the "administrator" role.
-  $user = User::load(1);
-  $user->roles[] = 'administrator';
-  $user->save();
-
   // Populate the default shortcut set.
   $shortcut = Shortcut::create([
     'shortcut_set' => 'default',
@@ -67,52 +58,6 @@ function az_quickstart_install() {
 }
 
 /**
- * Implements hook_requirements().
- */
-function az_quickstart_requirements($phase) {
-  $requirements = [];
-  if ($phase === 'runtime') {
-    // Reset the extension lists.
-    /** @var \Drupal\Core\Extension\ModuleExtensionList $module_extension_list */
-    $module_extension_list = \Drupal::service('extension.list.module');
-    $module_extension_list->reset();
-
-    // Gather all deprecated modules that are enabled.
-    $azqs_deprecated_modules = [
-      'background_image_formatter',
-      'block_content_permissions',
-      'ckeditor',
-      'entity_browser',
-      'media_library_theme_reset',
-    ];
-    $enabled_deprecated_modules = [];
-    $enabled_modules = \Drupal::moduleHandler()->getModuleList();
-    foreach ($enabled_modules as $module => $data) {
-      if (in_array($module, $azqs_deprecated_modules)) {
-        $enabled_deprecated_modules[$module] = $module_extension_list->getExtensionInfo($module)['name'];
-      }
-    }
-
-    // Warn if any deprecated modules are installed.
-    if (!empty($enabled_deprecated_modules)) {
-      foreach ($enabled_deprecated_modules as $deprecated_module => $name) {
-        $deprecated_modules_link_list[] = (string) Link::fromTextAndUrl($name, Url::fromUri('https://www.drupal.org/project/' . $deprecated_module))->toString();
-      }
-      $requirements['azqs_deprecated_modules'] = [
-        'title' => t('Quickstart deprecated modules enabled'),
-        'description' => t('These modules are no longer used by Arizona Quickstart and will be removed in a future release.  These modules should be uninstalled or should be added to a site-specific composer.json file if they are still needed, or your site will not be able to be updated via Composer.  Some action is required prior to updating to the next minor version.'),
-        'value' => t('Enabled Quickstart deprecated modules found: %module_list.', [
-          '%module_list' => Markup::create(implode(', ', $deprecated_modules_link_list)),
-        ]),
-        'severity' => REQUIREMENT_WARNING,
-      ];
-    }
-  }
-
-  return $requirements;
-}
-
-/**
  * Implements hook_update_last_removed().
  */
 function az_quickstart_update_last_removed() {
@@ -128,16 +73,10 @@ function az_quickstart_update_920601() {
 }
 
 /**
- * Change Arizona Bootstrap CDN references.
+ * Change Arizona Bootstrap CDN references (removed).
  */
 function az_quickstart_update_920602() {
-  $config = \Drupal::service('config.factory')->getEditable('az_barrio.settings');
-  if ($config->get('az_bootstrap_cdn_version') === 'main') {
-    $config->set('az_bootstrap_cdn_version', '2.x')->save(TRUE);
-  }
-  if ($config->get('az_bootstrap_cdn_version') === 'latest') {
-    $config->set('az_bootstrap_cdn_version', 'latest-2.x')->save(TRUE);
-  }
+  // This update has been removed.
 }
 
 /**
@@ -194,4 +133,55 @@ function az_quickstart_update_1020802() {
  */
 function az_quickstart_update_1020803() {
   \Drupal::service('module_installer')->uninstall(['media_library_theme_reset']);
+}
+
+/**
+ * Update langcode for migrated menu links to be the site's default language.
+ */
+function az_quickstart_update_1020901(&$sandbox) {
+  if (!isset($sandbox['progress'])) {
+    $sandbox['progress'] = 0;
+    $sandbox['max'] = \Drupal::entityQuery('menu_link_content')
+      ->accessCheck(FALSE)
+      ->condition('langcode', 'und')
+      ->count()
+      ->execute();
+  }
+  $batch_size = 25;
+  $default_langcode = \Drupal::languageManager()->getDefaultLanguage()->getId();
+
+  $ids = \Drupal::entityQuery('menu_link_content')
+    ->accessCheck(FALSE)
+    ->condition('langcode', 'und')
+    ->range(0, $batch_size)
+    ->execute();
+  $menu_links = \Drupal::entityTypeManager()->getStorage('menu_link_content')->loadMultiple($ids);
+  foreach ($menu_links as $menu_link) {
+    $menu_link->langcode = $default_langcode;
+    $menu_link->save();
+    $sandbox['progress']++;
+  }
+  $sandbox['#finished'] = empty($sandbox['max']) ? 1 : $sandbox['progress'] / $sandbox['max'];
+  return t('Updated langcode on %count menu links.', ['%count' => $sandbox['progress']]);
+}
+
+/**
+ * Enable masquerade and masquerade_log modules by default.
+ */
+function az_quickstart_update_1021301() {
+  \Drupal::service('module_installer')->install(['masquerade', 'masquerade_log']);
+}
+
+/**
+ * Enable quick_node_clone module by default.
+ */
+function az_quickstart_update_1021302() {
+  \Drupal::service('module_installer')->install(['quick_node_clone']);
+}
+
+/**
+ * Enable az_icons module by default.
+ */
+function az_quickstart_update_1130001() {
+  \Drupal::service('module_installer')->install(['az_icons']);
 }

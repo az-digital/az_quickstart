@@ -1,11 +1,13 @@
 name: 'Quickstart Paragraphs - Link Group'
 type: module
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10 || ^11 || ^12
 package: 'The University of Arizona - Experimental'
+lifecycle: experimental
+lifecycle_link: 'https://github.com/az-digital/az_quickstart/blob/main/RELEASES.md#experimental-features'
 description: 'Provides structured content for a group of links, which come with a handful of style options.'
 dependencies:
   - field
-  - link
+  - linkit
   - paragraphs
   - az_core
   - az_paragraphs

@@ -314,7 +314,7 @@ display:
       access:
         type: perm
         options:
-          perm: 'access draggableviews'
+          perm: 'access az_curated_views'
       cache:
         type: tag
         options: {  }
@@ -348,7 +348,7 @@ display:
           exposed: false
           draggable_views_reference: this
           draggable_views_null_order: before
-          draggable_views_pass_arguments: true
+          draggable_views_pass_arguments: 1
         field_az_publication_date_value:
           id: field_az_publication_date_value
           table: node__field_az_publication_date
@@ -397,7 +397,6 @@ display:
           default_argument_type: fixed
           default_argument_options:
             argument: ''
-          default_argument_skip_url: false
           summary_options:
             base_path: ''
             count: true
@@ -435,7 +434,6 @@ display:
           default_argument_type: fixed
           default_argument_options:
             argument: ''
-          default_argument_skip_url: false
           summary_options:
             base_path: ''
             count: true
@@ -513,12 +511,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              az_content_editor: '0'
-              az_content_admin: '0'
-              az_user_admin: '0'
-              az_html_admin: '0'
-              administrator: '0'
             placeholder: ''
           is_grouped: false
           group_info:
@@ -560,12 +552,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              az_content_editor: '0'
-              az_content_admin: '0'
-              az_user_admin: '0'
-              az_html_admin: '0'
-              administrator: '0'
             placeholder: ''
           is_grouped: false
           group_info:
@@ -609,12 +595,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              az_content_editor: '0'
-              az_content_admin: '0'
-              az_user_admin: '0'
-              az_html_admin: '0'
-              administrator: '0'
             min_placeholder: ''
             max_placeholder: ''
             placeholder: ''
@@ -657,12 +637,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              az_content_editor: '0'
-              az_content_admin: '0'
-              az_user_admin: '0'
-              az_html_admin: '0'
-              administrator: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -782,7 +756,6 @@ display:
           title: 'Curate Publications for {{ arguments.nid }}'
           default_argument_type: node
           default_argument_options: {  }
-          default_argument_skip_url: false
           summary_options:
             base_path: ''
             count: true
@@ -829,27 +802,28 @@ display:
         filters: false
         filter_groups: false
       relationships:
-        field_az_authors:
-          id: field_az_authors
-          table: node__field_az_authors
-          field: field_az_authors
+        field_az_contributors:
+          id: field_az_contributors
+          table: node__field_az_contributors
+          field: field_az_contributors
           relationship: none
           group_type: group
-          admin_label: 'field_az_authors: Author'
+          admin_label: 'field_az_contributors: Author'
           plugin_id: standard
           required: false
         field_az_author_person:
           id: field_az_author_person
           table: az_author__field_az_author_person
           field: field_az_author_person
-          relationship: field_az_authors
+          relationship: field_az_contributors
           group_type: group
           admin_label: 'field_az_author_person: Content'
           plugin_id: standard
           required: true
       display_description: ''
       display_extenders: {  }
-      path: admin/az-publication/curation/%node
+      path: az-publication/curation/%node
+      use_admin_theme: true
     cache_metadata:
       max-age: 0
       contexts:

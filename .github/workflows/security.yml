@@ -1,25 +1,27 @@
 name: Security workflow
 on:
-  push:
-    schedule:
-      - cron:  '0 13 * * *'
-    tags-ignore:
-      - '*'
+  schedule:
+    - cron:  '0 13 * * *'
+
 jobs:
-  dependency-audit:
-    name: Dependency Check
+  composer-audit:
+    name: composer audit (security)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - name: Setup PHP
-        uses: shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@bf6b4fbd49ca58e4608c9c89fba0b8d90bd2a39f # 2.35.5
         with:
-          php-version: '8.2'
+          php-version: '8.3'
+      - name: Find the push source branch name
+        if: ${{ github.event_name != 'pull_request' }}
+        run: echo "AZ_TRIMMED_REF=${GITHUB_REF#refs/*/}" >> ${GITHUB_ENV}
+      - name: Find the pull request source branch name
+        if: ${{ github.event_name == 'pull_request' }}
+        run: echo "AZ_TRIMMED_REF=${GITHUB_HEAD_REF}" >> ${GITHUB_ENV}
       - name: Set variables
         run: |
-          export AZ_TRIMMED_REF="${GITHUB_REF#refs/*/}"
-          echo "AZ_TRIMMED_REF=${AZ_TRIMMED_REF}" >> ${GITHUB_ENV}
           if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $AZ_TRIMMED_REF | wc -l) = 1 ]; then
             echo "SCAFFOLD_BRANCH=${AZ_TRIMMED_REF}" >> ${GITHUB_ENV}
           else
@@ -31,7 +33,7 @@ jobs:
             echo "DEV_PACKAGE_BRANCH=main" >> ${GITHUB_ENV}
           fi
       - name: Clone scaffolding repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
           repository: az-digital/az-quickstart-scaffolding
           path: az-quickstart-scaffolding
@@ -42,36 +44,24 @@ jobs:
           composer config repositories.az_quickstart vcs https://github.com/az-digital/az_quickstart.git
           composer config use-github-api false
           ./quickstart_branch.sh --branch ${AZ_TRIMMED_REF}
-          composer require --no-update --dev az-digital/az-quickstart-dev:dev-${DEV_PACKAGE_BRANCH}
+          if [[ ${DEV_PACKAGE_BRANCH} =~ ^[0-9]\.[0-9x] ]]; then
+            DEV_PACKAGE_VERSION="${DEV_PACKAGE_BRANCH}-dev"
+          else
+            DEV_PACKAGE_VERSION="dev-${DEV_PACKAGE_BRANCH}"
+          fi
+          composer require --no-update --dev az-digital/az-quickstart-dev:${DEV_PACKAGE_VERSION}
           composer install -o
-      - name: Check dependencies for vulnerabilities
-        uses: symfonycorp/security-checker-action@v5
-        with:
-          lock: az-quickstart-scaffolding/composer.lock
-  code-check:
-    name: Static Code Check
+      - name: Audit composer dependencies
+        run: |
+          cd az-quickstart-scaffolding
+          composer audit --abandoned report
+
+  yarn-audit:
+    name: yarn audit (security)
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
-          php-version: '8.2'
-      - name: Set variables
-        run: echo "AZ_TRIMMED_REF=${GITHUB_REF#refs/*/}" >> ${GITHUB_ENV}
-      - name: Install dependencies
-        run: |
-          if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $AZ_TRIMMED_REF | wc -l) = 1 ]; then SCAFFOLD_BRANCH="$AZ_TRIMMED_REF"; else SCAFFOLD_BRANCH=main; fi
-          if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-dev.git $AZ_TRIMMED_REF | wc -l) = 1 ]; then DEV_PACKAGE_BRANCH="$AZ_TRIMMED_REF"; else DEV_PACKAGE_BRANCH=main; fi
-          git clone --branch $SCAFFOLD_BRANCH https://github.com/az-digital/az-quickstart-scaffolding.git
-          cd az-quickstart-scaffolding
-          composer config repositories.az_quickstart vcs https://github.com/az-digital/az_quickstart.git
-          composer config use-github-api false
-          ./quickstart_branch.sh --branch ${AZ_TRIMMED_REF}
-          composer require --no-update --dev az-digital/az-quickstart-dev:dev-${DEV_PACKAGE_BRANCH}
-          composer install -o
-      - name: Run static code analysis
-        run: |
-          cd az-quickstart-scaffolding
-          composer phpcs
+          node-version: '20'
+      - run: yarn audit

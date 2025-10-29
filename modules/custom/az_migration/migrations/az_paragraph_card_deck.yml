@@ -71,9 +71,9 @@ process:
       options:
         plugin: default_value
         default_value:
-          class: 'bg-white'
+          class: 'text-bg-white'
           # Set the link style to default, since we can't migrate classes to this field.
-          link_style: 'btn-block'
+          link_style: 'w-100'
       media:
         -
           plugin: skip_on_empty
@@ -85,7 +85,7 @@ process:
             - 0
             - fid
         -
-          plugin: migration_lookup
+          plugin: migmag_lookup
           migration:
             - az_media
 
@@ -101,8 +101,8 @@ process:
         default: 'card'
         full: 'card'
         token: 'card'
-        uaqs_landing_grid: 'card card-borderless'
-        uaqs_borderless_card: 'card card-borderless'
+        uaqs_landing_grid: 'card border-0'
+        uaqs_borderless_card: 'card border-0'
 
   # Map QS1 landing grid, borderless styles to clickable card, default to off.
   card_clickable_processed:
@@ -121,6 +121,10 @@ process:
     plugin: default_value
     default_value: 'col-12'
 
+  card_deck_title_color_processed:
+    plugin: default_value
+    default_value: 'text-dark-silver'
+
   behavior_settings:
     plugin: az_paragraphs_behavior_settings
     paragraph_behavior_plugins:
@@ -128,6 +132,7 @@ process:
         card_width: '@card_width_processed'
         card_style: '@card_style_processed'
         card_clickable: '@card_clickable_processed'
+        card_deck_title_color: '@card_deck_title_color_processed'
         az_display_settings:
           bottom_spacing: bottom_spacing
           card_width_sm: '@card_width_sm_processed'

@@ -3,6 +3,7 @@
 namespace Drupal\az_migration\Plugin\migrate\process;
 
 use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
+use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
@@ -29,11 +30,8 @@ use Drupal\migrate\Row;
  *         source_end: value2
  *         timezone: 'America/Phoenix'
  * @endcode
- *
- * @MigrateProcessPlugin(
- *   id = "az_datetime_to_smart_date"
- * )
  */
+#[MigrateProcess('az_datetime_to_smart_date')]
 class DateTimeToSmartDate extends ProcessPluginBase {
 
   /**

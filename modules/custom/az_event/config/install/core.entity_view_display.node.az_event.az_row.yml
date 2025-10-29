@@ -6,6 +6,7 @@ dependencies:
     - field.field.node.az_event.field_az_attachments
     - field.field.node.az_event.field_az_body
     - field.field.node.az_event.field_az_contacts
+    - field.field.node.az_event.field_az_enterprise_attributes
     - field.field.node.az_event.field_az_event_category
     - field.field.node.az_event.field_az_event_date
     - field.field.node.az_event.field_az_featured_image_as_thumb
@@ -18,10 +19,10 @@ dependencies:
     - field.field.node.az_event.field_az_trellis_id
     - node.type.az_event
   module:
+    - az_core
     - date_ap_style
     - field_group
     - smart_title
-    - text
     - user
 third_party_settings:
   field_group:
@@ -50,7 +51,7 @@ third_party_settings:
       weight: 2
       format_type: html_element
       format_settings:
-        classes: 'row font-weight-normal'
+        classes: 'row fw-normal'
         id: ''
         element: div
         show_label: false
@@ -141,7 +142,7 @@ third_party_settings:
       weight: 19
       format_type: html_element
       format_settings:
-        classes: 'bg-gray-100 p-3 text-muted'
+        classes: 'text-bg-gray-100 p-3 text-body-secondary rounded'
         id: ''
         element: div
         show_label: false
@@ -161,9 +162,10 @@ third_party_settings:
       weight: 8
       format_type: html_element
       format_settings:
-        classes: 'col-lg-9 pt-lg-3 px-3 pl-lg-4 pb-3'
+        classes: 'col-lg-9 pt-lg-3 px-3 ps-lg-4 pb-3 text-break'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -198,7 +200,7 @@ third_party_settings:
       weight: 6
       format_type: html_element
       format_settings:
-        classes: font-weight-bold
+        classes: fw-bold
         id: ''
         element: div
         show_label: false
@@ -217,7 +219,7 @@ third_party_settings:
       weight: 4
       format_type: html_element
       format_settings:
-        classes: 'row no-gutters bg-gray-100 ml-n3 ml-md-0'
+        classes: 'row g-0 text-bg-gray-100 ms-n3 ms-md-0 rounded'
         show_empty_fields: false
         id: ''
         element: div
@@ -236,7 +238,7 @@ third_party_settings:
       weight: 6
       format_type: html_element
       format_settings:
-        classes: 'col-lg-3 pt-3 px-3 pr-lg-0 mb-lg-0'
+        classes: 'col-lg-3 pt-3 px-3 pe-lg-0 mb-lg-0'
         show_empty_fields: false
         id: ''
         element: div
@@ -276,12 +278,14 @@ content:
       cap_today: '1'
       display_time: '1'
       time_before_date: '1'
-      display_noon_and_midnight: '0'
+      display_noon_and_midnight: '1'
+      use_all_day: '1'
       separator: endash
       timezone: ''
-      use_all_day: '1'
-      capitalize_noon_and_midnight: 0
-      display_day: null
+      display_day: 0
+      month_only: 0
+      hide_date: 0
+      capitalize_noon_and_midnight: 1
     third_party_settings: {  }
     weight: 4
     region: content
@@ -295,7 +299,7 @@ content:
     weight: 7
     region: content
   field_az_summary:
-    type: text_default
+    type: az_text_summary
     label: hidden
     settings: {  }
     third_party_settings: {  }
@@ -310,6 +314,7 @@ hidden:
   field_az_attachments: true
   field_az_body: true
   field_az_contacts: true
+  field_az_enterprise_attributes: true
   field_az_event_category: true
   field_az_featured_image_as_thumb: true
   field_az_link: true

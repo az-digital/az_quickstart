@@ -7,15 +7,15 @@ namespace Drupal\az_event_trellis\Plugin\views\filter;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Asset\AttachedAssets;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\views\Attribute\ViewsFilter;
 use Drupal\views\Plugin\views\filter\FilterPluginBase;
 use Drupal\views_remote_data\Plugin\views\query\RemoteDataQuery;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Filter Trellis event API values according to dates.
- *
- * @ViewsFilter("az_event_trellis_views_date_filter")
  */
+#[ViewsFilter("az_event_trellis_views_date_filter")]
 class AZEventTrellisViewsDateFilter extends FilterPluginBase {
 
   const TRELLIS_DATE_FORMAT = 'Y-m-d\\TH:i:s.u';
@@ -141,7 +141,7 @@ class AZEventTrellisViewsDateFilter extends FilterPluginBase {
       '#default_value' => $this->value['end'],
     ];
     // Compute conditional fields using states array.
-    if ($exposed = $form_state->get('exposed')) {
+    if ($form_state->get('exposed')) {
       $identifier = $this->options['expose']['identifier'];
       $source = ':input[name="' . $identifier . '[value]"]';
       $state = [$source => ['value' => 'Custom']];
@@ -268,8 +268,8 @@ class AZEventTrellisViewsDateFilter extends FilterPluginBase {
         $end = strtotime("tomorrow", $end);
         // Roll over to the previous night.
         $end -= 1;
-        $begin = date(self::TRELLIS_DATE_FORMAT, $begin);
-        $end = date(self::TRELLIS_DATE_FORMAT, $end);
+        $begin = gmdate(self::TRELLIS_DATE_FORMAT, $begin);
+        $end = gmdate(self::TRELLIS_DATE_FORMAT, $end);
         $this->query->addWhere(
           $this->options['group'],
           $this->options['api_param_custom_begin'],

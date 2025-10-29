@@ -1,19 +1,18 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\az_event_trellis\Plugin\migrate\source;
 
-use Drupal\migrate\Plugin\migrate\source\SourcePluginBase;
+use Drupal\migrate\Attribute\MigrateSource;
 use Drupal\migrate\Plugin\MigrationInterface;
+use Drupal\migrate\Plugin\migrate\source\SourcePluginBase;
+use Drupal\migrate\Row;
 
 /**
  * Source plugin for retrieving data via Trellis events.
- *
- * @MigrateSource(
- *   id = "az_trellis_events_api"
- * )
  */
+#[MigrateSource('az_trellis_events_api')]
 class AZTrellisEventSource extends SourcePluginBase {
 
   /**
@@ -67,7 +66,9 @@ class AZTrellisEventSource extends SourcePluginBase {
     $this->trellisIds = $configuration['trellis_ids'] ?? [];
     // If no arguments are supplied, fetch the list currently on the site.
     if (empty($this->trellisIds)) {
-      $this->trellisIds = $this->trellisHelper->getImportedEventIds();
+      $ids = $this->trellisHelper->getImportedEventIds();
+      $ids += $this->trellisHelper->getRecurringEventIds();
+      $this->trellisIds = array_unique($ids);
     }
   }
 
@@ -99,6 +100,16 @@ class AZTrellisEventSource extends SourcePluginBase {
     // Return an iterable.
     $obj = new \ArrayObject($results);
     return $obj->getIterator();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function prepareRow(Row $row) {
+    // Trellis IDs from source configuration can affect the hash of the row.
+    $row->setSourceProperty('trellis_ids', []);
+    // Perform normal source plugin hashing.
+    return parent::prepareRow($row);
   }
 
   /**

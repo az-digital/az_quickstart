@@ -3,13 +3,14 @@
 namespace Drupal\az_paragraphs\Plugin\Field\FieldFormatter;
 
 use Drupal\Component\Utility\Html;
+use Drupal\Core\Field\Attribute\FieldFormatter;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\Plugin\Field\FieldFormatter\EntityReferenceFormatterBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Render\Markup;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
-//phpcs:ignore Security.BadFunctions.FilesystemFunctions.WarnWeirdFilesystem
 use Drupal\file\FileInterface;
 use Drupal\media\MediaInterface;
 use Drupal\paragraphs\ParagraphInterface;
@@ -17,19 +18,15 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Plugin implementation of the 'az_background_media_formatter' formatter.
- *
- * @FieldFormatter(
- *   id = "az_background_media",
- *   label = @Translation("Background Media"),
- *   field_types = {
- *     "entity_reference"
- *   },
- *   description = @Translation("This formatter can be enabled on any entity reference
- *   field, but will only create a background image for media entities of
- *   bundle type az_image, or az_remote_video.
- *   For az_remote_video, it must be a youtube video."),
- * )
  */
+#[FieldFormatter(
+  id: 'az_background_media',
+  label: new TranslatableMarkup('Background Media'),
+  description: new TranslatableMarkup('This formatter can be enabled on any entity reference field, but will only create a background image for media entities of bundle type az_image, or az_remote_video. For az_remote_video, it must be a youtube video.'),
+  field_types: [
+    'entity_reference',
+  ],
+)]
 class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements ContainerFactoryPluginInterface {
 
   /**
@@ -64,11 +61,11 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
    * {@inheritdoc}
    */
   public static function create(
-      ContainerInterface $container,
-      array $configuration,
-      $plugin_id,
-      $plugin_definition
-    ) {
+    ContainerInterface $container,
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+  ) {
     $instance = parent::create(
       $container,
       $configuration,
@@ -89,6 +86,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
   public static function defaultSettings(): array {
     return [
       'image_style' => '',
+      'autoplay_remote_video' => TRUE,
       'css_settings' => [
         'z_index' => 'auto',
         'color' => '#FFFFFF',
@@ -121,6 +119,12 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
       '#type' => 'select',
       '#options' => $responsive_image_style_options,
       '#default_value' => $this->getSetting('image_style'),
+    ];
+    $form['autoplay_remote_video'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Autoplay remote video'),
+      '#default_value' => $settings['autoplay_remote_video'],
+      '#description' => $this->t('Uncheck this setting to prevent remote video from playing automatically (such as on the "Preview" view mode).'),
     ];
     // Fieldset for css settings.
     $form['css_settings'] = [
@@ -274,6 +278,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     else {
       $summary[] = $this->t('Original image style');
     }
+    $summary[] = $this->t('Autoplay remote video: @style', ['@style' => empty($settings['autoplay_remote_video']) ? 'No' : 'Yes']);
     $summary[] = Markup::create('<p></p><strong>CSS settings:</strong>');
     if (isset($settings['css_settings']['selector'])) {
       $summary[] = $this->t('CSS selector: @selector', ['@selector' => $settings['css_settings']['selector']]);
@@ -312,19 +317,12 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
   public function viewElements(FieldItemListInterface $items, $langcode): array {
     $settings = $this->getAllSettings($items);
     $element = [];
-    $full_width = '';
-    $marquee_style = $settings['style'];
     /** @var \Drupal\media\MediaInterface[] $media_items */
     $media_items = $this->getEntitiesToView($items, $langcode);
-    $paragraph = $items->getEntity();
 
     // Early opt-out if the field is empty.
     if (empty($media_items)) {
       return $element;
-    }
-
-    if (!empty($settings['full_width'])) {
-      $full_width = $settings['full_width'];
     }
 
     // Prepare token data in bg image CSS selector.
@@ -376,7 +374,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     $options = [];
 
     if ($withNone && empty($styles)) {
-      $options[''] = t('- Defined None -');
+      $options[''] = $this->t('- Defined None -');
     }
     foreach ($styles as $name => $style) {
       $options[$name] = $style->label();
@@ -413,9 +411,6 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     // Get settings from parent paragraph.
     if ($parent instanceof ParagraphInterface) {
       $paragraph_settings = $parent->getAllBehaviorSettings();
-      if (!empty($paragraph_settings['az_text_media_paragraph_behavior'])) {
-        $paragraph_settings_all = $paragraph_settings['az_text_media_paragraph_behavior'];
-      }
     }
     return $paragraph_settings;
   }
@@ -456,7 +451,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
   /**
    * Prepare markup for remote video.
    *
-   * YouTube is currently the only supported provider.
+   * YouTube and Vimeo are currently the only two supported providers.
    *
    * @param array $settings
    *   The merged paragraph behavior settings,
@@ -481,22 +476,9 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     if ($settings['style'] === 'bottom') {
       $css_settings['selector'] = $css_settings['selector'] . ' .text-on-video';
     }
-    if ($provider === 'YouTube') {
+    if ($provider === 'YouTube' || $provider === 'Vimeo') {
       $source_url = $media->get('field_media_az_oembed_video')->value;
       $video_oembed_id = $this->videoEmbedHelper->getYoutubeIdFromUrl($source_url);
-      $attached_library = [
-        'library' => 'az_paragraphs_text_media/az_paragraphs_text_media.youtube',
-        'drupalSettings' => [
-          'azFieldsMedia' => [
-            'bgVideos' => [
-              $video_oembed_id => [
-                'videoId' => $video_oembed_id,
-                'start' => 0,
-              ],
-            ],
-          ],
-        ],
-      ];
       $responsive_image_style_element = [
         '#theme' => 'az_responsive_background_image',
         '#selector' => $css_settings['selector'],
@@ -511,28 +493,60 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
         '#uri' => $file_uri,
         '#z_index' => $css_settings['z_index'],
       ];
-      $background_video = [
-        '#type' => 'html_tag',
-        '#tag' => 'div',
-        '#allowed_tags' => ['iframe', 'img'],
-        '#attributes' => [
-          'id' => [$video_oembed_id . '-bg-video-container'],
-          'class' => [
-            'az-video-background',
-            'az-js-video-background',
+      if ($provider === 'YouTube') {
+        $attached_library = [
+          'library' => 'az_paragraphs_text_media/az_paragraphs_text_media.youtube',
+        ];
+        $background_video = [
+          '#type' => 'html_tag',
+          '#tag' => 'div',
+          '#allowed_tags' => ['iframe', 'img'],
+          '#attributes' => [
+            'id' => [$video_oembed_id . '-bg-video-container'],
+            'class' => [
+              'az-video-background',
+              'az-js-video-background',
+              'rounded',
+            ],
+            'data-youtubeid' => $video_oembed_id,
+            'data-style' => $settings['style'],
+            'data-parentid' => HTML::getId($settings['css_settings']['selector']),
+            'data-autoplay' => $settings['autoplay_remote_video'] ? 'true' : 'false',
+            'data-start' => '0',
           ],
-          'data-youtubeid' => $video_oembed_id,
-          'data-style' => $settings['style'],
-          'data-parentid' => HTML::getId($settings['css_settings']['selector']),
-        ],
-        'child' => $background_media,
-        '#attached' => $attached_library,
-      ];
+          'child' => $background_media,
+          '#attached' => $attached_library,
+        ];
+      }
+      elseif ($provider === 'Vimeo') {
+        $attached_library = [
+          'library' => 'az_paragraphs_text_media/az_paragraphs_text_media.vimeo',
+        ];
+        $background_video = [
+          '#type' => 'html_tag',
+          '#tag' => 'div',
+          '#allowed_tags' => ['iframe', 'img'],
+          '#attributes' => [
+            'id' => [$video_oembed_id . '-bg-video-container'],
+            'class' => [
+              'az-video-background',
+              'az-js-vimeo-video-background',
+              'rounded',
+            ],
+            'data-vimeo-video-id' => $video_oembed_id,
+            'data-style' => $settings['style'],
+            'data-parentid' => HTML::getId($settings['css_settings']['selector']),
+            'data-autoplay' => $settings['autoplay_remote_video'] ? 'true' : 'false',
+          ],
+          'child' => $background_media,
+          '#attached' => $attached_library,
+        ];
+      }
 
       if ($settings['style'] !== 'bottom') {
         $az_background_media[] = $responsive_image_style_element;
         $az_background_media[] = $background_video;
-        if ($settings['text_media_spacing'] === 'az-aspect-ratio' && isset($settings['full_width']) && $settings['full_width'] === 'full-width-background') {
+        if ($settings['text_media_spacing'] === 'az-aspect-ratio') {
           $image_renderable = [
             '#theme' => 'responsive_image_formatter',
             '#responsive_image_style_id' => 'az_full_width_background',
@@ -541,6 +555,12 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
               'class' => ['img-fluid', ' w-100', 'invisible'],
             ],
           ];
+
+          // Remove rounded corners on full-width paragraphs.
+          if (isset($settings['full_width']) && $settings['full_width'] === 'full-width-background') {
+            $image_renderable['#item_attributes']['class'][] = 'rounded-0';
+          }
+
           $az_background_media[] = $image_renderable;
         }
       }
@@ -553,6 +573,12 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
             'class' => ['img-fluid'],
           ],
         ];
+
+        // Remove rounded corners on full-width paragraphs.
+        if (isset($settings['full_width']) && $settings['full_width'] === 'full-width-background') {
+          $image_renderable['#item_attributes']['class'][] = 'rounded-0';
+        }
+
         $text_on_bottom = [
           '#type' => 'html_tag',
           '#tag' => 'div',
@@ -564,9 +590,9 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
           ],
         ];
         $az_background_media[] = $text_on_bottom;
-
       }
     }
+
     return $az_background_media;
   }
 
@@ -587,6 +613,9 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     $css_settings = $settings['css_settings'];
     $fid = $media->getSource()->getSourceFieldValue($media);
     $file = $this->entityTypeManager->getStorage('file')->load($fid);
+    if (empty($file)) {
+      return $az_background_media;
+    }
     $file_uri = $file->getFileUri();
 
     if ($settings['style'] !== 'bottom') {
@@ -604,7 +633,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
         '#uri' => $file_uri,
         '#z_index' => $css_settings['z_index'],
       ];
-      if ($settings['text_media_spacing'] === 'az-aspect-ratio' && isset($settings['full_width']) && $settings['full_width'] === 'full-width-background') {
+      if ($settings['text_media_spacing'] === 'az-aspect-ratio') {
         $image_renderable = [
           '#theme' => 'responsive_image_formatter',
           '#responsive_image_style_id' => 'az_full_width_background',
@@ -613,6 +642,12 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
             'class' => ['img-fluid', ' w-100', 'invisible'],
           ],
         ];
+
+        // Remove rounded corners on full-width paragraphs.
+        if (isset($settings['full_width']) && $settings['full_width'] === 'full-width-background') {
+          $image_renderable['#item_attributes']['class'][] = 'rounded-0';
+        }
+
         $az_background_media[] = $image_renderable;
       }
 
@@ -627,6 +662,12 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
           'class' => ['img-fluid'],
         ],
       ];
+
+      // Remove rounded corners on full-width paragraphs.
+      if (isset($settings['full_width']) && $settings['full_width'] === 'full-width-background') {
+        $image_renderable['#item_attributes']['class'][] = 'rounded-0';
+      }
+
       $text_on_bottom = [
         '#type' => 'html_tag',
         '#tag' => 'div',

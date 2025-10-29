@@ -4,142 +4,134 @@
 * https://www.drupal.org/node/2815083
 * @preserve
 **/
-(function ($, Drupal) {
+((Drupal, once) => {
   Drupal.behaviors.az_youtube_video_bg = {
-    attach: function attach(context, settings) {
-      if (window.screen && window.screen.width > 768) {
-        var defaults = {
-          ratio: 16 / 9,
-          videoId: '',
-          mute: true,
-          repeat: true,
-          width: $(window).width(),
-          playButtonClass: 'az-video-play',
-          pauseButtonClass: 'az-video-pause',
-          muteButtonClass: 'az-video-mute',
-          volumeUpClass: 'az-video-volume-up',
-          volumeDownClass: 'az-video-volume-down',
-          increaseVolumeBy: 10,
-          start: 0,
-          minimumSupportedWidth: 600
-        };
-        var bgVideos = settings.azFieldsMedia.bgVideos;
-        var bgVideoParagraphs = document.getElementsByClassName('az-js-video-background');
-        var tag = document.createElement('script');
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        tag.src = 'https://www.youtube.com/iframe_api';
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-        window.onYouTubeIframeAPIReady = function () {
-          $.each(bgVideoParagraphs, function (index) {
-            var thisContainer = bgVideoParagraphs[index];
-            var parentId = thisContainer.dataset.parentid;
-            var parentParagraph = document.getElementById(parentId);
-            var youtubeId = thisContainer.dataset.youtubeid;
-            bgVideos[youtubeId] = $.extend({}, defaults, thisContainer);
-            var options = bgVideos[youtubeId];
-            var videoPlayer = thisContainer.getElementsByClassName('az-video-player')[0];
-            var YouTubePlayer = window.YT;
-            thisContainer.player = new YouTubePlayer.Player(videoPlayer, {
-              width: options.width,
-              height: Math.ceil(options.width / options.ratio),
-              videoId: youtubeId,
-              playerVars: {
-                modestbranding: 1,
-                controls: 0,
-                showinfo: 0,
-                rel: 0,
-                wmode: 'transparent'
-              },
-              events: {
-                onReady: window.onPlayerReady,
-                onStateChange: window.onPlayerStateChange
-              }
+    attach(context) {
+      function initYouTubeBackgrounds() {
+        if (window.screen && window.screen.width > 768) {
+          const defaultSettings = {
+            loop: true,
+            mute: true,
+            pauseButtonClass: 'az-video-pause',
+            playButtonClass: 'az-video-play',
+            ratio: 16 / 9,
+            width: document.documentElement.clientWidth
+          };
+          const bgVideoSettings = {};
+          const tag = document.createElement('script');
+          const firstScriptTag = document.getElementsByTagName('script')[0];
+          tag.src = 'https://www.youtube.com/iframe_api';
+          firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+          const bgVideoParagraphs = document.getElementsByClassName('az-js-video-background');
+          window.onYouTubeIframeAPIReady = () => {
+            Array.from(bgVideoParagraphs).forEach(element => {
+              const parentParagraph = document.getElementById(element.dataset.parentid);
+              const youtubeId = element.dataset.youtubeid;
+              bgVideoSettings[youtubeId] = {
+                autoplay: element.dataset.autoplay === 'true',
+                start: element.dataset.start
+              };
+              const videoPlayer = element.getElementsByClassName('az-video-player')[0];
+              const youTubePlayer = window.YT;
+              element.player = new youTubePlayer.Player(videoPlayer, {
+                width: defaultSettings.width,
+                height: Math.ceil(defaultSettings.width / defaultSettings.ratio),
+                videoId: youtubeId,
+                playerVars: {
+                  controls: 0,
+                  enablejsapi: 1,
+                  origin: window.location.origin,
+                  rel: 0
+                },
+                events: {
+                  onReady: window.onPlayerReady,
+                  onStateChange: window.onPlayerStateChange
+                }
+              });
+              const playButton = element.getElementsByClassName('az-video-play')[0];
+              playButton.addEventListener('click', event => {
+                event.preventDefault();
+                element.player.playVideo();
+                parentParagraph.classList.remove('az-video-paused');
+                parentParagraph.classList.add('az-video-playing');
+              });
+              const pauseButton = element.getElementsByClassName('az-video-pause')[0];
+              pauseButton.addEventListener('click', event => {
+                event.preventDefault();
+                element.player.pauseVideo();
+                parentParagraph.classList.remove('az-video-playing');
+                parentParagraph.classList.add('az-video-paused');
+              });
             });
-            var playButton = bgVideoParagraphs[index].getElementsByClassName('az-video-play')[0];
-            playButton.addEventListener('click', function (event) {
-              event.preventDefault();
-              bgVideoParagraphs[index].player.playVideo();
-              parentParagraph.classList.remove('az-video-paused');
-              parentParagraph.classList.add('az-video-playing');
+          };
+          const setDimensions = container => {
+            container.style.height = `${container.parentNode.offsetHeight}px`;
+            if (container.dataset.style === 'bottom') {
+              container.style.top = 0;
+            }
+            const thisPlayer = container.getElementsByClassName('az-video-player')[0];
+            if (thisPlayer === null) {
+              return;
+            }
+            thisPlayer.style.zIndex = -100;
+            const width = container.offsetWidth;
+            const height = container.offsetHeight;
+            const pWidth = Math.ceil(height * defaultSettings.ratio);
+            const pHeight = Math.ceil(width / defaultSettings.ratio);
+            let widthMinuspWidthDividedByTwo = (width - pWidth) / 2;
+            widthMinuspWidthDividedByTwo = `${widthMinuspWidthDividedByTwo.toString()}px`;
+            const pHeightRatio = `${(height - pHeight) / 2}px`;
+            if (width / defaultSettings.ratio < height) {
+              thisPlayer.width = pWidth;
+              thisPlayer.height = height;
+              thisPlayer.style.left = widthMinuspWidthDividedByTwo;
+              thisPlayer.style.top = 0;
+            } else {
+              thisPlayer.height = pHeight;
+              thisPlayer.width = width;
+              thisPlayer.style.top = pHeightRatio;
+              thisPlayer.style.left = 0;
+            }
+          };
+          const resize = () => {
+            Array.from(bgVideoParagraphs).forEach(element => {
+              setDimensions(element);
             });
-            var pauseButton = bgVideoParagraphs[index].getElementsByClassName('az-video-pause')[0];
-            pauseButton.addEventListener('click', function (event) {
-              event.preventDefault();
-              bgVideoParagraphs[index].player.pauseVideo();
-              parentParagraph.classList.remove('az-video-playing');
-              parentParagraph.classList.add('az-video-paused');
-            });
-          });
-        };
-        var setDimensions = function setDimensions(container) {
-          var parentParagraph = container.parentNode;
-          var youtubeId = container.dataset.youtubeid;
-          var thisPlayer = container.getElementsByClassName('az-video-player')[0];
-          thisPlayer.style.zIndex = -100;
-          var style = container.dataset.style;
-          var width = container.offsetWidth;
-          var height = container.offsetHeight;
-          var ratio = bgVideos[youtubeId].ratio;
-          var pWidth = Math.ceil(height * ratio);
-          var pHeight = Math.ceil(width / ratio);
-          var parentHeight = parentParagraph.offsetHeight;
-          parentHeight = "".concat(parentHeight.toString(), "px");
-          container.style.height = parentHeight;
-          if (style === 'bottom') {
-            container.style.top = 0;
-          }
-          var widthMinuspWidthdividedbyTwo = (width - pWidth) / 2;
-          widthMinuspWidthdividedbyTwo = "".concat(widthMinuspWidthdividedbyTwo.toString(), "px");
-          var pHeightRatio = (height - pHeight) / 2;
-          pHeightRatio = "".concat(pHeightRatio.toString(), "px");
-          if (width / ratio < height) {
-            thisPlayer.width = pWidth;
-            thisPlayer.height = height;
-            thisPlayer.style.left = widthMinuspWidthdividedbyTwo;
-            thisPlayer.style.top = 0;
-          } else {
-            thisPlayer.height = pHeight;
-            thisPlayer.width = width;
-            thisPlayer.style.top = pHeightRatio;
-            thisPlayer.style.left = 0;
-          }
-        };
-        var resize = function resize() {
-          $.each(bgVideoParagraphs, function (index) {
-            setDimensions(bgVideoParagraphs[index]);
-          });
-        };
-        window.onPlayerReady = function (event) {
-          var id = event.target.playerInfo.videoData.video_id;
-          if (bgVideos[id].mute) {
-            event.target.mute();
-          }
-          event.target.seekTo(bgVideos[id].start);
-          event.target.playVideo();
-          var azVideoPlayEvent = new Event('azVideoPlay');
-          dispatchEvent(azVideoPlayEvent);
-        };
-        window.onPlayerStateChange = function (event) {
-          var id = event.target.playerInfo.videoData.video_id;
-          var stateChangeContainer = document.getElementById("".concat(id, "-bg-video-container"));
-          var parentid = stateChangeContainer.dataset.parentid;
-          var parentContainer = document.getElementById(parentid);
-          if (event.data === 0 && bgVideos[id].repeat) {
-            stateChangeContainer.player.seekTo(bgVideos[id].start);
-          }
-          if (event.data === 1) {
+          };
+          window.onPlayerReady = event => {
+            const id = event.target.options.videoId;
+            if (!bgVideoSettings[id].autoplay) {
+              return;
+            }
+            if (defaultSettings.mute) {
+              event.target.mute();
+            }
+            event.target.seekTo(bgVideoSettings[id].start);
+            event.target.playVideo();
+            dispatchEvent(new Event('azVideoPlay'));
+          };
+          window.onPlayerStateChange = event => {
+            const id = event.target.options.videoId;
+            const stateChangeContainer = document.getElementById(`${id}-bg-video-container`);
+            const parentContainer = document.getElementById(stateChangeContainer.dataset.parentid);
+            if (event.data === 0 && defaultSettings.loop) {
+              stateChangeContainer.player.seekTo(bgVideoSettings[id].start);
+            }
+            if (event.data === 1) {
+              resize();
+              parentContainer.classList.add('az-video-playing');
+              parentContainer.classList.remove('az-video-loading');
+            }
+          };
+          window.addEventListener('load', () => {
             resize();
-            parentContainer.classList.add('az-video-playing');
-            parentContainer.classList.remove('az-video-loading');
-          }
-        };
-        $(window).on('load', function () {
-          resize();
-        });
-        $(window).on('resize.bgVideo', function () {
-          resize();
-        });
+          });
+          window.addEventListener('resize', () => {
+            resize();
+          });
+        }
       }
+      once('youTubeTextOnMedia-init', 'body').forEach(initYouTubeBackgrounds, context);
     }
   };
-})(jQuery, Drupal, drupalSettings);
+})(Drupal, once);

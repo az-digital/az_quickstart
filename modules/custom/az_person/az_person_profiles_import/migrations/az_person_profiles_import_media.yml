@@ -1,0 +1,68 @@
+id: az_person_profiles_import_media
+label: Profiles Integration Media
+migration_tags:
+  - Profiles Integration
+source:
+  plugin: url
+  data_fetcher_plugin: az_profiles_api_fetcher
+  data_parser_plugin: az_person_profiles_import_json
+  urls: []
+  item_selector: /
+  ids:
+    netid:
+      type: string
+
+  fields:
+    -
+      name: netid
+      selector: 'Person/netid'
+    -
+      name: surname
+      selector: 'Person/surname'
+    -
+      name: givenname
+      selector: 'Person/givenname'
+
+process:
+  uid:
+    plugin: default_value
+    default_value: 0
+  bundle:
+    plugin: default_value
+    default_value: az_image
+  field_media_az_image/target_id:
+    -
+      plugin: migration_lookup
+      migration: az_person_profiles_import_files
+      source: netid
+      no_stub: true
+    -
+      plugin: skip_on_empty
+      method: row
+  field_media_az_image/alt:
+    plugin: concat
+    source:
+      - givenname
+      - surname
+    delimiter: ' '
+  field_media_az_image/title:
+    plugin: concat
+    source:
+      - givenname
+      - surname
+    delimiter: ' '
+  status:
+    plugin: default_value
+    default_value: 1
+
+destination:
+  plugin: entity:media
+
+dependencies:
+  enforced:
+    module:
+      - az_event_trellis
+      - az_media
+migration_dependencies:
+  optional:
+    - az_person_profiles_import_files

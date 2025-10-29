@@ -16,6 +16,11 @@ class AZAuthorListBuilder extends EntityListBuilder {
   /**
    * {@inheritdoc}
    */
+  protected const SORT_KEY = 'label';
+
+  /**
+   * {@inheritdoc}
+   */
   public function buildHeader() {
     $header['id'] = $this->t('Author ID');
     $header['name'] = $this->t('Name');

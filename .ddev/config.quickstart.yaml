@@ -1,7 +1,7 @@
 # Recipe for AZ Quickstart local development
 type: php
 docroot: web
-php_version: "8.2"
+php_version: "8.3"
 webserver_type: nginx-fpm
 
 # Default application ports
@@ -15,7 +15,20 @@ nfs_mount_enabled: false
 xdebug_enabled: false
 additional_hostnames: []
 additional_fqdns: []
-mariadb_version: "10.3"
+mariadb_version: "10.11"
 provider: default
 use_dns_when_possible: true
 timezone: ""
+
+web_environment:
+  - BROWSERTEST_OUTPUT_DIRECTORY=/tmp
+  - BROWSERTEST_OUTPUT_BASE_URL=${DDEV_PRIMARY_URL}
+  - SIMPLETEST_BASE_URL=http://web
+  - SIMPLETEST_DB=mysql://db:db@db/db
+  # Use disable-dev-shm-usage instead of setting shm_usage
+  # https://developers.google.com/web/tools/puppeteer/troubleshooting#tips
+  # The format of chromeOptions is defined at https://chromedriver.chromium.org/capabilities
+  - MINK_DRIVER_ARGS_WEBDRIVER=[\"chrome\", {\"browserName\":\"chrome\",\"goog:chromeOptions\":{\"w3c\":false,\"args\":[\"--disable-gpu\",\"--headless\", \"--no-sandbox\", \"--disable-dev-shm-usage\"]}}, \"http://selenium-chrome:4444/wd/hub\"]
+  # DTT
+  - DTT_BASE_URL=http://web
+  - DTT_MINK_DRIVER_ARGS=[\"chrome\", {\"browserName\":\"chrome\",\"goog:chromeOptions\":{\"w3c\":false,\"args\":[\"--disable-gpu\",\"--headless\", \"--no-sandbox\", \"--disable-dev-shm-usage\"]}}, \"http://selenium-chrome:4444/wd/hub\"]

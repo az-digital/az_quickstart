@@ -5,6 +5,13 @@
  * Contains az_person.module.
  */
 
+use Drupal\Core\Entity\EntityFormInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\node\NodeInterface;
+
 /**
  * Implements hook_preprocess_node().
  */
@@ -30,4 +37,212 @@ function az_person_preprocess_views_view(&$variables) {
     $variables['#attached']['library'][] = 'az_person/az_person';
   }
 
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter() for node_az_person_edit_form.
+ *
+ * Disables certain fields for imported person data.
+ */
+function az_person_form_node_az_person_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  $form_object = $form_state->getFormObject();
+  if ($form_object instanceof EntityFormInterface) {
+    /** @var \Drupal\node\NodeInterface $node */
+    $node = $form_object->getEntity();
+    if ($node->hasField('field_az_netid')) {
+      $netid = $node->get('field_az_netid')->value;
+      if (!empty($netid)) {
+        $imported = [];
+        try {
+          // See if a migration map exists for this person.
+          $imported = \Drupal::service('migrate.lookup')->lookup('az_person_profiles_import', [$netid]);
+        }
+        catch (\Exception $e) {
+          // Migration did not exist, or migrate service not found.
+          // We have no data on this person being imported or not.
+        }
+        // Lock person if migrate map for this person points to them.
+        if (!empty($imported[0]['nid']) && ($imported[0]['nid'] === $node->id())) {
+          $person_warning = t('This person has been imported from the Profiles API.');
+          \Drupal::messenger()->addWarning($person_warning);
+          $disabled_fields = [
+            'field_az_fname',
+            'field_az_lname',
+            'field_az_media_image',
+            'field_az_netid',
+            'field_az_email',
+            'field_az_phones',
+            'field_az_titles',
+            'field_az_degrees',
+            'field_az_address',
+            'field_az_body',
+            'field_az_research_interests',
+            'field_az_teaching_interests',
+            'field_az_awards',
+            'field_az_licensure_certification',
+            'field_az_work_experience',
+          ];
+          foreach ($disabled_fields as $field) {
+            if (!empty($form[$field])) {
+              $form[$field]['#disabled'] = TRUE;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_entity_bundle_field_info_alter().
+ */
+function az_person_entity_bundle_field_info_alter(&$fields, EntityTypeInterface $entity_type, $bundle) {
+  if (($entity_type->id() === 'node') && ($bundle === 'az_person') && (!empty($fields['field_az_netid']))) {
+    // Alter a unique constraint to the netID field.
+    // \Drupal\Core\Validation\Plugin\Validation\Constraint\UniqueFieldConstraint.
+    $fields['field_az_netid']->addConstraint('UniqueField');
+  }
+}
+
+/**
+ * Implements hook_preprocess_field().
+ */
+function az_person_preprocess_field(array &$variables) {
+  $entity_type = $variables['element']['#entity_type'] ?? '';
+  $bundle = $variables['element']['#bundle'] ?? '';
+  $field_name = $variables['element']['#field_name'] ?? '';
+  if ($entity_type === 'node' && $bundle === 'az_person' && $field_name === 'field_az_suffix') {
+    $suffix = $variables['element']['#items'][0]->value ?? '';
+    if (!empty($suffix)) {
+      $variables['items'][0]['content']['#context'] = [
+        'value' => ', ' . $suffix,
+      ];
+    }
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function az_person_theme() {
+  $field_group_base_hook = [
+    'base hook' => 'field_group_html_element',
+  ];
+  $experience_field_template = [
+    'template' => 'field--node--experience-field--az-person',
+    'base hook' => 'field',
+  ];
+  $interests_field_template = [
+    'template' => 'field--node--interests-field--az-person',
+    'base hook' => 'field',
+  ];
+  return [
+    'field_group_html_element__node__az_person__h1' => $field_group_base_hook,
+    'field_group_html_element__node__az_person__h2' => $field_group_base_hook,
+    'field_group_html_element__node__az_person__h3' => $field_group_base_hook,
+    'field__node__field_az_awards__az_person' => $experience_field_template,
+    'field__node__field_az_degrees__az_person' => $experience_field_template,
+    'field__node__field_az_licensure_certification__az_person' => $experience_field_template,
+    'field__node__field_az_work_experience__az_person' => $experience_field_template,
+    'field__node__field_az_research_interests__az_person' => $interests_field_template,
+    'field__node__field_az_teaching_interests__az_person' => $interests_field_template,
+    'horizontal_tabs__node__az_person__group_tabs' => ['base hook' => 'horizontal_tabs'],
+  ];
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ *
+ * Prepopulate the alphabetical index letter field in az_person where available.
+ */
+function az_person_node_presave(EntityInterface $entity) {
+  if ($entity->bundle() === 'az_person'
+    && $entity instanceof NodeInterface
+    && $entity->hasField('field_az_alphabetical_index')
+    && $entity->hasField('field_az_lname')) {
+    $last = $entity->get('field_az_lname')->value;
+    $index = $entity->get('field_az_alphabetical_index');
+    // Only operate if we have no current index values.
+    if (!empty($last) && empty($index->value)) {
+      $last = mb_strtolower($last);
+      // Remove accent characters.
+      $last = \Drupal::service('transliteration')->removeDiacritics($last);
+      // Get the list of allowed characters for the index field.
+      $allowed = $index->getSetting('allowed_values');
+      // Get first letter after beginning or space.
+      // Unicode mode is a deliberate attempt to support multibyte characters.
+      if (preg_match('/(?<=^|\s)\w/u', $last, $match) !== FALSE) {
+        // Get the matched letter.
+        $letter = $match[0];
+        $values = isset($allowed[$letter]) ? [$letter] : [];
+        // Update the field value if we could determine one.
+        if (!empty($values)) {
+          $entity->set('field_az_alphabetical_index', $values);
+        }
+      }
+    }
+  }
+  // Set a new revision to be created if this is a migrating person.
+  // Nodes from migrations are isSyncing().
+  if (($entity instanceof NodeInterface) && ($entity->bundle() === 'az_person') && $entity->isSyncing() && !$entity->isNew()) {
+    // Create new revision on syncing person records.
+    $revision_log = 'Updated via automated import.';
+    $fields = [
+      'field_az_fname',
+      'field_az_lname',
+      'field_az_netid',
+      'field_az_email',
+      'field_az_body',
+      'field_az_titles',
+      'field_az_degrees',
+      'field_az_phones',
+      'field_az_pronouns',
+      'field_az_research_interests',
+      'field_az_teaching_interests',
+      'field_az_awards',
+      'field_az_licensure_certification',
+      'field_az_work_experience',
+    ];
+    foreach ($fields as $field) {
+      if ($entity->hasField($field) && !empty($entity->original)) {
+        // Check if field changed.
+        $value = $entity->get($field)->getValue();
+        $original = $entity->original->get($field)->getValue();
+        if (serialize($value) !== serialize($original)) {
+          // Field value has changed.
+          // Get human readable name of field.
+          $field_info = FieldStorageConfig::loadByName('node', $field);
+          if (!is_null($field_info)) {
+            $label = $field_info->getLabel();
+            // Add mention of field being changed in log message.
+            $revision_log .= " Modified field " . $label . '.';
+          }
+        }
+      }
+    }
+    $entity->setNewRevision(TRUE);
+    $default_revision = TRUE;
+    // Determine if the entity's content moderation allows for a draft status.
+    try {
+      $moderation_information = \Drupal::service('content_moderation.moderation_information');
+      $workflow = $moderation_information->getWorkflowForEntity($entity);
+      if ($workflow && $workflow->getTypePlugin()->hasState('draft')) {
+        // Set the revision to be a draft.
+        // @todo perform more robust check to make sure draft transition is allowed.
+        $entity->set('moderation_state', 'draft');
+        // Draft should not be the default revision.
+        $default_revision = FALSE;
+      }
+    }
+    catch (\Exception $e) {
+      // Content moderation not enabled or other failure.
+    }
+
+    $entity->setRevisionLogMessage($revision_log);
+    $entity->setRevisionCreationTime(\Drupal::time()->getCurrentTime());
+    $entity->setRevisionUserId(\Drupal::currentUser()->id());
+    $entity->isDefaultRevision($default_revision);
+
+  }
 }

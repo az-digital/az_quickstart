@@ -47,7 +47,7 @@ third_party_settings:
         effect: none
         speed: fast
         id: ''
-        classes: az-full-width-row
+        classes: 'd-flex az-full-width-row'
         show_empty_fields: false
       label: Row
     group_az_title:
@@ -66,7 +66,7 @@ third_party_settings:
         effect: none
         speed: fast
         id: ''
-        classes: 'bold mt-0'
+        classes: 'fw-bold mt-0'
         show_empty_fields: false
       label: Title
     group_az_content:
@@ -149,6 +149,7 @@ content:
         size: cover
         selector: '#[paragraph:type:target_id]-[paragraph:id]'
         important: false
+      autoplay_remote_video: true
     third_party_settings: {  }
   field_az_text_area:
     weight: 22

@@ -8,7 +8,7 @@ id: paragraph.az_cards.field_az_title
 field_name: field_az_title
 entity_type: paragraph
 bundle: az_cards
-label: Card group title
+label: 'Card group title'
 description: 'Add a custom title above these cards.'
 required: false
 translatable: true

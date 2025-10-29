@@ -1,7 +1,9 @@
 name: 'Quickstart Google Tag Manager'
+description: "Provides configuration of the institution-wide Google Tag Manager container (AZ Comprehensive)."
 type: module
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10 || ^11 || ^12
 package: The University of Arizona
+container_rebuild_required: true
 dependencies:
-  - ctools:ctools
+  - az_core
   - google_tag:google_tag

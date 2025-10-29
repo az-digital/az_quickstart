@@ -1,0 +1,11 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - az_enterprise_attributes_import
+id: az_enterprise_attributes_import
+label: 'AZ Enterprise Attributes'
+description: 'Import Enterprise Attributes'
+source_type: 'Trellis Enterprise Attributes'
+module: az_enterprise_attributes_import
+shared_configuration: null

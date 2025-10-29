@@ -5,14 +5,14 @@ namespace Drupal\az_curated_views\Plugin\views\field;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Database\Database;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\views\Attribute\ViewsField;
 use Drupal\views\Plugin\views\field\BulkForm;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * Defines a views form element for curated views.
- *
- * @ViewsField("az_curated_views_field")
  */
+#[ViewsField("az_curated_views_field")]
 class AZCuratedViewsField extends BulkForm {
 
   /**
@@ -99,7 +99,7 @@ class AZCuratedViewsField extends BulkForm {
    *   Thrown when the user tried to access an action without access to it.
    */
   public function viewsFormSubmit(&$form, FormStateInterface $form_state) {
-    if (!\Drupal::currentUser()->hasPermission('access draggableviews')) {
+    if (!\Drupal::currentUser()->hasPermission('access az_curated_views')) {
       throw new AccessDeniedHttpException();
     }
     $input = $form_state->getUserInput();
@@ -154,7 +154,7 @@ class AZCuratedViewsField extends BulkForm {
     }
     catch (\Exception $e) {
       $transaction->rollback();
-      $this->messenger->addMessage(t('There was an error while saving the curation information.'), 'warning');
+      $this->messenger->addMessage($this->t('There was an error while saving the curation information.'), 'warning');
     }
   }
 

@@ -1,0 +1,73 @@
+id: az_demo_paragraph_gallery
+label: AZ Quickstart Demo Photo Gallery Paragraphs
+migration_tags:
+  - Quickstart Demo Content
+  - Content
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: json
+  urls:
+    - profiles/custom/az_quickstart/modules/custom/az_demo/data/az_demo_paragraph_gallery.json
+  item_selector: paragraphs
+  ids:
+    id:
+      type: integer
+
+  fields:
+    -
+      name: id
+      selector: id
+    -
+      name: bottom_spacing
+      selector: bottom_spacing
+    -
+      name: az_photos
+      selector: az_photos
+    -
+      name: gallery_display
+      selector: gallery_display
+    -
+      name: ratio
+      selector: ratio
+
+destination:
+  plugin: 'entity_reference_revisions:paragraph'
+  default_bundle: az_photo_gallery
+
+process:
+  field_az_photos:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: az_photos
+    -
+      plugin: explode
+      delimiter: '|'
+    -
+      plugin: migration_lookup
+      migration:
+        - az_demo_image_file
+    -
+      plugin: single_value
+    -
+      plugin: az_prepare_array_for_sub_process
+    -
+      plugin: sub_process
+      process:
+        target_id: value
+        delta: delta
+
+  behavior_settings:
+    plugin: az_paragraphs_behavior_settings
+    paragraph_behavior_plugins:
+      az_photo_gallery_paragraph_behavior:
+        gallery_display: gallery_display
+        ratio: ratio
+        az_display_settings:
+          bottom_spacing: bottom_spacing
+
+dependencies:
+  enforced:
+    module:
+      - az_flexible_page

@@ -1,6 +1,8 @@
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - az_event_trellis
 id: az_trellis_events
 label: 'AZ Trellis Events'
 description: 'Import AZ Events from Trellis Events.'

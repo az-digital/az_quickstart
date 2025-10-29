@@ -41,6 +41,8 @@ function az_cas_form_bulk_add_cas_users_alter(&$form, FormStateInterface $form_s
     $form['roles']['#options'] = $options;
     $form['#validate'][] = 'az_cas_validate_roles';
   }
+
+  $form['email_hostname']['#attributes']['disabled'] = 'disabled';
 }
 
 /**
@@ -113,5 +115,23 @@ function az_cas_module_implements_alter(&$implementations, $hook) {
     $group = $implementations['az_cas'];
     unset($implementations['az_cas']);
     $implementations['az_cas'] = $group;
+  }
+}
+
+/**
+ * Implements hook_menu_local_actions_alter().
+ *
+ * Customizes "Add CAS User(s)" menu local action and optionally disables the
+ * standard "Add user" menu local action on the admin user listing page.
+ */
+function az_cas_menu_local_actions_alter(&$local_actions) {
+  $az_cas_config = \Drupal::config('az_cas.settings');
+
+  $local_actions['cas.bulk_add_cas_users']['title'] = t('Add user(s) with NetID');
+  $local_actions['cas.bulk_add_cas_users']['weight'] = -1;
+
+  $disable_admin_add_user_button = $az_cas_config->get('disable_admin_add_user_button');
+  if ($disable_admin_add_user_button) {
+    unset($local_actions['user_admin_create']);
   }
 }

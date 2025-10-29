@@ -10,9 +10,9 @@ dependencies:
     - field.field.node.az_flexible_page.field_az_summary
     - node.type.az_flexible_page
   module:
+    - az_core
     - field_group
     - smart_title
-    - text
     - user
 third_party_settings:
   smart_title:
@@ -25,6 +25,7 @@ third_party_settings:
         - text-midnight
         - h4
         - mt-md-2
+        - hover-text-underline
   field_group:
     group_card_clickable:
       children:
@@ -35,8 +36,10 @@ third_party_settings:
       weight: 0
       format_type: html_element
       format_settings:
-        classes: 'card card-borderless card-clickable bg-gray-100 p-4'
+        classes: 'card border-0 text-bg-gray-100 hover p-4'
+        show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -53,8 +56,10 @@ third_party_settings:
       weight: 2
       format_type: link
       format_settings:
-        classes: 'card-body p-0'
+        classes: 'card-body p-0 stretched-link link-primary text-decoration-none'
+        show_empty_fields: false
         id: ''
+        label_as_html: false
         target: entity
         custom_uri: ''
         target_attribute: default
@@ -86,7 +91,7 @@ third_party_settings:
       weight: 5
       format_type: html_element
       format_settings:
-        classes: 'col-12 col-md-4'
+        classes: 'col-12 position-relative col-md-4'
         id: ''
         element: div
         show_label: false
@@ -141,13 +146,15 @@ third_party_settings:
       weight: 5
       format_type: html_element
       format_settings:
-        classes: 'card-clickable-link text-chili text-left'
+        classes: text-start
+        show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: true
         label_element: div
-        label_element_classes: ''
-        attributes: ''
+        label_element_classes: hover-text-underline
+        attributes: 'aria-hidden="true"'
         effect: none
         speed: fast
     group_summary:
@@ -159,8 +166,10 @@ third_party_settings:
       weight: 3
       format_type: html_element
       format_settings:
-        classes: 'card-text font-weight-normal'
+        classes: 'card-text fw-normal text-black'
+        show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -183,7 +192,7 @@ content:
     weight: 2
     region: content
   field_az_summary:
-    type: text_default
+    type: az_text_summary
     label: hidden
     settings: {  }
     third_party_settings: {  }

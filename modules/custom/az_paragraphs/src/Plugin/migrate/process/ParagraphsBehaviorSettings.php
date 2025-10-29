@@ -5,6 +5,7 @@ namespace Drupal\az_paragraphs\Plugin\migrate\process;
 use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
 use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate\ProcessPluginBase;
@@ -41,7 +42,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *     s:10:"full_width";s:21:"full-width-background";
  *     s:5:"style";s:3:"box";
  *     s:8:"bg_color";s:5:"light";
- *     s:8:"position";s:49:"col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6";
+ *     s:8:"position";s:41:"col-md-8 col-lg-6 offset-md-4 offset-lg-6";
  *     s:18:"text_media_spacing";s:4:"y-10";
  *     s:19:"az_display_settings";a:1:{
  *       s:14:"bottom_spacing";s:4:"mb-0";
@@ -64,25 +65,25 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *         - 0
  *         - value
  *     - plugin: static_map
- *       default: 'bg-transparent-white'
+ *       default: 'text-bg-transparent-white'
  *       map:
  *         bg-transparent: bg-transparent
- *         bg-trans-white: bg-transparent-white
- *         bg-trans-sky: bg-transparent-white
- *         bg-trans-arizona-blue: bg-transparent-black
- *         bg-trans-black: bg-transparent-black
- *         dark: bg-transparent-black
- *         light: bg-transparent-white
+ *         bg-trans-white: text-bg-transparent-white
+ *         bg-trans-sky: text-bg-transparent-white
+ *         bg-trans-arizona-blue: text-bg-transparent-black
+ *         bg-trans-black: text-bg-transparent-black
+ *         dark: text-bg-transparent-black
+ *         light: text-bg-transparent-white
  *     - plugin: default_value
- *       default_value: 'bg-transparent-white'
+ *       default_value: 'text-bg-transparent-white'
  *   view_mode_processed:
  *     - plugin: static_map
  *       source: view_mode
  *       default: 'col-md-8 col-lg-6'
  *       map:
  *         uaqs_bg_img_content_left: 'col-md-8 col-lg-6'
- *         uaqs_bg_img_content_center: 'col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3'
- *         uaqs_bg_img_content_right: 'col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6'
+ *         uaqs_bg_img_content_center: 'col-md-8 col-lg-6 offset-md-2 offset-lg-3'
+ *         uaqs_bg_img_content_right: 'col-md-8 col-lg-6 offset-md-4 offset-lg-6'
  *     - plugin: default_value
  *       default_value: 'col-md-8 col-lg-6'
  *   content_style_processed:
@@ -106,11 +107,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *         az_display_settings:
  *           bottom_spacing: '@bottom_spacing_processed'
  * @endcode
- *
- * @MigrateProcessPlugin(
- *   id = "az_paragraphs_behavior_settings"
- * )
  */
+#[MigrateProcess('az_paragraphs_behavior_settings')]
 class ParagraphsBehaviorSettings extends ProcessPluginBase implements ContainerFactoryPluginInterface {
 
   /**
@@ -143,7 +141,7 @@ class ParagraphsBehaviorSettings extends ProcessPluginBase implements ContainerF
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition, MigrationInterface $migration = NULL) {
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition, ?MigrationInterface $migration = NULL) {
     return new static(
       $configuration,
       $plugin_id,
