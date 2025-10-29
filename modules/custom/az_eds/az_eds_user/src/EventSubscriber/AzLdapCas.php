@@ -8,6 +8,7 @@ use Drupal\ldap_user\Processor\DrupalUserProcessor;
 use Drupal\cas\Event\CasPostValidateEvent;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\ldap_query\Controller\QueryController;
+use Drupal\user\UserInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -83,36 +84,86 @@ class AzLdapCas implements EventSubscriberInterface {
   }
 
   /**
-   * Check if an individual user is allowed by the ldap query.
+   * Update a user's roles.
    *
-   * @param string $authname
-   *   The username to check against the query.
-   *
-   * @return bool
-   *   Whether or not the authname exists in the query.
+   * @param \Drupal\user\UserInterface $user
+   *   The username to check via query.
+   * @param array $roles
+   *   Array of role machine names.
    */
-  protected function userAllowedByQuery(string $authname) {
-
-    // @todo formalize this by looking up query config from server.
-    $this->ldapQuery->load('az_eds_user');
-    // Add a clause for our authname to the existing filter.
-    $original_filter = $this->ldapQuery->getFilter();
-    $filter = '(&' . $original_filter .
-      '(uid=' .
-      ldap_escape($authname, "", LDAP_ESCAPE_FILTER) .
-      '))';
-    $this->ldapQuery->execute($filter);
-    $results = $this->ldapQuery->getRawResults();
-    foreach ($results as $result) {
-      // Make sure the result contains the user.
-      $row = $result->getAttributes();
-      $uid = $row['uid'] ?? [];
-      $uid = reset($uid);
-      if ($uid === $authname) {
-        return TRUE;
+  protected function synchronizeRoles(UserInterface $user, array $roles) {
+    $original_roles = $user->getRoles();
+    // List of roles to remove.
+    $remove = array_diff($original_roles, $roles);
+    // List of roles to add.
+    $add = array_diff($roles, $original_roles);
+    // Update the user roles.
+    foreach ($remove as $role) {
+      try {
+        $user->removeRole($role);
+      }
+      catch (\InvalidArgumentException $e) {
+        // Some roles are not valid to assign.
       }
     }
-    return FALSE;
+    foreach ($add as $role) {
+      try {
+        $user->addRole($role);
+      }
+      catch (\InvalidArgumentException $e) {
+        // Some roles are not valid to assign.
+      }
+    }
+    // Save the user if necessary.
+    if (!empty($add) && !empty($remove)) {
+      $user->save();
+    }
+  }
+
+  /**
+   * Check if an individual user is granted roles via LDAP.
+   *
+   * @param string $authname
+   *   The username to check via query.
+   *
+   * @return array
+   *   Machine name of allowed roles.
+   */
+  protected function userAllowedRoles(string $authname) {
+
+    $roles = [];
+    $storage = $this->entityTypeManager->getStorage('az_user_role_query');
+    $ids = $storage
+      ->getQuery()
+      ->accessCheck(FALSE)
+      ->condition('status', 1)
+      ->execute();
+    $mappings = $storage->loadMultiple($ids);
+    /** @var \Drupal\az_eds_user\AzUserRoleQueryInterface $mapping */
+    foreach ($mappings as $mapping) {
+      $query = $mapping->get('query');
+      $role = $mapping->get('role');
+      $this->ldapQuery->load($query);
+      // Add a clause for our authname to the existing filter.
+      $original_filter = $this->ldapQuery->getFilter();
+      $filter = '(&' . $original_filter .
+        '(uid=' .
+        ldap_escape($authname, "", LDAP_ESCAPE_FILTER) .
+        '))';
+      $this->ldapQuery->execute($filter);
+      $results = $this->ldapQuery->getRawResults();
+      foreach ($results as $result) {
+        // Make sure the result contains the user.
+        $row = $result->getAttributes();
+        $uid = $row['uid'] ?? [];
+        $uid = reset($uid);
+        if ($uid === $authname) {
+          $roles[] = $role;
+        }
+      }
+    }
+
+    return array_unique($roles);
   }
 
   /**
@@ -127,9 +178,15 @@ class AzLdapCas implements EventSubscriberInterface {
     $username = $bag->getUsername();
     // Check if a CAS user exists.
     $cas_uid = $this->externalAuth->getUid($username, 'cas');
+    $ldap_uid = $this->externalAuth->getUid($username, 'ldap_user');
+    if (($cas_uid !== FALSE) && ($ldap_uid === FALSE)) {
+      // Regular CAS user. We don't have responsibility for this user.
+      return;
+    }
+    $roles = $this->userAllowedRoles($username);
     if ($cas_uid === FALSE) {
-      if (!$this->userAllowedByQuery($username)) {
-        // Not allowed by query.
+      if (empty($roles)) {
+        // No roles allowed for this user. Nothing to do.
         return;
       }
       // User does not exist, but is allowed, attempt LDAP provisioning.
@@ -147,13 +204,14 @@ class AzLdapCas implements EventSubscriberInterface {
           // We have the user that ldap_user provisioned, set the cas account.
           if (!empty($user)) {
             $this->casUserManager->setCasUsernameForAccount($user, $user->getAccountName());
+            $this->synchronizeRoles($user, $roles);
           }
         }
       }
     }
     // CAS user existed but disallowed by query (e.g. user has lost membership.)
-    elseif (!$this->userAllowedByQuery($username)) {
-      if ($ldap_uid = $this->externalAuth->getUid($username, 'ldap_user')) {
+    elseif (empty($roles)) {
+      if ($ldap_uid !== FALSE) {
         $user = $this->entityTypeManager->getStorage('user')->load($ldap_uid);
         // User originally provisioned by LDAP, therefore cancel the account.
         // The implication is to NOT cancel an account created by hand.
@@ -169,6 +227,7 @@ class AzLdapCas implements EventSubscriberInterface {
     // CAS user existed, and is still allowed by query.
     else {
       $user = $this->entityTypeManager->getStorage('user')->load($cas_uid);
+      $this->synchronizeRoles($user, $roles);
       // Check if user needs to be unblocked.
       if (!empty($user) && $user->isBlocked()) {
         // Reactivate the account.
