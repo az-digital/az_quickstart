@@ -1,0 +1,126 @@
+{
+  "paragraphs": [
+    {
+      "id": 302,
+      "ranking_width": "col-lg-3",
+      "ranking_alignment": "text-left",
+      "ranking_header_style": "ranking-title-bold",
+      "ranking_clickable": true,
+      "ranking_hover_effect": true,
+      "ranking_title": "Demo Rankings - Clickable with Hover",
+      "az_rankings": [
+        {
+          "delta": 0,
+          "ranking_heading": "#1",
+          "ranking_description": "In Innovation",
+          "ranking_source": "US News & World Report",
+          "link_title": "Learn More",
+          "link_uri": "https://arizona.edu",
+          "media": "",
+          "options_class": "text-bg-chili",
+          "options_hover_class": "text-bg-chili",
+          "ranking_link_style": "visually-hidden",
+          "ranking_type": "standard",
+          "column_span": "1"
+        },
+        {
+          "delta": 1,
+          "ranking_heading": "#2",
+          "ranking_description": "In Research",
+          "ranking_source": "Another Ranking Source",
+          "link_title": "Read More",
+          "link_uri": "https://arizona.edu/research",
+          "media": "",
+          "options_class": "text-bg-blue",
+          "options_hover_class": "text-bg-blue",
+          "ranking_link_style": "visually-hidden",
+          "ranking_type": "standard",
+          "column_span": "1"
+        },
+        {
+          "delta": 2,
+          "ranking_heading": "#7",
+          "ranking_description": "Public University",
+          "ranking_source": "Forbes",
+          "link_title": "Discover",
+          "link_uri": "https://arizona.edu/about",
+          "media": "",
+          "options_class": "text-bg-sky",
+          "options_hover_class": "text-bg-sky",
+          "ranking_link_style": "visually-hidden",
+          "ranking_type": "standard",
+          "column_span": "1"
+        },
+        {
+          "delta": 3,
+          "ranking_heading": "#15",
+          "ranking_description": "Best Value",
+          "ranking_source": "Kiplinger",
+          "link_title": "Learn More",
+          "link_uri": "https://arizona.edu/admissions",
+          "media": "",
+          "options_class": "text-bg-oasis",
+          "options_hover_class": "text-bg-oasis",
+          "ranking_link_style": "visually-hidden",
+          "ranking_type": "standard",
+          "column_span": "1"
+        }
+      ],
+      "bottom_spacing": "mb-5"
+    },
+    {
+      "id": 303,
+      "ranking_width": "col-lg-4",
+      "ranking_alignment": "text-center",
+      "ranking_header_style": "ranking-title-bold",
+      "ranking_clickable": false,
+      "ranking_hover_effect": false,
+      "ranking_title": "Demo Rankings - Non-Clickable with Buttons",
+      "az_rankings": [
+        {
+          "delta": 0,
+          "ranking_heading": "Top 50",
+          "ranking_description": "Global Universities",
+          "ranking_source": "QS World University Rankings",
+          "link_title": "Learn More",
+          "link_uri": "https://arizona.edu",
+          "media": "",
+          "options_class": "text-bg-azurite",
+          "options_hover_class": "",
+          "ranking_link_style": "w-100 btn btn-red mt-2",
+          "ranking_type": "standard",
+          "column_span": "1"
+        },
+        {
+          "delta": 1,
+          "ranking_heading": "#1",
+          "ranking_description": "Space Grant College",
+          "ranking_source": "NASA",
+          "link_title": "Explore",
+          "link_uri": "https://arizona.edu/space",
+          "media": "",
+          "options_class": "text-bg-cool-gray",
+          "options_hover_class": "",
+          "ranking_link_style": "w-100 btn btn-blue mt-2",
+          "ranking_type": "standard",
+          "column_span": "1"
+        },
+        {
+          "delta": 2,
+          "ranking_heading": "R1",
+          "ranking_description": "Research Institution",
+          "ranking_source": "Carnegie Classification",
+          "link_title": "Discover",
+          "link_uri": "https://arizona.edu/research",
+          "media": "",
+          "options_class": "text-bg-warm-gray",
+          "options_hover_class": "",
+          "ranking_link_style": "w-100 btn btn-outline-red mt-2",
+          "ranking_type": "standard",
+          "column_span": "1"
+        }
+      ],
+      "bottom_spacing": "mb-5"
+    }
+  ]
+}

@@ -262,6 +262,15 @@
       "az_main_content" : "194",
       "az_media_image" : "",
       "az_summary" : "Remote media embeds."
+    },
+    {
+      "id":30,
+      "title" : "Rankings",
+      "path" : "/pages/rankings",
+      "az_page_category" : "Rankings",
+      "az_main_content" : "302|303",
+      "az_media_image" : "",
+      "az_summary" : "A page with rankings."
     }
   ]
 }
