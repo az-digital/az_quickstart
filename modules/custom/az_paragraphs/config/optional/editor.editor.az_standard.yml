@@ -38,6 +38,7 @@ settings:
       - style
       - '|'
       - drupalMedia
+      - icon
       - az_embed_content
       - az_embed_content_block
       - '|'
@@ -200,7 +201,7 @@ settings:
           element: '<span class="text-lowercase">'
         -
           label: 'Triangle Bullets'
-          element: '<ul class="ul-triangles">'
+          element: '<ul class="az-list-triangles">'
         -
           label: 'Unordered List Pills'
           element: '<ul class="nav nav-pills">'

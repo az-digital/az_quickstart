@@ -36,7 +36,7 @@ arizona-bootstrap:
       /libraries/arizona-bootstrap/css/arizona-bootstrap.min.css: { minified: true }
   js:
     /libraries/arizona-bootstrap/js/arizona-bootstrap.bundle.min.js: { minified: true }
-  deprecated: The combined "%library_id%" CSS and Javascript library is deprecated in az_quickstart:2.13.x and is removed from az_quickstart:2.14.x. For CSS, use az_barrio/arizona-bootstrap-css, and for Javascript use az_barrio/arizona-bootstrap-js. See https://github.com/az-digital/az_quickstart/issues/1251
+  deprecated: The combined "%library_id%" CSS and Javascript library is deprecated in az_quickstart:2.13.x and is removed from az_quickstart:3.1.x. For CSS, use az_barrio/arizona-bootstrap-css, and for Javascript use az_barrio/arizona-bootstrap-js. See https://github.com/az-digital/az_quickstart/issues/1251
 arizona-bootstrap-css:
   css:
     theme:
@@ -53,7 +53,7 @@ button-no-conflict:
     - core/drupal
     - core/jquery
 material-design-icons-sharp:
-  deprecated: The "%library_id%" CSS library is deprecated in az_quickstart:2.14.x and is removed from az_quickstart:3.x. Use `az_barrio/material-symbols-rounded` instead. See https://github.com/az-digital/az_quickstart/issues/4385
+  deprecated: The "%library_id%" CSS library is deprecated in az_quickstart:3.0.x and is removed from az_quickstart:3.1.x. Use `az_barrio/material-symbols-rounded` instead. See https://github.com/az-digital/az_quickstart/issues/4385
   css:
     theme:
       # Appends `#.css` as workaround for known issue with loadjs library.
@@ -67,3 +67,9 @@ material-symbols-rounded:
       # see https://github.com/kubetail-org/loadjs/issues/39
       # see https://github.com/az-digital/az_quickstart/issues/2772
       https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0#.css: { external: true, preprocess: false }
+toasts:
+  js:
+    js/toasts.js: {}
+  dependencies:
+    - core/drupal
+    - az_barrio/arizona-bootstrap-js

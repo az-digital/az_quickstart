@@ -1,291 +1,250 @@
-# Schema for the configuration files of the Bootstrap Barrio Subtheme.
-
+# Schema for the configuration files of the Bootstrap Barrio Subtheme
 az_barrio.settings:
-  type: theme_settings
+  type: bootstrap_barrio.settings
   label: 'Arizona Barrio Subtheme settings'
   mapping:
-    bootstrap_barrio_library:
-      type: text
-      label: 'Library'
-    bootstrap_barrio_sidebar_position:
-      type: text
-      label: 'Sidebar Position'
-    bootstrap_barrio_content_offset:
-      type: integer
-      label: 'Offset'
-    bootstrap_barrio_sidebar_first_width:
-      type: integer
-      label: 'Width'
-    bootstrap_barrio_sidebar_first_offset:
-      type: integer
-      label: 'Offset'
-    bootstrap_barrio_sidebar_second_width:
-      type: integer
-      label: 'Width'
-    bootstrap_barrio_sidebar_second_offset:
-      type: integer
-      label: 'Offset'
-    bootstrap_barrio_footer_layout:
-      type: text
-      label: 'Layout'
-    bootstrap_barrio_fluid_container:
-      type: integer
-      label: 'Enabled'
-    bootstrap_barrio_button:
-      type: integer
-      label: 'Convert submit to button'
-    bootstrap_barrio_button_size:
-      type: text
-      label: 'Size'
-    bootstrap_barrio_button_outline:
-      type: integer
-      label: 'Button outline'
-    bootstrap_barrio_navbar_top_position:
-      type: text
-      label: 'Position'
-    bootstrap_barrio_navbar_top_color:
-      type: text
-      label: 'Color'
-    bootstrap_barrio_navbar_top_background:
-      type: text
-      label: 'Background'
-    bootstrap_barrio_navbar_position:
-      type: text
-      label: 'Position'
-    bootstrap_barrio_navbar_color:
-      type: text
-      label: 'Color'
-    bootstrap_barrio_navbar_background:
-      type: text
-      label: 'Background'
-    bootstrap_barrio_navbar_toggle:
-      type: integer
-      label: 'Enable'
-    bootstrap_barrio_navbar_container:
-      type: text
-      label: 'Container'
-    bootstrap_barrio_table_hover:
-      type: integer
-      label: 'Enable Table Hover'
-    bootstrap_barrio_anchors_fix:
-      type: integer
-      label: 'Enabled'
-    bootstrap_barrio_anchors_smooth_scrolling:
-      type: integer
-      label: 'Enabled'
-    bootstrap_barrio_forms_required_has_error:
-      type: integer
-      label: 'Enabled'
-    bootstrap_barrio_forms_has_error_value_toggle:
-      type: integer
-      label: 'Enabled'
-    bootstrap_barrio_forms_smart_descriptions:
-      type: integer
-      label: 'Enabled'
-    bootstrap_barrio_forms_smart_descriptions_limit:
-      type: integer
-      label: 'Limit'
-    bootstrap_barrio_forms_smart_descriptions_allowed_tags:
-      type: text
-      label: 'Allowed tags'
-    bootstrap_barrio_popover_enabled:
-      type: integer
-      label: 'Enabled'
-    bootstrap_barrio_popover_animation:
-      type: integer
-      label: 'Enabled'
-    bootstrap_barrio_popover_html:
-      type: integer
-      label: 'Enabled'
-    bootstrap_barrio_popover_placement:
-      type: text
-      label: 'Placement'
-    bootstrap_barrio_popover_selector:
-      type: text
-      label: 'Selector'
-    bootstrap_barrio_popover_trigger_autoclose:
-      type: integer
-      label: 'Enabled'
-    bootstrap_barrio_popover_delay:
-      type: integer
-      label: 'Enabled'
-    bootstrap_barrio_popover_trigger:
-      type: mapping
-      mapping:
-        hover:
-          type: integer
-          label: 'Hover'
-    bootstrap_barrio_tooltip_enabled:
-      type: integer
-      label: 'Enabled'
-    bootstrap_barrio_tooltip_descriptions:
-      type: integer
-      label: 'Enabled'
-    bootstrap_barrio_tooltip_descriptions_length:
-      type: integer
-      label: 'Length'
-    bootstrap_barrio_tooltip_animation:
-      type: integer
-      label: 'Enabled'
-    bootstrap_barrio_tooltip_html:
-      type: integer
-      label: 'Length'
-    bootstrap_barrio_tooltip_delay:
-      type: integer
-      label: 'Enabled'
-    bootstrap_barrio_popover_title:
-      type: text
-      label: 'Title'
-    bootstrap_barrio_popover_content:
-      type: text
-      label: 'Content'
-    bootstrap_barrio_tooltip_placement:
-      type: text
-      label: 'Placement'
-    bootstrap_barrio_tooltip_container:
-      type: text
-      label: 'Container'
-    bootstrap_barrio_tooltip_selector:
-      type: text
-      label: 'Selector'
-    bootstrap_barrio_tooltip_trigger:
-      type: mapping
-      mapping:
-        hover:
-          type: text
-          label: 'Hover'
-    bootstrap_barrio_popover_container:
-      type: text
-      label: 'Container'
+    # Arizona-specific region settings not in parent theme
     bootstrap_barrio_region_clean_alert:
-      type: boolean
+      type: integer
       label: 'Enable clean wrapper for alert region'
     bootstrap_barrio_region_class_alert:
-      type: text
+      type: string
       label: 'Classes for alert region'
     bootstrap_barrio_region_clean_header_ua_utilities:
-      type: boolean
+      type: integer
       label: 'Enable clean wrapper for arizona utilities region'
     bootstrap_barrio_region_class_header_ua_utilities:
-      type: text
+      type: string
       label: 'Classes for arizona utilities region'
+    bootstrap_barrio_region_clean_branding:
+      type: integer
+      label: 'Enable clean wrapper for branding region'
+    bootstrap_barrio_region_class_branding:
+      type: string
+      label: 'Classes for branding region'
     bootstrap_barrio_region_clean_header_2:
-      type: boolean
+      type: integer
       label: 'Enable clean wrapper for header 2 region'
-    bootstrap_barrio_region_class_navigation:
-      type: text
-      label: 'Classes for arizona navigation region'
+    bootstrap_barrio_region_class_header_2:
+      type: string
+      label: 'Classes for header 2 region'
     bootstrap_barrio_region_clean_navigation:
-      type: boolean
+      type: integer
       label: 'Enable clean wrapper for navigation region'
-    bootstrap_barrio_region_class_navigation_offcanvas:
-      type: text
-      label: 'Classes for arizona navigation off-canvas region'
+    bootstrap_barrio_region_class_navigation:
+      type: string
+      label: 'Classes for arizona navigation region'
     bootstrap_barrio_region_clean_navigation_offcanvas:
-      type: boolean
+      type: integer
       label: 'Enable clean wrapper for navigation off-canvas region'
+    bootstrap_barrio_region_class_navigation_offcanvas:
+      type: string
+      label: 'Classes for arizona navigation off-canvas region'
+    bootstrap_barrio_region_clean_help:
+      type: integer
+      label: 'Enable clean wrapper for help region'
+    bootstrap_barrio_region_class_help:
+      type: string
+      label: 'Classes for help region'
     bootstrap_barrio_region_clean_content_featured:
-      type: boolean
+      type: integer
       label: 'Enable clean wrapper for content featured region'
     bootstrap_barrio_region_class_content_featured:
-      type: text
+      type: string
       label: 'Classes for content featured region'
     bootstrap_barrio_region_clean_content_top:
-      type: boolean
+      type: integer
       label: 'Enable clean wrapper for content top region'
     bootstrap_barrio_region_class_content_top:
-      type: text
+      type: string
       label: 'Classes for content top region'
     bootstrap_barrio_region_clean_content_2_col_1:
-      type: boolean
+      type: integer
       label: 'Enable clean wrapper for content 2 column 1 region'
     bootstrap_barrio_region_class_content_2_col_1:
-      type: text
+      type: string
       label: 'Classes for content 2 column 1 region'
     bootstrap_barrio_region_clean_content_2_col_2:
-      type: boolean
+      type: integer
       label: 'Enable clean wrapper for content 2 column 2 region'
     bootstrap_barrio_region_class_content_2_col_2:
-      type: text
+      type: string
       label: 'Classes for content 2 column 2 region'
     bootstrap_barrio_region_clean_content_3_col_1:
-      type: boolean
+      type: integer
       label: 'Enable clean wrapper for content 3 column 1 region region'
     bootstrap_barrio_region_class_content_3_col_1:
-      type: text
+      type: string
       label: 'Classes for content 3 column 1 region'
     bootstrap_barrio_region_clean_content_3_col_2:
-      type: boolean
+      type: integer
       label: 'Enable clean wrapper for content 3 column 2 region region'
     bootstrap_barrio_region_class_content_3_col_2:
-      type: text
+      type: string
       label: 'Classes for content 3 column 2 region'
     bootstrap_barrio_region_clean_content_3_col_3:
-      type: boolean
+      type: integer
       label: 'Enable clean wrapper for content 3 column 3 region region'
     bootstrap_barrio_region_class_content_3_col_3:
-      type: text
+      type: string
       label: 'Classes for content 3 column 3 region'
     bootstrap_barrio_region_clean_full_width_content_bottom:
-      type: boolean
+      type: integer
       label: 'Enable clean wrapper for full-width content bottom region'
     bootstrap_barrio_region_class_full_width_content_bottom:
-      type: text
+      type: string
       label: 'Classes for full-width content bottom region'
     bootstrap_barrio_region_clean_content_4_col_1:
-      type: boolean
+      type: integer
       label: 'Enable clean wrapper for content 4 column 1 region region'
     bootstrap_barrio_region_class_content_4_col_1:
-      type: text
+      type: string
       label: 'Classes for content 4 column 1 region'
     bootstrap_barrio_region_clean_content_4_col_2:
-      type: boolean
+      type: integer
       label: 'Enable clean wrapper for content 4 column 2 region region'
     bootstrap_barrio_region_class_content_4_col_2:
-      type: text
+      type: string
       label: 'Classes for content 4 column 2 region'
     bootstrap_barrio_region_clean_content_4_col_3:
-      type: boolean
+      type: integer
       label: 'Enable clean wrapper for content 4 column 3 region region'
     bootstrap_barrio_region_class_content_4_col_3:
-      type: text
+      type: string
       label: 'Classes for content 4 column 3 region'
     bootstrap_barrio_region_clean_content_4_col_4:
-      type: boolean
+      type: integer
       label: 'Enable clean wrapper for content 4 column 4 region region'
     bootstrap_barrio_region_class_content_4_col_4:
-      type: text
+      type: string
       label: 'Classes for content 4 column 4 region'
     bootstrap_barrio_region_clean_content_bottom:
-      type: boolean
+      type: integer
       label: 'Enable clean wrapper for content bottom region'
     bootstrap_barrio_region_class_content_bottom:
-      type: text
+      type: string
       label: 'Classes for content bottom region'
     bootstrap_barrio_region_clean_footer:
-      type: boolean
+      type: integer
       label: 'Enable clean wrapper for footer region'
     bootstrap_barrio_region_class_footer:
-      type: text
+      type: string
       label: 'Classes for footer region'
     bootstrap_barrio_region_clean_footer_sub:
-      type: boolean
+      type: integer
       label: 'Enable clean wrapper for footer sub region'
     bootstrap_barrio_region_class_footer_sub:
-      type: text
+      type: string
       label: 'Classes for footer sub region'
     bootstrap_barrio_region_clean_footer_sub_menus:
-      type: boolean
+      type: integer
       label: 'Enable clean wrapper for footer sub menus region'
     bootstrap_barrio_region_class_footer_sub_menus:
-      type: text
+      type: string
       label: 'Classes for footer sub menus region'
     bootstrap_barrio_region_clean_az_page_bottom:
-      type: boolean
+      type: integer
       label: 'Enable clean wrapper for page bottom region'
     bootstrap_barrio_region_class_az_page_bottom:
-      type: text
+      type: string
       label: 'Classes for page bottom region'
+    # Add schema missing in bootstrap_barrio.
+    # See https://www.drupal.org/i/3536240
+    bootstrap_barrio_region_width_alert:
+      type: integer
+      label: 'Width for alert region'
+    bootstrap_barrio_region_width_header_ua_utilities:
+      type: integer
+      label: 'Width for arizona utilities region'
+    bootstrap_barrio_region_width_branding:
+      type: integer
+      label: 'Width for branding region'
+    bootstrap_barrio_region_width_header_2:
+      type: integer
+      label: 'Width for header 2 region'
+    bootstrap_barrio_region_width_navigation:
+      type: integer
+      label: 'Width for navigation region'
+    bootstrap_barrio_region_width_navigation_offcanvas:
+      type: integer
+      label: 'Width for navigation off-canvas region'
+    bootstrap_barrio_region_width_help:
+      type: integer
+      label: 'Width for help region'
+    bootstrap_barrio_region_width_content_featured:
+      type: integer
+      label: 'Width for content featured region'
+    bootstrap_barrio_region_width_content_top:
+      type: integer
+      label: 'Width for content top region'
+    bootstrap_barrio_region_width_content_2_col_1:
+      type: integer
+      label: 'Width for content 2 column 1 region'
+    bootstrap_barrio_region_width_content_2_col_2:
+      type: integer
+      label: 'Width for content 2 column 2 region'
+    bootstrap_barrio_region_width_content_3_col_1:
+      type: integer
+      label: 'Width for content 3 column 1 region'
+    bootstrap_barrio_region_width_content_3_col_2:
+      type: integer
+      label: 'Width for content 3 column 2 region'
+    bootstrap_barrio_region_width_content_3_col_3:
+      type: integer
+      label: 'Width for content 3 column 3 region'
+    bootstrap_barrio_region_width_full_width_content_bottom:
+      type: integer
+      label: 'Width for full-width content bottom region'
+    bootstrap_barrio_region_width_content_4_col_1:
+      type: integer
+      label: 'Width for content 4 column 1 region'
+    bootstrap_barrio_region_width_content_4_col_2:
+      type: integer
+      label: 'Width for content 4 column 2 region'
+    bootstrap_barrio_region_width_content_4_col_3:
+      type: integer
+      label: 'Width for content 4 column 3 region'
+    bootstrap_barrio_region_width_content_4_col_4:
+      type: integer
+      label: 'Width for content 4 column 4 region'
+    bootstrap_barrio_region_width_content_bottom:
+      type: integer
+      label: 'Width for content bottom region'
+    bootstrap_barrio_region_width_footer:
+      type: integer
+      label: 'Width for footer region'
+    bootstrap_barrio_region_width_footer_sub:
+      type: integer
+      label: 'Width for footer sub region'
+    bootstrap_barrio_region_width_footer_sub_menus:
+      type: integer
+      label: 'Width for footer sub menus region'
+    bootstrap_barrio_region_width_az_page_bottom:
+      type: integer
+      label: 'Width for page bottom region'
+    # Parent theme region width settings that need to be defined
+    bootstrap_barrio_region_width_header:
+      type: integer
+      label: 'Width for header region'
+    bootstrap_barrio_region_width_highlighted:
+      type: integer
+      label: 'Width for highlighted region'
+    bootstrap_barrio_region_width_breadcrumb:
+      type: integer
+      label: 'Width for breadcrumb region'
+    bootstrap_barrio_region_width_sidebar_first:
+      type: integer
+      label: 'Width for sidebar first region'
+    bootstrap_barrio_region_width_sidebar_second:
+      type: integer
+      label: 'Width for sidebar second region'
+    bootstrap_barrio_region_width_content:
+      type: integer
+      label: 'Width for content region'
+    external_links:
+      type: boolean
+      label: 'Enable external links'
+    # Arizona-specific theme settings
     wordmark:
       type: boolean
       label: 'Enable wordmark logo'
@@ -304,9 +263,6 @@ az_barrio.settings:
     copyright_notice:
       type: text
       label: 'Copyright notice'
-    az_hide_front_title:
-      type: boolean
-      label: 'Enable hide front page title'
     az_back_to_top:
       type: boolean
       label: 'Enable ''Back to Top'' button'
@@ -359,26 +315,39 @@ az_barrio.settings:
       type: boolean
       label: 'Remove sidebar menu on mobile devices'
     primary_logo_alt_text:
-      type: string
+      type: label
       label: 'Primary logo alt text'
     primary_logo_title_text:
-      type: string
+      type: label
       label: 'Primary logo title text'
     footer_logo_link_destination:
-      type: string
+      type: uri
       label: 'Footer logo link destination'
     footer_logo_alt_text:
-      type: string
+      type: label
       label: 'Footer logo alt text'
     footer_logo_title_text:
-      type: string
+      type: label
       label: 'Footer logo title text'
     footer_logo_path:
       type: path
       label: 'Footer logo path'
+    footer_default_logo:
+      type: boolean
+      label: 'Use default footer logo'
     header_one_col_classes:
       type: string
       label: 'Header column one classes'
     header_two_col_classes:
       type: string
       label: 'Header column two classes'
+    # Bootstrap Barrio form element styling settings
+    bootstrap_barrio_radio:
+      type: string
+      label: 'Radio button style'
+    bootstrap_barrio_select:
+      type: string
+      label: 'Select element style'
+    bootstrap_barrio_file:
+      type: string
+      label: 'File input style'

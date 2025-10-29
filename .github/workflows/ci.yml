@@ -5,9 +5,9 @@ on:
     branches:
       - 'main'
       - '2.x'
+      - '3.0.x'
+      - '2.14.x'
       - '2.13.x'
-      - '2.12.x'
-      - '2.11.x'
 
 jobs:
   setup:
@@ -16,7 +16,7 @@ jobs:
       matrix: ${{ steps.setup-test-matrix.outputs.matrix }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - name: Setup test matrix
         id: setup-test-matrix
         run: |
@@ -35,9 +35,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - name: Setup PHP
-        uses: shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@bf6b4fbd49ca58e4608c9c89fba0b8d90bd2a39f # 2.35.5
         with:
           php-version: '8.3'
       - name: composer version
@@ -50,9 +50,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - name: Setup PHP
-        uses: shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@bf6b4fbd49ca58e4608c9c89fba0b8d90bd2a39f # 2.35.5
         with:
           php-version: '8.3'
       - name: Find the push source branch name
@@ -93,7 +93,7 @@ jobs:
             echo "DEV_PACKAGE_BRANCH=${DEFAULT_DEV_BRANCH}" >> ${GITHUB_ENV}
           fi
       - name: Clone scaffolding repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
           repository: az-digital/az-quickstart-scaffolding
           path: az-quickstart-scaffolding
@@ -112,7 +112,7 @@ jobs:
           composer require --no-update --dev az-digital/az-quickstart-dev:${DEV_PACKAGE_VERSION}
           composer install -o
       - name: Save build artifact
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         with:
           path: ${{ github.workspace }}/az-quickstart-scaffolding
           key: azqs-build-${{ github.sha }}
@@ -122,11 +122,11 @@ jobs:
     needs: composer
     runs-on: ubuntu-latest
     steps:
-      - uses: shivammathur/setup-php@v2
+      - uses: shivammathur/setup-php@bf6b4fbd49ca58e4608c9c89fba0b8d90bd2a39f # 2.35.5
         with:
           php-version: '8.3'
           tools: cs2pr, phpcs
-      - uses: actions/cache/restore@v4
+      - uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         with:
           path: ${{ github.workspace }}/az-quickstart-scaffolding
           key: azqs-build-${{ github.sha }}
@@ -134,7 +134,7 @@ jobs:
         continue-on-error: true
         run: |
           cd $GITHUB_WORKSPACE/az-quickstart-scaffolding
-          ./vendor/bin/phpcs --standard=web/profiles/custom/az_quickstart/phpcs.xml.dist -q --report=checkstyle | sed 's/web\/profiles\/custom\/az_quickstart\///' | cs2pr
+          ./vendor/bin/phpcs --standard=web/profiles/custom/az_quickstart/phpcs.xml.dist -sq --report=checkstyle | sed 's/web\/profiles\/custom\/az_quickstart\///' | cs2pr
       - name: Run phpcs
         run: |
           cd $GITHUB_WORKSPACE/az-quickstart-scaffolding
@@ -145,11 +145,11 @@ jobs:
     needs: composer
     runs-on: ubuntu-latest
     steps:
-      - uses: shivammathur/setup-php@v2
+      - uses: shivammathur/setup-php@bf6b4fbd49ca58e4608c9c89fba0b8d90bd2a39f # 2.35.5
         with:
           php-version: '8.3'
           tools: cs2pr, phpstan
-      - uses: actions/cache/restore@v4
+      - uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         with:
           path: ${{ github.workspace }}/az-quickstart-scaffolding
           key: azqs-build-${{ github.sha }}
@@ -163,31 +163,40 @@ jobs:
     needs: composer
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/cache/restore@v4
+      - uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         with:
           path: ${{ github.workspace }}/az-quickstart-scaffolding
           key: azqs-build-${{ github.sha }}
       - name: Run composer audit
         run: |
           cd az-quickstart-scaffolding
-          composer audit
+          composer audit --abandoned report
+
+  yarn-audit:
+    name: yarn audit (security)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+        with:
+          node-version: '20'
+      - run: yarn audit
 
   eslint:
     name: eslint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
-          node-version: 20.13.0
-      - name: Checkout
-        uses: actions/checkout@v5
-      - run: yarn install
+          node-version: '20'
+      - run: yarn install --ignore-scripts
       - name: Generate eslint report
         continue-on-error: true
         run: yarn run eslint . --format json --output-file eslint-report.json
       - name: Annotate eslint results
         continue-on-error: true
-        uses: ataylorme/eslint-annotate-action@v3
+        uses: ataylorme/eslint-annotate-action@d57a1193d4c59cbfbf3f86c271f42612f9dbd9e9 # 3.0.0
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           report-json: "eslint-report.json"
@@ -215,11 +224,11 @@ jobs:
           - 3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
-      - uses: shivammathur/setup-php@v2
+      - uses: shivammathur/setup-php@bf6b4fbd49ca58e4608c9c89fba0b8d90bd2a39f # 2.35.5
         with:
           php-version: '8.3'
           extensions: dom, curl, libxml, mbstring, zip, pdo, mysql, pdo_mysql, bcmath, soap, intl, gd, exif, iconv
-      - uses: actions/cache/restore@v4
+      - uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         with:
           path: ${{ github.workspace }}/az-quickstart-scaffolding
           key: azqs-build-${{ github.sha }}
@@ -272,11 +281,11 @@ jobs:
           - 3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
-      - uses: shivammathur/setup-php@v2
+      - uses: shivammathur/setup-php@bf6b4fbd49ca58e4608c9c89fba0b8d90bd2a39f # 2.35.5
         with:
           php-version: '8.3'
           extensions: dom, curl, libxml, mbstring, zip, pdo, mysql, pdo_mysql, bcmath, soap, intl, gd, exif, iconv
-      - uses: actions/cache/restore@v4
+      - uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         with:
           path: ${{ github.workspace }}/az-quickstart-scaffolding
           key: azqs-build-${{ github.sha }}
@@ -322,12 +331,12 @@ jobs:
           - 3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
-      - uses: shivammathur/setup-php@v2
+      - uses: shivammathur/setup-php@bf6b4fbd49ca58e4608c9c89fba0b8d90bd2a39f # 2.35.5
         with:
           php-version: '8.3'
           extensions: dom, curl, libxml, mbstring, zip, pdo, mysql, pdo_mysql, bcmath, soap, intl, gd, exif, iconv
           tools: cs2pr
-      - uses: actions/cache/restore@v4
+      - uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         with:
           path: ${{ github.workspace }}/az-quickstart-scaffolding
           key: azqs-build-${{ github.sha }}
