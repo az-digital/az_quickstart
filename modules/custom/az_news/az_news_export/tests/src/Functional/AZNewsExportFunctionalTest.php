@@ -3,7 +3,7 @@
 namespace Drupal\Tests\az_news_export\Functional;
 
 use Drupal\Component\Serialization\Json;
-use Drupal\Core\File\FileSystemInterface;
+use Drupal\Core\File\FileExists;
 use Drupal\media\Entity\Media;
 use Drupal\node\Entity\Node;
 use Drupal\taxonomy\Entity\Term;
@@ -65,7 +65,7 @@ class AZNewsExportFunctionalTest extends QuickstartFunctionalTestBase {
     $file = $file_repository->writeData(
       file_get_contents($this->root . '/core/misc/druplicon.png'),
       'public://functional-export-image.png',
-      FileSystemInterface::EXISTS_REPLACE,
+      FileExists::Replace,
     );
     $file->setPermanent();
     $file->save();

@@ -194,8 +194,8 @@ class AZNewsDataFieldRow extends DataFieldRow {
    * @param string $target_type
    *   The type of entities the field references.
    *
-   * @return array|\Drupal\az_news_export\AZNewsDataEmpty
-   *   The serialized field value.
+   * @return array
+   *   The serialized field values keyed sequentially.
    */
   protected function serializeReferenceField($value, string $target_type): array {
     $items = [];
