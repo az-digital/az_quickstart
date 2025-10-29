@@ -777,7 +777,7 @@ form.webform-submission-form {
   color: #333;
 }
 
-/* Place contextual link trigger button directly on centered media. 
+/* Place contextual link trigger button directly on centered embeds. 
  * See https://github.com/az-digital/az_quickstart/pull/3844
  */
 .field--name-field-az-text-area .align-center.contextual-region {
