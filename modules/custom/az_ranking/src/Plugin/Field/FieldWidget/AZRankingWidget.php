@@ -743,16 +743,20 @@ class AZRankingWidget extends WidgetBase {
     // Get ranking settings from parent paragraph.
     $ranking_hover_effect = FALSE;
     $ranking_clickable = FALSE;
-    $ranking_title_style = NULL;
+    $ranking_header_style = NULL;
+    $ranking_alignment = NULL;
     if ($parent instanceof ParagraphInterface) {
       $parent_config = $parent->getAllBehaviorSettings();
       if (!empty($parent_config['az_rankings_paragraph_behavior'])) {
         $ranking_defaults = $parent_config['az_rankings_paragraph_behavior'];
         $ranking_hover_effect = $ranking_defaults['ranking_hover_effect'] ?? FALSE;
         $ranking_clickable = $ranking_defaults['ranking_clickable'] ?? FALSE;
-        $ranking_title_style = $ranking_defaults['ranking_title_style'] ?? NULL;
+        $ranking_header_style = $ranking_defaults['ranking_header_style'] ?? NULL;
+        $ranking_alignment = $ranking_defaults['ranking_alignment'] ?? 'text-left';
       }
     }
+    // Apply paragraph settings and overrides found in AZRankingDefaultFormatter.
+    $ranking_classes .= ' ' . $ranking_alignment;
 
     // Apply clickable ranking styles (like formatter does).
     $link_title = $item->link_title ?? '';
@@ -900,7 +904,8 @@ class AZRankingWidget extends WidgetBase {
       '#ranking_heading' => $item->ranking_heading ?? '',
       '#ranking_description' => $item->ranking_description ?? '',
       '#ranking_source' => $item->ranking_source ?? '',
-      '#ranking_title_style' => $ranking_title_style,
+      '#ranking_header_style' => $ranking_header_style,
+      '#ranking_alignment' => $ranking_alignment,
       '#ranking_hover_effect' => $ranking_hover_effect,
       '#ranking_clickable' => $ranking_clickable,
       '#ranking_font_color' => $ranking_font_color,
