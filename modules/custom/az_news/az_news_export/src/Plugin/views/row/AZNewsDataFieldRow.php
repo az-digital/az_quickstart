@@ -5,6 +5,7 @@ namespace Drupal\az_news_export\Plugin\views\row;
 use Drupal\az_news_export\AZNewsDataEmpty;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
+use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\file\FileInterface;
 use Drupal\media\MediaInterface;
@@ -94,16 +95,31 @@ class AZNewsDataFieldRow extends DataFieldRow {
       $value = !empty($this->rawOutputOptions[$field_name]) ?
         $field->getValue($row) :
         $field->advancedRender($row);
-      if (empty($value) || !isset($field_definitions[$field_name])) {
+
+      if (!isset($field_definitions[$field_name])) {
         continue;
       }
       $field_definition = $field_definitions[$field_name];
+
+      $is_reference_field = FALSE;
       foreach (self::$serializableReferencedEntityTypes as $target_type) {
         if ($this->isReferenceFieldOfType($field_definition, $target_type)) {
-          $value = $this->serializeReferenceField($value, $target_type);
+          $serialized_items = $this->serializeReferenceField($value, $target_type);
+          $value = $this->normalizeReferenceFieldValue($serialized_items, $field_definition);
+          $is_reference_field = TRUE;
+          break;
         }
       }
-      if ($this->isTextField($field_definition)) {
+
+      if (!$is_reference_field && $this->valueIsEmpty($value)) {
+        continue;
+      }
+
+      if (
+        $this->isTextField($field_definition) &&
+        !$value instanceof AZNewsDataEmpty &&
+        !$this->valueIsEmpty($value)
+      ) {
         $value = $this->processTokens($value, $entity);
       }
       if (empty($field->options['exclude'])) {
@@ -181,7 +197,7 @@ class AZNewsDataFieldRow extends DataFieldRow {
    * @return array|\Drupal\az_news_export\AZNewsDataEmpty
    *   The serialized field value.
    */
-  protected function serializeReferenceField($value, string $target_type) {
+  protected function serializeReferenceField($value, string $target_type): array {
     $items = [];
     $values = is_array($value) ? $value : [$value];
     $values = array_filter($values, static fn($item) => !empty($item));
@@ -266,18 +282,58 @@ class AZNewsDataFieldRow extends DataFieldRow {
             $item = $referenced_entity->label();
             break;
         }
-
         if (!empty($item)) {
           $items[] = $item;
         }
       }
     }
 
-    if (empty($items) && in_array($target_type, self::$serializableReferencedEntityTypes, TRUE)) {
-      $items = new AZNewsDataEmpty();
+    return array_values($items);
+  }
+
+  /**
+   * Determines whether a value should be treated as empty output.
+   *
+   * @param mixed $value
+   *   The value to evaluate.
+   *
+   * @return bool
+   *   TRUE if the value is considered empty, FALSE otherwise.
+   */
+  protected function valueIsEmpty($value): bool {
+    if ($value instanceof AZNewsDataEmpty) {
+      return FALSE;
+    }
+    if (is_array($value)) {
+      return $value === [];
+    }
+    return $value === NULL || $value === '';
+  }
+
+  /**
+   * Normalizes reference field output based on field cardinality.
+   *
+   * @param array $items
+   *   The serialized reference items.
+   * @param \Drupal\Core\Field\FieldDefinitionInterface $field_definition
+   *   The field definition.
+   *
+   * @return array|\Drupal\az_news_export\AZNewsDataEmpty|mixed
+   *   The normalized value.
+   */
+  protected function normalizeReferenceFieldValue(array $items, FieldDefinitionInterface $field_definition) {
+    $cardinality = $field_definition->getFieldStorageDefinition()->getCardinality();
+    $is_multi_value = $cardinality === FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED || $cardinality > 1;
+
+    if (empty($items)) {
+      return $is_multi_value ? [] : new AZNewsDataEmpty();
     }
 
-    return $items;
+    if ($is_multi_value) {
+      return array_values($items);
+    }
+
+    return $items[0];
   }
 
 }
