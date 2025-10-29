@@ -1,6 +1,6 @@
 debug: false
 staging: false
-allow_embedding: false
+allow_embedding: true
 login_url: assets.arizona.edu
 login_enable_browser_login: true
 login_enable_custom_url: true
