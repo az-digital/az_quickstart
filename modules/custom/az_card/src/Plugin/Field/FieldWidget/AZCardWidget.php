@@ -12,6 +12,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StreamWrapper\PublicStream;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
+use Drupal\paragraphs\ParagraphInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 
@@ -142,6 +143,26 @@ class AZCardWidget extends WidgetBase {
         ],
       ];
 
+      $card_classes = 'card';
+      $parent = $item->getEntity();
+
+      // Get settings from parent paragraph.
+      if ($parent instanceof ParagraphInterface) {
+        // Get the behavior settings for the parent.
+        $parent_config = $parent->getAllBehaviorSettings();
+
+        // See if the parent behavior defines some card-specific settings.
+        if (!empty($parent_config['az_cards_paragraph_behavior'])) {
+          $card_defaults = $parent_config['az_cards_paragraph_behavior'];
+          $card_classes = $card_defaults['card_style'] ?? 'card';
+        }
+      }
+
+      // Add card class from options.
+      if (!empty($item->options['class'])) {
+        $card_classes .= ' ' . $item->options['class'];
+      }
+
       // Card item.
       $element['preview_container']['card_preview'] = [
         '#theme' => 'az_card',
@@ -149,13 +170,8 @@ class AZCardWidget extends WidgetBase {
         '#body' => check_markup(
           $item->body ?? '',
           $item->body_format ?? self::AZ_CARD_DEFAULT_TEXT_FORMAT),
-        '#attributes' => ['class' => ['card']],
+        '#attributes' => ['class' => $card_classes],
       ];
-
-      // Add card class from options.
-      if (!empty($item->options['class'])) {
-        $element['preview_container']['card_preview']['#attributes']['class'][] = $item->options['class'];
-      }
 
       // Check and see if we can construct a valid image to preview.
       $media_id = $item->media ?? NULL;
@@ -181,15 +197,15 @@ class AZCardWidget extends WidgetBase {
           '#type' => 'link',
           '#title' => $item->link_title ?? '',
           '#url' => $link_url ?: Url::fromRoute('<none>'),
-          '#attributes' => ['class' => ['btn', 'btn-default', 'w-100']],
         ];
       }
     }
 
-    // Add link class from options.
-    if (!empty($item->options['link_style'])) {
-      $element['preview_container']['card_preview']['#link']['#attributes']['class'] = explode(' ', $item->options['link_style']);
-    }
+    // Add link style classes.
+    $element['preview_container']['card_preview']['#link']['#attributes']['class'] =
+      empty($item->options['link_style']) ?
+      ['btn', 'w-100', 'btn-red'] :
+      explode(' ', $item->options['link_style']);
 
     if (!empty($element['preview_container']['card_preview']['#link'])) {
       $element['preview_container']['card_preview']['#link']['#attributes']['class'][] = 'az-card-no-follow';
@@ -198,34 +214,34 @@ class AZCardWidget extends WidgetBase {
     $element['options'] = [
       '#type' => 'select',
       '#options' => [
-        'bg-white' => $this->t('White'),
+        'text-bg-white' => $this->t('White'),
         'bg-transparent' => $this->t('Transparent'),
-        'bg-red' => $this->t('Arizona Red'),
-        'bg-blue' => $this->t('Arizona Blue'),
-        'bg-sky' => $this->t('Sky'),
-        'bg-oasis' => $this->t('Oasis'),
-        'bg-azurite' => $this->t('Azurite'),
-        'bg-midnight' => $this->t('Midnight'),
-        'bg-bloom' => $this->t('Bloom'),
-        'bg-chili' => $this->t('Chili'),
-        'bg-cool-gray' => $this->t('Cool Gray'),
-        'bg-warm-gray' => $this->t('Warm Gray'),
-        'bg-gray-100' => $this->t('Gray 100'),
-        'bg-gray-200' => $this->t('Gray 200'),
-        'bg-gray-300' => $this->t('Gray 300'),
-        'bg-leaf' => $this->t('Leaf'),
-        'bg-river' => $this->t('River'),
-        'bg-silver' => $this->t('Silver'),
-        'bg-ash' => $this->t('Ash'),
-        'bg-mesa' => $this->t('Mesa'),
+        'text-bg-red' => $this->t('Arizona Red'),
+        'text-bg-blue' => $this->t('Arizona Blue'),
+        'text-bg-sky' => $this->t('Sky'),
+        'text-bg-oasis' => $this->t('Oasis'),
+        'text-bg-azurite' => $this->t('Azurite'),
+        'text-bg-midnight' => $this->t('Midnight'),
+        'text-bg-bloom' => $this->t('Bloom'),
+        'text-bg-chili' => $this->t('Chili'),
+        'text-bg-cool-gray' => $this->t('Cool Gray'),
+        'text-bg-warm-gray' => $this->t('Warm Gray'),
+        'text-bg-gray-100' => $this->t('Gray 100'),
+        'text-bg-gray-200' => $this->t('Gray 200'),
+        'text-bg-gray-300' => $this->t('Gray 300'),
+        'text-bg-leaf' => $this->t('Leaf'),
+        'text-bg-river' => $this->t('River'),
+        'text-bg-silver' => $this->t('Silver'),
+        'text-bg-ash' => $this->t('Ash'),
+        'text-bg-mesa' => $this->t('Mesa'),
       ],
       '#required' => TRUE,
       '#title' => $this->t('Card Background'),
-      '#default_value' => (!empty($item->options['class'])) ? $item->options['class'] : 'bg-white',
+      '#default_value' => (!empty($item->options['class'])) ? $item->options['class'] : 'text-bg-white',
     ];
 
     $element['media'] = [
-      '#type' => 'media_library',
+      '#type' => 'az_media_library',
       '#title' => $this->t('Card Media'),
       '#default_value' => $item->media ?? NULL,
       '#allowed_bundles' => ['az_image'],
@@ -243,12 +259,12 @@ class AZCardWidget extends WidgetBase {
     $element['title_alignment'] = [
       '#type' => 'select',
       '#options' => [
-        'text-left' => $this->t('Title left'),
+        'text-start' => $this->t('Title left'),
         'text-center' => $this->t('Title center'),
-        'text-right' => $this->t('Title right'),
+        'text-end' => $this->t('Title right'),
       ],
       '#title' => $this->t('Card Title Alignment'),
-      '#default_value' => (!empty($item->options['title_alignment'])) ? $item->options['title_alignment'] : 'text-left',
+      '#default_value' => (!empty($item->options['title_alignment'])) ? $item->options['title_alignment'] : 'text-start',
     ];
 
     $element['body'] = [
@@ -292,16 +308,16 @@ class AZCardWidget extends WidgetBase {
     $element['link_style'] = [
       '#type' => 'select',
       '#options' => [
-        'sr-only' => $this->t('Hidden link title'),
-        'btn-block' => $this->t('Text link'),
-        'btn btn-block btn-red' => $this->t('Red button'),
-        'btn btn-block btn-blue' => $this->t('Blue button'),
-        'btn btn-block btn-outline-red' => $this->t('Red outline button'),
-        'btn btn-block btn-outline-blue' => $this->t('Blue outline button'),
-        'btn btn-block btn-outline-white' => $this->t('White outline button'),
+        'visually-hidden' => $this->t('Hidden link title'),
+        'w-100' => $this->t('Text link'),
+        'btn w-100 btn-red' => $this->t('Red button'),
+        'btn w-100 btn-blue' => $this->t('Blue button'),
+        'btn w-100 btn-outline-red' => $this->t('Red outline button'),
+        'btn w-100 btn-outline-blue' => $this->t('Blue outline button'),
+        'btn w-100 btn-outline-white' => $this->t('White outline button'),
       ],
       '#title' => $this->t('Card Link Style'),
-      '#default_value' => (!empty($item->options['link_style'])) ? $item->options['link_style'] : 'btn-block',
+      '#default_value' => (!empty($item->options['link_style'])) ? $item->options['link_style'] : 'btn w-100 btn-red',
     ];
 
     if (!$item->isEmpty()) {
@@ -339,8 +355,6 @@ class AZCardWidget extends WidgetBase {
     $elements = parent::formMultipleElements($items, $form, $form_state);
     $field_name = $this->fieldDefinition->getName();
     $cardinality = $this->fieldDefinition->getFieldStorageDefinition()->getCardinality();
-    $is_multiple = $this->fieldDefinition->getFieldStorageDefinition()->isMultiple();
-    $is_unlimited_not_programmed = FALSE;
     $parents = $form['#parents'];
 
     $max = 0;
@@ -349,7 +363,6 @@ class AZCardWidget extends WidgetBase {
       case FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED:
         $field_state = static::getWidgetState($parents, $field_name, $form_state);
         $max = $field_state['items_count'];
-        $is_unlimited_not_programmed = !$form_state->isProgrammed();
         break;
 
       default:
@@ -426,7 +439,6 @@ class AZCardWidget extends WidgetBase {
     // Find the widget and return it.
     $element = [];
     $triggering_element = $form_state->getTriggeringElement();
-    $oops = $triggering_element['#array_parents'];
     $array_parents = array_slice($triggering_element['#array_parents'], 0, -3);
     $element = NestedArray::getValue($form, $array_parents);
 
@@ -443,7 +455,7 @@ class AZCardWidget extends WidgetBase {
     array_pop($parents);
     $parent_element = NestedArray::getValue($complete_form, $parents);
     if (empty($element['#value']) && !empty($parent_element['link_uri']['#value'])) {
-      $form_state->setError($element, t('Card Link Title field is required when a URL is provided. Card Link Title may be visually hidden with a Card Link Style selection.'));
+      $form_state->setError($element, $this->t('Card Link Title field is required when a URL is provided. Card Link Title may be visually hidden with a Card Link Style selection.'));
     }
   }
 
@@ -456,7 +468,7 @@ class AZCardWidget extends WidgetBase {
 
     if (!empty($element['#value'])) {
       // Check to make sure the path can be found.
-      if ($url = $this->pathValidator->getUrlIfValid($element['#value'])) {
+      if ($this->pathValidator->getUrlIfValid($element['#value'])) {
         // Url is valid, no conversion required.
         return;
       }
@@ -468,7 +480,7 @@ class AZCardWidget extends WidgetBase {
         return;
       }
       $form_state
-        ->setError($element, t('This link does not exist or you do not have permission to link to %path.', [
+        ->setError($element, $this->t('This link does not exist or you do not have permission to link to %path.', [
           '%path' => $element['#value'],
         ]));
     }

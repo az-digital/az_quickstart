@@ -58,7 +58,7 @@ class EntityEmbedProcess extends Dom implements ContainerFactoryPluginInterface 
   protected $migrateStub;
 
   /**
-   * The entity type manager service..
+   * The entity type manager service.
    *
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */

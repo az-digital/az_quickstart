@@ -21,15 +21,16 @@
     "_": true,
     "Cookies": true,
     "Backbone": true,
-    "Modernizr": true,
+    "htmx": true,
     "loadjs": true,
     "Shepherd": true,
     "Sortable": true,
     "once": true,
     "CKEditor5": true,
     "tabbable": true,
-    "slugify": true,
-    "bodyScrollLock" : true
+    "transliterate": true,
+    "bodyScrollLock" : true,
+    "FloatingUIDOM": true
   },
   "rules": {
     "prettier/prettier": "error",

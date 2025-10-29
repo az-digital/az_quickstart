@@ -4,28 +4,49 @@
 * https://www.drupal.org/node/2815083
 * @preserve
 **/
-(function (drupalSettings, Drupal) {
+((drupalSettings, Drupal) => {
   Drupal.behaviors.azFinderFilterCount = {
-    attach: function attach(context, settings) {
-      var filterContainers = context.querySelectorAll('[data-az-better-exposed-filters]');
-      filterContainers.forEach(function (container) {
-        var filterCountDisplay = container.querySelector('.js-active-filter-count');
-        var textInputFields = container.querySelectorAll('input[type="text"], input[type="search"]');
-        var checkboxesAndRadios = container.querySelectorAll('input[type="checkbox"], input[type="radio"]');
-        var alwaysDisplayResetButton = settings.azFinder.alwaysDisplayResetButton || false;
-        var calculateActiveFilterCount = function calculateActiveFilterCount() {
-          var count = container.querySelectorAll('input[type="checkbox"]:checked, input[type="radio"]:checked').length;
-          textInputFields.forEach(function (inputField) {
+    attach(context, settings) {
+      const filterContainers = context.querySelectorAll('[data-az-better-exposed-filters]');
+      filterContainers.forEach(container => {
+        const filterCountDisplay = container.querySelector('.js-active-filter-count');
+        const textInputFields = container.querySelectorAll('input[type="text"], input[type="search"]');
+        const checkboxesAndRadios = container.querySelectorAll('input[type="checkbox"], input[type="radio"]');
+        const alwaysDisplayResetButton = settings.azFinder.alwaysDisplayResetButton || false;
+        const calculateActiveFilterCount = () => {
+          let count = container.querySelectorAll('input[type="checkbox"]:checked, input[type="radio"]:checked').length;
+          textInputFields.forEach(inputField => {
             if (inputField.value.trim().length >= 1) {
               count += 1;
             }
           });
           return count;
         };
-        var updateActiveFilterDisplay = function updateActiveFilterDisplay() {
-          var activeFilterCount = calculateActiveFilterCount();
-          filterCountDisplay.textContent = "(".concat(activeFilterCount, ")");
-          var resetButton = container.querySelector('.js-active-filters-reset');
+        const updateActiveFilterDisplay = () => {
+          const activeFilterCount = calculateActiveFilterCount();
+          let badge = filterCountDisplay.querySelector('.badge');
+          if (!badge) {
+            badge = document.createElement('span');
+            badge.classList.add('badge', 'text-bg-light');
+            badge.textContent = '0';
+          }
+          if (activeFilterCount > 0) {
+            badge.classList.remove('visually-hidden');
+            badge.classList.remove('position-absolute');
+          } else {
+            badge.classList.add('visually-hidden');
+            badge.classList.add('position-absolute');
+          }
+          let srText = badge.querySelector('.visually-hidden');
+          if (!srText) {
+            srText = document.createElement('span');
+            srText.classList.add('visually-hidden');
+            srText.textContent = `Active filters: `;
+            badge.appendChild(srText);
+          }
+          badge.firstChild.textContent = `${activeFilterCount}`;
+          filterCountDisplay.replaceChildren(badge);
+          const resetButton = container.querySelector('.js-active-filters-reset');
           if (resetButton) {
             if (alwaysDisplayResetButton || activeFilterCount > 0) {
               resetButton.classList.remove('d-none');
@@ -34,16 +55,12 @@
             }
           }
         };
-        textInputFields.forEach(function (inputField) {
-          return inputField.addEventListener('input', updateActiveFilterDisplay, {
-            passive: true
-          });
-        });
-        checkboxesAndRadios.forEach(function (input) {
-          return input.addEventListener('change', updateActiveFilterDisplay, {
-            passive: true
-          });
-        });
+        textInputFields.forEach(inputField => inputField.addEventListener('input', updateActiveFilterDisplay, {
+          passive: true
+        }));
+        checkboxesAndRadios.forEach(input => input.addEventListener('change', updateActiveFilterDisplay, {
+          passive: true
+        }));
         container.addEventListener('az-finder-filter-reset', updateActiveFilterDisplay, {
           passive: true
         });

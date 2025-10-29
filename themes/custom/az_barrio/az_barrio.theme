@@ -5,7 +5,6 @@
  * Functions to support theming in the Arizona Barrio theme.
  */
 
-//phpcs:ignore Security.BadFunctions.EasyRFI.WarnEasyRFI
 include_once \Drupal::service('extension.list.theme')->getPath('az_barrio') . '/includes/common.inc';
 
 use Drupal\block\Entity\Block;
@@ -42,7 +41,7 @@ function az_barrio_theme_suggestions_input_alter(&$suggestions, $variables) {
   if (isset($variables['element']['#form_id']) && $variables['element']['#form_id'] === 'search_block_form') {
     $suggestions[] = 'input__' . $variables['element']['#form_id'];
   }
-  if (isset($variables['element']['#type']) && isset($variables['element']['#form_id']) && $variables['element']['#form_id'] === 'search_block_form') {
+  if (isset($variables['element']['#type']) && isset($variables['element']['#form_id']) && ($variables['element']['#form_id'] === 'search_block_form')) {
     $suggestions[] = 'input__' . $variables['element']['#form_id'] . '__' . $variables['element']['#type'];
   }
 }
@@ -99,38 +98,14 @@ function az_barrio_preprocess_html(&$variables) {
  * Implements hook_preprocess_HOOK() for page templates.
  */
 function az_barrio_preprocess_page(&$variables, $hook) {
-  $variables['az_barrio_navbar_offcanvas'] = (theme_get_setting('az_barrio_navbar_offcanvas')) ? TRUE : FALSE;
-  if ($variables['az_barrio_navbar_offcanvas'] === TRUE) {
+  if (isset($variables['page']['navigation_offcanvas']['az_barrio_offcanvas_searchform'])) {
     $variables['#attached']['library'][] = 'az_barrio/az-barrio-off-canvas-nav';
-    $variables['navbar_offcanvas_attributes'] = new Attribute([
-      'id' => 'navbar-top',
-      'class' => [
-        'navbar-offcanvas'
-      ]
-    ]);
-    if ($variables['page']['navigation']) {
-      $variables['navbar_offcanvas_attributes']['class'][] = 'has-navigation-region';
-    }
-    else {
-      $variables['navbar_offcanvas_attributes']['class'][] = 'no-navigation-region';
-    }
-    if ($variables['page']['navigation_offcanvas']) {
-      $variables['navbar_offcanvas_attributes']['class'][] = 'has-off-canvas-region';
-    }
-    else {
-      $variables['navbar_offcanvas_attributes']['class'][] = 'no-off-canvas-region';
-    }
-  }
-
-  // Allow hiding of title of front page node.
-  if (theme_get_setting('az_hide_front_title') === 1 && \Drupal::service('path.matcher')->isFrontPage()) {
-    // $variables['title'] = FALSE;
   }
 
   // Check if land acknowledgment should be displayed.
   $land_acknowledgment = '';
   if (theme_get_setting('land_acknowledgment')) {
-    $land_acknowledgment = '<p class="font-weight-light"><em>We respectfully acknowledge <a href="https://www.arizona.edu/university-arizona-land-acknowledgment">the University of Arizona is on the land and territories of Indigenous peoples</a>. Today, Arizona is home to 22 federally recognized tribes, with Tucson being home to the O’odham and the Yaqui. Committed to diversity and inclusion, the University strives to build sustainable relationships with sovereign Native Nations and Indigenous communities through education offerings, partnerships, and community service.</em></p><hr>';
+    $land_acknowledgment = '<p class="fw-light"><em>We respectfully acknowledge <a href="https://www.arizona.edu/university-arizona-land-acknowledgment">the University of Arizona is on the land and territories of Indigenous peoples</a>. Today, Arizona is home to 22 federally recognized tribes, with Tucson being home to the O’odham and the Yaqui. The university strives to build sustainable relationships with sovereign Native Nations and Indigenous communities through education offerings, partnerships, and community service.</em></p><hr>';
   }
 
   // Check if information security policy should be displayed.
@@ -244,15 +219,16 @@ function az_barrio_library_info_alter(&$libraries, $extension) {
     // Remove site-footer styles.
     unset($libraries['global-styling']['css']['component']['css/components/site-footer.css']);
   }
-  if ($extension === 'az_barrio' && isset($libraries['arizona-bootstrap'])) {
-    // Add AZ Bootstrap CSS & JS based on theme settings.
+  
+  if ($extension === 'az_barrio' && isset($libraries['arizona-bootstrap-css'])) {
+    // Add AZ Bootstrap CSS based on theme settings.
     $az_bootstrap_css_path = az_barrio_az_bootstrap_assets_path('css');
-    $az_bootstrap_js_path = az_barrio_az_bootstrap_assets_path('js');
-    if (!$az_bootstrap_css_path || !$az_bootstrap_js_path) {
+
+    if (!$az_bootstrap_css_path) {
       return;
     }
 
-    $az_bootstrap_token = '';
+    $az_bootstrap_css_token = '';
     $az_bootstrap_css_info = [
       'media' => 'all',
       'preprocess' => FALSE,
@@ -262,53 +238,42 @@ function az_barrio_library_info_alter(&$libraries, $extension) {
       ],
       'minified' => FALSE,
     ];
-    $az_bootstrap_js_info = [
-      'preprocess' => FALSE,
-    ];
 
     // AZ Bootstrap source.
     if (theme_get_setting('az_bootstrap_source') === 'cdn') {
       // AZ Bootstrap CDN version.
-      if (theme_get_setting('az_bootstrap_cdn_version') !== 'stable') {
-        $az_bootstrap_token = '?=' . \Drupal::state()->get('system.css_js_query_string') ?: '0';
+      if (theme_get_setting('az_bootstrap_cdn_version_css') !== 'stable') {
+        $az_bootstrap_css_token = '?=' . \Drupal::state()->get('system.css_js_query_string') ?: '0';
       }
       $az_bootstrap_css_info['type'] = 'external';
-      $az_bootstrap_js_info['type'] = 'external';
     }
     else {
       $az_bootstrap_css_info['type'] = 'file';
-      $az_bootstrap_js_info['type'] = 'file';
     }
-
     if (theme_get_setting('az_bootstrap_minified')) {
       $az_bootstrap_css_info['minified'] = TRUE;
-      $az_bootstrap_js_info['minified'] = TRUE;
     }
 
-    $az_bootstrap_css_path .= $az_bootstrap_token;
-    $az_bootstrap_js_path .= $az_bootstrap_token;
-    $libraries['arizona-bootstrap']['css']['theme'] = [
+    $az_bootstrap_css_path .= $az_bootstrap_css_token;
+    $libraries['arizona-bootstrap-css']['css']['theme'] = [
       $az_bootstrap_css_path => $az_bootstrap_css_info,
-    ];
-    $libraries['arizona-bootstrap']['js'] = [
-      $az_bootstrap_js_path => $az_bootstrap_js_info,
     ];
 
     // Populate AZ Bootstrap location variable for CKEditor.
-    \Drupal::state()->set(AZ_BOOTSTRAP_LOCATION, $az_bootstrap_css_path . $az_bootstrap_token);
+    \Drupal::state()->set(AZ_BOOTSTRAP_LOCATION, $az_bootstrap_css_path . $az_bootstrap_css_token);
 
     $font = theme_get_setting('az_barrio_font');
     if ($font === TRUE) {
       // Add Proxima Nova CSS based on theme settings.
       // Ensure Proxima Nova is loaded before Arizona Bootstrap.
-      $libraries['arizona-bootstrap']['dependencies'][] = 'az_barrio/az-proxima-nova';
+      $libraries['arizona-bootstrap-css']['dependencies'][] = 'az_barrio/az-proxima-nova';
     }
 
-    $material_design_sharp_icons = theme_get_setting('az_barrio_material_design_sharp_icons');
-    if ($material_design_sharp_icons === TRUE) {
-      // Add Material Design Sharp Icon CSS based on theme settings.
+    $material_symbols_rounded = theme_get_setting('az_barrio_material_symbols_rounded');
+    if ($material_symbols_rounded === TRUE) {
+      // Add Material Symbols Rounded Icon CSS based on theme settings.
       // Ensure icon CSS is loaded before Arizona Bootstrap.
-      $libraries['arizona-bootstrap']['dependencies'][] = 'az_barrio/material-design-icons-sharp';
+      $libraries['arizona-bootstrap-css']['dependencies'][] = 'az_barrio/material-symbols-rounded';
     }
 
     $az_icons = theme_get_setting('az_barrio_az_icons');
@@ -317,7 +282,7 @@ function az_barrio_library_info_alter(&$libraries, $extension) {
         // Add Arizona Icons CSS based on theme settings.
         $az_icons_path = az_barrio_az_icons_assets_path('css');
         // Ensure icons are loaded before Arizona Bootstrap.
-        $libraries['arizona-bootstrap']['dependencies'][] = 'az_barrio/az-icons';
+        $libraries['arizona-bootstrap-css']['dependencies'][] = 'az_barrio/az-icons';
         $az_barrio_az_icons_css_info = [
           'media' => 'all',
           'preprocess' => FALSE,
@@ -341,6 +306,40 @@ function az_barrio_library_info_alter(&$libraries, $extension) {
       }
     }
   }
+
+  if ($extension === 'az_barrio' && isset($libraries['arizona-bootstrap-js'])) {
+    // Add AZ Bootstrap JS based on theme settings.
+    $az_bootstrap_js_path = az_barrio_az_bootstrap_assets_path('js');
+    if (!$az_bootstrap_js_path) {
+      return;
+    }
+
+    $az_bootstrap_js_token = '';
+    $az_bootstrap_js_info = [
+      'preprocess' => FALSE,
+    ];
+
+    // AZ Bootstrap source.
+    if (theme_get_setting('az_bootstrap_source') === 'cdn') {
+      // AZ Bootstrap CDN version.
+      if (theme_get_setting('az_bootstrap_cdn_version_js') !== 'stable') {
+        $az_bootstrap_js_token = '?=' . \Drupal::state()->get('system.css_js_query_string') ?: '0';
+      }
+      $az_bootstrap_js_info['type'] = 'external';
+    }
+    else {
+      $az_bootstrap_js_info['type'] = 'file';
+    }
+
+    if (theme_get_setting('az_bootstrap_minified')) {
+      $az_bootstrap_js_info['minified'] = TRUE;
+    }
+
+    $az_bootstrap_js_path .= $az_bootstrap_js_token;
+    $libraries['arizona-bootstrap-js']['js'] = [
+      $az_bootstrap_js_path => $az_bootstrap_js_info,
+    ];
+  }
 }
 
 /**
@@ -352,10 +351,10 @@ function az_barrio_az_bootstrap_assets_path($type) {
   }
 
   $az_bootstrap_path = '';
-
   // AZ Bootstrap source.
   if (theme_get_setting('az_bootstrap_source') === 'cdn') {
-    $az_bootstrap_cdn_version = theme_get_setting('az_bootstrap_cdn_version');
+    $version_setting = 'az_bootstrap_cdn_version_' . $type;
+    $az_bootstrap_cdn_version = theme_get_setting($version_setting);
     if ($az_bootstrap_cdn_version === 'stable') {
       $az_bootstrap_cdn_version = AZ_BOOTSTRAP_STABLE_VERSION;
     }
@@ -556,8 +555,7 @@ function az_barrio_footer_logo() {
  * Implements hook_theme_suggestions_HOOK_alter().
  */
 function az_barrio_theme_suggestions_menu_alter(array &$suggestions, array $variables) {
-  if (isset($variables['attributes']['id'])) {
-    $blockid = str_replace(['block-', '-'], ['', '_'], $variables['attributes']['id']);
+  if (isset($variables['attributes']['block'])) {
     $suggestions[] = $variables['theme_hook_original'] . '__' . $variables['attributes']['block'];
   }
 }
@@ -595,6 +593,7 @@ function az_barrio_preprocess_breadcrumb(&$variables) {
  * @link https://github.com/az-digital/az_quickstart/issues/1613
  */
 function az_barrio_preprocess_block(&$variables) {
+  $variables['content']['#attributes']['block'] = $variables['attributes']['id'];
   if ($variables['base_plugin_id'] === 'system_branding_block') {
     if ($variables['configuration']['use_site_logo']) {
       $variables['site_logo'] = az_barrio_primary_logo();
@@ -674,6 +673,11 @@ function az_barrio_preprocess_block(&$variables) {
  */
   if ($variables['base_plugin_id'] === 'search_form_block' && $variables['elements']['#id'] === 'az_barrio_search') {
     $variables['attributes']['class'][] = 'az-search-block';
+  }
+
+  // Pass theme setting to hide sidebar menu for mobile 
+  if (isset($variables['elements']['#id']) && $variables['elements']['#id'] === 'az_barrio_sidebar_menu') {
+    $variables['az_remove_sidebar_menu_mobile'] = theme_get_setting('az_remove_sidebar_menu_mobile');
   }
 
 }

@@ -1,0 +1,51 @@
+{#
+/**
+* @file
+* Default theme implementation to display a calendar add button.
+*
+* @ingroup themeable
+*/
+#}
+{% set attributes = attributes.addClass('clear-both') %}
+{# List and order of calendar implementations. #}
+{% set calendar_types = {
+    'google' : 'Google',
+    'ics' : 'iCal File',
+    'webOffice': 'Outlook Enterprise (Office 365)',
+    'webOutlook': 'Outlook Personal (outlook.com)',
+    'yahoo' : 'Yahoo!'
+  }
+%}
+
+<div{{ attributes }}>
+  {# Button trigger modal #}
+  <button type="button" class="btn btn-outline-blue btn-sm d-flex me-2" style="text-transform: none" data-bs-toggle="modal" data-bs-target="#{{ modal }}">
+    <span aria-hidden="true" class="material-symbols-rounded me-2">event</span>
+    <span class="my-auto">{{ 'Add to Calendar'|t }}</span>
+  </button>
+
+  {# Modal #}
+  <div id="{{ modal }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="{{ modal }}-label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header px-0 mx-3 align-items-start">
+          <div>
+            <h2 class="h5 modal-title mt-1 mb-2" id="{{ modal }}-label">{{ 'Add Event to Calendar'|t }}</h2>
+            <p class="mb-0">{{ title }}</p>
+            <p class="mb-0">{{ start_date|date('g:i a, F j, Y') }}</p>
+          </div>
+          <button type="button" class="btn-close mt-1" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p class="mb-3">{{ 'Select your calendar type below:'|t }}</p>
+          <div class="d-grid gap-2 text-center">
+          {% for calendar_type,name in calendar_types %}
+            {% set link = calendar_link(calendar_type, title, date(start_date), date(end_date), all_day, description, location) %}
+            <a class="btn btn-outline-blue calendar-link-{{ calendar_type }}" target="_blank" href="{{ link }}" role="button">{{ name }}</a>
+          {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

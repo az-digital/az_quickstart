@@ -11,6 +11,7 @@ use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
+use Drupal\Core\Render\Element;
 use Drupal\Core\Url;
 use Drupal\az_publication\Plugin\views\argument\AZCitationStyleArgument;
 use Drupal\filter\Entity\FilterFormat;
@@ -110,6 +111,9 @@ function az_publication_theme_suggestions_block_alter(array &$suggestions, array
  */
 function az_publication_theme() {
   return [
+    'az_inline_entity_role_form_entity_table' => [
+      'render element' => 'form',
+    ],
     'block__views_block__az_publications_az_author_person' => [
       'template' => 'block--views-block--az-publications-az-author-person',
       'base hook' => 'block',
@@ -117,10 +121,6 @@ function az_publication_theme() {
     'block__block_content__views_reference__az_publications__az_author_person' => [
       'template' => 'block--block-content--views-reference--az-publications--az-author-person',
       'base hook' => 'block',
-    ],
-    'views_exposed_form__az_publications' => [
-      'template' => 'views-exposed-form--az-publications',
-      'base hook' => 'views_exposed_form',
     ],
     'az_publication_type_listing_table' => [
       'variables' => [
@@ -225,8 +225,10 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
             $blob->{$destination} = trim($entity->{$source}->value);
           }
         }
-        if (!empty($entity->field_az_authors)) {
-          foreach ($entity->field_az_authors as $item) {
+        // Keep track of roles seen.
+        $roles = [];
+        if (!empty($entity->field_az_contributors)) {
+          foreach ($entity->field_az_contributors as $item) {
             if (!empty($item->entity)) {
               $author = new stdClass();
               $author_entity = $repository->getTranslationFromContext($item->entity);
@@ -251,7 +253,12 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
                 $person = $repository->getTranslationFromContext($author_entity->field_az_author_person->entity);
                 $author->itemlink = $person->toUrl()->toString();
               }
-              $blob->author[] = $author;
+              // Add to schema based on role.
+              $role = $item->role ?? 'author';
+              // Take note that we've seen a particular role.
+              $roles[$role] = TRUE;
+              // Add contributor to CSL information.
+              $blob->{$role}[] = $author;
             }
           }
         }
@@ -262,6 +269,12 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
             $blob->status = t('forthcoming');
           }
         }
+        // Check if publication has paragraph content.
+        $has_content = (
+          $entity->hasField('field_az_main_content') &&
+          !empty($entity->get('field_az_main_content')->referencedEntities())
+        );
+
         // Handle accessed date if available.
         if (!empty($entity->field_az_accessed_date->value)) {
           $date = new stdClass();
@@ -276,8 +289,8 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
             $has_cover = !empty($entity->field_az_publication_image->target_id);
             $has_abstract = !empty($entity->field_az_publication_abstract->value);
             $url = Url::fromRoute('entity.node.canonical', ['node' => $entity->id()]);
-            // Linking to full node if there is an abstract or cover page.
-            if ($has_cover || $has_abstract) {
+            // Link to full node if there is abstract, cover page, or content.
+            if ($has_cover || $has_abstract || $has_content) {
               $blob->itemlink = $url->toString();
             }
           }
@@ -289,7 +302,7 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
           $blob->itemlink = $entity->field_az_publication_link->uri;
         }
         // Handle file link if available.
-        if (!empty($entity->field_az_publication_media->entity)) {
+        if (!empty($entity->field_az_publication_media->entity) && !$has_content) {
           // @todo Remove urldecode() if we figure out a better way to prevent
           // encoded URLs from getting double-encoded by CiteProc.
           $media_entity = $repository->getTranslationFromContext($entity->field_az_publication_media->entity);
@@ -354,6 +367,10 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
             return preg_replace('#<div class="csl-left-margin">(.*?)</div>#', '', $renderedText);
           },
         ];
+        // Apply link transformation to different contributor roles.
+        foreach ($roles as $role => $val) {
+          $additionalMarkup[$role] = $renderlink;
+        }
         // Set up CSL rendering.
         $citeProc = new CiteProc($style_info, $locale, $additionalMarkup);
         $biblio = $citeProc->render([$blob], "bibliography");
@@ -689,6 +706,180 @@ function az_publication_form_node_az_publication_form_alter(&$form, FormStateInt
 function az_publication_form_node_az_publication_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
 
   _az_publication_form_revisions($form, $form_state, $form_id);
+}
+
+/**
+ * Prepares variables for az_inline_entity_role_form_entity_table templates.
+ *
+ * Default template: az-inline-entity-role-form-entity-table.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - form: A render element representing the form.
+ */
+function template_preprocess_az_inline_entity_role_form_entity_table(array &$variables) {
+  $form = $variables['form'];
+  $entity_type = $form['#entity_type'];
+
+  $fields = $form['#table_fields'];
+  $has_tabledrag = \Drupal::entityTypeManager()->getHandler($entity_type, 'inline_form')->isTableDragEnabled($form);
+
+  // Sort the fields by weight.
+  uasort($fields, '\Drupal\Component\Utility\SortArray::sortByWeightElement');
+
+  $header = [];
+  if ($has_tabledrag) {
+    $header[] = ['data' => '', 'class' => ['ief-tabledrag-header']];
+    $header[] = [
+      'data' => t('Sort order'),
+      'class' => ['ief-sort-order-header'],
+    ];
+  }
+  // Add header columns for each field.
+  $first = TRUE;
+  foreach ($fields as $field_name => $field) {
+    $column = [
+      'data' => $field['label'],
+      'class' => ['inline-entity-form-' . $entity_type . '-' . $field_name],
+    ];
+    // The first column gets a special class.
+    if ($first) {
+      $column['class'][] = 'ief-first-column-header';
+      $first = FALSE;
+    }
+    $header[] = $column;
+  }
+  $header[] = t('Role');
+  $header[] = t('Operations');
+
+  // Build an array of entity rows for the table.
+  $rows = [];
+  foreach (Element::children($form) as $key) {
+    /** @var \Drupal\Core\Entity\FieldableEntityInterface $entity */
+    $entity = $form[$key]['#entity'];
+    $row_classes = ['ief-row-entity'];
+    $cells = [];
+    if ($has_tabledrag) {
+      $cells[] = [
+        'data' => ['#plain_text' => ''],
+        '#wrapper_attributes' => ['class' => ['ief-tabledrag-handle']],
+      ];
+      $cells[] = ['data' => $form[$key]['delta']];
+      $row_classes[] = 'draggable';
+    }
+    // Add a special class to rows that have a form underneath, to allow
+    // for additional styling.
+    if (!empty($form[$key]['form'])) {
+      $row_classes[] = 'ief-row-entity-form';
+    }
+
+    foreach ($fields as $field_name => $field) {
+      if ($field['type'] === 'label') {
+        $data = ['#markup' => $variables['form'][$key]['#label']];
+      }
+      elseif ($field['type'] === 'field' && $entity->hasField($field_name)) {
+        $display_options = ['label' => 'hidden'];
+        if (isset($field['display_options'])) {
+          $display_options += $field['display_options'];
+        }
+        $data = $entity->get($field_name)->view($display_options);
+      }
+      elseif ($field['type'] === 'callback') {
+        $arguments = [
+          'entity' => $entity,
+          'variables' => $variables,
+        ];
+        if (isset($field['callback_arguments'])) {
+          $arguments = array_merge($arguments, $field['callback_arguments']);
+        }
+
+        $data = call_user_func_array($field['callback'], array_values($arguments));
+
+        // Backward compatibility for callbacks that just provide a string not
+        // an array.
+        if (!is_array($data)) {
+          $data = ['#markup' => $data];
+        }
+      }
+      else {
+        $data = ['#markup' => t('N/A')];
+      }
+
+      $cells[$field_name] = array_merge($data, ['#wrapper_attributes' => ['class' => ['inline-entity-form-' . $entity_type . '-' . $field_name]]]);
+    }
+
+    // Display the role field from the form.
+    $cells['role'] = $form[$key]['role'] ?? ['#markup' => t('N/A')];
+
+    // Add the buttons belonging to the "Operations" column, when entity is not
+    // being displayed as a form.
+    if (empty($form[$key]['form'])) {
+      $cells['actions'] = $form[$key]['actions'];
+    }
+    // Create the row.
+    $rows[] = $cells + ['#attributes' => ['class' => $row_classes]];
+    // If the current entity array specifies a form, output it in the next row.
+    if (!empty($form[$key]['form'])) {
+      $row = [];
+      $row[] = $form[$key]['form'] + ['#wrapper_attributes' => ['colspan' => count($fields) + 1]];
+      $rows[] = $row + [
+        '#attributes' =>
+        [
+          'class' => ['ief-row-form'],
+          'no_striping' => TRUE,
+        ],
+      ];
+    }
+  }
+
+  if (!empty($rows)) {
+    $tabledrag = [];
+    if ($has_tabledrag) {
+      $tabledrag = [
+        [
+          'action' => 'order',
+          'relationship' => 'sibling',
+          'group' => 'ief-entity-delta',
+        ],
+      ];
+    }
+
+    $variables['table'] = [
+      '#type' => 'table',
+      '#header' => $header,
+      '#attributes' => [
+        'id' => 'ief-entity-table-' . $form['#id'],
+        'class' => ['ief-entity-table'],
+      ],
+      '#tabledrag' => $tabledrag,
+    ] + $rows;
+  }
+}
+
+/**
+ * Implements hook_xmlsitemap_link_alter().
+ */
+function az_publication_xmlsitemap_link_alter(array &$link, array $context) {
+
+  // Modify publication links to not appear if they are noncanonical.
+  // This behavior is skipped for overridden links.
+  if (!empty($context['entity']) && $context['entity'] instanceof NodeInterface && $link['access'] && ($context['entity']->bundle() === 'az_publication') && (empty($link['status_override']))) {
+    // Fields that represent a canonical copy of the publication exists.
+    $canonicals = [
+      'field_az_publication_doi',
+      'field_az_publication_link',
+    ];
+
+    // If a publication has a canonical field, exclude this publication..
+    $entity = $context['entity'];
+    foreach ($canonicals as $canonical) {
+      // Publications are noncanonical if a canonical reference exists.
+      if ($entity->hasField($canonical) && !empty($entity->get($canonical)->getValue())) {
+        $link['access'] = FALSE;
+        break;
+      }
+    }
+  }
 }
 
 /**

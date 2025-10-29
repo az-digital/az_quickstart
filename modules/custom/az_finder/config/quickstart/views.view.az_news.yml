@@ -122,7 +122,20 @@ display:
       cache:
         type: tag
         options: {  }
-      empty: {  }
+      empty:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text
+          empty: true
+          content:
+            value: '<p><em>There are no news items listed.</em></p>'
+            format: az_standard
+          tokenize: false
       sorts:
         sticky:
           id: sticky
@@ -385,7 +398,7 @@ display:
           plugin_id: text
           empty: true
           content:
-            value: '<em>No results found for the applied filters.</em>'
+            value: '<p><em>There are no news items listed.</em></p>'
             format: az_standard
           tokenize: false
       filters:
@@ -805,7 +818,7 @@ display:
           plugin_id: text
           empty: true
           content:
-            value: "<style>\r\n#views-exposed-form-az-news-az-grid-filter {\r\n    margin-bottom: 0.5em;\r\n}\r\n#views-exposed-form-az-news-az-grid-filter label {\r\n    font-weight: bold;\r\n    display: block;\r\n}\r\n#views-exposed-form-az-news-az-grid-filter select {\r\n    color: #001c48;\r\n    font-weight: 500;\r\n    text-decoration: none;\r\n    letter-spacing: .04em;\r\n    white-space: normal;\r\n    border-width: 2px;\r\n    background-color: #dee2e6;\r\n    border-color: #dee2e6;\r\n    display: inline-block;\r\n    text-align: center;\r\n    vertical-align: middle;\r\n    -webkit-user-select: none;\r\n    -moz-user-select: none;\r\n    -ms-user-select: none;\r\n    user-select: none;\r\n    padding: 0.375rem 0.75rem;\r\n    font-size: 1rem;\r\n    line-height: 1.5;\r\n    border-radius: 0;\r\n    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;\r\n}\r\n</style>"
+            value: "<style>\r\n#views-exposed-form-az-news-az-grid-filter {\r\n    margin-bottom: 0.5em;\r\n}\r\n#views-exposed-form-az-news-az-grid-filter label {\r\n    font-weight: bold;\r\n    display: block;\r\n}\r\n#views-exposed-form-az-news-az-grid-filter select {\r\n    color: #001c48;\r\n    font-weight: 500;\r\n    text-decoration: none;\r\n    letter-spacing: .04em;\r\n    white-space: normal;\r\n    border-width: 2px;\r\n    background-color: #dee2e6;\r\n    border-color: #dee2e6;\r\n    display: inline-block;\r\n    text-align: center;\r\n    vertical-align: middle;\r\n    -webkit-user-select: none;\r\n    -moz-user-select: none;\r\n    -ms-user-select: none;\r\n    user-select: none;\r\n    padding: 0.375rem 0.75rem;\r\n    font-size: 1rem;\r\n    line-height: 1.5;\r\n    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;\r\n}\r\n</style>"
             format: full_html
           tokenize: false
       display_extenders: {  }
@@ -892,7 +905,7 @@ display:
           plugin_id: text
           empty: true
           content:
-            value: '<em>No results found for the applied filters.</em>'
+            value: '<p><em>There are no news items listed.</em></p>'
             format: az_standard
           tokenize: false
       filters:
@@ -1433,6 +1446,7 @@ display:
           relationship: none
           view_mode: az_small_row
       defaults:
+        empty: true
         title: false
         pager: false
         style: false
@@ -1529,6 +1543,20 @@ display:
         options:
           offset: 0
           items_per_page: 1
+      empty:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text
+          empty: true
+          content:
+            value: '<p class="col"><em>There are no news items listed.</em></p>'
+            format: az_standard
+          tokenize: false
       style:
         type: default
         options:
@@ -1541,6 +1569,7 @@ display:
           relationship: none
           view_mode: az_marquee
       defaults:
+        empty: false
         title: false
         css_class: false
         pager: false
@@ -1577,6 +1606,7 @@ display:
         options:
           offset: 1
           items_per_page: 3
+      empty: {  }
       style:
         type: default
         options:
@@ -1589,6 +1619,7 @@ display:
           relationship: none
           view_mode: az_medium_media_list
       defaults:
+        empty: false
         title: false
         css_class: false
         pager: false

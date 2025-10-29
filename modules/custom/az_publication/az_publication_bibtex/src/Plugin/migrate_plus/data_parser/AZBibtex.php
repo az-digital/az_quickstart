@@ -4,15 +4,17 @@ namespace Drupal\az_publication_bibtex\Plugin\migrate_plus\data_parser;
 
 use Drupal\az_publication_bibtex\Processor\AZDateProcessor;
 use Drupal\az_publication_bibtex\Processor\AZLatexProcessor;
+use Drupal\az_publication_bibtex\Processor\AZStripHtmlProcessor;
 use Drupal\migrate\MigrateException;
 use Drupal\migrate_plus\DataParserPluginBase;
 use RenanBr\BibTexParser\Exception\ExceptionInterface;
 use RenanBr\BibTexParser\Listener;
 use RenanBr\BibTexParser\Parser;
 use RenanBr\BibTexParser\Processor\NamesProcessor;
+use RenanBr\BibTexParser\Processor\TagNameCaseProcessor;
 
 /**
- * Obtain BibTeX data for migration..
+ * Obtain BibTeX data for migration.
  *
  * @DataParser(
  *   id = "az_bibtex",
@@ -35,8 +37,13 @@ class AZBibtex extends DataParserPluginBase {
     try {
       $listener = new Listener();
       $listener->addProcessor(new NamesProcessor());
+      $listener->addProcessor(new TagNameCaseProcessor(CASE_LOWER));
       $listener->addProcessor(new AZDateProcessor());
       $listener->addProcessor(new AZLatexProcessor());
+      // Create processor to strip html, skip only metadata fields and abstract.
+      $html = new AZStripHtmlProcessor();
+      $html->setTagCoverage(['_original', '_type', 'abstract'], 'blacklist');
+      $listener->addProcessor($html);
       $parser = new Parser();
       $parser->addListener($listener);
       $parser->parseString($bibtex);

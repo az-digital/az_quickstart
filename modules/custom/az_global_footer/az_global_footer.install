@@ -66,10 +66,8 @@ function az_global_footer_update_1020701() {
      */
     $menu_link_content = MenuLinkContent::load($id);
     if ($menu_link_content !== NULL) {
-      // phpcs:disable
       /* @phpstan-ignore-next-line */
       $menu_link_content->link->uri = 'https://safety.arizona.edu';
-      // phpcs:enable
       $menu_link_content->save();
       $updated_count++;
     }
@@ -96,10 +94,8 @@ function az_global_footer_update_1020702() {
     /** @var \Drupal\menu_link_content\Entity\MenuLinkContent $menu_link_content */
     $menu_link_content = MenuLinkContent::load($id);
     if ($menu_link_content !== NULL) {
-      // phpcs:disable
       /* @phpstan-ignore-next-line */
       $menu_link_content->link->uri = 'https://phonebook.arizona.edu';
-      // phpcs:enable
       $menu_link_content->save();
       $updated_count++;
     }
@@ -126,12 +122,10 @@ function az_global_footer_update_1020703() {
     /** @var \Drupal\menu_link_content\Entity\MenuLinkContent $menu_link_content */
     $menu_link_content = MenuLinkContent::load($id);
     if ($menu_link_content !== NULL) {
-      // phpcs:disable
       /* @phpstan-ignore-next-line */
       $menu_link_content->title = 'Directory';
       /* @phpstan-ignore-next-line */
       $menu_link_content->link->uri = 'https://directory.arizona.edu';
-      // phpcs:enable
       $menu_link_content->save();
       $updated_count++;
     }
@@ -160,27 +154,25 @@ function az_global_footer_update_1020801() {
     $menu_link_content = MenuLinkContent::load($id);
 
     if ($menu_link_content !== NULL) {
-      // phpcs:disable
       /* @phpstan-ignore-next-line */
       $menu_link_content->title = 'X, formerly Twitter';
       /* @phpstan-ignore-next-line */
       $menu_link_content->link->uri = 'https://x.com/uarizona';
 
-      // Retrieve existing options
+      // Retrieve existing options.
       /* @phpstan-ignore-next-line */
       $options = $menu_link_content->link->first()->options;
 
-      // Set new classes
+      // Set new classes.
       $options['attributes']['class'] = [
         'az-icon-x-twitter',
-        'az-icon-spacing'
+        'az-icon-spacing',
       ];
 
-      // Update the options
+      // Update the options.
       /* @phpstan-ignore-next-line */
       $menu_link_content->link->first()->options = $options;
 
-      // phpcs:enable
       $menu_link_content->save();
       $updated_count++;
     }
@@ -207,13 +199,10 @@ function az_global_footer_update_1020901() {
     /** @var \Drupal\menu_link_content\Entity\MenuLinkContent $menu_link_content */
     $menu_link_content = MenuLinkContent::load($id);
     if ($menu_link_content !== NULL) {
-      // phpcs:disable
       /* @phpstan-ignore-next-line */
       $menu_link_content->title = 'Annual Security Report';
-      // phpcs:disable
       /* @phpstan-ignore-next-line */
       $menu_link_content->link->uri = 'https://clery.arizona.edu/annual-reports';
-      // phpcs:enable
       $menu_link_content->save();
       $updated_count++;
     }
@@ -327,4 +316,127 @@ function az_global_footer_update_1021101() {
     '%asr' => $asr_updates,
     '%outreach' => count($outreach_link_ids),
   ]);
+}
+
+/**
+ * Remove Diversity link from Global Footer (#4065)
+ */
+function az_global_footer_update_1021202() {
+
+  // Delete Diversity link and update weights of links.
+  $diversity_link_ids = [];
+  $diversity_link_weight = NULL;
+  $topics_menu_ids = \Drupal::entityQuery('menu_link_content')
+    ->accessCheck(FALSE)
+    ->condition('menu_name', 'az-footer-topics')
+    ->execute();
+  foreach ($topics_menu_ids as $id) {
+    /** @var \Drupal\menu_link_content\Entity\MenuLinkContent $menu_link_content */
+    $menu_link_content = MenuLinkContent::load($id);
+    if ($menu_link_content !== NULL) {
+      if ($menu_link_content->getTitle() === 'Diversity' && $menu_link_content->getUrlObject()->toString() === 'https://diversity.arizona.edu') {
+        $diversity_link_ids[] = $id;
+        $diversity_link_weight = $menu_link_content->getWeight();
+        $menu_link_content->delete();
+      }
+    }
+
+    // Update the weights of links to fill the gap left by
+    // the deleted Diversity link.
+    if ($diversity_link_weight !== NULL) {
+      $weight = $menu_link_content->getWeight();
+      if ($menu_link_content->getWeight() > $diversity_link_weight) {
+        $menu_link_content->set('weight', --$weight);
+        $menu_link_content->save();
+      }
+    }
+  }
+}
+
+/**
+ * Update 'Health & Medical' global footer link (az_quickstart #4038)
+ */
+function az_global_footer_update_1021203() {
+  $updated_count = 0;
+  $menu_link_content_ids = \Drupal::entityQuery('menu_link_content')
+    ->accessCheck(FALSE)
+    ->condition('menu_name', 'az-footer-topics')
+    ->condition('title', 'Health & Medical')
+    ->condition('link__uri', 'https://www.arizona.edu/health-sciences')
+    ->execute();
+
+  foreach ($menu_link_content_ids as $id) {
+    /** @var \Drupal\menu_link_content\Entity\MenuLinkContent $menu_link_content */
+    $menu_link_content = MenuLinkContent::load($id);
+    if ($menu_link_content !== NULL) {
+      /* @phpstan-ignore-next-line */
+      $menu_link_content->title = 'Health & Medical';
+      /* @phpstan-ignore-next-line */
+      $menu_link_content->link->uri = 'https://healthsciences.arizona.edu/';
+      $menu_link_content->save();
+      $updated_count++;
+    }
+  }
+
+  return t('Updated %count Health & Medical menu link(s) in the global footer.', ['%count' => $updated_count]);
+}
+
+/**
+ * Update the Title IX / Non-Discrimination link (az_quickstart #4148).
+ */
+function az_global_footer_update_1021204() {
+  $updated_count = 0;
+  $menu_link_content_ids = \Drupal::entityQuery('menu_link_content')
+    ->accessCheck(FALSE)
+    ->condition('menu_name', 'az-footer-main')
+    ->condition('title', 'Title IX / Non-Discrimination')
+    ->condition('link__uri', 'https://www.arizona.edu/title-ix')
+    ->execute();
+  foreach ($menu_link_content_ids as $id) {
+    /** @var \Drupal\menu_link_content\Entity\MenuLinkContent $menu_link_content */
+    $menu_link_content = MenuLinkContent::load($id);
+    if ($menu_link_content !== NULL) {
+      $menu_link_content->title = 'Nondiscrimination';
+      /* @phpstan-ignore-next-line */
+      $menu_link_content->link->uri = 'https://www.arizona.edu/nondiscrimination';
+      $menu_link_content->save();
+      $updated_count++;
+    }
+  }
+
+  return t('Updated %count Title IX / Non-Discrimination menu link(s) in the global footer.', ['%count' => $updated_count]);
+}
+
+/**
+ * Remove "Annual Security Report" link from Global Footer (#4267)
+ */
+function az_global_footer_update_1021205() {
+  $annual_security_report_link_weight = NULL;
+  $menu_link_content_ids = \Drupal::entityQuery('menu_link_content')
+    ->accessCheck(FALSE)
+    ->condition('menu_name', 'az-footer-main')
+    ->condition('title', 'Annual Security Report')
+    ->condition('link__uri', 'https://clery.arizona.edu/asr')
+    ->execute();
+
+  foreach ($menu_link_content_ids as $id) {
+    /** @var \Drupal\menu_link_content\Entity\MenuLinkContent $menu_link_content */
+    $menu_link_content = MenuLinkContent::load($id);
+    if ($menu_link_content !== NULL) {
+      if ($menu_link_content->getTitle() === 'Annual Security Report' && $menu_link_content->getUrlObject()->toString() === 'https://clery.arizona.edu/asr') {
+        $annual_security_report_link_ids[] = $id;
+        $annual_security_report_link_weight = $menu_link_content->getWeight();
+        $menu_link_content->delete();
+      }
+    }
+    // Update the weights of links to fill the gap left by
+    // the deleted 'Annual Security Report' link.
+    if ($annual_security_report_link_weight !== NULL) {
+      $weight = $menu_link_content->getWeight();
+      if ($menu_link_content->getWeight() > $annual_security_report_link_weight) {
+        $menu_link_content->set('weight', --$weight);
+        $menu_link_content->save();
+      }
+    }
+  }
 }
