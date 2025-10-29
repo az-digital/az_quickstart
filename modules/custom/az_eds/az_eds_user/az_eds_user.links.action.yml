@@ -1,0 +1,5 @@
+entity.az_user_role_query.add_form:
+  route_name: 'entity.az_user_role_query.add_form'
+  title: 'Add quickstart role query mapping'
+  appears_on:
+    - entity.az_user_role_query.collection

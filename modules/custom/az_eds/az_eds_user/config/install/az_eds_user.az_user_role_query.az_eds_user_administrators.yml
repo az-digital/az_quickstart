@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az_eds_user_administrators
+label: 'Quickstart Administrators'
+query: az_eds_user_cws
+role: administrator

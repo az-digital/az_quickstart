@@ -1,8 +1,8 @@
 langcode: en
 status: true
 dependencies: {  }
-id: az_eds_user
-label: 'Quickstart Account Provisioning'
+id: az_eds_user_cws
+label: 'Campus Web Services'
 server_id: az_eds
 base_dn: ''
 filter: '(isMemberOf=arizona.edu:dept:uits:uitswebservices:team)'
