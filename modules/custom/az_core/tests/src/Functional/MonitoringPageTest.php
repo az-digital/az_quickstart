@@ -54,7 +54,7 @@ class MonitoringPageTest extends QuickstartFunctionalTestBase {
       'monitoring_page_enabled' => TRUE,
       'monitoring_page_path' => 'monitoring-page',
     ];
-    $this->submitForm($edit, t('Save configuration'), 'az-core-settings');
+    $this->submitForm($edit, 'Save configuration', 'az-core-settings');
 
     // Clear caches.
     drupal_flush_all_caches();

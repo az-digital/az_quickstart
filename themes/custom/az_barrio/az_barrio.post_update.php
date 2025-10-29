@@ -96,14 +96,176 @@ function az_barrio_post_update_migrate_bootstrap_2x_to_5x(&$sandbox = NULL) {
 function az_barrio_post_update_set_sidebar_menu_mobile_setting(&$sandbox = NULL) {
   $config_factory = \Drupal::configFactory();
   $theme_settings = $config_factory->getEditable('az_barrio.settings');
-
   // Check for the existence of the new setting.
   $current_setting = $theme_settings->get('az_remove_sidebar_menu_mobile');
-
   // Only set the new setting if it does not exist (is NULL).
   if ($current_setting === NULL) {
     $theme_settings->set('az_remove_sidebar_menu_mobile', TRUE);
     $theme_settings->save();
     \Drupal::logger('az_quickstart')->notice('Created az_remove_sidebar_menu_mobile and set to TRUE during post update.');
+  }
+}
+
+/**
+ * Convert boolean values to integers for bootstrap_barrio settings.
+ */
+function az_barrio_post_update_convert_boolean_to_integer_settings(&$sandbox = NULL) {
+  $config_factory = \Drupal::configFactory();
+  $theme_settings = $config_factory->getEditable('az_barrio.settings');
+
+  // Parent theme expects these as integers (0/1) not booleans
+  // Only convert settings that are defined in the parent schema.
+  $boolean_to_integer_settings = [
+    'bootstrap_barrio_region_clean_header',
+    'bootstrap_barrio_region_clean_sidebar_first',
+    'bootstrap_barrio_region_clean_sidebar_second',
+    'bootstrap_barrio_region_clean_highlighted',
+    'bootstrap_barrio_region_clean_breadcrumb',
+    'bootstrap_barrio_region_clean_content',
+  ];
+
+  $converted_count = 0;
+  foreach ($boolean_to_integer_settings as $setting) {
+    $value = $theme_settings->get($setting);
+    if (is_bool($value)) {
+      $theme_settings->set($setting, $value ? 1 : 0);
+      $converted_count++;
+    }
+  }
+  if ($converted_count > 0) {
+    $theme_settings->save();
+    \Drupal::logger('az_quickstart')->notice('Converted @count boolean values to integers for bootstrap_barrio parent theme settings.', ['@count' => $converted_count]);
+  }
+}
+
+/**
+ * Updates theme settings for schema compliance.
+ */
+function az_barrio_post_update_theme_settings_schema(&$sandbox = NULL) {
+  $config_factory = \Drupal::configFactory();
+  $theme_settings = $config_factory->getEditable('az_barrio.settings');
+
+  // Convert boolean values to proper types.
+  $type_updates = [
+    // Convert boolean false to integer 0, boolean true to integer 1.
+    'bootstrap_barrio_enable_color' => FALSE,
+    'bootstrap_barrio_image_fluid' => FALSE,
+    'bootstrap_barrio_navbar_flyout' => FALSE,
+    'bootstrap_barrio_navbar_slide' => FALSE,
+    'bootstrap_barrio_button' => FALSE,
+    'bootstrap_barrio_button_outline' => FALSE,
+    'bootstrap_barrio_navbar_top_navbar' => FALSE,
+    'bootstrap_barrio_navbar_top_affix' => FALSE,
+    'bootstrap_barrio_navbar_affix' => FALSE,
+    'bootstrap_barrio_sidebar_first_affix' => FALSE,
+    'bootstrap_barrio_sidebar_second_affix' => FALSE,
+    'bootstrap_barrio_hide_node_label' => FALSE,
+    'bootstrap_barrio_table_hover' => FALSE,
+    'bootstrap_barrio_bootstrap_icons' => FALSE,
+    'footer_default_logo' => FALSE,
+  ];
+
+  foreach ($type_updates as $key) {
+    $current_value = $theme_settings->get($key);
+    if ($current_value !== NULL) {
+      // Convert boolean false to integer 0, boolean true to integer 1.
+      if (is_bool($current_value)) {
+        $theme_settings->set($key, $current_value ? 1 : 0);
+      }
+    }
+  }
+
+  $theme_settings->save();
+
+  return t('Updated theme settings for schema compliance.');
+}
+
+/**
+ * Convert footer_default_logo from integer to boolean.
+ */
+function az_barrio_post_update_convert_footer_default_logo_to_boolean(&$sandbox = NULL) {
+  $config_factory = \Drupal::configFactory();
+  $theme_settings = $config_factory->getEditable('az_barrio.settings');
+
+  $current_value = $theme_settings->get('footer_default_logo');
+  if ($current_value !== NULL) {
+    // Convert integer value to boolean (0 => FALSE, anything else => TRUE).
+    $boolean_value = (bool) $current_value;
+    $theme_settings->set('footer_default_logo', $boolean_value);
+    $theme_settings->save();
+  }
+
+  return t('Converted footer_default_logo from integer to boolean.');
+}
+
+/**
+ * Adds langcode to az_barrio.settings.yml if it was missing.
+ */
+function az_barrio_post_update_add_langcode_to_settings(&$sandbox = NULL) {
+  $config_factory = \Drupal::configFactory();
+  $theme_settings = $config_factory->getEditable('az_barrio.settings');
+
+  // Check if langcode is already set.
+  if ($theme_settings->get('langcode') === NULL) {
+    // Set default langcode to 'en'.
+    $theme_settings->set('langcode', 'en');
+    $theme_settings->save();
+  }
+
+  return t('Added langcode to az_barrio.settings.yml if it was missing.');
+}
+
+/**
+ * Empty update (superseded by delete_navbar_offcanvas_setting_fix).
+ */
+function az_barrio_post_update_delete_navbar_offcanvas_setting(&$sandbox = NULL) {
+}
+
+/**
+ * Deletes obsolete az_barrio_navbar_offcanvas key if it exists.
+ *
+ * (New version to ensure the key is deleted. See az_quickstart #4927.)
+ */
+function az_barrio_post_update_delete_navbar_offcanvas_setting_fix(&$sandbox = NULL) {
+  $config_factory = \Drupal::configFactory();
+  $theme_settings = $config_factory->getEditable('az_barrio.settings');
+
+  if ($theme_settings->get('az_barrio_navbar_offcanvas') !== NULL) {
+    $theme_settings
+      ->clear('az_barrio_navbar_offcanvas')
+      ->save();
+    \Drupal::logger('az_quickstart')->notice('Deleted obsolete az_barrio_navbar_offcanvas configuration key during post update.');
+  }
+}
+
+/**
+ * Deletes obsolete az_hide_front_title key if it exists.
+ */
+function az_barrio_post_update_delete_az_hide_front_title_setting(&$sandbox = NULL) {
+  $config_factory = \Drupal::configFactory();
+  $theme_settings = $config_factory->getEditable('az_barrio.settings');
+
+  // Delete the az hide front title key if it exists.
+  if ($theme_settings->get('az_hide_front_title') !== NULL) {
+    $theme_settings
+      ->clear('az_hide_front_title')
+      ->save();
+    \Drupal::logger('az_quickstart')->notice('Deleted obsolete az_hide_front_title configuration key during post update.');
+  }
+}
+
+/**
+ * Deletes deprecated az_bootstrap_cdn_version key if it exists.
+ */
+function az_barrio_post_update_delete_az_bootstrap_cdn_version_setting(&$sandbox = NULL) {
+  $config_factory = \Drupal::configFactory();
+  $theme_settings = $config_factory->getEditable('az_barrio.settings');
+
+  // Delete the az_bootstrap_cdn_version key if it exists.
+  if ($theme_settings->get('az_bootstrap_cdn_version') !== NULL) {
+    $theme_settings
+      ->clear('az_bootstrap_cdn_version')
+      ->save();
+    \Drupal::logger('az_quickstart')->notice('Deleted deprecated az_bootstrap_cdn_version configuration key during post update.');
   }
 }
