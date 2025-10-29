@@ -80,6 +80,9 @@ class AZRankingsParagraphBehavior extends AZDefaultParagraphsBehavior {
 
     parent::buildBehaviorForm($paragraph, $form, $form_state);
 
+    // Attach library for form interactions (auto-uncheck hover when clickable unchecked).
+    $form['#attached']['library'][] = 'az_paragraphs/az_paragraphs.az_rankings';
+
     // Ranking deck width for tablets.
     $form['az_display_settings']['ranking_width_sm'] = [
       '#title' => $this->t('Rankings per row on tablet'),

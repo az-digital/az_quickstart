@@ -63,7 +63,11 @@ az_paragraphs.az_rankings:
   css:
     theme:
       css/az_paragraphs_az_rankings.css: {}
+  js:
+    js/az_ranking_form_behavior.js: {}
   dependencies:
     - az_barrio/arizona-bootstrap-css
     - az_barrio/arizona-bootstrap-js
     - az_barrio/button-no-conflict
+    - core/drupal
+    - core/once

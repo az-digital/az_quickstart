@@ -188,7 +188,7 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
           $column_classes[] = $ranking_defaults['ranking_width'] ?? 'col-md-4 col-lg-3';
           $ranking_clickable = $ranking_defaults['ranking_clickable'] ?? FALSE;
           $ranking_hover_effect = $ranking_defaults['ranking_hover_effect'] ?? FALSE;
-          $ranking_classes .= ' ' . $ranking_defaults['ranking_alignment'] ?? 'text-left';
+          $ranking_classes .= ' ' . ($ranking_defaults['ranking_alignment'] ?? 'text-left');
           // Calculate column classes for image based on column_span.
           if ($item->options['ranking_type'] === 'image_only' &&
             !empty($item->options['column_span']) &&
@@ -252,7 +252,6 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
         }
       }
 
-//      $ranking_classes .= ' overflow-hidden';
       if (!str_contains($item->options['class'], 'bg-transparent')) {
         // Add mt-auto class to source on all styles, except bg-transparent.
         $ranking_source_classes = 'mt-auto';
@@ -285,13 +284,13 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
           $hover_class = $item->options['class'];
         }
         if (!empty($hover_class)) {
-          $ranking_classes .= $hover_class;
+          $ranking_classes .= ' ' . $hover_class;
         }
       }
       // If ranking has no hover effect...
       else {
         if (!empty($item->options['class'])) {
-          $ranking_classes .= $item->options['class'];
+          $ranking_classes .= ' ' . $item->options['class'];
         }
       }
 
