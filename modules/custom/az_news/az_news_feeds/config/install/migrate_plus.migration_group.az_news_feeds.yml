@@ -17,7 +17,7 @@ shared_configuration:
     plugin: url
     data_fetcher_plugin: http
     data_parser_plugin: json
-    urls: 'https://news.arizona.edu/feed/json/stories/id/all'
+    urls: 'https://news.arizona.edu/az_quickstart/export/az_news/v1/az_news.json'
     constants:
       DRUPAL_FILE_DIRECTORY: 'public://images/'
-    item_selector: stories/
+    item_selector: '0'
