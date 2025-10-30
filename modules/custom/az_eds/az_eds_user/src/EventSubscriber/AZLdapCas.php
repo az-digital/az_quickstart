@@ -12,9 +12,9 @@ use Drupal\user\UserInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * Repond to import of persons from the profiles API.
+ * Respond to successful CAS ticket validation.
  */
-class AzLdapCas implements EventSubscriberInterface {
+class AZLdapCas implements EventSubscriberInterface {
 
   /**
    * @var \Drupal\cas\Service\CasUserManager
@@ -51,7 +51,7 @@ class AzLdapCas implements EventSubscriberInterface {
   protected $ldapQuery;
 
   /**
-   * Constructs an AZPersonProfilesImportEventSubscriber.
+   * Constructs an AZLdapCas.
    *
    * @param \Drupal\cas\Service\CasUserManager $casUserManager
    *   The CAS user manager service.
