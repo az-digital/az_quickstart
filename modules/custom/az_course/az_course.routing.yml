@@ -4,4 +4,4 @@ az_course.course_import_form:
     _form: '\Drupal\az_course\Form\CourseImportForm'
     _title: 'Import University of Arizona Courses'
   requirements:
-    _permission: 'administer site configuration'
+    _permission: 'administer quickstart configuration'
