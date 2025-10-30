@@ -379,6 +379,7 @@ class AZRankingWidget extends WidgetBase {
     $element['details']['ranking_source'] = [
       '#type' => 'textarea',
       '#title' => $this->t('Ranking Source'),
+      '#description' => $this->t('Optionally, cite where the ranking came from. This will be displayed below the ranking.'),
       '#default_value' => $item->ranking_source ?? NULL,
       '#rows' => 3,
       '#states' => [
