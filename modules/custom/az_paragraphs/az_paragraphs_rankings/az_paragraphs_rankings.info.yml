@@ -6,6 +6,6 @@ dependencies:
   - az_paragraphs:az_paragraphs
   - drupal:field
   - paragraphs:paragraphs
-  - az_ranking
+  - az_ranking:az_ranking
 package: 'The University of Arizona - Experimental'
 lifecycle: experimental
