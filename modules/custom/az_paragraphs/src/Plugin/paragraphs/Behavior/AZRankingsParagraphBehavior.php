@@ -23,6 +23,14 @@ class AZRankingsParagraphBehavior extends AZDefaultParagraphsBehavior {
   public function buildBehaviorForm(ParagraphInterface $paragraph, array &$form, FormStateInterface $form_state) {
     $config = $this->getSettings($paragraph);
 
+    // Create deterministic unique IDs based on form structure.
+    // This allows the AZRankingWidget to generate the same IDs independently.
+    $form_parents = $form['#parents'] ?? [];
+    $id_suffix = implode('-', $form_parents);
+
+    $ranking_clickable_unique_id = 'ranking-clickable--' . $id_suffix;
+    $ranking_hover_effect_unique_id = 'ranking-hover-effect--' . $id_suffix;
+
     // Ranking deck width for desktop.
     $form['ranking_width'] = [
       '#title' => $this->t('Rankings per row on desktop'),
@@ -64,6 +72,7 @@ class AZRankingsParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#type' => 'checkbox',
       '#default_value' => $config['ranking_clickable'] ?? FALSE,
       '#description' => $this->t('Make the whole ranking clickable if the link fields are populated.'),
+      '#attributes' => ['data-az-ranking-clickable-input-id' => $ranking_clickable_unique_id],
     ];
 
     $form['ranking_hover_effect'] = [
@@ -71,16 +80,17 @@ class AZRankingsParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#type' => 'checkbox',
       '#default_value' => $config['ranking_hover_effect'] ?? FALSE,
       '#description' => $this->t('Adds a contrasting hover effect.'),
+      '#attributes' => ['data-az-ranking-hover-effect-input-id' => $ranking_hover_effect_unique_id],
       '#states' => [
         'visible' => [
-          ':input[name*="[ranking_clickable]"]' => ['checked' => TRUE],
+          ':input[data-az-ranking-clickable-input-id="' . $ranking_clickable_unique_id . '"]' => ['checked' => TRUE],
         ],
       ],
     ];
 
     parent::buildBehaviorForm($paragraph, $form, $form_state);
 
-    // Attach library for form interactions (auto-uncheck hover when clickable unchecked).
+    // JavaScript for auto-uncheck hover when clickable unchecked.
     $form['#attached']['library'][] = 'az_paragraphs/az_paragraphs.az_rankings';
 
     // Ranking deck width for tablets.

@@ -3,10 +3,7 @@ az_ranking:
     component:
       css/az-ranking-widget.css: {}
       css/az-ranking.css: {}
-  js:
-    js/az-ranking-widget-preview.js: {}
   dependencies:
-    - core/jquery
     - core/drupal
     - core/once
 az_ranking_image:
@@ -16,7 +13,6 @@ az_ranking_image:
   js:
     js/az-ranking-focal-point-calc.js: {}
   dependencies:
-    - core/jquery
     - core/drupal
     - core/once
 az_ranking_no_follow:
@@ -34,6 +30,5 @@ focal_point_picker:
     component:
       css/az-ranking-focal-point-picker.css: {}
   dependencies:
-    - core/jquery
     - core/drupal
     - core/once

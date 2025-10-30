@@ -130,7 +130,7 @@ class AZRankingWidget extends WidgetBase {
       $status = TRUE;
     }
 
-    // Determine current ranking style needed for both preview and open edit mode.
+    // Determine current ranking style for preview.
     $ranking_classes = 'ranking card';
     $parent = $item->getEntity();
 
@@ -170,7 +170,7 @@ class AZRankingWidget extends WidgetBase {
           $hover_class = $item->options_hover_effect;
         }
       }
-      // Fallback to the persisted background class if no hover-specific value present.
+      // Fallback to persisted background class if no hover-specific value.
       if (empty($hover_class) && !empty($item->options['class'])) {
         $hover_class = $item->options['class'];
       }
@@ -219,6 +219,22 @@ class AZRankingWidget extends WidgetBase {
     $ranking_type_unique_id = 'ranking-type-' . $parent_id . '-' . $field_parents_string . '-' . $delta;
     $ranking_background_unique_id = 'ranking-bg-' . $parent_id . '-' . $field_parents_string . '-' . $delta;
 
+    // Generate unique IDs that match the paragraph behavior.
+    $ranking_clickable_unique_id = '';
+    $ranking_hover_effect_unique_id = '';
+    if ($parent instanceof ParagraphInterface) {
+      // Build a deterministic ID based on the paragraph's position in the form.
+      // Filter out 'subform' to match what's in $form['#parents'].
+      $filtered_parents = array_filter($field_parents, function ($key) {
+        return $key !== 'subform';
+      });
+      $behavior_form_parents = array_merge($filtered_parents, ['behavior_plugins', 'az_rankings_paragraph_behavior']);
+      $id_suffix = implode('-', $behavior_form_parents);
+
+      $ranking_clickable_unique_id = 'ranking-clickable--' . $id_suffix;
+      $ranking_hover_effect_unique_id = 'ranking-hover-effect--' . $id_suffix;
+    }
+
     // Add all form fields inside the details element.
     $element['details']['ranking_type'] = [
       '#type' => 'select',
@@ -230,17 +246,6 @@ class AZRankingWidget extends WidgetBase {
       '#default_value' => (!empty($item->options['ranking_type'])) ? $item->options['ranking_type'] : 'standard',
       '#attributes' => ['data-az-ranking-type-input-id' => $ranking_type_unique_id],
     ];
-
-    // Get ranking_width from parent config for help text calculation.
-    // Default value.
-    $ranking_width = 'col-lg-3';
-    $parent = $item->getEntity();
-    if ($parent instanceof ParagraphInterface) {
-      $parent_config = $parent->getAllBehaviorSettings();
-      if (!empty($parent_config['az_rankings_paragraph_behavior']['ranking_width'])) {
-        $ranking_width = $parent_config['az_rankings_paragraph_behavior']['ranking_width'];
-      }
-    }
 
     $element['details']['media'] = [
       '#type' => 'az_media_library',
@@ -300,8 +305,7 @@ class AZRankingWidget extends WidgetBase {
       '#states' => [
         'visible' => [
           ':input[data-az-ranking-type-input-id="' . $ranking_type_unique_id . '"]' => ['value' => 'standard'],
-          'and',
-          ':input[name*="[behavior_plugins][az_rankings_paragraph_behavior][ranking_hover_effect]"]' => [
+          ':input[data-az-ranking-hover-effect-input-id="' . $ranking_hover_effect_unique_id . '"]' => [
             ['checked' => FALSE],
           ],
         ],
@@ -323,8 +327,7 @@ class AZRankingWidget extends WidgetBase {
       '#states' => [
         'visible' => [
           ':input[data-az-ranking-type-input-id="' . $ranking_type_unique_id . '"]' => ['value' => 'standard'],
-          'and',
-          ':input[name*="[behavior_plugins][az_rankings_paragraph_behavior][ranking_hover_effect]"]' => [
+          ':input[data-az-ranking-hover-effect-input-id="' . $ranking_hover_effect_unique_id . '"]' => [
             ['checked' => TRUE],
           ],
         ],
@@ -344,7 +347,6 @@ class AZRankingWidget extends WidgetBase {
       '#states' => [
         'visible' => [
           ':input[data-az-ranking-type-input-id="' . $ranking_type_unique_id . '"]' => ['value' => 'standard'],
-          'and',
           ':input[data-az-ranking-bg-input-id="' . $ranking_background_unique_id . '"]' => ['value' => 'bg-transparent'],
         ],
       ],
@@ -395,8 +397,7 @@ class AZRankingWidget extends WidgetBase {
         'visible' => [
           // If ranking is clickable, hide the title.
           ':input[data-az-ranking-type-input-id="' . $ranking_type_unique_id . '"]' => ['value' => 'standard'],
-          'and',
-          ':input[name*="[behavior_plugins][az_rankings_paragraph_behavior][ranking_hover_effect]"]' => ['checked' => FALSE],
+          ':input[data-az-ranking-hover-effect-input-id="' . $ranking_hover_effect_unique_id . '"]' => ['checked' => FALSE],
         ],
       ],
     ];
@@ -408,7 +409,7 @@ class AZRankingWidget extends WidgetBase {
         'linkit_profile_id' => 'az_linkit',
       ],
       '#title' => $this->t('Ranking Link URL'),
-      '#element_validate' => [[$this, 'validateRankingLink']],
+      '#element_validate' => [[$this, 'validateRankingLink'], [$this, 'validateRankingLinkRequired']],
       '#default_value' => $item->link_uri ?? NULL,
       '#maxlength' => 2048,
       // Don't use server-side required - let #states handle it dynamically.
@@ -421,7 +422,7 @@ class AZRankingWidget extends WidgetBase {
         // AND the ranking is clickable.
         'required' => [
           ':input[data-az-ranking-type-input-id="' . $ranking_type_unique_id . '"]' => ['value' => 'standard'],
-          ':input[name*="[behavior_plugins][az_rankings_paragraph_behavior][ranking_clickable]"]' => [
+          ':input[data-az-ranking-clickable-input-id="' . $ranking_clickable_unique_id . '"]' => [
             ['checked' => TRUE],
           ],
         ],
@@ -444,8 +445,7 @@ class AZRankingWidget extends WidgetBase {
       '#states' => [
         'visible' => [
           ':input[data-az-ranking-type-input-id="' . $ranking_type_unique_id . '"]' => ['value' => 'standard'],
-          'and',
-          ':input[name*="[behavior_plugins][az_rankings_paragraph_behavior][ranking_hover_effect]"]' => ['checked' => FALSE],
+          ':input[data-az-ranking-hover-effect-input-id="' . $ranking_hover_effect_unique_id . '"]' => ['checked' => FALSE],
         ],
       ],
     ];
@@ -634,6 +634,47 @@ class AZRankingWidget extends WidgetBase {
   }
 
   /**
+   * Validate link_uri is filled when clickable is enabled.
+   */
+  public function validateRankingLinkRequired(&$element, FormStateInterface $form_state, &$complete_form) {
+    // Get the ranking item's form values.
+    $parents = $element['#array_parents'];
+
+    // Remove 'link_uri' from the end to get the ranking item's parents.
+    array_pop($parents);
+
+    // Filter out 'widget' keys to build correct values path.
+    $values_path = [];
+    foreach ($parents as $key) {
+      if ($key !== 'widget') {
+        $values_path[] = $key;
+      }
+    }
+
+    // Get the ranking item's values to check ranking_type.
+    $ranking_values = NestedArray::getValue($form_state->getValues(), $values_path);
+
+    // Check if this is a standard ranking (not image_only).
+    $ranking_type = $ranking_values['ranking_type'] ?? 'standard';
+    if ($ranking_type !== 'standard') {
+      return;
+    }
+
+    // Get the paragraph's form values to check clickable setting.
+    // Navigate to paragraph level: [field_az_main_content, 0].
+    $paragraph_parents = array_slice($values_path, 0, 2);
+    $paragraph_values = NestedArray::getValue($form_state->getValues(), $paragraph_parents);
+
+    // Check if ranking_clickable is enabled in the paragraph behavior.
+    $clickable = $paragraph_values['behavior_plugins']['az_rankings_paragraph_behavior']['ranking_clickable'] ?? FALSE;
+
+    // If clickable is enabled and link_uri is empty, set an error.
+    if ($clickable && empty($element['#value'])) {
+      $form_state->setError($element, $this->t('Ranking Link URL field is required when Clickable rankings is enabled.'));
+    }
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function errorElement(array $element, ConstraintViolationInterface $violation, array $form, FormStateInterface $form_state) {
@@ -743,27 +784,28 @@ class AZRankingWidget extends WidgetBase {
     // Get ranking settings from parent paragraph.
     $ranking_hover_effect = FALSE;
     $ranking_clickable = FALSE;
-    $ranking_title_style = NULL;
+    $ranking_header_style = NULL;
+    $ranking_alignment = NULL;
     if ($parent instanceof ParagraphInterface) {
       $parent_config = $parent->getAllBehaviorSettings();
       if (!empty($parent_config['az_rankings_paragraph_behavior'])) {
         $ranking_defaults = $parent_config['az_rankings_paragraph_behavior'];
         $ranking_hover_effect = $ranking_defaults['ranking_hover_effect'] ?? FALSE;
         $ranking_clickable = $ranking_defaults['ranking_clickable'] ?? FALSE;
-        $ranking_title_style = $ranking_defaults['ranking_title_style'] ?? NULL;
+        $ranking_header_style = $ranking_defaults['ranking_header_style'] ?? NULL;
+        $ranking_alignment = $ranking_defaults['ranking_alignment'] ?? 'text-left';
       }
     }
+    // Apply paragraph settings found in AZRankingDefaultFormatter.
+    $ranking_classes .= ' ' . $ranking_alignment;
 
     // Apply clickable ranking styles (like formatter does).
     $link_title = $item->link_title ?? '';
-    $ranking_link_style = $item->ranking_link_style ?? 'w-100 btn btn-red';
+    $ranking_link_style = $item->ranking_link_style ?? 'w-100 btn btn-red mt-2';
 
     if ($ranking_clickable) {
-      // Add shadow when ranking is clickable, unset link title and styles.
+      // Add shadow when ranking is clickable.
       $ranking_classes .= ' shadow';
-      $link_title = '';
-      $ranking_link_style = '';
-      // Add hover effect to ranking card.
       if (!empty($ranking_hover_effect)) {
         $ranking_classes .= ' ranking-bold-hover ';
       }
@@ -771,7 +813,7 @@ class AZRankingWidget extends WidgetBase {
     else {
       // Ranking is not clickable.
       $link_title = $item->link_title ?? '';
-      $ranking_link_style = $item->ranking_link_style ?? 'w-100 btn btn-red';
+      $ranking_link_style = $item->ranking_link_style ?? 'w-100 btn btn-red mt-2';
       $ranking_hover_effect = FALSE;
     }
 
@@ -807,7 +849,7 @@ class AZRankingWidget extends WidgetBase {
       $ranking_source_classes = 'mt-auto';
     }
     else {
-      // For transparent backgrounds, apply font color to ranking_classes and ranking_font_color.
+      // transparent: apply font color to ranking _font_color and _classes.
       $ranking_font_color = ' ' . $item->ranking_font_color;
       $ranking_classes .= ' ' . $item->ranking_font_color;
     }
@@ -869,7 +911,7 @@ class AZRankingWidget extends WidgetBase {
     // Build link render array and URL.
     $link_render_array = NULL;
     $link_url = NULL;
-    if ($item->link_title || $item->link_uri) {
+    if ($item->link_uri) {
       if (!empty($item->link_uri) && str_starts_with($item->link_uri, '/' . PublicStream::basePath())) {
         $link_url = Url::fromUri(urldecode('base:' . $item->link_uri));
       }
@@ -887,7 +929,7 @@ class AZRankingWidget extends WidgetBase {
 
         $link_render_array = [
           '#type' => 'link',
-          '#title' => $link_title,
+          '#title' => $link_title ?: ($item->ranking_source ?? ''),
           '#url' => $link_url,
           '#attributes' => ['class' => $link_classes],
         ];
@@ -900,7 +942,8 @@ class AZRankingWidget extends WidgetBase {
       '#ranking_heading' => $item->ranking_heading ?? '',
       '#ranking_description' => $item->ranking_description ?? '',
       '#ranking_source' => $item->ranking_source ?? '',
-      '#ranking_title_style' => $ranking_title_style,
+      '#ranking_header_style' => $ranking_header_style,
+      '#ranking_alignment' => $ranking_alignment,
       '#ranking_hover_effect' => $ranking_hover_effect,
       '#ranking_clickable' => $ranking_clickable,
       '#ranking_font_color' => $ranking_font_color,
@@ -918,7 +961,7 @@ class AZRankingWidget extends WidgetBase {
   }
 
   /**
-   * #after_build callback to add az_ranking_context query parameter to media edit links.
+   * Add az_ranking_context query parameter to media edit links.
    */
   public function addAzRankingContextToMediaEdit(array $element, FormStateInterface $form_state) {
     // Recursively search for media_edit links and add the query parameter.

@@ -10,39 +10,39 @@
  * object-fit: cover crops the image.
  */
 
-(function ($, Drupal, once) {
+(function (Drupal, once) {
   'use strict';
 
   Drupal.behaviors.azRankingFocalPoint = {
     attach: function (context, settings) {
-      const $images = $(once('az-ranking-focal-point', '.ranking-img', context));
+      const images = once('az-ranking-focal-point', '.ranking-img', context);
 
-      if ($images.length === 0) {
+      if (images.length === 0) {
         return;
       }
 
       /**
        * Calculate object-position for an image based on focal point and dimensions.
        */
-      function calculateObjectPosition($img) {
+      function calculateObjectPosition(img) {
         // Focal point values are stored as decimals (0-1)
-        const focalX = parseFloat($img.attr('data-focal-x'));
-        const focalY = parseFloat($img.attr('data-focal-y'));
+        const focalX = parseFloat(img.getAttribute('data-focal-x'));
+        const focalY = parseFloat(img.getAttribute('data-focal-y'));
 
         // Skip if no focal point data
         if (isNaN(focalX) || isNaN(focalY)) {
-          console.warn('⚠️ No focal point data for image:', $img.attr('src'));
+          console.warn('⚠️ No focal point data for image:', img.getAttribute('src'));
           return;
         }
 
         // Get container dimensions (the visible area)
-        const containerW = $img.width();
-        const containerH = $img.height();
+        const containerW = img.offsetWidth;
+        const containerH = img.offsetHeight;
 
         // Get ORIGINAL image dimensions (before any image style scaling).
         // Focal points are stored relative to original dimensions.
-        const originalW = parseFloat($img.attr('data-original-width')) || $img[0].naturalWidth;
-        const originalH = parseFloat($img.attr('data-original-height')) || $img[0].naturalHeight;
+        const originalW = parseFloat(img.getAttribute('data-original-width')) || img.naturalWidth;
+        const originalH = parseFloat(img.getAttribute('data-original-height')) || img.naturalHeight;
 
         // Skip if dimensions not available yet
         if (!originalW || !originalH || !containerW || !containerH) {
@@ -88,23 +88,21 @@
         objectPosY = Math.max(0, Math.min(100, objectPosY * 100));
 
         // Apply to image
-        $img.css('object-position', objectPosX + '% ' + objectPosY + '%');
+        img.style.objectPosition = objectPosX + '% ' + objectPosY + '%';
       }
 
       /**
        * Process all images.
        */
       function processImages() {
-        $images.each(function() {
-          const $img = $(this);
-
+        images.forEach(function(img) {
           // If image is already loaded, calculate immediately
-          if ($img[0].complete && $img[0].naturalWidth > 0) {
-            calculateObjectPosition($img);
+          if (img.complete && img.naturalWidth > 0) {
+            calculateObjectPosition(img);
           } else {
             // Wait for image to load
-            $img.on('load', function() {
-              calculateObjectPosition($img);
+            img.addEventListener('load', function() {
+              calculateObjectPosition(img);
             });
           }
         });
@@ -115,15 +113,15 @@
 
       // Recalculate on window resize (debounced)
       let resizeTimer;
-      $(window).on('resize', function() {
+      window.addEventListener('resize', function() {
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(function() {
-          $images.each(function() {
-            calculateObjectPosition($(this));
+          images.forEach(function(img) {
+            calculateObjectPosition(img);
           });
         }, 250);
       });
     }
   };
 
-})(jQuery, Drupal, once);
+})(Drupal, once);

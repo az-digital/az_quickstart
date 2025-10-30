@@ -236,7 +236,7 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
               $ranking_classes .= ' ranking-bold-hover hover ';
             }
             else {
-              // Add unique classes if no hover effect but ranking is still clickable.
+              // No hover effect but ranking is still clickable.
               if (!empty($item->link_uri)) {
                 $ranking_classes .= ' ranking-with-link hover ';
               }
@@ -279,7 +279,7 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
             $hover_class = $item->options_hover_effect;
           }
         }
-        // Fallback to the persisted background class if no hover-specific value present.
+        // Fallback to persisted background class if no hover-specific value.
         if (empty($hover_class) && !empty($item->options['class'])) {
           $hover_class = $item->options['class'];
         }

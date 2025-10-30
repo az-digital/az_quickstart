@@ -63,7 +63,7 @@ function az_ranking_form_alter(&$form, FormStateInterface $form_state, $form_id)
   // Add focal point picker to az_image media edit form.
   if ($form_id === 'media_az_image_edit_form' || $form_id === 'media_az_image_add_form') {
 
-    // Always hide the focal point coordinate fields visually but keep them in the form
+    // Hide focal point coordinate fields visually but keep them in the form
     // so JavaScript can update them when the picker is used.
     if (isset($form['field_focal_point_x'])) {
       $form['field_focal_point_x']['#attributes']['class'][] = 'visually-hidden';

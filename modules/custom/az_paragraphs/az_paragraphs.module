@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Implements hook_help().
@@ -50,6 +51,99 @@ function az_paragraphs_theme_registry_alter(&$theme_registry) {
       $theme_registry[$key]['theme path'] = $module_path;
       $theme_registry[$key] = array_merge($theme_registry[$key], $template_file_object);
       $theme_registry[$key]['type'] = 'module';
+    }
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function az_paragraphs_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // Only target node edit/add forms.
+  if (!preg_match('/^node_.*_form$/', $form_id)) {
+    return;
+  }
+
+  // Expand validation scope for "Add Text", "Add Rankings", etc. buttons.
+  _az_paragraphs_modify_paragraph_fields($form);
+}
+
+/**
+ * Recursively find and modify paragraph fields.
+ */
+function _az_paragraphs_modify_paragraph_fields(&$element, $depth = 0) {
+  if (!is_array($element)) {
+    return;
+  }
+
+  // Check if this is a paragraph field (has numeric keys and #field_name).
+  if (isset($element['#field_name'])) {
+    // Check if this field has paragraph widgets (numeric keys).
+    $has_az_rankings = FALSE;
+    $paragraph_deltas = [];
+
+    foreach ($element as $key => $widget) {
+      if (is_numeric($key) && is_array($widget) && isset($widget['#paragraph_type'])) {
+        $paragraph_deltas[] = $key;
+        if ($widget['#paragraph_type'] === 'az_rankings') {
+          $has_az_rankings = TRUE;
+        }
+      }
+    }
+
+    // If we have az_rankings, modify add_more buttons.
+    if ($has_az_rankings && isset($element['add_more']) && isset($element['#field_parents'])) {
+      $field_name = $element['#field_name'];
+      $parents = $element['#field_parents'];
+
+      _az_paragraphs_expand_add_more_validation($element['add_more'], $parents, $field_name, $paragraph_deltas);
+    }
+  }
+
+  // Recurse into all child elements.
+  foreach ($element as $key => &$child) {
+    if (is_string($key) && strpos($key, '#') !== 0 && is_array($child)) {
+      _az_paragraphs_modify_paragraph_fields($child, $depth + 1);
+    }
+  }
+}
+
+/**
+ * Recursively expand validation for add_more buttons.
+ */
+function _az_paragraphs_expand_add_more_validation(&$element, $parents, $field_name, $paragraph_deltas) {
+  foreach ($element as $key => &$child) {
+    // Skip special keys.
+    if (is_string($key) && strpos($key, '#') === 0) {
+      continue;
+    }
+
+    // Check if this is an add_more submit button.
+    if (is_array($child) && isset($child['#type']) && $child['#type'] === 'submit') {
+      if (isset($child['#submit']) && is_array($child['#submit'])) {
+        foreach ($child['#submit'] as $submit_handler) {
+          if (is_array($submit_handler) &&
+              count($submit_handler) === 2 &&
+              $submit_handler[1] === 'addMoreSubmit') {
+
+            // Expand #limit_validation_errors to include all paragraph deltas.
+            $validation_paths = [];
+            foreach ($paragraph_deltas as $delta) {
+              $validation_paths[] = array_merge($parents, [$field_name, $delta]);
+            }
+            // Also include the add_more element itself.
+            $validation_paths[] = array_merge($parents, [$field_name, 'add_more']);
+
+            $child['#limit_validation_errors'] = $validation_paths;
+            break;
+          }
+        }
+      }
+    }
+
+    // Recurse into children.
+    if (is_array($child)) {
+      _az_paragraphs_expand_add_more_validation($child, $parents, $field_name, $paragraph_deltas);
     }
   }
 }

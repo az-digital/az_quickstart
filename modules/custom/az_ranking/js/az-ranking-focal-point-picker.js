@@ -5,76 +5,70 @@
  * Adds a clickable overlay to the focal point picker section in the media edit form.
  */
 
-(function ($, Drupal, once) {
+(function (Drupal, once) {
   'use strict';
 
   Drupal.behaviors.azRankingFocalPointPicker = {
     attach: function (context, settings) {      
       // Find the focal point picker wrapper in the media form
-      const $pickerWrappers = $('.focal-point-picker-wrapper', context);
+      const pickerWrappers = once('focal-point-picker', '.focal-point-picker-wrapper', context);
       
-      $pickerWrappers.each(function(index) {
-        const $wrapper = $(this);
-        
-        // Check if already processed
-        if ($wrapper.data('focal-point-processed')) {
-          return;
-        }
-        $wrapper.data('focal-point-processed', true);
-        
+      pickerWrappers.forEach(function(wrapper) {
         // Find the image
-        const $image = $wrapper.find('.focal-point-picker-image');
+        const image = wrapper.querySelector('.focal-point-picker-image');
         
-        if ($image.length === 0) {
+        if (!image) {
           console.warn('No image found in focal point picker wrapper');
           return;
         }
         
         // Get current focal point values from data attributes
-        let focalX = parseFloat($wrapper.attr('data-focal-x')) || 0.5;
-        let focalY = parseFloat($wrapper.attr('data-focal-y')) || 0.5;
+        let focalX = parseFloat(wrapper.getAttribute('data-focal-x')) || 0.5;
+        let focalY = parseFloat(wrapper.getAttribute('data-focal-y')) || 0.5;
         
         console.log('=== Focal Point Picker Initialized ===');
-        console.log('Wrapper data-focal-x:', $wrapper.attr('data-focal-x'));
-        console.log('Wrapper data-focal-y:', $wrapper.attr('data-focal-y'));
+        console.log('Wrapper data-focal-x:', wrapper.getAttribute('data-focal-x'));
+        console.log('Wrapper data-focal-y:', wrapper.getAttribute('data-focal-y'));
         console.log('Parsed focalX:', focalX);
         console.log('Parsed focalY:', focalY);
         
         // Wrap the image in a positioned container to constrain the overlay
-        const $imageContainer = $('<div class="focal-point-image-container"></div>');
-        $imageContainer.css({
-          'position': 'relative',
-          'display': 'inline-block',
-          'max-width': '100%'
-        });
+        const imageContainer = document.createElement('div');
+        imageContainer.className = 'focal-point-image-container';
+        imageContainer.style.position = 'relative';
+        imageContainer.style.display = 'inline-block';
+        imageContainer.style.maxWidth = '100%';
         
         // Wrap the image
-        $image.wrap($imageContainer);
-        const $container = $image.parent();
+        image.parentNode.insertBefore(imageContainer, image);
+        imageContainer.appendChild(image);
         
         // Create overlay and indicator
-        const $overlay = $('<div class="focal-point-overlay"></div>');
-        const $indicator = $('<div class="focal-point-indicator" title="Click to set focal point"></div>');
+        const overlay = document.createElement('div');
+        overlay.className = 'focal-point-overlay';
+        const indicator = document.createElement('div');
+        indicator.className = 'focal-point-indicator';
+        indicator.title = 'Click to set focal point';
         
-        $overlay.append($indicator);
-        $container.append($overlay);
+        overlay.appendChild(indicator);
+        imageContainer.appendChild(overlay);
         
         // Get hidden field inputs for storing focal point values
         // Use class selectors for more reliable targeting
-        const $focalXInput = $('.js-focal-point-x-value', context);
-        const $focalYInput = $('.js-focal-point-y-value', context);
+        const focalXInput = context.querySelector('.js-focal-point-x-value');
+        const focalYInput = context.querySelector('.js-focal-point-y-value');
         
-        console.log('Hidden field inputs found:', $focalXInput.length, $focalYInput.length);
-        console.log('Hidden field X value:', $focalXInput.val());
-        console.log('Hidden field Y value:', $focalYInput.val());
+        console.log('Hidden field inputs found:', focalXInput ? 1 : 0, focalYInput ? 1 : 0);
+        console.log('Hidden field X value:', focalXInput?.value);
+        console.log('Hidden field Y value:', focalYInput?.value);
         
-        if ($focalXInput.length === 0 || $focalYInput.length === 0) {
+        if (!focalXInput || !focalYInput) {
           console.warn('Could not find focal point input fields! Focal point changes will not be saved.');
         }
         
         function updateIndicatorPosition() {
-          const width = $image.width();
-          const height = $image.height();
+          const width = image.offsetWidth;
+          const height = image.offsetHeight;
           
           // If dimensions are 0 or suspiciously small, the image isn't ready yet
           // Skip the update and it will be retried by other strategies
@@ -91,10 +85,8 @@
           console.log('Using focalX:', focalX, 'focalY:', focalY);
           console.log('Calculated position - left:', indicatorLeft, 'top:', indicatorTop);
           
-          $indicator.css({
-            left: indicatorLeft + 'px',
-            top: indicatorTop + 'px'
-          });
+          indicator.style.left = indicatorLeft + 'px';
+          indicator.style.top = indicatorTop + 'px';
         }
         
         // Set initial position
@@ -102,7 +94,7 @@
         // only when the image is fully rendered
         
         // Strategy 1: Wait for image load (for first-time loads)
-        $image.on('load', function() {
+        image.addEventListener('load', function() {
           console.log('Image load event fired');
           updateIndicatorPosition();
         });
@@ -115,7 +107,7 @@
         
         // Strategy 3: If image is cached (complete=true), use longer delays
         // because the image reports as complete but dimensions aren't ready yet
-        if ($image[0].complete) {
+        if (image.complete) {
           console.log('Image is cached - using multiple delayed updates');
           
           setTimeout(function() {
@@ -136,7 +128,7 @@
         }
         
         // Strategy 4: Listen for dialog/modal open events
-        $(document).on('dialogopen', function() {
+        document.addEventListener('dialogopen', function() {
           setTimeout(function() {
             console.log('Dialog opened, updating position');
             updateIndicatorPosition();
@@ -144,37 +136,41 @@
         });
         
         // Handle clicks on overlay
-        $overlay.on('click', function(e) {
-          const offset = $image.offset();
-          const width = $image.width();
-          const height = $image.height();
+        overlay.addEventListener('click', function(e) {
+          const rect = image.getBoundingClientRect();
+          const width = image.offsetWidth;
+          const height = image.offsetHeight;
           
           // Calculate relative position
-          focalX = (e.pageX - offset.left) / width;
-          focalY = (e.pageY - offset.top) / height;
+          focalX = (e.clientX - rect.left) / width;
+          focalY = (e.clientY - rect.top) / height;
           
           // Clamp values
           focalX = Math.max(0, Math.min(1, focalX));
           focalY = Math.max(0, Math.min(1, focalY));
           
           // Update hidden fields
-          $focalXInput.val(focalX.toFixed(2)).trigger('change');
-          $focalYInput.val(focalY.toFixed(2)).trigger('change');
+          if (focalXInput && focalYInput) {
+            focalXInput.value = focalX.toFixed(2);
+            focalXInput.dispatchEvent(new Event('change', { bubbles: true }));
+            focalYInput.value = focalY.toFixed(2);
+            focalYInput.dispatchEvent(new Event('change', { bubbles: true }));
+          }
           
           // Update indicator position
           updateIndicatorPosition();
           
           // Show feedback
-          $indicator.addClass('focal-point-indicator--active');
+          indicator.classList.add('focal-point-indicator--active');
           setTimeout(function() {
-            $indicator.removeClass('focal-point-indicator--active');
+            indicator.classList.remove('focal-point-indicator--active');
           }, 300);
         });
         
         // Update on resize
-        $(window).on('resize', updateIndicatorPosition);
+        window.addEventListener('resize', updateIndicatorPosition);
       });
     }
   };
 
-})(jQuery, Drupal, once);
+})(Drupal, once);
