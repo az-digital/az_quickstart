@@ -53,21 +53,6 @@ function az_core_requirements($phase): array {
         'severity' => REQUIREMENT_WARNING,
       ];
     }
-
-    // Add warning about deprecated az_barrio/arizona-bootstrap library.
-    $extension = 'az_barrio';
-    $library_name = 'arizona-bootstrap';
-    $library_info = \Drupal::service('library.discovery')->getLibraryByName($extension, $library_name);
-    if ($library_info['deprecated']) {
-      $message = $library_info['deprecated'];
-      $message = strtr($message, ['%library_id%' => $library_name]);
-      $requirements['az_barrio.deprecated_library'] = [
-        'title' => t('Deprecated libraries'),
-        'value' => t('Deprecated: @extension/@library', ['@extension' => $extension, '@library' => $library_name]),
-        'description' => $message,
-        'severity' => REQUIREMENT_WARNING,
-      ];
-    }
   }
 
   return $requirements;
