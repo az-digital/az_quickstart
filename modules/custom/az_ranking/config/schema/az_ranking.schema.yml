@@ -34,11 +34,3 @@ field.value.az_ranking:
         link_style:
           type: string
           label: Link Style
-# Field formatter.
-field.formatter.settings.az_ranking_default:
-  type: mapping
-  label: Example formatter settings
-  mapping:
-    foo:
-      type: string
-      label: Foo
