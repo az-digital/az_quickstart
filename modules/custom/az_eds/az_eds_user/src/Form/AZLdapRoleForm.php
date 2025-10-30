@@ -116,8 +116,8 @@ final class AZLdapRoleForm extends EntityForm {
     $message_args = ['%label' => $this->entity->label()];
     $this->messenger()->addStatus(
       match($result) {
-        \SAVED_NEW => $this->t('Created new role query mapping %label.', $message_args),
-        \SAVED_UPDATED => $this->t('Updated role query mapping %label.', $message_args),
+        \SAVED_NEW => $this->t('Created new LDAP role mapping %label.', $message_args),
+        \SAVED_UPDATED => $this->t('Updated LDAP role mapping %label.', $message_args),
       }
     );
     $form_state->setRedirectUrl($this->entity->toUrl('collection'));
