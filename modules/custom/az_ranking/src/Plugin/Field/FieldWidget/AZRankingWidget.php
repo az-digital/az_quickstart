@@ -812,11 +812,16 @@ class AZRankingWidget extends WidgetBase {
     }
     else {
       // Ranking is not clickable.
-      $link_title = $item->link_title ?? '';
-      $ranking_link_style = $item->ranking_link_style ?? 'w-100 btn btn-red mt-2';
       $ranking_hover_effect = FALSE;
     }
 
+    // Link color override
+    if(str_contains($ranking_link_style, 'link')) {
+      if(str_contains($item->options['class'], 'bg-oasis') || 
+        str_contains($item->options['class'], 'bg-sky')) {
+        $ranking_link_style .= ' text-midnight';
+      }
+    }
     // Determine font color and text color override.
     $ranking_font_color = $item->ranking_font_color ?? 'ranking-text-midnight';
     $text_color_override = '';

@@ -126,6 +126,18 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
         }
       }
 
+
+      // Define Ranking Variabbles.
+      $ranking_classes = 'ranking card';
+      $ranking_clickable = FALSE;
+      $ranking_hover_effect = FALSE;
+      $ranking_source_classes = '';
+      $ranking_font_color = '';
+      $ranking_defaults = [];
+      $column_classes = [];
+      $column_classes[] = 'col-md-4 col-lg-4';
+      $parent = $item->getEntity();
+
       // Link and link style.
       $link_render_array = [];
       $link_url = '';
@@ -152,6 +164,13 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
           '#attributes' => ['class' => ['']],
         ];
         $ranking_link_style = $item->ranking_link_style;
+        // Link color override
+        if(str_contains($ranking_link_style, 'link')) {
+          if(str_contains($item->options['class'], 'bg-oasis') || 
+            str_contains($item->options['class'], 'bg-sky')) {
+            $ranking_link_style .= ' text-midnight';
+          }
+        }
         $link_render_array['#attributes']['class'] = explode(' ', $ranking_link_style);
         if (empty($settings['interactive_links'])) {
           $link_render_array['#attributes']['class'][] = 'az-ranking-no-follow';
@@ -160,16 +179,7 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
         // $attached['library'][] = 'az_ranking/az_ranking_title_hover';
       }
 
-      // Define Ranking Variabbles.
-      $ranking_classes = 'ranking card';
-      $ranking_clickable = FALSE;
-      $ranking_hover_effect = FALSE;
-      $ranking_source_classes = '';
-      $ranking_font_color = '';
-      $ranking_defaults = [];
-      $column_classes = [];
-      $column_classes[] = 'col-md-4 col-lg-4';
-      $parent = $item->getEntity();
+
 
       // Get settings from parent paragraph.
       if ($parent instanceof ParagraphInterface) {
@@ -251,7 +261,6 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
           }
         }
       }
-
       if (!str_contains($item->options['class'], 'bg-transparent')) {
         // Add mt-auto class to source on all styles, except bg-transparent.
         $ranking_source_classes = 'mt-auto';
