@@ -6,7 +6,7 @@ package: 'The University of Arizona - Experimental'
 lifecycle: experimental
 dependencies:
   - az_core:az_core
-  - az_media
+  - az_media:az_media
   - drupal:filter
   - drupal:image
   - drupal:media
