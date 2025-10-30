@@ -219,6 +219,22 @@ class AZRankingWidget extends WidgetBase {
     $ranking_type_unique_id = 'ranking-type-' . $parent_id . '-' . $field_parents_string . '-' . $delta;
     $ranking_background_unique_id = 'ranking-bg-' . $parent_id . '-' . $field_parents_string . '-' . $delta;
 
+    // Generate unique IDs that match the paragraph behavior.
+    $ranking_clickable_unique_id = '';
+    $ranking_hover_effect_unique_id = '';
+    if ($parent instanceof ParagraphInterface) {
+      // Build a deterministic ID based on the paragraph's position in the form.
+      // Filter out 'subform' to match what the behavior form will have in $form['#parents'].
+      $filtered_parents = array_filter($field_parents, function($key) {
+        return $key !== 'subform';
+      });
+      $behavior_form_parents = array_merge($filtered_parents, ['behavior_plugins', 'az_rankings_paragraph_behavior']);
+      $id_suffix = implode('-', $behavior_form_parents);
+
+      $ranking_clickable_unique_id = 'ranking-clickable--' . $id_suffix;
+      $ranking_hover_effect_unique_id = 'ranking-hover-effect--' . $id_suffix;
+    }
+
     // Add all form fields inside the details element.
     $element['details']['ranking_type'] = [
       '#type' => 'select',
@@ -300,8 +316,7 @@ class AZRankingWidget extends WidgetBase {
       '#states' => [
         'visible' => [
           ':input[data-az-ranking-type-input-id="' . $ranking_type_unique_id . '"]' => ['value' => 'standard'],
-          'and',
-          ':input[name*="[behavior_plugins][az_rankings_paragraph_behavior][ranking_hover_effect]"]' => [
+          ':input[data-az-ranking-hover-effect-input-id="' . $ranking_hover_effect_unique_id . '"]' => [
             ['checked' => FALSE],
           ],
         ],
@@ -323,8 +338,7 @@ class AZRankingWidget extends WidgetBase {
       '#states' => [
         'visible' => [
           ':input[data-az-ranking-type-input-id="' . $ranking_type_unique_id . '"]' => ['value' => 'standard'],
-          'and',
-          ':input[name*="[behavior_plugins][az_rankings_paragraph_behavior][ranking_hover_effect]"]' => [
+          ':input[data-az-ranking-hover-effect-input-id="' . $ranking_hover_effect_unique_id . '"]' => [
             ['checked' => TRUE],
           ],
         ],
@@ -344,7 +358,6 @@ class AZRankingWidget extends WidgetBase {
       '#states' => [
         'visible' => [
           ':input[data-az-ranking-type-input-id="' . $ranking_type_unique_id . '"]' => ['value' => 'standard'],
-          'and',
           ':input[data-az-ranking-bg-input-id="' . $ranking_background_unique_id . '"]' => ['value' => 'bg-transparent'],
         ],
       ],
@@ -395,8 +408,7 @@ class AZRankingWidget extends WidgetBase {
         'visible' => [
           // If ranking is clickable, hide the title.
           ':input[data-az-ranking-type-input-id="' . $ranking_type_unique_id . '"]' => ['value' => 'standard'],
-          'and',
-          ':input[name*="[behavior_plugins][az_rankings_paragraph_behavior][ranking_hover_effect]"]' => ['checked' => FALSE],
+          ':input[data-az-ranking-hover-effect-input-id="' . $ranking_hover_effect_unique_id . '"]' => ['checked' => FALSE],
         ],
       ],
     ];
@@ -421,7 +433,7 @@ class AZRankingWidget extends WidgetBase {
         // AND the ranking is clickable.
         'required' => [
           ':input[data-az-ranking-type-input-id="' . $ranking_type_unique_id . '"]' => ['value' => 'standard'],
-          ':input[name*="[behavior_plugins][az_rankings_paragraph_behavior][ranking_clickable]"]' => [
+          ':input[data-az-ranking-clickable-input-id="' . $ranking_clickable_unique_id . '"]' => [
             ['checked' => TRUE],
           ],
         ],
@@ -444,8 +456,7 @@ class AZRankingWidget extends WidgetBase {
       '#states' => [
         'visible' => [
           ':input[data-az-ranking-type-input-id="' . $ranking_type_unique_id . '"]' => ['value' => 'standard'],
-          'and',
-          ':input[name*="[behavior_plugins][az_rankings_paragraph_behavior][ranking_hover_effect]"]' => ['checked' => FALSE],
+          ':input[data-az-ranking-hover-effect-input-id="' . $ranking_hover_effect_unique_id . '"]' => ['checked' => FALSE],
         ],
       ],
     ];
