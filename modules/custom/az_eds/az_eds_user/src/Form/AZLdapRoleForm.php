@@ -7,6 +7,7 @@ namespace Drupal\az_eds_user\Form;
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\az_eds_user\Entity\AZLdapRole;
+use Drupal\user\RoleInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -70,8 +71,15 @@ final class AZLdapRoleForm extends EntityForm {
       ->condition('status', 1)
       ->execute();
     $roles = $storage->loadMultiple($ids);
+    $unmanaged_roles = [
+      RoleInterface::ANONYMOUS_ID,
+    ];
     foreach ($roles as $role) {
-      $role_options[$role->id()] = $role->label();
+      $role_id = $role->id();
+      if (in_array($role_id, $unmanaged_roles)) {
+        continue;
+      }
+      $role_options[$role_id] = $role->label();
     }
 
     $form['role'] = [
