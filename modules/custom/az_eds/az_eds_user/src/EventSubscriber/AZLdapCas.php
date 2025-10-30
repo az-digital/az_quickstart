@@ -2,15 +2,15 @@
 
 namespace Drupal\az_eds_user\EventSubscriber;
 
+use Drupal\cas\Event\CasPostValidateEvent;
 use Drupal\cas\Service\CasUserManager;
 use Drupal\externalauth\AuthmapInterface;
-use Drupal\ldap_user\Processor\DrupalUserProcessor;
-use Drupal\cas\Event\CasPostValidateEvent;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\ldap_query\Controller\QueryController;
+use Drupal\ldap_user\Processor\DrupalUserProcessor;
 use Drupal\user\RoleInterface;
 use Drupal\user\UserInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Logger\LoggerChannelInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
