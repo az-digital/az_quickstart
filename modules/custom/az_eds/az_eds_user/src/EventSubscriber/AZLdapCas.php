@@ -7,7 +7,9 @@ use Drupal\externalauth\AuthmapInterface;
 use Drupal\ldap_user\Processor\DrupalUserProcessor;
 use Drupal\cas\Event\CasPostValidateEvent;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\ldap_query\Controller\QueryController;
+use Drupal\user\RoleInterface;
 use Drupal\user\UserInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -51,6 +53,11 @@ class AZLdapCas implements EventSubscriberInterface {
   protected $ldapQuery;
 
   /**
+   * @var \Drupal\Core\Logger\LoggerChannelInterface
+   */
+  protected $logger;
+
+  /**
    * Constructs an AZLdapCas.
    *
    * @param \Drupal\cas\Service\CasUserManager $casUserManager
@@ -63,13 +70,16 @@ class AZLdapCas implements EventSubscriberInterface {
    *   Entity type manager.
    * @param \Drupal\ldap_query\Controller\QueryController $ldapQuery
    *   Controller helper to use for LDAP queries.
+   * @param \Drupal\Core\Logger\LoggerChannelInterface $logger
+   *   The logger channel service.
    */
-  public function __construct(CasUserManager $casUserManager, AuthmapInterface $authmap, DrupalUserProcessor $processor, EntityTypeManagerInterface $entityTypeManager, QueryController $ldapQuery) {
+  public function __construct(CasUserManager $casUserManager, AuthmapInterface $authmap, DrupalUserProcessor $processor, EntityTypeManagerInterface $entityTypeManager, QueryController $ldapQuery, LoggerChannelInterface $logger) {
     $this->casUserManager = $casUserManager;
     $this->externalAuth = $authmap;
     $this->drupalUserProcessor = $processor;
     $this->entityTypeManager = $entityTypeManager;
     $this->ldapQuery = $ldapQuery;
+    $this->logger = $logger;
   }
 
   /**
@@ -92,15 +102,26 @@ class AZLdapCas implements EventSubscriberInterface {
    *   Array of role machine names.
    */
   protected function synchronizeRoles(UserInterface $user, array $roles) {
+    // User's original roles.
     $original_roles = $user->getRoles();
+    // We do not attempt to manage these roles.
+    $unmanaged_roles = [
+      RoleInterface::AUTHENTICATED_ID,
+      RoleInterface::ANONYMOUS_ID,
+    ];
     // List of roles to remove.
-    $remove = array_diff($original_roles, $roles);
+    $remove = array_diff($original_roles, $roles, $unmanaged_roles);
     // List of roles to add.
-    $add = array_diff($roles, $original_roles);
+    $add = array_diff($roles, $original_roles, $unmanaged_roles);
     // Update the user roles.
     foreach ($remove as $role) {
       try {
         $user->removeRole($role);
+        $this->logger->notice('Removing role @role from @user during LDAP mapping.',
+        [
+          '@role' => $role,
+          '@user' => $user->getDisplayName(),
+        ]);
       }
       catch (\InvalidArgumentException $e) {
         // Some roles are not valid to assign.
@@ -109,6 +130,11 @@ class AZLdapCas implements EventSubscriberInterface {
     foreach ($add as $role) {
       try {
         $user->addRole($role);
+        $this->logger->notice('Adding role @role to @user during LDAP mapping.',
+        [
+          '@role' => $role,
+          '@user' => $user->getDisplayName(),
+        ]);
       }
       catch (\InvalidArgumentException $e) {
         // Some roles are not valid to assign.
@@ -203,6 +229,10 @@ class AZLdapCas implements EventSubscriberInterface {
           $user = $this->entityTypeManager->getStorage('user')->load($ldap_uid);
           // We have the user that ldap_user provisioned, set the cas account.
           if (!empty($user)) {
+            $this->logger->notice('Provisoning user @user during LDAP mapping.',
+            [
+              '@user' => $user->getDisplayName(),
+            ]);
             $this->casUserManager->setCasUsernameForAccount($user, $user->getAccountName());
             $this->synchronizeRoles($user, $roles);
           }
@@ -220,6 +250,10 @@ class AZLdapCas implements EventSubscriberInterface {
           // Deactivate the account.
           $user->block();
           $user->save();
+          $this->logger->notice('Blocking user @user during LDAP mapping.',
+          [
+            '@user' => $user->getDisplayName(),
+          ]);
           // After this event, CAS login will fail because account blocked.
         }
       }
@@ -233,6 +267,10 @@ class AZLdapCas implements EventSubscriberInterface {
         // Reactivate the account.
         $user->activate();
         $user->save();
+        $this->logger->notice('Reactivating user @user during LDAP mapping.',
+        [
+          '@user' => $user->getDisplayName(),
+        ]);
         // After this event, CAS will succeed because they are active.
       }
     }
