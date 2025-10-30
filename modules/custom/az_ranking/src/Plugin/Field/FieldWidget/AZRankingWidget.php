@@ -408,7 +408,7 @@ class AZRankingWidget extends WidgetBase {
         'linkit_profile_id' => 'az_linkit',
       ],
       '#title' => $this->t('Ranking Link URL'),
-      '#element_validate' => [[$this, 'validateRankingLink']],
+      '#element_validate' => [[$this, 'validateRankingLink'], [$this, 'validateRankingLinkRequired']],
       '#default_value' => $item->link_uri ?? NULL,
       '#maxlength' => 2048,
       // Don't use server-side required - let #states handle it dynamically.
@@ -630,6 +630,49 @@ class AZRankingWidget extends WidgetBase {
         ->setError($element, $this->t('This link does not exist or you do not have permission to link to %path.', [
           '%path' => $element['#value'],
         ]));
+    }
+  }
+
+  /**
+   * Form element validation handler to check if link_uri is required when clickable is enabled.
+   */
+  public function validateRankingLinkRequired(&$element, FormStateInterface $form_state, &$complete_form) {
+    // Get the ranking item's form values.
+    $parents = $element['#array_parents'];
+
+    // Remove 'link_uri' from the end to get the ranking item's parents.
+    array_pop($parents);
+
+    // Filter out 'widget' keys to build correct values path.
+    // Form structure: [field_az_main_content, widget, 0, subform, field_az_rankings, widget, 0, details]
+    // Values path: [field_az_main_content, 0, subform, field_az_rankings, 0, details]
+    $values_path = [];
+    foreach ($parents as $key) {
+      if ($key !== 'widget') {
+        $values_path[] = $key;
+      }
+    }
+
+    // Get the ranking item's values to check ranking_type.
+    $ranking_values = NestedArray::getValue($form_state->getValues(), $values_path);
+
+    // Check if this is a standard ranking (not image_only).
+    $ranking_type = $ranking_values['ranking_type'] ?? 'standard';
+    if ($ranking_type !== 'standard') {
+      return; // Image-only rankings don't need URLs.
+    }
+
+    // Get the paragraph's form values to check clickable setting.
+    // Navigate to paragraph level: [field_az_main_content, 0]
+    $paragraph_parents = array_slice($values_path, 0, 2);
+    $paragraph_values = NestedArray::getValue($form_state->getValues(), $paragraph_parents);
+
+    // Check if ranking_clickable is enabled in the paragraph behavior.
+    $clickable = $paragraph_values['behavior_plugins']['az_rankings_paragraph_behavior']['ranking_clickable'] ?? FALSE;
+
+    // If clickable is enabled and link_uri is empty, set an error.
+    if ($clickable && empty($element['#value'])) {
+      $form_state->setError($element, $this->t('Ranking Link URL field is required when Clickable rankings is enabled.'));
     }
   }
 
