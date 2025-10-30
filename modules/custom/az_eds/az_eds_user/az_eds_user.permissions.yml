@@ -1,2 +1,2 @@
-administer az_user_role_query:
-  title: 'Administer quickstart role query mapping'
+administer az_ldap_role:
+  title: 'Administer Quickstart LDAP Role Mapping'

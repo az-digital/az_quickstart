@@ -1,6 +1,6 @@
-az_eds_user.az_user_role_query.*:
+az_eds_user.az_ldap_role.*:
   type: config_entity
-  label: Quickstart Role Query Mapping
+  label: Quickstart LDAP Role Mapping
   mapping:
     id:
       type: string

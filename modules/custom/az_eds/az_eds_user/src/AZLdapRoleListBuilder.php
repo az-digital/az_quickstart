@@ -8,9 +8,9 @@ use Drupal\Core\Config\Entity\ConfigEntityListBuilder;
 use Drupal\Core\Entity\EntityInterface;
 
 /**
- * Provides a listing of quickstart role query mappings.
+ * Provides a listing of Quickstart LDAP Role Mappings.
  */
-final class AzUserRoleQueryListBuilder extends ConfigEntityListBuilder {
+final class AZLdapRoleListBuilder extends ConfigEntityListBuilder {
 
   /**
    * {@inheritdoc}
@@ -26,7 +26,7 @@ final class AzUserRoleQueryListBuilder extends ConfigEntityListBuilder {
    * {@inheritdoc}
    */
   public function buildRow(EntityInterface $entity): array {
-    /** @var \Drupal\az_eds_user\AzUserRoleQueryInterface $entity */
+    /** @var \Drupal\az_eds_user\AZLdapRoleInterface $entity */
     $row['label'] = $entity->label();
     $row['id'] = $entity->id();
     $row['status'] = $entity->status() ? $this->t('Enabled') : $this->t('Disabled');

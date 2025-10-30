@@ -1,5 +1,5 @@
-entity.az_user_role_query.overview:
+entity.az_ldap_role.overview:
   title: Quickstart User Provisioning
   parent: ldap.settings
   description: 'Mappings used for provisioning Quickstart user accounts'
-  route_name: entity.az_user_role_query.collection
+  route_name: entity.az_ldap_role.collection

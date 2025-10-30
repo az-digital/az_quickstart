@@ -8,40 +8,40 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
 use Drupal\Core\Entity\Attribute\ConfigEntityType;
 use Drupal\Core\Entity\EntityDeleteForm;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
-use Drupal\az_eds_user\AzUserRoleQueryInterface;
-use Drupal\az_eds_user\AzUserRoleQueryListBuilder;
-use Drupal\az_eds_user\Form\AzUserRoleQueryForm;
+use Drupal\az_eds_user\AZLdapRoleInterface;
+use Drupal\az_eds_user\AZLdapRoleListBuilder;
+use Drupal\az_eds_user\Form\AZLdapRoleForm;
 
 /**
  * Defines the quickstart role query mapping entity type.
  */
 #[ConfigEntityType(
-  id: 'az_user_role_query',
+  id: 'az_ldap_role',
   label: new TranslatableMarkup('Quickstart Role Query Mapping'),
   label_collection: new TranslatableMarkup('Quickstart Role Query Mappings'),
   label_singular: new TranslatableMarkup('quickstart role query mapping'),
   label_plural: new TranslatableMarkup('quickstart role query mappings'),
-  config_prefix: 'az_user_role_query',
+  config_prefix: 'az_ldap_role',
   entity_keys: [
     'id' => 'id',
     'label' => 'label',
     'uuid' => 'uuid',
   ],
   handlers: [
-    'list_builder' => AzUserRoleQueryListBuilder::class,
+    'list_builder' => AZLdapRoleListBuilder::class,
     'form' => [
-      'add' => AzUserRoleQueryForm::class,
-      'edit' => AzUserRoleQueryForm::class,
+      'add' => AZLdapRoleForm::class,
+      'edit' => AZLdapRoleForm::class,
       'delete' => EntityDeleteForm::class,
     ],
   ],
   links: [
     'collection' => '/admin/config/people/ldap/az-quickstart',
     'add-form' => '/admin/config/people/ldap/az-quickstart/add',
-    'edit-form' => '/admin/config/people/ldap/az-quickstart/{az_user_role_query}',
-    'delete-form' => '/admin/config/people/ldap/az-quickstart/{az_user_role_query}/delete',
+    'edit-form' => '/admin/config/people/ldap/az-quickstart/{az_ldap_role}',
+    'delete-form' => '/admin/config/people/ldap/az-quickstart/{az_ldap_role}/delete',
   ],
-  admin_permission: 'administer az_user_role_query',
+  admin_permission: 'administer az_ldap_role',
   label_count: [
     'singular' => '@count quickstart role query mapping',
     'plural' => '@count quickstart role query mappings',
@@ -53,7 +53,7 @@ use Drupal\az_eds_user\Form\AzUserRoleQueryForm;
     'role',
   ],
 )]
-final class AzUserRoleQuery extends ConfigEntityBase implements AzUserRoleQueryInterface {
+final class AZLdapRole extends ConfigEntityBase implements AZLdapRoleInterface {
 
   /**
    * The Role Query ID.

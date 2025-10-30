@@ -1,31 +1,31 @@
-entity.az_user_role_query.collection:
+entity.az_ldap_role.collection:
   path: '/admin/config/people/ldap/az-quickstart'
   defaults:
-    _entity_list: 'az_user_role_query'
-    _title: 'Quickstart Role Query Mapping configuration'
+    _entity_list: 'az_ldap_role'
+    _title: 'Quickstart LDAP Role Mapping configuration'
   requirements:
-    _permission: 'administer az_user_role_query'
+    _permission: 'administer az_ldap_role'
 
-entity.az_user_role_query.add_form:
+entity.az_ldap_role.add_form:
   path: '/admin/config/people/ldap/az-quickstart/add'
   defaults:
-    _entity_form: 'az_user_role_query.add'
-    _title: 'Add a quickstart role query mapping'
+    _entity_form: 'az_ldap_role.add'
+    _title: 'Add a Quickstart LDAP Role Mapping'
   requirements:
-    _permission: 'administer az_user_role_query'
+    _permission: 'administer az_ldap_role'
 
-entity.az_user_role_query.edit_form:
-  path: '/admin/config/people/ldap/az-quickstart/{az_user_role_query}'
+entity.az_ldap_role.edit_form:
+  path: '/admin/config/people/ldap/az-quickstart/{az_ldap_role}'
   defaults:
-    _entity_form: 'az_user_role_query.edit'
-    _title: 'Edit a quickstart role query mapping'
+    _entity_form: 'az_ldap_role.edit'
+    _title: 'Edit a Quickstart LDAP Role Mapping'
   requirements:
-    _permission: 'administer az_user_role_query'
+    _permission: 'administer az_ldap_role'
 
-entity.az_user_role_query.delete_form:
-  path: '/admin/config/people/ldap/az-quickstart/{az_user_role_query}/delete'
+entity.az_ldap_role.delete_form:
+  path: '/admin/config/people/ldap/az-quickstart/{az_ldap_role}/delete'
   defaults:
-    _entity_form: 'az_user_role_query.delete'
-    _title: 'Delete a quickstart role query mapping'
+    _entity_form: 'az_ldap_role.delete'
+    _title: 'Delete a Quickstart LDAP Role Mapping'
   requirements:
-    _permission: 'administer az_user_role_query'
+    _permission: 'administer az_ldap_role'

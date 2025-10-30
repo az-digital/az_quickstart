@@ -6,13 +6,13 @@ namespace Drupal\az_eds_user\Form;
 
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\az_eds_user\Entity\AzUserRoleQuery;
+use Drupal\az_eds_user\Entity\AZLdapRole;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Quickstart Role Query Mapping form.
+ * Quickstart LDAP Role Mapping form.
  */
-final class AzUserRoleQueryForm extends EntityForm {
+final class AZLdapRoleForm extends EntityForm {
 
   /**
    * Entity type manager.
@@ -36,7 +36,7 @@ final class AzUserRoleQueryForm extends EntityForm {
   public function form(array $form, FormStateInterface $form_state): array {
 
     $form = parent::form($form, $form_state);
-    /** @var \Drupal\az_eds_user\AzUserRoleQueryInterface $entity */
+    /** @var \Drupal\az_eds_user\AZLdapRoleInterface $entity */
     $entity = $this->entity;
     $form['label'] = [
       '#type' => 'textfield',
@@ -50,7 +50,7 @@ final class AzUserRoleQueryForm extends EntityForm {
       '#type' => 'machine_name',
       '#default_value' => $this->entity->id(),
       '#machine_name' => [
-        'exists' => [AzUserRoleQuery::class, 'load'],
+        'exists' => [AZLdapRole::class, 'load'],
       ],
       '#disabled' => !$this->entity->isNew(),
     ];
@@ -76,10 +76,10 @@ final class AzUserRoleQueryForm extends EntityForm {
 
     $form['role'] = [
       '#type' => 'select',
-      '#title' => $this->t('Role that this Role Query mapping will map'),
+      '#title' => $this->t('Role'),
       '#required' => TRUE,
       '#default_value' => $entity->get('role'),
-      '#description' => $this->t('This mapping will provision users of this Drupal role.'),
+      '#description' => $this->t('This mapping will provision users of this role.'),
       '#options' => $role_options,
     ];
 
@@ -101,7 +101,7 @@ final class AzUserRoleQueryForm extends EntityForm {
       '#title' => $this->t('LDAP Query used to map this role'),
       '#required' => TRUE,
       '#default_value' => $entity->get('query'),
-      '#description' => $this->t('At login time, this LDAP query will be executed to determine which users it maps.'),
+      '#description' => $this->t('At login time, this LDAP query will be executed to determine if a user receives the role.'),
       '#options' => $query_options,
     ];
 

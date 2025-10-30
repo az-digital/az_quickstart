@@ -132,14 +132,14 @@ class AzLdapCas implements EventSubscriberInterface {
   protected function userAllowedRoles(string $authname) {
 
     $roles = [];
-    $storage = $this->entityTypeManager->getStorage('az_user_role_query');
+    $storage = $this->entityTypeManager->getStorage('az_ldap_role');
     $ids = $storage
       ->getQuery()
       ->accessCheck(FALSE)
       ->condition('status', 1)
       ->execute();
     $mappings = $storage->loadMultiple($ids);
-    /** @var \Drupal\az_eds_user\AzUserRoleQueryInterface $mapping */
+    /** @var \Drupal\az_eds_user\AZLdapRoleInterface $mapping */
     foreach ($mappings as $mapping) {
       $query = $mapping->get('query');
       $role = $mapping->get('role');
