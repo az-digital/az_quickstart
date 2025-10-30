@@ -814,14 +814,11 @@ class AZRankingWidget extends WidgetBase {
 
     // Apply clickable ranking styles (like formatter does).
     $link_title = $item->link_title ?? '';
-    $ranking_link_style = $item->ranking_link_style ?? 'w-100 btn btn-red';
+    $ranking_link_style = $item->ranking_link_style ?? 'w-100 btn btn-red mt-2';
 
     if ($ranking_clickable) {
-      // Add shadow when ranking is clickable, unset link title and styles.
+      // Add shadow when ranking is clickable.
       $ranking_classes .= ' shadow';
-      $link_title = '';
-      $ranking_link_style = '';
-      // Add hover effect to ranking card.
       if (!empty($ranking_hover_effect)) {
         $ranking_classes .= ' ranking-bold-hover ';
       }
@@ -829,7 +826,7 @@ class AZRankingWidget extends WidgetBase {
     else {
       // Ranking is not clickable.
       $link_title = $item->link_title ?? '';
-      $ranking_link_style = $item->ranking_link_style ?? 'w-100 btn btn-red';
+      $ranking_link_style = $item->ranking_link_style ?? 'w-100 btn btn-red mt-2';
       $ranking_hover_effect = FALSE;
     }
 
@@ -927,7 +924,7 @@ class AZRankingWidget extends WidgetBase {
     // Build link render array and URL.
     $link_render_array = NULL;
     $link_url = NULL;
-    if ($item->link_title || $item->link_uri) {
+    if ($item->link_uri) {
       if (!empty($item->link_uri) && str_starts_with($item->link_uri, '/' . PublicStream::basePath())) {
         $link_url = Url::fromUri(urldecode('base:' . $item->link_uri));
       }
@@ -945,7 +942,7 @@ class AZRankingWidget extends WidgetBase {
 
         $link_render_array = [
           '#type' => 'link',
-          '#title' => $link_title,
+          '#title' => $link_title ?: ($item->ranking_source ?? ''),
           '#url' => $link_url,
           '#attributes' => ['class' => $link_classes],
         ];
