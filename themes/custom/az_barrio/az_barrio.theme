@@ -218,7 +218,7 @@ function az_barrio_library_info_alter(&$libraries, $extension) {
     // Remove site-footer styles.
     unset($libraries['global-styling']['css']['component']['css/components/site-footer.css']);
   }
-  
+
   if ($extension === 'az_barrio' && isset($libraries['arizona-bootstrap-css'])) {
     // Add AZ Bootstrap CSS based on theme settings.
     $az_bootstrap_css_path = az_barrio_az_bootstrap_assets_path('css');
