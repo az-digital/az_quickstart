@@ -558,7 +558,7 @@
                     "link_title": "Read more",
                     "link_uri": "#",
                     "ranking_link_style": "w-100 btn btn-red mt-2",
-                    "ranking_font_color": "ranking-text-black",
+                    "ranking_font_color": "ranking-text-white",
                     "media": "",
                     "options_class": "bg-transparent",
                     "ranking_type": "standard",
