@@ -4,10 +4,13 @@
             "id": 302,
             "ranking_title": "Bold Not Clickable",
             "ranking_width": "col-lg-3",
+            "ranking_deck_title_color": "text-blue",
             "ranking_alignment": "text-left",
             "ranking_header_style": "ranking-title-bold",
             "ranking_clickable": false,
             "ranking_hover_effect": false,
+            "ranking_width_sm": "col-md-12",
+            "ranking_width_xs": "col-12",
             "bottom_spacing": "mb-0",
             "az_rankings": [
                 {
@@ -121,10 +124,13 @@
             "id": 303,
             "ranking_title": "Thin Clickable",
             "ranking_width": "col-lg-3",
+            "ranking_deck_title_color": "text-oasis",
             "ranking_alignment": "text-center",
             "ranking_header_style": "ranking-title-thin",
             "ranking_clickable": 1,
             "ranking_hover_effect": false,
+            "ranking_width_sm": "col-md-12",
+            "ranking_width_xs": "col-12",
             "bottom_spacing": "mb-0",
             "az_rankings": [
                 {
@@ -238,10 +244,13 @@
             "id": 304,
             "ranking_title": "Thin Clickable Hover",
             "ranking_width": "col-lg-4",
+            "ranking_deck_title_color": "text-azurite",
             "ranking_alignment": "text-left",
             "ranking_header_style": "ranking-title-thin",
             "ranking_clickable": 1,
             "ranking_hover_effect": 1,
+            "ranking_width_sm": "col-md-12",
+            "ranking_width_xs": "col-12",
             "bottom_spacing": "mb-0",
             "az_rankings": [
                 {
@@ -340,10 +349,13 @@
             "id": 305,
             "ranking_title": "Bold Clickable Hover",
             "ranking_width": "col-lg-4",
+            "ranking_deck_title_color": "text-ash",
             "ranking_alignment": "text-center",
             "ranking_header_style": "ranking-title-bold",
             "ranking_clickable": 1,
             "ranking_hover_effect": 1,
+            "ranking_width_sm": "col-md-12",
+            "ranking_width_xs": "col-12",
             "bottom_spacing": "mb-0",
             "az_rankings": [
                 {
@@ -442,10 +454,13 @@
             "id": 306,
             "ranking_title": "Transparent Not Clickable",
             "ranking_width": "col-lg-6",
+            "ranking_deck_title_color": "text-dark-silver",
             "ranking_alignment": "text-center",
             "ranking_header_style": "ranking-title-bold",
             "ranking_clickable": false,
             "ranking_hover_effect": false,
+            "ranking_width_sm": "col-md-12",
+            "ranking_width_xs": "col-12",
             "bottom_spacing": "mb-0",
             "az_rankings": [
                 {
@@ -529,10 +544,13 @@
             "id": 307,
             "ranking_title": "Transparent Clickable",
             "ranking_width": "col-lg-6",
+            "ranking_deck_title_color": "text-black",
             "ranking_alignment": "text-center",
             "ranking_header_style": "ranking-title-bold",
             "ranking_clickable": 1,
             "ranking_hover_effect": false,
+            "ranking_width_sm": "col-md-12",
+            "ranking_width_xs": "col-12",
             "bottom_spacing": "mb-0",
             "az_rankings": [
                 {

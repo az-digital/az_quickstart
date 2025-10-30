@@ -28,6 +28,15 @@ source:
       name: ranking_width
       selector: ranking_width
     -
+      name: ranking_width_sm
+      selector: ranking_width_sm
+    -
+      name: ranking_width_xs
+      selector: ranking_width_xs
+    -
+      name: ranking_deck_title_color
+      selector: ranking_deck_title_color
+    -
       name: ranking_alignment
       selector: ranking_alignment
     -
@@ -110,9 +119,12 @@ process:
     paragraph_behavior_plugins:
       az_rankings_paragraph_behavior:
         ranking_width: ranking_width
+        ranking_deck_title_color: ranking_deck_title_color
         ranking_alignment: ranking_alignment
         ranking_header_style: ranking_header_style
         ranking_clickable: ranking_clickable
         ranking_hover_effect: ranking_hover_effect
         az_display_settings:
+          ranking_width_sm: ranking_width_sm
+          ranking_width_xs: ranking_width_xs
           bottom_spacing: bottom_spacing
