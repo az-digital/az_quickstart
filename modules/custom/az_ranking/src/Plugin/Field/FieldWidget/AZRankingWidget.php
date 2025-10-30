@@ -130,7 +130,7 @@ class AZRankingWidget extends WidgetBase {
       $status = TRUE;
     }
 
-    // Determine current ranking style needed for both preview and open edit mode.
+    // Determine current ranking style for preview.
     $ranking_classes = 'ranking card';
     $parent = $item->getEntity();
 
@@ -170,7 +170,7 @@ class AZRankingWidget extends WidgetBase {
           $hover_class = $item->options_hover_effect;
         }
       }
-      // Fallback to the persisted background class if no hover-specific value present.
+      // Fallback to persisted background class if no hover-specific value.
       if (empty($hover_class) && !empty($item->options['class'])) {
         $hover_class = $item->options['class'];
       }
@@ -224,8 +224,8 @@ class AZRankingWidget extends WidgetBase {
     $ranking_hover_effect_unique_id = '';
     if ($parent instanceof ParagraphInterface) {
       // Build a deterministic ID based on the paragraph's position in the form.
-      // Filter out 'subform' to match what the behavior form will have in $form['#parents'].
-      $filtered_parents = array_filter($field_parents, function($key) {
+      // Filter out 'subform' to match what's in $form['#parents'].
+      $filtered_parents = array_filter($field_parents, function ($key) {
         return $key !== 'subform';
       });
       $behavior_form_parents = array_merge($filtered_parents, ['behavior_plugins', 'az_rankings_paragraph_behavior']);
@@ -246,17 +246,6 @@ class AZRankingWidget extends WidgetBase {
       '#default_value' => (!empty($item->options['ranking_type'])) ? $item->options['ranking_type'] : 'standard',
       '#attributes' => ['data-az-ranking-type-input-id' => $ranking_type_unique_id],
     ];
-
-    // Get ranking_width from parent config for help text calculation.
-    // Default value.
-    $ranking_width = 'col-lg-3';
-    $parent = $item->getEntity();
-    if ($parent instanceof ParagraphInterface) {
-      $parent_config = $parent->getAllBehaviorSettings();
-      if (!empty($parent_config['az_rankings_paragraph_behavior']['ranking_width'])) {
-        $ranking_width = $parent_config['az_rankings_paragraph_behavior']['ranking_width'];
-      }
-    }
 
     $element['details']['media'] = [
       '#type' => 'az_media_library',
@@ -645,7 +634,7 @@ class AZRankingWidget extends WidgetBase {
   }
 
   /**
-   * Form element validation handler to check if link_uri is required when clickable is enabled.
+   * Validate link_uri is filled when clickable is enabled.
    */
   public function validateRankingLinkRequired(&$element, FormStateInterface $form_state, &$complete_form) {
     // Get the ranking item's form values.
@@ -655,8 +644,6 @@ class AZRankingWidget extends WidgetBase {
     array_pop($parents);
 
     // Filter out 'widget' keys to build correct values path.
-    // Form structure: [field_az_main_content, widget, 0, subform, field_az_rankings, widget, 0, details]
-    // Values path: [field_az_main_content, 0, subform, field_az_rankings, 0, details]
     $values_path = [];
     foreach ($parents as $key) {
       if ($key !== 'widget') {
@@ -670,11 +657,11 @@ class AZRankingWidget extends WidgetBase {
     // Check if this is a standard ranking (not image_only).
     $ranking_type = $ranking_values['ranking_type'] ?? 'standard';
     if ($ranking_type !== 'standard') {
-      return; // Image-only rankings don't need URLs.
+      return;
     }
 
     // Get the paragraph's form values to check clickable setting.
-    // Navigate to paragraph level: [field_az_main_content, 0]
+    // Navigate to paragraph level: [field_az_main_content, 0].
     $paragraph_parents = array_slice($values_path, 0, 2);
     $paragraph_values = NestedArray::getValue($form_state->getValues(), $paragraph_parents);
 
@@ -809,7 +796,7 @@ class AZRankingWidget extends WidgetBase {
         $ranking_alignment = $ranking_defaults['ranking_alignment'] ?? 'text-left';
       }
     }
-    // Apply paragraph settings and overrides found in AZRankingDefaultFormatter.
+    // Apply paragraph settings found in AZRankingDefaultFormatter.
     $ranking_classes .= ' ' . $ranking_alignment;
 
     // Apply clickable ranking styles (like formatter does).
@@ -862,7 +849,7 @@ class AZRankingWidget extends WidgetBase {
       $ranking_source_classes = 'mt-auto';
     }
     else {
-      // For transparent backgrounds, apply font color to ranking_classes and ranking_font_color.
+      // transparent: apply font color to ranking _font_color and _classes.
       $ranking_font_color = ' ' . $item->ranking_font_color;
       $ranking_classes .= ' ' . $item->ranking_font_color;
     }
@@ -974,7 +961,7 @@ class AZRankingWidget extends WidgetBase {
   }
 
   /**
-   * #after_build callback to add az_ranking_context query parameter to media edit links.
+   * Add az_ranking_context query parameter to media edit links.
    */
   public function addAzRankingContextToMediaEdit(array $element, FormStateInterface $form_state) {
     // Recursively search for media_edit links and add the query parameter.

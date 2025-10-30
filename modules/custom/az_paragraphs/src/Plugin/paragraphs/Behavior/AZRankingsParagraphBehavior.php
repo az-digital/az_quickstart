@@ -25,7 +25,6 @@ class AZRankingsParagraphBehavior extends AZDefaultParagraphsBehavior {
 
     // Create deterministic unique IDs based on form structure.
     // This allows the AZRankingWidget to generate the same IDs independently.
-    // Both the behavior and widget use the form parents path to ensure matching IDs.
     $form_parents = $form['#parents'] ?? [];
     $id_suffix = implode('-', $form_parents);
 
@@ -91,7 +90,7 @@ class AZRankingsParagraphBehavior extends AZDefaultParagraphsBehavior {
 
     parent::buildBehaviorForm($paragraph, $form, $form_state);
 
-    // Attach library for form interactions (auto-uncheck hover when clickable unchecked).
+    // JavaScript for auto-uncheck hover when clickable unchecked.
     $form['#attached']['library'][] = 'az_paragraphs/az_paragraphs.az_rankings';
 
     // Ranking deck width for tablets.

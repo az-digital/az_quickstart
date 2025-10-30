@@ -58,17 +58,13 @@ function az_paragraphs_theme_registry_alter(&$theme_registry) {
 /**
  * Implements hook_form_alter().
  */
-
-
 function az_paragraphs_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   // Only target node edit/add forms.
   if (!preg_match('/^node_.*_form$/', $form_id)) {
     return;
   }
 
-  // Expand validation scope for paragraph "Add More" buttons when az_rankings is present.
-  // This ensures that AZRankingWidget::validateRankingLinkRequired() runs when
-  // users click "Add Text", "Add Rankings", etc. buttons.
+  // Expand validation scope for "Add Text", "Add Rankings", etc. buttons.
   _az_paragraphs_modify_paragraph_fields($form);
 }
 
@@ -151,4 +147,3 @@ function _az_paragraphs_expand_add_more_validation(&$element, $parents, $field_n
     }
   }
 }
-
