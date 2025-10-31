@@ -69,8 +69,6 @@ class AZRankingItem extends FieldItemBase {
       ->setLabel(t('Link Style'));
     $properties['options'] = MapDataDefinition::create()
       ->setLabel(t('Ranking Options'));
-    $properties['options_hover_effect'] = MapDataDefinition::create()
-      ->setLabel(t('Ranking Options Hover Effect'));
 
     return $properties;
   }
@@ -124,11 +122,6 @@ class AZRankingItem extends FieldItemBase {
         'length' => 64,
       ],
       'options' => [
-        'type' => 'blob',
-        'size' => 'normal',
-        'serialize' => TRUE,
-      ],
-      'options_hover_effect' => [
         'type' => 'blob',
         'size' => 'normal',
         'serialize' => TRUE,

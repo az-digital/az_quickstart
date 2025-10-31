@@ -277,16 +277,10 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
 
       // Hover effect takes precedence over non-hover-effect backgrounds.
       if ($ranking_hover_effect) {
-        // Try to read hover-specific value from the item. Widget may submit
-        // either a string or an array with 'class' key depending on context.
+        // Try to read hover-specific value from the item.
         $hover_class = '';
-        if (!empty($item->options_hover_effect)) {
-          if (is_array($item->options_hover_effect) && !empty($item->options_hover_effect['class'])) {
-            $hover_class = $item->options_hover_effect['class'];
-          }
-          elseif (is_string($item->options_hover_effect)) {
-            $hover_class = $item->options_hover_effect;
-          }
+        if (!empty($item->options['hover_class'])) {
+          $hover_class = $item->options['hover_class'];
         }
         // Fallback to persisted background class if no hover-specific value.
         if (empty($hover_class) && !empty($item->options['class'])) {
@@ -332,17 +326,17 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
       }
       // Override hover class.
       else {
-        if (!empty($item->options_hover_effect['class'])) {
+        if (!empty($item->options['hover_class'])) {
           switch (TRUE) {
-            case str_contains($item->options_hover_effect['class'], 'bg-sky'):
+            case str_contains($item->options['hover_class'], 'bg-sky'):
               $text_color_override = 'text-midnight';
               break;
 
-            case str_contains($item->options_hover_effect['class'], 'bg-cool-gray'):
+            case str_contains($item->options['hover_class'], 'bg-cool-gray'):
               $text_color_override = 'text-azurite';
               break;
 
-            case str_contains($item->options_hover_effect['class'], 'bg-oasis'):
+            case str_contains($item->options['hover_class'], 'bg-oasis'):
               $text_color_override = 'text-midnight';
               break;
           }

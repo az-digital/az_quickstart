@@ -110,9 +110,9 @@ process:
             - az_demo_image_file:
                 - filename
       options/class: options_class
+      options/hover_class: options_hover_class
       options/ranking_type: ranking_type
       options/column_span: column_span
-      options_hover_effect/class: options_hover_class
 
   behavior_settings:
     plugin: az_paragraphs_behavior_settings

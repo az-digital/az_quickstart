@@ -162,13 +162,8 @@ class AZRankingWidget extends WidgetBase {
     if ($ranking_hover_effect) {
       // Try to read hover-specific value from the item.
       $hover_class = '';
-      if (!empty($item->options_hover_effect)) {
-        if (is_array($item->options_hover_effect) && !empty($item->options_hover_effect['class'])) {
-          $hover_class = $item->options_hover_effect['class'];
-        }
-        elseif (is_string($item->options_hover_effect)) {
-          $hover_class = $item->options_hover_effect;
-        }
+      if (!empty($item->options['hover_class'])) {
+        $hover_class = $item->options['hover_class'];
       }
       // Fallback to persisted background class if no hover-specific value.
       if (empty($hover_class) && !empty($item->options['class'])) {
@@ -323,7 +318,7 @@ class AZRankingWidget extends WidgetBase {
       ],
       '#required' => TRUE,
       '#title' => $this->t('Ranking Background with Hover Effect'),
-      '#default_value' => (!empty($item->options_hover_effect['class'])) ? $item->options_hover_effect['class'] : 'text-bg-chili',
+      '#default_value' => (!empty($item->options['hover_class'])) ? $item->options['hover_class'] : 'text-bg-chili',
       '#states' => [
         'visible' => [
           ':input[data-az-ranking-type-input-id="' . $ranking_type_unique_id . '"]' => ['value' => 'standard'],
@@ -750,18 +745,11 @@ class AZRankingWidget extends WidgetBase {
 
         $values[$delta]['options'] = [
           'class' => $details_values['options'] ?? '',
+          'hover_class' => $details_values['options_hover_effect'] ?? '',
           'ranking_type' => $details_values['ranking_type'] ?? '',
           'column_span' => $details_values['column_span'] ?? '',
         ];
       }
-      if (!empty($details_values['options_hover_effect']) || !empty($details_values['ranking_type']) || !empty($details_values['column_span'])) {
-        $values[$delta]['options_hover_effect'] = [
-          'class' => $details_values['options_hover_effect'] ?? '',
-          'ranking_type' => $details_values['ranking_type'] ?? '',
-          'column_span' => $details_values['column_span'] ?? '',
-        ];
-      }
-
       // Remove the details wrapper from the final values.
       unset($values[$delta]['details']);
     }
@@ -833,13 +821,8 @@ class AZRankingWidget extends WidgetBase {
 
     // Get the appropriate background class depending on hover effect.
     if ($ranking_hover_effect) {
-      if (!empty($item->options_hover_effect)) {
-        if (is_array($item->options_hover_effect) && !empty($item->options_hover_effect['class'])) {
-          $background_class = $item->options_hover_effect['class'];
-        }
-        elseif (is_string($item->options_hover_effect)) {
-          $background_class = $item->options_hover_effect;
-        }
+      if (!empty($item->options['hover_class'])) {
+        $background_class = $item->options['hover_class'];
       }
       // Fallback to the persisted background class.
       if (empty($background_class) && !empty($item->options['class'])) {
@@ -888,17 +871,17 @@ class AZRankingWidget extends WidgetBase {
     }
     else {
       // Override hover class.
-      if (!empty($item->options_hover_effect['class'])) {
+      if (!empty($item->options['hover_class'])) {
         switch (TRUE) {
-          case str_contains($item->options_hover_effect['class'], 'bg-sky'):
+          case str_contains($item->options['hover_class'], 'bg-sky'):
             $text_color_override = 'text-midnight';
             break;
 
-          case str_contains($item->options_hover_effect['class'], 'bg-cool-gray'):
+          case str_contains($item->options['hover_class'], 'bg-cool-gray'):
             $text_color_override = 'text-azurite';
             break;
 
-          case str_contains($item->options_hover_effect['class'], 'bg-oasis'):
+          case str_contains($item->options['hover_class'], 'bg-oasis'):
             $text_color_override = 'text-midnight';
             break;
         }

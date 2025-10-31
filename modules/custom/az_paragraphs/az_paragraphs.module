@@ -7,6 +7,7 @@
 
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Render\Element;
 
 /**
  * Implements hook_help().
@@ -56,14 +57,9 @@ function az_paragraphs_theme_registry_alter(&$theme_registry) {
 }
 
 /**
- * Implements hook_form_alter().
+ * Implements hook_form_FORM_ID_alter() for node_az_flexible_page_form.
  */
-function az_paragraphs_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  // Only target node edit/add forms.
-  if (!preg_match('/^node_.*_form$/', $form_id)) {
-    return;
-  }
-
+function az_paragraphs_form_node_az_flexible_page_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   // Expand validation scope for "Add Text", "Add Rankings", etc. buttons.
   _az_paragraphs_modify_paragraph_fields($form);
 }
@@ -101,9 +97,9 @@ function _az_paragraphs_modify_paragraph_fields(&$element, $depth = 0) {
   }
 
   // Recurse into all child elements.
-  foreach ($element as $key => &$child) {
-    if (is_string($key) && strpos($key, '#') !== 0 && is_array($child)) {
-      _az_paragraphs_modify_paragraph_fields($child, $depth + 1);
+  foreach (Element::children($element) as $key) {
+    if (is_array($element[$key])) {
+      _az_paragraphs_modify_paragraph_fields($element[$key], $depth + 1);
     }
   }
 }
@@ -112,11 +108,8 @@ function _az_paragraphs_modify_paragraph_fields(&$element, $depth = 0) {
  * Recursively expand validation for add_more buttons.
  */
 function _az_paragraphs_expand_add_more_validation(&$element, $parents, $field_name, $paragraph_deltas) {
-  foreach ($element as $key => &$child) {
-    // Skip special keys.
-    if (is_string($key) && strpos($key, '#') === 0) {
-      continue;
-    }
+  foreach (Element::children($element) as $key) {
+    $child = &$element[$key];
 
     // Check if this is an add_more submit button.
     if (is_array($child) && isset($child['#type']) && $child['#type'] === 'submit') {
