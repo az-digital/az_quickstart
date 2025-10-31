@@ -136,7 +136,7 @@ function az_barrio_preprocess_page(&$variables, $hook) {
   $variables['header_two_col_classes'] = theme_get_setting('header_two_col_classes');
 
   // Calculate content width based on sidebar widths (assuming 12-column grid).
-  // Only subtract sidebar widths if the sidebars actually have content on this page.
+  // Only subtract sidebar widths if the sidebars actually have content.
   $first_width = 0;
   $second_width = 0;
 
