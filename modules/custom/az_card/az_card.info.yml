@@ -9,4 +9,3 @@ dependencies:
   - drupal:filter
   - drupal:image
   - drupal:media
-  - media_library_form_element:media_library_form_element

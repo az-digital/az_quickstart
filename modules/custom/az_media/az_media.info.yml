@@ -19,3 +19,4 @@ dependencies:
   - media_library_edit:media_library_edit
   - media_entity_file_replace:media_entity_file_replace
   - decorative_image_widget:decorative_image_widget
+  - media_library_form_element:media_library_form_element
