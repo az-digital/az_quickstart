@@ -11,7 +11,7 @@ filters:
     status: true
     weight: -10
     settings:
-      allowed_html: '<a href hreflang> <em> <strong> <cite> <blockquote cite class="blockquote blockquote-reverse text-right text-center"l> <dt> <dd> <h2 id> <h3 id> <h4 id> <h5 id> <h6 id> <footer class="blockquote-footer">'
+      allowed_html: '<a href hreflang> <em> <strong> <cite> <blockquote cite class="blockquote blockquote-reverse text-right text-end text-center"l> <dt> <dd> <h2 id> <h3 id> <h4 id> <h5 id> <h6 id> <footer class="blockquote-footer">'
       filter_html_help: true
       filter_html_nofollow: false
   filter_autop:

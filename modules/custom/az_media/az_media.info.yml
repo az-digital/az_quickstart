@@ -1,14 +1,16 @@
 name: Quickstart Media
 type: module
 description: Media entity types & image styles.
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10 || ^11 || ^12
 package: The University of Arizona
 dependencies:
-  - az_core
+  - az_core:az_core
+  - az_icons:az_icons
   - crop:crop
   - drupal:image
   - drupal:media
   - drupal:media_library
+  - drupal:media_remote
   - drupal:responsive_image
   - entity_embed:entity_embed
   - field_group:field_group
@@ -16,3 +18,4 @@ dependencies:
   - bootstrap_utilities:bootstrap_utilities
   - media_library_edit:media_library_edit
   - media_entity_file_replace:media_entity_file_replace
+  - decorative_image_widget:decorative_image_widget

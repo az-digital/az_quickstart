@@ -39,74 +39,7 @@
     padding-right: 15px;
     padding-left: 15px;
 }
-.az-aspect-ratio .container {
-    bottom: 0;
-    top: 0;
-    float: none;
-    position: absolute;
-    width: 100%;
-    z-index: 1;
-}
 
-.layout-no-sidebars .az-aspect-ratio.full-width-background .container {
-    left: 0;
-    right: 0;
-}
-.layout-sidebar-second .az-aspect-ratio.full-width-background .container {
-    left: 0;
-    right: 0;
-}
-.az-aspect-ratio.column .az-full-width-column-content {
-    height: 100%;
-    display: -ms-flexbox!important;
-    display: flex!important;
-}
-.az-aspect-ratio.box .col:first-child {
-    align-self: center;
-}
-
-.az-aspect-ratio .column .az-full-width-column-content-wrapper {
-    align-self: center;
-}
-.region-content .container .az-full-width-row {
-    height: 100%;
-}
-
-@media (min-width: 768px) {
-    .layout-sidebar-first .region-content .az-aspect-ratio.full-width-background .container {
-        margin-left: calc(50% - 185px);
-    }
-    .layout-sidebar-second .region-content .az-aspect-ratio.full-width-background .container {
-        margin-left: calc(50% - 355px);
-    }
-    .layout-one-sidebar .region-content .az-aspect-ratio.full-width-background .container {
-        width: 540px;
-    }
-}
-@media (min-width: 992px) {
-    .layout-sidebar-first .region-content .az-aspect-ratio.full-width-background .container {
-        margin-left: calc(50% - 245px);
-    }
-    .layout-sidebar-second .region-content .az-aspect-ratio.full-width-background .container {
-        margin-left: calc(50% - 464px);
-    }
-
-    .layout-one-sidebar .region-content .az-aspect-ratio.full-width-background .container {
-        width: 722px;
-    }
-}
-@media (min-width: 1200px) {
-    .layout-sidebar-first .region-content .az-aspect-ratio.full-width-background .container {
-        margin-left: calc(50% - 290px);
-    }
-    .layout-sidebar-second .region-content .az-aspect-ratio.full-width-background .container {
-        margin-left: calc(50% - 565px);
-    }
-
-    .layout-one-sidebar .region-content .az-aspect-ratio.full-width-background .container {
-        width: 855px;
-    }
-}
 @media (min-width: 768px) {
     .layout-sidebar-first .region-content .full-width-background .az-full-width-row {
         -ms-flex: 0 0 100%;
@@ -136,10 +69,6 @@
         flex: 0 0 100%;
         -ms-flex-pack: start!important;
         justify-content: flex-start!important;
-    }
-    .layout-two-sidebars .region-content .full-width-background .az-full-width-row {
-        -ms-flex-pack: center!important;
-        justify-content: center!important;
     }
     .layout-two-sidebars .region-content .full-width-background .az-full-width-row {
         -ms-flex: 0 0 100%;

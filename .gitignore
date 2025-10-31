@@ -35,3 +35,7 @@ tags
 .phpcs-cache
 
 .DS_Store
+.idea
+
+# ENV Files
+.env

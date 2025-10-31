@@ -21,6 +21,7 @@ permissions:
   - 'access own webform configuration'
   - 'access printer-friendly version'
   - 'access toolbar'
+  - 'access ui icons library'
   - 'access tour'
   - 'access webform help'
   - 'access webform overview'

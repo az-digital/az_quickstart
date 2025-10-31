@@ -71,9 +71,9 @@ process:
       options:
         plugin: default_value
         default_value:
-          class: 'bg-white'
+          class: 'text-bg-white'
           # Set the link style to default, since we can't migrate classes to this field.
-          link_style: 'btn-block'
+          link_style: 'w-100'
       media:
         -
           plugin: skip_on_empty
@@ -101,8 +101,8 @@ process:
         default: 'card'
         full: 'card'
         token: 'card'
-        uaqs_landing_grid: 'card card-borderless'
-        uaqs_borderless_card: 'card card-borderless'
+        uaqs_landing_grid: 'card border-0'
+        uaqs_borderless_card: 'card border-0'
 
   # Map QS1 landing grid, borderless styles to clickable card, default to off.
   card_clickable_processed:

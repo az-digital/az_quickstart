@@ -17,7 +17,7 @@ function az_event_field_views_data_alter(array &$data, FieldStorageConfigInterfa
     && $data[$table_name][$field_storage->getName() . '_value']['filter']['id'] === 'date') {
       // Create year, month, and day arguments.
       $group = $data[$table_name][$field_storage->getName() . '_value']['group'];
-      $data[$table_name][$field_storage->getName() . '_value_' . 'az_calendar'] = [
+      $data[$table_name][$field_storage->getName() . '_value_az_calendar'] = [
         'title' => 'Calendar Filter ' . $field_storage->getLabel(),
         'help' => t('Calendar Filter Widget.'),
         'filter' => [

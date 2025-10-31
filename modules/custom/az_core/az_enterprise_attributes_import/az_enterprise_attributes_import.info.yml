@@ -1,13 +1,13 @@
 name: Quickstart Enterprise Attributes Import
 description: 'Import University of Arizona Attributes'
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10 || ^11 || ^12
 type: module
 package: 'The University of Arizona - Experimental'
 lifecycle: experimental
 lifecycle_link: 'https://github.com/az-digital/az_quickstart/blob/main/RELEASES.md#experimental-features'
 dependencies:
   - az_core:az_core
-  - migrate:migrate
+  - drupal:migrate
   - migrate_plus:migrate_plus
   - migrate_tools:migrate_tools
   - migrate_queue_importer:migrate_queue_importer
