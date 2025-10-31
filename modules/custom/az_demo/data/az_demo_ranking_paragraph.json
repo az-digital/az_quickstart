@@ -1,7 +1,7 @@
 {
     "paragraphs": [
         {
-            "id": 302,
+            "id": 308,
             "ranking_title": "Bold Not Clickable",
             "ranking_width": "col-lg-3",
             "ranking_deck_title_color": "text-blue",
@@ -121,7 +121,7 @@
             ]
         },
         {
-            "id": 303,
+            "id": 309,
             "ranking_title": "Thin Clickable",
             "ranking_width": "col-lg-3",
             "ranking_deck_title_color": "text-oasis",
@@ -241,7 +241,7 @@
             ]
         },
         {
-            "id": 304,
+            "id": 310,
             "ranking_title": "Thin Clickable Hover",
             "ranking_width": "col-lg-4",
             "ranking_deck_title_color": "text-azurite",
@@ -346,7 +346,7 @@
             ]
         },
         {
-            "id": 305,
+            "id": 311,
             "ranking_title": "Bold Clickable Hover",
             "ranking_width": "col-lg-4",
             "ranking_deck_title_color": "text-ash",
@@ -451,7 +451,7 @@
             ]
         },
         {
-            "id": 306,
+            "id": 312,
             "ranking_title": "Transparent Not Clickable",
             "ranking_width": "col-lg-6",
             "ranking_deck_title_color": "text-dark-silver",
@@ -541,7 +541,7 @@
             ]
         },
         {
-            "id": 307,
+            "id": 313,
             "ranking_title": "Transparent Clickable",
             "ranking_width": "col-lg-6",
             "ranking_deck_title_color": "text-black",
