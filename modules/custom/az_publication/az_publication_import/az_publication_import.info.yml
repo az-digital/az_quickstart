@@ -8,6 +8,6 @@ lifecycle_link: 'https://github.com/az-digital/az_quickstart/blob/main/RELEASES.
 dependencies:
   - 'az_core:az_core'
   - 'az_publication:az_publication'
-  - migrate
-  - migrate_plus
-  - migrate_tools
+  - drupal:migrate
+  - migrate_plus:migrate_plus
+  - migrate_tools:migrate_tools

@@ -3,7 +3,7 @@ type: module
 description: 'Provides a Contact paragraph type.'
 core_version_requirement: ^10 || ^11 || ^12
 dependencies:
-  - az_paragraphs
+  - az_paragraphs:az_paragraphs
   - drupal:field
   - drupal:node
   - drupal:telephone

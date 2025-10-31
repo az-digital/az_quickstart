@@ -6,21 +6,21 @@ package: 'The University of Arizona - Experimental'
 lifecycle: experimental
 lifecycle_link: 'https://github.com/az-digital/az_quickstart/blob/main/RELEASES.md#experimental-features'
 dependencies:
-  - auto_entitylabel
-  - field
-  - field_group
-  - image
-  - menu_ui
-  - migrate
-  - migrate_plus
-  - migrate_tools
-  - node
-  - path
-  - pathauto
-  - smart_title
-  - search
-  - taxonomy
-  - token
-  - text
-  - user
-  - views
+  - auto_entitylabel:auto_entitylabel
+  - drupal:field
+  - field_group:field_group
+  - drupal:image
+  - drupal:menu_ui
+  - drupal:migrate
+  - migrate_plus:migrate_plus
+  - migrate_tools:migrate_tools
+  - drupal:node
+  - drupal:path
+  - pathauto:pathauto
+  - smart_title:smart_title
+  - drupal:search
+  - drupal:taxonomy
+  - token:token
+  - drupal:text
+  - drupal:user
+  - drupal:views
