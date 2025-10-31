@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\az_ranking\Element;
+namespace Drupal\az_media\Element;
 
 use Drupal\Component\Render\FormattableMarkup;
 use Drupal\Component\Utility\UrlHelper;
