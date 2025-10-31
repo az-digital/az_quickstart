@@ -57,11 +57,16 @@ function az_paragraphs_theme_registry_alter(&$theme_registry) {
 }
 
 /**
- * Implements hook_form_FORM_ID_alter() for node_az_flexible_page_form.
+ * Implements hook_form_BASE_FORM_ID_alter() for node_az_flexible_page_form.
  */
-function az_paragraphs_form_node_az_flexible_page_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  // Expand validation scope for "Add Text", "Add Rankings", etc. buttons.
-  _az_paragraphs_modify_paragraph_fields($form);
+function az_paragraphs_form_node_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // Get the node entity
+  $node = $form_state->getFormObject()->getEntity();
+
+  // Check if it's the az_flexible_page content type
+  if ($node->bundle() === 'az_flexible_page') {
+    _az_paragraphs_modify_paragraph_fields($form);
+  }
 }
 
 /**
