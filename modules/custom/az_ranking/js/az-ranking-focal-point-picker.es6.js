@@ -96,7 +96,6 @@
         // Strategy 3: If image is cached (complete=true), use longer delays
         // because the image reports as complete but dimensions aren't ready yet
         if (image.complete) {
-
           setTimeout(() => {
             updateIndicatorPosition();
           }, 150);
