@@ -338,6 +338,16 @@
       "az_main_content" : "194",
       "az_media_image" : "",
       "az_summary" : "Remote media embeds."
+    },
+    {
+      "id":42,
+      "title" : "Remote Video Embeds",
+      "path" : "/pages/media-embeds/remote-video",
+      "exclude_title" : false,
+      "az_page_category" : "Media Galleries",
+      "az_main_content" : "193|302|195|303|196|304|197|305|198|306|199|307",
+      "az_media_image" : "",
+      "az_summary" : "Remote video embedded via CKEditor."
     }
   ]
 }
