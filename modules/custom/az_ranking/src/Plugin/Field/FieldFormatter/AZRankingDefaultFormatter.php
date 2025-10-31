@@ -126,7 +126,6 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
         }
       }
 
-
       // Define Ranking Variabbles.
       $ranking_classes = 'ranking card';
       $ranking_clickable = FALSE;
@@ -164,9 +163,9 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
           '#attributes' => ['class' => ['']],
         ];
         $ranking_link_style = $item->ranking_link_style;
-        // Link color override
-        if(str_contains($ranking_link_style, 'link')) {
-          if(str_contains($item->options['class'], 'bg-oasis') || 
+        // Link color override.
+        if (str_contains($ranking_link_style, 'link')) {
+          if (str_contains($item->options['class'], 'bg-oasis') ||
             str_contains($item->options['class'], 'bg-sky')) {
             $ranking_link_style .= ' text-midnight';
           }
@@ -176,10 +175,7 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
           $link_render_array['#attributes']['class'][] = 'az-ranking-no-follow';
           $attached['library'][] = 'az_ranking/az_ranking_no_follow';
         }
-        // $attached['library'][] = 'az_ranking/az_ranking_title_hover';
       }
-
-
 
       // Get settings from parent paragraph.
       if ($parent instanceof ParagraphInterface) {

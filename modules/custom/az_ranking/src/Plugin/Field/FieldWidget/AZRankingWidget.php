@@ -804,9 +804,9 @@ class AZRankingWidget extends WidgetBase {
       $ranking_hover_effect = FALSE;
     }
 
-    // Link color override
-    if(str_contains($ranking_link_style, 'link')) {
-      if(str_contains($item->options['class'], 'bg-oasis') || 
+    // Link color override.
+    if (str_contains($ranking_link_style, 'link')) {
+      if (str_contains($item->options['class'], 'bg-oasis') ||
         str_contains($item->options['class'], 'bg-sky')) {
         $ranking_link_style .= ' text-midnight';
       }
