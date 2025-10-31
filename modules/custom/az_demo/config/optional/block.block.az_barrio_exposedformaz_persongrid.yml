@@ -1,24 +1,24 @@
 langcode: en
 status: true
 dependencies:
+  enforced:
+    module:
+      - az_demo
   config:
-    - views.view.az_finder
+    - views.view.az_person
   module:
     - system
     - views
   theme:
     - az_barrio
-  enforced:
-    module:
-      - az_demo
-id: az_barrio_exposedformaz_findernews
+id: az_barrio_exposedformaz_persongrid
 theme: az_barrio
 region: sidebar_first
 weight: 0
 provider: null
-plugin: 'views_exposed_filter_block:az_finder-news'
+plugin: 'views_exposed_filter_block:az_person-grid'
 settings:
-  id: 'views_exposed_filter_block:az_finder-news'
+  id: 'views_exposed_filter_block:az_person-grid'
   label: ''
   label_display: visible
   provider: views
@@ -27,4 +27,4 @@ visibility:
   request_path:
     id: request_path
     negate: false
-    pages: /finders/news
+    pages: '/finders/az-person-grid'
