@@ -60,9 +60,6 @@ az_paragraphs.az_html:
   dependencies:
     - core/jquery
 az_paragraphs.az_rankings:
-  css:
-    theme:
-      css/az_paragraphs_az_rankings.css: {}
   js:
     js/az_ranking_form_behavior.js: {}
   dependencies:
