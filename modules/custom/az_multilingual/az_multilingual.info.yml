@@ -4,6 +4,6 @@ description: 'Allows users to serve content in multiple languages.'
 core_version_requirement: ^10 || ^11 || ^12
 package: The University of Arizona
 dependencies:
-  - az_core
+  - az_core:az_core
   - drupal:language
   - drupal:content_translation
