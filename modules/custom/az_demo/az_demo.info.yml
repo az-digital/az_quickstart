@@ -6,21 +6,21 @@ package: 'The University of Arizona - Experimental'
 lifecycle: experimental
 lifecycle_link: 'https://github.com/az-digital/az_quickstart/blob/main/RELEASES.md#experimental-features'
 dependencies:
-  - az_custom_menu_block
-  - az_core
-  - az_event
-  - az_news
-  - az_flexible_page
-  - az_paragraphs_text
-  - az_paragraphs_text_background
-  - az_paragraphs_text_media
-  - az_paragraphs_splitscreen
-  - az_paragraphs_rankings
-  - az_person
-  - az_publication
-  - az_media
-  - az_media_trellis
-  - az_finder
-  - migrate:migrate
+  - az_block_types:az_custom_menu_block
+  - az_core:az_core
+  - az_event:az_event
+  - az_news:az_news
+  - az_flexible_page:az_flexible_page
+  - az_paragraphs:az_paragraphs_text
+  - az_paragraphs:az_paragraphs_text_background
+  - az_paragraphs:az_paragraphs_text_media
+  - az_paragraphs:az_paragraphs_splitscreen
+  - az_paragraphs:az_paragraphs_rankings
+  - az_person:az_person
+  - az_publication:az_publication
+  - az_media:az_media
+  - az_media:az_media_trellis
+  - az_finder:az_finder
+  - drupal:migrate
   - migrate_plus:migrate_plus
   - migrate_tools:migrate_tools

@@ -30,6 +30,7 @@ permissions:
   - 'administer shortcuts'
   - 'administer taxonomy'
   - 'administer url aliases'
+  - 'administer webform overview'
   - 'administer xmlsitemap'
   - 'batch update workbench access'
   - 'bypass node access'

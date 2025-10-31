@@ -237,3 +237,35 @@ function az_barrio_post_update_delete_navbar_offcanvas_setting_fix(&$sandbox = N
     \Drupal::logger('az_quickstart')->notice('Deleted obsolete az_barrio_navbar_offcanvas configuration key during post update.');
   }
 }
+
+/**
+ * Deletes obsolete az_hide_front_title key if it exists.
+ */
+function az_barrio_post_update_delete_az_hide_front_title_setting(&$sandbox = NULL) {
+  $config_factory = \Drupal::configFactory();
+  $theme_settings = $config_factory->getEditable('az_barrio.settings');
+
+  // Delete the az hide front title key if it exists.
+  if ($theme_settings->get('az_hide_front_title') !== NULL) {
+    $theme_settings
+      ->clear('az_hide_front_title')
+      ->save();
+    \Drupal::logger('az_quickstart')->notice('Deleted obsolete az_hide_front_title configuration key during post update.');
+  }
+}
+
+/**
+ * Deletes deprecated az_bootstrap_cdn_version key if it exists.
+ */
+function az_barrio_post_update_delete_az_bootstrap_cdn_version_setting(&$sandbox = NULL) {
+  $config_factory = \Drupal::configFactory();
+  $theme_settings = $config_factory->getEditable('az_barrio.settings');
+
+  // Delete the az_bootstrap_cdn_version key if it exists.
+  if ($theme_settings->get('az_bootstrap_cdn_version') !== NULL) {
+    $theme_settings
+      ->clear('az_bootstrap_cdn_version')
+      ->save();
+    \Drupal::logger('az_quickstart')->notice('Deleted deprecated az_bootstrap_cdn_version configuration key during post update.');
+  }
+}

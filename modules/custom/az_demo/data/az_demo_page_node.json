@@ -200,61 +200,137 @@
       "az_summary" : "This is a page with text and text with background elements."
     },
     {
-      "id":23,
-      "title" : "People Finder",
-      "path" : "/finders/people",
-      "az_page_category" : "Views",
-      "az_main_content" : "104",
-      "az_media_image" : "",
-      "az_summary" : "A page with views better exposed filters block."
-    },
-    {
-      "id":24,
-      "title" : "News Finder",
-      "path" : "/finders/news",
-      "az_page_category" : "Views",
-      "az_main_content" : "105",
-      "az_media_image" : "",
-      "az_summary" : "A page with views better exposed filters block."
-    },
-    {
-      "id":25,
-      "title" : "Event Finder",
-      "path" : "/finders/events",
-      "az_page_category" : "Views|Event Listings",
-      "az_main_content" : "106",
-      "az_media_image" : "",
-      "az_summary" : "A page with views better exposed filters block."
-    },
-    {
-      "id":26,
-      "title" : "Page Finder",
-      "path" : "/finders/pages",
-      "az_page_category" : "Views",
-      "az_main_content" : "107",
-      "az_media_image" : "",
-      "az_summary" : "A page with views better exposed filters block."
-    },
-    {
-      "id":27,
-      "title" : "Content Finder",
-      "path" : "/finders/content",
-      "az_page_category" : "Views",
-      "az_main_content" : "108",
-      "az_media_image" : "",
-      "az_summary" : "A page with views better exposed filters block."
-    },
-    {
       "id":28,
       "title" : "Publications",
       "path" : "/publications",
+      "exclude_title" : false,
       "az_page_category" : "Publications",
       "az_main_content" : "190",
       "az_media_image" : "",
       "az_summary" : "A page with publications."
     },
     {
-      "id":29,
+      "id": 29,
+      "title": "AZ Person - Grid page",
+      "path": "/finders/az-person-grid",
+      "exclude_title": false,
+      "az_page_category": "Views",
+      "az_main_content": "401",
+      "az_media_image": "",
+      "az_summary": "A page with views better exposed filters block."
+    },
+    {
+      "id": 30,
+      "title": "AZ Person - Grid - Modal",
+      "path": "/finders/az-person-grid-modal",
+      "exclude_title": false,
+      "az_page_category": "Views",
+      "az_main_content": "402",
+      "az_media_image": "",
+      "az_summary": "A page with views better exposed filters block."
+    },
+    {
+      "id": 31,
+      "title": "AZ Person - Row page",
+      "path": "/finders/az-person-row",
+      "exclude_title": false,
+      "az_page_category": "Views",
+      "az_main_content": "403",
+      "az_media_image": "",
+      "az_summary": "A page with views better exposed filters block."
+    },
+    {
+      "id": 32,
+      "title": "AZ Person - Grid 3 col",
+      "path": "/finders/az-person-grid-block-3cols",
+      "exclude_title": false,
+      "az_page_category": "Views",
+      "az_main_content": "404",
+      "az_media_image": "",
+      "az_summary": "A page with views better exposed filters block."
+    },
+    {
+      "id": 33,
+      "title": "AZ Person - Grid - Modal 3 col",
+      "path": "/finders/az-person-grid-modal-3cols",
+      "exclude_title": false,
+      "az_page_category": "Views",
+      "az_main_content": "405",
+      "az_media_image": "",
+      "az_summary": "A page with views better exposed filters block."
+    },
+    {
+      "id": 34,
+      "title": "AZ Events - Grid view",
+      "path": "/finders/az-events-az-grid",
+      "exclude_title": false,
+      "az_page_category": "Views",
+      "az_main_content": "406",
+      "az_media_image": "A page with views better exposed filters block.",
+      "az_summary": ""
+    },
+    {
+      "id": 35,
+      "title": "AZ Events - Grid view with images",
+      "path": "/finders/az-events-az-grid-images",
+      "exclude_title": false,
+      "az_page_category": "Views",
+      "az_main_content": "407",
+      "az_media_image": "",
+      "az_summary": "A page with views better exposed filters block."
+    },
+    {
+      "id": 36,
+      "title": "AZ Events - Past grid view with images",
+      "path": "/finders/az-events-az-past-grid-images",
+      "exclude_title": false,
+      "az_page_category": "Views",
+      "az_main_content": "408",
+      "az_media_image": "",
+      "az_summary": "A page with views better exposed filters block."
+    },
+    {
+      "id": 37,
+      "title": "AZ News - Paged row view",
+      "path": "/finders/az-news-az-paged-row",
+      "exclude_title": false,
+      "az_page_category": "Views",
+      "az_main_content": "409",
+      "az_media_image": "",
+      "az_summary": "A page with views better exposed filters block."
+    },
+    {
+      "id": 38,
+      "title": "AZ News - Grid view",
+      "path": "/finders/az-news-az-grid",
+      "exclude_title": false,
+      "az_page_category": "Views",
+      "az_main_content": "410",
+      "az_media_image": "",
+      "az_summary": "A page with views better exposed filters block."
+    },
+    {
+      "id": 39,
+      "title": "AZ Pages - Row page",
+      "path": "/finders/az-page-by-category-row",
+      "exclude_title": false,
+      "az_page_category": "Views",
+      "az_main_content": "411",
+      "az_media_image": "",
+      "az_summary": "A page with views better exposed filters block."
+    },
+    {
+      "id": 40,
+      "title": "AZ Pages - Grid page",
+      "path": "/finders/az-page-by-category-grid",
+      "exclude_title": false,
+      "az_page_category": "Views",
+      "az_main_content": "412",
+      "az_media_image": "",
+      "az_summary": "A page with views better exposed filters block."
+    },
+    {
+      "id": 41,
       "title" : "Media Embeds",
       "path" : "/pages/media-embeds",
       "exclude_title" : true,
@@ -264,7 +340,17 @@
       "az_summary" : "Remote media embeds."
     },
     {
-      "id":30,
+      "id":42,
+      "title" : "Remote Video Embeds",
+      "path" : "/pages/media-embeds/remote-video",
+      "exclude_title" : false,
+      "az_page_category" : "Media Galleries",
+      "az_main_content" : "193|302|195|303|196|304|197|305|198|306|199|307",
+      "az_media_image" : "",
+      "az_summary" : "Remote video embedded via CKEditor."
+    },
+    {
+      "id":43,
       "title" : "Rankings",
       "path" : "/pages/rankings",
       "az_page_category" : "Rankings",
