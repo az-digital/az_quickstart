@@ -20,6 +20,7 @@
         const image = wrapper.querySelector('.focal-point-picker-image');
 
         if (!image) {
+          // eslint-disable-next-line no-console
           console.warn('No image found in focal point picker wrapper');
           return;
         }
@@ -27,18 +28,6 @@
         // Get current focal point values from data attributes
         let focalX = parseFloat(wrapper.getAttribute('data-focal-x')) || 0.5;
         let focalY = parseFloat(wrapper.getAttribute('data-focal-y')) || 0.5;
-
-        console.log('=== Focal Point Picker Initialized ===');
-        console.log(
-          'Wrapper data-focal-x:',
-          wrapper.getAttribute('data-focal-x'),
-        );
-        console.log(
-          'Wrapper data-focal-y:',
-          wrapper.getAttribute('data-focal-y'),
-        );
-        console.log('Parsed focalX:', focalX);
-        console.log('Parsed focalY:', focalY);
 
         // Wrap the image in a positioned container to constrain the overlay
         const imageContainer = document.createElement('div');
@@ -66,15 +55,8 @@
         const focalXInput = context.querySelector('.js-focal-point-x-value');
         const focalYInput = context.querySelector('.js-focal-point-y-value');
 
-        console.log(
-          'Hidden field inputs found:',
-          focalXInput ? 1 : 0,
-          focalYInput ? 1 : 0,
-        );
-        console.log('Hidden field X value:', focalXInput?.value);
-        console.log('Hidden field Y value:', focalYInput?.value);
-
         if (!focalXInput || !focalYInput) {
+          // eslint-disable-next-line no-console
           console.warn(
             'Could not find focal point input fields! Focal point changes will not be saved.',
           );
@@ -87,28 +69,11 @@
           // If dimensions are 0 or suspiciously small, the image isn't ready yet
           // Skip the update and it will be retried by other strategies
           if (width < 10 || height < 10) {
-            console.log(
-              'Image dimensions too small (not rendered yet). Width:',
-              width,
-              'Height:',
-              height,
-              '- skipping update',
-            );
             return;
           }
 
           const indicatorLeft = focalX * width;
           const indicatorTop = focalY * height;
-
-          console.log('=== Updating Indicator Position ===');
-          console.log('Image width:', width, 'height:', height);
-          console.log('Using focalX:', focalX, 'focalY:', focalY);
-          console.log(
-            'Calculated position - left:',
-            indicatorLeft,
-            'top:',
-            indicatorTop,
-          );
 
           indicator.style.left = `${indicatorLeft}px`;
           indicator.style.top = `${indicatorTop}px`;
@@ -120,34 +85,28 @@
 
         // Strategy 1: Wait for image load (for first-time loads)
         image.addEventListener('load', () => {
-          console.log('Image load event fired');
           updateIndicatorPosition();
         });
 
         // Strategy 2: Use setTimeout to allow DOM to settle after modal opens
         setTimeout(() => {
-          console.log('Delayed update after modal open (100ms)');
           updateIndicatorPosition();
         }, 100);
 
         // Strategy 3: If image is cached (complete=true), use longer delays
         // because the image reports as complete but dimensions aren't ready yet
         if (image.complete) {
-          console.log('Image is cached - using multiple delayed updates');
 
           setTimeout(() => {
-            console.log('Cached image update attempt (150ms)');
             updateIndicatorPosition();
           }, 150);
 
           setTimeout(() => {
-            console.log('Cached image update attempt (300ms)');
             updateIndicatorPosition();
           }, 300);
 
           // Final attempt for stubborn cases
           setTimeout(() => {
-            console.log('Cached image final update attempt (500ms)');
             updateIndicatorPosition();
           }, 500);
         }
@@ -155,7 +114,6 @@
         // Strategy 4: Listen for dialog/modal open events
         document.addEventListener('dialogopen', () => {
           setTimeout(() => {
-            console.log('Dialog opened, updating position');
             updateIndicatorPosition();
           }, 150);
         });
