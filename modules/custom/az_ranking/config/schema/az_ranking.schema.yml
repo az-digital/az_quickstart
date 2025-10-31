@@ -31,6 +31,9 @@ field.value.az_ranking:
         class:
           type: string
           label: CSS Class
+        hover_class:
+          type: string
+          label: Hover CSS Class
         link_style:
           type: string
           label: Link Style
