@@ -196,3 +196,18 @@ function az_media_preprocess_field(&$variables) {
     }
   }
 }
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter() for media_form.
+ */
+function az_media_form_media_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // hide focal point fields since they are set by JS.
+  if (isset($form['field_focal_point_x'])) {
+    $form['field_focal_point_x']['#attributes']['class'][] = 'visually-hidden';
+    $form['field_focal_point_x']['widget'][0]['value']['#attributes']['class'][] = 'js-focal-point-x-value';
+  }
+  if (isset($form['field_focal_point_y'])) {
+    $form['field_focal_point_y']['#attributes']['class'][] = 'visually-hidden';
+    $form['field_focal_point_y']['widget'][0]['value']['#attributes']['class'][] = 'js-focal-point-y-value';
+  }
+}

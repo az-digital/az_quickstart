@@ -60,22 +60,9 @@ function az_ranking_theme($existing, $type, $theme, $path) {
  * Implements hook_form_FORM_ID_alter() for media_az_image_edit_form.
  */
 function az_ranking_form_media_az_image_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  // Add focal point picker to az_image media edit form.
-  // Hide focal point coordinate fields visually but keep them in the form
-  // so JavaScript can update them when the picker is used.
-  if (isset($form['field_focal_point_x'])) {
-    $form['field_focal_point_x']['#attributes']['class'][] = 'visually-hidden';
-    $form['field_focal_point_x']['widget'][0]['value']['#attributes']['class'][] = 'js-focal-point-x-value';
-  }
-  if (isset($form['field_focal_point_y'])) {
-    $form['field_focal_point_y']['#attributes']['class'][] = 'visually-hidden';
-    $form['field_focal_point_y']['widget'][0]['value']['#attributes']['class'][] = 'js-focal-point-y-value';
-  }
 
   // Only show focal point picker if opened from AZ Ranking context.
   $request = \Drupal::request();
-
-  // Check if this is from AZ Ranking widget and if it's in a modal.
   $is_az_ranking_context = $request->query->get('az_ranking_context') === '1';
   $is_modal = $request->query->get('_wrapper_format') === 'drupal_modal';
 
