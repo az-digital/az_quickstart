@@ -140,7 +140,6 @@ info_security_privacy: true
 copyright_notice: 'The Arizona Board of Regents on behalf of <a href="https://www.arizona.edu" target="_blank">The University of Arizona</a>.'
 az_back_to_top: true
 az_bootstrap_source: cdn
-az_bootstrap_cdn_version: stable
 az_bootstrap_cdn_version_css: stable
 az_bootstrap_cdn_version_js: stable
 az_bootstrap_minified: true
