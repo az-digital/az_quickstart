@@ -74,6 +74,7 @@ process:
         - az_demo_view_paragraph
         - az_demo_paragraph_gallery
         - az_demo_paragraph_accordion
+        - az_demo_ranking_paragraph
       source: '@pseudo_exploded_paragraphs'
 
   field_az_main_content:
@@ -127,6 +128,7 @@ migration_dependencies:
     - az_demo_page_categories
     - az_demo_paragraph_gallery
     - az_demo_paragraph_accordion
+    - az_demo_ranking_paragraph
 
 dependencies:
   enforced:

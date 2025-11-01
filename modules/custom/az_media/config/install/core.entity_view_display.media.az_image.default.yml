@@ -4,6 +4,8 @@ dependencies:
   config:
     - field.field.media.az_image.field_az_caption
     - field.field.media.az_image.field_az_credit
+    - field.field.media.az_image.field_focal_point_x
+    - field.field.media.az_image.field_focal_point_y
     - field.field.media.az_image.field_media_az_image
     - image.style.az_small
     - media.type.az_image
@@ -153,6 +155,8 @@ content:
     region: content
 hidden:
   created: true
+  field_focal_point_x: true
+  field_focal_point_y: true
   name: true
   thumbnail: true
   uid: true

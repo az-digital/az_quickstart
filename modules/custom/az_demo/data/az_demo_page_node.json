@@ -348,6 +348,15 @@
       "az_main_content" : "193|302|195|303|196|304|197|305|198|306|199|307",
       "az_media_image" : "",
       "az_summary" : "Remote video embedded via CKEditor."
+    },
+    {
+      "id":43,
+      "title" : "Rankings",
+      "path" : "/pages/rankings",
+      "az_page_category" : "Rankings",
+      "az_main_content" : "308|309|310|311|312|313",
+      "az_media_image" : "",
+      "az_summary" : "A page with rankings."
     }
   ]
 }
