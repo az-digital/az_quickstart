@@ -6,7 +6,6 @@
  */
 
 ((Drupal, once) => {
-
   Drupal.behaviors.azRankingsParagraphBehavior = {
     attach: (context) => {
       // Find all ranking_clickable checkboxes
@@ -21,11 +20,11 @@
         // It should be in the same form, with a similar name pattern
         const clickableName = clickableElement.getAttribute('name');
         const hoverEffectName = clickableName.replace(
-          '[ranking_clickable]', 
-          '[ranking_hover_effect]'
+          '[ranking_clickable]',
+          '[ranking_hover_effect]',
         );
         const hoverEffectElement = document.querySelector(
-          `input[name="${hoverEffectName}"]`
+          `input[name="${hoverEffectName}"]`,
         );
 
         if (!hoverEffectElement) {
@@ -40,7 +39,7 @@
               hoverEffectElement.checked = false;
               // Trigger change event
               hoverEffectElement.dispatchEvent(
-                new Event('change', { bubbles: true })
+                new Event('change', { bubbles: true }),
               );
             }
           }
