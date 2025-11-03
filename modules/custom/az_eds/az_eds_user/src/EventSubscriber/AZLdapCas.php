@@ -141,7 +141,7 @@ class AZLdapCas implements EventSubscriberInterface {
       }
     }
     // Save the user if necessary.
-    if (!empty($add) && !empty($remove)) {
+    if (!empty($add) || !empty($remove)) {
       $user->save();
     }
   }
@@ -229,7 +229,7 @@ class AZLdapCas implements EventSubscriberInterface {
           $user = $this->entityTypeManager->getStorage('user')->load($ldap_uid);
           // We have the user that ldap_user provisioned, set the cas account.
           if (!empty($user)) {
-            $this->logger->notice('Provisoning user @user during LDAP mapping.',
+            $this->logger->notice('Provisioning user @user during LDAP mapping.',
             [
               '@user' => $user->getDisplayName(),
             ]);

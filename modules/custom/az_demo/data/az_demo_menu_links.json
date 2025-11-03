@@ -144,6 +144,17 @@
       "weight": "6"
     },
     {
+      "link_id": "44",
+      "parent_link_id": "6",
+      "menu": "main",
+      "title": "Rankings",
+      "urlpath": "/pages/rankings",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "7"
+    },
+    {
       "link_id": "23",
       "parent_link_id": "6",
       "menu": "main",
@@ -152,7 +163,7 @@
       "external": false,
       "expanded": false,
       "enabled": true,
-      "weight": "7"
+      "weight": "8"
     },
     {
       "link_id": "24",
@@ -163,7 +174,7 @@
       "external": false,
       "expanded": false,
       "enabled": true,
-      "weight": "8"
+      "weight": "9"
     },
     {
       "link_id": "13",
@@ -174,7 +185,18 @@
       "external": false,
       "expanded": false,
       "enabled": true,
-      "weight": "9"
+      "weight": "10"
+    },
+    {
+      "link_id": "14",
+      "parent_link_id": "6",
+      "menu": "main",
+      "title": "Page List",
+      "urlpath": "/page-list",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "11"
     },
     {
       "link_id": "26",
@@ -185,7 +207,7 @@
       "external": false,
       "expanded": false,
       "enabled": true,
-      "weight": "11"
+      "weight": "12"
     },
     {
       "link_id": "27",
@@ -219,17 +241,6 @@
       "expanded": false,
       "enabled": true,
       "weight": "12"
-    },
-    {
-      "link_id": "14",
-      "parent_link_id": "6",
-      "menu": "main",
-      "title": "Page List",
-      "urlpath": "/page-list",
-      "external": false,
-      "expanded": false,
-      "enabled": true,
-      "weight": "10"
     },
     {
       "link_id": "15",
