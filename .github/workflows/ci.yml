@@ -43,7 +43,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@bf6b4fbd49ca58e4608c9c89fba0b8d90bd2a39f # 2.35.5
         with:
-          php-version: '8.3'
+          php-version: '8.4'
       - name: composer version
         run: composer --version
       - name: composer validate
@@ -58,7 +58,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@bf6b4fbd49ca58e4608c9c89fba0b8d90bd2a39f # 2.35.5
         with:
-          php-version: '8.3'
+          php-version: '8.4'
       - name: Find the push source branch name
         if: github.event_name != 'pull_request'
         run: |
@@ -128,7 +128,7 @@ jobs:
     steps:
       - uses: shivammathur/setup-php@bf6b4fbd49ca58e4608c9c89fba0b8d90bd2a39f # 2.35.5
         with:
-          php-version: '8.3'
+          php-version: '8.4'
           tools: cs2pr, phpcs
       - uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         with:
@@ -151,7 +151,7 @@ jobs:
     steps:
       - uses: shivammathur/setup-php@bf6b4fbd49ca58e4608c9c89fba0b8d90bd2a39f # 2.35.5
         with:
-          php-version: '8.3'
+          php-version: '8.4'
           tools: cs2pr, phpstan
       - uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         with:
@@ -230,7 +230,7 @@ jobs:
     steps:
       - uses: shivammathur/setup-php@bf6b4fbd49ca58e4608c9c89fba0b8d90bd2a39f # 2.35.5
         with:
-          php-version: '8.3'
+          php-version: '8.4'
           extensions: dom, curl, libxml, mbstring, zip, pdo, mysql, pdo_mysql, bcmath, soap, intl, gd, exif, iconv
       - uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         with:
@@ -240,18 +240,36 @@ jobs:
         run: |
           cd az-quickstart-scaffolding
           php -S 172.17.0.1:8080 -t web &
-      - name: Ensure sites/simpletest directory
+      - name: Prepare test directories
         run: |
-          cd az-quickstart-scaffolding
-          mkdir -p web/sites/simpletest
-          chmod 777 web/sites/simpletest
+          mkdir -pv $GITHUB_WORKSPACE/az-quickstart-scaffolding/reports
+          mkdir -pv $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/sites/simpletest/browser_output
+          chmod -R 777 $GITHUB_WORKSPACE/az-quickstart-scaffolding/reports
+          chmod -R 777 $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/sites/simpletest
       - name: Run phpunit test (${{ matrix.test.file }})
-        run: $GITHUB_WORKSPACE/az-quickstart-scaffolding/vendor/bin/phpunit --configuration $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/profiles/custom/az_quickstart/phpunit.xml.dist --bootstrap $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/core/tests/bootstrap.php --colors="always" --do-not-cache-result $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/profiles/custom/az_quickstart/"${{ matrix.test.file }}"
+        run: |
+          $GITHUB_WORKSPACE/az-quickstart-scaffolding/vendor/bin/phpunit \
+            --configuration $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/profiles/custom/az_quickstart/phpunit.xml.dist \
+            --bootstrap $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/core/tests/bootstrap.php \
+            --log-junit $GITHUB_WORKSPACE/az-quickstart-scaffolding/reports/junit.xml \
+            --colors="always" \
+            --do-not-cache-result \
+            $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/profiles/custom/az_quickstart/"${{ matrix.test.file }}"
         env:
           SYMFONY_DEPRECATIONS_HELPER: weak
           SIMPLETEST_DB: mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3306] }}/db
           SIMPLETEST_BASE_URL: http://172.17.0.1:8080
+          BROWSERTEST_OUTPUT_DIRECTORY: ${{ github.workspace }}/az-quickstart-scaffolding/web/sites/simpletest/browser_output
+          BROWSERTEST_OUTPUT_VERBOSE: true
           MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","goog:chromeOptions":{"args":["--disable-gpu","--headless","--disable-dev-shm-usage","--no-sandbox"]}}, "http://127.0.0.1:${{ job.services.chromedriver.ports[9515] }}"]'
+      - name: Upload PHPUnit Artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phpunit-results-${{ matrix.test.name }}
+          path: |
+            ./az-quickstart-scaffolding/web/sites/simpletest/browser_output/
+            ./az-quickstart-scaffolding/reports/junit.xml
 
   install:
     name: drush site:install
@@ -269,7 +287,7 @@ jobs:
     steps:
       - uses: shivammathur/setup-php@bf6b4fbd49ca58e4608c9c89fba0b8d90bd2a39f # 2.35.5
         with:
-          php-version: '8.3'
+          php-version: '8.4'
           extensions: dom, curl, libxml, mbstring, zip, pdo, mysql, pdo_mysql, bcmath, soap, intl, gd, exif, iconv
       - uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         with:
@@ -319,7 +337,7 @@ jobs:
     steps:
       - uses: shivammathur/setup-php@bf6b4fbd49ca58e4608c9c89fba0b8d90bd2a39f # 2.35.5
         with:
-          php-version: '8.3'
+          php-version: '8.4'
           extensions: dom, curl, libxml, mbstring, zip, pdo, mysql, pdo_mysql, bcmath, soap, intl, gd, exif, iconv
           tools: cs2pr
       - uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
