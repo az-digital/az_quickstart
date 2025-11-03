@@ -22,3 +22,10 @@ function az_media_update_last_removed() {
 function az_media_update_1021301() {
   \Drupal::service('module_installer')->install(['decorative_image_widget']);
 }
+
+/**
+ * Ensure media_library_form_element module is installed by default.
+ */
+function az_media_update_113101() {
+  \Drupal::service('module_installer')->install(['media_library_form_element']);
+}
