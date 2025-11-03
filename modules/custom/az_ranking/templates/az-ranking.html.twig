@@ -23,12 +23,14 @@
 #}
 {% set attributes = attributes.addClass('h-100', 'az-ranking-responsive', 'border-0', 'overflow-hidden') %}
 
-<div{{ attributes }}>
 {% if media %}
-  <div class="ranking-image-wrapper">
-    {{ media }}
+  <div class="h-100 az-ranking-responsive border-0 overflow-hidden">
+    <div class="ranking-image-wrapper">
+      {{ media }}
+    </div>
   </div>
 {% else %}
+<div{{ attributes }}>
   <div class="card-body d-flex flex-column h-100">
       <div class="card-text d-flex flex-column flex-grow-1">
         <div class="ranking-content">
@@ -69,5 +71,5 @@
         {% endif %}
       {% endif %}
     </div>
-  {% endif %}
-</div>
+  </div>
+{% endif %}
