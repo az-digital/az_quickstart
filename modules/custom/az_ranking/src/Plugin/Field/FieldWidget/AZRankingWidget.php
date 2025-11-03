@@ -169,12 +169,12 @@ class AZRankingWidget extends WidgetBase {
       if (empty($hover_class) && !empty($item->options['class'])) {
         $hover_class = $item->options['class'];
       }
-      if (!empty($hover_class)) {
+      if (!empty($hover_class) && $item->options['ranking_type'] !== 'image_only') {
         $ranking_classes .= ' from-hover-effect ' . $hover_class;
       }
     }
     else {
-      if (!empty($item->options['class'])) {
+      if (!empty($item->options['class']) && $item->options['ranking_type'] !== 'image_only') {
         $ranking_classes .= ' non-hover-effect ' . $item->options['class'];
       }
     }
@@ -786,7 +786,9 @@ class AZRankingWidget extends WidgetBase {
       }
     }
     // Apply paragraph settings found in AZRankingDefaultFormatter.
-    $ranking_classes .= ' ' . $ranking_alignment;
+    if ($item->options['ranking_type'] !== 'image_only') {
+      $ranking_classes .= ' ' . $ranking_alignment;
+    }
 
     // Apply clickable ranking styles (like formatter does).
     $link_title = $item->link_title ?? '';
@@ -795,8 +797,8 @@ class AZRankingWidget extends WidgetBase {
     if ($ranking_clickable) {
       // Add shadow when ranking is clickable.
       $ranking_classes .= ' shadow';
-      if (!empty($ranking_hover_effect)) {
-        $ranking_classes .= ' ranking-bold-hover ';
+      if (!empty($ranking_hover_effect) && $item->options['ranking_type'] !== 'image_only') {
+        $ranking_classes .= ' ranking-bold-hover';
       }
     }
     else {

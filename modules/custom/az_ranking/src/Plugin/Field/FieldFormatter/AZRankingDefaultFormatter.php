@@ -194,7 +194,9 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
           $column_classes[] = $ranking_defaults['ranking_width'] ?? 'col-md-4 col-lg-3';
           $ranking_clickable = $ranking_defaults['ranking_clickable'] ?? FALSE;
           $ranking_hover_effect = $ranking_defaults['ranking_hover_effect'] ?? FALSE;
-          $ranking_classes .= ' ' . ($ranking_defaults['ranking_alignment'] ?? 'text-left');
+          if ($item->options['ranking_type'] !== 'image_only') {
+            $ranking_classes .= ' ' . ($ranking_defaults['ranking_alignment'] ?? 'text-left');
+          }
           // Calculate column classes for image based on column_span.
           if ($item->options['ranking_type'] === 'image_only' &&
             !empty($item->options['column_span']) &&
@@ -239,12 +241,14 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
             $ranking_link_style = '';
             if (!empty($ranking_hover_effect)) {
               // Add hover effect to ranking card.
-              $ranking_classes .= ' ranking-bold-hover hover ';
+              if ($item->options['ranking_type'] !== 'image_only') {
+                $ranking_classes .= ' ranking-bold-hover hover';
+              }
             }
             else {
               // No hover effect but ranking is still clickable.
-              if (!empty($item->link_uri)) {
-                $ranking_classes .= ' ranking-with-link hover ';
+              if (!empty($item->link_uri) && $item->options['ranking_type'] !== 'image_only') {
+                $ranking_classes .= ' ranking-with-link hover';
               }
             }
           }
@@ -282,13 +286,13 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
         if (empty($hover_class) && !empty($item->options['class'])) {
           $hover_class = $item->options['class'];
         }
-        if (!empty($hover_class)) {
+        if (!empty($hover_class) && $item->options['ranking_type'] !== 'image_only') {
           $ranking_classes .= ' ' . $hover_class;
         }
       }
       // If ranking has no hover effect...
       else {
-        if (!empty($item->options['class'])) {
+        if (!empty($item->options['class']) && $item->options['ranking_type'] !== 'image_only') {
           $ranking_classes .= ' ' . $item->options['class'];
         }
       }
