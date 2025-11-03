@@ -5,10 +5,8 @@
 * @preserve
 **/
 ((Drupal, once) => {
-  'use strict';
-
   Drupal.behaviors.azRankingsParagraphBehavior = {
-    attach: (context, settings) => {
+    attach: context => {
       const clickableCheckboxes = once('az-rankings-clickable', 'input[name*="[ranking_clickable]"]', context);
       clickableCheckboxes.forEach(clickableElement => {
         const clickableName = clickableElement.getAttribute('name');

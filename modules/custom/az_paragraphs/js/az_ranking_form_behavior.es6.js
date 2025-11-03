@@ -6,19 +6,27 @@
  */
 
 ((Drupal, once) => {
-  'use strict';
 
   Drupal.behaviors.azRankingsParagraphBehavior = {
-    attach: (context, settings) => {
+    attach: (context) => {
       // Find all ranking_clickable checkboxes
-      const clickableCheckboxes = once('az-rankings-clickable', 'input[name*="[ranking_clickable]"]', context);
+      const clickableCheckboxes = once(
+        'az-rankings-clickable',
+        'input[name*="[ranking_clickable]"]',
+        context,
+      );
 
       clickableCheckboxes.forEach((clickableElement) => {
         // Find the corresponding ranking_hover_effect checkbox
         // It should be in the same form, with a similar name pattern
         const clickableName = clickableElement.getAttribute('name');
-        const hoverEffectName = clickableName.replace('[ranking_clickable]', '[ranking_hover_effect]');
-        const hoverEffectElement = document.querySelector(`input[name="${hoverEffectName}"]`);
+        const hoverEffectName = clickableName.replace(
+          '[ranking_clickable]', 
+          '[ranking_hover_effect]'
+        );
+        const hoverEffectElement = document.querySelector(
+          `input[name="${hoverEffectName}"]`
+        );
 
         if (!hoverEffectElement) {
           return; // Skip if we can't find the hover effect checkbox
@@ -31,12 +39,13 @@
             if (hoverEffectElement.checked) {
               hoverEffectElement.checked = false;
               // Trigger change event
-              hoverEffectElement.dispatchEvent(new Event('change', { bubbles: true }));
+              hoverEffectElement.dispatchEvent(
+                new Event('change', { bubbles: true })
+              );
             }
           }
         });
       });
-    }
+    },
   };
-
 })(Drupal, once);
