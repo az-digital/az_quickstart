@@ -30,7 +30,7 @@
         "citation-style-language/locales": "0.0.78",
         "citation-style-language/styles": "0.0.668",
         "composer/installers": "^2.0",
-        "cweagans/composer-patches": "^1.7",
+        "cweagans/composer-patches": "^2.0",
         "devanych/mime-types": "2.1.2",
         "drupal/access_unpublished": "1.8.0",
         "drupal/antibot": "2.0.4",
