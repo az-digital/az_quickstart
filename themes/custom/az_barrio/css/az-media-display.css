@@ -3,16 +3,16 @@
   margin-right: auto;
   margin-left: auto;
 }
+.az-default.az-media {
+  width: 100%;
+  max-width: 100%;
+}
 .az-large.az-media {
   width: 1140px;
   max-width:100%;
 }
 .az-medium.az-media {
-  width: 760px;
-  max-width:100%;
-}
-.az-natural-size.az-media {
-  width: auto;
+  width: 740px;
   max-width:100%;
 }
 .az-small.az-media {
@@ -27,10 +27,18 @@
   width:220px;
   max-width: 100%;
 }
-.az-default.az-media {
-  width: 100%;
-  max-width:100%;
+.az-natural-size.az-media {
+  width: auto;
+  max-width: 100%;
 }
 .field--type-entity-reference.field--name-field-az-media-image {
   margin-bottom: 0 !important;
+}
+@media (min-width:576px) {
+  .align-left .az-default.az-media,
+  .align-left .az-natural-size.az-media,
+  .align-right .az-default.az-media,
+  .align-right .az-natural-size.az-media {
+    width: 400px;
+  }
 }

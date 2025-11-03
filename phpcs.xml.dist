@@ -3,7 +3,7 @@
   <description>PHPCS configuration for AZ QuickStart</description>
   <!-- Check all files within the AZ QuickStart installation profile. -->
   <file>.</file>
-  <arg name="extensions" value="php,install,module,profile,inc"/>
+  <arg name="extensions" value="engine,inc,install,module,php,profile,test,theme,yml"/>
 
   <arg name="cache" value=".phpcs-cache"/>
   <arg name="parallel" value="10"/>

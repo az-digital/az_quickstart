@@ -4,8 +4,8 @@ description: 'Allows users to create and order carousel items.'
 core_version_requirement: ^10 || ^11 || ^12
 package: The University of Arizona
 dependencies:
-  - az_core
-  - az_media
+  - az_core:az_core
+  - az_media:az_media
   - blazy:blazy
   - draggableviews:draggableviews
   - drupal:block

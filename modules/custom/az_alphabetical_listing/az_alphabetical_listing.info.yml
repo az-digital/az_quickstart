@@ -4,6 +4,6 @@ core_version_requirement: ^10 || ^11 || ^12
 package: 'The University of Arizona'
 description: 'Provides an alphabetical listing field to add to content types, as well as a View to display that content in an alphabetical list.'
 dependencies:
-  - az_core
-  - field
-  - views
+  - az_core:az_core
+  - drupal:field
+  - drupal:views
