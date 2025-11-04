@@ -46,7 +46,7 @@ services:
         if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $BRANCH_NAME | wc -l) = 1 ]; then
           SCAFFOLD_BRANCH="$BRANCH_NAME"
         else
-          SCAFFOLD_BRANCH="main"
+          SCAFFOLD_BRANCH="3.1.x"
         fi
         git clone --branch $SCAFFOLD_BRANCH https://github.com/az-digital/az-quickstart-scaffolding.git /app
       # Use the installation profile as a non-packagist repository.
