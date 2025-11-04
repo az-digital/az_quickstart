@@ -91,8 +91,8 @@ content:
       default_paragraph_type: _none
       features:
         add_above: add_above
-        convert: '0'
         collapse_edit_all: collapse_edit_all
+        convert: '0'
         duplicate: duplicate
     third_party_settings: {  }
   field_az_marketing_page_style:
