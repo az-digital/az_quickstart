@@ -162,13 +162,14 @@ content:
       edit_mode: closed
       closed_mode: preview
       autocollapse: all
-      closed_mode_threshold: 0
+      closed_mode_threshold: 3
       add_mode: button
       form_display_mode: default
       default_paragraph_type: _none
       features:
-        add_above: '0'
+        add_above: add_above
         collapse_edit_all: collapse_edit_all
+        convert: '0'
         duplicate: duplicate
     third_party_settings: {  }
   field_az_media_image:
