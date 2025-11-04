@@ -5,6 +5,7 @@ on:
     branches:
       - 'main'
       - '2.x'
+      - '3.1.x'
       - '3.0.x'
       - '2.14.x'
       - '2.13.x'
@@ -75,10 +76,10 @@ jobs:
         run: |
           echo "DEFAULT_SCAFFOLD_BRANCH=2.x" >> ${GITHUB_ENV}
           echo "DEFAULT_DEV_BRANCH=1.x" >> ${GITHUB_ENV}
-      - name: Fallback to main branch
+      - name: Fallback to 3.1.x/main branch
         if: steps.test-2-x.outcome == 'skipped'
         run: |
-          echo "DEFAULT_SCAFFOLD_BRANCH=main" >> ${GITHUB_ENV}
+          echo "DEFAULT_SCAFFOLD_BRANCH=3.1.x" >> ${GITHUB_ENV}
           echo "DEFAULT_DEV_BRANCH=main" >> ${GITHUB_ENV}
       - name: Set variables
         run: |
