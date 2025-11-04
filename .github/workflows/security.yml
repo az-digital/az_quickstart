@@ -25,7 +25,7 @@ jobs:
           if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $AZ_TRIMMED_REF | wc -l) = 1 ]; then
             echo "SCAFFOLD_BRANCH=${AZ_TRIMMED_REF}" >> ${GITHUB_ENV}
           else
-            echo "SCAFFOLD_BRANCH=main" >> ${GITHUB_ENV}
+            echo "SCAFFOLD_BRANCH=3.1.x" >> ${GITHUB_ENV}
           fi
           if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-dev.git $AZ_TRIMMED_REF | wc -l) = 1 ]; then
             echo "DEV_PACKAGE_BRANCH=${AZ_TRIMMED_REF}" >> ${GITHUB_ENV}

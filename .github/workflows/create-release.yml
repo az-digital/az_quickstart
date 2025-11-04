@@ -44,7 +44,7 @@ jobs:
           if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $GITHUB_REF_NAME | wc -l) = 1 ]; then
             echo "SCAFFOLD_BRANCH=${GITHUB_REF_NAME}" >> ${GITHUB_ENV}
           else
-            echo "SCAFFOLD_BRANCH=main" >> ${GITHUB_ENV}
+            echo "SCAFFOLD_BRANCH=3.1.x" >> ${GITHUB_ENV}
           fi
       - name: Clone scaffolding repo
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
