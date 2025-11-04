@@ -111,7 +111,7 @@ content:
     settings:
       title: Contact
       title_plural: Contacts
-      edit_mode: closed
+      edit_mode: open
       add_mode: dropdown
       form_display_mode: default
       default_paragraph_type: _none
@@ -156,7 +156,7 @@ content:
     third_party_settings: {  }
   field_az_main_content:
     type: paragraphs
-    weight: 6
+    weight: 1
     region: content
     settings:
       title: Paragraph
