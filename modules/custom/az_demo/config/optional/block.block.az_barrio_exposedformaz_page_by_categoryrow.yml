@@ -1,16 +1,13 @@
 langcode: en
 status: true
 dependencies:
+  module:
+    - system
+  theme:
+    - az_barrio
   enforced:
     module:
       - az_demo
-  config:
-    - views.view.az_page_by_category
-  module:
-    - system
-    - views
-  theme:
-    - az_barrio
 id: az_barrio_exposedformaz_page_by_categoryrow
 theme: az_barrio
 region: sidebar_first

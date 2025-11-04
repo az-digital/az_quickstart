@@ -347,34 +347,43 @@ display:
               autosubmit: true
               autosubmit_exclude_textfield: false
               autosubmit_textfield_delay: 500
+              autosubmit_textfield_minimum_length: 3
               autosubmit_hide: true
               input_required: false
               allow_secondary: false
               secondary_label: 'Advanced options'
               secondary_open: false
               reset_button_always_show: false
+              active_filter_indicator_on_top_level_terms: 1
             filter:
               title:
                 plugin_id: default
                 advanced:
                   placeholder_text: ''
                   collapsible: false
+                  collapsible_disable_automatic_open: false
                   is_secondary: false
+                  hide_label: false
               tid:
                 plugin_id: az_finder_tid_widget
                 advanced:
                   sort_options: false
+                  placeholder_text: ''
                   rewrite:
                     filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
                   collapsible: false
+                  collapsible_disable_automatic_open: false
                   is_secondary: false
+                  hide_label: false
+                default_states: {  }
           reset_button_position: top
           reset_button_counter: true
           orientation: vertical
           skip_link: true
           skip_link_text: 'Skip to search and filter'
           skip_link_id: search-filter
-          active_filter_indicator_on_top_level_terms: false
+          active_filter_indicator_on_top_level_terms: true
       filters:
         status:
           id: status
@@ -475,12 +484,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              az_content_editor: '0'
-              az_content_admin: '0'
-              az_user_admin: '0'
-              az_html_admin: '0'
-              administrator: '0'
             placeholder: ''
           is_grouped: false
           group_info:
@@ -520,12 +523,6 @@ display:
             multiple: true
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              az_content_editor: '0'
-              az_content_admin: '0'
-              az_user_admin: '0'
-              az_html_admin: '0'
-              administrator: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -569,13 +566,13 @@ display:
         title: false
         use_ajax: false
         pager: false
+        pager_options: false
         exposed_form: false
         style: false
         style_options: false
         row: false
         filters: false
         filter_groups: false
-        pager_options: false
         footer: false
       use_ajax: true
       display_description: 'Use in a region that spans at least 12 columns.'
@@ -634,34 +631,43 @@ display:
               autosubmit: true
               autosubmit_exclude_textfield: false
               autosubmit_textfield_delay: 500
+              autosubmit_textfield_minimum_length: 3
               autosubmit_hide: true
               input_required: false
               allow_secondary: false
               secondary_label: 'Advanced options'
               secondary_open: false
               reset_button_always_show: false
+              active_filter_indicator_on_top_level_terms: 1
             filter:
               title:
                 plugin_id: default
                 advanced:
                   placeholder_text: ''
                   collapsible: false
+                  collapsible_disable_automatic_open: false
                   is_secondary: false
+                  hide_label: false
               tid:
                 plugin_id: az_finder_tid_widget
                 advanced:
                   sort_options: false
+                  placeholder_text: ''
                   rewrite:
                     filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
                   collapsible: false
+                  collapsible_disable_automatic_open: false
                   is_secondary: false
+                  hide_label: false
+                default_states: {  }
           reset_button_position: top
           reset_button_counter: true
           orientation: vertical
           skip_link: true
           skip_link_text: 'Skip to search and filter'
           skip_link_id: search-filter
-          active_filter_indicator_on_top_level_terms: false
+          active_filter_indicator_on_top_level_terms: true
       filters:
         status:
           id: status
@@ -762,12 +768,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              az_content_editor: '0'
-              az_content_admin: '0'
-              az_user_admin: '0'
-              az_html_admin: '0'
-              administrator: '0'
             placeholder: ''
           is_grouped: false
           group_info:
@@ -807,12 +807,6 @@ display:
             multiple: true
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              az_content_editor: '0'
-              az_content_admin: '0'
-              az_user_admin: '0'
-              az_html_admin: '0'
-              administrator: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -856,13 +850,13 @@ display:
         title: false
         use_ajax: false
         pager: false
+        pager_options: false
         exposed_form: false
         style: false
         style_options: false
         row: false
         filters: false
         filter_groups: false
-        pager_options: false
         footer: false
       use_ajax: true
       display_description: 'Use in a region that spans at least 12 columns.'
@@ -938,34 +932,43 @@ display:
               autosubmit: true
               autosubmit_exclude_textfield: false
               autosubmit_textfield_delay: 500
+              autosubmit_textfield_minimum_length: 3
               autosubmit_hide: true
               input_required: false
               allow_secondary: false
               secondary_label: 'Advanced options'
               secondary_open: false
               reset_button_always_show: false
+              active_filter_indicator_on_top_level_terms: 1
             filter:
               title:
                 plugin_id: default
                 advanced:
                   placeholder_text: ''
                   collapsible: false
+                  collapsible_disable_automatic_open: false
                   is_secondary: false
+                  hide_label: false
               tid:
                 plugin_id: az_finder_tid_widget
                 advanced:
                   sort_options: false
+                  placeholder_text: ''
                   rewrite:
                     filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
                   collapsible: false
+                  collapsible_disable_automatic_open: false
                   is_secondary: false
+                  hide_label: false
+                default_states: {  }
           reset_button_position: top
           reset_button_counter: true
           orientation: vertical
           skip_link: true
           skip_link_text: 'Skip to search and filter'
           skip_link_id: search-filter
-          active_filter_indicator_on_top_level_terms: false
+          active_filter_indicator_on_top_level_terms: true
       empty:
         area:
           id: area
@@ -1095,12 +1098,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              az_content_editor: '0'
-              az_content_admin: '0'
-              az_user_admin: '0'
-              az_html_admin: '0'
-              administrator: '0'
             placeholder: ''
           is_grouped: false
           group_info:
@@ -1140,12 +1137,6 @@ display:
             multiple: true
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              az_content_editor: '0'
-              az_content_admin: '0'
-              az_user_admin: '0'
-              az_html_admin: '0'
-              administrator: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -1190,6 +1181,7 @@ display:
         title: false
         use_ajax: false
         pager: false
+        pager_options: false
         exposed_form: false
         style: false
         style_options: false
@@ -1197,7 +1189,6 @@ display:
         sorts: false
         filters: false
         filter_groups: false
-        pager_options: false
         footer: false
       use_ajax: true
       display_description: 'Use in a region that spans at least 12 columns.'
@@ -1214,163 +1205,6 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
-        - 'user.node_grants:view'
-        - user.permissions
-      tags: {  }
-  az_sidebar:
-    id: az_sidebar
-    display_title: 'Grid Sidebar'
-    display_plugin: block
-    position: 3
-    display_options:
-      title: ''
-      pager:
-        type: some
-        options:
-          offset: 0
-          items_per_page: 3
-      empty: {  }
-      sorts:
-        field_az_event_date_value:
-          id: field_az_event_date_value
-          table: node__field_az_event_date
-          field: field_az_event_date_value
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: date
-          order: ASC
-          expose:
-            label: ''
-            field_identifier: field_az_event_date_value
-          exposed: false
-          granularity: second
-      arguments:
-        term_node_tid_depth:
-          id: term_node_tid_depth
-          table: node_field_data
-          field: term_node_tid_depth
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: node
-          plugin_id: taxonomy_index_tid_depth
-          default_action: ignore
-          exception:
-            value: all
-            title_enable: false
-            title: All
-          title_enable: false
-          title: ''
-          default_argument_type: fixed
-          default_argument_options:
-            argument: ''
-          summary_options:
-            base_path: ''
-            count: true
-            override: false
-            items_per_page: 25
-          summary:
-            sort_order: asc
-            number_of_records: 0
-            format: default_summary
-          specify_validation: true
-          validate:
-            type: 'entity:taxonomy_term'
-            fail: 'not found'
-          validate_options:
-            bundles:
-              az_event_categories: az_event_categories
-            access: false
-            operation: view
-            multiple: 1
-          break_phrase: false
-          depth: 0
-          use_taxonomy_term_path: false
-        nid:
-          id: nid
-          table: node_field_data
-          field: nid
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: node
-          entity_field: nid
-          plugin_id: node_nid
-          default_action: default
-          exception:
-            value: all
-            title_enable: false
-            title: All
-          title_enable: false
-          title: ''
-          default_argument_type: node
-          default_argument_options: {  }
-          summary_options:
-            base_path: ''
-            count: true
-            override: false
-            items_per_page: 25
-          summary:
-            sort_order: asc
-            number_of_records: 0
-            format: default_summary
-          specify_validation: true
-          validate:
-            type: 'entity:node'
-            fail: 'not found'
-          validate_options:
-            bundles:
-              az_event: az_event
-            access: false
-            operation: view
-            multiple: 0
-          break_phrase: false
-          not: true
-      defaults:
-        empty: false
-        title: false
-        pager: false
-        sorts: false
-        arguments: false
-        pager_options: false
-        header: false
-        footer: false
-      display_description: 'Use in first or second sidebar regions'
-      pager_options: null
-      header:
-        area_text_custom:
-          id: area_text_custom
-          table: views
-          field: area_text_custom
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: text_custom
-          empty: false
-          content: '<h2 class="h5 margin-align-middle text-uppercase">Upcoming Events</h2>'
-          tokenize: false
-      footer:
-        area_text_custom:
-          id: area_text_custom
-          table: views
-          field: area_text_custom
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: text_custom
-          empty: false
-          content: "<div class=\"text-align-center\">\r\n<a title=\"View all events\" class=\"btn btn-outline-blue\" href=\"/calendar\">View all events</a>\r\n</div>"
-          tokenize: false
-      display_extenders: {  }
-      block_description: 'Sidebar Events Block'
-      allow:
-        items_per_page: false
-    cache_metadata:
-      max-age: -1
-      contexts:
-        - 'languages:language_interface'
-        - url
         - 'user.node_grants:view'
         - user.permissions
       tags: {  }
@@ -1577,12 +1411,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              az_content_editor: '0'
-              az_content_admin: '0'
-              az_user_admin: '0'
-              az_html_admin: '0'
-              administrator: '0'
             placeholder: ''
           is_grouped: false
           group_info:
@@ -1622,12 +1450,6 @@ display:
             multiple: true
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              az_content_editor: '0'
-              az_content_admin: '0'
-              az_user_admin: '0'
-              az_html_admin: '0'
-              administrator: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -1668,6 +1490,7 @@ display:
         title: false
         use_ajax: false
         pager: false
+        pager_options: false
         exposed_form: false
         style: false
         style_options: false
@@ -1675,7 +1498,6 @@ display:
         sorts: false
         filters: false
         filter_groups: false
-        pager_options: false
         footer: false
       use_ajax: true
       display_description: 'Use in a region that spans at least 12 columns.'
@@ -1692,6 +1514,163 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
+        - 'user.node_grants:view'
+        - user.permissions
+      tags: {  }
+  az_sidebar:
+    id: az_sidebar
+    display_title: 'Grid Sidebar'
+    display_plugin: block
+    position: 3
+    display_options:
+      title: ''
+      pager:
+        type: some
+        options:
+          offset: 0
+          items_per_page: 3
+      empty: {  }
+      sorts:
+        field_az_event_date_value:
+          id: field_az_event_date_value
+          table: node__field_az_event_date
+          field: field_az_event_date_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: date
+          order: ASC
+          expose:
+            label: ''
+            field_identifier: field_az_event_date_value
+          exposed: false
+          granularity: second
+      arguments:
+        term_node_tid_depth:
+          id: term_node_tid_depth
+          table: node_field_data
+          field: term_node_tid_depth
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          plugin_id: taxonomy_index_tid_depth
+          default_action: ignore
+          exception:
+            value: all
+            title_enable: false
+            title: All
+          title_enable: false
+          title: ''
+          default_argument_type: fixed
+          default_argument_options:
+            argument: ''
+          summary_options:
+            base_path: ''
+            count: true
+            override: false
+            items_per_page: 25
+          summary:
+            sort_order: asc
+            number_of_records: 0
+            format: default_summary
+          specify_validation: true
+          validate:
+            type: 'entity:taxonomy_term'
+            fail: 'not found'
+          validate_options:
+            bundles:
+              az_event_categories: az_event_categories
+            access: false
+            operation: view
+            multiple: 1
+          break_phrase: false
+          depth: 0
+          use_taxonomy_term_path: false
+        nid:
+          id: nid
+          table: node_field_data
+          field: nid
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          entity_field: nid
+          plugin_id: node_nid
+          default_action: default
+          exception:
+            value: all
+            title_enable: false
+            title: All
+          title_enable: false
+          title: ''
+          default_argument_type: node
+          default_argument_options: {  }
+          summary_options:
+            base_path: ''
+            count: true
+            override: false
+            items_per_page: 25
+          summary:
+            sort_order: asc
+            number_of_records: 0
+            format: default_summary
+          specify_validation: true
+          validate:
+            type: 'entity:node'
+            fail: 'not found'
+          validate_options:
+            bundles:
+              az_event: az_event
+            access: false
+            operation: view
+            multiple: 0
+          break_phrase: false
+          not: true
+      defaults:
+        empty: false
+        title: false
+        pager: false
+        pager_options: false
+        sorts: false
+        arguments: false
+        header: false
+        footer: false
+      display_description: 'Use in first or second sidebar regions'
+      pager_options: null
+      header:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text_custom
+          empty: false
+          content: '<h2 class="h5 margin-align-middle text-uppercase">Upcoming Events</h2>'
+          tokenize: false
+      footer:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text_custom
+          empty: false
+          content: "<div class=\"text-align-center\">\r\n<a title=\"View all events\" class=\"btn btn-outline-blue\" href=\"/calendar\">View all events</a>\r\n</div>"
+          tokenize: false
+      display_extenders: {  }
+      block_description: 'Sidebar Events Block'
+      allow:
+        items_per_page: false
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_interface'
+        - url
         - 'user.node_grants:view'
         - user.permissions
       tags: {  }
@@ -1772,10 +1751,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              az_content_editor: '0'
-              az_content_admin: '0'
-              administrator: '0'
             min_placeholder: ''
             max_placeholder: ''
             placeholder: ''
@@ -1818,11 +1793,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              az_content_editor: '0'
-              az_content_admin: '0'
-              az_user_admin: '0'
-              administrator: '0'
             reduce: false
           is_grouped: false
           group_info:

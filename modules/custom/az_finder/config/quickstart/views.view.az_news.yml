@@ -306,11 +306,11 @@ display:
           view_mode: az_feature
       defaults:
         pager: false
+        pager_options: false
         style: false
         style_options: false
         row: false
         sorts: true
-        pager_options: false
       display_description: ''
       pager_options: null
       style_options: null
@@ -352,42 +352,56 @@ display:
               autosubmit: true
               autosubmit_exclude_textfield: false
               autosubmit_textfield_delay: 500
+              autosubmit_textfield_minimum_length: 3
               autosubmit_hide: true
               input_required: false
               allow_secondary: false
               secondary_label: 'Advanced options'
               secondary_open: false
               reset_button_always_show: false
+              active_filter_indicator_on_top_level_terms: 1
             filter:
               title:
                 plugin_id: default
                 advanced:
                   placeholder_text: ''
                   collapsible: false
+                  collapsible_disable_automatic_open: false
                   is_secondary: false
+                  hide_label: false
               tid:
                 plugin_id: az_finder_tid_widget
                 advanced:
                   sort_options: false
+                  placeholder_text: ''
                   rewrite:
                     filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
                   collapsible: false
+                  collapsible_disable_automatic_open: false
                   is_secondary: false
+                  hide_label: false
+                default_states: {  }
               tid_1:
                 plugin_id: az_finder_tid_widget
                 advanced:
                   sort_options: false
+                  placeholder_text: ''
                   rewrite:
                     filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
                   collapsible: false
+                  collapsible_disable_automatic_open: false
                   is_secondary: false
+                  hide_label: false
+                default_states: {  }
           reset_button_position: top
           reset_button_counter: true
           orientation: vertical
           skip_link: true
           skip_link_text: 'Skip to search and filter'
           skip_link_id: search-filter
-          active_filter_indicator_on_top_level_terms: false
+          active_filter_indicator_on_top_level_terms: true
       empty:
         area:
           id: area
@@ -457,12 +471,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              az_content_editor: '0'
-              az_content_admin: '0'
-              az_user_admin: '0'
-              az_html_admin: '0'
-              administrator: '0'
             placeholder: ''
           is_grouped: false
           group_info:
@@ -502,12 +510,6 @@ display:
             multiple: true
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              az_content_editor: '0'
-              az_content_admin: '0'
-              az_user_admin: '0'
-              az_html_admin: '0'
-              administrator: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -553,12 +555,6 @@ display:
             multiple: true
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              az_content_editor: '0'
-              az_content_admin: '0'
-              az_user_admin: '0'
-              az_html_admin: '0'
-              administrator: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -749,11 +745,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              az_content_editor: '0'
-              az_content_admin: '0'
-              az_user_admin: '0'
-              administrator: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -796,13 +787,13 @@ display:
       defaults:
         use_ajax: false
         pager: false
+        pager_options: false
         exposed_form: false
         style: false
         style_options: false
         row: false
         filters: false
         filter_groups: false
-        pager_options: false
         footer: false
       use_ajax: true
       display_description: ''
@@ -860,42 +851,56 @@ display:
               autosubmit: true
               autosubmit_exclude_textfield: false
               autosubmit_textfield_delay: 500
+              autosubmit_textfield_minimum_length: 3
               autosubmit_hide: true
               input_required: false
               allow_secondary: false
               secondary_label: 'Advanced options'
               secondary_open: false
               reset_button_always_show: false
+              active_filter_indicator_on_top_level_terms: 1
             filter:
               title:
                 plugin_id: default
                 advanced:
                   placeholder_text: ''
                   collapsible: false
+                  collapsible_disable_automatic_open: false
                   is_secondary: false
+                  hide_label: false
               tid:
                 plugin_id: az_finder_tid_widget
                 advanced:
                   sort_options: false
+                  placeholder_text: ''
                   rewrite:
                     filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
                   collapsible: false
+                  collapsible_disable_automatic_open: false
                   is_secondary: false
+                  hide_label: false
+                default_states: {  }
               tid_1:
                 plugin_id: az_finder_tid_widget
                 advanced:
                   sort_options: false
+                  placeholder_text: ''
                   rewrite:
                     filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
                   collapsible: false
+                  collapsible_disable_automatic_open: false
                   is_secondary: false
+                  hide_label: false
+                default_states: {  }
           reset_button_position: top
           reset_button_counter: true
           orientation: vertical
           skip_link: true
           skip_link_text: 'Skip to search and filter'
           skip_link_id: search-filter
-          active_filter_indicator_on_top_level_terms: false
+          active_filter_indicator_on_top_level_terms: true
       empty:
         area:
           id: area
@@ -964,12 +969,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              az_content_editor: '0'
-              az_content_admin: '0'
-              az_user_admin: '0'
-              az_html_admin: '0'
-              administrator: '0'
             placeholder: ''
           is_grouped: false
           group_info:
@@ -1009,12 +1008,6 @@ display:
             multiple: true
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              az_content_editor: '0'
-              az_content_admin: '0'
-              az_user_admin: '0'
-              az_html_admin: '0'
-              administrator: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -1060,12 +1053,6 @@ display:
             multiple: true
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              az_content_editor: '0'
-              az_content_admin: '0'
-              az_user_admin: '0'
-              az_html_admin: '0'
-              administrator: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -1514,10 +1501,10 @@ display:
           view_mode: az_card
       defaults:
         pager: false
+        pager_options: false
         style: false
         style_options: false
         row: false
-        pager_options: false
       display_description: 'Grid of teasers that appears on /news-teasers (offset by 4)'
       pager_options: null
       style_options: null
@@ -1575,10 +1562,10 @@ display:
         title: false
         css_class: false
         pager: false
+        pager_options: false
         style: false
         style_options: false
         row: false
-        pager_options: false
       css_class: row
       display_description: ''
       pager_options: null
@@ -1625,10 +1612,10 @@ display:
         title: false
         css_class: false
         pager: false
+        pager_options: false
         style: false
         style_options: false
         row: false
-        pager_options: false
       css_class: ''
       display_description: ''
       pager_options: null

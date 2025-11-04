@@ -1,16 +1,13 @@
 langcode: en
 status: true
 dependencies:
+  module:
+    - system
+  theme:
+    - az_barrio
   enforced:
     module:
       - az_demo
-  config:
-    - views.view.az_events
-  module:
-    - system
-    - views
-  theme:
-    - az_barrio
 id: az_barrio_exposedformaz_eventsaz_past_grid_images
 theme: az_barrio
 region: sidebar_first

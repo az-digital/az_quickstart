@@ -313,12 +313,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              az_content_editor: '0'
-              az_content_admin: '0'
-              az_user_admin: '0'
-              az_html_admin: '0'
-              administrator: '0'
             placeholder: ''
           is_grouped: false
           group_info:
@@ -358,12 +352,6 @@ display:
             multiple: true
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              az_content_editor: '0'
-              az_content_admin: '0'
-              az_user_admin: '0'
-              az_html_admin: '0'
-              administrator: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -540,12 +528,14 @@ display:
               autosubmit: true
               autosubmit_exclude_textfield: false
               autosubmit_textfield_delay: 500
+              autosubmit_textfield_minimum_length: 3
               autosubmit_hide: true
               input_required: false
               allow_secondary: false
               secondary_label: 'Advanced options'
               secondary_open: false
               reset_button_always_show: false
+              active_filter_indicator_on_top_level_terms: 1
             filter:
               title:
                 plugin_id: default
@@ -554,6 +544,7 @@ display:
                   collapsible: false
                   collapsible_disable_automatic_open: false
                   is_secondary: false
+                  hide_label: false
               tid:
                 plugin_id: az_finder_tid_widget
                 advanced:
@@ -565,6 +556,7 @@ display:
                   collapsible: false
                   collapsible_disable_automatic_open: false
                   is_secondary: false
+                  hide_label: false
                 default_states: {  }
           reset_button_position: top
           reset_button_counter: true
@@ -572,7 +564,7 @@ display:
           skip_link: true
           skip_link_text: 'Skip to search and filter'
           skip_link_id: search-filter
-          active_filter_indicator_on_top_level_terms: false
+          active_filter_indicator_on_top_level_terms: true
       style:
         type: default
         options:
