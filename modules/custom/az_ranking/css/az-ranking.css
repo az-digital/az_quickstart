@@ -1,0 +1,72 @@
+/* Header styles */
+.header-with-link:hover * {
+  text-decoration: underline !important;
+}
+
+/* Responsive ranking card styles */
+.az-ranking-responsive {
+  /* Small viewports. Default: 1 card per row */
+  min-height: 190px;
+}
+
+/* Stretched Link fix for hidden cards */
+.card-body .visually-hidden {
+  display: block;
+  position: static !important;
+}
+
+/* Medium viewports. Default: 2 cards per row */
+@media (min-width: 768px) {
+  .az-ranking-responsive {
+    min-height: 230px;
+  }
+}
+
+/* Large viewports. Default: 4 cards per row */
+@media (min-width: 992px) {
+  .az-ranking-responsive {
+    min-height: 260px;
+  }
+}
+
+/**
+ * Pre-set css hover colors based on primary card background color
+ *
+ */
+.text-bg-chili.ranking-bold-hover:hover * {
+  background-color: #ffffff !important;
+  color: RGBA(var(--bs-chili-rgb), var(--bs-bg-opacity, 1)) !important;
+}
+.text-bg-blue.ranking-bold-hover:hover * {
+    background-color: #ffffff !important;
+    color: RGBA(var(--bs-blue-rgb),var(--bs-bg-opacity,1)) !important;
+}
+.bg-sky.ranking-bold-hover:hover * {
+    background-color: RGBA(var(--bs-blue-rgb),var(--bs-bg-opacity,1)) !important;
+    color: RGBA(var(--bs-sky-rgb),var(--bs-bg-opacity,1)) !important;
+}
+.bg-cool-gray.ranking-bold-hover:hover * {
+  background-color: RGBA(var(--bs-azurite-rgb), var(--bs-bg-opacity, 1)) !important;
+  color: RGBA(var(--bs-cool-gray-rgb), var(--bs-bg-opacity, 1)) !important;
+}
+.bg-oasis.ranking-bold-hover:hover * {
+    background-color: RGBA(var(--bs-midnight-rgb),var(--bs-bg-opacity,1)) !important;
+    color: RGBA(var(--bs-oasis-rgb),var(--bs-bg-opacity,1)) !important;
+}
+
+/**
+ * Transparent BG Ranking font color overrides, ignoring user-set links
+ */
+
+.ranking-text-white *:not(a) {
+    color: #ffffff !important;
+}
+.ranking-text-black *:not(a) {
+    color: #000000 !important;
+}
+.ranking-text-az-blue *:not(a) {
+    color: RGBA(var(--bs-blue-rgb),var(--bs-bg-opacity,1));
+}
+.ranking-text-midnight *:not(a) {
+    color: RGBA(var(--bs-midnight-rgb),var(--bs-bg-opacity,1)) !important;
+}

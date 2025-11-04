@@ -1,0 +1,6 @@
+az_person_eds_import.import_tab:
+  title: 'Import Person from EDS'
+  route_name: az_person_eds_import.form
+  parent_id: system.admin_content
+  description: 'Import a person from EDS'
+  weight: 103

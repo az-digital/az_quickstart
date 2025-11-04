@@ -101,7 +101,11 @@
 	}
 
 /* Slide Image */
-.az-carousel-slide img {
+.az-carousel-slide .field__item img {
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
 	position: relative;
 	display: block;
 	min-width: 100%;
