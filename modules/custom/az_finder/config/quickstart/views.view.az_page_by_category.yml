@@ -434,12 +434,14 @@ display:
               autosubmit: true
               autosubmit_exclude_textfield: false
               autosubmit_textfield_delay: 500
+              autosubmit_textfield_minimum_length: 3
               autosubmit_hide: true
               input_required: false
               allow_secondary: false
               secondary_label: 'Advanced options'
               secondary_open: false
               reset_button_always_show: false
+              active_filter_indicator_on_top_level_terms: 1
             filter:
               title:
                 plugin_id: default
@@ -448,6 +450,7 @@ display:
                   collapsible: false
                   collapsible_disable_automatic_open: false
                   is_secondary: false
+                  hide_label: false
               tid:
                 plugin_id: az_finder_tid_widget
                 advanced:
@@ -459,6 +462,7 @@ display:
                   collapsible: false
                   collapsible_disable_automatic_open: false
                   is_secondary: false
+                  hide_label: false
                 default_states: {  }
           reset_button_position: top
           reset_button_counter: true
@@ -466,7 +470,7 @@ display:
           skip_link: true
           skip_link_text: 'Skip to search and filter'
           skip_link_id: search-filter
-          active_filter_indicator_on_top_level_terms: false
+          active_filter_indicator_on_top_level_terms: true
       style:
         type: views_bootstrap_grid
         options:
