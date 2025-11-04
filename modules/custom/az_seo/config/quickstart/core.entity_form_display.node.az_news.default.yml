@@ -161,7 +161,7 @@ content:
     settings:
       title: Paragraph
       title_plural: Paragraphs
-      edit_mode: closed_expand_nested
+      edit_mode: closed
       closed_mode: preview
       autocollapse: all
       closed_mode_threshold: 3
