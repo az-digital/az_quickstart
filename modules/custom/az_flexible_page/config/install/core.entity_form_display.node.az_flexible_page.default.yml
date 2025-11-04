@@ -90,7 +90,7 @@ content:
       form_display_mode: default
       default_paragraph_type: _none
       features:
-        add_above: '0'
+        add_above: add_above
         convert: convert
         collapse_edit_all: collapse_edit_all
         duplicate: duplicate
