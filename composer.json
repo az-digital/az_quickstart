@@ -176,6 +176,9 @@
                 "Recent changes to migrate_drupal can break migrations that rely on hook_migration_plugins_alter() (3546325)": "https://www.drupal.org/files/issues/2025-09-11/3546325-11-2-x.patch",
                 "Display Bug when using #states (Forms API) with Ajax Request (1091852)": "https://www.drupal.org/files/issues/2023-12-18/1091852-186.patch"
             },
+            "drupal/date_ap_style": {
+                "PHP 8.4 compatibility (3542712)": "https://git.drupalcode.org/project/date_ap_style/-/commit/a1ff8a3f346a29d452ff1936ae6617ffba278a8a.diff"
+            },
             "drupal/draggableviews": {
                 "Row weights not displaying on sort view (3252365)": "https://www.drupal.org/files/issues/2023-08-25/3252365-check-remove-select-all-class.patch",
                 "Reset button, to reset the weight all back to 0 (3388659)": "https://www.drupal.org/files/issues/2023-09-21/3388659-reset-button-2.patch",
