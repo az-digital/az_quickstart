@@ -209,7 +209,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     $variables['attributes']['class'][] = 'paragraph';
     $variables['attributes']['class'][] = 'position-relative';
     $variables['attributes']['class'][] = HTML::getClass('paragraph--type--' . $paragraph->bundle());
-    if (!empty($variables['content']['field_az_media']['#media_type'])) {
+    if (!empty($variables['content']['field_az_media'][0]['#media_type'])) {
       $variables['attributes']['class'][] = 'media--type--' . HTML::getClass($variables['content']['field_az_media']['#media_type']);
     }
     $variables['attributes']['class'][] = HTML::getClass('paragraph--view-mode--' . $variables['view_mode']);
