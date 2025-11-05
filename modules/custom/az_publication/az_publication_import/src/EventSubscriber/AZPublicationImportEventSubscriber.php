@@ -4,6 +4,7 @@ namespace Drupal\az_publication_import\EventSubscriber;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Messenger\Messenger;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\migrate\Event\MigrateEvents;
 use Drupal\migrate\Event\MigratePostRowSaveEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -12,6 +13,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  * Reponse to publication migration import events.
  */
 class AZPublicationImportEventSubscriber implements EventSubscriberInterface {
+
+  use StringTranslationTrait;
 
   /**
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
@@ -67,7 +70,7 @@ class AZPublicationImportEventSubscriber implements EventSubscriberInterface {
       $publication = $this->nodeStorage->load($id);
       $url = $publication->toUrl()->toString();
       if (!empty($publication)) {
-        $this->messenger->addMessage(t('Imported <a href="@publink">@pubtitle</a>.', [
+        $this->messenger->addMessage($this->t('Imported <a href="@publink">@pubtitle</a>.', [
           '@publink' => $url,
           '@pubtitle' => $publication->getTitle(),
         ]));

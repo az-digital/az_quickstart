@@ -98,12 +98,12 @@ function template_preprocess_az_responsive_background_image(array &$variables) {
     ->getFallbackImageStyle(), $variables['uri']);
 
   // Split each source into multiple rules.
-  foreach (array_reverse($variables['sources']) as $source_i => $source) {
+  foreach (array_reverse($variables['sources']) as $source) {
     $attr = $source->toArray();
 
     $srcset = explode(', ', $attr['srcset']);
 
-    foreach ($srcset as $src_i => $src) {
+    foreach ($srcset as $src) {
       [$src, $res] = explode(' ', $src);
 
       $media = $attr['media'] ?? '';
@@ -124,6 +124,25 @@ function template_preprocess_az_responsive_background_image(array &$variables) {
       ];
 
     }
+  }
+}
+
+/**
+ * Implements hook_field_widget_single_element_WIDGET_TYPE_form_alter() for image_widget_crop.
+ *
+ * Modification for image_widget_crop widgets to show usage warning.
+ */
+function az_media_field_widget_single_element_image_widget_crop_form_alter(array &$element, FormStateInterface $form_state, array $context) {
+  // Make modifications only to managed files that are part of az_media fields.
+  $field = $element['#field_name'] ?? NULL;
+  if ($field === 'field_media_az_image') {
+    $element['#pre_render'] = [
+      ['Drupal\az_media\AZMediaMultipleUsagesHelper', 'warnMultipleUsages'],
+      // @todo determine why this needs to be added.
+      // If this is not added, the default ManagedFile callback does not run.
+      // Perhaps our pre_render needs to be added in a later hook.
+      ['Drupal\file\Element\ManagedFile', 'preRenderManagedFile'],
+    ];
   }
 }
 
@@ -175,5 +194,20 @@ function az_media_preprocess_field(&$variables) {
         $item['content']['#attributes']['class'][] = 'rounded-2';
       }
     }
+  }
+}
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter() for media_form.
+ */
+function az_media_form_media_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // Hide focal point fields since they are set by JS.
+  if (isset($form['field_focal_point_x'])) {
+    $form['field_focal_point_x']['#attributes']['class'][] = 'visually-hidden';
+    $form['field_focal_point_x']['widget'][0]['value']['#attributes']['class'][] = 'js-focal-point-x-value';
+  }
+  if (isset($form['field_focal_point_y'])) {
+    $form['field_focal_point_y']['#attributes']['class'][] = 'visually-hidden';
+    $form['field_focal_point_y']['widget'][0]['value']['#attributes']['class'][] = 'js-focal-point-y-value';
   }
 }

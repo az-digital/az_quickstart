@@ -416,31 +416,6 @@ td.menu-disabled {
   }
 }
 
-/* AZ Barrio off-canvas search (Mobile) */
-#block-az-barrio-offcanvas-searchform .search-form {
-  margin-left: .25rem;
-}
-
-#block-az-barrio-offcanvas-searchform .form-search {
-  height: unset;
-  margin-left: 0;
-  padding-left: .75rem;
-  border: none;
-  border-top-left-radius: 0 !important;
-  border-bottom-left-radius: 0 !important;
-}
-
-#block-az-barrio-offcanvas-searchform .btn {
-  padding: .5rem 1rem;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  border-color: transparent;
-}
-
-#block-az-barrio-offcanvas-searchform .material-symbols-rounded {
-  vertical-align: text-bottom;
-}
-
 /* AZ Barrio search form block (Desktop) */
 .az-search-block .search-block-form .form-search {
   height: 43px;
@@ -796,6 +771,17 @@ form.webform-submission-form {
  */
 .hide-contextual-links .contextual button {
   display: none;
+}
+
+.contextual-region .contextual .contextual-links a {
+  color: #333;
+}
+
+/* Place contextual link trigger button directly on centered embeds. 
+ * See https://github.com/az-digital/az_quickstart/pull/3844
+ */
+.field--name-field-az-text-area .align-center.contextual-region {
+  width: fit-content;
 }
 
 /* Fix when using inline image text wrap bulleted text needs more left padding

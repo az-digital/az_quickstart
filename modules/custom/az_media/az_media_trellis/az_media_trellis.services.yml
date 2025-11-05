@@ -1,0 +1,5 @@
+services:
+  az_media_trellis:
+    class: \Drupal\az_media_trellis\AzMediaTrellisService
+    arguments:
+      - '@current_route_match'

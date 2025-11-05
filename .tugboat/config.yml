@@ -1,7 +1,7 @@
 services:
 
   webserver:
-    image: tugboatqa/php:8.3-apache
+    image: tugboatqa/php:8.4-apache
     default: true
     depends: database
     environment:
@@ -73,7 +73,7 @@ services:
 
         # Add tugboat URLs to the Drupal trusted host patterns.
         echo "\$settings['trusted_host_patterns'] = ['\.tugboatqa\.com\$'];" >> $DOCROOT/sites/default/settings.php
-        echo "\$config['environment_indicator.indicator']['name'] = '$TUGBOAT_GITHUB_HEAD (Tugboat)';\n\$config['environment_indicator.indicator']['bg_color'] = '#07688c';" >> $DOCROOT/sites/default/settings.php
+        echo "\$config['environment_indicator.indicator']['name'] = '$TUGBOAT_PREVIEW_REF (Tugboat)';\n\$config['environment_indicator.indicator']['bg_color'] = '#07688c';" >> $DOCROOT/sites/default/settings.php
 
         # Make sure our files and translations folders exists and are writable.
         mkdir -p "${DOCROOT}/sites/default/files/translations"
