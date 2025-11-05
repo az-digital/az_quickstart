@@ -314,7 +314,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
   /**
    * {@inheritdoc}
    */
-  public function viewElements(FieldItemListInterface $items, $langcode): array {
+  public function viewElements(FieldItemListInterface $items, $langcode): array<array|string> {
     $settings = $this->getAllSettings($items);
     $element = [];
     /** @var \Drupal\media\MediaInterface[] $media_items */
