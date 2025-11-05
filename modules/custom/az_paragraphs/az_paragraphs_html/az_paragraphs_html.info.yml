@@ -3,7 +3,7 @@ type: module
 description: 'Provides an HTML paragraph type, and an unfiltered text formatter.'
 core_version_requirement: ^10 || ^11 || ^12
 dependencies:
-  - az_paragraphs
+  - az_paragraphs:az_paragraphs
   - drupal:field
   - paragraphs:paragraphs
   - drupal:text

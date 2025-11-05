@@ -8,11 +8,11 @@ lifecycle_link: 'https://github.com/az-digital/az_quickstart/blob/main/RELEASES.
 php: 8.0
 
 dependencies:
-  - az_core
-  - az_event
-  - az_migration_remote
+  - az_core:az_core
+  - az_event:az_event
+  - az_migration:az_migration_remote
   - drupal:views
-  - migrate:migrate
+  - drupal:migrate
   - migrate_plus:migrate_plus
   - migrate_tools:migrate_tools
   - migrate_queue_importer:migrate_queue_importer
