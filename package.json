@@ -19,7 +19,7 @@
     "babel-plugin-add-header-comment": "^1.0.3",
     "chalk": "^4.1.0",
     "chokidar": "^4.0.1",
-    "chromedriver": "^119.0.1",
+    "chromedriver": "^142.0.0",
     "cross-env": "^7.0.2",
     "dotenv-safe": "^9.1.0",
     "eslint": "^8.53.0",
