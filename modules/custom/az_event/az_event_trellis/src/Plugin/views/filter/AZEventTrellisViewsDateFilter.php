@@ -141,7 +141,7 @@ class AZEventTrellisViewsDateFilter extends FilterPluginBase {
       '#default_value' => $this->value['end'],
     ];
     // Compute conditional fields using states array.
-    if ($exposed = $form_state->get('exposed')) {
+    if ($form_state->get('exposed')) {
       $identifier = $this->options['expose']['identifier'];
       $source = ':input[name="' . $identifier . '[value]"]';
       $state = [$source => ['value' => 'Custom']];
@@ -268,8 +268,8 @@ class AZEventTrellisViewsDateFilter extends FilterPluginBase {
         $end = strtotime("tomorrow", $end);
         // Roll over to the previous night.
         $end -= 1;
-        $begin = date(self::TRELLIS_DATE_FORMAT, $begin);
-        $end = date(self::TRELLIS_DATE_FORMAT, $end);
+        $begin = gmdate(self::TRELLIS_DATE_FORMAT, $begin);
+        $end = gmdate(self::TRELLIS_DATE_FORMAT, $end);
         $this->query->addWhere(
           $this->options['group'],
           $this->options['api_param_custom_begin'],

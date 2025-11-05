@@ -5,6 +5,7 @@ dependencies:
     - field.field.node.az_event.field_az_attachments
     - field.field.node.az_event.field_az_body
     - field.field.node.az_event.field_az_contacts
+    - field.field.node.az_event.field_az_enterprise_attributes
     - field.field.node.az_event.field_az_event_category
     - field.field.node.az_event.field_az_event_date
     - field.field.node.az_event.field_az_featured_image_as_thumb
@@ -17,6 +18,7 @@ dependencies:
     - field.field.node.az_event.field_az_trellis_id
     - node.type.az_event
   module:
+    - az_core
     - field_group
     - file
     - link
@@ -86,9 +88,23 @@ content:
       form_display_mode: default
       default_paragraph_type: _none
     third_party_settings: {  }
+  field_az_enterprise_attributes:
+    type: attributes_select
+    weight: 9
+    region: content
+    settings:
+      allowed_attributes:
+        Audiences__c: Audiences__c
+        Topic__c: Topic__c
+        Category1__c: Category1__c
+        Event_Format__c: Event_Format__c
+        Arizona_County__c: 0
+        Tribal_Nation__c: 0
+        Display_Name_Formula__c: 0
+    third_party_settings: {  }
   field_az_event_category:
     type: options_select
-    weight: 9
+    weight: 8
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -109,6 +125,7 @@ content:
       hide_date: false
       allday: true
       remove_seconds: false
+      duration_overlay: true
     third_party_settings:
       smart_date_recur:
         modal: true
@@ -162,7 +179,7 @@ content:
         show_edit: '1'
   field_az_subheading:
     type: text_textfield
-    weight: 8
+    weight: 7
     region: content
     settings:
       size: 60
@@ -191,7 +208,7 @@ content:
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 7
+    weight: 6
     region: content
     settings:
       display_label: true

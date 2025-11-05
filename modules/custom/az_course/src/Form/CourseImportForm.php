@@ -2,8 +2,11 @@
 
 namespace Drupal\az_course\Form;
 
+use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\KeyValueStore\KeyValueFactoryInterface;
+use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\az_course\CourseMigrateBatchExecutable;
 use Drupal\migrate\MigrateExecutable;
 use Drupal\migrate\MigrateMessage;
@@ -44,6 +47,27 @@ class CourseImportForm extends ConfigFormBase {
   protected $courseSearch;
 
   /**
+   * The key/value factory.
+   *
+   * @var \Drupal\Core\KeyValueStore\KeyValueFactoryInterface
+   */
+  protected KeyValueFactoryInterface $keyValue;
+
+  /**
+   * The time service.
+   *
+   * @var \Drupal\Component\Datetime\TimeInterface
+   */
+  protected TimeInterface $time;
+
+  /**
+   * The translation manager.
+   *
+   * @var \Drupal\Core\StringTranslation\TranslationInterface
+   */
+  protected TranslationInterface $translation;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
@@ -52,6 +76,9 @@ class CourseImportForm extends ConfigFormBase {
     $instance->pluginManagerMigration = $container->get('plugin.manager.migration');
     $instance->courseSearch = $container->get('az_course.search');
     $instance->cron = $container->get('cron');
+    $instance->keyValue = $container->get('keyvalue');
+    $instance->time = $container->get('datetime.time');
+    $instance->translation = $container->get('string_translation');
     return $instance;
   }
 
@@ -82,10 +109,31 @@ class CourseImportForm extends ConfigFormBase {
       $default = implode("\n", $config->get('courses'));
     }
 
+    $form['instructions'] = [
+      '#type' => 'details',
+      '#title' => $this->t('How does this feature work?'),
+    ];
+
+    $form['instructions'][] = [
+      '#theme' => 'item_list',
+      '#type' => 'ul',
+      '#items' => [
+        $this->t('List subject codes and catalog numbers you wish to import, one per line.'),
+        $this->t('Enter a subject code, e.g. <strong>ENGL</strong> to import every scheduled course in an entire subject.'),
+        $this->t('Enter a subject code and catalog number, e.g. <strong>ENGL 101</strong> to import a single course.'),
+        $this->t('Listed courses will be imported by using the <strong>Save and Import Courses</strong> submit button on this form.'),
+        $this->t('Running the <strong>az_courses</strong> migration via <strong>Drush</strong> will also import these configured courses.'),
+        $this->t('At least one scheduled section of a course must exist in an active term in order to be imported.'),
+      ],
+    ];
+
     $form['courses'] = [
       '#type' => 'textarea',
       '#title' => $this->t('Courses to Import'),
-      '#description' => $this->t('Courses will be imported when az_courses migration is run either by drush or pushing the "Import Courses" button. List courses to import, one per line, in format "ENGL 101" or "ENGL" for entire subject.'),
+      '#description' => $this->t('List courses to import, one per line, in format <strong>ENGL 101</strong> or <strong>ENGL</strong> for an entire subject. At least one scheduled section of the course must exist in an active term to be imported.'),
+      '#attributes' => [
+        'placeholder' => $this->t("ENGL 101"),
+      ],
       '#required' => FALSE,
       '#default_value' => $default,
       '#resizable' => 'vertical',
@@ -93,25 +141,38 @@ class CourseImportForm extends ConfigFormBase {
       '#weight' => '2',
     ];
 
+    $form['warning'] = [
+      '#markup' => $this->t('<p>This form can time out if run through the web interface. Consider using <strong>Drush</strong> or enabling the <strong>Quickstart HTTP</strong> module if you encounter problems.</p>'),
+      '#weight' => '3',
+    ];
     $form['submit'] = [
       '#type' => 'submit',
       '#value' => $this->t('Save Course List'),
+      '#attributes' => [
+        'title' => $this->t("Save the listed courses for future import."),
+      ],
       '#button_type' => 'primary',
-      '#weight' => '3',
+      '#weight' => '4',
     ];
 
     $form['run'] = [
       '#type' => 'submit',
-      '#value' => t('Save and Import Courses'),
+      '#value' => $this->t('Save and Import Courses'),
+      '#attributes' => [
+        'title' => $this->t("Import the listed courses. This may time out for very large subject codes."),
+      ],
       '#submit' => ['::runMigrate'],
-      '#weight' => '4',
+      '#weight' => '5',
     ];
 
     $form['rollback'] = [
       '#type' => 'submit',
-      '#value' => t('Rollback'),
+      '#value' => $this->t('Rollback'),
+      '#attributes' => [
+        'title' => $this->t("Remove courses imported by this form from the site."),
+      ],
       '#submit' => ['::rollback'],
-      '#weight' => '5',
+      '#weight' => '6',
     ];
 
     return $form;
@@ -126,7 +187,7 @@ class CourseImportForm extends ConfigFormBase {
 
     $courses = preg_split("/[\n\r]+/", $courses);
     if ($courses === FALSE) {
-      $form_state->setErrorByName('courses', t('Enter search terms to locate a course to import.'));
+      $form_state->setErrorByName('courses', $this->t('Enter search terms to locate a course to import.'));
     }
     else {
       foreach ($courses as $course) {
@@ -137,7 +198,7 @@ class CourseImportForm extends ConfigFormBase {
         elseif (preg_match("/^[[:space:]]*[[:alpha:]]+[[:space:]]*$/", $course)) {
         }
         else {
-          $form_state->setErrorByName('courses', t('Use format "MATH 123 or MATH" for courses.'));
+          $form_state->setErrorByName('courses', $this->t('Use format "MATH 123 or MATH" for courses.'));
         }
       }
     }
@@ -206,7 +267,15 @@ class CourseImportForm extends ConfigFormBase {
         ],
       ],
     ];
-    $executable = new CourseMigrateBatchExecutable($migration, new MigrateMessage(), $options);
+    $executable = new CourseMigrateBatchExecutable(
+      $migration,
+      new MigrateMessage(),
+      $this->keyValue,
+      $this->time,
+      $this->translation,
+      $this->pluginManagerMigration,
+      $options,
+    );
     $executable->batchImport();
   }
 

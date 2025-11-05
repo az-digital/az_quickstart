@@ -1,0 +1,48 @@
+id: az_demo_media_trellis
+label: AZ Quickstart Demo Media Trellis
+migration_tags:
+  - Quickstart Demo Content
+  - Content
+  - Media
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: json
+  urls:
+    - profiles/custom/az_quickstart/modules/custom/az_demo/data/az_demo_media_trellis.json
+  item_selector: trellis_forms
+  ids:
+    id:
+      type: string
+  fields:
+    -
+      name: id
+      selector: id
+    -
+      name: name
+      selector: name
+    -
+      name: uuid
+      selector: uuid
+    -
+      name: url
+      selector: url
+    -
+      name: form_id
+      selector: form_id
+    -
+      name: rec_id
+      selector: rec_id
+
+destination:
+  plugin: 'entity:media'
+
+process:
+  bundle:
+    plugin: default_value
+    default_value: az_trellis
+  name: name
+  field_media_az_media_remote: url
+  field_az_media_trellis_form_id: form_id
+  field_az_media_trellis_rec_id: rec_id
+  uuid: uuid

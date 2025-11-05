@@ -391,7 +391,7 @@ display:
           id: name
           table: az_author_field_data
           field: name
-          relationship: field_az_authors
+          relationship: field_az_contributors
           group_type: group
           admin_label: ''
           entity_type: az_author
@@ -415,12 +415,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              az_content_editor: '0'
-              az_content_admin: '0'
-              az_user_admin: '0'
-              az_html_admin: '0'
-              administrator: '0'
             placeholder: ''
           is_grouped: false
           group_info:
@@ -462,12 +456,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              az_content_editor: '0'
-              az_content_admin: '0'
-              az_user_admin: '0'
-              az_html_admin: '0'
-              administrator: '0'
             placeholder: ''
           is_grouped: false
           group_info:
@@ -511,12 +499,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              az_content_editor: '0'
-              az_content_admin: '0'
-              az_user_admin: '0'
-              az_html_admin: '0'
-              administrator: '0'
             min_placeholder: ''
             max_placeholder: ''
             placeholder: ''
@@ -557,14 +539,7 @@ display:
             required: false
             remember: false
             multiple: false
-            remember_roles:
-              anonymous: '0'
-              authenticated: '0'
-              az_content_editor: '0'
-              az_content_admin: '0'
-              az_user_admin: '0'
-              az_html_admin: '0'
-              administrator: '0'
+            remember_roles: {  }
             reduce: false
           is_grouped: false
           group_info:
@@ -613,13 +588,13 @@ display:
           replica: false
           query_tags: {  }
       relationships:
-        field_az_authors:
-          id: field_az_authors
-          table: node__field_az_authors
-          field: field_az_authors
+        field_az_contributors:
+          id: field_az_contributors
+          table: node__field_az_contributors
+          field: field_az_contributors
           relationship: none
           group_type: group
-          admin_label: 'field_az_authors: Author'
+          admin_label: 'field_az_contributors: Author'
           plugin_id: standard
           required: false
       use_ajax: true
@@ -946,20 +921,20 @@ display:
         filters: false
         filter_groups: false
       relationships:
-        field_az_authors:
-          id: field_az_authors
-          table: node__field_az_authors
-          field: field_az_authors
+        field_az_contributors:
+          id: field_az_contributors
+          table: node__field_az_contributors
+          field: field_az_contributors
           relationship: none
           group_type: group
-          admin_label: 'field_az_authors: Author'
+          admin_label: 'field_az_contributors: Author'
           plugin_id: standard
           required: false
         field_az_author_person:
           id: field_az_author_person
           table: az_author__field_az_author_person
           field: field_az_author_person
-          relationship: field_az_authors
+          relationship: field_az_contributors
           group_type: group
           admin_label: 'field_az_author_person: Content'
           plugin_id: standard

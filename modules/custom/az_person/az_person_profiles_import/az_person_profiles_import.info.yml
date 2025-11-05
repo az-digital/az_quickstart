@@ -1,14 +1,15 @@
 name: 'Quickstart Person Profiles Import'
 type: module
 description: 'Import people via UA Vitae Profiles.'
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10 || ^11 || ^12
 package: 'The University of Arizona - Experimental'
 dependencies:
-  - az_person
-  - field
-  - migrate
-  - migrate_plus
-  - migrate_tools
-  - node
-  - path
-  - pathauto
+  - az_migration:az_migration_remote
+  - az_person:az_person
+  - drupal:field
+  - drupal:migrate
+  - migrate_plus:migrate_plus
+  - migrate_tools:migrate_tools
+  - drupal:node
+  - drupal:path
+  - pathauto:pathauto

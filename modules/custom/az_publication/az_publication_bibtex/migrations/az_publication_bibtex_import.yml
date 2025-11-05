@@ -19,6 +19,8 @@ source:
       selector: title
     - name: author
       selector: author
+    - name: editor
+      selector: editor
     - name: publisher
       selector: publisher
     - name: institution
@@ -129,7 +131,7 @@ process:
   field_az_publication_volume: volume
   field_az_publication_issue: number
   field_az_publication_version: version
-  field_az_authors:
+  authors:
     plugin: sub_process
     source: author
     process:
@@ -148,7 +150,7 @@ process:
         source: '@fullname'
         value_key: name
         ignore_case: true
-        bundle: 1
+        bundle: '1'
         bundle_key: status
         entity_type: az_author
         values:
@@ -156,6 +158,44 @@ process:
           field_az_author_nondrop_particle: von
           field_az_author_lname: last
           field_az_author_suffix: jr
+      role:
+        plugin: default_value
+        default_value: author
+  editors:
+    plugin: sub_process
+    source: editor
+    process:
+      fullname:
+        - plugin: callback
+          callable: array_filter
+          source:
+            - first
+            - von
+            - last
+            - jr
+        - plugin: concat
+          delimiter: ' '
+      target_id:
+        plugin: entity_generate
+        source: '@fullname'
+        value_key: name
+        ignore_case: true
+        bundle: '1'
+        bundle_key: status
+        entity_type: az_author
+        values:
+          field_az_author_fname: first
+          field_az_author_nondrop_particle: von
+          field_az_author_lname: last
+          field_az_author_suffix: jr
+      role:
+        plugin: default_value
+        default_value: editor
+  field_az_contributors:
+    plugin: merge
+    source:
+      - '@authors'
+      - '@editors'
 destination:
   plugin: entity:node
   bundle: az_publication

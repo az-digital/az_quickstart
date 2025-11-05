@@ -16,6 +16,9 @@ parameters:
 		- */node_modules/*
 		- */LinkExtractor/*
 
+	scanDirectories:
+		- ../../../../vendor/drush/drush/src-symfony-compatibility
+
 	ignoreErrors:
 		- '#\Drupal calls should be avoided in classes, use dependency injection instead#'
 		- '#Plugin definitions cannot be altered.#'
@@ -39,5 +42,5 @@ parameters:
 			paragraphs_type:
 				class: Drupal\paragraphs\Entity\ParagraphsType
 
-	phpVersion: 80200
+	phpVersion: 80300
 	level: 2
