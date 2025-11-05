@@ -126,10 +126,10 @@
         "giggsey/libphonenumber-for-php": "^9.0",
         "kevinrob/guzzle-cache-middleware": "7.0.0",
         "npm-asset/blazy": "1.8.2",
-        "npm-asset/bootstrap-datepicker": "1.10.0",
-        "npm-asset/noli42--chosen": "3.0.1",
+        "npm-asset/bootstrap-datepicker": "1.10.1",
         "npm-asset/easepick--bundle": "1.2.1",
         "npm-asset/jquery-ui-touch-punch": "*",
+        "npm-asset/noli42--chosen": "3.0.1",
         "npm-asset/slick-carousel": "1.6.0",
         "renanbr/bibtex-parser": "2.2.0",
         "seboettg/citeproc-php": "2.7.0"
@@ -142,7 +142,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "3.1.x-dev",
+            "dev-main": "3.2.x-dev",
             "2.x-dev": "2.14.x-dev"
         },
         "patches": {
