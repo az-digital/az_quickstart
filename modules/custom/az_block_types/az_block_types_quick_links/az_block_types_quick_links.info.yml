@@ -7,4 +7,4 @@ dependencies:
   - drupal:block_content
   - drupal:link
   - field_group:field_group
-  - az_block_types
+  - az_block_types:az_block_types
