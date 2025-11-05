@@ -20,7 +20,6 @@ active-filter-indicator:
       - minified: false
   dependencies:
     - core/drupal
-    - core/drupalSettings
 taxonomy-index-tid-widget:
   css:
     theme:
