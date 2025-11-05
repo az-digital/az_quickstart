@@ -156,7 +156,7 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
         foreach ($event_date_field as $item) {
           if (($item->value >= $now) || (!empty($item->end_value) && ($item->end_value >= $now))) {
             $start = $item->value;
-            $end = $item->end_value;
+            $end = $item->get('end_value')->getValue();
             $all_day = $smart_date_manager->isAllDay($start, $end);
             $build['field_az_event_date'][] = [
               '#theme' => 'az_event_calendar_add_button',
