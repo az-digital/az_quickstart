@@ -143,11 +143,4 @@ class AZPublicationType extends ConfigEntityBase implements AZPublicationTypeInt
     ];
   }
 
-  /**
-   * {@inheritdoc}
-   */
-  public static function load($id): ?static {
-    return \Drupal::entityTypeManager()->getStorage('az_publication_type')->load($id);
-  }
-
 }
