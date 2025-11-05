@@ -35,8 +35,12 @@ parameters:
 				class: Drupal\az_publication\Entity\AZAuthor
 			az_citation_style:
 				class: Drupal\az_publication\Entity\AZQuickstartCitationStyle
+			az_ldap_role:
+				class: Drupal\az_eds_user\Entity\AZLdapRole
 			az_publication_type:
 				class: Drupal\az_publication\Entity\AZPublicationType
+			az_recurring_import_rule:
+				class: Drupal\az_event_trellis\Entity\AZRecurringImportRule
 			paragraph:
 				class: Drupal\paragraphs\Entity\Paragraph
 			paragraphs_type:
