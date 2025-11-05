@@ -150,7 +150,7 @@ class AZEntityRoleInlineFormComplex extends InlineEntityFormComplex {
   /**
    * Sanitizes a string label to display as an option.
    *
-   * @param Drupal\Component\Render\MarkupInterface|string $label
+   * @param \Drupal\Component\Render\MarkupInterface|string $label
    *   The label to sanitize.
    */
   protected function sanitizeLabel(&$label) {
