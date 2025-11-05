@@ -237,8 +237,11 @@ class AZNewsDataFieldRow extends DataFieldRow {
                     $item[$key] = $image_style->buildUrl($uri);
                   }
                 }
-                if (!empty($referenced_entity->field_media_az_image->alt)) {
-                  $item['alt'] = $referenced_entity->field_media_az_image->alt;
+                if ($referenced_entity->hasField('field_media_az_image') && !$referenced_entity->get('field_media_az_image')->isEmpty()) {
+                  $alt_value = $referenced_entity->get('field_media_az_image')->first()->get('alt')->getValue();
+                  if (!empty($alt_value)) {
+                    $item['alt'] = $alt_value;
+                  }
                 }
               }
             }
@@ -254,8 +257,8 @@ class AZNewsDataFieldRow extends DataFieldRow {
                   'field_az_phone',
                 ];
                 foreach ($contact_fields as $contact_field) {
-                  if ($referenced_entity->hasField($contact_field) && !$referenced_entity->{$contact_field}->isEmpty()) {
-                    $item[$contact_field] = $referenced_entity->{$contact_field}->value;
+                  if ($referenced_entity->hasField($contact_field) && !$referenced_entity->get($contact_field)->isEmpty()) {
+                    $item[$contact_field] = $referenced_entity->get($contact_field)->value;
                   }
                 }
               }
