@@ -72,9 +72,7 @@ target_countries:
   - CA  # Canada
 # If AGCDN location cannot determine location, hide consent banner (assume outside GDPR regions)
 show_on_unknown_location: false
-# Test mode - if enabled, mock /cdn-loc endpoint will be used with test_country_code
+# Test mode - if enabled, overrides AGCDN country code with test_country_code
 test_mode: false
 # Test country code - used when test_mode is enabled (default: US)
 test_country_code: 'US'
-# Enable debug mode for console logging
-debug: true
