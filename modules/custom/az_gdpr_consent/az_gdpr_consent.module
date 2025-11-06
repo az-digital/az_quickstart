@@ -143,14 +143,4 @@ JS;
       'az_gdpr_consent_auto_accept',
     ];
   }
-
-  // Log country detection for debugging.
-  if ($config->get('debug')) {
-    $debug_country = $country_code ?? 'Unknown';
-    $debug_status = $is_gdpr_country ? 'GDPR country - showing banner' : 'Non-GDPR country - auto-accepting';
-    \Drupal::logger('az_gdpr_consent')->info('Country: @country - Status: @status', [
-      '@country' => $debug_country,
-      '@status' => $debug_status,
-    ]);
-  }
 }

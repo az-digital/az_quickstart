@@ -6,7 +6,7 @@ Provides geolocation-based GDPR cookie consent management using Klaro and Panthe
 
 This module integrates Klaro cookie consent management with Pantheon's AGCDN geolocation headers (`X-Geo-Country-Code`) for server-side geolocation detection. It conditionally displays consent banners only to visitors from countries that require GDPR compliance or have similar data protection laws.
 
-For non-GDPR countries (like the United States), the module automatically pre-sets consent for all services before Klaro loads, allowing tracking to work seamlessly as if Klaro was not installed.
+For non-GDPR countries (like the United States), the module automatically pre-sets consent for all services before Klaro loads, allowing tracking to work as if Klaro was not installed.
 
 ## Features
 
@@ -18,8 +18,7 @@ For non-GDPR countries (like the United States), the module automatically pre-se
   - 3 EEA Countries (Iceland, Liechtenstein, Norway)
   - United Kingdom (UK GDPR)
   - 30+ countries with similar data protection laws
-- **Test mode**: Override country code for testing without VPN
-- **Debug mode**: Drupal logging for troubleshooting
+- **Test mode**: Override country code for testing without VPN (useful for local development)
 - **Configurable**: Admin UI to manage settings
 - **Safe fallback**: Option to show/hide consent when location cannot be determined
 
@@ -31,7 +30,7 @@ For non-GDPR countries (like the United States), the module automatically pre-se
 
 ## Installation
 
-### Production Setup
+### Setup
 
 1. **Enable the modules**:
    ```bash
@@ -47,18 +46,6 @@ For non-GDPR countries (like the United States), the module automatically pre-se
 
 4. Configure GDPR Consent Management at `/admin/config/az-quickstart/settings/az-gdpr-consent`
 
-### Development Setup
-
-1. **Enable the modules**:
-   ```bash
-   drush en klaro az_gdpr_consent -y
-   ```
-
-2. **Clear caches**:
-   ```bash
-   drush cr
-   ```
-
 ## How It Works
 
 ### Server-Side Geolocation
@@ -66,7 +53,7 @@ For non-GDPR countries (like the United States), the module automatically pre-se
 1. **Edge Detection**: Pantheon's AGCDN detects visitor location at the CDN edge and adds `X-Geo-Country-Code` header
 2. **Cache Context**: Module adds cache context for the header, ensuring Pantheon caches separate versions per country
 3. **PHP Logic**: `hook_page_attachments()` reads the header and determines if visitor is in a GDPR country
-4. **Auto-Accept**: For non-GDPR countries, inline JavaScript pre-sets Klaro consent cookie (or localStorage) before Klaro loads
+4. **Auto-Accept**: For non-GDPR countries, inline JavaScript pre-sets Klaro consent cookie before Klaro loads
 5. **Banner Display**: For GDPR countries, Klaro loads normally and shows the consent banner
 
 ### Directory Structure
@@ -74,20 +61,13 @@ For non-GDPR countries (like the United States), the module automatically pre-se
 ```
 az_gdpr_consent/
 ├── src/
-│   ├── Controller/
-│   │   └── CdnLocController.php            # DEPRECATED: Mock /cdn-loc endpoint (NOT USED)
 │   └── Form/
 │       └── GdprConsentSettingsForm.php     # Admin settings form
-├── js/                                      # DEPRECATED: Client-side approach (kept for reference)
-│   ├── az_gdpr_consent_cdn.js              # Old Drupal-integrated version (NOT USED)
-│   └── az_gdpr_consent_cdn_vanilla.js      # Old standalone version (NOT USED)
+|
 ├── az_gdpr_consent.module                  # Main module logic (server-side approach)
-├── az_gdpr_consent.routing.yml             # Routes (includes deprecated /cdn-loc route)
-├── az_gdpr_consent.libraries.yml           # Library definition (deprecated, not attached)
+├── az_gdpr_consent.routing.yml             # Routes
 └── az_gdpr_consent.info.yml               # Module metadata
 ```
-
-**Note**: The `js/` directory and `CdnLocController.php` contain deprecated client-side implementation files. These are no longer used but are kept for reference in case we need to revert to the client-side approach. The current implementation uses server-side geolocation via Pantheon's `X-Geo-Country-Code` header.
 
 ## Configuration
 
@@ -103,9 +83,8 @@ Configure Klaro services and purposes at `/admin/config/user-interface/klaro`:
 Access the configuration form at `/admin/config/az-quickstart/settings/az-gdpr-consent`:
 
 - **Enable geolocation-based consent management**: Turn the feature on/off
-- **Test mode**: Enable mock `/cdn-loc` endpoint for testing
+- **Test mode**: Override AGCDN country code for testing (useful for local development)
 - **Test country code**: Two-letter ISO code to simulate (e.g., DE, US, GB)
-- **Debug mode**: Enable console logging for troubleshooting
 - **Show consent banner when location is unknown**: Safer option for compliance
 - **Target country codes**: List of ISO 3166-1 alpha-2 country codes (one per line)
 
@@ -153,7 +132,7 @@ The module automatically detects and uses Klaro's configured storage method:
 - **Automatic Detection**: The inline JavaScript checks Klaro's configuration and uses the appropriate storage method
 - **Format**: Stores a JSON object with service names as keys and boolean consent values (e.g., `{"ga":true,"gtm":true}`)
 
-This ensures the module always matches Klaro's expected storage format.
+This ensures the module matches Klaro's expected storage format.
 
 ## Testing
 
@@ -166,7 +145,7 @@ Enable test mode to override the country code without needing a VPN:
 3. Enter a country code (e.g., `DE` for Germany or `US` for United States)
 4. Save configuration
 5. Clear Drupal cache: `drush cr`
-6. Visit your site and check the behavior
+6. Visit your site in incognito mode and check behavior
 
 ### Testing Different Countries
 
@@ -180,9 +159,7 @@ Enable test mode to override the country code without needing a VPN:
 - Test country code: `US`
 - Expected: Banner hidden (USA not in GDPR list)
 
-### Debug Output
-
-With debug mode enabled, check:
+### Console Output
 
 **Browser console** (for non-GDPR countries):
 ```
@@ -193,18 +170,14 @@ or if using localStorage:
 [AZ GDPR Consent] Auto-accepted all services (localStorage) for non-GDPR country: US
 ```
 
-**Drupal logs** (`/admin/reports/dblog` or via `drush watchdog:show`):
-```
-Country: US - Status: Non-GDPR country - auto-accepting
-Country: DE - Status: GDPR country - showing banner
-```
+The module automatically logs to the browser console when it auto-accepts services for non-GDPR countries. This helps verify the module is working correctly.
 
 ## Troubleshooting
 
 **Consent banner not showing:**
 - Check that Klaro is configured and enabled
 - Verify you're testing from a GDPR country (or enable test mode)
-- Check browser console for debug messages
+- Check browser console for auto-accept messages
 - Clear Drupal cache: `drush cr`
 - Clear browser cookies (especially the `klaro` cookie)
 
@@ -218,7 +191,7 @@ Country: DE - Status: GDPR country - showing banner
 - Verify you're on Pantheon hosting with AGCDN enabled
 - Contact Pantheon support to confirm `X-Geo-Country-Code` header is enabled
 - Use test mode to override country code for testing
-- Check Drupal logs for country detection messages
+- Check browser console for auto-accept messages to verify module is running
 
 **Auto-accept not working for non-GDPR countries:**
 - Check browser console for JavaScript errors
