@@ -7,6 +7,7 @@
  * Provides geolocation-based GDPR cookie consent management.
  */
 
+use Drupal\Core\Render\Markup;
 use Drupal\Core\Routing\RouteMatchInterface;
 
 /**
@@ -16,112 +17,140 @@ function az_gdpr_consent_help($route_name, RouteMatchInterface $route_match) {
   switch ($route_name) {
     case 'help.page.az_gdpr_consent':
       $output = '<h3>' . t('About') . '</h3>';
-      $output .= '<p>' . t('The Quickstart GDPR Consent Management module provides geolocation-based cookie consent management. It uses Smart IP to detect visitor location and conditionally loads the Klaro consent banner only for visitors from countries that require GDPR compliance or have similar data protection laws.') . '</p>';
+      $output .= '<p>' . t('The Quickstart GDPR Consent Management module provides geolocation-based cookie consent management. It uses Pantheon\'s AGCDN geolocation headers (X-Geo-Country-Code) to detect visitor location server-side and conditionally shows the Klaro consent banner only for visitors from countries that require GDPR compliance or have similar data protection laws.') . '</p>';
+      $output .= '<p>' . t('For non-GDPR countries (like the United States), the module automatically pre-sets consent for all services before Klaro loads, allowing tracking to work as if Klaro was not installed.') . '</p>';
       $output .= '<h3>' . t('Configuration') . '</h3>';
       $output .= '<p>' . t('Configure the module at Administration » Configuration » Arizona Quickstart » Arizona Quickstart Settings » Quickstart GDPR Consent Management.') . '</p>';
+      $output .= '<h3>' . t('Caching') . '</h3>';
+      $output .= '<p>' . t('The module uses Drupal cache contexts to vary the cached page by country code. This ensures that visitors from different countries receive the appropriate cached version (with or without consent pre-set).') . '</p>';
       return $output;
   }
 }
 
 /**
- * Implements hook_page_attachments_alter().
+ * Implements hook_page_attachments().
  *
- * Removes Klaro attachments if visitor is not from a target country.
+ * Attaches geolocation-based consent logic using server-side detection.
  */
-function az_gdpr_consent_page_attachments_alter(array &$attachments) {
-
-  // Check if we should show the banner.
-  if (!az_gdpr_consent_should_show_banner()) {
-    \Drupal::messenger()->addStatus('GDPR Debug: Removing Klaro libraries');
-
-    // Remove Klaro libraries if they were attached.
-    if (isset($attachments['#attached']['library'])) {
-      foreach ($attachments['#attached']['library'] as $key => $library) {
-        if (strpos($library, 'klaro/') === 0) {
-          unset($attachments['#attached']['library'][$key]);
-        }
-      }
-    }
-
-    // Remove Klaro drupalSettings if present.
-    if (isset($attachments['#attached']['drupalSettings']['klaro'])) {
-      unset($attachments['#attached']['drupalSettings']['klaro']);
-    }
-  }
-  else {
-    \Drupal::messenger()->addStatus('GDPR Debug: Keeping Klaro libraries');
-  }
-}
-
-/**
- * Implements hook_module_implements_alter().
- *
- * Ensures our page_attachments_alter runs after Klaro's.
- */
-function az_gdpr_consent_module_implements_alter(&$implementations, $hook) {
-  if ($hook === 'page_attachments_alter') {
-    // Move our implementation to run last, after Klaro.
-    $group = $implementations['az_gdpr_consent'];
-    unset($implementations['az_gdpr_consent']);
-    $implementations['az_gdpr_consent'] = $group;
-  }
-}
-
-/**
- * Determine if the consent banner should be shown based on visitor location.
- *
- * @return bool
- *   TRUE if the banner should be shown, FALSE otherwise.
- */
-function az_gdpr_consent_should_show_banner() {
-  // Ensure Drupal is fully bootstrapped.
-  if (!\Drupal::hasContainer()) {
-    // Default to showing banner if container not ready.
-    return TRUE;
+function az_gdpr_consent_page_attachments(array &$attachments) {
+  // Don't run on admin routes.
+  if (\Drupal::service('router.admin_context')->isAdminRoute()) {
+    return;
   }
 
   $config = \Drupal::config('az_gdpr_consent.settings');
-  $logger = \Drupal::logger('az_gdpr_consent');
 
-  // If module is disabled, don't show banner.
+  // Don't run if module is disabled.
   if (!$config->get('enabled')) {
-    return FALSE;
+    return;
   }
 
-  // If test mode is enabled, always show banner.
+  // Add cache context for geolocation header.
+  // This automatically adds Vary: X-Geo-Country-Code to the response.
+  $attachments['#cache']['contexts'][] = 'headers:X-Geo-Country-Code';
+
+  // Get country code from Pantheon AGCDN header.
+  $country_code = $_SERVER['HTTP_X_GEO_COUNTRY_CODE'] ?? NULL;
+
+  // Override in test mode.
   if ($config->get('test_mode')) {
-    return TRUE;
+    $country_code = $config->get('test_country_code') ?? 'US';
   }
 
-  // Get visitor's country from Smart IP.
-  $location = \Drupal::service('smart_ip.smart_ip_location');
-  $data = $location->getData();
-  $country_code = $data['countryCode'] ?? NULL;
-  $ip_address = $data['ipAddress'] ?? 'unknown';
+  // Get GDPR country list from configuration.
+  $gdpr_countries = $config->get('target_countries') ?? [];
 
-  $logger->info('Visitor location check: IP=@ip, Country=@country', [
-    '@ip' => $ip_address,
-    '@country' => $country_code ?? 'NULL',
-  ]);
+  // Determine if this is a GDPR country.
+  $is_gdpr_country = $country_code && in_array(strtoupper($country_code), array_map('strtoupper', $gdpr_countries));
 
-  // If we can't determine location, use fallback setting.
-  if (empty($country_code)) {
-    $show = $config->get('show_on_unknown_location');
-    $logger->info('Location unknown, fallback setting: @show', [
-      '@show' => $show ? 'show banner' : 'hide banner',
+  // Fallback for unknown location.
+  if (!$country_code) {
+    $is_gdpr_country = $config->get('show_on_unknown_location') ?? FALSE;
+  }
+
+  // For non-GDPR countries: Pre-set Klaro consent via inline JavaScript.
+  if (!$is_gdpr_country) {
+    // Get configured Klaro services.
+    $klaro_config = \Drupal::config('klaro.settings');
+    $klaro_helper = \Drupal::service('klaro.helper');
+    $services = [];
+
+    // Get all configured services from Klaro.
+    if ($klaro_helper) {
+      $apps = $klaro_helper->getApps();
+      foreach ($apps as $app) {
+        $services[] = $app->id();
+      }
+    }
+
+    // Build consent object.
+    $consents = [];
+    foreach ($services as $service) {
+      $consents[$service] = TRUE;
+    }
+
+    // Get Klaro storage settings.
+    $storage_method = $klaro_config->get('library.storage_method') ?? 'cookie';
+    $storage_name = $klaro_config->get('library.cookie_name') ?? 'klaro';
+    $cookie_expires = $klaro_config->get('library.cookie_expires_after_days') ?? 180;
+
+    // Create inline JavaScript to pre-set consent before Klaro loads.
+    $consents_json = json_encode($consents);
+
+    $inline_js = <<<JS
+(function() {
+  try {
+    // Pre-set Klaro consent for all services (non-GDPR country).
+    var consents = $consents_json;
+    var storageName = '$storage_name';
+    var storageMethod = '$storage_method';
+    var consentsJson = JSON.stringify(consents);
+
+    if (storageMethod === 'cookie') {
+      // Set cookie with expiration
+      var expiryDays = $cookie_expires;
+      var expiryDate = new Date();
+      expiryDate.setTime(expiryDate.getTime() + (expiryDays * 24 * 60 * 60 * 1000));
+      var expires = 'expires=' + expiryDate.toUTCString();
+      document.cookie = storageName + '=' + encodeURIComponent(consentsJson) + ';' + expires + ';path=/;SameSite=Lax';
+
+      if (console && console.log) {
+        console.log('[AZ GDPR Consent] Auto-accepted all services (cookie) for non-GDPR country: $country_code');
+      }
+    } else {
+      // Use localStorage
+      localStorage.setItem(storageName, consentsJson);
+
+      if (console && console.log) {
+        console.log('[AZ GDPR Consent] Auto-accepted all services (localStorage) for non-GDPR country: $country_code');
+      }
+    }
+  } catch(e) {
+    if (console && console.error) {
+      console.error('[AZ GDPR Consent] Error auto-accepting services:', e);
+    }
+  }
+})();
+JS;
+
+    $attachments['#attached']['html_head'][] = [
+      [
+        '#type' => 'html_tag',
+        '#tag' => 'script',
+        '#value' => Markup::create($inline_js),
+        '#weight' => -1000,
+      ],
+      'az_gdpr_consent_auto_accept',
+    ];
+  }
+
+  // Log country detection for debugging.
+  if ($config->get('debug')) {
+    $debug_country = $country_code ?? 'Unknown';
+    $debug_status = $is_gdpr_country ? 'GDPR country - showing banner' : 'Non-GDPR country - auto-accepting';
+    \Drupal::logger('az_gdpr_consent')->info('Country: @country - Status: @status', [
+      '@country' => $debug_country,
+      '@status' => $debug_status,
     ]);
-    return $show;
   }
-
-  // Check if country is in target list.
-  $target_countries = $config->get('target_countries') ?? [];
-  $should_show = in_array($country_code, $target_countries);
-
-  $logger->info('Country @country is @status target list. Banner: @action', [
-    '@country' => $country_code,
-    '@status' => $should_show ? 'IN' : 'NOT IN',
-    '@action' => $should_show ? 'SHOW' : 'HIDE',
-  ]);
-
-  return $should_show;
 }

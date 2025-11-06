@@ -1,115 +1,111 @@
 # Quickstart GDPR Consent Management
 
-Provides geolocation-based GDPR cookie consent management using Klaro and Smart IP.
+Provides geolocation-based GDPR cookie consent management using Klaro and Pantheon's AGCDN geolocation headers.
 
 ## Overview
 
-This module integrates Klaro cookie consent management with Smart IP geolocation to conditionally display consent banners only to visitors from countries that require GDPR compliance or have similar data protection laws.
+This module integrates Klaro cookie consent management with Pantheon's AGCDN geolocation headers (`X-Geo-Country-Code`) for server-side geolocation detection. It conditionally displays consent banners only to visitors from countries that require GDPR compliance or have similar data protection laws.
+
+For non-GDPR countries (like the United States), the module automatically pre-sets consent for all services before Klaro loads, allowing tracking to work seamlessly as if Klaro was not installed.
 
 ## Features
 
-- **Geolocation-based consent**: Only shows consent banner to visitors from target countries
-- **Comprehensive country list**: Pre-configured with:
+- **Server-side geolocation**: Uses Pantheon's AGCDN `X-Geo-Country-Code` header at the edge
+- **Cache-aware**: Uses Drupal cache contexts to vary cached pages by country
+- **Auto-accept for non-GDPR**: Automatically grants consent for visitors outside GDPR regions
+- **Comprehensive country list**: Pre-configured with 50+ countries:
   - 27 EU Member States
   - 3 EEA Countries (Iceland, Liechtenstein, Norway)
   - United Kingdom (UK GDPR)
-  - 11 European countries subject to GDPR compliance
-  - 15 countries with similar data protection laws
-- **Configurable**: Admin UI to manage settings and country list
-- **Test mode**: Force display consent banner for testing
-- **Safe fallback**: Option to show consent when location cannot be determined
+  - 30+ countries with similar data protection laws
+- **Test mode**: Override country code for testing without VPN
+- **Debug mode**: Drupal logging for troubleshooting
+- **Configurable**: Admin UI to manage settings
+- **Safe fallback**: Option to show/hide consent when location cannot be determined
 
 ## Dependencies
 
 - `az_core`
 - `klaro` - Cookie consent management module
-- `smart_ip` - IP geolocation module
-- `smart_ip_maxmind_geoip2_bin_db` - MaxMind GeoIP2 binary database integration (used by default)
+- **Pantheon AGCDN** - Requires Pantheon's Advanced Global CDN with geolocation headers
 
 ## Installation
 
-### Development (Lando)
+### Production Setup
 
-1. Enable the modules:
+1. **Enable the modules**:
    ```bash
-   lando drush en klaro smart_ip smart_ip_maxmind_geoip2_bin_db az_gdpr_consent -y
+   drush en klaro az_gdpr_consent -y
    ```
 
-2. When using Lando, `lando install` automatically:
-   - Creates `web/sites/default/files/private/` directory
-   - Sets `$settings['file_private_path']` in `settings.php`
-   - Configures Smart IP to use MaxMind GeoIP2 Binary Database as the data source
-   - Downloads the MaxMind GeoLite2 Country database on first use
+2. **Clear caches**:
+   ```bash
+   drush cr
+   ```
 
 3. Configure Klaro module at `/admin/config/user-interface/klaro`
 
 4. Configure GDPR Consent Management at `/admin/config/az-quickstart/settings/az-gdpr-consent`
 
-### Production/Manual Setup
+### Development Setup
 
-If you're not using Lando or need to configure manually:
-
-1. **Configure private file path** - Add to your `settings.php`:
-   ```php
-   $settings['file_private_path'] = 'sites/default/files/private';
-   ```
-
-2. **Create the directory**:
+1. **Enable the modules**:
    ```bash
-   mkdir -p web/sites/default/files/private
-   chmod 755 web/sites/default/files/private
+   drush en klaro az_gdpr_consent -y
    ```
 
-3. **Enable the modules**:
+2. **Clear caches**:
    ```bash
-   drush en klaro smart_ip smart_ip_maxmind_geoip2_bin_db az_gdpr_consent -y
+   drush cr
    ```
 
-4. **Verify setup** at `/admin/reports/status`:
-   - Check for **"GDPR Consent: Private file path"** - Should be configured
-   - The GeoIP database will download automatically on first page load
+## How It Works
 
-5. Configure Klaro and GDPR Consent Management as described above
+### Server-Side Geolocation
 
-**Why private files?**
-- **Security**: GeoIP databases shouldn't be publicly accessible
-- **Best Practice**: Drupal automatically creates a `.htaccess` file to deny web access
+1. **Edge Detection**: Pantheon's AGCDN detects visitor location at the CDN edge and adds `X-Geo-Country-Code` header
+2. **Cache Context**: Module adds cache context for the header, ensuring Pantheon caches separate versions per country
+3. **PHP Logic**: `hook_page_attachments()` reads the header and determines if visitor is in a GDPR country
+4. **Auto-Accept**: For non-GDPR countries, inline JavaScript pre-sets Klaro consent cookie (or localStorage) before Klaro loads
+5. **Banner Display**: For GDPR countries, Klaro loads normally and shows the consent banner
 
-### Verification
+### Directory Structure
 
-Visit `/admin/config/people/smart_ip` to verify:
-- Data source should be set to: **MaxMind GeoIP2 Binary Database**
-- Auto-update should be enabled by default
+```
+az_gdpr_consent/
+├── src/
+│   ├── Controller/
+│   │   └── CdnLocController.php            # DEPRECATED: Mock /cdn-loc endpoint (NOT USED)
+│   └── Form/
+│       └── GdprConsentSettingsForm.php     # Admin settings form
+├── js/                                      # DEPRECATED: Client-side approach (kept for reference)
+│   ├── az_gdpr_consent_cdn.js              # Old Drupal-integrated version (NOT USED)
+│   └── az_gdpr_consent_cdn_vanilla.js      # Old standalone version (NOT USED)
+├── az_gdpr_consent.module                  # Main module logic (server-side approach)
+├── az_gdpr_consent.routing.yml             # Routes (includes deprecated /cdn-loc route)
+├── az_gdpr_consent.libraries.yml           # Library definition (deprecated, not attached)
+└── az_gdpr_consent.info.yml               # Module metadata
+```
+
+**Note**: The `js/` directory and `CdnLocController.php` contain deprecated client-side implementation files. These are no longer used but are kept for reference in case we need to revert to the client-side approach. The current implementation uses server-side geolocation via Pantheon's `X-Geo-Country-Code` header.
 
 ## Configuration
 
 ### Klaro Configuration
 
-Configure Klaro services and purposes at `/admin/config/system/klaro`. This includes:
-- Defining cookie purposes (e.g., analytics, marketing)
-- Configuring services (e.g., Google Analytics, Google Tag Manager)
-- Customizing consent banner text and styling
-
-### Smart IP Configuration
-
-The module automatically configures Smart IP with the following defaults:
-- **Data source**: MaxMind GeoIP2 Binary Database (`smart_ip_maxmind_geoip2_bin_db`)
-- **Database auto-update**: Enabled (database updates automatically)
-- **Version**: GeoLite2 Country (Lite version)
-- **Edition**: Country database
-
-These settings are configured via `config/quickstart/smart_ip.settings.yml` and `config/quickstart/smart_ip_maxmind_geoip2_bin_db.settings.yml`.
-
-You can verify or modify these settings at `/admin/config/people/smart_ip` if needed.
-
-**Note**: The MaxMind GeoLite2 database is downloaded automatically on first use. You no longer need to manually download or configure the database file.
+Configure Klaro services and purposes at `/admin/config/user-interface/klaro`:
+- Define cookie purposes (e.g., analytics, marketing)
+- Configure services (e.g., Google Analytics, Google Tag Manager)
+- Customize consent banner text and styling
 
 ### GDPR Consent Management Settings
 
 Access the configuration form at `/admin/config/az-quickstart/settings/az-gdpr-consent`:
 
 - **Enable geolocation-based consent management**: Turn the feature on/off
-- **Test mode**: Always show consent banner (useful for testing)
+- **Test mode**: Enable mock `/cdn-loc` endpoint for testing
+- **Test country code**: Two-letter ISO code to simulate (e.g., DE, US, GB)
+- **Debug mode**: Enable console logging for troubleshooting
 - **Show consent banner when location is unknown**: Safer option for compliance
 - **Target country codes**: List of ISO 3166-1 alpha-2 country codes (one per line)
 
@@ -138,51 +134,139 @@ AL, BY, BA, XK, MD, ME, MK, RU, RS, TR, UA
 - South America: AR, BR, UY
 - North America: CA
 
-## How It Works
+## Caching Strategy
 
-1. Visitor requests a page
-2. Smart IP detects visitor's country based on IP address
-3. Module checks if country is in the target list
-4. If yes: Klaro consent banner is shown
-5. If no: Klaro consent banner is removed from the page
+The module uses Drupal's cache context system to ensure proper CDN caching:
+
+1. **Cache Context**: `headers:X-Geo-Country-Code` is added to page attachments
+2. **Vary Header**: Drupal automatically adds `Vary: X-Geo-Country-Code` to HTTP responses
+3. **Separate Caches**: Pantheon CDN maintains separate cached versions for each country
+4. **Performance**: Server-side detection is extremely fast (happens at CDN edge)
+5. **No Race Conditions**: Unlike client-side approaches, there are no timing or API issues
+
+## Storage Method
+
+The module automatically detects and uses Klaro's configured storage method:
+
+- **Cookie Storage** (default): The module reads Klaro's `library.storage_method` and `library.cookie_name` settings and creates a cookie with the consent data
+- **localStorage**: If Klaro is configured to use localStorage, the module will use that instead
+- **Automatic Detection**: The inline JavaScript checks Klaro's configuration and uses the appropriate storage method
+- **Format**: Stores a JSON object with service names as keys and boolean consent values (e.g., `{"ga":true,"gtm":true}`)
+
+This ensures the module always matches Klaro's expected storage format.
 
 ## Testing
 
-Enable **Test mode** in the configuration form to always show the consent banner regardless of location. This is useful for:
-- Testing consent banner appearance and functionality
-- Verifying Klaro configuration
+### Test Mode
+
+Enable test mode to override the country code without needing a VPN:
+
+1. Go to `/admin/config/az-quickstart/settings/az-gdpr-consent`
+2. Check "Test mode"
+3. Enter a country code (e.g., `DE` for Germany or `US` for United States)
+4. Save configuration
+5. Clear Drupal cache: `drush cr`
+6. Visit your site and check the behavior
+
+### Testing Different Countries
+
+**Test GDPR country (should show banner):**
+- Test mode: ✓ Enabled
+- Test country code: `DE`
+- Expected: Banner shows (Germany is in GDPR list)
+
+**Test non-GDPR country (should NOT show banner):**
+- Test mode: ✓ Enabled
+- Test country code: `US`
+- Expected: Banner hidden (USA not in GDPR list)
+
+### Debug Output
+
+With debug mode enabled, check:
+
+**Browser console** (for non-GDPR countries):
+```
+[AZ GDPR Consent] Auto-accepted all services (cookie) for non-GDPR country: US
+```
+or if using localStorage:
+```
+[AZ GDPR Consent] Auto-accepted all services (localStorage) for non-GDPR country: US
+```
+
+**Drupal logs** (`/admin/reports/dblog` or via `drush watchdog:show`):
+```
+Country: US - Status: Non-GDPR country - auto-accepting
+Country: DE - Status: GDPR country - showing banner
+```
 
 ## Troubleshooting
 
 **Consent banner not showing:**
 - Check that Klaro is configured and enabled
-- Verify Smart IP has downloaded the GeoIP2 database (check `/admin/config/people/smart_ip`)
-- Check if test mode is disabled when testing from target countries
-- Clear Drupal cache: `lando drush cr`
+- Verify you're testing from a GDPR country (or enable test mode)
+- Check browser console for debug messages
+- Clear Drupal cache: `drush cr`
+- Clear browser cookies (especially the `klaro` cookie)
 
 **Consent banner showing for all visitors:**
 - Check if test mode is enabled
-- Verify Smart IP is correctly detecting location
-- Check Smart IP session data: `/admin/reports/smart_ip`
+- Verify test country code is set correctly
+- Check browser console for country detection
+- Delete the `klaro` cookie and refresh
 
 **Location detection not working:**
-- Verify Smart IP data source is set to "MaxMind GeoIP2 Binary Database"
-- Check that the GeoIP2 database has been downloaded (first page load triggers download)
-- Ensure the private file path is configured correctly at `/admin/config/media/file-system`
-- Verify the private directory exists: `ls -la web/sites/default/files/private/` (should show `.htaccess` and `smart_ip/` subdirectory)
-- Review Smart IP documentation for troubleshooting
+- Verify you're on Pantheon hosting with AGCDN enabled
+- Contact Pantheon support to confirm `X-Geo-Country-Code` header is enabled
+- Use test mode to override country code for testing
+- Check Drupal logs for country detection messages
 
-**Database download issues:**
-- Check that the private files directory exists and is writable
-- Verify network connectivity to MaxMind servers
-- Check Drupal logs for any error messages: `lando drush watchdog:show`
+**Auto-accept not working for non-GDPR countries:**
+- Check browser console for JavaScript errors
+- Verify the `klaro` cookie is being set (check Application → Cookies in browser DevTools)
+- Check that Klaro services are properly configured
+- Ensure Klaro's storage method matches what the module sets (default: cookie)
+- Clear browser cookies and refresh
 
-**Private file path issues:**
-- Visit `/admin/reports/status` and look for "GDPR Consent: Private file path" status
-- Verify `$settings['file_private_path']` is set in `settings.php`
-- Check directory permissions: `chmod 755 web/sites/default/files/private`
+## Advantages Over Client-Side Approaches
+
+1. **Simpler Infrastructure**
+   - No MaxMind account/credentials needed
+   - No database downloads or updates
+   - No external API calls required
+
+2. **Better Performance**
+   - Server-side detection at CDN edge (fastest possible)
+   - No JavaScript fetch delays or race conditions
+   - Proper CDN caching with separate versions per country
+
+3. **More Reliable**
+   - No timing issues with JavaScript loading order
+   - No localStorage timing problems
+   - Decision made before page renders
+
+4. **Cache-Friendly**
+   - Uses Drupal cache contexts correctly
+   - Pantheon CDN varies cache by country automatically
+   - No cache invalidation issues
+
+5. **Easier Maintenance**
+   - All logic in one PHP hook
+   - No complex JavaScript state management
+   - Easier to debug and test
+
+## Browser Compatibility
+
+- All modern browsers with cookie support (default)
+- All modern browsers with localStorage support (if Klaro configured for localStorage)
+- Chrome, Firefox, Safari, Edge (current versions)
+- Mobile browsers (iOS Safari, Chrome Mobile)
+- Requires JavaScript enabled for auto-accept functionality
+- Cookies must not be blocked by browser privacy settings
 
 ## Related Issues
 
 - GitHub Issue: [#3699 - Solution needed for GDPR Compliance](https://github.com/az-digital/az_quickstart/issues/3699)
 
+## License
+
+GPL-2.0-or-later
