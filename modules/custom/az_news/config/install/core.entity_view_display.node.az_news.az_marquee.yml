@@ -29,17 +29,14 @@ third_party_settings:
   field_group:
     group_row:
       children:
-        - group_photo_container
-        - group_text_muted
-        - group_heading
-        - group_read_more
+        - group_link
       label: 'Card Clickable'
       parent_name: group_content
       region: content
       weight: 3
       format_type: html_element
       format_settings:
-        classes: 'card border-0 p-0 mb-4'
+        classes: 'card border-0 p-0 mb-4 hover'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -54,7 +51,7 @@ third_party_settings:
       children:
         - field_az_published
       label: 'Text Body Secondary'
-      parent_name: group_row
+      parent_name: group_link
       region: content
       weight: 4
       format_type: html_element
@@ -74,13 +71,15 @@ third_party_settings:
       children:
         - field_az_media_thumbnail_image
       label: 'Card Image'
-      parent_name: group_row
+      parent_name: group_link
       region: content
       weight: 3
       format_type: html_element
       format_settings:
-        classes: 'mb-1'
+        classes: mb-1
+        show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -90,14 +89,17 @@ third_party_settings:
         speed: fast
     group_link:
       children:
-        - az_news_read_more
+        - group_photo_container
+        - group_text_muted
+        - group_heading
+        - group_read_more
       label: Link
-      parent_name: group_read_more_text
+      parent_name: group_row
       region: content
-      weight: 7
+      weight: 4
       format_type: link
       format_settings:
-        classes: 'card-body p-0 stretched-link link-primary link-underline link-underline-opacity-0 link-underline-opacity-100-hover'
+        classes: 'card-body p-0 stretched-link link-primary text-decoration-none'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -108,7 +110,7 @@ third_party_settings:
       children:
         - smart_title
       label: Heading
-      parent_name: group_row
+      parent_name: group_link
       region: content
       weight: 5
       format_type: html_element
@@ -126,7 +128,7 @@ third_party_settings:
       children:
         - group_read_more_text
       label: 'Read more'
-      parent_name: group_row
+      parent_name: group_link
       region: content
       weight: 6
       format_type: html_element
@@ -162,14 +164,14 @@ third_party_settings:
         speed: fast
     group_read_more_text:
       children:
-        - group_link
+        - az_news_read_more
       label: 'Read more text'
       parent_name: group_read_more
       region: content
       weight: 1
       format_type: html_element
       format_settings:
-        classes: text-start
+        classes: 'text-start hover-text-underline'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -194,13 +196,13 @@ content:
   az_news_read_more:
     settings: {  }
     third_party_settings: {  }
-    weight: 8
+    weight: 1
     region: content
   field_az_media_thumbnail_image:
     type: entity_reference_entity_view
     label: hidden
     settings:
-      view_mode: az_medium
+      view_mode: az_card_image
       link: false
     third_party_settings: {  }
     weight: 0

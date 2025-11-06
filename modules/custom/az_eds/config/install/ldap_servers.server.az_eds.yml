@@ -4,7 +4,7 @@ dependencies: {  }
 id: az_eds
 label: 'EDS Service'
 type: default
-address: null
+address: eds.iam.arizona.edu
 port: 636
 timeout: 10
 encryption: ssl
@@ -13,13 +13,13 @@ bind_method: service_account
 binddn: null
 bindpw: null
 basedn:
-  - ''
-user_attr: ''
+  - 'ou=People,dc=eds,dc=arizona,dc=edu'
+user_attr: uid
 account_name_attr: ''
-mail_attr: ''
+mail_attr: mail
 mail_template: ''
 picture_attr: ''
-unique_persistent_attr: ''
+unique_persistent_attr: dn
 unique_persistent_attr_binary: false
 user_dn_expression: ''
 testing_drupal_username: ''

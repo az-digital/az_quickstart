@@ -21,11 +21,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
           token: ${{ secrets.REPO_DISPATCH_TOKEN }}
       - name: Setup PHP
-        uses: shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@bf6b4fbd49ca58e4608c9c89fba0b8d90bd2a39f # 2.35.5
         with:
           php-version: '8.3'
       - name: Create Tag
@@ -47,7 +47,7 @@ jobs:
             echo "SCAFFOLD_BRANCH=main" >> ${GITHUB_ENV}
           fi
       - name: Clone scaffolding repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
           repository: az-digital/az-quickstart-scaffolding
           path: az_quickstart
@@ -67,7 +67,7 @@ jobs:
           tar --exclude '*.git*' -c -z -f az_quickstart.tar.gz az_quickstart
       - name: Create Release
         id: create_release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@6da8fa9354ddfdc4aeace5fc48d7f679b5214090 # v2.4.1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           tag_name: ${{ github.event.inputs.version }}
@@ -79,11 +79,12 @@ jobs:
             ./az_quickstart.zip
             ./az_quickstart.tar.gz
 
-      - name: Remove version from info file
+      - name: Set info file version back to dev
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
           sed -i "/version: /d" az_quickstart.info.yml
+          echo -e "version: ${{ github.ref_name }}-dev" >> az_quickstart.info.yml
           git add az_quickstart.info.yml
           git commit -m "Back to dev."
           git push
@@ -97,7 +98,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Notify dependencies
-        uses: peter-evans/repository-dispatch@v3
+        uses: peter-evans/repository-dispatch@5fc4efd1a4797ddb68ffd0714a238564e4cc0e6f # v4.0.0
         with:
           token: ${{ secrets.REPO_DISPATCH_TOKEN }}
           repository: ${{ matrix.repo }}

@@ -40,13 +40,27 @@ jobs:
             echo "Requested minor release branch name already exists: $NEW_VERSION" >> $GITHUB_STEP_SUMMARY
             exit 1
           fi
+
           delimiter=.
-          prev_minor=($(echo $NEW_VERSION | tr $delimiter '\n'))
-          prev_minor[1]=$((prev_minor[1]-1))
-          prev_minor_branch=$(IFS=$delimiter ; echo "${prev_minor[*]}" | sed 's/\(.*\)/\1/')
-          if [ $(git ls-remote --heads https://github.com/az-digital/az_quickstart.git $prev_minor_branch | wc -l) = 0 ]; then
-            echo "Previous minor release branch name doesn't exist yet: $prev_minor_branch" >> $GITHUB_STEP_SUMMARY
-            exit 1
+          current_parts=($(echo $NEW_VERSION | tr $delimiter '\n'))
+          major_version=${current_parts[0]}
+          minor_version=${current_parts[1]}
+
+          echo "Checking version: $NEW_VERSION (major: $major_version, minor: $minor_version)" >> $GITHUB_STEP_SUMMARY
+
+          # Check if this is the first minor release for this major version (e.g., 3.0.x)
+          if [ "$minor_version" = "0" ]; then
+            echo "Creating first minor release branch for major version $major_version: $NEW_VERSION" >> $GITHUB_STEP_SUMMARY
+          else
+            # For non-zero minor versions, ensure the previous minor release exists
+
+            prev_minor=($(echo $NEW_VERSION | tr $delimiter '\n'))
+            prev_minor[1]=$((prev_minor[1]-1))
+            prev_minor_branch=$(IFS=$delimiter ; echo "${prev_minor[*]}" | sed 's/\(.*\)/\1/')
+            if [ $(git ls-remote --heads https://github.com/az-digital/az_quickstart.git $prev_minor_branch | wc -l) = 0 ]; then
+              echo "Previous minor release branch name doesn't exist yet: $prev_minor_branch" >> $GITHUB_STEP_SUMMARY
+              exit 1
+            fi
           fi
       - name: Validation for 2.x release branches
         if: github.ref_name == '2.x'
@@ -115,7 +129,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Notify dependencies
-        uses: peter-evans/repository-dispatch@v3
+        uses: peter-evans/repository-dispatch@5fc4efd1a4797ddb68ffd0714a238564e4cc0e6f # v4.0.0
         with:
           token: ${{ secrets.REPO_DISPATCH_TOKEN }}
           repository: ${{ matrix.repo }}
@@ -133,7 +147,7 @@ jobs:
       NEW_VERSION: ${{ inputs.release_branch_name }}
     steps:
     - name: Checkout az_quickstart
-      uses: actions/checkout@v5
+      uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       with:
         repository: az-digital/az_quickstart
         ref: ${{ github.ref_name }}
@@ -174,7 +188,7 @@ jobs:
         sed -i "s/SCAFFOLD_BRANCH=main/SCAFFOLD_BRANCH=$NEW_VERSION/g" .probo.yaml
 
     - name: Setup PHP with composer v2
-      uses: shivammathur/setup-php@v2
+      uses: shivammathur/setup-php@bf6b4fbd49ca58e4608c9c89fba0b8d90bd2a39f # 2.35.5
       with:
          php-version: '8.3'
          tools: composer:v2
@@ -185,7 +199,7 @@ jobs:
         composer validate
 
     - name: Create pull request for new release branch updates
-      uses: peter-evans/create-pull-request@v7
+      uses: peter-evans/create-pull-request@271a8d0340265f705b14b6d32b9829c1cb33d45e # v7.0.8
       with:
         title: Prepare repository for new minor release branch ${{ inputs.release_branch_name }}
         commit-message: Prepare repository for new minor release branch ${{ inputs.release_branch_name }}
@@ -213,7 +227,7 @@ jobs:
     name: Update the composer dev branch alias on the `${{ github.ref_name }}` branch.
     steps:
       - name: Update `${{ github.ref_name }}` branch with new minor release branch alias.
-        uses: actions/checkout@v5
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
           ref: ${{ github.ref_name }}
           token: ${{ secrets.REPO_DISPATCH_TOKEN }}
@@ -224,7 +238,7 @@ jobs:
           git config user.email "action@github.com"
 
       - name: Setup PHP with composer v2
-        uses: shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@bf6b4fbd49ca58e4608c9c89fba0b8d90bd2a39f # 2.35.5
         with:
           php-version: '8.3'
           tools: composer:v2
@@ -234,8 +248,13 @@ jobs:
           composer config extra.branch-alias.${{ needs.branch_name_prep.outputs.dev_branch_source }} ${{ needs.branch_name_prep.outputs.dev_branch_alias }}
           composer validate
 
+      - name: Update version in .info.yml file
+        run: |
+          sed -i "/version: /d" az_quickstart.info.yml
+          echo -e "version: ${{ needs.branch_name_prep.outputs.dev_branch_alias }}" >> az_quickstart.info.yml
+
       - name: Create pull request for `${{ github.ref_name }}` branch updates
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@271a8d0340265f705b14b6d32b9829c1cb33d45e # v7.0.8
         with:
           title: Prepare `${{ github.ref_name }}` branch for new minor release branch ${{ inputs.release_branch_name }}
           commit-message: Prepare `${{ github.ref_name }}` branch for new minor release branch ${{ inputs.release_branch_name }}
@@ -247,3 +266,4 @@ jobs:
           token: ${{ secrets.REPO_DISPATCH_TOKEN }}
           add-paths: |
             composer.json
+            az_quickstart.info.yml
