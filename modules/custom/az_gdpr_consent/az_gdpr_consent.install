@@ -6,52 +6,16 @@
  */
 
 use Drupal\Core\Url;
-use Symfony\Component\Yaml\Yaml;
 
 /**
  * Implements hook_install().
  */
 function az_gdpr_consent_install() {
-  // Get the module path.
-  $module_path = \Drupal::service('extension.list.module')->getPath('az_gdpr_consent');
-  $config_path = $module_path . '/config/overrides';
-
-  // List of Klaro config files to apply from the overrides directory.
-  $config_files = [
-    'klaro.settings.yml',
-    'klaro.texts.yml',
-    'klaro.klaro_app.facebook.yml',
-    'klaro.klaro_app.ga.yml',
-    'klaro.klaro_app.gtm.yml',
-  ];
-
-  $config_factory = \Drupal::configFactory();
-
-  // Apply each config file.
-  foreach ($config_files as $config_file) {
-    $file_path = $config_path . '/' . $config_file;
-    if (file_exists($file_path)) {
-      // Parse the config name from the filename (remove .yml extension).
-      $config_name = substr($config_file, 0, -4);
-
-      // Read the YAML file.
-      $config_data = Yaml::parseFile($file_path);
-
-      // Get the editable config and set the data.
-      $config_factory->getEditable($config_name)
-        ->setData($config_data)
-        ->save();
-
-      \Drupal::logger('az_gdpr_consent')->info('Applied configuration: @config', ['@config' => $config_name]);
-    }
-  }
-
-  // Display message to user about configuration.
   $config_url = Url::fromRoute('az_gdpr_consent.settings')->toString();
   $klaro_url = Url::fromRoute('klaro.admin')->toString();
 
   $message = \Drupal::translation()->translate(
-    '<strong>GDPR Consent Management installed!</strong> The module uses Pantheon\'s AGCDN location API for geolocation. Configure the module at <a href=":config_url">GDPR Consent settings</a> and set up your cookie services at <a href=":klaro_url">Klaro settings</a>.',
+    'Configure module at <a href=":config_url">GDPR Consent settings</a> and review your cookie services at <a href=":klaro_url">Klaro settings</a>.',
     [
       ':config_url' => $config_url,
       ':klaro_url' => $klaro_url,
