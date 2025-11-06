@@ -58,13 +58,6 @@ class GdprConsentSettingsForm extends ConfigFormBase {
       ],
     ];
 
-    $form['debug'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Debug mode'),
-      '#description' => $this->t('Enable console logging for troubleshooting. You can view debug messages in your browser\'s developer console.'),
-      '#default_value' => $config->get('debug') ?? TRUE,
-    ];
-
     $form['show_on_unknown_location'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Show consent banner when location is unknown'),
@@ -116,7 +109,6 @@ class GdprConsentSettingsForm extends ConfigFormBase {
       ->set('enabled', $form_state->getValue('enabled'))
       ->set('test_mode', $form_state->getValue('test_mode'))
       ->set('test_country_code', $test_country_code)
-      ->set('debug', $form_state->getValue('debug'))
       ->set('show_on_unknown_location', $form_state->getValue('show_on_unknown_location'))
       ->set('target_countries', $country_array)
       ->save();
