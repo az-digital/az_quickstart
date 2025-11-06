@@ -16,10 +16,8 @@ function az_gdpr_consent_install() {
   $module_path = \Drupal::service('extension.list.module')->getPath('az_gdpr_consent');
   $config_path = $module_path . '/config/overrides';
 
-  // List of config files to apply from the overrides directory.
+  // List of Klaro config files to apply from the overrides directory.
   $config_files = [
-    'smart_ip.settings.yml',
-    'smart_ip_maxmind_geoip2_bin_db.settings.yml',
     'klaro.settings.yml',
     'klaro.texts.yml',
     'klaro.klaro_app.facebook.yml',
@@ -48,15 +46,16 @@ function az_gdpr_consent_install() {
     }
   }
 
-  // Display message to user.
-  $smart_ip_url = Url::fromRoute('smart_ip.settings')->toString();
-  $maxmind_url = 'https://www.maxmind.com/en/geolite2/signup';
+  // Display message to user about configuration.
+  $config_url = Url::fromRoute('az_gdpr_consent.settings')->toString();
+  $klaro_url = Url::fromRoute('klaro.admin')->toString();
+
   $message = \Drupal::translation()->translate(
-    '<strong><em>IMPORTANT NEXT STEP:</em></strong> In order for the GDPR Consent to function properly, please <a href=":maxmind_url" target="_blank">sign up for a free MaxMind GeoLite2 account</a> to obtain a license key and account ID, then <a href=":smart_ip_url">enter your credentials in the Smart IP settings</a>.',
+    '<strong>GDPR Consent Management installed!</strong> The module uses Pantheon\'s AGCDN location API for geolocation. Configure the module at <a href=":config_url">GDPR Consent settings</a> and set up your cookie services at <a href=":klaro_url">Klaro settings</a>.',
     [
-      ':smart_ip_url' => $smart_ip_url,
-      ':maxmind_url' => $maxmind_url,
+      ':config_url' => $config_url,
+      ':klaro_url' => $klaro_url,
     ]
   );
-  \Drupal::messenger()->addWarning($message);
+  \Drupal::messenger()->addStatus($message);
 }

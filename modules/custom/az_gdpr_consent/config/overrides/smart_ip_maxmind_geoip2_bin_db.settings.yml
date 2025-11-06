@@ -1,4 +1,0 @@
-version: lite
-edition: country
-db_auto_update: true
-bin_file_custom_path: ''
