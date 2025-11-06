@@ -17,7 +17,7 @@ function az_gdpr_consent_help($route_name, RouteMatchInterface $route_match) {
   switch ($route_name) {
     case 'help.page.az_gdpr_consent':
       $output = '<h3>' . t('About') . '</h3>';
-      $output .= '<p>' . t('The Quickstart GDPR Consent Management module provides geolocation-based cookie consent management. It uses Pantheon\'s AGCDN geolocation headers (X-Geo-Country-Code) to detect visitor location server-side and conditionally shows the Klaro consent banner only for visitors from countries that require GDPR compliance or have similar data protection laws.') . '</p>';
+      $output .= '<p>' . t("The Quickstart GDPR Consent Management module provides geolocation-based cookie consent management. It uses Pantheon's AGCDN geolocation headers (X-Geo-Country-Code) to detect visitor location server-side and conditionally shows the Klaro consent banner only for visitors from countries that require GDPR compliance or have similar data protection laws.") . '</p>';
       $output .= '<p>' . t('For non-GDPR countries (like the United States), the module automatically pre-sets consent for all services before Klaro loads, allowing tracking to work as if Klaro was not installed.') . '</p>';
       $output .= '<h3>' . t('Configuration') . '</h3>';
       $output .= '<p>' . t('Configure the module at Administration » Configuration » Arizona Quickstart » Arizona Quickstart Settings » Quickstart GDPR Consent Management.') . '</p>';
