@@ -1,0 +1,10 @@
+# DEPRECATED: Client-side approach replaced by server-side geolocation.
+# Kept for reference in case we need to revert to client-side approach.
+# This library is NOT currently attached or used by the module.
+gdpr_consent:
+  version: 1.9
+  js:
+    js/az_gdpr_consent_cdn.js: {}
+  dependencies:
+    - core/drupal
+    - core/drupalSettings

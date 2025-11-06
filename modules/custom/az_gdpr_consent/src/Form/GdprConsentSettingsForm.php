@@ -40,14 +40,35 @@ class GdprConsentSettingsForm extends ConfigFormBase {
     $form['test_mode'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Test mode'),
-      '#description' => $this->t('When enabled, consent banner will always be shown regardless of visitor location. Useful for testing.'),
+      '#description' => $this->t('When enabled, overrides the Pantheon AGCDN country code with a test value. This allows you to test with different country codes without needing a VPN. Useful for local development (Lando) where AGCDN headers are not available.'),
       '#default_value' => $config->get('test_mode'),
+    ];
+
+    $form['test_country_code'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Test country code'),
+      '#description' => $this->t('Two-letter ISO country code to simulate in test mode (e.g., US for non-GDPR, DE for GDPR). The module will behave as if the visitor is from this country.'),
+      '#default_value' => $config->get('test_country_code') ?? 'US',
+      '#size' => 2,
+      '#maxlength' => 2,
+      '#states' => [
+        'visible' => [
+          ':input[name="test_mode"]' => ['checked' => TRUE],
+        ],
+      ],
+    ];
+
+    $form['debug'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Debug mode'),
+      '#description' => $this->t('Enable console logging for troubleshooting. You can view debug messages in your browser\'s developer console.'),
+      '#default_value' => $config->get('debug') ?? TRUE,
     ];
 
     $form['show_on_unknown_location'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Show consent banner when location is unknown'),
-      '#description' => $this->t('When Smart IP cannot determine the visitor location, show the consent banner. This is the safer option for compliance.'),
+      '#description' => $this->t('When the AGCDN location cannot be determined, show the consent banner. Enable this for maximum compliance (shows banner by default), or disable to hide banner for unknown locations (assumes visitors are outside GDPR regions).'),
       '#default_value' => $config->get('show_on_unknown_location'),
     ];
 
@@ -88,9 +109,14 @@ class GdprConsentSettingsForm extends ConfigFormBase {
     $country_codes = $form_state->getValue('target_countries');
     $country_array = array_filter(array_map('trim', explode("\n", $country_codes)));
 
+    // Uppercase the test country code.
+    $test_country_code = strtoupper(trim($form_state->getValue('test_country_code')));
+
     $this->config('az_gdpr_consent.settings')
       ->set('enabled', $form_state->getValue('enabled'))
       ->set('test_mode', $form_state->getValue('test_mode'))
+      ->set('test_country_code', $test_country_code)
+      ->set('debug', $form_state->getValue('debug'))
       ->set('show_on_unknown_location', $form_state->getValue('show_on_unknown_location'))
       ->set('target_countries', $country_array)
       ->save();

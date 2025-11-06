@@ -17,3 +17,9 @@ az_gdpr_consent.settings:
     test_mode:
       type: boolean
       label: 'Test mode'
+    test_country_code:
+      type: string
+      label: 'Test country code'
+    debug:
+      type: boolean
+      label: 'Debug mode'
