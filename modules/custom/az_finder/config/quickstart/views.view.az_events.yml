@@ -354,7 +354,7 @@ display:
               secondary_label: 'Advanced options'
               secondary_open: false
               reset_button_always_show: false
-              active_filter_indicator_on_top_level_terms: 1
+              active_filter_indicator_on_top_level_terms: true
             filter:
               title:
                 plugin_id: default
@@ -638,7 +638,7 @@ display:
               secondary_label: 'Advanced options'
               secondary_open: false
               reset_button_always_show: false
-              active_filter_indicator_on_top_level_terms: 1
+              active_filter_indicator_on_top_level_terms: true
             filter:
               title:
                 plugin_id: default
@@ -939,7 +939,7 @@ display:
               secondary_label: 'Advanced options'
               secondary_open: false
               reset_button_always_show: false
-              active_filter_indicator_on_top_level_terms: 1
+              active_filter_indicator_on_top_level_terms: true
             filter:
               title:
                 plugin_id: default
@@ -1281,7 +1281,7 @@ display:
           skip_link: true
           skip_link_text: 'Skip to search and filter'
           skip_link_id: search-filter
-          active_filter_indicator_on_top_level_terms: false
+          active_filter_indicator_on_top_level_terms: true
       empty:
         area:
           id: area
