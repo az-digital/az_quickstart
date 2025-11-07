@@ -33,7 +33,7 @@
             if (!badge) {
               badge = document.createElement('span');
               badge.className =
-                'js-az-finder-indicator badge bg-azurite mx-2 small';
+                'js-az-finder-indicator badge bg-azurite mx-2';
               badge.textContent = count;
             } else {
               badge.textContent = count;
