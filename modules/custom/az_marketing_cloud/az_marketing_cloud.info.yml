@@ -6,5 +6,5 @@ package: 'The University of Arizona - Experimental'
 lifecycle: experimental
 lifecycle_link: 'https://github.com/az-digital/az_quickstart/blob/main/RELEASES.md#experimental-features'
 dependencies:
-  - az_news
-  - az_event
+  - az_news:az_news
+  - az_event:az_event

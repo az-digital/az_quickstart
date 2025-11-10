@@ -33,11 +33,40 @@ updates:
       - "2.x only"
       - "Drupal"
 
+  # NPM/Yarn package updates for main branch
+  - package-ecosystem: "npm"
+    target-branch: "main"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 5
+    cooldown:
+      default-days: 5
+    labels:
+      - "dependencies"
+      - "ci"
+
+  # NPM/Yarn package updates for 2.x branch
+  - package-ecosystem: "npm"
+    target-branch: "2.x"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 5
+    cooldown:
+      default-days: 5
+    labels:
+      - "dependencies"
+      - "2.x only"
+      - "ci"
+
   # GitHub Actions updates
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "daily"
+    cooldown:
+      default-days: 5
     labels:
       - "dependencies"
       - "github_actions"
