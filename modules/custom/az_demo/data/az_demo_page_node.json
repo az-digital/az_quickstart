@@ -359,7 +359,7 @@
       "az_summary" : "A page with rankings."
     },
     {
-      "id":29,
+      "id":44,
       "title": "Documentation Overview",
       "path": "/admin/documentation/overview",
       "az_page_category": "Documentation",
@@ -368,7 +368,7 @@
       "az_summary": "Introduction to internal documentation area."
     },
     {
-      "id":30,
+      "id":45,
       "title": "Editing Guidelines",
       "path": "/admin/documentation/editing-guidelines",
       "az_page_category": "Documentation",
@@ -377,7 +377,7 @@
       "az_summary": "Formatting, media, accessibility, tagging policies."
     },
     {
-      "id":31,
+      "id":46,
       "title": "Publishing Workflow",
       "path": "/admin/documentation/publishing-workflow",
       "az_page_category": "Documentation",
