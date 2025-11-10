@@ -108,12 +108,12 @@
         {
             "id": 194,
             "az_text_area": "<h2>Trellis Form</h2><drupal-media data-entity-type='media' data-entity-uuid='2d1c72cf-e90b-4457-992d-55f87bf5dc46' data-align='center'>&nbsp;</drupal-media>",
-            "bottom_spacing": "mb-0"
+            "bottom_spacing": "mb-4"
         },
         {
             "id": 195,
             "az_text_area": "<h2>Editing Guidelines</h2><p>Follow these standards to keep content consistent and accessible:</p><ul><li><strong>Headings:</strong> Use a single H1 (the page title). Nest logically; don’t skip levels.</li><li><strong>Links:</strong> Use descriptive text; avoid ‘click here’.</li><li><strong>Media:</strong> Provide alt text describing purpose, not decoration.</li><li><strong>Formatting:</strong> Prefer semantic elements over visual styling.</li><li><strong>Accessibility:</strong> Ensure sufficient color contrast and meaningful link text.</li><li><strong>Taxonomy:</strong> Apply only relevant tags; avoid over-tagging.</li></ul>",
-            "bottom_spacing": "mb-4"
+            "bottom_spacing": "mb-0"
         },
         {
             "id": 195,
