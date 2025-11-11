@@ -9,4 +9,5 @@ lifecycle_link: 'https://github.com/az-digital/az_quickstart/blob/main/RELEASES.
 dependencies:
   - az_core:az_core
   - better_exposed_filters:better_exposed_filters
+  - google_tag:google_tag
 configure: az_finder.settings

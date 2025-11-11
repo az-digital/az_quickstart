@@ -8,6 +8,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\better_exposed_filters\Plugin\views\exposed_form\BetterExposedFilters;
 use Drupal\views\Attribute\ViewsExposedForm;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Exposed form plugin that provides a basic exposed form.
@@ -20,6 +21,22 @@ use Drupal\views\Attribute\ViewsExposedForm;
   help: new TranslatableMarkup('Better exposed filters with additional Quickstart Settings.')
 )]
 class QuickstartExposedFilters extends BetterExposedFilters {
+
+  /**
+   * Drupal\Core\Config\ConfigFactoryInterface definition.
+   *
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
+   */
+  protected $configFactory;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): static {
+    $instance = parent::create($container, $configuration, $plugin_id, $plugin_definition);
+    $instance->configFactory = $container->get('config.factory');
+    return $instance;
+  }
 
   /**
    * {@inheritdoc}
@@ -95,6 +112,20 @@ class QuickstartExposedFilters extends BetterExposedFilters {
       $form['top_reset'] = $reset_button;
       // Hide the original reset button.
       $form['actions']['reset']['#access'] = FALSE;
+    }
+
+    // Add view display attribute to the container for GTM event functionality.
+    $view_display = str_replace(
+      ['views_exposed_form__', '__'],
+      ['', ':'],
+      $form['#theme'],
+      )[0];
+    $form['#attributes']['data-az-view-display'] = str_replace(':', '-', $view_display);
+
+    // Attach JS library to send GTM events if they are enabled for this view.
+    $gtm_enabled_views = $this->configFactory->get('az_finder.settings')->get('gtm_enabled_views');
+    if (!empty($gtm_enabled_views) && $gtm_enabled_views[$view_display]) {
+      $form['#attached']['library'][] = 'az_finder/gtm-events';
     }
   }
 
