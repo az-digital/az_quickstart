@@ -22,7 +22,7 @@ function az_gdpr_consent_help($route_name, RouteMatchInterface $route_match) {
       $output .= '<h3>' . t('Configuration') . '</h3>';
       $output .= '<p>' . t('Configure the module at Administration » Configuration » Arizona Quickstart » Arizona Quickstart Settings » Quickstart GDPR Consent Management.') . '</p>';
       $output .= '<h3>' . t('Caching') . '</h3>';
-      $output .= '<p>' . t('The module uses client-side geolocation detection via Pantheon\'s /cdn-loc endpoint. Pantheon\'s Global CDN caches pages separately per country using the Vary: X-Geo-Country-Code header.') . '</p>';
+      $output .= '<p>' . t("The module uses client-side geolocation detection via Pantheon's /cdn-loc endpoint. Pantheon's Global CDN caches pages separately per country using the Vary: X-Geo-Country-Code header.") . '</p>';
       return $output;
   }
 }
@@ -72,7 +72,7 @@ function az_gdpr_consent_page_attachments(array &$attachments) {
   $test_mode = $config->get('test_mode') ? 'true' : 'false';
   $test_country_code = $config->get('test_country_code') ?? 'US';
 
-  // Create inline JavaScript that fetches geolocation and conditionally sets consent.
+  // Fetches geolocation and conditionally sets consent.
   $inline_js = <<<JS
 (function() {
   const GDPR_COUNTRIES = $gdpr_countries_json;
