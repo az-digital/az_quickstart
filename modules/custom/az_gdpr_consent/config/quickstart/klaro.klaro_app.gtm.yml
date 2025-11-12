@@ -4,7 +4,7 @@ dependencies: {  }
 id: gtm
 label: 'Google Tag Manager'
 description: 'Manages and deploys marketing tags.'
-default: false
+default: true
 required: false
 opt_out: false
 only_once: false
