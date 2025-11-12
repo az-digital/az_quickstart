@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies: {  }
+id: vimeo
+label: Vimeo
+description: 'Vimeo is a video sharing platform by Vimeo, LLC (USA).'
+default: true
+purposes:
+  - external_content
+cookies: {  }
+required: false
+opt_out: false
+only_once: false
+contextual_consent_only: false
+contextual_consent_text: ''
+info_url: 'https://vimeo.com/'
+privacy_policy_url: 'https://vimeo.com/privacy'
+javascripts:
+  - vimeo.com
+callback_code: ''
+wrapper_identifier: {  }
+attachments: {  }
+weight: 0

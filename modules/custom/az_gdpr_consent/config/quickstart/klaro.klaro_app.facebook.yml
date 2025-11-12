@@ -4,7 +4,7 @@ dependencies: {  }
 id: facebook
 label: Facebook
 description: 'Facebook is a social media platform by Meta Platforms, Inc (USA).'
-default: false
+default: true
 required: false
 opt_out: false
 only_once: false
