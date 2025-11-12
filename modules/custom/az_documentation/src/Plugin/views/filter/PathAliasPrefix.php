@@ -32,8 +32,6 @@ class PathAliasPrefix extends FilterPluginBase {
     return TRUE;
   }
 
-  // No need to override adminLabel(); annotation supplies title.
-
   /**
    * {@inheritdoc}
    */
