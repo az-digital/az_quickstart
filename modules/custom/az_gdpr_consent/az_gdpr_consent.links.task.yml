@@ -1,5 +1,0 @@
-az_gdpr_consent.az_gdpr_consent_settings_tab:
-  route_name: az_gdpr_consent.settings
-  title: 'AZ GDPR Consent'
-  base_route: az_core.az_settings
-  weight: 0
