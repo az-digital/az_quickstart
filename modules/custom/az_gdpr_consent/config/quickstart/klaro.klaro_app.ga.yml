@@ -4,7 +4,7 @@ dependencies: {  }
 id: ga
 label: 'Google Analytics'
 description: 'Tracks online visits of the website as a service.'
-default: false
+default: true
 required: false
 opt_out: false
 only_once: false
