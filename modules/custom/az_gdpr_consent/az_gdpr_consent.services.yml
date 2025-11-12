@@ -1,0 +1,5 @@
+services:
+  az_gdpr_consent.vary_header_subscriber:
+    class: Drupal\az_gdpr_consent\EventSubscriber\GdprVaryHeaderSubscriber
+    tags:
+      - { name: event_subscriber }
