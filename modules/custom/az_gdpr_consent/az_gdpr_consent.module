@@ -17,12 +17,12 @@ function az_gdpr_consent_help($route_name, RouteMatchInterface $route_match) {
   switch ($route_name) {
     case 'help.page.az_gdpr_consent':
       $output = '<h3>' . t('About') . '</h3>';
-      $output .= '<p>' . t("The Quickstart GDPR Consent Management module provides geolocation-based cookie consent management. It uses Pantheon's AGCDN geolocation headers (X-Geo-Country-Code) to detect visitor location server-side and conditionally shows the Klaro consent banner only for visitors from countries that require GDPR compliance or have similar data protection laws.") . '</p>';
+      $output .= '<p>' . t("The Quickstart GDPR Consent Management module provides geolocation-based cookie consent management. It uses client-side detection via Pantheon's /cdn-loc endpoint to determine visitor location and conditionally shows the Klaro consent banner only for visitors from countries that require GDPR compliance or have similar data protection laws.") . '</p>';
       $output .= '<p>' . t('For non-GDPR countries (like the United States), the module automatically pre-sets consent for all services before Klaro loads, allowing tracking to work as if Klaro was not installed.') . '</p>';
       $output .= '<h3>' . t('Configuration') . '</h3>';
       $output .= '<p>' . t('Configure the module at Administration » Configuration » Arizona Quickstart » Arizona Quickstart Settings » Quickstart GDPR Consent Management.') . '</p>';
       $output .= '<h3>' . t('Caching') . '</h3>';
-      $output .= '<p>' . t('The module uses Drupal cache contexts to vary the cached page by country code. This ensures that visitors from different countries receive the appropriate cached version (with or without consent pre-set).') . '</p>';
+      $output .= '<p>' . t('The module uses client-side geolocation detection via Pantheon\'s /cdn-loc endpoint. Pantheon\'s Global CDN caches pages separately per country using the Vary: X-Geo-Country-Code header.') . '</p>';
       return $output;
   }
 }
@@ -30,7 +30,7 @@ function az_gdpr_consent_help($route_name, RouteMatchInterface $route_match) {
 /**
  * Implements hook_page_attachments().
  *
- * Attaches geolocation-based consent logic using server-side detection.
+ * Attaches geolocation-based consent logic using client-side detection.
  */
 function az_gdpr_consent_page_attachments(array &$attachments) {
   // Don't run on admin routes.
@@ -45,102 +45,133 @@ function az_gdpr_consent_page_attachments(array &$attachments) {
     return;
   }
 
-  // Add cache context for geolocation header.
-  // This automatically adds Vary: X-Geo-Country-Code to the response.
-  $attachments['#cache']['contexts'][] = 'headers:X-Geo-Country-Code';
-
-  // Get country code from Pantheon AGCDN header.
-  $country_code = $_SERVER['HTTP_X_GEO_COUNTRY_CODE'] ?? NULL;
-
-  // Override in test mode.
-  if ($config->get('test_mode')) {
-    $country_code = $config->get('test_country_code') ?? 'US';
-  }
-
-  // Get GDPR country list from configuration.
+  // Get GDPR countries list from config.
   $gdpr_countries = $config->get('target_countries') ?? [];
+  $gdpr_countries_json = json_encode($gdpr_countries);
 
-  // Determine if this is a GDPR country.
-  $is_gdpr_country = $country_code && in_array(strtoupper($country_code), array_map('strtoupper', $gdpr_countries));
+  // Get configured Klaro services.
+  $klaro_config = \Drupal::config('klaro.settings');
+  $klaro_helper = \Drupal::service('klaro.helper');
+  $services = [];
 
-  // Fallback for unknown location.
-  if (!$country_code) {
-    $is_gdpr_country = $config->get('show_on_unknown_location') ?? FALSE;
+  // Get all configured services from Klaro.
+  if ($klaro_helper) {
+    $apps = $klaro_helper->getApps();
+    foreach ($apps as $app) {
+      $services[] = $app->id();
+    }
   }
+  $services_json = json_encode($services);
 
-  // For non-GDPR countries: Pre-set Klaro consent via inline JavaScript.
-  if (!$is_gdpr_country) {
-    // Get configured Klaro services.
-    $klaro_config = \Drupal::config('klaro.settings');
-    $klaro_helper = \Drupal::service('klaro.helper');
-    $services = [];
+  // Get Klaro storage settings.
+  $storage_method = $klaro_config->get('library.storage_method') ?? 'cookie';
+  $storage_name = $klaro_config->get('library.cookie_name') ?? 'klaro';
+  $cookie_expires = $klaro_config->get('library.cookie_expires_after_days') ?? 180;
 
-    // Get all configured services from Klaro.
-    if ($klaro_helper) {
-      $apps = $klaro_helper->getApps();
-      foreach ($apps as $app) {
-        $services[] = $app->id();
-      }
-    }
+  // Check if test mode is enabled.
+  $test_mode = $config->get('test_mode') ? 'true' : 'false';
+  $test_country_code = $config->get('test_country_code') ?? 'US';
 
-    // Build consent object.
-    $consents = [];
-    foreach ($services as $service) {
-      $consents[$service] = TRUE;
-    }
-
-    // Get Klaro storage settings.
-    $storage_method = $klaro_config->get('library.storage_method') ?? 'cookie';
-    $storage_name = $klaro_config->get('library.cookie_name') ?? 'klaro';
-    $cookie_expires = $klaro_config->get('library.cookie_expires_after_days') ?? 180;
-
-    // Create inline JavaScript to pre-set consent before Klaro loads.
-    $consents_json = json_encode($consents);
-
-    $inline_js = <<<JS
+  // Create inline JavaScript that fetches geolocation and conditionally sets consent.
+  $inline_js = <<<JS
 (function() {
-  try {
-    // Pre-set Klaro consent for all services (non-GDPR country).
-    var consents = $consents_json;
-    var storageName = '$storage_name';
-    var storageMethod = '$storage_method';
-    var consentsJson = JSON.stringify(consents);
+  const GDPR_COUNTRIES = $gdpr_countries_json;
+  const KLARO_SERVICES = $services_json;
+  const storageName = '$storage_name';
+  const storageMethod = '$storage_method';
+  const cookieExpiresAfterDays = $cookie_expires;
+  const testMode = $test_mode;
+  const testCountryCode = '$test_country_code';
 
-    if (storageMethod === 'cookie') {
-      // Set cookie with expiration
-      var expiryDays = $cookie_expires;
-      var expiryDate = new Date();
-      expiryDate.setTime(expiryDate.getTime() + (expiryDays * 24 * 60 * 60 * 1000));
-      var expires = 'expires=' + expiryDate.toUTCString();
-      document.cookie = storageName + '=' + encodeURIComponent(consentsJson) + ';' + expires + ';path=/;SameSite=Lax';
+  // Function to set auto-accepted consent for non-GDPR countries.
+  function setAutoAcceptedConsent() {
+    const consents = {};
+    KLARO_SERVICES.forEach(service => {
+      consents[service] = true;
+    });
+    const consentsJson = JSON.stringify(consents);
 
-      if (console && console.log) {
-        console.log('[AZ GDPR Consent] Auto-accepted all services (cookie) for non-GDPR country: $country_code');
+    try {
+      if (storageMethod === 'cookie') {
+        const expiryDays = cookieExpiresAfterDays;
+        const expiryDate = new Date();
+        expiryDate.setTime(expiryDate.getTime() + (expiryDays * 24 * 60 * 60 * 1000));
+        const expires = 'expires=' + expiryDate.toUTCString();
+        document.cookie = storageName + '=' + encodeURIComponent(consentsJson) + ';' + expires + ';path=/;SameSite=Lax';
+
+        if (console && console.log) {
+          console.log('[AZ GDPR Consent] Auto-accepted all services (cookie) for non-GDPR country');
+        }
+      } else {
+        // Use localStorage
+        localStorage.setItem(storageName, consentsJson);
+
+        if (console && console.log) {
+          console.log('[AZ GDPR Consent] Auto-accepted all services (localStorage) for non-GDPR country');
+        }
       }
-    } else {
-      // Use localStorage
-      localStorage.setItem(storageName, consentsJson);
-
-      if (console && console.log) {
-        console.log('[AZ GDPR Consent] Auto-accepted all services (localStorage) for non-GDPR country: $country_code');
+    } catch (e) {
+      if (console && console.error) {
+        console.error('[AZ GDPR Consent] Error auto-accepting services:', e);
       }
-    }
-  } catch(e) {
-    if (console && console.error) {
-      console.error('[AZ GDPR Consent] Error auto-accepting services:', e);
     }
   }
+
+  // If test mode is enabled, use the test country code.
+  if (testMode) {
+    const isGdprCountry = GDPR_COUNTRIES.includes(testCountryCode.toUpperCase());
+    if (console && console.log) {
+      console.log('[AZ GDPR Consent] Test mode enabled. Country:', testCountryCode, 'Is GDPR:', isGdprCountry);
+    }
+    if (!isGdprCountry) {
+      setAutoAcceptedConsent();
+    }
+    return;
+  }
+
+  // Fetch geolocation data from the Pantheon /cdn-loc endpoint.
+  fetch('/cdn-loc')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(data => {
+      const countryCode = data['client.geo.country_code'];
+      const isGdprCountry = GDPR_COUNTRIES.map(c => c.toUpperCase()).includes(countryCode.toUpperCase());
+
+      if (isGdprCountry) {
+        // GDPR country detected - let Klaro banner display normally.
+        if (console && console.log) {
+          console.log('[AZ GDPR Consent] GDPR country detected:', countryCode, '- Allowing banner to display.');
+        }
+      } else {
+        // Non-GDPR country - auto-accept consent.
+        if (console && console.log) {
+          console.log('[AZ GDPR Consent] Non-GDPR country detected:', countryCode);
+        }
+        setAutoAcceptedConsent();
+      }
+    })
+    .catch(error => {
+      // If geolocation fetch fails, assume GDPR applies for safety.
+      if (console && console.error) {
+        console.error('[AZ GDPR Consent] Failed to fetch geolocation data:', error);
+        console.log('[AZ GDPR Consent] Assuming GDPR country due to error - banner will display.');
+      }
+    });
 })();
 JS;
 
-    $attachments['#attached']['html_head'][] = [
-      [
-        '#type' => 'html_tag',
-        '#tag' => 'script',
-        '#value' => Markup::create($inline_js),
-        '#weight' => -1000,
-      ],
-      'az_gdpr_consent_auto_accept',
-    ];
-  }
+  // Attach the script to run before Klaro loads.
+  $attachments['#attached']['html_head'][] = [
+    [
+      '#type' => 'html_tag',
+      '#tag' => 'script',
+      '#value' => Markup::create($inline_js),
+      '#weight' => -1000,
+    ],
+    'az_gdpr_consent_geolocation_check',
+  ];
 }
