@@ -6,11 +6,6 @@
  * of these @include files will be combined into a single file.
  */
 
-/* For structuring header utilities */
-header#header_arizona {
-  min-height: 10px;
-}
-
 /* Sticky footer */
 html.sticky-footer #page {
   display: -webkit-box;
@@ -102,13 +97,6 @@ audio:not([controls]) {
   height: auto;
   width: auto;
   overflow: auto;
-}
-
-/**
- * Branding header.
- */
-.arizona-header .row > * {
-  width: unset;
 }
 
 /* Wrapping link for logo. */
@@ -418,41 +406,23 @@ td.menu-disabled {
   }
 }
 
-a.btn.btn-redbar {
-  padding: .5rem 0 0 0;
+/* Disable fixed Arizona Header for mobile if user is logged in. */
+@media screen and (max-width: 992px) {
+  .user-logged-in {
+    margin-top: 0;
+  }
+  .user-logged-in .arizona-header {
+    position: static;
+  }
 }
 
-.navbar-offcanvas button.btn.btn-redbar {
-  padding-bottom: 4px;
-}
-
-.bg-chili .btn.btn-redbar {
-  background-color: #8b0015;
-  border: 2px solid #8b0015;
-}
-
-/*
- * Search
- */
-.navbar-offcanvas .navbar-offcanvas-search .form-control {
-    height: 60px;
-    margin: 0;
-    border: none;
-}
-
-#block-az-barrio-offcanvas-searchform .material-symbols-rounded {
-  font-size: 24px;
-}
-
-#block-az-barrio-offcanvas-searchform .btn {
-padding: 0.625rem .75rem;
-}
-
-.search-block-form input {
+/* AZ Barrio search form block (Desktop) */
+.az-search-block .search-block-form .form-search {
   height: 43px;
+  margin-left: 0 !important;
 }
 
-.az-search-block form.search-block-form .input-group button {
+.az-search-block .search-block-form .input-group button {
   display: flex;
   align-items: center;
   font-size: 20px;
@@ -462,8 +432,8 @@ padding: 0.625rem .75rem;
   padding: 0 8px;
 }
 
-.az-search-block form.search-block-form .input-group button:hover,
-.az-search-block form.search-block-form .input-group button:focus {
+.az-search-block .search-block-form .input-group button:hover,
+.az-search-block .search-block-form .input-group button:focus {
     background-color: #8B0015;
     color: #ffffff;
 }
@@ -796,18 +766,29 @@ form.webform-submission-form {
   color: #49595e;
 }
 
-.navbar-offcanvas.open {
-   overflow-y: scroll;
-}
-@media (min-width: 992px) {
-  .navbar-offcanvas.open {
-     overflow-y: initial;
-  }
-}
-
 /* Add ability to hide contextual links:
  * See https://github.com/az-digital/az_quickstart/pull/2228
  */
 .hide-contextual-links .contextual button {
   display: none;
+}
+
+.contextual-region .contextual .contextual-links a {
+  color: #333;
+}
+
+/* Place contextual link trigger button directly on centered embeds. 
+ * See https://github.com/az-digital/az_quickstart/pull/3844
+ */
+.field--name-field-az-text-area .align-center.contextual-region {
+  width: fit-content;
+}
+
+/* Fix when using inline image text wrap bulleted text needs more left padding
+ * See https://github.com/az-digital/az_quickstart/pull/4195
+ */
+.align-left ~ ul,
+.align-left ~ ol {
+  overflow: auto;
+  overflow-wrap: anywhere;
 }
