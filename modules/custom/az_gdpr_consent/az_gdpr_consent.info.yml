@@ -4,7 +4,6 @@ type: module
 core_version_requirement: ^10 || ^11 || ^12
 package: The University of Arizona
 container_rebuild_required: true
-configure: az_gdpr_consent.settings
 dependencies:
   - az_core:az_core
   - klaro:klaro

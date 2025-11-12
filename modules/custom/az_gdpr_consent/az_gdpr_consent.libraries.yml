@@ -1,0 +1,7 @@
+# Library definition for AZ GDPR Consent Management
+gdpr_consent:
+  version: 1.0
+  js:
+    js/az-gdpr-consent.js: { weight: -1000, preprocess: false }
+  # Load this script in the header to ensure it runs before Klaro loads
+  header: true
