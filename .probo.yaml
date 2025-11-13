@@ -51,7 +51,7 @@ steps:
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush config:set -y system.logging error_level "verbose"
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush cache:rebuild
       - chown www-data:www-data -R /var/www/html/sites/default/files
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -y -n pm:install environment_indicator
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -y -n pm:install environment_indicator_toolbar
       - chmod 777 /var/www/html/sites/default/settings.php
       - echo -e "\$config['environment_indicator.indicator']['name'] = '$BRANCH_NAME (ProboCI)';\n\$config['environment_indicator.indicator']['bg_color'] = '#440027';" >> /var/www/html/sites/default/settings.php
       - chmod 444 /var/www/html/sites/default/settings.php

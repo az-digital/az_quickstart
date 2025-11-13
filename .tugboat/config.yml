@@ -82,7 +82,7 @@ services:
         find "${DOCROOT}/sites/default/files" -type f -exec chmod 0664 {} \;
 
         # Post-install steps.
-        vendor/bin/drush -y -n pm:install az_demo environment_indicator
+        vendor/bin/drush -y -n pm:install az_demo environment_indicator_toolbar
         vendor/bin/drush user:create azcontenteditor --password="azcontenteditor2025" --mail="azcontenteditor@example.com"
         vendor/bin/drush user:role:add az_content_editor azcontenteditor
         vendor/bin/drush user:create azcontentadmin --password="azcontentadmin2025" --mail="azcontentadmin@example.com"
