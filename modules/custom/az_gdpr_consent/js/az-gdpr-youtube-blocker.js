@@ -46,7 +46,7 @@
     const originalCreateElement = document.createElement;
 
     // Override createElement to intercept YouTube API script creation
-    document.createElement = function (tagName) {
+    document.createElement = function createElementOverride(tagName) {
       const element = originalCreateElement.call(document, tagName);
 
       if (tagName.toLowerCase() === 'script') {
@@ -109,7 +109,7 @@
                 const maxRetries = 50; // Stop after 5 seconds
 
                 const registerKlaroWatcher = () => {
-                  retryCount++;
+                  retryCount += 1;
 
                   try {
                     if (window.klaro && window.klaro.getManager) {
@@ -124,17 +124,13 @@
                         };
 
                         manager.watch(watcherObject);
-                      } else {
+                      } else if (retryCount < maxRetries) {
                         // Manager not fully initialized, try again
-                        if (retryCount < maxRetries) {
-                          setTimeout(registerKlaroWatcher, 100);
-                        }
-                      }
-                    } else {
-                      // Klaro not ready yet, try again soon
-                      if (retryCount < maxRetries) {
                         setTimeout(registerKlaroWatcher, 100);
                       }
+                    } else if (retryCount < maxRetries) {
+                      // Klaro not ready yet, try again soon
+                      setTimeout(registerKlaroWatcher, 100);
                     }
                   } catch (e) {
                     // Klaro threw an error (not ready yet), try again

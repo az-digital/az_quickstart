@@ -117,7 +117,6 @@
         );
         const expires = `expires=${expiryDate.toUTCString()}`;
         document.cookie = `${STORAGE_NAME}=${encodeURIComponent(consentsJson)};${expires};path=/;SameSite=Lax`;
-
       } else {
         // Use localStorage
         localStorage.setItem(STORAGE_NAME, consentsJson);
