@@ -78,28 +78,76 @@
 
                 // Store the script element for later
                 const scriptElement = this;
+                let apiLoaded = false;
 
-                // Set up Klaro consent listener
-                window.addEventListener('klaro-consent-updated', () => {
-                  if (hasYouTubeConsent()) {
-                    if (console && console.log) {
-                      console.log(
-                        '[AZ GDPR] YouTube consent granted, loading API',
-                      );
-                    }
-                    // Now load the script
+                /**
+                 * Klaro Consent Watcher
+                 *
+                 * Sets up a watcher to monitor Klaro consent changes and
+                 * loads the YouTube API right after the user grants consent.
+                 *
+                 * 1. YouTube API was blocked from loading initially (see lines 66-77)
+                 * 2. Now we register a watcher with Klaro's consent manager
+                 * 3. When the user accepts consent, Klaro triggers the watcher's update() method
+                 * 4. The watcher checks if YouTube consent was granted and loads the API
+                 * 5. An apiLoaded flag prevents duplicate loading (Klaro fires multiple events)
+                 *
+                 * Retry mechanism:
+                 * - Klaro might not be initialized when this script runs (weight -2000)
+                 * - We retry every 100ms up to 50 times (5 seconds) until Klaro is ready
+                 * - Once ready, we register a watcher object with an update() method
+                 */
+                const consentHandler = () => {
+                  if (hasYouTubeConsent() && !apiLoaded) {
+                    apiLoaded = true;
+                    // Now load the script - YouTube will call onYouTubeIframeAPIReady automatically
                     originalSrcDescriptor.set.call(scriptElement, value);
                   }
-                });
+                };
+
+                let retryCount = 0;
+                const maxRetries = 50; // Stop after 5 seconds
+
+                const registerKlaroWatcher = () => {
+                  retryCount++;
+
+                  try {
+                    if (window.klaro && window.klaro.getManager) {
+                      const manager = window.klaro.getManager();
+
+                      if (manager && manager.watch && manager.config) {
+                        // The watcher object must have an 'update' method
+                        const watcherObject = {
+                          update: () => {
+                            consentHandler();
+                          },
+                        };
+
+                        manager.watch(watcherObject);
+                      } else {
+                        // Manager not fully initialized, try again
+                        if (retryCount < maxRetries) {
+                          setTimeout(registerKlaroWatcher, 100);
+                        }
+                      }
+                    } else {
+                      // Klaro not ready yet, try again soon
+                      if (retryCount < maxRetries) {
+                        setTimeout(registerKlaroWatcher, 100);
+                      }
+                    }
+                  } catch (e) {
+                    // Klaro threw an error (not ready yet), try again
+                    if (retryCount < maxRetries) {
+                      setTimeout(registerKlaroWatcher, 100);
+                    }
+                  }
+                };
+
+                registerKlaroWatcher();
 
                 // Don't set the src yet - wait for consent
                 return;
-              }
-
-              if (console && console.log) {
-                console.log(
-                  '[AZ GDPR] YouTube consent already granted, allowing API load',
-                );
               }
             }
 
@@ -112,10 +160,6 @@
 
       return element;
     };
-
-    if (console && console.log) {
-      console.log('[AZ GDPR] YouTube API blocker initialized');
-    }
   };
 
   // Initialize immediately
