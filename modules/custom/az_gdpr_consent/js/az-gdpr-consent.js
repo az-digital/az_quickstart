@@ -118,20 +118,9 @@
         const expires = `expires=${expiryDate.toUTCString()}`;
         document.cookie = `${STORAGE_NAME}=${encodeURIComponent(consentsJson)};${expires};path=/;SameSite=Lax`;
 
-        if (console && console.log) {
-          console.log(
-            '[AZ GDPR Consent] Auto-accepted all services (cookie) for non-GDPR country',
-          );
-        }
       } else {
         // Use localStorage
         localStorage.setItem(STORAGE_NAME, consentsJson);
-
-        if (console && console.log) {
-          console.log(
-            '[AZ GDPR Consent] Auto-accepted all services (localStorage) for non-GDPR country',
-          );
-        }
       }
     } catch (e) {
       if (console && console.error) {
@@ -173,9 +162,6 @@
   const initialize = () => {
     // Skip if consent already exists (from previous visit)
     if (hasExistingConsent()) {
-      if (console && console.log) {
-        console.log('[AZ GDPR Consent] Existing consent found, skipping');
-      }
       return;
     }
 
@@ -194,20 +180,8 @@
           throw new Error('Country code not found in /cdn-loc response');
         }
 
-        if (isGdprCountry(countryCode)) {
-          // GDPR country detected - let Klaro banner display normally
-          if (console && console.log) {
-            console.log(
-              `[AZ GDPR Consent] GDPR country detected: ${countryCode} - Allowing banner to display.`,
-            );
-          }
-        } else {
+        if (!isGdprCountry(countryCode)) {
           // Non-GDPR country - auto-accept consent
-          if (console && console.log) {
-            console.log(
-              `[AZ GDPR Consent] Non-GDPR country detected: ${countryCode}`,
-            );
-          }
           setAutoAcceptedConsent();
         }
       })
