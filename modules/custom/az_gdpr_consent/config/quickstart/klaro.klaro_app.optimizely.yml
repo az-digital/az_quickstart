@@ -1,0 +1,28 @@
+langcode: en
+status: true
+dependencies: {  }
+id: optimizely
+label: Optimizely
+description: 'Optimizely helps us test and improve our website based on how visitors use it.'
+default: true
+purposes:
+  - analytics
+cookies:
+  -
+    regex: optimizelyEndUserId
+    path: ''
+    domain: ''
+required: false
+opt_out: false
+only_once: false
+contextual_consent_only: false
+contextual_consent_text: ''
+info_url: 'https://www.optimizely.com/'
+privacy_policy_url: 'https://www.optimizely.com/privacy/'
+javascripts:
+  - cdn.optimizely.com/js/
+  - logx.optimizely.com/
+callback_code: ''
+wrapper_identifier: {  }
+attachments: {  }
+weight: 0
