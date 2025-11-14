@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies: {  }
+id: tiktok
+label: TikTok
+description: 'TikTok is a social media platform by Bytedance Ltd. (China/Cayman Islands).'
+default: true
+purposes:
+  - external_content
+cookies: {  }
+required: false
+opt_out: false
+only_once: false
+contextual_consent_only: false
+contextual_consent_text: ''
+info_url: 'https://www.tiktok.com/about'
+privacy_policy_url: 'https://www.tiktok.com/legal/privacy-policy-row'
+javascripts:
+  - www.tiktok.com
+callback_code: ''
+wrapper_identifier:
+  - .tiktok-embed
+attachments: {  }
+weight: 0
+

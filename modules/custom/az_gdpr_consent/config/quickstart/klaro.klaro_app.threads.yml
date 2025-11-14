@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies: {  }
+id: threads
+label: 'Threads by Instagram'
+description: 'Threads is a social media platform by Meta Platforms, Inc (USA).'
+default: true
+purposes:
+  - external_content
+cookies: {  }
+required: false
+opt_out: false
+only_once: false
+contextual_consent_only: false
+contextual_consent_text: ''
+info_url: 'https://about.instagram.com/threads'
+privacy_policy_url: 'https://about.instagram.com/safety/privacy'
+javascripts:
+  - www.threads.net
+callback_code: ''
+wrapper_identifier:
+  - .text-post-media
+attachments: {  }
+weight: 0
+
