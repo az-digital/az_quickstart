@@ -134,7 +134,6 @@ display:
               secondary_label: 'Advanced options'
               secondary_open: false
               reset_button_always_show: false
-              active_filter_indicator_on_top_level_terms: 1
             filter:
               title:
                 plugin_id: default

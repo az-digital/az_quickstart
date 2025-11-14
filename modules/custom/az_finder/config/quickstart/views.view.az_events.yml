@@ -354,7 +354,6 @@ display:
               secondary_label: 'Advanced options'
               secondary_open: false
               reset_button_always_show: false
-              active_filter_indicator_on_top_level_terms: true
             filter:
               title:
                 plugin_id: default
@@ -638,7 +637,6 @@ display:
               secondary_label: 'Advanced options'
               secondary_open: false
               reset_button_always_show: false
-              active_filter_indicator_on_top_level_terms: true
             filter:
               title:
                 plugin_id: default
@@ -939,7 +937,6 @@ display:
               secondary_label: 'Advanced options'
               secondary_open: false
               reset_button_always_show: false
-              active_filter_indicator_on_top_level_terms: true
             filter:
               title:
                 plugin_id: default
