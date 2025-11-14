@@ -83,11 +83,17 @@
   // Hard-coded Klaro configuration
   // Note: These MUST match ALL services configured in Klaro
   const KLARO_SERVICES = {
-    ga: true,
-    gtm: true,
-    facebook: true,
     cms: true,
     klaro: true,
+    facebook: true,
+    ga: true,
+    google_maps: true,
+    gtm: true,
+    instagram: true,
+    linkedin: true,
+    optimizely: true,
+    threads: true,
+    tiktok: true,
     vimeo: true,
     youtube: true,
   };
