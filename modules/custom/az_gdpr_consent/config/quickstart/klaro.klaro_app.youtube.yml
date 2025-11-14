@@ -7,7 +7,24 @@ description: 'YouTube is an online video sharing platform owned by Google.'
 default: true
 purposes:
   - external_content
-cookies: {  }
+  - advertising
+cookies:
+  -
+    regex: VISITOR_INFO1_LIVE
+    path: ''
+    domain: .youtube.com
+  -
+    regex: VISITOR_PRIVACY_METADATA
+    path: ''
+    domain: .youtube.com
+  -
+    regex: __Secure-YNID
+    path: ''
+    domain: .youtube.com
+  -
+    regex: __Secure-ROLLOUT_TOKEN
+    path: ''
+    domain: .youtube.com
 required: false
 opt_out: false
 only_once: false
@@ -21,6 +38,9 @@ javascripts:
   - youtube-nocookie.com
   - ytimg.com
 callback_code: ''
-wrapper_identifier: {  }
+wrapper_identifier:
+  - 'iframe[src*="youtube.com"]'
+  - 'iframe[src*="youtu.be"]'
+  - 'iframe[src*="youtube-nocookie.com"]'
 attachments: {  }
 weight: 0

@@ -27,10 +27,10 @@ library:
   cookie_name: klaro
   cookie_expires_after_days: 180
   cookie_domain: ''
-  group_by_purpose: false
+  group_by_purpose: true
   accept_all: false
   hide_decline_all: false
-  hide_learn_more: true
+  hide_learn_more: false
   learn_more_as_button: false
   additional_class: ''
   disable_powered_by: false
