@@ -96,7 +96,7 @@ class QuickstartExposedFilters extends BetterExposedFilters {
       // Hide the original reset button.
       $form['actions']['reset']['#access'] = FALSE;
     }
-    if ($options['active_filter_indicator_on_top_level_terms'] === TRUE) {
+    if (($options['active_filter_indicator_on_top_level_terms'] ?? FALSE) === TRUE) {
       $form['#attached']['library'][] = 'az_finder/active-filter-indicator';
     }
 
@@ -113,6 +113,7 @@ class QuickstartExposedFilters extends BetterExposedFilters {
     $options['skip_link'] = ['default' => FALSE];
     $options['skip_link_text'] = ['default' => $this->t('Skip to search and filter')];
     $options['skip_link_id'] = ['default' => 'search-filter'];
+    $options['active_filter_indicator_on_top_level_terms'] = ['default' => TRUE];
 
     return $options;
   }
