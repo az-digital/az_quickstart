@@ -6,7 +6,9 @@
           '#az-sidebar-collapsible',
         );
         const sidebarCollapsibleWidth =
-          sidebarCollapsible.getBoundingClientRect().width;
+          sidebarCollapsible !== null
+            ? sidebarCollapsible.getBoundingClientRect().width
+            : 0;
 
         // Return if sidebar isn't visible (such as on mobile).
         if (sidebarCollapsibleWidth === 0) return;
