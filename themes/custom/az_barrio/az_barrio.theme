@@ -162,7 +162,7 @@ function az_barrio_preprocess_page(&$variables, $hook) {
 
   if (isset($variables['page']['az_sidebar_collapsible'])) {
     $sidebar_collapsible_attributes = [];
-    
+
     // Test setting for Sidebar Collapsible button options.
     $variables['az_sidebar_collapsible_test'] = theme_get_setting('az_sidebar_collapsible_test');
     $sidebar_collapsible_attributes['class'][] = $variables['az_sidebar_collapsible_test'];
