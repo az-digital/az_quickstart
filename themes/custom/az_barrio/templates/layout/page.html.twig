@@ -45,6 +45,7 @@
  * - page.highlighted: Items for the highlighted region.
  * - page.breadcrumb: Items for the breadcrumb region.
  * - page.content_top: Items for the content top region.
+ * - page.az_sidebar_collapsible: Items for the sidebar collapsible region.
  * - page.sidebar_first: Items for the first sidebar.
  * - page.sidebar_second: Items for the second sidebar.
  * - page.content: The main content of the current page.
@@ -68,6 +69,7 @@
  * - navbar_top_attributes: Attributes for the navbar_top region.
  * - navbar_attributes: Attributes for the navbar region.
  * - content_attributes: Attributes for the content region.
+ * - az_sidebar_collapsible_attributes: Attributes for the az_sidebar_collapsible region.
  * - sidebar_first_attributes: Attributes for the sidebar_first region.
  * - sidebar_second_attributes: Attributes for the sidebar_second region.
  *
@@ -166,86 +168,110 @@
     <div id="main-wrapper" class="layout-main-wrapper clearfix">
         <div id="main">
           {% if page.content_featured %}
-          <section id="content_featured">
-            {{ page.content_featured }}
-          </section>
+            <section id="content_featured">
+              {{ page.content_featured }}
+            </section>
           {% endif %}
           {% if page.breadcrumb or page.content_top or page.highlighted %}
-          <div class="{{ container }}">
-            {% if page.highlighted %}
-            <div class="row">
-              {{ page.highlighted }}
+            <div class="{{ container }}">
+              {% if page.highlighted %}
+              <div class="row">
+                {{ page.highlighted }}
+              </div>
+              {% endif %}
+              {% if page.breadcrumb %}
+              <div class="row">
+                {{ page.breadcrumb }}
+              </div>
+              {% endif %}
+              {% if page.content_top %}
+              <div class="row">
+                {{ page.content_top }}
+              </div>
+              {% endif %}
             </div>
-            {% endif %}
-            {% if page.breadcrumb %}
-            <div class="row">
-              {{ page.breadcrumb }}
-            </div>
-            {% endif %}
-            {% if page.content_top %}
-            <div class="row">
-              {{ page.content_top }}
-            </div>
-            {% endif %}
-          </div>
           {% endif %}
-          <div class="{{ container }}">
+          {% set has_az_sidebar_collapsible = page.az_sidebar_collapsible|render|striptags('<drupal-render-placeholder><embed><hr><iframe><img><input><link><object><script><source><style><video>')|trim %}
+          {% if has_az_sidebar_collapsible is not empty %}
+            <div class="container-fluid g-0">
+              <div class="row g-0 flex-nowrap">
+                <div{{ az_sidebar_collapsible_attributes }}>
+                  <div class="ms-1 h-100 rounded-2 border">
+                    {% if az_sidebar_collapsible_test != 'navbar' %}
+                      <div class="collapse-btn-div text-align-right rounded{{ az_sidebar_collapsible_test != 'close' ? ' text-bg-azurite' : '' }}">
+                        <button type="button" data-bs-toggle="collapse" data-bs-target="#az-sidebar-collapsible" aria-expanded="true" aria-controls="az-sidebar-collapsible" class="btn btn-sm border-0 {{ az_sidebar_collapsible_test != 'close' ? 'text-white' : '' }}" id="az-sidebar-collapse-btn">
+                          <span aria-hidden="true" class="icon material-symbols-rounded" id="az-sidebar-collapse-icon">{{ az_sidebar_collapsible_test == 'close' ? 'close' : 'left_panel_close' }}</span>
+                          <span class="visually-hidden">Hide sidebar menu</span>
+                        </button>
+                      </div>
+                    {% endif %}
+                    {{ page.az_sidebar_collapsible }}
+                  </div>
+                </div>
+                <div id="container-with-sidebar-collapsible" class="col-md-9 col-xxl-10">
+          {% endif %}
+          <div class="{{ has_az_sidebar_collapsible is not empty ? 'container-fluid' : container }}">
             <div class="row row-offcanvas row-offcanvas-left clearfix">
               <main{{ content_attributes }}>
                 {{ page.content }}
               </main>
               {% set has_sidebar_first = page.sidebar_first|render|striptags('<drupal-render-placeholder><embed><hr><iframe><img><input><link><object><script><source><style><video>')|trim %}
               {% if has_sidebar_first is not empty %}
-              <div{{ sidebar_first_attributes }}>
-                <aside class="section" role="complementary">
-                  {{ page.sidebar_first }}
-                </aside>
-              </div>
+                <div{{ sidebar_first_attributes }}>
+                  <aside class="section" role="complementary">
+                    {{ page.sidebar_first }}
+                  </aside>
+                </div>
               {% endif %}
               {% set has_sidebar_second = page.sidebar_second|render|striptags('<drupal-render-placeholder><embed><hr><iframe><img><input><link><object><script><source><style><video>')|trim %}
               {% if has_sidebar_second is not empty %}
-              <div{{ sidebar_second_attributes }}>
-                <aside class="section" role="complementary">
-                  {{ page.sidebar_second }}
-                </aside>
-              </div>
+                <div{{ sidebar_second_attributes }}>
+                  <aside class="section" role="complementary">
+                    {{ page.sidebar_second }}
+                  </aside>
+                </div>
               {% endif %}
             </div>
           </div>
           {{ page.full_width_content_bottom }}
           {% if page.content_2_col_1 or page.content_2_col_2 %}
-          <div class="{{ container }}">
-            <div class="row">
-              {{ page.content_2_col_1 }}
-              {{ page.content_2_col_2 }}
+            <div class="{{ container }}">
+              <div class="row">
+                {{ page.content_2_col_1 }}
+                {{ page.content_2_col_2 }}
+              </div>
             </div>
-          </div>
           {% endif %}
           {% if page.content_3_col_1 or page.content_3_col_2 or page.content_3_col_3 %}
-          <div class="{{ container }}">
-            <div class="row">
-              {{ page.content_3_col_1 }}
-              {{ page.content_3_col_2 }}
-              {{ page.content_3_col_3 }}
+            <div class="{{ container }}">
+              <div class="row">
+                {{ page.content_3_col_1 }}
+                {{ page.content_3_col_2 }}
+                {{ page.content_3_col_3 }}
+              </div>
             </div>
-          </div>
           {% endif %}
           {% if page.content_bottom %}
-          <div class="{{ container }}">
-            <div class="row">
-              {{ page.content_bottom }}
+            <div class="{{ container }}">
+              <div class="row">
+                {{ page.content_bottom }}
+              </div>
             </div>
-          </div>
           {% endif %}
           {% if page.content_4_col_1 or page.content_4_col_2 or page.content_4_col_3 or page.content_4_col_4 %}
-          <div class="{{ container }}">
-            <div class="row">
-                {{ page.content_4_col_1 }}
-                {{ page.content_4_col_2 }}
-                {{ page.content_4_col_3 }}
-                {{ page.content_4_col_4 }}
+            <div class="{{ container }}">
+              <div class="row">
+                  {{ page.content_4_col_1 }}
+                  {{ page.content_4_col_2 }}
+                  {{ page.content_4_col_3 }}
+                  {{ page.content_4_col_4 }}
+              </div>
             </div>
-          </div>
+          {% endif %}
+          {% if has_az_sidebar_collapsible is not empty %}
+                </div>
+              </div>
+            </div>
           {% endif %}
         </div>
     </div>

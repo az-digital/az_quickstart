@@ -146,6 +146,17 @@ function az_barrio_preprocess_page(&$variables, $hook) {
     $variables['sidebar_first_attributes']['class'][] = 'order-2 order-md-first';
     $variables['sidebar_second_attributes']['class'][] = 'order-last';
   }
+
+  if (isset($variables['page']['az_sidebar_collapsible'])) {
+    // Test setting for Sidebar Collapsible button options
+    $variables['az_sidebar_collapsible_test'] = theme_get_setting('az_sidebar_collapsible_test');
+    $variables['az_sidebar_collapsible_attributes']['class'][] = $variables['az_sidebar_collapsible_test'];
+
+    $variables['#attached']['library'][] = 'az_barrio/az-barrio-sidebar-collapsible';
+    $variables['az_sidebar_collapsible_attributes']['class'][] = 'd-none d-md-block col-md-3 col-xxl-2 mb-1 position-relative collapse collapse-horizontal show';
+    $variables['az_sidebar_collapsible_attributes']['id'][] = 'az-sidebar-collapsible';
+    $variables['az_sidebar_collapsible_attributes'] = new Attribute($variables['az_sidebar_collapsible_attributes']);
+  }
 }
 
 /**
@@ -842,4 +853,17 @@ function az_barrio_preprocess_block(&$variables) {
     $variables['az_remove_sidebar_menu_mobile'] = theme_get_setting('az_remove_sidebar_menu_mobile');
   }
 
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ *
+ * FOR TESTING ONLY! Adds theme setting for main menu theme template.
+ */
+function az_barrio_preprocess_menu(&$variables) {
+  if (isset($variables['menu_name'])
+    && $variables['menu_name'] === 'main'
+    && theme_get_setting('az_sidebar_collapsible_test') === 'navbar') {
+    $variables['az_sidebar_toggle'] = TRUE;
+  }
 }

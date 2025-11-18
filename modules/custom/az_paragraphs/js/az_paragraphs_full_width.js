@@ -58,6 +58,7 @@
     calculateFullWidthNegativeMargins();
     calculateFullWidthSidebarWidth();
     pushSidebarsDown();
+    document.dispatchEvent(new Event('setFullWidthLayout'));
   }
   document.addEventListener('DOMContentLoaded', setFullWidthLayout);
   window.addEventListener('resize', setFullWidthLayout);
