@@ -40,6 +40,11 @@
   margin: 1px 0 !important;
 }
 
+#az-sidebar-collapsible.in-navbar:not(.show) > div {
+  border: 0 !important;
+  margin: 0 !important;
+}
+
 #az-sidebar-collapsible.close:not(.show) {
   display: none !important;
 }

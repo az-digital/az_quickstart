@@ -197,7 +197,7 @@
               <div class="row g-0 flex-nowrap">
                 <div{{ az_sidebar_collapsible_attributes }}>
                   <div class="ms-1 h-100 rounded-2 border">
-                    {% if az_sidebar_collapsible_test != 'navbar' %}
+                    {% if az_sidebar_collapsible_test != 'in-navbar' %}
                       <div class="collapse-btn-div text-align-right rounded{{ az_sidebar_collapsible_test != 'close' ? ' text-bg-azurite' : '' }}">
                         <button type="button" data-bs-toggle="collapse" data-bs-target="#az-sidebar-collapsible" aria-expanded="true" aria-controls="az-sidebar-collapsible" class="btn btn-sm border-0 {{ az_sidebar_collapsible_test != 'close' ? 'text-white' : '' }}" id="az-sidebar-collapse-btn">
                           <span aria-hidden="true" class="icon material-symbols-rounded" id="az-sidebar-collapse-icon">{{ az_sidebar_collapsible_test == 'close' ? 'close' : 'left_panel_close' }}</span>

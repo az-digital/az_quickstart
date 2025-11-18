@@ -435,7 +435,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#options' => [
       'inside' => t('A collapse button is displayed inside the region and remains visible when the region is collapsed.'),
       'sticky' => t('A collapse button is displayed inside the region and becomes a tab on the left edge of the browser window when the region is collapsed. (To do: This button will also be sticky at the top of the window as the user scrolls.)'),
-      'navbar' => t('A toggle sidebar button is displayed in the primary navbar.'),
+      'in-navbar' => t('A toggle sidebar button is displayed in the primary navbar.'),
       'close' => t('A close button is displayed inside the region. Users can reload to restore the sidebar.'),
     ],
     '#default_value' => theme_get_setting('az_sidebar_collapsible_test'),

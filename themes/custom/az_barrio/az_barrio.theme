@@ -718,7 +718,7 @@ function az_barrio_preprocess_block(&$variables) {
 function az_barrio_preprocess_menu(&$variables) {
   if (isset($variables['menu_name'])
     && $variables['menu_name'] === 'main'
-    && theme_get_setting('az_sidebar_collapsible_test') === 'navbar') {
+    && theme_get_setting('az_sidebar_collapsible_test') === 'in-navbar') {
     $variables['az_sidebar_toggle'] = TRUE;
   }
 }
