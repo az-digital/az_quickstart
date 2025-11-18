@@ -12,6 +12,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Render\Markup;
+use Drupal\Core\Template\Attribute;
 use Drupal\Core\Url;
 
 /**
@@ -160,14 +161,16 @@ function az_barrio_preprocess_page(&$variables, $hook) {
   }
 
   if (isset($variables['page']['az_sidebar_collapsible'])) {
-    // Test setting for Sidebar Collapsible button options
+    $sidebar_collapsible_attributes = [];
+    
+    // Test setting for Sidebar Collapsible button options.
     $variables['az_sidebar_collapsible_test'] = theme_get_setting('az_sidebar_collapsible_test');
-    $variables['az_sidebar_collapsible_attributes']['class'][] = $variables['az_sidebar_collapsible_test'];
+    $sidebar_collapsible_attributes['class'][] = $variables['az_sidebar_collapsible_test'];
 
     $variables['#attached']['library'][] = 'az_barrio/az-barrio-sidebar-collapsible';
-    $variables['az_sidebar_collapsible_attributes']['class'][] = 'd-none d-md-block col-md-3 col-xxl-2 mb-1 position-relative collapse collapse-horizontal show';
-    $variables['az_sidebar_collapsible_attributes']['id'][] = 'az-sidebar-collapsible';
-    $variables['az_sidebar_collapsible_attributes'] = new Attribute($variables['az_sidebar_collapsible_attributes']);
+    $sidebar_collapsible_attributes['class'][] = 'd-none d-md-block col-md-3 col-xxl-2 mb-1 position-relative collapse collapse-horizontal show';
+    $sidebar_collapsible_attributes['id'][] = 'az-sidebar-collapsible';
+    $variables['az_sidebar_collapsible_attributes'] = new Attribute($sidebar_collapsible_attributes);
   }
 }
 
