@@ -25,7 +25,7 @@ settings:
   depth: 0
   expand_all_items: false
   parent: 'main:'
-  suggestion: sidebar
+  suggestion: sidebar_collapsible
   label_type: root
   label_link: false
   expand: false
