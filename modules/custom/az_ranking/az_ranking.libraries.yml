@@ -1,0 +1,34 @@
+az_ranking:
+  css:
+    component:
+      css/az-ranking-widget.css: {}
+      css/az-ranking.css: {}
+  dependencies:
+    - core/drupal
+    - core/once
+az_ranking_image:
+  css:
+    component:
+      css/az-ranking-image.css: {}
+  js:
+    js/az-ranking-focal-point-calc.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
+az_ranking_no_follow:
+  css:
+    component:
+      css/az-ranking-no-follow.css: {}
+  js:
+    js/az-ranking-no-follow.js: {}
+  dependencies:
+    - core/drupal.nodelist.foreach
+focal_point_picker:
+  js:
+    js/az-ranking-focal-point-picker.js: {}
+  css:
+    component:
+      css/az-ranking-focal-point-picker.css: {}
+  dependencies:
+    - core/drupal
+    - core/once

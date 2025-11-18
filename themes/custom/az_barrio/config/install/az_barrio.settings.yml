@@ -136,16 +136,13 @@ bootstrap_barrio_region_width_breadcrumb: 0
 bootstrap_barrio_region_width_sidebar_first: 0
 bootstrap_barrio_region_width_sidebar_second: 0
 bootstrap_barrio_region_width_content: 0
-az_barrio_navbar_offcanvas: true
 external_links: true
 wordmark: true
 land_acknowledgment: true
 info_security_privacy: true
 copyright_notice: 'The Arizona Board of Regents on behalf of <a href="https://www.arizona.edu" target="_blank">The University of Arizona</a>.'
-az_hide_front_title: false
 az_back_to_top: true
 az_bootstrap_source: cdn
-az_bootstrap_cdn_version: stable
 az_bootstrap_cdn_version_css: stable
 az_bootstrap_cdn_version_js: stable
 az_bootstrap_minified: true

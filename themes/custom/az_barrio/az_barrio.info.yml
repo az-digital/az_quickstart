@@ -3,7 +3,7 @@ type: theme
 description: 'Basic structure for a Bootstrap Barrio SubTheme.'
 core_version_requirement: ^10 || ^11 || ^12
 dependencies:
-  - az_core
+  - az_core:az_core
 base theme: bootstrap_barrio
 block_default_region: 'content'
 

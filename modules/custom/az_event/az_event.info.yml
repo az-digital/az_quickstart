@@ -4,28 +4,28 @@ description: 'Provides Event content type and related configuration.'
 core_version_requirement: ^10 || ^11 || ^12
 package: 'The University of Arizona'
 dependencies:
-  - az_accordion
-  - az_core
-  - az_media
-  - az_paragraphs_contact
-  - calendar_link
-  - date_ap_style
-  - datetime_range
-  - field
-  - field_group
-  - jquery_ui_datepicker
-  - file
-  - link
-  - media
-  - media_library
-  - menu_ui
-  - node
-  - path
+  - az_accordion:az_accordion
+  - az_core:az_core
+  - az_media:az_media
+  - az_paragraphs:az_paragraphs_contact
+  - calendar_link:calendar_link
+  - date_ap_style:date_ap_style
+  - drupal:datetime_range
+  - drupal:field
+  - field_group:field_group
+  - jquery_ui_datepicker:jquery_ui_datepicker
+  - drupal:file
+  - drupal:link
+  - drupal:media
+  - drupal:media_library
+  - drupal:menu_ui
+  - drupal:node
+  - drupal:path
   - pathauto:pathauto
-  - smart_date
-  - smart_date_recur
-  - smart_title
-  - taxonomy
-  - text
-  - user
-  - views_bootstrap
+  - smart_date:smart_date
+  - smart_date:smart_date_recur
+  - smart_title:smart_title
+  - drupal:taxonomy
+  - drupal:text
+  - drupal:user
+  - views_bootstrap:views_bootstrap

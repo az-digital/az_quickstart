@@ -345,6 +345,25 @@ function az_core_form_node_form_alter(&$form, FormStateInterface $form_state) {
  */
 function az_core_form_menu_link_content_form_alter(&$form, FormStateInterface $form_state) {
   $form['#attached']['library'][] = 'az_core/claro-node-form-overrides';
+}
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter() for Drupal\block_content\BlockContentForm.
+ *
+ * Adds style overrides for claro/node-form and arizona-bootstrap.
+ */
+function az_core_form_block_content_form_alter(&$form, FormStateInterface $form_state) {
+  $form['#attached']['library'][] = 'az_core/claro-node-form-overrides';
+  $form['#attached']['library'][] = 'az_core/arizona-bootstrap-node-form-overrides';
+}
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter() for Drupal\webform\Form.
+ *
+ * Adds style overrides for claro/node-form and arizona-bootstrap.
+ */
+function az_core_form_webform_edit_form_alter(&$form, FormStateInterface $form_state) {
+  $form['#attached']['library'][] = 'az_core/claro-node-form-overrides';
   $form['#attached']['library'][] = 'az_core/arizona-bootstrap-node-form-overrides';
 }
 
@@ -476,7 +495,8 @@ function az_core_node_access(NodeInterface $node, $op, AccountInterface $account
     if ($bundle === 'az_person') {
       // Determine if netid field exists.
       if ($node->hasField('field_az_netid')) {
-        $netid = $node->get('field_az_netid')->getValue();
+        $netid = $node->get('field_az_netid')->first();
+        $netid = $netid?->getString();
         try {
           // Look up user mapping for CAS.
           $auth = \Drupal::service('externalauth.authmap')->get($account->id(), 'cas');
