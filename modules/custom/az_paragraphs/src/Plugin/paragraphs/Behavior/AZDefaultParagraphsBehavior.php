@@ -166,6 +166,11 @@ class AZDefaultParagraphsBehavior extends ParagraphsBehaviorBase {
       $build['#attributes']['class'][] = $config['az_display_settings']['bottom_spacing'];
     }
 
+    // Add .container class to content-width paragraphs.
+    if ((empty($config['full_width']) || $config['full_width'] !== 'full-width-background') ||
+        (empty($config['text_background_full_width']) || $config['text_background_full_width'] !== 'full-width-background')) {
+      $build['#attributes']['class'][] = 'container';
+    }
   }
 
 }
