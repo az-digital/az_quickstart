@@ -4,39 +4,11 @@ config:
   php: '8.4'
   via: apache:2.4
   webroot: web
-  database: mariadb:10.6
+  database: mariadb:11.4
   xdebug: false
 env_file:
   - .env
 services:
-  # Replaces default lando MariaDB image with arm64 (Apple M1) compatible one.
-  # TODO: remove database service overrides once lando is updated.
-  database:
-    type: compose
-    ssl: true
-    sslExpose: false
-    services:
-      image: mariadb:10.6
-      command: docker-entrypoint.sh mariadbd
-      restart: always
-      ports:
-        - '3306'
-      environment:
-        MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: 'true'
-        MARIADB_DATABASE: drupal11
-        MYSQL_DATABASE: drupal11
-        MARIADB_USER: drupal11
-        MARIADB_PASSWORD: drupal11
-    # Turn on SSL settings because recent mariadb clients expect it.
-    build_as_root:
-      # Create an empty mariadb configuration file
-      - echo [mariadb] > /etc/mysql/conf.d/.lando.cnf
-      # Add generated service cert as the mariadb cert
-      - sh -c 'printf -- "ssl_cert = %s\n" "$LANDO_SERVICE_CERT" >> /etc/mysql/conf.d/.lando.cnf'
-      # Add generated service key as the mariadb key
-      - sh -c 'printf -- "ssl_key  = %s\n" "$LANDO_SERVICE_KEY" >> /etc/mysql/conf.d/.lando.cnf'
-      # Add reference to the shared Lando certificate authority
-      - sh -c 'printf -- "ssl_ca   = %s\n" "$LANDO_CA_CERT" >> /etc/mysql/conf.d/.lando.cnf'
   appserver:
     config:
       php: .vscode/php.ini
