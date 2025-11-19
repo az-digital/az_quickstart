@@ -156,15 +156,52 @@
   };
 
   /**
+   * Hides the Klaro toggle button DOM element.
+   * Waits for the element to be rendered, then hides it with CSS.
+   */
+  const hideToggleButton = () => {
+    let retryCount = 0;
+    const maxRetries = 30; // 3 seconds total (30 * 100ms)
+
+    const attemptHide = () => {
+      retryCount += 1;
+
+      try {
+        // Look for the toggle button DOM element
+        const toggleButton = document.querySelector('#klaro_toggle_dialog');
+
+        if (toggleButton) {
+          toggleButton.style.display = 'none';
+          // Success! Stop retrying
+          return;
+        }
+
+        // Element not found yet, retry
+        if (retryCount < maxRetries) {
+          setTimeout(attemptHide, 100);
+        }
+      } catch (e) {
+        if (console && console.error) {
+          console.error('[AZ GDPR Consent] Error hiding toggle button:', e);
+        }
+        // Retry on error
+        if (retryCount < maxRetries) {
+          setTimeout(attemptHide, 100);
+        }
+      }
+    };
+
+    // Start the retry loop
+    attemptHide();
+  };
+
+  /**
    * Main execution: Fetch geolocation and conditionally set consent.
    */
   const initialize = () => {
-    // Skip if consent already exists (from previous visit)
-    if (hasExistingConsent()) {
-      return;
-    }
+    const consentExists = hasExistingConsent();
 
-    // Fetch geolocation data from Pantheon /cdn-loc endpoint
+    // Always fetch geolocation to hide toggle for returning visitors
     fetch('/cdn-loc')
       .then((response) => {
         if (!response.ok) {
@@ -180,8 +217,15 @@
         }
 
         if (!isGdprCountry(countryCode)) {
-          // Non-GDPR country - auto-accept consent
-          setAutoAcceptedConsent();
+          // Non-GDPR country - auto-accept consent (first visit) and hide toggle button (all visits)
+
+          // Only set consent if it doesn't exist yet
+          if (!consentExists) {
+            setAutoAcceptedConsent();
+          }
+
+          // Always hide toggle button for non-GDPR countries
+          hideToggleButton();
         }
       })
       .catch((error) => {

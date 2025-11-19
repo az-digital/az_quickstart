@@ -9,7 +9,7 @@ block_unknown: false
 log_unknown_resources: false
 block_unknown_label: 'Unknown services'
 block_unknown_description: 'Allow loading of unknown external resources'
-show_toggle_button: false
+show_toggle_button: true
 show_close_button: false
 deletable_cookie_domains: {  }
 exclude_urls:
