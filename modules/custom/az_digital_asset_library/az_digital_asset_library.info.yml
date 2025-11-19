@@ -7,6 +7,6 @@ container_rebuild_required: true
 lifecycle: experimental
 lifecycle_link: 'https://github.com/az-digital/az_quickstart/blob/main/RELEASES.md#experimental-features'
 dependencies:
-  - az_core
+  - az_core:az_core
   - ib_dam:ib_dam
   - ib_dam:ib_dam_media

@@ -3,8 +3,8 @@ type: module
 description: 'Provides a photo gallery paragraph type.'
 core_version_requirement: ^10 || ^11 || ^12
 dependencies:
-  - az_paragraphs
+  - az_paragraphs:az_paragraphs
   - drupal:field
   - paragraphs:paragraphs
-  - az_media
+  - az_media:az_media
 package: 'The University of Arizona'
