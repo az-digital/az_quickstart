@@ -6,13 +6,19 @@
  * endpoint to determine visitor location and conditionally auto-accepts
  * consent for visitors from non-GDPR countries.
  *
- * For GDPR countries, the Klaro banner displays normally.
- * For non-GDPR countries, consent is auto-accepted before Klaro loads.
+ * For GDPR countries, the Klaro banner displays normally and toggle button is shown.
+ * For non-GDPR countries, consent is auto-accepted and toggle button stays hidden.
  */
 
 /* eslint-disable no-console */
 
 (() => {
+  // Inject CSS to hide toggle button by default
+  const style = document.createElement('style');
+  style.id = 'klaro-toggle-hide';
+  style.textContent = '#klaro_toggle_dialog { display: none !important; }';
+  document.head.appendChild(style);
+
   // list of GDPR and GDPR-like countries (ISO 3166-1 alpha-2 codes)
   const GDPR_COUNTRIES = [
     // EU Member States (27)
@@ -156,43 +162,19 @@
   };
 
   /**
-   * Hides the Klaro toggle button DOM element.
-   * Waits for the element to be rendered, then hides it with CSS.
+   * Shows the Klaro toggle button by removing the hiding CSS.
    */
-  const hideToggleButton = () => {
-    let retryCount = 0;
-    const maxRetries = 30; // 3 seconds total (30 * 100ms)
-
-    const attemptHide = () => {
-      retryCount += 1;
-
-      try {
-        // Look for the toggle button DOM element
-        const toggleButton = document.querySelector('#klaro_toggle_dialog');
-
-        if (toggleButton) {
-          toggleButton.style.display = 'none';
-          // Success! Stop retrying
-          return;
-        }
-
-        // Element not found yet, retry
-        if (retryCount < maxRetries) {
-          setTimeout(attemptHide, 100);
-        }
-      } catch (e) {
-        if (console && console.error) {
-          console.error('[AZ GDPR Consent] Error hiding toggle button:', e);
-        }
-        // Retry on error
-        if (retryCount < maxRetries) {
-          setTimeout(attemptHide, 100);
-        }
+  const showToggleButton = () => {
+    try {
+      const hideStyle = document.getElementById('klaro-toggle-hide');
+      if (hideStyle) {
+        hideStyle.remove();
       }
-    };
-
-    // Start the retry loop
-    attemptHide();
+    } catch (e) {
+      if (console && console.error) {
+        console.error('[AZ GDPR Consent] Error showing toggle button:', e);
+      }
+    }
   };
 
   /**
@@ -201,7 +183,7 @@
   const initialize = () => {
     const consentExists = hasExistingConsent();
 
-    // Always fetch geolocation to hide toggle for returning visitors
+    // Fetch geolocation to determine whether to show toggle button
     fetch('/cdn-loc')
       .then((response) => {
         if (!response.ok) {
@@ -216,29 +198,28 @@
           throw new Error('Country code not found in /cdn-loc response');
         }
 
-        if (!isGdprCountry(countryCode)) {
-          // Non-GDPR country - auto-accept consent (first visit) and hide toggle button (all visits)
-
-          // Only set consent if it doesn't exist yet
+        if (isGdprCountry(countryCode)) {
+          // GDPR country - show toggle button (hidden by default)
+          showToggleButton();
+        } else {
+          // Non-GDPR country - auto-accept consent on first visit
           if (!consentExists) {
             setAutoAcceptedConsent();
           }
-
-          // Always hide toggle button for non-GDPR countries
-          hideToggleButton();
         }
       })
       .catch((error) => {
-        // If geolocation fetch fails, assume GDPR applies for safety
+        // If geolocation fetch fails, assume GDPR applies
         if (console && console.error) {
           console.error(
             '[AZ GDPR Consent] Failed to fetch geolocation data:',
             error,
           );
           console.log(
-            '[AZ GDPR Consent] Assuming GDPR country due to error - banner will display.',
+            '[AZ GDPR Consent] Assuming GDPR country due to error - showing toggle button.',
           );
         }
+        showToggleButton();
       });
   };
 
