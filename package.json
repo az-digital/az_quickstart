@@ -29,7 +29,7 @@
     "eslint-plugin-jquery": "^1.5.1",
     "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-yml": "^1.8.0",
-    "glob": "10.5.0",
+    "glob": "11.0.3",
     "minimist": "^1.2.8",
     "mkdirp": "^3.0.1",
     "prettier": "^3.0.3",
