@@ -31,6 +31,10 @@
   /* overflow: hidden; */
 }
 
+#az-sidebar-collapsible.show {
+  width: 280px;
+}
+
 #az-sidebar-collapsible.collapsing {
   transition: none;
 }

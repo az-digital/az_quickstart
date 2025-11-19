@@ -55,10 +55,7 @@
         );
         sidebar.addEventListener('hide.bs.collapse', (event) => {
           if (event.target.id === 'az-sidebar-collapsible') {
-            event.target.classList.remove('col-md-3', 'col-xxl-2');
             event.target.classList.add('col-auto');
-            mainContainer.classList.remove('col-md-9', 'col-xxl-10');
-            mainContainer.classList.add('col');
           }
         });
         sidebar.addEventListener('hidden.bs.collapse', (event) => {
@@ -94,9 +91,6 @@
             document.querySelector('#az-sidebar-collapse-icon').textContent =
               'left_panel_close';
             event.target.classList.remove('col-auto');
-            event.target.classList.add('col-md-3', 'col-xxl-2');
-            mainContainer.classList.remove('col');
-            mainContainer.classList.add('col-md-9', 'col-xxl-10');
           }
           setWidthOfFullWidthElements();
         });

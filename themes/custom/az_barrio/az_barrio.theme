@@ -168,7 +168,7 @@ function az_barrio_preprocess_page(&$variables, $hook) {
     $sidebar_collapsible_attributes['class'][] = $variables['az_sidebar_collapsible_test'];
 
     $variables['#attached']['library'][] = 'az_barrio/az-barrio-sidebar-collapsible';
-    $sidebar_collapsible_attributes['class'][] = 'd-none d-md-block col-md-3 col-xxl-2 mb-1 position-relative collapse collapse-horizontal show';
+    $sidebar_collapsible_attributes['class'][] = 'd-none d-md-block mb-1 position-relative collapse collapse-horizontal show';
     $sidebar_collapsible_attributes['id'][] = 'az-sidebar-collapsible';
     $variables['az_sidebar_collapsible_attributes'] = new Attribute($sidebar_collapsible_attributes);
   }
