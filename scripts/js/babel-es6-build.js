@@ -15,7 +15,7 @@
 
 'use strict';
 
-const glob = require('glob');
+const { globSync } = require('glob');
 const argv = require('minimist')(process.argv.slice(2));
 const changeOrAdded = require('./changeOrAdded');
 const check = require('./check');
@@ -27,10 +27,7 @@ const fileMatch = './**/*.es6.js';
 const globOptions = {
   ignore: './node_modules/**'
 };
-const processFiles = (error, filePaths) => {
-  if (error) {
-    process.exitCode = 1;
-  }
+const processFiles = (filePaths) => {
   // Process all the found files.
   let callback = changeOrAdded;
   if (argv.check) {
@@ -40,9 +37,9 @@ const processFiles = (error, filePaths) => {
 };
 
 if (argv.file) {
-  processFiles(null, [].concat(argv.file));
+  processFiles([].concat(argv.file));
 }
 else {
-  glob(fileMatch, globOptions, processFiles);
+  processFiles(globSync(fileMatch, globOptions).sort());
 }
 process.exitCode = 0;
