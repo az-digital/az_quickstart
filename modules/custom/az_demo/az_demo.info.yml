@@ -8,6 +8,7 @@ lifecycle_link: 'https://github.com/az-digital/az_quickstart/blob/main/RELEASES.
 dependencies:
   - az_block_types:az_custom_menu_block
   - az_core:az_core
+  - az_documentation:az_documentation
   - az_event:az_event
   - az_news:az_news
   - az_flexible_page:az_flexible_page
