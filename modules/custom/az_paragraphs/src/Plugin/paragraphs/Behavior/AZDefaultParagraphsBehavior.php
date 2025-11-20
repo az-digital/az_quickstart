@@ -167,8 +167,12 @@ class AZDefaultParagraphsBehavior extends ParagraphsBehaviorBase {
     }
 
     // Add .container class to content-width paragraphs.
-    if ((empty($config['full_width']) || $config['full_width'] !== 'full-width-background') ||
-        (empty($config['text_background_full_width']) || $config['text_background_full_width'] !== 'full-width-background')) {
+    if (empty($config['full_width'])) {
+      if (empty($config['text_background_full_width']) || $config['text_background_full_width'] !== 'full-width-background') {
+        $build['#attributes']['class'][] = 'container';
+      }
+    }
+    elseif ($config['full_width'] !== 'full-width-background') {
       $build['#attributes']['class'][] = 'container';
     }
   }
