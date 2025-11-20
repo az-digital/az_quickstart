@@ -74,7 +74,7 @@ bootstrap_barrio_region_class_content_featured: ''
 bootstrap_barrio_region_clean_content_top: 0
 bootstrap_barrio_region_class_content_top: col-md
 bootstrap_barrio_region_clean_az_sidebar_collapsible: 0
-bootstrap_barrio_region_class_az_sidebar_collapsible: 'px-2 pb-2'
+bootstrap_barrio_region_class_az_sidebar_collapsible: 'px-2 py-3 pb-2'
 bootstrap_barrio_region_clean_content_2_col_1: 0
 bootstrap_barrio_region_class_content_2_col_1: col-md-6
 bootstrap_barrio_region_clean_content_2_col_2: 0

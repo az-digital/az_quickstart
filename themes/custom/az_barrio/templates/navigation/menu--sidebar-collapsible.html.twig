@@ -57,7 +57,7 @@
         {% if item.below %}
           <div class="d-flex justify-content-between">
             {{ link(item.title, item.url, {'class': link_classes}) }}
-            <a href="#{{ key|replace({'menu_link_content:': ''}) }}" data-bs-toggle="collapse" aria-expanded="{{ item.in_active_trail ? 'true' : 'false' }}" aria-controls="{{ key|replace({'menu_link_content:': ''}) }}" class="btn d-flex align-items-center text-bg-white px-2 rounded-0 border-0" type="button">
+            <a href="#{{ key|replace({'menu_link_content:': ''}) }}" data-bs-toggle="collapse" aria-expanded="{{ item.in_active_trail ? 'true' : 'false' }}" aria-controls="{{ key|replace({'menu_link_content:': ''}) }}" class="btn d-flex align-items-center px-2 rounded-0 border-0" type="button">
               <span class="material-symbols-rounded align-text-top rounded-0" aria-hidden="true">keyboard_arrow_down</span>
             </a>
           </div>

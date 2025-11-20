@@ -7,25 +7,6 @@
   overflow: hidden;
 }
 
-#az-sidebar-collapsible .nav-pills > .nav-item {
-  border-top-left-radius: 0;
-  border-bottom-right-radius: var(--bs-border-radius);
-}
-
-.region-az-sidebar-collapsible .nav.nav-pills li a.is-active {
-  box-shadow:inset 6px 0 #378dbd;
-}
-
-.region-az-sidebar-collapsible .nav.nav-pills.flex-column>li a:focus, .region-az-sidebar-collapsible .nav.nav-pills.flex-column>li a:hover {
-  background-color: #001c48;
-  color: white;
-}
-
-.region-az-sidebar-collapsible .nav.nav-pills.flex-column>li {
-  margin-top: 0;
-  border: 0;
-}
-
 #az-sidebar-collapsible {
   min-width: 0;
   /* overflow: hidden; */
@@ -63,10 +44,6 @@
   padding-right: .25rem !important;
 }
 
-.collapse-btn-div {
-  margin: .25rem;
-}
-
 #az-sidebar-collapsible.sticky:not(.show) .collapse-btn-div {
   position: fixed;
   margin: 0;
@@ -84,4 +61,38 @@
 
 #az-sidebar-collapsible .material-symbols-rounded {
   font-size: 1.625rem;
+}
+
+/* @todo Target only menu blocks placed in Sidebar collapsible region */
+#az-sidebar-collapsible .nav-pills > .nav-item {
+  border-top-left-radius: 0;
+  border-bottom-right-radius: var(--bs-border-radius);
+}
+
+.region-az-sidebar-collapsible .nav.nav-pills li a.is-active {
+  box-shadow:inset 6px 0 #378dbd;
+}
+
+.region-az-sidebar-collapsible .nav.nav-pills.flex-column>li {
+  margin-top: 0;
+  border: 0;
+}
+
+#az-sidebar-collapsible a {
+  font-weight: 400;
+}
+
+#az-sidebar-collapsible .nav-link.active,
+#az-sidebar-collapsible .nav-link.is-active,
+#az-sidebar-collapsible .nav-pills .nav-link.active,
+#az-sidebar-collapsible .nav-pills .nav-link.is-active {
+  font-weight: 600;
+}
+
+#az-sidebar-collapsible .is-active {
+  background-color: #e9ecef !important;
+}
+
+#az-sidebar-collapsible .btn:hover {
+  background-color: #e9ecef;
 }

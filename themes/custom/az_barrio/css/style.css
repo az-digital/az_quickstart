@@ -792,29 +792,3 @@ form.webform-submission-form {
   overflow: auto;
   overflow-wrap: anywhere;
 }
-
-/* TEST STYLES FOR NAVIGATION UPDATES */
-
-.region-az-sidebar-collapsible {
-  margin-left: 0;
-  margin-right: 0;
-}
-
-.region-az-sidebar-collapsible a {
-  font-weight: 400;
-}
-
-.region-az-sidebar-collapsible > nav {
-  margin-top: 1rem;
-}
-
-.region-az-sidebar-collapsible .nav-link.active, .region-az-sidebar-collapsible .nav-link.is-active, .region-az-sidebar-collapsible .nav-pills .nav-link.active, .region-az-sidebar-collapsible .nav-pills .nav-link.is-active {
-  background-color: #001c48;
-  color: white;
-  font-weight: 600;
-}
-
-.region-az-sidebar-collapsible .nav-link:active, .region-az-sidebar-collapsible .nav-pills .nav-link:active {
-  background-color: #001c48;
-  color: white;
-}
