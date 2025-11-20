@@ -23,7 +23,7 @@ settings:
   follow_parent: active
   level: 2
   depth: 0
-  expand_all_items: false
+  expand_all_items: true
   parent: 'main:'
   suggestion: sidebar_collapsible
   label_type: root
