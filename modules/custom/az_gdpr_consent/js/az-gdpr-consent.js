@@ -201,11 +201,9 @@
         if (isGdprCountry(countryCode)) {
           // GDPR country - show toggle button (hidden by default)
           showToggleButton();
-        } else {
+        } else if (!consentExists) {
           // Non-GDPR country - auto-accept consent on first visit
-          if (!consentExists) {
-            setAutoAcceptedConsent();
-          }
+          setAutoAcceptedConsent();
         }
       })
       .catch((error) => {
