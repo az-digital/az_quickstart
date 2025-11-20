@@ -18,6 +18,8 @@ privacy_policy_url: 'https://vimeo.com/privacy'
 javascripts:
   - vimeo.com
 callback_code: ''
-wrapper_identifier: {  }
+wrapper_identifier:
+  - 'iframe[src*="vimeo.com"]'
+  - 'iframe[data-src*="vimeo.com"]'
 attachments: {  }
 weight: 0

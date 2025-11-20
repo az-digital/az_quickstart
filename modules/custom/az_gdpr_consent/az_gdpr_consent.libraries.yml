@@ -2,9 +2,9 @@
 gdpr_consent:
   version: 1.0
   js:
-    # YouTube blocker must load first to intercept script creation
-    js/az-gdpr-youtube-blocker.js: { weight: -2000, preprocess: false }
-    # Main consent script loads after blocker but before Klaro
+    # Remote video consent handler must load first to intercept script creation
+    js/az-gdpr-remote-video-consent-handler.js: { weight: -2000, preprocess: false }
+    # Main consent script loads after handler but before Klaro
     js/az-gdpr-consent.js: { weight: -1000, preprocess: false }
   # Load this script in the header to ensure it runs before Klaro loads
   header: true
