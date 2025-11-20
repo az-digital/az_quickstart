@@ -50,9 +50,11 @@
       function addSidebarCollapsibleListeners() {
         const sidebar = document.querySelector('#az-sidebar-collapsible');
         const sidebarBtn = document.querySelector('#az-sidebar-collapse-btn');
-        const mainContainer = document.querySelector(
-          '#container-with-sidebar-collapsible',
-        );
+        /*
+          const mainContainer = document.querySelector(
+            '#container-with-sidebar-collapsible',
+          );
+        */
         sidebar.addEventListener('hide.bs.collapse', (event) => {
           if (event.target.id === 'az-sidebar-collapsible') {
             event.target.classList.add('col-auto');
