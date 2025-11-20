@@ -51,7 +51,10 @@
       const containers = document.querySelectorAll('.az-js-video-background');
       containers.forEach((container) => {
         // Destroy the player instance
-        if (container.player && typeof container.player.destroy === 'function') {
+        if (
+          container.player &&
+          typeof container.player.destroy === 'function'
+        ) {
           container.player.destroy();
           container.player = null;
         }
@@ -64,7 +67,9 @@
 
         // Clean up parent paragraph classes to restore preview state
         if (container.dataset.parentid) {
-          const parentParagraph = document.getElementById(container.dataset.parentid);
+          const parentParagraph = document.getElementById(
+            container.dataset.parentid,
+          );
           if (parentParagraph) {
             parentParagraph.classList.remove('az-video-playing');
             parentParagraph.classList.remove('az-video-paused');
@@ -84,10 +89,15 @@
    */
   const destroyVimeoPlayers = () => {
     try {
-      const containers = document.querySelectorAll('.az-js-vimeo-video-background');
+      const containers = document.querySelectorAll(
+        '.az-js-vimeo-video-background',
+      );
       containers.forEach((container) => {
         // Destroy the player instance
-        if (container.player && typeof container.player.destroy === 'function') {
+        if (
+          container.player &&
+          typeof container.player.destroy === 'function'
+        ) {
           container.player.destroy();
           container.player = null;
         }
@@ -100,7 +110,9 @@
 
         // Clean up parent paragraph classes to restore preview state
         if (container.dataset.parentid) {
-          const parentParagraph = document.getElementById(container.dataset.parentid);
+          const parentParagraph = document.getElementById(
+            container.dataset.parentid,
+          );
           if (parentParagraph) {
             parentParagraph.classList.remove('az-video-playing');
             parentParagraph.classList.remove('az-video-paused');
@@ -176,11 +188,20 @@
                         if (manager && manager.watch && manager.config) {
                           const watcherObject = {
                             update: () => {
-                              if (hasConsent('youtube') && !loadedAPIs.youtube) {
+                              if (
+                                hasConsent('youtube') &&
+                                !loadedAPIs.youtube
+                              ) {
                                 // Consent granted - load API
                                 loadedAPIs.youtube = true;
-                                originalSrcDescriptor.set.call(scriptElement, value);
-                              } else if (!hasConsent('youtube') && loadedAPIs.youtube) {
+                                originalSrcDescriptor.set.call(
+                                  scriptElement,
+                                  value,
+                                );
+                              } else if (
+                                !hasConsent('youtube') &&
+                                loadedAPIs.youtube
+                              ) {
                                 // Consent revoked - destroy players
                                 destroyYouTubePlayers();
                               }
@@ -189,7 +210,9 @@
 
                           manager.watch(watcherObject);
                           return; // Success
-                        } else if (retryCount < maxRetries) {
+                        }
+
+                        if (retryCount < maxRetries) {
                           setTimeout(attemptSetup, 100);
                         }
                       } else if (retryCount < maxRetries) {
@@ -246,8 +269,14 @@
                               if (hasConsent('vimeo') && !loadedAPIs.vimeo) {
                                 // Consent granted - load API
                                 loadedAPIs.vimeo = true;
-                                originalSrcDescriptor.set.call(scriptElement, value);
-                              } else if (!hasConsent('vimeo') && loadedAPIs.vimeo) {
+                                originalSrcDescriptor.set.call(
+                                  scriptElement,
+                                  value,
+                                );
+                              } else if (
+                                !hasConsent('vimeo') &&
+                                loadedAPIs.vimeo
+                              ) {
                                 // Consent revoked - destroy players
                                 destroyVimeoPlayers();
                               }
@@ -256,7 +285,9 @@
 
                           manager.watch(watcherObject);
                           return; // Success
-                        } else if (retryCount < maxRetries) {
+                        }
+
+                        if (retryCount < maxRetries) {
                           setTimeout(attemptSetup, 100);
                         }
                       } else if (retryCount < maxRetries) {
