@@ -51,13 +51,13 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
    *   The plugin definition.
    * @param \Symfony\Component\HttpFoundation\Request $request
    *   The request service.
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The configuration factory.
    * @param \Drupal\Core\Render\RendererInterface $renderer
    *   The renderer service.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   The entity type manager service.
-   * @param \Drupal\az_finder\Service\AZFinderIcons $az_finder_icons
+   * @param \Drupal\az_finder\Service\AZFinderIcons $azFinderIcons
    *   The AZFinderIcons service.
    * @param \Psr\Log\LoggerInterface $logger
    *   The logger service.
@@ -90,7 +90,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $containter->get('request_stack')->getCurrentRequest(),
+      $container->get('request_stack')->getCurrentRequest(),
       $container->get('config.factory'),
       $container->get('renderer'),
       $container->get('entity_type.manager'),
