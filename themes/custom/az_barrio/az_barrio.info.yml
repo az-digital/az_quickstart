@@ -24,6 +24,7 @@ regions:
   content_featured: 'Featured content'
   highlighted: 'Highlighted'
   breadcrumb: 'Breadcrumb'
+  az_sidebar_collapsible: 'Sidebar collapsible'
   content_top: 'Content top'
   sidebar_first: 'Sidebar first'
   sidebar_second: 'Sidebar second'
