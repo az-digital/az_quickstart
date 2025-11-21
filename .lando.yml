@@ -9,6 +9,21 @@ config:
 env_file:
   - .env
 services:
+  # Base Lando bitnami legacy images no longer receive support.
+  database:
+    type: compose
+    services:
+      image: mariadb:11.4
+      command: docker-entrypoint.sh mariadbd
+      restart: always
+      ports:
+        - '3306'
+      environment:
+        MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: 'true'
+        MARIADB_DATABASE: drupal11
+        MYSQL_DATABASE: drupal11
+        MARIADB_USER: drupal11
+        MARIADB_PASSWORD: drupal11
   appserver:
     config:
       php: .vscode/php.ini
