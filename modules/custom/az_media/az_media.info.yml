@@ -10,7 +10,6 @@ dependencies:
   - drupal:image
   - drupal:media
   - drupal:media_library
-  - drupal:media_remote
   - drupal:responsive_image
   - entity_embed:entity_embed
   - field_group:field_group

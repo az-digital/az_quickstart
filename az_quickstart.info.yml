@@ -55,7 +55,6 @@ install:
   - drupal:dblog
   - drupal:search
   - drupal:shortcut
-  - drupal:media_remote
   - token:token
   - drupal:toolbar
   - drupal:field_ui
