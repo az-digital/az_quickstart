@@ -86,25 +86,6 @@
     'CA', // Canada
   ];
 
-  // Hard-coded Klaro configuration
-  // Note: These MUST match ALL services configured in Klaro
-  const KLARO_SERVICES = {
-    cms: true,
-    klaro: true,
-    facebook: true,
-    ga: true,
-    google_maps: true,
-    gtm: true,
-    instagram: true,
-    linkedin: true,
-    optimizely: true,
-    snapchat: true,
-    stackadapt: true,
-    threads: true,
-    tiktok: true,
-    vimeo: true,
-    youtube: true,
-  };
   const STORAGE_NAME = 'klaro';
   const STORAGE_METHOD = 'cookie'; // 'cookie' or 'localStorage'
   const COOKIE_EXPIRES_AFTER_DAYS = 180;
@@ -113,8 +94,12 @@
    * Sets auto-accepted consent for all configured Klaro services.
    */
   const setAutoAcceptedConsent = () => {
-    // Use the pre-configured service settings
-    const consentsJson = JSON.stringify(KLARO_SERVICES);
+    // Get current service settings from drupalSettings
+    const services = window.drupalSettings?.azGdprConsent?.klaroServices;
+    if (!services) {
+      return;
+    }
+    const consentsJson = JSON.stringify(services);
 
     try {
       if (STORAGE_METHOD === 'cookie') {
@@ -182,7 +167,18 @@
   /**
    * Main execution: Fetch geolocation and conditionally set consent.
    */
-  const initialize = () => {
+  const initialize = (retryCount = 0) => {
+    const maxRetries = 10;
+    const retryDelay = 100; // milliseconds
+
+    // Check if drupalSettings available
+    if (!window.drupalSettings?.azGdprConsent?.klaroServices) {
+      if (retryCount < maxRetries) {
+        setTimeout(() => initialize(retryCount + 1), retryDelay);
+      }
+      return;
+    }
+
     const consentExists = hasExistingConsent();
 
     // Fetch geolocation to determine whether to show toggle button
