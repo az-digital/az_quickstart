@@ -148,11 +148,6 @@ class QuickstartExposedFilters extends BetterExposedFilters {
       }
     }
 
-    // Check view-level setting.
-    if (isset($this->options['active_filter_indicator_levels']) && $this->options['active_filter_indicator_levels'] !== NULL) {
-      return (int) $this->options['active_filter_indicator_levels'];
-    }
-
     // Fall back to global default.
     $global_config = $this->configFactory->get('az_finder.settings');
     $global_levels = $global_config->get('tid_widget.active_filter_indicator_levels');
@@ -174,7 +169,6 @@ class QuickstartExposedFilters extends BetterExposedFilters {
     $options['skip_link'] = ['default' => FALSE];
     $options['skip_link_text'] = ['default' => $this->t('Skip to search and filter')];
     $options['skip_link_id'] = ['default' => 'search-filter'];
-    $options['active_filter_indicator_levels'] = ['default' => 1];
 
     return $options;
   }
@@ -249,14 +243,6 @@ class QuickstartExposedFilters extends BetterExposedFilters {
       '#default_value' => $this->options['skip_link_id'] ?? 'search-filter',
       '#description' => $this->t('The ID or anchor to link to within the view.'),
     ];
-    $form['bef']['general']['active_filter_indicator_levels'] = [
-      '#type' => 'number',
-      '#title' => $this->t('Filter indicator levels'),
-      '#description' => $this->t('Controls which accordion levels display an active filter indicator. Leave empty (NULL) to use the global default or disable indicators. 0 shows indicators on all levels. 1 shows them only on level 0 (top-level). 2 shows them on levels 0 and 1, and so on.'),
-      '#default_value' => $this->options['active_filter_indicator_levels'],
-      '#min' => 0,
-      '#step' => 1,
-    ];
     $form['bef']['general']['orientation'] = [
       '#type' => 'radios',
       '#title' => $this->t('Orientation'),
@@ -290,11 +276,9 @@ class QuickstartExposedFilters extends BetterExposedFilters {
         $this->options['skip_link'] = $general_settings['skip_link'] ?? FALSE;
         $this->options['skip_link_text'] = $general_settings['skip_link_settings']['skip_link_text'] ?? $this->t('Skip to search and filter');
         $this->options['skip_link_id'] = $general_settings['skip_link_settings']['skip_link_id'] ?? 'search-filter';
-        $this->options['active_filter_indicator_levels'] = $general_settings['active_filter_indicator_levels'] ?? NULL;
         unset($general_settings['orientation']);
         unset($general_settings['skip_link']);
         unset($general_settings['skip_link_settings']);
-        unset($general_settings['active_filter_indicator_levels']);
         unset($general_settings['reset_button_settings']);
         // Reassign 'general' back to 'bef' to reflect our changes.
         $bef_settings['general'] = $general_settings;
