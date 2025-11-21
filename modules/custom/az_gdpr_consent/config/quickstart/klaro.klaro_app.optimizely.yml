@@ -10,7 +10,19 @@ purposes:
 cookies:
   -
     regex: optimizelyEndUserId
-    path: ''
+    path: /
+    domain: ''
+  -
+    regex: '^optimizely'
+    path: /
+    domain: ''
+  -
+    regex: '^_opt_'
+    path: /
+    domain: ''
+  -
+    regex: '^_vis_opt_'
+    path: /
     domain: ''
 required: false
 opt_out: false

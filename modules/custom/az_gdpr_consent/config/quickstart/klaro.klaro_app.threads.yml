@@ -7,7 +7,27 @@ description: 'Threads is a social media platform by Meta Platforms, Inc (USA).'
 default: true
 purposes:
   - external_content
-cookies: {  }
+cookies:
+  -
+    regex: '^ig_'
+    path: /
+    domain: ''
+  -
+    regex: '^csrftoken$'
+    path: /
+    domain: ''
+  -
+    regex: '^mid$'
+    path: /
+    domain: ''
+  -
+    regex: '^rur$'
+    path: /
+    domain: ''
+  -
+    regex: '^ds_user_id$'
+    path: /
+    domain: ''
 required: false
 opt_out: false
 only_once: false

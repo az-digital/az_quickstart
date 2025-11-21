@@ -7,7 +7,31 @@ description: 'TikTok is a social media platform by Bytedance Ltd. (China/Cayman 
 default: true
 purposes:
   - external_content
-cookies: {  }
+cookies:
+  -
+    regex: '^tt_'
+    path: /
+    domain: ''
+  -
+    regex: '^ttwid$'
+    path: /
+    domain: ''
+  -
+    regex: '^_abck$'
+    path: /
+    domain: ''
+  -
+    regex: '^msToken$'
+    path: /
+    domain: ''
+  -
+    regex: '^store-country-code$'
+    path: /
+    domain: ''
+  -
+    regex: '^store-idc$'
+    path: /
+    domain: ''
 required: false
 opt_out: false
 only_once: false
