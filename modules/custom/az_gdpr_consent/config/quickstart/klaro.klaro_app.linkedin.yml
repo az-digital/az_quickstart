@@ -7,7 +7,35 @@ description: 'Linkedin is a social media platform by Linkedin, Inc (USA), subsid
 default: true
 purposes:
   - external_content
-cookies: {  }
+cookies:
+  -
+    regex: '^li_'
+    path: /
+    domain: ''
+  -
+    regex: '^lidc$'
+    path: /
+    domain: ''
+  -
+    regex: '^bcookie$'
+    path: /
+    domain: ''
+  -
+    regex: '^bscookie$'
+    path: /
+    domain: ''
+  -
+    regex: '^lang$'
+    path: /
+    domain: ''
+  -
+    regex: '^UserMatchHistory$'
+    path: /
+    domain: ''
+  -
+    regex: '^AnalyticsSyncHistory$'
+    path: /
+    domain: ''
 required: false
 opt_out: false
 only_once: false
