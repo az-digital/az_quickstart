@@ -55,7 +55,7 @@
           const count = Array.from(inputs).filter(
             (input) => input.checked,
           ).length;
-          
+
           let badge = h3.querySelector('.js-az-finder-indicator');
           if (count > 0) {
             if (!badge) {
