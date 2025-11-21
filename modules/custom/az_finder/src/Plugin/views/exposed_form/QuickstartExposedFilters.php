@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\az_finder\Plugin\views\exposed_form;
 
-use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\better_exposed_filters\Plugin\views\exposed_form\BetterExposedFilters;
@@ -128,9 +127,9 @@ class QuickstartExposedFilters extends BetterExposedFilters {
    * Get active filter indicator levels from config hierarchy.
    *
    * Checks in this order:
-   * 1. View-specific override config (az_finder.tid_widget.[view_id].[display_id])
-   * 2. View-level setting (from exposed form options)
-   * 3. Global default (az_finder.settings)
+   * 1. View-specific override config
+   *    (az_finder.tid_widget.[view_id].[display_id]).
+   * 2. Global default (az_finder.settings).
    *
    * @return int|null
    *   The number of levels to show indicators on, or NULL to disable.

@@ -26,8 +26,7 @@
       if (levels === 0) {
         // Target all levels.
         selector = 'a.collapser[class*="level-"]';
-      }
-      else {
+      } else {
         // Build selector for specific levels (0 through levels).
         const levelSelectors = [];
         for (let i = 0; i <= levels; i++) {
@@ -36,11 +35,7 @@
         selector = levelSelectors.join(', ');
       }
 
-      const toggles = once(
-        'az-filter-indicator',
-        selector,
-        context,
-      );
+      const toggles = once('az-filter-indicator', selector, context);
 
       toggles.forEach((toggle) => {
         const h3 = toggle.querySelector('h3, h4, h5, h6');
@@ -51,7 +46,9 @@
 
         const updateIndicator = () => {
           // Count all checked checkboxes in this section and all nested sections
-          const inputs = checkboxList.querySelectorAll('input[type="checkbox"]');
+          const inputs = checkboxList.querySelectorAll(
+            'input[type="checkbox"]',
+          );
           const count = Array.from(inputs).filter(
             (input) => input.checked,
           ).length;
@@ -64,7 +61,10 @@
                 'js-az-finder-indicator badge bg-azurite mx-2 lh-az-normal';
               badge.textContent = count;
               // Find the text node
-              const textNode = Array.from(h3.childNodes).find(node => node.nodeType === Node.TEXT_NODE && node.textContent.trim());
+              const textNode = Array.from(h3.childNodes).find(
+                (node) =>
+                  node.nodeType === Node.TEXT_NODE && node.textContent.trim(),
+              );
               if (textNode) {
                 // For flex-row-reverse, insert BEFORE text so it appears after visually
                 // For normal flex, insert AFTER text
@@ -86,11 +86,10 @@
 
         // Get all checkboxes in this section and nested sections
         const inputs = checkboxList.querySelectorAll('input[type="checkbox"]');
-        inputs.forEach(
-          (input) =>
-            input.addEventListener('change', updateIndicator, {
-              passive: true,
-            }),
+        inputs.forEach((input) =>
+          input.addEventListener('change', updateIndicator, {
+            passive: true,
+          }),
         );
         updateIndicator();
         document

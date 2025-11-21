@@ -259,7 +259,7 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
 
     // Normalize override values.
     $overrides = $form_state->getValue(['az_finder_tid_widget', 'overrides']) ?? [];
-    foreach ($overrides as $key => &$override) {
+    foreach ($overrides as &$override) {
       if (isset($override['active_filter_indicator_levels'])) {
         $value = $override['active_filter_indicator_levels'];
         if ($value === '') {
