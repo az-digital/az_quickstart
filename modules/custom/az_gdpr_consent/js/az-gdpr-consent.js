@@ -98,6 +98,8 @@
     instagram: true,
     linkedin: true,
     optimizely: true,
+    snapchat: true,
+    stackadapt: true,
     threads: true,
     tiktok: true,
     vimeo: true,

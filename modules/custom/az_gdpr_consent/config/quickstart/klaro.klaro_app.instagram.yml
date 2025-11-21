@@ -7,7 +7,27 @@ description: 'Instagram is a social media platform by Meta Platforms, Inc (USA).
 default: true
 purposes:
   - external_content
-cookies: {  }
+cookies:
+  -
+    regex: '^ig_'
+    path: /
+    domain: ''
+  -
+    regex: '^csrftoken$'
+    path: /
+    domain: ''
+  -
+    regex: '^mid$'
+    path: /
+    domain: ''
+  -
+    regex: '^rur$'
+    path: /
+    domain: ''
+  -
+    regex: '^urlgen$'
+    path: /
+    domain: ''
 required: false
 opt_out: false
 only_once: false
