@@ -164,7 +164,6 @@ display:
           skip_link: true
           skip_link_text: 'Skip to search and filter'
           skip_link_id: search-filter
-          active_filter_indicator_on_top_level_terms: true
       access:
         type: perm
         options:
@@ -469,7 +468,6 @@ display:
           skip_link: true
           skip_link_text: 'Skip to search and filter'
           skip_link_id: search-filter
-          active_filter_indicator_on_top_level_terms: true
       style:
         type: views_bootstrap_grid
         options:
@@ -566,7 +564,6 @@ display:
           skip_link: true
           skip_link_text: 'Skip to search and filter'
           skip_link_id: search-filter
-          active_filter_indicator_on_top_level_terms: true
       style:
         type: default
         options:
