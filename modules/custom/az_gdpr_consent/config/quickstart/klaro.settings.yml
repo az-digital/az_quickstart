@@ -33,6 +33,6 @@ library:
   hide_learn_more: false
   learn_more_as_button: false
   additional_class: ''
-  disable_powered_by: false
+  disable_powered_by: true
   html_texts: false
   auto_focus: true
