@@ -1,0 +1,24 @@
+langcode: en
+status: true
+dependencies: {  }
+id: google_maps
+label: 'Google Maps'
+description: 'Google Maps is an online map service offered by Google.'
+default: true
+purposes:
+  - external_content
+cookies: {  }
+required: false
+opt_out: false
+only_once: false
+contextual_consent_only: false
+contextual_consent_text: ''
+info_url: 'https://www.google.com/maps/about'
+privacy_policy_url: 'https://policies.google.com/privacy'
+javascripts:
+  - 'https://www.google.com/maps/embed'
+  - 'https://maps.googleapis.com/maps/api/staticmap'
+callback_code: ''
+wrapper_identifier: {  }
+attachments: {  }
+weight: 0
