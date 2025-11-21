@@ -30,6 +30,13 @@ class QuickstartExposedFilters extends BetterExposedFilters {
   protected $configFactory;
 
   /**
+   * Static cache for global settings.
+   *
+   * @var array|null
+   */
+  protected static $globalSettings;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): static {
@@ -147,9 +154,15 @@ class QuickstartExposedFilters extends BetterExposedFilters {
       }
     }
 
-    // Fall back to global default.
-    $global_config = $this->configFactory->get('az_finder.settings');
-    $global_levels = $global_config->get('tid_widget.active_filter_indicator_levels');
+    // Fall back to global default (cached).
+    if (static::$globalSettings === NULL) {
+      $global_config = $this->configFactory->get('az_finder.settings');
+      static::$globalSettings = [
+        'active_filter_indicator_levels' => $global_config->get('tid_widget.active_filter_indicator_levels'),
+      ];
+    }
+
+    $global_levels = static::$globalSettings['active_filter_indicator_levels'];
     if ($global_levels !== NULL) {
       return (int) $global_levels;
     }
