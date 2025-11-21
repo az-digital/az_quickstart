@@ -32,6 +32,7 @@ function az_event_theme($existing, $type, $theme, $path) {
         'location' => NULL,
         'modal' => NULL,
         'attributes' => NULL,
+        'formatted_date' => NULL,
       ],
       'render element' => 'children',
     ],
@@ -168,6 +169,7 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
               '#location' => $entity->field_az_location->title ?? '',
               '#modal' => Html::getUniqueId('calendar-link-modal'),
               '#attributes' => ['class' => 'mt-3'],
+              '#formatted_date' => $field_render_array,
             ];
             break;
           }
@@ -233,6 +235,11 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
               $occurrences_modal[$item_index++] = [
                 '#markup' => "<h3 class='h5 mt-0'>{$upcoming_events_heading}</h3>",
               ];
+              // Render just the next occurrence's date for the modal.
+              $next_occurrence_item = $entity->field_az_event_date[$key];
+              $field_render_array = $next_occurrence_item->view('default');
+              $field_render_array['#prefix'] = '<strong>' . t('Next event:') . '</strong> ';
+
               // Add to Calendar button for an event with multiple occurrences.
               $add_to_calendar_button = [
                 '#theme' => 'az_event_calendar_add_button',
@@ -243,6 +250,7 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
                 '#location' => $entity->field_az_location->title ?? '',
                 '#modal' => Html::getUniqueId('calendar-link-modal'),
                 '#attributes' => ['class' => 'mb-2'],
+                '#formatted_date' => $field_render_array,
               ];
             }
             $occurrences_modal[$item_index++] = $occurrence_items[$key]['render'];
