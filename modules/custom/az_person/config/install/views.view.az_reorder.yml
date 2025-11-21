@@ -418,6 +418,7 @@ display:
             title: title
             field_az_person_category: field_az_person_category
             draggableviews: draggableviews
+            sticky: sticky
           default: '-1'
           info:
             title:
@@ -428,13 +429,18 @@ display:
               empty_column: false
               responsive: ''
             field_az_person_category:
-              sortable: false
-              default_sort_order: asc
               align: ''
               separator: ''
               empty_column: false
               responsive: ''
             draggableviews:
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            sticky:
+              sortable: false
+              default_sort_order: asc
               align: ''
               separator: ''
               empty_column: false
