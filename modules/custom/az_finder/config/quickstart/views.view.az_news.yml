@@ -400,7 +400,7 @@ display:
           skip_link: true
           skip_link_text: 'Skip to search and filter'
           skip_link_id: search-filter
-          active_filter_indicator_on_top_level_terms: true
+          active_filter_indicator_levels: 1
       empty:
         area:
           id: area
@@ -898,7 +898,7 @@ display:
           skip_link: true
           skip_link_text: 'Skip to search and filter'
           skip_link_id: search-filter
-          active_filter_indicator_on_top_level_terms: true
+          active_filter_indicator_levels: 1
       empty:
         area:
           id: area
