@@ -72,3 +72,6 @@ views.exposed_form.az_better_exposed_filters:
     skip_link_id:
       type: string
       label: 'Skip Link ID'
+    active_filter_indicator_on_top_level_terms:
+      type: boolean
+      label: 'Active Filter Indicator on Top Level Terms'

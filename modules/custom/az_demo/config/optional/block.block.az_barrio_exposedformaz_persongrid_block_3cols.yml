@@ -1,9 +1,6 @@
 langcode: en
 status: true
 dependencies:
-  enforced:
-    module:
-      - az_demo
   config:
     - views.view.az_person
   module:
@@ -11,6 +8,9 @@ dependencies:
     - views
   theme:
     - az_barrio
+  enforced:
+    module:
+      - az_demo
 id: az_barrio_exposedformaz_persongrid_block_3cols
 theme: az_barrio
 region: sidebar_first
