@@ -46,7 +46,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#type' => 'checkbox',
     '#title' => t('Institutional header wordmark logo'),
     '#description' => t('With few exceptions, this should always be enabled.'),
-    '#default_value' => theme_get_setting('wordmark'),
+    '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('wordmark'),
   ];
 
   // Land Acknowledgment.
@@ -54,7 +54,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#type' => 'checkbox',
     '#title' => t('Land Acknowledgment'),
     '#description' => t('With few execeptions, this should always be enabled.'),
-    '#default_value' => theme_get_setting('land_acknowledgment'),
+    '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('land_acknowledgment'),
   ];
 
   // Information security and privacy link.
@@ -62,7 +62,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#type' => 'checkbox',
     '#title' => t('University Information Security and Privacy link'),
     '#description' => t('With few execeptions, this should always be enabled.'),
-    '#default_value' => theme_get_setting('info_security_privacy'),
+    '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('info_security_privacy'),
   ];
 
   // Copyright notice.
@@ -71,14 +71,14 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#title' => t('Copyright notice'),
     '#maxlength' => 512,
     '#description' => t('A copyright notice for this site. The value here will appear after a "Copyright YYYY" notice (where YYYY is the current year).'),
-    '#default_value' => theme_get_setting('copyright_notice'),
+    '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('copyright_notice'),
   ];
 
   // Back-to-top button.
   $form['az_settings']['settings']['az_back_to_top'] = [
     '#type' => 'checkbox',
     '#title' => t('Add back to top button to pages longer than 4 screens (browser window height).'),
-    '#default_value' => theme_get_setting('az_back_to_top'),
+    '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_back_to_top'),
   ];
 
   // Fonts and Icons.
@@ -86,7 +86,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   $form['fonts']['fonts']['az_barrio_font'] = [
     '#type' => 'checkbox',
     '#title' => t('Use the centrally-managed Typekit webfont, Proxima Nova'),
-    '#default_value' => theme_get_setting('az_barrio_font'),
+    '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_barrio_font'),
     '#description' => t(
         'If selected, a Typekit CDN <code>&lt;link&gt;</code> will be added to every page importing the @proxima_nova_docs_link CSS.', [
           '@proxima_nova_docs_link' => Link::fromTextAndUrl(
@@ -132,7 +132,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
           )->toString(),
         ]
     ),
-    '#default_value' => theme_get_setting('az_barrio_material_symbols_rounded'),
+    '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_barrio_material_symbols_rounded'),
   ];
   $form['fonts']['icons']['az_barrio_icons']['az_barrio_material_design_sharp_icons'] = [
     '#type' => 'checkbox',
@@ -150,7 +150,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
           )->toString(),
         ]
     ),
-    '#default_value' => theme_get_setting('az_barrio_material_design_sharp_icons'),
+    '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_barrio_material_design_sharp_icons'),
   ];
   $form['fonts']['icons']['az_barrio_icons']['az_barrio_az_icons'] = [
     '#type' => 'checkbox',
@@ -168,7 +168,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
           )->toString(),
         ]
     ),
-    '#default_value' => theme_get_setting('az_barrio_az_icons'),
+    '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_barrio_az_icons'),
   ];
   $form['fonts']['icons']['az_barrio_icons']['az_icons'] = [
     '#type' => 'fieldset',
@@ -178,7 +178,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
         ':input[name="az_barrio_az_icons"]' => ['checked' => TRUE],
       ],
     ],
-    '#default_value' => theme_get_setting('az_barrio_az_icons'),
+    '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_barrio_az_icons'),
   ];
 
   $form['fonts']['icons']['az_barrio_icons']['az_icons']['az_barrio_az_icons_source'] = [
@@ -201,7 +201,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
       ),
       'local' => t('Use local copy of AZ Icons packaged with AZ Barrio (%stableversion).', ['%stableversion' => AZ_ICONS_STABLE_VERSION]),
     ],
-    '#default_value' => theme_get_setting('az_barrio_az_icons_source'),
+    '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_barrio_az_icons_source'),
   ];
   $form['fonts']['icons']['az_barrio_icons']['az_icons']['az_icons_cdn'] = [
     '#type' => 'fieldset',
@@ -220,12 +220,12 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
       'latest' => t('Latest tagged version. The most recently tagged stable release of Arizona Icons. While this has not been explicitly tested on this version of az_barrio, it’s probably OK to use on production sites. Please report bugs to the AZ Digital team.'),
       'main' => t('Latest dev version. This is the tip of the main branch of Arizona Icons. Please do not use on production unless you are following the Arizona Icons project closely. Please report bugs to the AZ Digital team.'),
     ],
-    '#default_value' => theme_get_setting('az_icons_cdn_version'),
+    '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_icons_cdn_version'),
   ];
   $form['fonts']['icons']['az_barrio_icons']['az_icons']['az_icons_minified'] = [
     '#type'          => 'checkbox',
     '#title'         => t('Use minified version of AZ Icons.'),
-    '#default_value' => theme_get_setting('az_icons_minified'),
+    '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_icons_minified'),
   ];
   // AZ Bootstrap settings.
   $form['azbs_settings'] = [
@@ -241,7 +241,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
       'local' => t('Use local copy of AZ Bootstrap packaged with AZ Barrio (%stableversion).', ['%stableversion' => AZ_BOOTSTRAP_STABLE_VERSION]),
       'cdn' => t('Use external copy of AZ Bootstrap hosted on the AZ Bootstrap CDN.'),
     ],
-    '#default_value' => theme_get_setting('az_bootstrap_source'),
+    '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_bootstrap_source'),
     '#prefix' => t(
         'AZ Barrio requires the <a href="@azbootstrap">AZ Bootstrap</a> front-end framework. AZ Bootstrap can either be loaded from the local copy packaged with AZ Barrio or from the AZ Bootstrap CDN.', [
           '@azbootstrap' => 'http://digital.arizona.edu/arizona-bootstrap',
@@ -266,7 +266,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
       'latest-5.x' => t('Latest tagged version of 5.x. The most recently tagged stable release of AZ Bootstrap. While this has not been explicitly tested on this version of az_barrio, it’s probably OK to use on production sites. Please report bugs to the AZ Digital team.'),
       '5.x' => t('Latest dev version of <code>main</code>. This is the tip of the main branch of AZ Bootstrap. Please do not use on production unless you are following the AZ Bootstrap project closely. Please report bugs to the AZ Digital team.'),
     ],
-    '#default_value' => theme_get_setting('az_bootstrap_cdn_version_css'),
+    '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_bootstrap_cdn_version_css'),
   ];
   $form['azbs_settings']['settings']['az_bootstrap_cdn']['az_bootstrap_cdn_version_js'] = [
     '#type' => 'radios',
@@ -276,12 +276,12 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
       'latest-5.x' => t('Latest tagged version of 5.x. The most recently tagged stable release of AZ Bootstrap. While this has not been explicitly tested on this version of az_barrio, it’s probably OK to use on production sites. Please report bugs to the AZ Digital team.'),
       '5.x' => t('Latest dev version of <code>main</code>. This is the tip of the main branch of AZ Bootstrap. Please do not use on production unless you are following the AZ Bootstrap project closely. Please report bugs to the AZ Digital team.'),
     ],
-    '#default_value' => theme_get_setting('az_bootstrap_cdn_version_js'),
+    '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_bootstrap_cdn_version_js'),
   ];
   $form['azbs_settings']['settings']['az_bootstrap_minified'] = [
     '#type'          => 'checkbox',
     '#title'         => t('Use minified version of AZ Bootstrap.'),
-    '#default_value' => theme_get_setting('az_bootstrap_minified'),
+    '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_bootstrap_minified'),
   ];
   $form['azbs_settings']['settings']['az_bootstrap_style'] = [
     '#type' => 'fieldset',
@@ -290,7 +290,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   $form['azbs_settings']['settings']['az_bootstrap_style']['sticky_footer'] = [
     '#type' => 'checkbox',
     '#title' => t('Use the AZ Bootstrap sticky footer template.'),
-    '#default_value' => theme_get_setting('sticky_footer'),
+    '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('sticky_footer'),
   ];
   // Responsive Header Grid.
   $form['layout']['header_grid'] = [
@@ -304,13 +304,13 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#type' => 'textfield',
     '#title' => t('Column one classes'),
     '#description' => t('Responsive column classes for the parent <code>div</code> of the Site branding region. Should contain a string with classes separated by a space.'),
-    '#default_value' => theme_get_setting('header_one_col_classes'),
+    '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('header_one_col_classes'),
   ];
   $form['layout']['header_grid']['header_two_col_classes'] = [
     '#type' => 'textfield',
     '#title' => t('Column two classes'),
     '#description' => t('Responsive column classes for the parent <code>div</code> of the Header 1 and Header 2 regions. Should contain a string with classes separated by a space.'),
-    '#default_value' => theme_get_setting('header_two_col_classes'),
+    '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('header_two_col_classes'),
   ];
   // Add new AZ Barrio sidebar position option and help text.
   $form['layout']['sidebar_position']['bootstrap_barrio_sidebar_position']['#options']['az-barrio-both-below'] = t('Both sides below on mobile');
@@ -320,7 +320,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#type' => 'checkbox',
     '#title' => t('Remove sidebar menu on mobile devices'),
     '#description' => t('If checked, the sidebar menu will not be displayed on mobile devices.'),
-    '#default_value' => theme_get_setting('az_remove_sidebar_menu_mobile'),
+    '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_remove_sidebar_menu_mobile'),
   ];
   // Remove Navbar options.
   $form['affix']['navbar_top'] = [];
@@ -330,7 +330,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   $form['logo']['az_barrio_logo_svg_inline'] = [
     '#type' => 'checkbox',
     '#title' => t('Inline logo SVG (Experimental)'),
-    '#default_value' => theme_get_setting('az_barrio_logo_svg_inline') ? TRUE : FALSE,
+    '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_barrio_logo_svg_inline') ? TRUE : FALSE,
     '#description' => t('If logo is SVG image then inline it content in the page instead of using image tag to render it. This is useful when you need to control SVG logo with theme CSS.'),
   ];
   // Primary logo.
@@ -338,14 +338,14 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#type' => 'textfield',
     '#title' => t('Custom primary logo alt text'),
     '#description' => t('Alternative text is used by screen readers, search engines, and when the image cannot be loaded. By adding alt text you improve accessibility and search engine optimization.'),
-    '#default_value' => theme_get_setting('primary_logo_alt_text'),
+    '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('primary_logo_alt_text'),
     '#element_validate' => ['token_element_validate'],
   ];
   $form['logo']['primary_logo_title_text'] = [
     '#type' => 'textfield',
     '#title' => t('Custom primary logo title text'),
     '#description' => t('Title text is used in the tool tip when a user hovers their mouse over the image. Adding title text makes it easier to understand the context of an image and improves usability.'),
-    '#default_value' => theme_get_setting('primary_logo_title_text'),
+    '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('primary_logo_title_text'),
     '#element_validate' => ['token_element_validate'],
   ];
   $form['logo']['tokens'] = [
@@ -363,7 +363,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   $form['footer_logo']['footer_default_logo'] = [
     '#type' => 'checkbox',
     '#title' => t('Use the default logo'),
-    '#default_value' => theme_get_setting('footer_default_logo'),
+    '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('footer_default_logo'),
     '#tree' => FALSE,
     '#description' => t('Check here if you want the theme to use the logo supplied with it.'),
   ];
@@ -381,14 +381,14 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   $form['footer_logo']['settings']['az_barrio_footer_logo_svg_inline'] = [
     '#type' => 'checkbox',
     '#title' => t('Inline footer logo SVG (Experimental)'),
-    '#default_value' => theme_get_setting('az_barrio_footer_logo_svg_inline') ? TRUE : FALSE,
+    '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_barrio_footer_logo_svg_inline') ? TRUE : FALSE,
     '#description' => t('If logo is SVG image then inline it content in the page instead of using image tag to render it. This is useful when you need to control SVG logo with theme CSS.'),
   ];
   $form['footer_logo']['settings']['footer_logo_path'] = [
     '#type' => 'textfield',
     '#title' => t('Path to custom footer logo'),
     '#description' => t('The path to the file you would like to use as your footer logo file instead of the logo in the header.'),
-    '#default_value' => theme_get_setting('footer_logo_path'),
+    '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('footer_logo_path'),
   ];
   $form['footer_logo']['settings']['footer_logo_upload'] = [
     '#type' => 'file',
@@ -404,14 +404,14 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#type' => 'url',
     '#title' => t('Footer logo external link destination'),
     '#description' => t('If blank, the footer logo links to the homepage; otherwise, enter an external site URL. Example: https://www.arizona.edu/'),
-    '#default_value' => theme_get_setting('footer_logo_link_destination'),
+    '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('footer_logo_link_destination'),
   ];
   $form['footer_logo']['settings']['footer_logo_alt_text'] = [
     '#required' => TRUE,
     '#type' => 'textfield',
     '#title' => t('Footer logo alt text'),
     '#description' => t('Alternative text is used by screen readers, search engines, and when the image cannot be loaded. By adding alt text you improve accessibility and search engine optimization.'),
-    '#default_value' => theme_get_setting('footer_logo_alt_text'),
+    '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('footer_logo_alt_text'),
     '#element_validate' => ['token_element_validate'],
   ];
   $form['footer_logo']['settings']['footer_logo_title_text'] = [
@@ -419,7 +419,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#type' => 'textfield',
     '#title' => t('Footer logo title text'),
     '#description' => t('Title text is used in the tool tip when a user hovers their mouse over the image. Adding title text makes it easier to understand the context of an image and improves usability.'),
-    '#default_value' => theme_get_setting('footer_logo_title_text'),
+    '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('footer_logo_title_text'),
     '#element_validate' => ['token_element_validate'],
   ];
   $form['footer_logo']['settings']['tokens'] = [
