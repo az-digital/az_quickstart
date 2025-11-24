@@ -14,7 +14,9 @@
 
 (() => {
   let settings = null;
-  const settingsElement = document.querySelector('[data-drupal-selector="drupal-settings-json"]');
+  const settingsElement = document.querySelector(
+    '[data-drupal-selector="drupal-settings-json"]',
+  );
 
   if (settingsElement) {
     try {
