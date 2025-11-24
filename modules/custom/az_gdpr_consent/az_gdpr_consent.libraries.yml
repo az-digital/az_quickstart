@@ -8,3 +8,6 @@ gdpr_consent:
     js/az-gdpr-consent.js: { weight: -1000, preprocess: false }
   # Load this script in the header to ensure it runs before Klaro loads
   header: true
+  # Depend on drupalSettings to ensure it's available
+  dependencies:
+    - core/drupalSettings
