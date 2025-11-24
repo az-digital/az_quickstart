@@ -147,21 +147,6 @@
   };
 
   /**
-   * Checks if consent cookie already exists.
-   *
-   * @return {boolean} True if consent cookie/storage exists.
-   */
-  const hasExistingConsent = () => {
-    if (STORAGE_METHOD === 'cookie') {
-      return document.cookie.split(';').some((cookie) => {
-        return cookie.trim().startsWith(`${STORAGE_NAME}=`);
-      });
-    }
-
-    return localStorage.getItem(STORAGE_NAME) !== null;
-  };
-
-  /**
    * Shows the Klaro toggle button by removing the hiding CSS.
    */
   const showToggleButton = () => {
@@ -179,8 +164,6 @@
    * Main execution: Fetch geolocation and conditionally set consent.
    */
   const initialize = () => {
-    const consentExists = hasExistingConsent();
-
     // Fetch geolocation to determine whether to show toggle button
     fetch('/cdn-loc')
       .then((response) => {
@@ -199,8 +182,8 @@
         if (isGdprCountry(countryCode)) {
           // GDPR country - show toggle button (hidden by default)
           showToggleButton();
-        } else if (!consentExists) {
-          // Non-GDPR country - auto-accept consent on first visit
+        } else {
+          // Non-GDPR country - auto-accept consent every time
           setAutoAcceptedConsent();
         }
       })
