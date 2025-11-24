@@ -49,8 +49,6 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
    *   The plugin ID.
    * @param mixed $plugin_definition
    *   The plugin definition.
-   * @param \Symfony\Component\HttpFoundation\Request $request
-   *   The current request.
    * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
    *   The config factory service.
    * @param \Drupal\Core\Render\RendererInterface $renderer
@@ -66,7 +64,6 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
     array $configuration,
     $plugin_id,
     $plugin_definition,
-    Request $request,
     protected ConfigFactoryInterface $configFactory,
     protected RendererInterface $renderer,
     protected EntityTypeManagerInterface $entityTypeManager,
@@ -90,7 +87,6 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('request_stack')->getCurrentRequest(),
       $container->get('config.factory'),
       $container->get('renderer'),
       $container->get('entity_type.manager'),
