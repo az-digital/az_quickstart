@@ -13,6 +13,23 @@
 /* eslint-disable no-console */
 
 (() => {
+  let settings = null;
+  const settingsElement = document.querySelector('[data-drupal-selector="drupal-settings-json"]');
+
+  if (settingsElement) {
+    try {
+      settings = JSON.parse(settingsElement.textContent);
+    } catch (e) {
+      console.error('[AZ GDPR] Error parsing drupalSettings JSON:', e);
+    }
+  }
+
+  // If parsing failed or services not available, exit
+  if (!settings?.azGdprConsent?.klaroServices) {
+    console.error('[AZ GDPR] Services not available in parsed settings');
+    return;
+  }
+
   // Inject CSS to hide toggle button by default
   const style = document.createElement('style');
   style.id = 'klaro-toggle-hide';
@@ -94,11 +111,7 @@
    * Sets auto-accepted consent for all configured Klaro services.
    */
   const setAutoAcceptedConsent = () => {
-    // Get current service settings from drupalSettings
-    const services = window.drupalSettings?.azGdprConsent?.klaroServices;
-    if (!services) {
-      return;
-    }
+    const services = settings.azGdprConsent.klaroServices;
     const consentsJson = JSON.stringify(services);
 
     try {
@@ -115,9 +128,7 @@
         localStorage.setItem(STORAGE_NAME, consentsJson);
       }
     } catch (e) {
-      if (console && console.error) {
-        console.error('[AZ GDPR Consent] Error auto-accepting services:', e);
-      }
+      console.error('[AZ GDPR] Error auto-accepting services:', e);
     }
   };
 
@@ -158,27 +169,14 @@
         hideStyle.remove();
       }
     } catch (e) {
-      if (console && console.error) {
-        console.error('[AZ GDPR Consent] Error showing toggle button:', e);
-      }
+      console.error('[AZ GDPR] Error showing toggle button:', e);
     }
   };
 
   /**
    * Main execution: Fetch geolocation and conditionally set consent.
    */
-  const initialize = (retryCount = 0) => {
-    const maxRetries = 10;
-    const retryDelay = 100; // milliseconds
-
-    // Check if drupalSettings available
-    if (!window.drupalSettings?.azGdprConsent?.klaroServices) {
-      if (retryCount < maxRetries) {
-        setTimeout(() => initialize(retryCount + 1), retryDelay);
-      }
-      return;
-    }
-
+  const initialize = () => {
     const consentExists = hasExistingConsent();
 
     // Fetch geolocation to determine whether to show toggle button
@@ -206,19 +204,11 @@
       })
       .catch((error) => {
         // If geolocation fetch fails, assume GDPR applies
-        if (console && console.error) {
-          console.error(
-            '[AZ GDPR Consent] Failed to fetch geolocation data:',
-            error,
-          );
-          console.log(
-            '[AZ GDPR Consent] Assuming GDPR country due to error - showing toggle button.',
-          );
-        }
+        console.error('[AZ GDPR] Failed to fetch geolocation data:', error);
         showToggleButton();
       });
   };
 
-  // Execute immediately
+  // Execute initialization
   initialize();
 })();
