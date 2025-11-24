@@ -39,8 +39,8 @@ content:
     weight: 1
     label: hidden
     settings:
-      max_width: 1296
-      max_height: 729
+      max_width: 0
+      max_height: 0
       loading:
         attribute: lazy
     third_party_settings: {  }

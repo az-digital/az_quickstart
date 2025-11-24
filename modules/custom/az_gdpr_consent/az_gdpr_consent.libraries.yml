@@ -1,6 +1,9 @@
 # Library definition for AZ GDPR Consent Management
 gdpr_consent:
   version: 1.0
+  css:
+    theme:
+      css/az-gdpr-consent.css: {}
   js:
     # Remote video consent handler must load first to intercept script creation
     js/az-gdpr-remote-video-consent-handler.js: { weight: -2000, preprocess: false }
