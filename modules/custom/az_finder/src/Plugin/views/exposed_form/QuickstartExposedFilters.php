@@ -46,6 +46,21 @@ class QuickstartExposedFilters extends BetterExposedFilters {
   }
 
   /**
+   * Get global AZ Finder settings with static caching.
+   *
+   * @return array
+   *   Array of global settings.
+   */
+  protected function getGlobalSettings(): array {
+    if (static::$globalSettings === NULL) {
+      static::$globalSettings = [
+        'active_filter_indicator_levels' => $this->configFactory->get('az_finder.settings')->get('tid_widget.active_filter_indicator_levels'),
+      ];
+    }
+    return static::$globalSettings;
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function exposedFormAlter(&$form, FormStateInterface $form_state): void {
@@ -155,19 +170,10 @@ class QuickstartExposedFilters extends BetterExposedFilters {
     }
 
     // Fall back to global default (cached).
-    if (static::$globalSettings === NULL) {
-      $global_config = $this->configFactory->get('az_finder.settings');
-      static::$globalSettings = [
-        'active_filter_indicator_levels' => $global_config->get('tid_widget.active_filter_indicator_levels'),
-      ];
-    }
-
-    $global_levels = static::$globalSettings['active_filter_indicator_levels'];
-    if ($global_levels !== NULL) {
-      return (int) $global_levels;
-    }
-
-    return NULL;
+    $settings = $this->getGlobalSettings();
+    return $settings['active_filter_indicator_levels'] !== NULL
+      ? (int) $settings['active_filter_indicator_levels']
+      : NULL;
   }
 
   /**

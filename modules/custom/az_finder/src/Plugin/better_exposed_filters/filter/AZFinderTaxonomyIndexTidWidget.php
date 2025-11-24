@@ -74,7 +74,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
     protected LoggerInterface $logger,
   ) {
     $configuration += $this->defaultConfiguration();
-    parent::__construct($configuration, $plugin_id, $plugin_definition, $request, $configFactory);
+    parent::__construct($configuration, $plugin_id, $plugin_definition);
   }
 
   /**

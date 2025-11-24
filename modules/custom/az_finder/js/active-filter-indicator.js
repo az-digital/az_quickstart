@@ -19,17 +19,18 @@
 
       // Determine which levels to target based on configuration.
       // levels = 0: all levels (.level-0, .level-1, .level-2, etc.)
-      // levels = 1: level-0 and level-1 (first 2 levels)
-      // levels = 2: level-0, level-1, and level-2 (first 3 levels)
+      // levels = 1: only level-0 (first level)
+      // levels = 2: level-0 and level-1 (first 2 levels)
+      // levels = 3: level-0, level-1, and level-2 (first 3 levels)
       // etc.
       let selector;
       if (levels === 0) {
         // Target all levels.
         selector = 'a.collapser[class*="level-"]';
       } else {
-        // Build selector for specific levels (0 through levels).
+        // Build selector for specific levels (0 through levels - 1).
         const levelSelectors = [];
-        for (let i = 0; i <= levels; i++) {
+        for (let i = 0; i < levels; i++) {
           levelSelectors.push(`a.collapser.level-${i}`);
         }
         selector = levelSelectors.join(', ');
