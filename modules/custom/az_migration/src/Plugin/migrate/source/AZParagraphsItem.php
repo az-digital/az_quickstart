@@ -107,7 +107,7 @@ class AZParagraphsItem extends ParagraphsItem {
       $row->setSourceProperty($field, $this->getFieldValues('paragraphs_item', $field, $item_id, $revision_id));
     }
 
-    return $row;
+    return parent::prepareRow($row);
   }
 
 }
