@@ -22,6 +22,15 @@ az-barrio-off-canvas-nav:
     js/az-barrio-off-canvas-nav.js: {}
   dependencies:
     - az_barrio/global-styling
+az-barrio-sidebar-collapsible:
+  css:
+    theme:
+      css/az-barrio-sidebar-collapsible.css: {}
+  js:
+    js/az-barrio-sidebar-collapsible.js: {}
+  dependencies:
+    - az_barrio/global-styling
+    - az_paragraphs/az_paragraphs.az_paragraphs_full_width
 az-proxima-nova:
   css:
     theme:
