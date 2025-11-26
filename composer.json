@@ -32,7 +32,7 @@
         "composer/installers": "^2.0",
         "cweagans/composer-patches": "^1.7",
         "devanych/mime-types": "2.1.2",
-        "drupal/access_unpublished": "1.8.0",
+        "drupal/access_unpublished": "1.9.0",
         "drupal/antibot": "2.0.4",
         "drupal/asset_injector": "2.21.0",
         "drupal/auto_entitylabel": "3.4.0",
