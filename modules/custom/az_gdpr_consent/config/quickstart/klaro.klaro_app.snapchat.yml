@@ -1,0 +1,44 @@
+langcode: en
+status: true
+dependencies: {  }
+id: snapchat
+label: 'Snap Pixel'
+description: 'Snap Pixel tracks conversions and user behavior for advertising purposes.'
+default: true
+required: false
+opt_out: false
+only_once: false
+contextual_consent_only: null
+contextual_consent_text: null
+info_url: 'https://www.snapchat.com/'
+privacy_policy_url: 'https://www.snap.com/privacy/privacy-policy'
+purposes:
+  - advertising
+cookies:
+  -
+    regex: '^_scid$'
+    path: /
+    domain: ''
+  -
+    regex: '^_scid_r$'
+    path: /
+    domain: ''
+  -
+    regex: '^_sctr$'
+    path: /
+    domain: ''
+  -
+    regex: '^_ScCbts$'
+    path: /
+    domain: ''
+  -
+    regex: '^sc_at$'
+    path: /
+    domain: ''
+callback_code: ''
+javascripts:
+  - sc-static.net
+  - snapchat.com/pixel
+wrapper_identifier: {  }
+attachments: {  }
+weight: 0
