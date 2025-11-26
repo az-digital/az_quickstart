@@ -73,7 +73,7 @@ class AZCarouselNotice extends BlockBase {
       '#attributes' => [
         'class' => [
           'callout',
-          'callout-leaf',
+          'callout-warning',
         ],
       ],
       'child' => [
