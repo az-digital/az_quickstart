@@ -8,6 +8,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\better_exposed_filters\Plugin\views\exposed_form\BetterExposedFilters;
 use Drupal\views\Attribute\ViewsExposedForm;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Exposed form plugin that provides a basic exposed form.
@@ -20,6 +21,44 @@ use Drupal\views\Attribute\ViewsExposedForm;
   help: new TranslatableMarkup('Better exposed filters with additional Quickstart Settings.')
 )]
 class QuickstartExposedFilters extends BetterExposedFilters {
+
+  /**
+   * The config factory.
+   *
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
+   */
+  protected $configFactory;
+
+  /**
+   * Static cache for global settings.
+   *
+   * @var array|null
+   */
+  protected static $globalSettings;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): static {
+    $instance = parent::create($container, $configuration, $plugin_id, $plugin_definition);
+    $instance->configFactory = $container->get('config.factory');
+    return $instance;
+  }
+
+  /**
+   * Get global AZ Finder settings with static caching.
+   *
+   * @return array
+   *   Array of global settings.
+   */
+  protected function getGlobalSettings(): array {
+    if (static::$globalSettings === NULL) {
+      static::$globalSettings = [
+        'active_filter_indicator_levels' => $this->configFactory->get('az_finder.settings')->get('tid_widget.active_filter_indicator_levels'),
+      ];
+    }
+    return static::$globalSettings;
+  }
 
   /**
    * {@inheritdoc}
@@ -96,10 +135,45 @@ class QuickstartExposedFilters extends BetterExposedFilters {
       // Hide the original reset button.
       $form['actions']['reset']['#access'] = FALSE;
     }
-    if (($options['active_filter_indicator_on_top_level_terms'] ?? FALSE) === TRUE) {
+
+    // Get active filter indicator levels from config hierarchy.
+    $levels = $this->getActiveFilterIndicatorLevels();
+    if ($levels !== NULL) {
       $form['#attached']['library'][] = 'az_finder/active-filter-indicator';
+      $form['#attached']['drupalSettings']['azFinder']['activeFilterIndicatorLevels'] = $levels;
     }
 
+  }
+
+  /**
+   * Get active filter indicator levels from config hierarchy.
+   *
+   * Checks in this order:
+   * 1. View-specific override config
+   *    (az_finder.tid_widget.[view_id].[display_id]).
+   * 2. Global default (az_finder.settings).
+   *
+   * @return int|null
+   *   The number of levels to show indicators on, or NULL to disable.
+   */
+  protected function getActiveFilterIndicatorLevels(): ?int {
+    $view_id = $this->view->id();
+    $display_id = $this->view->current_display;
+
+    // Check for per-view override config.
+    $override_config = $this->configFactory->get("az_finder.tid_widget.{$view_id}.{$display_id}");
+    if ($override_config && !$override_config->isNew()) {
+      $override_levels = $override_config->get('active_filter_indicator_levels');
+      if ($override_levels !== NULL) {
+        return (int) $override_levels;
+      }
+    }
+
+    // Fall back to global default (cached).
+    $settings = $this->getGlobalSettings();
+    return $settings['active_filter_indicator_levels'] !== NULL
+      ? (int) $settings['active_filter_indicator_levels']
+      : NULL;
   }
 
   /**
@@ -113,7 +187,6 @@ class QuickstartExposedFilters extends BetterExposedFilters {
     $options['skip_link'] = ['default' => FALSE];
     $options['skip_link_text'] = ['default' => $this->t('Skip to search and filter')];
     $options['skip_link_id'] = ['default' => 'search-filter'];
-    $options['active_filter_indicator_on_top_level_terms'] = ['default' => TRUE];
 
     return $options;
   }
@@ -188,12 +261,6 @@ class QuickstartExposedFilters extends BetterExposedFilters {
       '#default_value' => $this->options['skip_link_id'] ?? 'search-filter',
       '#description' => $this->t('The ID or anchor to link to within the view.'),
     ];
-    $form['bef']['general']['active_filter_indicator_on_top_level_terms'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Add a filter indicator to top level terms'),
-      '#description' => $this->t('Add a filter indicator to top level terms to indicate that a child term is active.'),
-      '#default_value' => $this->options['active_filter_indicator_on_top_level_terms'] ?? TRUE,
-    ];
     $form['bef']['general']['orientation'] = [
       '#type' => 'radios',
       '#title' => $this->t('Orientation'),
@@ -227,7 +294,6 @@ class QuickstartExposedFilters extends BetterExposedFilters {
         $this->options['skip_link'] = $general_settings['skip_link'] ?? FALSE;
         $this->options['skip_link_text'] = $general_settings['skip_link_settings']['skip_link_text'] ?? $this->t('Skip to search and filter');
         $this->options['skip_link_id'] = $general_settings['skip_link_settings']['skip_link_id'] ?? 'search-filter';
-        $this->options['active_filter_indicator_on_top_level_terms'] = $general_settings['active_filter_indicator_on_top_level_terms'] ?? FALSE;
         unset($general_settings['orientation']);
         unset($general_settings['skip_link']);
         unset($general_settings['skip_link_settings']);
