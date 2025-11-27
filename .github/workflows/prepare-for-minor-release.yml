@@ -199,7 +199,7 @@ jobs:
         composer validate
 
     - name: Create pull request for new release branch updates
-      uses: peter-evans/create-pull-request@271a8d0340265f705b14b6d32b9829c1cb33d45e # v7.0.8
+      uses: peter-evans/create-pull-request@84ae59a2cdc2258d6fa0732dd66352dddae2a412 # v7.0.9
       with:
         title: Prepare repository for new minor release branch ${{ inputs.release_branch_name }}
         commit-message: Prepare repository for new minor release branch ${{ inputs.release_branch_name }}
@@ -254,7 +254,7 @@ jobs:
           echo -e "version: ${{ needs.branch_name_prep.outputs.dev_branch_alias }}" >> az_quickstart.info.yml
 
       - name: Create pull request for `${{ github.ref_name }}` branch updates
-        uses: peter-evans/create-pull-request@271a8d0340265f705b14b6d32b9829c1cb33d45e # v7.0.8
+        uses: peter-evans/create-pull-request@84ae59a2cdc2258d6fa0732dd66352dddae2a412 # v7.0.9
         with:
           title: Prepare `${{ github.ref_name }}` branch for new minor release branch ${{ inputs.release_branch_name }}
           commit-message: Prepare `${{ github.ref_name }}` branch for new minor release branch ${{ inputs.release_branch_name }}
