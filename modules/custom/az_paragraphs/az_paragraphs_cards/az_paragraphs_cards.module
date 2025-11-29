@@ -23,10 +23,30 @@ function az_paragraphs_cards_field_group_pre_render_alter(array &$element, &$gro
         // Get the behavior settings.
         $settings = $paragraph->getAllBehaviorSettings();
         $card_settings = $settings['az_cards_paragraph_behavior'] ?? [];
-        // If we have a color, apply it to the field group.
+        // If we have a title color, apply it to the field group.
         if (!empty($card_settings['card_deck_title_color'])) {
           if (!empty($element['#attributes']) && ($element['#attributes'] instanceof Attribute)) {
             $element['#attributes']->addClass($card_settings['card_deck_title_color']);
+          }
+        }
+      }
+    }
+  }
+
+  // Special rules for rendering the border color.
+  if (($group->group_name === 'group_border_color') && !empty($rendering_object['#paragraph'])) {
+    $paragraph = $rendering_object['#paragraph'];
+    // Make sure we have a paragraph entity.
+    if ($paragraph instanceof ParagraphInterface) {
+      // Only run for cards.
+      if ($paragraph->bundle() === 'az_cards') {
+        // Get the behavior settings.
+        $settings = $paragraph->getAllBehaviorSettings();
+        $card_settings = $settings['az_cards_paragraph_behavior'] ?? [];
+        // If we have a border color, apply it to the field group.
+        if (!empty($card_settings['card_deck_border_color'])) {
+          if (!empty($element['#attributes']) && ($element['#attributes'] instanceof Attribute)) {
+            $element['#attributes']->addClass($card_settings['card_deck_border_color']);
           }
         }
       }
