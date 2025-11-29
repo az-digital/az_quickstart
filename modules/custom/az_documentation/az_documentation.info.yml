@@ -1,0 +1,10 @@
+name: 'Site Documentation'
+type: module
+description: 'Provides a central site documentation hub at /admin/documentation.'
+core_version_requirement: ^10 || ^11 || ^12
+package: 'Arizona Quickstart'
+dependencies:
+  - drupal:node
+  - drupal:path
+  - drupal:views
+  - az_core:az_core
