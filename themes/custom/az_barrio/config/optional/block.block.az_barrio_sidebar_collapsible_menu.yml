@@ -21,12 +21,14 @@ settings:
   provider: menu_block
   follow: false
   follow_parent: active
-  level: 2
+  display_empty: false
+  label_link: true
+  label_type: visibility_level_parent
+  level: 3
   depth: 0
   expand_all_items: true
   parent: 'main:'
+  render_parent: false
   suggestion: sidebar_collapsible
-  label_type: root
-  label_link: false
-  expand: false
+  hide_on_nonactive: false
 visibility: {  }
