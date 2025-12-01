@@ -1,0 +1,46 @@
+/* Styles for the Sidebar collapsible menu block */
+
+.az-sidebar-collapsible-parent {
+  margin-left: -.5rem;
+  margin-right: -.5rem;
+}
+
+.az-sidebar-collapsible-menu .az-sidebar-collapsible-parent > a {
+  width: 100%;
+  padding-left: .875rem;
+  border-radius: 0;
+}
+
+.az-sidebar-collapsible-menu .nav.nav-pills.flex-column > li {
+  margin-top: 0;
+  border: 0;
+}
+
+.az-sidebar-collapsible-menu .nav-pills a {
+  font-weight: 400;
+}
+
+.az-sidebar-collapsible-parent > a,
+.az-sidebar-collapsible-menu .nav-pills .nav-link.is-active {
+  font-weight: 600;
+}
+
+.az-sidebar-collapsible-menu .is-active {
+  background-color: #e9ecef;
+  box-shadow: inset 6px 0 #378dbd;
+}
+
+.az-sidebar-collapsible-parent > a:hover,
+.az-sidebar-collapsible-menu .btn:hover {
+  background-color: #e9ecef;
+}
+
+/* Only use underline on hover for leaf links below current menu level. */
+.az-sidebar-collapsible-menu .nav-pills .nav-pills .nav-link.az-leaf-menu-item:not(.is-active):hover {
+  background-color: initial;
+  text-decoration: underline;
+}
+
+.az-sidebar-collapsible-menu .material-symbols-rounded {
+  font-size: 1.625rem;
+}

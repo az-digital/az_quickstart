@@ -22,15 +22,23 @@ az-barrio-off-canvas-nav:
     js/az-barrio-off-canvas-nav.js: {}
   dependencies:
     - az_barrio/global-styling
-az-barrio-sidebar-collapsible:
+az-barrio-sidebar-collapsible-region:
   css:
     theme:
-      css/az-barrio-sidebar-collapsible.css: {}
+      css/az-barrio-sidebar-collapsible-region.css: {}
   js:
-    js/az-barrio-sidebar-collapsible.js: {}
+    js/az-barrio-sidebar-collapsible-region.js: {}
   dependencies:
     - az_barrio/global-styling
     - az_paragraphs/az_paragraphs.az_paragraphs_full_width
+az-barrio-sidebar-collapsible-menu:
+  css:
+    theme:
+      css/az-barrio-sidebar-collapsible-menu.css: {}
+  js:
+    js/az-barrio-sidebar-collapsible-menu.js: {}
+  dependencies:
+    - az_barrio/az-barrio-sidebar-collapsible-region
 az-proxima-nova:
   css:
     theme:

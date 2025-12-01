@@ -38,6 +38,7 @@
       'block-menu',
       'navigation',
       'menu--' ~ derivative_plugin_id|clean_class,
+      'az-sidebar-collapsible-menu'
     ]
   %}
   {% set heading_id = attributes.id ~ '-menu'|clean_id %}
@@ -47,7 +48,7 @@
       {% set title_attributes = title_attributes.addClass('visually-hidden') %}
     {% endif %}
     {{ title_prefix }}
-    <h2{{ title_attributes.setAttribute('id', heading_id).addClass('h4').addClass('mt-0') }}>{{ configuration.label }}</h2>
+    <h2{{ title_attributes.setAttribute('id', heading_id).addClass(['h5', 'my-0', 'nav', 'az-sidebar-collapsible-parent']) }}>{{ configuration.label }}</h2>
     {{ title_suffix }}
 
     {# Menu. #}
