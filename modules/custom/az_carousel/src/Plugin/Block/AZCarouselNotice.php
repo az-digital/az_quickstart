@@ -37,7 +37,7 @@ class AZCarouselNotice extends BlockBase {
         'class' => [
           'btn',
           'btn-success',
-          'mr-4',
+          'me-2',
         ],
       ],
     ];
