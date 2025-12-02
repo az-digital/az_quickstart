@@ -1,13 +1,7 @@
 /* Styles for the Sidebar collapsible menu block */
 
-.az-sidebar-collapsible-parent {
-  margin-left: -.5rem;
-  margin-right: -.5rem;
-}
-
 .az-sidebar-collapsible-menu .az-sidebar-collapsible-parent > a {
   width: 100%;
-  padding-left: .875rem;
   border-radius: 0;
 }
 

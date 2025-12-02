@@ -34,6 +34,10 @@
     ]
   %}
   {% if items %}
+    {% if menu_level == 0 %}
+      <ul{{ attributes.addClass(nav_pills_ul_classes)}}>
+        <li class="rounded-0">
+    {% endif %}
     <ul{{ attributes.addClass(nav_pills_ul_classes)}}>
     {% for key, item in items %}
       {%
@@ -69,5 +73,9 @@
         {% endif %}
     {% endfor %}
     </ul>
+    {% if menu_level == 0 %}
+        </li>
+      </ul>
+    {% endif %}
   {% endif %}
 {% endmacro %}
