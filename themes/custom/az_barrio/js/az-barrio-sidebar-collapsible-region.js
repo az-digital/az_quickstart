@@ -49,21 +49,21 @@
         const sidebarCollapsibleContainer = document.querySelector(
           '#az-sidebar-collapsible',
         );
+        const sidebarCollapsibleInnerDiv = document.querySelector(
+          '#az-sidebar-collapsible > div',
+        );
         const sidebarCollapseBtn = document.querySelector(
           '#az-sidebar-collapse-btn',
         );
         const sidebarCollapseIcon = document.querySelector(
           '#az-sidebar-collapse-icon',
         );
-        const sidebarCollapsibleRegion = document.querySelector(
-          '.region-az-sidebar-collapsible',
-        );
 
         if (
           sidebarCollapsibleContainer === null ||
+          sidebarCollapsibleInnerDiv === null ||
           sidebarCollapseBtn === null ||
-          sidebarCollapseIcon === null ||
-          sidebarCollapsibleRegion === null
+          sidebarCollapseIcon === null
         )
           return;
         /*
@@ -83,7 +83,7 @@
           'hidden.bs.collapse',
           (event) => {
             if (event.target.id === 'az-sidebar-collapsible') {
-              sidebarCollapsibleRegion.classList.add('d-none');
+              sidebarCollapsibleInnerDiv.classList.add('text-bg-gray-300');
               sidebarCollapseIcon.textContent = 'left_panel_open';
               sidebarCollapseBtn.classList.add('stretched-link');
               const visuallyHiddenText =
@@ -99,7 +99,7 @@
           'show.bs.collapse',
           (event) => {
             if (event.target.id === 'az-sidebar-collapsible') {
-              sidebarCollapsibleRegion.classList.remove('d-none');
+              sidebarCollapsibleInnerDiv.classList.remove('text-bg-gray-300');
               sidebarCollapseIcon.textContent = 'left_panel_close';
               sidebarCollapseBtn.classList.remove('stretched-link');
               const visuallyHiddenText =
@@ -114,8 +114,6 @@
           'shown.bs.collapse',
           (event) => {
             if (event.target.id === 'az-sidebar-collapsible') {
-              sidebarCollapsibleRegion.classList.remove('d-none');
-              sidebarCollapseIcon.textContent = 'left_panel_close';
               event.target.classList.remove('col-auto');
             }
             setWidthOfFullWidthElements();

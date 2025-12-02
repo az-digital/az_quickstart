@@ -13,6 +13,10 @@
   transition: none;
 }
 
+#az-sidebar-collapsible:not(.show) .region-az-sidebar-collapsible {
+  display: none;
+}
+
 #az-sidebar-collapsible.sticky:not(.show) > div {
   border: 0 !important;
   margin: 1px 0 !important;
