@@ -51,7 +51,7 @@
             'nav-link',
             item.url.getOption('attributes').class ? item.url.getOption('attributes').class | join(''),
             'nav-link-' ~ item.url.toString() | clean_class,
-            item.below ? 'flex-grow-1' : 'az-leaf-menu-item',
+            item.below ? 'flex-grow-1',
           ]
         %}
         {% if item.below %}

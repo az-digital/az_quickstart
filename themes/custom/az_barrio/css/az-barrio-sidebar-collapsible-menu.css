@@ -35,12 +35,6 @@
   background-color: #e9ecef;
 }
 
-/* Only use underline on hover for leaf links below current menu level. */
-.az-sidebar-collapsible-menu .nav-pills .nav-pills .nav-link.az-leaf-menu-item:not(.is-active):hover {
-  background-color: initial;
-  text-decoration: underline;
-}
-
 .az-sidebar-collapsible-menu .material-symbols-rounded {
   font-size: 1.625rem;
 }
