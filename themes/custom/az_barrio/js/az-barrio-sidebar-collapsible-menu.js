@@ -2,7 +2,7 @@
   Drupal.behaviors.azBarrioSidebarCollapsibleMenu = {
     attach: (context) => {
       function addParentItemStyling() {
-        once('addParentItemStyling', '#az-sidebar-collapsible').forEach(() => {
+        once('addParentItemStyling', '.az-sidebar-collapsible-menu').forEach(() => {
           const menuParent = document.querySelector(
             '.az-sidebar-collapsible-parent > a',
           );
@@ -12,7 +12,10 @@
         }, context);
       }
 
-      document.addEventListener('DOMContentLoaded', addParentItemStyling);
+      once('addMenuParentStyling', '#az-sidebar-collapsible').forEach(
+        addParentItemStyling,
+        context,
+      );
     },
   };
 })(Drupal, once);

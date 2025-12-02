@@ -123,6 +123,10 @@
         );
       }
 
+      once('updateFullWidthElements', '#az-sidebar-collapsible').forEach(
+        setWidthOfFullWidthElements,
+        context,
+      );
       once('addFullWidthListeners', '#main').forEach(
         addFullWidthListeners,
         context,
