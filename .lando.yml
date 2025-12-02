@@ -1,20 +1,19 @@
 name: az_quickstart
 recipe: drupal11
 config:
-  php: '8.3'
+  php: '8.4'
   via: apache:2.4
   webroot: web
-  database: mariadb:10.6
+  database: mariadb:11.4
   xdebug: false
 env_file:
   - .env
 services:
-  # Replaces default lando MariaDB image with arm64 (Apple M1) compatible one.
-  # TODO: remove database service overrides once lando is updated.
+  # Base Lando bitnami legacy images no longer receive support.
   database:
     type: compose
     services:
-      image: mariadb:10.6
+      image: mariadb:11.4
       command: docker-entrypoint.sh mariadbd
       restart: always
       ports:
@@ -70,7 +69,7 @@ services:
   node:
     type: node:20
     build:
-      - yarn install
+      - yarn install --ignore-scripts
   chromedriver:
     type: compose
     services:
@@ -100,7 +99,7 @@ tooling:
   # Provide phpcs tooling to check coding standards.
   phpcs:
     service: appserver
-    cmd: /app/vendor/bin/phpcs --colors --standard=web/profiles/custom/az_quickstart/phpcs.xml.dist web/profiles/custom/az_quickstart
+    cmd: /app/vendor/bin/phpcs -s --colors --standard=web/profiles/custom/az_quickstart/phpcs.xml.dist web/profiles/custom/az_quickstart
   # Provide PHPCBF tooling to fix coding standards.
   phpcbf:
     service: appserver

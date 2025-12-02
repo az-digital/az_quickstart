@@ -4,15 +4,16 @@ core_version_requirement: ^10 || ^11 || ^12
 type: module
 package: The University of Arizona
 dependencies:
-  - az_core
-  - az_media
-  - az_paragraphs
-  - az_paragraphs_cards
-  - az_paragraphs_contact
-  - az_paragraphs_photo_gallery
-  - az_paragraphs_text
+  - az_core:az_core
+  - az_media:az_media
+  - az_paragraphs:az_paragraphs
+  - az_paragraphs:az_paragraphs_cards
+  - az_paragraphs:az_paragraphs_contact
+  - az_paragraphs:az_paragraphs_photo_gallery
+  - az_paragraphs:az_paragraphs_text
   - better_exposed_filters:better_exposed_filters
   - date_ap_style:date_ap_style
+
   - drupal:datetime
   - drupal:field
   - drupal:file

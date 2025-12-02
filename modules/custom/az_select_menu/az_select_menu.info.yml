@@ -4,4 +4,4 @@ type: module
 core_version_requirement: ^10 || ^11 || ^12
 package: The University of Arizona
 dependencies:
-  - drupal:menu_block
+  - menu_block:menu_block

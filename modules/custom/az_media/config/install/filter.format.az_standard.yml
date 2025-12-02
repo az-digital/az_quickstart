@@ -9,6 +9,7 @@ dependencies:
     - core.entity_view_mode.media.az_square
     - core.entity_view_mode.media.az_very_small
   module:
+    - az_icons
     - bootstrap_utilities
     - entity_embed
     - linkit
@@ -58,7 +59,7 @@ filters:
     status: true
     weight: -50
     settings:
-      allowed_html: '<br> <p class> <h1 class name id> <h2 class name id> <h3 class name id> <h4 class name id> <h5 class name id> <h6 class name id> <a class target name id title href data-entity-type data-entity-uuid data-entity-substitution> <span class name id> <ul class type> <blockquote class> <footer class> <table class> <thead class> <abbr> <address> <cite> <dl> <dt> <dd> <div class name id data-*> <img src alt data-entity-type data-entity-uuid> <ol type class start> <li class> <tbody class> <tfoot class> <th class scope rowspan colspan> <td class rowspan colspan> <tr class colspan rowspan> <hr class> <drupal-entity data-entity-type data-embed-button alt title data-align data-caption data-entity-embed-display data-entity-embed-display-settings data-view-mode data-entity-uuid data-langcode> <drupal-media title data-entity-type data-entity-uuid alt data-view-mode data-align> <strong> <em> <code class="language-*"> <pre class="text-align-left text-align-center text-align-right text-align-justify"> <s> <sub> <sup> <caption>'
+      allowed_html: '<br> <p class> <h1 class name id> <h2 class name id> <h3 class name id> <h4 class name id> <h5 class name id> <h6 class name id> <a class target name id title href data-entity-type data-entity-uuid data-entity-substitution> <span class name id> <ul class type> <blockquote class> <footer class> <table class> <thead class> <abbr> <address> <cite> <dl> <dt> <dd> <div class name id data-*> <img src alt data-entity-type data-entity-uuid> <ol type class start> <li class> <tbody class> <tfoot class> <th class scope rowspan colspan> <td class rowspan colspan> <tr class colspan rowspan> <hr class> <drupal-entity data-entity-type data-embed-button alt title data-align data-caption data-entity-embed-display data-entity-embed-display-settings data-view-mode data-entity-uuid data-langcode> <drupal-media title data-entity-type data-entity-uuid alt data-view-mode data-align> <strong> <em> <code class="language-*"> <pre class="text-align-left text-align-center text-align-right text-align-justify"> <s> <sub> <sup> <caption> <drupal-icon data-icon-id data-icon-settings class role aria-label aria-hidden>'
       filter_html_help: true
       filter_html_nofollow: false
   filter_htmlcorrector:
@@ -74,6 +75,17 @@ filters:
     weight: -46
     settings:
       filter_url_length: 72
+  icon_embed:
+    id: icon_embed
+    provider: ui_icons_text
+    status: true
+    weight: 100
+    settings:
+      allowed_icon_pack:
+        arizona_icons: arizona_icons
+        material_symbols: material_symbols
+      result_format: grid
+      max_result: 24
   linkit:
     id: linkit
     provider: linkit
@@ -97,3 +109,4 @@ filters:
         az_square: az_square
         az_very_small: az_very_small
       allowed_media_types: {  }
+      show_contextual_links: true

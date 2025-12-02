@@ -9,6 +9,6 @@ dependencies:
   - 'az_core:az_core'
   - 'az_publication:az_publication'
   - 'az_publication_import:az_publication_import'
-  - migrate
-  - migrate_plus
-  - migrate_tools
+  - drupal:migrate
+  - migrate_plus:migrate_plus
+  - migrate_tools:migrate_tools
