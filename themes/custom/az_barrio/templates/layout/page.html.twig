@@ -148,7 +148,7 @@
           {% if page.navigation %}
             <div class="row d-none d-lg-flex">
               <div class="col-lg">
-                <nav id="navbar-top" class="navbar navbar-expand">
+                <nav id="navbar-top" class="navbar navbar-expand{% if az_navbar %} navbar-az{% endif %}">
                   {{ page.navigation }}
                 </nav>
               </div>
