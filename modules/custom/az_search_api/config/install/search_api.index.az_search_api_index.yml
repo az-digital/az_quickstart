@@ -2,10 +2,8 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.node.search_index
-    - core.entity_view_mode.node.teaser
     - field.storage.node.field_az_summary
-    - search_api.server.az_search_api_local
+    - search_api.server.az_search_api_searchstax
   module:
     - node
     - search_api_solr
@@ -61,20 +59,6 @@ name: 'Quickstart Search API Index'
 description: ''
 read_only: false
 field_settings:
-  search_index:
-    label: 'Rendered HTML output'
-    property_path: rendered_item
-    type: text
-    configuration:
-      roles:
-        - anonymous
-      view_mode:
-        'entity:node':
-          ':default': search_index
-          az_event: ':default'
-          az_flexible_page: ':default'
-          az_news: ':default'
-          az_person: ':default'
   summary:
     label: Summary
     datasource_id: 'entity:node'
@@ -83,20 +67,6 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_az_summary
-  teaser:
-    label: 'Rendered HTML output'
-    property_path: rendered_item
-    type: text
-    configuration:
-      roles:
-        - anonymous
-      view_mode:
-        'entity:node':
-          ':default': teaser
-          az_event: ':default'
-          az_flexible_page: ':default'
-          az_news: ':default'
-          az_person: ':default'
   title:
     label: Title
     datasource_id: 'entity:node'
@@ -105,6 +75,12 @@ field_settings:
     dependencies:
       module:
         - node
+  url:
+    label: URI
+    property_path: search_api_url
+    type: string
+    configuration:
+      absolute: true
 datasource_settings:
   'entity:node':
     bundles:
