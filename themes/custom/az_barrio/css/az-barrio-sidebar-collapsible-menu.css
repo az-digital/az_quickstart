@@ -1,5 +1,10 @@
 /* Styles for the Sidebar collapsible menu block */
 
+.az-sidebar-collapsible-menu,
+.az-sidebar-collapsible-menu h2 {
+  font-family: proxima-nova-condensed, var(--bs-body-font-family);
+}
+
 .az-sidebar-collapsible-menu .az-sidebar-collapsible-parent > a {
   width: 100%;
   border-radius: 0;
