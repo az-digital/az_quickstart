@@ -117,6 +117,7 @@
               event.target.classList.remove('col-auto');
             }
             setWidthOfFullWidthElements();
+            sidebarCollapseBtn.scrollIntoView({ block: "nearest" });
           },
         );
       }
