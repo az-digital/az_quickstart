@@ -11,6 +11,9 @@ use Drupal\paragraphs\Plugin\migrate\source\d7\ParagraphsItem;
 /**
  * Drupal 7 Paragraph Item source plugin.
  *
+ * @deprecated in az_quickstart:3.2.0 and is removed from az_quickstart:4.0.0.
+ * There is no replacement.
+ * 
  * Available configuration keys:
  * - bundle: (optional) If supplied, this will only return paragraphs
  *   of that particular type.

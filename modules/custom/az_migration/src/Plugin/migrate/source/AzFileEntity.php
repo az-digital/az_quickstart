@@ -13,6 +13,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * File Entity Item source plugin.
  *
+ * @deprecated in az_quickstart:3.2.0 and is removed from az_quickstart:4.0.0.
+ * There is no replacement.
+ * 
  * Available configuration keys:
  * - type: (optional) If supplied, this will only return fields
  *   of that particular type.

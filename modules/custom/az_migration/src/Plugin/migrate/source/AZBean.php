@@ -9,6 +9,9 @@ use Drupal\migrate_drupal\Plugin\migrate\source\d7\FieldableEntity;
 /**
  * Migration source plugin for Bean entities.
  *
+ * @deprecated in az_quickstart:3.2.0 and is removed from az_quickstart:4.0.0.
+ * There is no replacement.
+ * 
  * @MigrateSource(
  *   id = "az_bean",
  *   source_module = "bean"
