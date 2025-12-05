@@ -72,9 +72,8 @@ function az_gdpr_consent_page_attachments(array &$attachments) {
  *
  * Adds az_gdpr_consent/gdpr_consent as a dependency for libraries that need
  * to load after our consent scripts. This ensures:
- * - Video script interception is in place before YouTube/Vimeo scripts run
- * - Geolocation check and auto-consent runs before Klaro initializes
- * - drupalSettings is available before Klaro's core library loads
+ * - Video script interception is in place before YouTube/Vimeo scripts run.
+ * - Geolocation check and auto-consent runs before Klaro initializes.
  */
 function az_gdpr_consent_library_info_alter(&$libraries, $extension) {
   // Make our consent library load before az_paragraphs video libraries.
@@ -87,7 +86,7 @@ function az_gdpr_consent_library_info_alter(&$libraries, $extension) {
     }
   }
 
-  // Make Klaro's core JS library depend on drupalSettings and our consent library.
+  // Make Klaro's core JS library depend on this module's consent library.
   if ($extension === 'klaro' && isset($libraries['library'])) {
     if (!isset($libraries['library']['dependencies'])) {
       $libraries['library']['dependencies'] = [];
