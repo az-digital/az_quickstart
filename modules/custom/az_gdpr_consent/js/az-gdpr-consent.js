@@ -13,24 +13,13 @@
 /* eslint-disable no-console */
 
 (() => {
-  let settings = null;
-  const settingsElement = document.querySelector(
-    '[data-drupal-selector="drupal-settings-json"]',
-  );
-
-  if (settingsElement) {
-    try {
-      settings = JSON.parse(settingsElement.textContent);
-    } catch (e) {
-      console.error('[AZ GDPR] Error parsing drupalSettings JSON:', e);
-    }
-  }
-
-  // If parsing failed or services not available, exit
-  if (!settings?.azGdprConsent?.klaroServices) {
-    console.error('[AZ GDPR] Services not available in parsed settings');
+  // Check if drupalSettings is available
+  if (typeof drupalSettings === 'undefined' || !drupalSettings?.azGdprConsent?.klaroServices) {
+    console.error('[AZ GDPR] drupalSettings or services not available');
     return;
   }
+
+  const settings = drupalSettings;
 
   // Inject CSS to hide toggle button by default
   const style = document.createElement('style');
@@ -162,38 +151,41 @@
 
   /**
    * Main execution: Fetch geolocation and conditionally set consent.
+   * Uses synchronous XHR to block script execution until geolocation is determined.
    */
   const initialize = () => {
-    // Fetch geolocation to determine whether to show toggle button
-    fetch('/cdn-loc')
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        const countryCode = data['client.geo.country_code'];
+    try {
 
-        if (!countryCode) {
-          throw new Error('Country code not found in /cdn-loc response');
-        }
+      // Use synchronous XMLHttpRequest to truly block execution
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET', '/cdn-loc', false); // false = synchronous
+      xhr.send();
 
-        if (isGdprCountry(countryCode)) {
-          // GDPR country - show toggle button (hidden by default)
-          showToggleButton();
-        } else {
-          // Non-GDPR country - auto-accept consent every time
-          setAutoAcceptedConsent();
-        }
-      })
-      .catch((error) => {
-        // If geolocation fetch fails, assume GDPR applies
-        console.error('[AZ GDPR] Failed to fetch geolocation data:', error);
+      if (xhr.status !== 200) {
+        throw new Error(`Network response was not ok: ${xhr.status}`);
+      }
+
+      const data = JSON.parse(xhr.responseText);
+      const countryCode = data['client.geo.country_code'];
+
+      if (!countryCode) {
+        throw new Error('Country code not found in /cdn-loc response');
+      }
+
+      if (isGdprCountry(countryCode)) {
+        // GDPR country - show toggle button (hidden by default)
         showToggleButton();
-      });
+      } else {
+        // Non-GDPR country - auto-accept consent every time
+        setAutoAcceptedConsent();
+      }
+    } catch (error) {
+      // If geolocation fetch fails, assume GDPR applies
+      console.error('[AZ GDPR] Failed to fetch geolocation data:', error);
+      showToggleButton();
+    }
   };
 
-  // Execute initialization
+  // Execute initialization (blocks until complete)
   initialize();
 })();

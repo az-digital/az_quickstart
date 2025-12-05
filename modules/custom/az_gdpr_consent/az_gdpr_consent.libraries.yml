@@ -6,9 +6,10 @@ gdpr_consent:
       css/az-gdpr-consent.css: {}
   js:
     # Remote video consent handler must load first to intercept script creation
-    js/az-gdpr-remote-video-consent-handler.js: { weight: -2000, preprocess: false }
+    js/az-gdpr-remote-video-consent-handler.js: { preprocess: false }
     # Main consent script loads after handler but before Klaro
-    js/az-gdpr-consent.js: { weight: -1000, preprocess: false }
+    # Using defer to ensure drupalSettings is available when script executes
+    js/az-gdpr-consent.js: { preprocess: false, attributes: { defer: true } }
   # Load this script in the header to ensure it runs before Klaro loads
   header: true
   # Depend on drupalSettings to ensure it's available
