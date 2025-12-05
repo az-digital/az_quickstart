@@ -575,6 +575,11 @@ function az_barrio_theme_suggestions_menu_alter(array &$suggestions, array $vari
   if (isset($variables['attributes']['block'])) {
     $suggestions[] = $variables['theme_hook_original'] . '__' . $variables['attributes']['block'];
   }
+
+  // Add theme suggestion for the az_navbar variation of the main menu.
+  if ($variables['menu_name'] == 'main' && theme_get_setting('az_navbar')) {
+    $suggestions[] = 'menu__main_navbar_az';
+  }
 }
 
 /**

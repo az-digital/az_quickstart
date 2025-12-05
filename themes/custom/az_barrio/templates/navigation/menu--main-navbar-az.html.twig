@@ -1,0 +1,68 @@
+{#
+/**
+ * @file
+ * Bootstrap Barrio's override to display a menu.
+ *
+ * Available variables:
+ * - menu_name: The machine name of the menu.
+ * - items: A nested list of menu items. Each menu item contains:
+ *   - attributes: HTML attributes for the menu item.
+ *   - below: The menu item child items.
+ *   - title: The menu link title.
+ *   - url: The menu link url, instance of \Drupal\Core\Url
+ *   - localized_options: Menu link localized options.
+ *   - is_expanded: TRUE if the link has visible children within the current
+ *     menu tree.
+ *   - is_collapsed: TRUE if the link has children within the current menu tree
+ *     that are not currently visible.
+ *   - in_active_trail: TRUE if the link is in the active trail.
+ */
+#}
+{% import _self as menus %}
+{#
+  We call a macro which calls itself to render the full tree.
+  @see http://twig.sensiolabs.org/doc/tags/macro.html
+#}
+{{ menus.menu_links(items, attributes, 0) }}
+
+{% macro menu_links(items, attributes, menu_level) %}
+  {% if items %}
+    {% if menu_level == 0 %}
+      <ul{{ attributes.addClass('navbar-nav flex-lg-row') }}>
+    {% else %}
+      <div class="dropdown-menu">
+    {% endif %}
+    {% for item in items %}
+      {% set classes = [
+        not menu_level ? 'nav-item',
+        item.is_expanded ? 'menu-item--expanded',
+        item.is_collapsed ? 'menu-item--collapsed',
+        item.in_active_trail ? 'active',
+        item.below ? 'dropdown nav-item nav-item-parent keep-open',
+      ] %}
+      {% if menu_level == 0 %}
+        <li{{ item.attributes.addClass(classes) }}>
+      {% endif %}
+      {% set link_classes = [
+        menu_level ? 'dropdown-item' : 'nav-link',
+        item.in_active_trail ? 'active',
+        item.below ? 'dropdown-toggle',
+        item.url.getOption('attributes').class ? item.url.getOption('attributes').class | join(' '),
+      ] %}
+      {% if item.below %}
+        <button{{ item.attributes.addClass(link_classes).setAttribute('data-bs-toggle','dropdown').setAttribute('aria-expanded', 'false').setAttribute('aria-haspopup', 'true').setAttribute('data-bs-display', 'static') }}>{{ item.title }}</button>
+        {{ menus.menu_links(item.below, attributes, menu_level + 1) }}
+      {% else %}
+        {{ link(item.title, item.url, {'class': link_classes}) }}
+      {% endif %}
+      {% if menu_level == 0 %}
+        </li>
+      {% endif %}
+    {% endfor %}
+    {% if menu_level == 0 %}
+      </ul>
+    {% else %}
+      </div>
+    {% endif %}
+  {% endif %}
+{% endmacro %}
