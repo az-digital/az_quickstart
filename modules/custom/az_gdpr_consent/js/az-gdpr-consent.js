@@ -14,7 +14,10 @@
 
 (() => {
   // Check if drupalSettings is available
-  if (typeof drupalSettings === 'undefined' || !drupalSettings?.azGdprConsent?.klaroServices) {
+  if (
+    typeof drupalSettings === 'undefined' ||
+    !drupalSettings?.azGdprConsent?.klaroServices
+  ) {
     console.error('[AZ GDPR] drupalSettings or services not available');
     return;
   }
@@ -155,7 +158,6 @@
    */
   const initialize = () => {
     try {
-
       // Use synchronous XMLHttpRequest to truly block execution
       const xhr = new XMLHttpRequest();
       xhr.open('GET', '/cdn-loc', false); // false = synchronous
