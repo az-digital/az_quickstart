@@ -162,6 +162,7 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
       '#step' => 1,
       '#required' => FALSE,
       '#weight' => -1,
+      '#default_value' => $this->config('az_finder.settings')->get('tid_widget.active_filter_indicator_levels') ?? '',
     ];
 
     // Fetch existing overrides from the AZFinderOverrides service.
