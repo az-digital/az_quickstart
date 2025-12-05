@@ -75,6 +75,12 @@ services:
     services:
       image: seleniarm/standalone-chromium:4.1.4-20220429
       command: /opt/bin/entry_point.sh
+  search:
+    type: solr:8
+    core: az_search
+    portforward: true
+    config:
+      dir: modules/custom/az_search_api/solr
 tooling:
   # Provide a command to install Drupal.
   # Current versions of the Bitnami MySQL container sometimes signal
