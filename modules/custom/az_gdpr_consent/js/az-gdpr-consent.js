@@ -19,7 +19,7 @@
     !drupalSettings?.azGdprConsent?.klaroServices
   ) {
     console.error('[AZ GDPR] drupalSettings or services not available');
-    return;
+    throw new Error('[AZ GDPR] drupalSettings not available');
   }
 
   const settings = drupalSettings;
@@ -153,41 +153,49 @@
   };
 
   /**
-   * Main execution: Fetch geolocation and conditionally set consent.
-   * Uses synchronous XHR to block script execution until geolocation is determined.
+   * Use the early geolocation fetch that was started in <head>.
+   *
+   * An inline script in <head> starts fetch('/cdn-loc') immediately when parsed,
+   * storing the Promise in window.azGdprGeoPromise. By the time this script runs,
+   * the fetch may have already completed. We await the Promise to get the result.
+   *
+   * If geolocation fails, we assume GDPR (show banner) to be safe.
    */
-  const initialize = () => {
-    try {
-      // Use synchronous XMLHttpRequest to truly block execution
-      const xhr = new XMLHttpRequest();
-      xhr.open('GET', '/cdn-loc', false); // false = synchronous
-      xhr.send();
+  if (!window.azGdprGeoPromise) {
+    console.error('[AZ GDPR] Early geo fetch promise not found');
+    showToggleButton();
+  } else {
+    // Use .then() to get the result of the early fetch
+    window.azGdprGeoPromise
+      .then((data) => {
+        if (!data) {
+          console.error('[AZ GDPR] Failed to fetch geolocation data');
+          showToggleButton();
+          return;
+        }
 
-      if (xhr.status !== 200) {
-        throw new Error(`Network response was not ok: ${xhr.status}`);
-      }
+        try {
+          const countryCode = data['client.geo.country_code'];
 
-      const data = JSON.parse(xhr.responseText);
-      const countryCode = data['client.geo.country_code'];
+          if (!countryCode) {
+            throw new Error('Country code not found in /cdn-loc response');
+          }
 
-      if (!countryCode) {
-        throw new Error('Country code not found in /cdn-loc response');
-      }
+          const isGdpr = isGdprCountry(countryCode);
 
-      if (isGdprCountry(countryCode)) {
-        // GDPR country - show toggle button (hidden by default)
+          if (isGdpr) {
+            showToggleButton();
+          } else {
+            setAutoAcceptedConsent();
+          }
+        } catch (error) {
+          console.error('[AZ GDPR] Error processing geolocation data:', error);
+          showToggleButton();
+        }
+      })
+      .catch((error) => {
+        console.error('[AZ GDPR] Failed to fetch geolocation data:', error);
         showToggleButton();
-      } else {
-        // Non-GDPR country - auto-accept consent every time
-        setAutoAcceptedConsent();
-      }
-    } catch (error) {
-      // If geolocation fetch fails, assume GDPR applies
-      console.error('[AZ GDPR] Failed to fetch geolocation data:', error);
-      showToggleButton();
-    }
-  };
-
-  // Execute initialization (blocks until complete)
-  initialize();
+      });
+  }
 })();
