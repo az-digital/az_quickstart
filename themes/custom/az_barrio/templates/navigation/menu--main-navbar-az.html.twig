@@ -33,7 +33,7 @@
     {% elseif menu_level == 1 %}
       <ul{{ attributes.removeClass('navbar-nav').addClass('dropdown-menu') }} id="secondary-{{ parent_item.title|clean_class }}">
     {% elseif menu_level == 2 %}
-      <ul class="collapse" id="tertiary-{{ parent_item.title|clean_class }}" data-bs-parent="#secondary-{{ parent_item.parent.title|clean_class }}">
+      <ul class="collapse{% if parent_item.in_active_trail %} show{% endif %}" id="tertiary-{{ parent_item.title|clean_class }}" data-bs-parent="#secondary-{{ parent_item.parent.title|clean_class }}">
     {% endif %}
     {% for item in items %}
       {% set is_placeholder = (
@@ -69,7 +69,7 @@
           {% if item.below %}
             <div class="btn-group">
               {{ link(item.title, item.url, { 'class': 'dropdown-item' }) }}
-              <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-bs-toggle="collapse" data-bs-target="#tertiary-{{ item.title|clean_class }}" data-bs-auto-close="outside" aria-controls="tertiary-{{ item.title|clean_class }}" aria-expanded="false">
+              <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-bs-toggle="collapse" data-bs-target="#tertiary-{{ item.title|clean_class }}" data-bs-auto-close="outside" aria-controls="tertiary-{{ item.title|clean_class }}" aria-expanded="{{ item.in_active_trail ? 'true' : 'false' }}">
                 <span class="visually-hidden">Toggle Dropdown</span>
               </button>
             </div>
