@@ -325,7 +325,13 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   // Remove Navbar options.
   $form['affix']['navbar_top'] = [];
   $form['affix']['navbar'] = [];
-  $form['components']['navbar'] = [];
+  $form['components']['navbar']['#access'] = FALSE;
+  $form['components']['navbar_az']['az_navbar'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Enable AZ Navbar'),
+    '#description' => t('Adds the `navbar-az` class to the main navigation bar, providing additional styling and support for a third level of navigation.'),
+    '#default_value' => theme_get_setting('az_navbar'),
+  ];
   // Logos.
   $form['logo']['az_barrio_logo_svg_inline'] = [
     '#type' => 'checkbox',
