@@ -3,7 +3,6 @@
 namespace Drupal\az_cas\EventSubscriber;
 
 use Drupal\cas\Event\CasPreLoginEvent;
-use Drupal\cas\Service\CasHelper;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -36,7 +35,7 @@ class CasPreLoginSubscriber implements EventSubscriberInterface {
    */
   public static function getSubscribedEvents() {
     $events = [];
-    $events[CasHelper::EVENT_PRE_LOGIN][] = ['onCasPreLogin', 100];
+    $events[CasPreLoginEvent::class][] = ['onCasPreLogin', 100];
     return $events;
   }
 

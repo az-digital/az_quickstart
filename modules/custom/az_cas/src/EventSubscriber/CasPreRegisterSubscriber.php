@@ -5,7 +5,6 @@ namespace Drupal\az_cas\EventSubscriber;
 use Drupal\az_cas\Exception\GuestRedirectException;
 use Drupal\az_cas\Service\GuestSessionManager;
 use Drupal\cas\Event\CasPreRegisterEvent;
-use Drupal\cas\Service\CasHelper;
 use Drupal\cas\Service\CasUserManager;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -97,7 +96,7 @@ class CasPreRegisterSubscriber implements EventSubscriberInterface {
    */
   public static function getSubscribedEvents() {
     $events = [];
-    $events[CasHelper::EVENT_PRE_REGISTER][] = ['onCasPreRegister', 100];
+    $events[CasPreRegisterEvent::class][] = ['onCasPreRegister', 100];
     return $events;
   }
 
