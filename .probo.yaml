@@ -1,4 +1,4 @@
-image: proboci/ubuntu:22.04-php8.3
+image: proboci/ubuntu:22.04-php8.4
 assets:
   - test-credentials.sh
   - migration.settings.php
@@ -51,7 +51,7 @@ steps:
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush config:set -y system.logging error_level "verbose"
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush cache:rebuild
       - chown www-data:www-data -R /var/www/html/sites/default/files
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -y -n pm:install environment_indicator
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -y -n pm:install environment_indicator_toolbar
       - chmod 777 /var/www/html/sites/default/settings.php
       - echo -e "\$config['environment_indicator.indicator']['name'] = '$BRANCH_NAME (ProboCI)';\n\$config['environment_indicator.indicator']['bg_color'] = '#440027';" >> /var/www/html/sites/default/settings.php
       - chmod 444 /var/www/html/sites/default/settings.php
@@ -59,7 +59,7 @@ steps:
     plugin: Script
     script:
       - mkdir -p ~/terminus && cd ~/terminus
-      - curl -L https://github.com/pantheon-systems/terminus/releases/download/3.4.0/terminus.phar --output terminus
+      - curl -L https://github.com/pantheon-systems/terminus/releases/download/4.0.1/terminus.phar --output terminus
       - chmod +x terminus
       - ./terminus self:update
       - ln -sf ~/terminus/terminus /usr/local/bin/terminus

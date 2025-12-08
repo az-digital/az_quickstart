@@ -174,7 +174,11 @@ function az_core_modules_uninstalled($modules) {
  * Implements hook_block_access().
  */
 function az_core_block_access(Block $block, $operation, AccountInterface $account) {
-  if ($operation === 'view' && $block->id() === 'az_barrio_sidebar_menu') {
+  if ($operation === 'view' && strpos($block->get('plugin'), 'menu_block:') === 0) {
+    $settings = $block->get('settings');
+    if (($settings['display_empty'] ?? FALSE) === TRUE) {
+      return AccessResult::neutral();
+    }
     $block_content = \Drupal::entityTypeManager()
       ->getViewBuilder('block')
       ->view($block);
@@ -341,6 +345,25 @@ function az_core_form_node_form_alter(&$form, FormStateInterface $form_state) {
  */
 function az_core_form_menu_link_content_form_alter(&$form, FormStateInterface $form_state) {
   $form['#attached']['library'][] = 'az_core/claro-node-form-overrides';
+}
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter() for Drupal\block_content\BlockContentForm.
+ *
+ * Adds style overrides for claro/node-form and arizona-bootstrap.
+ */
+function az_core_form_block_content_form_alter(&$form, FormStateInterface $form_state) {
+  $form['#attached']['library'][] = 'az_core/claro-node-form-overrides';
+  $form['#attached']['library'][] = 'az_core/arizona-bootstrap-node-form-overrides';
+}
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter() for Drupal\webform\Form.
+ *
+ * Adds style overrides for claro/node-form and arizona-bootstrap.
+ */
+function az_core_form_webform_edit_form_alter(&$form, FormStateInterface $form_state) {
+  $form['#attached']['library'][] = 'az_core/claro-node-form-overrides';
   $form['#attached']['library'][] = 'az_core/arizona-bootstrap-node-form-overrides';
 }
 
@@ -472,7 +495,8 @@ function az_core_node_access(NodeInterface $node, $op, AccountInterface $account
     if ($bundle === 'az_person') {
       // Determine if netid field exists.
       if ($node->hasField('field_az_netid')) {
-        $netid = $node->get('field_az_netid')->getValue();
+        $netid = $node->get('field_az_netid')->first();
+        $netid = $netid?->getString();
         try {
           // Look up user mapping for CAS.
           $auth = \Drupal::service('externalauth.authmap')->get($account->id(), 'cas');
@@ -537,7 +561,6 @@ function az_core_preprocess_container__text_format_filter_help(&$variables) {
  */
 function az_core_preprocess_entity_embed_container(array &$variables) {
   if (isset($variables['element']['entity']['webform'])) {
-    $embedded_webform_preview = $variables['element']['entity']['title'][0]['#context']['value'];
     if (\Drupal::routeMatch()->getRouteName() === 'entity.node.edit_form' || \Drupal::routeMatch()->getRouteName() === 'entity.block_content.edit_form') {
       // Get the view builder for the entity.
       $entity = $variables["element"]['#entity'];

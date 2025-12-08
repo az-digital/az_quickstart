@@ -74,14 +74,6 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#default_value' => theme_get_setting('copyright_notice'),
   ];
 
-  // Hide front page title.
-  $form['az_settings']['settings']['az_hide_front_title'] = [
-    '#type' => 'checkbox',
-    '#title' => t('Hide title of front page node'),
-    '#description' => t('If this is checked, the title of the node being displayed on the front page will not be visible'),
-    '#default_value' => theme_get_setting('az_hide_front_title'),
-  ];
-
   // Back-to-top button.
   $form['az_settings']['settings']['az_back_to_top'] = [
     '#type' => 'checkbox',
@@ -266,19 +258,6 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
       ],
     ],
   ];
-  $form['azbs_settings']['settings']['az_bootstrap_cdn']['az_bootstrap_cdn_version'] = [
-    '#type' => 'radios',
-    '#title' => t('AZ Bootstrap CDN version (DEPRECATED)'),
-    '#description' => t('This setting is deprecated in favor of allowing choosing your CSS and JS versions separately.  <a href="@bootstrapdeprecated">This setting will be removed in a future version of AZ Barrio</a>.', [
-      '@bootstrapdeprecated' => 'https://github.com/az-digital/az_quickstart/issues/1251',
-    ]),
-    '#options' => [
-      'stable' => t('Stable version: This option has undergone the most testing within the az_barrio theme. Currently: %stableversion (Recommended).', ['%stableversion' => AZ_BOOTSTRAP_STABLE_VERSION]),
-      'latest-2.x' => t('Latest tagged version. The most recently tagged stable release of AZ Bootstrap. While this has not been explicitly tested on this version of az_barrio, it’s probably OK to use on production sites. Please report bugs to the AZ Digital team.'),
-      '2.x' => t('Latest dev version. This is the tip of the 2.x branch of AZ Bootstrap. Please do not use on production unless you are following the AZ Bootstrap project closely. Please report bugs to the AZ Digital team.'),
-    ],
-    '#default_value' => theme_get_setting('az_bootstrap_cdn_version'),
-  ];
   $form['azbs_settings']['settings']['az_bootstrap_cdn']['az_bootstrap_cdn_version_css'] = [
     '#type' => 'radios',
     '#title' => t('AZ Bootstrap CSS CDN version'),
@@ -347,19 +326,6 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   $form['affix']['navbar_top'] = [];
   $form['affix']['navbar'] = [];
   $form['components']['navbar'] = [];
-  // Components.
-  $form['components']['navbar_offcanvas'] = [
-    '#type' => 'details',
-    '#title' => t('Navbar with Off Canvas Drawer for mobile devices.'),
-    '#collapsible' => TRUE,
-    '#collapsed' => TRUE,
-  ];
-  $form['components']['navbar_offcanvas']['az_barrio_navbar_offcanvas'] = [
-    '#type' => 'checkbox',
-    '#title' => t('Use Navbar Off Canvas'),
-    '#description' => t('Check to use the Arizona Bootstrap Off Canvas Navbar instead of the bootstrap navbar.'),
-    '#default_value' => theme_get_setting('az_barrio_navbar_offcanvas'),
-  ];
   // Logos.
   $form['logo']['az_barrio_logo_svg_inline'] = [
     '#type' => 'checkbox',
@@ -469,8 +435,6 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
  * Submit handler for az_barrio_form_settings.
  */
 function az_barrio_form_system_theme_settings_submit($form, FormStateInterface &$form_state) {
-  $config_key = $form_state->getValue('config_key');
-  $config = \Drupal::getContainer()->get('config.factory')->getEditable($config_key);
   $values = $form_state->getValues();
   // If the user uploaded a new logo or favicon, save it to a permanent location
   // and use it in place of the default theme-provided file.

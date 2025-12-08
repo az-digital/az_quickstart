@@ -4,7 +4,8 @@ description: Media entity types & image styles.
 core_version_requirement: ^10 || ^11 || ^12
 package: The University of Arizona
 dependencies:
-  - az_core
+  - az_core:az_core
+  - az_icons:az_icons
   - crop:crop
   - drupal:image
   - drupal:media
@@ -17,3 +18,4 @@ dependencies:
   - media_library_edit:media_library_edit
   - media_entity_file_replace:media_entity_file_replace
   - decorative_image_widget:decorative_image_widget
+  - media_library_form_element:media_library_form_element

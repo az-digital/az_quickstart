@@ -337,8 +337,6 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
         ],
       ];
 
-      $config_name = "az_finder.tid_widget.{$view_id}.{$display_id}";
-      $config = $this->config($config_name);
       $vocabulary_ids = $this->azFinderVocabulary->getVocabularyIdsForFilter($view_id, $display_id, 'taxonomy_index_tid');
 
       foreach ($vocabulary_ids as $vocabulary_id) {

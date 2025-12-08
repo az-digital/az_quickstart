@@ -3,7 +3,7 @@ type: theme
 description: 'Basic structure for a Bootstrap Barrio SubTheme.'
 core_version_requirement: ^10 || ^11 || ^12
 dependencies:
-  - az_core
+  - az_core:az_core
 base theme: bootstrap_barrio
 block_default_region: 'content'
 
@@ -19,7 +19,7 @@ regions:
   header: 'Header 1'
   header_2: 'Header 2'
   navigation: 'Navigation bar'
-  navigation_offcanvas: 'Off canvas content associated with the mobile off canvas navbar'
+  navigation_offcanvas: 'Mobile navigation and search'
   help: 'Help'
   content_featured: 'Featured content'
   highlighted: 'Highlighted'
@@ -48,9 +48,13 @@ ckeditor5-stylesheets:
   - css/ckeditor5.css
   - https://cdn.digital.arizona.edu/lib/az-icons/main/az-icons-styles.css
   - https://cdn.digital.arizona.edu/lib/arizona-bootstrap/latest-5.x/css/arizona-bootstrap.min.css
+  - https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0#.css
 
 libraries-extend:
   system/base:
     - az_barrio/az-media-display
   core/drupal.ajax:
     - az_barrio/az-ajax
+
+libraries-override:
+  bootstrap_barrio/toast: az_barrio/toasts

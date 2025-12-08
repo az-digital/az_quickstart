@@ -6,6 +6,6 @@ package: 'The University of Arizona'
 container_rebuild_required: true
 dependencies:
   - cas:cas
-  - az_core
+  - az_core:az_core
   - drupal:user
 configure: az_cas.settings
