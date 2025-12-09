@@ -577,7 +577,7 @@ function az_barrio_theme_suggestions_menu_alter(array &$suggestions, array $vari
   }
 
   // Add theme suggestion for the az_navbar variation of the main menu.
-  if (isset($variables['attributes']['id']) && $variables['attributes']['id'] == 'block-az-barrio-main-menu' && theme_get_setting('az_navbar')) {
+  if (isset($variables['attributes']['id']) && $variables['attributes']['id'] === 'block-az-barrio-main-menu' && theme_get_setting('az_navbar')) {
     $suggestions[] = 'menu__main_navbar_az';
   }
 }
