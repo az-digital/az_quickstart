@@ -1,7 +1,7 @@
 {#
 /**
  * @file
- * Bootstrap Barrio's override to display a menu.
+ * Bootstrap Barrio's override to display a menu. Used when az_navbar theme setting is enabled.
  *
  * Available variables:
  * - menu_name: The machine name of the menu.
@@ -36,6 +36,7 @@
       <ul class="collapse{% if parent_item.in_active_trail %} show{% endif %}" id="tertiary-{{ parent_item.title|clean_class }}" data-bs-parent="#secondary-{{ parent_item.parent.title|clean_class }}">
     {% endif %}
     {% for item in items %}
+      {# item is_placeholder if it has no link at the primary level #}
       {% set is_placeholder = (
         not item.url.isRouted()
       ) or (
