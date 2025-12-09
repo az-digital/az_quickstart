@@ -1,0 +1,9 @@
+#az-back-to-top {
+    width: fit-content;
+    --bs-text-opacity: .9;
+    display: none;
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 2;
+}
