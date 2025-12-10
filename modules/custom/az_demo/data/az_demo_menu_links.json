@@ -60,7 +60,7 @@
       "parent_link_id": "0",
       "menu": "main",
       "title": "Pages",
-      "urlpath": "route:<button>",
+      "urlpath": "/pages",
       "external": false,
       "expanded": true,
       "enabled": true,
