@@ -236,3 +236,23 @@ function az_quickstart_update_1130001() {
   // This update was meant for 3.1.x only and was replaced by
   // az_quickstart_install_1130101().
 }
+
+/**
+ * Enable environment_indicator_toolbar module if applicable.
+ *
+ * This update ensures that environment_indicator_toolbar is enabled on sites
+ * that have both environment_indicator and toolbar modules enabled, regardless
+ * of configuration state. This addresses an issue where the module may not
+ * have been enabled during updates due to config changes happening before the
+ * environment_indicator module's own update hook could run.
+ */
+function az_quickstart_update_1130002() {
+  $module_handler = \Drupal::service('module_handler');
+  // Check if both environment_indicator and toolbar are enabled.
+  if ($module_handler->moduleExists('environment_indicator') && $module_handler->moduleExists('toolbar')) {
+    // Enable environment_indicator_toolbar if not already enabled.
+    if (!$module_handler->moduleExists('environment_indicator_toolbar')) {
+      \Drupal::service('module_installer')->install(['environment_indicator_toolbar']);
+    }
+  }
+}
