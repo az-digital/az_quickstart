@@ -98,8 +98,8 @@ function az_barrio_preprocess_html(&$variables) {
  */
 function az_barrio_preprocess_page(&$variables, $hook) {
   $variables['az_back_to_top'] = (theme_get_setting('az_back_to_top')) ? TRUE : FALSE;
-  if($variables['az_back_to_top']) {
-      $variables['#attached']['library'][] = 'az_barrio/az-back-to-top';
+  if ($variables['az_back_to_top']) {
+    $variables['#attached']['library'][] = 'az_barrio/az-back-to-top';
   }
 
   if (isset($variables['page']['navigation_offcanvas']['az_barrio_offcanvas_searchform'])) {
