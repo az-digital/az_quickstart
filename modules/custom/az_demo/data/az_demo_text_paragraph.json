@@ -134,6 +134,21 @@
             "id": 199,
             "az_text_area": "<h2>Square Size</h2><p>The square size view mode scales the video to 220x220px.</p>",
             "bottom_spacing": "mb-0"
+        },
+        {
+            "id": 200,
+            "az_text_area": "<h2>Internal Documentation Overview</h2><p>This area contains internal site documentation intended for authenticated users with appropriate permissions. Use it to record editorial standards, workflows, component usage tips, and any custom business logic implemented in this Quickstart instance.</p><p><strong>Suggested sections:</strong></p><ul><li>Editing Guidelines</li><li>Publishing Workflow</li><li>Content Architecture</li><li>Media &amp; Assets</li><li>Governance &amp; Roles</li></ul>",
+            "bottom_spacing": "mb-0"
+        },
+        {
+            "id": 201,
+            "az_text_area": "<h2>Publishing Workflow</h2><p>Standard lifecycle for documentation pages:</p><ol><li><strong>Draft:</strong> Author creates or updates content and saves as draft.</li><li><strong>Review:</strong> Content editor checks style, accuracy, accessibility.</li><li><strong>Approval:</strong> Lead or administrator reviews for governance alignment.</li><li><strong>Publish:</strong> Content is made active; cache clear occurs automatically for the node.</li><li><strong>Maintenance:</strong> Schedule periodic review (e.g., every 6 months) and mark changes in revision log.</li></ol><p><strong>Tip:</strong> Use concise revision messages describing what changed and why.</p>",
+            "bottom_spacing": "mb-0"
+        },
+        {
+            "id": 202,
+            "az_text_area": "<h2>Editing Guidelines</h2><p>Follow these standards to keep content consistent and accessible:</p><ul><li><strong>Headings:</strong> Use a single H1 (the page title). Nest logically; don’t skip levels.</li><li><strong>Links:</strong> Use descriptive text; avoid ‘click here’.</li><li><strong>Media:</strong> Provide alt text describing purpose, not decoration.</li><li><strong>Formatting:</strong> Prefer semantic elements over visual styling.</li><li><strong>Accessibility:</strong> Ensure sufficient color contrast and meaningful link text.</li><li><strong>Taxonomy:</strong> Apply only relevant tags; avoid over-tagging.</li></ul>",
+            "bottom_spacing": "mb-0"
         }
     ]
 }

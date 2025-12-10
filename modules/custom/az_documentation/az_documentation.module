@@ -1,0 +1,38 @@
+<?php
+
+/**
+ * @file
+ */
+
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\node\NodeInterface;
+
+/**
+ * Implements hook_node_access().
+ *
+ * Prevent anonymous (or unauthorized) access to nodes whose alias begins with
+ * /admin/documentation. This ensures that documentation content placed under
+ * that path (intentionally or accidentally via a path alias) is only visible
+ * to users who have the "access az site documentation" permission.
+ */
+function az_documentation_node_access(NodeInterface $node, $op, AccountInterface $account) {
+  if ($op !== 'view') {
+    return AccessResult::neutral();
+  }
+
+  // Resolve the current (preferred) alias for this node.
+  /** @var \Drupal\path_alias\AliasManagerInterface $alias_manager */
+  $alias_manager = \Drupal::service('path_alias.manager');
+  $alias = $alias_manager->getAliasByPath('/node/' . $node->id());
+
+  if (str_starts_with($alias, '/admin/documentation')) {
+    // Enforce permission.
+    if ($account->hasPermission('access az site documentation')) {
+      return AccessResult::allowed()->cachePerPermissions()->addCacheTags(['node:' . $node->id()]);
+    }
+    return AccessResult::forbidden()->cachePerPermissions()->addCacheTags(['node:' . $node->id()]);
+  }
+
+  return AccessResult::neutral();
+}
