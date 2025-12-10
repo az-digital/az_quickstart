@@ -357,6 +357,15 @@
       "az_main_content" : "308|309|310|311|312|313",
       "az_media_image" : "",
       "az_summary" : "A page with rankings."
+    },
+    {
+      "id":44,
+      "title"  : "Large Card Deck Performance Test",
+      "path" : "/pages/large-card-deck-test",
+      "az_page_category"  : "Cards",
+      "az_main_content"  : "413",
+      "az_media_image"    : "",
+      "az_summary" : "Demonstrates performance issues with large card decks (100 cards). See GitHub issue #4505."
     }
   ]
 }
