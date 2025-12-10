@@ -324,15 +324,16 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   ];
   // Remove navbar options and add AZ Navbar setting.
   $form['components']['navbar'] = [];
-  $az_navbar_setting = ['az_navbar' => 
-    [
-      '#type' => 'checkbox',
-      '#prefix' => "<span class='form-item__label'>" . t('AZ Navbar') . "</span>",
-      '#title' => t('Enable AZ Navbar'),
-      '#description' => t('Adds the `navbar-az` class to the main navigation bar, providing additional styling and support for a third level of navigation.'),
-      '#default_value' => theme_get_setting('az_navbar'),
-      '#wrapper_attributes' => ['class' => ['field-multiple-table']]
-    ]
+  $az_navbar_setting = [
+    'az_navbar' =>
+      [
+        '#type' => 'checkbox',
+        '#prefix' => "<span class='form-item__label'>" . t('AZ Navbar') . "</span>",
+        '#title' => t('Enable AZ Navbar'),
+        '#description' => t('Adds the `navbar-az` class to the main navigation bar, providing additional styling and support for a third level of navigation.'),
+        '#default_value' => theme_get_setting('az_navbar'),
+        '#wrapper_attributes' => ['class' => ['field-multiple-table']],
+      ],
   ];
   $form['components']['navbar_behaviour'] = $az_navbar_setting + $form['components']['navbar_behaviour'];
   $form['affix']['navbar_top'] = [];
