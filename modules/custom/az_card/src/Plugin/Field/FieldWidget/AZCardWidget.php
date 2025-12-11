@@ -131,28 +131,83 @@ class AZCardWidget extends WidgetBase {
       $status = TRUE;
     }
 
-    // Generate a preview if we need one (performance optimization).
-    if ($status) {
-      // Card is OPEN - hide preview while editing to avoid stale content.
+    // Generate a preview if we need one.
+    if (!$status) {
+
+      // Bootstrap wrapper.
       $element['preview_container'] = [
         '#type' => 'container',
-        '#attributes' => ['class' => ['card-preview-hidden']],
-        '#access' => FALSE,
+        '#attributes' => [
+          'class' =>
+            ['col-12', 'col-sm-6', 'col-md-6', 'col-lg-4', 'card-preview'],
+        ],
       ];
-    }
-    else {
-      // Card is CLOSED - keep the richer preview instead of a lazy placeholder.
-      $element['preview_container'] = $this->buildFullCardPreview($item, $form_state);
-      $element['preview_container']['#attributes']['class'][] = 'card-preview-collapsed';
+
+      $card_classes = 'card';
+      $parent = $item->getEntity();
+
+      // Get settings from parent paragraph.
+      if ($parent instanceof ParagraphInterface) {
+        // Get the behavior settings for the parent.
+        $parent_config = $parent->getAllBehaviorSettings();
+
+        // See if the parent behavior defines some card-specific settings.
+        if (!empty($parent_config['az_cards_paragraph_behavior'])) {
+          $card_defaults = $parent_config['az_cards_paragraph_behavior'];
+          $card_classes = $card_defaults['card_style'] ?? 'card';
+        }
+      }
+
+      // Add card class from options.
+      if (!empty($item->options['class'])) {
+        $card_classes .= ' ' . $item->options['class'];
+      }
+
+      // Card item.
+      $element['preview_container']['card_preview'] = [
+        '#theme' => 'az_card',
+        '#title' => $item->title ?? '',
+        '#body' => check_markup(
+          $item->body ?? '',
+          $item->body_format ?? self::AZ_CARD_DEFAULT_TEXT_FORMAT),
+        '#attributes' => ['class' => $card_classes],
+      ];
+
+      // Check and see if we can construct a valid image to preview.
+      $media_id = $item->media ?? NULL;
+      if (!empty($media_id)) {
+        if ($media = $this->entityTypeManager->getStorage('media')->load($media_id)) {
+          $media_render_array = $this->cardImageHelper->generateImageRenderArray($media);
+          if (!empty($media_render_array)) {
+            $element['preview_container']['card_preview']['#media'] = $media_render_array;
+          }
+        }
+      }
+
+      // Check and see if there's a valid link to preview.
+      if ($item->link_title || $item->link_uri) {
+        if (!empty($item->link_uri) && str_starts_with($item->link_uri, '/' . PublicStream::basePath())) {
+          // Link to public file: use fromUri() to get the URL.
+          $link_url = Url::fromUri(urldecode('base:' . $item->link_uri));
+        }
+        else {
+          $link_url = $this->pathValidator->getUrlIfValid($item->link_uri ?? '<none>');
+        }
+        $element['preview_container']['card_preview']['#link'] = [
+          '#type' => 'link',
+          '#title' => $item->link_title ?? '',
+          '#url' => $link_url ?: Url::fromRoute('<none>'),
+        ];
+      }
     }
 
-    // Add link style classes (only for open cards with preview_container).
+    // Add link style classes.
+    $element['preview_container']['card_preview']['#link']['#attributes']['class'] =
+      empty($item->options['link_style']) ?
+      ['btn', 'w-100', 'btn-red'] :
+      explode(' ', $item->options['link_style']);
+
     if (!empty($element['preview_container']['card_preview']['#link'])) {
-      $element['preview_container']['card_preview']['#link']['#attributes']['class'] =
-        empty($item->options['link_style']) ?
-        ['btn', 'w-100', 'btn-red'] :
-        explode(' ', $item->options['link_style']);
-
       $element['preview_container']['card_preview']['#link']['#attributes']['class'][] = 'az-card-no-follow';
     }
 
@@ -183,10 +238,8 @@ class AZCardWidget extends WidgetBase {
       '#required' => TRUE,
       '#title' => $this->t('Card Background'),
       '#default_value' => (!empty($item->options['class'])) ? $item->options['class'] : 'text-bg-white',
-      '#access' => $status, // Only show for open cards
     ];
 
-    // Only create expensive widgets for open cards
     if ($status) {
       $element['media'] = [
         '#type' => 'az_media_library',
@@ -196,27 +249,12 @@ class AZCardWidget extends WidgetBase {
         '#delta' => $delta,
         '#cardinality' => 1,
       ];
-
-      $element['body'] = [
-        '#type' => 'text_format',
-        '#title' => $this->t('Card Body'),
-        '#default_value' => $item->body ?? NULL,
-        '#format' => $item->body_format ?? self::AZ_CARD_DEFAULT_TEXT_FORMAT,
-      ];
     }
     else {
-      // Closed cards: keep values lightweight but structured for saves.
+      // Closed cards: keep values without rendering heavy widgets.
       $element['media'] = [
         '#type' => 'value',
         '#value' => $item->media ?? NULL,
-      ];
-
-      $element['body'] = [
-        '#type' => 'value',
-        '#value' => [
-          'value' => $item->body ?? '',
-          'format' => $item->body_format ?? self::AZ_CARD_DEFAULT_TEXT_FORMAT,
-        ],
       ];
     }
 
@@ -225,7 +263,6 @@ class AZCardWidget extends WidgetBase {
       '#title' => $this->t('Card Title'),
       '#default_value' => $item->title ?? NULL,
       '#maxlength' => 255,
-      '#access' => $status, // Only show for open cards
     ];
 
     $element['title_alignment'] = [
@@ -237,8 +274,25 @@ class AZCardWidget extends WidgetBase {
       ],
       '#title' => $this->t('Card Title Alignment'),
       '#default_value' => (!empty($item->options['title_alignment'])) ? $item->options['title_alignment'] : 'text-start',
-      '#access' => $status, // Only show for open cards
     ];
+
+    if ($status) {
+      $element['body'] = [
+        '#type' => 'text_format',
+        '#title' => $this->t('Card Body'),
+        '#default_value' => $item->body ?? NULL,
+        '#format' => $item->body_format ?? self::AZ_CARD_DEFAULT_TEXT_FORMAT,
+      ];
+    }
+    else {
+      $element['body'] = [
+        '#type' => 'value',
+        '#value' => [
+          'value' => $item->body ?? '',
+          'format' => $item->body_format ?? self::AZ_CARD_DEFAULT_TEXT_FORMAT,
+        ],
+      ];
+    }
 
     $element['link_title'] = [
       '#type' => 'textfield',
@@ -246,7 +300,6 @@ class AZCardWidget extends WidgetBase {
       '#element_validate' => [[$this, 'validateCardLinkTitle']],
       '#default_value' => $item->link_title ?? NULL,
       '#description' => $this->t('<p>Make each link title unique for <a href="https://www.w3.org/WAI/WCAG21/Understanding/link-purpose-in-context.html">best accessibility</a> of this content. Use the pattern <em>"verb" "noun"</em> to create helpful links. For example, "Explore Undergraduate Programs".</p><p>This field is required when a Card Link URL is provided. Card Link Title may be visually hidden with a Card Link Style selection.</p>'),
-      '#access' => $status, // Only show for open cards
     ];
 
     $element['link_uri'] = [
@@ -259,7 +312,6 @@ class AZCardWidget extends WidgetBase {
       '#element_validate' => [[$this, 'validateCardLink']],
       '#default_value' => $item->link_uri ?? NULL,
       '#maxlength' => 2048,
-      '#access' => $status, // Only show for open cards
     ];
 
     // Add client side validation for link title if not collapsed.
@@ -286,7 +338,6 @@ class AZCardWidget extends WidgetBase {
       ],
       '#title' => $this->t('Card Link Style'),
       '#default_value' => (!empty($item->options['link_style'])) ? $item->options['link_style'] : 'btn w-100 btn-red',
-      '#access' => !$status, // Only show for open cards
     ];
 
     if (!$item->isEmpty()) {
@@ -313,74 +364,6 @@ class AZCardWidget extends WidgetBase {
     $element['#attributes']['class'][] = 'az-card-elements';
     $element['#attributes']['class'][] = $status ? 'az-card-elements-open' : 'az-card-elements-closed';
     $element['#attached']['library'][] = 'az_card/az_card';
-
-    return $element;
-  }
-
-  /**
-   * Builds full card preview for open cards only (performance optimization).
-   */
-  protected function buildFullCardPreview($item, FormStateInterface $form_state) {
-    $element = [
-      '#type' => 'container',
-      '#attributes' => [
-        'class' =>
-          ['col-12', 'col-sm-6', 'col-md-6', 'col-lg-4', 'card-preview'],
-      ],
-    ];
-
-    $card_classes = 'card';
-    $parent = $item->getEntity();
-
-    // Get settings from parent paragraph.
-    if ($parent instanceof ParagraphInterface) {
-      $parent_config = $parent->getAllBehaviorSettings();
-      if (!empty($parent_config['az_cards_paragraph_behavior'])) {
-        $card_defaults = $parent_config['az_cards_paragraph_behavior'];
-        $card_classes = $card_defaults['card_style'] ?? 'card';
-      }
-    }
-
-    // Add card class from options.
-    if (!empty($item->options['class'])) {
-      $card_classes .= ' ' . $item->options['class'];
-    }
-
-    // Card item.
-    $element['card_preview'] = [
-      '#theme' => 'az_card',
-      '#title' => $item->title ?? '',
-      '#body' => check_markup(
-        $item->body ?? '',
-        $item->body_format ?? self::AZ_CARD_DEFAULT_TEXT_FORMAT),
-      '#attributes' => ['class' => $card_classes],
-    ];
-
-    // Optimized media loading.
-    $media_id = $item->media ?? NULL;
-    if (!empty($media_id)) {
-      if ($media = $this->entityTypeManager->getStorage('media')->load($media_id)) {
-        $media_render_array = $this->cardImageHelper->generateImageRenderArray($media);
-        if (!empty($media_render_array)) {
-          $element['card_preview']['#media'] = $media_render_array;
-        }
-      }
-    }
-
-    // Link processing.
-    if ($item->link_title || $item->link_uri) {
-      if (!empty($item->link_uri) && str_starts_with($item->link_uri, '/' . PublicStream::basePath())) {
-        $link_url = Url::fromUri(urldecode('base:' . $item->link_uri));
-      }
-      else {
-        $link_url = $this->pathValidator->getUrlIfValid($item->link_uri ?? '<none>');
-      }
-      $element['card_preview']['#link'] = [
-        '#type' => 'link',
-        '#title' => $item->link_title ?? '',
-        '#url' => $link_url ?: Url::fromRoute('<none>'),
-      ];
-    }
 
     return $element;
   }
@@ -432,9 +415,10 @@ class AZCardWidget extends WidgetBase {
    *   The form state.
    */
   public function cardSubmit(array $form, FormStateInterface $form_state) {
+
     // Get triggering element.
     $triggering_element = $form_state->getTriggeringElement();
-    $array_parents = array_slice($triggering_element['#array_parents'], 0, -2);
+    $array_parents = $array_parents = array_slice($triggering_element['#array_parents'], 0, -2);
 
     // Determine delta.
     $delta = array_pop($array_parents);
@@ -454,19 +438,8 @@ class AZCardWidget extends WidgetBase {
     }
     $settings['open_status'][$delta] = $status;
 
-    // Performance optimization: clear preloaded media to save memory.
-    if ($status === FALSE) {
-      $form_state->set('preloaded_card_media', []);
-    }
-
-    // Save new state - but don't rebuild the entire form!
+    // Save new state and rebuild form.
     static::setWidgetState($field_parents, $field_name, $form_state, $settings);
-    
-    // Store the toggled delta for the AJAX callback to use
-    $form_state->set('toggled_card_delta', $delta);
-    
-    // We need a minimal rebuild to update just this card's state
-    // But we'll do this in a much more targeted way
     $form_state->setRebuild();
   }
 
@@ -482,10 +455,13 @@ class AZCardWidget extends WidgetBase {
    *   Ajax response as render array.
    */
   public function cardAjax(array &$form, FormStateInterface $form_state) {
+
+    // Find the widget and return it.
+    $element = [];
     $triggering_element = $form_state->getTriggeringElement();
     $array_parents = array_slice($triggering_element['#array_parents'], 0, -3);
     $element = NestedArray::getValue($form, $array_parents);
-    
+
     return $element;
   }
 
@@ -542,8 +518,7 @@ class AZCardWidget extends WidgetBase {
    */
   public function massageFormValues(array $values, array $form, FormStateInterface $form_state) {
     foreach ($values as $delta => $value) {
-      // Ensure we always work with an array structure (closed cards may use
-      // lightweight value elements).
+      // Allow closed cards to submit lightweight value structures.
       if (!is_array($value)) {
         $value = ['body' => $value];
       }
