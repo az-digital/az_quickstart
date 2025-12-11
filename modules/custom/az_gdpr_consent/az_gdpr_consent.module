@@ -8,7 +8,6 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
-use Drupal\Core\Render\Markup;
 
 /**
  * Implements hook_help().
@@ -64,16 +63,8 @@ function az_gdpr_consent_page_attachments(array &$attachments) {
   // Pass services to JavaScript via drupalSettings.
   $attachments['#attached']['drupalSettings']['azGdprConsent']['klaroServices'] = $klaro_services;
 
-  // Inject inline script to start geolocation fetch as early as possible.
-  // This runs immediately when parsed in <head>, before any other scripts.
-  $geo_fetch_script = [
-    '#tag' => 'script',
-    '#value' => Markup::create("window.azGdprGeoPromise = fetch('/cdn-loc').then(r => r.json()).catch(e => { console.error('[AZ GDPR] Early fetch failed:', e); return null; });"),
-    '#weight' => -1000,
-  ];
-  $attachments['#attached']['html_head'][] = [$geo_fetch_script, 'az_gdpr_geo_fetch'];
-
-  // Attach the JavaScript library.
+  // Attach the JavaScript libraries.
+  $attachments['#attached']['library'][] = 'az_gdpr_consent/gdpr_intercept';
   $attachments['#attached']['library'][] = 'az_gdpr_consent/gdpr_consent';
 }
 

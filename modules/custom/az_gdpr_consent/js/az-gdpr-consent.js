@@ -153,11 +153,12 @@
   };
 
   /**
-   * Use the early geolocation fetch that was started in <head>.
+   * Use the early geolocation fetch that was started by az-gdpr-intercept.js.
    *
-   * An inline script in <head> starts fetch('/cdn-loc') immediately when parsed,
-   * storing the Promise in window.azGdprGeoPromise. By the time this script runs,
-   * the fetch may have already completed. We await the Promise to get the result.
+   * The az-gdpr-intercept.js script (loaded early in <head>) starts fetch('/cdn-loc')
+   * immediately and stores the Promise in window.azGdprGeoPromise. By the time this
+   * script runs, the fetch may have already completed. We await the Promise to get
+   * the result.
    *
    * If geolocation fails, we assume GDPR (show banner) to be safe.
    */
