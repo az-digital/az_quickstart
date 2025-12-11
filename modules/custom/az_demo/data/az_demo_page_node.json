@@ -365,7 +365,7 @@
       "az_page_category"  : "Cards",
       "az_main_content"  : "413",
       "az_media_image"    : "",
-      "az_summary" : "Demonstrates performance issues with large card decks (100 cards). See GitHub issue #4505."
+      "az_summary" : "Demonstrates performance issues with large card decks (100 cards)."
     }
   ]
 }
