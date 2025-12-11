@@ -13,24 +13,16 @@
 /* eslint-disable no-console */
 
 (() => {
-  let settings = null;
-  const settingsElement = document.querySelector(
-    '[data-drupal-selector="drupal-settings-json"]',
-  );
-
-  if (settingsElement) {
-    try {
-      settings = JSON.parse(settingsElement.textContent);
-    } catch (e) {
-      console.error('[AZ GDPR] Error parsing drupalSettings JSON:', e);
-    }
+  // Check if drupalSettings is available
+  if (
+    typeof drupalSettings === 'undefined' ||
+    !drupalSettings?.azGdprConsent?.klaroServices
+  ) {
+    console.error('[AZ GDPR] drupalSettings or services not available');
+    throw new Error('[AZ GDPR] drupalSettings not available');
   }
 
-  // If parsing failed or services not available, exit
-  if (!settings?.azGdprConsent?.klaroServices) {
-    console.error('[AZ GDPR] Services not available in parsed settings');
-    return;
-  }
+  const settings = drupalSettings;
 
   // Inject CSS to hide toggle button by default
   const style = document.createElement('style');
@@ -161,39 +153,50 @@
   };
 
   /**
-   * Main execution: Fetch geolocation and conditionally set consent.
+   * Use the early geolocation fetch that was started by az-gdpr-intercept.js.
+   *
+   * The az-gdpr-intercept.js script (loaded early in <head>) starts fetch('/cdn-loc')
+   * immediately and stores the Promise in window.azGdprGeoPromise. By the time this
+   * script runs, the fetch may have already completed. We await the Promise to get
+   * the result.
+   *
+   * If geolocation fails, we assume GDPR (show banner) to be safe.
    */
-  const initialize = () => {
-    // Fetch geolocation to determine whether to show toggle button
-    fetch('/cdn-loc')
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
+  if (!window.azGdprGeoPromise) {
+    console.error('[AZ GDPR] Early geo fetch promise not found');
+    showToggleButton();
+  } else {
+    // Use .then() to get the result of the early fetch
+    window.azGdprGeoPromise
       .then((data) => {
-        const countryCode = data['client.geo.country_code'];
-
-        if (!countryCode) {
-          throw new Error('Country code not found in /cdn-loc response');
+        if (!data) {
+          console.error('[AZ GDPR] Failed to fetch geolocation data');
+          showToggleButton();
+          return;
         }
 
-        if (isGdprCountry(countryCode)) {
-          // GDPR country - show toggle button (hidden by default)
+        try {
+          const countryCode = data['client.geo.country_code'];
+
+          if (!countryCode) {
+            throw new Error('Country code not found in /cdn-loc response');
+          }
+
+          const isGdpr = isGdprCountry(countryCode);
+
+          if (isGdpr) {
+            showToggleButton();
+          } else {
+            setAutoAcceptedConsent();
+          }
+        } catch (error) {
+          console.error('[AZ GDPR] Error processing geolocation data:', error);
           showToggleButton();
-        } else {
-          // Non-GDPR country - auto-accept consent every time
-          setAutoAcceptedConsent();
         }
       })
       .catch((error) => {
-        // If geolocation fetch fails, assume GDPR applies
         console.error('[AZ GDPR] Failed to fetch geolocation data:', error);
         showToggleButton();
       });
-  };
-
-  // Execute initialization
-  initialize();
+  }
 })();
