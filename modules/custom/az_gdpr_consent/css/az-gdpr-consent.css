@@ -29,18 +29,13 @@
   .klaro_toggle_dialog:focus {
     transform: scale(1.1) !important;
   }
-
-  /* Add bottom padding to prevent buttons from blocking footer content */
-  body.klaro-toggle-visible .site-footer [role="contentinfo"] {
-    padding-bottom: 100px !important;
-  }
 }
 
 /**
  * Move az-back-to-top button up when Klaro toggle exists and is visible.
  */
 body.klaro-toggle-visible #az-back-to-top {
-  bottom: 63px !important;
+  right: 65px !important;
 }
 
 /**

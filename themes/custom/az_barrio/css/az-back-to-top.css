@@ -1,3 +1,6 @@
+/**
+ * AZ Back to Top Button. min touch target 44x44px on mobile.
+ */
 #az-back-to-top {
     width: fit-content;
     --bs-text-opacity: .9;
@@ -6,6 +9,12 @@
     right: 20px;
     bottom: 20px;
     z-index: 2;
+    /* Reduce padding to make button smaller while keeping 24px icon */
+    padding: 3px 3px 0px 3px !important;
+    /* Ensure button stays circular/round */
+    border-radius: 30% !important;
+    min-width: 44px;
+    min-height: 44px;
 }
 
 /**
