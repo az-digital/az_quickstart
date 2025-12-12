@@ -134,6 +134,7 @@ function az_barrio_preprocess_page(&$variables, $hook) {
 
   $variables['header_one_col_classes'] = theme_get_setting('header_one_col_classes');
   $variables['header_two_col_classes'] = theme_get_setting('header_two_col_classes');
+  $variables['az_navbar'] = theme_get_setting('az_navbar');
 
   // Calculate content width based on sidebar widths (assuming 12-column grid).
   // Only subtract sidebar widths if the sidebars actually have content.
@@ -573,6 +574,11 @@ function az_barrio_footer_logo() {
 function az_barrio_theme_suggestions_menu_alter(array &$suggestions, array $variables) {
   if (isset($variables['attributes']['block'])) {
     $suggestions[] = $variables['theme_hook_original'] . '__' . $variables['attributes']['block'];
+  }
+
+  // Add theme suggestion for the az_navbar variation of the main menu.
+  if (isset($variables['attributes']['id']) && $variables['attributes']['id'] === 'block-az-barrio-main-menu' && theme_get_setting('az_navbar')) {
+    $suggestions[] = 'menu__main_navbar_az';
   }
 }
 
