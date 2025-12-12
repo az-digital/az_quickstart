@@ -5,22 +5,23 @@
  * Ensures proper aspect ratio display when Klaro wraps iframes.
  */
 
+ /**
+ * Position the Klaro consent banner on the lower left instead of lower right.
+ * This prevents overlap with the back-to-top button.
+ */
+.klaro {
+  --notice-left: 20px;
+  --notice-right: auto;
+}
+
 /**
  * Minimize Klaro toggle button size and reposition accordingly
  */
 .klaro_toggle_dialog {
   width: 28px !important;
   height: 28px !important;
-  right: 22px !important;
+  right: 18px !important;
   bottom: 18px !important;
-}
-
-/**
- * Move back-to-top button up when Klaro toggle exists and is visible.
- * The #klaro-toggle-hide style element is removed in GDPR countries.
- */
-body.klaro-toggle-visible #az-back-to-top {
-  bottom: 50px !important;
 }
 
 /**
