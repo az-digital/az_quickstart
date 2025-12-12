@@ -6,6 +6,24 @@
  */
 
 /**
+ * Minimize Klaro toggle button size and reposition accordingly
+ */
+.klaro_toggle_dialog {
+  width: 28px !important;
+  height: 28px !important;
+  right: 22px !important;
+  bottom: 18px !important;
+}
+
+/**
+ * Move back-to-top button up when Klaro toggle exists and is visible.
+ * The #klaro-toggle-hide style element is removed in GDPR countries.
+ */
+body:not(:has(#klaro-toggle-hide)) #az-back-to-top {
+  bottom: 50px !important;
+}
+
+/**
  * When Klaro wraps an iframe, it adds an extra div layer between .ratio and
  * the iframe. This extends the ratio behavior to iframes nested one level deeper.
  */
