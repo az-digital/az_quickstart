@@ -19,7 +19,7 @@
  * Move back-to-top button up when Klaro toggle exists and is visible.
  * The #klaro-toggle-hide style element is removed in GDPR countries.
  */
-body:not(:has(#klaro-toggle-hide)) #az-back-to-top {
+body.klaro-toggle-visible #az-back-to-top {
   bottom: 50px !important;
 }
 

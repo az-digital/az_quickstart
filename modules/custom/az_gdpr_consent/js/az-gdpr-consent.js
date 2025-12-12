@@ -146,6 +146,7 @@
       const hideStyle = document.getElementById('klaro-toggle-hide');
       if (hideStyle) {
         hideStyle.remove();
+        document.body.classList.add('klaro-toggle-visible');
       }
     } catch (e) {
       console.error('[AZ GDPR] Error showing toggle button:', e);
