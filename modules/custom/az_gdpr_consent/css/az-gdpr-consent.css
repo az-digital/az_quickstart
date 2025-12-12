@@ -2,26 +2,50 @@
  * @file
  * AZ GDPR Consent Management - Styles
  *
- * Ensures proper aspect ratio display when Klaro wraps iframes.
  */
 
  /**
- * Position the Klaro consent banner on the lower left instead of lower right.
- * This prevents overlap with the back-to-top button.
+ * Position the Klaro consent banner and toggle on the lower left instead 
+ * of lower right. This prevents overlap with the back-to-top button.
+ * Also make privacy toggle smaller on desktop
  */
 .klaro {
   --notice-left: 20px;
   --notice-right: auto;
 }
 
-/**
- * Minimize Klaro toggle button size and reposition accordingly
- */
 .klaro_toggle_dialog {
   width: 28px !important;
   height: 28px !important;
   left: 18px !important;
   bottom: 18px !important;
+}
+
+/**
+ * WCAG 2.5.5 compliance: Ensure 44x44px minimum touch target on mobile.
+ * 33x33px content size, add padding for 44x44px total.
+ */
+@media (max-width: 767px) {
+  .klaro_toggle_dialog {
+    width: 33px !important;
+    height: 33px !important;
+    padding: 5.5px !important;
+    border: none !important;
+    box-shadow: none !important;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2)) !important;
+    box-sizing: content-box !important;
+    left: 16px !important;
+    bottom: 16px !important;
+    background-size: contain !important;
+    background-position: center !important;
+    background-origin: content-box !important;
+    background-clip: content-box !important;
+  }
+
+  /* Adjust focus transform to account for larger touch target */
+  .klaro_toggle_dialog:focus {
+    transform: scale(1.1) !important;
+  }
 }
 
 /**
