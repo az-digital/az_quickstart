@@ -4,6 +4,23 @@
  *
  */
 
+ /**
+ * Position the Klaro consent banner and toggle on the lower left instead 
+ * of lower right. This prevents overlap with the back-to-top button.
+ * Also make privacy toggle smaller on desktop
+ */
+.klaro {
+  --notice-left: 20px;
+  --notice-right: auto;
+}
+
+.klaro_toggle_dialog {
+  width: 28px !important;
+  height: 28px !important;
+  left: 18px !important;
+  bottom: 18px !important;
+}
+
 /**
  * WCAG 2.5.5 compliance: Ensure 44x44px minimum touch target on mobile.
  * 33x33px content size, add padding for 44x44px total.
@@ -17,7 +34,7 @@
     box-shadow: none !important;
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2)) !important;
     box-sizing: content-box !important;
-    right: 16px !important;
+    left: 16px !important;
     bottom: 16px !important;
     background-size: contain !important;
     background-position: center !important;
@@ -29,18 +46,6 @@
   .klaro_toggle_dialog:focus {
     transform: scale(1.1) !important;
   }
-
-  /* Add bottom padding to prevent buttons from blocking footer content */
-  body.klaro-toggle-visible .site-footer [role="contentinfo"] {
-    padding-bottom: 100px !important;
-  }
-}
-
-/**
- * Move az-back-to-top button up when Klaro toggle exists and is visible.
- */
-body.klaro-toggle-visible #az-back-to-top {
-  bottom: 63px !important;
 }
 
 /**
