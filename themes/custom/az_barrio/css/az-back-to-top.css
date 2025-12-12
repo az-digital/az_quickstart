@@ -1,0 +1,20 @@
+#az-back-to-top {
+    width: fit-content;
+    --bs-text-opacity: .9;
+    display: none;
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 2;
+}
+
+/**
+ * Add bottom padding on mobile to prevent button from blocking
+ * footer content. Target footer's contentinfo div to keep padding
+ * within the footer's background color.
+ */
+@media (max-width: 767px) {
+  .site-footer [role="contentinfo"] {
+    padding-bottom: 65px !important;
+  }
+}

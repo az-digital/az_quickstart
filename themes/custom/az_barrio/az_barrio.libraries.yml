@@ -14,6 +14,12 @@ az-media-display:
   css:
     component:
       css/az-media-display.css: {}
+az-back-to-top:
+  css:
+    theme:
+      css/az-back-to-top.css: {}
+  js:
+    js/az-back-to-top.js: {}
 az-barrio-off-canvas-nav:
   css:
     theme:

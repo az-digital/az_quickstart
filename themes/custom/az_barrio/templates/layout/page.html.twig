@@ -306,5 +306,8 @@
     {% if page.az_page_bottom %}
     {{ page.az_page_bottom }}
     {% endif %}
-  </div>
+    {% if az_back_to_top %}
+      <a id="az-back-to-top" href="#" class="btn btn-blue"><span class="material-symbols-rounded " style="font-size:24px;">arrow_upward</span></a>
+    {% endif %}
+    </div>
 </div>
