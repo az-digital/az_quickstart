@@ -32,7 +32,7 @@
 }
 
 /**
- * Move az-back-to-top button up when Klaro toggle exists and is visible.
+ * Move az-back-to-top button further left when Klaro toggle exists and is visible.
  */
 body.klaro-toggle-visible #az-back-to-top {
   right: 65px !important;
