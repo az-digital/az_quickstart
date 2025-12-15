@@ -6,7 +6,10 @@
 
 ((Drupal, window, document) => {
   Drupal.behaviors.uaBackToTop = {
-    attach() {
+    attach: (context) => {
+      if (context !== document) {
+        return;
+      }
       // only run this script if the document height is 4 times the height
       // of the browser window the page is being viewed through.
       if (
