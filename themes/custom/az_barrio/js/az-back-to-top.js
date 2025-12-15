@@ -4,7 +4,7 @@
  *
  */
 
-((Drupal, window, document) => {
+((Drupal) => {
   Drupal.behaviors.uaBackToTop = {
     attach: (context) => {
       if (context !== document) {
