@@ -35,4 +35,4 @@
       }
     },
   };
-})(Drupal, window, document);
+})(Drupal);
