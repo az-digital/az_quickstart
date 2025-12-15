@@ -5,7 +5,7 @@
  */
 
 ((Drupal) => {
-  Drupal.behaviors.uaBackToTop = {
+  Drupal.behaviors.azBackToTop = {
     attach: (context) => {
       if (context !== document) {
         return;
