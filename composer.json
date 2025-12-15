@@ -109,7 +109,7 @@
         "drupal/search_api": "1.40.0",
         "drupal/search_api_solr": "4.3.10",
         "drupal/search_exclude": "3.0.0-beta2",
-        "drupal/searchstax": "dev-1.x#94e36bda96bacdf3a85e15200c511f2be226fb51",
+        "drupal/searchstax": "1.9.0",
         "drupal/seckit": "2.0.3",
         "drupal/slick": "3.0.6",
         "drupal/slick_views": "3.0.3",
