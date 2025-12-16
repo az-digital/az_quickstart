@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.node.search_index
     - field.storage.media.field_media_az_image
     - field.storage.node.field_az_awards
     - field.storage.node.field_az_body
@@ -90,7 +91,7 @@ field_settings:
     label: 'Event Description'
     datasource_id: 'entity:node'
     property_path: field_az_body
-    type: text
+    type: string
     dependencies:
       config:
         - field.storage.node.field_az_body
@@ -152,7 +153,7 @@ field_settings:
     label: 'News Tags » Taxonomy term » Name'
     datasource_id: 'entity:node'
     property_path: 'field_az_news_tags:entity:name'
-    type: string
+    type: text
     dependencies:
       config:
         - field.storage.node.field_az_news_tags
@@ -172,7 +173,7 @@ field_settings:
     label: 'Category » Taxonomy term » Name'
     datasource_id: 'entity:node'
     property_path: 'field_az_person_category:entity:name'
-    type: string
+    type: text
     dependencies:
       config:
         - field.storage.node.field_az_person_category
@@ -200,7 +201,7 @@ field_settings:
     label: Subtitle
     datasource_id: 'entity:node'
     property_path: field_az_subheading
-    type: string
+    type: text
     dependencies:
       config:
         - field.storage.node.field_az_subheading
@@ -212,11 +213,25 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_az_summary
+  rendered_item:
+    label: 'Rendered HTML output'
+    property_path: rendered_item
+    type: text
+    configuration:
+      roles:
+        - anonymous
+      view_mode:
+        'entity:node':
+          ':default': search_index
+          az_event: ':default'
+          az_flexible_page: ':default'
+          az_news: ':default'
+          az_person: ':default'
   title:
     label: Title
     datasource_id: 'entity:node'
     property_path: title
-    type: text
+    type: string
     dependencies:
       module:
         - node
