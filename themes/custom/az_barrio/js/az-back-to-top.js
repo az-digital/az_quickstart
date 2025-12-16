@@ -27,6 +27,7 @@
         // Hide the arrow if we're at the top of the page.
         window.addEventListener('scroll', () => {
           if (window.scrollY > 750) {
+            backToTop.style.display = 'block';
           } else {
             backToTop.style.display = 'none';
           }
