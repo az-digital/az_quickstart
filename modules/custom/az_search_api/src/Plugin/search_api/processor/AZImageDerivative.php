@@ -89,7 +89,7 @@ class AZImageDerivative extends FieldsProcessorPluginBase implements PluginFormI
       '#title' => $this->t('Image Style'),
       '#options' => $options,
       '#required' => TRUE,
-      '#default_value' => (int) $this->configuration['image_style'],
+      '#default_value' => $this->configuration['image_style'],
     ];
     return $form;
   }
