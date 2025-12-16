@@ -1,0 +1,35 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.az_carousel_item
+    - field.field.media.az_digital_asset_library_embed.field_media_ib_dam_embed
+    - media.type.az_digital_asset_library_embed
+  module:
+    - ib_dam
+  enforced:
+    module:
+      - az_digital_asset_library
+id: media.az_digital_asset_library_embed.az_carousel_item
+targetEntityType: media
+bundle: az_digital_asset_library_embed
+mode: az_carousel_item
+content:
+  field_media_ib_dam_embed:
+    type: ib_dam_embed
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: '0'
+      target: '0'
+      no_link: true
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  created: true
+  name: true
+  thumbnail: true
+  uid: true
