@@ -83,7 +83,7 @@ field_settings:
     label: Awards
     datasource_id: 'entity:node'
     property_path: field_az_awards
-    type: string
+    type: text
     dependencies:
       config:
         - field.storage.node.field_az_awards
@@ -91,7 +91,7 @@ field_settings:
     label: 'Event Description'
     datasource_id: 'entity:node'
     property_path: field_az_body
-    type: string
+    type: text
     dependencies:
       config:
         - field.storage.node.field_az_body
@@ -99,7 +99,7 @@ field_settings:
     label: Degrees
     datasource_id: 'entity:node'
     property_path: field_az_degrees
-    type: string
+    type: text
     dependencies:
       config:
         - field.storage.node.field_az_degrees
