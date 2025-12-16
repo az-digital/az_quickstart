@@ -27,10 +27,6 @@
         // Hide the arrow if we're at the top of the page.
         window.addEventListener('scroll', () => {
           if (window.scrollY > 750) {
-            // Only show if over Mobile breakpoint
-            if (window.innerWidth > 768) {
-              backToTop.style.display = 'block';
-            }
           } else {
             backToTop.style.display = 'none';
           }
