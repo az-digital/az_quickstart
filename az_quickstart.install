@@ -184,7 +184,8 @@ function az_quickstart_update_1021302() {
  * Enable az_icons module by default (removed).
  */
 function az_quickstart_update_1130001() {
-  // This update was replaced by az_quickstart_install_1130101().
+  // This update was meant for 3.1.x only and was replaced by
+  // az_quickstart_install_1130101().
 }
 
 /**
