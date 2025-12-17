@@ -13,8 +13,7 @@
       // only run this script if the document height is 4 times the height
       // of the browser window the page is being viewed through.
       if (
-        document.body.clientHeight /
-          document.documentElement.clientHeight >=
+        document.body.clientHeight / document.documentElement.clientHeight >=
         3
       ) {
         const backToTop = document.getElementById('az-back-to-top');
