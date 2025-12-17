@@ -118,7 +118,7 @@ function az_barrio_preprocess_page(&$variables, $hook) {
   $module_handler = \Drupal::service('module_handler');
   if ($module_handler->moduleExists('az_gdpr_consent')) {
     $manage_privacy_choices = '<p class="small" style="display: flex; align-items: center; justify-content: center; gap: 0.25rem; margin-top: 0;">';
-    $manage_privacy_choices .= '<span class="material-symbols-rounded " style="font-size:16px; color: #8B0015;">shield_lock</span>';
+    $manage_privacy_choices .= '<span class="material-symbols-rounded" style="font-size:16px; color: #8B0015;">shield_lock</span>';
     $manage_privacy_choices .= '<a href="#" rel="open-consent-manager">Manage Privacy Choices</a>';
     $manage_privacy_choices .= '</p>';
   }
