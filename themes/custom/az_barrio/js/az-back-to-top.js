@@ -28,9 +28,9 @@
         });
 
         // Hide the arrow if we're at the top of the page.
-      window.addEventListener('scroll', () => {
-        backToTop.classList.toggle('invisible', window.scrollY <= 750);
-      });
+        window.addEventListener('scroll', () => {
+          backToTop.classList.toggle('invisible', window.scrollY <= 750);
+        });
       }
     },
   };
