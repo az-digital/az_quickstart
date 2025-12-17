@@ -110,17 +110,17 @@ function az_barrio_preprocess_page(&$variables, $hook) {
   // Check if information security policy should be displayed.
   $info_security_privacy = '';
   if (theme_get_setting('info_security_privacy')) {
-    $info_security_privacy = '<p class="small"><a href="https://www.arizona.edu/information-security-privacy" target="_blank">University Information Security and Privacy</a></p>';
+    $info_security_privacy = '<p class="small" style="margin-bottom: 0.25rem;"><a href="https://www.arizona.edu/information-security-privacy" target="_blank">University Information Security and Privacy</a></p>';
   }
 
   // Check if Klaro consent management link should be displayed.
-  $manage_consents = '';
+  $manage_privacy_choices = '';
   $module_handler = \Drupal::service('module_handler');
   if ($module_handler->moduleExists('az_gdpr_consent')) {
-    $manage_consents = '<p class="small" style="display: flex; align-items: center; justify-content: center; gap: 0.25rem;">';
-    $manage_consents .= '<span class="material-symbols-rounded " style="font-size:16px; color: #8B0015;">shield_lock</span>';
-    $manage_consents .= '<a href="#" rel="open-consent-manager">Manage Consents</a>';
-    $manage_consents .= '</p>';
+    $manage_privacy_choices = '<p class="small" style="display: flex; align-items: center; justify-content: center; gap: 0.25rem; margin-top: 0;">';
+    $manage_privacy_choices .= '<span class="material-symbols-rounded " style="font-size:16px; color: #8B0015;">shield_lock</span>';
+    $manage_privacy_choices .= '<a href="#" rel="open-consent-manager">Manage Privacy Choices</a>';
+    $manage_privacy_choices .= '</p>';
   }
 
   // Determine what copyright notice to display.
@@ -136,7 +136,7 @@ function az_barrio_preprocess_page(&$variables, $hook) {
   $variables['logo'] = az_barrio_primary_logo();
   $variables['land_acknowledgment'] = Markup::create($land_acknowledgment);
   $variables['info_security_privacy'] = Markup::create($info_security_privacy);
-  $variables['manage_consents'] = Markup::create($manage_consents);
+  $variables['manage_privacy_choices'] = Markup::create($manage_privacy_choices);
   $variables['copyright_notice'] = Markup::create($copyright_notice);
   $variables['footer_logo'] = az_barrio_footer_logo();
 
