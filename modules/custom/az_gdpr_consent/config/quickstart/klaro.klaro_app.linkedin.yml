@@ -1,0 +1,51 @@
+langcode: en
+status: true
+dependencies: {  }
+id: linkedin
+label: Linkedin
+description: 'Linkedin is a social media platform by Linkedin, Inc (USA), subsidiary of Microsoft Corp. (USA).'
+default: true
+purposes:
+  - external_content
+cookies:
+  -
+    regex: '^li_'
+    path: /
+    domain: ''
+  -
+    regex: '^lidc$'
+    path: /
+    domain: ''
+  -
+    regex: '^bcookie$'
+    path: /
+    domain: ''
+  -
+    regex: '^bscookie$'
+    path: /
+    domain: ''
+  -
+    regex: '^lang$'
+    path: /
+    domain: ''
+  -
+    regex: '^UserMatchHistory$'
+    path: /
+    domain: ''
+  -
+    regex: '^AnalyticsSyncHistory$'
+    path: /
+    domain: ''
+required: false
+opt_out: false
+only_once: false
+contextual_consent_only: false
+contextual_consent_text: ''
+info_url: 'https://about.linkedin.com/'
+privacy_policy_url: 'https://www.linkedin.com/legal/privacy-policy'
+javascripts:
+  - www.linkedin.com
+callback_code: ''
+wrapper_identifier: {  }
+attachments: {  }
+weight: 0

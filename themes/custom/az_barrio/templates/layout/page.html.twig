@@ -148,7 +148,7 @@
           {% if page.navigation %}
             <div class="row d-none d-lg-flex">
               <div class="col-lg">
-                <nav id="navbar-top" class="navbar navbar-expand">
+                <nav id="navbar-top" class="navbar navbar-expand{{ az_navbar ? ' navbar-az' }}">
                   {{ page.navigation }}
                 </nav>
               </div>
@@ -294,6 +294,7 @@
                   {% endif %}
                   {{ land_acknowledgment }}
                   {{ info_security_privacy }}
+                  {{ manage_privacy_choices }}
                   {{ copyright_notice }}
                 </div>
               </div>
