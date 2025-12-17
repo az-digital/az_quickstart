@@ -4,15 +4,20 @@
     bottom: 20px;
     z-index: 2;
     display: none;
+    align-items: center;
+    padding-left: 4px;
+}
+
+#az-back-to-top img {
+    width: 20px;
+    height: 20px;
 }
 
 /**
- * Add bottom padding on mobile to prevent button from blocking
- * footer content. Target footer's contentinfo div to keep padding
- * within the footer's background color.
+ * Hide back to top button on mobile devices
  */
 @media (max-width: 767px) {
-  .site-footer [role="contentinfo"] {
-    padding-bottom: 65px !important;
+  #az-back-to-top {
+    display: none !important;
   }
 }
