@@ -2,10 +2,7 @@
     position: fixed;
     right: 20px;
     bottom: 20px;
-    z-index: 2;
     display: none;
-    align-items: center;
-    padding-left: 4px;
 }
 
 #az-back-to-top img {
