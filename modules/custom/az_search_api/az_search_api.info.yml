@@ -7,6 +7,7 @@ lifecycle: experimental
 dependencies:
   - az_core:az_core
   - az_secrets:az_secrets
+  - az_seo:az_seo
   - drupal:file
   - drupal:media
   - drupal:node

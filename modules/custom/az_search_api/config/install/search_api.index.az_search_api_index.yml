@@ -11,6 +11,7 @@ dependencies:
     - field.storage.node.field_az_event_date
     - field.storage.node.field_az_link
     - field.storage.node.field_az_location
+    - field.storage.node.field_az_media_image
     - field.storage.node.field_az_media_thumbnail_image
     - field.storage.node.field_az_news_tags
     - field.storage.node.field_az_page_category
@@ -79,6 +80,10 @@ name: 'Quickstart Search API Index'
 description: ''
 read_only: false
 field_settings:
+  description:
+    label: 'Search Summary'
+    property_path: az_search_summary
+    type: text
   field_az_awards:
     label: Awards
     datasource_id: 'entity:node'
@@ -153,7 +158,7 @@ field_settings:
     label: 'News Tags » Taxonomy term » Name'
     datasource_id: 'entity:node'
     property_path: 'field_az_news_tags:entity:name'
-    type: text
+    type: string
     dependencies:
       config:
         - field.storage.node.field_az_news_tags
@@ -173,7 +178,7 @@ field_settings:
     label: 'Category » Taxonomy term » Name'
     datasource_id: 'entity:node'
     property_path: 'field_az_person_category:entity:name'
-    type: text
+    type: string
     dependencies:
       config:
         - field.storage.node.field_az_person_category
@@ -193,7 +198,7 @@ field_settings:
     label: 'Short Title'
     datasource_id: 'entity:node'
     property_path: field_az_short_title
-    type: string
+    type: text
     dependencies:
       config:
         - field.storage.node.field_az_short_title
@@ -213,6 +218,18 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_az_summary
+  field_media_az_image:
+    label: 'Photo » Media » Image » File » URI'
+    datasource_id: 'entity:node'
+    property_path: 'field_az_media_image:entity:field_media_az_image:entity:uri'
+    type: string
+    dependencies:
+      config:
+        - field.storage.media.field_media_az_image
+        - field.storage.node.field_az_media_image
+      module:
+        - file
+        - media
   rendered_item:
     label: 'Rendered HTML output'
     property_path: rendered_item
@@ -231,7 +248,7 @@ field_settings:
     label: Title
     datasource_id: 'entity:node'
     property_path: title
-    type: string
+    type: text
     dependencies:
       module:
         - node
@@ -271,6 +288,8 @@ processor_settings:
     all_fields: 0
     fields:
       field_az_media_thumbnail_image: field_az_media_thumbnail_image
+      field_media_az_image: field_media_az_image
+      description: 0
       field_az_awards: 0
       field_az_body: 0
       field_az_degrees: 0
@@ -284,13 +303,32 @@ processor_settings:
       field_az_short_title: 0
       field_az_subheading: 0
       field_az_summary: 0
+      rendered_item: 0
       title: 0
       type: 0
       url: 0
-    image_style: az_enterprise_thumbnail_small
+    image_style: az_card_image
+  az_search_summary: {  }
   custom_value: {  }
   entity_status: {  }
   entity_type: {  }
+  html_filter:
+    weights:
+      preprocess_index: -15
+      preprocess_query: -15
+    all_fields: false
+    fields:
+      - description
+    title: false
+    alt: false
+    tags:
+      b: 2.0
+      em: 1.5
+      h1: 5.0
+      h2: 3.0
+      h3: 2.0
+      strong: 2.0
+      u: 1.5
   language_with_fallback: {  }
   rendered_item: {  }
   solr_date_range:
