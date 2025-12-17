@@ -5,42 +5,10 @@
  */
 
 /**
- * WCAG 2.5.5 compliance: Ensure 44x44px minimum touch target on mobile.
- * 33x33px content size, add padding for 44x44px total.
+ * Hide the Klaro toggle button since we're using a footer link instead.
  */
-@media (max-width: 767px) {
-  .klaro_toggle_dialog {
-    width: 33px !important;
-    height: 33px !important;
-    padding: 5.5px !important;
-    border: none !important;
-    box-shadow: none !important;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2)) !important;
-    box-sizing: content-box !important;
-    right: 16px !important;
-    bottom: 16px !important;
-    background-size: contain !important;
-    background-position: center !important;
-    background-origin: content-box !important;
-    background-clip: content-box !important;
-  }
-
-  /* Adjust focus transform to account for larger touch target */
-  .klaro_toggle_dialog:focus {
-    transform: scale(1.1) !important;
-  }
-
-  /* Add bottom padding to prevent buttons from blocking footer content */
-  body.klaro-toggle-visible .site-footer [role="contentinfo"] {
-    padding-bottom: 100px !important;
-  }
-}
-
-/**
- * Move az-back-to-top button up when Klaro toggle exists and is visible.
- */
-body.klaro-toggle-visible #az-back-to-top {
-  bottom: 63px !important;
+#klaro_toggle_dialog {
+  display: none !important;
 }
 
 /**
