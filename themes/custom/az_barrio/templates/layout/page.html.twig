@@ -148,7 +148,7 @@
           {% if page.navigation %}
             <div class="row d-none d-lg-flex">
               <div class="col-lg">
-                <nav id="navbar-top" class="navbar navbar-expand">
+                <nav id="navbar-top" class="navbar navbar-expand{{ az_navbar ? ' navbar-az' }}">
                   {{ page.navigation }}
                 </nav>
               </div>
@@ -308,7 +308,10 @@
     {{ page.az_page_bottom }}
     {% endif %}
     {% if az_back_to_top %}
-      <a id="az-back-to-top" href="#" class="btn btn-blue"><span class="material-symbols-rounded " style="font-size:24px;">arrow_upward</span></a>
+      <a id="az-back-to-top" href="#" class="btn btn-sm btn-blue shadow-sm">
+        <img src="{{ theme_path }}/images/keyboard_arrow_up.svg" alt="" />
+        Back to top
+      </a>
     {% endif %}
     </div>
 </div>

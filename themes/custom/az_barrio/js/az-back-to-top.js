@@ -4,17 +4,24 @@
  *
  */
 
-((Drupal, window, document) => {
-  Drupal.behaviors.uaBackToTop = {
-    attach() {
+((Drupal) => {
+  Drupal.behaviors.azBackToTop = {
+    attach: (context) => {
+      if (context !== document) {
+        return;
+      }
       // only run this script if the document height is 4 times the height
       // of the browser window the page is being viewed through.
       if (
         document.body.clientHeight /
           document.querySelector('html').clientHeight >=
-        4
+        3
       ) {
         const backToTop = document.getElementById('az-back-to-top');
+
+        if (!backToTop) {
+          return;
+        }
 
         // Smoothly scroll to the top of the page if the arrow is clicked.
         backToTop.addEventListener('click', () => {
@@ -24,7 +31,7 @@
         // Hide the arrow if we're at the top of the page.
         window.addEventListener('scroll', () => {
           if (window.scrollY > 750) {
-            backToTop.style.display = 'block';
+            backToTop.style.display = 'flex';
           } else {
             backToTop.style.display = 'none';
           }
@@ -32,4 +39,4 @@
       }
     },
   };
-})(Drupal, window, document);
+})(Drupal);
