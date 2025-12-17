@@ -118,6 +118,16 @@ function az_barrio_preprocess_page(&$variables, $hook) {
     $info_security_privacy = '<p class="small"><a href="https://www.arizona.edu/information-security-privacy" target="_blank">University Information Security and Privacy</a></p>';
   }
 
+  // Check if Klaro consent management link should be displayed.
+  $manage_consents = '';
+  $module_handler = \Drupal::service('module_handler');
+  if ($module_handler->moduleExists('az_gdpr_consent')) {
+    $manage_consents = '<p class="small" style="display: flex; align-items: center; justify-content: center; gap: 0.25rem;">';
+    $manage_consents .= '<span class="material-symbols-rounded " style="font-size:16px; color: #8B0015;">shield_lock</span>';
+    $manage_consents .= '<a href="#" rel="open-consent-manager">Manage Consents</a>';
+    $manage_consents .= '</p>';
+  }
+
   // Determine what copyright notice to display.
   $copyright_notice = theme_get_setting('copyright_notice');
   $copyright_notice_format = '<p class="small">&copy; ' . date('Y') . ' %s</p>';
@@ -131,6 +141,7 @@ function az_barrio_preprocess_page(&$variables, $hook) {
   $variables['logo'] = az_barrio_primary_logo();
   $variables['land_acknowledgment'] = Markup::create($land_acknowledgment);
   $variables['info_security_privacy'] = Markup::create($info_security_privacy);
+  $variables['manage_consents'] = Markup::create($manage_consents);
   $variables['copyright_notice'] = Markup::create($copyright_notice);
   $variables['footer_logo'] = az_barrio_footer_logo();
 

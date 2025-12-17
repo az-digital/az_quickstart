@@ -6,8 +6,6 @@
  * endpoint to determine visitor location and conditionally auto-accepts
  * consent for visitors from non-GDPR countries.
  *
- * For GDPR countries, the Klaro banner displays normally and toggle button is shown.
- * For non-GDPR countries, consent is auto-accepted and toggle button stays hidden.
  */
 
 /* eslint-disable no-console */
@@ -23,12 +21,6 @@
   }
 
   const settings = drupalSettings;
-
-  // Inject CSS to hide toggle button by default
-  const style = document.createElement('style');
-  style.id = 'klaro-toggle-hide';
-  style.textContent = '#klaro_toggle_dialog { display: none !important; }';
-  document.head.appendChild(style);
 
   // list of GDPR and GDPR-like countries (ISO 3166-1 alpha-2 codes)
   const GDPR_COUNTRIES = [
@@ -139,21 +131,6 @@
   };
 
   /**
-   * Shows the Klaro toggle button by removing the hiding CSS.
-   */
-  const showToggleButton = () => {
-    try {
-      const hideStyle = document.getElementById('klaro-toggle-hide');
-      if (hideStyle) {
-        hideStyle.remove();
-        document.body.classList.add('klaro-toggle-visible');
-      }
-    } catch (e) {
-      console.error('[AZ GDPR] Error showing toggle button:', e);
-    }
-  };
-
-  /**
    * Use the early geolocation fetch that was started by az-gdpr-intercept.js.
    *
    * The az-gdpr-intercept.js script (loaded early in <head>) starts fetch('/cdn-loc')
@@ -165,14 +142,12 @@
    */
   if (!window.azGdprGeoPromise) {
     console.error('[AZ GDPR] Early geo fetch promise not found');
-    showToggleButton();
   } else {
     // Use .then() to get the result of the early fetch
     window.azGdprGeoPromise
       .then((data) => {
         if (!data) {
           console.error('[AZ GDPR] Failed to fetch geolocation data');
-          showToggleButton();
           return;
         }
 
@@ -185,19 +160,15 @@
 
           const isGdpr = isGdprCountry(countryCode);
 
-          if (isGdpr) {
-            showToggleButton();
-          } else {
+          if (!isGdpr) {
             setAutoAcceptedConsent();
           }
         } catch (error) {
           console.error('[AZ GDPR] Error processing geolocation data:', error);
-          showToggleButton();
         }
       })
       .catch((error) => {
         console.error('[AZ GDPR] Failed to fetch geolocation data:', error);
-        showToggleButton();
       });
   }
 })();
