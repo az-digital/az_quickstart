@@ -49,8 +49,10 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
    *   The plugin ID.
    * @param mixed $plugin_definition
    *   The plugin definition.
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
-   *   The config factory service.
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   The request service.
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   *   The configuration factory.
    * @param \Drupal\Core\Render\RendererInterface $renderer
    *   The renderer service.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
@@ -64,14 +66,15 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
     array $configuration,
     $plugin_id,
     $plugin_definition,
-    protected ConfigFactoryInterface $configFactory,
+    Request $request,
+    ConfigFactoryInterface $config_factory,
     protected RendererInterface $renderer,
     protected EntityTypeManagerInterface $entityTypeManager,
     protected AZFinderIcons $azFinderIcons,
     protected LoggerInterface $logger,
   ) {
     $configuration += $this->defaultConfiguration();
-    parent::__construct($configuration, $plugin_id, $plugin_definition);
+    parent::__construct($configuration, $plugin_id, $plugin_definition, $request, $config_factory);
   }
 
   /**
@@ -87,6 +90,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
       $configuration,
       $plugin_id,
       $plugin_definition,
+      $container->get('request_stack')->getCurrentRequest(),
       $container->get('config.factory'),
       $container->get('renderer'),
       $container->get('entity_type.manager'),
