@@ -28,13 +28,9 @@
         });
 
         // Hide the arrow if we're at the top of the page.
-        window.addEventListener('scroll', () => {
-          if (window.scrollY > 750) {
-            backToTop.style.display = 'flex';
-          } else {
-            backToTop.style.display = 'none';
-          }
-        });
+      window.addEventListener('scroll', () => {
+        backToTop.classList.toggle('invisible', window.scrollY <= 750);
+      });
       }
     },
   };
