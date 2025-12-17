@@ -244,6 +244,12 @@ field_settings:
           az_flexible_page: ':default'
           az_news: ':default'
           az_person: ':default'
+  sitename:
+    label: 'Site Name'
+    property_path: custom_value
+    type: string
+    configuration:
+      value: '[site:name]'
   title:
     label: Title
     datasource_id: 'entity:node'
