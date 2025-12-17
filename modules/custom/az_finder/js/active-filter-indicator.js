@@ -59,7 +59,7 @@
             if (!badge) {
               badge = document.createElement('span');
               badge.className =
-                'js-az-finder-indicator badge bg-azurite mx-2 lh-az-normal';
+                'js-az-finder-indicator badge text-bg-azurite mx-2 lh-az-normal';
               badge.textContent = count;
               // Find the text node
               const textNode = Array.from(h3.childNodes).find(
