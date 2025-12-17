@@ -14,7 +14,7 @@
       // of the browser window the page is being viewed through.
       if (
         document.body.clientHeight /
-          document.querySelector('html').clientHeight >=
+          document.documentElement.clientHeight >=
         3
       ) {
         const backToTop = document.getElementById('az-back-to-top');
