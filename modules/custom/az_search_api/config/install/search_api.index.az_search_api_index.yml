@@ -247,7 +247,7 @@ field_settings:
   sitename:
     label: 'Site Name'
     property_path: custom_value
-    type: string
+    type: text
     configuration:
       value: '[site:name]'
   title:
