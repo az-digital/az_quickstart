@@ -10,7 +10,7 @@
       if (context !== document) {
         return;
       }
-      // only run this script if the document height is 4 times the height
+      // Only run this script if the document height is 3 times the height
       // of the browser window the page is being viewed through.
       if (
         document.body.clientHeight / document.documentElement.clientHeight >=
