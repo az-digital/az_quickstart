@@ -3,11 +3,7 @@
     right: 20px;
     bottom: 20px;
     display: none;
-}
-
-#az-back-to-top img {
-    width: 20px;
-    height: 20px;
+    align-items: center;
 }
 
 /**
