@@ -1,7 +1,6 @@
 /**
  * @file
  * A JavaScript file for the back to top functionality.
- *
  */
 
 ((Drupal) => {
