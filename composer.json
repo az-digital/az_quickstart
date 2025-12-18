@@ -146,7 +146,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "3.2.x-dev",
+            "dev-main": "3.3.x-dev",
             "2.x-dev": "2.14.x-dev"
         },
         "patches": {
