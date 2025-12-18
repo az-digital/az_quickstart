@@ -16,7 +16,7 @@
         document.body.clientHeight / document.documentElement.clientHeight >=
         3
       ) {
-        const backToTop = document.getElementById('az-back-to-top');
+        const backToTop = document.getElementById('az-js-back-to-top');
 
         if (!backToTop) {
           return;
