@@ -360,12 +360,21 @@
     },
     {
       "id":44,
+      "title" : "Pages",
+      "path" : "/pages",
+      "az_page_category" : "",
+      "az_main_content" : "413|414",
+      "az_media_image" : "",
+      "az_summary" : "Overview page for the Pages section."
+    },
+    {
+      "id":45,
       "title"  : "Large Card Deck Performance Test",
       "path" : "/pages/large-card-deck-test",
       "az_page_category"  : "Cards",
-      "az_main_content"  : "413",
+      "az_main_content"  : "415",
       "az_media_image"    : "",
       "az_summary" : "Demonstrates performance issues with large card decks (100 cards)."
-    }
+    },
   ]
 }

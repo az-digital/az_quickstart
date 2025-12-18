@@ -60,7 +60,7 @@
       "parent_link_id": "0",
       "menu": "main",
       "title": "Pages",
-      "urlpath": "route:<button>",
+      "urlpath": "/pages",
       "external": false,
       "expanded": true,
       "enabled": true,
@@ -186,28 +186,6 @@
       "expanded": false,
       "enabled": true,
       "weight": "9"
-    },
-    {
-      "link_id": "13",
-      "parent_link_id": "6",
-      "menu": "main",
-      "title": "Page Grid",
-      "urlpath": "/page-grid",
-      "external": false,
-      "expanded": false,
-      "enabled": true,
-      "weight": "10"
-    },
-    {
-      "link_id": "14",
-      "parent_link_id": "6",
-      "menu": "main",
-      "title": "Page List",
-      "urlpath": "/page-list",
-      "external": false,
-      "expanded": false,
-      "enabled": true,
-      "weight": "11"
     },
     {
       "link_id": "26",

@@ -1,0 +1,11 @@
+name: 'Quickstart GDPR Consent Management'
+description: 'Provides geolocation-based GDPR cookie consent management using Klaro and Pantheon AGCDN location API.'
+type: module
+core_version_requirement: ^10 || ^11 || ^12
+package: 'The University of Arizona - Experimental'
+lifecycle: experimental
+lifecycle_link: 'https://github.com/az-digital/az_quickstart/blob/main/RELEASES.md#experimental-features'
+container_rebuild_required: true
+dependencies:
+  - az_core:az_core
+  - klaro:klaro
