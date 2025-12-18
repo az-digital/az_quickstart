@@ -250,6 +250,7 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
   public function submitForm(array &$form, FormStateInterface $form_state) {
     // Manually save global active_filter_indicator_levels.
     // Empty → NULL, numeric → integer.
+    // This is necessary due to this issue https://www.drupal.org/project/drupal/issues/3468471.
     $global_config = $this->configFactory->getEditable('az_finder.settings');
     $global_value = $form_state->getValue(['az_finder_tid_widget', 'active_filter_indicator_levels']);
     if ($global_value === '') {
