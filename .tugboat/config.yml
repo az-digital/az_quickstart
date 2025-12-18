@@ -32,7 +32,7 @@ services:
         if [ $(git ls-remote --heads $AZQS_SCAFFOLD_REPO $TUGBOAT_GITHUB_HEAD | wc -l) = 1 ]; then
           SCAFFOLD_BRANCH="$TUGBOAT_GITHUB_HEAD"
         else
-          SCAFFOLD_BRANCH="3.1.x"
+          SCAFFOLD_BRANCH="3.2.x"
         fi
         git clone --branch $SCAFFOLD_BRANCH $AZQS_SCAFFOLD_REPO $AZQS_COMPOSER_ROOT
 
