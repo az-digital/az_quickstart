@@ -5,10 +5,10 @@ on:
     branches:
       - 'main'
       - '2.x'
+      - '3.2.x'
       - '3.1.x'
       - '3.0.x'
       - '2.14.x'
-      - '2.13.x'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref_name }}
