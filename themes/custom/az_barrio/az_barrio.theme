@@ -97,7 +97,7 @@ function az_barrio_preprocess_html(&$variables) {
  * Implements hook_preprocess_HOOK() for page templates.
  */
 function az_barrio_preprocess_page(&$variables, $hook) {
-  $variables['az_back_to_top'] = (theme_get_setting('az_back_to_top')) ? TRUE : FALSE;
+  $variables['az_back_to_top'] = (\Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_back_to_top')) ? TRUE : FALSE;
   if ($variables['az_back_to_top']) {
     $variables['#attached']['library'][] = 'az_barrio/az-back-to-top';
   }
@@ -593,7 +593,7 @@ function az_barrio_theme_suggestions_menu_alter(array &$suggestions, array $vari
   }
 
   // Add theme suggestion for the az_navbar variation of the main menu.
-  if (isset($variables['attributes']['id']) && $variables['attributes']['id'] === 'block-az-barrio-main-menu' && theme_get_setting('az_navbar')) {
+  if (isset($variables['attributes']['id']) && $variables['attributes']['id'] === 'block-az-barrio-main-menu' && \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_navbar')) {
     $suggestions[] = 'menu__main_navbar_az';
   }
 }
