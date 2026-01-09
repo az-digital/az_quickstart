@@ -27,7 +27,7 @@
         "php": ">=8.3",
         "az-digital/arizona-bootstrap": "5.0.4",
         "az-digital/az-icons": "1.0.4",
-        "citation-style-language/locales": "0.0.80",
+        "citation-style-language/locales": "0.0.81",
         "citation-style-language/styles": "0.0.668",
         "composer/installers": "^2.0",
         "cweagans/composer-patches": "^1.7",
@@ -36,7 +36,7 @@
         "drupal/antibot": "2.0.4",
         "drupal/asset_injector": "2.21.0",
         "drupal/auto_entitylabel": "3.4.0",
-        "drupal/better_exposed_filters": "7.0.5",
+        "drupal/better_exposed_filters": "7.1.1",
         "drupal/blazy": "3.0.15",
         "drupal/block_class": "4.0.2",
         "drupal/block_field": "1.0.0-rc5",
@@ -81,7 +81,8 @@
         "drupal/intelligencebank": "5.1.0",
         "drupal/jquery_ui": "1.8.0",
         "drupal/jquery_ui_datepicker": "2.1.1",
-        "drupal/key": "1.20",
+        "drupal/key": "1.21.0",
+        "drupal/klaro": "3.0.8",
         "drupal/ldap": "4.12",
         "drupal/link_class": "2.2.0",
         "drupal/linkit": "7.0.11",
@@ -106,7 +107,10 @@
         "drupal/redirect": "1.12.0",
         "drupal/role_delegation": "1.4.0",
         "drupal/schema_metatag": "3.0.3",
+        "drupal/search_api": "1.40.0",
+        "drupal/search_api_solr": "4.3.10",
         "drupal/search_exclude": "3.0.0-beta2",
+        "drupal/searchstax": "1.9.1",
         "drupal/seckit": "2.0.3",
         "drupal/slick": "3.0.6",
         "drupal/slick_views": "3.0.3",
@@ -126,10 +130,8 @@
         "giggsey/libphonenumber-for-php": "^9.0",
         "jjj/chosen": "2.2.1",
         "kevinrob/guzzle-cache-middleware": "7.0.0",
-        "npm-asset/blazy": "1.8.2",
         "npm-asset/bootstrap-datepicker": "1.10.1",
         "npm-asset/easepick--bundle": "1.2.1",
-        "npm-asset/jquery-ui-touch-punch": "*",
         "npm-asset/slick-carousel": "1.6.0",
         "renanbr/bibtex-parser": "2.2.0",
         "seboettg/citeproc-php": "2.7.0"
@@ -142,7 +144,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "3.2.x-dev",
+            "dev-main": "3.3.x-dev",
             "2.x-dev": "2.14.x-dev"
         },
         "patches": {
