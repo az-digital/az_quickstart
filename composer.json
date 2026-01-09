@@ -128,7 +128,7 @@
         "drupal/workbench_access": "2.0.4",
         "drupal/xmlsitemap": "2.0.0",
         "giggsey/libphonenumber-for-php": "^9.0",
-        "jjj/chosen": "2.2.1",
+        "jjj/chosen": "3.0.0",
         "kevinrob/guzzle-cache-middleware": "7.0.0",
         "npm-asset/bootstrap-datepicker": "1.10.1",
         "npm-asset/easepick--bundle": "1.2.1",
