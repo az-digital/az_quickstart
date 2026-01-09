@@ -29,21 +29,21 @@ steps:
     subDirectory: az-quickstart-scaffolding/web
     runInstall: true
     profileName: az_quickstart
-    installArgs: "--site-name='Quickstart Review' --account-name=azadmin --account-pass=azadmin2025 --verbose --yes -n"
+    installArgs: "--site-name='Quickstart Review' --account-name=azadmin --account-pass=azadmin2026 --verbose --yes -n"
   - name: Post-Installation Steps
     plugin: Script
     script:
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -y -n pm:install az_demo
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:create azcontenteditor --password="azcontenteditor2025" --mail="azcontenteditor@example.com"
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:create azcontenteditor --password="azcontenteditor2026" --mail="azcontenteditor@example.com"
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_editor azcontenteditor
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:create azcontentadmin --password="azcontentadmin2025" --mail="azcontentadmin@example.com"
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:create azcontentadmin --password="azcontentadmin2026" --mail="azcontentadmin@example.com"
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_editor azcontentadmin
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_admin azcontentadmin
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:create azuseradmin --password="azuseradmin2025" --mail="azuseradmin@example.com"
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:create azuseradmin --password="azuseradmin2026" --mail="azuseradmin@example.com"
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_editor azuseradmin
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_admin azuseradmin
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_user_admin azuseradmin
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:create azhtmladmin --password="azhtmladmin2025" --mail="azhtmladmin@example.com"
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:create azhtmladmin --password="azhtmladmin2026" --mail="azhtmladmin@example.com"
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_editor azhtmladmin
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_admin azhtmladmin
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_html_admin azhtmladmin
