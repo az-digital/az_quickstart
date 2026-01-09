@@ -67,7 +67,7 @@ services:
           --db-url=mysql://tugboat:tugboat@database:3306/tugboat \
           --site-name="Live preview for ${TUGBOAT_PREVIEW_NAME}" \
           --account-name=azadmin \
-          --account-pass=azadmin2025 \
+          --account-pass=azadmin2026 \
           --verbose \
           site:install
 
@@ -82,17 +82,22 @@ services:
         find "${DOCROOT}/sites/default/files" -type f -exec chmod 0664 {} \;
 
         # Post-install steps.
+<<<<<<< HEAD
         vendor/bin/drush -y -n pm:install az_demo environment_indicator
         vendor/bin/drush user:create azcontenteditor --password="azcontenteditor2025" --mail="azcontenteditor@example.com"
+=======
+        vendor/bin/drush -y -n pm:install az_demo environment_indicator_toolbar
+        vendor/bin/drush user:create azcontenteditor --password="azcontenteditor2026" --mail="azcontenteditor@example.com"
+>>>>>>> b28b3618 (Closes #5172: Update test user account passwords for local dev and PR preview sites for 2026 (#5173))
         vendor/bin/drush user:role:add az_content_editor azcontenteditor
-        vendor/bin/drush user:create azcontentadmin --password="azcontentadmin2025" --mail="azcontentadmin@example.com"
+        vendor/bin/drush user:create azcontentadmin --password="azcontentadmin2026" --mail="azcontentadmin@example.com"
         vendor/bin/drush user:role:add az_content_editor azcontentadmin
         vendor/bin/drush user:role:add az_content_admin azcontentadmin
-        vendor/bin/drush user:create azuseradmin --password="azuseradmin2025" --mail="azuseradmin@example.com"
+        vendor/bin/drush user:create azuseradmin --password="azuseradmin2026" --mail="azuseradmin@example.com"
         vendor/bin/drush user:role:add az_content_editor azuseradmin
         vendor/bin/drush user:role:add az_content_admin azuseradmin
         vendor/bin/drush user:role:add az_user_admin azuseradmin
-        vendor/bin/drush user:create azhtmladmin --password="azhtmladmin2025" --mail="azhtmladmin@example.com"
+        vendor/bin/drush user:create azhtmladmin --password="azhtmladmin2026" --mail="azhtmladmin@example.com"
         vendor/bin/drush user:role:add az_content_editor azhtmladmin
         vendor/bin/drush user:role:add az_content_admin azhtmladmin
         vendor/bin/drush user:role:add az_html_admin azhtmladmin

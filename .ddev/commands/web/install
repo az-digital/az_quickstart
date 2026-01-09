@@ -20,7 +20,7 @@ composer require --no-update --dev az-digital/az-quickstart-dev:${DEV_PACKAGE_VE
 
 # Install Quickstart
 composer install --no-interaction
-drush --root=/var/www/html/web site:install --account-mail=noreply@email.arizona.edu --account-name=azadmin --account-pass=azadmin2025 --db-url=mysql://db:db@db:3306/db -y --verbose
+drush --root=/var/www/html/web site:install --account-mail=noreply@email.arizona.edu --account-name=azadmin --account-pass=azadmin2026 --db-url=mysql://db:db@db:3306/db -y --verbose
 drush --root=/var/www/html/web config:set -y az_cas.settings disable_login_form 0
 drush --root=/var/www/html/web cache:rebuild
 yarn --cwd /usr/local/quickstart-install-profile install
