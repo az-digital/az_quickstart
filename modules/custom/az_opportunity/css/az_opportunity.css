@@ -1,9 +1,9 @@
 /* Override for Entity Reference Margins issue. */
 
-/* Issue: Inline labels in the views need 0 margin,
+/* CSS reason: The issue is that inline labels in the views need 0 margin,
  * but labels for h3 in the default display need margin.
+ * @TODO: Possible fix for Barrio Bootstrap Core?
  */
-
 
 .field--type-entity-reference {
     margin: 0 !important;

@@ -10,21 +10,19 @@
  */
 function az_opportunity_preprocess_node__az_opportunity(&$variables) {
 
-	// Attach the opportunity CSS library for az_opportunity node renderings.
-	$variables['#attached']['library'][] = 'az_opportunity/az_opportunity';
+  // Attach the opportunity CSS library for az_opportunity node renderings.
+  $variables['#attached']['library'][] = 'az_opportunity/az_opportunity';
 }
 
 /**
- * Implements template_preprocess_views_view().
- *
- * Ensure that views that render az_opportunity also get the CSS library.
+ * Implements template_preprocess_views_view() for az_opportunity views.
  */
 function az_opportunity_preprocess_views_view(&$variables) {
 
-	$view = $variables['view'];
-	$id = $view->storage->id();
+  $view = $variables['view'];
+  $id = $view->storage->id();
 
-	if ($id === 'az_opportunity') {
-		$variables['#attached']['library'][] = 'az_opportunity/az_opportunity';
-	}
+  if ($id === 'az_opportunity') {
+    $variables['#attached']['library'][] = 'az_opportunity/az_opportunity';
+  }
 }
