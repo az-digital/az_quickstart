@@ -9,7 +9,7 @@ field_name: field_az_parent_account
 entity_type: node
 bundle: az_opportunity
 label: 'Parent Account'
-description: ''
+description: 'Trellis specific field that checks for Parent Accounts, or the parent program content.'
 required: false
 translatable: false
 default_value: {  }

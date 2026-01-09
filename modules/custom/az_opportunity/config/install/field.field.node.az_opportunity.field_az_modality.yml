@@ -10,7 +10,7 @@ field_name: field_az_modality
 entity_type: node
 bundle: az_opportunity
 label: Modality
-description: ''
+description: 'How this opportunity is attended.'
 required: false
 translatable: false
 default_value: {  }

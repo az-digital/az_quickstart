@@ -11,7 +11,7 @@ field_name: field_az_program_date
 entity_type: node
 bundle: az_opportunity
 label: 'Program Date'
-description: ''
+description: 'The Program Date, or the Account Date, that the program is active.'
 required: false
 translatable: false
 default_value: {  }

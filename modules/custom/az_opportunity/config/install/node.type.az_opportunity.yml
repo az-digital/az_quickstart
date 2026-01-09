@@ -9,7 +9,7 @@ third_party_settings:
     parent: ''
 name: Opportunity
 type: az_opportunity
-description: null
+description: 'Use this content type to add a new Opportunity to your site.'
 help: null
 new_revision: true
 preview_mode: 1

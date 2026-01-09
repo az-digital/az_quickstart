@@ -3,6 +3,6 @@ status: true
 dependencies: {  }
 name: 'Opportunity Semester'
 vid: az_opportunity_semester
-description: null
+description: 'Taxonomy for the Opportunity content type'
 weight: 0
 new_revision: false

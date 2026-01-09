@@ -9,7 +9,7 @@ field_name: field_az_incentives
 entity_type: node
 bundle: az_opportunity
 label: Incentives
-description: ''
+description: 'Indicates if this opportunity is paid or has other incentives.'
 required: false
 translatable: false
 default_value: {  }

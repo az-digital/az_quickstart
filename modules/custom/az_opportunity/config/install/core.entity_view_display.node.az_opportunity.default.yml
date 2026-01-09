@@ -319,9 +319,10 @@ content:
     weight: 4
     region: content
   field_az_topic:
-    type: entity_reference_label
+    type: entity_reference_entity_view
     label: above
     settings:
+      view_mode: az_badge
       link: false
     third_party_settings: {  }
     weight: 7

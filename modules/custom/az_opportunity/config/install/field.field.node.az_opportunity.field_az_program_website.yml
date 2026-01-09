@@ -11,7 +11,7 @@ field_name: field_az_program_website
 entity_type: node
 bundle: az_opportunity
 label: 'Program Website'
-description: ''
+description: 'A link to the Program website.'
 required: false
 translatable: false
 default_value: {  }

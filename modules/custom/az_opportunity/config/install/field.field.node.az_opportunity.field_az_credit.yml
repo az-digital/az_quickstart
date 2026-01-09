@@ -10,7 +10,7 @@ field_name: field_az_credit
 entity_type: node
 bundle: az_opportunity
 label: Credit
-description: ''
+description: 'Does this opportunity earn Credits?'
 required: false
 translatable: false
 default_value: {  }

@@ -9,7 +9,7 @@ field_name: field_az_program_length
 entity_type: node
 bundle: az_opportunity
 label: 'Program Length'
-description: ''
+description: 'How long a program is running.'
 required: false
 translatable: false
 default_value: {  }

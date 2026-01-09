@@ -9,7 +9,7 @@ field_name: field_az_ongoing
 entity_type: node
 bundle: az_opportunity
 label: Ongoing
-description: ''
+description: 'Is this content ongoing even though its Application time has passed?'
 required: false
 translatable: false
 default_value: {  }

@@ -3,6 +3,6 @@ status: true
 dependencies: {  }
 name: 'Opportunity Audience'
 vid: az_opportunity_audience
-description: null
+description: 'Taxonomy for the Opportunity content type'
 weight: 0
 new_revision: false

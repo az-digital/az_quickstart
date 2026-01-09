@@ -11,7 +11,7 @@ field_name: field_az_application_date
 entity_type: node
 bundle: az_opportunity
 label: 'Application Date'
-description: ''
+description: 'An Application Date is when this opportunity is active for applications.'
 required: false
 translatable: false
 default_value: {  }

@@ -10,7 +10,7 @@ field_name: field_az_offered
 entity_type: node
 bundle: az_opportunity
 label: Offered
-description: ''
+description: 'Which semester or season this opportunity is offered.'
 required: false
 translatable: false
 default_value: {  }
