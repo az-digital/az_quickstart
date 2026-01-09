@@ -1,0 +1,28 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_opportunity_attachments
+    - media.type.az_document
+    - node.type.az_opportunity
+id: node.az_opportunity.field_opportunity_attachments
+field_name: field_opportunity_attachments
+entity_type: node
+bundle: az_opportunity
+label: 'Opportunity Attachments'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      az_document: az_document
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

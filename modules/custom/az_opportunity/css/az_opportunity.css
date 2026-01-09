@@ -1,0 +1,15 @@
+/* Override for Entity Reference Margins issue. */
+
+/* Issue: Inline labels in the views need 0 margin,
+ * but labels for h3 in the default display need margin.
+ */
+
+
+.field--type-entity-reference {
+    margin: 0 !important;
+}
+
+.field--type-entity-reference .field__label:not(.fw-bolder) {
+    font-weight: 500 !important;
+    margin: 1.042em 0 .667em !important;
+}

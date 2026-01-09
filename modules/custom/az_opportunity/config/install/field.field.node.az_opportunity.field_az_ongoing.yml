@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_az_ongoing
+    - node.type.az_opportunity
+id: node.az_opportunity.field_az_ongoing
+field_name: field_az_ongoing
+entity_type: node
+bundle: az_opportunity
+label: Ongoing
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

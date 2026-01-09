@@ -1,9 +1,8 @@
 smart_title:
-  - 'node:az_carousel_item'
-  - 'node:az_course'
   - 'node:az_event'
-  - 'node:az_news'
   - 'node:az_flexible_page'
+  - 'node:az_news'
+  - 'node:az_opportunity'
   - 'node:az_person'
   - 'node:az_publication'
   - 'taxonomy_term:az_event_categories'

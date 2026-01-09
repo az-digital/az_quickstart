@@ -1,0 +1,40 @@
+langcode: en
+status: false
+dependencies:
+  config:
+    - core.entity_view_mode.taxonomy_term.az_badge
+    - taxonomy.vocabulary.az_opportunity_topic
+  module:
+    - field_group
+    - text
+third_party_settings:
+  field_group:
+    group_opportunity_tags:
+      children:
+        - description
+      label: 'Opportunity Tags'
+      parent_name: ''
+      region: content
+      weight: 0
+      format_type: link
+      format_settings:
+        classes: 'badge text-bg-light badge-link'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        target: entity
+        custom_uri: ''
+        target_attribute: default
+id: taxonomy_term.az_opportunity_topic.az_badge
+targetEntityType: taxonomy_term
+bundle: az_opportunity_topic
+mode: az_badge
+content:
+  description:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden: {  }

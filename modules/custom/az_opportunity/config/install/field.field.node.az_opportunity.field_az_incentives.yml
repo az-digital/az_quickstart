@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_az_incentives
+    - node.type.az_opportunity
+id: node.az_opportunity.field_az_incentives
+field_name: field_az_incentives
+entity_type: node
+bundle: az_opportunity
+label: Incentives
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: 'Yes'
+  off_label: 'No'
+field_type: boolean

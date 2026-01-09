@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'Opportunity Modality'
+vid: az_opportunity_modality
+description: null
+weight: 0
+new_revision: false

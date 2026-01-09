@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_az_parent_account
+    - node.type.az_opportunity
+id: node.az_opportunity.field_az_parent_account
+field_name: field_az_parent_account
+entity_type: node
+bundle: az_opportunity
+label: 'Parent Account'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
