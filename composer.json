@@ -128,8 +128,12 @@
         "npm-asset/blazy": "1.8.2",
         "npm-asset/bootstrap-datepicker": "1.10.0",
         "npm-asset/easepick--bundle": "1.2.1",
+<<<<<<< HEAD
         "npm-asset/jquery-ui-touch-punch": "*",
         "npm-asset/slick-carousel": "1.8.0",
+=======
+        "npm-asset/slick-carousel": "1.6.0",
+>>>>>>> 0ef57d2c (Closes #5165: Remove no-longer-needed jquery_ui_touch_punch JS library. (#5166))
         "renanbr/bibtex-parser": "2.2.0",
         "seboettg/citeproc-php": "2.6.2"
     },
