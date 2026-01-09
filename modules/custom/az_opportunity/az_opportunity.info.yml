@@ -1,0 +1,28 @@
+name: Quickstart Opportunity
+description: 'Provides an Opportunity content type and related configuration. Use this content type to add non-academic opportunities such as Scholarships, Internships or Job Opportunities to your site.'
+core_version_requirement: ^10 || ^11 || ^12
+type: module
+package: The University of Arizona - Experimental
+dependencies:
+  - az_core:az_core
+  - calendar_link:calendar_link
+  - date_ap_style:date_ap_style
+  - drupal:datetime_range
+  - drupal:field
+  - field_group:field_group
+  - jquery_ui_datepicker:jquery_ui_datepicker
+  - drupal:file
+  - drupal:link
+  - drupal:media
+  - drupal:media_library
+  - drupal:menu_ui
+  - drupal:node
+  - drupal:path
+  - pathauto:pathauto
+  - smart_date:smart_date
+  - smart_date:smart_date_recur
+  - smart_title:smart_title
+  - drupal:taxonomy
+  - drupal:text
+  - drupal:user
+  - views_bootstrap:views_bootstrap

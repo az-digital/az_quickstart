@@ -1,0 +1,237 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.az_opportunity.field_az_application_date
+    - field.field.node.az_opportunity.field_az_application_link
+    - field.field.node.az_opportunity.field_az_audiences
+    - field.field.node.az_opportunity.field_az_body
+    - field.field.node.az_opportunity.field_az_credit
+    - field.field.node.az_opportunity.field_az_incentives
+    - field.field.node.az_opportunity.field_az_location
+    - field.field.node.az_opportunity.field_az_modality
+    - field.field.node.az_opportunity.field_az_offered
+    - field.field.node.az_opportunity.field_az_ongoing
+    - field.field.node.az_opportunity.field_az_parent_account
+    - field.field.node.az_opportunity.field_az_program_date
+    - field.field.node.az_opportunity.field_az_program_length
+    - field.field.node.az_opportunity.field_az_program_website
+    - field.field.node.az_opportunity.field_az_topic
+    - field.field.node.az_opportunity.field_az_trellis_id
+    - field.field.node.az_opportunity.field_az_trellis_imported_date
+    - field.field.node.az_opportunity.field_opportunity_attachments
+    - node.type.az_opportunity
+  module:
+    - datetime
+    - datetime_range
+    - link
+    - media_library
+    - path
+    - text
+id: node.az_opportunity.default
+targetEntityType: node
+bundle: az_opportunity
+mode: default
+content:
+  created:
+    type: datetime_timestamp
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_az_application_date:
+    type: daterange_default
+    weight: 9
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_az_application_link:
+    type: link_default
+    weight: 19
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+  field_az_audiences:
+    type: entity_reference_autocomplete
+    weight: 20
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_body:
+    type: text_textarea
+    weight: 21
+    region: content
+    settings:
+      rows: 9
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_credit:
+    type: entity_reference_autocomplete
+    weight: 15
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_incentives:
+    type: boolean_checkbox
+    weight: 12
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  field_az_location:
+    type: link_default
+    weight: 13
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+  field_az_modality:
+    type: entity_reference_autocomplete
+    weight: 14
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_offered:
+    type: entity_reference_autocomplete
+    weight: 16
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_ongoing:
+    type: boolean_checkbox
+    weight: 11
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  field_az_parent_account:
+    type: string_textfield
+    weight: 23
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_program_date:
+    type: daterange_default
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_az_program_length:
+    type: string_textfield
+    weight: 8
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_program_website:
+    type: link_default
+    weight: 18
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+  field_az_topic:
+    type: entity_reference_autocomplete
+    weight: 17
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_trellis_id:
+    type: string_textfield
+    weight: 24
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_trellis_imported_date:
+    type: datetime_default
+    weight: 25
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_opportunity_attachments:
+    type: media_library_widget
+    weight: 22
+    region: content
+    settings:
+      media_types: {  }
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 5
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  promote:
+    type: boolean_checkbox
+    weight: 3
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 7
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  sticky:
+    type: boolean_checkbox
+    weight: 4
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 1
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  url_redirects:
+    weight: 6
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden: {  }
