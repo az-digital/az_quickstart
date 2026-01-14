@@ -631,7 +631,7 @@ function az_barrio_preprocess_breadcrumb(&$variables) {
  * @link https://github.com/az-digital/az_quickstart/issues/1613
  */
 function az_barrio_preprocess_block(&$variables) {
-   if (isset($variables['attributes']['id'])) {
+  if (isset($variables['attributes']['id'])) {
     $variables['content']['#attributes']['block'] = $variables['attributes']['id'];
   }
   if ($variables['base_plugin_id'] === 'system_branding_block') {
