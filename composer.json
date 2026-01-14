@@ -104,13 +104,8 @@
         "drupal/paragraphs_admin": "1.6.0",
         "drupal/pathauto": "1.13.0",
         "drupal/quick_node_clone": "1.22.0",
-<<<<<<< HEAD
         "drupal/redirect": "1.11.0",
-        "drupal/role_delegation": "1.4.0",
-=======
-        "drupal/redirect": "1.12.0",
         "drupal/role_delegation": "1.5.0",
->>>>>>> eb4665a5 (Fixes #5193 Update drupal/role_delegation for SA-CONTRIB-2026-002 (#5194))
         "drupal/schema_metatag": "3.0.3",
         "drupal/search_exclude": "3.0.0-beta2",
         "drupal/seckit": "2.0.3",
