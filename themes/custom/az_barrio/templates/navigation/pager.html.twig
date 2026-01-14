@@ -34,9 +34,6 @@
 {% set mobile_total_page_numbers_to_show = 2 * mobile_page_numbers_each_side_of_current + 1 %}
 {% if items %}
   <nav role="navigation" aria-label="{{ heading_id }}">
-    <div>
-      <span>Page {{ current }} / {{ (items.last.href|slice(6,9))+1 }}</span>
-    </div>
     <h3 id="{{ heading_id }}" class="visually-hidden">{{ 'Pagination'|t }}</h3>
     <ul class="pagination js-pager__items">
       {# Print first item if we are not on the first page. #}
@@ -94,6 +91,7 @@
       {# Display an ellipsis if there are further next pages. #}
       {% if ellipses.next %}
         {% set hide_ellipsis_class = '' %}
+        
       {% else %}
         {% if items.pages|keys|last - current > mobile_page_numbers_each_side_of_current %}
           {% set hide_ellipsis_class = ' d-sm-none' %}
@@ -102,6 +100,15 @@
         {% endif %}
       {% endif %}
       <li class="page-item pager__item--ellipsis{{ hide_ellipsis_class }}">&hellip;</li>
+      {% if ellipses.next %}
+        {# Prevent error by checking for last page again after ellipses #}
+        <li class="page-item">
+          <a href="{{ items.last.href }}" title="{{ (items.last.href|slice(6,10))+1 }}"{{ items.last.attributes|without('href', 'title') }} class="page-link">
+            <span aria-hidden="true">{{ (items.last.href|slice(6,10))+1 }}</span>
+            <span class="visually-hidden">{{ (items.last.href|slice(6,10))+1 }}</span>
+          </a>
+        </li>
+      {% endif %}
       {# Print next item if we are not on the last page. #}
       {% if items.next %}
         <li class="page-item pager__item--next hide-pager-item-mobile">
@@ -115,7 +122,7 @@
       {% if items.last %}
         <li class="page-item">
           <a href="{{ items.last.href }}" title="{{ 'Go to last page'|t }}"{{ items.last.attributes|without('href', 'title') }} class="page-link">
-            <span aria-hidden="true">{{ (items.last.href|slice(6,9))+1 }} {{ items.last.text|default('»'|t) }}</span>
+            <span aria-hidden="true">{{ items.last.text|default('»'|t) }}</span>
             <span class="visually-hidden">{{ 'Last page'|t }}</span>
           </a>
         </li>
