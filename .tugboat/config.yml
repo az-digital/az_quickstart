@@ -65,7 +65,7 @@ services:
         vendor/bin/drush \
           --yes \
           --db-url=mysql://tugboat:tugboat@database:3306/tugboat \
-          --site-name="Live preview for ${TUGBOAT_PREVIEW_NAME}" \
+          --site-name="Live preview for ${TUGBOAT_PREVIEW_REF}" \
           --account-name=azadmin \
           --account-pass=azadmin2025 \
           --verbose \
