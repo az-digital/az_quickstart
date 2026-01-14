@@ -33,7 +33,7 @@
     {% elseif menu_level == 1 %}
       <ul{{ attributes.removeClass('navbar-nav').addClass('dropdown-menu') }} id="secondary-{{ parent_item.title|clean_class }}">
     {% elseif menu_level == 2 %}
-      <ul class="collapse{% if parent_item.in_active_trail %} show{% endif %}" id="tertiary-{{ parent_item.title|clean_class }}" data-bs-parent="#secondary-{{ parent_item.parent.title|clean_class }}">
+      <ul class="collapse{% if parent_item.in_active_trail %} show{% endif %}" id="tertiary-{{ parent_item.title|clean_class }}" data-bs-parent="#{{ attributes.id }}">
     {% endif %}
     {% for item in items %}
       {# item is_placeholder if it has no link at the primary level #}
