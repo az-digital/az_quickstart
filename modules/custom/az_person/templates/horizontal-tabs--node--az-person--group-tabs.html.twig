@@ -22,16 +22,16 @@
 {% endfor %}
 {% if tabElements %}
   <div class="mt-4 mb-3 clearfix">
-    <ul class="nav nav-tabs rounded-top" role="tablist">
+    <ul class="nav nav-tabs az-person-nav-tabs border-bottom-0 rounded-top" role="tablist">
       {% set isFirstTab = true %}
       {% for key, value in tabElements %}
-        <li class="nav-item ml-nmin mt-nmin border-right" role="presentation">
-          <button class="nav-link{{ isFirstTab ? ' active' }}" id="{{ (key) }}_tab" data-bs-toggle="tab" data-bs-target="#{{ (value['#id']) }}" type="button" role="tab" aria-controls="{{ (value['#id']) }}" aria-selected="{{ isFirstTab ? 'true' : 'false' }}">{{ (value['#title']) }}</button>
+        <li class="nav-item mt-nmin{{ not isFirstTab ? ' ms-1' }}" role="presentation">
+          <button class="nav-link border-light border-bottom-0{{ isFirstTab ? ' active' }}" id="{{ (key) }}_tab" data-bs-toggle="tab" data-bs-target="#{{ (value['#id']) }}" type="button" role="tab" aria-controls="{{ (value['#id']) }}" aria-selected="{{ isFirstTab ? 'true' : 'false' }}">{{ (value['#title']) }}</button>
         </li>
         {% set isFirstTab = false %}
       {% endfor %}
     </ul>
-    <div class="border rounded-bottom" style="border-top: 1px solid transparent !important;">
+    <div class="border rounded-bottom">
       <div class="tab-content mt-card px-card pb-card">
         {% set activePane = ' show active' %}
         {% for key, value in tabElements %}
