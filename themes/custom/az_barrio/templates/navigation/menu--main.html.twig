@@ -24,13 +24,21 @@
   We call a macro which calls itself to render the full tree.
   @see http://twig.sensiolabs.org/doc/tags/macro.html
 #}
-{{ menus.menu_links(items, attributes, 0) }}
+{{ menus.menu_links(items, attributes, 0, az_sidebar_toggle) }}
 
-{% macro menu_links(items, attributes, menu_level) %}
+{% macro menu_links(items, attributes, menu_level, sidebar_toggle) %}
   {% import _self as menus %}
   {% if items %}
     {% if menu_level == 0 %}
       <ul{{ attributes.addClass('navbar-nav flex-lg-row') }}>
+      {% if sidebar_toggle == true %}
+        <li class="nav-item sidebar-button">
+          <button type="button" data-bs-toggle="collapse" data-bs-target="#az-sidebar-collapsible" aria-expanded="true" aria-controls="az-sidebar-collapsible" class="btn btn-sm border-0 nav-link ps-2 pe-2" id="az-sidebar-collapse-btn">
+            <span aria-hidden="true" class="icon material-symbols-rounded" id="az-sidebar-collapse-icon">left_panel_close</span>
+            <span class="visually-hidden">Hide sidebar menu</span>
+          </button>
+        </li>
+      {% endif %}
 {% else %}
   <div class="dropdown-menu">
 {% endif %}
