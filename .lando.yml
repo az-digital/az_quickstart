@@ -64,7 +64,7 @@ services:
           DEV_PACKAGE_VERSION="dev-${DEV_PACKAGE_BRANCH}"
         fi
         composer require --no-update --dev az-digital/az-quickstart-dev:$DEV_PACKAGE_VERSION
-      - composer install --no-interaction
+      - composer install --prefer-install=source --no-interaction
       - ln -s /usr/local/quickstart-install-profile/.vscode /app/.vscode
   node:
     type: node:20

@@ -115,7 +115,7 @@ jobs:
             DEV_PACKAGE_VERSION="dev-${DEV_PACKAGE_BRANCH}"
           fi
           composer require --no-update --dev az-digital/az-quickstart-dev:${DEV_PACKAGE_VERSION}
-          composer install -o
+          composer install --prefer-install=source -o
       - name: Save build artifact
         uses: actions/cache/save@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
         with:
