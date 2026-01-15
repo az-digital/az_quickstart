@@ -56,7 +56,7 @@ services:
         composer \
           --working-dir=$AZQS_COMPOSER_ROOT \
           --no-interaction \
-          install --prefer-install=source --optimize-autoloader
+          install --optimize-autoloader
 
         # Link the document root to the expected path.
         ln -snf "${AZQS_DOCROOT}" "${DOCROOT}"
