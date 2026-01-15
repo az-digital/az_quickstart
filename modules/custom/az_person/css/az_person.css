@@ -47,3 +47,7 @@
 .az-person-modal .az-person-modal-close {
 	mix-blend-mode: difference;
 }
+
+.az-person-nav-tabs .nav-link.active:after {
+	border: solid 1px #fff;
+}
