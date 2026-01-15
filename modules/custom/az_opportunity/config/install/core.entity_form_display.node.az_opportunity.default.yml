@@ -4,11 +4,13 @@ dependencies:
   config:
     - field.field.node.az_opportunity.field_az_application_date
     - field.field.node.az_opportunity.field_az_application_link
+    - field.field.node.az_opportunity.field_az_attachments
     - field.field.node.az_opportunity.field_az_audiences
     - field.field.node.az_opportunity.field_az_body
     - field.field.node.az_opportunity.field_az_credit
     - field.field.node.az_opportunity.field_az_incentives
     - field.field.node.az_opportunity.field_az_location
+    - field.field.node.az_opportunity.field_az_media_image
     - field.field.node.az_opportunity.field_az_modality
     - field.field.node.az_opportunity.field_az_offered
     - field.field.node.az_opportunity.field_az_ongoing
@@ -19,14 +21,15 @@ dependencies:
     - field.field.node.az_opportunity.field_az_topic
     - field.field.node.az_opportunity.field_az_trellis_id
     - field.field.node.az_opportunity.field_az_trellis_imported_date
-    - field.field.node.az_opportunity.field_opportunity_attachments
     - node.type.az_opportunity
   module:
     - datetime
-    - datetime_range
+    - file
     - link
     - media_library
+    - media_library_edit
     - path
+    - smart_date
     - text
 id: node.az_opportunity.default
 targetEntityType: node
@@ -40,22 +43,43 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_az_application_date:
-    type: daterange_default
+    type: smartdate_only
     weight: 9
     region: content
-    settings: {  }
+    settings:
+      separator: to
+      modal: false
+      default_duration: 60
+      default_duration_increments: |-
+        30
+        60|1 hour
+        90
+        120|2 hours
+        custom
+      show_extra: false
+      hide_date: true
+      allday: true
+      remove_seconds: false
+      duration_overlay: true
     third_party_settings: {  }
   field_az_application_link:
     type: link_default
-    weight: 19
+    weight: 21
     region: content
     settings:
       placeholder_url: ''
       placeholder_title: ''
     third_party_settings: {  }
+  field_az_attachments:
+    type: file_generic
+    weight: 17
+    region: content
+    settings:
+      progress_indicator: throbber
+    third_party_settings: {  }
   field_az_audiences:
     type: entity_reference_autocomplete
-    weight: 20
+    weight: 22
     region: content
     settings:
       match_operator: CONTAINS
@@ -65,48 +89,45 @@ content:
     third_party_settings: {  }
   field_az_body:
     type: text_textarea
-    weight: 21
+    weight: 23
     region: content
     settings:
       rows: 9
       placeholder: ''
     third_party_settings: {  }
   field_az_credit:
-    type: entity_reference_autocomplete
-    weight: 15
+    type: string_textfield
+    weight: 14
     region: content
     settings:
-      match_operator: CONTAINS
-      match_limit: 10
       size: 60
       placeholder: ''
     third_party_settings: {  }
   field_az_incentives:
     type: boolean_checkbox
-    weight: 12
+    weight: 13
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   field_az_location:
     type: link_default
-    weight: 13
+    weight: 15
     region: content
     settings:
       placeholder_url: ''
       placeholder_title: ''
     third_party_settings: {  }
-  field_az_modality:
-    type: entity_reference_autocomplete
-    weight: 14
+  field_az_media_image:
+    type: media_library_widget
+    weight: 11
     region: content
     settings:
-      match_operator: CONTAINS
-      match_limit: 10
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-  field_az_offered:
+      media_types: {  }
+    third_party_settings:
+      media_library_edit:
+        show_edit: '1'
+  field_az_modality:
     type: entity_reference_autocomplete
     weight: 16
     region: content
@@ -116,26 +137,50 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+  field_az_offered:
+    type: entity_reference_autocomplete
+    weight: 18
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
   field_az_ongoing:
     type: boolean_checkbox
-    weight: 11
+    weight: 12
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   field_az_parent_account:
     type: string_textfield
-    weight: 23
+    weight: 24
     region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
   field_az_program_date:
-    type: daterange_default
+    type: smartdate_only
     weight: 10
     region: content
-    settings: {  }
+    settings:
+      separator: to
+      modal: false
+      default_duration: 60
+      default_duration_increments: |-
+        30
+        60|1 hour
+        90
+        120|2 hours
+        custom
+      show_extra: false
+      hide_date: true
+      allday: true
+      remove_seconds: false
+      duration_overlay: true
     third_party_settings: {  }
   field_az_program_length:
     type: string_textfield
@@ -147,7 +192,7 @@ content:
     third_party_settings: {  }
   field_az_program_website:
     type: link_default
-    weight: 18
+    weight: 20
     region: content
     settings:
       placeholder_url: ''
@@ -155,7 +200,7 @@ content:
     third_party_settings: {  }
   field_az_topic:
     type: entity_reference_autocomplete
-    weight: 17
+    weight: 19
     region: content
     settings:
       match_operator: CONTAINS
@@ -165,7 +210,7 @@ content:
     third_party_settings: {  }
   field_az_trellis_id:
     type: string_textfield
-    weight: 24
+    weight: 25
     region: content
     settings:
       size: 60
@@ -173,16 +218,9 @@ content:
     third_party_settings: {  }
   field_az_trellis_imported_date:
     type: datetime_default
-    weight: 25
+    weight: 26
     region: content
     settings: {  }
-    third_party_settings: {  }
-  field_opportunity_attachments:
-    type: media_library_widget
-    weight: 22
-    region: content
-    settings:
-      media_types: {  }
     third_party_settings: {  }
   path:
     type: path

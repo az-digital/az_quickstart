@@ -11,7 +11,7 @@ id: node.az_opportunity.field_az_body
 field_name: field_az_body
 entity_type: node
 bundle: az_opportunity
-label: 'Opportunity Description'
+label: Overview
 description: 'White text will be highlighted in gray (only while editing) to keep the text visible.'
 required: false
 translatable: false

@@ -14,7 +14,12 @@ label: Where
 description: "To link to an online map for the location, enter a URL above.<br />\r\nOtherwise, enter <em>&lt;nolink&gt;</em> in the URL field and enter the location name or address in the Link text field.<br />\r\n<strong>Campus Map: </strong> <a href=\"https://map.arizona.edu\" target=\"_blank\">https://map.arizona.edu</a><br />\r\n<strong>Google Maps: </strong> <a href=\"https://maps.google.com\" target=\"_blank\">https://maps.google.com</a>"
 required: false
 translatable: false
-default_value: {  }
+default_value:
+  -
+    attributes: {  }
+    uri: 'route:<nolink>'
+    title: ''
+    options: {  }
 default_value_callback: ''
 settings:
   title: 1

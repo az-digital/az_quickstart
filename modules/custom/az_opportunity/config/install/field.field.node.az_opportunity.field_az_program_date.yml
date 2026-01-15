@@ -14,7 +14,12 @@ label: 'Program Date'
 description: 'The Program Date, or the Account Date, that the program is active.'
 required: false
 translatable: false
-default_value: {  }
+default_value:
+  -
+    default_date_type: now
+    default_date: now
+    default_end_date_type: now
+    default_end_date: now
 default_value_callback: ''
 settings: {  }
 field_type: daterange

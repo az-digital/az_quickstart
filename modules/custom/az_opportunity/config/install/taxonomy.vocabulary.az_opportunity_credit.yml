@@ -1,8 +1,1 @@
-langcode: en
-status: true
-dependencies: {  }
-name: 'Opportunity Credit'
-vid: az_opportunity_credit
-description: 'Taxonomy for the Opportunity content type'
-weight: 0
-new_revision: false
+{  }

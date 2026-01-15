@@ -5,11 +5,13 @@ dependencies:
     - core.entity_view_mode.node.az_row
     - field.field.node.az_opportunity.field_az_application_date
     - field.field.node.az_opportunity.field_az_application_link
+    - field.field.node.az_opportunity.field_az_attachments
     - field.field.node.az_opportunity.field_az_audiences
     - field.field.node.az_opportunity.field_az_body
     - field.field.node.az_opportunity.field_az_credit
     - field.field.node.az_opportunity.field_az_incentives
     - field.field.node.az_opportunity.field_az_location
+    - field.field.node.az_opportunity.field_az_media_image
     - field.field.node.az_opportunity.field_az_modality
     - field.field.node.az_opportunity.field_az_offered
     - field.field.node.az_opportunity.field_az_ongoing
@@ -20,7 +22,6 @@ dependencies:
     - field.field.node.az_opportunity.field_az_topic
     - field.field.node.az_opportunity.field_az_trellis_id
     - field.field.node.az_opportunity.field_az_trellis_imported_date
-    - field.field.node.az_opportunity.field_opportunity_attachments
     - node.type.az_opportunity
   module:
     - datetime_range
@@ -99,7 +100,7 @@ third_party_settings:
       weight: 3
       format_type: html_element
       format_settings:
-        classes: col-4
+        classes: col-3
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -112,14 +113,14 @@ third_party_settings:
         speed: fast
     group_col_2:
       children:
-        - field_az_application_date
+        - field_az_location
       label: 'col 2'
       parent_name: group_row
       region: content
       weight: 4
       format_type: html_element
       format_settings:
-        classes: col-3
+        classes: col-4
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -132,8 +133,7 @@ third_party_settings:
         speed: fast
     group_col_3:
       children:
-        - field_az_location
-        - field_az_incentives
+        - field_az_application_date
       label: 'Col 3'
       parent_name: group_row
       region: content
@@ -178,6 +178,8 @@ third_party_settings:
       smart_title__tag: h2
       smart_title__classes:
         - node__title
+        - h5
+        - m-0
 id: node.az_opportunity.az_row
 targetEntityType: node
 bundle: az_opportunity
@@ -188,21 +190,11 @@ content:
     label: inline
     settings:
       timezone_override: ''
-      format_type: medium
+      format_type: short
       from_to: both
       separator: '-'
     third_party_settings: {  }
-    weight: 10
-    region: content
-  field_az_incentives:
-    type: boolean
-    label: inline
-    settings:
-      format: default
-      format_custom_false: ''
-      format_custom_true: ''
-    third_party_settings: {  }
-    weight: 12
+    weight: 13
     region: content
   field_az_location:
     type: link
@@ -237,9 +229,12 @@ content:
     region: content
 hidden:
   field_az_application_link: true
+  field_az_attachments: true
   field_az_audiences: true
   field_az_body: true
   field_az_credit: true
+  field_az_incentives: true
+  field_az_media_image: true
   field_az_modality: true
   field_az_offered: true
   field_az_ongoing: true
@@ -249,4 +244,3 @@ hidden:
   field_az_program_website: true
   field_az_trellis_id: true
   field_az_trellis_imported_date: true
-  field_opportunity_attachments: true
