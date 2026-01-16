@@ -61,7 +61,7 @@
           {% if item.below %}
             {% if not is_placeholder %}
               <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
-                <span class="visually-hidden">Toggle Dropdown</span>
+                <span class="visually-hidden">{{ item.title }}</span>
               </button>
             {% endif %}
             {{ menus.menu_links(item.below, attributes.removeClass('nav-item'), menu_level + 1, item) }}
@@ -71,7 +71,7 @@
             <div class="btn-group">
               {{ link(item.title, item.url, { 'class': 'dropdown-item' }) }}
               <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-bs-toggle="collapse" data-bs-target="#tertiary-{{ item.title|clean_class }}" data-bs-auto-close="outside" aria-controls="tertiary-{{ item.title|clean_class }}" aria-expanded="{{ item.in_active_trail ? 'true' : 'false' }}">
-                <span class="visually-hidden">Toggle Dropdown</span>
+                <span class="visually-hidden">{{ item.title }}</span>
               </button>
             </div>
             {{ menus.menu_links(item.below, attributes, menu_level + 1, item) }}
