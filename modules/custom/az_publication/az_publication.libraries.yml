@@ -7,10 +7,16 @@ az_publication_picker:
     - core/jquery
     - core/once
 bootstrap-datepicker:
+  remote: https://github.com/uxsolutions/bootstrap-datepicker
+  version: 1.10.0
+  license:
+    name: Apache-2.0
+    url: https://github.com/uxsolutions/bootstrap-datepicker/blob/master/LICENSE
+    gpl-compatible: false
   css:
     theme:
-      /libraries/bootstrap-datepicker/dist/css/bootstrap-datepicker.standalone.min.css: { minified: true }
+      https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css: { type: external, minified: true }
   js:
-    /libraries/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js: { minified: true }
+    https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js: { type: external, minified: true }
   dependencies:
     - core/jquery
