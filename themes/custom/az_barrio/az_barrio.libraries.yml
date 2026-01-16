@@ -3,7 +3,8 @@ global-styling:
     theme:
       css/style.css: {}
   dependencies:
-    - az_barrio/arizona-bootstrap
+    - az_barrio/arizona-bootstrap-css
+    - az_barrio/arizona-bootstrap-js
 az-ajax:
   js:
     js/az-ajax.js: {}
@@ -13,12 +14,17 @@ az-media-display:
   css:
     component:
       css/az-media-display.css: {}
+az-back-to-top:
+  js:
+    js/az-back-to-top.js: {}
 az-barrio-off-canvas-nav:
   css:
     theme:
       css/az-barrio-off-canvas-nav.css: {}
   js:
     js/az-barrio-off-canvas-nav.js: {}
+  dependencies:
+    - az_barrio/global-styling
 az-proxima-nova:
   css:
     theme:
@@ -27,10 +33,11 @@ az-icons:
   css:
     theme:
       /libraries/az-icons/az-icons-styles.min.css: { minified: true }
-arizona-bootstrap:
+arizona-bootstrap-css:
   css:
     theme:
       /libraries/arizona-bootstrap/css/arizona-bootstrap.min.css: { minified: true }
+arizona-bootstrap-js:
   js:
     /libraries/arizona-bootstrap/js/arizona-bootstrap.bundle.min.js: { minified: true }
   dependencies:
@@ -42,9 +49,23 @@ button-no-conflict:
     - core/drupal
     - core/jquery
 material-design-icons-sharp:
+  deprecated: The "%library_id%" CSS library is deprecated in az_quickstart:3.0.x and is removed from az_quickstart:3.1.x. Use `az_barrio/material-symbols-rounded` instead. See https://github.com/az-digital/az_quickstart/issues/4385
   css:
     theme:
       # Appends `#.css` as workaround for known issue with loadjs library.
       # see https://github.com/kubetail-org/loadjs/issues/39
       # see https://github.com/az-digital/az_quickstart/issues/2772
       https://fonts.googleapis.com/css?family=Material+Icons+Sharp#.css: { external: true, preprocess: false }
+material-symbols-rounded:
+  css:
+    theme:
+      # Appends `#.css` as workaround for known issue with loadjs library.
+      # see https://github.com/kubetail-org/loadjs/issues/39
+      # see https://github.com/az-digital/az_quickstart/issues/2772
+      https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,300..400,0..1,0#.css: { external: true, preprocess: false }
+toasts:
+  js:
+    js/toasts.js: {}
+  dependencies:
+    - core/drupal
+    - az_barrio/arizona-bootstrap-js

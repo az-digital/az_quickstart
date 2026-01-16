@@ -1,0 +1,16 @@
+name: 'Quickstart Search API'
+type: module
+description: 'Connects this Quickstart site to SearchStax integration'
+core_version_requirement: ^10 || ^11 || ^12
+package: 'The University of Arizona - Experimental'
+lifecycle: experimental
+dependencies:
+  - az_core:az_core
+  - az_secrets:az_secrets
+  - az_seo:az_seo
+  - drupal:file
+  - drupal:media
+  - drupal:node
+  - search_api:search_api
+  - search_api_solr:search_api_solr
+  - searchstax:searchstax

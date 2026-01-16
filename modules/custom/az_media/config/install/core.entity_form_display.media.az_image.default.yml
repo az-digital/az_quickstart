@@ -4,10 +4,13 @@ dependencies:
   config:
     - field.field.media.az_image.field_az_caption
     - field.field.media.az_image.field_az_credit
+    - field.field.media.az_image.field_focal_point_x
+    - field.field.media.az_image.field_focal_point_y
     - field.field.media.az_image.field_media_az_image
     - image.style.thumbnail
     - media.type.az_image
   module:
+    - decorative_image_widget
     - image_widget_crop
     - path
     - text
@@ -23,46 +26,63 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_az_caption:
+    type: text_textarea
     weight: 5
+    region: content
     settings:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
-    type: text_textarea
-    region: content
   field_az_credit:
+    type: text_textfield
     weight: 26
+    region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    type: text_textfield
+  field_focal_point_x:
+    type: number
+    weight: 27
     region: content
-  field_media_az_image:
     settings:
-      show_default_crop: true
-      warn_multiple_usages: true
+      placeholder: ''
+    third_party_settings: {  }
+  field_focal_point_y:
+    type: number
+    weight: 28
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_media_az_image:
+    type: image_widget_crop
+    weight: 0
+    region: content
+    settings:
+      progress_indicator: throbber
       preview_image_style: thumbnail
       crop_preview_image_style: crop_thumbnail
       crop_list:
         - az_card_image
-        - az_modal_image
+        - az_carousel_image
         - az_full_width_bg_extra_small
         - az_full_width_bg_large
         - az_full_width_bg_medium
         - az_full_width_bg_small
         - az_large
+        - az_modal_image
         - az_marketing_cloud_30_70_layout
         - az_marketing_cloud_50_50_layout
         - az_marketing_cloud_hero_layout
         - az_square_aspect_ratio
-      progress_indicator: throbber
       crop_types_required: {  }
+      warn_multiple_usages: true
       show_crop_area: false
-    third_party_settings: {  }
-    type: image_widget_crop
-    weight: 0
-    region: content
+      show_default_crop: true
+    third_party_settings:
+      decorative_image_widget:
+        use_decorative_checkbox: true
   path:
     type: path
     weight: 3
@@ -71,20 +91,20 @@ content:
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    settings:
-      display_label: true
     weight: 4
     region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
     weight: 1
+    region: content
     settings:
       match_operator: CONTAINS
       match_limit: 10
       size: 60
       placeholder: ''
-    region: content
     third_party_settings: {  }
 hidden:
   name: true

@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.az_user_admin
+  module:
+    - user
+id: user_remove_role_action.az_user_admin
+label: 'Remove the User administrator role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: az_user_admin
