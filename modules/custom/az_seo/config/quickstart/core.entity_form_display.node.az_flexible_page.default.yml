@@ -87,7 +87,7 @@ content:
       edit_mode: closed
       closed_mode: preview
       autocollapse: all
-      closed_mode_threshold: 1
+      closed_mode_threshold: 2
       add_mode: button
       form_display_mode: default
       default_paragraph_type: _none
