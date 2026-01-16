@@ -1,0 +1,88 @@
+{#
+/**
+ * @file
+ * Arizona Barrio override to display a menu. Used when az_navbar theme setting is enabled.
+ *
+ * Available variables:
+ * - menu_name: The machine name of the menu.
+ * - items: A nested list of menu items. Each menu item contains:
+ *   - attributes: HTML attributes for the menu item.
+ *   - below: The menu item child items.
+ *   - title: The menu link title.
+ *   - url: The menu link url, instance of \Drupal\Core\Url
+ *   - localized_options: Menu link localized options.
+ *   - is_expanded: TRUE if the link has visible children within the current
+ *     menu tree.
+ *   - is_collapsed: TRUE if the link has children within the current menu tree
+ *     that are not currently visible.
+ *   - in_active_trail: TRUE if the link is in the active trail.
+ */
+#}
+{% import _self as menus %}
+{#
+  We call a macro which calls itself to render the full tree.
+  @see http://twig.sensiolabs.org/doc/tags/macro.html
+#}
+{{ menus.menu_links(items, attributes, 0, false) }}
+
+{% macro menu_links(items, attributes, menu_level, parent_item) %}
+  {% import _self as menus %}
+  {% if items %}
+    {% if menu_level == 0 %}
+      <ul{{ attributes.addClass('navbar-nav') }}>
+    {% elseif menu_level == 1 %}
+      <ul{{ attributes.removeClass('navbar-nav').addClass('dropdown-menu') }} id="secondary-{{ parent_item.title|clean_class }}">
+    {% elseif menu_level == 2 %}
+      <ul class="collapse{% if parent_item.in_active_trail %} show{% endif %}" id="tertiary-{{ parent_item.title|clean_class }}" data-bs-parent="#{{ attributes.id }}">
+    {% endif %}
+    {% for item in items %}
+      {# item is_placeholder if it has no link at the primary level #}
+      {% set is_placeholder = (
+        not item.url.isRouted()
+      ) or (
+        item.url.toString() is empty or item.url.toString() == '#'
+      ) or (
+        item.url.getRouteName() in ['<nolink>', '<none>']
+      ) %}
+      {% set item_classes = [
+        menu_level == 0 ? 'nav-item',
+        item.in_active_trail ? 'active',
+        item.below ? 'dropdown',
+        (menu_level == 0 and item.below and not is_placeholder) ? 'btn-group'
+      ] %}
+
+      <li{{ item.attributes.addClass(item_classes) }}>
+        {% if menu_level == 0 %}
+          {% if item.below and is_placeholder %}
+            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">{{ item.title }}</a>
+          {% else %}
+            {{ link(item.title, item.url, { 'class': 'nav-link' }) }}
+          {% endif %}
+          {% if item.below %}
+            {% if not is_placeholder %}
+              <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                <span class="visually-hidden">{{ item.title }}</span>
+              </button>
+            {% endif %}
+            {{ menus.menu_links(item.below, attributes.removeClass('nav-item'), menu_level + 1, item) }}
+          {% endif %}
+        {% elseif menu_level == 1 %}
+          {% if item.below %}
+            <div class="btn-group">
+              {{ link(item.title, item.url, { 'class': 'dropdown-item' }) }}
+              <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-bs-toggle="collapse" data-bs-target="#tertiary-{{ item.title|clean_class }}" data-bs-auto-close="outside" aria-controls="tertiary-{{ item.title|clean_class }}" aria-expanded="{{ item.in_active_trail ? 'true' : 'false' }}">
+                <span class="visually-hidden">{{ item.title }}</span>
+              </button>
+            </div>
+            {{ menus.menu_links(item.below, attributes, menu_level + 1, item) }}
+          {% else %}
+            {{ link(item.title, item.url, { 'class': 'dropdown-item' }) }}
+          {% endif %}
+        {% else %}
+          <li>{{ link(item.title, item.url) }}</li>
+        {% endif %}
+      </li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endmacro %}
