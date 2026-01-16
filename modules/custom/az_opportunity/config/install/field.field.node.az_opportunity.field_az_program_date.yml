@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_az_program_date
+    - node.type.az_opportunity
+  module:
+    - datetime_range
+id: node.az_opportunity.field_az_program_date
+field_name: field_az_program_date
+entity_type: node
+bundle: az_opportunity
+label: 'Program Date'
+description: 'The Program Date, or the Account Date, that the program is active.'
+required: false
+translatable: false
+default_value:
+  -
+    default_date_type: now
+    default_date: now
+    default_end_date_type: now
+    default_end_date: now
+default_value_callback: ''
+settings: {  }
+field_type: daterange
