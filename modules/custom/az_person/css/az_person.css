@@ -48,6 +48,15 @@
 	mix-blend-mode: difference;
 }
 
-.az-person-nav-tabs .nav-link.active:after {
-	border: solid 1px #fff;
+.nav-tabs.az-person-nav-tabs .nav-item .nav-link {
+	border-right-color: var(--bs-border-color);
+	border-top-color: var(--bs-border-color);
+	border-left-color: var(--bs-border-color);
+}
+
+.nav-tabs.az-person-nav-tabs .nav-item:first-child::after {
+	content: '';
+	position: absolute;
+	height: 1px;
+	border-left: solid 1px var(--bs-border-color);
 }
