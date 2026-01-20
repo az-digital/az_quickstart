@@ -256,6 +256,7 @@ jobs:
             --colors="always" \
             --do-not-cache-result \
             --display-deprecations \
+            --display-phpunit-deprecations \
             $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/profiles/custom/az_quickstart/"${{ matrix.test.file }}"
         env:
           SYMFONY_DEPRECATIONS_HELPER: weak
