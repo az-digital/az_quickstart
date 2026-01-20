@@ -16,12 +16,6 @@
   <php>
     <!-- Set error reporting to E_ALL. -->
     <ini name="error_reporting" value="32767"/>
-    <!-- Display errors (critical for seeing warnings) -->  
-    <ini name="display_errors" value="On" />  
-    <!-- Log errors to stderr (avoids buffering issues) -->  
-    <ini name="display_startup_errors" value="On" />  
-    <ini name="log_errors" value="On" />  
-    <ini name="error_log" value="php://stderr" />  
     <!-- Do not limit the amount of memory tests take to run. -->
     <ini name="memory_limit" value="-1"/>
   </php>
