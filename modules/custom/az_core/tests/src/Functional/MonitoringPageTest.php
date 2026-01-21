@@ -3,12 +3,12 @@
 namespace Drupal\Tests\az_core\Functional;
 
 use Drupal\Core\Url;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test to ensure that monitoring page works correctly.
- *
- * @group az_core
  */
+#[Group('az_core')]
 class MonitoringPageTest extends QuickstartFunctionalTestBase {
 
   /**

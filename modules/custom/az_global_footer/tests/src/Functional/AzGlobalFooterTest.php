@@ -3,12 +3,12 @@
 namespace Drupal\Tests\az_global_footer\Functional;
 
 use Drupal\Tests\BrowserTestBase;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Tests the Quickstart Global Footer.
- *
- * @group az_global_footer
  */
+#[Group('az_global_footer')]
 class AzGlobalFooterTest extends BrowserTestBase {
 
   /**

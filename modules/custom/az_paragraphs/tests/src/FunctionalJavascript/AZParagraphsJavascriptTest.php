@@ -3,14 +3,12 @@
 namespace Drupal\Tests\az_paragraphs\FunctionalJavascript;
 
 use Drupal\Tests\az_core\FunctionalJavascript\QuickstartFunctionalJavascriptTestBase;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Run tests of paragraph bundles.
- *
- * @ingroup az_paragraphs_js
- *
- * @group az_paragraphs_js
  */
+#[Group('az_paragraphs_js')]
 class AZParagraphsJavascriptTest extends QuickstartFunctionalJavascriptTestBase {
 
   /**
