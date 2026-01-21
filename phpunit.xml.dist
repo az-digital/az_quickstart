@@ -5,7 +5,7 @@
          beStrictAboutTestsThatDoNotTestAnything="true"
          beStrictAboutOutputDuringTests="true"
          beStrictAboutChangesToGlobalState="true"
-         failOnRisky="false"
+         failOnRisky="true"
          failOnWarning="true"
          failOnDeprecation="true"
          displayDetailsOnTestsThatTriggerErrors="true"
