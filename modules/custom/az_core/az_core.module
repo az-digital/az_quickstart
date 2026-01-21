@@ -133,7 +133,7 @@ function az_core_toolbar() {
  */
 function az_core_pathauto_pattern_alter(PathautoPatternInterface $pattern, array $context) {
   // Manually specify default AZQS pattern.
-  $azqs_pattern = '[node:menu-link:parents:join-path]/[node:menu-link]';
+  $azqs_pattern = '[node:menu-link:parent:url:relative]/[node:title]';
 
   // Check if context is node and pattern is the AZQS default.
   if ($context['module'] === 'node' && $pattern->getPattern() === $azqs_pattern) {
