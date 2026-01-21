@@ -57,7 +57,7 @@ third_party_settings:
     group_col2:
       children:
         - group_date
-        - field_az_application_date
+        - field_az_offered
       label: col2
       parent_name: group_header_row
       region: content
@@ -100,7 +100,6 @@ third_party_settings:
       children:
         - group_modality
         - field_az_modality
-        - field_az_offered
       label: col4
       parent_name: group_header_row
       region: content
@@ -148,7 +147,7 @@ third_party_settings:
       label: col6
       parent_name: group_header_row
       region: content
-      weight: 6
+      weight: 7
       format_type: html_element
       format_settings:
         classes: col
@@ -348,14 +347,14 @@ mode: default
 content:
   field_az_application_date:
     type: daterange_default
-    label: hidden
+    label: inline
     settings:
       timezone_override: ''
-      format_type: html_date
+      format_type: short
       from_to: both
       separator: '-'
     third_party_settings: {  }
-    weight: 15
+    weight: 4
     region: content
   field_az_application_link:
     type: link
@@ -367,7 +366,7 @@ content:
       rel: ''
       target: ''
     third_party_settings: {  }
-    weight: 7
+    weight: 9
     region: content
   field_az_attachments:
     type: file_default
@@ -375,7 +374,7 @@ content:
     settings:
       use_description_as_link_text: true
     third_party_settings: {  }
-    weight: 3
+    weight: 6
     region: content
   field_az_audiences:
     type: entity_reference_label
@@ -390,7 +389,7 @@ content:
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 2
+    weight: 3
     region: content
   field_az_credit:
     type: string
@@ -423,12 +422,13 @@ content:
     weight: 6
     region: content
   field_az_media_image:
-    type: entity_reference_label
+    type: entity_reference_entity_view
     label: hidden
     settings:
-      link: true
+      view_mode: az_large
+      link: false
     third_party_settings: {  }
-    weight: 8
+    weight: 2
     region: content
   field_az_modality:
     type: entity_reference_label
@@ -444,13 +444,24 @@ content:
     settings:
       link: false
     third_party_settings: {  }
-    weight: 11
+    weight: 15
     region: content
   field_az_opportunity_type:
     type: entity_reference_label
     label: hidden
     settings:
       link: true
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  field_az_program_date:
+    type: daterange_default
+    label: inline
+    settings:
+      timezone_override: ''
+      format_type: short
+      from_to: both
+      separator: '-'
     third_party_settings: {  }
     weight: 5
     region: content
@@ -472,7 +483,7 @@ content:
       rel: ''
       target: ''
     third_party_settings: {  }
-    weight: 5
+    weight: 8
     region: content
   field_az_topic:
     type: entity_reference_entity_view
@@ -486,12 +497,11 @@ content:
   links:
     settings: {  }
     third_party_settings: {  }
-    weight: 4
+    weight: 7
     region: content
 hidden:
   field_az_ongoing: true
   field_az_parent_account: true
-  field_az_program_date: true
   field_az_trellis_id: true
   field_az_trellis_imported_date: true
   smart_title: true

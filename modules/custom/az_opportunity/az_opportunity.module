@@ -12,6 +12,10 @@ function az_opportunity_preprocess_node__az_opportunity(&$variables) {
 
   // Attach the opportunity CSS library for az_opportunity node renderings.
   $variables['#attached']['library'][] = 'az_opportunity/az_opportunity';
+  //dpr($variables);
+  //if(isEmpty($variables['elements']['field_az_application_date'][0])) {
+    
+  //}
 }
 
 /**
@@ -26,3 +30,12 @@ function az_opportunity_preprocess_views_view(&$variables) {
     $variables['#attached']['library'][] = 'az_opportunity/az_opportunity';
   }
 }
+
+/**
+ * Implements hook_preprocess_field() for field_az_application_date.
+ *
+ * Displays "TBD" when the field is empty.
+ */
+//function az_opportunity_preprocess_field__field_az_application_date(&$variables) {
+//  dpr($variables);
+//}

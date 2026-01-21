@@ -74,7 +74,6 @@ third_party_settings:
         - group_col_1
         - group_col_2
         - group_col_3
-        - group_col_4
       label: row
       parent_name: group_opportunity_link
       region: content
@@ -95,10 +94,31 @@ third_party_settings:
     group_col_1:
       children:
         - smart_title
+        - field_az_topic
       label: 'col 1'
       parent_name: group_row
       region: content
       weight: 3
+      format_type: html_element
+      format_settings:
+        classes: col-6
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_col_2:
+      children:
+        - field_az_application_date
+      label: 'col 2'
+      parent_name: group_row
+      region: content
+      weight: 4
       format_type: html_element
       format_settings:
         classes: col-3
@@ -112,29 +132,9 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-    group_col_2:
-      children:
-        - field_az_location
-      label: 'col 2'
-      parent_name: group_row
-      region: content
-      weight: 4
-      format_type: html_element
-      format_settings:
-        classes: col-4
-        show_empty_fields: false
-        id: ''
-        label_as_html: false
-        element: div
-        show_label: false
-        label_element: h3
-        label_element_classes: ''
-        attributes: ''
-        effect: none
-        speed: fast
     group_col_3:
       children:
-        - field_az_application_date
+        - field_az_location
       label: 'Col 3'
       parent_name: group_row
       region: content
@@ -153,12 +153,11 @@ third_party_settings:
         effect: none
         speed: fast
     group_col_4:
-      children:
-        - field_az_topic
+      children: {  }
       label: 'col 4'
-      parent_name: group_row
-      region: content
-      weight: 6
+      parent_name: ''
+      region: hidden
+      weight: 1
       format_type: html_element
       format_settings:
         classes: col-2
@@ -207,16 +206,16 @@ content:
       rel: ''
       target: ''
     third_party_settings: {  }
-    weight: 11
+    weight: 14
     region: content
   field_az_topic:
     type: entity_reference_entity_view
-    label: inline
+    label: hidden
     settings:
       view_mode: az_badge
       link: false
     third_party_settings: {  }
-    weight: 5
+    weight: 1
     region: content
   links:
     settings: {  }

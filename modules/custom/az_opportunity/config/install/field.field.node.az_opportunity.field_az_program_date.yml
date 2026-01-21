@@ -11,15 +11,10 @@ field_name: field_az_program_date
 entity_type: node
 bundle: az_opportunity
 label: 'Program Date'
-description: 'The Program Date, or the Account Date, that the program is active.'
+description: "The Program Date, or the Account Date, that the program is active.\r\nLeave this field empty for \"TBD\""
 required: false
 translatable: false
-default_value:
-  -
-    default_date_type: now
-    default_date: now
-    default_end_date_type: now
-    default_end_date: now
+default_value: {  }
 default_value_callback: ''
 settings: {  }
 field_type: daterange
