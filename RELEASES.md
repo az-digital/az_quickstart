@@ -14,6 +14,7 @@ To illustrate how the LTS model works, consider the following example:
 
 - **2.14** is designated as the final Quickstart 2.x minor release and a **Long Term Support (LTS)** release.
 - When **3.0** is released, **2.14 (LTS)** and **3.0** will be supported concurrently.
+- When **3.1** is released, **3.0** will no longer be supported and **2.4 (LTS)** and **3.1** will be supported concurrently.
 
 Once the version of Drupal core used by the LTS release (e.g., Drupal 10 for 2.14) reaches end-of-life, support for the LTS release also ends. We then resume our standard support policy of maintaining only the two most recent minor releases unless another LTS version is designated.
 
