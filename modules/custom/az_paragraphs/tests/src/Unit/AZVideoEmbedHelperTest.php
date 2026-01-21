@@ -5,7 +5,7 @@ namespace Drupal\Tests\az_paragraphs\Unit;
 use Drupal\Tests\UnitTestCase;
 use Drupal\az_paragraphs\AZVideoEmbedHelper;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\CoversFunction;
+use PHPUnit\Framework\Attributes\CoversMethod;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -32,7 +32,7 @@ class AZVideoEmbedHelperTest extends UnitTestCase {
   /**
    * Tests parsing of YouTube video ID from URLs.
    */
-  #[CoversFunction('getYouTubeIdFromUrl')]
+  #[CoversMethod(AZVideoEmbedHelper::class, 'getYouTubeIdFromUrl')]
   #[DataProvider('providerYouTubeVideoData')]
   public function testGetYoutubeIdFromUrl($youtube_url, $expected_id) {
     $this->assertEquals($expected_id, $this->videoEmbedHelper->getYoutubeIdFromUrl($youtube_url));
