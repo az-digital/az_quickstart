@@ -14,26 +14,23 @@ use Drupal\migrate_tools\MigrateExecutable;
 class EnterpriseAttributesImportTest extends BrowserTestBase {
 
   /**
-   * The profile to install as a basis for testing.
-   *
-   * @var string
+   * {@inheritdoc}
    */
   protected $profile = 'az_quickstart';
 
   /**
-   * @var bool
+   * {@inheritdoc}
    */
   protected $strictConfigSchema = FALSE;
 
   /**
-   * @var string
+   * {@inheritdoc}
    */
   protected $defaultTheme = 'stark';
 
+
   /**
-   * Modules to enable.
-   *
-   * @var string[]
+   * {@inheritdoc}
    */
   protected static $modules = [
     'az_core',

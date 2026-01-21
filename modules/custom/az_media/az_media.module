@@ -66,11 +66,11 @@ function template_preprocess_az_responsive_background_image(array &$variables) {
   // If a responsive image style is not selected, log the error and stop
   // execution.
   if (!$responsive_image_style) {
-    $variables = [];
     \Drupal::logger('az_media')
       ->log(RfcLogLevel::ERROR, 'Failed to load responsive image style: “@style“ while displaying responsive image.', [
         '@style' => $variables['responsive_image_style_id'],
       ]);
+    $variables = [];
     return;
   }
 

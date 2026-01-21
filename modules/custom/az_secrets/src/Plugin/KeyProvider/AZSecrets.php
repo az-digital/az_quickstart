@@ -117,7 +117,7 @@ class AZSecrets extends KeyProviderBase implements KeyPluginFormInterface {
     $key_value = getenv($secret_name);
 
     if (!$key_value) {
-      return NULL;
+      return '';
     }
 
     if (isset($this->configuration['base64_encoded']) && $this->configuration['base64_encoded'] === TRUE) {
