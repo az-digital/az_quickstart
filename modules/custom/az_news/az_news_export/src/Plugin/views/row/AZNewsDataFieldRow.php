@@ -2,10 +2,16 @@
 
 namespace Drupal\az_news_export\Plugin\views\row;
 
-use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\az_news_export\AZNewsDataEmpty;
-use Drupal\image\Entity\ImageStyle;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Field\FieldDefinitionInterface;
+use Drupal\Core\Field\FieldStorageDefinitionInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\file\FileInterface;
+use Drupal\media\MediaInterface;
+use Drupal\paragraphs\ParagraphInterface;
 use Drupal\rest\Plugin\views\row\DataFieldRow;
+use Drupal\taxonomy\TermInterface;
 use Drupal\views\Attribute\ViewsRow;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -23,6 +29,13 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class AZNewsDataFieldRow extends DataFieldRow {
 
   /**
+   * Drupal\Core\Entity\EntityFieldManagerInterface definition.
+   *
+   * @var \Drupal\Core\Entity\EntityFieldManagerInterface
+   */
+  protected $entityFieldManager;
+
+  /**
    * Drupal\Core\Entity\EntityTypeManagerInterface definition.
    *
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
@@ -37,16 +50,33 @@ class AZNewsDataFieldRow extends DataFieldRow {
   protected $token;
 
   /**
+   * A static list of the types of referenced entities that can be serialized.
+   *
+   * @var string[]
+   */
+  protected static $serializableReferencedEntityTypes = [
+    'media',
+    'taxonomy_term',
+    'paragraph',
+    'file',
+  ];
+
+  /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+  public static function create(
+    ContainerInterface $container,
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+  ) {
     $instance = parent::create(
       $container,
       $configuration,
       $plugin_id,
       $plugin_definition,
     );
-
+    $instance->entityFieldManager = $container->get('entity_field.manager');
     $instance->entityTypeManager = $container->get('entity_type.manager');
     $instance->token = $container->get('token');
     return $instance;
@@ -57,163 +87,256 @@ class AZNewsDataFieldRow extends DataFieldRow {
    */
   public function render($row) {
     $output = [];
-    // Provider a helper for image serialization.
-    $image_serializer = function ($value, $entity) {
-      $item = [];
-      if (!empty($value)) {
-        $media = $this->entityTypeManager->getStorage('media')->load($value);
-        if (!empty($media) && $media->access('view') && $media->hasField('field_media_az_image')) {
-          if (!empty($media->field_media_az_image->entity)) {
-            /** @var \Drupal\file\FileInterface $image */
-            $image = $media->field_media_az_image->entity;
-            $item['fid'] = $image->id();
-            $item['uuid'] = $image->uuid();
-            $item['original'] = $image->createFileUrl(FALSE);
-            $uri = $image->getFileUri();
-            $styles = [
-              'thumbnail' => 'az_enterprise_thumbnail',
-              'thumbnail_small' => 'az_enterprise_thumbnail_small',
-            ];
-            foreach ($styles as $key => $style_id) {
-              $image_style = ImageStyle::load($style_id);
-              if (!empty($image_style)) {
-                $item[$key] = $image_style->buildUrl($uri);
-              }
-            }
-            if (!empty($media->field_media_az_image->alt)) {
-              $item['alt'] = $media->field_media_az_image->alt;
-            }
-          }
-        }
-      }
-      // Avoid returning an empty array.
-      if (empty($item)) {
-        $item = new AZNewsDataEmpty();
-      }
-      return $item;
-    };
-    // Special serialization rules. Resolve references at serialization time.
-    // View relationships creates duplicate rows and wrong array structure.
-    $rules = [
-      // Serialize file entities as URLs.
-      'field_az_attachments' => function ($value, $entity) {
-        $items = [];
-        $files = $this->entityTypeManager->getStorage('file')->loadMultiple($value);
-        foreach ($files as $file) {
-          if (!$file->access('view')) {
-            continue;
-          }
-          $items[] = $file->createFileUrl(FALSE);
-        }
-        return $items;
-      },
-      // Serialize contacts as associative arrays of keyed fields.
-      'field_az_contacts' => function ($value, $entity) {
-        $items = [];
-        $contacts = $this->entityTypeManager->getStorage('paragraph')->loadMultiple($value);
-        foreach ($contacts as $contact) {
-          if (!$contact->access('view')) {
-            continue;
-          }
-          $item = [];
-          // Serialize specific fields from contact.
-          $contact_fields = [
-            'field_az_email',
-            'field_az_title',
-            'field_az_phone',
-          ];
-          foreach ($contact_fields as $contact_field) {
-            if ($contact->hasField($contact_field) && !empty($contact->{$contact_field}->value)) {
-              $item[$contact_field] = $contact->{$contact_field}->value;
-            }
-          }
-          $items[] = $item;
-        }
-        return $items;
-      },
-      // Serialize media image as file URL.
-      'field_az_media_image' => $image_serializer,
-      'field_az_media_thumbnail_image' => $image_serializer,
-      // Serialize the taxonomy terms as an array of labels.
-      'field_az_news_tags' => function ($value, $entity) {
-        $items = [];
-        $terms = $this->entityTypeManager->getStorage('taxonomy_term')->loadMultiple($value);
-        foreach ($terms as $term) {
-          if (!$term->access('view')) {
-            continue;
-          }
-          $items[] = $term->label();
-        }
-        return $items;
-      },
-      // Serialize the taxonomy terms as an array of enterprise keys.
-      'field_az_enterprise_attributes' => function ($value, $entity) {
-        $items = [];
-        if (!empty($value)) {
-          $term_storage = $this->entityTypeManager->getStorage('taxonomy_term');
+    $entity = $row->_entity;
+    $entity_type = $entity->getEntityTypeId();
+    $entity_bundle = $entity->bundle();
+    $field_definitions = $this->entityFieldManager->getFieldDefinitions($entity_type, $entity_bundle);
+    foreach ($this->view->field as $field_name => $field) {
+      $value = !empty($this->rawOutputOptions[$field_name]) ?
+        $field->getValue($row) :
+        $field->advancedRender($row);
 
-          $terms = $this->entityTypeManager->getStorage('taxonomy_term')->getQuery()
-            ->accessCheck(TRUE)
-            ->addTag('taxonomy_term_access')
-            ->condition('vid', 'az_enterprise_attributes')
-            ->condition('tid', $value, 'IN')
-            ->condition('status', 1)
-            ->sort('tid')->execute();
-          $terms = $term_storage->loadMultiple($terms);
-          foreach ($terms as $term) {
-            if (!$term->access('view')) {
-              continue;
-            }
-            if (!empty($term->parent->entity)) {
-              if (!empty($term->field_az_attribute_key->value) && !empty($term->parent->entity->field_az_attribute_key->value)) {
-                $items[$term->parent->entity->field_az_attribute_key->value][] = $term->field_az_attribute_key->value;
-              }
-            }
-          }
-        }
-        // Avoid returning an empty array.
-        if (empty($items)) {
-          $items = new AZNewsDataEmpty();
-        }
-        return $items;
-      },
-      // Allow for token replacement in short title.
-      'field_az_short_title' => function ($value, $entity) {
-        $item = "";
-        if (!empty($value)) {
-          $token_data = ['node' => $entity];
-          $token_options = ['clear' => TRUE];
-          // Perform token replacement.
-          $item = $this->token->replacePlain($value, $token_data, $token_options);
-        }
-        return $item;
-      },
-    ];
-    foreach ($this->view->field as $id => $field) {
-      // If the raw output option has been set, get the raw value.
-      if (!empty($this->rawOutputOptions[$id])) {
-        $value = $field->getValue($row);
-        // Check for special serialization rules for this particular field.
-        if (!empty($rules[$id]) && !empty($row->_entity)) {
-          $value = $rules[$id]($value, $row->_entity);
-        }
+      if (!isset($field_definitions[$field_name])) {
+        continue;
       }
-      // Otherwise, get rendered field.
-      else {
-        // Advanced render for token replacement.
-        $markup = $field->advancedRender($row);
-        // Post render to support uncacheable fields.
-        $field->postRender($row, $markup);
-        $value = $field->last_render ?? "";
+      $field_definition = $field_definitions[$field_name];
+
+      $is_reference_field = FALSE;
+      foreach (self::$serializableReferencedEntityTypes as $target_type) {
+        if ($this->isReferenceFieldOfType($field_definition, $target_type)) {
+          $serialized_items = $this->serializeReferenceField($value, $target_type);
+          $value = $this->normalizeReferenceFieldValue($serialized_items, $field_definition);
+          $is_reference_field = TRUE;
+          break;
+        }
       }
 
-      // Omit excluded fields from the rendered output.
+      if (!$is_reference_field && $this->valueIsEmpty($value)) {
+        continue;
+      }
+
+      if (
+        $this->isTextField($field_definition) &&
+        !$value instanceof AZNewsDataEmpty &&
+        !$this->valueIsEmpty($value)
+      ) {
+        $value = $this->processTokens($value, $entity);
+      }
       if (empty($field->options['exclude'])) {
-        $output[$this->getFieldKeyAlias($id)] = $value;
+        $output[$this->getFieldKeyAlias($field_name)] = $value;
       }
     }
 
     return $output;
+  }
+
+  /**
+   * Determines whether a field is a text field.
+   *
+   * @param \Drupal\Core\Field\FieldDefinitionInterface $field_definition
+   *   The field definition.
+   *
+   * @return bool
+   *   TRUE if the field is a text field, FALSE otherwise.
+   */
+  protected function isTextField(FieldDefinitionInterface $field_definition): bool {
+    return $field_definition->getType() === 'string';
+  }
+
+  /**
+   * Performs token replacement for tokenized field values.
+   *
+   * @param mixed $value
+   *   The field value.
+   * @param \Drupal\Core\Entity\EntityInterface $entity
+   *   The entity.
+   *
+   * @return string
+   *   The processed field value.
+   */
+  protected function processTokens($value, EntityInterface $entity): string {
+    $item = '';
+    if (!empty($value)) {
+      $token_data = ['node' => $entity];
+      $token_options = ['clear' => TRUE];
+      $item = $this->token->replacePlain($value, $token_data, $token_options);
+    }
+    return $item;
+  }
+
+  /**
+   * Checks if the specified field is of a given reference type.
+   *
+   * @param \Drupal\Core\Field\FieldDefinitionInterface $field_definition
+   *   The field definition.
+   * @param string $target_type
+   *   The target entity type.
+   *
+   * @return bool
+   *   TRUE if the field references the specified type, FALSE otherwise.
+   */
+  protected function isReferenceFieldOfType(FieldDefinitionInterface $field_definition, string $target_type): bool {
+    $reference_field_types = [
+      'entity_reference',
+      'entity_reference_revisions',
+      'file',
+    ];
+    $field_type = $field_definition->getType();
+    $field_target_type = $field_definition->getSetting('target_type');
+    return in_array($field_type, $reference_field_types, TRUE) && $field_target_type === $target_type;
+  }
+
+  /**
+   * Serializes entity reference fields into exportable values.
+   *
+   * @param mixed $value
+   *   The field value(s), can be an array of entity IDs or a single entity ID.
+   * @param string $target_type
+   *   The type of entities the field references.
+   *
+   * @return array
+   *   The serialized field values keyed sequentially.
+   */
+  protected function serializeReferenceField($value, string $target_type): array {
+    $items = [];
+    $values = is_array($value) ? $value : [$value];
+    $values = array_filter($values, static fn($item) => !empty($item));
+    if (!empty($values)) {
+      $storage = $this->entityTypeManager->getStorage($target_type);
+      $entities = $storage->loadMultiple($values);
+
+      foreach ($entities as $referenced_entity) {
+        if (!$referenced_entity->access('view')) {
+          continue;
+        }
+
+        $item = [];
+        switch ($target_type) {
+          case 'media':
+            if ($referenced_entity instanceof MediaInterface) {
+              $media_type = $referenced_entity->bundle();
+              $source = $referenced_entity->getSource();
+              $fid = $source->getSourceFieldValue($referenced_entity);
+              $file = $this->entityTypeManager->getStorage('file')->load($fid);
+              if (!$file instanceof FileInterface) {
+                break;
+              }
+              $item['fid'] = $file->id();
+              $item['uuid'] = $file->uuid();
+              $item['original'] = $file->createFileUrl(FALSE);
+
+              if ($media_type === 'az_image') {
+                $uri = $file->getFileUri();
+                $styles = [
+                  'thumbnail' => 'az_enterprise_thumbnail',
+                  'thumbnail_small' => 'az_enterprise_thumbnail_small',
+                ];
+                foreach ($styles as $key => $style_id) {
+                  $image_style = $this->entityTypeManager->getStorage('image_style')->load($style_id);
+                  if (!empty($image_style)) {
+                    $item[$key] = $image_style->buildUrl($uri);
+                  }
+                }
+                if ($referenced_entity->hasField('field_media_az_image') && !$referenced_entity->get('field_media_az_image')->isEmpty()) {
+                  $alt_value = $referenced_entity->get('field_media_az_image')->first()->get('alt')->getValue();
+                  if (!empty($alt_value)) {
+                    $item['alt'] = $alt_value;
+                  }
+                }
+              }
+            }
+            break;
+
+          case 'paragraph':
+            if ($referenced_entity instanceof ParagraphInterface) {
+              $paragraph_type = $referenced_entity->bundle();
+              if ($paragraph_type === 'az_contact') {
+                $contact_fields = [
+                  'field_az_email',
+                  'field_az_title',
+                  'field_az_phone',
+                ];
+                foreach ($contact_fields as $contact_field) {
+                  if ($referenced_entity->hasField($contact_field) && !$referenced_entity->get($contact_field)->isEmpty()) {
+                    $item[$contact_field] = $referenced_entity->get($contact_field)->value;
+                  }
+                }
+              }
+            }
+            break;
+
+          case 'file':
+            if ($referenced_entity instanceof FileInterface) {
+              $item = [
+                'fid' => $referenced_entity->id(),
+                'uuid' => $referenced_entity->uuid(),
+                'original' => $referenced_entity->createFileUrl(FALSE),
+              ];
+            }
+            break;
+
+          case 'taxonomy_term':
+            if ($referenced_entity instanceof TermInterface) {
+              $item = $referenced_entity->label();
+            }
+            break;
+
+          default:
+            $item = $referenced_entity->label();
+            break;
+        }
+        if (!empty($item)) {
+          $items[] = $item;
+        }
+      }
+    }
+
+    return array_values($items);
+  }
+
+  /**
+   * Determines whether a value should be treated as empty output.
+   *
+   * @param mixed $value
+   *   The value to evaluate.
+   *
+   * @return bool
+   *   TRUE if the value is considered empty, FALSE otherwise.
+   */
+  protected function valueIsEmpty($value): bool {
+    if ($value instanceof AZNewsDataEmpty) {
+      return FALSE;
+    }
+    if (is_array($value)) {
+      return $value === [];
+    }
+    return $value === NULL || $value === '';
+  }
+
+  /**
+   * Normalizes reference field output based on field cardinality.
+   *
+   * @param array $items
+   *   The serialized reference items.
+   * @param \Drupal\Core\Field\FieldDefinitionInterface $field_definition
+   *   The field definition.
+   *
+   * @return array|\Drupal\az_news_export\AZNewsDataEmpty|mixed
+   *   The normalized value.
+   */
+  protected function normalizeReferenceFieldValue(array $items, FieldDefinitionInterface $field_definition) {
+    $cardinality = $field_definition->getFieldStorageDefinition()->getCardinality();
+    $is_multi_value = $cardinality === FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED || $cardinality > 1;
+
+    if (empty($items)) {
+      return $is_multi_value ? [] : new AZNewsDataEmpty();
+    }
+
+    if ($is_multi_value) {
+      return array_values($items);
+    }
+
+    return $items[0];
   }
 
 }
