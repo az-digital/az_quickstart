@@ -322,6 +322,11 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
       $entity_type = 'taxonomy_term';
       $entity_id = is_numeric($child) ? $child : str_replace('tid:', '', $child);
       $state = $state_overrides[$entity_id] ?? $global_default_state;
+      // If the term should be removed, exclude it.
+      if ($state === 'hide') {
+        unset($variables['element'][$child]);
+        continue;
+      }
       $variables['element'][$child]['#state'] = $state;
       $entity_storage = $this->entityTypeManager->getStorage($entity_type);
       $children = method_exists($entity_storage, 'loadChildren') ? $entity_storage->loadChildren($entity_id) : [];
