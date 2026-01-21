@@ -3,6 +3,7 @@
 namespace Drupal\Tests\az_global_footer\Functional;
 
 use Drupal\Tests\BrowserTestBase;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -32,9 +33,9 @@ class AzGlobalFooterTest extends BrowserTestBase {
 
   /**
    * Tests that the Quickstart Global Footer module can be uninstalled.
-   *
-   * @group regression
    */
+  #[Group('regression')]
+  #[DoesNotPerformAssertions]
   public function testIsUninstallableAndReinstallable() {
 
     // Uninstalls the az_global_footer module, so hook_modules_uninstalled()
