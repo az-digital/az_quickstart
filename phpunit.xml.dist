@@ -7,6 +7,7 @@
          beStrictAboutChangesToGlobalState="true"
          failOnRisky="false"
          failOnWarning="true"
+         failOnDeprecation="true"
          displayDetailsOnTestsThatTriggerErrors="true"
          displayDetailsOnTestsThatTriggerWarnings="true"
          displayDetailsOnTestsThatTriggerNotices="true"
