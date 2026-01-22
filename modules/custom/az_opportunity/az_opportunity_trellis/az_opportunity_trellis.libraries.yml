@@ -1,0 +1,18 @@
+az_opportunity_trellis_date:
+  js:
+    js/az_opportunity_trellis_date.js: {}
+  css:
+    theme:
+      css/az_opportunity_trellis_datewrapper.css: {}
+  dependencies:
+    - core/drupal
+    - core/drupalSettings
+    - core/once
+    - az_opportunity_trellis/easepick_bundle
+easepick_bundle:
+  js:
+    /libraries/easepick--bundle/dist/index.umd.js: { minified: true }
+easepick_styles:
+  css:
+    theme:
+      /libraries/easepick--bundle/dist/index.css: { minified: true }

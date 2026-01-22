@@ -73,6 +73,7 @@ third_party_settings:
       children:
         - group_col_1
         - group_col_2
+        - group_col_4
         - group_col_3
       label: row
       parent_name: group_opportunity_link
@@ -101,7 +102,7 @@ third_party_settings:
       weight: 3
       format_type: html_element
       format_settings:
-        classes: col-6
+        classes: col-4
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -138,10 +139,10 @@ third_party_settings:
       label: 'Col 3'
       parent_name: group_row
       region: content
-      weight: 5
+      weight: 6
       format_type: html_element
       format_settings:
-        classes: col-3
+        classes: col-2
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -153,14 +154,15 @@ third_party_settings:
         effect: none
         speed: fast
     group_col_4:
-      children: {  }
+      children:
+        - field_az_program_date
       label: 'col 4'
-      parent_name: ''
-      region: hidden
-      weight: 1
+      parent_name: group_row
+      region: content
+      weight: 5
       format_type: html_element
       format_settings:
-        classes: col-2
+        classes: col-3
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -208,6 +210,17 @@ content:
     third_party_settings: {  }
     weight: 14
     region: content
+  field_az_program_date:
+    type: daterange_default
+    label: inline
+    settings:
+      timezone_override: ''
+      format_type: medium
+      from_to: both
+      separator: '-'
+    third_party_settings: {  }
+    weight: 1
+    region: content
   field_az_topic:
     type: entity_reference_entity_view
     label: hidden
@@ -240,7 +253,6 @@ hidden:
   field_az_ongoing: true
   field_az_opportunity_type: true
   field_az_parent_account: true
-  field_az_program_date: true
   field_az_program_length: true
   field_az_program_website: true
   field_az_trellis_id: true

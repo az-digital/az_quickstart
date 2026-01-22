@@ -166,7 +166,7 @@ third_party_settings:
       label: col7
       parent_name: ''
       region: hidden
-      weight: 14
+      weight: 15
       format_type: html_element
       format_settings:
         classes: col7
@@ -185,7 +185,7 @@ third_party_settings:
       label: col8
       parent_name: ''
       region: hidden
-      weight: 15
+      weight: 16
       format_type: html_element
       format_settings:
         classes: col
@@ -338,6 +338,26 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
+    group_topics:
+      children:
+        - field_az_topic
+      label: Topics
+      parent_name: ''
+      region: content
+      weight: 1
+      format_type: html_element
+      format_settings:
+        classes: mb-4
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
   smart_title:
     enabled: false
 id: node.az_opportunity.default
@@ -363,10 +383,10 @@ content:
       trim_length: 80
       url_only: false
       url_plain: false
-      rel: ''
-      target: ''
+      rel: '0'
+      target: '0'
     third_party_settings: {  }
-    weight: 9
+    weight: 10
     region: content
   field_az_attachments:
     type: file_default
@@ -452,7 +472,7 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 6
+    weight: 5
     region: content
   field_az_program_date:
     type: daterange_default
@@ -492,7 +512,7 @@ content:
       view_mode: az_badge
       link: false
     third_party_settings: {  }
-    weight: 1
+    weight: 2
     region: content
   links:
     settings: {  }

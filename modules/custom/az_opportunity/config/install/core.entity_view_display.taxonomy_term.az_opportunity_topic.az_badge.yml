@@ -18,7 +18,7 @@ third_party_settings:
       weight: 0
       format_type: link
       format_settings:
-        classes: 'badge text-bg-light badge-link'
+        classes: 'badge text-bg-light badge-link d-inline-block'
         show_empty_fields: false
         id: ''
         label_as_html: false

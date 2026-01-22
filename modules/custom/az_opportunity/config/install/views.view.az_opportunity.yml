@@ -316,7 +316,7 @@ display:
       tags: {  }
   block_4:
     id: block_4
-    display_title: 'Row View Filter'
+    display_title: 'Row View Application Dates'
     display_plugin: block
     position: 1
     display_options:
@@ -551,6 +551,322 @@ display:
         groups:
           1: AND
           2: AND
+          3: AND
+      style:
+        type: default
+        options:
+          row_class: ''
+          default_row_class: true
+          uses_fields: false
+      row:
+        type: 'entity:node'
+        options:
+          relationship: none
+          view_mode: az_row
+      defaults:
+        style: false
+        style_options: false
+        row: false
+        filters: false
+        filter_groups: false
+      display_description: ''
+      style_options: null
+      display_extenders: {  }
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - url.query_args
+        - 'user.node_grants:view'
+        - user.permissions
+      tags: {  }
+  block_5:
+    id: block_5
+    display_title: 'Rows View with Filter'
+    display_plugin: block
+    position: 1
+    display_options:
+      filters:
+        status:
+          id: status
+          table: node_field_data
+          field: status
+          entity_type: node
+          entity_field: status
+          plugin_id: boolean
+          value: '1'
+          group: 1
+          expose:
+            operator: ''
+        type:
+          id: type
+          table: node_field_data
+          field: type
+          entity_type: node
+          entity_field: type
+          plugin_id: bundle
+          value:
+            az_opportunity: az_opportunity
+          group: 1
+        title:
+          id: title
+          table: node_field_data
+          field: title
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          entity_field: title
+          plugin_id: string
+          operator: '='
+          value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: title_op
+            label: Title
+            description: ''
+            use_operator: false
+            operator: title_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: title
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            placeholder: ''
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+        field_az_location_options:
+          id: field_az_location_options
+          table: node__field_az_location
+          field: field_az_location_options
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: string
+          operator: '='
+          value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_az_location_options_op
+            label: Where
+            description: ''
+            use_operator: false
+            operator: field_az_location_options_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_az_location_options
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            placeholder: ''
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+        field_az_topic_target_id:
+          id: field_az_topic_target_id
+          table: node__field_az_topic
+          field: field_az_topic_target_id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: taxonomy_index_tid
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_az_topic_target_id_op
+            label: Topic
+            description: ''
+            use_operator: false
+            operator: field_az_topic_target_id_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_az_topic_target_id
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          vid: az_opportunity_topic
+          type: select
+          hierarchy: false
+          limit: true
+          error_message: true
+        field_az_modality_target_id:
+          id: field_az_modality_target_id
+          table: node__field_az_modality
+          field: field_az_modality_target_id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: taxonomy_index_tid
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_az_modality_target_id_op
+            label: Modality
+            description: ''
+            use_operator: false
+            operator: field_az_modality_target_id_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_az_modality_target_id
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          vid: az_opportunity_modality
+          type: select
+          hierarchy: false
+          limit: true
+          error_message: true
+        field_az_offered_target_id:
+          id: field_az_offered_target_id
+          table: node__field_az_offered
+          field: field_az_offered_target_id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: taxonomy_index_tid
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_az_offered_target_id_op
+            label: Offered
+            description: ''
+            use_operator: false
+            operator: field_az_offered_target_id_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_az_offered_target_id
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          vid: az_opportunity_semester
+          type: select
+          hierarchy: false
+          limit: true
+          error_message: true
+        field_az_incentives_value:
+          id: field_az_incentives_value
+          table: node__field_az_incentives
+          field: field_az_incentives_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: boolean
+          operator: '='
+          value: All
+          group: 1
+          exposed: true
+          expose:
+            operator_id: ''
+            label: Incentives
+            description: ''
+            use_operator: false
+            operator: field_az_incentives_value_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_az_incentives_value
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
       style:
         type: default
         options:
