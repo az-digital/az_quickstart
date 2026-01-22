@@ -334,7 +334,7 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase implements 
       parse_str($parsed['query'], $query_params);
     }
     $parts = explode('/', trim($parsed['path'], '/'));
-    if (!empty($parts) && $parts[0] === 'publish') {
+    if ($parts[0] === 'publish') {
       $new_path = '/' . implode('/', $parts);
       return $parsed['scheme'] . '://' . $parsed['host'] . $new_path;
     }
