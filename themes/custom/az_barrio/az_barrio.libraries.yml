@@ -17,6 +17,12 @@ az-media-display:
 az-back-to-top:
   js:
     js/az-back-to-top.js: {}
+az-navbar:
+  js:
+    js/az-navbar.js: {}
+  dependencies:
+    - core/drupal
+    - az_barrio/arizona-bootstrap-js
 az-barrio-off-canvas-nav:
   css:
     theme:
@@ -40,8 +46,6 @@ arizona-bootstrap-css:
 arizona-bootstrap-js:
   js:
     /libraries/arizona-bootstrap/js/arizona-bootstrap.bundle.min.js: { minified: true }
-  dependencies:
-    - core/jquery
 button-no-conflict:
   js:
     js/button-no-conflict.js: {}
