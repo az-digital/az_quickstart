@@ -10,7 +10,7 @@ use Drupal\search_api\Processor\FieldsProcessorPluginBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Makes searches case-insensitive on selected fields.
+ * Transforms base_url into a value matching xmlsitemap.
  */
 #[SearchApiProcessor(
   id: 'az_base_url',
