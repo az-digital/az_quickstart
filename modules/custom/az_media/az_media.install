@@ -8,6 +8,8 @@
  * az_media module.
  */
 
+use Drupal\field\Entity\FieldStorageConfig;
+
 /**
  * Implements hook_update_last_removed().
  */
@@ -34,7 +36,7 @@ function az_media_update_1130101() {
  * Increase Trellis remote media URL length to 1024.
  */
 function az_media_update_1130102() {
-  $field_storage = \Drupal\field\Entity\FieldStorageConfig::load('media.field_media_az_media_remote');
+  $field_storage = FieldStorageConfig::load('media.field_media_az_media_remote');
   if ($field_storage) {
     $field_storage->setSetting('max_length', 1024);
     $field_storage->save();

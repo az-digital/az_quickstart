@@ -371,7 +371,7 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase implements 
         ],
       ]);
       if ($response->getStatusCode() !== 200) {
-        $cache->set($cid, NULL, 
+        $cache->set($cid, NULL,
           \Drupal::time()->getRequestTime() + 3600);
         return NULL;
       }
