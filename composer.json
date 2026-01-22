@@ -25,7 +25,7 @@
     ],
     "require": {
         "php": ">=8.3",
-        "az-digital/arizona-bootstrap": "5.0.4",
+        "az-digital/arizona-bootstrap": "5.0.5",
         "az-digital/az-icons": "1.0.4",
         "citation-style-language/locales": "0.0.81",
         "citation-style-language/styles": "0.0.668",
