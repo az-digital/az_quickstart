@@ -58,6 +58,9 @@ source:
       name: az_byline
       selector: az_byline
     -
+      name: az_byline_affiliation
+      selector: az_byline_affiliation
+    -
       name: az_contacts
       selector: az_contacts
     -
@@ -106,6 +109,7 @@ process:
       default_value: plain_text
 
   field_az_byline: az_byline
+  field_az_byline_affiliation: az_byline_affiliation
 
   temp_field_az_published:
     -
