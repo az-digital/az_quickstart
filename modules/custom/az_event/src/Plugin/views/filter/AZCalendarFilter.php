@@ -25,8 +25,9 @@ class AZCalendarFilter extends Date {
     if ($form_state->get('exposed')) {
       $filter_settings = [];
 
-      // Only attempt to get cell data if we're not already.
-      if (empty($this->view->cellQuery)) {
+      // Only attempt to get cell data if we're not already, and not in Views UI.
+      $is_views_ui = \Drupal::routeMatch()->getRouteName() === 'views_ui.form_display';
+      if (empty($this->view->cellQuery) && !$is_views_ui) {
         $filter_settings[$this->options['expose']['identifier']] = $this->calendarCells();
       }
 
