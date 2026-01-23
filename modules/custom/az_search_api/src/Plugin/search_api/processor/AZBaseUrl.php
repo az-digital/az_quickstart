@@ -61,7 +61,7 @@ class AZBaseUrl extends FieldsProcessorPluginBase {
   }
 
   /**
-   * Retrieves the entity type manager.
+   * Retrieves state service.
    *
    * @return \Drupal\Core\State\StateInterface
    *   The state service.
