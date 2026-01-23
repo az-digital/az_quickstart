@@ -1750,6 +1750,8 @@ display:
               secondary_open: false
               reset_button_always_show: true
             filter:
+              field_az_event_date_value_az_calendar:
+                plugin_id: default
               term_node_tid_depth:
                 plugin_id: az_finder_tid_widget
                 advanced:
