@@ -32,13 +32,6 @@ class AZBaseUrl extends FieldsProcessorPluginBase {
   protected $baseUrl;
 
   /**
-   * The xml_base_url.
-   *
-   * @var string
-   */
-  protected $xmlBaseUrl;
-
-  /**
    * The state service.
    */
   protected ?StateInterface $state = NULL;
