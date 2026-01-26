@@ -1,4 +1,6 @@
 smart_title:
+  - 'node:az_carousel_item'
+  - 'node:az_course'
   - 'node:az_event'
   - 'node:az_flexible_page'
   - 'node:az_news'
