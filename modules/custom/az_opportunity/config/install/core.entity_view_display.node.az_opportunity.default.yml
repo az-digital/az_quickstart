@@ -36,7 +36,6 @@ third_party_settings:
     group_col1:
       children:
         - group_where
-        - field_az_location
       label: col1
       parent_name: group_header_row
       region: content
@@ -57,7 +56,6 @@ third_party_settings:
     group_col2:
       children:
         - group_date
-        - field_az_offered
       label: col2
       parent_name: group_header_row
       region: content
@@ -78,7 +76,6 @@ third_party_settings:
     group_col3:
       children:
         - group_program_length
-        - field_az_program_length
       label: col3
       parent_name: group_header_row
       region: content
@@ -99,7 +96,6 @@ third_party_settings:
     group_col4:
       children:
         - group_modality
-        - field_az_modality
       label: col4
       parent_name: group_header_row
       region: content
@@ -120,8 +116,6 @@ third_party_settings:
     group_col5:
       children:
         - group_incentives
-        - field_az_incentives
-        - field_az_credit
       label: col5
       parent_name: group_header_row
       region: content
@@ -142,8 +136,6 @@ third_party_settings:
     group_col6:
       children:
         - group_audiences
-        - field_az_audiences
-        - field_az_opportunity_type
       label: col6
       parent_name: group_header_row
       region: content
@@ -162,14 +154,15 @@ third_party_settings:
         effect: none
         speed: fast
     group_col7:
-      children: {  }
+      children:
+        - field_az_program_website
       label: col7
-      parent_name: ''
-      region: hidden
+      parent_name: group_bottom_row
+      region: content
       weight: 15
       format_type: html_element
       format_settings:
-        classes: col7
+        classes: col
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -181,11 +174,12 @@ third_party_settings:
         effect: none
         speed: fast
     group_col8:
-      children: {  }
+      children:
+        - field_az_application_link
       label: col8
-      parent_name: ''
-      region: hidden
-      weight: 16
+      parent_name: group_bottom_row
+      region: content
+      weight: 17
       format_type: html_element
       format_settings:
         classes: col
@@ -225,7 +219,8 @@ third_party_settings:
         effect: none
         speed: fast
     group_where:
-      children: {  }
+      children:
+        - field_az_location
       label: Where
       parent_name: group_col1
       region: content
@@ -233,18 +228,19 @@ third_party_settings:
       format_type: html_element
       format_settings:
         classes: ''
-        show_empty_fields: true
+        show_empty_fields: false
         id: ''
         label_as_html: false
-        element: h4
+        element: div
         show_label: true
-        label_element: Where
-        label_element_classes: ''
+        label_element: h2
+        label_element_classes: 'h4 fw-bolder'
         attributes: ''
         effect: none
         speed: fast
     group_date:
-      children: {  }
+      children:
+        - field_az_offered
       label: Date
       parent_name: group_col2
       region: content
@@ -252,18 +248,19 @@ third_party_settings:
       format_type: html_element
       format_settings:
         classes: ''
-        show_empty_fields: true
+        show_empty_fields: false
         id: ''
         label_as_html: false
-        element: h4
+        element: div
         show_label: true
-        label_element: Date
-        label_element_classes: ''
+        label_element: h2
+        label_element_classes: 'h4 fw-bolder'
         attributes: ''
         effect: none
         speed: fast
     group_modality:
-      children: {  }
+      children:
+        - field_az_modality
       label: Modality
       parent_name: group_col4
       region: content
@@ -271,18 +268,20 @@ third_party_settings:
       format_type: html_element
       format_settings:
         classes: ''
-        show_empty_fields: true
+        show_empty_fields: false
         id: ''
         label_as_html: false
-        element: h4
+        element: div
         show_label: true
-        label_element: Modality
-        label_element_classes: ''
+        label_element: h2
+        label_element_classes: 'h4 fw-bolder'
         attributes: ''
         effect: none
         speed: fast
     group_incentives:
-      children: {  }
+      children:
+        - field_az_incentives
+        - field_az_credit
       label: Incentives
       parent_name: group_col5
       region: content
@@ -290,18 +289,20 @@ third_party_settings:
       format_type: html_element
       format_settings:
         classes: ''
-        show_empty_fields: true
+        show_empty_fields: false
         id: ''
         label_as_html: false
-        element: h4
+        element: div
         show_label: true
-        label_element: Incentives
-        label_element_classes: ''
+        label_element: h2
+        label_element_classes: 'h4 fw-bolder'
         attributes: ''
         effect: none
         speed: fast
     group_audiences:
-      children: {  }
+      children:
+        - field_az_audiences
+        - field_az_opportunity_type
       label: Audiences
       parent_name: group_col6
       region: content
@@ -312,15 +313,16 @@ third_party_settings:
         show_empty_fields: true
         id: ''
         label_as_html: false
-        element: h4
+        element: div
         show_label: true
-        label_element: Audiences
-        label_element_classes: ''
+        label_element: h2
+        label_element_classes: 'h4 fw-bolder'
         attributes: ''
         effect: none
         speed: fast
     group_program_length:
-      children: {  }
+      children:
+        - field_az_program_length
       label: Length
       parent_name: group_col3
       region: content
@@ -328,13 +330,13 @@ third_party_settings:
       format_type: html_element
       format_settings:
         classes: ''
-        show_empty_fields: true
+        show_empty_fields: false
         id: ''
         label_as_html: false
-        element: h4
+        element: div
         show_label: true
-        label_element: Length
-        label_element_classes: ''
+        label_element: h4
+        label_element_classes: 'h4 fw-bolder'
         attributes: ''
         effect: none
         speed: fast
@@ -348,6 +350,27 @@ third_party_settings:
       format_type: html_element
       format_settings:
         classes: mb-4
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_bottom_row:
+      children:
+        - group_col7
+        - group_col8
+      label: 'Bottom Row'
+      parent_name: ''
+      region: content
+      weight: 10
+      format_type: html_element
+      format_settings:
+        classes: row
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -378,7 +401,7 @@ content:
     region: content
   field_az_application_link:
     type: link
-    label: above
+    label: hidden
     settings:
       trim_length: 80
       url_only: false
@@ -386,7 +409,7 @@ content:
       rel: '0'
       target: '0'
     third_party_settings: {  }
-    weight: 10
+    weight: 16
     region: content
   field_az_attachments:
     type: file_default
@@ -400,7 +423,7 @@ content:
     type: entity_reference_label
     label: hidden
     settings:
-      link: true
+      link: false
     third_party_settings: {  }
     weight: 4
     region: content
@@ -430,7 +453,7 @@ content:
     weight: 4
     region: content
   field_az_location:
-    type: link_separate
+    type: link
     label: hidden
     settings:
       trim_length: 80
@@ -495,7 +518,7 @@ content:
     region: content
   field_az_program_website:
     type: link
-    label: above
+    label: hidden
     settings:
       trim_length: 80
       url_only: false

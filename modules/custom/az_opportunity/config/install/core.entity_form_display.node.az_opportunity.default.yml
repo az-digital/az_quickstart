@@ -27,6 +27,7 @@ dependencies:
     - datetime
     - file
     - link
+    - link_class
     - media_library
     - media_library_edit
     - path
@@ -64,12 +65,15 @@ content:
       duration_overlay: true
     third_party_settings: {  }
   field_az_application_link:
-    type: link_default
+    type: link_class_field_widget
     weight: 22
     region: content
     settings:
       placeholder_url: ''
       placeholder_title: ''
+      link_class_mode: force_class
+      link_class_force: 'btn btn-red'
+      link_class_select: ''
     third_party_settings: {  }
   field_az_attachments:
     type: file_generic

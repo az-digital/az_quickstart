@@ -10,22 +10,23 @@ dependencies:
   - az_core:az_core
   - calendar_link:calendar_link
   - date_ap_style:date_ap_style
-  - drupal:datetime_range
-  - drupal:field
   - field_group:field_group
   - jquery_ui_datepicker:jquery_ui_datepicker
+  - drupal:datetime_range
+  - drupal:field
   - drupal:file
   - drupal:link
+  - drupal:link_class
   - drupal:media
   - drupal:media_library
   - drupal:menu_ui
   - drupal:node
   - drupal:path
+  - drupal:taxonomy
+  - drupal:text
+  - drupal:user
   - pathauto:pathauto
   - smart_date:smart_date
   - smart_date:smart_date_recur
   - smart_title:smart_title
-  - drupal:taxonomy
-  - drupal:text
-  - drupal:user
   - views_bootstrap:views_bootstrap

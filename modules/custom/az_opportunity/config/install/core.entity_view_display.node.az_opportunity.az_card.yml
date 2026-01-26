@@ -37,7 +37,7 @@ third_party_settings:
       label: col1
       parent_name: ''
       region: hidden
-      weight: 19
+      weight: 16
       format_type: html_element
       format_settings:
         classes: col
@@ -56,7 +56,7 @@ third_party_settings:
       label: col2
       parent_name: ''
       region: hidden
-      weight: 20
+      weight: 17
       format_type: html_element
       format_settings:
         classes: col
@@ -75,7 +75,7 @@ third_party_settings:
       label: col3
       parent_name: ''
       region: hidden
-      weight: 22
+      weight: 19
       format_type: html_element
       format_settings:
         classes: col
@@ -94,7 +94,7 @@ third_party_settings:
       label: col4
       parent_name: ''
       region: hidden
-      weight: 23
+      weight: 20
       format_type: html_element
       format_settings:
         classes: col
@@ -113,7 +113,7 @@ third_party_settings:
       label: col5
       parent_name: ''
       region: hidden
-      weight: 24
+      weight: 21
       format_type: html_element
       format_settings:
         classes: col
@@ -132,7 +132,7 @@ third_party_settings:
       label: col6
       parent_name: ''
       region: hidden
-      weight: 21
+      weight: 18
       format_type: html_element
       format_settings:
         classes: col
@@ -151,7 +151,7 @@ third_party_settings:
       label: col7
       parent_name: ''
       region: hidden
-      weight: 25
+      weight: 22
       format_type: html_element
       format_settings:
         classes: col7
@@ -170,7 +170,7 @@ third_party_settings:
       label: col8
       parent_name: ''
       region: hidden
-      weight: 26
+      weight: 23
       format_type: html_element
       format_settings:
         classes: col
@@ -188,11 +188,12 @@ third_party_settings:
       children:
         - group_card_clickable
         - field_az_program_length
+        - links
         - group_read_more
       label: 'header row'
       parent_name: ''
       region: hidden
-      weight: 18
+      weight: 15
       format_type: html_element
       format_settings:
         classes: row
@@ -228,7 +229,6 @@ third_party_settings:
         speed: fast
     group_link:
       children:
-        - links
         - field_az_media_image
         - group_heading
         - group_text_body_secondary
@@ -267,14 +267,14 @@ third_party_settings:
         speed: fast
     group_text_body_secondary:
       children:
-        - field_az_application_date
         - field_az_location
+        - field_az_application_date
         - field_az_offered
         - field_az_modality
       label: 'Text Body Secondary'
       parent_name: group_link
       region: content
-      weight: 19
+      weight: 20
       format_type: html_element
       format_settings:
         classes: 'text-body-secondary fw-normal small mt-2'
@@ -347,19 +347,19 @@ content:
       from_to: both
       separator: '-'
     third_party_settings: {  }
-    weight: 2
+    weight: 6
     region: content
   field_az_location:
     type: link
-    label: inline
+    label: hidden
     settings:
       trim_length: 80
       url_only: false
       url_plain: false
-      rel: ''
-      target: ''
+      rel: '0'
+      target: '0'
     third_party_settings: {  }
-    weight: 3
+    weight: 5
     region: content
   field_az_media_image:
     type: entity_reference_entity_view
@@ -376,7 +376,7 @@ content:
     settings:
       link: false
     third_party_settings: {  }
-    weight: 5
+    weight: 8
     region: content
   field_az_offered:
     type: entity_reference_label
@@ -384,12 +384,7 @@ content:
     settings:
       link: false
     third_party_settings: {  }
-    weight: 4
-    region: content
-  links:
-    settings: {  }
-    third_party_settings: {  }
-    weight: 16
+    weight: 7
     region: content
   smart_title:
     settings: {  }
@@ -412,3 +407,4 @@ hidden:
   field_az_topic: true
   field_az_trellis_id: true
   field_az_trellis_imported_date: true
+  links: true
