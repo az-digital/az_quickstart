@@ -3,7 +3,6 @@
 namespace Drupal\az_event\Plugin\views\filter;
 
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\views\Attribute\ViewsFilter;
 use Drupal\views\Plugin\views\filter\Date;
 use Drupal\views\Views;
@@ -43,7 +42,8 @@ class AZCalendarFilter extends Date {
     if ($form_state->get('exposed')) {
       $filter_settings = [];
 
-      // Only attempt to get cell data if we're not already, and not in Views UI.
+      // Only attempt to get cell data if we're not already, and not in
+      // Views UI.
       $is_views_ui = $this->routeMatch->getRouteName() === 'views_ui.form_display';
       if (empty($this->view->cellQuery) && !$is_views_ui) {
         $filter_settings[$this->options['expose']['identifier']] = $this->calendarCells();
