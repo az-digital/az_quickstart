@@ -98,10 +98,9 @@ class QuickstartExposedFilters extends BetterExposedFilters {
       // Get configured button classes and split into an array.
       $button_classes = $options['reset_button_classes'] ?? static::DEFAULT_RESET_BUTTON_CLASSES;
       // Sanitize class names: only allow alphanumeric, hyphens, underscores, and spaces.
-      $button_classes = preg_replace('/[^a-zA-Z0-9\s_-]/', '', $button_classes);
-      $configured_classes = !empty($button_classes)
-        ? array_filter(explode(' ', trim($button_classes)))
-        : array_filter(explode(' ', static::DEFAULT_RESET_BUTTON_CLASSES));
+      $button_classes = preg_replace('/[^a-zA-Z0-9\s_\-]/', '', $button_classes);
+      // Split into array and filter empty elements.
+      $configured_classes = array_filter(explode(' ', trim($button_classes)));
       // Always add the js-active-filters-reset class for JavaScript functionality.
       $configured_classes[] = 'js-active-filters-reset';
       $reset_button['#attributes']['class'] = array_merge($existing_classes, $configured_classes);
