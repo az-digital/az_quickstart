@@ -110,7 +110,7 @@ class QuickstartExposedFilters extends BetterExposedFilters {
         }
       );
       $configured_classes = array_map([Html::class, 'getClass'], $class_array);
-      // Always add the js-active-filters-reset class for JavaScript functionality.
+      // Always add the js-active-filters-reset class for JS functionality.
       $configured_classes[] = 'js-active-filters-reset';
       $reset_button['#attributes']['class'] = array_merge($existing_classes, $configured_classes);
       // Add the reset button visibility setting to the drupalSettings array.
