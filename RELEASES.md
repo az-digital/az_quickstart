@@ -1,12 +1,14 @@
 # Arizona Quickstart Releases
 
-The overarching goal of this release policy is to ensure developers and site maintainers know what to expect when using Arizona Quickstart. Arizona Quickstart follows [semantic versioning](https://semver.org/) and aligns with Drupal's core release cycle to allow predictable updates, especially for security and stability.
+The overarching goal of this release policy is to ensure developers and site maintainers know what to expect when using Arizona Quickstart. Arizona Quickstart follows [semantic versioning](https://semver.org/) and aligns with [Drupal's core release cycle](https://www.drupal.org/about/core/policies/core-release-cycles/release-process-overview) to allow predictable updates, especially for security and stability.
 
 ## Release Support Policy
 
-Arizona Digital typically supports two minor releases of Arizona Quickstart at a time. Patch releases are issued as needed.
+Arizona Digital provides varying levels of support for three minor releases of Arizona Quickstart at a time. Different types of patch releases are issued as needed.
 
-When a new major version is planned, we may designate specific minor releases as the final **Long Term Support (LTS)** version for the existing major release. In these cases, the LTS version will continue receiving patch releases alongside a single minor release for the new major version.
+The latest minor version (e.g., 3.2) is supported with standard bugfix patch releases. Support for the previous minor release (3.1) is limited to security patch releases only.
+
+In addition, when a new major version is planned, we may designate a specific minor release of the existing major release as the **Long Term Support (LTS)** version. In these cases, the LTS version will continue receiving patch releases alongside the latest minor release for the new major version.
 
 ### Example Support Scenario
 
@@ -14,7 +16,8 @@ To illustrate how the LTS model works, consider the following example:
 
 - **2.14** is designated as the final Quickstart 2.x minor release and a **Long Term Support (LTS)** release.
 - When **3.0** is released, **2.14 (LTS)** and **3.0** will be supported concurrently.
-- When **3.1** is released, **3.0** will no longer be supported and **2.4 (LTS)** and **3.1** will be supported concurrently.
+- When **3.1** is released, **3.0** will receive only security support. **2.14 (LTS)** and **3.1** will be supported concurrently.
+- When **3.2** is released, **3.0** will no longer be supported. **3.1** will receive only security support. **2.14 (LTS)** and **3.2** will be supported concurrently.
 
 Once the version of Drupal core used by the LTS release (e.g., Drupal 10 for 2.14) reaches end-of-life, support for the LTS release also ends. We then resume our standard support policy of maintaining only the two most recent minor releases unless another LTS version is designated.
 
@@ -22,39 +25,70 @@ Once the version of Drupal core used by the LTS release (e.g., Drupal 10 for 2.1
 
 ### Patch Releases (`x.y.Z`)
 
-Patch releases are applied to the development branch first, then backported to all currently supported minor versions, including LTS versions.
+Patch releases are limited to changes that are backward-compatible, low-risk, and necessary to maintain stability, accessibility, and compliance.
 
-Patch releases are limited to changes that are:
+There are three types of Quickstart patch releases:
+- Bugfix patch releases
+- Security patch releases
+- Long Term Support (LTS) patch releases
 
-- Backward-compatible
-- Low-risk
-- Necessary to maintain stability, accessibility, and compliance
+#### _Included in Bugfix Patch Releases:_
 
-**Included in Patch Releases:**
-
-#### Arizona Quickstart (install profile, custom modules, theme)
-
+**Arizona Quickstart (install profile, custom modules, theme)**
 - Bug fixes
 - Accessibility improvements
 - Performance improvements
-- Security improvements
-- Critical institutional link changes (may include DB updates)
-- Critical brand changes (may include DB updates)
-- Addition or updates to experimental modules (typically excluded from LTS releases but may be included in patch releases for the current non-LTS minor release)
+- Security updates
+- Critical institutional link changes (may include database updates)
+- Critical brand changes (may include database updates)
+- Additions and updates to experimental modules
 
-#### Third-party dependencies
-
+**Third-party dependencies**
 - Drupal core  
-  - Security updates  
-  - Patch-level releases (non-security bug fixes)  
-  - Minor version updates (only included in LTS releases, to maintain alignment with Drupal's long-term support cycle)  
-  - Removal of no-longer-needed patches  
-- Drupal contrib projects  
-  - Security updates  
-  - Patch or minor version updates  
-  - Addition or removal of contrib modules or patches
+  - Security updates
+  - Patch-level releases (non-security bug fixes)
+  - Removal of no-longer-needed patches
+- Drupal contrib projects
+  - Security updates
+  - Patch or minor version updates
+  - Addition and removal of contrib modules or patches
+
+#### _Included in Security Patch Releases:_
+
+**Arizona Quickstart (install profile, custom modules, theme)**
+- Security updates
+
+**Third-party dependencies**
+- Drupal core
+  - Security updates
+  - Patch-level releases (to stay current with Drupal core)
+  - Removal of no-longer-needed patches
+- Drupal contrib projects
+  - Security updates
+
+#### _Included in LTS Patch Releases:_
+
+**Arizona Quickstart (install profile, custom modules, theme)**
+- Bug fixes
+- Accessibility improvements
+- Performance improvements
+- Security updates
+- Critical institutional link changes (may include database updates)
+- Critical brand changes (may include database updates)
+
+**Third-party dependencies**
+- Drupal core  
+  - Security updates
+  - Patch-level releases (non-security bug fixes)
+  - Minor version updates (only included in LTS releases, to maintain alignment with Drupal's long-term support cycle)
+  - Removal of no-longer-needed patches
+- Drupal contrib projects
+  - Security updates
+  - Patch or minor version updates
+  - Addition and removal of contrib modules or patches
 
 > For LTS releases, critical institutional changes (e.g. required footer updates) may include database updates. These should be designed to minimize disruption to site owners and include opt-out paths where applicable.
+
 
 ### Minor Releases (`x.Y.z`)
 
@@ -126,7 +160,7 @@ To ensure reliability, experimental modules should:
 
 #### Promotion Process
 
-- Full testing in Probo.CI
+- Full testing in Tugboat
 - Complete documentation
 - Review and approval from the development team and stakeholders
 
