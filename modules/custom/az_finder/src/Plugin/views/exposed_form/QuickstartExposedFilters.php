@@ -6,6 +6,7 @@ namespace Drupal\az_finder\Plugin\views\exposed_form;
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\Component\Utility\Html;
 use Drupal\better_exposed_filters\Plugin\views\exposed_form\BetterExposedFilters;
 use Drupal\views\Attribute\ViewsExposedForm;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -27,7 +28,7 @@ class QuickstartExposedFilters extends BetterExposedFilters {
    *
    * @var string
    */
-  const DEFAULT_RESET_BUTTON_CLASSES = 'btn btn-secondary btn-sm w-100 mb-3 ms-1 me-1';
+  const DEFAULT_RESET_BUTTON_CLASSES = 'btn btn-sm btn-secondary w-100 mx-1 mb-3';
 
   /**
    * The config factory.
@@ -97,10 +98,9 @@ class QuickstartExposedFilters extends BetterExposedFilters {
       $existing_classes = $reset_button['#attributes']['class'] ?? [];
       // Get configured button classes and split into an array.
       $button_classes = $options['reset_button_classes'] ?? static::DEFAULT_RESET_BUTTON_CLASSES;
-      // Sanitize class names: only allow alphanumeric, hyphens, underscores, and spaces.
-      $button_classes = preg_replace('/[^a-zA-Z0-9\s_\-]/', '', $button_classes);
-      // Split into array and filter empty elements.
-      $configured_classes = array_filter(explode(' ', trim($button_classes)));
+      // Split into array, sanitize each class, and filter empty elements.
+      $class_array = array_filter(explode(' ', trim($button_classes)));
+      $configured_classes = array_map([Html::class, 'getClass'], $class_array);
       // Always add the js-active-filters-reset class for JavaScript functionality.
       $configured_classes[] = 'js-active-filters-reset';
       $reset_button['#attributes']['class'] = array_merge($existing_classes, $configured_classes);
