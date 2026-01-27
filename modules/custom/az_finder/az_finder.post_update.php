@@ -9,8 +9,9 @@ use Drupal\Core\Config\Entity\ConfigEntityUpdater;
 use Drupal\views\ViewEntityInterface;
 
 /**
- * Add default reset_button_classes to existing views using
- * az_better_exposed_filters.
+ * Add default reset_button_classes to existing views.
+ *
+ * Updates all views using az_better_exposed_filters.
  */
 function az_finder_post_update_add_reset_button_classes(&$sandbox) {
   // Use the same default classes as defined in QuickstartExposedFilters.
