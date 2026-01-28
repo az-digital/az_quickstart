@@ -67,6 +67,8 @@ There are three types of Quickstart patch releases:
   - Removal of no-longer-needed patches
 - Drupal contrib projects
   - Security updates
+- Other PHP or Javascript packages and libraries
+  - Security updates
 
 #### _Included in LTS Patch Releases:_
 
