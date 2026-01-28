@@ -97,7 +97,7 @@ jobs:
           else
             echo "DEV_PACKAGE_BRANCH=${DEFAULT_DEV_BRANCH}" >> ${GITHUB_ENV}
           fi
-          echo "CACHE_KEY=${GITHUB_WORKFLOW}-${AZ_SOURCE_REF}-${GITHUB_SHA}-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}" >> ${GITHUB_ENV}
+          echo "CACHE_KEY=${GITHUB_WORKFLOW}-${AZ_SOURCE_REF}-${GITHUB_SHA}" >> ${GITHUB_ENV}
       - name: Clone scaffolding repo
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
