@@ -2,7 +2,6 @@
 
 namespace Drupal\az_search_api\Plugin\search_api\processor;
 
-use Drupal\Core\State\StateInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
 use Drupal\search_api\Attribute\SearchApiProcessor;
@@ -29,12 +28,7 @@ class AZBaseUrl extends FieldsProcessorPluginBase {
    *
    * @var string
    */
-  protected $baseUrl;
-
-  /**
-   * The state service.
-   */
-  protected ?StateInterface $state = NULL;
+  protected ?string $baseUrl;
 
   /**
    * {@inheritdoc}
@@ -43,51 +37,32 @@ class AZBaseUrl extends FieldsProcessorPluginBase {
     /** @var static $processor */
     $processor = parent::create($container, $configuration, $plugin_id, $plugin_definition);
 
-    // Compute the baseUrl from front page;
-    // Cannot use the request object here, there may be no request.
-    $url = Url::fromRoute('<front>', [], ['absolute' => TRUE]);
-    $processor->baseUrl = $url->toString();
+    // \Drupal\Core\State\StateInterface $state;
+    $state = $container->get('state');
+    $baseUrl = $state->get('xmlsitemap_base_url');
+    if (!empty($baseUrl)) {
+      // Append a trailing slash if there isn't one.
+      if (!str_ends_with($baseUrl, '/')) {
+        $baseUrl .= '/';
+      }
+      $processor->baseUrl = $baseUrl;
+    }
 
-    // Get the state service.
-    $processor->setState($container->get('state'));
     return $processor;
-  }
-
-  /**
-   * Retrieves state service.
-   *
-   * @return \Drupal\Core\State\StateInterface
-   *   The state service.
-   */
-  public function getState(): StateInterface {
-    return $this->state ?: \Drupal::state();
-  }
-
-  /**
-   * Sets the state service.
-   *
-   * @param \Drupal\Core\State\StateInterface $state
-   *   The state service.
-   *
-   * @return $this
-   */
-  public function setState(StateInterface $state): static {
-    $this->state = $state;
-    return $this;
   }
 
   /**
    * {@inheritdoc}
    */
   protected function process(&$value) {
-    // @todo should xml_base be set once in the constructor?
-    $xml_base = $this->getState()->get('xmlsitemap_base_url');
-    if (!empty($xml_base)) {
-      // Append a trailing slash if there isn't one.
-      if (!str_ends_with($xml_base, '/')) {
-        $xml_base .= '/';
-      }
-      $value = str_replace($this->baseUrl, $xml_base, $value);
+    // Compute the current base URL.
+    // This can vary, e.g. drush, other environments.
+    // Cannot use the request object here, there may be no request.
+    $url = Url::fromRoute('<front>', [], ['absolute' => TRUE]);
+    $url = $url->toString();
+
+    if (!empty($this->baseUrl)) {
+      $value = str_replace($url, $this->baseUrl, $value);
     }
   }
 
