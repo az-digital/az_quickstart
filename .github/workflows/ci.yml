@@ -97,6 +97,7 @@ jobs:
           else
             echo "DEV_PACKAGE_BRANCH=${DEFAULT_DEV_BRANCH}" >> ${GITHUB_ENV}
           fi
+          echo "CACHE_KEY=${GITHUB_WORKFLOW}-${AZ_SOURCE_REF}-${GITHUB_SHA}-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}" >> ${GITHUB_ENV}
       - name: Clone scaffolding repo
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
@@ -120,7 +121,7 @@ jobs:
         uses: actions/cache/save@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
         with:
           path: ${{ github.workspace }}/az-quickstart-scaffolding
-          key: azqs-build-${{ github.sha }}
+          key: ${{ env.CACHE_KEY }}
 
   phpcs:
     name: PHP_CodeSniffer
@@ -134,7 +135,8 @@ jobs:
       - uses: actions/cache/restore@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
         with:
           path: ${{ github.workspace }}/az-quickstart-scaffolding
-          key: azqs-build-${{ github.sha }}
+          key: ${{ env.CACHE_KEY }}
+          fail-on-cache-miss: true
       - name: Generate phpcs report
         continue-on-error: true
         run: |
@@ -157,7 +159,8 @@ jobs:
       - uses: actions/cache/restore@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
         with:
           path: ${{ github.workspace }}/az-quickstart-scaffolding
-          key: azqs-build-${{ github.sha }}
+          key: ${{ env.CACHE_KEY }}
+          fail-on-cache-miss: true
       - name: Run phpstan
         run: |
           cd $GITHUB_WORKSPACE/az-quickstart-scaffolding
@@ -171,7 +174,8 @@ jobs:
       - uses: actions/cache/restore@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
         with:
           path: ${{ github.workspace }}/az-quickstart-scaffolding
-          key: azqs-build-${{ github.sha }}
+          key: ${{ env.CACHE_KEY }}
+          fail-on-cache-miss: true
       - name: Run composer audit
         run: |
           cd az-quickstart-scaffolding
@@ -236,7 +240,8 @@ jobs:
       - uses: actions/cache/restore@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
         with:
           path: ${{ github.workspace }}/az-quickstart-scaffolding
-          key: azqs-build-${{ github.sha }}
+          key: ${{ env.CACHE_KEY }}
+          fail-on-cache-miss: true
       - name: Run php built-in server
         run: |
           cd az-quickstart-scaffolding
@@ -293,7 +298,8 @@ jobs:
       - uses: actions/cache/restore@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
         with:
           path: ${{ github.workspace }}/az-quickstart-scaffolding
-          key: azqs-build-${{ github.sha }}
+          key: ${{ env.CACHE_KEY }}
+          fail-on-cache-miss: true
       - name: Install AZ Quickstart
         run: |
           cd az-quickstart-scaffolding
@@ -344,7 +350,8 @@ jobs:
       - uses: actions/cache/restore@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
         with:
           path: ${{ github.workspace }}/az-quickstart-scaffolding
-          key: azqs-build-${{ github.sha }}
+          key: ${{ env.CACHE_KEY }}
+          fail-on-cache-miss: true
       - name: Install AZ Quickstart
         run: |
           cd az-quickstart-scaffolding
