@@ -89,7 +89,8 @@ There are three types of Quickstart patch releases:
 - Drupal contrib projects
   - Security updates
   - Patch or minor version updates
-  - Addition and removal of contrib modules or patches
+  - Removal of contrib modules that become unsupported
+  - Addition and removal of patches
 - Other PHP or Javascript packages and libraries
   - Security updates
   - Patch or minor version updates
