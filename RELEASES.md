@@ -52,7 +52,9 @@ There are three types of Quickstart patch releases:
   - Security updates
   - Patch or minor version updates
   - Addition and removal of contrib modules or patches
-
+- Other PHP or Javascript packages and libraries
+  - Security updates
+  - Patch or minor version updates
 #### _Included in Security Patch Releases:_
 
 **Arizona Quickstart (install profile, custom modules, theme)**
