@@ -38,7 +38,7 @@ There are three types of Quickstart patch releases:
 - Bug fixes
 - Accessibility improvements
 - Performance improvements
-- Security updates
+- Security updates or improvements
 - Critical institutional link changes (may include database updates)
 - Critical brand changes (may include database updates)
 - Additions and updates to experimental modules
