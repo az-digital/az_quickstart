@@ -97,7 +97,9 @@
               const month = dates[i].getMonth() + 1;
               const day = dates[i].getDate();
               const year = dates[i].getFullYear();
-              $ancestor.find('input').eq(i).val(`${year}-${month}-${day}`);
+              const input = $ancestor.find('input').eq(i)[0];
+              input.value = `${year}-${month}-${day}`;
+              input.dispatchEvent(new Event('change', { bubbles: true }));
             }
 
             // Signal to UI that the inputs were updated programmatically.
