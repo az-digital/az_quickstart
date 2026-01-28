@@ -90,6 +90,9 @@ There are three types of Quickstart patch releases:
   - Security updates
   - Patch or minor version updates
   - Addition and removal of contrib modules or patches
+- Other PHP or Javascript packages and libraries
+  - Security updates
+  - Patch or minor version updates
 
 > For LTS releases, critical institutional changes (e.g. required footer updates) may include database updates. These should be designed to minimize disruption to site owners and include opt-out paths where applicable.
 
