@@ -8,6 +8,8 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\better_exposed_filters\Plugin\views\exposed_form\BetterExposedFilters;
 use Drupal\views\Attribute\ViewsExposedForm;
+use Drupal\views\Plugin\views\display\DisplayPluginBase;
+use Drupal\views\ViewExecutable;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -43,6 +45,17 @@ class QuickstartExposedFilters extends BetterExposedFilters {
     $instance = parent::create($container, $configuration, $plugin_id, $plugin_definition);
     $instance->configFactory = $container->get('config.factory');
     return $instance;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function init(ViewExecutable $view, DisplayPluginBase $display, ?array &$options = NULL): void {
+    if ($options === NULL) {
+      $options = [];
+    }
+    parent::init($view, $display, $options);
+    // Now $this->displayHandler should be properly populated.
   }
 
   /**
@@ -88,15 +101,14 @@ class QuickstartExposedFilters extends BetterExposedFilters {
         $reset_button['#weight'] = -1000;
       }
       $existing_classes = $reset_button['#attributes']['class'] ?? [];
-      $reset_button['#attributes']['class'] = array_merge($existing_classes, [
-        'btn',
-        'btn-sm',
-        'btn-secondary',
-        'w-100',
-        'js-active-filters-reset',
-        'mx-1',
-        'mb-3',
-      ]);
+      // Always add essential JavaScript class.
+      $button_classes = ['js-active-filters-reset'];
+      // Add configured classes.
+      $configured_classes = $options['reset_button_classes'] ?? 'btn btn-secondary btn-sm w-100 mb-3 ms-1 me-1';
+      if (!empty($configured_classes)) {
+        $button_classes = array_merge($button_classes, explode(' ', trim($configured_classes)));
+      }
+      $reset_button['#attributes']['class'] = array_merge($existing_classes, $button_classes);
       // Add the reset button visibility setting to the drupalSettings array.
       if ($this->options['bef']['general']['reset_button_always_show'] === TRUE) {
         $form['#attached']['drupalSettings']['azFinder']['alwaysDisplayResetButton'] = TRUE;
@@ -183,6 +195,7 @@ class QuickstartExposedFilters extends BetterExposedFilters {
     $options = parent::defineOptions();
     $options['reset_button_position'] = ['default' => 'bottom'];
     $options['reset_button_counter'] = ['default' => FALSE];
+    $options['reset_button_classes'] = ['default' => 'btn btn-secondary btn-sm w-100 mb-3 ms-1 me-1'];
     $options['orientation'] = ['default' => 'horizontal'];
     $options['skip_link'] = ['default' => FALSE];
     $options['skip_link_text'] = ['default' => $this->t('Skip to search and filter')];
@@ -196,9 +209,19 @@ class QuickstartExposedFilters extends BetterExposedFilters {
    */
   public function buildOptionsForm(&$form, FormStateInterface $form_state): void {
     parent::buildOptionsForm($form, $form_state);
-    $reset_button_option = $form['bef']['general']['reset_button'];
-    unset($form['bef']['general']['reset_button']);
-    $form['bef']['general']['reset_button'] = $reset_button_option;
+
+    // Ensure the form structure exists before manipulating it.
+    if (!isset($form['bef']['general'])) {
+      return;
+    }
+
+    // Move reset_button to maintain order.
+    if (isset($form['bef']['general']['reset_button'])) {
+      $reset_button_option = $form['bef']['general']['reset_button'];
+      unset($form['bef']['general']['reset_button']);
+      $form['bef']['general']['reset_button'] = $reset_button_option;
+    }
+
     $form['bef']['general']['reset_button_settings'] = [
       '#type' => 'details',
       '#title' => $this->t('Reset Button Settings'),
@@ -232,6 +255,12 @@ class QuickstartExposedFilters extends BetterExposedFilters {
       '#title' => $this->t('Show active filter counter'),
       '#description' => $this->t('Show a counter of active filters within the reset button next to the text.'),
       '#default_value' => $this->options['reset_button_counter'] ?? FALSE,
+    ];
+    $form['bef']['general']['reset_button_settings']['reset_button_classes'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Button CSS Classes'),
+      '#default_value' => $this->options['reset_button_classes'] ?? 'btn btn-secondary btn-sm w-100 mb-3 ms-1 me-1',
+      '#description' => $this->t('CSS classes to apply to the reset button. The <code>js-active-filters-reset</code> class is always added for functionality. Example: <code>btn btn-secondary btn-sm w-100 mb-3 ms-1 me-1</code>'),
     ];
     $form['bef']['general']['skip_link'] = [
       '#type' => 'checkbox',
@@ -290,6 +319,7 @@ class QuickstartExposedFilters extends BetterExposedFilters {
         $this->options['bef']['general']['reset_button_always_show'] = $reset_button_settings['reset_button_always_show'] ?? FALSE;
         $this->options['reset_button_position'] = $reset_button_settings['reset_button_position'] ?? 'bottom';
         $this->options['reset_button_counter'] = $reset_button_settings['reset_button_counter'] ?? FALSE;
+        $this->options['reset_button_classes'] = $reset_button_settings['reset_button_classes'] ?? 'btn btn-secondary btn-sm w-100 mb-3 ms-1 me-1';
         $this->options['orientation'] = $general_settings['orientation'] ?? 'vertical';
         $this->options['skip_link'] = $general_settings['skip_link'] ?? FALSE;
         $this->options['skip_link_text'] = $general_settings['skip_link_settings']['skip_link_text'] ?? $this->t('Skip to search and filter');

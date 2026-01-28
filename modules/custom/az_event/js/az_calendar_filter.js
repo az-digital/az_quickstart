@@ -41,6 +41,8 @@
           const $wrapper = $(this);
           // rangeKey contains our filter identifier to find calendar cell data.
           const rangeKey = $wrapper.data('az-calendar-filter');
+          // Get calendar top margin configuration.
+          const calendarTopMargin = $wrapper.data('calendar-top-margin') || '2';
           let rangeStart = null;
           let rangeEnd = null;
           $wrapper.append(
@@ -50,6 +52,8 @@
             '.az-calendar-filter-buttons',
           );
           const $calendar = $wrapper.children('.az-calendar-filter-calendar');
+          // Apply top margin class to calendar.
+          $calendar.addClass(`mt-${calendarTopMargin}`);
           const $submitButton = $wrapper
             .closest('.views-exposed-form')
             .find('button.form-submit');
@@ -222,6 +226,22 @@
             $('.az-calendar-filter-calendar').datepicker('refresh');
             $pressed.addClass('active').attr('aria-pressed', 'true');
           });
+
+          // Listen for reset event from the reset button.
+          $wrapper
+            .closest('[data-az-better-exposed-filters]')
+            .on('az-finder-filter-reset', () => {
+              // Clear button active states.
+              $buttonWrapper
+                .find('.calendar-filter-button')
+                .removeClass('active')
+                .attr('aria-pressed', 'false');
+              // Clear range selection.
+              rangeStart = null;
+              rangeEnd = null;
+              // Refresh the datepicker to clear any selections.
+              $calendar.datepicker('refresh');
+            });
         });
     },
   };
