@@ -211,7 +211,7 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
           );
           // If the date field only has a recurring item, check for overrides.
           if (!$are_occurrences_modified) {
-            /** @var \Drupal\smart_date_recur\Entity\SmartDateRule $smart_date_rule */
+            /** @var ?\Drupal\smart_date_recur\Entity\SmartDateRule $smart_date_rule */
             $smart_date_rule = \Drupal::entityTypeManager()->getStorage('smart_date_rule')->load($event_rrules[0]);
             $are_occurrences_modified = (!isset($smart_date_rule) || empty($smart_date_rule->getRuleOverrides())) ? FALSE : TRUE;
           }
@@ -317,7 +317,7 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
 function az_event_get_recurrence_text(string $rule_index, array $last_occurrence, string $event_langcode) {
   $recurrence_text = '';
 
-  /** @var \Drupal\smart_date_recur\Entity\SmartDateRule $smart_date_rule */
+  /** @var ?\Drupal\smart_date_recur\Entity\SmartDateRule $smart_date_rule */
   $smart_date_rule = \Drupal::entityTypeManager()->getStorage('smart_date_rule')->load($rule_index);
   if (!isset($smart_date_rule)) {
     return $recurrence_text;
