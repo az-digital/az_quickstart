@@ -1,0 +1,42 @@
+id: az_trellis_opportunity_files
+label: Trellis Opportunity Files
+source:
+  plugin: az_trellis_opportunity_api
+  trellis_ids: {  }
+  track_changes: true
+  fields:
+    -
+      name: id
+      label: ID
+      selector: Id
+    -
+      name: image_url
+      label: 'Image URL'
+      selector: Image_URL
+  ids:
+    id:
+      type: string
+
+process:
+  status:
+    plugin: default_value
+    default_value: 1
+
+  uri:
+    -
+      plugin: az_migration_remote_file
+      migration: az_trellis_opportunity_files
+      default_filename: id
+      directory: 'public://trellis-opportunity'
+      source_ids:
+        - id
+      source: image_url
+    -
+      plugin: skip_on_empty
+      method: row
+  uid:
+    plugin: default_value
+    default_value: 0
+
+destination:
+  plugin: entity:file
