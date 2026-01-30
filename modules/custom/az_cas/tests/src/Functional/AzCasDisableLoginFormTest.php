@@ -4,12 +4,13 @@ namespace Drupal\Tests\az_cas\Functional;
 
 use Drupal\Core\Url;
 use Drupal\Tests\az_core\Functional\QuickstartFunctionalTestBase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Tests that access to the user login form can be disabled.
- *
- * @group az_cas
  */
+#[Group('az_cas')]
 class AzCasDisableLoginFormTest extends QuickstartFunctionalTestBase {
 
   /**
@@ -51,9 +52,8 @@ class AzCasDisableLoginFormTest extends QuickstartFunctionalTestBase {
 
   /**
    * Tests that access to the user login form is disabled.
-   *
-   * @dataProvider azCasSettingsProvider
    */
+  #[DataProvider('azCasSettingsProvider')]
   public function testUserLoginFormBehavior($disable_login_form) {
     $edit = [
       'disable_login_form' => $disable_login_form,
