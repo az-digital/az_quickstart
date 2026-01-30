@@ -288,9 +288,36 @@ processor_settings:
   add_url: {  }
   aggregated_field: {  }
   auto_aggregated_fulltext_field: {  }
+  az_base_url:
+    weights:
+      preprocess_index: -15
+      preprocess_query: -15
+    all_fields: 1
+    fields:
+      - description
+      - field_az_awards
+      - field_az_body
+      - field_az_degrees
+      - field_az_event_category
+      - field_az_link
+      - field_az_location
+      - field_az_media_thumbnail_image
+      - field_az_news_tags
+      - field_az_page_category
+      - field_az_person_category
+      - field_az_person_category_sec
+      - field_az_short_title
+      - field_az_subheading
+      - field_az_summary
+      - field_media_az_image
+      - rendered_item
+      - sitename
+      - title
+      - type
+      - url
   az_image_derivative:
     weights:
-      preprocess_index: -20
+      preprocess_index: -16
     all_fields: 0
     fields:
       field_az_media_thumbnail_image: field_az_media_thumbnail_image
@@ -310,6 +337,7 @@ processor_settings:
       field_az_subheading: 0
       field_az_summary: 0
       rendered_item: 0
+      sitename: 0
       title: 0
       type: 0
       url: 0
@@ -320,8 +348,8 @@ processor_settings:
   entity_type: {  }
   html_filter:
     weights:
-      preprocess_index: -15
-      preprocess_query: -15
+      preprocess_index: -10
+      preprocess_query: 0
     all_fields: false
     fields:
       - description
