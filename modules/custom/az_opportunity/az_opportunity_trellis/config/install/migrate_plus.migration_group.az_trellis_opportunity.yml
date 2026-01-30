@@ -1,0 +1,11 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - az_opportunity_trellis
+id: az_trellis_opportunity
+label: 'AZ Trellis Opportunity'
+description: 'Import AZ Opportunities from Trellis Programs.'
+source_type: 'Trellis Opportunity'
+module: az_opportunity_trellis
+shared_configuration: null
