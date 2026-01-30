@@ -353,6 +353,8 @@ processor_settings:
     all_fields: false
     fields:
       - description
+      - field_az_body
+      - rendered_item
     title: false
     alt: false
     tags:
