@@ -1,11 +1,16 @@
 # Arizona Quickstart Releases
 The overarching goal of this release policy is to make sure that developers know what to expect when they use Arizona Quickstart for their websites. Arizona Quickstart has adopted semantic versioning to allow site maintainers to keep websites up to date with security updates and other critical improvements without having to track the ongoing feature development of Arizona Quickstart.
 
+<<<<<<< HEAD
 ## Release Overview
 Arizona Digital will support two minor releases at a time with ongoing patch releases. This process will allow for flexibility of development while allowing site owners to have more stable websites with fewer ongoing updates.
+=======
+The overarching goal of this release policy is to ensure developers and site maintainers know what to expect when using Arizona Quickstart. Arizona Quickstart follows [semantic versioning](https://semver.org/) and aligns with [Drupal's core release cycle](https://www.drupal.org/about/core/policies/core-release-cycles/release-process-overview) to allow predictable updates, especially for security and stability.
+>>>>>>> c5267b56 (Closes #5231 Clarify release policy for multiple minor releases. (#5228))
 
 _**Note:** When an Arizona Quickstart minor release contains a major or minor Drupal core release, it will be vital that existing sites are updated to the latest patch release of the previous minor version of Arizona Quickstart and ensure that Drupal database updates have been applied BEFORE updating to the new minor release._
 
+<<<<<<< HEAD
 ### Patch Releases (x.y.Z)
 Patch releases will be applied to the current development branch first and then backported to the currently supported minor release(s). These will be released as necessary and limited to:
 - Arizona Quickstart (install profile, custom modules, custom theme)
@@ -52,6 +57,13 @@ The following types of changes are allowed for minor releases in addition to tho
   - Changes requiring an upgrade path
   - Changes that risk regressions
   - Other disruptive bug fixes or high-risk changes
+=======
+Arizona Digital provides varying levels of support for three minor releases of Arizona Quickstart at a time. Different types of patch releases are issued as needed.
+
+The latest minor version (e.g., 3.2) is supported with standard bugfix patch releases. Support for the previous minor release (3.1) is limited to security patch releases only.
+
+In addition, when a new major version is planned, we may designate a specific minor release of the existing major release as the **Long Term Support (LTS)** version. In these cases, the LTS version will continue receiving patch releases alongside the latest minor release for the new major version.
+>>>>>>> c5267b56 (Closes #5231 Clarify release policy for multiple minor releases. (#5228))
 
 ### Major Releases (X.y.z)
 No decisions have been made about what will constitute the next major release yet.
@@ -75,11 +87,139 @@ The goal of the stable release is to provide a version of Quickstart for The Uni
 Once two more releases of Quickstart are available (approximately one year from initial release), releases will no longer be supported. This means that they will not receive any further security updates or bug fixes.
 -->
 
+<<<<<<< HEAD
 ### Beta Releases (beta)
 Beta releases serve as a preview of the upcoming stable release and are meant for testing purposes. They provide developers and site maintainers an opportunity to test new features, APIs, and compatibility with existing configurations. Feedback from beta testing is crucial to address bugs, performance issues, or any other concerns before the stable release.
 
 ### Release Candidates (rc)
 Release candidates are the final step before the stable release. These versions are considered feature complete, with all proposed features implemented and bugs addressed. The primary purpose of an RC is to ensure that there are no critical issues that were missed during beta testing. If no significant problems are identified in an RC, it can be promoted to a stable release. However, if issues are found, they are addressed, and a new RC is issued for testing.
+=======
+- **2.14** is designated as the final Quickstart 2.x minor release and a **Long Term Support (LTS)** release.
+- When **3.0** is released, **2.14 (LTS)** and **3.0** will be supported concurrently.
+- When **3.1** is released, **3.0** will receive only security support. **2.14 (LTS)** and **3.1** will be supported concurrently.
+- When **3.2** is released, **3.0** will no longer be supported. **3.1** will receive only security support. **2.14 (LTS)** and **3.2** will be supported concurrently.
+
+Once the version of Drupal core used by the LTS release (e.g., Drupal 10 for 2.14) reaches end-of-life, support for the LTS release also ends. We then resume our standard support policy of maintaining only the two most recent minor releases unless another LTS version is designated.
+
+## Release Types
+
+### Patch Releases (`x.y.Z`)
+
+Patch releases are limited to changes that are backward-compatible, low-risk, and necessary to maintain stability, accessibility, and compliance. They will avoid visual changes when possible.
+
+There are three types of Quickstart patch releases:
+- Bugfix patch releases
+- Security patch releases
+- Long Term Support (LTS) patch releases
+
+#### _Included in Bugfix Patch Releases:_
+
+**Arizona Quickstart (install profile, custom modules, theme)**
+- Bug fixes
+- Accessibility improvements
+- Performance improvements
+- Security updates or improvements
+- Critical institutional link changes (may include database updates)
+- Critical brand changes (may include database updates)
+- Additions and updates to experimental modules
+
+**Third-party dependencies**
+- Drupal core  
+  - Security updates
+  - Patch-level releases (non-security bug fixes)
+  - Removal of no-longer-needed patches
+- Drupal contrib projects
+  - Security updates
+  - Patch or minor version updates
+  - Addition and removal of contrib modules or patches
+- Other PHP or Javascript packages and libraries
+  - Security updates
+  - Patch or minor version updates
+#### _Included in Security Patch Releases:_
+
+**Arizona Quickstart (install profile, custom modules, theme)**
+- Security updates
+
+**Third-party dependencies**
+- Drupal core
+  - Security updates
+  - Patch-level releases (to stay current with Drupal core)
+  - Removal of no-longer-needed patches
+- Drupal contrib projects
+  - Security updates
+- Other PHP or Javascript packages and libraries
+  - Security updates
+
+#### _Included in LTS Patch Releases:_
+
+**Arizona Quickstart (install profile, custom modules, theme)**
+- Bug fixes
+- Accessibility improvements
+- Performance improvements
+- Security updates
+- Critical institutional link changes (may include database updates)
+- Critical brand changes (may include database updates)
+
+**Third-party dependencies**
+- Drupal core  
+  - Security updates
+  - Patch-level releases (non-security bug fixes)
+  - Minor version updates (only included in LTS releases, to maintain alignment with Drupal's long-term support cycle)
+  - Removal of no-longer-needed patches
+- Drupal contrib projects
+  - Security updates
+  - Patch or minor version updates
+  - Removal of contrib modules that become unsupported
+  - Addition and removal of patches
+- Other PHP or Javascript packages and libraries
+  - Security updates
+  - Patch or minor version updates
+
+> For LTS releases, critical institutional changes (e.g. required footer updates) may include database updates. These should be designed to minimize disruption to site owners and include opt-out paths where applicable.
+
+
+### Minor Releases (`x.Y.z`)
+
+Minor releases may include all patch-level changes, as well as:
+
+#### Functionality and Frontend
+
+- New features
+- Changes to behavior that existing sites may rely on
+- Changes to visual appearance, CSS, templates, or markup  
+  - Including breaking changes that may require manual adjustment
+- Experimental modules promoted to Stable
+- Enabling stable modules by default
+
+#### Dependencies
+
+- Drupal core minor version updates
+- Drupal contrib major version updates
+
+#### APIs
+
+- New internal APIs or API enhancements (backward-compatible preferred)
+
+#### Code Quality
+
+- Disruptive coding standard or architectural changes
+- Risky or regression-prone fixes requiring manual testing or upgrade paths
+
+### Major Releases (`X.y.z`)
+
+- Drupal core major version updates
+- Arizona Bootstrap major version updates
+
+## Pre-Release Versions
+
+### Alpha Releases (`alpha`)
+
+Previews of upcoming minor releases for testing and feedback. Alpha versions are feature-complete but may contain known issues or incomplete documentation.
+
+### Beta Releases (`beta`)
+
+Beta releases are considered stable pending final verification. If no critical issues are found, the beta is promoted to a full release. Otherwise, a new beta may be issued.
+>>>>>>> c5267b56 (Closes #5231 Clarify release policy for multiple minor releases. (#5228))
 
 ## Experimental Features
 When adding new features to Quickstart, particularly large or complicated
@@ -133,9 +273,28 @@ Experimental modules to Stable with each minor release.
   
 ## Update hook numbering convention
 
+<<<<<<< HEAD
 In order to allow update hooks to be added to different minor release branches
 independently, DB update hooks implementing `hook_update_N()` should adhere to
 the following update numbering convention.
+=======
+To ensure reliability, experimental modules should:
+
+- Be feature-complete
+- Be tested on live sites for at least one minor release cycle
+- Have no unresolved critical issues
+- Depend only on stable modules
+
+#### Promotion Process
+
+- Full testing in Tugboat
+- Complete documentation
+- Review and approval from the development team and stakeholders
+
+## Update Hook Numbering
+
+To support independent patch branches, update hooks must follow this convention:
+>>>>>>> c5267b56 (Closes #5231 Clarify release policy for multiple minor releases. (#5228))
 
 **hook_update_XYZZnn()**
 - X = 1 or 2 digits for Drupal core major version compatibility (e.g. `9`)
