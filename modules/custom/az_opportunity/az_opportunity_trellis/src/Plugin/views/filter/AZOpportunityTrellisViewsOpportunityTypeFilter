@@ -13,10 +13,10 @@ use Drupal\views_remote_data\Plugin\views\query\RemoteDataQuery;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Filter Trellis opportunity API values according to Enterprise Attributes.
+ * Filter Trellis event API values according to Enterprise Attributes.
  */
-#[ViewsFilter("az_opportunity_trellis_views_attribute_filter")]
-class AZOpportunityTrellisViewsAttributeFilter extends FilterPluginBase {
+#[ViewsFilter("az_opportunity_trellis_views_opportunity_type_filter")]
+class AZOpportunityTrellisViewsOpportunityTypeFilter extends FilterPluginBase {
 
   use PropertyPluginTrait;
 
@@ -64,12 +64,12 @@ class AZOpportunityTrellisViewsAttributeFilter extends FilterPluginBase {
     $options = [];
     $key = $this->options['az_attribute_key'] ?? '';
 
-    // Get the applicable attribute terms.
+    // Get the applicable type terms.
     $query = $this->termStorage->getQuery()
       ->accessCheck(TRUE)
       ->addTag('taxonomy_term_access')
-      ->condition('vid', 'az_enterprise_attributes')
-      ->condition('field_az_attribute_key', $key);
+      ->condition('vid', 'az_opportunity_type')
+      ->condition('field_az_opportunity_type_key', $key);
     $parents = $query->execute();
     $children = [];
     if (!empty($parents)) {
@@ -83,8 +83,8 @@ class AZOpportunityTrellisViewsAttributeFilter extends FilterPluginBase {
     $terms = Term::loadMultiple($children);
     // Build option list.
     foreach ($terms as $term) {
-      if ($term->hasField('field_az_attribute_key') && !empty($term->field_az_attribute_key->value)) {
-        $options[$term->field_az_attribute_key->value] = $this->entityRepository->getTranslationFromContext($term)->label();
+      if ($term->hasField('field_az_opportunity_type_key') && !empty($term->field_az_attribute_key->value)) {
+        $options[$term->field_az_opportunity_type_key->value] = $this->entityRepository->getTranslationFromContext($term)->label();
       }
     }
     $form['value'] = [
@@ -113,7 +113,7 @@ class AZOpportunityTrellisViewsAttributeFilter extends FilterPluginBase {
   protected function defineOptions(): array {
     $options = parent::defineOptions();
     $this->definePropertyPathOption($options);
-    $options['az_attribute_key'] = ['default' => ''];
+    $options['az_opportunity_type_key'] = ['default' => ''];
     return $options;
   }
 
@@ -123,10 +123,10 @@ class AZOpportunityTrellisViewsAttributeFilter extends FilterPluginBase {
   public function buildOptionsForm(&$form, FormStateInterface $form_state): void {
     $this->propertyPathElement($form, $this->options);
     parent::buildOptionsForm($form, $form_state);
-    $form['az_attribute_key'] = [
-      '#title' => $this->t('Unique key of enterprise attribute'),
+    $form['az_opportunity_type_key'] = [
+      '#title' => $this->t('Unique key of opportunity type'),
       '#type' => 'textfield',
-      '#default_value' => $this->options['az_attribute_key'] ?? '',
+      '#default_value' => $this->options['az_opportunity_type_key'] ?? '',
       '#required' => TRUE,
     ];
   }
@@ -138,7 +138,7 @@ class AZOpportunityTrellisViewsAttributeFilter extends FilterPluginBase {
    *   An array with the key as the attribute id and the value as the api path.
    */
   public function getApiMapping(): array {
-    $key = $this->options['az_attribute_key'] ?? '';
+    $key = $this->options['az_opportunity_type_key'] ?? '';
     $path = $this->options['property_path'] ?? '';
     return [$key => $path];
   }
@@ -148,7 +148,7 @@ class AZOpportunityTrellisViewsAttributeFilter extends FilterPluginBase {
    */
   public function adminSummary() {
     $prop = $this->options['property_path'] ?? '';
-    $key = $this->options['az_attribute_key'] ?? '';
+    $key = $this->options['az_opportunity_type_key'] ?? '';
     return $key . ' (API value ' . $prop . ') ' . $this->operator . ' ' . $this->value;
   }
 

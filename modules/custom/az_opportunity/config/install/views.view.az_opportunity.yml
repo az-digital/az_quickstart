@@ -9,6 +9,7 @@ dependencies:
     - taxonomy.vocabulary.az_opportunity_modality
     - taxonomy.vocabulary.az_opportunity_semester
     - taxonomy.vocabulary.az_opportunity_topic
+    - taxonomy.vocabulary.az_opportunity_type
   module:
     - datetime
     - node
@@ -145,10 +146,10 @@ display:
             field_identifier: ''
           exposed: false
       arguments:
-        field_az_topic_target_id:
-          id: field_az_topic_target_id
-          table: node__field_az_topic
-          field: field_az_topic_target_id
+        field_az_opportunity_type_target_id:
+          id: field_az_opportunity_type_target_id
+          table: node__field_az_opportunity_type
+          field: field_az_opportunity_type_target_id
           relationship: none
           group_type: group
           admin_label: ''
@@ -175,10 +176,10 @@ display:
           specify_validation: true
           validate:
             type: 'entity:taxonomy_term'
-            fail: ignore
+            fail: 'not found'
           validate_options:
             bundles:
-              az_opportunity_topic: az_opportunity_topic
+              az_opportunity_type: az_opportunity_type
             access: false
             operation: view
             multiple: 1

@@ -44,11 +44,11 @@ function az_opportunity_trellis_views_data(): array {
       'id' => 'date',
     ],
   ];
-  $data['az_opportunity_trellis_data']['Attributes'] = [
-    'title' => t('Enterprise Attribute'),
-    'help' => t('Trellis opportunity search API enterprise attributes'),
+  $data['az_opportunity_trellis_data']['Program_Type'] = [
+    'title' => t('Program type'),
+    'help' => t('Trellis opportunity search API program type'),
     'filter' => [
-      'id' => 'az_opportunity_trellis_views_attribute_filter',
+      'id' => 'az_opportunity_trellis_views_program_type_filter',
     ],
   ];
   $data['az_opportunity_trellis_data']['Approval'] = [

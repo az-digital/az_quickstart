@@ -4,16 +4,14 @@ dependencies:
   config:
     - field.field.node.az_opportunity.field_az_application_date
     - field.field.node.az_opportunity.field_az_application_link
-    - field.field.node.az_opportunity.field_az_attachments
     - field.field.node.az_opportunity.field_az_audiences
     - field.field.node.az_opportunity.field_az_body
     - field.field.node.az_opportunity.field_az_credit
     - field.field.node.az_opportunity.field_az_incentives
-    - field.field.node.az_opportunity.field_az_location
-    - field.field.node.az_opportunity.field_az_media_image
     - field.field.node.az_opportunity.field_az_modality
     - field.field.node.az_opportunity.field_az_offered
     - field.field.node.az_opportunity.field_az_ongoing
+    - field.field.node.az_opportunity.field_az_opportunity_location
     - field.field.node.az_opportunity.field_az_opportunity_type
     - field.field.node.az_opportunity.field_az_parent_account
     - field.field.node.az_opportunity.field_az_program_date
@@ -26,7 +24,6 @@ dependencies:
   module:
     - datetime_range
     - field_group
-    - file
     - link
     - smart_title
     - text
@@ -220,8 +217,9 @@ third_party_settings:
         speed: fast
     group_where:
       children:
-        - field_az_location
-      label: Where
+        - field_az_opportunity_location
+        - field_az_modality
+      label: Location
       parent_name: group_col1
       region: content
       weight: 5
@@ -260,8 +258,8 @@ third_party_settings:
         speed: fast
     group_modality:
       children:
-        - field_az_modality
-      label: Modality
+        - field_az_parent_account
+      label: 'Parent Account'
       parent_name: group_col4
       region: content
       weight: 9
@@ -302,11 +300,10 @@ third_party_settings:
     group_audiences:
       children:
         - field_az_audiences
-        - field_az_opportunity_type
       label: Audiences
       parent_name: group_col6
       region: content
-      weight: 3
+      weight: 5
       format_type: html_element
       format_settings:
         classes: ''
@@ -323,7 +320,7 @@ third_party_settings:
     group_program_length:
       children:
         - field_az_program_length
-      label: Length
+      label: 'Program Length'
       parent_name: group_col3
       region: content
       weight: 9
@@ -342,6 +339,7 @@ third_party_settings:
         speed: fast
     group_topics:
       children:
+        - field_az_opportunity_type
         - field_az_topic
       label: Topics
       parent_name: ''
@@ -367,7 +365,7 @@ third_party_settings:
       label: 'Bottom Row'
       parent_name: ''
       region: content
-      weight: 10
+      weight: 7
       format_type: html_element
       format_settings:
         classes: row
@@ -411,21 +409,13 @@ content:
     third_party_settings: {  }
     weight: 16
     region: content
-  field_az_attachments:
-    type: file_default
-    label: hidden
-    settings:
-      use_description_as_link_text: true
-    third_party_settings: {  }
-    weight: 6
-    region: content
   field_az_audiences:
     type: entity_reference_label
     label: hidden
     settings:
       link: false
     third_party_settings: {  }
-    weight: 4
+    weight: 7
     region: content
   field_az_body:
     type: text_default
@@ -452,34 +442,13 @@ content:
     third_party_settings: {  }
     weight: 4
     region: content
-  field_az_location:
-    type: link
-    label: hidden
-    settings:
-      trim_length: 80
-      url_only: false
-      url_plain: false
-      rel: ''
-      target: ''
-    third_party_settings: {  }
-    weight: 6
-    region: content
-  field_az_media_image:
-    type: entity_reference_entity_view
-    label: hidden
-    settings:
-      view_mode: az_large
-      link: false
-    third_party_settings: {  }
-    weight: 2
-    region: content
   field_az_modality:
     type: entity_reference_label
     label: hidden
     settings:
       link: false
     third_party_settings: {  }
-    weight: 10
+    weight: 5
     region: content
   field_az_offered:
     type: entity_reference_label
@@ -489,13 +458,30 @@ content:
     third_party_settings: {  }
     weight: 15
     region: content
-  field_az_opportunity_type:
-    type: entity_reference_label
+  field_az_opportunity_location:
+    type: string
     label: hidden
     settings:
-      link: true
+      link_to_entity: false
     third_party_settings: {  }
-    weight: 5
+    weight: 4
+    region: content
+  field_az_opportunity_type:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: az_badge
+      link: false
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_az_parent_account:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 6
     region: content
   field_az_program_date:
     type: daterange_default
@@ -514,7 +500,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 10
+    weight: 5
     region: content
   field_az_program_website:
     type: link
@@ -535,16 +521,15 @@ content:
       view_mode: az_badge
       link: false
     third_party_settings: {  }
-    weight: 2
+    weight: 4
     region: content
   links:
     settings: {  }
     third_party_settings: {  }
-    weight: 7
+    weight: 6
     region: content
 hidden:
   field_az_ongoing: true
-  field_az_parent_account: true
   field_az_trellis_id: true
   field_az_trellis_imported_date: true
   smart_title: true

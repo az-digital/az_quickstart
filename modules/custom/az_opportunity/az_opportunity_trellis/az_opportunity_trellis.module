@@ -34,13 +34,6 @@ function az_opportunity_trellis_form_node_az_opportunity_edit_form_alter(&$form,
 
       $disabled_fields = [
         'title',
-        // 'title', // Original fields for reference
-        // 'field_az_location',
-        // 'field_az_event_date',
-        // 'field_az_link',
-        // 'field_az_summary',
-        // 'field_az_photos',
-        // 'field_az_enterprise_attributes',
         'field_az_application_date',
         'field_az_application_link',
         'field_az_audiences',
@@ -62,10 +55,7 @@ function az_opportunity_trellis_form_node_az_opportunity_edit_form_alter(&$form,
       }
 
       $no_access_fields = [
-      //  'field_az_subheading',
         'field_az_body',
-        //'field_az_contacts',
-        'field_az_attachments',
       ];
       foreach ($no_access_fields as $field) {
         $form[$field]['#access'] = FALSE;

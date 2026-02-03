@@ -29,11 +29,11 @@ az_opportunity_trellis.az_recurring_import_rule.*:
       type: string
     keyword:
       type: string
-    attributes:
+    opportunity_type:
       type: sequence
-      label: ‘Enterprise Attributes’
+      label: 'Opportunity Type'
       sequence:
         type: string
-        label: ‘Attribute’
+        label: 'Opportunity Type'
     approval:
       type: string

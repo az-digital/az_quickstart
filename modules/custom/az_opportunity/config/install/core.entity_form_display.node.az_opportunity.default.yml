@@ -4,16 +4,14 @@ dependencies:
   config:
     - field.field.node.az_opportunity.field_az_application_date
     - field.field.node.az_opportunity.field_az_application_link
-    - field.field.node.az_opportunity.field_az_attachments
     - field.field.node.az_opportunity.field_az_audiences
     - field.field.node.az_opportunity.field_az_body
     - field.field.node.az_opportunity.field_az_credit
     - field.field.node.az_opportunity.field_az_incentives
-    - field.field.node.az_opportunity.field_az_location
-    - field.field.node.az_opportunity.field_az_media_image
     - field.field.node.az_opportunity.field_az_modality
     - field.field.node.az_opportunity.field_az_offered
     - field.field.node.az_opportunity.field_az_ongoing
+    - field.field.node.az_opportunity.field_az_opportunity_location
     - field.field.node.az_opportunity.field_az_opportunity_type
     - field.field.node.az_opportunity.field_az_parent_account
     - field.field.node.az_opportunity.field_az_program_date
@@ -24,12 +22,8 @@ dependencies:
     - field.field.node.az_opportunity.field_az_trellis_imported_date
     - node.type.az_opportunity
   module:
-    - datetime
-    - file
     - link
     - link_class
-    - media_library
-    - media_library_edit
     - path
     - smart_date
     - text
@@ -46,7 +40,7 @@ content:
     third_party_settings: {  }
   field_az_application_date:
     type: smartdate_only
-    weight: 10
+    weight: 11
     region: content
     settings:
       separator: to
@@ -75,16 +69,9 @@ content:
       link_class_force: 'btn btn-red'
       link_class_select: ''
     third_party_settings: {  }
-  field_az_attachments:
-    type: file_generic
-    weight: 18
-    region: content
-    settings:
-      progress_indicator: throbber
-    third_party_settings: {  }
   field_az_audiences:
     type: entity_reference_autocomplete
-    weight: 23
+    weight: 18
     region: content
     settings:
       match_operator: CONTAINS
@@ -115,23 +102,6 @@ content:
     settings:
       display_label: true
     third_party_settings: {  }
-  field_az_location:
-    type: link_default
-    weight: 16
-    region: content
-    settings:
-      placeholder_url: ''
-      placeholder_title: ''
-    third_party_settings: {  }
-  field_az_media_image:
-    type: media_library_widget
-    weight: 12
-    region: content
-    settings:
-      media_types: {  }
-    third_party_settings:
-      media_library_edit:
-        show_edit: '1'
   field_az_modality:
     type: entity_reference_autocomplete
     weight: 17
@@ -154,10 +124,18 @@ content:
     third_party_settings: {  }
   field_az_ongoing:
     type: boolean_checkbox
-    weight: 13
+    weight: 10
     region: content
     settings:
       display_label: true
+    third_party_settings: {  }
+  field_az_opportunity_location:
+    type: string_textfield
+    weight: 23
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
   field_az_opportunity_type:
     type: options_buttons
@@ -167,7 +145,7 @@ content:
     third_party_settings: {  }
   field_az_parent_account:
     type: string_textfield
-    weight: 25
+    weight: 16
     region: content
     settings:
       size: 60
@@ -175,7 +153,7 @@ content:
     third_party_settings: {  }
   field_az_program_date:
     type: smartdate_only
-    weight: 11
+    weight: 12
     region: content
     settings:
       separator: to
@@ -218,20 +196,6 @@ content:
       match_limit: 10
       size: 60
       placeholder: ''
-    third_party_settings: {  }
-  field_az_trellis_id:
-    type: string_textfield
-    weight: 26
-    region: content
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-  field_az_trellis_imported_date:
-    type: datetime_default
-    weight: 27
-    region: content
-    settings: {  }
     third_party_settings: {  }
   path:
     type: path
@@ -283,4 +247,6 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-hidden: {  }
+hidden:
+  field_az_trellis_id: true
+  field_az_trellis_imported_date: true
