@@ -32,68 +32,36 @@ There are three types of Quickstart patch releases:
 - Security patch releases
 - Long Term Support (LTS) patch releases
 
-#### _Included in Bugfix Patch Releases:_
+|Type of change|Included in Bugfix Patch Releases|Included in Security Patch Releases|Included in LTS Patch Releases|
+|---|:---:|:---:|:---:|
+|**Arizona Quickstart (install profile, custom modules, theme)**|
+|- Bug fixes|✅||✅|
+|- Accessibility improvements|✅||✅|
+|- Performance improvements|✅||✅|
+|- Security updates or improvements|✅|✅|✅|
+|- Critical institutional link changes (may include database updates)|✅||✅|
+|- Critical brand changes (may include database updates)|✅||✅|
+|- Additions and updates to experimental modules|✅|||
+||**Included in Bugfix Patch Releases**|**Included in Security Patch Releases**|**Included in LTS Patch Releases**|
+|**Third-party dependencies**|
+|**Drupal core**|
+|- Security updates|✅|✅|✅|
+|- Patch-level releases*|✅|✅|✅|
+|- Removal of no-longer-needed patches|✅|✅|✅|
+|- Minor version updates**|||✅|
+|**Drupal contrib projects**|
+|- Security updates|✅|✅|✅|
+|- Patch or minor version updates|✅| |✅|
+|- Addition and removal of contrib modules or patches|✅||✅|
+|- Removal of contrib modules that become unsupported|||✅|
+|**Other PHP or Javascript packages and libraries**|
+|- Security updates|✅|✅|✅|
+|- Patch or minor version updates|✅||✅|
 
-**Arizona Quickstart (install profile, custom modules, theme)**
-- Bug fixes
-- Accessibility improvements
-- Performance improvements
-- Security updates or improvements
-- Critical institutional link changes (may include database updates)
-- Critical brand changes (may include database updates)
-- Additions and updates to experimental modules
+_*Patch-level releases are non-security bug fixes in Bugfix and LTS Patch releases. Patch-level releases are only necessary to stay current with Drupal core in Security Patch releases._
 
-**Third-party dependencies**
-- Drupal core  
-  - Security updates
-  - Patch-level releases (non-security bug fixes)
-  - Removal of no-longer-needed patches
-- Drupal contrib projects
-  - Security updates
-  - Patch or minor version updates
-  - Addition and removal of contrib modules or patches
-- Other PHP or Javascript packages and libraries
-  - Security updates
-  - Patch or minor version updates
-#### _Included in Security Patch Releases:_
+_**Minor version updates are only included in LTS releases, to maintain alignment with Drupal's long-term support cycle._
 
-**Arizona Quickstart (install profile, custom modules, theme)**
-- Security updates
-
-**Third-party dependencies**
-- Drupal core
-  - Security updates
-  - Patch-level releases (to stay current with Drupal core)
-  - Removal of no-longer-needed patches
-- Drupal contrib projects
-  - Security updates
-- Other PHP or Javascript packages and libraries
-  - Security updates
-
-#### _Included in LTS Patch Releases:_
-
-**Arizona Quickstart (install profile, custom modules, theme)**
-- Bug fixes
-- Accessibility improvements
-- Performance improvements
-- Security updates
-- Critical institutional link changes (may include database updates)
-- Critical brand changes (may include database updates)
-
-**Third-party dependencies**
-- Drupal core  
-  - Security updates
-  - Patch-level releases (non-security bug fixes)
-  - Minor version updates (only included in LTS releases, to maintain alignment with Drupal's long-term support cycle)
-  - Removal of no-longer-needed patches
-- Drupal contrib projects
-  - Security updates
-  - Patch or minor version updates
-  - Removal of contrib modules that become unsupported
-  - Addition and removal of patches
-- Other PHP or Javascript packages and libraries
-  - Security updates
-  - Patch or minor version updates
 
 > For LTS releases, critical institutional changes (e.g. required footer updates) may include database updates. These should be designed to minimize disruption to site owners and include opt-out paths where applicable.
 
