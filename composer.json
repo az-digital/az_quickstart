@@ -83,6 +83,7 @@
         "drupal/jquery_ui_datepicker": "2.1.1",
         "drupal/key": "1.21.0",
         "drupal/klaro": "3.0.8",
+        "drupal/layout_paragraphs": "2.1.1",
         "drupal/ldap": "4.12",
         "drupal/link_class": "2.2.0",
         "drupal/linkit": "7.0.12",
