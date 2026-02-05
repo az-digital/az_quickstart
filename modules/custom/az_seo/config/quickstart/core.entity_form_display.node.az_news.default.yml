@@ -25,6 +25,7 @@ dependencies:
     - datetime
     - field_group
     - file
+    - layout_paragraphs
     - link
     - media_library
     - media_library_edit
@@ -155,24 +156,16 @@ content:
       placeholder_title: ''
     third_party_settings: {  }
   field_az_main_content:
-    type: paragraphs
+    type: layout_paragraphs
     weight: 6
     region: content
     settings:
-      title: Paragraph
-      title_plural: Paragraphs
-      edit_mode: closed
-      closed_mode: preview
-      autocollapse: all
-      closed_mode_threshold: 2
-      add_mode: button
+      view_mode: default
+      preview_view_mode: default
       form_display_mode: default
-      default_paragraph_type: _none
-      features:
-        add_above: '0'
-        collapse_edit_all: collapse_edit_all
-        convert: '0'
-        duplicate: duplicate
+      nesting_depth: 0
+      require_layouts: 0
+      empty_message: ''
     third_party_settings: {  }
   field_az_media_image:
     type: media_library_widget

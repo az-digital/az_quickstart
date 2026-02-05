@@ -9,15 +9,19 @@ dependencies:
     - field.field.node.az_flexible_page.field_az_summary
     - node.type.az_flexible_page
   module:
-    - entity_reference_revisions
+    - layout_paragraphs
+    - smart_title
     - user
+third_party_settings:
+  smart_title:
+    enabled: false
 id: node.az_flexible_page.default
 targetEntityType: node
 bundle: az_flexible_page
 mode: default
 content:
   field_az_main_content:
-    type: entity_reference_revisions_entity_view
+    type: layout_paragraphs
     label: hidden
     settings:
       view_mode: default
