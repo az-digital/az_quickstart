@@ -808,6 +808,6 @@ form.webform-submission-form {
 }
 
 .lpb-btn--cancel {
-  width: initial;
+  width: initial !important;
   float: right;
 }
