@@ -32,11 +32,6 @@ how to contribute including:
 * [How to submit a pull request](https://github.com/az-digital/az_quickstart/blob/main/CONTRIBUTING.md#pull-request-guidelines)
 * [Local development](https://github.com/az-digital/az_quickstart/blob/main/CONTRIBUTING.md#local-development)
 
-## Currently Supported Releases
-
-* [2.14.x](https://github.com/az-digital/az_quickstart/tree/2.14.x) (Quickstart 2 LTS)
-* [3.0.x](https://github.com/az-digital/az_quickstart/tree/3.0.x)
-* [3.1.x](https://github.com/az-digital/az_quickstart/tree/3.1.x) (Pre-release)
 
 ## Where to Install Your Quickstart Site
 
@@ -220,3 +215,10 @@ path: `/admin/config/development/distro`
 You should be able to see the upstream updates to be applied, after updating
 your codebase by employing the "Merge" strategy available under the "Advanced"
 accordion on that page.
+
+## Currently Supported Releases
+
+* [2.14.x](https://github.com/az-digital/az_quickstart/tree/2.14.x) (Quickstart 2 LTS)
+* [3.0.x](https://github.com/az-digital/az_quickstart/tree/3.0.x)
+* [3.1.x](https://github.com/az-digital/az_quickstart/tree/3.1.x)
+* [3.2.x](https://github.com/az-digital/az_quickstart/tree/3.2.x) (Pre-release)
