@@ -57,7 +57,8 @@ There are three types of Quickstart patch releases:
 |- Removal of contrib modules that become unsupported|✅|✅|✅|
 |**Other PHP or Javascript packages and libraries**|
 |- Security updates|✅|✅|✅|
-|- Patch or minor version updates|✅||✅|
+|- Patch-level version updates*|✅|✅|✅|
+|- Minor version updates|✅| |✅|
 
 _*Patch-level releases are non-security bug fixes in Bugfix and LTS Patch releases. Patch-level releases are only necessary to stay current with Drupal core in Security Patch releases._
 
