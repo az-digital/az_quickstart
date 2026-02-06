@@ -34,9 +34,9 @@ how to contribute including:
 
 ## Currently Supported Releases
 
-* [2.14.x]([url](https://github.com/az-digital/az_quickstart/tree/2.14.x))(Quickstart 2 LTS)
-* [3.0.x]([url](https://github.com/az-digital/az_quickstart/tree/3.0.x))
-* [3.1.x]([url](https://github.com/az-digital/az_quickstart/tree/3.1.x)) (Pre-release)
+* [2.14.x](https://github.com/az-digital/az_quickstart/tree/2.14.x) (Quickstart 2 LTS)
+* [3.0.x](https://github.com/az-digital/az_quickstart/tree/3.0.x)
+* [3.1.x](https://github.com/az-digital/az_quickstart/tree/3.1.x) (Pre-release)
 
 ## Where to Install Your Quickstart Site
 
