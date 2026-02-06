@@ -62,7 +62,7 @@ There are three types of Quickstart patch releases:
 
 _*Patch-level updates (non-security bug-fix updates) are typically included in Quickstart Bug-fix and LTS Patch releases. In the event of a security update for Drupal core, Drupal contrib projects or third party libraries, it may be necessary to include non-security patch-level updates (bug-fix updates) in Quickstart Security Patch releasees. Quickstart maintainers typically include non-security Drupal core bug-fix updates in Quickstart Security patch releases (proactively) in order to stay current with Drupal core._
 
-_**Minor version updates are only included in LTS releases, to maintain alignment with Drupal's long-term support cycle._
+_**Minor version updates for Drupal core are included in Quickstart LTS (patch-level) releases to maintain alignment with Drupal's long-term support cycle._
 
 
 > For LTS releases, critical institutional changes (e.g. required footer updates) may include database updates. These should be designed to minimize disruption to site owners and include opt-out paths where applicable.
