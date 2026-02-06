@@ -6,7 +6,6 @@ dependencies:
     - field.field.node.az_flexible_page.field_az_main_content
     - field.field.node.az_flexible_page.field_az_marketing_page_style
     - field.field.node.az_flexible_page.field_az_media_image
-    - field.field.node.az_flexible_page.field_az_metatag
     - field.field.node.az_flexible_page.field_az_page_category
     - field.field.node.az_flexible_page.field_az_summary
     - node.type.az_flexible_page
@@ -212,6 +211,5 @@ content:
 hidden:
   field_az_main_content: true
   field_az_marketing_page_style: true
-  field_az_metatag: true
   field_az_page_category: true
   links: true

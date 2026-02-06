@@ -15,7 +15,6 @@ dependencies:
     - field.field.node.az_person.field_az_links
     - field.field.node.az_person.field_az_lname
     - field.field.node.az_person.field_az_media_image
-    - field.field.node.az_person.field_az_metatag
     - field.field.node.az_person.field_az_netid
     - field.field.node.az_person.field_az_person_category
     - field.field.node.az_person.field_az_person_category_sec
@@ -262,7 +261,6 @@ hidden:
   field_az_link: true
   field_az_links: true
   field_az_lname: true
-  field_az_metatag: true
   field_az_netid: true
   field_az_person_category: true
   field_az_person_category_sec: true

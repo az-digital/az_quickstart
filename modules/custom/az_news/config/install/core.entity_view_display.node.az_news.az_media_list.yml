@@ -269,18 +269,18 @@ content:
     type: timestamp_ap_style
     label: hidden
     settings:
-      always_display_year: true
-      use_today: true
-      cap_today: true
-      display_day: true
-      display_time: false
-      hide_date: false
-      time_before_date: false
-      display_noon_and_midnight: true
-      capitalize_noon_and_midnight: false
-      use_all_day: false
+      always_display_year: '1'
+      use_today: '1'
+      cap_today: '1'
+      display_day: '1'
+      display_noon_and_midnight: '1'
       timezone: ''
-      month_only: false
+      display_time: 0
+      time_before_date: 0
+      use_all_day: 0
+      capitalize_noon_and_midnight: 0
+      hide_date: 0
+      month_only: 0
     third_party_settings: {  }
     weight: 5
     region: content

@@ -21,4 +21,5 @@ settings:
   max: 1.0
   prefix: ''
   suffix: ''
+  scale: '2'
 field_type: decimal
