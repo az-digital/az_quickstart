@@ -42,7 +42,7 @@ There are three types of Quickstart patch releases:
 |- Critical institutional link changes (may include database updates)|✅||✅|
 |- Critical brand changes (may include database updates)|✅||✅|
 |- Additions and updates to experimental modules|✅|||
-||**Included in Bugfix Patch Releases**|**Included in Security Patch Releases**|**Included in LTS Patch Releases**|
+||**Included in Bug-fix Patch Releases**|**Included in Security Patch Releases**|**Included in LTS Patch Releases**|
 |**Third-party dependencies**|
 |**Drupal core**|
 |- Security updates|✅|✅|✅|
