@@ -216,7 +216,7 @@ You should be able to see the upstream updates to be applied, after updating
 your codebase by employing the "Merge" strategy available under the "Advanced"
 accordion on that page.
 
-## Currently Supported Releases
+### Currently Supported Releases
 
 * [2.14.x](https://github.com/az-digital/az_quickstart/tree/2.14.x) (Quickstart 2 LTS)
 * [3.0.x](https://github.com/az-digital/az_quickstart/tree/3.0.x)
