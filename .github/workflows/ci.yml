@@ -21,7 +21,7 @@ jobs:
       matrix: ${{ steps.setup-test-matrix.outputs.matrix }}
     steps:
       - name: Checkout
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Setup test matrix
         id: setup-test-matrix
         run: |
@@ -40,7 +40,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Setup PHP
         uses: shivammathur/setup-php@44454db4f0199b8b9685a5d763dc37cbf79108e1 # 2.36.0
         with:
@@ -55,7 +55,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Setup PHP
         uses: shivammathur/setup-php@44454db4f0199b8b9685a5d763dc37cbf79108e1 # 2.36.0
         with:
@@ -98,7 +98,7 @@ jobs:
             echo "DEV_PACKAGE_BRANCH=${DEFAULT_DEV_BRANCH}" >> ${GITHUB_ENV}
           fi
       - name: Clone scaffolding repo
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           repository: az-digital/az-quickstart-scaffolding
           path: az-quickstart-scaffolding
@@ -117,7 +117,7 @@ jobs:
           composer require --no-update --dev az-digital/az-quickstart-dev:${DEV_PACKAGE_VERSION}
           composer install -o
       - name: Save build artifact
-        uses: actions/cache/save@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
+        uses: actions/cache/save@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5.0.2
         with:
           path: ${{ github.workspace }}/az-quickstart-scaffolding
           key: azqs-build-${{ github.sha }}
@@ -131,7 +131,7 @@ jobs:
         with:
           php-version: '8.4'
           tools: cs2pr, phpcs
-      - uses: actions/cache/restore@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
+      - uses: actions/cache/restore@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5.0.2
         with:
           path: ${{ github.workspace }}/az-quickstart-scaffolding
           key: azqs-build-${{ github.sha }}
@@ -154,7 +154,7 @@ jobs:
         with:
           php-version: '8.4'
           tools: cs2pr, phpstan
-      - uses: actions/cache/restore@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
+      - uses: actions/cache/restore@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5.0.2
         with:
           path: ${{ github.workspace }}/az-quickstart-scaffolding
           key: azqs-build-${{ github.sha }}
@@ -168,7 +168,7 @@ jobs:
     needs: composer
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/cache/restore@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
+      - uses: actions/cache/restore@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5.0.2
         with:
           path: ${{ github.workspace }}/az-quickstart-scaffolding
           key: azqs-build-${{ github.sha }}
@@ -181,7 +181,7 @@ jobs:
     name: yarn audit (security)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
         with:
           node-version: '20'
@@ -191,7 +191,7 @@ jobs:
     name: eslint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
         with:
           node-version: '20'
@@ -233,7 +233,7 @@ jobs:
         with:
           php-version: '8.4'
           extensions: dom, curl, libxml, mbstring, zip, pdo, mysql, pdo_mysql, bcmath, soap, intl, gd, exif, iconv
-      - uses: actions/cache/restore@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
+      - uses: actions/cache/restore@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5.0.2
         with:
           path: ${{ github.workspace }}/az-quickstart-scaffolding
           key: azqs-build-${{ github.sha }}
@@ -292,7 +292,7 @@ jobs:
         with:
           php-version: '8.4'
           extensions: dom, curl, libxml, mbstring, zip, pdo, mysql, pdo_mysql, bcmath, soap, intl, gd, exif, iconv
-      - uses: actions/cache/restore@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
+      - uses: actions/cache/restore@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5.0.2
         with:
           path: ${{ github.workspace }}/az-quickstart-scaffolding
           key: azqs-build-${{ github.sha }}
@@ -343,7 +343,7 @@ jobs:
           php-version: '8.4'
           extensions: dom, curl, libxml, mbstring, zip, pdo, mysql, pdo_mysql, bcmath, soap, intl, gd, exif, iconv
           tools: cs2pr
-      - uses: actions/cache/restore@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
+      - uses: actions/cache/restore@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5.0.2
         with:
           path: ${{ github.workspace }}/az-quickstart-scaffolding
           key: azqs-build-${{ github.sha }}
