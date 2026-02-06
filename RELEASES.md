@@ -37,7 +37,7 @@ There are three types of Quickstart patch releases:
 Minor releases include more impactful changes to Quickstart that are commonly defined as "breaking" changes.
 
 ### Major Releases (`X.y.z`)
-Major releases include breaking changes including Drupal core and Bootstrap core updates.
+Major releases include major changes such as Drupal core and Arizona Bootstrap major version updates.
 
 ### What's Included in each Type of Release?
 
