@@ -16,8 +16,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 #[SearchApiProcessor(
   id: 'az_search_summary',
-  label: new TranslatableMarkup('Quickstart Summary'),
-  description: new TranslatableMarkup("Generates a summary for an entity."),
+  label: new TranslatableMarkup('Quickstart Summary (Deprecated)'),
+  description: new TranslatableMarkup("Generates a summary for an entity. (Deprecated)"),
   stages: [
     'add_properties' => 0,
   ],
@@ -71,8 +71,8 @@ class AZSearchSummary extends ProcessorPluginBase {
     $properties = [];
     if (!$datasource) {
       $definition = [
-        'label' => $this->t('Search Summary'),
-        'description' => $this->t('A generates summary for the item'),
+        'label' => $this->t('Search Summary (Deprecated)'),
+        'description' => $this->t('A generates summary for the item (Deprecated)'),
         'type' => 'string',
         'processor_id' => $this->getPluginId(),
       ];
