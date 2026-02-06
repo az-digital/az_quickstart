@@ -6,7 +6,7 @@ The overarching goal of this release policy is to ensure developers and site mai
 
 Arizona Digital provides varying levels of support for three minor releases of Arizona Quickstart at a time. Different types of patch releases are issued as needed.
 
-The latest minor version (e.g., 3.2) is supported with standard bugfix patch releases. Support for the previous minor release (3.1) is limited to security patch releases only.
+The latest minor version (e.g., 3.2) is supported with standard bug-fix patch releases. Support for the previous minor release (3.1) is limited to security patch releases only.
 
 In addition, when a new major version is planned, we may designate a specific minor release of the existing major release as the **Long Term Support (LTS)** version. In these cases, the LTS version will continue receiving patch releases alongside the latest minor release for the new major version.
 
