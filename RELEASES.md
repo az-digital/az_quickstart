@@ -28,7 +28,7 @@ Once the version of Drupal core used by the LTS release (e.g., Drupal 10 for 2.1
 Patch releases are limited to changes that are backward-compatible, low-risk, and necessary to maintain stability, accessibility, and compliance. They will avoid visual changes when possible.
 
 There are three types of Quickstart patch releases:
-- Bugfix patch releases
+- Bug-fix patch releases
 - Security patch releases
 - Long Term Support (LTS) patch releases
 
