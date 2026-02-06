@@ -32,7 +32,7 @@ There are three types of Quickstart patch releases:
 - Security patch releases
 - Long Term Support (LTS) patch releases
 
-|Type of change|Included in Bugfix Patch Releases|Included in Security Patch Releases|Included in LTS Patch Releases|
+|Type of change|Included in Bug-fix Patch Releases|Included in Security Patch Releases|Included in LTS Patch Releases|
 |---|:---:|:---:|:---:|
 |**Arizona Quickstart (install profile, custom modules, theme)**|
 |- Bug fixes|✅||✅|
