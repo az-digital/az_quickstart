@@ -72,7 +72,7 @@ class AZSearchSummary extends ProcessorPluginBase {
     if (!$datasource) {
       $definition = [
         'label' => $this->t('Search Summary (Deprecated)'),
-        'description' => $this->t('A generates summary for the item (Deprecated)'),
+        'description' => $this->t('A generated summary for the item (Deprecated)'),
         'type' => 'string',
         'processor_id' => $this->getPluginId(),
       ];
