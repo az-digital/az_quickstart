@@ -134,7 +134,7 @@
         "npm-asset/easepick--bundle": "1.2.1",
         "npm-asset/slick-carousel": "1.6.0",
         "renanbr/bibtex-parser": "2.2.0",
-        "seboettg/citeproc-php": "2.7.0"
+        "seboettg/citeproc-php": "2.7.1"
     },
     "require-dev": {
         "az-digital/az-quickstart-dev": "~3"
