@@ -46,7 +46,7 @@ There are three types of Quickstart patch releases:
 |**Third-party dependencies**|
 |**Drupal core**|
 |- Security updates|✅|✅|✅|
-|- Patch-level releases*|✅|✅|✅|
+|- Patch-level updates*|✅|✅|✅|
 |- Removal of no-longer-needed patches|✅|✅|✅|
 |- Minor version updates**|||✅|
 |**Drupal contrib projects**|
