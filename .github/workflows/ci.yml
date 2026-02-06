@@ -175,39 +175,7 @@ jobs:
       - name: Run composer audit
         run: |
           cd az-quickstart-scaffolding
-          # Composer audit returns: 0=no issues, 1=vulnerable, 2=abandoned, 3=both
-          # Exit codes don't differentiate severity, so we parse JSON
-          set +e
-          composer audit --abandoned report --format=json --no-dev > audit-result.json
-          EXIT_CODE=$?
-          set -e
-          
-          if [ "$EXIT_CODE" -eq 0 ]; then
-            echo "No vulnerabilities found"
-            exit 0
-          elif [ "$EXIT_CODE" -eq 2 ]; then
-            echo "Only abandoned packages found (no vulnerabilities, not failing CI)"
-            composer audit --abandoned report --no-dev || true
-            exit 0
-          fi
-          
-          # Exit code 1 or 3 means vulnerabilities exist
-          # Check for high/critical severity vulnerabilities
-          HIGH_CRITICAL=$(jq -r '.advisories | to_entries | map(select(.value.severity == "high" or .value.severity == "critical")) | length' audit-result.json 2>/dev/null)
-          if [ -z "$HIGH_CRITICAL" ] || ! [[ "$HIGH_CRITICAL" =~ ^[0-9]+$ ]]; then
-            HIGH_CRITICAL=0
-          fi
-          
-          if [ "$HIGH_CRITICAL" -gt 0 ]; then
-            echo "Found $HIGH_CRITICAL high or critical severity vulnerabilities"
-            # Display results from the JSON we already parsed
-            jq -r '.advisories | to_entries[] | select(.value.severity == "high" or .value.severity == "critical") | "\(.key): \(.value.title) (\(.value.severity))"' audit-result.json
-            exit 1
-          else
-            echo "Only low/moderate severity vulnerabilities found (not failing CI)"
-            composer audit --abandoned report --no-dev || true
-            exit 0
-          fi
+          composer audit --abandoned report --no-dev --ignore-severity=low --ignore-severity=moderate
 
   yarn-audit:
     name: yarn audit (security)
@@ -217,27 +185,7 @@ jobs:
       - uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
         with:
           node-version: '20'
-      - name: Run yarn audit
-        run: |
-          # Yarn audit uses bitwise exit codes:
-          # 0=no issues, 1=info, 2=low, 4=moderate, 8=high, 16=critical
-          # Exit code >= 8 means high or critical vulnerabilities exist
-          # Exclude dev dependencies to match composer approach
-          set +e
-          yarn audit --groups dependencies,optionalDependencies
-          EXIT_CODE=$?
-          set -e
-          
-          if [ "$EXIT_CODE" -eq 0 ]; then
-            echo "No vulnerabilities found"
-            exit 0
-          elif [ "$EXIT_CODE" -ge 8 ]; then
-            echo "High or critical severity vulnerabilities found (exit code: $EXIT_CODE)"
-            exit 1
-          else
-            echo "Only info/low/moderate severity vulnerabilities found (exit code: $EXIT_CODE, not failing CI)"
-            exit 0
-          fi
+      - run: yarn audit --level high --groups dependencies,optionalDependencies
 
   eslint:
     name: eslint
