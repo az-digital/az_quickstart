@@ -51,8 +51,7 @@ There are three types of Quickstart patch releases:
 |- Minor version updates**|||✅|
 |**Drupal contrib projects**|
 |- Security updates|✅|✅|✅|
-|- Patch-level version updates*|✅|✅|✅|
-|- Minor version updates|✅| |✅|
+|- Patch-level and minor version updates*|✅|✅|✅|
 |- Addition and removal of contrib modules or patches|✅||✅|
 |- Removal of contrib modules that become unsupported|✅|✅|✅|
 |**Other PHP or Javascript packages and libraries**|
