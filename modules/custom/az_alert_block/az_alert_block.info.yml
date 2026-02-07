@@ -1,0 +1,13 @@
+name: 'Quickstart Alert Block'
+description: 'Adds an alert block type for site-wide or emergency messages.'
+type: module
+core_version_requirement: ^10 || ^11 || ^12
+package: The University of Arizona
+dependencies:
+  - drupal:block
+  - drupal:block_content
+  - drupal:field
+  - drupal:field_group
+  - drupal:system
+  - drupal:text
+  - az_media:az_media

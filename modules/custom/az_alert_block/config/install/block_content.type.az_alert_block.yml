@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az_alert_block
+label: 'Alert Block'
+revision: true
+description: 'Use to place an alert message on the Arizona.edu site.'
