@@ -5,6 +5,8 @@ dependencies:
     - core.entity_form_mode.media.media_library
     - field.field.media.az_image.field_az_caption
     - field.field.media.az_image.field_az_credit
+    - field.field.media.az_image.field_focal_point_x
+    - field.field.media.az_image.field_focal_point_y
     - field.field.media.az_image.field_media_az_image
     - image.style.thumbnail
     - media.type.az_image
@@ -63,6 +65,8 @@ content:
         use_decorative_checkbox: true
 hidden:
   created: true
+  field_focal_point_x: true
+  field_focal_point_y: true
   name: true
   path: true
   replace_file: true
