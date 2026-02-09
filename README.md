@@ -224,4 +224,4 @@ accordion on that page.
 
 ### Visual Changes included in Patch Releases
 
-Visual changes in patch releases will be avoided when possible. Visual changes will only be included when they fix a critical issue and cannot wait until the next minor release.
+Visual changes in patch releases will be avoided when possible. Visual changes will only be included when they fix a critical issue and cannot wait until the next minor (or major) release.
