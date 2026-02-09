@@ -5,6 +5,11 @@
  * Contains az_alphabetical_listing.module.
  */
 
+use Drupal\views\ResultRow;
+use Drupal\views\ViewExecutable;
+use Drupal\Core\Template\Attribute;
+use Drupal\field\Entity\FieldStorageConfig;
+
 /**
  * Implements template_preprocess_views_view()
  */
@@ -12,6 +17,45 @@ function az_alphabetical_listing_preprocess_views_view(&$variables) {
   $view_id = $variables['view']->id();
   if ($view_id === 'az_alphabetical_listing') {
     $variables['#attached']['library'][] = 'az_alphabetical_listing/az_alphabetical_listing';
+  }
+}
+
+/**
+ * Implements template_preprocess_views_view_summary()
+ */
+function az_alphabetical_listing_preprocess_views_view_summary(&$variables) {
+  // Add styling classes for az_alphabetical_glossary_attachment.
+  $view = $variables['view'];
+  if ($view->id() === 'az_alphabetical_glossary' && $view->current_display === 'az_alphabetical_glossary_attachment') {
+    $rows = $variables['rows'];
+    $views_field_alias_for_letter = 'node__field_az_alphabetical_index_field_az_alphabetical_inde';
+
+    foreach ($variables['rows'] as $key => &$summary_row) {
+      // Use '&' to modify $summary_row directly.
+      // $summary_row is an array with keys like 'link', 'attributes', 'active'.
+      // $summary_row['attributes'] is an Attribute object.
+      /** @var \Drupal\Core\Template\Attribute $row_attributes */
+      $row_attributes = $summary_row->attributes;
+      $classes_to_add = ['page-link'];
+      $current_letter_from_summary = strtolower($summary_row->link);
+
+      // Check our map to see if this letter existed in original results.
+      if (isset($summary_row->num_records)) {
+        // Add a specific class like 'had-content'.
+        $summary_row->disabled = FALSE;
+      }
+      else {
+        // Add a class that will disable the letter.
+        $summary_row->disabled = TRUE;
+      }
+
+      // Add the determined classes to the Attribute object.
+      if (isset($summary_row->attributes) && $summary_row->attributes instanceof Attribute) {
+        $summary_row->attributes->addClass($classes_to_add);
+      }
+    }
+    // Important to unset the reference after the loop.
+    unset($summary_row);
   }
 }
 
@@ -31,7 +75,7 @@ function az_alphabetical_listing_theme_registry_alter(&$theme_registry) {
         $theme_registry[$key] = $theme_registry['node'];
       }
       // Copy default views registry entry for views entries.
-      if (strpos($key, 'views') === 0) {
+      if (strpos($key, 'views') === 0 && ($key !== 'views_view_summary__az_alphabetical_glossary_attachment')) {
         $theme_registry[$key] = $theme_registry['views_view'];
       }
       // Alter the theme path and template elements.
@@ -39,5 +83,94 @@ function az_alphabetical_listing_theme_registry_alter(&$theme_registry) {
       $theme_registry[$key] = array_merge($theme_registry[$key], $template_file_object);
       $theme_registry[$key]['type'] = 'module';
     }
+  }
+}
+
+/**
+ * Implements hook_views_post_execute().
+ */
+function az_alphabetical_listing_views_post_execute(ViewExecutable $view) {
+
+  // Check if we're on the correct view and display.
+  if (($view->id() === 'az_alphabetical_glossary') && ($view->current_display === 'az_alphabetical_glossary_attachment')) {
+    $entity_type_id = $view->getBaseEntityType()->id();
+    // Get the results of the current query.
+    /** @var \Drupal\views\ResultRow[] $results */
+    $results = $view->result ?? [];
+
+    // Get field_az_alphabetical_index storage settings for allowed values.
+    $allowed_values = [];
+
+    /** @var \Drupal\field\Entity\FieldStorageConfig $field_storage_config */
+    $field_storage_config = FieldStorageConfig::loadByName($entity_type_id, 'field_az_alphabetical_index');
+    if ($field_storage_config) {
+      $allowed_values = $field_storage_config->getSetting('allowed_values');
+    }
+
+    // Get the letters that were present in the original view results.
+    $letters_in_original_results = [];
+    // dpm($results);
+    $count = 0;
+    foreach ($results as $original_row_index => $original_row) {
+      if (isset($original_row->_entity)) {
+        /** @var \Drupal\Core\Entity\ContentEntityInterface $entity */
+        $entity = $original_row->_entity;
+        if ($entity->hasField('field_az_alphabetical_index')) {
+          $field_items = $entity->get('field_az_alphabetical_index');
+          if (!$field_items->isEmpty()) {
+            // Use the actual field value (key) not the label.
+            $letters_in_original_results[$field_items->value] = $original_row->num_records;
+          }
+        }
+      }
+    }
+
+    // Replace view results with new ResultRows from allowed values.
+    $new_results = [];
+    $current_row_index = 0;
+
+    foreach (array_keys($allowed_values) as $letter_key) {
+      $row_data = [
+        'index' => $current_row_index,
+        // Add custom properties that attachment display can use.
+        'field_az_alphabetical_index' => $letter_key,
+        '#alphabetical_label' => $allowed_values[$letter_key],
+        'node__field_az_alphabetical_index_field_az_alphabetical_inde' => $allowed_values[$letter_key],
+      ];
+
+      if (isset($letters_in_original_results[$letter_key])) {
+        $row_data['num_records'] = $letters_in_original_results[$letter_key];
+      }
+
+      $new_results[] = new ResultRow($row_data);
+      $current_row_index++;
+    }
+
+    // Update $view->result with the new set of rows.
+    $view->result = $new_results;
+    // Update $view->total_rows to reflect the new count.
+    $view->total_rows = count($new_results);
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function az_alphabetical_listing_theme() {
+  return [
+    'views_view_summary__az_alphabetical_glossary_attachment' => [
+      'template' => 'views-view-summary--az-alphabetical-glossary-attachment',
+      'base hook' => 'views_views_summary',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
+function az_alphabetical_listing_theme_suggestions_views_view_summary_alter(array &$suggestions, array $variables) {
+  $view = $variables['view'];
+  if ($view->id() === 'az_alphabetical_glossary' && $view->current_display === 'az_alphabetical_glossary_attachment') {
+    $suggestions[] = 'views_view_summary__az_alphabetical_glossary_attachment';
   }
 }
