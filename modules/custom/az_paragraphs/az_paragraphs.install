@@ -8,6 +8,8 @@
  * profile.
  */
 
+use Drupal\Core\Entity\Query\QueryException;
+
 /**
  * Implements hook_update_last_removed().
  */
@@ -95,4 +97,317 @@ function az_paragraphs_update_1021001() {
  * Empty update since we reverted our addition of the anchor_link module.
  */
 function az_paragraphs_update_1021201() {
+}
+
+/**
+ * Apply Bootstrap 5 compatibility updates to paragraphs with text_area fields.
+ */
+function az_paragraphs_update_1130001(&$sandbox) {
+  /** @var \Drupal\az_core\AZContentFieldUpdater $field_updater */
+  $field_updater = \Drupal::service('az_core.content_field_updater');
+  $paragraph_storage = \Drupal::service('entity_type.manager')->getStorage('paragraph');
+  $logger = \Drupal::logger('az_paragraphs');
+
+  // Define field configurations for different paragraph types.
+  $field_configs = [
+    // Regular text fields.
+    'text' => [
+      'bundles' => [
+        'az_splitscreen',
+        'az_text',
+        'az_text_background',
+        'az_text_media',
+      ],
+      'field_name' => 'field_az_text_area',
+      'options' => [
+        'value_key' => 'value',
+        'format_key' => 'format',
+        'format_required' => TRUE,
+      ],
+      'query_conditions' => [
+        'field_name' => 'field_az_text_area.format',
+        'values' => ['az_standard', 'full_html'],
+      ],
+    ],
+    // HTML fields.
+    'html' => [
+      'bundles' => ['az_html'],
+      'field_name' => 'field_az_full_html',
+      'options' => [
+        'value_key' => 'value',
+        'format_required' => FALSE,
+      ],
+      'query_conditions' => [
+        'field_name' => 'field_az_full_html',
+        'exists' => TRUE,
+      ],
+    ],
+    // Card fields.
+    'cards' => [
+      'bundles' => ['az_cards'],
+      'field_name' => 'field_az_cards',
+      'options' => [
+        'value_key' => 'body',
+        'format_key' => 'body_format',
+        'format_required' => TRUE,
+      ],
+      'query_conditions' => [
+        'field_name' => 'field_az_cards.body',
+        'exists' => TRUE,
+        'format_field' => 'field_az_cards.body_format',
+        'values' => ['az_standard', 'full_html'],
+      ],
+    ],
+    // Accordion fields.
+    'accordion' => [
+      'bundles' => ['az_accordion'],
+      'field_name' => 'field_az_accordion',
+      'options' => [
+        'value_key' => 'body',
+        'format_key' => 'body_format',
+        'format_required' => TRUE,
+      ],
+      'query_conditions' => [
+        'field_name' => 'field_az_accordion.body',
+        'exists' => TRUE,
+        'format_field' => 'field_az_accordion.body_format',
+        'values' => ['az_standard', 'full_html'],
+      ],
+    ],
+  ];
+
+  if (!isset($sandbox['progress'])) {
+    // Filter out field configs for bundles/fields that don't exist.
+    $field_map = \Drupal::service('entity_field.manager')->getFieldMap();
+    $bundle_info = \Drupal::service('entity_type.bundle.info')->getBundleInfo('paragraph');
+
+    foreach ($field_configs as $config_key => $config) {
+      $field_exists = isset($field_map['paragraph'][$config['field_name']]);
+      $bundles_exist = array_intersect($config['bundles'], array_keys($bundle_info));
+
+      if (!$field_exists || empty($bundles_exist)) {
+        $logger->info('Skipping @config_key config - field exists: @field_exists, valid bundles: @bundles', [
+          '@config_key' => $config_key,
+          '@field_exists' => $field_exists ? 'yes' : 'no',
+          '@bundles' => implode(', ', $bundles_exist),
+        ]);
+        unset($field_configs[$config_key]);
+      }
+    }
+
+    // Initialize update tracking.
+    $query = $paragraph_storage->getQuery()
+      ->accessCheck(FALSE);
+
+    // Build conditions for each field type.
+    $field_groups = [];
+    foreach ($field_configs as $config) {
+      $group = $query->andConditionGroup()
+        ->condition('type', $config['bundles'], 'IN');
+
+      // Add field conditions.
+      if (!empty($config['query_conditions']['exists'])) {
+        $group->exists($config['query_conditions']['field_name']);
+      }
+      if (!empty($config['query_conditions']['values'])) {
+        $field = $config['query_conditions']['format_field'] ?? $config['query_conditions']['field_name'];
+        $group->condition($field, $config['query_conditions']['values'], 'IN');
+      }
+
+      $field_groups[] = $group;
+    }
+
+    // Combine all conditions.
+    $or_group = $query->orConditionGroup();
+    foreach ($field_groups as $group) {
+      $or_group->condition($group);
+    }
+    $query->condition($or_group);
+
+    // Initialize sandbox.
+    $sandbox['ids'] = $query->execute();
+    $sandbox['max'] = count($sandbox['ids']);
+    $sandbox['progress'] = 0;
+    // Track overall progress separately.
+    $sandbox['total_progress'] = 0;
+    $sandbox['total_processed'] = 0;
+    $sandbox['updated_count'] = 0;
+    if (empty($sandbox['max'])) {
+      $sandbox['#finished'] = 1;
+      return t('No paragraphs need to be updated.');
+    }
+  }
+
+  if (!isset($sandbox['current_type'])) {
+    // Initialize tracking of which field config we're processing.
+    $sandbox['field_configs'] = $field_configs;
+    $sandbox['field_config_keys'] = array_keys($field_configs);
+    $sandbox['current_type'] = 0;
+  }
+
+  // Get current field configuration.
+  if ($sandbox['current_type'] >= count($sandbox['field_config_keys'])) {
+    // We've processed all field types.
+    $sandbox['#finished'] = 1;
+    return t('Processed @count total paragraphs. @paragraphs_updated paragraphs updated.', [
+      '@count' => $sandbox['total_processed'],
+      '@paragraphs_updated' => $sandbox['updated_count'],
+    ]);
+  }  $type = $sandbox['field_config_keys'][$sandbox['current_type']];
+  $field_config = $sandbox['field_configs'][$type];
+
+  // Initialize processing for this field type if needed.
+  if (!isset($sandbox['type_progress'])) {
+    // Query paragraphs of current type that have parents.
+    $query = $paragraph_storage->getQuery()
+      ->condition('type', $field_config['bundles'], 'IN')
+      ->accessCheck(FALSE);
+
+    // Add field conditions from config.
+    if (!empty($field_config['query_conditions']['exists'])) {
+      $query->exists($field_config['query_conditions']['field_name']);
+    }
+    if (!empty($field_config['query_conditions']['values'])) {
+      $field = $field_config['query_conditions']['format_field'] ?? $field_config['query_conditions']['field_name'];
+      $query->condition($field, $field_config['query_conditions']['values'], 'IN');
+    }
+
+    // Only get paragraphs that have parent entities.
+    $query->exists('parent_type')
+      ->exists('parent_field_name');
+
+    // Filter out orphaned paragraphs.
+    $ids = $query->execute();
+    $valid_ids = [];
+    foreach (array_chunk($ids, 50) as $chunk) {
+      $paragraphs = $paragraph_storage->loadMultiple($chunk);
+      foreach ($paragraphs as $paragraph) {
+        $parent_type = $paragraph->get('parent_type')->value;
+        $parent_field = $paragraph->get('parent_field_name')->value;
+        if (empty($parent_type)) {
+          $logger->warning('Paragraph @pid has no parent type', ['@pid' => $paragraph->id()]);
+          continue;
+        }
+        if (empty($parent_field)) {
+          $logger->warning('Paragraph @pid has no parent field', ['@pid' => $paragraph->id()]);
+          continue;
+        }
+        try {
+          $query = \Drupal::service('entity_type.manager')->getStorage($parent_type)
+            ->getQuery()
+            ->condition("$parent_field.target_id", $paragraph->id())
+            ->range(0, 1)
+            ->accessCheck(FALSE);
+          if ($query->execute()) {
+            $valid_ids[] = $paragraph->id();
+          }
+          else {
+            $logger->info('Skipping unused paragraph @pid', ['@pid' => $paragraph->id()]);
+          }
+        }
+        catch (QueryException $qe) {
+          $logger->warning('Failed to check for usage of paragraph @pid in @parent_field on type @parent_type @msg', [
+            '@pid' => $paragraph->id(),
+            '@parent_field' => $parent_field,
+            '@parent_type' => $parent_type,
+            '@msg' => $qe->getMessage(),
+          ]);
+        }
+      }
+    }
+
+    // Set up tracking for this field type.
+    $sandbox['type_ids'] = $valid_ids;
+    $sandbox['type_progress'] = 0;
+    $sandbox['type_max'] = count($valid_ids);
+  }
+
+  // Set up sandbox for this batch of the current type.
+  $batch_ids = array_slice($sandbox['type_ids'], $sandbox['type_progress'], 20);
+  if (empty($batch_ids)) {
+    // Update overall progress before moving to next type.
+    $sandbox['progress'] += $sandbox['type_progress'];
+
+    // Move to next field type.
+    $sandbox['current_type']++;
+    unset($sandbox['type_progress']);
+    unset($sandbox['type_ids']);
+    unset($sandbox['type_max']);
+
+    return NULL;
+  }
+
+  $type_sandbox = [
+    'ids' => $batch_ids,
+    'max' => count($batch_ids),
+    'progress' => 0,
+    'updated_count' => 0,
+  ];
+
+  // Process this batch.
+  $options = array_merge([
+    'create_revisions' => TRUE,
+    'prefix' => __FUNCTION__,
+    'suffix' => 'for Bootstrap 5 compatibility',
+    'batch_size' => 20,
+  ], $field_config['options']);
+
+  $field_updater->processFieldUpdates(
+    'paragraph',
+    $field_config['field_name'],
+    'Drupal\az_core\Utility\AZBootstrapMarkupConverter::compareProcessor',
+    $type_sandbox,
+    $options
+  );
+
+  // Update progress.
+  $sandbox['type_progress'] += $type_sandbox['progress'];
+  $sandbox['updated_count'] += $type_sandbox['updated_count'];
+  $sandbox['total_progress'] += $type_sandbox['progress'];
+  $sandbox['total_processed'] += $type_sandbox['progress'];
+
+  // If we've processed all entities for this field type, move to next type.
+  if ($sandbox['type_progress'] >= $sandbox['type_max']) {
+    $sandbox['current_type']++;
+    $sandbox['type_progress'] = 0;
+
+    // If we've processed all field types, we're done.
+    if ($sandbox['current_type'] >= count($sandbox['field_config_keys'])) {
+      $sandbox['#finished'] = 1;
+      return t('Processed @count total paragraphs. @paragraphs_updated paragraphs updated.', [
+        '@count' => $sandbox['total_processed'],
+        '@paragraphs_updated' => $sandbox['updated_count'],
+      ]);
+    }
+
+    // Initialize next field type.
+    $current_key = $sandbox['field_config_keys'][$sandbox['current_type']];
+    $field_config = $sandbox['field_configs'][$current_key];
+
+    // Build query for this field type.
+    $query = $paragraph_storage->getQuery()
+      ->condition('type', $field_config['bundles'], 'IN')
+      ->accessCheck(FALSE);
+
+    $group = $query->andConditionGroup();
+    if (!empty($field_config['query_conditions']['exists'])) {
+      $group->exists($field_config['query_conditions']['field_name']);
+    }
+    if (!empty($field_config['query_conditions']['values'])) {
+      $field = $field_config['query_conditions']['format_field'] ?? $field_config['query_conditions']['field_name'];
+      $group->condition($field, $field_config['query_conditions']['values'], 'IN');
+    }
+    $query->condition($group);
+
+    $sandbox['paragraphs'] = $query->execute();
+    $sandbox['type_ids'] = $sandbox['paragraphs'];
+    $sandbox['type_max'] = count($sandbox['paragraphs']);
+  }
+
+  // Calculate overall progress as we process each type.
+  $total_types = count($sandbox['field_config_keys']);
+  $current_type_progress = $sandbox['type_progress'] / ($sandbox['type_max'] ?: 1);
+  $sandbox['#finished'] = ($sandbox['current_type'] + $current_type_progress) / $total_types;
+
+  return NULL;
 }

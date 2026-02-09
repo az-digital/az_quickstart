@@ -1,0 +1,381 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.search_index
+    - field.storage.media.field_media_az_image
+    - field.storage.node.field_az_awards
+    - field.storage.node.field_az_body
+    - field.storage.node.field_az_degrees
+    - field.storage.node.field_az_event_category
+    - field.storage.node.field_az_event_date
+    - field.storage.node.field_az_link
+    - field.storage.node.field_az_location
+    - field.storage.node.field_az_media_image
+    - field.storage.node.field_az_media_thumbnail_image
+    - field.storage.node.field_az_news_tags
+    - field.storage.node.field_az_page_category
+    - field.storage.node.field_az_person_category
+    - field.storage.node.field_az_person_category_sec
+    - field.storage.node.field_az_short_title
+    - field.storage.node.field_az_subheading
+    - field.storage.node.field_az_summary
+    - search_api.server.az_search_api_searchstax
+  module:
+    - az_search_api
+    - file
+    - media
+    - node
+    - search_api_solr
+    - taxonomy
+third_party_settings:
+  search_api_solr:
+    finalize: false
+    commit_before_finalize: false
+    commit_after_finalize: false
+    debug_finalize: false
+    highlighter:
+      maxAnalyzedChars: 51200
+      fragmenter: gap
+      usePhraseHighlighter: true
+      highlightMultiTerm: true
+      preserveMulti: false
+      regex:
+        slop: 0.5
+        pattern: blank
+        maxAnalyzedChars: 10000
+      highlight:
+        mergeContiguous: false
+        requireFieldMatch: false
+        snippets: 3
+        fragsize: 0
+    mlt:
+      mintf: 1
+      mindf: 1
+      maxdf: 0
+      maxdfpct: 0
+      minwl: 0
+      maxwl: 0
+      maxqt: 100
+      maxntp: 2000
+      boost: false
+      interestingTerms: none
+    term_modifiers:
+      slop: 3
+      fuzzy: 1
+      fuzzy_analyzer: true
+    advanced:
+      index_prefix: ''
+      collection: ''
+      timezone: ''
+    multilingual:
+      limit_to_content_language: false
+      include_language_independent: true
+      use_language_undefined_as_fallback_language: false
+      specific_languages:
+        en: '0'
+      use_universal_collation: false
+id: az_search_api_index
+name: 'Quickstart Search API Index'
+description: ''
+read_only: false
+field_settings:
+  description:
+    label: 'Search Summary'
+    property_path: az_search_summary
+    type: text
+  field_az_awards:
+    label: Awards
+    datasource_id: 'entity:node'
+    property_path: field_az_awards
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_az_awards
+  field_az_body:
+    label: 'Event Description'
+    datasource_id: 'entity:node'
+    property_path: field_az_body
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_az_body
+  field_az_degrees:
+    label: Degrees
+    datasource_id: 'entity:node'
+    property_path: field_az_degrees
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_az_degrees
+  field_az_event_category:
+    label: 'Category » Taxonomy term » Name'
+    datasource_id: 'entity:node'
+    property_path: 'field_az_event_category:entity:name'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_az_event_category
+      module:
+        - taxonomy
+  field_az_event_date:
+    label: When
+    datasource_id: 'entity:node'
+    property_path: field_az_event_date
+    type: date
+    dependencies:
+      config:
+        - field.storage.node.field_az_event_date
+  field_az_link:
+    label: 'Link to external event'
+    datasource_id: 'entity:node'
+    property_path: field_az_link
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_az_link
+  field_az_location:
+    label: Where
+    datasource_id: 'entity:node'
+    property_path: field_az_location
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_az_location
+  field_az_media_thumbnail_image:
+    label: 'Thumbnail Image » Media » Image » File » URI'
+    datasource_id: 'entity:node'
+    property_path: 'field_az_media_thumbnail_image:entity:field_media_az_image:entity:uri'
+    type: string
+    dependencies:
+      config:
+        - field.storage.media.field_media_az_image
+        - field.storage.node.field_az_media_thumbnail_image
+      module:
+        - file
+        - media
+  field_az_news_tags:
+    label: 'News Tags » Taxonomy term » Name'
+    datasource_id: 'entity:node'
+    property_path: 'field_az_news_tags:entity:name'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_az_news_tags
+      module:
+        - taxonomy
+  field_az_page_category:
+    label: 'Category » Taxonomy term » Name'
+    datasource_id: 'entity:node'
+    property_path: 'field_az_page_category:entity:name'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_az_page_category
+      module:
+        - taxonomy
+  field_az_person_category:
+    label: 'Category » Taxonomy term » Name'
+    datasource_id: 'entity:node'
+    property_path: 'field_az_person_category:entity:name'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_az_person_category
+      module:
+        - taxonomy
+  field_az_person_category_sec:
+    label: 'Category - Secondary » Taxonomy term » Name'
+    datasource_id: 'entity:node'
+    property_path: 'field_az_person_category_sec:entity:name'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_az_person_category_sec
+      module:
+        - taxonomy
+  field_az_short_title:
+    label: 'Short Title'
+    datasource_id: 'entity:node'
+    property_path: field_az_short_title
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_az_short_title
+  field_az_subheading:
+    label: Subtitle
+    datasource_id: 'entity:node'
+    property_path: field_az_subheading
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_az_subheading
+  field_az_summary:
+    label: Summary
+    datasource_id: 'entity:node'
+    property_path: field_az_summary
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_az_summary
+  field_media_az_image:
+    label: 'Photo » Media » Image » File » URI'
+    datasource_id: 'entity:node'
+    property_path: 'field_az_media_image:entity:field_media_az_image:entity:uri'
+    type: string
+    dependencies:
+      config:
+        - field.storage.media.field_media_az_image
+        - field.storage.node.field_az_media_image
+      module:
+        - file
+        - media
+  rendered_item:
+    label: 'Rendered HTML output'
+    property_path: rendered_item
+    type: text
+    configuration:
+      roles:
+        - anonymous
+      view_mode:
+        'entity:node':
+          ':default': search_index
+          az_event: ':default'
+          az_flexible_page: ':default'
+          az_news: ':default'
+          az_person: ':default'
+  sitename:
+    label: 'Site Name'
+    property_path: custom_value
+    type: text
+    configuration:
+      value: '[site:name]'
+  title:
+    label: Title
+    datasource_id: 'entity:node'
+    property_path: title
+    type: text
+    dependencies:
+      module:
+        - node
+  type:
+    label: 'Content type'
+    datasource_id: 'entity:node'
+    property_path: type
+    type: string
+    dependencies:
+      module:
+        - node
+  url:
+    label: URI
+    property_path: search_api_url
+    type: string
+    configuration:
+      absolute: true
+datasource_settings:
+  'entity:node':
+    bundles:
+      default: false
+      selected:
+        - az_event
+        - az_flexible_page
+        - az_news
+        - az_person
+    languages:
+      default: true
+      selected: {  }
+processor_settings:
+  add_url: {  }
+  aggregated_field: {  }
+  auto_aggregated_fulltext_field: {  }
+  az_base_url:
+    weights:
+      preprocess_index: -15
+      preprocess_query: -15
+    all_fields: 1
+    fields:
+      - description
+      - field_az_awards
+      - field_az_body
+      - field_az_degrees
+      - field_az_event_category
+      - field_az_link
+      - field_az_location
+      - field_az_media_thumbnail_image
+      - field_az_news_tags
+      - field_az_page_category
+      - field_az_person_category
+      - field_az_person_category_sec
+      - field_az_short_title
+      - field_az_subheading
+      - field_az_summary
+      - field_media_az_image
+      - rendered_item
+      - sitename
+      - title
+      - type
+      - url
+  az_image_derivative:
+    weights:
+      preprocess_index: -16
+    all_fields: 0
+    fields:
+      field_az_media_thumbnail_image: field_az_media_thumbnail_image
+      field_media_az_image: field_media_az_image
+      description: 0
+      field_az_awards: 0
+      field_az_body: 0
+      field_az_degrees: 0
+      field_az_event_category: 0
+      field_az_link: 0
+      field_az_location: 0
+      field_az_news_tags: 0
+      field_az_page_category: 0
+      field_az_person_category: 0
+      field_az_person_category_sec: 0
+      field_az_short_title: 0
+      field_az_subheading: 0
+      field_az_summary: 0
+      rendered_item: 0
+      sitename: 0
+      title: 0
+      type: 0
+      url: 0
+    image_style: az_card_image
+  az_search_summary: {  }
+  custom_value: {  }
+  entity_status: {  }
+  entity_type: {  }
+  html_filter:
+    weights:
+      preprocess_index: -10
+      preprocess_query: 0
+    all_fields: false
+    fields:
+      - description
+      - field_az_body
+      - rendered_item
+    title: false
+    alt: false
+    tags:
+      b: 2.0
+      em: 1.5
+      h1: 5.0
+      h2: 3.0
+      h3: 2.0
+      strong: 2.0
+      u: 1.5
+  language_with_fallback: {  }
+  rendered_item: {  }
+  solr_date_range:
+    weights:
+      preprocess_index: 0
+tracker_settings:
+  default:
+    indexing_order: fifo
+options:
+  cron_limit: 100
+  delete_on_fail: true
+  index_directly: false
+  track_changes_in_references: true
+server: az_search_api_searchstax

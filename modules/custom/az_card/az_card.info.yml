@@ -1,12 +1,11 @@
 name: 'Quickstart Card'
 type: module
 description: 'Custom field plugins and theme template for cards.'
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10 || ^11 || ^12
 package: 'The University of Arizona'
 dependencies:
-  - az_core
-  - az_media
+  - az_core:az_core
+  - az_media:az_media
   - drupal:filter
   - drupal:image
   - drupal:media
-  - media_library_form_element:media_library_form_element

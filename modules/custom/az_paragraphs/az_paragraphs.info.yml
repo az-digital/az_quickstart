@@ -1,13 +1,14 @@
 name: 'Quickstart Paragraphs'
 type: module
 description: 'Provides custom paragraph types.'
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10 || ^11 || ^12
 package: 'The University of Arizona'
 dependencies:
   - paragraphs:paragraphs
-  - az_card
-  - az_core
-  - az_media
+  - az_card:az_card
+  - az_core:az_core
+  - az_icons:az_icons
+  - az_media:az_media
   - ckeditor_indentblock:ckeditor_indentblock
   - drupal:text
   - drupal:telephone

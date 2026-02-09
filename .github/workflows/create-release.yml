@@ -21,11 +21,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           token: ${{ secrets.REPO_DISPATCH_TOKEN }}
       - name: Setup PHP
-        uses: shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@44454db4f0199b8b9685a5d763dc37cbf79108e1 # 2.36.0
         with:
           php-version: '8.3'
       - name: Create Tag
@@ -39,9 +39,21 @@ jobs:
           git push
           git tag ${{ github.event.inputs.version }}
           git push origin ${{ github.event.inputs.version }}
-      - name: Build project # This would actually build your project, using zip for an example artifact
+      - name: Set variables
         run: |
-          git clone https://github.com/az-digital/az-quickstart-scaffolding.git az_quickstart
+          if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $GITHUB_REF_NAME | wc -l) = 1 ]; then
+            echo "SCAFFOLD_BRANCH=${GITHUB_REF_NAME}" >> ${GITHUB_ENV}
+          else
+            echo "SCAFFOLD_BRANCH=main" >> ${GITHUB_ENV}
+          fi
+      - name: Clone scaffolding repo
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          repository: az-digital/az-quickstart-scaffolding
+          path: az_quickstart
+          ref: ${{ env.SCAFFOLD_BRANCH }}
+      - name: Build project
+        run: |
           cd az_quickstart
           composer config repositories.az_quickstart vcs https://github.com/az-digital/az_quickstart.git
           composer config use-github-api false
@@ -55,7 +67,7 @@ jobs:
           tar --exclude '*.git*' -c -z -f az_quickstart.tar.gz az_quickstart
       - name: Create Release
         id: create_release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@a06a81a03ee405af7f2048a818ed3f03bbf83c7b # v2.5.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           tag_name: ${{ github.event.inputs.version }}
@@ -67,11 +79,12 @@ jobs:
             ./az_quickstart.zip
             ./az_quickstart.tar.gz
 
-      - name: Remove version from info file
+      - name: Set info file version back to dev
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
           sed -i "/version: /d" az_quickstart.info.yml
+          echo -e "version: ${{ github.ref_name }}-dev" >> az_quickstart.info.yml
           git add az_quickstart.info.yml
           git commit -m "Back to dev."
           git push
@@ -85,7 +98,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Notify dependencies
-        uses: peter-evans/repository-dispatch@v3
+        uses: peter-evans/repository-dispatch@28959ce8df70de7be546dd1250a005dd32156697 # v4.0.1
         with:
           token: ${{ secrets.REPO_DISPATCH_TOKEN }}
           repository: ${{ matrix.repo }}

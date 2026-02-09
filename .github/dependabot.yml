@@ -1,17 +1,83 @@
 version: 2
 updates:
+  # Composer updates for main branch
   - package-ecosystem: "composer"
+    target-branch: "main"
     directory: "/"
     schedule:
       interval: "daily"
-    reviewers:
-      - "az-digital/developers"
-    # Allow up to 10 open pull requests
     open-pull-requests-limit: 10
+    ignore:
+      - dependency-name: "drupal/core*"
+        update-types:
+          - "version-update:semver-major"
+          - "version-update:semver-minor"
+
+  # Composer updates for 2.x branch
+  - package-ecosystem: "composer"
+    target-branch: "2.x"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    allow:
+      - dependency-name: "drupal/core*"
+    ignore:
+      - dependency-name: "drupal/core*"
+        update-types:
+          - "version-update:semver-major"
+          - "version-update:semver-minor"
+    labels:
+      - "dependencies"
+      - "php"
+      - "2.x only"
+      - "Drupal"
+
+  # NPM/Yarn package updates for main branch
+  - package-ecosystem: "npm"
+    target-branch: "main"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 5
+    cooldown:
+      default-days: 5
+    ignore:
+      - dependency-name: "*"
+        update-types:
+          - "version-update:semver-major"
+          - "version-update:semver-minor"
+    labels:
+      - "dependencies"
+      - "ci"
+
+  # NPM/Yarn package updates for 2.x branch
+  - package-ecosystem: "npm"
+    target-branch: "2.x"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 5
+    cooldown:
+      default-days: 5
+    ignore:
+      - dependency-name: "*"
+        update-types:
+          - "version-update:semver-major"
+          - "version-update:semver-minor"
+    labels:
+      - "dependencies"
+      - "2.x only"
+      - "ci"
+
+  # GitHub Actions updates
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      # Check for updates to GitHub Actions every week
-      interval: "weekly"
-    reviewers:
-      - "az-digital/developers"
+      interval: "daily"
+    cooldown:
+      default-days: 5
+    labels:
+      - "dependencies"
+      - "github_actions"
+      - "ci"

@@ -1,7 +1,7 @@
 name: 'Quickstart Block Types'
 description: 'Various styles of freestanding blocks which can be repeated throughout a site with different content in each.'
 type: module
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10 || ^11 || ^12
 package: The University of Arizona
 dependencies:
   - drupal:block_content

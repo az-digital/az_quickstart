@@ -72,8 +72,7 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
     AZFinderOverrides $az_finder_overrides,
     EntityTypeManagerInterface $entity_type_manager,
   ) {
-    parent::__construct($config_factory);
-    $this->typedConfigManager = $typed_config_manager;
+    parent::__construct($config_factory, $typed_config_manager);
     $this->azFinderViewOptions = $az_finder_view_options;
     $this->azFinderVocabulary = $az_finder_vocabulary;
     $this->azFinderOverrides = $az_finder_overrides;
@@ -154,6 +153,18 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
       '#config_target' => 'az_finder.settings:tid_widget.default_state',
     ];
 
+    // Active filter indicator levels field.
+    $form['az_finder_tid_widget']['active_filter_indicator_levels'] = [
+      '#type' => 'number',
+      '#title' => $this->t('Filter Indicator Levels'),
+      '#description' => $this->t('Controls which accordion levels display an active filter indicator by default. Leave empty to disable indicators globally. 0 shows indicators on all levels. 1 shows them only on level 0 (top-level). 2 shows them on levels 0 and 1, and so on. Individual views can override this setting.'),
+      '#min' => 0,
+      '#step' => 1,
+      '#required' => FALSE,
+      '#weight' => -1,
+      '#default_value' => $this->config('az_finder.settings')->get('tid_widget.active_filter_indicator_levels') ?? '',
+    ];
+
     // Fetch existing overrides from the AZFinderOverrides service.
     $config_overrides = $this->azFinderOverrides->getExistingOverrides();
 
@@ -231,6 +242,46 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
     // Save combined overrides to the form state.
     $form_state->setValue(['az_finder_tid_widget', 'overrides'], $overrides);
     return parent::buildForm($form, $form_state);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function submitForm(array &$form, FormStateInterface $form_state) {
+    // Manually save global active_filter_indicator_levels.
+    // Empty → NULL, numeric → integer.
+    // This is necessary due to a core issue.
+    // @see https://www.drupal.org/project/drupal/issues/3468471
+    $global_config = $this->configFactory->getEditable('az_finder.settings');
+    $global_value = $form_state->getValue(['az_finder_tid_widget', 'active_filter_indicator_levels']);
+    if ($global_value === '') {
+      $global_config->set('tid_widget.active_filter_indicator_levels', NULL);
+    }
+    elseif (is_numeric($global_value)) {
+      $global_config->set('tid_widget.active_filter_indicator_levels', (int) $global_value);
+    }
+
+    // Manually save override configs.
+    $overrides = $form_state->getValue(['az_finder_tid_widget', 'overrides']) ?? [];
+    foreach ($overrides as $key => $override) {
+      if (isset($override['active_filter_indicator_levels'])) {
+        [$view_id, $display_id] = explode(':', $key, 2);
+        $config_name = "az_finder.tid_widget.{$view_id}.{$display_id}";
+        $override_config = $this->configFactory->getEditable($config_name);
+        $value = $override['active_filter_indicator_levels'];
+        if ($value === '') {
+          $override_config->set('active_filter_indicator_levels', NULL);
+        }
+        elseif (is_numeric($value)) {
+          $override_config->set('active_filter_indicator_levels', (int) $value);
+        }
+        $override_config->save();
+      }
+    }
+
+    // Save the global config and call parent to handle default_state.
+    $global_config->save();
+    parent::submitForm($form, $form_state);
   }
 
   /**
@@ -338,8 +389,22 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
         ],
       ];
 
+      // Add active_filter_indicator_levels field for this view override.
       $config_name = "az_finder.tid_widget.{$view_id}.{$display_id}";
-      $config = $this->config($config_name);
+      $override_config = $this->config($config_name);
+      $current_value = $override_config->get('active_filter_indicator_levels');
+
+      $form['az_finder_tid_widget']['overrides'][$key]['active_filter_indicator_levels'] = [
+        '#type' => 'number',
+        '#title' => $this->t('Filter Indicator Levels Override'),
+        '#description' => $this->t('Override the global filter indicator setting for this view. Leave empty to use the global default.'),
+        '#min' => 0,
+        '#step' => 1,
+        '#weight' => -10,
+        '#required' => FALSE,
+        '#default_value' => $current_value ?? '',
+      ];
+
       $vocabulary_ids = $this->azFinderVocabulary->getVocabularyIdsForFilter($view_id, $display_id, 'taxonomy_index_tid');
 
       foreach ($vocabulary_ids as $vocabulary_id) {

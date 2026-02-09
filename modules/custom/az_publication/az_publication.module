@@ -122,10 +122,6 @@ function az_publication_theme() {
       'template' => 'block--block-content--views-reference--az-publications--az-author-person',
       'base hook' => 'block',
     ],
-    'views_exposed_form__az_publications' => [
-      'template' => 'views-exposed-form--az-publications',
-      'base hook' => 'views_exposed_form',
-    ],
     'az_publication_type_listing_table' => [
       'variables' => [
         'headers' => NULL,
@@ -797,7 +793,6 @@ function template_preprocess_az_inline_entity_role_form_entity_table(array &$var
           $arguments = array_merge($arguments, $field['callback_arguments']);
         }
 
-        // phpcs:ignore
         $data = call_user_func_array($field['callback'], array_values($arguments));
 
         // Backward compatibility for callbacks that just provide a string not
