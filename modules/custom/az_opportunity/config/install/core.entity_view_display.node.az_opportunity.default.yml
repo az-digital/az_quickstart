@@ -307,7 +307,7 @@ third_party_settings:
       format_type: html_element
       format_settings:
         classes: ''
-        show_empty_fields: true
+        show_empty_fields: false
         id: ''
         label_as_html: false
         element: div
