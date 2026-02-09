@@ -221,3 +221,7 @@ accordion on that page.
 * [2.14.x](https://github.com/az-digital/az_quickstart/tree/2.14.x) (Quickstart 2 LTS)
 * [3.1.x](https://github.com/az-digital/az_quickstart/tree/3.1.x) (Security only)
 * [3.2.x](https://github.com/az-digital/az_quickstart/tree/3.2.x)```
+
+### Visual Changes included in Patch Releases
+
+Visual changes in patch releases will be avoided when possible. Visual changes will only be included when they fix a critical issue and cannot wait until the next minor release.
