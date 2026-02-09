@@ -219,6 +219,5 @@ accordion on that page.
 ### Currently Supported Releases
 
 * [2.14.x](https://github.com/az-digital/az_quickstart/tree/2.14.x) (Quickstart 2 LTS)
-* [3.0.x](https://github.com/az-digital/az_quickstart/tree/3.0.x)
-* [3.1.x](https://github.com/az-digital/az_quickstart/tree/3.1.x)
-* [3.2.x](https://github.com/az-digital/az_quickstart/tree/3.2.x) (Pre-release)
+* [3.1.x](https://github.com/az-digital/az_quickstart/tree/3.1.x) (Security only)
+* [3.2.x](https://github.com/az-digital/az_quickstart/tree/3.2.x)```
