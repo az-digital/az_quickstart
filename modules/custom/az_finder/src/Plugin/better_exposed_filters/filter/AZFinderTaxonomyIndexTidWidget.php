@@ -19,6 +19,7 @@ use Drupal\taxonomy\Plugin\views\filter\TaxonomyIndexTid;
 use Drupal\views\ViewExecutable;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Finder widget implementation.
@@ -31,48 +32,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements ContainerFactoryPluginInterface {
 
   use StringTranslationTrait;
-
-  /**
-   * The configuration for the plugin.
-   *
-   * @var array
-   */
-  protected $configuration;
-
-  /**
-   * The renderer service.
-   *
-   * @var \Drupal\Core\Render\RendererInterface
-   */
-  protected $renderer;
-
-  /**
-   * The entity type manager service.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected $entityTypeManager;
-
-  /**
-   * The AZFinderIcons service.
-   *
-   * @var \Drupal\az_finder\Service\AZFinderIcons
-   */
-  protected $azFinderIcons;
-
-  /**
-   * The config factory service.
-   *
-   * @var \Drupal\Core\Config\ConfigFactoryInterface
-   */
-  protected $configFactory;
-
-  /**
-   * The logger service.
-   *
-   * @var \Psr\Log\LoggerInterface
-   */
-  protected $logger;
 
   /**
    * The override settings.
@@ -90,14 +49,16 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
    *   The plugin ID.
    * @param mixed $plugin_definition
    *   The plugin definition.
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   The request service.
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   *   The configuration factory.
    * @param \Drupal\Core\Render\RendererInterface $renderer
    *   The renderer service.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   The entity type manager service.
-   * @param \Drupal\az_finder\Service\AZFinderIcons $az_finder_icons
+   * @param \Drupal\az_finder\Service\AZFinderIcons $azFinderIcons
    *   The AZFinderIcons service.
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
-   *   The config factory service.
    * @param \Psr\Log\LoggerInterface $logger
    *   The logger service.
    */
@@ -105,19 +66,15 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
     array $configuration,
     $plugin_id,
     $plugin_definition,
-    RendererInterface $renderer,
-    EntityTypeManagerInterface $entity_type_manager,
-    AZFinderIcons $az_finder_icons,
+    Request $request,
     ConfigFactoryInterface $config_factory,
-    LoggerInterface $logger,
+    protected RendererInterface $renderer,
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected AZFinderIcons $azFinderIcons,
+    protected LoggerInterface $logger,
   ) {
     $configuration += $this->defaultConfiguration();
-    parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->renderer = $renderer;
-    $this->entityTypeManager = $entity_type_manager;
-    $this->azFinderIcons = $az_finder_icons;
-    $this->configFactory = $config_factory;
-    $this->logger = $logger;
+    parent::__construct($configuration, $plugin_id, $plugin_definition, $request, $config_factory);
   }
 
   /**
@@ -128,15 +85,16 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
     array $configuration,
     $plugin_id,
     $plugin_definition,
-  ) {
+  ): static {
     return new static(
       $configuration,
       $plugin_id,
       $plugin_definition,
+      $container->get('request_stack')->getCurrentRequest(),
+      $container->get('config.factory'),
       $container->get('renderer'),
       $container->get('entity_type.manager'),
       $container->get('az_finder.icons'),
-      $container->get('config.factory'),
       $container->get('logger.channel.az_finder')
     );
   }
@@ -427,7 +385,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
         ];
 
         $collapse_id = 'collapse-az-finder-' . $entity_id;
-        $list_title_link['#attributes']['data-toggle'] = 'collapse';
+        $list_title_link['#attributes']['data-bs-toggle'] = 'collapse';
         $list_title_link['#attributes']['href'] = '#' . $collapse_id;
         $list_title_link['#attributes']['class'][] = 'd-block';
         $list_title_link['#attributes']['role'] = 'button';
@@ -458,7 +416,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
           $list_title_link['#attributes']['class'][] = 'js-svg-replace-level-1';
           $list_title['#tag'] = "h" . ($depth + 3);
           $list_title['#attributes']['class'][] = 'text-body';
-          $list_title['#attributes']['class'][] = 'text-size-h6';
+          $list_title['#attributes']['class'][] = 'fs-6';
           $list_title['#attributes']['class'][] = 'd-flex';
           $list_title['#attributes']['class'][] = 'flex-row-reverse';
           $list_title['#attributes']['class'][] = 'justify-content-end';

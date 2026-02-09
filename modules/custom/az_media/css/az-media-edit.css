@@ -3,6 +3,37 @@
   margin-right: auto;
   margin-left: auto;
 }
-.az-media.embed-responsive {
-  width:400px;
+
+/* Edit screen sizing - provides consistent preview for editors */
+.az-media.ratio {
+  width: 400px;
+  max-width: 100%;
+}
+
+figure[data-view-mode="az_natural_size"] .az-media.ratio {
+  width: 100%;
+}
+
+figure[data-view-mode="az_natural_size"].drupal-media:has(iframe) {
+  display: block;
+}
+
+figure[data-view-mode="az_large"] .az-media.ratio {
+  width: 1140px;
+}
+
+figure[data-view-mode="az_medium"] .az-media.ratio {
+  width: 740px;
+}
+
+figure[data-view-mode="az_small"] .az-media.ratio {
+  width: 360px;
+}
+
+figure[data-view-mode="az_square"] .az-media.ratio {
+  width: 240px;
+}
+
+figure[data-view-mode="az_very_small"] .az-media.ratio {
+  width: 220px;
 }

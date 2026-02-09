@@ -4,10 +4,13 @@ dependencies:
   config:
     - field.field.media.az_image.field_az_caption
     - field.field.media.az_image.field_az_credit
+    - field.field.media.az_image.field_focal_point_x
+    - field.field.media.az_image.field_focal_point_y
     - field.field.media.az_image.field_media_az_image
     - image.style.thumbnail
     - media.type.az_image
   module:
+    - decorative_image_widget
     - image_widget_crop
     - path
     - text
@@ -38,6 +41,20 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+  field_focal_point_x:
+    type: number
+    weight: 27
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_focal_point_y:
+    type: number
+    weight: 28
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
   field_media_az_image:
     type: image_widget_crop
     weight: 0
@@ -58,13 +75,14 @@ content:
         - az_marketing_cloud_30_70_layout
         - az_marketing_cloud_50_50_layout
         - az_marketing_cloud_hero_layout
-        - az_modal_image
         - az_square_aspect_ratio
       crop_types_required: {  }
       warn_multiple_usages: true
       show_crop_area: false
       show_default_crop: true
-    third_party_settings: {  }
+    third_party_settings:
+      decorative_image_widget:
+        use_decorative_checkbox: true
   path:
     type: path
     weight: 3

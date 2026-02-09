@@ -11,12 +11,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Setup PHP
-        uses: shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@44454db4f0199b8b9685a5d763dc37cbf79108e1 # 2.36.0
         with:
-          php-version: '8.3'
+          php-version: '8.4'
 
       - name: Install Terminus and authenticate Terminus
-        uses: pantheon-systems/terminus-github-actions@release/v1
+        uses: pantheon-systems/terminus-github-actions@8e024bd89ff46ed2aa4e0663c6b54c87a94344f8 # v1.2.7
         with:
           pantheon-machine-token: ${{ secrets.TERMINUS_TOKEN }}
 
@@ -33,9 +33,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup PHP
-        uses: shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@44454db4f0199b8b9685a5d763dc37cbf79108e1 # 2.36.0
         with:
-          php-version: '8.3'
+          php-version: '8.4'
 
       - name: Set up SSH
         run: |
@@ -45,7 +45,7 @@ jobs:
           chmod 600 ${HOME}/.ssh/*
 
       - name: Install Terminus and authenticate Terminus
-        uses: pantheon-systems/terminus-github-actions@release/v1
+        uses: pantheon-systems/terminus-github-actions@8e024bd89ff46ed2aa4e0663c6b54c87a94344f8 # v1.2.7
         with:
           pantheon-machine-token: ${{ secrets.TERMINUS_TOKEN }}
 
@@ -69,9 +69,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup PHP
-        uses: shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@44454db4f0199b8b9685a5d763dc37cbf79108e1 # 2.36.0
         with:
-          php-version: '8.3'
+          php-version: '8.4'
 
       - name: Set up SSH
         run: |
@@ -81,7 +81,7 @@ jobs:
           chmod 600 ${HOME}/.ssh/*
 
       - name: Install Terminus and authenticate Terminus
-        uses: pantheon-systems/terminus-github-actions@release/v1
+        uses: pantheon-systems/terminus-github-actions@8e024bd89ff46ed2aa4e0663c6b54c87a94344f8 # v1.2.7
         with:
           pantheon-machine-token: ${{ secrets.TERMINUS_TOKEN }}
 

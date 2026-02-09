@@ -1,0 +1,12 @@
+name: 'Quickstart EDS'
+type: module
+description: 'Provides access credentials for EDS via environment.'
+core_version_requirement: ^10 || ^11 || ^12
+package: 'The University of Arizona - Experimental'
+lifecycle: experimental
+lifecycle_link: 'https://github.com/az-digital/az_quickstart/blob/main/RELEASES.md#experimental-features'
+dependencies:
+  - az_secrets:az_secrets
+  - key:key
+  - ldap_query:ldap_query
+  - ldap_servers:ldap_servers
