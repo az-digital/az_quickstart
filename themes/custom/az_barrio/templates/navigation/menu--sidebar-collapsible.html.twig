@@ -30,7 +30,7 @@
       'nav',
       'flex-column',
       'nav-pills',
-      'text-bg-white',
+      'text-bg-azurite',
     ]
   %}
   {% if items %}
@@ -62,7 +62,7 @@
           <div class="d-flex justify-content-between">
             {{ link(item.title, item.url, {'class': link_classes}) }}
             <a href="#{{ key|replace({'menu_link_content:': ''}) }}" data-bs-toggle="collapse" aria-expanded="{{ item.in_active_trail ? 'true' : 'false' }}" aria-controls="{{ key|replace({'menu_link_content:': ''}) }}" class="btn d-flex align-items-center px-2 rounded-0 border-0" type="button">
-              <span class="material-symbols-rounded align-text-top rounded-0" aria-hidden="true">keyboard_arrow_down</span>
+              <span class="material-symbols-rounded align-text-top text-white rounded-0" aria-hidden="true">keyboard_arrow_down</span>
             </a>
           </div>
           <div id="{{ key|replace({'menu_link_content:': ''}) }}" class="collapse {{ item.in_active_trail ? 'show' }}">

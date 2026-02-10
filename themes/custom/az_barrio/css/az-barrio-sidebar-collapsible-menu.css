@@ -3,6 +3,7 @@
 .az-sidebar-collapsible-menu,
 .az-sidebar-collapsible-menu h2 {
   font-family: proxima-nova-condensed, var(--bs-body-font-family);
+  --bs-bg-opacity: 1;
 }
 
 .az-sidebar-collapsible-menu .az-sidebar-collapsible-parent > a {
@@ -24,14 +25,27 @@
   font-weight: 600;
 }
 
+.az-sidebar-collapsible-menu .nav-link {
+  padding-top: calc(var(--bs-nav-link-padding-y) + 2px);
+  background-color: rgba(var(--bs-azurite-rgb), var(--bs-bg-opacity));
+  color: var(--bs-white-rgb);
+}
+
 .az-sidebar-collapsible-menu .is-active {
-  background-color: #e9ecef;
-  box-shadow: inset 6px 0 #378dbd;
+  background-color: rgba(var(--bs-blue-rgb), var(--bs-bg-opacity));
+  box-shadow: inset 6px 0 rgba(var(--bs-oasis-rgb), var(--bs-bg-opacity));
+}
+
+.az-sidebar-collapsible-parent > a:focus,
+.az-sidebar-collapsible-menu .nav.nav-pills .nav-item .nav-link:focus,
+.az-sidebar-collapsible-menu .nav-item .btn:focus {
+  background-color: rgba(var(--bs-midnight-rgb), var(--bs-bg-opacity));
 }
 
 .az-sidebar-collapsible-parent > a:hover,
-.az-sidebar-collapsible-menu .btn:hover {
-  background-color: #e9ecef;
+.az-sidebar-collapsible-menu .nav.nav-pills .nav-item .nav-link:hover,
+.az-sidebar-collapsible-menu .nav-item .btn:hover {
+  background-color: rgba(var(--bs-blue-rgb), var(--bs-bg-opacity));
 }
 
 .az-sidebar-collapsible-menu .material-symbols-rounded {
