@@ -5,12 +5,12 @@ namespace Drupal\Tests\az_demo\Functional;
 use Drupal\Core\Url;
 use Drupal\Core\Config\FileStorage;
 use Drupal\Tests\az_core\Functional\QuickstartFunctionalTestBase;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Verify successful importing of demo content.
- *
- * @group az_demo
  */
+#[Group('az_demo')]
 class AZDemoContentTest extends QuickstartFunctionalTestBase {
 
   /**

@@ -3,14 +3,14 @@
 namespace Drupal\Tests\az_publication\FunctionalJavascript;
 
 use Drupal\Tests\az_core\FunctionalJavascript\QuickstartFunctionalJavascriptTestBase;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 
 /**
  * Run tests of publication contributor role functionality.
- *
- * @ingroup az_publication
- *
- * @group az_publication
  */
+#[Group('az_publication')]
+#[IgnoreDeprecations]
 class AZPublicationInlineContributorTest extends QuickstartFunctionalJavascriptTestBase {
 
   /**

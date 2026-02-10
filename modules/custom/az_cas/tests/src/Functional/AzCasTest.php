@@ -4,12 +4,12 @@ namespace Drupal\Tests\az_cas\Functional;
 
 use Drupal\Core\Url;
 use Drupal\Tests\az_core\Functional\QuickstartFunctionalTestBase;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Tests for the AZ CAS module.
- *
- * @group az_cas
  */
+#[Group('az_cas')]
 class AzCasTest extends QuickstartFunctionalTestBase {
 
   /**
