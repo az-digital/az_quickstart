@@ -14,6 +14,9 @@ az-media-display:
   css:
     component:
       css/az-media-display.css: {}
+az-back-to-top:
+  js:
+    js/az-back-to-top.js: {}
 az-barrio-off-canvas-nav:
   css:
     theme:
@@ -22,6 +25,13 @@ az-barrio-off-canvas-nav:
     js/az-barrio-off-canvas-nav.js: {}
   dependencies:
     - az_barrio/global-styling
+az-navbar-hover:
+  js:
+    js/az-navbar-hover.js: {}
+  dependencies:
+    - az_barrio/arizona-bootstrap-js
+    - core/drupal
+    - core/once
 az-barrio-sidebar-collapsible-region:
   css:
     theme:

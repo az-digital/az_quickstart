@@ -320,6 +320,9 @@ az_barrio.settings:
     az_remove_sidebar_menu_mobile:
       type: boolean
       label: 'Remove sidebar menu on mobile devices'
+    az_navbar:
+      type: boolean
+      label: 'Enable AZ Navbar'
     primary_logo_alt_text:
       type: label
       label: 'Primary logo alt text'

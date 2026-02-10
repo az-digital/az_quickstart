@@ -266,8 +266,8 @@
       "exclude_title": false,
       "az_page_category": "Views",
       "az_main_content": "406",
-      "az_media_image": "A page with views better exposed filters block.",
-      "az_summary": ""
+      "az_media_image": "",
+      "az_summary": "A page with views better exposed filters block."
     },
     {
       "id": 35,
@@ -357,6 +357,15 @@
       "az_main_content" : "308|309|310|311|312|313",
       "az_media_image" : "",
       "az_summary" : "A page with rankings."
+    },
+    {
+      "id":44,
+      "title" : "Pages",
+      "path" : "/pages",
+      "az_page_category" : "",
+      "az_main_content" : "413|414",
+      "az_media_image" : "",
+      "az_summary" : "Overview page for the Pages section."
     }
   ]
 }

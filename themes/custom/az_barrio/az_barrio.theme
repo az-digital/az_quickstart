@@ -98,6 +98,11 @@ function az_barrio_preprocess_html(&$variables) {
  * Implements hook_preprocess_HOOK() for page templates.
  */
 function az_barrio_preprocess_page(&$variables, $hook) {
+  $variables['az_back_to_top'] = (theme_get_setting('az_back_to_top')) ? TRUE : FALSE;
+  if ($variables['az_back_to_top']) {
+    $variables['#attached']['library'][] = 'az_barrio/az-back-to-top';
+  }
+
   if (isset($variables['page']['navigation_offcanvas']['az_barrio_offcanvas_searchform'])) {
     $variables['#attached']['library'][] = 'az_barrio/az-barrio-off-canvas-nav';
   }
@@ -111,7 +116,17 @@ function az_barrio_preprocess_page(&$variables, $hook) {
   // Check if information security policy should be displayed.
   $info_security_privacy = '';
   if (theme_get_setting('info_security_privacy')) {
-    $info_security_privacy = '<p class="small"><a href="https://www.arizona.edu/information-security-privacy" target="_blank">University Information Security and Privacy</a></p>';
+    $info_security_privacy = '<p class="small" style="margin-bottom: 0.25rem;"><a href="https://www.arizona.edu/information-security-privacy" target="_blank">University Information Security and Privacy</a></p>';
+  }
+
+  // Check if Klaro consent management link should be displayed.
+  $manage_privacy_choices = '';
+  $module_handler = \Drupal::service('module_handler');
+  if ($module_handler->moduleExists('az_gdpr_consent')) {
+    $manage_privacy_choices = '<p class="small" style="display: flex; align-items: center; justify-content: center; gap: 0.25rem; margin-top: 0;">';
+    $manage_privacy_choices .= '<span class="material-symbols-rounded" style="font-size:16px; color: #8B0015;">shield_lock</span>';
+    $manage_privacy_choices .= '<a href="#" rel="open-consent-manager">Manage Privacy Choices</a>';
+    $manage_privacy_choices .= '</p>';
   }
 
   // Determine what copyright notice to display.
@@ -127,6 +142,7 @@ function az_barrio_preprocess_page(&$variables, $hook) {
   $variables['logo'] = az_barrio_primary_logo();
   $variables['land_acknowledgment'] = Markup::create($land_acknowledgment);
   $variables['info_security_privacy'] = Markup::create($info_security_privacy);
+  $variables['manage_privacy_choices'] = Markup::create($manage_privacy_choices);
   $variables['copyright_notice'] = Markup::create($copyright_notice);
   $variables['footer_logo'] = az_barrio_footer_logo();
 
@@ -135,6 +151,7 @@ function az_barrio_preprocess_page(&$variables, $hook) {
 
   $variables['header_one_col_classes'] = theme_get_setting('header_one_col_classes');
   $variables['header_two_col_classes'] = theme_get_setting('header_two_col_classes');
+  $variables['az_navbar'] = theme_get_setting('az_navbar');
 
   // Calculate content width based on sidebar widths (assuming 12-column grid).
   // Only subtract sidebar widths if the sidebars actually have content.
@@ -592,6 +609,11 @@ function az_barrio_theme_suggestions_menu_alter(array &$suggestions, array $vari
   if (isset($variables['attributes']['block'])) {
     $suggestions[] = $variables['theme_hook_original'] . '__' . $variables['attributes']['block'];
   }
+
+  // Add theme suggestion for the az_navbar variation of the main menu.
+  if (isset($variables['attributes']['id']) && $variables['attributes']['id'] === 'block-az-barrio-main-menu' && theme_get_setting('az_navbar')) {
+    $suggestions[] = 'menu__main_navbar_az';
+  }
 }
 
 /**
@@ -627,7 +649,9 @@ function az_barrio_preprocess_breadcrumb(&$variables) {
  * @link https://github.com/az-digital/az_quickstart/issues/1613
  */
 function az_barrio_preprocess_block(&$variables) {
-  $variables['content']['#attributes']['block'] = $variables['attributes']['id'];
+  if (isset($variables['attributes']['id'])) {
+    $variables['content']['#attributes']['block'] = $variables['attributes']['id'];
+  }
   if ($variables['base_plugin_id'] === 'system_branding_block') {
     if ($variables['configuration']['use_site_logo']) {
       $variables['site_logo'] = az_barrio_primary_logo();
