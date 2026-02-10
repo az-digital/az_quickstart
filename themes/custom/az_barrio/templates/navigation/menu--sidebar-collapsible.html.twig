@@ -65,7 +65,7 @@
               <span class="material-symbols-rounded align-text-top text-white rounded-0" aria-hidden="true">keyboard_arrow_down</span>
             </a>
           </div>
-          <div id="{{ key|replace({'menu_link_content:': ''}) }}" class="collapse {{ item.in_active_trail ? 'show' }}">
+          <div id="{{ key|replace({'menu_link_content:': ''}) }}" class="az-sidebar-collapse collapse {{ item.in_active_trail ? 'show' }}">
             {{ menus.menu_links(item.below, attributes, menu_level + 1) }}
           </div>
         {% else %}
