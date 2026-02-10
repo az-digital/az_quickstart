@@ -18,6 +18,7 @@
  *   - in_active_trail: TRUE if the link is in the active trail.
  */
 #}
+{{ attach_library('az_barrio/az-navbar-hover') }}
 {% import _self as menus %}
 {#
   We call a macro which calls itself to render the full tree.
@@ -33,7 +34,7 @@
     {% elseif menu_level == 1 %}
       <ul{{ attributes.removeClass('navbar-nav').addClass('dropdown-menu') }} id="secondary-{{ parent_item.title|clean_class }}">
     {% elseif menu_level == 2 %}
-      <ul class="collapse{% if parent_item.in_active_trail %} show{% endif %}" id="tertiary-{{ parent_item.title|clean_class }}" data-bs-parent="#secondary-{{ parent_item.parent.title|clean_class }}">
+      <ul class="collapse{% if parent_item.in_active_trail %} show{% endif %}" id="tertiary-{{ parent_item.title|clean_class }}" data-bs-parent="#{{ attributes.id }}">
     {% endif %}
     {% for item in items %}
       {# item is_placeholder if it has no link at the primary level #}
@@ -61,7 +62,7 @@
           {% if item.below %}
             {% if not is_placeholder %}
               <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
-                <span class="visually-hidden">Toggle Dropdown</span>
+                <span class="visually-hidden">{{ item.title }}</span>
               </button>
             {% endif %}
             {{ menus.menu_links(item.below, attributes.removeClass('nav-item'), menu_level + 1, item) }}
@@ -71,7 +72,7 @@
             <div class="btn-group">
               {{ link(item.title, item.url, { 'class': 'dropdown-item' }) }}
               <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-bs-toggle="collapse" data-bs-target="#tertiary-{{ item.title|clean_class }}" data-bs-auto-close="outside" aria-controls="tertiary-{{ item.title|clean_class }}" aria-expanded="{{ item.in_active_trail ? 'true' : 'false' }}">
-                <span class="visually-hidden">Toggle Dropdown</span>
+                <span class="visually-hidden">{{ item.title }}</span>
               </button>
             </div>
             {{ menus.menu_links(item.below, attributes, menu_level + 1, item) }}
