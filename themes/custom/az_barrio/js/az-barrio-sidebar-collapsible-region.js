@@ -83,7 +83,6 @@
           'hidden.bs.collapse',
           (event) => {
             if (event.target.id === 'az-sidebar-collapsible') {
-              sidebarCollapsibleInnerDiv.classList.add('text-bg-gray-200');
               sidebarCollapseIcon.textContent = 'left_panel_open';
               sidebarCollapseBtn.classList.add('stretched-link');
               const visuallyHiddenText =
@@ -99,7 +98,6 @@
           'show.bs.collapse',
           (event) => {
             if (event.target.id === 'az-sidebar-collapsible') {
-              sidebarCollapsibleInnerDiv.classList.remove('text-bg-gray-200');
               sidebarCollapseIcon.textContent = 'left_panel_close';
               sidebarCollapseBtn.classList.remove('stretched-link');
               const visuallyHiddenText =
