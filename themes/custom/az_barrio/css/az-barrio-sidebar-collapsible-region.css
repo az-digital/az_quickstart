@@ -5,6 +5,16 @@
   /* overflow: hidden; */
 }
 
+#az-sidebar-collapsible:after {
+  content: " ";
+  height: 100%;
+  position: absolute;
+  top: 0;
+  width: 20px;
+  box-shadow: 20px 0px 20px -20px inset #0000003B;
+  right: -20px;
+}
+
 #az-sidebar-collapsible.show {
   width: 288px;
 }
