@@ -482,7 +482,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
     parent::submitConfigurationForm($form, $form_state);
 
     $default_states = [];
-    $values = $form_state->getValue('default_states');
+    $values = $form_state->getValue('default_states') ?? [];
     foreach ($values as $tid => $state) {
       $default_states[$tid] = $state;
     }
