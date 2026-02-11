@@ -76,6 +76,8 @@ Major releases include major changes such as Drupal core and Arizona Bootstrap m
 ||**Included in Bug-fix Patch Releases**|**Included in Security Patch Releases**|**Included in LTS Patch Releases**|**Included in Minor Releases**|**Included in Major Releases**|
 |**APIs and Code Quality**|
 |- New internal APIs or API enhancements (backward-compatible preferred)||||✅|✅|
+|- Removal of deprecated internal APIs|||||✅|
+|- Removal of deprecated custom modules|||||✅|
 |- Disruptive changes to comply with new or updated coding standards||||✅|✅|
 |- Major architectural changes|||||✅|
 |- Risky or regression-prone fixes requiring manual testing or upgrade paths||||✅|✅|
