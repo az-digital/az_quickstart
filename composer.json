@@ -142,6 +142,9 @@
     "conflict": {
         "drush/drush": "<12.4.3"
     },
+    "archive": {
+        "exclude": ["/.*", "/*.neon", "/*.xml.dist", "/package.json"]
+    },
     "extra": {
         "branch-alias": {
             "dev-main": "3.3.x-dev",
