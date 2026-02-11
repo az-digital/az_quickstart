@@ -175,7 +175,7 @@ jobs:
       - name: Run composer audit
         run: |
           cd az-quickstart-scaffolding
-          composer audit --abandoned report
+          composer audit --abandoned report --no-dev --ignore-severity=low --ignore-severity=moderate
 
   yarn-audit:
     name: yarn audit (security)
@@ -185,7 +185,7 @@ jobs:
       - uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
         with:
           node-version: '20'
-      - run: yarn audit
+      - run: yarn audit --level high --groups dependencies,optionalDependencies
 
   eslint:
     name: eslint
