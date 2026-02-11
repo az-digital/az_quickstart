@@ -16,7 +16,7 @@ use Drupal\views\ViewEntityInterface;
 function az_finder_post_update_add_reset_button_classes(&$sandbox) {
   // Use the same default classes as defined in QuickstartExposedFilters.
   // This should match QuickstartExposedFilters::DEFAULT_RESET_BUTTON_CLASSES.
-  $default_classes = 'btn btn-sm btn-secondary w-100 mx-1 mb-3';
+  $default_classes = 'btn btn-sm btn-blue w-100 mx-1 mb-3';
 
   \Drupal::classResolver()
     ->getInstanceFromDefinition(ConfigEntityUpdater::class)

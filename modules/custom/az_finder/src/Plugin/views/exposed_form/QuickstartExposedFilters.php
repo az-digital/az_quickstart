@@ -28,7 +28,7 @@ class QuickstartExposedFilters extends BetterExposedFilters {
    *
    * @var string
    */
-  const DEFAULT_RESET_BUTTON_CLASSES = 'btn btn-sm btn-secondary w-100 mx-1 mb-3';
+  const DEFAULT_RESET_BUTTON_CLASSES = 'btn btn-sm btn-blue w-100 mx-1 mb-3';
 
   /**
    * The config factory.
