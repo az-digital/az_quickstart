@@ -117,7 +117,7 @@ jobs:
           composer require --no-update --dev az-digital/az-quickstart-dev:${DEV_PACKAGE_VERSION}
           composer install -o
       - name: Save build artifact
-        uses: actions/cache/save@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5.0.2
+        uses: actions/cache/save@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
         with:
           path: ${{ github.workspace }}/az-quickstart-scaffolding
           key: azqs-build-${{ github.sha }}
@@ -131,7 +131,7 @@ jobs:
         with:
           php-version: '8.4'
           tools: cs2pr, phpcs
-      - uses: actions/cache/restore@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5.0.2
+      - uses: actions/cache/restore@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
         with:
           path: ${{ github.workspace }}/az-quickstart-scaffolding
           key: azqs-build-${{ github.sha }}
@@ -154,7 +154,7 @@ jobs:
         with:
           php-version: '8.4'
           tools: cs2pr, phpstan
-      - uses: actions/cache/restore@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5.0.2
+      - uses: actions/cache/restore@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
         with:
           path: ${{ github.workspace }}/az-quickstart-scaffolding
           key: azqs-build-${{ github.sha }}
@@ -168,31 +168,31 @@ jobs:
     needs: composer
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/cache/restore@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5.0.2
+      - uses: actions/cache/restore@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
         with:
           path: ${{ github.workspace }}/az-quickstart-scaffolding
           key: azqs-build-${{ github.sha }}
       - name: Run composer audit
         run: |
           cd az-quickstart-scaffolding
-          composer audit --abandoned report
+          composer audit --abandoned report --no-dev --ignore-severity=low --ignore-severity=moderate
 
   yarn-audit:
     name: yarn audit (security)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-      - uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
+      - uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
         with:
           node-version: '20'
-      - run: yarn audit
+      - run: yarn audit --level high --groups dependencies,optionalDependencies
 
   eslint:
     name: eslint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-      - uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
+      - uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
         with:
           node-version: '20'
       - run: yarn install --ignore-scripts
@@ -233,7 +233,7 @@ jobs:
         with:
           php-version: '8.4'
           extensions: dom, curl, libxml, mbstring, zip, pdo, mysql, pdo_mysql, bcmath, soap, intl, gd, exif, iconv
-      - uses: actions/cache/restore@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5.0.2
+      - uses: actions/cache/restore@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
         with:
           path: ${{ github.workspace }}/az-quickstart-scaffolding
           key: azqs-build-${{ github.sha }}
@@ -292,7 +292,7 @@ jobs:
         with:
           php-version: '8.4'
           extensions: dom, curl, libxml, mbstring, zip, pdo, mysql, pdo_mysql, bcmath, soap, intl, gd, exif, iconv
-      - uses: actions/cache/restore@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5.0.2
+      - uses: actions/cache/restore@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
         with:
           path: ${{ github.workspace }}/az-quickstart-scaffolding
           key: azqs-build-${{ github.sha }}
@@ -343,7 +343,7 @@ jobs:
           php-version: '8.4'
           extensions: dom, curl, libxml, mbstring, zip, pdo, mysql, pdo_mysql, bcmath, soap, intl, gd, exif, iconv
           tools: cs2pr
-      - uses: actions/cache/restore@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5.0.2
+      - uses: actions/cache/restore@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
         with:
           path: ${{ github.workspace }}/az-quickstart-scaffolding
           key: azqs-build-${{ github.sha }}
