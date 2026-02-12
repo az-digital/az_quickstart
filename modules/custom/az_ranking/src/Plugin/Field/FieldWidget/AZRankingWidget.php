@@ -113,17 +113,18 @@ class AZRankingWidget extends WidgetBase {
     $field_name = $this->fieldDefinition->getName();
     $field_parents = $element['#field_parents'];
     $widget_state = static::getWidgetState($field_parents, $field_name, $form_state);
-    $status = (isset($widget_state['open_status'][$delta])) ? $widget_state['open_status'][$delta] : FALSE;
 
-    // We may have had a deleted row. This shouldn't be necessary to check, but
-    // The experimental paragraphs widget extracts values before the submit
-    // handler.
+    // We may have had a deleted row or reordered items. Track the original delta
+    // for fetching the correct item and collapse status, but keep $delta for
+    // form element IDs and properties.
+    $original_delta = $delta;
     if (isset($widget_state['original_deltas'][$delta]) && ($widget_state['original_deltas'][$delta] !== $delta)) {
-      $delta = $widget_state['original_deltas'][$delta];
+      $original_delta = $widget_state['original_deltas'][$delta];
     }
 
     /** @var \Drupal\az_ranking\Plugin\Field\FieldType\AZRankingItem $item */
-    $item = $items[$delta];
+    $item = $items[$original_delta];
+    $status = (isset($widget_state['open_status'][$original_delta])) ? $widget_state['open_status'][$original_delta] : FALSE;
 
     // New field values shouldn't be considered collapsed.
     if ($item->isEmpty()) {
