@@ -113,18 +113,47 @@ class AZRankingWidget extends WidgetBase {
     $field_name = $this->fieldDefinition->getName();
     $field_parents = $element['#field_parents'];
     $widget_state = static::getWidgetState($field_parents, $field_name, $form_state);
+    $status = (isset($widget_state['open_status'][$delta])) ? $widget_state['open_status'][$delta] : FALSE;
 
-    // We may have had a deleted row or reordered items. Track the original delta
-    // for fetching the correct item and collapse status, but keep $delta for
-    // form element IDs and properties.
-    $original_delta = $delta;
-    if (isset($widget_state['original_deltas'][$delta]) && ($widget_state['original_deltas'][$delta] !== $delta)) {
-      $original_delta = $widget_state['original_deltas'][$delta];
+    // Get the correct item for this delta position.
+    // After drag-and-drop reordering, $items is still in database order, but
+    // $delta represents the display position. We need to find which item from
+    // $items corresponds to this display position.
+    $item_delta = $delta;
+    
+    // Check if we have a user input with weight values (from form submission).
+    $user_input = $form_state->getUserInput();
+    $field_path = array_merge($field_parents, [$field_name]);
+    $field_values = NestedArray::getValue($user_input, $field_path);
+    
+    if (!empty($field_values) && is_array($field_values)) {
+      // Build a weight-sorted mapping of display position to item index.
+      $weighted_deltas = [];
+      foreach ($field_values as $item_index => $item_value) {
+        if (isset($item_value['_weight']) && $item_index !== 'add_more') {
+          $weighted_deltas[] = [
+            'delta' => $item_index,
+            'weight' => $item_value['_weight'],
+          ];
+        }
+      }
+      
+      // Sort by weight.
+      usort($weighted_deltas, function ($a, $b) {
+        return $a['weight'] <=> $b['weight'];
+      });
+      
+      // Map display position to item index.
+      if (isset($weighted_deltas[$delta])) {
+        $item_delta = $weighted_deltas[$delta]['delta'];
+      }
     }
-
+    
     /** @var \Drupal\az_ranking\Plugin\Field\FieldType\AZRankingItem $item */
-    $item = $items[$original_delta];
-    $status = (isset($widget_state['open_status'][$original_delta])) ? $widget_state['open_status'][$original_delta] : FALSE;
+    $item = $items[$item_delta];
+    
+    // Update status to use the correct delta for collapse state tracking.
+    $status = (isset($widget_state['open_status'][$item_delta])) ? $widget_state['open_status'][$item_delta] : FALSE;
 
     // New field values shouldn't be considered collapsed.
     if ($item->isEmpty()) {
