@@ -83,6 +83,7 @@
         "drupal/jquery_ui_datepicker": "2.1.1",
         "drupal/key": "1.21.0",
         "drupal/klaro": "3.0.8",
+        "drupal/layout_paragraphs": "2.1.1",
         "drupal/ldap": "4.12",
         "drupal/link_class": "2.2.0",
         "drupal/linkit": "7.0.12",
@@ -198,6 +199,9 @@
             },
             "drupal/inline_entity_form": {
                 "Support Referencing the same entity multiple times (3363988)": "https://gist.githubusercontent.com/tadean/d3c4969f0c8dd7bacc3a3c0ba0521b3e/raw/f5ad64286fdcfcc23b2bf147656b012bba6a4872/inline_entity_form_multiple.patch"
+            },
+            "drupal/layout_paragraphs": {
+                "php8.4 deprecation issues (3565074)": "https://www.drupal.org/files/issues/2026-01-05/layout_paragraphs-php8.4-deprecations.patch"
             },
             "drupal/menu_block": {
                 "Performance issue caused by build in access check (3509045)": "https://www.drupal.org/files/issues/2025-03-05/3509045-13.patch"
