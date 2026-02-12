@@ -109,11 +109,10 @@ class AZRankingWidget extends WidgetBase {
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
 
-    // Get current collapse status.
+    // Get widget state for field.
     $field_name = $this->fieldDefinition->getName();
     $field_parents = $element['#field_parents'];
     $widget_state = static::getWidgetState($field_parents, $field_name, $form_state);
-    $status = (isset($widget_state['open_status'][$delta])) ? $widget_state['open_status'][$delta] : FALSE;
 
     // Get the correct item for this delta position.
     // After drag-and-drop reordering, $items is still in database order, but
@@ -152,7 +151,7 @@ class AZRankingWidget extends WidgetBase {
     /** @var \Drupal\az_ranking\Plugin\Field\FieldType\AZRankingItem $item */
     $item = $items[$item_delta];
     
-    // Update status to use the correct delta for collapse state tracking.
+    // Get current collapse status using the correct item delta.
     $status = (isset($widget_state['open_status'][$item_delta])) ? $widget_state['open_status'][$item_delta] : FALSE;
 
     // New field values shouldn't be considered collapsed.
