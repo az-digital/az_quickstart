@@ -120,12 +120,12 @@ class AZCardWidget extends WidgetBase {
     // $delta represents the display position. We need to find which item from
     // $items corresponds to this display position.
     $item_delta = $delta;
-    
+
     // Check if we have a user input with weight values (from form submission).
     $user_input = $form_state->getUserInput();
     $field_path = array_merge($field_parents, [$field_name]);
     $field_values = NestedArray::getValue($user_input, $field_path);
-    
+
     if (!empty($field_values) && is_array($field_values)) {
       // Build a weight-sorted mapping of display position to item index.
       $weighted_deltas = [];
@@ -137,21 +137,21 @@ class AZCardWidget extends WidgetBase {
           ];
         }
       }
-      
+
       // Sort by weight.
       usort($weighted_deltas, function ($a, $b) {
         return $a['weight'] <=> $b['weight'];
       });
-      
+
       // Map display position to item index.
       if (isset($weighted_deltas[$delta])) {
         $item_delta = $weighted_deltas[$delta]['delta'];
       }
     }
-    
+
     /** @var \Drupal\az_card\Plugin\Field\FieldType\AZCardItem $item */
     $item = $items[$item_delta];
-    
+
     // Get current collapse status using the correct item delta.
     $status = (isset($widget_state['open_status'][$item_delta])) ? $widget_state['open_status'][$item_delta] : FALSE;
 
