@@ -32,7 +32,6 @@ how to contribute including:
 * [How to submit a pull request](https://github.com/az-digital/az_quickstart/blob/main/CONTRIBUTING.md#pull-request-guidelines)
 * [Local development](https://github.com/az-digital/az_quickstart/blob/main/CONTRIBUTING.md#local-development)
 
-
 ## Where to Install Your Quickstart Site
 
 The university's Campus Web Services group provides ready-to-use sites based on
