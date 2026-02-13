@@ -111,7 +111,6 @@ class AZRankingWidget extends WidgetBase {
 
     $item = $items[$delta];
 
-    /** @var \Drupal\az_ranking\Plugin\Field\FieldType\AZRankingItem $item */
     // Get current collapse status.
     $field_name = $this->fieldDefinition->getName();
     $field_parents = $element['#field_parents'];
@@ -137,6 +136,8 @@ class AZRankingWidget extends WidgetBase {
         }
       }
     }
+
+    /** @var \Drupal\az_ranking\Plugin\Field\FieldType\AZRankingItem $item */
 
     // New field values shouldn't be collapsed.
     if ($item->isEmpty()) {
