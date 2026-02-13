@@ -109,6 +109,7 @@ class AZRankingWidget extends WidgetBase {
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
 
+    /** @var \Drupal\az_ranking\Plugin\Field\FieldType\AZRankingItem $item */
     $item = $items[$delta];
 
     // Get current collapse status.
