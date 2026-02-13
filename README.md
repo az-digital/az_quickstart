@@ -216,12 +216,6 @@ You should be able to see the upstream updates to be applied, after updating
 your codebase by employing the "Merge" strategy available under the "Advanced"
 accordion on that page.
 
-### Currently Supported Releases
-
-* [2.14.x](https://github.com/az-digital/az_quickstart/tree/2.14.x) (Quickstart 2 LTS)
-* [3.1.x](https://github.com/az-digital/az_quickstart/tree/3.1.x) (Security only)
-* [3.2.x](https://github.com/az-digital/az_quickstart/tree/3.2.x)```
-
 ### Visual Changes included in Patch Releases
 
 Visual changes in patch releases will be avoided when possible. Visual changes will only be included when they fix a critical issue and cannot wait until the next minor (or major) release.
