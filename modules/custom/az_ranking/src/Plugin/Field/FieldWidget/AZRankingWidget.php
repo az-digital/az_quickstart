@@ -118,14 +118,27 @@ class AZRankingWidget extends WidgetBase {
     $widget_state = static::getWidgetState($field_parents, $field_name, $form_state);
     $status = (isset($widget_state['open_status'][$delta])) ? $widget_state['open_status'][$delta] : FALSE;
 
-    // We may have had a deleted row. This shouldn't be necessary to check, but
-    // The experimental paragraphs widget extracts values before the submit
-    // handler.
-    if (isset($widget_state['original_deltas'][$delta]) && ($widget_state['original_deltas'][$delta] !== $delta)) {
-      $delta = $widget_state['original_deltas'][$delta];
+    // Remap item data when rebuilding to keep previews aligned with fields.
+    if ($form_state->isRebuilding() && !$item->isEmpty()) {
+      $trigger = $form_state->getTriggeringElement();
+      $is_remove = str_contains($trigger['#name'] ?? '', '_remove_button');
+      if ($is_remove) {
+        // For Remove, use the original delta remapping (reassign $delta).
+        if (isset($widget_state['original_deltas'][$delta]) && ($widget_state['original_deltas'][$delta] !== $delta)) {
+          $delta = $widget_state['original_deltas'][$delta];
+        }
+      }
+      else {
+        // For Update Preview / Add Another Item, use reverse delta mapping.
+        $reverse_deltas = !empty($widget_state['original_deltas'])
+          ? array_flip($widget_state['original_deltas']) : [];
+        if (isset($reverse_deltas[$delta])) {
+          $item = $items[$reverse_deltas[$delta]];
+        }
+      }
     }
 
-    // New field values shouldn't be considered collapsed.
+    // New field values shouldn't be collapsed.
     if ($item->isEmpty()) {
       $status = TRUE;
     }
