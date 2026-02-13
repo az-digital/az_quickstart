@@ -14,3 +14,4 @@ dependencies:
   - search_api:search_api
   - search_api_solr:search_api_solr
   - searchstax:searchstax
+  - xmlsitemap:xmlsitemap
