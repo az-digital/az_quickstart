@@ -27,7 +27,7 @@
         "php": ">=8.3",
         "az-digital/arizona-bootstrap": "5.0.5",
         "az-digital/az-icons": "1.0.4",
-        "citation-style-language/locales": "0.0.81",
+        "citation-style-language/locales": "0.0.86",
         "citation-style-language/styles": "0.0.668",
         "composer/installers": "^2.0",
         "cweagans/composer-patches": "^1.7",
@@ -68,7 +68,7 @@
         "drupal/entity_embed": "1.7.0",
         "drupal/environment_indicator": "4.0.25",
         "drupal/exclude_node_title": "2.0.0",
-        "drupal/externalauth": "2.0.8",
+        "drupal/externalauth": "2.0.9",
         "drupal/extlink": "2.0.5",
         "drupal/field_group": "4.0.0",
         "drupal/field_group_link": "3.3.0",
@@ -134,7 +134,7 @@
         "npm-asset/easepick--bundle": "1.2.1",
         "npm-asset/slick-carousel": "1.6.0",
         "renanbr/bibtex-parser": "2.2.0",
-        "seboettg/citeproc-php": "2.7.0"
+        "seboettg/citeproc-php": "2.7.1"
     },
     "require-dev": {
         "az-digital/az-quickstart-dev": "~3"
