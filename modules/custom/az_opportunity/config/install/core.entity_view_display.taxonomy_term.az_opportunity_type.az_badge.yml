@@ -1,0 +1,45 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.taxonomy_term.az_badge
+    - taxonomy.vocabulary.az_opportunity_type
+  module:
+    - field_group
+    - smart_title
+third_party_settings:
+  field_group:
+    group_opportunity_type_badge:
+      children:
+        - smart_title
+      label: 'Opportunity Type Badge'
+      parent_name: ''
+      region: content
+      weight: 0
+      format_type: link
+      format_settings:
+        classes: 'badge text-bg-warm-gray badge-link d-inline-block'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        target: entity
+        custom_uri: ''
+        target_attribute: default
+  smart_title:
+    enabled: true
+    settings:
+      smart_title__link: false
+      smart_title__tag: div
+      smart_title__classes: {  }
+id: taxonomy_term.az_opportunity_type.az_badge
+targetEntityType: taxonomy_term
+bundle: az_opportunity_type
+mode: az_badge
+content:
+  smart_title:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  description: true

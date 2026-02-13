@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.az_opportunity_audience
+  module:
+    - az_core
+id: taxonomy_term.az_opportunity_audience.default
+targetEntityType: taxonomy_term
+bundle: az_opportunity_audience
+mode: default
+content:
+  description:
+    type: az_text_summary
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden: {  }

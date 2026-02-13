@@ -1,0 +1,535 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.az_opportunity.field_az_application_date
+    - field.field.node.az_opportunity.field_az_application_link
+    - field.field.node.az_opportunity.field_az_audiences
+    - field.field.node.az_opportunity.field_az_body
+    - field.field.node.az_opportunity.field_az_credit
+    - field.field.node.az_opportunity.field_az_incentives
+    - field.field.node.az_opportunity.field_az_modality
+    - field.field.node.az_opportunity.field_az_offered
+    - field.field.node.az_opportunity.field_az_ongoing
+    - field.field.node.az_opportunity.field_az_opportunity_location
+    - field.field.node.az_opportunity.field_az_opportunity_type
+    - field.field.node.az_opportunity.field_az_parent_account
+    - field.field.node.az_opportunity.field_az_program_date
+    - field.field.node.az_opportunity.field_az_program_length
+    - field.field.node.az_opportunity.field_az_program_website
+    - field.field.node.az_opportunity.field_az_topic
+    - field.field.node.az_opportunity.field_az_trellis_id
+    - field.field.node.az_opportunity.field_az_trellis_imported_date
+    - node.type.az_opportunity
+  module:
+    - datetime_range
+    - field_group
+    - link
+    - smart_title
+    - text
+    - user
+third_party_settings:
+  field_group:
+    group_col1:
+      children:
+        - group_where
+      label: col1
+      parent_name: group_header_row
+      region: content
+      weight: 1
+      format_type: html_element
+      format_settings:
+        classes: col
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: Where
+        attributes: ''
+        effect: none
+        speed: fast
+    group_col2:
+      children:
+        - group_date
+      label: col2
+      parent_name: group_header_row
+      region: content
+      weight: 2
+      format_type: html_element
+      format_settings:
+        classes: col
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_col3:
+      children:
+        - group_program_length
+      label: col3
+      parent_name: group_header_row
+      region: content
+      weight: 3
+      format_type: html_element
+      format_settings:
+        classes: col
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_col4:
+      children:
+        - group_modality
+      label: col4
+      parent_name: group_header_row
+      region: content
+      weight: 4
+      format_type: html_element
+      format_settings:
+        classes: col
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_col5:
+      children:
+        - group_incentives
+      label: col5
+      parent_name: group_header_row
+      region: content
+      weight: 5
+      format_type: html_element
+      format_settings:
+        classes: col
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_col6:
+      children:
+        - group_audiences
+      label: col6
+      parent_name: group_header_row
+      region: content
+      weight: 7
+      format_type: html_element
+      format_settings:
+        classes: col
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_col7:
+      children:
+        - field_az_program_website
+      label: col7
+      parent_name: group_bottom_row
+      region: content
+      weight: 15
+      format_type: html_element
+      format_settings:
+        classes: col
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_col8:
+      children:
+        - field_az_application_link
+      label: col8
+      parent_name: group_bottom_row
+      region: content
+      weight: 17
+      format_type: html_element
+      format_settings:
+        classes: col
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_header_row:
+      children:
+        - group_col1
+        - group_col2
+        - group_col3
+        - group_col4
+        - group_col5
+        - group_col6
+      label: 'header row'
+      parent_name: ''
+      region: content
+      weight: 0
+      format_type: html_element
+      format_settings:
+        classes: 'row text-bg-cool-gray rounded pb-4 mb-4'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_where:
+      children:
+        - field_az_opportunity_location
+        - field_az_modality
+      label: Location
+      parent_name: group_col1
+      region: content
+      weight: 5
+      format_type: html_element
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: true
+        label_element: h2
+        label_element_classes: 'h4 fw-bolder'
+        attributes: ''
+        effect: none
+        speed: fast
+    group_date:
+      children:
+        - field_az_offered
+      label: Date
+      parent_name: group_col2
+      region: content
+      weight: 14
+      format_type: html_element
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: true
+        label_element: h2
+        label_element_classes: 'h4 fw-bolder'
+        attributes: ''
+        effect: none
+        speed: fast
+    group_modality:
+      children:
+        - field_az_parent_account
+      label: 'Parent Account'
+      parent_name: group_col4
+      region: content
+      weight: 9
+      format_type: html_element
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: true
+        label_element: h2
+        label_element_classes: 'h4 fw-bolder'
+        attributes: ''
+        effect: none
+        speed: fast
+    group_incentives:
+      children:
+        - field_az_incentives
+        - field_az_credit
+      label: Incentives
+      parent_name: group_col5
+      region: content
+      weight: 2
+      format_type: html_element
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: true
+        label_element: h2
+        label_element_classes: 'h4 fw-bolder'
+        attributes: ''
+        effect: none
+        speed: fast
+    group_audiences:
+      children:
+        - field_az_audiences
+      label: Audiences
+      parent_name: group_col6
+      region: content
+      weight: 5
+      format_type: html_element
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: true
+        label_element: h2
+        label_element_classes: 'h4 fw-bolder'
+        attributes: ''
+        effect: none
+        speed: fast
+    group_program_length:
+      children:
+        - field_az_program_length
+      label: 'Program Length'
+      parent_name: group_col3
+      region: content
+      weight: 9
+      format_type: html_element
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: true
+        label_element: h4
+        label_element_classes: 'h4 fw-bolder'
+        attributes: ''
+        effect: none
+        speed: fast
+    group_topics:
+      children:
+        - field_az_opportunity_type
+        - field_az_topic
+      label: Topics
+      parent_name: ''
+      region: content
+      weight: 1
+      format_type: html_element
+      format_settings:
+        classes: mb-4
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_bottom_row:
+      children:
+        - group_col7
+        - group_col8
+      label: 'Bottom Row'
+      parent_name: ''
+      region: content
+      weight: 7
+      format_type: html_element
+      format_settings:
+        classes: row
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+  smart_title:
+    enabled: false
+id: node.az_opportunity.default
+targetEntityType: node
+bundle: az_opportunity
+mode: default
+content:
+  field_az_application_date:
+    type: daterange_default
+    label: inline
+    settings:
+      timezone_override: ''
+      format_type: short
+      from_to: both
+      separator: '-'
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_az_application_link:
+    type: link
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: '0'
+      target: '0'
+    third_party_settings: {  }
+    weight: 16
+    region: content
+  field_az_audiences:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: false
+    third_party_settings: {  }
+    weight: 7
+    region: content
+  field_az_body:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_az_credit:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_az_incentives:
+    type: boolean
+    label: hidden
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_az_modality:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: false
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_az_offered:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: false
+    third_party_settings: {  }
+    weight: 15
+    region: content
+  field_az_opportunity_location:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_az_opportunity_type:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: az_badge
+      link: false
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_az_parent_account:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  field_az_program_date:
+    type: daterange_default
+    label: inline
+    settings:
+      timezone_override: ''
+      format_type: short
+      from_to: both
+      separator: '-'
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_az_program_length:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_az_program_website:
+    type: link
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 8
+    region: content
+  field_az_topic:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: az_badge
+      link: false
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 6
+    region: content
+hidden:
+  field_az_ongoing: true
+  field_az_trellis_id: true
+  field_az_trellis_imported_date: true
+  smart_title: true
