@@ -4,4 +4,4 @@ dependencies: {  }
 id: az_alert_block
 label: 'Alert Block'
 revision: true
-description: 'Use to place an alert message on the Arizona.edu site.'
+description: 'Create an alert block to place in high-visibility areas.'

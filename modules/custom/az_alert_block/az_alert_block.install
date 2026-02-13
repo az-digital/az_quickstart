@@ -1,0 +1,83 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the Quickstart Alert Block module.
+ */
+
+use Drupal\block_content\Entity\BlockContent;
+
+/** UUID for the default Emergency Alert Block (used for placement config). */
+const AZ_ALERT_BLOCK_EMERGENCY_UUID = 'a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d';
+
+/**
+ * Implements hook_install().
+ *
+ * Creates a default "Emergency Alert Block" content entity and places it in
+ * the Alert region (disabled) so sites can enable it during incidents without
+ * manually creating or placing the block.
+ */
+function az_alert_block_install() {
+  $block = BlockContent::create([
+    'type' => 'az_alert_block',
+    'uuid' => AZ_ALERT_BLOCK_EMERGENCY_UUID,
+    'info' => 'Emergency Alert Block',
+    'body' => [
+      'value' => '<p><strong>EMERGENCY ALERT: This is a test. Add text here. <a href="https://arizona.edu">Learn more link</a></strong></p>',
+      'summary' => '',
+      'format' => 'az_standard',
+    ],
+  ]);
+  $block->save();
+
+  // Place the block in the Alert region (disabled) so it appears in Block
+  // layout and can be enabled during an incident without manual placement.
+  $theme = 'az_barrio';
+  $block_config_id = $theme . '_emergency_alert_block';
+  $plugin_id = 'block_content:' . AZ_ALERT_BLOCK_EMERGENCY_UUID;
+  \Drupal::configFactory()
+    ->getEditable('block.block.' . $block_config_id)
+    ->set('langcode', 'en')
+    ->set('status', FALSE)
+    ->set('dependencies', [
+      'module' => ['block_content'],
+      'theme' => [$theme],
+    ])
+    ->set('id', $block_config_id)
+    ->set('theme', $theme)
+    ->set('region', 'alert')
+    ->set('weight', 0)
+    ->set('provider', 'block_content')
+    ->set('plugin', $plugin_id)
+    ->set('settings', [
+      'id' => $plugin_id,
+      'label' => 'Emergency Alert Block',
+      'label_display' => '0',
+      'provider' => 'block_content',
+    ])
+    ->set('visibility', [])
+    ->save();
+}
+
+/**
+ * Implements hook_uninstall().
+ *
+ * Removes the default Emergency Alert Block entity and its placement config.
+ */
+function az_alert_block_uninstall() {
+  $blocks = \Drupal::entityTypeManager()
+    ->getStorage('block_content')
+    ->loadByProperties([
+      'type' => 'az_alert_block',
+      'uuid' => AZ_ALERT_BLOCK_EMERGENCY_UUID,
+    ]);
+  foreach ($blocks as $block) {
+    $block->delete();
+  }
+
+  $block_config_id = 'az_barrio_emergency_alert_block';
+  $config = \Drupal::configFactory()->getEditable('block.block.' . $block_config_id);
+  if (!$config->isNew()) {
+    $config->delete();
+  }
+}

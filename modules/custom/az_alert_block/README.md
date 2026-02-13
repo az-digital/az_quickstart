@@ -4,9 +4,7 @@ Adds an alert block type for site-wide or emergency messages (e.g. campus incide
 
 ## Setup
 
-1. Add a custom block at `/block/add/az_alert_block` (or **Structure → Block layout → Place block**).
-2. Title the block **"Emergency Alert Block"** so staff can find it consistently across sites.
-3. Place the block in the **Alert** region. Leave it **disabled** until needed.
+When the module is installed, a default **"Emergency Alert Block"** is created and placed in the **Alert** region (disabled), so no manual setup is needed. You can find it under **Structure → Block layout** in the Alert region. To add another block, use **Content → Blocks → Add custom block** and choose "Alert Block", then place it in the Alert region.
 
 ## During an incident
 
