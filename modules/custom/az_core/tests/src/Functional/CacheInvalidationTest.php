@@ -4,11 +4,13 @@ namespace Drupal\Tests\az_core\Functional;
 
 use Drupal\Tests\BrowserTestBase;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests cache invalidation when nodes are updated.
  */
 #[Group('az_core')]
+#[RunTestsInSeparateProcesses]
 class CacheInvalidationTest extends BrowserTestBase {
 
   /**

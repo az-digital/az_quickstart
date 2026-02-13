@@ -4,11 +4,13 @@ namespace Drupal\Tests\az_barrio\Functional;
 
 use Drupal\Tests\az_core\Functional\QuickstartFunctionalTestBase;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests the Arizona Barrio theme.
  */
 #[Group('az_barrio')]
+#[RunTestsInSeparateProcesses]
 class AzBarrioTest extends QuickstartFunctionalTestBase {
 
   /**
