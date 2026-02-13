@@ -461,6 +461,37 @@ function az_event_form_views_exposed_form_alter(&$form, FormStateInterface $form
         }
       }
     }
+    if (isset($form['az_enterprise_attributes'])) {
+      if (isset($form['az_enterprise_attributes']['#options']) &&
+        is_array($form['az_enterprise_attributes']['#options'])) {
+        // We will only show the category filter in some cases.
+        $keep_filter = TRUE;
+
+        // Get the arguments statically, as this hook is called multiple times.
+        // At some points in the request, the arguments disappear.
+        $view_args = &drupal_static(__FUNCTION__);
+        if (!isset($view_args)) {
+          $view_args = $view->args;
+        }
+
+        // Check if our event category filter doesn't contain multiple terms.
+        // The implication is this site probably doesn't use this vocabulary.
+        if (count($form['az_enterprise_attributes']['#options']) <= 1) {
+          $keep_filter = FALSE;
+        }
+
+        // Check if we seem to have contextual filter arguments.
+        if (isset($view_args) && is_array($view_args) && !empty($view_args)) {
+          $keep_filter = FALSE;
+        }
+
+        // Hide the category filter if either of the above were the case.
+        // Our goal is to hide the filter if it conflicts or has no terms.
+        if (!$keep_filter) {
+          $form['az_enterprise_attributes']['#access'] = FALSE;
+        }
+      }
+    }
   }
 }
 
