@@ -4,11 +4,13 @@ namespace Drupal\Tests\az_core\Functional;
 
 use Drupal\Core\Url;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Test to ensure that monitoring page works correctly.
  */
 #[Group('az_core')]
+#[RunTestsInSeparateProcesses]
 class MonitoringPageTest extends QuickstartFunctionalTestBase {
 
   /**

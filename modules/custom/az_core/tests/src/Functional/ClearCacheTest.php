@@ -4,11 +4,13 @@ namespace Drupal\Tests\az_core\Functional;
 
 use Drupal\Core\Url;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Test to ensure the Quickstart settings clear cache button works correctly.
  */
 #[Group('az_core')]
+#[RunTestsInSeparateProcesses]
 class ClearCacheTest extends QuickstartFunctionalTestBase {
 
   /**

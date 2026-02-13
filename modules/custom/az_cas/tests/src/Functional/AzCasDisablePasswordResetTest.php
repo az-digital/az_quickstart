@@ -5,11 +5,13 @@ namespace Drupal\Tests\az_cas\Functional;
 use Drupal\Tests\az_core\Functional\QuickstartFunctionalTestBase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests that access to the password reset form can be disabled.
  */
 #[Group('az_cas')]
+#[RunTestsInSeparateProcesses]
 class AzCasDisablePasswordResetTest extends QuickstartFunctionalTestBase {
 
   /**

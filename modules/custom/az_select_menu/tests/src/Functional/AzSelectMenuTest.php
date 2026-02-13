@@ -5,11 +5,13 @@ namespace Drupal\Tests\az_select_menu\Functional;
 use Drupal\Tests\BrowserTestBase;
 use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests the Quickstart select menu block.
  */
 #[Group('az_select_menu')]
+#[RunTestsInSeparateProcesses]
 class AzSelectMenuTest extends BrowserTestBase {
 
   /**

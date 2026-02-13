@@ -6,11 +6,13 @@ use Drupal\Tests\BrowserTestBase;
 use Drupal\migrate\MigrateMessage;
 use Drupal\migrate_tools\MigrateExecutable;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Test of attribute import functionality.
  */
 #[Group('az_enterprise_attributes_import')]
+#[RunTestsInSeparateProcesses]
 class EnterpriseAttributesImportTest extends BrowserTestBase {
 
   /**
