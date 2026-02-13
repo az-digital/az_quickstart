@@ -7,7 +7,8 @@
 
 use Drupal\block_content\Entity\BlockContent;
 
-/** UUID for the default Emergency Alert Block (used for placement config). */
+/**
+ * UUID for the default Emergency Alert Block (used for placement config). */
 const AZ_ALERT_BLOCK_EMERGENCY_UUID = 'a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d';
 
 /**
