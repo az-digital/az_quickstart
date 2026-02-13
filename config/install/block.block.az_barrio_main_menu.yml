@@ -19,6 +19,6 @@ settings:
   label_display: '0'
   provider: system
   level: 1
-  depth: 2
+  depth: 3
   expand_all_items: true
 visibility: {  }
