@@ -4,8 +4,8 @@ namespace Drupal\Tests\az_publication\FunctionalJavascript;
 
 use Drupal\Tests\az_core\FunctionalJavascript\QuickstartFunctionalJavascriptTestBase;
 use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use PHPUnit\Framework\Attributes\IgnoreDeprecations;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Run tests of publication contributor role functionality.
