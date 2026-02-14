@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Install, update and uninstall functions for the Quickstart Alert Block module.
+ * Install, update and uninstall functions for the AZ Alert Block module.
  */
 
 use Drupal\block_content\Entity\BlockContent;
