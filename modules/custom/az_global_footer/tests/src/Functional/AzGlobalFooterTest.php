@@ -37,7 +37,6 @@ class AzGlobalFooterTest extends BrowserTestBase {
    * Tests that the Quickstart Global Footer module can be uninstalled.
    */
   #[Group('regression')]
-  #[RunTestsInSeparateProcesses]
   #[DoesNotPerformAssertions]
   public function testIsUninstallableAndReinstallable() {
 
