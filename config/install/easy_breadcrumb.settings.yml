@@ -4,7 +4,7 @@ excluded_paths: ''
 replaced_titles: ''
 custom_paths: ''
 include_home_segment: true
-alternative_title_field: field_breadcrumb_title
+alternative_title_field: ''
 home_segment_title: Home
 home_segment_keep: false
 include_title_segment: true
