@@ -38,12 +38,11 @@
     {% endif %}
     {% for item in items %}
       {# item is_placeholder if it has no link at the primary level #}
+      {% set is_routed = item.url.isRouted() %}
       {% set is_placeholder = (
-        not item.url.isRouted()
-      ) or (
         item.url.toString() is empty or item.url.toString() == '#'
       ) or (
-        item.url.getRouteName() in ['<nolink>', '<none>']
+        is_routed and item.url.getRouteName() in ['<nolink>', '<none>']
       ) %}
       {% set item_classes = [
         menu_level == 0 ? 'nav-item',
