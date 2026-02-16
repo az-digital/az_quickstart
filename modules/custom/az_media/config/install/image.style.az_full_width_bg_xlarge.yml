@@ -1,0 +1,31 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - crop.type.az_full_width_bg_xlarge
+  module:
+    - crop
+name: az_full_width_bg_xlarge
+label: 'Extra-Large full-width background (Scales width down to 1920px)'
+effects:
+  438d5058-38f2-49ac-aa5c-3f07b1c31677:
+    uuid: 438d5058-38f2-49ac-aa5c-3f07b1c31677
+    id: crop_crop
+    weight: 1
+    data:
+      crop_type: az_full_width_bg_xlarge
+      automatic_crop_provider: null
+  e964cb52-3ce9-4b6e-a445-1ca30ba6f4ec:
+    uuid: e964cb52-3ce9-4b6e-a445-1ca30ba6f4ec
+    id: image_scale
+    weight: 2
+    data:
+      width: 1920
+      height: null
+      upscale: false
+  a2827eb2-c614-47a6-bd61-cbcb858a2d26:
+    uuid: a2827eb2-c614-47a6-bd61-cbcb858a2d26
+    id: image_convert
+    weight: 3
+    data:
+      extension: webp
