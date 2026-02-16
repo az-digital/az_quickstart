@@ -187,6 +187,25 @@ function az_barrio_preprocess_image_style(&$variables) {
 }
 
 /**
+ * Implements hook_preprocess_pager() for full pagers.
+ */
+function az_barrio_preprocess_pager(&$variables) {
+  if($variables['ellipses']['next'] == true) {
+    // Option 1: Edit the Last Text.
+    // $totalPages = $variables['items']['last']['href'];
+    // $totalPages = str_replace('?page=', '', $totalPages);
+    // $variables['items']['last']['text'] = ' Last » ' . $totalPages;
+
+    // Option 2: Create a whole new item attached to the Twig template.
+    $totalPages = str_replace('?page=', '', $variables['items']['last']['href']);
+    $totalPages = (int)$totalPages+1;
+    $variables['items']['total']['text'] = $totalPages;
+    $variables['items']['total']['href'] = $variables['items']['last']['href'];
+    $variables['items']['total']['attributes'] = $variables['items']['last']['attributes'];
+  }
+}
+
+/**
  * Implements hook_theme_suggestions_HOOK_alter() for containers.
  */
 function az_barrio_theme_suggestions_container_alter(array &$suggestions, array &$variables) {
@@ -631,7 +650,9 @@ function az_barrio_preprocess_breadcrumb(&$variables) {
  * @link https://github.com/az-digital/az_quickstart/issues/1613
  */
 function az_barrio_preprocess_block(&$variables) {
-  $variables['content']['#attributes']['block'] = $variables['attributes']['id'];
+  if (isset($variables['attributes']['id'])) {
+    $variables['content']['#attributes']['block'] = $variables['attributes']['id'];
+  }
   if ($variables['base_plugin_id'] === 'system_branding_block') {
     if ($variables['configuration']['use_site_logo']) {
       $variables['site_logo'] = az_barrio_primary_logo();
