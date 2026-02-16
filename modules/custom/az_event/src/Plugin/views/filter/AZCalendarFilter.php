@@ -35,52 +35,6 @@ class AZCalendarFilter extends Date {
   /**
    * {@inheritdoc}
    */
-  protected function defineOptions() {
-    $options = parent::defineOptions();
-    $options['calendar_top_margin'] = ['default' => '2'];
-    $options['calendar_wrapper_bottom_margin'] = ['default' => '3'];
-    return $options;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function buildOptionsForm(&$form, FormStateInterface $form_state) {
-    parent::buildOptionsForm($form, $form_state);
-
-    $form['calendar_top_margin'] = [
-      '#type' => 'select',
-      '#title' => $this->t('Calendar top margin'),
-      '#description' => $this->t('The spacing between the calendar buttons and the calendar widget.'),
-      '#options' => [
-        '0' => $this->t('None (mt-0)'),
-        '1' => $this->t('Small (mt-1)'),
-        '2' => $this->t('Default (mt-2)'),
-        '3' => $this->t('Medium (mt-3)'),
-        '4' => $this->t('Large (mt-4)'),
-      ],
-      '#default_value' => $this->options['calendar_top_margin'] ?? '2',
-    ];
-
-    $form['calendar_wrapper_bottom_margin'] = [
-      '#type' => 'select',
-      '#title' => $this->t('Calendar wrapper bottom margin'),
-      '#description' => $this->t('The spacing below the entire calendar filter widget.'),
-      '#options' => [
-        '0' => $this->t('None (mb-0)'),
-        '1' => $this->t('Small (mb-1)'),
-        '2' => $this->t('Default (mb-2)'),
-        '3' => $this->t('Medium (mb-3)'),
-        '4' => $this->t('Large (mb-4)'),
-        '5' => $this->t('Extra Large (mb-5)'),
-      ],
-      '#default_value' => $this->options['calendar_wrapper_bottom_margin'] ?? '3',
-    ];
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   protected function valueForm(&$form, FormStateInterface $form_state) {
     parent::valueForm($form, $form_state);
 
@@ -108,11 +62,9 @@ class AZCalendarFilter extends Date {
         '#attributes' => [
           'class' => [
             'az-calendar-filter-wrapper',
-            'mb-' . ($this->options['calendar_wrapper_bottom_margin'] ?? '3'),
           ],
           // Communicate to the HTML DOM what the unique id of our filter is.
           'data-az-calendar-filter' => $this->options['expose']['identifier'],
-          'data-calendar-top-margin' => $this->options['calendar_top_margin'] ?? '2',
         ],
       ];
 

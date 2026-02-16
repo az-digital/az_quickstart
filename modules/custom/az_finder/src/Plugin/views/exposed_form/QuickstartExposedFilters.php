@@ -100,8 +100,7 @@ class QuickstartExposedFilters extends BetterExposedFilters {
       if ($options['reset_button_position'] === 'top') {
         $reset_button['#weight'] = -1000;
       }
-      $existing_classes = $reset_button['#attributes']['class'] ?? [];
-      // Always add essential JavaScript class.
+      $existing_classes = $reset_button['#attributes']['class'] ?? [];      // Always add essential JavaScript class.
       $button_classes = ['js-active-filters-reset'];
       // Add configured classes.
       $configured_classes = $options['reset_button_classes'] ?? 'btn btn-blue btn-sm w-100 mb-3 mx-1';

@@ -41,8 +41,6 @@
           const $wrapper = $(this);
           // rangeKey contains our filter identifier to find calendar cell data.
           const rangeKey = $wrapper.data('az-calendar-filter');
-          // Get calendar top margin configuration.
-          const calendarTopMargin = $wrapper.data('calendar-top-margin') || '2';
           let rangeStart = null;
           let rangeEnd = null;
           $wrapper.append(
@@ -52,8 +50,6 @@
             '.az-calendar-filter-buttons',
           );
           const $calendar = $wrapper.children('.az-calendar-filter-calendar');
-          // Apply top margin class to calendar.
-          $calendar.addClass(`mt-${calendarTopMargin}`);
           const $submitButton = $wrapper
             .closest('.views-exposed-form')
             .find('button.form-submit');

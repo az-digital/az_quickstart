@@ -5,10 +5,3 @@ views.filter_value.az_calendar_filter:
 views.filter.az_calendar_filter:
   type: views.filter.date
   label: 'Calendar Filter'
-  mapping:
-    calendar_top_margin:
-      type: string
-      label: 'Calendar top margin'
-    calendar_wrapper_bottom_margin:
-      type: string
-      label: 'Calendar wrapper bottom margin'
