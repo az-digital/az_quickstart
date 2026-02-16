@@ -12,6 +12,7 @@ use PHPUnit\Framework\Attributes\IgnorePhpunitDeprecations;
  */
 #[Group('az_publication')]
 #[IgnoreDeprecations]
+#[IgnorePhpunitDeprecations]
 class AZPublicationInlineContributorTest extends QuickstartFunctionalJavascriptTestBase {
 
   /**
