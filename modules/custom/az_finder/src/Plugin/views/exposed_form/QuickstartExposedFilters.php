@@ -256,12 +256,6 @@ class QuickstartExposedFilters extends BetterExposedFilters {
       '#description' => $this->t('Show a counter of active filters within the reset button next to the text.'),
       '#default_value' => $this->options['reset_button_counter'] ?? FALSE,
     ];
-    $form['bef']['general']['reset_button_settings']['reset_button_classes'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Button CSS Classes'),
-      '#default_value' => $this->options['reset_button_classes'] ?? 'btn btn-blue btn-sm w-100 mb-3 mx-1',
-      '#description' => $this->t('CSS classes to apply to the reset button. The <code>js-active-filters-reset</code> class is always added for functionality. Example: <code>btn btn-blue btn-sm w-100 mb-3 mx-1</code>'),
-    ];
     $form['bef']['general']['skip_link'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Add skip link to the top of the view results'),
