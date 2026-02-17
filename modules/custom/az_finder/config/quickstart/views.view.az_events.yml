@@ -1878,7 +1878,6 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          calendar_wrapper_bottom_margin: '0'
         term_node_tid_depth:
           id: term_node_tid_depth
           table: node_field_data
