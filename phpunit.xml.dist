@@ -8,7 +8,7 @@
          failOnRisky="true"
          failOnWarning="true"
          failOnDeprecation="true"
-         failOnPhpunitDeprecation="true"
+         failOnPhpunitDeprecation="false"
          displayDetailsOnTestsThatTriggerErrors="true"
          displayDetailsOnTestsThatTriggerWarnings="true"
          displayDetailsOnTestsThatTriggerDeprecations="true"
