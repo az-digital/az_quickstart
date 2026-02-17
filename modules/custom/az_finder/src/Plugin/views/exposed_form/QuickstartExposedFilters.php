@@ -196,7 +196,6 @@ class QuickstartExposedFilters extends BetterExposedFilters {
     $options = parent::defineOptions();
     $options['reset_button_position'] = ['default' => 'bottom'];
     $options['reset_button_counter'] = ['default' => FALSE];
-$options['reset_button_counter'] = ['default' => FALSE];
     $options['orientation'] = ['default' => 'horizontal'];
     $options['skip_link'] = ['default' => FALSE];
     $options['skip_link_text'] = ['default' => $this->t('Skip to search and filter')];
