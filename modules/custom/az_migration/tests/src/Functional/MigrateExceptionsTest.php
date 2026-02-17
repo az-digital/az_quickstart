@@ -39,8 +39,6 @@ class MigrateExceptionsTest extends BrowserTestBase {
 
   /**
    * Tests that the Quickstart Global Footer module can be installed.
-   *
-   * @group regression
    */
   public function testGlobalFooterMigration() {
     // Install the az_global_footer module.
