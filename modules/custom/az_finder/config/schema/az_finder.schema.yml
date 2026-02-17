@@ -68,9 +68,6 @@ views.exposed_form.az_better_exposed_filters:
     reset_button_counter:
       type: boolean
       label: 'Show Active Filter Counter'
-    reset_button_classes:
-      type: string
-      label: 'Button CSS Classes'
     orientation:
       type: string
       label: 'Orientation'
