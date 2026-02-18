@@ -414,7 +414,7 @@ class AZRankingWidget extends WidgetBase {
 
     // Rebuild the preview in #after_build so it uses the form API-populated
     // field values (which reflect drag-and-drop reorder) instead of $items.
-    $element['#after_build'][] = [static::class, 'afterBuildRebuildPreview'];
+    $element['#after_build'][] = [$this, 'afterBuildRebuildPreview'];
 
     return $element;
   }
@@ -426,7 +426,7 @@ class AZRankingWidget extends WidgetBase {
    * form fields, ensuring the preview stays in sync after drag-and-drop
    * reorder.
    */
-  public static function afterBuildRebuildPreview(array $element, FormStateInterface $form_state) {
+  public function afterBuildRebuildPreview(array $element, FormStateInterface $form_state) {
     // Only rebuild if there is a preview to update.
     if (!isset($element['preview_wrapper']['preview'])) {
       return $element;
@@ -575,11 +575,9 @@ class AZRankingWidget extends WidgetBase {
     // Build media render array.
     $media_render_array = NULL;
     if (!empty($media_id)) {
-      $media_entity = \Drupal::entityTypeManager()->getStorage('media')->load($media_id);
+      $media_entity = $this->entityTypeManager->getStorage('media')->load($media_id);
       if ($media_entity) {
-        /** @var \Drupal\az_ranking\AZRankingImageHelper $image_helper */
-        $image_helper = \Drupal::service('az_ranking.image');
-        $media_render_array = $image_helper->generateImageRenderArray($media_entity);
+        $media_render_array = $this->rankingImageHelper->generateImageRenderArray($media_entity);
       }
     }
 
@@ -591,7 +589,7 @@ class AZRankingWidget extends WidgetBase {
         $link_url = Url::fromUri(urldecode('base:' . $link_uri));
       }
       else {
-        $link_url = \Drupal::service('path.validator')->getUrlIfValid($link_uri);
+        $link_url = $this->pathValidator->getUrlIfValid($link_uri);
       }
       if ($link_url) {
         $link_classes = explode(' ', $ranking_link_style);
