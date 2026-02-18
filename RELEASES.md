@@ -85,7 +85,7 @@ Major releases include major changes such as Drupal core and Arizona Bootstrap m
 |- Arizona Bootstrap minor version updates||||✅|✅|
 |- Arizona Bootstrap major version updates|||||✅|
 
-_*Patch-level updates (non-security bug-fix updates) are typically included in Quickstart Bug-fix and LTS Patch releases. In the event of a security update for Drupal core, Drupal contrib projects or third party libraries, it may be necessary to include non-security patch-level updates (bug-fix updates) in Quickstart Security Patch releasees._
+_*Patch-level updates (non-security bug-fix updates) are typically included in Quickstart Bug-fix and LTS Patch releases. In the event of a security update for Drupal core, Drupal contrib projects or third party libraries, it may be necessary to include non-security patch-level updates (bug-fix updates) in Quickstart Security Patch releases._
 
 _**Minor version updates for Drupal core are included in Quickstart LTS (patch-level) releases to maintain alignment with Drupal's long-term support cycle._
 
