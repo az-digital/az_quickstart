@@ -439,6 +439,20 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#global_types' => TRUE,
     '#click_insert' => TRUE,
   ];
+
+  // Test setting for Sidebar Collapsible options.
+  $form['layout']['az_sidebar_collapsible_test'] = [
+    '#type' => 'radios',
+    '#title' => t('FOR TESTING ONLY - Sidebar Collapsible button display style'),
+    '#options' => [
+      'inside' => t('A collapse button is displayed inside the region and remains visible when the region is collapsed.'),
+      'sticky' => t('A collapse button is displayed inside the region and becomes a tab on the left edge of the browser window when the region is collapsed. (To do: This button will also be sticky at the top of the window as the user scrolls.)'),
+      'in-navbar' => t('A toggle sidebar button is displayed in the primary navbar.'),
+      'close' => t('A close button is displayed inside the region. Users can reload to restore the sidebar.'),
+    ],
+    '#default_value' => theme_get_setting('az_sidebar_collapsible_test'),
+  ];
+
   $form['#validate'][] = 'az_barrio_form_system_theme_settings_validate';
   $form['#submit'][] = 'az_barrio_form_system_theme_settings_submit';
 }

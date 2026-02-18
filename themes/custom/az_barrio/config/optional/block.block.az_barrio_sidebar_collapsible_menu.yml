@@ -1,0 +1,34 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.main
+  module:
+    - block_class
+    - menu_block
+  theme:
+    - az_barrio
+id: az_barrio_sidebar_collapsible_menu
+theme: az_barrio
+region: az_sidebar_collapsible
+weight: 0
+provider: null
+plugin: 'menu_block:main'
+settings:
+  id: 'menu_block:main'
+  label: 'Sidebar Collapsible menu'
+  label_display: visible
+  provider: menu_block
+  follow: false
+  follow_parent: active
+  display_empty: false
+  label_link: true
+  label_type: visibility_level_parent
+  level: 3
+  depth: 0
+  expand_all_items: true
+  parent: 'main:'
+  render_parent: false
+  suggestion: sidebar_collapsible
+  hide_on_nonactive: false
+visibility: {  }

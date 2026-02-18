@@ -32,6 +32,23 @@ az-navbar-hover:
     - az_barrio/arizona-bootstrap-js
     - core/drupal
     - core/once
+az-barrio-sidebar-collapsible-region:
+  css:
+    theme:
+      css/az-barrio-sidebar-collapsible-region.css: {}
+  js:
+    js/az-barrio-sidebar-collapsible-region.js: {}
+  dependencies:
+    - az_barrio/global-styling
+    - az_paragraphs/az_paragraphs.az_paragraphs_full_width
+az-barrio-sidebar-collapsible-menu:
+  css:
+    theme:
+      css/az-barrio-sidebar-collapsible-menu.css: {}
+  js:
+    js/az-barrio-sidebar-collapsible-menu.js: {}
+  dependencies:
+    - az_barrio/az-barrio-sidebar-collapsible-region
 az-proxima-nova:
   css:
     theme:

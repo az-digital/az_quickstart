@@ -12,6 +12,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Render\Markup;
+use Drupal\Core\Template\Attribute;
 use Drupal\Core\Url;
 
 /**
@@ -174,6 +175,23 @@ function az_barrio_preprocess_page(&$variables, $hook) {
   if (theme_get_setting('bootstrap_barrio_sidebar_position') === 'az-barrio-both-below') {
     $variables['sidebar_first_attributes']['class'][] = 'order-2 order-md-first';
     $variables['sidebar_second_attributes']['class'][] = 'order-last';
+  }
+
+  if (isset($variables['page']['az_sidebar_collapsible'])) {
+    $sidebar_collapsible_attributes = [];
+
+    // Test setting for Sidebar Collapsible button options.
+    $variables['az_sidebar_collapsible_test'] = theme_get_setting('az_sidebar_collapsible_test');
+    $sidebar_collapsible_attributes['class'][] = $variables['az_sidebar_collapsible_test'];
+
+    $variables['#attached']['library'][] = 'az_barrio/az-barrio-sidebar-collapsible-region';
+    $sidebar_collapsible_attributes['class'][] = 'd-none d-md-block position-relative z-3 text-bg-azurite collapse collapse-horizontal show';
+    $sidebar_collapsible_attributes['id'][] = 'az-sidebar-collapsible';
+    $variables['az_sidebar_collapsible_attributes'] = new Attribute($sidebar_collapsible_attributes);
+
+    if (isset($variables['page']['az_sidebar_collapsible']['az_barrio_sidebar_collapsible_menu'])) {
+      $variables['#attached']['library'][] = 'az_barrio/az-barrio-sidebar-collapsible-menu';
+    }
   }
 }
 
@@ -718,4 +736,17 @@ function az_barrio_preprocess_block(&$variables) {
     $variables['az_remove_sidebar_menu_mobile'] = theme_get_setting('az_remove_sidebar_menu_mobile');
   }
 
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ *
+ * FOR TESTING ONLY! Adds theme setting for main menu theme template.
+ */
+function az_barrio_preprocess_menu(&$variables) {
+  if (isset($variables['menu_name'])
+    && $variables['menu_name'] === 'main'
+    && theme_get_setting('az_sidebar_collapsible_test') === 'in-navbar') {
+    $variables['az_sidebar_toggle'] = TRUE;
+  }
 }

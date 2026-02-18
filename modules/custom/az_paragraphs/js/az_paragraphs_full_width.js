@@ -116,6 +116,7 @@
     calculateFullWidthNegativeMargins();
     calculateFullWidthSidebarWidth();
     pushSidebarsDown();
+    document.dispatchEvent(new Event('setFullWidthLayout'));
   }
 
   // Initialize on page load
