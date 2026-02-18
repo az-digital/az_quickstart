@@ -420,11 +420,9 @@ class AZRankingWidget extends WidgetBase {
   }
 
   /**
-   * #after_build callback: build preview from Form API-populated values.
-   *
-   * This callback rebuilds previews from the same #value sources
-   * as the form fields, ensuring the preview stays in sync after
-   * drag-and-drop reorder.
+   * This after-build callback rebuilds the preview from the same
+   * Form API-populated #value as the form fields, ensuring the
+   * preview stays in sync after drag-and-drop reorder.
    */
   public static function afterBuildRebuildPreview(array $element, FormStateInterface $form_state) {
     // Only rebuild if there is a preview to update.
@@ -435,8 +433,8 @@ class AZRankingWidget extends WidgetBase {
     $parent_config = $element['#ranking_parent_config'] ?? [];
     $details = $element['details'] ?? [];
 
-    // Read values from this element's form fields. At this point, 
-    // the Form API has set #value from user input (keyed by original delta). 
+    // Read values from this element's form fields. At this point,
+    // the Form API has set #value from user input (keyed by original delta).
     $heading = $details['ranking_heading']['#value']
       ?? $details['ranking_heading']['#default_value']
       ?? '';
@@ -577,7 +575,7 @@ class AZRankingWidget extends WidgetBase {
     if (!empty($media_id)) {
       $media_entity = \Drupal::entityTypeManager()->getStorage('media')->load($media_id);
       if ($media_entity) {
-        /** @var \Drupal\az_ranking\Helper\AZRankingImageHelper $image_helper */
+        /** @var \Drupal\az_ranking\AZRankingImageHelper $image_helper */
         $image_helper = \Drupal::service('az_ranking.image');
         $media_render_array = $image_helper->generateImageRenderArray($media_entity);
       }
