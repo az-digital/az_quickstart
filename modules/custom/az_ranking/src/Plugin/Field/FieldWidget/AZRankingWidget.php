@@ -563,7 +563,7 @@ class AZRankingWidget extends WidgetBase {
 
     // Determine source classes based on background.
     $ranking_source_classes = '';
-    if (!str_contains($effective_bg, 'bg-transparent')) {
+    if (!str_contains($background_class, 'bg-transparent')) {
       $ranking_source_classes = 'mt-auto';
     }
     else {
