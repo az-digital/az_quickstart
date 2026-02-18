@@ -881,14 +881,3 @@ function az_publication_xmlsitemap_link_alter(array &$link, array $context) {
     }
   }
 }
-
-/**
- * Implements hook_views_data_alter().
- *
- * See https://www.drupal.org/project/drupal/issues/3347343
- */
-function az_publication_views_data_alter(&$data) {
-  // Use entity reference for the field 'field_az_publication_mapped_type'.
-  $field_name = 'field_az_publication_mapped_type';
-  $data['node__' . $field_name][$field_name . '_target_id']['filter']['id'] = 'entity_reference';
-}
