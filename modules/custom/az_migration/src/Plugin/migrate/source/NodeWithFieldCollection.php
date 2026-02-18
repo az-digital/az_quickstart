@@ -11,7 +11,7 @@ use Drupal\node\Plugin\migrate\source\d7\Node as D7Node;
  *
  * Converts field collection content field values into paragraphs content.
  *
- * @deprecated in az_quickstart:3.2.0 and is removed from az_quickstart:4.0.0.
+ * @deprecated in az_quickstart:3.3.0 and is removed from az_quickstart:4.0.0.
  * There is no replacement.
  *
  * @see https://www.drupal.org/node/3533564
