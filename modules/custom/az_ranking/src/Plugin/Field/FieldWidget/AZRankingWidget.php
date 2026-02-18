@@ -489,8 +489,8 @@ class AZRankingWidget extends WidgetBase {
     elseif (is_numeric($media_input)) {
       $media_id = $media_input;
     }
-    // Fallback for initial load (no user input yet).
-    if ($media_id === NULL && !$form_state->isRebuilding()) {
+    // Fallback for initial load (no user input for this field yet).
+    if ($media_id === NULL && $media_input === NULL) {
       $media_id = $details['media']['#default_value'] ?? NULL;
     }
 
@@ -624,7 +624,7 @@ class AZRankingWidget extends WidgetBase {
       '#link_url' => $link_url,
       '#link_title' => $link_title,
       '#attributes' => [
-        'class' => $ranking_classes . ' widget-preview-ranking',
+        'class' => array_merge(array_filter(explode(' ', $ranking_classes)), ['widget-preview-ranking']),
         'style' => 'transform: scale(0.8); transform-origin: center;',
       ],
     ];
