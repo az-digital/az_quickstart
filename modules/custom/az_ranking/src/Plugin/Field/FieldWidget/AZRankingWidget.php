@@ -548,7 +548,7 @@ class AZRankingWidget extends WidgetBase {
     if (!empty($check_bg)) {
       $bg_text_map = [
         'bg-sky' => 'text-midnight',
-        'bg-cool-gray' => $ranking_hover_effect ? 'text-azurite' : 'text-azurite',
+        'bg-cool-gray' => 'text-azurite',
         'bg-warm-gray' => 'text-midnight',
         'bg-white' => 'text-midnight',
         'bg-oasis' => 'text-midnight',
