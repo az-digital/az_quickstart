@@ -420,9 +420,11 @@ class AZRankingWidget extends WidgetBase {
   }
 
   /**
-   * This after-build callback rebuilds the preview from the same
-   * Form API-populated #value as the form fields, ensuring the
-   * preview stays in sync after drag-and-drop reorder.
+   * After-build callback to rebuild preview from form field values.
+   *
+   * Rebuilds the preview from the same Form API-populated #value as the
+   * form fields, ensuring the preview stays in sync after drag-and-drop
+   * reorder.
    */
   public static function afterBuildRebuildPreview(array $element, FormStateInterface $form_state) {
     // Only rebuild if there is a preview to update.
