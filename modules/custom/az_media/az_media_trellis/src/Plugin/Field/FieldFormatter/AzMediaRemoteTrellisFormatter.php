@@ -3,7 +3,6 @@
 namespace Drupal\az_media_trellis\Plugin\Field\FieldFormatter;
 
 use Drupal\Component\Utility\Html;
-use Drupal\Core\Cache\Cache;
 use Drupal\Core\Field\Attribute\FieldFormatter;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -126,7 +125,7 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase implements 
    *   both supported domains.
    */
   public static function getUrlRegexPattern() {
-    return '/^https:\/\/(forms-a\.trellis\.arizona\.edu|trellis\.tfaforms\.net)\/(?:[0-9]+|f\/[^\/?#]+)/';
+    return '/^https:\/\/(forms-a\.trellis\.arizona\.edu|trellis\.tfaforms\.net)\/[0-9]+(?:[\/?#].*)?$/';
   }
 
   /**
@@ -145,7 +144,6 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase implements 
     return [
       // University of Arizona Trellis forms.
       'https://forms-a.trellis.arizona.edu/192',
-      'https://forms-a.trellis.arizona.edu/f/campaign-embed-stage',
       'https://forms-a.trellis.arizona.edu/185?tfa_4=7018N00000072edQAA',
       'https://forms-a.trellis.arizona.edu/185?tfa_4=7018N00000071eDQAQ',
       // TFA Forms Trellis forms.
@@ -323,7 +321,7 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase implements 
    */
   protected function transformToQuickPublishUrl(string $url, array &$query_params = []): ?string {
     $pattern = static::getUrlRegexPattern();
-    if (!preg_match($pattern, $url, $matches)) {
+    if (!preg_match($pattern, $url)) {
       return NULL;
     }
     $parsed = parse_url($url);
@@ -338,56 +336,9 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase implements 
       $new_path = '/' . implode('/', $parts);
       return $parsed['scheme'] . '://' . $parsed['host'] . $new_path;
     }
-    if (count($parts) >= 2 && $parts[0] === 'f') {
-      $slug_url = $parsed['scheme'] . '://' . $parsed['host'] . '/f/' . $parts[1];
-      $form_id = $this->resolveSlugToFormId($slug_url);
-      if ($form_id === NULL) {
-        return NULL;
-      }
-      $parts = ['publish', $form_id];
-    }
-    else {
-      $parts = array_merge(['publish'], $parts);
-    }
+    $parts = array_merge(['publish'], $parts);
     $new_path = '/' . implode('/', $parts);
     return $parsed['scheme'] . '://' . $parsed['host'] . $new_path;
-  }
-
-  /**
-   * Resolve a Trellis custom URL slug to its numeric form ID.
-   */
-  protected function resolveSlugToFormId(string $slug_url): ?string {
-    $cid = 'az_media_trellis:slug:' . hash('sha256', $slug_url);
-    $cache = \Drupal::cache('default');
-    if ($cached = $cache->get($cid)) {
-      return $cached->data ?: NULL;
-    }
-
-    try {
-      $response = \Drupal::httpClient()->get($slug_url, [
-        'timeout' => 5,
-        'headers' => [
-          'User-Agent' => 'Drupal az_media_trellis',
-        ],
-      ]);
-      if ($response->getStatusCode() !== 200) {
-        $cache->set($cid, NULL,
-          \Drupal::time()->getRequestTime() + 3600);
-        return NULL;
-      }
-      $html = (string) $response->getBody();
-      if (preg_match('/id="(\d+)-WRPR"/', $html, $match)
-        || preg_match('/<form[^>]+id="(\d+)"/i', $html, $match)) {
-        $cache->set($cid, $match[1], Cache::PERMANENT);
-        return $match[1];
-      }
-    }
-    catch (\Exception $e) {
-      // Fail silently; caller will treat as invalid URL.
-    }
-
-    $cache->set($cid, NULL, \Drupal::time()->getRequestTime() + 3600);
-    return NULL;
   }
 
   /**
