@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'Opportunity Type'
+vid: az_opportunity_type
+description: 'Taxonomy for the Opportunity content type'
+weight: 0
+new_revision: false

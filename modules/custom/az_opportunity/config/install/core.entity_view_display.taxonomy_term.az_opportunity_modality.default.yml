@@ -1,0 +1,26 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.az_opportunity_modality
+  module:
+    - smart_title
+third_party_settings:
+  smart_title:
+    enabled: true
+    settings:
+      smart_title__link: false
+      smart_title__tag: div
+      smart_title__classes: {  }
+id: taxonomy_term.az_opportunity_modality.default
+targetEntityType: taxonomy_term
+bundle: az_opportunity_modality
+mode: default
+content:
+  smart_title:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  description: true
