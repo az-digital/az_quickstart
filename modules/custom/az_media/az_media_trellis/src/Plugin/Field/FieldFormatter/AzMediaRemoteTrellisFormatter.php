@@ -321,7 +321,7 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase implements 
    */
   protected function transformToQuickPublishUrl(string $url, array &$query_params = []): ?string {
     $pattern = static::getUrlRegexPattern();
-    if (!preg_match($pattern, $url)) {
+    if (!preg_match($pattern, $url, $matches)) {
       return NULL;
     }
     $parsed = parse_url($url);
@@ -332,10 +332,6 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase implements 
       parse_str($parsed['query'], $query_params);
     }
     $parts = explode('/', trim($parsed['path'], '/'));
-    if ($parts[0] === 'publish') {
-      $new_path = '/' . implode('/', $parts);
-      return $parsed['scheme'] . '://' . $parsed['host'] . $new_path;
-    }
     $parts = array_merge(['publish'], $parts);
     $new_path = '/' . implode('/', $parts);
     return $parsed['scheme'] . '://' . $parsed['host'] . $new_path;
