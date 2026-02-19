@@ -101,6 +101,13 @@
       <li class="page-item pager__item--ellipsis{{ hide_ellipsis_class }}">&hellip;</li>
       {# Print next item if we are not on the last page. #}
       {% if items.next %}
+        {# Print total after Ellipses and before Next. #}
+        <li class="page-item pager__item--last hide-pager-item-mobile">
+          <a href="{{ items.total.href }}" title="{{ 'Go to last page'|t }}" rel="next"{{ items.total.attributes|without('href', 'title', 'rel') }} class="page-link">
+            <span aria-hidden="true">{{ items.total.text|default('›'|t) }}</span>
+            <span class="visually-hidden">{{ 'Last page'|t }}</span>
+          </a>
+        </li>
         <li class="page-item pager__item--next hide-pager-item-mobile">
           <a href="{{ items.next.href }}" title="{{ 'Go to next page'|t }}" rel="next"{{ items.next.attributes|without('href', 'title', 'rel') }} class="page-link">
             <span aria-hidden="true">{{ items.next.text|default('›'|t) }}</span>
