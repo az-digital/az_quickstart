@@ -23,6 +23,13 @@ final class AZPersonProfilesImportForm extends FormBase {
   protected $entityTypeManager;
 
   /**
+   * The secrets checker service (if available).
+   *
+   * @var \Drupal\az_secrets\Service\SecretsChecker|null
+   */
+  protected $secretsChecker;
+
+  /**
    * The LDAP query controller service (if available).
    *
    * @var \Drupal\ldap_query\Controller\QueryController|null
@@ -46,6 +53,16 @@ final class AZPersonProfilesImportForm extends FormBase {
   public static function create(ContainerInterface $container) {
     $instance = parent::create($container);
     $instance->entityTypeManager = $container->get('entity_type.manager');
+
+    // Try to get the secrets checker service if available.
+    try {
+      $instance->secretsChecker = $container->get('az_secrets.checker');
+    }
+    catch (\Exception $e) {
+      // az_secrets module not enabled.
+      $instance->secretsChecker = NULL;
+    }
+
     try {
       // This service may not exist if ldap_query is not enabled.
       $instance->ldapQueryController = $container->get('ldap.query');
@@ -71,7 +88,16 @@ final class AZPersonProfilesImportForm extends FormBase {
   public function buildForm(array $form, FormStateInterface $form_state): array {
 
     $config = $this->config('az_person_profiles_import.settings');
-    $has_key = !empty(trim($config->get('apikey')));
+
+    // Check if we have an API key either via secrets or config.
+    $has_key = FALSE;
+    if ($this->secretsChecker && $this->secretsChecker->hasKey('az_profiles_api_key')) {
+      $has_key = TRUE;
+    }
+    elseif (!empty(trim($config->get('apikey')))) {
+      $has_key = TRUE;
+    }
+
     if (!$has_key) {
       $url = Url::fromRoute('az_person_profiles_import.settings_form')->toString();
       $this->messenger->addWarning($this->t('You must first configure a Profiles API token <a href=":link">here</a>.', [
