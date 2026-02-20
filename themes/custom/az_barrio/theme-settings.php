@@ -330,7 +330,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
         '#type' => 'checkbox',
         '#prefix' => "<span class='form-item__label'>" . t('AZ Navbar') . "</span>",
         '#title' => t('Enable AZ Navbar'),
-        '#description' => t('Adds the `navbar-az` class to the main navigation bar, providing additional styling and support for a third level of navigation.'),
+        '#description' => t('Adds the `navbar-az` class to the main navigation bar, providing additional styling and support for a third level of navigation. DEPRECATION WARNING: The option to disable AZ Navbar will be removed in a future release.'),
         '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_navbar'),
         '#wrapper_attributes' => ['class' => ['field-multiple-table']],
       ],
