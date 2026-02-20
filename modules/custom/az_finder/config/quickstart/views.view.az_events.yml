@@ -6,6 +6,7 @@ dependencies:
     - core.entity_view_mode.node.az_card_alternate
     - core.entity_view_mode.node.az_row
     - node.type.az_event
+    - taxonomy.vocabulary.az_enterprise_attributes
     - taxonomy.vocabulary.az_event_categories
   module:
     - az_event
@@ -111,7 +112,7 @@ display:
             offset_label: Offset
           quantity: 3
       exposed_form:
-        type: basic
+        type: az_better_exposed_filters
         options:
           submit_button: Apply
           reset_button: false
@@ -120,6 +121,33 @@ display:
           expose_sort_order: true
           sort_asc_label: Asc
           sort_desc_label: Desc
+          text_input_required: 'Select any filter and click on Apply to see results'
+          text_input_required_format: null
+          bef:
+            general:
+              autosubmit: false
+              autosubmit_exclude_textfield: false
+              autosubmit_textfield_delay: 500
+              autosubmit_textfield_minimum_length: 3
+              autosubmit_hide: false
+              input_required: false
+              allow_secondary: false
+              secondary_label: 'Advanced options'
+              secondary_open: false
+              reset_button_always_show: false
+            sort:
+              plugin_id: default
+            filter:
+              field_az_event_date_value_az_calendar:
+                plugin_id: default
+              term_node_tid_depth:
+                plugin_id: default
+          reset_button_position: bottom
+          reset_button_counter: false
+          orientation: horizontal
+          skip_link: false
+          skip_link_text: 'Skip to search and filter'
+          skip_link_id: search-filter
       access:
         type: perm
         options:
@@ -203,7 +231,7 @@ display:
           specify_validation: true
           validate:
             type: 'entity:taxonomy_term'
-            fail: 'not found'
+            fail: empty
           validate_options:
             bundles:
               az_event_categories: az_event_categories
@@ -1701,6 +1729,65 @@ display:
     display_plugin: page
     position: 1
     display_options:
+      exposed_form:
+        type: az_better_exposed_filters
+        options:
+          submit_button: Apply
+          reset_button: true
+          reset_button_label: Reset filters
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: true
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+          text_input_required: 'Select any filter and click on Apply to see results'
+          text_input_required_format: az_standard
+          bef:
+            general:
+              autosubmit: true
+              autosubmit_exclude_textfield: false
+              autosubmit_textfield_delay: 500
+              autosubmit_textfield_minimum_length: 3
+              autosubmit_hide: true
+              input_required: false
+              allow_secondary: false
+              secondary_label: 'Advanced options'
+              secondary_open: false
+              reset_button_always_show: true
+            filter:
+              field_az_event_date_value_az_calendar:
+                plugin_id: default
+              term_node_tid_depth:
+                plugin_id: az_finder_tid_widget
+                advanced:
+                  sort_options: false
+                  placeholder_text: ''
+                  rewrite:
+                    filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
+                  collapsible: false
+                  collapsible_disable_automatic_open: false
+                  is_secondary: false
+                  hide_label: false
+                default_states: {  }
+              field_az_enterprise_attributes_target_id:
+                plugin_id: az_finder_tid_widget
+                advanced:
+                  sort_options: false
+                  placeholder_text: ''
+                  rewrite:
+                    filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
+                  collapsible: false
+                  collapsible_disable_automatic_open: false
+                  is_secondary: false
+                  hide_label: false
+                default_states: {  }
+          reset_button_position: top
+          reset_button_counter: true
+          orientation: vertical
+          skip_link: true
+          skip_link_text: 'Skip to search and filter'
+          skip_link_id: search-filter
       sorts:
         field_az_event_date_value:
           id: field_az_event_date_value
@@ -1739,6 +1826,7 @@ display:
           plugin_id: bundle
           value:
             az_event: az_event
+          group: 1
           expose:
             operator_limit_selection: false
             operator_list: {  }
@@ -1773,8 +1861,11 @@ display:
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
+              az_profile_editor: '0'
               az_content_editor: '0'
               az_content_admin: '0'
+              az_user_admin: '0'
+              az_html_admin: '0'
               administrator: '0'
             min_placeholder: ''
             max_placeholder: ''
@@ -1806,7 +1897,7 @@ display:
           exposed: true
           expose:
             operator_id: term_node_tid_depth_op
-            label: Category
+            label: ''
             description: ''
             use_operator: false
             operator: term_node_tid_depth_op
@@ -1815,13 +1906,15 @@ display:
             identifier: term_node_tid_depth
             required: false
             remember: false
-            multiple: false
+            multiple: true
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
+              az_profile_editor: '0'
               az_content_editor: '0'
               az_content_admin: '0'
               az_user_admin: '0'
+              az_html_admin: '0'
               administrator: '0'
             reduce: false
           is_grouped: false
@@ -1843,6 +1936,58 @@ display:
           limit: true
           error_message: true
           depth: 0
+        field_az_enterprise_attributes_target_id:
+          id: field_az_enterprise_attributes_target_id
+          table: node__field_az_enterprise_attributes
+          field: field_az_enterprise_attributes_target_id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: taxonomy_index_tid
+          operator: and
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_az_enterprise_attributes_target_id_op
+            label: ''
+            description: ''
+            use_operator: false
+            operator: field_az_enterprise_attributes_target_id_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: az_enterprise_attributes
+            required: false
+            remember: false
+            multiple: true
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              az_profile_editor: '0'
+              az_content_editor: '0'
+              az_content_admin: '0'
+              az_user_admin: '0'
+              az_html_admin: '0'
+              administrator: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          vid: az_enterprise_attributes
+          type: select
+          hierarchy: true
+          limit: true
+          error_message: true
       filter_groups:
         operator: AND
         groups:
@@ -1862,6 +2007,7 @@ display:
       defaults:
         css_class: false
         use_ajax: false
+        exposed_form: false
         style: false
         style_options: false
         row: false

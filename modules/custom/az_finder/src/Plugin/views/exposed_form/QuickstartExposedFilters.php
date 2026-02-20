@@ -9,6 +9,8 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Component\Utility\Html;
 use Drupal\better_exposed_filters\Plugin\views\exposed_form\BetterExposedFilters;
 use Drupal\views\Attribute\ViewsExposedForm;
+use Drupal\views\Plugin\views\display\DisplayPluginBase;
+use Drupal\views\ViewExecutable;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -51,6 +53,17 @@ class QuickstartExposedFilters extends BetterExposedFilters {
     $instance = parent::create($container, $configuration, $plugin_id, $plugin_definition);
     $instance->configFactory = $container->get('config.factory');
     return $instance;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function init(ViewExecutable $view, DisplayPluginBase $display, ?array &$options = NULL): void {
+    if ($options === NULL) {
+      $options = [];
+    }
+    parent::init($view, $display, $options);
+    // Now $this->displayHandler should be properly populated.
   }
 
   /**
@@ -213,9 +226,19 @@ class QuickstartExposedFilters extends BetterExposedFilters {
    */
   public function buildOptionsForm(&$form, FormStateInterface $form_state): void {
     parent::buildOptionsForm($form, $form_state);
+
+    // Ensure the form structure exists before manipulating it.
+    if (!isset($form['bef']['general'])) {
+      return;
+    }
+
+    // Move reset_button to maintain order.
+    if (isset($form['bef']['general']['reset_button'])) {
     $reset_button_option = $form['bef']['general']['reset_button'];
     unset($form['bef']['general']['reset_button']);
     $form['bef']['general']['reset_button'] = $reset_button_option;
+    }
+
     $form['bef']['general']['reset_button_settings'] = [
       '#type' => 'details',
       '#title' => $this->t('Reset Button Settings'),

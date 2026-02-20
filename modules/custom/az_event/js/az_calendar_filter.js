@@ -97,7 +97,9 @@
               const month = dates[i].getMonth() + 1;
               const day = dates[i].getDate();
               const year = dates[i].getFullYear();
-              $ancestor.find('input').eq(i).val(`${year}-${month}-${day}`);
+              const input = $ancestor.find('input').eq(i)[0];
+              input.value = `${year}-${month}-${day}`;
+              input.dispatchEvent(new Event('change', { bubbles: true }));
             }
 
             // Signal to UI that the inputs were updated programmatically.
@@ -220,6 +222,22 @@
             $('.az-calendar-filter-calendar').datepicker('refresh');
             $pressed.addClass('active').attr('aria-pressed', 'true');
           });
+
+          // Listen for reset event from the reset button.
+          $wrapper
+            .closest('[data-az-better-exposed-filters]')
+            .on('az-finder-filter-reset', () => {
+              // Clear button active states.
+              $buttonWrapper
+                .find('.calendar-filter-button')
+                .removeClass('active')
+                .attr('aria-pressed', 'false');
+              // Clear range selection.
+              rangeStart = null;
+              rangeEnd = null;
+              // Refresh the datepicker to clear any selections.
+              $calendar.datepicker('refresh');
+            });
         });
     },
   };

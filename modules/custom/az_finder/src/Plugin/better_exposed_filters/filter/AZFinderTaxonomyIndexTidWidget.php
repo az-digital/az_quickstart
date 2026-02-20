@@ -221,7 +221,12 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
    *   The form array with the options set.
    */
   protected function setFormOptions(array &$form, $field_id): array {
-    $form[$field_id]['#options'] = !empty($form[$field_id]['#options']) ? BetterExposedFiltersHelper::flattenOptions($form[$field_id]['#options']) : $form[$field_id]['#options'];
+    if (isset($form[$field_id]['#options'])) {
+      $form[$field_id]['#options'] = !empty($form[$field_id]['#options']) ? BetterExposedFiltersHelper::flattenOptions($form[$field_id]['#options']) : $form[$field_id]['#options'];
+    }
+    else {
+      $form[$field_id]['#options'] = [];
+    }
     $form[$field_id]['#hierarchy'] = !empty($this->handler->options['hierarchy']);
     $form[$field_id]['#theme'] = 'az_finder_widget';
     $form[$field_id]['#type'] = 'checkboxes';
