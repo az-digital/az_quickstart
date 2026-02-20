@@ -255,7 +255,6 @@ jobs:
             --log-junit $GITHUB_WORKSPACE/az-quickstart-scaffolding/reports/junit.xml \
             --colors="always" \
             --do-not-cache-result \
-            --debug \
             $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/profiles/custom/az_quickstart/"${{ matrix.test.file }}"
         env:
           SYMFONY_DEPRECATIONS_HELPER: weak
