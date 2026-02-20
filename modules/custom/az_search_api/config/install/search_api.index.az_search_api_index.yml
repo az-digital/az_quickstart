@@ -81,9 +81,11 @@ description: ''
 read_only: false
 field_settings:
   description:
-    label: 'Search Summary'
-    property_path: az_search_summary
+    label: 'Description Metatag'
+    property_path: az_metatag
     type: text
+    configuration:
+      value: description
   field_az_awards:
     label: Awards
     datasource_id: 'entity:node'
@@ -245,19 +247,17 @@ field_settings:
           az_news: ':default'
           az_person: ':default'
   sitename:
-    label: 'Site Name'
-    property_path: custom_value
+    label: 'OG Sitename Metatag'
+    property_path: az_metatag
     type: text
     configuration:
-      value: '[site:name]'
+      value: og_site_name
   title:
-    label: Title
-    datasource_id: 'entity:node'
-    property_path: title
+    label: 'Title Metatag'
+    property_path: az_metatag
     type: text
-    dependencies:
-      module:
-        - node
+    configuration:
+      value: title
   type:
     label: 'Content type'
     datasource_id: 'entity:node'
@@ -342,6 +342,8 @@ processor_settings:
       type: 0
       url: 0
     image_style: az_card_image
+  az_metatag: {  }
+  az_robots_noindex: {  }
   az_search_summary: {  }
   custom_value: {  }
   entity_status: {  }
