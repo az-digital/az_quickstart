@@ -1,7 +1,7 @@
 name: 'Quickstart Block Types - Quick Links'
 description: "An embeddable content block with block fields that accept links."
 type: module
-core_version_requirement: ^10 || ^11 || ^12
+core_version_requirement: ^11.3 || ^12
 package: The University of Arizona
 dependencies:
   - drupal:block_content
