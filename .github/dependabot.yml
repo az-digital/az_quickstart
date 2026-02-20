@@ -70,8 +70,9 @@ updates:
       - "2.x only"
       - "ci"
 
-  # GitHub Actions updates
+  # GitHub Actions updates for main branch
   - package-ecosystem: "github-actions"
+    target-branch: "main"
     directory: "/"
     schedule:
       interval: "daily"
@@ -81,3 +82,59 @@ updates:
       - "dependencies"
       - "github_actions"
       - "ci"
+
+  # GitHub Actions updates for 2.x branch
+  - package-ecosystem: "github-actions"
+    target-branch: "2.x"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    cooldown:
+      default-days: 5
+    labels:
+      - "dependencies"
+      - "github_actions"
+      - "ci"
+      - "2.x only"
+
+  # GitHub Actions updates for 2.14.x branch
+  - package-ecosystem: "github-actions"
+    target-branch: "2.14.x"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    cooldown:
+      default-days: 5
+    labels:
+      - "dependencies"
+      - "github_actions"
+      - "ci"
+      - "2.14.x only"
+
+  # GitHub Actions updates for 3.0.x branch
+  - package-ecosystem: "github-actions"
+    target-branch: "3.0.x"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    cooldown:
+      default-days: 5
+    labels:
+      - "dependencies"
+      - "github_actions"
+      - "ci"
+      - "3.0.x only"
+
+  # GitHub Actions updates for 3.1.x branch
+  - package-ecosystem: "github-actions"
+    target-branch: "3.1.x"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    cooldown:
+      default-days: 5
+    labels:
+      - "dependencies"
+      - "github_actions"
+      - "ci"
+      - "3.1.x only"
