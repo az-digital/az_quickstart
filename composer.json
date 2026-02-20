@@ -83,6 +83,7 @@
         "drupal/jquery_ui_datepicker": "2.1.1",
         "drupal/key": "1.21.0",
         "drupal/klaro": "3.0.8",
+        "drupal/layout_paragraphs": "3.0.0-alpha7",
         "drupal/ldap": "4.12",
         "drupal/link_class": "2.2.0",
         "drupal/linkit": "7.0.12",
@@ -94,6 +95,7 @@
         "drupal/media_remote": "1.10",
         "drupal/menu_block": "1.14.0",
         "drupal/menu_link_attributes": "1.6.0",
+        "drupal/mercury_editor": "3.0.0-alpha13",
         "drupal/metatag": "2.2.0",
         "drupal/migmag": "1.8.4",
         "drupal/migrate_plus": "6.0.8",
@@ -179,7 +181,8 @@
                 "[regression] CSS class is not added to MediaLibrary dialog (3474018)": "https://www.drupal.org/files/issues/2025-07-03/3474018-27.diff",
                 "Diffs with different line endings leads to Invalid $mode 3 specified (3389715)": "https://www.drupal.org/files/issues/2024-01-09/Diffs-with-different-line-endings-leads-to-Invalid-mode-3-specified.patch",
                 "Recent changes to migrate_drupal can break migrations that rely on hook_migration_plugins_alter() (3546325)": "https://www.drupal.org/files/issues/2025-09-11/3546325-11-2-x.patch",
-                "Display Bug when using #states (Forms API) with Ajax Request (1091852)": "https://www.drupal.org/files/issues/2023-12-18/1091852-186.patch"
+                "Display Bug when using #states (Forms API) with Ajax Request (1091852)": "https://www.drupal.org/files/issues/2023-12-18/1091852-186.patch",
+                "Support for Workspaces (3495098)": "https://www.drupal.org/files/issues/2024-12-19/drupal-10.3.x-mercury_editor-workspaces-comment-2.patch"
             },
             "drupal/draggableviews": {
                 "Row weights not displaying on sort view (3252365)": "https://www.drupal.org/files/issues/2023-08-25/3252365-check-remove-select-all-class.patch",
