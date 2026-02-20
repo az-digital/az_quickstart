@@ -155,6 +155,9 @@
             "drupal/config_distro": {
                 "Storage comparer issue": "https://gist.githubusercontent.com/tadean/e2e0dd57f1a9c4eae28d8e713cb01d82/raw/e114987d4a76c183208c763de4dbfecbf41b7f35/config_distro_storage_comparer_issue.patch"
             },
+            "drupal/config_readonly": {
+                "Admin Page at admin/config/services/jsonapi is not loading in test environment (3469854)": "https://www.drupal.org/files/issues/2026-02-18/config_readonly-3469854-18.diff"
+            },
             "drupal/core": {
                 "Views Date Filter Datetime Granularity Option (2868014)": "https://www.drupal.org/files/issues/2025-06-25/2868014-139-11-x.patch",
                 "Layout builder revisions issue (3033516)": "https://www.drupal.org/files/issues/2019-06-17/3033516-17.patch",
