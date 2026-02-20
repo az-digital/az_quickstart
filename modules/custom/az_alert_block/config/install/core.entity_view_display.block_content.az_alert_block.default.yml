@@ -1,0 +1,119 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.az_alert_block
+    - field.field.block_content.az_alert_block.body
+  module:
+    - field_group
+    - text
+third_party_settings:
+  field_group:
+    group_background:
+      children:
+        - group_container
+      label: Background
+      parent_name: ''
+      region: content
+      weight: 0
+      format_type: html_element
+      format_settings:
+        classes: 'bg-warning text-bg-warning'
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_column:
+      children:
+        - group_content
+      label: Column
+      parent_name: group_row
+      region: content
+      weight: 21
+      format_type: html_element
+      format_settings:
+        classes: col
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_row:
+      children:
+        - group_column
+      label: Row
+      parent_name: group_container
+      region: content
+      weight: 21
+      format_type: html_element
+      format_settings:
+        classes: row
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_container:
+      children:
+        - group_row
+      label: Container
+      parent_name: group_background
+      region: content
+      weight: 20
+      format_type: html_element
+      format_settings:
+        classes: 'container pt-3'
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_content:
+      children:
+        - body
+      label: Content
+      parent_name: group_column
+      region: content
+      weight: 21
+      format_type: html_element
+      format_settings:
+        classes: col
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+id: block_content.az_alert_block.default
+targetEntityType: block_content
+bundle: az_alert_block
+mode: default
+content:
+  body:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 21
+    region: content
+hidden: {  }

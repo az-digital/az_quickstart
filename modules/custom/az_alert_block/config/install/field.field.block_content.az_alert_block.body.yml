@@ -1,0 +1,27 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.az_alert_block
+    - field.storage.block_content.body
+  module:
+    - text
+id: block_content.az_alert_block.body
+field_name: body
+entity_type: block_content
+bundle: az_alert_block
+label: Body
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: "<p><strong>EMERGENCY ALERT: This is a test. Add text here. <a href=\"https://arizona.edu\">Learn more link</a></strong></p>\r\n"
+    summary: ''
+    format: az_standard
+default_value_callback: ''
+settings:
+  display_summary: false
+  required_summary: false
+  allowed_formats: {  }
+field_type: text_with_summary
