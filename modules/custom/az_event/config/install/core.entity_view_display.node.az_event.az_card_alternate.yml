@@ -48,7 +48,7 @@ third_party_settings:
         speed: fast
     group_link:
       children:
-        - field_az_media_thumbnail_image
+        - group_media
         - group_date
         - group_heading
         - group_summary
@@ -71,7 +71,7 @@ third_party_settings:
       label: Date
       parent_name: group_link
       region: content
-      weight: 7
+      weight: 4
       format_type: html_element
       format_settings:
         classes: 'text-body-secondary fw-bold small'
@@ -89,7 +89,7 @@ third_party_settings:
       label: Heading
       parent_name: group_link
       region: content
-      weight: 8
+      weight: 5
       format_type: html_element
       format_settings:
         classes: 'card-title text-red h5 mt-0 mb-2'
@@ -107,11 +107,31 @@ third_party_settings:
       label: Summary
       parent_name: group_link
       region: content
-      weight: 9
+      weight: 6
       format_type: html_element
       format_settings:
         classes: 'card-text fw-normal small mb-0'
         id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_media:
+      children:
+        - field_az_media_thumbnail_image
+      label: Media
+      parent_name: group_link
+      region: content
+      weight: 2
+      format_type: html_element
+      format_settings:
+        classes: 'pb-card mb-nmin'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -158,7 +178,7 @@ content:
       view_mode: az_card_image
       link: false
     third_party_settings: {  }
-    weight: 6
+    weight: 3
     region: content
   field_az_summary:
     type: az_text_summary
