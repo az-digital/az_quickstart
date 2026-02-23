@@ -593,7 +593,16 @@ function az_barrio_theme_suggestions_menu_alter(array &$suggestions, array $vari
   }
 
   // Add theme suggestion for the az_navbar variation of the main menu.
-  if (isset($variables['attributes']['id']) && $variables['attributes']['id'] === 'block-az-barrio-main-menu' && theme_get_setting('az_navbar')) {
+  $is_header_main_menu = !empty($variables['menu_name'])
+    && $variables['menu_name'] === 'main'
+    && !empty($variables['attributes']['az_navbar_main']);
+
+  // Backward-compatible fallback for standard install block ID.
+  if (!$is_header_main_menu && isset($variables['attributes']['id']) && $variables['attributes']['id'] === 'block-az-barrio-main-menu') {
+    $is_header_main_menu = TRUE;
+  }
+
+  if ($is_header_main_menu && theme_get_setting('az_navbar')) {
     $suggestions[] = 'menu__main_navbar_az';
   }
 }
@@ -634,6 +643,19 @@ function az_barrio_preprocess_block(&$variables) {
   if (isset($variables['attributes']['id'])) {
     $variables['content']['#attributes']['block'] = $variables['attributes']['id'];
   }
+
+  // Mark the primary main menu in the navigation region for AZ navbar theming.
+  if (!empty($variables['base_plugin_id'])
+    && $variables['base_plugin_id'] === 'system_menu_block'
+    && !empty($variables['derivative_plugin_id'])
+    && $variables['derivative_plugin_id'] === 'main'
+    && !empty($variables['elements']['#id'])) {
+    $block = Block::load($variables['elements']['#id']);
+    if (!empty($block) && $block->getRegion() === 'navigation') {
+      $variables['content']['#attributes']['az_navbar_main'] = '1';
+    }
+  }
+
   if ($variables['base_plugin_id'] === 'system_branding_block') {
     if ($variables['configuration']['use_site_logo']) {
       $variables['site_logo'] = az_barrio_primary_logo();
