@@ -36,4 +36,5 @@ dependencies:
   - 'paragraphs:paragraphs'
   - 'pathauto:pathauto'
   - 'smart_title:smart_title'
+  - 'views_core_entity_reference:views_core_entity_reference'
 configure: az_publication.settings
