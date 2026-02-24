@@ -33,7 +33,6 @@ class AZPublicAccess extends ProcessorPluginBase {
       if (!empty($entity) && ($entity instanceof AccessibleInterface)) {
         // Exclude an item if entity is not accessible by the anonymous user.
         if (!$entity->access('view', $user)) {
-          \Drupal::logger('my_module')->notice("refusing to index non-public content.");
           unset($items[$item_id]);
         }
       }
