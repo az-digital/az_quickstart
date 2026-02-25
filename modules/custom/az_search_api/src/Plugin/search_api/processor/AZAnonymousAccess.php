@@ -12,14 +12,14 @@ use Drupal\user\Entity\User;
  * Skip indexing content that is not accessible to the anonymous user.
  */
 #[SearchApiProcessor(
-  id: 'az_public_access',
-  label: new TranslatableMarkup('Index only public content'),
+  id: 'az_anonymous_access',
+  label: new TranslatableMarkup('Index only entities accessible to the anonymous user'),
   description: new TranslatableMarkup('This performs an anonymous access check with the entity before indexing.'),
   stages: [
     'alter_items' => 10,
   ],
 )]
-class AZPublicAccess extends ProcessorPluginBase {
+class AZAnonymousAccess extends ProcessorPluginBase {
 
   /**
    * {@inheritdoc}

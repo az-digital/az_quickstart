@@ -343,7 +343,7 @@ processor_settings:
       url: 0
     image_style: az_card_image
   az_metatag: {  }
-  az_public_access: {  }
+  az_anonymous_access: {  }
   az_robots_noindex: {  }
   az_search_summary: {  }
   custom_value: {  }
