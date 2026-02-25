@@ -33,6 +33,29 @@ function az_quickstart_install() {
   ]);
   $shortcut->save();
 
+  // Apply install-time defaults programmatically for new builds only.
+  //
+  // These values intentionally remain out of install config defaults so they
+  // are not applied by configuration import on existing sites during updates.
+  $config_storage = \Drupal::service('config.storage');
+  $config_factory = \Drupal::configFactory();
+
+  // Enable AZ Navbar by default on fresh installs.
+  if ($config_storage->exists('az_barrio.settings')) {
+    $config_factory
+      ->getEditable('az_barrio.settings')
+      ->set('az_navbar', TRUE)
+      ->save();
+  }
+
+  // Set Main navigation block depth to 3 levels on fresh installs.
+  if ($config_storage->exists('block.block.az_barrio_main_menu')) {
+    $config_factory
+      ->getEditable('block.block.az_barrio_main_menu')
+      ->set('settings.depth', 3)
+      ->save();
+  }
+
   // Install additional modules if site is running on Pantheon (or not).
   if (defined('PANTHEON_ENVIRONMENT')) {
     // Modules to install only on Pantheon.
