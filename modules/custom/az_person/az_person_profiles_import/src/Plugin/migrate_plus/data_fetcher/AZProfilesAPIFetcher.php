@@ -39,13 +39,6 @@ class AZProfilesAPIFetcher extends Http {
   protected $configFactory;
 
   /**
-   * The secrets checker service (if available).
-   *
-   * @var \Drupal\az_secrets\Service\SecretsChecker|null
-   */
-  protected $secretsChecker;
-
-  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): self {
@@ -66,16 +59,6 @@ class AZProfilesAPIFetcher extends Http {
       $instance->httpClient = $container->get('http_client');
     }
     $instance->configFactory = $container->get('config.factory');
-
-    // Try to get the secrets checker service if available.
-    try {
-      $instance->secretsChecker = $container->get('az_secrets.checker');
-    }
-    catch (ServiceNotFoundException $e) {
-      // az_secrets module not enabled, will use config values.
-      $instance->secretsChecker = NULL;
-    }
-
     return $instance;
   }
 
@@ -84,16 +67,11 @@ class AZProfilesAPIFetcher extends Http {
    */
   public function getResponseContent(string $url): string {
     // Grab the profiles API settings from configuration.
+    // Note: If az_secrets is configured with key config overrides,
+    // these values will be automatically injected from secrets.
     $config = $this->configFactory->get('az_person_profiles_import.settings');
     $endpoint = $config->get('endpoint');
     $apikey = $config->get('apikey');
-
-    // Check if we should use secrets instead.
-    if ($this->secretsChecker &&
-        $this->secretsChecker->hasKeys(['az_profiles_api_endpoint', 'az_profiles_api_key'])) {
-      $endpoint = $this->secretsChecker->getKeyValue('az_profiles_api_endpoint');
-      $apikey = $this->secretsChecker->getKeyValue('az_profiles_api_key');
-    }
 
     // For this fetcher, the supplied URL is the netid.
     $netid = $url;

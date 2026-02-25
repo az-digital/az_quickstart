@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Drupal\az_person_profiles_import\Form;
 
+use Drupal\Component\Render\FormattableMarkup;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Component\Render\FormattableMarkup;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -15,27 +15,18 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 final class AZPersonProfilesImportSettingsForm extends ConfigFormBase {
 
   /**
-   * The secrets checker service (if available).
+   * The entity type manager.
    *
-   * @var \Drupal\az_secrets\Service\SecretsChecker|null
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
-  protected $secretsChecker;
+  protected $entityTypeManager;
 
   /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
     $instance = parent::create($container);
-
-    // Try to get the secrets checker service if available.
-    try {
-      $instance->secretsChecker = $container->get('az_secrets.checker');
-    }
-    catch (\Exception $e) {
-      // az_secrets module not enabled.
-      $instance->secretsChecker = NULL;
-    }
-
+    $instance->entityTypeManager = $container->get('entity_type.manager');
     return $instance;
   }
 
@@ -59,12 +50,10 @@ final class AZPersonProfilesImportSettingsForm extends ConfigFormBase {
   public function buildForm(array $form, FormStateInterface $form_state): array {
     $config = $this->config('az_person_profiles_import.settings');
 
-    // Check if az_secrets integration is active.
-    $using_secrets = FALSE;
-    if ($this->secretsChecker &&
-        $this->secretsChecker->hasKeys(['az_profiles_api_endpoint', 'az_profiles_api_key'])) {
-      $using_secrets = TRUE;
+    // Check if az_secrets integration is active by checking if keys exist and have values.
+    $using_secrets = $this->hasSecrets(['az_profiles_api_endpoint', 'az_profiles_api_key']);
 
+    if ($using_secrets) {
       $form['secrets_status'] = [
         '#type' => 'item',
         '#markup' => new FormattableMarkup('<div class="messages messages--status">@message1<br>@message2</div>', [
@@ -107,15 +96,8 @@ final class AZPersonProfilesImportSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state): void {
-    // Check if secrets are being used.
-    $using_secrets = FALSE;
-    if ($this->secretsChecker &&
-        $this->secretsChecker->hasKeys(['az_profiles_api_endpoint', 'az_profiles_api_key'])) {
-      $using_secrets = TRUE;
-    }
-
     // Only save to config if not using secrets.
-    if (!$using_secrets) {
+    if (!$this->hasSecrets(['az_profiles_api_endpoint', 'az_profiles_api_key'])) {
       $this->config('az_person_profiles_import.settings')
         ->set('endpoint', $form_state->getValue('endpoint'))
         ->set('apikey', $form_state->getValue('apikey'))
@@ -123,6 +105,40 @@ final class AZPersonProfilesImportSettingsForm extends ConfigFormBase {
     }
 
     parent::submitForm($form, $form_state);
+  }
+
+  /**
+   * Check if secrets are configured with values.
+   *
+   * @param array $key_ids
+   *   Array of key entity IDs to check.
+   *
+   * @return bool
+   *   TRUE if all keys exist and have values, FALSE otherwise.
+   */
+  protected function hasSecrets(array $key_ids): bool {
+    try {
+      $key_storage = $this->entityTypeManager->getStorage('key');
+
+      foreach ($key_ids as $key_id) {
+        $key = $key_storage->load($key_id);
+
+        if (!$key || !method_exists($key, 'getKeyValue')) {
+          return FALSE;
+        }
+
+        $value = $key->getKeyValue();
+        if (empty($value)) {
+          return FALSE;
+        }
+      }
+
+      return TRUE;
+    }
+    catch (\Exception $e) {
+      // Key storage not available or error loading keys.
+      return FALSE;
+    }
   }
 
 }
