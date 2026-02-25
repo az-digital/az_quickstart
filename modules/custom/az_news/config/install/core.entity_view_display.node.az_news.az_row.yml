@@ -108,7 +108,7 @@ third_party_settings:
     group_media_right:
       children:
         - field_az_media_image
-      label: Media
+      label: 'Media'
       parent_name: group_media
       region: content
       weight: 21
