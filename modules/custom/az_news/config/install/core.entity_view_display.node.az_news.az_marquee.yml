@@ -76,7 +76,7 @@ third_party_settings:
       weight: 3
       format_type: html_element
       format_settings:
-        classes: mb-1
+        classes: 'pb-card mb-nmin'
         show_empty_fields: false
         id: ''
         label_as_html: false
