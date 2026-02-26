@@ -3,14 +3,14 @@
 namespace Drupal\Tests\az_core\Functional;
 
 use Drupal\Tests\BrowserTestBase;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Test to ensure Quickstart configuration overrides work correctly.
- *
- * @ingroup az_core
- *
- * @group az_core
  */
+#[Group('az_core')]
+#[RunTestsInSeparateProcesses]
 class ConfigOverrideTest extends BrowserTestBase {
 
   /**
