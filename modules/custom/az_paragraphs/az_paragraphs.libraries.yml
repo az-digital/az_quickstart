@@ -68,3 +68,8 @@ az_paragraphs.az_rankings:
     - az_barrio/button-no-conflict
     - core/drupal
     - core/once
+az_paragraphs.az_accordion:
+  js:
+    js/az_paragraphs_accordion.js: {}
+  dependencies:
+    - core/drupal
