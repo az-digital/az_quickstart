@@ -21,6 +21,7 @@ install:
   - az_flexible_page
   - az_flexible_block
   - az_block_types_quick_links
+  - az_alert_block
   - az_icons
   - az_metrics
   - az_news
