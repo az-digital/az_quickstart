@@ -41,7 +41,7 @@ class AZAccordionWidget extends WidgetBase {
     $element['collapsed'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Collapsed by Default'),
-      '#default_value' => $items[$delta]->collapsed ?? TRUE,
+      '#default_value' => $items[$delta]->collapsed ? TRUE : NULL,
     ];
 
     $element['#theme_wrappers'] = ['container', 'form_element'];
