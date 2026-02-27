@@ -294,6 +294,26 @@ class AZCardWidget extends WidgetBase {
       '#maxlength' => 2048,
     ];
 
+    // Individual Card's border color.
+    $element['border_color'] = [
+      '#title' => $this->t('Card Border Color'),
+      '#type' => 'select',
+      '#options' => [
+        'border' => $this->t('Default'),
+        'border-red' => $this->t('Red'),
+        'border-chili' => $this->t('Chili'),
+        'border-blue' => $this->t('Blue'),
+        'border-oasis' => $this->t('Oasis'),
+        'border-azurite' => $this->t('Azurite'),
+        'border-midnight' => $this->t('Midnight'),
+        'border-cool-gray' => $this->t('Cool Gray'),
+        'border-warm-gray' => $this->t('Warm Gray'),
+        'border-white' => $this->t('White'),
+      ],
+      '#default_value' => (!empty($item->options['border_color'])) ? $item->options['border_color'] : 'border',
+      '#description' => $this->t('Change the border color of this Card.'),
+    ];
+
     // Add client side validation for link title if not collapsed.
     if ($status) {
       $link_uri_unique_id = Html::getUniqueId('az_card_link_uri_input');
@@ -519,6 +539,9 @@ class AZCardWidget extends WidgetBase {
           'link_style' => $value['link_style'],
           'title_alignment' => $value['title_alignment'],
         ];
+      }
+      if (!empty($value['border_color'])) {
+        $values[$delta]['options']['border_color'] = $value['border_color'];
       }
       $values[$delta]['body'] = $value['body']['value'];
       $values[$delta]['body_format'] = $value['body']['format'];
