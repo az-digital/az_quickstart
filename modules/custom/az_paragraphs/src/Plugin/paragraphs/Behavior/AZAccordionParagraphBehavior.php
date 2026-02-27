@@ -26,7 +26,7 @@ class AZAccordionParagraphBehavior extends AZDefaultParagraphsBehavior {
     $form['expand_all'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Show Expand/Collapse All'),
-      '#default_value' => $config['expand_all'],
+      '#default_value' => $config['expand_all'] ?? FALSE,
       '#description' => $this->t('Display an Expand/Collapse All button above this accordion.'),
     ];
 
