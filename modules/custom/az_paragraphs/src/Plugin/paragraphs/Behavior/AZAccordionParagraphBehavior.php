@@ -23,6 +23,8 @@ class AZAccordionParagraphBehavior extends AZDefaultParagraphsBehavior {
   public function buildBehaviorForm(ParagraphInterface $paragraph, array &$form, FormStateInterface $form_state) {
     $config = $this->getSettings($paragraph);
 
+    parent::buildBehaviorForm($paragraph, $form, $form_state);
+
     $form['expand_all'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Show Expand/Collapse All'),
