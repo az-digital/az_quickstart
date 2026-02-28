@@ -62,8 +62,7 @@
             }
 
             // Toggle all collapse items within this accordion container.
-            const accordionButtons =
-              accordionEl.querySelectorAll('.collapse');
+            const accordionButtons = accordionEl.querySelectorAll('.collapse');
 
             if (e.currentTarget.textContent === 'Collapse all') {
               // Collapse all accordion items
