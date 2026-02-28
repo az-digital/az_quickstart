@@ -78,9 +78,12 @@
             {{ link(item.title, item.url, { 'class': 'dropdown-item' }) }}
           {% endif %}
         {% else %}
-          <li>{{ link(item.title, item.url) }}</li>
+          {{ link(item.title, item.url) }}
         {% endif %}
       </li>
+      {% if menu_level == 0 and not loop.last %}
+        <li class="nav-item" role="presentation"><span class="vr" aria-hidden="true"></span></li>
+      {% endif %}
     {% endfor %}
     </ul>
   {% endif %}
