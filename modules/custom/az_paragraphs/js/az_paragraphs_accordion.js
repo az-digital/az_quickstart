@@ -10,15 +10,11 @@
   Drupal.behaviors.azAccordionExpandAll = {
     attach: (context) => {
       function collapseAccordionItem(el) {
-        if (!el.classList.contains('collapsed')) {
-          el.click();
-        }
+        el.classList.remove('show');
       }
 
       function expandAccordionItem(el) {
-        if (el.classList.contains('collapsed')) {
-          el.click();
-        }
+        el.classList.add('show');
       }
 
       function addAccordionToggleListeners() {
@@ -67,7 +63,7 @@
 
             // Toggle all collapse items within this accordion container.
             const accordionButtons =
-              accordionEl.querySelectorAll('.accordion-button');
+              accordionEl.querySelectorAll('.collapse');
 
             if (e.currentTarget.textContent === 'Collapse all') {
               // Collapse all accordion items
