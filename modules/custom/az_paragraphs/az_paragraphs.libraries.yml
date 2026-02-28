@@ -76,3 +76,4 @@ az_paragraphs.az_accordion:
     - az_barrio/arizona-bootstrap-js
     - az_barrio/button-no-conflict
     - core/drupal
+    - core/once
