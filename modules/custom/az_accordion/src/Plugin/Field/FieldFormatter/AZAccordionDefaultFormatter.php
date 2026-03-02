@@ -113,10 +113,9 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
       }
 
       $button_text = $any_collapsed ? 'Expand all' : 'Collapse all';
-      $aria_pressed = $any_collapsed ? 'false' : 'true';
 
       $toggle_id = 'accordion-toggle-' . $accordion_container_id;
-      $element['#prefix'] = Markup::create('<p class="text-end"><button type="button" id="' . $toggle_id . '" class="btn btn-outline-blue btn-sm" data-target="#' . $accordion_container_id . '" aria-pressed="' . $aria_pressed . '">' . $button_text . '</button></p>');
+      $element['#prefix'] = Markup::create('<div class="text-end"><button type="button" id="' . $toggle_id . '" class="btn btn-link btn-sm p-0" data-target="#' . $accordion_container_id . '">' . $button_text . '</button></div>');
     }
 
     if (!empty($element)) {

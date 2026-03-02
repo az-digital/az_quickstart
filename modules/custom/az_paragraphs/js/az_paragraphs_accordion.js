@@ -9,12 +9,16 @@
   // Attach once behavior for Expand all buttons.
   Drupal.behaviors.azAccordionExpandAll = {
     attach: (context) => {
-      function collapseAccordionItem(el) {
-        el.classList.remove('show');
+      function setAccordionStatus(el, status) {
+        if (status === 'expanded') {
+          el.classList.add('show');
+        } else {
+          el.classList.remove('show');
+        }
       }
 
-      function expandAccordionItem(el) {
-        el.classList.add('show');
+      function setAccordionAriaStatus(el, status) {
+        el.setAttribute('aria-expanded', status);
       }
 
       function addAccordionToggleListeners() {
@@ -62,19 +66,35 @@
             }
 
             // Toggle all collapse items within this accordion container.
-            const accordionButtons = accordionEl.querySelectorAll('.collapse');
+            const accordionButtons =
+              accordionEl.querySelectorAll('[aria-expanded]');
+            const accordionItems = accordionEl.querySelectorAll('.collapse');
 
             if (e.currentTarget.textContent === 'Collapse all') {
               // Collapse all accordion items
-              [...accordionButtons].map(collapseAccordionItem);
+              const setAccordionItemStatus = (el) =>
+                setAccordionStatus(el, 'collapsed');
+              [...accordionItems].map(setAccordionItemStatus);
 
-              // Update text to 'expand all'
+              // Set aria-expanded attribute to false
+              const setAccordionBtnAria = (el) =>
+                setAccordionAriaStatus(el, 'false');
+              [...accordionButtons].map(setAccordionBtnAria);
+
+              // Update toggle text to 'expand all'
               e.currentTarget.textContent = 'Expand all';
             } else {
-              // Expand all elements
-              [...accordionButtons].map(expandAccordionItem);
+              // Expand all accordion items
+              const setAccordionItemStatus = (el) =>
+                setAccordionStatus(el, 'expanded');
+              [...accordionItems].map(setAccordionItemStatus);
 
-              // Update text to 'collapse all'
+              // Set aria-expanded attribute to true
+              const setAccordionBtnAria = (el) =>
+                setAccordionAriaStatus(el, 'true');
+              [...accordionButtons].map(setAccordionBtnAria);
+
+              // Update toggle text to 'collapse all'
               e.currentTarget.textContent = 'Collapse all';
             }
           });
