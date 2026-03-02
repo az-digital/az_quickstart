@@ -29,7 +29,7 @@ class AZAccordionParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#type' => 'checkbox',
       '#title' => $this->t('Show "Expand/Collapse All" button'),
       '#default_value' => $config['expand_all'] ?? FALSE,
-      '#description' => $this->t('Display an Expand/Collapse All button above this accordion.'),
+      '#description' => $this->t('Display an "Expand/Collapse All" button above this accordion.'),
     ];
 
     // This places the form fields on the content tab rather than behavior tab.
