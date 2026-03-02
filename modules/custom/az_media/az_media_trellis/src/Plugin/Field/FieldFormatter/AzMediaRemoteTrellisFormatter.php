@@ -390,7 +390,7 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase implements 
   public function settingsForm(array $form, FormStateInterface $form_state) {
     return parent::settingsForm($form, $form_state) + [
       'url' => [
-        '#type' => 'string',
+        '#type' => 'url',
         '#title' => $this->t('URL'),
         '#size' => 60,
         '#maxlength' => 1024,
