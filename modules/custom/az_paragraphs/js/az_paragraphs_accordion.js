@@ -9,6 +9,7 @@
   // Attach once behavior for Expand all buttons.
   Drupal.behaviors.azAccordionExpandAll = {
     attach: (context) => {
+      // Set the 'show' class on the accordion item.
       function setAccordionStatus(el, status) {
         if (status === 'expanded') {
           el.classList.add('show');
@@ -17,10 +18,12 @@
         }
       }
 
+      // Set aria-expanded attribute to true or false.
       function setAccordionAriaStatus(el, status) {
         el.setAttribute('aria-expanded', status);
       }
 
+      // Add event listeners to the accordion toggle buttons.
       function addAccordionToggleListeners() {
         const toggles = context.querySelectorAll
           ? context.querySelectorAll('[id^="accordion-toggle"]')
