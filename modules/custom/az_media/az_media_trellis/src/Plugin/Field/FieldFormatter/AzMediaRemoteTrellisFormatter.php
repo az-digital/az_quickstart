@@ -125,7 +125,7 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase implements 
    *   both supported domains.
    */
   public static function getUrlRegexPattern() {
-    return '/^https:\/\/(forms-a\.trellis\.arizona\.edu|trellis\.tfaforms\.net)\/[0-9]+(?:[\/?#].*)?$/';
+    return '/^https:\/\/(forms-a\.trellis\.arizona\.edu|trellis\.tfaforms\.net)\/[0-9]+\/?(?:[?#].*)?$/';
   }
 
   /**
