@@ -23,19 +23,20 @@ settings:
     auto_create: false
   plugin_types:
     default: default
-    block: block
     page: page
+    block: block
   preselect_views:
     az_courses: az_courses
     az_events: az_events
     az_news: az_news
+    az_opportunity: az_opportunity
     az_page_by_category: az_page_by_category
     az_person: az_person
     az_publications: az_publications
   enabled_settings:
-    pager: pager
     offset: offset
     argument: argument
     title: title
+    pager: pager
     limit: limit
 field_type: viewsreference
