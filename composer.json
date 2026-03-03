@@ -229,7 +229,8 @@
                 "Content is assigned to wrong menu level if user does not have access to the current level (3187152)": "https://www.drupal.org/files/issues/2023-09-26/3187152-workbench_access-menu-default-20.patch"
             },
             "drupal/xmlsitemap": {
-                "Module incorrectly assumes string, triggering PHP 8 fatal error (3355204)": "https://www.drupal.org/files/issues/2023-04-19/3355204_metatag_2.patch"
+                "Module incorrectly assumes string, triggering PHP 8 fatal error (3355204)": "https://www.drupal.org/files/issues/2023-04-19/3355204_metatag_2.patch",
+                "Using null as an array offset is deprecated in PHP 8.5 (3571583)": "https://git.drupalcode.org/project/xmlsitemap/-/merge_requests/79.diff"
             },
             "npm-asset/slick-carousel": {
                 "Incompatibility with Drupal 11/jQuery 4 (3467129)": "https://www.drupal.org/files/issues/2025-02-17/compatibility_jQuery_4.patch"
