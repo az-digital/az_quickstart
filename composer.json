@@ -240,6 +240,9 @@
             },
             "renanbr/bibtex-parser": {
                 "Parser performance issue": "https://gist.githubusercontent.com/tadean/39b90d00cd3edfff7c5653f907e15721/raw/8feb59cb4447b0f667fe5f4936a25c4d30211e1b/renanbr_bibtex_parser_performance.patch"
+            },
+            "seboettg/citeproc-php": {
+                "Switch to explicit nullable types": "https://patch-diff.githubusercontent.com/raw/seboettg/citeproc-php/pull/195.diff"
             }
         },
         "drupal-scaffold": {
