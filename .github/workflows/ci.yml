@@ -321,6 +321,7 @@ jobs:
           curl -sS -o /dev/null http://127.0.0.1:8080/news
           curl -sS -o /dev/null http://127.0.0.1:8080/calendar
           curl -sS -o /dev/null http://127.0.0.1:8080/pages/annual-events
+          $GITHUB_WORKSPACE/az-quickstart-scaffolding/vendor/bin/drush -n watchdog:show --count=100 --type=php
           if [ -z "$($GITHUB_WORKSPACE/az-quickstart-scaffolding/vendor/bin/drush -n watchdog:show --count=100 --type=php)" ]; then echo "No PHP notices/errors logged."; else echo "PHP notices/errors found in log." >&2 && exit 1; fi
 
   upgrade-status:
