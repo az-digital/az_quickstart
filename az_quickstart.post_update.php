@@ -69,3 +69,32 @@ function az_quickstart_post_update_remove_block_content_permissions_from_roles(&
     return $update;
   });
 }
+
+/**
+ * Enables AZ Navbar and sets Main navigation block depth to 3.
+ */
+function az_quickstart_post_update_enable_az_navbar_and_main_menu_depth(&$sandbox) {
+  $updated = FALSE;
+  $config_storage = \Drupal::service('config.storage');
+  $config_factory = \Drupal::configFactory();
+
+  if ($config_storage->exists('az_barrio.settings')) {
+    $theme_settings = $config_factory->getEditable('az_barrio.settings');
+    if ($theme_settings->get('az_navbar') !== TRUE) {
+      $theme_settings->set('az_navbar', TRUE)->save();
+      $updated = TRUE;
+    }
+  }
+
+  if ($config_storage->exists('block.block.az_barrio_main_menu')) {
+    $menu_block = $config_factory->getEditable('block.block.az_barrio_main_menu');
+    if ((int) $menu_block->get('settings.depth') !== 3) {
+      $menu_block->set('settings.depth', 3)->save();
+      $updated = TRUE;
+    }
+  }
+
+  if ($updated) {
+    \Drupal::logger('az_quickstart')->notice('Enabled AZ Navbar and set Main navigation block depth to 3 during post update.');
+  }
+}
