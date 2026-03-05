@@ -749,8 +749,8 @@ form.webform-submission-form {
 /* end Bootstrap Barrio image field styles */
 
 /* overrides Entity Reference fields and labels to match similar fields */
-.field--type-entity-reference {
-  margin: 0;
+.field.field--type-entity-reference {
+  margin-bottom: 0;
 }
 
 @media (min-width: 768px) {
