@@ -6,6 +6,8 @@ config:
   webroot: web
   database: mariadb:10.6
   xdebug: false
+env_file:
+  - .env
 services:
   # Replaces default lando MariaDB image with arm64 (Apple M1) compatible one.
   # TODO: remove database service overrides once lando is updated.
