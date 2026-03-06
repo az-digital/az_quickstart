@@ -125,7 +125,7 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase implements 
    *   both supported domains.
    */
   public static function getUrlRegexPattern() {
-    return '/^https:\/\/(forms-a\.trellis\.arizona\.edu|trellis\.tfaforms\.net)\/([0-9]+)/';
+    return '/^https:\/\/(forms-a\.trellis\.arizona\.edu|trellis\.tfaforms\.net)\/[0-9]+\/?(?:[?#].*)?$/';
   }
 
   /**
@@ -390,10 +390,10 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase implements 
   public function settingsForm(array $form, FormStateInterface $form_state) {
     return parent::settingsForm($form, $form_state) + [
       'url' => [
-        '#type' => 'string',
+        '#type' => 'url',
         '#title' => $this->t('URL'),
-        '#size' => 255,
-        '#maxlength' => 255,
+        '#size' => 60,
+        '#maxlength' => 1024,
         '#description' => $this->t('The URL of the Trellis form. Must be a valid FormAssembly Trellis URL from forms-a.trellis.arizona.edu or trellis.tfaforms.net.'),
       ],
     ];
