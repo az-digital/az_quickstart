@@ -12,7 +12,6 @@
       if (context !== document) {
         return;
       }
-      
       // Set the accordion item 'show' class.
       function setAccordionItemStatus(el, status) {
         if (status === 'true') {
