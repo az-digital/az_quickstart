@@ -10,6 +10,7 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Logger\RfcLogLevel;
 use Drupal\responsive_image\Entity\ResponsiveImageStyle;
+use Drupal\responsive_image\ResponsiveImageBuilder;
 
 /**
  * Implements hook_library_info_alter().
@@ -90,11 +91,11 @@ function template_preprocess_az_responsive_background_image(array &$variables) {
   foreach ($responsive_image_style
     ->getKeyedImageStyleMappings() as $breakpoint_id => $multipliers) {
     if (isset($breakpoints[$breakpoint_id])) {
-      $variables['sources'][] = _responsive_image_build_source_attributes($variables, $breakpoints[$breakpoint_id], $multipliers);
+      $variables['sources'][] = \Drupal::service(ResponsiveImageBuilder::class)->buildSourceAttributes($variables, $breakpoints[$breakpoint_id], $multipliers);
     }
   }
 
-  $variables['fallback_image'] = _responsive_image_image_style_url($responsive_image_style
+  $variables['fallback_image'] = \Drupal::service(ResponsiveImageBuilder::class)->getImageStyleUrl($responsive_image_style
     ->getFallbackImageStyle(), $variables['uri']);
 
   // Split each source into multiple rules.

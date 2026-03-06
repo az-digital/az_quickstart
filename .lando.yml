@@ -83,7 +83,7 @@ tooling:
   install:
     service: appserver
     cmd:
-      - /app/vendor/bin/drush --root=/app/web site:install --account-mail=noreply@email.arizona.edu --account-name=azadmin --account-pass=azadmin2025 --db-url=mysql://drupal11:drupal11@database:3306/drupal11 -y --verbose
+      - /app/vendor/bin/drush --root=/app/web site:install --account-mail=noreply@email.arizona.edu --account-name=azadmin --account-pass=azadmin2026 --db-url=mysql://drupal11:drupal11@database:3306/drupal11 -y --verbose
       - /app/vendor/bin/drush --root=/app/web config:set -y az_cas.settings disable_login_form 0
       - /app/vendor/bin/drush --root=/app/web cache:rebuild
   # Enable theme debugging.

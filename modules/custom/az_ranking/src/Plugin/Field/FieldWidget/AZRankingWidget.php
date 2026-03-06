@@ -493,7 +493,7 @@ class AZRankingWidget extends WidgetBase {
         $elements[$delta]['ranking_actions']['delete'] = $remove;
         // Attempt to style it like collapse button.
         $elements[$delta]['ranking_actions']['delete']['#attributes']['class'][] = 'button--extrasmall';
-        $elements[$delta]['ranking_actions']['delete']['#attributes']['class'][] = 'ml-3';
+        $elements[$delta]['ranking_actions']['delete']['#attributes']['class'][] = 'ms-3';
       }
 
       // Add a "Refresh Preview" button with AJAX.
@@ -507,7 +507,7 @@ class AZRankingWidget extends WidgetBase {
           'wrapper' => $wrapper_id,
         ],
         '#attributes' => [
-          'class' => ['button--extrasmall', 'ml-3'],
+          'class' => ['button--extrasmall', 'ms-3'],
         ],
         '#limit_validation_errors' => [],
       ];
