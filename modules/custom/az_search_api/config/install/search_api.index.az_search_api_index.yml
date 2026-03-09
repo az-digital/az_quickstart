@@ -109,12 +109,8 @@ field_settings:
 datasource_settings:
   'entity:node':
     bundles:
-      default: false
-      selected:
-        - az_event
-        - az_flexible_page
-        - az_news
-        - az_person
+      default: true
+      selected: {  }
     languages:
       default: true
       selected: {  }
