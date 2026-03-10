@@ -78,7 +78,8 @@
             return;
           }
 
-          let selected = datePickerIntegration.getNormalizedSelectedDates(self)[0];
+          let selected =
+            datePickerIntegration.getNormalizedSelectedDates(self)[0];
 
           if (!selected) {
             const calendarContext = self.context || {};

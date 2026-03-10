@@ -3,7 +3,7 @@
  * Shared integration helpers for Vanilla Calendar Pro.
  */
 
-/* global Drupal, VanillaCalendarProUtils */
+/* global VanillaCalendarProUtils */
 
 ((Drupal, window) => {
   const OPEN_KEYS = new Set(['Enter', 'ArrowDown', ' ']);

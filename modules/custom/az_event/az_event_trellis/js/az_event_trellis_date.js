@@ -23,8 +23,7 @@
     const endDate = end.value.trim();
     if (beginDate && endDate) {
       selectedDates.push(`${beginDate}:${endDate}`);
-    }
-    else if (beginDate) {
+    } else if (beginDate) {
       selectedDates.push(beginDate);
     }
     return selectedDates;
@@ -54,8 +53,9 @@
           enableEdgeDatesOnly: true,
           selectedDates,
           onChangeToInput(self) {
-            const values =
-              datePickerIntegration.getNormalizedSelectedDates(self).slice(0, 2);
+            const values = datePickerIntegration
+              .getNormalizedSelectedDates(self)
+              .slice(0, 2);
             begin.value = values[0] || '';
             end.value = values[1] || '';
 
