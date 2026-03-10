@@ -26,26 +26,18 @@
   };
 
   /**
-   * Trims a normalized Y-m-d date to match publication date type precision.
+   * Trims a normalized Y-m-d date to requested precision.
    *
    * @param {string} value
    *   Date string in Y-m-d format.
-   * @param {string} mode
-   *   Publication date mode (`year`, `month`, or `default`).
+   * @param {number} partsCount
+   *   Number of date components to keep.
    *
    * @return {string}
    *   A date string formatted to the selected precision.
    */
-  const trimDateForMode = (value, mode) => {
-    const fullDate = normalizeToFullDate(value);
-    const parts = fullDate.split('-');
-    if (mode === 'year') {
-      return parts[0];
-    }
-    if (mode === 'month') {
-      return parts.slice(0, 2).join('-');
-    }
-    return parts.slice(0, 3).join('-');
+  const trimDateToPartsCount = (value, partsCount) => {
+    return normalizeToFullDate(value).split('-').slice(0, partsCount).join('-');
   };
 
   Drupal.behaviors.datetimeTweaksDefaultDate = {
@@ -58,22 +50,30 @@
 
       const elements = once(
         'azpublicationdate',
-        '.az-publication-date-picker input, input.az-publication-date-picker',
+        'input.az-publication-date-picker',
         context,
       );
 
       elements.forEach((element) => {
+        const dateFormat = element.dataset.drupalDateFormat || 'Y-m-d';
+        const components = dateFormat.split('-').filter((part) => part !== '');
+        const datePartsCount = Math.min(Math.max(components.length, 1), 3);
         const mode = element.dataset.azPublicationDateMode || 'default';
 
         // Keep user-visible values aligned to the selected granularity.
-        const value = String(element.value || '').trim();
+        let value = String(element.value || '').trim();
         let selectedDate = null;
         if (value) {
+          value = value.split('-').filter((part) => part !== '');
+          while (value.length < datePartsCount) {
+            value.push('01');
+          }
+          value = value.slice(0, datePartsCount).join('-');
+          element.value = value;
           selectedDate = normalizeToFullDate(value);
-          element.value = trimDateForMode(selectedDate, mode);
         }
 
-        const syncValueFromCalendar = (self) => {
+        const writeValueFromCalendar = (self) => {
           if (!self.context.inputElement) {
             return;
           }
@@ -94,14 +94,22 @@
           }
 
           if (selected) {
-            self.context.inputElement.value = trimDateForMode(selected, mode);
-            self.context.inputElement.dispatchEvent(
-              new Event('change', { bubbles: true }),
+            self.context.inputElement.value = trimDateToPartsCount(
+              selected,
+              datePartsCount,
             );
             self.hide();
           } else {
             self.context.inputElement.value = '';
           }
+        };
+
+        // onClickMonth/onClickYear fire before calendar state updates; defer
+        // via rAF so selectedYear/selectedMonth are committed before we read them.
+        const writeValueFromViewSelection = (self) => {
+          requestAnimationFrame(() => {
+            writeValueFromCalendar(self);
+          });
         };
 
         const config = {
@@ -112,17 +120,9 @@
           themeAttrDetect: false,
           selectionDatesMode: 'single',
           type: mode,
-          onChangeToInput: syncValueFromCalendar,
-          onClickMonth(self) {
-            requestAnimationFrame(() => {
-              syncValueFromCalendar(self);
-            });
-          },
-          onClickYear(self) {
-            requestAnimationFrame(() => {
-              syncValueFromCalendar(self);
-            });
-          },
+          onChangeToInput: writeValueFromCalendar,
+          onClickMonth: writeValueFromViewSelection,
+          onClickYear: writeValueFromViewSelection,
         };
 
         if (selectedDate) {
