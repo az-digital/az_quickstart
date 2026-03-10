@@ -149,18 +149,18 @@ final class AZRecurringImportRuleForm extends EntityForm {
       ];
     }
 
-    $form['query_parameters']['approval'] = [
-      '#type' => 'select',
-      '#title' => $this->t('Approved for University Calendar'),
-      '#options' => [
-        'approved' => $this->t('Approved'),
-        'denied' => $this->t('Denied'),
-      ],
-      '#empty_option' => $this->t('- Any -'),
-      '#empty_value' => '',
-      '#required' => FALSE,
-      '#default_value' => $entity->get('approval'),
-    ];
+    // $form['query_parameters']['approval'] = [
+    //   '#type' => 'select',
+    //   '#title' => $this->t('Approved for University Calendar'),
+    //   '#options' => [
+    //     'approved' => $this->t('Approved'),
+    //     'denied' => $this->t('Denied'),
+    //   ],
+    //   '#empty_option' => $this->t('- Any -'),
+    //   '#empty_value' => '',
+    //   '#required' => FALSE,
+    //   '#default_value' => $entity->get('approval'),
+    // ];
 
     return $form;
   }
