@@ -1,0 +1,21 @@
+name: Quickstart Opportunity - Trellis Opportunity Importer
+type: module
+description: 'Import opportunities from <a href="https://trellis.arizona.edu/solutions/events-management">Trellis Programs</a>, the official University of Arizona program management tool.'
+core_version_requirement: ^11.3 || ^12
+package: 'The University of Arizona - Experimental'
+lifecycle: experimental
+lifecycle_link: 'https://github.com/az-digital/az_quickstart/blob/main/RELEASES.md#experimental-features'
+php: 8.0
+
+dependencies:
+  - az_core:az_core
+  - az_opportunity:az_opportunity
+  - az_migration:az_migration_remote
+  - drupal:views
+  - drupal:migrate
+  - migrate_plus:migrate_plus
+  - migrate_tools:migrate_tools
+  - migrate_queue_importer:migrate_queue_importer
+  - views_remote_data:views_remote_data
+
+configure: az_opportunity_trellis.settings
