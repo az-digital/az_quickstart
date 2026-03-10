@@ -2,11 +2,12 @@ az_publication_picker:
   js:
     js/az_publication_date_picker.js: {}
   dependencies:
-    - az_publication/bootstrap-datepicker
+    - az_core/vanilla-calendar-pro
+    - az_core/az-date-picker-integration
     - core/drupal
-    - core/jquery
     - core/once
 bootstrap-datepicker:
+  deprecated: 'Deprecated in Quickstart 3.3.0 and will be removed in 3.4.0. Use az_core/vanilla-calendar-pro instead.'
   css:
     theme:
       /libraries/bootstrap-datepicker/dist/css/bootstrap-datepicker.standalone.min.css: { minified: true }
