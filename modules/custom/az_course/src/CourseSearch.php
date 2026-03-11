@@ -23,7 +23,7 @@ class CourseSearch {
    *
    * @var string
    */
-  protected $courseDetailsUrl = "https://uacourses-api.uaccess.arizona.edu/crsdetail";
+  protected $courseDetailsUrl = "https://uacourses.api.qa.eips.arizona.edu/crsdetail";
 
   /**
    * Constructs a CourseSearch service.
@@ -78,7 +78,7 @@ class CourseSearch {
     $descriptionSelector = 'ns1:descr';
 
     $search = strtoupper($search);
-    $queryUrl = Url::fromUri('https://uacourses-api.uaccess.arizona.edu/search', ['query' => ['search_text' => $search]]);
+    $queryUrl = Url::fromUri('https://uacourses.api.qa.eips.arizona.edu/search', ['query' => ['search_text' => $search]]);
     $queryUrl = $queryUrl->toString();
     try {
       $response = $this->httpClient->request('GET', $queryUrl);
