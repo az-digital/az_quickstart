@@ -22,11 +22,205 @@ source:
       name: name
       label: Name
       selector: Name
+    -
+      name: start_options
+      label: 'Start Options'
+      selector: Start_Options__c
+    -
+      name: program_format
+      label: 'Program Format'
+      selector: Program_Format__c
+    -
+      name: program_length
+      label: 'Program Length'
+      selector: Length_Of_Program__c
+    -
+      name: incentives
+      label: Incentives
+      selector: Incentives__c
+    -
+      name: location
+      label: Location
+      selector: Location__c
+    -
+      name: program_website
+      label: 'Program Website'
+      selector: Program_Website__c
+    -
+      name: description
+      label: 'Program Description'
+      selector: Program_Description__c
+    -
+      name: eligibility
+      label: Eligibility
+      selector: Eligibility__c
+    -
+      name: topic
+      label: Topic
+      selector: Topic__c
+    -
+      name: application_form_url
+      label: 'Application Form URL'
+      selector: Application_Form_URL__c
+    -
+      name: audiences
+      label: Audiences
+      selector: Audiences__c
+    -
+      name: application_open
+      label: 'Application Open Date'
+      selector: Application_Open__c
+    -
+      name: application_closed
+      label: 'Application Closed Date'
+      selector: Application_Closed__c
+    -
+      name: start_date
+      label: 'Program Start Date'
+      selector: Start_Date__c
+    -
+      name: end_date
+      label: 'Program End Date'
+      selector: End_Date__c
+    -
+      name: ongoing
+      label: Ongoing
+      selector: Ongoing__c
+    -
+      name: imported_date
+      label: 'Last Modified Date'
+      selector: Last_Modified_Date
+    -
+      name: parent_account
+      label: 'Parent Account Name'
+      selector: Parent_Account_Name
+    -
+      name: program_type
+      label: 'Program Type'
+      selector: Program_Type__c
+    -
+      name: owner_netid
+      label: 'Owner NetID'
+      selector: Owner_NetID
   ids:
     id:
       type: string
 process:
   title: name
+  field_az_trellis_id: id
+  field_az_start_options: start_options
+  field_az_modality:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: program_format
+    -
+      plugin: entity_lookup
+      entity_type: taxonomy_term
+      bundle_key: vid
+      bundle: az_opportunity_modality
+      value_key: name
+      ignore_case: true
+  field_az_program_length: program_length
+  field_az_incentives:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: incentives
+    -
+      plugin: callback
+      callable: trim
+  field_az_opportunity_location: location
+  field_az_program_website/uri: program_website
+  field_az_program_website/title:
+    -
+      plugin: default_value
+      default_value: 'Program details'
+  field_az_body: description
+  field_az_topic:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: topic
+    -
+      plugin: entity_lookup
+      entity_type: taxonomy_term
+      bundle_key: vid
+      bundle: az_opportunity_topic
+      value_key: name
+      ignore_case: true
+  field_az_application_link/uri: application_form_url
+  field_az_application_link/title:
+    -
+      plugin: default_value
+      default_value: 'Apply now'
+  field_az_audiences:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: audiences
+    -
+      plugin: entity_lookup
+      entity_type: taxonomy_term
+      bundle_key: vid
+      bundle: az_opportunity_audience
+      value_key: name
+      ignore_case: true
+  field_az_application_date/value:
+    -
+      plugin: format_date
+      source: application_open
+      from_format: 'Y-m-d'
+      to_format: U
+  field_az_application_date/end_value:
+    -
+      plugin: format_date
+      source: application_closed
+      from_format: 'Y-m-d'
+      to_format: U
+  field_az_program_date/value:
+    -
+      plugin: format_date
+      source: start_date
+      from_format: 'Y-m-d'
+      to_format: U
+  field_az_program_date/end_value:
+    -
+      plugin: format_date
+      source: end_date
+      from_format: 'Y-m-d'
+      to_format: U
+  field_az_ongoing:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: ongoing
+    -
+      plugin: callback
+      callable: trim
+  field_az_trellis_imported_date:
+    -
+      plugin: format_date
+      source: imported_date
+      from_format: 'Y-m-d\TH:i:s.vp'
+      to_format: U
+  field_az_parent_account: parent_account
+  field_az_opportunity_type:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: program_type
+    -
+      plugin: entity_lookup
+      entity_type: taxonomy_term
+      bundle_key: vid
+      bundle: az_opportunity_type
+      value_key: name
+      ignore_case: true
+  status:
+    -
+      plugin: default_value
+      default_value: 1
 destination:
   plugin: 'entity:node'
   default_bundle: az_opportunity
