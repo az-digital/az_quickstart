@@ -1,5 +1,10 @@
 name: AZ Main Navbar
 status: experimental
+libraryOverrides:
+  dependencies:
+    - az_barrio/arizona-bootstrap-js
+    - core/drupal
+    - core/once
 props:
   type: object
   properties:
@@ -16,3 +21,4 @@ props:
         - string
         - 'null'
       title: Root menu id
+

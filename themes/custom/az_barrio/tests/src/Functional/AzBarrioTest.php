@@ -63,7 +63,7 @@ class AzBarrioTest extends QuickstartFunctionalTestBase {
     $this->drupalGet('');
     $this->assertSession()->elementExists('css', '#navbar-top.navbar.navbar-expand.navbar-az');
     $this->assertSession()->elementExists('css', '#block-az-barrio-main-menu ul.navbar-nav');
-    $this->assertSession()->responseContains('az-navbar-hover.js');
+    $this->assertSession()->responseContains('az_main_navbar.js');
   }
 
 }
