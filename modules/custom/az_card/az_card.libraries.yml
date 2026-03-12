@@ -7,7 +7,7 @@ az_card_no_follow:
     component:
       components/az-card/az-card-no-follow.css: {}
   js:
-    js/az-card-no-follow.js: {}
+    components/az-card/az-card-no-follow.js: {}
   dependencies:
     - core/drupal.nodelist.foreach
 az_card_title_hover:
