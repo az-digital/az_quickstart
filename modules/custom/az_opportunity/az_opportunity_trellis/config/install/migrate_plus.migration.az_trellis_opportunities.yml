@@ -39,6 +39,10 @@ source:
       label: Incentives
       selector: Incentives__c
     -
+      name: credit_type
+      label: Credit Type
+      selector: Credit_Type__c
+    -
       name: location
       label: Location
       selector: Location__c
@@ -108,17 +112,30 @@ source:
 process:
   title: name
   field_az_trellis_id: id
-  field_az_start_options: start_options
+  field_az_offered:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: start_options
+    -
+      plugin: entity_generate
+      entity_type: taxonomy_term
+      bundle_key: vid
+      bundle: az_opportunity_semester
+      source: start_options
+      value_key: name
+      ignore_case: true
   field_az_modality:
     -
       plugin: skip_on_empty
       method: process
       source: program_format
     -
-      plugin: entity_lookup
+      plugin: entity_generate
       entity_type: taxonomy_term
       bundle_key: vid
       bundle: az_opportunity_modality
+      source: program_format
       value_key: name
       ignore_case: true
   field_az_program_length: program_length
@@ -128,8 +145,12 @@ process:
       method: process
       source: incentives
     -
-      plugin: callback
-      callable: trim
+      plugin: static_map
+      source: incentives
+      map:
+        Yes: 1
+        No: 0
+  field_az_credit: credit_type
   field_az_opportunity_location: location
   field_az_program_website/uri: program_website
   field_az_program_website/title:
@@ -143,10 +164,11 @@ process:
       method: process
       source: topic
     -
-      plugin: entity_lookup
+      plugin: entity_generate
       entity_type: taxonomy_term
       bundle_key: vid
       bundle: az_opportunity_topic
+      source: topic
       value_key: name
       ignore_case: true
   field_az_application_link/uri: application_form_url
@@ -160,10 +182,11 @@ process:
       method: process
       source: audiences
     -
-      plugin: entity_lookup
+      plugin: entity_generate
       entity_type: taxonomy_term
       bundle_key: vid
       bundle: az_opportunity_audience
+      source: audiences
       value_key: name
       ignore_case: true
   field_az_application_date/value:
@@ -171,39 +194,42 @@ process:
       plugin: format_date
       source: application_open
       from_format: 'Y-m-d'
-      to_format: U
+      to_format: 'Y-m-d\TH:i:s'
   field_az_application_date/end_value:
     -
       plugin: format_date
       source: application_closed
       from_format: 'Y-m-d'
-      to_format: U
+      to_format: 'Y-m-d\TH:i:s'
   field_az_program_date/value:
     -
       plugin: format_date
       source: start_date
       from_format: 'Y-m-d'
-      to_format: U
+      to_format: 'Y-m-d\TH:i:s'
   field_az_program_date/end_value:
     -
       plugin: format_date
       source: end_date
       from_format: 'Y-m-d'
-      to_format: U
+      to_format: 'Y-m-d\TH:i:s'
   field_az_ongoing:
     -
       plugin: skip_on_empty
       method: process
       source: ongoing
     -
-      plugin: callback
-      callable: trim
+      plugin: static_map
+      source: ongoing
+      map:
+        'false': 0
+        'true': 1
   field_az_trellis_imported_date:
     -
       plugin: format_date
       source: imported_date
       from_format: 'Y-m-d\TH:i:s.vp'
-      to_format: U
+      to_format: 'Y-m-d\TH:i:s'
   field_az_parent_account: parent_account
   field_az_opportunity_type:
     -
@@ -211,7 +237,7 @@ process:
       method: process
       source: program_type
     -
-      plugin: entity_lookup
+      plugin: entity_generate
       entity_type: taxonomy_term
       bundle_key: vid
       bundle: az_opportunity_type
