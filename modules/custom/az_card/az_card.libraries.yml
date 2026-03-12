@@ -5,7 +5,7 @@ az_card:
 az_card_no_follow:
   css:
     component:
-      css/az-card-no-follow.css: {}
+      components/az-card/az-card-no-follow.css: {}
   js:
     js/az-card-no-follow.js: {}
   dependencies:
@@ -13,4 +13,4 @@ az_card_no_follow:
 az_card_title_hover:
   css:
     component:
-      css/az-card-title-hover.css: {}
+      components/az-card/az-card-title-hover.css: {}
