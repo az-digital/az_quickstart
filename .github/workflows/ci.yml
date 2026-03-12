@@ -5,9 +5,9 @@ on:
     branches:
       - 'main'
       - '2.x'
+      - '3.3.x'
       - '3.2.x'
       - '3.1.x'
-      - '3.0.x'
       - '2.14.x'
 
 concurrency:
@@ -266,7 +266,7 @@ jobs:
           MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","goog:chromeOptions":{"args":["--disable-gpu","--headless","--disable-dev-shm-usage","--no-sandbox"]}}, "http://127.0.0.1:${{ job.services.chromedriver.ports[9515] }}"]'
       - name: Upload PHPUnit Artifacts
         if: always()
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         with:
           name: phpunit-results-${{ matrix.test.name }}
           path: |
