@@ -308,10 +308,10 @@
     {{ page.az_page_bottom }}
     {% endif %}
     {% if az_back_to_top %}
-      <a id="az-js-back-to-top" href="#" class="align-items-center bottom-0 btn btn-blue btn-sm d-flex end-0 mb-card me-card position-fixed shadow-sm z-2 invisible">
-        <span class="material-symbols-rounded">keyboard_arrow_up</span>
+      <button type="button" id="az-js-back-to-top" class="btn btn-blue btn-sm shadow-sm d-flex align-items-center position-fixed bottom-0 end-0 mb-card me-card z-2 invisible">
+        <span aria-hidden="true" class="material-symbols-rounded">keyboard_arrow_up</span>
         Back to top
-      </a>
+      </button>
     {% endif %}
     </div>
 </div>
