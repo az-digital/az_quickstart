@@ -52,6 +52,18 @@ class AzBarrioTest extends QuickstartFunctionalTestBase {
     $this->assertSession()->elementExists('css', '#navbar-top.navbar.navbar-expand');
     $this->assertSession()->elementExists('css', '#block-az-barrio-offcanvas-searchform');
     $this->assertSession()->elementExists('css', '#block-az-barrio-mobilenavblock');
+
+    // Tests that the AZ navbar variation renders when enabled.
+    \Drupal::configFactory()->getEditable('az_barrio.settings')
+      ->set('az_navbar', TRUE)
+      ->save();
+    \Drupal::service('theme.registry')->reset();
+    \Drupal\Core\Cache\Cache::invalidateTags(['rendered']);
+
+    $this->drupalGet('');
+    $this->assertSession()->elementExists('css', '#navbar-top.navbar.navbar-expand.navbar-az');
+    $this->assertSession()->elementExists('css', '#block-az-barrio-main-menu ul.navbar-nav');
+    $this->assertSession()->responseContains('az-navbar-hover.js');
   }
 
 }
