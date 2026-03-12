@@ -2,6 +2,7 @@
 
 namespace Drupal\Tests\az_barrio\Functional;
 
+use Drupal\Core\Cache\Cache;
 use Drupal\Tests\az_core\Functional\QuickstartFunctionalTestBase;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
@@ -58,7 +59,7 @@ class AzBarrioTest extends QuickstartFunctionalTestBase {
       ->set('az_navbar', TRUE)
       ->save();
     \Drupal::service('theme.registry')->reset();
-    \Drupal\Core\Cache\Cache::invalidateTags(['rendered']);
+    Cache::invalidateTags(['rendered']);
 
     $this->drupalGet('');
     $this->assertSession()->elementExists('css', '#navbar-top.navbar.navbar-expand.navbar-az');
