@@ -1,0 +1,171 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.search_index
+    - search_api.server.az_search_api_searchstax
+  module:
+    - az_search_api
+    - node
+    - search_api_solr
+third_party_settings:
+  search_api_solr:
+    finalize: false
+    commit_before_finalize: false
+    commit_after_finalize: false
+    debug_finalize: false
+    highlighter:
+      maxAnalyzedChars: 51200
+      fragmenter: gap
+      usePhraseHighlighter: true
+      highlightMultiTerm: true
+      preserveMulti: false
+      regex:
+        slop: 0.5
+        pattern: blank
+        maxAnalyzedChars: 10000
+      highlight:
+        mergeContiguous: false
+        requireFieldMatch: false
+        snippets: 3
+        fragsize: 0
+    mlt:
+      mintf: 1
+      mindf: 1
+      maxdf: 0
+      maxdfpct: 0
+      minwl: 0
+      maxwl: 0
+      maxqt: 100
+      maxntp: 2000
+      boost: false
+      interestingTerms: none
+    term_modifiers:
+      slop: 3
+      fuzzy: 1
+      fuzzy_analyzer: true
+    advanced:
+      index_prefix: ''
+      collection: ''
+      timezone: ''
+    multilingual:
+      limit_to_content_language: false
+      include_language_independent: true
+      use_language_undefined_as_fallback_language: false
+      specific_languages:
+        en: '0'
+      use_universal_collation: false
+id: az_search_api_index
+name: 'Quickstart Search API Index'
+description: ''
+read_only: false
+field_settings:
+  description:
+    label: 'Description Metatag'
+    property_path: az_metatag
+    type: text
+    configuration:
+      value: description
+  rendered_item:
+    label: 'Rendered HTML output'
+    property_path: rendered_item
+    type: text
+    configuration:
+      roles:
+        - anonymous
+      view_mode:
+        'entity:node':
+          ':default': search_index
+          az_event: ':default'
+          az_flexible_page: ':default'
+          az_news: ':default'
+          az_person: ':default'
+  sitename:
+    label: 'OG Sitename Metatag'
+    property_path: az_metatag
+    type: text
+    configuration:
+      value: og_site_name
+  title:
+    label: 'Title Metatag'
+    property_path: az_metatag
+    type: text
+    configuration:
+      value: title
+  type:
+    label: 'Content type'
+    datasource_id: 'entity:node'
+    property_path: type
+    type: string
+    dependencies:
+      module:
+        - node
+  url:
+    label: URI
+    property_path: search_api_url
+    type: string
+    configuration:
+      absolute: true
+datasource_settings:
+  'entity:node':
+    bundles:
+      default: true
+      selected: {  }
+    languages:
+      default: true
+      selected: {  }
+processor_settings:
+  add_url: {  }
+  aggregated_field: {  }
+  auto_aggregated_fulltext_field: {  }
+  az_anonymous_access: {  }
+  az_base_url:
+    weights:
+      preprocess_index: -15
+      preprocess_query: -15
+    all_fields: 1
+    fields:
+      - description
+      - rendered_item
+      - sitename
+      - title
+      - type
+      - url
+  az_metatag: {  }
+  az_robots_noindex: {  }
+  az_search_summary: {  }
+  custom_value: {  }
+  entity_status: {  }
+  entity_type: {  }
+  html_filter:
+    weights:
+      preprocess_index: -10
+      preprocess_query: 0
+    all_fields: false
+    fields:
+      - description
+      - rendered_item
+    title: false
+    alt: false
+    tags:
+      b: 2.0
+      em: 1.5
+      h1: 5.0
+      h2: 3.0
+      h3: 2.0
+      strong: 2.0
+      u: 1.5
+  language_with_fallback: {  }
+  rendered_item: {  }
+  solr_date_range:
+    weights:
+      preprocess_index: 0
+tracker_settings:
+  default:
+    indexing_order: fifo
+options:
+  cron_limit: 100
+  delete_on_fail: true
+  index_directly: false
+  track_changes_in_references: true
+server: az_search_api_searchstax
