@@ -1,0 +1,17 @@
+{#
+/**
+ * @file
+ * Theme override for the az_cards paragraph bundle.
+ */
+#}
+{{ attach_library('az_paragraphs/az_paragraphs.az_cards') }}
+
+{% set card_settings = paragraph.getAllBehaviorSettings()['az_cards_paragraph_behavior']|default({}) %}
+
+{% include 'az_paragraphs_cards:az-cards' with {
+  attributes: attributes.addClass('az-cards'),
+  title: paragraph.field_az_title.value|default(''),
+  title_color_class: card_settings['card_deck_title_color']|default(''),
+  show_title: view_mode != 'preview',
+  cards: content.field_az_cards,
+} only %}
