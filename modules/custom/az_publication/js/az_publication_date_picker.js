@@ -78,14 +78,24 @@
             return;
           }
 
-          let selected =
-            datePickerIntegration.getNormalizedSelectedDates(self)[0];
+          let selected = null;
+          const calendarContext = self.context || {};
+          const year = calendarContext.selectedYear;
+          const monthIndex = calendarContext.selectedMonth;
 
-          if (!selected) {
-            const calendarContext = self.context || {};
-            const year = calendarContext.selectedYear;
-            const monthIndex = calendarContext.selectedMonth;
+          // Month/year modes are view-driven; selectedDates can remain stale.
+          if (mode === 'month' || mode === 'year') {
             if (Number.isInteger(year)) {
+              const month =
+                mode === 'month' && Number.isInteger(monthIndex)
+                  ? String(monthIndex + 1).padStart(2, '0')
+                  : '01';
+              selected = `${year}-${month}-01`;
+            }
+          } else {
+            [selected] = datePickerIntegration.getNormalizedSelectedDates(self);
+
+            if (!selected && Number.isInteger(year)) {
               const month = Number.isInteger(monthIndex)
                 ? String(monthIndex + 1).padStart(2, '0')
                 : '01';
