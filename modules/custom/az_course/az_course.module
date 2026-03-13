@@ -38,9 +38,9 @@ function az_course_theme() {
 /**
  * Implements hook_preprocess_node().
  */
-function az_course_preprocess_node(&$variables) {
-  if ($variables['node']->bundle() === 'az_course' && $variables['view_mode'] === 'az_card') {
-    $variables['#attached']['library'][] = 'az_course/az-course-card';
+function az_course_preprocess_node__az_course(&$variables) {
+  if ($variables['view_mode'] === 'az_card') {
+    $variables['#attached']['library'][] = 'az_course/az_course';
   }
 }
 

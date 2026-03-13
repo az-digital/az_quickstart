@@ -1,6 +1,6 @@
-az-course-card:
+az_course:
   css:
-    component:
+    theme:
       css/az_course.css: {}
   dependencies:
     - az_barrio/arizona-bootstrap-css
