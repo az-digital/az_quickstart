@@ -38,12 +38,14 @@ vanilla-calendar-pro:
     gpl-compatible: true
   css:
     theme:
-      # TODO: Switch to styles/index.css (and remove forced selectedTheme/themeAttrDetect JS overrides) if we want automatic dark mode support.
-      https://cdn.jsdelivr.net/npm/vanilla-calendar-pro@3.1.0/styles/layout.css: { type: external, minified: true }
-      https://cdn.jsdelivr.net/npm/vanilla-calendar-pro@3.1.0/styles/themes/light.css: { type: external, minified: true }
+      # TODO: Replace individual CSS files with styles/index.css and update
+      # theme settings in library implementations if we want to enable automatic
+      # dark mode support.
+      lib/vanilla-calendar-pro/styles/layout.css: { minified: true }
+      lib/vanilla-calendar-pro/styles/themes/light.css: { minified: true }
   js:
-    https://cdn.jsdelivr.net/npm/vanilla-calendar-pro@3.1.0/index.js: { type: external, minified: true }
-    https://cdn.jsdelivr.net/npm/vanilla-calendar-pro@3.1.0/utils/index.js: { type: external, minified: true }
+    lib/vanilla-calendar-pro/index.js: { minified: true }
+    lib/vanilla-calendar-pro/utils/index.js: { minified: true }
 az-date-picker-integration:
   js:
     js/az-date-picker-integration.js: {}
