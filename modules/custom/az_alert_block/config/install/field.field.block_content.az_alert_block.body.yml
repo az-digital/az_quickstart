@@ -16,7 +16,7 @@ required: false
 translatable: true
 default_value:
   -
-    value: '<p class="text-align-center"><em>The University of Arizona is currently addressing a campus incident. For more information, visit <a href="https://arizona.edu/incident">arizona.edu/incident</a>.</em></p>'
+    value: '<p class="text-center"><em>The University of Arizona is currently addressing a campus incident. For more information, visit <a href="https://arizona.edu/incident">arizona.edu/incident</a>.</em></p>'
     summary: ''
     format: az_standard
 default_value_callback: ''
