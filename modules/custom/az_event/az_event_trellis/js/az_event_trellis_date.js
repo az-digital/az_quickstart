@@ -63,11 +63,28 @@
               self.hide();
             }
           },
+          onHide(self) {
+            // Reset to begin input after closing so default input-mode behavior
+            // stays anchored to the primary field.
+            self.context.inputElement = begin;
+          },
         });
         calendar.init();
 
+        let endOpenQueued = false;
         datePickerIntegration.bindCalendarOpenHandlers(end, () => {
-          calendar.show();
+          if (endOpenQueued) {
+            return;
+          }
+
+          // Treat End as the active input while opening from End so this click
+          // is not interpreted as an outside click by input-mode handlers.
+          calendar.context.inputElement = end;
+          endOpenQueued = true;
+          requestAnimationFrame(() => {
+            calendar.show();
+            endOpenQueued = false;
+          });
         });
       });
     },
