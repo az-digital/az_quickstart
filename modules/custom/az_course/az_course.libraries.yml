@@ -1,0 +1,6 @@
+az_course:
+  css:
+    theme:
+      css/az_course.css: {}
+  dependencies:
+    - az_barrio/arizona-bootstrap-css
