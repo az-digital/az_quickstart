@@ -24,7 +24,7 @@ function az_alert_block_install() {
     'uuid' => AZ_ALERT_BLOCK_EMERGENCY_UUID,
     'info' => 'Emergency Alert Block',
     'body' => [
-      'value' => '<p><em>The University of Arizona is currently addressing a campus incident. For more information, visit <a href="https://arizona.edu/incident">arizona.edu/incident</a>.</em></p>',
+      'value' => '<p class="text-center"><em>The University of Arizona is currently addressing a campus incident. For more information, visit <a href="https://arizona.edu/incident">arizona.edu/incident</a>.</em></p>',
       'summary' => '',
       'format' => 'az_standard',
     ],
