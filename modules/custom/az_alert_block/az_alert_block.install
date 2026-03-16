@@ -33,9 +33,11 @@ function az_alert_block_install() {
   $plugin_id = 'block_content:' . $block->uuid();
   \Drupal::configFactory()
     ->getEditable('block.block.' . $block_config_id)
+    ->set('uuid', \Drupal::service('uuid')->generate())
     ->set('langcode', 'en')
     ->set('status', FALSE)
     ->set('dependencies', [
+      'content' => 'block_content:az_alert_block:' . $block->uuid(),
       'module' => ['block_content'],
       'theme' => [$theme],
     ])
@@ -43,13 +45,13 @@ function az_alert_block_install() {
     ->set('theme', $theme)
     ->set('region', 'alert')
     ->set('weight', 0)
-    ->set('provider', 'block_content')
     ->set('plugin', $plugin_id)
     ->set('settings', [
       'id' => $plugin_id,
       'label' => 'Emergency Alert Block',
       'label_display' => '0',
       'provider' => 'block_content',
+      'view_mode' => 'full',
     ])
     ->set('visibility', [])
     ->save();
