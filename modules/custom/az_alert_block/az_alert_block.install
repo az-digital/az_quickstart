@@ -60,14 +60,13 @@ function az_alert_block_install() {
 /**
  * Implements hook_uninstall().
  *
- * Removes the default Emergency Alert Block entity and its placement config.
+ * Removes Alert Block entities and the placement config for the default block.
  */
 function az_alert_block_uninstall() {
   $blocks = \Drupal::entityTypeManager()
     ->getStorage('block_content')
     ->loadByProperties([
       'type' => 'az_alert_block',
-      'uuid' => AZ_ALERT_BLOCK_EMERGENCY_UUID,
     ]);
   foreach ($blocks as $block) {
     $block->delete();
