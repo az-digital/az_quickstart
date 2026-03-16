@@ -4,7 +4,7 @@ Adds an alert block type for site-wide or emergency messages (e.g. campus incide
 
 ## Setup
 
-When the module is installed, a default **"Emergency Alert Block"** is created and placed in the **Alert** region (disabled), so no manual setup is needed. You can find it under **Structure → Block layout** in the Alert region. To add another block, use **Content → Blocks → Add custom block** and choose "Alert Block", then place it in the Alert region.
+When the module is installed, a default **"Emergency Alert Block"** is created and placed in the **Alert** region (disabled), so no manual setup is needed. You can find it under **Structure → Block layout** in the Alert region.
 
 ## During an incident
 
