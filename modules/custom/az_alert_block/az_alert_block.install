@@ -60,7 +60,7 @@ function az_alert_block_install() {
 /**
  * Implements hook_uninstall().
  *
- * Removes Alert Block entities and the placement config for the default block.
+ * Removes AZ Alert Block entities.
  */
 function az_alert_block_uninstall() {
   $blocks = \Drupal::entityTypeManager()
@@ -70,11 +70,5 @@ function az_alert_block_uninstall() {
     ]);
   foreach ($blocks as $block) {
     $block->delete();
-  }
-
-  $block_config_id = 'az_barrio_emergency_alert_block';
-  $config = \Drupal::configFactory()->getEditable('block.block.' . $block_config_id);
-  if (!$config->isNew()) {
-    $config->delete();
   }
 }
