@@ -79,28 +79,21 @@
           }
 
           let selected = null;
-          const calendarContext = self.context || {};
-          const year = calendarContext.selectedYear;
-          const monthIndex = calendarContext.selectedMonth;
 
           // Month/year modes are view-driven; selectedDates can remain stale.
           if (mode === 'month' || mode === 'year') {
-            if (Number.isInteger(year)) {
+            const year = self.context.selectedYear;
+            const monthIndex = self.context.selectedMonth;
+            if (Number.isInteger(year) && Number.isInteger(monthIndex)) {
               const month =
-                mode === 'month' && Number.isInteger(monthIndex)
+                mode === 'month'
                   ? String(monthIndex + 1).padStart(2, '0')
                   : '01';
               selected = `${year}-${month}-01`;
             }
           } else {
-            [selected] = datePickerIntegration.getNormalizedSelectedDates(self);
-
-            if (!selected && Number.isInteger(year)) {
-              const month = Number.isInteger(monthIndex)
-                ? String(monthIndex + 1).padStart(2, '0')
-                : '01';
-              selected = `${year}-${month}-01`;
-            }
+            [selected] = datePickerIntegration
+              .getNormalizedSelectedDates(self);
           }
 
           if (selected) {
@@ -114,14 +107,6 @@
           }
         };
 
-        // onClickMonth/onClickYear fire before calendar state updates; defer
-        // via rAF so selectedYear/selectedMonth are committed before we read them.
-        const writeValueFromViewSelection = (self) => {
-          requestAnimationFrame(() => {
-            writeValueFromCalendar(self);
-          });
-        };
-
         const config = {
           inputMode: true,
           openOnFocus: false,
@@ -130,9 +115,14 @@
           themeAttrDetect: false,
           selectionDatesMode: 'single',
           type: mode,
+          enableJumpToSelectedDate: true,
           onChangeToInput: writeValueFromCalendar,
-          onClickMonth: writeValueFromViewSelection,
-          onClickYear: writeValueFromViewSelection,
+          onClickMonth(self) {
+            requestAnimationFrame(() => writeValueFromCalendar(self));
+          },
+          onClickYear(self) {
+            requestAnimationFrame(() => writeValueFromCalendar(self));
+          },
         };
 
         if (selectedDate) {

@@ -45,12 +45,13 @@
 
         const selectedDates = getSelectedDatesFromInputs(begin, end);
 
-        const calendar = new VanillaCalendarPro.Calendar(begin, {
+        const config = {
           inputMode: true,
           selectedTheme: 'light',
           themeAttrDetect: false,
           selectionDatesMode: 'multiple-ranged',
           enableEdgeDatesOnly: true,
+          enableJumpToSelectedDate: true,
           selectedDates,
           onChangeToInput(self) {
             const values = datePickerIntegration
@@ -68,7 +69,9 @@
             // stays anchored to the primary field.
             self.context.inputElement = begin;
           },
-        });
+        };
+
+        const calendar = new VanillaCalendarPro.Calendar(begin, config);
         calendar.init();
 
         let endOpenQueued = false;
