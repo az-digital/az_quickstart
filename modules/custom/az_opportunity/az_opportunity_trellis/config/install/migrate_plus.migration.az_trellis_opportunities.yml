@@ -3,6 +3,7 @@ status: true
 dependencies: {  }
 id: az_trellis_opportunities
 class: null
+idMap: {  }
 field_plugin_method: null
 cck_plugin_method: null
 migration_tags:
@@ -40,7 +41,7 @@ source:
       selector: Incentives__c
     -
       name: credit_type
-      label: Credit Type
+      label: 'Credit Type'
       selector: Credit_Type__c
     -
       name: location
@@ -148,8 +149,8 @@ process:
       plugin: static_map
       source: incentives
       map:
-        Yes: 1
-        No: 0
+        'Yes': 1
+        'No': 0
   field_az_credit: credit_type
   field_az_opportunity_location: location
   field_az_program_website/uri: program_website
@@ -193,25 +194,25 @@ process:
     -
       plugin: format_date
       source: application_open
-      from_format: 'Y-m-d'
+      from_format: Y-m-d
       to_format: 'Y-m-d\TH:i:s'
   field_az_application_date/end_value:
     -
       plugin: format_date
       source: application_closed
-      from_format: 'Y-m-d'
+      from_format: Y-m-d
       to_format: 'Y-m-d\TH:i:s'
   field_az_program_date/value:
     -
       plugin: format_date
       source: start_date
-      from_format: 'Y-m-d'
+      from_format: Y-m-d
       to_format: 'Y-m-d\TH:i:s'
   field_az_program_date/end_value:
     -
       plugin: format_date
       source: end_date
-      from_format: 'Y-m-d'
+      from_format: Y-m-d
       to_format: 'Y-m-d\TH:i:s'
   field_az_ongoing:
     -
@@ -254,3 +255,4 @@ destination:
 migration_dependencies:
   optional:
     - az_trellis_opportunities_media
+include: null

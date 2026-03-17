@@ -34,12 +34,25 @@ function az_opportunity_trellis_form_node_az_opportunity_edit_form_alter(&$form,
 
       $disabled_fields = [
         'title',
-        // 'field_az_location',
-        // 'field_az_event_date',
-        // 'field_az_link',
-        // 'field_az_summary',
-        // 'field_az_photos',
-        // 'field_az_enterprise_attributes',
+        'field_az_application_date',
+        'field_az_application_link',
+        'field_az_audiences',
+        'field_az_credit',
+        'field_az_eligibility',
+        'field_az_incentives',
+        'field_az_opportunity_location',
+        'field_az_modality',
+        'field_az_offered',
+        'field_az_ongoing',
+        'field_az_opportunity_type',
+        'field_az_body',
+        'field_az_parent_account',
+        'field_az_program_date',
+        'field_az_program_length',
+        'field_az_program_website',
+        'field_az_topic',
+        'field_az_trellis_imported_date',
+        'field_az_trellis_id',
       ];
       foreach ($disabled_fields as $field) {
         $form[$field]['#disabled'] = TRUE;
@@ -48,7 +61,7 @@ function az_opportunity_trellis_form_node_az_opportunity_edit_form_alter(&$form,
       $no_access_fields = [
         // 'field_az_subheading',
         'field_az_body',
-        // 'field_az_contacts',
+        'field_az_eligibility',
         // 'field_az_attachments',
       ];
       foreach ($no_access_fields as $field) {
