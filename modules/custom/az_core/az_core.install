@@ -22,7 +22,7 @@ function az_core_requirements($phase) {
     $extension = 'az_barrio';
     $library_name = 'arizona-bootstrap';
     $library_info = \Drupal::service('library.discovery')->getLibraryByName($extension, $library_name);
-    if ($library_info['deprecated']) {
+    if ($library_info && isset($library_info['deprecated'])) {
       $message = $library_info['deprecated'];
       $message = strtr($message, ['%library_id%' => $library_name]);
       $requirements['az_barrio.deprecated_library'] = [
