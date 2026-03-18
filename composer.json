@@ -239,6 +239,9 @@
             "npm-asset/slick-carousel": {
                 "Incompatibility with Drupal 11/jQuery 4 (3467129)": "https://www.drupal.org/files/issues/2025-02-17/compatibility_jQuery_4.patch"
             },
+            "seboettg/citeproc-php": {
+                "Switch to explicit nullable types (seboettg/citeproc-php#195)": "https://gist.githubusercontent.com/joeparsons/b7e598fe332a9f96aa5e74d47c0af7c0/raw/82e8268c196b082b281be3be84784e3c6c78ce55/seboettg-citeproc-php-195.diff"
+            },
             "renanbr/bibtex-parser": {
                 "Parser performance issue": "https://gist.githubusercontent.com/tadean/39b90d00cd3edfff7c5653f907e15721/raw/8feb59cb4447b0f667fe5f4936a25c4d30211e1b/renanbr_bibtex_parser_performance.patch"
             }
