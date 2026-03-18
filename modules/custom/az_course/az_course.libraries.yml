@@ -1,4 +1,4 @@
-az_course:
+style:
   css:
     theme:
       css/az_course.css: {}

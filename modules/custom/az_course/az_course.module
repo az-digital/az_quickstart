@@ -40,7 +40,7 @@ function az_course_theme() {
  */
 function az_course_preprocess_node__az_course(&$variables) {
   if ($variables['view_mode'] === 'az_card') {
-    $variables['#attached']['library'][] = 'az_course/az_course';
+    $variables['#attached']['library'][] = 'az_course/style';
   }
 }
 
