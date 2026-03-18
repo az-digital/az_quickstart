@@ -6,40 +6,6 @@
 /* global VanillaCalendarPro */
 
 ((Drupal, once) => {
-  /**
-   * Pads month/day values for Drupal datetime parsing.
-   *
-   * @param {string} value
-   *   Raw input value.
-   *
-   * @return {string}
-   *   A full date in Y-m-d format.
-   */
-  const normalizeToFullDate = (value) => {
-    const parts = String(value || '')
-      .split('-')
-      .filter((part) => part !== '');
-    while (parts.length < 3) {
-      parts.push('01');
-    }
-    return parts.slice(0, 3).join('-');
-  };
-
-  /**
-   * Trims a normalized Y-m-d date to requested precision.
-   *
-   * @param {string} value
-   *   Date string in Y-m-d format.
-   * @param {number} partsCount
-   *   Number of date components to keep.
-   *
-   * @return {string}
-   *   A date string formatted to the selected precision.
-   */
-  const trimDateToPartsCount = (value, partsCount) => {
-    return normalizeToFullDate(value).split('-').slice(0, partsCount).join('-');
-  };
-
   Drupal.behaviors.datetimeTweaksDefaultDate = {
     attach(context) {
       const datePickerIntegration = Drupal.azCore?.datePickerIntegration;
@@ -61,16 +27,19 @@
         const mode = element.dataset.azPublicationDateMode || 'default';
 
         // Keep user-visible values aligned to the selected granularity.
-        let value = String(element.value || '').trim();
+        const value = String(element.value || '').trim();
         let selectedDate = null;
         if (value) {
-          value = value.split('-').filter((part) => part !== '');
-          while (value.length < datePartsCount) {
-            value.push('01');
+          selectedDate = datePickerIntegration.normalizeToFullDate(value);
+          if (selectedDate) {
+            element.value = datePickerIntegration.trimDateToPartsCount(
+              selectedDate,
+              datePartsCount,
+            );
+          } else {
+            // Do not seed calendar state with invalid pre-existing text.
+            element.value = '';
           }
-          value = value.slice(0, datePartsCount).join('-');
-          element.value = value;
-          selectedDate = normalizeToFullDate(value);
         }
 
         const writeValueFromCalendar = (self) => {
@@ -79,48 +48,36 @@
           }
 
           let selected = null;
-          const calendarContext = self.context || {};
-          const year = calendarContext.selectedYear;
-          const monthIndex = calendarContext.selectedMonth;
 
           // Month/year modes are view-driven; selectedDates can remain stale.
           if (mode === 'month' || mode === 'year') {
-            if (Number.isInteger(year)) {
+            const year = self.context.selectedYear;
+            const monthIndex = self.context.selectedMonth;
+            if (Number.isInteger(year) && Number.isInteger(monthIndex)) {
               const month =
-                mode === 'month' && Number.isInteger(monthIndex)
+                mode === 'month'
                   ? String(monthIndex + 1).padStart(2, '0')
                   : '01';
               selected = `${year}-${month}-01`;
             }
           } else {
             [selected] = datePickerIntegration.getNormalizedSelectedDates(self);
-
-            if (!selected && Number.isInteger(year)) {
-              const month = Number.isInteger(monthIndex)
-                ? String(monthIndex + 1).padStart(2, '0')
-                : '01';
-              selected = `${year}-${month}-01`;
-            }
           }
 
           if (selected) {
-            self.context.inputElement.value = trimDateToPartsCount(
-              selected,
-              datePartsCount,
-            );
+            self.context.inputElement.value =
+              datePickerIntegration.trimDateToPartsCount(
+                selected,
+                datePartsCount,
+              );
             self.hide();
           } else {
             self.context.inputElement.value = '';
           }
         };
 
-        // onClickMonth/onClickYear fire before calendar state updates; defer
-        // via rAF so selectedYear/selectedMonth are committed before we read them.
-        const writeValueFromViewSelection = (self) => {
-          requestAnimationFrame(() => {
-            writeValueFromCalendar(self);
-          });
-        };
+        let calendarTabHandler = null;
+        let suppressOnHideFocus = false;
 
         const config = {
           inputMode: true,
@@ -130,9 +87,57 @@
           themeAttrDetect: false,
           selectionDatesMode: 'single',
           type: mode,
+          enableJumpToSelectedDate: true,
           onChangeToInput: writeValueFromCalendar,
-          onClickMonth: writeValueFromViewSelection,
-          onClickYear: writeValueFromViewSelection,
+          onClickMonth(self) {
+            requestAnimationFrame(() => writeValueFromCalendar(self));
+          },
+          onClickYear(self) {
+            requestAnimationFrame(() => writeValueFromCalendar(self));
+          },
+          onShow(self) {
+            const calendarEl = self.context.mainElement;
+            const focusAnchor = self.context.inputElement;
+            calendarTabHandler = (event) => {
+              if (event.key !== 'Tab') return;
+
+              if (
+                !datePickerIntegration.shouldExitCalendarOnTab(
+                  event,
+                  calendarEl,
+                )
+              ) {
+                return;
+              }
+
+              event.preventDefault();
+              suppressOnHideFocus = true;
+              // onHide fires synchronously from hide(), restoring focus to input.
+              self.hide();
+              // Move focus in natural tab order relative to the input anchor.
+              datePickerIntegration.focusRelativeToAnchor(
+                calendarEl,
+                focusAnchor,
+                event.shiftKey ? 'previous' : 'next',
+              );
+            };
+            calendarEl.addEventListener('keydown', calendarTabHandler);
+          },
+          onHide(self) {
+            if (calendarTabHandler) {
+              self.context.mainElement.removeEventListener(
+                'keydown',
+                calendarTabHandler,
+              );
+              calendarTabHandler = null;
+            }
+            // Restore focus after close unless focus was moved explicitly.
+            if (suppressOnHideFocus) {
+              suppressOnHideFocus = false;
+            } else if (self.context.inputElement) {
+              self.context.inputElement.focus();
+            }
+          },
         };
 
         if (selectedDate) {
@@ -141,6 +146,39 @@
 
         const calendar = new VanillaCalendarPro.Calendar(element, config);
         calendar.init();
+
+        // Allow direct text editing: silently discard invalid user input.
+        element.addEventListener('change', () => {
+          const userValue = String(element.value || '').trim();
+          const normalized =
+            datePickerIntegration.normalizeToFullDate(userValue);
+
+          if (!userValue) {
+            calendar.set(
+              { selectedDates: [] },
+              { dates: true, year: true, month: true },
+            );
+            return;
+          }
+
+          if (normalized) {
+            element.value = datePickerIntegration.trimDateToPartsCount(
+              normalized,
+              datePartsCount,
+            );
+            calendar.set(
+              { selectedDates: [normalized] },
+              { dates: true, year: true, month: true },
+            );
+            return;
+          }
+
+          element.value = '';
+          calendar.set(
+            { selectedDates: [] },
+            { dates: true, year: true, month: true },
+          );
+        });
 
         let firstOpen = true;
 
