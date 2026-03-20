@@ -112,26 +112,6 @@ class AZOpportunityTrellisViewsField extends BulkForm {
       }
 
       $migrations = [
-        'az_trellis_opportunities_files' => [
-          'limit' => 0,
-          'update' => 0,
-          'force' => 0,
-          'configuration' => [
-            'source' => [
-              'trellis_ids' => $ids,
-            ],
-          ],
-        ],
-        'az_trellis_opportunities_media' => [
-          'limit' => 0,
-          'update' => 0,
-          'force' => 0,
-          'configuration' => [
-            'source' => [
-              'trellis_ids' => $ids,
-            ],
-          ],
-        ],
         'az_trellis_opportunities' => [
           'limit' => 0,
           'update' => 0,

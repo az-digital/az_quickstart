@@ -104,6 +104,10 @@ source:
       label: 'Program Type'
       selector: Program_Type__c
     -
+      name: publish
+      label: Publish
+      selector: Publish_Formula
+    -
       name: owner_netid
       label: 'Owner NetID'
       selector: Owner_NetID
@@ -246,13 +250,15 @@ process:
       ignore_case: true
   status:
     -
+      plugin: get
+      source: publish
+    -
       plugin: default_value
-      default_value: 1
+      strict: true
+      default_value: 0
 destination:
   plugin: 'entity:node'
   default_bundle: az_opportunity
   validate: false
-migration_dependencies:
-  optional:
-    - az_trellis_opportunities_media
+migration_dependencies: null
 include: null
