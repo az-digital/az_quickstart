@@ -2,6 +2,7 @@
 
 namespace Drupal\Tests\az_barrio\Functional;
 
+use Drupal\Core\Cache\Cache;
 use Drupal\Tests\az_core\Functional\QuickstartFunctionalTestBase;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
@@ -52,6 +53,18 @@ class AzBarrioTest extends QuickstartFunctionalTestBase {
     $this->assertSession()->elementExists('css', '#navbar-top.navbar.navbar-expand');
     $this->assertSession()->elementExists('css', '#block-az-barrio-offcanvas-searchform');
     $this->assertSession()->elementExists('css', '#block-az-barrio-mobilenavblock');
+
+    // Tests that the AZ navbar variation renders when enabled.
+    \Drupal::configFactory()->getEditable('az_barrio.settings')
+      ->set('az_navbar', TRUE)
+      ->save();
+    \Drupal::service('theme.registry')->reset();
+    Cache::invalidateTags(['rendered']);
+
+    $this->drupalGet('');
+    $this->assertSession()->elementExists('css', '#navbar-top.navbar.navbar-expand.navbar-az');
+    $this->assertSession()->elementExists('css', '#block-az-barrio-main-menu ul.navbar-nav');
+    $this->assertSession()->responseContains('az_main_navbar.js');
   }
 
 }
