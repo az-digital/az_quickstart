@@ -176,7 +176,7 @@ jobs:
       - name: Run composer audit
         run: |
           cd az-quickstart-scaffolding
-          composer audit --abandoned report --no-dev --ignore-severity=low --ignore-severity=moderate
+          composer audit --no-dev --ignore-severity=low --ignore-severity=moderate
 
   yarn-audit:
     name: yarn audit (security)
