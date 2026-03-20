@@ -25,7 +25,7 @@
     ],
     "require": {
         "php": ">=8.3",
-        "az-digital/arizona-bootstrap": "5.1.0",
+        "az-digital/arizona-bootstrap": "5.1.1",
         "az-digital/az-icons": "1.0.4",
         "citation-style-language/locales": "0.0.87",
         "citation-style-language/styles": "0.0.668",
@@ -43,7 +43,8 @@
         "drupal/bootstrap_barrio": "5.5.20",
         "drupal/bootstrap_utilities": "3.0.1",
         "drupal/calendar_link": "3.0.4",
-        "drupal/cas": "3.0.0",
+        "drupal/captcha": "2.0.10",
+        "drupal/cas": "3.0.1",
         "drupal/chosen": "4.0.3",
         "drupal/ckeditor_bs_grid": "2.2.0-alpha1",
         "drupal/ckeditor_indentblock": "1.1.0",
@@ -57,11 +58,11 @@
         "drupal/config_split": "2.0.2",
         "drupal/config_sync": "3.0.0-alpha5",
         "drupal/config_update": "2.0.0-alpha4",
-        "drupal/core-recommended": "11.3.3",
-        "drupal/crop": "2.5.0",
+        "drupal/core-recommended": "11.3.5",
+        "drupal/crop": "2.6.0",
         "drupal/date_ap_style": "3.0.0",
         "drupal/decorative_image_widget": "1.0.3",
-        "drupal/diff": "2.0.0-beta4",
+        "drupal/diff": "2.0.0-beta5",
         "drupal/draggableviews": "2.1.4",
         "drupal/easy_breadcrumb": "2.0.9",
         "drupal/embed": "1.10.0",
@@ -104,9 +105,10 @@
         "drupal/paragraphs_admin": "1.7.0",
         "drupal/pathauto": "1.14.0",
         "drupal/quick_node_clone": "1.22.0",
+        "drupal/recaptcha": "3.4",
         "drupal/redirect": "1.12.0",
         "drupal/role_delegation": "1.6.0",
-        "drupal/schema_metatag": "3.0.3",
+        "drupal/schema_metatag": "3.0.4",
         "drupal/search_api": "1.40.0",
         "drupal/search_api_solr": "4.3.10",
         "drupal/search_exclude": "3.0.0-beta2",
@@ -124,7 +126,7 @@
         "drupal/views_bulk_operations": "4.4.4",
         "drupal/views_remote_data": "1.0.3",
         "drupal/viewsreference": "2.0.0-beta10",
-        "drupal/webform": "6.3.0-beta7",
+        "drupal/webform": "6.3.0-beta8",
         "drupal/workbench_access": "2.0.4",
         "drupal/xmlsitemap": "2.0.0",
         "giggsey/libphonenumber-for-php": "^9.0",
@@ -143,11 +145,16 @@
         "drush/drush": "<12.4.3"
     },
     "archive": {
-        "exclude": ["/.*", "/*.neon", "/*.xml.dist", "/package.json"]
+        "exclude": [
+            "/.*",
+            "/*.neon",
+            "/*.xml.dist",
+            "/package.json"
+        ]
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "3.3.x-dev",
+            "dev-main": "3.4.x-dev",
             "2.x-dev": "2.14.x-dev"
         },
         "patches": {
@@ -233,6 +240,9 @@
             },
             "npm-asset/slick-carousel": {
                 "Incompatibility with Drupal 11/jQuery 4 (3467129)": "https://www.drupal.org/files/issues/2025-02-17/compatibility_jQuery_4.patch"
+            },
+            "seboettg/citeproc-php": {
+                "Switch to explicit nullable types (seboettg/citeproc-php#195)": "https://gist.githubusercontent.com/joeparsons/b7e598fe332a9f96aa5e74d47c0af7c0/raw/82e8268c196b082b281be3be84784e3c6c78ce55/seboettg-citeproc-php-195.diff"
             },
             "renanbr/bibtex-parser": {
                 "Parser performance issue": "https://gist.githubusercontent.com/tadean/39b90d00cd3edfff7c5653f907e15721/raw/8feb59cb4447b0f667fe5f4936a25c4d30211e1b/renanbr_bibtex_parser_performance.patch"
