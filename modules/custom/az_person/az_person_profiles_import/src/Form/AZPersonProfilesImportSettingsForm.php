@@ -50,7 +50,8 @@ final class AZPersonProfilesImportSettingsForm extends ConfigFormBase {
   public function buildForm(array $form, FormStateInterface $form_state): array {
     $config = $this->config('az_person_profiles_import.settings');
 
-    // Check if az_secrets integration is active by checking if keys exist and have values.
+    // Check if az_secrets integration is active by checking if keys exist and
+    // have values.
     $using_secrets = $this->hasSecrets(['az_profiles_api_endpoint', 'az_profiles_api_key']);
 
     if ($using_secrets) {
