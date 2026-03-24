@@ -2,15 +2,15 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_az_incentives
+    - field.storage.node.field_az_opportunity_credit
     - node.type.az_opportunity
   module:
     - options
-id: node.az_opportunity.field_az_incentives
-field_name: field_az_incentives
+id: node.az_opportunity.field_az_opportunity_credit
+field_name: field_az_opportunity_credit
 entity_type: node
 bundle: az_opportunity
-label: Incentives
+label: Credit
 description: ''
 required: false
 translatable: false

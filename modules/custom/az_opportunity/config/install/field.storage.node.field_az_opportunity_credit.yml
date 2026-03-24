@@ -4,15 +4,21 @@ dependencies:
   module:
     - node
     - options
-id: node.field_az_incentives
-field_name: field_az_incentives
+id: node.field_az_opportunity_credit
+field_name: field_az_opportunity_credit
 entity_type: node
 type: list_string
 settings:
   allowed_values:
     -
-      value: 'yes'
-      label: 'Yes'
+      value: non_credit
+      label: Non-Credit
+    -
+      value: ua_credit
+      label: 'UA Credit'
+    -
+      value: transfer_credit
+      label: 'Transfer Credit'
   allowed_values_function: ''
 module: options
 locked: false

@@ -9,6 +9,7 @@ php: 8.0
 
 dependencies:
   - az_core:az_core
+  - az_enterprise_attributes_import:az_enterprise_attributes_import
   - az_opportunity:az_opportunity
   - az_migration:az_migration_remote
   - drupal:views

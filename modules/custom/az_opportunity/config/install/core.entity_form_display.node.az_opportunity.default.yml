@@ -4,25 +4,24 @@ dependencies:
   config:
     - field.field.node.az_opportunity.field_az_application_date
     - field.field.node.az_opportunity.field_az_application_link
-    - field.field.node.az_opportunity.field_az_audiences
     - field.field.node.az_opportunity.field_az_body
-    - field.field.node.az_opportunity.field_az_credit
     - field.field.node.az_opportunity.field_az_eligibility
+    - field.field.node.az_opportunity.field_az_enterprise_attributes
     - field.field.node.az_opportunity.field_az_incentives
-    - field.field.node.az_opportunity.field_az_modality
     - field.field.node.az_opportunity.field_az_offered
     - field.field.node.az_opportunity.field_az_ongoing
+    - field.field.node.az_opportunity.field_az_opportunity_category
+    - field.field.node.az_opportunity.field_az_opportunity_credit
     - field.field.node.az_opportunity.field_az_opportunity_location
-    - field.field.node.az_opportunity.field_az_opportunity_type
     - field.field.node.az_opportunity.field_az_parent_account
     - field.field.node.az_opportunity.field_az_program_date
     - field.field.node.az_opportunity.field_az_program_length
     - field.field.node.az_opportunity.field_az_program_website
-    - field.field.node.az_opportunity.field_az_topic
     - field.field.node.az_opportunity.field_az_trellis_id
     - field.field.node.az_opportunity.field_az_trellis_imported_date
     - node.type.az_opportunity
   module:
+    - az_core
     - datetime
     - link
     - link_class
@@ -36,13 +35,13 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 3
+    weight: 20
     region: content
     settings: {  }
     third_party_settings: {  }
   field_az_application_date:
     type: smartdate_only
-    weight: 11
+    weight: 5
     region: content
     settings:
       separator: to
@@ -62,7 +61,7 @@ content:
     third_party_settings: {  }
   field_az_application_link:
     type: link_class_field_widget
-    weight: 21
+    weight: 9
     region: content
     settings:
       placeholder_url: ''
@@ -71,60 +70,45 @@ content:
       link_class_force: 'btn btn-red'
       link_class_select: ''
     third_party_settings: {  }
-  field_az_audiences:
-    type: entity_reference_autocomplete
-    weight: 17
-    region: content
-    settings:
-      match_operator: CONTAINS
-      match_limit: 10
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
   field_az_body:
     type: text_textarea
-    weight: 23
+    weight: 13
     region: content
     settings:
       rows: 9
       placeholder: ''
     third_party_settings: {  }
-  field_az_credit:
-    type: string_textfield
-    weight: 14
-    region: content
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
   field_az_eligibility:
     type: text_textarea
-    weight: 24
+    weight: 14
     region: content
     settings:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
-  field_az_incentives:
-    type: boolean_checkbox
-    weight: 13
+  field_az_enterprise_attributes:
+    type: attributes_select
+    weight: 2
     region: content
     settings:
-      display_label: true
+      allowed_attributes:
+        Audiences__c: Audiences__c
+        Event_Format__c: Event_Format__c
+        Topic__c: Topic__c
+        Arizona_County__c: 0
+        Category1__c: 0
+        Tribal_Nation__c: 0
+        Display_Name_Formula__c: 0
     third_party_settings: {  }
-  field_az_modality:
-    type: entity_reference_autocomplete
-    weight: 16
+  field_az_incentives:
+    type: options_select
+    weight: 11
     region: content
-    settings:
-      match_operator: CONTAINS
-      match_limit: 10
-      size: 60
-      placeholder: ''
+    settings: {  }
     third_party_settings: {  }
   field_az_offered:
     type: entity_reference_autocomplete
-    weight: 18
+    weight: 7
     region: content
     settings:
       match_operator: CONTAINS
@@ -134,28 +118,38 @@ content:
     third_party_settings: {  }
   field_az_ongoing:
     type: boolean_checkbox
-    weight: 10
+    weight: 4
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
+  field_az_opportunity_category:
+    type: entity_reference_autocomplete
+    weight: 1
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_opportunity_credit:
+    type: options_select
+    weight: 12
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   field_az_opportunity_location:
     type: string_textfield
-    weight: 22
+    weight: 10
     region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-  field_az_opportunity_type:
-    type: options_buttons
-    weight: 1
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   field_az_parent_account:
     type: string_textfield
-    weight: 15
+    weight: 16
     region: content
     settings:
       size: 60
@@ -163,7 +157,7 @@ content:
     third_party_settings: {  }
   field_az_program_date:
     type: smartdate_only
-    weight: 12
+    weight: 6
     region: content
     settings:
       separator: to
@@ -183,7 +177,7 @@ content:
     third_party_settings: {  }
   field_az_program_length:
     type: string_textfield
-    weight: 9
+    weight: 3
     region: content
     settings:
       size: 60
@@ -191,25 +185,15 @@ content:
     third_party_settings: {  }
   field_az_program_website:
     type: link_default
-    weight: 20
+    weight: 8
     region: content
     settings:
       placeholder_url: ''
       placeholder_title: ''
     third_party_settings: {  }
-  field_az_topic:
-    type: entity_reference_autocomplete
-    weight: 19
-    region: content
-    settings:
-      match_operator: CONTAINS
-      match_limit: 10
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
   field_az_trellis_id:
     type: string_textfield
-    weight: 25
+    weight: 15
     region: content
     settings:
       size: 60
@@ -217,33 +201,33 @@ content:
     third_party_settings: {  }
   field_az_trellis_imported_date:
     type: datetime_default
-    weight: 26
+    weight: 17
     region: content
     settings: {  }
     third_party_settings: {  }
   path:
     type: path
-    weight: 6
+    weight: 23
     region: content
     settings: {  }
     third_party_settings: {  }
   promote:
     type: boolean_checkbox
-    weight: 4
+    weight: 21
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 8
+    weight: 18
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
-    weight: 5
+    weight: 22
     region: content
     settings:
       display_label: true
@@ -258,7 +242,7 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 2
+    weight: 19
     region: content
     settings:
       match_operator: CONTAINS
@@ -267,7 +251,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
   url_redirects:
-    weight: 7
+    weight: 24
     region: content
     settings: {  }
     third_party_settings: {  }
