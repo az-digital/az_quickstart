@@ -142,11 +142,19 @@
             }
             btn._azAccordionItemBound = true;
 
-            btn.addEventListener('click', () => {
-              // Update button text after a delay to account for Bootstrap DOM updating.
-              setTimeout(() => {
+            accordionItems.forEach((item) => {
+              if (item._azAccordionEventBound) {
+                return;
+              }
+              item._azAccordionEventBound = true;
+
+              item.addEventListener('shown.bs.collapse', () => {
                 updateToggleButtonText(accordionEl, toggle);
-              }, 50);
+              });
+
+              item.addEventListener('hidden.bs.collapse', () => {
+                updateToggleButtonText(accordionEl, toggle);
+              });
             });
           });
         });
