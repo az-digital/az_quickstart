@@ -88,13 +88,6 @@ final class AZRecurringImportRuleForm extends EntityForm {
       '#default_value' => $entity->get('owner'),
     ];
 
-    // $form['query_parameters']['host'] = [
-    //   '#type' => 'textfield',
-    //   '#title' => $this->t('Host'),
-    //   '#maxlength' => 255,
-    //   '#default_value' => $entity->get('host'),
-    // ];
-
     $form['query_parameters']['keyword'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Keyword'),
@@ -148,19 +141,6 @@ final class AZRecurringImportRuleForm extends EntityForm {
         '#default_value' => $entity->get('attributes')[$key] ?? NULL,
       ];
     }
-
-    // $form['query_parameters']['approval'] = [
-    //   '#type' => 'select',
-    //   '#title' => $this->t('Approved for University Calendar'),
-    //   '#options' => [
-    //     'approved' => $this->t('Approved'),
-    //     'denied' => $this->t('Denied'),
-    //   ],
-    //   '#empty_option' => $this->t('- Any -'),
-    //   '#empty_value' => '',
-    //   '#required' => FALSE,
-    //   '#default_value' => $entity->get('approval'),
-    // ];
 
     return $form;
   }

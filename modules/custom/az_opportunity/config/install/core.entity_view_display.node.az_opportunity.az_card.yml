@@ -264,7 +264,6 @@ third_party_settings:
     group_text_body_secondary:
       children:
         - field_az_opportunity_location
-        - field_az_modality
         - field_az_application_date
         - field_az_offered
         - field_az_parent_account

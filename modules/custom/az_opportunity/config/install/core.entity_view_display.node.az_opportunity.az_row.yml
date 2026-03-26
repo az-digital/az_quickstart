@@ -92,7 +92,6 @@ third_party_settings:
     group_col_1:
       children:
         - smart_title
-        - field_az_topic
       label: 'col 1'
       parent_name: group_row
       region: content
@@ -133,7 +132,6 @@ third_party_settings:
     group_col_3:
       children:
         - field_az_opportunity_location
-        - field_az_modality
       label: 'Col 3'
       parent_name: group_row
       region: content
@@ -190,7 +188,7 @@ content:
     label: inline
     settings:
       timezone_override: ''
-      format_type: short
+      format_type: html_date
       from_to: both
       separator: '-'
     third_party_settings: {  }
@@ -209,7 +207,7 @@ content:
     label: inline
     settings:
       timezone_override: ''
-      format_type: medium
+      format_type: html_date
       from_to: both
       separator: '-'
     third_party_settings: {  }

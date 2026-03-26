@@ -36,7 +36,7 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 21
+    weight: 20
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -73,7 +73,7 @@ content:
     third_party_settings: {  }
   field_az_body:
     type: text_textarea
-    weight: 14
+    weight: 13
     region: content
     settings:
       rows: 9
@@ -81,7 +81,7 @@ content:
     third_party_settings: {  }
   field_az_eligibility:
     type: text_textarea
-    weight: 15
+    weight: 14
     region: content
     settings:
       rows: 5
@@ -103,7 +103,7 @@ content:
     third_party_settings: {  }
   field_az_incentives:
     type: options_select
-    weight: 12
+    weight: 11
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -136,13 +136,7 @@ content:
     third_party_settings: {  }
   field_az_opportunity_credit:
     type: options_select
-    weight: 13
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  field_az_opportunity_format:
-    type: options_select
-    weight: 11
+    weight: 12
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -156,7 +150,7 @@ content:
     third_party_settings: {  }
   field_az_parent_account:
     type: string_textfield
-    weight: 17
+    weight: 16
     region: content
     settings:
       size: 60
@@ -200,7 +194,7 @@ content:
     third_party_settings: {  }
   field_az_trellis_id:
     type: string_textfield
-    weight: 16
+    weight: 15
     region: content
     settings:
       size: 60
@@ -208,33 +202,33 @@ content:
     third_party_settings: {  }
   field_az_trellis_imported_date:
     type: datetime_default
-    weight: 18
+    weight: 17
     region: content
     settings: {  }
     third_party_settings: {  }
   path:
     type: path
-    weight: 24
+    weight: 23
     region: content
     settings: {  }
     third_party_settings: {  }
   promote:
     type: boolean_checkbox
-    weight: 22
+    weight: 21
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 19
+    weight: 18
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
-    weight: 23
+    weight: 22
     region: content
     settings:
       display_label: true
@@ -249,7 +243,7 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 20
+    weight: 19
     region: content
     settings:
       match_operator: CONTAINS
@@ -258,8 +252,9 @@ content:
       placeholder: ''
     third_party_settings: {  }
   url_redirects:
-    weight: 25
+    weight: 24
     region: content
     settings: {  }
     third_party_settings: {  }
-hidden: {  }
+hidden:
+  field_az_opportunity_format: true

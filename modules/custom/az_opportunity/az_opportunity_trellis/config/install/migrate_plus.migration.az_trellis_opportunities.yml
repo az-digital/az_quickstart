@@ -104,6 +104,18 @@ source:
       label: 'Program Type'
       selector: Program_Type__c
     -
+      name: audiences
+      label: Audiences
+      selector: Audiences__c
+    -
+      name: topic
+      label: Topic
+      selector: Topic__c
+    -
+      name: program_type
+      label: 'Program Type'
+      selector: Program_Type__c
+    -
       name: publish
       label: Publish
       selector: Publish_Formula
@@ -115,6 +127,28 @@ source:
     id:
       type: string
 process:
+  field_az_enterprise_attributes:
+    - plugin: callback
+      callable: array_filter
+      source:
+        - audiences
+        - topic
+        - program_type
+        - program_format
+    -
+      plugin: multiple_values
+    -
+      plugin: callback
+      callable: trim
+    -
+      plugin: single_value
+    -
+      plugin: entity_lookup
+      entity_type: taxonomy_term
+      bundle_key: vid
+      bundle: az_enterprise_attributes
+      value_key: name
+      ignore_case: true
   title: name
   field_az_trellis_id: id
   field_az_offered:
@@ -130,19 +164,18 @@ process:
       source: start_options
       value_key: name
       ignore_case: true
-  field_az_modality:
+  field_az_opportunity_format:
     -
       plugin: skip_on_empty
       method: process
       source: program_format
     -
-      plugin: entity_generate
-      entity_type: taxonomy_term
-      bundle_key: vid
-      bundle: az_opportunity_modality
+      plugin: static_map
       source: program_format
-      value_key: name
-      ignore_case: true
+      map:
+        'Hybrid': hybrid
+        'In-Person': in_person
+        'Virtual': virtual
   field_az_program_length: program_length
   field_az_incentives:
     -
@@ -153,47 +186,33 @@ process:
       plugin: static_map
       source: incentives
       map:
-        'Yes': 1
-        'No': 0
-  field_az_credit: credit_type
+        'Yes': yes
+        'No': no
+        'Inquire Within': inquire_within
+  field_az_opportunity_credit:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: credit_type
+    -
+      plugin: static_map
+      source: credit_type
+      map:
+        'Non-Credit': non_credit
+        'UA Credit': ua_credit
+        'Transfer Credit': transfer_credit
   field_az_opportunity_location: location
   field_az_program_website/uri: program_website
   field_az_program_website/title:
     -
       plugin: default_value
-      default_value: 'Program details'
+      default_value: 'Program Website'
   field_az_body: description
-  field_az_topic:
-    -
-      plugin: skip_on_empty
-      method: process
-      source: topic
-    -
-      plugin: entity_generate
-      entity_type: taxonomy_term
-      bundle_key: vid
-      bundle: az_opportunity_topic
-      source: topic
-      value_key: name
-      ignore_case: true
   field_az_application_link/uri: application_form_url
   field_az_application_link/title:
     -
       plugin: default_value
       default_value: 'Apply now'
-  field_az_audiences:
-    -
-      plugin: skip_on_empty
-      method: process
-      source: audiences
-    -
-      plugin: entity_generate
-      entity_type: taxonomy_term
-      bundle_key: vid
-      bundle: az_opportunity_audience
-      source: audiences
-      value_key: name
-      ignore_case: true
   field_az_application_date/value:
     -
       plugin: format_date
@@ -236,18 +255,6 @@ process:
       from_format: 'Y-m-d\TH:i:s.vp'
       to_format: 'Y-m-d\TH:i:s'
   field_az_parent_account: parent_account
-  field_az_opportunity_type:
-    -
-      plugin: skip_on_empty
-      method: process
-      source: program_type
-    -
-      plugin: entity_generate
-      entity_type: taxonomy_term
-      bundle_key: vid
-      bundle: az_opportunity_type
-      value_key: name
-      ignore_case: true
   status:
     -
       plugin: get
@@ -260,5 +267,6 @@ destination:
   plugin: 'entity:node'
   default_bundle: az_opportunity
   validate: false
-migration_dependencies: null
+migration_dependencies:
+  null
 include: null
