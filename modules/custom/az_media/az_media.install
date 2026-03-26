@@ -29,12 +29,3 @@ function az_media_update_1021301() {
 function az_media_update_1130101() {
   \Drupal::service('module_installer')->install(['media_library_form_element']);
 }
-
-/**
- * Empty update. Trellis URL length is now handled by field_az_media_trellis_url.
- */
-function az_media_update_1130201() {
-  // Intentionally left empty. The Trellis remote media URL length increase
-  // is now handled by a dedicated field (field_az_media_trellis_url) owned
-  // by the az_media_trellis module. See az_media_trellis_update_1130201().
-}
