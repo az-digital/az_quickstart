@@ -33,6 +33,10 @@ function az_media_trellis_update_1130201() {
       'module' => 'core',
       'locked' => FALSE,
       'cardinality' => 1,
+      'translatable' => FALSE,
+      'indexes' => [],
+      'persist_with_no_fields' => FALSE,
+      'custom_storage' => FALSE,
     ])->save();
   }
 
@@ -44,7 +48,6 @@ function az_media_trellis_update_1130201() {
       'bundle' => 'az_trellis',
       'label' => 'Trellis Form URL',
       'required' => TRUE,
-      'translatable' => TRUE,
     ])->save();
   }
 

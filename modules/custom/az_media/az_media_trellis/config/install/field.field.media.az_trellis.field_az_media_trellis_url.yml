@@ -14,7 +14,6 @@ bundle: az_trellis
 label: 'Trellis Form URL'
 description: ''
 required: true
-translatable: true
 default_value: {  }
 default_value_callback: ''
 settings: {  }
