@@ -1,0 +1,133 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for az_media_trellis module.
+ */
+
+use Drupal\field\Entity\FieldConfig;
+use Drupal\field\Entity\FieldStorageConfig;
+
+/**
+ * Migrate Trellis URL data from shared field to module-owned field.
+ *
+ * Creates the new field_az_media_trellis_url field storage and instance,
+ * then copies existing values from field_media_az_media_remote for
+ * az_trellis media entities. Also updates the media type source field
+ * configuration and display settings.
+ */
+function az_media_trellis_update_1130201() {
+  $entity_type_manager = \Drupal::entityTypeManager();
+
+  // Create the new field storage if it doesn't exist yet.
+  if (!FieldStorageConfig::load('media.field_az_media_trellis_url')) {
+    FieldStorageConfig::create([
+      'field_name' => 'field_az_media_trellis_url',
+      'entity_type' => 'media',
+      'type' => 'string',
+      'settings' => [
+        'max_length' => 2048,
+        'case_sensitive' => FALSE,
+        'is_ascii' => FALSE,
+      ],
+      'module' => 'core',
+      'locked' => FALSE,
+      'cardinality' => 1,
+    ])->save();
+  }
+
+  // Create the field instance on the az_trellis bundle if it doesn't exist.
+  if (!FieldConfig::load('media.az_trellis.field_az_media_trellis_url')) {
+    FieldConfig::create([
+      'field_name' => 'field_az_media_trellis_url',
+      'entity_type' => 'media',
+      'bundle' => 'az_trellis',
+      'label' => 'Trellis Form URL',
+      'required' => TRUE,
+      'translatable' => TRUE,
+    ])->save();
+  }
+
+  // Migrate data from old field to new field for az_trellis media entities.
+  $media_storage = $entity_type_manager->getStorage('media');
+  $ids = $media_storage->getQuery()
+    ->accessCheck(FALSE)
+    ->condition('bundle', 'az_trellis')
+    ->exists('field_media_az_media_remote')
+    ->execute();
+
+  if (!empty($ids)) {
+    $entities = $media_storage->loadMultiple($ids);
+    foreach ($entities as $entity) {
+      // Only copy if new field is empty to make this update idempotent.
+      if ($entity->hasField('field_az_media_trellis_url') && $entity->get('field_az_media_trellis_url')->isEmpty()) {
+        $old_value = $entity->get('field_media_az_media_remote')->value;
+        if (!empty($old_value)) {
+          $entity->set('field_az_media_trellis_url', $old_value);
+          $entity->save();
+        }
+      }
+    }
+  }
+
+  // Update the media type source field to use the new field.
+  $media_type = $entity_type_manager->getStorage('media_type')->load('az_trellis');
+  if ($media_type) {
+    $source_config = $media_type->get('source_configuration');
+    $source_config['source_field'] = 'field_az_media_trellis_url';
+    $media_type->set('source_configuration', $source_config);
+    $media_type->save();
+  }
+
+  // Update form displays: swap old field component for new field.
+  $form_display_storage = $entity_type_manager->getStorage('entity_form_display');
+  /** @var \Drupal\Core\Entity\Display\EntityFormDisplayInterface[] $form_displays */
+  $form_displays = $form_display_storage->loadByProperties([
+    'targetEntityType' => 'media',
+    'bundle' => 'az_trellis',
+  ]);
+  foreach ($form_displays as $form_display) {
+    $old_component = $form_display->getComponent('field_media_az_media_remote');
+    if ($old_component && !$form_display->getComponent('field_az_media_trellis_url')) {
+      $form_display->setComponent('field_az_media_trellis_url', $old_component);
+      $form_display->removeComponent('field_media_az_media_remote');
+      $form_display->save();
+    }
+  }
+
+  // Update view displays: swap old field component and field_group children.
+  $view_display_storage = $entity_type_manager->getStorage('entity_view_display');
+  /** @var \Drupal\Core\Entity\Display\EntityViewDisplayInterface[] $view_displays */
+  $view_displays = $view_display_storage->loadByProperties([
+    'targetEntityType' => 'media',
+    'bundle' => 'az_trellis',
+  ]);
+  foreach ($view_displays as $view_display) {
+    $old_component = $view_display->getComponent('field_media_az_media_remote');
+    if ($old_component && !$view_display->getComponent('field_az_media_trellis_url')) {
+      $view_display->setComponent('field_az_media_trellis_url', $old_component);
+      $view_display->removeComponent('field_media_az_media_remote');
+
+      // Update field_group children references if field_group is available.
+      $third_party = $view_display->getThirdPartySettings('field_group');
+      foreach ($third_party as $group_name => $group_settings) {
+        if (!empty($group_settings['children'])) {
+          $key = array_search('field_media_az_media_remote', $group_settings['children']);
+          if ($key !== FALSE) {
+            $group_settings['children'][$key] = 'field_az_media_trellis_url';
+            $view_display->setThirdPartySetting('field_group', $group_name, $group_settings);
+          }
+        }
+      }
+
+      $view_display->save();
+    }
+  }
+
+  // Remove the old field instance from az_trellis bundle.
+  // The shared field storage remains for other modules.
+  $old_field_instance = FieldConfig::load('media.az_trellis.field_media_az_media_remote');
+  if ($old_field_instance) {
+    $old_field_instance->delete();
+  }
+}

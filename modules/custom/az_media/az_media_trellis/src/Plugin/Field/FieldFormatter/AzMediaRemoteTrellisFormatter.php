@@ -393,7 +393,7 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase implements 
         '#type' => 'url',
         '#title' => $this->t('URL'),
         '#size' => 60,
-        '#maxlength' => 1024,
+        '#maxlength' => 2048,
         '#description' => $this->t('The URL of the Trellis form. Must be a valid FormAssembly Trellis URL from forms-a.trellis.arizona.edu or trellis.tfaforms.net.'),
       ],
     ];
