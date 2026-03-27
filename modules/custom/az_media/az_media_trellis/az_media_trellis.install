@@ -127,10 +127,15 @@ function az_media_trellis_update_1130201() {
     }
   }
 
-  // Remove the old field instance from az_trellis bundle.
-  // The shared field storage remains for other modules.
+  // Remove the old field instance and storage since no other bundles use it.
   $old_field_instance = FieldConfig::load('media.az_trellis.field_media_az_media_remote');
   if ($old_field_instance) {
     $old_field_instance->delete();
+  }
+
+  // Explicitly delete the orphaned field storage.
+  $old_field_storage = FieldStorageConfig::load('media.field_media_az_media_remote');
+  if ($old_field_storage && empty($old_field_storage->getBundles())) {
+    $old_field_storage->delete();
   }
 }
