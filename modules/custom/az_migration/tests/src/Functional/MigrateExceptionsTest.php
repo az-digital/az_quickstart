@@ -14,9 +14,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 class MigrateExceptionsTest extends BrowserTestBase {
 
   /**
-   * The profile to install as a basis for testing.
-   *
-   * @var string
+   * {@inheritdoc}
    */
   protected $profile = 'az_quickstart';
 
@@ -26,16 +24,12 @@ class MigrateExceptionsTest extends BrowserTestBase {
   protected $defaultTheme = 'az_barrio';
 
   /**
-   * Disable strict schema checking.
-   *
-   * @var bool
+   * {@inheritdoc}
    */
   protected $strictConfigSchema = FALSE;
 
   /**
-   * Modules to enable.
-   *
-   * @var string[]
+   * {@inheritdoc}
    */
   protected static $modules = ['az_migration'];
 

@@ -175,7 +175,7 @@ class EntityEmbedProcess extends Dom implements ContainerFactoryPluginInterface 
    * @param string $storage
    *   Storage controller for embedded item, eg. node or media.
    *
-   * @return \DOMDocument
+   * @return \DOMElement|null
    *   The new DOM element to use for replacement. NULL if none.
    */
   public function updateEmbedTag($id, $type, $tag, $view, \DOMDocument $dom, \DOMElement $element, $migration, $storage) {
@@ -186,6 +186,9 @@ class EntityEmbedProcess extends Dom implements ContainerFactoryPluginInterface 
 
     // Set up our replacement element.
     $changed = $dom->createElement($tag);
+    if ($changed === FALSE) {
+      return NULL;
+    }
     $changed->setAttribute('data-entity-type', $type);
     $ids = $this->migrateLookup->lookup($migration, [$id]);
     if (empty($ids)) {
