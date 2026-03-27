@@ -1,0 +1,34 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.az_large
+    - field.field.media.az_digital_asset_library_embed.field_media_ib_dam_embed
+    - media.type.az_digital_asset_library_embed
+  module:
+    - az_digital_asset_library
+  enforced:
+    module:
+      - az_digital_asset_library
+id: media.az_digital_asset_library_embed.az_large
+targetEntityType: media
+bundle: az_digital_asset_library_embed
+mode: az_large
+content:
+  field_media_ib_dam_embed:
+    type: az_digital_asset_library_remote
+    label: hidden
+    settings:
+      width: '100'
+      height: '100'
+      ignore_aspect_ratio: '1'
+      dpi: ''
+      alt: ''
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  created: true
+  name: true
+  thumbnail: true
+  uid: true
