@@ -1,0 +1,8 @@
+name: Breadcrumb
+status: experimental
+props:
+  type: object
+  properties:
+    breadcrumb:
+      type: array
+      title: Breadcrumb items

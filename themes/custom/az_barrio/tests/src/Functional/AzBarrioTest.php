@@ -52,6 +52,16 @@ class AzBarrioTest extends QuickstartFunctionalTestBase {
     $this->assertSession()->elementExists('css', '#navbar-top.navbar.navbar-expand');
     $this->assertSession()->elementExists('css', '#block-az-barrio-offcanvas-searchform');
     $this->assertSession()->elementExists('css', '#block-az-barrio-mobilenavblock');
+
+    // Tests that breadcrumb block visibility and markup remain intact.
+    $this->drupalGet('');
+    $this->assertSession()->elementNotExists('css', 'nav[aria-label="breadcrumb"]');
+
+    $this->drupalGet('user/login');
+    $this->assertSession()->elementExists('css', 'nav[aria-label="breadcrumb"]');
+    $this->assertSession()->elementExists('css', 'nav[aria-label="breadcrumb"] ol.breadcrumb');
+    $this->assertSession()->elementExists('css', 'nav[aria-label="breadcrumb"] .breadcrumb-item-home a');
+    $this->assertSession()->elementExists('css', 'nav[aria-label="breadcrumb"] .breadcrumb-item.active[aria-current="page"]');
   }
 
 }
