@@ -1,0 +1,49 @@
+<div{{ attributes }}>
+  {% if has_media %}
+    <div class="position-relative overflow-hidden">
+      {{ media }}
+      {% if title and title_style == 'title-on-image' %}
+        <div class="card-img-overlay p-0 d-flex flex-column">
+          <{{ title_level }} class="fw-bold mt-auto card-title text-bg-gradient-black text-white mb-0 p-card pt-8 {{ title_alignment }} {{ title_display }}">
+            {% if has_link %}
+              <a href="{{ link_url }}" class="text-reset">{{ title }}</a>
+            {% else %}
+              {{ title }}
+            {% endif %}
+          </{{ title_level }}>
+        </div>
+      {% endif %}
+    </div>
+  {% endif %}
+  {% if title_style == 'title-on-image' and not has_body and (link_label == '' or link_is_visually_hidden) %}
+    <div class="d-flex flex-column">
+      {% if has_link %}
+        {% if link_is_visually_hidden and link_is_stretched %}
+          <div class="mt-auto">
+            <a href="{{ link_url }}" class="stretched-link" aria-label="{{ link_label }}"></a>
+          </div>
+        {% else %}
+          <div class="mt-auto">{{ link }}</div>
+        {% endif %}
+      {% endif %}
+    </div>
+  {% else %}
+    <div class="card-body d-flex flex-column">
+      {% if title and title_style == 'default' %}
+        <{{ title_level }} class="fw-bold mt-0 mb-3 card-title {{ title_alignment }} {{ title_display }}">
+          {% if has_link %}
+            <a href="{{ link_url }}" class="text-reset">{{ title }}</a>
+          {% else %}
+            {{ title }}
+          {% endif %}
+        </{{ title_level }}>
+      {% endif %}
+      {% if has_body %}
+        <div class="card-text">{{ body }}</div>
+      {% endif %}
+      {% if has_link %}
+        <div class="mt-auto">{{ link }}</div>
+      {% endif %}
+    </div>
+  {% endif %}
+</div>

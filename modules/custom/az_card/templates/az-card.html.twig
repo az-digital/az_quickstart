@@ -19,54 +19,23 @@
  */
 #}
 
-{% set attributes = attributes.addClass('h-100') %}
+{% set link_classes = link['#attributes']['class']|default([]) %}
 
-<div{{ attributes }}>
-  {% if media %}
-    <div class="position-relative overflow-hidden">
-      {{ media }}
-      {% if title and title_style == 'title-on-image' %}
-        <div class="card-img-overlay p-0 d-flex flex-column">
-          <{{ title_level }} class="fw-bold mt-auto card-title text-bg-gradient-black text-white mb-0 p-card pt-8 {{ title_alignment }} {{ title_display }}">
-            {% if link|render %}
-              <a href="{{ link_url }}" class="text-reset">{{ title }}</a>
-            {% else %}
-              {{ title }}
-            {% endif %}
-          </{{ title_level }}>
-        </div>
-      {% endif %}
-    </div>
-  {% endif %}
-  {% if title_style == 'title-on-image' and body['#text'] == '' and (link['#title'] == '' or 'visually-hidden' in link['#attributes']['class'] ) %}
-    <div class="d-flex flex-column">
-      {% if link|render %}
-        {% if 'visually-hidden' in link['#attributes']['class'] and 'stretched-link' in link['#attributes']['class'] %}
-          <div class="mt-auto">
-            <a href="{{ link['#url'] }}" class="stretched-link" aria-label="{{ link['#title'] }}"></a>
-          </div>
-        {% else %}
-          <div class="mt-auto">{{ link }}</div>
-        {% endif %}
-      {% endif %}
-    </div>
-  {% else %}
-    <div class="card-body d-flex flex-column">
-      {% if title and title_style == 'default' %}
-        <{{ title_level }} class="fw-bold mt-0 mb-3 card-title {{ title_alignment }} {{ title_display }}">
-          {% if link|render %}
-            <a href="{{ link_url }}" class="text-reset">{{ title }}</a>
-          {% else %}
-            {{ title }}
-          {% endif %}
-        </{{ title_level }}>
-      {% endif %}
-      {% if body['#text'] %}
-        <div class="card-text">{{ body }}</div>
-      {% endif %}
-      {% if link %}
-        <div class="mt-auto">{{ link }}</div>
-      {% endif %}
-    </div>
-  {% endif %}
-</div>
+{% include 'az_card:az-card' with {
+  attributes: attributes.addClass('h-100'),
+  media: media,
+  title: title,
+  body: body,
+  link: link,
+  link_url: link_url,
+  title_style: title_style,
+  title_alignment: title_alignment,
+  title_level: title_level,
+  title_display: title_display,
+  has_media: media is not empty,
+  has_link: link is not empty,
+  has_body: body['#text']|default('') != '',
+  link_is_visually_hidden: 'visually-hidden' in link_classes,
+  link_is_stretched: 'stretched-link' in link_classes,
+  link_label: link['#title']|default(''),
+} only %}

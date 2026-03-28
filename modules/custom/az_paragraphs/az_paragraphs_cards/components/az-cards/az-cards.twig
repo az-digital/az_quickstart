@@ -1,0 +1,7 @@
+<div{{ attributes }}>
+  {% if show_title and title %}
+    <h2{% if title_color_class %} class="{{ title_color_class }}"{% endif %}>{{ title }}</h2>
+  {% endif %}
+
+  {{ cards }}
+</div>

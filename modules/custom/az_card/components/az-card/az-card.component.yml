@@ -1,0 +1,47 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/11.x/core/assets/schemas/v1/metadata.schema.json
+name: AZ Card
+status: experimental
+props:
+  type: object
+  properties:
+    media:
+      type:
+        - array
+        - 'null'
+    title:
+      type:
+        - string
+        - 'null'
+    body:
+      type:
+        - array
+        - 'null'
+    link:
+      type:
+        - array
+        - 'null'
+    link_url:
+      type:
+        - string
+        - object
+        - 'null'
+    title_style:
+      type: string
+    title_alignment:
+      type: string
+    title_level:
+      type: string
+    title_display:
+      type: string
+    has_media:
+      type: boolean
+    has_link:
+      type: boolean
+    has_body:
+      type: boolean
+    link_is_visually_hidden:
+      type: boolean
+    link_is_stretched:
+      type: boolean
+    link_label:
+      type: string
