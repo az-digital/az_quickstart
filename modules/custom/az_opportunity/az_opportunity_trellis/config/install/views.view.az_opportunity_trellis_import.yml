@@ -136,8 +136,8 @@ display:
           label: 'Start Date'
           exclude: false
           alter:
-            alter_text: false
-            text: ''
+            alter_text: true
+            text: "{{ property_2 | date('Y-m-d') }}"
             make_link: false
             path: ''
             absolute: false

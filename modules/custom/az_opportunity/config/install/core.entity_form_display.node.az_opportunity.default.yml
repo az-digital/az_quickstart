@@ -12,7 +12,6 @@ dependencies:
     - field.field.node.az_opportunity.field_az_ongoing
     - field.field.node.az_opportunity.field_az_opportunity_category
     - field.field.node.az_opportunity.field_az_opportunity_credit
-    - field.field.node.az_opportunity.field_az_opportunity_format
     - field.field.node.az_opportunity.field_az_opportunity_location
     - field.field.node.az_opportunity.field_az_parent_account
     - field.field.node.az_opportunity.field_az_program_date
@@ -95,6 +94,7 @@ content:
       allowed_attributes:
         Audiences__c: Audiences__c
         Event_Format__c: Event_Format__c
+        Program_Type__c: Program_Type__c
         Topic__c: Topic__c
         Arizona_County__c: 0
         Category1__c: 0
@@ -256,5 +256,4 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-hidden:
-  field_az_opportunity_format: true
+hidden: {  }

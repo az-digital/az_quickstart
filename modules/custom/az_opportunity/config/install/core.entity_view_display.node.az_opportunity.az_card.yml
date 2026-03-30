@@ -13,7 +13,6 @@ dependencies:
     - field.field.node.az_opportunity.field_az_ongoing
     - field.field.node.az_opportunity.field_az_opportunity_category
     - field.field.node.az_opportunity.field_az_opportunity_credit
-    - field.field.node.az_opportunity.field_az_opportunity_format
     - field.field.node.az_opportunity.field_az_opportunity_location
     - field.field.node.az_opportunity.field_az_parent_account
     - field.field.node.az_opportunity.field_az_program_date
@@ -383,7 +382,6 @@ hidden:
   field_az_ongoing: true
   field_az_opportunity_category: true
   field_az_opportunity_credit: true
-  field_az_opportunity_format: true
   field_az_program_date: true
   field_az_program_length: true
   field_az_program_website: true
