@@ -257,7 +257,7 @@ function az_core_tokens($type, $tokens, array $data, array $options, BubbleableM
  *   The node's generated summary.
  */
 function az_core_automatic_summary(array $data) {
-  $summary = 'foo';
+  $summary = '';
   /** @var \Drupal\node\NodeInterface $node */
   $node = $data['node'] ?? NULL;
 
