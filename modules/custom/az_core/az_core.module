@@ -18,6 +18,8 @@ use Drupal\node\NodeInterface;
 use Drupal\pathauto\PathautoPatternInterface;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use PhpScience\TextRank\TextRankFacade;
+use PhpScience\TextRank\Tool\StopWords\English;
 
 /**
  * Implements hook_help().
@@ -232,11 +234,58 @@ function az_core_tokens($type, $tokens, array $data, array $options, BubbleableM
         case 'az-canonical-summary-link-title':
           $replacements[$original] = az_core_canonical_summary_link_title($data);
           break;
+
+        case 'az-automatic-summary':
+          $replacements[$original] = az_core_automatic_summary($data);
+          break;
       }
     }
   }
 
   return $replacements;
+}
+
+/**
+ * Token replacement callback for automatic summary.
+ *
+ * Computes an automatic summary via TextRank.
+ *
+ * @param array $data
+ *   Node data from hook_tokens().
+ *
+ * @return string
+ *   The node's generated summary.
+ */
+function az_core_automatic_summary(array $data) {
+  $summary = 'foo';
+  /** @var \Drupal\node\NodeInterface $node */
+  $node = $data['node'] ?? NULL;
+
+  if ($node) {
+    // @todo check for actual summary fields and use those in preference to automatic summary.
+    // Build and render the node.
+    $builder = \Drupal::entityTypeManager()->getViewBuilder('node');
+    $build = $builder->view($node, 'full');
+    $output = \Drupal::service('renderer')->renderRoot($build);
+    $text = strip_tags($output->__toString());
+    $text = html_entity_decode($text);
+    // @todo make end of tag text considered to be the end of a sentence.
+    // Fetch programmatic summary.
+    $rank = new TextRankFacade();
+    // @todo langcode handling
+    $stops = new English();
+    $rank->setStopWords($stops);
+    $result = $rank->summarizeTextBasic($text);
+
+    // Get most important sentence.
+    // @todo refuse to consider a sentence with low score. (e.g. no clear summary)
+    $best = array_shift($result);
+    if (!empty($best)) {
+      $summary = $best;
+    }
+  }
+
+  return $summary;
 }
 
 /**
