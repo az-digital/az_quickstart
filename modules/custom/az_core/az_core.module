@@ -209,6 +209,10 @@ function az_core_token_info() {
           'name' => t("AZ Canonical Summary Link Title"),
           'description' => t("Returns the link title value of field_az_link if present on the node or nothing if not."),
         ],
+        'az-automatic-summary' => [
+          'name' => t("AZ Automatic Summary"),
+          'description' => t("Returns the node summary field if not empty, or a generated summary."),
+        ],
       ],
     ],
   ];
