@@ -16,7 +16,7 @@ use Drupal\field\Entity\FieldStorageConfig;
  * az_trellis media entities. Also updates the media type source field
  * configuration and display settings.
  */
-function az_media_trellis_update_1130201() {
+function az_media_trellis_update_1130301() {
   $entity_type_manager = \Drupal::entityTypeManager();
 
   // Create the new field storage if it doesn't exist yet.
