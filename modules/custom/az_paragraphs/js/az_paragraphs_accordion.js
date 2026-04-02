@@ -5,6 +5,8 @@
  * Handles accordion toggles for Expand all/Collapse all buttons.
  */
 
+/* global arizonaBootstrap */
+
 ((Drupal, once) => {
   // Attach once behavior for Expand all buttons.
   Drupal.behaviors.azAccordionExpandAll = {
@@ -12,40 +14,30 @@
       if (context !== document) {
         return;
       }
-      // Set the accordion item 'show' class.
-      function setAccordionItemStatus(el, status) {
-        if (status === 'true') {
-          el.classList.add('show');
-        } else {
-          el.classList.remove('show');
-        }
-      }
 
-      // Set the accordion button aria-expanded attribute and 'collapsed' class.
-      function setAccordionBtnStatus(el, status) {
-        el.setAttribute('aria-expanded', status);
+      // Set the accordion item 'show' class with Bootstrap collapse animation.
+      function setAccordionItemStatus(el, isOpen) {
+        if (!el?.classList) return;
 
-        if (status === 'true') {
-          el.classList.remove('collapsed');
+        // Get or create Bootstrap collapse instance.
+        const bsCollapse =
+          arizonaBootstrap.Collapse.getInstance(el) ||
+          new arizonaBootstrap.Collapse(el, { toggle: false });
+
+        if (isOpen) {
+          bsCollapse.show();
         } else {
-          el.classList.add('collapsed');
+          bsCollapse.hide();
         }
       }
 
       // Update the toggle button text based on accordion state.
-      function updateToggleButtonText(accordionEl, toggleBtn) {
-        if (!accordionEl || !toggleBtn) {
-          return;
-        }
-
-        const accordionItems = accordionEl.querySelectorAll('.collapse');
-        if (accordionItems.length === 0) {
-          return;
-        }
+      function updateToggleButtonText(accordionItems, toggleBtn) {
+        if (!accordionItems?.length || !toggleBtn) return;
 
         // Count how many items have the 'show' class.
-        const expandedCount = Array.from(accordionItems).filter((item) =>
-          item.classList.contains('show'),
+        const expandedCount = [...accordionItems].filter((el) =>
+          el.classList.contains('show'),
         ).length;
 
         // Update button text based on state.
@@ -58,9 +50,7 @@
 
       // Add event listeners to the accordion toggle buttons.
       function addAccordionToggleListeners() {
-        const toggles = context.querySelectorAll
-          ? context.querySelectorAll('[id^="accordion-toggle"]')
-          : [];
+        const toggles = context.querySelectorAll('[id^="accordion-toggle"]');
 
         toggles.forEach((toggle) => {
           if (toggle._azAccordionBound) {
@@ -70,36 +60,17 @@
 
           // Use the button's data-target attribute to find the exact accordion
           // container. data-target should be like '#accordion-123'.
-          const targetSelector =
-            toggle.getAttribute('data-target') || toggle.dataset.target;
+          const targetSelector = toggle.dataset.target;
 
-          let accordionEl = null;
-          if (targetSelector) {
-            accordionEl = document.querySelector(targetSelector);
-          }
-
-          // Fallback: try to find a nearby .accordion element.
-          if (!accordionEl) {
-            let next = toggle.nextElementSibling;
-            while (next) {
-              if (next.classList && next.classList.contains('accordion')) {
-                accordionEl = next;
-                break;
-              }
-              next = next.nextElementSibling;
-            }
-          }
-
-          if (!accordionEl) {
-            accordionEl = document.querySelector('.accordion');
-          }
+          const accordionEl =
+            document.querySelector(targetSelector) ||
+            toggle.closest('.accordion-wrapper')?.querySelector('.accordion') ||
+            document.querySelector('.accordion');
 
           if (!accordionEl) {
             return;
           }
 
-          const accordionButtons =
-            accordionEl.querySelectorAll('[aria-expanded]');
           const accordionItems = accordionEl.querySelectorAll('.collapse');
 
           // Add a listener for the main toggle button click.
@@ -110,51 +81,28 @@
             if (e.currentTarget.textContent === 'Collapse all') {
               // Collapse all accordion items.
               const setAccordionItem = (el) =>
-                setAccordionItemStatus(el, 'false');
-              [...accordionItems].map(setAccordionItem);
-
-              // Set aria-expanded attribute to false.
-              const setAccordionBtn = (el) =>
-                setAccordionBtnStatus(el, 'false');
-              [...accordionButtons].map(setAccordionBtn);
-
-              // Update toggle text to 'expand all'.
-              e.currentTarget.textContent = 'Expand all';
+                setAccordionItemStatus(el, false);
+              accordionItems.forEach(setAccordionItem);
             } else {
               // Expand all accordion items.
-              const setAccordionItem = (el) =>
-                setAccordionItemStatus(el, 'true');
-              [...accordionItems].map(setAccordionItem);
-
-              // Set aria-expanded attribute to true.
-              const setAccordionBtn = (el) => setAccordionBtnStatus(el, 'true');
-              [...accordionButtons].map(setAccordionBtn);
-
-              // Update toggle text to 'collapse all'.
-              e.currentTarget.textContent = 'Collapse all';
+              const setAccordionItem = (el) => setAccordionItemStatus(el, true);
+              accordionItems.forEach(setAccordionItem);
             }
+
+            updateToggleButtonText(accordionItems, toggle);
           });
 
-          // Add listeners for individual accordion item buttons.
-          accordionButtons.forEach((btn) => {
-            if (btn._azAccordionItemBound) {
-              return;
-            }
-            btn._azAccordionItemBound = true;
+          // Add listeners for individual accordion items.
+          accordionItems.forEach((item) => {
+            if (item._azAccordionEventBound) return;
+            item._azAccordionEventBound = true;
 
-            accordionItems.forEach((item) => {
-              if (item._azAccordionEventBound) {
-                return;
-              }
-              item._azAccordionEventBound = true;
+            item.addEventListener('shown.bs.collapse', () => {
+              updateToggleButtonText(accordionItems, toggle);
+            });
 
-              item.addEventListener('shown.bs.collapse', () => {
-                updateToggleButtonText(accordionEl, toggle);
-              });
-
-              item.addEventListener('hidden.bs.collapse', () => {
-                updateToggleButtonText(accordionEl, toggle);
-              });
+            item.addEventListener('hidden.bs.collapse', () => {
+              updateToggleButtonText(accordionItems, toggle);
             });
           });
         });
@@ -162,7 +110,6 @@
 
       once('azAccordionToggleButtons', 'body').forEach(
         addAccordionToggleListeners,
-        context,
       );
     },
   };
