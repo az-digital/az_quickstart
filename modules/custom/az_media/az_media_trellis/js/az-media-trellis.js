@@ -420,9 +420,39 @@
         if (hasFormContent && this.finalized) {
           this.removeSpinner();
         }
+        // Late-prefill safety net: if fields arrive after finalization (e.g.
+        // FormAssembly progressively enhances the form), fill any that are
+        // still empty and re-evaluate hide logic for campaign fields.
+        if (this.finalized && this.queryParams) {
+          this.applyLatePrefill();
+        }
       });
       observer.observe(this.container, { childList: true, subtree: true });
     };
+
+  /**
+   * Fill any query-param-targeted fields that are still empty after finalization.
+   * Called by the dynamic mutation observer when new nodes appear post-render.
+   */
+  TrellisFormHandler.prototype.applyLatePrefill = function applyLatePrefill() {
+    const qp = this.queryParams;
+    if (!qp) return;
+    let applied = false;
+    Object.keys(qp).forEach((name) => {
+      const value = qp[name];
+      if (value == null) return;
+      const field = this.container.querySelector(`[name="${name}"]`);
+      if (field && field.value !== String(value)) {
+        field.value = value;
+        field.dispatchEvent(new Event('input', { bubbles: true }));
+        field.dispatchEvent(new Event('change', { bubbles: true }));
+        applied = true;
+      }
+    });
+    if (applied) {
+      this.hideEmptyOptionalPrefillFields();
+    }
+  };
 
   TrellisFormHandler.prototype.insertSpinner = function insertSpinner() {
     if (this.spinnerInserted) return;
@@ -505,21 +535,24 @@
     }
 
     const tryApply = () => {
-      // Check that every target name has a corresponding field OR at least one field exists (remote may omit some legitimately).
-      const allPresent = targetNames.every(
-        (name) => !!this.container.querySelector(`[name="${name}"]`),
-      );
-      if (!allPresent) return false;
+      // Apply values incrementally to whatever fields exist NOW rather than
+      // waiting for all of them. This prevents the all-or-nothing gate from
+      // blocking prefill when some fields render later than others.
+      let allPresent = true;
       targetNames.forEach((name) => {
-        const value = qp[name];
         const field = this.container.querySelector(`[name="${name}"]`);
-        if (field && value != null && field.value !== String(value)) {
+        if (!field) {
+          allPresent = false;
+          return;
+        }
+        const value = qp[name];
+        if (value != null && field.value !== String(value)) {
           field.value = value;
           field.dispatchEvent(new Event('input', { bubbles: true }));
           field.dispatchEvent(new Event('change', { bubbles: true }));
         }
       });
-      return true;
+      return allPresent;
     };
 
     // Attempt immediately in case fields already present.
