@@ -13,5 +13,5 @@ source: media_remote
 queue_thumbnail_downloads: false
 new_revision: false
 source_configuration:
-  source_field: field_media_az_media_remote
+  source_field: field_az_media_trellis_url
 field_map: {  }
