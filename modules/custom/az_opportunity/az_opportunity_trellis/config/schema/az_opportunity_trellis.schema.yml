@@ -29,6 +29,8 @@ az_opportunity_trellis.az_recurring_import_rule.*:
       type: string
     keyword:
       type: string
+    parent_account_name:
+      type: string
     attributes:
       type: sequence
       label: ‘Enterprise Attributes’

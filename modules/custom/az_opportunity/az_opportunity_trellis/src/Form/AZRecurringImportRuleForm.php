@@ -88,6 +88,19 @@ final class AZRecurringImportRuleForm extends EntityForm {
       '#default_value' => $entity->get('owner'),
     ];
 
+    $form['query_parameters']['keyword'] = [ // cut from line 146
+      '#type' => 'textfield',
+      '#title' => $this->t('Keyword'),
+      '#maxlength' => 255,
+      '#default_value' => $entity->get('keyword'),
+    ];
+
+    $form['query_parameters']['parent_account_name'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Parent Account'),
+      '#maxlength' => 255,
+      '#default_value' => $entity->get('parent_account_name'),
+    ];
 
     $form['query_parameters']['attributes']['#tree'] = TRUE;
 
@@ -143,14 +156,6 @@ final class AZRecurringImportRuleForm extends EntityForm {
         '#markup' => $this->t('No mapped enterprise attributes found, so the attribute controls are unavailable.'),
       ];
     }
-
-    $form['query_parameters']['keyword'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Keyword'),
-      '#maxlength' => 255,
-      '#default_value' => $entity->get('keyword'),
-    ];
-
     return $form;
   }
 

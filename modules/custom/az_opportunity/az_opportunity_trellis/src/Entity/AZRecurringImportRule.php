@@ -36,10 +36,10 @@ use Drupal\az_opportunity_trellis\Form\AZRecurringImportRuleForm;
     'plural' => '@count recurring import rules',
   ],
   links: [
-    'collection' => '/admin/config/az-quickstart/settings/az-recurring-import-rule',
-    'add-form' => '/admin/config/az-quickstart/settings/az-recurring-import-rule/add',
-    'edit-form' => '/admin/config/az-quickstart/settings/az-recurring-import-rule/{az_recurring_import_rule}',
-    'delete-form' => '/admin/config/az-quickstart/settings/az-recurring-import-rule/{az_recurring_import_rule}/delete',
+    'collection' => '/admin/config/az-quickstart/settings/az-opportunity-recurring-import-rule',
+    'add-form' => '/admin/config/az-quickstart/settings/az-opportunity-recurring-import-rule/add',
+    'edit-form' => '/admin/config/az-quickstart/settings/az-opportunity-recurring-import-rule/{az_recurring_import_rule}',
+    'delete-form' => '/admin/config/az-quickstart/settings/az-opportunity-recurring-import-rule/{az_recurring_import_rule}/delete',
   ],
   entity_keys: [
     'id' => 'id',
@@ -53,6 +53,7 @@ use Drupal\az_opportunity_trellis\Form\AZRecurringImportRuleForm;
 //    'host',
     'keyword',
     'attributes',
+    'parent_account_name',
 //    'approval',
   ],
 )]
@@ -94,6 +95,11 @@ final class AZRecurringImportRule extends ConfigEntityBase implements AZRecurrin
   protected string $approval;
 
   /**
+   * The az_recurring_import_rule parent account name.
+   */
+  protected string $parent_account_name;
+
+  /**
    * {@inheritdoc}
    */
   public function getQueryParameters() {
@@ -105,6 +111,7 @@ final class AZRecurringImportRule extends ConfigEntityBase implements AZRecurrin
     $params += $attributes;
     $params['keyword'] = $this->get('keyword') ?? '';
     $params['owner'] = $this->get('owner') ?? '';
+    $params['parent_account_name'] = $this->get('parent_account_name') ?? '';
   //  $params['host'] = $this->get('host') ?? '';
   //  $params['approval'] = $this->get('approval') ?? '';
     $params = array_filter($params);

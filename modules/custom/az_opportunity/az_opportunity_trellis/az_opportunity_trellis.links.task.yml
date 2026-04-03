@@ -13,6 +13,6 @@ az_opportunity.import_form_task:
 
 az_opportunity_trellis.az_recurring_import_rules_tab:
   route_name: entity.az_recurring_import_rule.collection
-  title: 'Recurring Imports'
+  title: 'Recurring Opportunity Imports'
   base_route: az_core.az_settings
   weight: 5
