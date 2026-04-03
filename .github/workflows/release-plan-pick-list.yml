@@ -130,12 +130,14 @@ jobs:
           PR_LIST=""
           COMMIT_HASHES=""
           SPLIT_COMMANDS=""
+          PR_COUNTER=0
 
           while IFS=' ' read -r _DATE PR_NUM COMMIT_OID; do
+            PR_COUNTER=$((PR_COUNTER + 1))
             if [ -z "$PR_LIST" ]; then
-              PR_LIST="- #${PR_NUM}"
+              PR_LIST="${PR_COUNTER}. #${PR_NUM}"
             else
-              PR_LIST="${PR_LIST}"$'\n'"- #${PR_NUM}"
+              PR_LIST="${PR_LIST}"$'\n'"${PR_COUNTER}. #${PR_NUM}"
             fi
 
             if [ -z "$COMMIT_HASHES" ]; then
@@ -155,12 +157,14 @@ jobs:
 
           # Build the list of external (non-az_quickstart) Done PRs, sorted for consistency.
           EXTERNAL_PR_LIST=""
+          EXTERNAL_COUNTER=0
           if [ ${#EXTERNAL_PRS[@]} -gt 0 ]; then
             while IFS= read -r REPO_AND_NUM; do
+              EXTERNAL_COUNTER=$((EXTERNAL_COUNTER + 1))
               if [ -z "$EXTERNAL_PR_LIST" ]; then
-                EXTERNAL_PR_LIST="- ${REPO_AND_NUM}"
+                EXTERNAL_PR_LIST="${EXTERNAL_COUNTER}. ${REPO_AND_NUM}"
               else
-                EXTERNAL_PR_LIST="${EXTERNAL_PR_LIST}"$'\n'"- ${REPO_AND_NUM}"
+                EXTERNAL_PR_LIST="${EXTERNAL_PR_LIST}"$'\n'"${EXTERNAL_COUNTER}. ${REPO_AND_NUM}"
               fi
             done < <(printf '%s\n' "${!EXTERNAL_PRS[@]}" | sort)
           fi
