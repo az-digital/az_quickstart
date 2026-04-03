@@ -4,12 +4,15 @@
 *.profile linguist-language=PHP
 *.theme linguist-language=PHP
 
-# Reclassify az_barrio libraries folder as vendor code.
+# Classify library folders as vendor code.
 themes/custom/az_barrio/libraries/* linguist-vendored
+themes/custom/az_core/lib/* linguist-vendored
 
-# Reclassify az_barrio minified files as generated code.
+# Classify generated library files as such.
 themes/custom/az_barrio/libraries/*.min.css linguist-generated=true
 themes/custom/az_barrio/libraries/*.min.js linguist-generated=true
+themes/custom/az_core/lib/**/*.css linguist-generated=true
+themes/custom/az_core/lib/**/*.js linguist-generated=true
 
 # Set DDEV command files to lf
 .ddev/commands/web/install text eol=lf
@@ -20,3 +23,9 @@ themes/custom/az_barrio/libraries/*.min.js linguist-generated=true
 .ddev/commands/web/phpstan text eol=lf
 .ddev/commands/web/phpstan-contrib text eol=lf
 .ddev/commands/web/phpunit text eol=lf
+
+# Exclude dev files from archives
+.* export-ignore
+*.neon export-ignore
+*.xml.dist export-ignore
+package.json export-ignore

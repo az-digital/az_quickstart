@@ -18,6 +18,7 @@
  *   - in_active_trail: TRUE if the link is in the active trail.
  */
 #}
+{{ attach_library('az_barrio/az-navbar-hover') }}
 {% import _self as menus %}
 {#
   We call a macro which calls itself to render the full tree.
@@ -33,16 +34,14 @@
     {% elseif menu_level == 1 %}
       <ul{{ attributes.removeClass('navbar-nav').addClass('dropdown-menu') }} id="secondary-{{ parent_item.title|clean_class }}">
     {% elseif menu_level == 2 %}
-      <ul class="collapse{% if parent_item.in_active_trail %} show{% endif %}" id="tertiary-{{ parent_item.title|clean_class }}" data-bs-parent="#secondary-{{ parent_item.parent.title|clean_class }}">
+      <ul class="collapse{% if parent_item.in_active_trail %} show{% endif %}" id="tertiary-{{ parent_item.title|clean_class }}" data-bs-parent="#{{ attributes.block }}">
     {% endif %}
     {% for item in items %}
       {# item is_placeholder if it has no link at the primary level #}
       {% set is_placeholder = (
-        not item.url.isRouted()
-      ) or (
         item.url.toString() is empty or item.url.toString() == '#'
       ) or (
-        item.url.getRouteName() in ['<nolink>', '<none>']
+        item.url.isRouted() and item.url.getRouteName() in ['<nolink>', '<none>']
       ) %}
       {% set item_classes = [
         menu_level == 0 ? 'nav-item',
@@ -61,7 +60,7 @@
           {% if item.below %}
             {% if not is_placeholder %}
               <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
-                <span class="visually-hidden">Toggle Dropdown</span>
+                <span class="visually-hidden">{{ item.title }}</span>
               </button>
             {% endif %}
             {{ menus.menu_links(item.below, attributes.removeClass('nav-item'), menu_level + 1, item) }}
@@ -71,7 +70,7 @@
             <div class="btn-group">
               {{ link(item.title, item.url, { 'class': 'dropdown-item' }) }}
               <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-bs-toggle="collapse" data-bs-target="#tertiary-{{ item.title|clean_class }}" data-bs-auto-close="outside" aria-controls="tertiary-{{ item.title|clean_class }}" aria-expanded="{{ item.in_active_trail ? 'true' : 'false' }}">
-                <span class="visually-hidden">Toggle Dropdown</span>
+                <span class="visually-hidden">{{ item.title }}</span>
               </button>
             </div>
             {{ menus.menu_links(item.below, attributes, menu_level + 1, item) }}
@@ -79,9 +78,12 @@
             {{ link(item.title, item.url, { 'class': 'dropdown-item' }) }}
           {% endif %}
         {% else %}
-          <li>{{ link(item.title, item.url) }}</li>
+          {{ link(item.title, item.url) }}
         {% endif %}
       </li>
+      {% if menu_level == 0 and not loop.last %}
+        <li class="nav-item" role="presentation"><span class="vr" aria-hidden="true"></span></li>
+      {% endif %}
     {% endfor %}
     </ul>
   {% endif %}

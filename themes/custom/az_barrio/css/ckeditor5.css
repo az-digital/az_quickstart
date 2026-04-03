@@ -27,10 +27,6 @@
   --ck-z-modal: calc( var(--ck-z-default) + 999 );
 }
 
-.ck.ck-content .field--type-entity-reference.field--name-field-az-media-image {
-  margin-bottom: 0;
-}
-
 .ck.ck-content ul {
   list-style-type: initial;
 }

@@ -24,7 +24,7 @@ third_party_settings:
   field_group:
     group_card:
       children:
-        - group_card_block
+        - group_card_body
       label: Card
       parent_name: ''
       region: content
@@ -44,16 +44,16 @@ third_party_settings:
     group_card_block:
       children:
         - smart_title
-        - group_text_muted
       label: 'Card Link'
-      parent_name: group_card
+      parent_name: group_card_body
       region: content
-      weight: 2
+      weight: 5
       format_type: link
       format_settings:
-        classes: 'card-body'
+        classes: 'stretched-link text-decoration-none'
         show_empty_fields: true
         id: ''
+        label_as_html: false
         target: entity
         custom_uri: ''
         target_attribute: default
@@ -62,14 +62,36 @@ third_party_settings:
         - field_az_course_description
         - field_az_course_units
       label: 'Text Muted'
-      parent_name: group_card_block
+      parent_name: group_card_body
       region: content
-      weight: 4
+      weight: 6
       format_type: html_element
       format_settings:
         classes: 'text-body-secondary fw-normal'
         show_empty_fields: false
         id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_card_body:
+      children:
+        - group_card_block
+        - group_text_muted
+      label: 'Card Body'
+      parent_name: group_card
+      region: content
+      weight: 4
+      format_type: html_element
+      format_settings:
+        classes: card-body
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
