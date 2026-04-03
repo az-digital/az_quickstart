@@ -35,10 +35,12 @@ jobs:
 
           CURSOR="null"
           HAS_NEXT_PAGE="true"
-          # pr_number -> merge_commit_sha
+          # pr_number -> merge_commit_sha (az-digital/az_quickstart PRs only)
           declare -A PR_COMMITS
           # pr_number -> committed date (ISO 8601)
           declare -A PR_COMMIT_DATE
+          # pr_number -> "repo#number" for PRs from other repositories
+          declare -A EXTERNAL_PRS
 
           GRAPHQL_QUERY='query($org: String!, $num: Int!, $after: String) {
             organization(login: $org) {
@@ -82,14 +84,18 @@ jobs:
             HAS_NEXT_PAGE=$(echo "$RESPONSE" | jq -r '.data.organization.projectV2.items.pageInfo.hasNextPage')
             CURSOR=$(echo "$RESPONSE" | jq -r '.data.organization.projectV2.items.pageInfo.endCursor')
 
-            # Parse items: keep only "Done" PRs from az-digital/az_quickstart
+            # Parse items: keep only "Done" PRs, separating az-digital/az_quickstart from others
             while IFS=$'\t' read -r STATUS REPO PR_NUM COMMIT_OID COMMITTED_DATE; do
-              if [ "$STATUS" = "Done" ] && [ "$REPO" = "az-digital/az_quickstart" ] && [ "$PR_NUM" != "null" ]; then
-                if [ "$COMMIT_OID" = "null" ]; then
-                  echo "Warning: PR #${PR_NUM} has no merge commit (may have been merged via rebase). Skipping."
-                else
-                  PR_COMMITS["$PR_NUM"]="$COMMIT_OID"
-                  PR_COMMIT_DATE["$PR_NUM"]="$COMMITTED_DATE"
+              if [ "$STATUS" = "Done" ] && [ "$PR_NUM" != "null" ]; then
+                if [ "$REPO" = "az-digital/az_quickstart" ]; then
+                  if [ "$COMMIT_OID" = "null" ]; then
+                    echo "Warning: PR #${PR_NUM} has no merge commit (may have been merged via rebase). Skipping."
+                  else
+                    PR_COMMITS["$PR_NUM"]="$COMMIT_OID"
+                    PR_COMMIT_DATE["$PR_NUM"]="$COMMITTED_DATE"
+                  fi
+                elif [ "$REPO" != "null" ]; then
+                  EXTERNAL_PRS["${REPO}#${PR_NUM}"]="$REPO"
                 fi
               fi
             done < <(echo "$RESPONSE" | jq -r '
@@ -147,12 +153,33 @@ jobs:
 
           CHERRY_PICK_CMD="git cherry-pick -x ${COMMIT_HASHES}"
 
+          # Build the list of external (non-az_quickstart) Done PRs, sorted for consistency.
+          EXTERNAL_PR_LIST=""
+          if [ ${#EXTERNAL_PRS[@]} -gt 0 ]; then
+            while IFS= read -r REPO_AND_NUM; do
+              if [ -z "$EXTERNAL_PR_LIST" ]; then
+                EXTERNAL_PR_LIST="- ${REPO_AND_NUM}"
+              else
+                EXTERNAL_PR_LIST="${EXTERNAL_PR_LIST}"$'\n'"- ${REPO_AND_NUM}"
+              fi
+            done < <(printf '%s\n' "${!EXTERNAL_PRS[@]}" | sort)
+          fi
+
           # Build the comment body using printf to control newlines precisely.
-          COMMENT_BODY=$(printf \
-            '## Pull Requests (in commit order from oldest to newest)\n\n%s\n\n## Pick List\n\n```\n%s\n```\n\n```\n%s\n```' \
-            "$PR_LIST" \
-            "$CHERRY_PICK_CMD" \
-            "$SPLIT_COMMANDS")
+          if [ -n "$EXTERNAL_PR_LIST" ]; then
+            COMMENT_BODY=$(printf \
+              '## Pull Requests (in commit order from oldest to newest)\n\n%s\n\n## Pull Requests from Other Repositories\n\n%s\n\n## Pick List\n\n```\n%s\n```\n\n```\n%s\n```' \
+              "$PR_LIST" \
+              "$EXTERNAL_PR_LIST" \
+              "$CHERRY_PICK_CMD" \
+              "$SPLIT_COMMANDS")
+          else
+            COMMENT_BODY=$(printf \
+              '## Pull Requests (in commit order from oldest to newest)\n\n%s\n\n## Pick List\n\n```\n%s\n```\n\n```\n%s\n```' \
+              "$PR_LIST" \
+              "$CHERRY_PICK_CMD" \
+              "$SPLIT_COMMANDS")
+          fi
 
           echo "Posting comment to issue #${ISSUE_NUMBER}..."
           gh issue comment "${ISSUE_NUMBER}" \
