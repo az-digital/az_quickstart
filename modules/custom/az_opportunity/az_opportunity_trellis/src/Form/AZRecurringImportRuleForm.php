@@ -88,59 +88,68 @@ final class AZRecurringImportRuleForm extends EntityForm {
       '#default_value' => $entity->get('owner'),
     ];
 
+
+    $form['query_parameters']['attributes']['#tree'] = TRUE;
+
+    if (!empty($mappings)) {
+      // Get the different attributes available.
+      $term_storage = $this->entityTypeManager->getStorage('taxonomy_term');
+      $query = $term_storage->getQuery()
+        ->accessCheck(TRUE)
+        ->addTag('taxonomy_term_access')
+        ->condition('vid', 'az_enterprise_attributes')
+        ->condition('parent', 0)
+        ->sort('name')
+        // Only fetch attributes that have an API mapping.
+        ->condition('field_az_attribute_key', array_keys($mappings), 'IN');
+      $attributes = $query->execute();
+      $attributes = $term_storage->loadMultiple($attributes);
+
+      // Build attribute select lists.
+      foreach ($attributes as $attribute) {
+        $options = [];
+        $key = $mappings[$attribute->field_az_attribute_key->value];
+        $id = $attribute->id();
+
+        // Find the options the attribute has, in order.
+        $query = $term_storage->getQuery()
+          ->accessCheck(TRUE)
+          ->addTag('taxonomy_term_access')
+          ->condition('vid', 'az_enterprise_attributes')
+          ->condition('parent', $id)
+          ->sort('name')
+          ->condition('field_az_attribute_key', '', '<>');
+        $terms = $query->execute();
+        $terms = $term_storage->loadMultiple($terms);
+        foreach ($terms as $term) {
+          $options[$term->field_az_attribute_key->value] = $this->entityRepository->getTranslationFromContext($term)->label();
+        }
+
+        // Build the select element for the attribute.
+        $form['query_parameters']['attributes'][$key] = [
+          '#type' => 'select',
+          '#options' => $options,
+          '#empty_option' => $this->t('- Any -'),
+          '#empty_value' => '',
+          '#title' => $this->entityRepository->getTranslationFromContext($attribute)->label(),
+          '#required' => FALSE,
+          '#default_value' => $entity->get('attributes')[$key] ?? NULL,
+        ];
+      }
+    }
+    else {
+      $form['query_parameters']['attributes']['empty'] = [
+        '#type' => 'item',
+        '#markup' => $this->t('No mapped enterprise attributes found, so the attribute controls are unavailable.'),
+      ];
+    }
+
     $form['query_parameters']['keyword'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Keyword'),
       '#maxlength' => 255,
       '#default_value' => $entity->get('keyword'),
     ];
-
-    $form['query_parameters']['attributes']['#tree'] = TRUE;
-
-    // Get the different attributes available.
-    $term_storage = $this->entityTypeManager->getStorage('taxonomy_term');
-    $query = $term_storage->getQuery()
-      ->accessCheck(TRUE)
-      ->addTag('taxonomy_term_access')
-      ->condition('vid', 'az_enterprise_attributes')
-      ->condition('parent', 0)
-      ->sort('name')
-      // Only fetch attributes that have an API mapping.
-      ->condition('field_az_attribute_key', array_keys($mappings), 'IN');
-    $attributes = $query->execute();
-    $attributes = $term_storage->loadMultiple($attributes);
-
-    // Build attribute select lists.
-    foreach ($attributes as $attribute) {
-      $options = [];
-      $key = $mappings[$attribute->field_az_attribute_key->value];
-      $id = $attribute->id();
-
-      // Find the options the attribute has, in order.
-      $query = $term_storage->getQuery()
-        ->accessCheck(TRUE)
-        ->addTag('taxonomy_term_access')
-        ->condition('vid', 'az_enterprise_attributes')
-        ->condition('parent', $id)
-        ->sort('name')
-        ->condition('field_az_attribute_key', '', '<>');
-      $terms = $query->execute();
-      $terms = $term_storage->loadMultiple($terms);
-      foreach ($terms as $term) {
-        $options[$term->field_az_attribute_key->value] = $this->entityRepository->getTranslationFromContext($term)->label();
-      }
-
-      // Build the select element for the attribute.
-      $form['query_parameters']['attributes'][$key] = [
-        '#type' => 'select',
-        '#options' => $options,
-        '#empty_option' => $this->t('- Any -'),
-        '#empty_value' => '',
-        '#title' => $this->entityRepository->getTranslationFromContext($attribute)->label(),
-        '#required' => FALSE,
-        '#default_value' => $entity->get('attributes')[$key] ?? NULL,
-      ];
-    }
 
     return $form;
   }

@@ -50,10 +50,10 @@ use Drupal\az_opportunity_trellis\Form\AZRecurringImportRuleForm;
     'id',
     'label',
     'owner',
-    'host',
+//    'host',
     'keyword',
     'attributes',
-    'approval',
+//    'approval',
   ],
 )]
 final class AZRecurringImportRule extends ConfigEntityBase implements AZRecurringImportRuleInterface {
@@ -81,7 +81,7 @@ final class AZRecurringImportRule extends ConfigEntityBase implements AZRecurrin
   /**
    * The az_recurring_import_rule owner.
    */
-  protected string $host;
+  //protected string $host;
 
   /**
    * The az_recurring_import_rule enterprise attributes.
@@ -105,8 +105,8 @@ final class AZRecurringImportRule extends ConfigEntityBase implements AZRecurrin
     $params += $attributes;
     $params['keyword'] = $this->get('keyword') ?? '';
     $params['owner'] = $this->get('owner') ?? '';
-    $params['host'] = $this->get('host') ?? '';
-    $params['approval'] = $this->get('approval') ?? '';
+  //  $params['host'] = $this->get('host') ?? '';
+  //  $params['approval'] = $this->get('approval') ?? '';
     $params = array_filter($params);
     return $params;
   }

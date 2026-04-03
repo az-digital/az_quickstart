@@ -231,14 +231,33 @@ final class TrellisHelper {
    */
   public function getAttributeMappings() {
     $mappings = [];
+
     $view = Views::getView('az_opportunity_trellis_import');
-    $display = $view->getDisplay() ?? NULL;
+    if (!$view) {
+      return $mappings;
+    }
+
+    // Ensure we are on a display that has filter handlers.
+    if (!$view->getDisplay()) {
+      $display_id = $view->current_display ?? 'default';
+      if (!$display_id) {
+        $display_id = 'default';
+      }
+      $view->setDisplay($display_id);
+    }
+
+    $display = $view->getDisplay();
+    if (!$display) {
+      return $mappings;
+    }
+
     $filters = $display->getHandlers('filter');
     foreach ($filters as $filter) {
       if ($filter instanceof AZOpportunityTrellisViewsAttributeFilter) {
         $mappings += $filter->getApiMapping();
       }
     }
+
     return $mappings;
   }
 
