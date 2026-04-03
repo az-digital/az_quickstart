@@ -50,9 +50,9 @@ process:
         plugin: default_value
         default_value: az_standard
       collapsed:
-        plugin: skip_on_empty
-        method: process
+        plugin: callback
         source: collapsed
+        callable: intval
   behavior_settings:
     plugin: az_paragraphs_behavior_settings
     paragraph_behavior_plugins:
