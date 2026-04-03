@@ -31,6 +31,29 @@ jobs:
           # are considered complete.  We page through all project items using
           # the GraphQL API and keep only PRs that belong to az-digital/az_quickstart.
 
+          echo "Fetching project #${PROJECT_NUMBER} metadata from az-digital org..."
+
+          PROJECT_META=$(gh api graphql \
+            -f query='query($org: String!, $num: Int!) {
+              organization(login: $org) {
+                projectV2(number: $num) {
+                  title
+                  public
+                }
+              }
+            }' \
+            -f org="az-digital" \
+            -F num="$PROJECT_NUMBER")
+
+          PROJECT_PUBLIC=$(echo "$PROJECT_META" | jq -r '.data.organization.projectV2.public')
+          PROJECT_TITLE=$(echo "$PROJECT_META" | jq -r '.data.organization.projectV2.title')
+
+          if [ "$PROJECT_PUBLIC" != "true" ]; then
+            echo "Error: Project #${PROJECT_NUMBER} (\"${PROJECT_TITLE}\") is not a public project. This workflow only supports public projects." >&2
+            exit 1
+          fi
+
+          echo "Project: ${PROJECT_TITLE} (public)"
           echo "Fetching project items from project #${PROJECT_NUMBER} in az-digital org..."
 
           CURSOR="null"
