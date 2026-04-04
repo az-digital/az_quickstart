@@ -33,7 +33,7 @@ third_party_settings:
       label: col1
       parent_name: ''
       region: hidden
-      weight: 16
+      weight: 14
       format_type: html_element
       format_settings:
         classes: col
@@ -52,7 +52,7 @@ third_party_settings:
       label: col2
       parent_name: ''
       region: hidden
-      weight: 17
+      weight: 15
       format_type: html_element
       format_settings:
         classes: col
@@ -71,7 +71,7 @@ third_party_settings:
       label: col3
       parent_name: ''
       region: hidden
-      weight: 19
+      weight: 17
       format_type: html_element
       format_settings:
         classes: col
@@ -90,7 +90,7 @@ third_party_settings:
       label: col4
       parent_name: ''
       region: hidden
-      weight: 20
+      weight: 18
       format_type: html_element
       format_settings:
         classes: col
@@ -109,7 +109,7 @@ third_party_settings:
       label: col5
       parent_name: ''
       region: hidden
-      weight: 21
+      weight: 19
       format_type: html_element
       format_settings:
         classes: col
@@ -128,7 +128,7 @@ third_party_settings:
       label: col6
       parent_name: ''
       region: hidden
-      weight: 18
+      weight: 16
       format_type: html_element
       format_settings:
         classes: col
@@ -147,7 +147,7 @@ third_party_settings:
       label: col7
       parent_name: ''
       region: hidden
-      weight: 22
+      weight: 20
       format_type: html_element
       format_settings:
         classes: col7
@@ -166,7 +166,7 @@ third_party_settings:
       label: col8
       parent_name: ''
       region: hidden
-      weight: 23
+      weight: 21
       format_type: html_element
       format_settings:
         classes: col
@@ -183,13 +183,14 @@ third_party_settings:
     group_header_row:
       children:
         - group_card_clickable
+        - field_az_parent_account
         - field_az_program_length
         - links
         - group_read_more
       label: 'header row'
       parent_name: ''
       region: hidden
-      weight: 15
+      weight: 13
       format_type: html_element
       format_settings:
         classes: row
@@ -265,7 +266,6 @@ third_party_settings:
         - field_az_opportunity_location
         - field_az_application_date
         - field_az_offered
-        - field_az_parent_account
       label: 'Text Body Secondary'
       parent_name: group_link
       region: content
@@ -360,14 +360,6 @@ content:
     third_party_settings: {  }
     weight: 7
     region: content
-  field_az_parent_account:
-    type: string
-    label: inline
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    weight: 11
-    region: content
   smart_title:
     settings: {  }
     third_party_settings: {  }
@@ -382,6 +374,7 @@ hidden:
   field_az_ongoing: true
   field_az_opportunity_category: true
   field_az_opportunity_credit: true
+  field_az_parent_account: true
   field_az_program_date: true
   field_az_program_length: true
   field_az_program_website: true

@@ -22,7 +22,6 @@ dependencies:
     - node.type.az_opportunity
   module:
     - az_core
-    - datetime
     - link
     - link_class
     - path
@@ -35,7 +34,7 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 20
+    weight: 17
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -148,14 +147,6 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-  field_az_parent_account:
-    type: string_textfield
-    weight: 16
-    region: content
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
   field_az_program_date:
     type: smartdate_only
     weight: 6
@@ -192,43 +183,29 @@ content:
       placeholder_url: ''
       placeholder_title: ''
     third_party_settings: {  }
-  field_az_trellis_id:
-    type: string_textfield
-    weight: 15
-    region: content
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-  field_az_trellis_imported_date:
-    type: datetime_default
-    weight: 17
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   path:
     type: path
-    weight: 23
+    weight: 20
     region: content
     settings: {  }
     third_party_settings: {  }
   promote:
-    type: boolean_checkbox
-    weight: 21
-    region: content
-    settings:
-      display_label: true
-    third_party_settings: {  }
-  status:
     type: boolean_checkbox
     weight: 18
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 15
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
   sticky:
     type: boolean_checkbox
-    weight: 22
+    weight: 19
     region: content
     settings:
       display_label: true
@@ -243,7 +220,7 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 19
+    weight: 16
     region: content
     settings:
       match_operator: CONTAINS
@@ -252,8 +229,11 @@ content:
       placeholder: ''
     third_party_settings: {  }
   url_redirects:
-    weight: 24
+    weight: 21
     region: content
     settings: {  }
     third_party_settings: {  }
-hidden: {  }
+hidden:
+  field_az_parent_account: true
+  field_az_trellis_id: true
+  field_az_trellis_imported_date: true
