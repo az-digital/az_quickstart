@@ -39,7 +39,7 @@ class AZPhotoGalleryParagraphBehavior extends AZDefaultParagraphsBehavior {
 
     $form['gallery_captions'] = [
       '#type' => 'checkbox',
-      '#title' => $this->t('Show captions on page'),
+      '#title' => $this->t('Show captions under each thumbnail'),
       '#default_value' => $config['gallery_captions'] ?? FALSE,
       '#states' => [
         'visible' => [
