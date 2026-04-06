@@ -207,7 +207,14 @@ process:
     -
       plugin: default_value
       default_value: 'Program Website'
-  field_az_body: description
+  field_az_eligibility/value: eligibility
+  field_az_eligibility/format:
+    plugin: default_value
+    default_value: az_standard
+  field_az_body/value: description
+  field_az_body/format:
+    plugin: default_value
+    default_value: az_standard
   field_az_application_link/uri: application_form_url
   field_az_application_link/title:
     -
