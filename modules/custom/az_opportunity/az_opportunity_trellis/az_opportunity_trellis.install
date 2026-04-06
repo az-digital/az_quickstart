@@ -15,14 +15,14 @@ function az_opportunity_trellis_update_1020801() {
 }
 
 /**
- * Ensure az_recurring_import_rule entity type is installed.
+ * Ensure az_opp_recurring_import_rule entity type is installed.
  */
 function az_opportunity_trellis_update_1021001() {
   $changes = \Drupal::entityDefinitionUpdateManager()->getChangeList();
-  $status = $changes['az_recurring_import_rule']['entity_type'] ?? '';
+  $status = $changes['az_opp_recurring_import_rule']['entity_type'] ?? '';
   // Determine if recurring import rule entity needs to be created.
   if ($status === EntityDefinitionUpdateManagerInterface::DEFINITION_CREATED) {
-    $entity_type_definition = \Drupal::service('entity_type.manager')->getDefinition('az_recurring_import_rule');
+    $entity_type_definition = \Drupal::service('entity_type.manager')->getDefinition('az_opp_recurring_import_rule');
     \Drupal::entityDefinitionUpdateManager()->installEntityType($entity_type_definition);
   }
 }

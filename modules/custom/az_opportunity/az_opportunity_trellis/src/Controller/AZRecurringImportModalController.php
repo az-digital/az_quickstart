@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Returns a modal copy of the az_recurring_import_rule configuration form.
+ * Returns a modal copy of the az_opp_recurring_import_rule configuration form.
  */
 final class AZRecurringImportModalController extends ControllerBase {
 
@@ -68,7 +68,7 @@ final class AZRecurringImportModalController extends ControllerBase {
   }
 
   /**
-   * Open az_recurring_import_rule configuration form as a modal.
+   * Open az_opp_recurring_import_rule configuration form as a modal.
    *
    * @param \Symfony\Component\HttpFoundation\Request $request
    *   The current request.
@@ -80,7 +80,7 @@ final class AZRecurringImportModalController extends ControllerBase {
     $search = [];
     $key = $request->query->get('search');
     // Attempt to get cached search if we have a valid cache key.
-    if (!empty($key) && str_starts_with($key, 'az_recurring_import_modal:')) {
+    if (!empty($key) && str_starts_with($key, 'az_opp_recurring_import_modal:')) {
       // Get a cached search if there is one for our key.
       $search = $this->cache->get($key)->data ?? [];
     }
@@ -88,11 +88,11 @@ final class AZRecurringImportModalController extends ControllerBase {
     // Create an AjaxResponse that opens a modal copy of the config form.
     $response = new AjaxResponse();
     // Entity forms require an entity.
-    $config = $this->entityTypeManager->getStorage('az_recurring_import_rule')->create($search);
+    $config = $this->entityTypeManager->getStorage('az_opp_recurring_import_rule')->create($search);
     // Generate a copy of the configuration entity form using the stub as basis.
     $config_form = $this->entityFormBuilder->getForm($config, 'add');
     // Forms generated during ajax calls do not have the right action path.
-    $config_form['#action'] = Url::fromRoute('entity.az_recurring_import_rule.add_form')->toString();
+    $config_form['#action'] = Url::fromRoute('entity.az_opp_recurring_import_rule.add_form')->toString();
     // Add an ajax command to open the modal.
     $response->addCommand(new OpenModalDialogCommand($this->t('Create Recurring Import'), $config_form, ['width' => '1000']));
     return $response;

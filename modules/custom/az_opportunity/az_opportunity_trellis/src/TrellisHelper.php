@@ -209,7 +209,7 @@ final class TrellisHelper {
    */
   public function getRecurringOpportunityIds() {
     // Find enabled import configurations.
-    $imports = $this->entityTypeManager->getStorage('az_recurring_import_rule')->loadByProperties([
+    $imports = $this->entityTypeManager->getStorage('az_opp_recurring_import_rule')->loadByProperties([
       'status' => [1, TRUE],
     ]);
 

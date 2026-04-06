@@ -16,7 +16,7 @@ use Drupal\az_opportunity_trellis\Form\AZRecurringImportRuleForm;
  * Defines the recurring import rule entity type.
  */
 #[ConfigEntityType(
-  id: 'az_recurring_import_rule',
+  id: 'az_opp_recurring_import_rule',
   label: new TranslatableMarkup('Recurring Import Rule'),
   label_collection: new TranslatableMarkup('Recurring Import Rules'),
   label_singular: new TranslatableMarkup('recurring import rule'),
@@ -29,7 +29,7 @@ use Drupal\az_opportunity_trellis\Form\AZRecurringImportRuleForm;
       'delete' => EntityDeleteForm::class,
     ],
   ],
-  config_prefix: 'az_recurring_import_rule',
+  config_prefix: 'az_opp_recurring_import_rule',
   admin_permission: 'administer quickstart configuration',
   label_count: [
     'singular' => '@count recurring import rule',
@@ -38,8 +38,8 @@ use Drupal\az_opportunity_trellis\Form\AZRecurringImportRuleForm;
   links: [
     'collection' => '/admin/config/az-quickstart/settings/az-opportunity-recurring-import-rule',
     'add-form' => '/admin/config/az-quickstart/settings/az-opportunity-recurring-import-rule/add',
-    'edit-form' => '/admin/config/az-quickstart/settings/az-opportunity-recurring-import-rule/{az_recurring_import_rule}',
-    'delete-form' => '/admin/config/az-quickstart/settings/az-opportunity-recurring-import-rule/{az_recurring_import_rule}/delete',
+    'edit-form' => '/admin/config/az-quickstart/settings/az-opportunity-recurring-import-rule/{az_opp_recurring_import_rule}',
+    'delete-form' => '/admin/config/az-quickstart/settings/az-opportunity-recurring-import-rule/{az_opp_recurring_import_rule}/delete',
   ],
   entity_keys: [
     'id' => 'id',
@@ -60,42 +60,42 @@ use Drupal\az_opportunity_trellis\Form\AZRecurringImportRuleForm;
 final class AZRecurringImportRule extends ConfigEntityBase implements AZRecurringImportRuleInterface {
 
   /**
-   * The az_recurring_import_rule ID.
+   * The az_opp_recurring_import_rule ID.
    */
   protected string $id;
 
   /**
-   * The az_recurring_import_rule label.
+   * The az_opp_recurring_import_rule label.
    */
   protected string $label;
 
   /**
-   * The az_recurring_import_rule keyword.
+   * The az_opp_recurring_import_rule keyword.
    */
   protected string $keyword;
 
   /**
-   * The az_recurring_import_rule owner.
+   * The az_opp_recurring_import_rule owner.
    */
   protected string $owner;
 
   /**
-   * The az_recurring_import_rule owner.
+   * The az_opp_recurring_import_rule owner.
    */
   //protected string $host;
 
   /**
-   * The az_recurring_import_rule enterprise attributes.
+   * The az_opp_recurring_import_rule enterprise attributes.
    */
   protected ?array $attributes;
 
   /**
-   * The az_recurring_import_rule approval status.
+   * The az_opp_recurring_import_rule approval status.
    */
   protected string $approval;
 
   /**
-   * The az_recurring_import_rule parent account name.
+   * The az_opp_recurring_import_rule parent account name.
    */
   protected string $parent_account_name;
 

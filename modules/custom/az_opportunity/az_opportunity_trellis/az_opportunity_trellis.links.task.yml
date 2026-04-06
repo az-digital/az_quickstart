@@ -11,8 +11,8 @@ az_opportunity.import_form_task:
   description: 'Import opportunities from the Trellis Opportunity API.'
   weight: 101
 
-az_opportunity_trellis.az_recurring_import_rules_tab:
-  route_name: entity.az_recurring_import_rule.collection
+az_opportunity_trellis.az_opp_recurring_import_rules_tab:
+  route_name: entity.az_opp_recurring_import_rule.collection
   title: 'Recurring Opportunity Imports'
   base_route: az_core.az_settings
   weight: 5

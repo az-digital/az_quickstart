@@ -6,39 +6,39 @@ az_opportunity_trellis.settings:
   requirements:
     _permission: 'administer quickstart configuration'
 
-entity.az_recurring_import_rule.collection:
+entity.az_opp_recurring_import_rule.collection:
   path: '/admin/config/az-quickstart/settings/az-opportunity-recurring-import-rule'
   defaults:
-    _entity_list: 'az_recurring_import_rule'
+    _entity_list: 'az_opp_recurring_import_rule'
     _title: 'Recurring Import Rule configuration'
   requirements:
     _permission: 'administer quickstart configuration'
 
-entity.az_recurring_import_rule.add_form:
+entity.az_opp_recurring_import_rule.add_form:
   path: '/admin/config/az-quickstart/settings/az-opportunity-recurring-import-rule/add'
   defaults:
-    _entity_form: 'az_recurring_import_rule.add'
+    _entity_form: 'az_opp_recurring_import_rule.add'
     _title: 'Add a recurring import rule'
   requirements:
     _permission: 'administer quickstart configuration'
 
-entity.az_recurring_import_rule.edit_form:
-  path: '/admin/config/az-quickstart/settings/az-opportunity-recurring-import-rule/{az_recurring_import_rule}'
+entity.az_opp_recurring_import_rule.edit_form:
+  path: '/admin/config/az-quickstart/settings/az-opportunity-recurring-import-rule/{az_opp_recurring_import_rule}'
   defaults:
-    _entity_form: 'az_recurring_import_rule.edit'
+    _entity_form: 'az_opp_recurring_import_rule.edit'
     _title: 'Edit a recurring import rule'
   requirements:
     _permission: 'administer quickstart configuration'
 
-entity.az_recurring_import_rule.delete_form:
-  path: '/admin/config/az-quickstart/settings/az-opportunity-recurring-import-rule/{az_recurring_import_rule}/delete'
+entity.az_opp_recurring_import_rule.delete_form:
+  path: '/admin/config/az-quickstart/settings/az-opportunity-recurring-import-rule/{az_opp_recurring_import_rule}/delete'
   defaults:
-    _entity_form: 'az_recurring_import_rule.delete'
+    _entity_form: 'az_opp_recurring_import_rule.delete'
     _title: 'Delete a recurring import rule'
   requirements:
     _permission: 'administer quickstart configuration'
 
-entity.az_recurring_import_rule.modal:
+entity.az_opp_recurring_import_rule.modal:
   path: '/admin/az-opportunity-trellis-modal'
   defaults:
     _title: 'Entity Az Recurring Import Rule Modal'

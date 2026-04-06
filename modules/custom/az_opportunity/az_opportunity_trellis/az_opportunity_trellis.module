@@ -150,7 +150,7 @@ function az_opportunity_trellis_form_views_exposed_form_alter(&$form, FormStateI
       // We cannot use an ajax response here to open a dialog.
       // Exposed forms do not support ajax callbacks. Cache search parameters.
       // Compute cache key of parameters.
-      $key = 'az_recurring_import_modal:' . Crypt::hashBase64(serialize($search));
+      $key = 'az_opp_recurring_import_modal:' . Crypt::hashBase64(serialize($search));
       $expire = time() + 1200;
       // Cache the search.
       \Drupal::service('cache.default')->set($key, $search, $expire);
@@ -159,7 +159,7 @@ function az_opportunity_trellis_form_views_exposed_form_alter(&$form, FormStateI
       $form['actions']['recurring'] = [
         '#type' => 'link',
         '#title' => t('Create Recurring Import'),
-        '#url' => Url::fromRoute('entity.az_recurring_import_rule.modal'),
+        '#url' => Url::fromRoute('entity.az_opp_recurring_import_rule.modal'),
         // Pass the search parameters cache key as an argument.
         '#options' => ['query' => ['search' => $key]],
         '#attributes' => ['class' => ['use-ajax', 'button']],
