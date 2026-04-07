@@ -274,7 +274,7 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          property_path: Audiences__c
+          property_path: Attributes.0.Audiences__c
         property_7:
           id: property_7
           table: az_opportunity_trellis_data
@@ -632,45 +632,6 @@ display:
             default_group_multiple: {  }
             group_items: {  }
           property_path: account_id
-        property_3:
-          id: property_3
-          table: az_opportunity_trellis_data
-          field: property
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: views_remote_data_property
-          operator: '='
-          value: ''
-          group: 1
-          exposed: true
-          expose:
-            operator_id: property_3_op
-            label: Topic
-            description: ''
-            use_operator: false
-            operator: property_3_op
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: property_3
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          property_path: topic
         property_4:
           id: property_4
           table: az_opportunity_trellis_data
@@ -749,6 +710,166 @@ display:
             default_group_multiple: {  }
             group_items: {  }
           property_path: keyword
+        Attributes:
+          id: Attributes
+          table: az_opportunity_trellis_data
+          field: Attributes
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: az_opportunity_trellis_views_attribute_filter
+          operator: '='
+          value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: Attributes_op
+            label: Audience
+            description: ''
+            use_operator: false
+            operator: Attributes_op
+            operator_limit_selection: false
+            operator_list: { }
+            identifier: audience
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: { }
+            group_items: { }
+          property_path: audience
+          az_attribute_key: Audiences__c
+        Attributes_1:
+          id: Attributes_1
+          table: az_opportunity_trellis_data
+          field: Attributes
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: az_opportunity_trellis_views_attribute_filter
+          operator: '='
+          value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: Attributes_1_op
+            label: Topic
+            description: ''
+            use_operator: false
+            operator: Attributes_1_op
+            operator_limit_selection: false
+            operator_list: { }
+            identifier: topic
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: { }
+            group_items: { }
+          property_path: topic
+          az_attribute_key: Topic__c
+        Attributes_2:
+          id: Attributes_2
+          table: az_opportunity_trellis_data
+          field: Attributes
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: az_opportunity_trellis_views_attribute_filter
+          operator: '='
+          value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: Attributes_2_op
+            label: Program Type
+            description: ''
+            use_operator: false
+            operator: Attributes_2_op
+            operator_limit_selection: false
+            operator_list: { }
+            identifier: program_type
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: { }
+            group_items: { }
+          property_path: program_type
+          az_attribute_key: Program_Type__c
+        Attributes_3:
+          id: Attributes_3
+          table: az_opportunity_trellis_data
+          field: Attributes
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: az_opportunity_trellis_views_attribute_filter
+          operator: '='
+          value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: Attributes_3_op
+            label: Format
+            description: ''
+            use_operator: false
+            operator: Attributes_3_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: program_format
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          property_path: program_format
+          az_attribute_key: Program_Format__c
       filter_groups:
         operator: AND
         groups:

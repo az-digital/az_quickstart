@@ -163,11 +163,11 @@ function az_opportunity_trellis_views_data(): array {
       'id' => 'az_opportunity_trellis_views_owner_netid',
     ],
   ];
-  $data['az_opportunity_trellis_data']['Program_Type__c'] = [
-    'title' => t('Trellis Opportunity Program Type'),
-    'help' => t('Parent Opportunity Program Type'),
-    'field' => [
-      'id' => 'az_opportunity_trellis_views_program_type',
+  $data['az_opportunity_trellis_data']['Attributes'] = [
+    'title' => t('Enterprise Attribute'),
+    'help' => t('Trellis opportunity search API enterprise attributes'),
+    'filter' => [
+      'id' => 'az_opportunity_trellis_views_attribute_filter',
     ],
   ];
   return $data;
