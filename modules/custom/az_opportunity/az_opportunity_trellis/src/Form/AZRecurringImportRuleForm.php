@@ -88,7 +88,8 @@ final class AZRecurringImportRuleForm extends EntityForm {
       '#default_value' => $entity->get('owner'),
     ];
 
-    $form['query_parameters']['keyword'] = [ // cut from line 146
+    // Cut from line 146.
+    $form['query_parameters']['keyword'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Keyword'),
       '#maxlength' => 255,

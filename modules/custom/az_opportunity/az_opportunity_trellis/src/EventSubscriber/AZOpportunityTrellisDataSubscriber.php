@@ -125,7 +125,7 @@ final class AZOpportunityTrellisDataSubscriber implements EventSubscriberInterfa
       }
       // Don't perform search if empty or publish is the only field.
       if (empty($parameters)) {
-      //if (empty($parameters) || (count($parameters) <= 1)) {
+        // If (empty($parameters) || (count($parameters) <= 1)) {.
         return;
       }
       $ids = $this->trellisHelper->searchOpportunities($parameters);
