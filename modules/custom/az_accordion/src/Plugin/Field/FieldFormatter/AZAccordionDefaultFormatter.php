@@ -157,7 +157,7 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
    *
    * Each FAQ-enabled accordion attaches its questions as a separate html_head
    * entry with a unique key (faq_questions_ENTITY_ID). The
-   * FaqSchemaAggregatorSubscriber merges all such entries into a single
+   * AZFaqAggregatorSubscriber merges all such entries into a single
    * FAQPage JSON-LD block before the response is sent. This approach is
    * compatible with Drupal's render caching because #attached metadata
    * survives caching.
@@ -194,13 +194,7 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
     }
 
     if (!empty($questions)) {
-      // Attach questions as a data entry with a unique key.
-      // FaqSchemaAggregatorSubscriber will find all faq_questions_* entries
-      // and merge them into a single FAQPage JSON-LD block. The subscriber
-      // derives the FAQPage name from the current route's node entity, so
-      // the formatter only needs to provide the questions.
       $data = ['questions' => $questions];
-
       $element['#attached']['html_head'][] = [
         [
           '#type' => 'html_tag',
