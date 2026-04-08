@@ -2,11 +2,14 @@
 
 namespace Drupal\az_search_api\Plugin\search_api\processor;
 
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\metatag\MetatagManager;
 use Drupal\search_api\Attribute\SearchApiProcessor;
 use Drupal\search_api\Processor\ProcessorPluginBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
 
 /**
  * Skip indexing content that is noncanonical.
@@ -19,7 +22,10 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
     'alter_items' => 0,
   ],
 )]
-class AZCanonical extends ProcessorPluginBase {
+class AZCanonical extends ProcessorPluginBase implements LoggerAwareInterface {
+
+  use LoggerAwareTrait;
+  use StringTranslationTrait;
 
   /**
    * The MetatagManager. MetatagManagerInterface does not have APIs we need.
@@ -33,6 +39,7 @@ class AZCanonical extends ProcessorPluginBase {
     /** @var static $processor */
     $processor = parent::create($container, $configuration, $plugin_id, $plugin_definition);
     $processor->metatagManager = $container->get('metatag.manager');
+    $processor->setLogger($container->get('logger.channel.az_search_api'));
     return $processor;
   }
 
@@ -51,13 +58,15 @@ class AZCanonical extends ProcessorPluginBase {
         $canonical_url = $tokens['canonical_url'] ?? '';
         // Compute the entity's actual url.
         $url = $entity->toUrl();
+        $label = $entity->label();
         $uri = $url->setOption('absolute', TRUE)->toString();
         // Do not index the content if the canonical url does not match.
         if (!empty($canonical_url) && ($uri !== $canonical_url)) {
-          // @todo this logging message is only for testing. Remove before merge.
-          \Drupal::logger('az_search_api')->notice(t("Not indexing @uri because of canonical @canonical_url", [
-            '@uri' => $uri,
-            '@canonical' => $canonical_url,
+          // @todo remove this message when az_search_api exits experimental status.
+          $this->logger->debug($this->t('Skipping index of <a href=":uri">@label</a> because %canonical_url is canonical', [
+            ':uri' => $uri,
+            '@label' => $label,
+            '%canonical' => $canonical_url,
           ]));
           unset($items[$item_id]);
         }
