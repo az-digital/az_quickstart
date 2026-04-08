@@ -17,10 +17,6 @@ use Symfony\Component\HttpKernel\KernelEvents;
  * HtmlResponseSubscriber (which processes attachments into HTML), finds all
  * such entries, merges the questions, and replaces them with a single
  * 'faq_schema' entry containing one FAQPage JSON-LD block.
- *
- * This approach is compatible with Drupal's render caching because #attached
- * metadata survives caching — the subscriber sees entries from both cached
- * and freshly rendered accordions.
  */
 class AZFaqAggregatorSubscriber implements EventSubscriberInterface {
 
