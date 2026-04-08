@@ -48,7 +48,7 @@ class AZCanonical extends ProcessorPluginBase {
         $tags = $this->metatagManager->tagsFromEntityWithDefaults($entity);
         $tokens = $this->metatagManager->generateTokenValues($tags, $entity);
         // Get the canonical url from the metatag.
-        $canonical_url = $tokens['og_url'] ?? '';
+        $canonical_url = $tokens['canonical_url'] ?? '';
         // Compute the entity's actual url.
         $url = $entity->toUrl();
         $uri = $url->setOption('absolute', TRUE)->toString();
