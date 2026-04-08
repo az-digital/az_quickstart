@@ -166,12 +166,16 @@ process:
       ignore_case: true
   field_az_opportunity_format:
     -
+      plugin: explode
+      source: program_format
+      delimiter: ', '
+    -
+      plugin: multiple_values
+    -
       plugin: skip_on_empty
       method: process
-      source: program_format
     -
       plugin: static_map
-      source: program_format
       map:
         'Hybrid': hybrid
         'In-Person': in_person
@@ -191,12 +195,19 @@ process:
         'Inquire Within': inquire_within
   field_az_opportunity_credit:
     -
+      plugin: explode
+      source: credit_type
+      delimiter: ';'
+    -
+      plugin: callback
+      callable: trim
+    -
+      plugin: multiple_values
+    -
       plugin: skip_on_empty
       method: process
-      source: credit_type
     -
       plugin: static_map
-      source: credit_type
       map:
         'Non-Credit': non_credit
         'UA Credit': ua_credit
