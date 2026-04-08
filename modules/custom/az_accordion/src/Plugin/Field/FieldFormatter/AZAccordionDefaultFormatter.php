@@ -2,7 +2,6 @@
 
 namespace Drupal\az_accordion\Plugin\Field\FieldFormatter;
 
-use Drupal\Component\Serialization\Json;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Field\Attribute\FieldFormatter;
 use Drupal\Core\Field\FieldItemListInterface;
@@ -154,7 +153,14 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
   }
 
   /**
-   * Attaches FAQPage JSON-LD structured data to the render array.
+   * Attaches FAQ question data to the render array for later aggregation.
+   *
+   * Each FAQ-enabled accordion attaches its questions as a separate html_head
+   * entry with a unique key (faq_questions_ENTITY_ID). The
+   * FaqSchemaAggregatorSubscriber merges all such entries into a single
+   * FAQPage JSON-LD block before the response is sent. This approach is
+   * compatible with Drupal's render caching because #attached metadata
+   * survives caching.
    *
    * @param array &$element
    *   The render array to attach the schema to.
@@ -172,36 +178,37 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
         continue;
       }
 
-      // Strip HTML tags from the body for the schema markup.
-      // Schema.org acceptedAnswer can contain HTML, but we use plain text
-      // for maximum compatibility with search engines.
-      $plain_body = strip_tags($body);
+      // Keep only the HTML tags that Google displays in FAQ rich results.
+      // @see https://developers.google.com/search/docs/appearance/structured-data/faqpage
+      $allowed_tags = '<h1><h2><h3><h4><h5><h6><br><ol><ul><li><a><p><div><b><strong><i><em>';
+      $clean_body = strip_tags($body, $allowed_tags);
 
       $questions[] = [
         '@type' => 'Question',
         'name' => $title,
         'acceptedAnswer' => [
           '@type' => 'Answer',
-          'text' => $plain_body,
+          'text' => $clean_body,
         ],
       ];
     }
 
     if (!empty($questions)) {
-      $faq_schema = [
-        '@context' => 'https://schema.org',
-        '@type' => 'FAQPage',
-        'mainEntity' => $questions,
-      ];
+      // Attach questions as a data entry with a unique key.
+      // FaqSchemaAggregatorSubscriber will find all faq_questions_* entries
+      // and merge them into a single FAQPage JSON-LD block. The subscriber
+      // derives the FAQPage name from the current route's node entity, so
+      // the formatter only needs to provide the questions.
+      $data = ['questions' => $questions];
 
       $element['#attached']['html_head'][] = [
         [
           '#type' => 'html_tag',
           '#tag' => 'script',
           '#attributes' => ['type' => 'application/ld+json'],
-          '#value' => Json::encode($faq_schema),
+          '#value' => json_encode($data),
         ],
-        'faq_schema_' . $items->getEntity()->id(),
+        'faq_questions_' . $items->getEntity()->id(),
       ];
     }
   }

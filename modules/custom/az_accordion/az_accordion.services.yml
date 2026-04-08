@@ -1,0 +1,5 @@
+services:
+  az_accordion.faq_schema_aggregator_subscriber:
+    class: Drupal\az_accordion\EventSubscriber\FaqSchemaAggregatorSubscriber
+    tags:
+      - { name: event_subscriber }
