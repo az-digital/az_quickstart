@@ -50,11 +50,9 @@ use Drupal\az_opportunity_trellis\Form\AZRecurringImportRuleForm;
     'id',
     'label',
     'owner',
-  // 'host',
     'keyword',
     'attributes',
     'parent_account_name',
-  // 'approval',
   ],
 )]
 final class AZRecurringImportRule extends ConfigEntityBase implements AZRecurringImportRuleInterface {
@@ -78,11 +76,6 @@ final class AZRecurringImportRule extends ConfigEntityBase implements AZRecurrin
    * The az_opp_recurring_import_rule owner.
    */
   protected string $owner;
-
-  /**
-   * The az_opp_recurring_import_rule owner.
-   */
-  // Protected string $host;.
 
   /**
    * The az_opp_recurring_import_rule enterprise attributes.
@@ -112,8 +105,6 @@ final class AZRecurringImportRule extends ConfigEntityBase implements AZRecurrin
     $params['keyword'] = $this->get('keyword') ?? '';
     $params['owner'] = $this->get('owner') ?? '';
     $params['parent_account_name'] = $this->get('parent_account_name') ?? '';
-    // $params['host'] = $this->get('host') ?? '';
-    //  $params['approval'] = $this->get('approval') ?? '';
     $params = array_filter($params);
     return $params;
   }
@@ -125,10 +116,6 @@ final class AZRecurringImportRule extends ConfigEntityBase implements AZRecurrin
     // Build a list of query parameters.
     $params = $this->getQueryParameters();
 
-    // Let's refuse to search if there are no constraints except published.
-    //    if (count($params) === 1) {
-    //      return [];
-    //    }.
     return \Drupal::service('az_opportunity_trellis.trellis_helper')->searchOpportunities($params);
   }
 
