@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\az_accordion\EventSubscriber;
 
 use Drupal\Core\Render\HtmlResponse;
@@ -20,7 +22,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
  * metadata survives caching — the subscriber sees entries from both cached
  * and freshly rendered accordions.
  */
-class FaqSchemaAggregatorSubscriber implements EventSubscriberInterface {
+class AZFaqAggregatorSubscriber implements EventSubscriberInterface {
 
   /**
    * {@inheritdoc}
