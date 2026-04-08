@@ -9,6 +9,7 @@ use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\az_accordion\Plugin\Field\FieldType\AZAccordionItem;
 use Drupal\paragraphs\ParagraphInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -95,8 +96,8 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
     $accordion_container_id = HTML::getUniqueId('accordion-' . $entity->id());
     $faq_schema_enabled = FALSE;
 
-    /** @var \Drupal\az_accordion\Plugin\Field\FieldType\AZAccordionItem $item */
     foreach ($items as $delta => $item) {
+      assert($item instanceof AZAccordionItem);
       // Format title.
       $title = $item->title ?? '';
 
