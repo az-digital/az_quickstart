@@ -23,20 +23,6 @@ function az_opportunity_trellis_views_data(): array {
       'id' => 'az_opportunity_trellis_views_field',
     ],
   ];
-  $data['az_opportunity_trellis_data']['Start_Options__c'] = [
-    'title' => t('Trellis Opportunity Start Options'),
-    'help' => t('When the opportunity usually begins'),
-    'field' => [
-      'id' => 'az_opportunity_trellis_views_attribute_filter',
-    ],
-  ];
-  $data['az_opportunity_trellis_data']['Program_Format__c'] = [
-    'title' => t('Trellis Opportunity Program Format'),
-    'help' => t('Modality for the program attendance'),
-    'field' => [
-      'id' => 'az_opportunity_trellis_views_attribute_filter',
-    ],
-  ];
   $data['az_opportunity_trellis_data']['Length_Of_Program__c'] = [
     'title' => t('Trellis Opportunity Length of Program'),
     'help' => t('How long does this program typically last'),
@@ -84,20 +70,6 @@ function az_opportunity_trellis_views_data(): array {
     'help' => t('Eligibility'),
     'field' => [
       'id' => 'az_opportunity_trellis_views_field',
-    ],
-  ];
-  $data['az_opportunity_trellis_data']['Topic__c'] = [
-    'title' => t('Trellis Opportunity Topic'),
-    'help' => t('Topics'),
-    'field' => [
-      'id' => 'az_opportunity_trellis_views_attribute_filter',
-    ],
-  ];
-  $data['az_opportunity_trellis_data']['Audiences__c'] = [
-    'title' => t('Trellis Opportunity Topic'),
-    'help' => t('Topics'),
-    'field' => [
-      'id' => 'az_opportunity_trellis_views_attribute_filter',
     ],
   ];
   $data['az_opportunity_trellis_data']['Application_Open__c'] = [

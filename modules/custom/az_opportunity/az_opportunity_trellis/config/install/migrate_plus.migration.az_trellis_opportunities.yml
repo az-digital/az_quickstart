@@ -166,14 +166,14 @@ process:
       ignore_case: true
   field_az_opportunity_format:
     -
+      plugin: skip_on_empty
+      method: process
+    -
       plugin: explode
       source: program_format
       delimiter: ', '
     -
       plugin: multiple_values
-    -
-      plugin: skip_on_empty
-      method: process
     -
       plugin: static_map
       map:
@@ -195,17 +195,17 @@ process:
         'Inquire Within': inquire_within
   field_az_opportunity_credit:
     -
-      plugin: explode
+      plugin: skip_on_empty
+      method: process
       source: credit_type
+    -
+      plugin: explode
       delimiter: ';'
     -
       plugin: callback
       callable: trim
     -
       plugin: multiple_values
-    -
-      plugin: skip_on_empty
-      method: process
     -
       plugin: static_map
       map:
