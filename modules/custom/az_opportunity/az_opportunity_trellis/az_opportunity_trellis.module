@@ -15,7 +15,8 @@ use Drupal\az_opportunity_trellis\TrellisHelper;
 /**
  * Implements hook_form_FORM_ID_alter() for node_az_opportunity_edit_form.
  *
- * Adds warning message and disables opportunity detail form elements on opportunities
+ * Adds warning message and disables opportunity detail
+ * form elements on opportunities
  * imported from Trellis Opportunities.
  */
 function az_opportunity_trellis_form_node_az_opportunity_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
@@ -60,10 +61,8 @@ function az_opportunity_trellis_form_node_az_opportunity_edit_form_alter(&$form,
       }
 
       $no_access_fields = [
-        // 'field_az_subheading',
         'field_az_body',
         'field_az_eligibility',
-        // 'field_az_attachments',
       ];
       foreach ($no_access_fields as $field) {
         $form[$field]['#access'] = FALSE;
