@@ -3,6 +3,6 @@ status: true
 dependencies: {  }
 name: 'Opportunity Categories'
 vid: az_opportunity_categories
-description: null
+description: 'Taxonomy for categorizing the Opportunity content type'
 weight: 0
 new_revision: false
