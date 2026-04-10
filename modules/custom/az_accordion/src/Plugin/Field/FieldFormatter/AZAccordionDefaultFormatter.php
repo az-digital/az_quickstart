@@ -3,6 +3,7 @@
 namespace Drupal\az_accordion\Plugin\Field\FieldFormatter;
 
 use Drupal\Component\Utility\Html;
+use Drupal\Component\Utility\Xss;
 use Drupal\Core\Field\Attribute\FieldFormatter;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
@@ -171,8 +172,8 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
 
       // Keep only the HTML tags that Google displays in FAQ rich results.
       // @see https://developers.google.com/search/docs/appearance/structured-data/faqpage
-      $allowed_tags = '<h1><h2><h3><h4><h5><h6><br><ol><ul><li><a><p><div><b><strong><i><em>';
-      $clean_body = strip_tags($body, $allowed_tags);
+      $allowed_tags = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'br', 'ol', 'ul', 'li', 'a', 'p', 'div', 'b', 'strong', 'i', 'em'];
+      $clean_body = Xss::filter($body, $allowed_tags);
 
       $questions[] = [
         '@type' => 'Question',
