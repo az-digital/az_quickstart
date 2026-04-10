@@ -25,9 +25,9 @@
     ],
     "require": {
         "php": ">=8.3",
-        "az-digital/arizona-bootstrap": "5.1.1",
+        "az-digital/arizona-bootstrap": "5.1.2",
         "az-digital/az-icons": "1.0.4",
-        "citation-style-language/locales": "0.0.87",
+        "citation-style-language/locales": "0.0.88",
         "citation-style-language/styles": "0.0.668",
         "composer/installers": "^2.0",
         "cweagans/composer-patches": "^1.7",
@@ -43,6 +43,7 @@
         "drupal/bootstrap_barrio": "5.5.20",
         "drupal/bootstrap_utilities": "3.0.1",
         "drupal/calendar_link": "3.0.4",
+        "drupal/captcha": "2.0.10",
         "drupal/cas": "3.0.1",
         "drupal/chosen": "4.0.3",
         "drupal/ckeditor_bs_grid": "2.2.0-alpha1",
@@ -93,7 +94,7 @@
         "drupal/media_library_form_element": "2.1.4",
         "drupal/media_remote": "1.10",
         "drupal/menu_block": "1.14.0",
-        "drupal/menu_link_attributes": "1.6.0",
+        "drupal/menu_link_attributes": "1.7.0",
         "drupal/metatag": "2.2.0",
         "drupal/migmag": "1.8.4",
         "drupal/migrate_plus": "6.0.10",
@@ -104,13 +105,14 @@
         "drupal/paragraphs_admin": "1.7.0",
         "drupal/pathauto": "1.14.0",
         "drupal/quick_node_clone": "1.22.0",
+        "drupal/recaptcha": "3.4",
         "drupal/redirect": "1.12.0",
         "drupal/role_delegation": "1.6.0",
         "drupal/schema_metatag": "3.0.4",
         "drupal/search_api": "1.40.0",
         "drupal/search_api_solr": "4.3.10",
         "drupal/search_exclude": "3.0.0-beta2",
-        "drupal/searchstax": "1.9.3",
+        "drupal/searchstax": "1.10.0",
         "drupal/seckit": "2.0.3",
         "drupal/slick": "3.0.7",
         "drupal/slick_views": "3.0.3",
@@ -167,6 +169,9 @@
             "drupal/config_distro": {
                 "Storage comparer issue": "https://gist.githubusercontent.com/tadean/e2e0dd57f1a9c4eae28d8e713cb01d82/raw/e114987d4a76c183208c763de4dbfecbf41b7f35/config_distro_storage_comparer_issue.patch"
             },
+            "drupal/config_ignore": {
+                "PHP 8.4 compatibility: Implicitly marking parameter $request as nullable is deprecated (3583753)": "https://www.drupal.org/files/issues/2026-04-08/config_ignore-php84-explicit-nullable-request-3583753.patch"
+            },
             "drupal/config_readonly": {
                 "Admin Page at admin/config/services/jsonapi is not loading in test environment (3469854)": "https://www.drupal.org/files/issues/2026-02-18/config_readonly-3469854-18.diff"
             },
@@ -185,7 +190,8 @@
                 "[Regression] missing menu active trail since Drupal 9.5.9 (3359511)": "https://www.drupal.org/files/issues/2025-12-04/3359511-143.patch",
                 "Diffs with different line endings leads to Invalid $mode 3 specified (3389715)": "https://www.drupal.org/files/issues/2024-01-09/Diffs-with-different-line-endings-leads-to-Invalid-mode-3-specified.patch",
                 "Recent changes to migrate_drupal can break migrations that rely on hook_migration_plugins_alter() (3546325)": "https://www.drupal.org/files/issues/2025-11-07/3546325-15-11-3-x.patch",
-                "Display Bug when using #states (Forms API) with Ajax Request (1091852)": "https://www.drupal.org/files/issues/2023-12-18/1091852-186.patch"
+                "Display Bug when using #states (Forms API) with Ajax Request (1091852)": "https://www.drupal.org/files/issues/2023-12-18/1091852-186.patch",
+                "Views with exposed filter and ajax causes unexpected scroll position change (3564586)": "https://gist.githubusercontent.com/bberndt-uaz/7183bc9aee173b19176955ba1cb178f9/raw/c7baa3a68d0325b1f459860831b075cd0819571d/3564586-11.x.patch"
             },
             "drupal/draggableviews": {
                 "Row weights not displaying on sort view (3252365)": "https://www.drupal.org/files/issues/2023-08-25/3252365-check-remove-select-all-class.patch",
@@ -243,6 +249,9 @@
             },
             "npm-asset/slick-carousel": {
                 "Incompatibility with Drupal 11/jQuery 4 (3467129)": "https://www.drupal.org/files/issues/2025-02-17/compatibility_jQuery_4.patch"
+            },
+            "seboettg/citeproc-php": {
+                "Switch to explicit nullable types (seboettg/citeproc-php#195)": "https://gist.githubusercontent.com/joeparsons/b7e598fe332a9f96aa5e74d47c0af7c0/raw/82e8268c196b082b281be3be84784e3c6c78ce55/seboettg-citeproc-php-195.diff"
             },
             "renanbr/bibtex-parser": {
                 "Parser performance issue": "https://gist.githubusercontent.com/tadean/39b90d00cd3edfff7c5653f907e15721/raw/8feb59cb4447b0f667fe5f4936a25c4d30211e1b/renanbr_bibtex_parser_performance.patch"

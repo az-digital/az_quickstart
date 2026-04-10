@@ -759,6 +759,9 @@ form.webform-submission-form {
   #content .form-file,
   #content .form-number,
   #content .form-tel,
+  #content .form-url,
+  #content .form-date,
+  #content .form-time,
   #content input[type="text"].form-control,
   #content .webform-signature-pad .button {
     width: initial;
