@@ -23,6 +23,13 @@ class AZAccordionParagraphBehavior extends AZDefaultParagraphsBehavior {
   public function buildBehaviorForm(ParagraphInterface $paragraph, array &$form, FormStateInterface $form_state) {
     $config = $this->getSettings($paragraph);
 
+    $form['expand_all'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Show "Expand/Collapse All" button'),
+      '#default_value' => $config['expand_all'] ?? FALSE,
+      '#description' => $this->t('Display an "Expand/Collapse All" button above this accordion.'),
+    ];
+
     $form['faq_schema'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('This is an FAQ'),
