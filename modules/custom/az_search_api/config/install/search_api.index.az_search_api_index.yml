@@ -131,6 +131,7 @@ processor_settings:
       - title
       - type
       - url
+  az_canonical: {  }
   az_metatag: {  }
   az_robots_noindex: {  }
   az_search_summary: {  }
