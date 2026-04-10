@@ -1,16 +1,3 @@
-views.filter_value.az_opportunity_trellis_views_date_filter:
-  type: views_filter
-  label: 'Trellis filter'
-  mapping:
-    value:
-      type: string
-      label: 'Value'
-    begin:
-      type: string
-      label: 'Custom Date Range Begin'
-    end:
-      type: string
-      label: 'Custom Date Range End'
 az_opportunity_trellis.az_opp_recurring_import_rule.*:
   type: config_entity
   label: Trellis Opportunity Import

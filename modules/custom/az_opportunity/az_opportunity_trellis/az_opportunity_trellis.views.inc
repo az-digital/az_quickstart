@@ -130,7 +130,7 @@ function az_opportunity_trellis_views_data(): array {
   ];
   $data['az_opportunity_trellis_data']['Owner_NetID'] = [
     'title' => t('Trellis Opportunity Owner NetID'),
-    'help' => t('Parent Opportunity Owner Netid'),
+    'help' => t('Opportunity Owner Netid'),
     'field' => [
       'id' => 'az_opportunity_trellis_views_field',
     ],

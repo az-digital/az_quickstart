@@ -652,7 +652,7 @@ display:
             operator: property_4_op
             operator_limit_selection: false
             operator_list: {  }
-            identifier: parent_account_name
+            identifier: parent_account
             required: false
             remember: false
             multiple: false
@@ -670,7 +670,7 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          property_path: parent_account_name
+          property_path: parent_account
         property_5:
           id: property_5
           table: az_opportunity_trellis_data
