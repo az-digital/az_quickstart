@@ -30,6 +30,13 @@ class AZAccordionParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#description' => $this->t('Display an "Expand/Collapse All" button above this accordion.'),
     ];
 
+    $form['faq_schema'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('This is an FAQ'),
+      '#default_value' => $config['faq_schema'] ?? FALSE,
+      '#description' => $this->t('Enable FAQ (FAQPage) schema markup for this accordion. When checked, structured data will be added to the page so search engines can display these items as rich FAQ results. Only use this for content that is genuinely a list of frequently asked questions.'),
+    ];
+
     parent::buildBehaviorForm($paragraph, $form, $form_state);
 
     // This places the form fields on the content tab rather than behavior tab.

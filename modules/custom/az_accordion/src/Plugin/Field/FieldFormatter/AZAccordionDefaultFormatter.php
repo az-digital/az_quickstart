@@ -3,6 +3,7 @@
 namespace Drupal\az_accordion\Plugin\Field\FieldFormatter;
 
 use Drupal\Component\Utility\Html;
+use Drupal\Component\Utility\Xss;
 use Drupal\Core\Field\Attribute\FieldFormatter;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
@@ -63,6 +64,7 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
 
     $entity = $items->getEntity();
     $accordion_container_id = HTML::getUniqueId('accordion-' . $entity->id());
+    $faq_schema_enabled = FALSE;
 
     foreach ($items as $delta => $item) {
       assert($item instanceof AZAccordionItem);
@@ -71,6 +73,17 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
 
       $column_classes = [];
       $column_classes[] = 'col-md-4 col-lg-4';
+      $parent = $item->getEntity();
+
+      if ($parent instanceof ParagraphInterface) {
+        // Get the behavior settings for the parent.
+        $parent_config = $parent->getAllBehaviorSettings();
+
+        // Check if FAQ schema markup is enabled.
+        if (!empty($parent_config['az_accordion_paragraph_behavior']['faq_schema'])) {
+          $faq_schema_enabled = TRUE;
+        }
+      }
 
       // Handle class keys that contained multiple classes.
       $column_classes = implode(' ', $column_classes);
@@ -123,7 +136,71 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
       $element['#accordion_container_id'] = $accordion_container_id;
     }
 
+    // Attach FAQ schema markup if enabled.
+    if ($faq_schema_enabled && !empty($element)) {
+      $this->attachFaqSchema($element, $items);
+    }
+
     return $element;
+  }
+
+  /**
+   * Attaches FAQ question data to the render array for later aggregation.
+   *
+   * Each FAQ-enabled accordion attaches its questions as a separate html_head
+   * entry with a unique key (faq_questions_ENTITY_ID). The
+   * AZFaqAggregatorSubscriber merges all such entries into a single
+   * FAQPage JSON-LD block before the response is sent. This approach is
+   * compatible with Drupal's render caching because #attached metadata
+   * survives caching.
+   *
+   * @param array &$element
+   *   The render array to attach the schema to.
+   * @param \Drupal\Core\Field\FieldItemListInterface $items
+   *   The accordion field items.
+   */
+  protected function attachFaqSchema(array &$element, FieldItemListInterface $items) {
+    $questions = [];
+
+    foreach ($items as $item) {
+      $title = $item->title ?? '';
+      $body = $item->body ?? '';
+
+      if (empty($title) || empty($body)) {
+        continue;
+      }
+
+      // Keep only the HTML tags that Google displays in FAQ rich results.
+      // @see https://developers.google.com/search/docs/appearance/structured-data/faqpage
+      $allowed_tags = [
+        'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+        'br', 'ol', 'ul', 'li', 'a', 'p', 'div',
+        'b', 'strong', 'i', 'em',
+      ];
+      $clean_body = Xss::filter($body, $allowed_tags);
+
+      $questions[] = [
+        '@type' => 'Question',
+        'name' => $title,
+        'acceptedAnswer' => [
+          '@type' => 'Answer',
+          'text' => $clean_body,
+        ],
+      ];
+    }
+
+    if (!empty($questions)) {
+      $data = ['questions' => $questions];
+      $element['#attached']['html_head'][] = [
+        [
+          '#type' => 'html_tag',
+          '#tag' => 'script',
+          '#attributes' => ['type' => 'application/ld+json'],
+          '#value' => json_encode($data),
+        ],
+        'faq_questions_' . $items->getEntity()->id(),
+      ];
+    }
   }
 
 }
