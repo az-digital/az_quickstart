@@ -165,6 +165,9 @@
             "drupal/config_distro": {
                 "Storage comparer issue": "https://gist.githubusercontent.com/tadean/e2e0dd57f1a9c4eae28d8e713cb01d82/raw/e114987d4a76c183208c763de4dbfecbf41b7f35/config_distro_storage_comparer_issue.patch"
             },
+            "drupal/config_ignore": {
+                "PHP 8.4 compatibility: Implicitly marking parameter $request as nullable is deprecated (3583753)": "https://www.drupal.org/files/issues/2026-04-08/config_ignore-php84-explicit-nullable-request-3583753.patch"
+            },
             "drupal/config_readonly": {
                 "Admin Page at admin/config/services/jsonapi is not loading in test environment (3469854)": "https://www.drupal.org/files/issues/2026-02-18/config_readonly-3469854-18.diff"
             },
