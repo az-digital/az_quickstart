@@ -11,6 +11,7 @@ dependencies:
     - node
     - options
     - user
+    - views_bootstrap
 id: az_opportunity
 label: 'AZ Opportunity'
 module: views
@@ -411,12 +412,18 @@ display:
     position: 1
     display_options:
       style:
-        type: default
+        type: views_bootstrap_grid
         options:
-          grouping: {  }
           row_class: ''
           default_row_class: true
           uses_fields: false
+          grid_class: ''
+          col_xs: col-12
+          col_sm: none
+          col_md: col-md-6
+          col_lg: col-lg-4
+          col_xl: none
+          col_xxl: none
       row:
         type: 'entity:node'
         options:

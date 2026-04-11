@@ -143,7 +143,7 @@ third_party_settings:
       weight: 1
       format_type: html_element
       format_settings:
-        classes: 'row text-bg-cool-gray rounded'
+        classes: 'row rounded border'
         show_empty_fields: false
         id: ''
         label_as_html: false

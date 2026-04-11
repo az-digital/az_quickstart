@@ -22,7 +22,7 @@ dependencies:
     - field.field.node.az_opportunity.field_az_trellis_imported_date
     - node.type.az_opportunity
   module:
-    - datetime_range
+    - date_ap_style
     - field_group
     - smart_title
     - user
@@ -34,10 +34,10 @@ third_party_settings:
       label: col1
       parent_name: group_header_row
       region: content
-      weight: 7
+      weight: 21
       format_type: html_element
       format_settings:
-        classes: col
+        classes: 'col-12 col-md-6'
         show_empty_fields: false
         id: ''
         label_as_html: true
@@ -54,124 +54,10 @@ third_party_settings:
       label: col2
       parent_name: group_header_row
       region: content
-      weight: 8
-      format_type: html_element
-      format_settings:
-        classes: col
-        show_empty_fields: false
-        id: ''
-        label_as_html: false
-        element: div
-        show_label: false
-        label_element: h3
-        label_element_classes: ''
-        attributes: ''
-        effect: none
-        speed: fast
-    group_col3:
-      children: {  }
-      label: col3
-      parent_name: ''
-      region: hidden
-      weight: 20
-      format_type: html_element
-      format_settings:
-        classes: col
-        show_empty_fields: false
-        id: ''
-        label_as_html: false
-        element: div
-        show_label: false
-        label_element: h3
-        label_element_classes: ''
-        attributes: ''
-        effect: none
-        speed: fast
-    group_col4:
-      children: {  }
-      label: col4
-      parent_name: ''
-      region: hidden
-      weight: 21
-      format_type: html_element
-      format_settings:
-        classes: col
-        show_empty_fields: false
-        id: ''
-        label_as_html: false
-        element: div
-        show_label: false
-        label_element: h3
-        label_element_classes: ''
-        attributes: ''
-        effect: none
-        speed: fast
-    group_col5:
-      children: {  }
-      label: col5
-      parent_name: ''
-      region: hidden
       weight: 22
       format_type: html_element
       format_settings:
-        classes: col
-        show_empty_fields: false
-        id: ''
-        label_as_html: false
-        element: div
-        show_label: false
-        label_element: h3
-        label_element_classes: ''
-        attributes: ''
-        effect: none
-        speed: fast
-    group_col6:
-      children: {  }
-      label: col6
-      parent_name: ''
-      region: hidden
-      weight: 23
-      format_type: html_element
-      format_settings:
-        classes: col
-        show_empty_fields: false
-        id: ''
-        label_as_html: false
-        element: div
-        show_label: false
-        label_element: h3
-        label_element_classes: ''
-        attributes: ''
-        effect: none
-        speed: fast
-    group_col7:
-      children: {  }
-      label: col7
-      parent_name: ''
-      region: hidden
-      weight: 24
-      format_type: html_element
-      format_settings:
-        classes: col7
-        show_empty_fields: false
-        id: ''
-        label_as_html: false
-        element: div
-        show_label: false
-        label_element: h3
-        label_element_classes: ''
-        attributes: ''
-        effect: none
-        speed: fast
-    group_col8:
-      children: {  }
-      label: col8
-      parent_name: ''
-      region: hidden
-      weight: 25
-      format_type: html_element
-      format_settings:
-        classes: col
+        classes: 'col-12 col-md-6'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -187,12 +73,32 @@ third_party_settings:
         - group_col1
         - group_col2
       label: 'header row'
+      parent_name: group_container
+      region: content
+      weight: 1
+      format_type: html_element
+      format_settings:
+        classes: 'row border-bottom pb-2 mb-2'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_container:
+      children:
+        - group_header_row
+      label: Container
       parent_name: ''
       region: content
       weight: 0
       format_type: html_element
       format_settings:
-        classes: row
+        classes: container
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -207,25 +113,33 @@ third_party_settings:
     enabled: true
     settings:
       smart_title__link: true
-      smart_title__tag: h5
+      smart_title__tag: h3
       smart_title__classes:
-        - node__title
+        - fs-5
         - fw-bold
-        - mt-0
-        - mb-0
+        - m-0
 id: node.az_opportunity.az_small_row
 targetEntityType: node
 bundle: az_opportunity
 mode: az_small_row
 content:
   field_az_application_date:
-    type: daterange_default
-    label: hidden
+    type: daterange_ap_style
+    label: inline
     settings:
-      timezone_override: ''
-      format_type: short
-      from_to: both
-      separator: '-'
+      always_display_year: false
+      use_today: false
+      cap_today: false
+      display_day: false
+      display_time: false
+      hide_date: false
+      time_before_date: false
+      display_noon_and_midnight: false
+      capitalize_noon_and_midnight: false
+      use_all_day: false
+      separator: endash
+      timezone: ''
+      month_only: false
     third_party_settings: {  }
     weight: 5
     region: content
