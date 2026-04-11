@@ -21,7 +21,7 @@ dependencies:
     - field.field.node.az_opportunity.field_az_trellis_imported_date
     - node.type.az_opportunity
   module:
-    - datetime_range
+    - date_ap_style
     - field_group
     - link
     - options
@@ -309,13 +309,22 @@ bundle: az_opportunity
 mode: default
 content:
   field_az_application_date:
-    type: daterange_default
+    type: daterange_ap_style
     label: hidden
     settings:
-      timezone_override: ''
-      format_type: html_date
-      from_to: both
-      separator: '-'
+      always_display_year: false
+      use_today: false
+      cap_today: false
+      display_day: false
+      display_time: false
+      hide_date: false
+      time_before_date: false
+      display_noon_and_midnight: false
+      capitalize_noon_and_midnight: false
+      use_all_day: false
+      separator: endash
+      timezone: ''
+      month_only: false
     third_party_settings: {  }
     weight: 7
     region: content
@@ -385,13 +394,22 @@ content:
     weight: 4
     region: content
   field_az_program_date:
-    type: daterange_default
+    type: daterange_ap_style
     label: hidden
     settings:
-      timezone_override: ''
-      format_type: html_date
-      from_to: both
-      separator: '-'
+      always_display_year: false
+      use_today: false
+      cap_today: false
+      display_day: false
+      display_time: false
+      hide_date: false
+      time_before_date: false
+      display_noon_and_midnight: false
+      capitalize_noon_and_midnight: false
+      use_all_day: false
+      separator: endash
+      timezone: ''
+      month_only: false
     third_party_settings: {  }
     weight: 7
     region: content
