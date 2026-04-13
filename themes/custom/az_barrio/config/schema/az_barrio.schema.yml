@@ -314,7 +314,7 @@ az_barrio.settings:
     az_navbar:
       type: boolean
       label: 'Enable AZ Navbar'
-      deprecated: 'The "az_navbar" config schema is deprecated in az_quickstart:3.4.0 and is removed from az_quickstart:3.5.0. AZ Navbar is now always enabled. See https://quickstart.arizona.edu/site-admin/managing-menus/main-navigation'
+      deprecated: 'The "az_navbar" config schema is deprecated in az_quickstart:3.4.0 and is removed from az_quickstart:3.5.0. AZ Navbar is now enabled by default. See https://quickstart.arizona.edu/site-admin/managing-menus/main-navigation'
     primary_logo_alt_text:
       type: label
       label: 'Primary logo alt text'
