@@ -67,6 +67,8 @@ class AZProfilesAPIFetcher extends Http {
    */
   public function getResponseContent(string $url): string {
     // Grab the profiles API settings from configuration.
+    // Note: If az_secrets is configured with key config overrides,
+    // these values will be automatically injected from secrets.
     $config = $this->configFactory->get('az_person_profiles_import.settings');
     $endpoint = $config->get('endpoint');
     $apikey = $config->get('apikey');
@@ -78,7 +80,12 @@ class AZProfilesAPIFetcher extends Http {
     try {
       $body = (string) $this->getResponse($url)->getBody();
     }
-    catch (MigrateException | RequestException $e) {
+    catch (RequestException $e) {
+      // Response from API had no data.
+      $json = ['Person' => ['netid' => $netid]];
+      $body = json_encode($json);
+    }
+    catch (MigrateException $e) {
       // Response from API had no data.
       $json = ['Person' => ['netid' => $netid]];
       $body = json_encode($json);
