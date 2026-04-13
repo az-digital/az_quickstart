@@ -97,7 +97,8 @@ function az_barrio_get_az_navbar_enabled() {
   if ($az_navbar_enabled === FALSE) {
     static $az_navbar_deprecation_triggered = FALSE;
     if (!$az_navbar_deprecation_triggered) {
-      @trigger_error('Disabling AZ Navbar via the "az_navbar" theme setting is deprecated in az_quickstart:3.4.0 and is removed from az_quickstart:3.5.0. AZ Navbar is now always enabled. See https://quickstart.arizona.edu/site-admin/managing-menus/main-navigation', E_USER_DEPRECATED);
+      // phpcs:ignore Drupal.Semantics.FunctionTriggerError.TriggerErrorSeeUrlFormat
+      @trigger_error('The "az_navbar" theme setting is deprecated in az_quickstart:3.4.0 and is removed from az_quickstart:3.5.0. AZ Navbar is now always enabled. See https://quickstart.arizona.edu/site-admin/managing-menus/main-navigation', E_USER_DEPRECATED);
       $az_navbar_deprecation_triggered = TRUE;
     }
   }
