@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - crop
+    - ib_dam_media
+  enforced:
+    module:
+      - az_digital_asset_library
+third_party_settings:
+  crop:
+    image_field: null
+id: az_digital_asset_library_embed
+label: 'Arizona Digital Asset Library Embed'
+description: 'Used to embed digital assets from the Arizona Digital Asset Library service.'
+source: ib_dam_embed
+queue_thumbnail_downloads: false
+new_revision: false
+source_configuration:
+  source_field: field_media_ib_dam_embed
+field_map:
+  resource_title: name
