@@ -58,6 +58,12 @@ az_barrio.settings:
     bootstrap_barrio_region_class_content_top:
       type: string
       label: 'Classes for content top region'
+    bootstrap_barrio_region_clean_az_sidebar_collapsible:
+      type: integer
+      label: 'Enable clean wrapper for sidebar collapsible region'
+    bootstrap_barrio_region_class_az_sidebar_collapsible:
+      type: string
+      label: 'Classes for sidebar collapsible region'
     bootstrap_barrio_region_clean_content_2_col_1:
       type: integer
       label: 'Enable clean wrapper for content 2 column 1 region'
@@ -177,6 +183,9 @@ az_barrio.settings:
     bootstrap_barrio_region_width_content_top:
       type: integer
       label: 'Width for content top region'
+    bootstrap_barrio_region_width_az_sidebar_collapsible:
+      type: integer
+      label: 'Width for sidebar collapsible region'
     bootstrap_barrio_region_width_content_2_col_1:
       type: integer
       label: 'Width for content 2 column 1 region'
@@ -341,6 +350,9 @@ az_barrio.settings:
     header_two_col_classes:
       type: string
       label: 'Header column two classes'
+    az_sidebar_collapsible_test:
+      type: string
+      label: 'Test setting for Sidebar Collapsible region'
     # Bootstrap Barrio form element styling settings
     bootstrap_barrio_radio:
       type: string
