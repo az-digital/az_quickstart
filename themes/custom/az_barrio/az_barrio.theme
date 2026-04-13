@@ -83,30 +83,6 @@ function az_barrio_attach_form_id(&$form, $form_id) {
 }
 
 /**
- * Gets whether AZ Navbar behavior is enabled.
- *
- * The disabled AZ Navbar path is deprecated and retained only for
- * backwards compatibility during the deprecation window.
- *
- * @return bool
- *   TRUE when AZ Navbar behavior is enabled.
- */
-function az_barrio_get_az_navbar_enabled() {
-  $az_navbar_enabled = (bool) \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_navbar');
-
-  if ($az_navbar_enabled === FALSE) {
-    static $az_navbar_deprecation_triggered = FALSE;
-    if (!$az_navbar_deprecation_triggered) {
-      // phpcs:ignore Drupal.Semantics.FunctionTriggerError.TriggerErrorSeeUrlFormat
-      @trigger_error('The "az_navbar" theme setting is deprecated in az_quickstart:3.4.0 and is removed from az_quickstart:3.5.0. AZ Navbar is now always enabled. See https://quickstart.arizona.edu/site-admin/managing-menus/main-navigation', E_USER_DEPRECATED);
-      $az_navbar_deprecation_triggered = TRUE;
-    }
-  }
-
-  return $az_navbar_enabled;
-}
-
-/**
  * Implements hook_preprocess_HOOK() for HTML document templates.
  *
  * Adds html classes based on AZ Barrio options.
@@ -174,7 +150,7 @@ function az_barrio_preprocess_page(&$variables, $hook) {
 
   $variables['header_one_col_classes'] = \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('header_one_col_classes');
   $variables['header_two_col_classes'] = \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('header_two_col_classes');
-  $variables['az_navbar'] = az_barrio_get_az_navbar_enabled();
+  $variables['az_navbar'] = \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_navbar');
 
   // Calculate content width based on sidebar widths (assuming 12-column grid).
   // Only subtract sidebar widths if the sidebars actually have content.
@@ -617,7 +593,7 @@ function az_barrio_theme_suggestions_menu_alter(array &$suggestions, array $vari
   }
 
   // Add theme suggestion for the az_navbar variation of the main menu.
-  if (isset($variables['attributes']['id']) && $variables['attributes']['id'] === 'block-az-barrio-main-menu' && az_barrio_get_az_navbar_enabled()) {
+  if (isset($variables['attributes']['id']) && $variables['attributes']['id'] === 'block-az-barrio-main-menu' && \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_navbar')) {
     $suggestions[] = 'menu__main_navbar_az';
   }
 }
