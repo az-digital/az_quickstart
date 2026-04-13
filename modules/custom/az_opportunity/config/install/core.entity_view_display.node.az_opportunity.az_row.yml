@@ -22,7 +22,7 @@ dependencies:
     - field.field.node.az_opportunity.field_az_trellis_imported_date
     - node.type.az_opportunity
   module:
-    - datetime_range
+    - date_ap_style
     - field_group
     - smart_title
     - user
@@ -31,13 +31,14 @@ third_party_settings:
     group_row_wrap:
       children:
         - group_opportunity_link
+        - group_row
       label: 'row wrap'
       parent_name: ''
       region: content
-      weight: 0
+      weight: 1
       format_type: html_element
       format_settings:
-        classes: 'position-relative d-block list-group-item-action'
+        classes: 'position-relative d-block list-group-item-action hover container'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -51,11 +52,10 @@ third_party_settings:
     group_opportunity_link:
       children:
         - links
-        - group_row
       label: 'opportunity link'
       parent_name: group_row_wrap
       region: content
-      weight: 1
+      weight: 0
       format_type: link
       format_settings:
         classes: 'text-decoration-none stretched-link'
@@ -68,16 +68,16 @@ third_party_settings:
     group_row:
       children:
         - group_col_1
-        - group_col_2
         - group_col_4
+        - group_col_2
         - group_col_3
       label: row
-      parent_name: group_opportunity_link
+      parent_name: group_row_wrap
       region: content
-      weight: 8
+      weight: 2
       format_type: html_element
       format_settings:
-        classes: row
+        classes: 'row shadow-sm p-2 p-md-1 border rounded'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -94,10 +94,10 @@ third_party_settings:
       label: 'col 1'
       parent_name: group_row
       region: content
-      weight: 3
+      weight: 2
       format_type: html_element
       format_settings:
-        classes: col-4
+        classes: 'col-12 col-md-4 align-content-center'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -111,104 +111,123 @@ third_party_settings:
     group_col_2:
       children:
         - field_az_application_date
-      label: 'col 2'
+      label: 'Application date'
       parent_name: group_row
       region: content
       weight: 4
       format_type: html_element
       format_settings:
-        classes: col-3
+        classes: 'col-12 col-md-3'
         show_empty_fields: false
         id: ''
         label_as_html: false
         element: div
-        show_label: false
-        label_element: h3
-        label_element_classes: ''
+        show_label: true
+        label_element: h4
+        label_element_classes: 'fs-6 fw-bold mb-0 mt-2 mt-md-1'
         attributes: ''
         effect: none
         speed: fast
     group_col_3:
       children:
         - field_az_opportunity_location
-      label: 'Col 3'
+      label: Location
       parent_name: group_row
       region: content
-      weight: 6
+      weight: 5
       format_type: html_element
       format_settings:
-        classes: col-2
+        classes: 'col-12 col-md-2'
         show_empty_fields: false
         id: ''
         label_as_html: false
         element: div
-        show_label: false
-        label_element: h3
-        label_element_classes: ''
+        show_label: true
+        label_element: h4
+        label_element_classes: 'fs-6 fw-bold mb-0 mt-2 mt-md-1'
         attributes: ''
         effect: none
         speed: fast
     group_col_4:
       children:
         - field_az_program_date
-      label: 'col 4'
+      label: 'Program Date'
       parent_name: group_row
       region: content
-      weight: 5
+      weight: 3
       format_type: html_element
       format_settings:
-        classes: col-3
+        classes: 'col-12 col-md-3'
         show_empty_fields: false
         id: ''
         label_as_html: false
         element: div
-        show_label: false
-        label_element: h3
-        label_element_classes: ''
+        show_label: true
+        label_element: h4
+        label_element_classes: 'fs-6 fw-bold mb-0 mt-2 mt-md-1'
         attributes: ''
         effect: none
         speed: fast
   smart_title:
     enabled: true
     settings:
-      smart_title__link: true
-      smart_title__tag: h2
+      smart_title__link: false
+      smart_title__tag: h3
       smart_title__classes:
-        - node__title
         - h5
-        - m-0
+        - my-2
+        - my-md-0
+        - hover-text-underline
 id: node.az_opportunity.az_row
 targetEntityType: node
 bundle: az_opportunity
 mode: az_row
 content:
   field_az_application_date:
-    type: daterange_default
-    label: inline
+    type: daterange_ap_style
+    label: hidden
     settings:
-      timezone_override: ''
-      format_type: html_date
-      from_to: both
-      separator: '-'
+      always_display_year: false
+      use_today: false
+      cap_today: false
+      display_day: false
+      display_time: false
+      hide_date: false
+      time_before_date: false
+      display_noon_and_midnight: false
+      capitalize_noon_and_midnight: false
+      use_all_day: false
+      separator: endash
+      timezone: ''
+      month_only: false
     third_party_settings: {  }
     weight: 13
     region: content
   field_az_opportunity_location:
     type: string
-    label: inline
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
     weight: 9
     region: content
   field_az_program_date:
-    type: daterange_default
-    label: inline
+    type: daterange_ap_style
+    label: hidden
     settings:
-      timezone_override: ''
-      format_type: html_date
-      from_to: both
-      separator: '-'
+      always_display_year: false
+      use_today: false
+      cap_today: false
+      display_day: false
+      display_time: false
+      hide_date: false
+      time_before_date: false
+      display_noon_and_midnight: false
+      capitalize_noon_and_midnight: false
+      use_all_day: false
+      separator: endash
+      timezone: ''
+      month_only: false
     third_party_settings: {  }
     weight: 1
     region: content

@@ -21,7 +21,7 @@ dependencies:
     - field.field.node.az_opportunity.field_az_trellis_imported_date
     - node.type.az_opportunity
   module:
-    - datetime_range
+    - date_ap_style
     - field_group
     - link
     - options
@@ -39,7 +39,7 @@ third_party_settings:
       weight: 1
       format_type: html_element
       format_settings:
-        classes: col
+        classes: 'col-12 col-sm-6 col-lg p-card'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -50,54 +50,16 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-    group_col2:
-      children: {  }
-      label: col2
-      parent_name: ''
-      region: hidden
-      weight: 13
-      format_type: html_element
-      format_settings:
-        classes: col
-        show_empty_fields: false
-        id: ''
-        label_as_html: false
-        element: div
-        show_label: false
-        label_element: h3
-        label_element_classes: ''
-        attributes: ''
-        effect: none
-        speed: fast
     group_col3:
       children:
         - group_program_length
-      label: col3
+      label: col2
       parent_name: group_header_row
       region: content
-      weight: 2
+      weight: 3
       format_type: html_element
       format_settings:
-        classes: col
-        show_empty_fields: false
-        id: ''
-        label_as_html: false
-        element: div
-        show_label: false
-        label_element: h3
-        label_element_classes: ''
-        attributes: ''
-        effect: none
-        speed: fast
-    group_col4:
-      children: {  }
-      label: col4
-      parent_name: ''
-      region: hidden
-      weight: 10
-      format_type: html_element
-      format_settings:
-        classes: col
+        classes: 'col-12 col-sm-6 col-lg p-card'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -111,33 +73,13 @@ third_party_settings:
     group_col5:
       children:
         - group_incentives
-      label: col5
+      label: col3
       parent_name: group_header_row
       region: content
-      weight: 3
+      weight: 4
       format_type: html_element
       format_settings:
-        classes: col
-        show_empty_fields: false
-        id: ''
-        label_as_html: false
-        element: div
-        show_label: false
-        label_element: h3
-        label_element_classes: ''
-        attributes: ''
-        effect: none
-        speed: fast
-    group_col6:
-      children:
-        - group_audiences
-      label: col6
-      parent_name: ''
-      region: hidden
-      weight: 11
-      format_type: html_element
-      format_settings:
-        classes: col
+        classes: 'col-12 col-sm-6 col-lg p-card'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -151,14 +93,13 @@ third_party_settings:
     group_col7:
       children:
         - group_date
-        - group_modality
-      label: col7
+      label: col4
       parent_name: group_header_row
       region: content
-      weight: 4
+      weight: 5
       format_type: html_element
       format_settings:
-        classes: col
+        classes: 'col-12 col-sm-6 col-lg p-card'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -172,13 +113,13 @@ third_party_settings:
     group_col8:
       children:
         - group_topics
-      label: col8
+      label: col5
       parent_name: group_header_row
       region: content
       weight: 6
       format_type: html_element
       format_settings:
-        classes: col
+        classes: 'col-12 col-sm-6 col-lg p-card'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -197,12 +138,12 @@ third_party_settings:
         - group_col7
         - group_col8
       label: 'header row'
-      parent_name: ''
+      parent_name: group_container
       region: content
-      weight: 0
+      weight: 1
       format_type: html_element
       format_settings:
-        classes: 'row text-bg-cool-gray rounded pb-4 mb-4'
+        classes: 'row rounded border'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -229,7 +170,7 @@ third_party_settings:
         element: div
         show_label: true
         label_element: h2
-        label_element_classes: 'h4 fw-bolder'
+        label_element_classes: 'h5 fw-bolder mt-0'
         attributes: ''
         effect: none
         speed: fast
@@ -250,26 +191,7 @@ third_party_settings:
         element: div
         show_label: true
         label_element: h2
-        label_element_classes: 'h4 fw-bolder'
-        attributes: ''
-        effect: none
-        speed: fast
-    group_modality:
-      children: {  }
-      label: 'Parent Account'
-      parent_name: group_col7
-      region: hidden
-      weight: 6
-      format_type: html_element
-      format_settings:
-        classes: ''
-        show_empty_fields: false
-        id: ''
-        label_as_html: false
-        element: div
-        show_label: true
-        label_element: h2
-        label_element_classes: 'h4 fw-bolder'
+        label_element_classes: 'h5 fw-bolder mt-0'
         attributes: ''
         effect: none
         speed: fast
@@ -290,26 +212,7 @@ third_party_settings:
         element: div
         show_label: true
         label_element: h2
-        label_element_classes: 'h4 fw-bolder'
-        attributes: ''
-        effect: none
-        speed: fast
-    group_audiences:
-      children: {  }
-      label: Audiences
-      parent_name: group_col6
-      region: hidden
-      weight: 5
-      format_type: html_element
-      format_settings:
-        classes: ''
-        show_empty_fields: false
-        id: ''
-        label_as_html: false
-        element: div
-        show_label: true
-        label_element: h2
-        label_element_classes: 'h4 fw-bolder'
+        label_element_classes: 'h5 fw-bolder mt-0'
         attributes: ''
         effect: none
         speed: fast
@@ -329,8 +232,8 @@ third_party_settings:
         label_as_html: false
         element: div
         show_label: true
-        label_element: h4
-        label_element_classes: 'h4 fw-bolder'
+        label_element: h2
+        label_element_classes: 'h5 fw-bolder mt-0'
         attributes: ''
         effect: none
         speed: fast
@@ -351,20 +254,44 @@ third_party_settings:
         element: div
         show_label: true
         label_element: h2
-        label_element_classes: 'h4 fw-bolder'
+        label_element_classes: 'h5 fw-bolder mt-0'
         attributes: ''
         effect: none
         speed: fast
-    group_bottom_row:
-      children: {  }
-      label: 'Bottom Row'
+    group_container:
+      children:
+        - group_header_row
+      label: container
       parent_name: ''
-      region: hidden
-      weight: 12
+      region: content
+      weight: 0
       format_type: html_element
       format_settings:
-        classes: row
+        classes: container
         show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_content_row:
+      children:
+        - field_az_opportunity_category
+        - field_az_body
+        - field_az_eligibility
+        - links
+      label: 'Content row'
+      parent_name: ''
+      region: content
+      weight: 5
+      format_type: html_element
+      format_settings:
+        classes: 'row mb-5'
+        show_empty_fields: true
         id: ''
         label_as_html: false
         element: div
@@ -382,13 +309,22 @@ bundle: az_opportunity
 mode: default
 content:
   field_az_application_date:
-    type: daterange_default
+    type: daterange_ap_style
     label: hidden
     settings:
-      timezone_override: ''
-      format_type: html_date
-      from_to: both
-      separator: '-'
+      always_display_year: false
+      use_today: false
+      cap_today: false
+      display_day: false
+      display_time: false
+      hide_date: false
+      time_before_date: false
+      display_noon_and_midnight: false
+      capitalize_noon_and_midnight: false
+      use_all_day: false
+      separator: endash
+      timezone: ''
+      month_only: false
     third_party_settings: {  }
     weight: 7
     region: content
@@ -458,13 +394,22 @@ content:
     weight: 4
     region: content
   field_az_program_date:
-    type: daterange_default
+    type: daterange_ap_style
     label: hidden
     settings:
-      timezone_override: ''
-      format_type: html_date
-      from_to: both
-      separator: '-'
+      always_display_year: false
+      use_today: false
+      cap_today: false
+      display_day: false
+      display_time: false
+      hide_date: false
+      time_before_date: false
+      display_noon_and_midnight: false
+      capitalize_noon_and_midnight: false
+      use_all_day: false
+      separator: endash
+      timezone: ''
+      month_only: false
     third_party_settings: {  }
     weight: 7
     region: content
