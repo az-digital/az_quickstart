@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Block\BlockPluginInterface;
 use Drupal\Core\Extension\Exception\UnknownExtensionException;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
@@ -580,4 +581,13 @@ function az_core_preprocess_entity_embed_container(array &$variables) {
       $variables['children'] = $builder->view($entity, 'teaser');
     }
   }
+}
+
+/**
+ * Implements hook_block_build_BASE_BLOCK_ID_alter().
+ *
+ * Adds a build array flag for mobile nav blocks for use in the page template.
+ */
+function az_core_block_build_mobile_nav_block_alter(array &$build, BlockPluginInterface $block): void {
+  $build['#mobile_nav_block'] = TRUE;
 }
