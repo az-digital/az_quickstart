@@ -126,14 +126,17 @@ class CourseSearch {
         }
       }
       catch (\ValueError $v) {
-        $this->logger->error($this->t("Invalid response from Courses API when searching for %search", [
+        $this->logger->error($this->t("Invalid response from Courses API when searching for %search: %message", [
           '%search' => $search,
+          '%message' => $v->getMessage(),
         ]));
       }
 
     }
     catch (RequestException $e) {
-      $this->logger->error($this->t("Request exception while searching for courses."));
+      $this->logger->error($this->t("Request exception while searching for courses: %message", [
+        '%message' => $e->getMessage(),
+      ]));
     }
 
     foreach ($items as $item) {
