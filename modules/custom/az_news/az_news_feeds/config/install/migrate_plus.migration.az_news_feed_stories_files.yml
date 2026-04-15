@@ -68,7 +68,6 @@ process:
         - '@destination_path'
       file_exists: 'use existing'
       move: false
-      source_exception: 'skip_process'
   field_media_az_image/target_id:
     -
       plugin: entity_generate
