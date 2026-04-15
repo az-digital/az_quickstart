@@ -2,11 +2,8 @@
 
 namespace Drupal\az_course;
 
-<<<<<<< HEAD
-=======
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
->>>>>>> 2a647e66 (Fixes #5486 Error when fetching nonexistent course subject code (#5487))
 use Drupal\Core\Url;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
@@ -127,13 +124,9 @@ class CourseSearch {
 
     }
     catch (RequestException $e) {
-<<<<<<< HEAD
-      \Drupal::logger('az_course')->error("Request exception.");
-=======
       $this->logger->error($this->t("Request exception while searching for courses: %message", [
         '%message' => $e->getMessage(),
       ]));
->>>>>>> 2a647e66 (Fixes #5486 Error when fetching nonexistent course subject code (#5487))
     }
 
     foreach ($items as $item) {
