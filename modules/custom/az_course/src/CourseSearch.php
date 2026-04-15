@@ -2,7 +2,6 @@
 
 namespace Drupal\az_course;
 
-use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use GuzzleHttp\ClientInterface;
@@ -116,7 +115,7 @@ class CourseSearch {
         }
       }
       catch (\ValueError $v) {
-        $this->logger->error($this->t("Invalid response from Courses API when searching for %search: %message", [
+        \Drupal::logger('az_course')->error($this->t("Invalid response from Courses API when searching for %search: %message", [
           '%search' => $search,
           '%message' => $v->getMessage(),
         ]));
@@ -124,7 +123,7 @@ class CourseSearch {
 
     }
     catch (RequestException $e) {
-      $this->logger->error($this->t("Request exception while searching for courses: %message", [
+      \Drupal::logger('az_course')->error($this->t("Request exception while searching for courses: %message", [
         '%message' => $e->getMessage(),
       ]));
     }
