@@ -67,26 +67,6 @@
           }
         }
 
-        // Helper function for play button click
-        function handlePlayButtonClick(element, parentParagraph) {
-          return (event) => {
-            event.preventDefault();
-            element.player.play().catch((error) => vimeoError(error));
-            parentParagraph.classList.add('az-video-playing');
-            parentParagraph.classList.remove('az-video-paused');
-          };
-        }
-
-        // Helper function for pause button click
-        function handlePauseButtonClick(element, parentParagraph) {
-          return (event) => {
-            event.preventDefault();
-            element.player.pause().catch((error) => vimeoError(error));
-            parentParagraph.classList.add('az-video-paused');
-            parentParagraph.classList.remove('az-video-playing');
-          };
-        }
-
         // Helper function to initialize a single Vimeo element
         function initVimeoElement(element, defaultOptions) {
           const parentParagraph = element.parentNode;
@@ -111,23 +91,33 @@
             parentParagraph.classList.add('az-video-playing');
           });
 
-          // Play Button
-          const playButtons = element.getElementsByClassName('az-video-play');
-          if (playButtons[0]) {
-            playButtons[0].addEventListener(
-              'click',
-              handlePlayButtonClick(element, parentParagraph),
-            );
-          }
+          // Set the iframe tabindex to -1 to prevent focus from reaching iframe.
+          element.player.ready().then(() => {
+            const iframe = element.player.element;
+            if (iframe) {
+              iframe.setAttribute('tabindex', '-1');
+            }
+          });
 
-          // Pause Button
-          const pauseButtons = element.getElementsByClassName('az-video-pause');
-          if (pauseButtons[0]) {
-            pauseButtons[0].addEventListener(
-              'click',
-              handlePauseButtonClick(element, parentParagraph),
-            );
-          }
+          // Play/Pause button toggle.
+          const playPauseButton =
+            element.getElementsByClassName('az-video-playpause')[0];
+          playPauseButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            if (event.currentTarget.textContent === 'Play Video') {
+              element.player.play().catch((error) => vimeoError(error));
+              parentParagraph.classList.remove('az-video-paused');
+              parentParagraph.classList.add('az-video-playing');
+              event.currentTarget.textContent = 'Pause Video';
+              event.currentTarget.setAttribute('title', 'Pause the video');
+            } else {
+              element.player.pause().catch((error) => vimeoError(error));
+              parentParagraph.classList.remove('az-video-playing');
+              parentParagraph.classList.add('az-video-paused');
+              event.currentTarget.textContent = 'Play Video';
+              event.currentTarget.setAttribute('title', 'Play the video');
+            }
+          });
         }
 
         // Helper function to handle API loaded callback
