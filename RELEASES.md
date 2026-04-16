@@ -6,7 +6,7 @@ The overarching goal of this release policy is to ensure developers and site mai
 
 Arizona Digital provides varying levels of support for three minor releases of Arizona Quickstart at a time. Different types of patch releases are issued as needed.
 
-The latest minor version (e.g., 3.2) is supported with standard bugfix patch releases. Support for the previous minor release (3.1) is limited to security patch releases only.
+The latest minor version (e.g., 3.2) is supported with standard bug-fix patch releases. Support for the previous minor release (3.1) is limited to security patch releases only.
 
 In addition, when a new major version is planned, we may designate a specific minor release of the existing major release as the **Long Term Support (LTS)** version. In these cases, the LTS version will continue receiving patch releases alongside the latest minor release for the new major version.
 
@@ -28,107 +28,67 @@ Once the version of Drupal core used by the LTS release (e.g., Drupal 10 for 2.1
 Patch releases are limited to changes that are backward-compatible, low-risk, and necessary to maintain stability, accessibility, and compliance. They will avoid visual changes when possible.
 
 There are three types of Quickstart patch releases:
-- Bugfix patch releases
+- Bug-fix patch releases
 - Security patch releases
 - Long Term Support (LTS) patch releases
-
-#### _Included in Bugfix Patch Releases:_
-
-**Arizona Quickstart (install profile, custom modules, theme)**
-- Bug fixes
-- Accessibility improvements
-- Performance improvements
-- Security updates or improvements
-- Critical institutional link changes (may include database updates)
-- Critical brand changes (may include database updates)
-- Additions and updates to experimental modules
-
-**Third-party dependencies**
-- Drupal core  
-  - Security updates
-  - Patch-level releases (non-security bug fixes)
-  - Removal of no-longer-needed patches
-- Drupal contrib projects
-  - Security updates
-  - Patch or minor version updates
-  - Addition and removal of contrib modules or patches
-- Other PHP or Javascript packages and libraries
-  - Security updates
-  - Patch or minor version updates
-#### _Included in Security Patch Releases:_
-
-**Arizona Quickstart (install profile, custom modules, theme)**
-- Security updates
-
-**Third-party dependencies**
-- Drupal core
-  - Security updates
-  - Patch-level releases (to stay current with Drupal core)
-  - Removal of no-longer-needed patches
-- Drupal contrib projects
-  - Security updates
-- Other PHP or Javascript packages and libraries
-  - Security updates
-
-#### _Included in LTS Patch Releases:_
-
-**Arizona Quickstart (install profile, custom modules, theme)**
-- Bug fixes
-- Accessibility improvements
-- Performance improvements
-- Security updates
-- Critical institutional link changes (may include database updates)
-- Critical brand changes (may include database updates)
-
-**Third-party dependencies**
-- Drupal core  
-  - Security updates
-  - Patch-level releases (non-security bug fixes)
-  - Minor version updates (only included in LTS releases, to maintain alignment with Drupal's long-term support cycle)
-  - Removal of no-longer-needed patches
-- Drupal contrib projects
-  - Security updates
-  - Patch or minor version updates
-  - Removal of contrib modules that become unsupported
-  - Addition and removal of patches
-- Other PHP or Javascript packages and libraries
-  - Security updates
-  - Patch or minor version updates
-
-> For LTS releases, critical institutional changes (e.g. required footer updates) may include database updates. These should be designed to minimize disruption to site owners and include opt-out paths where applicable.
-
+  - _For LTS releases, critical institutional changes (e.g. required footer updates) may include database updates. These should be designed to minimize disruption to site owners and include opt-out paths where applicable._
 
 ### Minor Releases (`x.Y.z`)
-
-Minor releases may include all patch-level changes, as well as:
-
-#### Functionality and Frontend
-
-- New features
-- Changes to behavior that existing sites may rely on
-- Changes to visual appearance, CSS, templates, or markup  
-  - Including breaking changes that may require manual adjustment
-- Experimental modules promoted to Stable
-- Enabling stable modules by default
-
-#### Dependencies
-
-- Drupal core minor version updates
-- Drupal contrib major version updates
-
-#### APIs
-
-- New internal APIs or API enhancements (backward-compatible preferred)
-
-#### Code Quality
-
-- Disruptive coding standard or architectural changes
-- Risky or regression-prone fixes requiring manual testing or upgrade paths
+Minor releases include more impactful changes to Quickstart that are commonly defined as "breaking" changes.
 
 ### Major Releases (`X.y.z`)
+Major releases include major changes such as Drupal core and Arizona Bootstrap major version updates.
 
-- Drupal core major version updates
-- Arizona Bootstrap major version updates
+### What's Included in each Type of Release?
+
+|Type of change|Included in Bug-fix Patch Releases|Included in Security Patch Releases|Included in LTS Patch Releases|Included in Minor Releases|Included in Major Releases|
+|---|:---:|:---:|:---:|:---:|:---:|
+|**Arizona Quickstart (install profile, custom modules, theme)**|
+|- Bug fixes|✅||✅|✅|✅|
+|- Accessibility improvements|✅||✅|✅|✅|
+|- Performance improvements|✅||✅|✅|✅|
+|- Security updates or improvements|✅|✅|✅|✅|✅|
+|- Critical institutional link changes (may include database updates)|✅||✅|✅|✅|
+|- Critical brand changes (may include database updates)|✅||✅|✅|✅|
+|- Additions and updates to experimental modules|✅|||✅|✅|
+|- New features||||✅|✅|
+|- Changes to behavior that existing sites may rely on||||✅|✅|
+|- Changes to visual appearance, CSS, templates, or markup (Including breaking changes that may require manual adjustment)||||✅|✅|
+|- Experimental modules promoted to Stable||||✅|✅|
+|- Enabling stable modules by default||||✅|✅|
+||**Included in Bug-fix Patch Releases**|**Included in Security Patch Releases**|**Included in LTS Patch Releases**|**Included in Minor Releases**|**Included in Major Releases**|
+|**Third-party dependencies**|
+|**Drupal core**|
+|- Security updates|✅|✅|✅|✅|✅|
+|- Patch-level version updates*|✅|✅|✅|✅|✅|
+|- Removal of no-longer-needed patches|✅|✅|✅|✅|✅|
+|- Minor version updates**|||✅|✅|✅|
+|- Major version updates|||||✅|
+|**Drupal contrib projects**|
+|- Security updates|✅|✅|✅|✅|✅|
+|- Patch-level and minor version updates*|✅|✅|✅|✅|✅|
+|- Major version updates||||✅|✅|
+|- Addition and removal of contrib modules or patches|✅||✅|✅|✅|
+|- Removal of contrib modules that become unsupported|✅|✅|✅|✅|✅|
+|**Other PHP or Javascript packages and libraries**|
+|- Security updates|✅|✅|✅|✅|✅|
+|- Patch-level and minor version updates*|✅|✅|✅|✅|✅|
+||**Included in Bug-fix Patch Releases**|**Included in Security Patch Releases**|**Included in LTS Patch Releases**|**Included in Minor Releases**|**Included in Major Releases**|
+|**APIs and Code Quality**|
+|- New internal APIs or API enhancements (backward-compatible preferred)||||✅|✅|
+|- Removal of deprecated internal APIs|||||✅|
+|- Removal of deprecated custom modules|||||✅|
+|- Disruptive changes to comply with new or updated coding standards||||✅|✅|
+|- Major architectural changes|||||✅|
+|- Risky or regression-prone fixes requiring manual testing or upgrade paths||||✅|✅|
+|**Arizona Bootstrap**|
+|- Arizona Bootstrap minor version updates||||✅|✅|
+|- Arizona Bootstrap major version updates|||||✅|
+
+_*Patch-level updates (non-security bug-fix updates) are typically included in Quickstart Bug-fix and LTS Patch releases. In the event of a security update for Drupal core, Drupal contrib projects or third party libraries, it may be necessary to include non-security patch-level updates (bug-fix updates) in Quickstart Security Patch releases._
+
+_**Minor version updates for Drupal core are included in Quickstart LTS (patch-level) releases to maintain alignment with Drupal's long-term support cycle._
+
 
 ## Pre-Release Versions
 

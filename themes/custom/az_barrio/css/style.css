@@ -33,7 +33,7 @@ html.sticky-footer #main-wrapper {
 
 /* Footer Nav */
 #footer_sub .nav-utility {
-  line-height: 1.25;
+  line-height: 1.375;
 }
 
 /* Correct `inline-block` display not defined in IE 8/9. */
@@ -749,8 +749,8 @@ form.webform-submission-form {
 /* end Bootstrap Barrio image field styles */
 
 /* overrides Entity Reference fields and labels to match similar fields */
-.field--type-entity-reference {
-  margin: 0;
+.field.field--type-entity-reference {
+  margin-bottom: 0;
 }
 
 @media (min-width: 768px) {
@@ -759,6 +759,9 @@ form.webform-submission-form {
   #content .form-file,
   #content .form-number,
   #content .form-tel,
+  #content .form-url,
+  #content .form-date,
+  #content .form-time,
   #content input[type="text"].form-control,
   #content .webform-signature-pad .button {
     width: initial;
