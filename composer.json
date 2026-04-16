@@ -27,7 +27,7 @@
         "php": ">=8.3",
         "az-digital/arizona-bootstrap": "5.1.2",
         "az-digital/az-icons": "1.0.4",
-        "citation-style-language/locales": "0.0.88",
+        "citation-style-language/locales": "0.0.90",
         "citation-style-language/styles": "0.0.668",
         "composer/installers": "^2.0",
         "cweagans/composer-patches": "^1.7",
@@ -58,7 +58,7 @@
         "drupal/config_split": "2.0.2",
         "drupal/config_sync": "3.0.0-alpha5",
         "drupal/config_update": "2.0.0-alpha4",
-        "drupal/core-recommended": "11.3.5",
+        "drupal/core-recommended": "11.3.7",
         "drupal/crop": "2.6.0",
         "drupal/date_ap_style": "3.0.0",
         "drupal/decorative_image_widget": "1.0.3",
@@ -169,13 +169,15 @@
             "drupal/config_distro": {
                 "Storage comparer issue": "https://gist.githubusercontent.com/tadean/e2e0dd57f1a9c4eae28d8e713cb01d82/raw/e114987d4a76c183208c763de4dbfecbf41b7f35/config_distro_storage_comparer_issue.patch"
             },
+            "drupal/config_ignore": {
+                "PHP 8.4 compatibility: Implicitly marking parameter $request as nullable is deprecated (3583753)": "https://www.drupal.org/files/issues/2026-04-08/config_ignore-php84-explicit-nullable-request-3583753.patch"
+            },
             "drupal/config_readonly": {
                 "Admin Page at admin/config/services/jsonapi is not loading in test environment (3469854)": "https://www.drupal.org/files/issues/2026-02-18/config_readonly-3469854-18.diff"
             },
             "drupal/core": {
                 "Views Date Filter Datetime Granularity Option (2868014)": "https://www.drupal.org/files/issues/2025-06-25/2868014-139-11-x.patch",
                 "Unable to select single view display for view settings (2552541)": "https://www.drupal.org/files/issues/2025-07-23/2552541-69.patch",
-                "Add skip-method option to file_copy and download process plugins (2766369)": "https://www.drupal.org/files/issues/2024-05-13/2766369-39.patch",
                 "Move content overview default task link out of content_moderation module (3199682)": "https://www.drupal.org/files/issues/2022-02-10/3199682-11-9-4-x.patch",
                 "Improve migration system performance: statically cache DrupalSqlBase::$systemData (3154156)": "https://www.drupal.org/files/issues/2022-01-24/3154156-12.patch",
                 "filter_autop returns self closing br element with slash, lets alter to br (2350049)": "https://www.drupal.org/files/issues/2025-11-07/2350049-66-11.x.patch",
