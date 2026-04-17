@@ -330,7 +330,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
         '#type' => 'checkbox',
         '#prefix' => "<span class='form-item__label'>" . t('AZ Navbar') . "</span>",
         '#title' => t('Enable AZ Navbar'),
-        '#description' => t('Adds the `navbar-az` class to the main navigation bar, providing additional styling and support for a third level of navigation. DEPRECATION WARNING: This setting is deprecated in AZQS 3.4 and is removed from AZQS 3.5. AZ Navbar is now enabled by default. See https://quickstart.arizona.edu/site-admin/managing-menus/main-navigation'),
+        '#description' => t('Adds the `navbar-az` class to the main navigation bar, providing additional styling and support for a third level of navigation. DEPRECATION WARNING: The option to not use this setting is now deprecated with Quickstart 3.4 and will be removed from Quickstart 3.5. See https://quickstart.arizona.edu/site-admin/managing-menus/main-navigation'),
         '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_navbar'),
         '#wrapper_attributes' => ['class' => ['field-multiple-table']],
       ],
