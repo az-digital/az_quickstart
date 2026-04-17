@@ -13,6 +13,17 @@ use Drupal\az_opportunity_trellis\Plugin\views\filter\AZOpportunityTrellisViewsA
 use Drupal\az_opportunity_trellis\TrellisHelper;
 
 /**
+ * Implements hook_theme().
+ */
+function az_opportunity_trellis_theme() {
+  return [
+    'views_view__az_opportunity_trellis_import' => [
+      'base hook' => 'views_view',
+    ],
+  ];
+}
+
+/**
  * Implements hook_form_FORM_ID_alter() for node_az_opportunity_edit_form.
  *
  * Adds warning message and disables opportunity detail

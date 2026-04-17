@@ -426,7 +426,7 @@ display:
           hide_alter_empty: true
           property_path: Parent_Account_Name
       pager:
-        type: mini
+        type: full
         options:
           offset: 0
           pagination_heading_level: h4
@@ -434,8 +434,10 @@ display:
           total_pages: null
           id: 0
           tags:
-            next: ››
-            previous: ‹‹
+            first: '« First'
+            previous: '‹ Previous'
+            next: 'Next ›'
+            last: 'Last »'
           expose:
             items_per_page: false
             items_per_page_label: 'Items per page'
@@ -444,6 +446,7 @@ display:
             items_per_page_options_all_label: '- All -'
             offset: false
             offset_label: Offset
+          quantity: 9
       exposed_form:
         type: basic
         options:
@@ -461,7 +464,17 @@ display:
       cache:
         type: none
         options: {  }
-      empty: {  }
+      empty:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text_custom
+          empty: true
+          content: 'No results found. Try adjusting your search filters.'
       sorts: {  }
       arguments: {  }
       filters:
@@ -833,7 +846,17 @@ display:
         options: {  }
       relationships: {  }
       use_ajax: true
-      header: {  }
+      header:
+        result:
+          id: result
+          table: views
+          field: result
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: result
+          empty: false
+          content: 'Displaying @start–@end of @total results'
       footer: {  }
       display_extenders: {  }
     cache_metadata:

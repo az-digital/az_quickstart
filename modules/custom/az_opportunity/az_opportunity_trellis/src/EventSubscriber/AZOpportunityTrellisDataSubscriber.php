@@ -130,6 +130,8 @@ final class AZOpportunityTrellisDataSubscriber implements EventSubscriberInterfa
       }
       $ids = $this->trellisHelper->searchOpportunities($parameters);
       if (!empty($ids)) {
+        // Set total before slicing so the pager knows the full result count.
+        $event->getView()->pager->total_items = count($ids);
         $offset = $event->getOffset();
         $limit = $event->getLimit();
         if (!empty($limit)) {
