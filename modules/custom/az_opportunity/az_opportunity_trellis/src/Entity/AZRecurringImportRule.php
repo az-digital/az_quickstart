@@ -104,7 +104,7 @@ final class AZRecurringImportRule extends ConfigEntityBase implements AZRecurrin
     $params += $attributes;
     $params['keyword'] = $this->get('keyword') ?? '';
     $params['owner'] = $this->get('owner') ?? '';
-    $params['parent_account_name'] = $this->get('parent_account_name') ?? '';
+    $params['parent_account'] = $this->get('parent_account_name') ?? '';
     $params = array_filter($params);
     return $params;
   }
