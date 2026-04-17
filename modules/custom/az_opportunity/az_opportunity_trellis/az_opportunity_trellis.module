@@ -11,6 +11,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\az_opportunity_trellis\Plugin\views\filter\AZOpportunityTrellisViewsAttributeFilter;
 use Drupal\az_opportunity_trellis\TrellisHelper;
+use Drupal\views\ViewExecutable;
 
 /**
  * Implements hook_theme().
@@ -21,6 +22,25 @@ function az_opportunity_trellis_theme() {
       'base hook' => 'views_view',
     ],
   ];
+}
+
+/**
+ * Implements hook_views_pre_render().
+ *
+ * Suppresses the empty state message on the import view when no search
+ * has been performed yet (initial page load or blank form submit).
+ */
+function az_opportunity_trellis_views_pre_render(ViewExecutable $view) {
+  if ($view->id() !== 'az_opportunity_trellis_import' || $view->current_display !== 'page_1') {
+    return;
+  }
+  $input = $view->getExposedInput();
+  // Strip the form submit key and blank values to detect a real search.
+  unset($input['op']);
+  $meaningful = array_filter($input, fn($v) => $v !== '' && $v !== [] && $v !== NULL);
+  if (empty($meaningful)) {
+    $view->empty = [];
+  }
 }
 
 /**

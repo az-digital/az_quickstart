@@ -474,7 +474,7 @@ display:
           admin_label: ''
           plugin_id: text_custom
           empty: true
-          content: 'No results found. Try adjusting your search filters.'
+          content: 'No results found. Try adjusting search filters above.'
       sorts: {  }
       arguments: {  }
       filters:
