@@ -2,7 +2,8 @@
   Drupal.behaviors.az_youtube_video_bg = {
     attach(context) {
       function initYouTubeBackgrounds() {
-        if (window.screen && window.screen.width > 768) {
+        if (window.screen &&
+          window.screen.width > 768) {
           // @see https://developers.google.com/youtube/player_parameters
           const defaultSettings = {
             loop: true,
@@ -16,7 +17,8 @@
 
           // Load YouTube IFrame player API
           const tag = document.createElement('script');
-          const firstScriptTag = document.getElementsByTagName('script')[0];
+          const firstScriptTag =
+            document.getElementsByTagName('script')[0];
           tag.src = 'https://www.youtube.com/iframe_api';
           firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
@@ -55,23 +57,15 @@
                 },
               });
 
-              // Play/Pause button toggle.
+              // Play/Pause button: delegate state changes to player events.
               const playPauseButton =
                 element.getElementsByClassName('az-video-playpause')[0];
               playPauseButton.addEventListener('click', (event) => {
                 event.preventDefault();
-                if (event.currentTarget.textContent === 'Play Video') {
+                if (event.currentTarget.getAttribute('aria-pressed') === 'true') {
                   element.player.playVideo();
-                  parentParagraph.classList.remove('az-video-paused');
-                  parentParagraph.classList.add('az-video-playing');
-                  event.currentTarget.textContent = 'Pause Video';
-                  event.currentTarget.setAttribute('title', 'Pause the video');
                 } else {
                   element.player.pauseVideo();
-                  parentParagraph.classList.remove('az-video-playing');
-                  parentParagraph.classList.add('az-video-paused');
-                  event.currentTarget.textContent = 'Play Video';
-                  event.currentTarget.setAttribute('title', 'Play the video');
                 }
               });
             });
@@ -156,6 +150,22 @@
               resize();
               parentContainer.classList.add('az-video-playing');
               parentContainer.classList.remove('az-video-loading');
+              // Sync button state: video is confirmed playing.
+              const btn = parentContainer.querySelector('.az-video-playpause');
+              if (btn) {
+                btn.textContent = 'Pause Video';
+                btn.setAttribute('aria-pressed', 'false');
+              }
+            }
+            if (event.data === 2) {
+              // Video paused: sync button state.
+              parentContainer.classList.remove('az-video-playing');
+              parentContainer.classList.add('az-video-paused');
+              const btn = parentContainer.querySelector('.az-video-playpause');
+              if (btn) {
+                btn.textContent = 'Play Video';
+                btn.setAttribute('aria-pressed', 'true');
+              }
             }
           };
 
