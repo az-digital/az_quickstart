@@ -26,9 +26,6 @@
           );
           window.onYouTubeIframeAPIReady = () => {
             Array.from(bgVideoParagraphs).forEach((element) => {
-              const parentParagraph = document.getElementById(
-                element.dataset.parentid,
-              );
               const youtubeId = element.dataset.youtubeid;
               bgVideoSettings[youtubeId] = {
                 autoplay: element.dataset.autoplay === 'true',
@@ -55,23 +52,17 @@
                 },
               });
 
-              // Play/Pause button toggle.
+              // Play/Pause button: delegate state changes to player events.
               const playPauseButton =
                 element.getElementsByClassName('az-video-playpause')[0];
               playPauseButton.addEventListener('click', (event) => {
                 event.preventDefault();
-                if (event.currentTarget.textContent === 'Play Video') {
+                if (
+                  event.currentTarget.getAttribute('aria-pressed') === 'true'
+                ) {
                   element.player.playVideo();
-                  parentParagraph.classList.remove('az-video-paused');
-                  parentParagraph.classList.add('az-video-playing');
-                  event.currentTarget.textContent = 'Pause Video';
-                  event.currentTarget.setAttribute('title', 'Pause the video');
                 } else {
                   element.player.pauseVideo();
-                  parentParagraph.classList.remove('az-video-playing');
-                  parentParagraph.classList.add('az-video-paused');
-                  event.currentTarget.textContent = 'Play Video';
-                  event.currentTarget.setAttribute('title', 'Play the video');
                 }
               });
             });
@@ -134,6 +125,7 @@
             if (defaultSettings.mute) {
               event.target.mute();
             }
+
             event.target.seekTo(bgVideoSettings[id].start);
             event.target.playVideo();
             // Create and dispatch a new event when video starts playing.
@@ -156,6 +148,22 @@
               resize();
               parentContainer.classList.add('az-video-playing');
               parentContainer.classList.remove('az-video-loading');
+              // Sync button state: video is confirmed playing.
+              const btn = parentContainer.querySelector('.az-video-playpause');
+              if (btn) {
+                btn.textContent = 'Pause Video';
+                btn.setAttribute('aria-pressed', 'false');
+              }
+            }
+            if (event.data === 2) {
+              // Video paused: sync button state.
+              parentContainer.classList.remove('az-video-playing');
+              parentContainer.classList.add('az-video-paused');
+              const btn = parentContainer.querySelector('.az-video-playpause');
+              if (btn) {
+                btn.textContent = 'Play Video';
+                btn.setAttribute('aria-pressed', 'true');
+              }
             }
           };
 

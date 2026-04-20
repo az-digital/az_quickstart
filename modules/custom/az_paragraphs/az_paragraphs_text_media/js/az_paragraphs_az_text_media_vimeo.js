@@ -85,10 +85,29 @@
             muted: defaultOptions.muted,
           });
 
-          // Event listener for starting play.
+          // Play/Pause button reference used by event handlers below.
+          const playPauseButton =
+            element.getElementsByClassName('az-video-playpause')[0];
+
+          // Update dimensions when buffering completes.
           element.player.on('bufferend', () => {
             setDimensions(element);
+          });
+
+          // Sync button and class state when video plays.
+          element.player.on('play', () => {
+            parentParagraph.classList.remove('az-video-paused');
             parentParagraph.classList.add('az-video-playing');
+            playPauseButton.textContent = 'Pause Video';
+            playPauseButton.setAttribute('aria-pressed', 'false');
+          });
+
+          // Sync button and class state when video pauses.
+          element.player.on('pause', () => {
+            parentParagraph.classList.remove('az-video-playing');
+            parentParagraph.classList.add('az-video-paused');
+            playPauseButton.textContent = 'Play Video';
+            playPauseButton.setAttribute('aria-pressed', 'true');
           });
 
           // Set the iframe tabindex to -1 to prevent focus from reaching iframe.
@@ -99,23 +118,13 @@
             }
           });
 
-          // Play/Pause button toggle.
-          const playPauseButton =
-            element.getElementsByClassName('az-video-playpause')[0];
+          // Play/Pause button: delegate state changes to player events.
           playPauseButton.addEventListener('click', (event) => {
             event.preventDefault();
-            if (event.currentTarget.textContent === 'Play Video') {
+            if (event.currentTarget.getAttribute('aria-pressed') === 'true') {
               element.player.play().catch((error) => vimeoError(error));
-              parentParagraph.classList.remove('az-video-paused');
-              parentParagraph.classList.add('az-video-playing');
-              event.currentTarget.textContent = 'Pause Video';
-              event.currentTarget.setAttribute('title', 'Pause the video');
             } else {
               element.player.pause().catch((error) => vimeoError(error));
-              parentParagraph.classList.remove('az-video-playing');
-              parentParagraph.classList.add('az-video-paused');
-              event.currentTarget.textContent = 'Play Video';
-              event.currentTarget.setAttribute('title', 'Play the video');
             }
           });
         }
@@ -165,7 +174,6 @@
           });
         }
       }
-
       once('vimeoTextOnMedia-init', 'body').forEach(initVimeoBackgrounds);
     },
   };
