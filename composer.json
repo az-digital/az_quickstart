@@ -27,7 +27,7 @@
         "php": ">=8.3",
         "az-digital/arizona-bootstrap": "5.1.2",
         "az-digital/az-icons": "1.0.4",
-        "citation-style-language/locales": "0.0.88",
+        "citation-style-language/locales": "0.0.90",
         "citation-style-language/styles": "0.0.668",
         "composer/installers": "^2.0",
         "cweagans/composer-patches": "^1.7",
@@ -199,7 +199,11 @@
                 "Fix PHP 8.4 nullable type deprecations (3518553)": "https://www.drupal.org/files/issues/2025-11-26/3518553-fix-php-8.4-3.patch"
             },
             "drupal/entity_embed": {
-                "Drupal 10.5/11.2 compatability (tooltip broken, cannot edit embedded entities) (3531672)": "https://www.drupal.org/files/issues/2025-08-08/entity_embed--fix-ckeditor-icon-reference--3531672-22.patch"
+                "Drupal 10.5/11.2 compatability (tooltip broken, cannot edit embedded entities) (3531672)": "https://www.drupal.org/files/issues/2025-08-08/entity_embed--fix-ckeditor-icon-reference--3531672-22.patch",
+                "Using null as an array offset is deprecated in PHP 8.5 (3577405)": "https://www.drupal.org/files/issues/2026-03-06/3577405-mr66-5.patch"
+            },
+            "drupal/google_tag": {
+                "PHP 8.5: Method SplObjectStorage::contains() is deprecated since 8.5 (3560958)": "https://www.drupal.org/files/issues/2026-03-06/3560958-mr129-11.patch"
             },
             "drupal/image_widget_crop": {
                 "Can't save image widget crop settings (ImmutableConfigException) (3491004)": "https://www.drupal.org/files/issues/2025-03-06/image_widget_crop_fix.patch",
@@ -221,6 +225,9 @@
                 "entity_lookup plugin fails if $value is empty (2830058)": "https://www.drupal.org/files/issues/2022-10-11/migrate_plus-lookup-2830058-10.patch",
                 "Using the XML Data Parser with a Predicate pulls in the final xml item regardless of if the predicate matches (2891964)": "https://www.drupal.org/files/issues/fix-ignored-predicate-2891964-2.patch"
             },
+            "drupal/pathauto": {
+                "Deprecated error with PHP 8.5 on entity forms without pathauto patterns (3579655)": "https://www.drupal.org/files/issues/2026-04-13/pathauto-3579655-11-fix-deprecation-errors-on-8-1-14.patch" 
+            },
             "drupal/role_delegation": {
                 "Restrict access to cancel/remove accounts with non-assignable roles (3299201)": "https://www.drupal.org/files/issues/2022-07-25/3299201-4.patch"
             },
@@ -239,7 +246,8 @@
                 "Content is assigned to wrong menu level if user does not have access to the current level (3187152)": "https://www.drupal.org/files/issues/2023-09-26/3187152-workbench_access-menu-default-20.patch"
             },
             "drupal/xmlsitemap": {
-                "Module incorrectly assumes string, triggering PHP 8 fatal error (3355204)": "https://www.drupal.org/files/issues/2023-04-19/3355204_metatag_2.patch"
+                "Module incorrectly assumes string, triggering PHP 8 fatal error (3355204)": "https://www.drupal.org/files/issues/2023-04-19/3355204_metatag_2.patch",
+                "Using null as an array offset is deprecated in PHP 8.5 (3571583)": "https://www.drupal.org/files/issues/2026-03-06/3571583-mr76-10.patch"
             },
             "npm-asset/slick-carousel": {
                 "Incompatibility with Drupal 11/jQuery 4 (3467129)": "https://www.drupal.org/files/issues/2025-02-17/compatibility_jQuery_4.patch"

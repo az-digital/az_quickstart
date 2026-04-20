@@ -28,6 +28,9 @@ source:
       name: gallery_display
       selector: gallery_display
     -
+      name: gallery_captions
+      selector: gallery_captions
+    -
       name: ratio
       selector: ratio
 
@@ -63,6 +66,7 @@ process:
     paragraph_behavior_plugins:
       az_photo_gallery_paragraph_behavior:
         gallery_display: gallery_display
+        gallery_captions: gallery_captions
         ratio: ratio
         az_display_settings:
           bottom_spacing: bottom_spacing
