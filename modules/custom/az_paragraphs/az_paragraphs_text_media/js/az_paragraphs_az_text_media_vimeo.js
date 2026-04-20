@@ -45,8 +45,7 @@
           const pWidth = Math.ceil(height * defaultAspectRatio); // get new player width
           const pHeight = Math.ceil(width / defaultAspectRatio); // get new player height
           let widthMinuspWidthDividedByTwo = (width - pWidth) / 2;
-          widthMinuspWidthDividedByTwo =
-            `${widthMinuspWidthDividedByTwo.toString()}px`;
+          widthMinuspWidthDividedByTwo = `${widthMinuspWidthDividedByTwo.toString()}px`;
           let pHeightRatio = (height - pHeight) / 2;
           pHeightRatio = `${pHeightRatio.toString()}px`;
           // when screen aspect ratio differs from video,
@@ -175,7 +174,6 @@
           });
         }
       }
-
       once('vimeoTextOnMedia-init', 'body').forEach(initVimeoBackgrounds);
     },
   };
