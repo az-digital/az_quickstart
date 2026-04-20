@@ -2,8 +2,7 @@
   Drupal.behaviors.az_youtube_video_bg = {
     attach(context) {
       function initYouTubeBackgrounds() {
-        if (window.screen &&
-          window.screen.width > 768) {
+        if (window.screen && window.screen.width > 768) {
           // @see https://developers.google.com/youtube/player_parameters
           const defaultSettings = {
             loop: true,
@@ -17,8 +16,7 @@
 
           // Load YouTube IFrame player API
           const tag = document.createElement('script');
-          const firstScriptTag =
-            document.getElementsByTagName('script')[0];
+          const firstScriptTag = document.getElementsByTagName('script')[0];
           tag.src = 'https://www.youtube.com/iframe_api';
           firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
@@ -28,9 +26,6 @@
           );
           window.onYouTubeIframeAPIReady = () => {
             Array.from(bgVideoParagraphs).forEach((element) => {
-              const parentParagraph = document.getElementById(
-                element.dataset.parentid,
-              );
               const youtubeId = element.dataset.youtubeid;
               bgVideoSettings[youtubeId] = {
                 autoplay: element.dataset.autoplay === 'true',
@@ -62,7 +57,9 @@
                 element.getElementsByClassName('az-video-playpause')[0];
               playPauseButton.addEventListener('click', (event) => {
                 event.preventDefault();
-                if (event.currentTarget.getAttribute('aria-pressed') === 'true') {
+                if (
+                  event.currentTarget.getAttribute('aria-pressed') === 'true'
+                ) {
                   element.player.playVideo();
                 } else {
                   element.player.pauseVideo();
@@ -128,6 +125,7 @@
             if (defaultSettings.mute) {
               event.target.mute();
             }
+
             event.target.seekTo(bgVideoSettings[id].start);
             event.target.playVideo();
             // Create and dispatch a new event when video starts playing.
