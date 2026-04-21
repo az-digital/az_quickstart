@@ -151,6 +151,7 @@ function az_barrio_preprocess_page(&$variables, $hook) {
   $variables['header_one_col_classes'] = \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('header_one_col_classes');
   $variables['header_two_col_classes'] = \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('header_two_col_classes');
   $variables['az_navbar'] = \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_navbar');
+  $variables['az_navbar_fullscreen'] = \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_navbar_fullscreen');
 
   // Calculate content width based on sidebar widths (assuming 12-column grid).
   // Only subtract sidebar widths if the sidebars actually have content.
@@ -289,6 +290,11 @@ function az_barrio_library_info_alter(&$libraries, $extension) {
     }
 
     $az_bootstrap_css_path .= $az_bootstrap_css_token;
+    /* @todo - Remove hardcoded path when AZ Navbar Fullscreen is available via CDN. */
+    if (\Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_bootstrap_cdn_version_css') === 'az-navbar-fullscreen') {
+      $az_bootstrap_css_path = 'https://review.digital.arizona.edu/arizona-bootstrap/issue/1937/docs/5.1/dist/css/arizona-bootstrap.min.css';
+      $az_bootstrap_css_token = '';
+    }
     $libraries['arizona-bootstrap-css']['css']['theme'] = [
       $az_bootstrap_css_path => $az_bootstrap_css_info,
     ];
@@ -370,6 +376,11 @@ function az_barrio_library_info_alter(&$libraries, $extension) {
     }
 
     $az_bootstrap_js_path .= $az_bootstrap_js_token;
+    /* @todo - Remove hardcoded path when AZ Navbar Fullscreen is available via CDN. */
+    if (\Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_bootstrap_cdn_version_js') === 'az-navbar-fullscreen') {
+      $az_bootstrap_js_path = 'https://review.digital.arizona.edu/arizona-bootstrap/issue/1937/docs/5.1/dist/js/arizona-bootstrap.bundle.min.js';
+      $az_bootstrap_js_token = '';
+    }
     $libraries['arizona-bootstrap-js']['js'] = [
       $az_bootstrap_js_path => $az_bootstrap_js_info,
     ];
@@ -718,4 +729,13 @@ function az_barrio_preprocess_block(&$variables) {
     $variables['az_remove_sidebar_menu_mobile'] = \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_remove_sidebar_menu_mobile');
   }
 
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for the AZ Navbar Fullscreen menu block.
+ *
+ * Pass wordmark logo setting to the AZ Navbar Fullscreen menu block template.
+ */
+function az_barrio_preprocess_block__az_navbar_fullscreen_menu_block(array &$variables) {
+  $variables['wordmark'] = (\Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('wordmark')) ? TRUE : FALSE;
 }

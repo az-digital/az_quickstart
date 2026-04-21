@@ -1,0 +1,175 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: AZ Navbar Fullscreen
+status: experimental
+libraryOverrides:
+  dependencies:
+    - az_barrio/arizona-bootstrap-css
+    - az_barrio/arizona-bootstrap-js
+    - core/drupal
+props:
+  type: object
+  properties:
+    block_name:
+      type: string
+      title: Block name
+      description: The name of the block to display.
+    attributes:
+      type: string
+      title: HTML attributes
+      description: HTML attributes for the block.
+    primary_items:
+      type: array
+      title: Primary Menu Items
+      description: A nested list of menu items.
+      items:
+        type: object
+        title: Menu Item
+        properties:
+          attributes:
+            type: object
+            title: HTML attributes
+            description: HTML attributes for the menu item.
+          below:
+            type: array
+            title: Child items
+            description: The menu item child items.
+            items:
+              $ref: '#/props/properties/items/items'
+          title:
+            type: string
+            title: Title
+            description: The menu link title.
+          url:
+            type: object
+            title: URL
+            description: The menu link url, instance of \Drupal\Core\Url
+          is_expanded:
+            type: boolean
+            title: Is expanded
+            description: TRUE if the link has visible children within the current menu tree.
+          is_collapsed:
+            type: boolean
+            title: Is collapsed
+            description: TRUE if the link has children within the current menu tree that are not currently visible.
+          in_active_trail:
+            type: boolean
+            title: In active trail
+            description: TRUE if the link is in the active trail.
+    cta_items:
+      type: array
+      title: CTA Menu Items
+      description: A nested list of call-to-action menu items.
+      items:
+        type: object
+        title: Menu Item
+        properties:
+          attributes:
+            type: object
+            title: HTML attributes
+            description: HTML attributes for the menu item.
+          below:
+            type: array
+            title: Child items
+            description: The menu item child items.
+            items:
+              $ref: '#/props/properties/items/items'
+          title:
+            type: string
+            title: Title
+            description: The menu link title.
+          url:
+            type: object
+            title: URL
+            description: The menu link url, instance of \Drupal\Core\Url
+          is_expanded:
+            type: boolean
+            title: Is expanded
+            description: TRUE if the link has visible children within the current menu tree.
+          is_collapsed:
+            type: boolean
+            title: Is collapsed
+            description: TRUE if the link has children within the current menu tree that are not currently visible.
+          in_active_trail:
+            type: boolean
+            title: In active trail
+            description: TRUE if the link is in the active trail.
+    resources_items:
+      type: array
+      title: Resources Menu Items
+      description: A nested list of resources menu items.
+      items:
+        type: object
+        title: Menu Item
+        properties:
+          attributes:
+            type: object
+            title: HTML attributes
+            description: HTML attributes for the menu item.
+          below:
+            type: array
+            title: Child items
+            description: The menu item child items.
+            items:
+              $ref: '#/props/properties/items/items'
+          title:
+            type: string
+            title: Title
+            description: The menu link title.
+          url:
+            type: object
+            title: URL
+            description: The menu link url, instance of \Drupal\Core\Url
+          is_expanded:
+            type: boolean
+            title: Is expanded
+            description: TRUE if the link has visible children within the current menu tree.
+          is_collapsed:
+            type: boolean
+            title: Is collapsed
+            description: TRUE if the link has children within the current menu tree that are not currently visible.
+          in_active_trail:
+            type: boolean
+            title: In active trail
+            description: TRUE if the link is in the active trail.
+    helpful_links_items:
+      type: array
+      title: Helpful Links Menu Items
+      description: A nested list of helpful links menu items.
+      items:
+        type: object
+        title: Menu Item
+        properties:
+          attributes:
+            type: object
+            title: HTML attributes
+            description: HTML attributes for the menu item.
+          below:
+            type: array
+            title: Child items
+            description: The menu item child items.
+            items:
+              $ref: '#/props/properties/items/items'
+          title:
+            type: string
+            title: Title
+            description: The menu link title.
+          url:
+            type: object
+            title: URL
+            description: The menu link url, instance of \Drupal\Core\Url
+          is_expanded:
+            type: boolean
+            title: Is expanded
+            description: TRUE if the link has visible children within the current menu tree.
+          is_collapsed:
+            type: boolean
+            title: Is collapsed
+            description: TRUE if the link has children within the current menu tree that are not currently visible.
+          in_active_trail:
+            type: boolean
+            title: In active trail
+            description: TRUE if the link is in the active trail.
+    wordmark:
+      type: boolean
+      title: Wordmark
+      description: Setting to display the Arizona wordmark in the menu.

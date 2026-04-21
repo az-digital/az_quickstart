@@ -1,0 +1,26 @@
+langcode: en
+status: false
+dependencies:
+  module:
+    - az_core
+  theme:
+    - az_barrio
+id: az_barrio_aznavbarfullscreenmenu
+theme: az_barrio
+region: navigation
+weight: 0
+provider: null
+plugin: az_navbar_fullscreen_menu_block
+settings:
+  id: az_navbar_fullscreen_menu_block
+  label: 'AZ Navbar Fullscreen Menu'
+  label_display: '0'
+  provider: az_core
+  primary_menu: main
+  level: '1'
+  depth: null
+  expand_all_items: 0
+  cta_menu: az-utility-links
+  resources_menu: az-footer-information-for
+  helpful_links_menu: az-footer-resources
+visibility: {  }

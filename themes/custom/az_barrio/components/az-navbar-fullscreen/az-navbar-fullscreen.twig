@@ -1,0 +1,185 @@
+{#
+/**
+ * @file
+ * Theme template to display the AZ Navbar Fullscreen.
+ *
+ * Available variables:
+ * - attributes: Attributes for the menu.
+ * - primary_items: A nested list of primary menu items. Each menu item contains:
+ *   - attributes: HTML attributes for the menu item.
+ *   - below: The menu item child items.
+ *   - title: The menu link title.
+ *   - url: The menu link url, instance of \Drupal\Core\Url
+ *   - localized_options: Menu link localized options.
+ *   - is_expanded: TRUE if the link has visible children within the current
+ *     menu tree.
+ *   - is_collapsed: TRUE if the link has children within the current menu tree
+ *     that are not currently visible.
+ *   - in_active_trail: TRUE if the link is in the active trail.
+ * - cta_items: A nested list of call-to-actionmenu items.
+ * - resources_items: A nested list of "resources for" menu items.
+ * - helpful_links_items: A nested list of "helpful links" menu items.
+ * - wordmark: Setting to display the University wordmark in the nav.
+ */
+#}
+<nav class="navbar navbar-az-newer" aria-label="Main navigation">
+  <div class="container-lg">
+    {% if wordmark %}
+      <a class="navbar-brand col-auto" href="https://www.arizona.edu" title="The University of Arizona homepage">
+        <img alt="The University of Arizona Wordmark Logo White" src="https://review.digital.arizona.edu/arizona-bootstrap/issue/1937/docs/5.1/assets/brand/arizona-bootstrap-logo-webheader-white.svg" fetchpriority="high"/>
+      </a>
+    {% endif %}
+
+    <div class="navbar-az-newer-tools ms-auto">
+      <ul class="navbar-nav flex-row navbar-az-newer-actions d-none d-lg-flex align-items-center mx-3">
+        {% for item in cta_items %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ item.url }}">{{ item.title }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+
+      <form class="navbar-az-newer-search me-4" role="search">
+        <label class="visually-hidden" for="navbar-az-newer-search">Search the site</label>
+        <div class="input-group">
+          <input id="navbar-az-newer-search" class="form-control" type="search" placeholder="Search" aria-label="Search the site">
+          <div class="vr"></div>
+          <button class="btn" type="submit" aria-label="Submit site search"></button>
+        </div>
+      </form>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="modal" data-bs-target="#navbar-newer-menu" aria-controls="navbar-newer-menu" aria-label="Open site menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="modal navbar-az-newer-modal" id="navbar-newer-menu" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="navbar-newer-menu-label" aria-hidden="true">
+  <h2 id="navbar-newer-menu-label" class="visually-hidden">Site menu</h2>
+  <div class="modal-dialog modal-fullscreen">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="navbar navbar-az-newer">
+          <div class="container-lg">
+            {% if wordmark %}
+              <a class="navbar-brand col-auto" href="https://www.arizona.edu" title="The University of Arizona homepage">
+                <img alt="The University of Arizona Wordmark Logo White" src="https://review.digital.arizona.edu/arizona-bootstrap/issue/1937/docs/5.1/assets/brand/arizona-bootstrap-logo-webheader-white.svg" fetchpriority="high"/>
+              </a>
+            {% endif %}
+            <div class="navbar-az-newer-tools ms-auto">
+              <ul class="navbar-nav flex-row navbar-az-newer-actions d-none d-lg-flex align-items-center mx-3">
+                {% for item in cta_items %}
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{ item.url }}">{{ item.title }}</a>
+                  </li>
+                {% endfor %}
+              </ul>
+              <button class="navbar-toggler" type="button" data-bs-dismiss="modal" aria-label="Close site menu">
+                <span class="navbar-toggler-icon" aria-hidden="true"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="container-lg">
+          <form class="navbar-az-newer-search my-5" role="search">
+            <label class="visually-hidden" for="navbar-az-newer-modal-search">Search the site</label>
+            <div class="input-group">
+              <input id="navbar-az-newer-modal-search" class="form-control" type="search" placeholder="type your search term and press enter..." aria-label="Search the site">
+              <div class="vr"></div>
+              <button class="btn" type="submit" aria-label="Submit site search"></button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="modal-body">
+        <div class="container-lg text-white navbar-az-newer-modal-menu">
+          <div class="row g-0">
+            <div class="col-4 navbar-az-newer-nav-primary-col">
+              <!-- primary nav items -->
+              <div class="nav flex-column navbar-az-newer-nav-primary" id="az-navbar-newer-primary-tablist" role="tablist" aria-orientation="vertical">
+                {% for item in primary_items %}
+                <button class="nav-link" id="az-navbar-newer-primary-{{ loop.index }}-tab" data-bs-toggle="pill-hover" data-bs-target="#az-navbar-newer-primary-{{ loop.index }}-content" type="button" role="tab" aria-controls="az-navbar-newer-primary-{{ loop.index }}-content" aria-selected="false">{{ item.title }}</button>
+                {% endfor %}
+              </div>
+            </div>
+            <div class="col-8 navbar-az-newer-nav-secondary-tertiary-cols d-flex">
+              <div class="tab-content d-flex flex-grow-1 w-100" id="az-navbar-newer-primary-tab-content">
+                {% for item in primary_items %}
+                <div class="tab-pane fade flex-grow-1 h-100 w-100" id="az-navbar-newer-primary-{{ loop.index }}-content" role="tabpanel" aria-labelledby="az-navbar-newer-primary-{{ loop.index }}-tab" tabindex="0">
+                  <div class="h-100">
+                    <div class="col h-100 d-flex flex-column p-0">
+                      <!-- secondary nav items -->
+                      <nav class="nav flex-column navbar-az-newer-nav-secondary" aria-label="{{ item.title }}" id="az-navbar-newer-{{ loop.index }}-secondary-nav">
+                        <div class="navbar-az-newer-nav-secondary-scroll">
+                          {% for child in item.below %}
+                          {% if child.below %}
+                          <div class="d-flex align-items-center">
+                            <a class="nav-link flex-grow-1" href="{{ child.url }}">{{ child.title }}</a>
+                            <div class="vr"></div>
+                            <button class="btn navbar-az-newer-nav-toggle" id="az-navbar-newer-{{ loop.parent.loop.index }}-secondary-{{ loop.index }}-tab" data-bs-toggle="collapse" data-bs-target="#az-navbar-newer-{{ loop.parent.loop.index }}-secondary-{{ loop.index }}-content" type="button" aria-expanded="false" aria-controls="az-navbar-newer-{{ loop.parent.loop.index }}-secondary-{{ loop.index }}-content" aria-label="Toggle {{ child.title }} submenu">
+                              <span class="navbar-az-newer-nav-toggle-icon" aria-hidden="true"></span>
+                            </button>
+                          </div>
+                          <div class="collapse navbar-az-newer-nav-tertiary-panel" id="az-navbar-newer-{{ loop.parent.loop.index }}-secondary-{{ loop.index }}-content" data-bs-parent="#az-navbar-newer-{{ loop.parent.loop.index }}-secondary-nav">
+                            <nav class="nav flex-column navbar-az-newer-nav-secondary" aria-label="{{ child.title }} submenu">
+                              {% for grandchild in child.below %}
+                              <a class="nav-link" href="{{ grandchild.url }}">{{ grandchild.title }}</a>
+                              {% if not loop.last %}<hr class="border-top border-azurite opacity-100" aria-hidden="true" role="presentation">{% endif %}
+                              {% endfor %}
+                            </nav>
+                          </div>
+                          {% else %}
+                          <a class="nav-link" href="{{ child.url }}">{{ child.title }}</a>
+                          {% endif %}
+                          {% if not loop.last %}<hr class="border-top border-azurite opacity-100" aria-hidden="true" role="presentation">{% endif %}
+                          {% endfor %}
+                        </div>
+                      </nav>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {% if resources_items %}
+        <div class="modal-footer justify-content-start">
+          <nav class="navbar" aria-labelledby="resources-for-label">
+            <div class="container-lg">
+              <h2 class="navbar-brand m-0" id="resources-for-label">Resources for:</h2>
+              <div class="navbar-az-newer-modal-footer-scroll">
+                <ul class="navbar-nav flex-row align-items-center mb-0">
+                  {% for item in resources_items %}
+                    <li class="nav-item"><a class="nav-link" href="{{ item.url }}">{{ item.title }}</a></li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+          </nav>
+        </div>
+      {% endif %}
+      {% if helpful_links_items %}
+        <div class="modal-footer justify-content-start">
+          <nav class="navbar" aria-labelledby="helpful-links-label">
+            <div class="container-lg">
+              <h2 class="navbar-brand m-0" id="helpful-links-label">Helpful Links:</h2>
+              <div class="navbar-az-newer-modal-footer-scroll">
+                <ul class="navbar-nav flex-row align-items-center mb-0">
+                  {% for item in helpful_links_items %}
+                    <li class="nav-item"><a class="nav-link" href="{{ item.url }}">{{ item.title }}</a></li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+          </nav>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
