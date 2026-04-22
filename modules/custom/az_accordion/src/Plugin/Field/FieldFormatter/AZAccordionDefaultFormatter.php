@@ -181,7 +181,7 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
 
       $questions[] = [
         '@type' => 'Question',
-        'name' => $title,
+        'name' => strip_tags($title),
         'acceptedAnswer' => [
           '@type' => 'Answer',
           'text' => $clean_body,
