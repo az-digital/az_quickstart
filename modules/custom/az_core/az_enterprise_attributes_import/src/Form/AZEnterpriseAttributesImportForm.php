@@ -6,6 +6,7 @@ use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\KeyValueStore\KeyValueFactoryInterface;
+use Drupal\Core\Plugin\CachedDiscoveryClearer;
 use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\migrate\MigrateMessage;
 use Drupal\migrate\Plugin\MigrationInterface;
@@ -46,6 +47,13 @@ class AZEnterpriseAttributesImportForm extends ConfigFormBase {
   protected TranslationInterface $translation;
 
   /**
+   * The plugin cache clearer.
+   *
+   * @var \Drupal\Core\Plugin\CachedDiscoveryClearer
+   */
+  protected CachedDiscoveryClearer $pluginCacheClearer;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
@@ -54,6 +62,7 @@ class AZEnterpriseAttributesImportForm extends ConfigFormBase {
     $instance->keyValue = $container->get('keyvalue');
     $instance->time = $container->get('datetime.time');
     $instance->translation = $container->get('string_translation');
+    $instance->pluginCacheClearer = $container->get('plugin.cache_clearer');
     return $instance;
   }
 
@@ -98,7 +107,7 @@ class AZEnterpriseAttributesImportForm extends ConfigFormBase {
       ->set('endpoint', $form_state->getValue('endpoint'))
       ->save();
 
-    \Drupal::service('plugin.cache_clearer')->clearCachedDefinitions();
+    $this->pluginCacheClearer->clearCachedDefinitions();
 
     // Fetch the attribute migration.
     $migration = $this->pluginManagerMigration->createInstance('az_enterprise_attributes_import');
