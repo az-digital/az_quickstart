@@ -6,7 +6,7 @@ use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\KeyValueStore\KeyValueFactoryInterface;
-use Drupal\Core\Plugin\CachedDiscoveryClearer;
+use Drupal\Core\Plugin\CachedDiscoveryClearerInterface;
 use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\migrate\MigrateMessage;
 use Drupal\migrate\Plugin\MigrationInterface;
@@ -49,9 +49,9 @@ class AZEnterpriseAttributesImportForm extends ConfigFormBase {
   /**
    * The plugin cache clearer.
    *
-   * @var \Drupal\Core\Plugin\CachedDiscoveryClearer
+   * @var \Drupal\Core\Plugin\CachedDiscoveryClearerInterface
    */
-  protected CachedDiscoveryClearer $pluginCacheClearer;
+  protected CachedDiscoveryClearerInterface $pluginCacheClearer;
 
   /**
    * {@inheritdoc}
