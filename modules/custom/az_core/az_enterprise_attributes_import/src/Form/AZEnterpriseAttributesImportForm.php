@@ -98,6 +98,8 @@ class AZEnterpriseAttributesImportForm extends ConfigFormBase {
       ->set('endpoint', $form_state->getValue('endpoint'))
       ->save();
 
+    \Drupal::service('plugin.cache_clearer')->clearCachedDefinitions();
+
     // Fetch the attribute migration.
     $migration = $this->pluginManagerMigration->createInstance('az_enterprise_attributes_import');
     // Phpstan doesn't know this can be NULL.
