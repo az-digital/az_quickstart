@@ -48,7 +48,7 @@ class AZFaqAggregatorSubscriber implements EventSubscriberInterface {
     }
 
     // Collect questions grouped by the accordion entity ID encoded in the
-    // attachment key. Grouping lets us sort whole accordions by their 
+    // attachment key. Grouping lets us sort whole accordions by their
     // position on the page.
     $groups = [];
     $remaining_head = [];
@@ -72,7 +72,7 @@ class AZFaqAggregatorSubscriber implements EventSubscriberInterface {
     }
 
     // Sort groups by the DOM order of each accordion wrapper's id attribute.
-    // Non-FAQ accordions that match this pattern are ignored since uksort 
+    // Non-FAQ accordions that match this pattern are ignored since uksort
     // only consults IDs that keyed an FAQ accordion group.
     preg_match_all('/id="accordion-(\d+)/', $response->getContent(), $matches);
     $order = array_flip($matches[1]);
