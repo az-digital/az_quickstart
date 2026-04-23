@@ -47,19 +47,19 @@ class AZFaqAggregatorSubscriber implements EventSubscriberInterface {
       return;
     }
 
-    // Collect all faq_questions_* entries and their questions.
-    $all_questions = [];
+    // Collect questions grouped by the accordion entity ID encoded in the
+    // attachment key. Grouping lets us sort whole accordions by their 
+    // position on the page.
+    $groups = [];
     $remaining_head = [];
 
     foreach ($attachments['html_head'] as $item) {
       [$element, $key] = $item;
       if (str_starts_with($key, 'faq_questions_')) {
-        // Decode the questions from the JSON value.
+        $entity_id = substr($key, strlen('faq_questions_'));
         $data = json_decode($element['#value'], TRUE);
         if (is_array($data) && !empty($data['questions'])) {
-          foreach ($data['questions'] as $question) {
-            $all_questions[] = $question;
-          }
+          $groups[$entity_id] = $data['questions'];
         }
       }
       else {
@@ -67,34 +67,35 @@ class AZFaqAggregatorSubscriber implements EventSubscriberInterface {
       }
     }
 
-    if (empty($all_questions)) {
+    if (empty($groups)) {
       return;
+    }
+
+    // Sort groups by the DOM order of each accordion wrapper's id attribute.
+    // Non-FAQ accordions that match this pattern are ignored since uksort 
+    // only consults IDs that keyed an FAQ accordion group.
+    preg_match_all('/id="accordion-(\d+)/', $response->getContent(), $matches);
+    $order = array_flip($matches[1]);
+
+    uksort($groups, function ($a, $b) use ($order): int {
+      $pa = $order[$a] ?? PHP_INT_MAX;
+      $pb = $order[$b] ?? PHP_INT_MAX;
+      return $pa <=> $pb;
+    });
+
+    $all_questions = [];
+    foreach ($groups as $questions) {
+      foreach ($questions as $question) {
+        $all_questions[] = $question;
+      }
     }
 
     // Build the single merged FAQPage schema.
     $faq_schema = [
       '@context' => 'https://schema.org',
       '@type' => 'FAQPage',
+      'mainEntity' => $all_questions,
     ];
-
-    // Sort questions to match their visual order on the page.
-    // Decode HTML entities in the response so that encoded characters
-    // (e.g. &#039; for apostrophes) are converted back to their raw form,
-    // allowing a direct match against the raw question titles.
-    $html = html_entity_decode($response->getContent(), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
-    usort($all_questions, function (array $a, array $b) use ($html): int {
-      $pos_a = mb_strpos($html, $a['name']);
-      $pos_b = mb_strpos($html, $b['name']);
-      if ($pos_a === FALSE) {
-        $pos_a = PHP_INT_MAX;
-      }
-      if ($pos_b === FALSE) {
-        $pos_b = PHP_INT_MAX;
-      }
-      return $pos_a <=> $pos_b;
-    });
-
-    $faq_schema['mainEntity'] = $all_questions;
 
     // Add the merged schema as a single html_head entry.
     $remaining_head[] = [
