@@ -102,12 +102,14 @@
                     <span class="icon-text">Search</span>
                   </button>
                 {% endif %}
-                {% if page.navigation_offcanvas.az_barrio_mobilenavblock %}
-                  <button type="button" data-bs-toggle="offcanvas" data-bs-target="#azMobileNav" aria-controls="azMobileNav" class="btn btn-arizona-header">
-                    <span aria-hidden="true" class="icon material-symbols-rounded">menu</span>
-                    <span class="icon-text">Menu</span>
-                  </button>
-                {% endif %}
+                {% for offcanvasblock in page.navigation_offcanvas %}
+                  {% if offcanvasblock['#mobile_nav_block'] %}
+                    <button type="button" data-bs-toggle="offcanvas" data-bs-target="#azMobileNav" aria-controls="azMobileNav" class="btn btn-arizona-header">
+                      <span aria-hidden="true" class="icon material-symbols-rounded">menu</span>
+                      <span class="icon-text">Menu</span>
+                    </button>
+                  {% endif %}
+                {% endfor %}
                 <div class="offcanvas offcanvas-end mw-100 w-100 bg-white d-flex d-lg-none overflow-y-auto" tabindex="-1" id="azMobileNav" aria-label="Mobile navigation">
                   <div class="offcanvas-header sticky-top p-0 mb-2 text-bg-red d-flex justify-content-between align-items-center">
                     <a href="/" class="btn btn-arizona-header">
