@@ -229,7 +229,10 @@ navTarget.attr('href', '#' + $(element).attr('id'));
 
 *Template:*
 1. Add `aria-label` to the `<form>` element sourced from
-   `preform_text_sr_only` (falling back to `preform_text`):
+   `preform_text_sr_only` (falling back to `preform_text`). Note:
+   `preform_text_sr_only` is the intentional variable name used throughout
+   the `az_select_menu` module (config schema, template, and PHP class all
+   use this spelling):
 
 ```twig
 <form {{ form_attributes }}

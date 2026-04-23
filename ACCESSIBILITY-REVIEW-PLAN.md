@@ -279,8 +279,11 @@ navTarget.attr('href', $(element).attr('id'));
 
 This causes the anchor link to navigate to a relative URL path (`/A`) rather
 than scrolling to the section anchor on the same page. The smooth-scroll click
-handler overrides this for mouse users (it reads `data-href`), but keyboard
-users who activate the link via Enter will navigate away from the page.
+handler (`$('#az-js-alpha-navigation a').on('click', …)`) overrides this for
+mouse users by reading `data-href` from the anchor element via
+`$.attr(event.currentTarget, 'data-href')` and calling `jQuery.animate()` for
+scrolling. Keyboard users who activate the link via Enter, however, follow
+the `href` attribute and navigate away from the page.
 
 **Required fix (a):** Add `aria-label="{{ 'Alphabetical navigation'|t }}"` to
 the `<nav>` element.
