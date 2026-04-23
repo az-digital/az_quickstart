@@ -76,3 +76,17 @@ toasts:
   dependencies:
     - core/drupal
     - az_barrio/arizona-bootstrap-js
+
+az-slick-a11y-patch:
+  js:
+    js/slick-a11y-patch.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+
+az-slick-a11y-patch:
+  js:
+    js/slick-a11y-patch.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
