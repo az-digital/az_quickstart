@@ -66,6 +66,7 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
     $accordion_container_id = HTML::getUniqueId('accordion-' . $entity->id());
     $faq_schema_enabled = FALSE;
 
+    $accordion_items = [];
     foreach ($items as $delta => $item) {
       assert($item instanceof AZAccordionItem);
       // Format title.
@@ -74,7 +75,6 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
       $column_classes = [];
       $column_classes[] = 'col-md-4 col-lg-4';
       $parent = $item->getEntity();
-
       if ($parent instanceof ParagraphInterface) {
         // Get the behavior settings for the parent.
         $parent_config = $parent->getAllBehaviorSettings();
@@ -107,6 +107,17 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
         '#collapsed' => $item->collapsed ? '' : 'show',
         '#aria_expanded' => !$item->collapsed ? 'true' : 'false',
       ];
+
+      // Collect accordion item data for drupalSettings.
+      $accordion_items[] = [
+        'weight' => $delta,
+        'parent_id' => $items->getEntity()->id(),
+        'field_name' => $items->getName(),
+        'title' => $title,
+        'body' => $item->body ?? '',
+        'body_format' => $item->body_format,
+        'langcode' => $item->getLangcode(),
+      ];
     }
 
     $show_expand_all = FALSE;
@@ -136,10 +147,18 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
       $element['#accordion_container_id'] = $accordion_container_id;
     }
 
-    // Attach FAQ schema markup if enabled.
-    if ($faq_schema_enabled && !empty($element)) {
-      $this->attachFaqSchema($element, $items);
+    // Attach consolidated drupalSettings output, including FAQ flag.
+    if (!empty($accordion_items)) {
+      $settings_entry = [
+        'entity_id' => $items->getEntity()->id(),
+        'field_name' => $items->getName(),
+        'faq' => $faq_schema_enabled,
+        'items' => $accordion_items,
+      ];
+      $unique_id = $items->getEntity()->id() . '__' . $items->getName();
+      $element['#attached']['drupalSettings']['az_accordion'][$unique_id] = $settings_entry;
     }
+
 
     return $element;
   }
@@ -188,7 +207,6 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
         ],
       ];
     }
-
     if (!empty($questions)) {
       $data = ['questions' => $questions];
       $element['#attached']['html_head'][] = [

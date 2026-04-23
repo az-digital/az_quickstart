@@ -43,51 +43,43 @@ class AZFaqAggregatorSubscriber implements EventSubscriberInterface {
     }
 
     $attachments = $response->getAttachments();
-    if (empty($attachments['html_head'])) {
-      return;
-    }
 
-    // Collect questions grouped by the accordion entity ID encoded in the
-    // attachment key. Grouping lets us sort whole accordions by their
-    // position on the page.
-    $groups = [];
-    $remaining_head = [];
+      if (empty($attachments['drupalSettings']['az_accordion'])) {
+        return;
+      }
 
-    foreach ($attachments['html_head'] as $item) {
-      [$element, $key] = $item;
-      if (str_starts_with($key, 'faq_questions_')) {
-        $entity_id = substr($key, strlen('faq_questions_'));
-        $data = json_decode($element['#value'], TRUE);
-        if (is_array($data) && !empty($data['questions'])) {
-          $groups[$entity_id] = $data['questions'];
+      // If az_accordion is an associative array, get all values.
+      $accordion_settings = $attachments['drupalSettings']['az_accordion'];
+      if (!is_array($accordion_settings)) {
+        $accordion_settings = [$accordion_settings];
+      }
+      // If associative, get values.
+      if (array_keys($accordion_settings) !== range(0, count($accordion_settings) - 1)) {
+        $accordion_settings = array_values($accordion_settings);
+      }
+
+    // Aggregate FAQ questions from drupalSettings['az_accordion'].
+    $all_questions = [];
+    foreach ($accordion_settings as $settings) {
+      if (!empty($settings['faq']) && !empty($settings['items'])) {
+        foreach ($settings['items'] as $item) {
+          // Only add items with both title and body.
+          if (!empty($item['title']) && !empty($item['body'])) {
+            $all_questions[] = [
+              '@type' => 'Question',
+              'name' => strip_tags($item['title']),
+              'acceptedAnswer' => [
+                '@type' => 'Answer',
+                'text' => $item['body'],
+              ],
+            ];
+          }
         }
       }
-      else {
-        $remaining_head[] = $item;
-      }
     }
 
-    if (empty($groups)) {
+    if (empty($all_questions)) {
       return;
-    }
-
-    // Sort groups by the DOM order of each accordion wrapper's id attribute.
-    // Non-FAQ accordions that match this pattern are ignored since uksort
-    // only consults IDs that keyed an FAQ accordion group.
-    preg_match_all('/id="accordion-(\d+)/', $response->getContent(), $matches);
-    $order = array_flip($matches[1]);
-
-    uksort($groups, function ($a, $b) use ($order): int {
-      $pa = $order[$a] ?? PHP_INT_MAX;
-      $pb = $order[$b] ?? PHP_INT_MAX;
-      return $pa <=> $pb;
-    });
-
-    $all_questions = [];
-    foreach ($groups as $questions) {
-      foreach ($questions as $question) {
-        $all_questions[] = $question;
-      }
     }
 
     // Build the single merged FAQPage schema.
@@ -97,8 +89,8 @@ class AZFaqAggregatorSubscriber implements EventSubscriberInterface {
       'mainEntity' => $all_questions,
     ];
 
-    // Add the merged schema as a single html_head entry.
-    $remaining_head[] = [
+    // Replace html_head with the merged FAQPage schema.
+    $attachments['html_head'][] = [
       [
         '#type' => 'html_tag',
         '#tag' => 'script',
@@ -107,8 +99,6 @@ class AZFaqAggregatorSubscriber implements EventSubscriberInterface {
       ],
       'faq_schema',
     ];
-
-    $attachments['html_head'] = $remaining_head;
     $response->setAttachments($attachments);
   }
 
