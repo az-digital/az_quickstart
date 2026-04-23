@@ -25,6 +25,10 @@ Suggested opening:
 
 "The purpose of today’s meeting is to review the accessibility program structure, confirm the decisions that affect scope and release planning, and agree on the first wave of work. We are not starting implementation today. We are making sure the work is organized correctly before implementation begins."
 
+Suggested framing note for the facilitator:
+
+"The recommended approach is intentionally targeted. We should start with the changes that create immediate, noticeable improvement for users on common journeys, then use the broader program structure to sequence the deeper work responsibly."
+
 ## Section-by-Section Talking Points
 
 ### 1. Program Overview
@@ -104,6 +108,13 @@ Talking points:
 2. [#5550](https://github.com/az-digital/az_quickstart/issues/5550) is an architectural and product-boundary decision.
 3. [#5544](https://github.com/az-digital/az_quickstart/issues/5544) and [#5545](https://github.com/az-digital/az_quickstart/issues/5545) are currently set to `Undecided` because they are the most likely to shift between a narrower patch approach and a fuller minor-release approach.
 
+Recommended starting positions to bring into the room:
+
+1. Treat Marketing Cloud export routes as browser-facing until the team explicitly confirms fragment-only usage.
+2. Approve a representative page matrix that is intentionally narrow, high-value, and built around common journeys plus the highest-risk widgets.
+3. Use the representative page matrix as the release gate for both patch and minor releases rather than waiting for full-site coverage.
+4. Keep gallery carousel and date-picker structural rewrites in minor-release territory unless the team identifies a narrower patch-safe path.
+
 Prompts:
 
 1. "Which of these truly need a team decision before work begins?"
@@ -130,6 +141,10 @@ Recommended candidates to confirm:
 Prompt:
 
 "If we had to define the first implementation wave today, which of these are truly ready once the decision items are settled?"
+
+Facilitator reminder:
+
+Keep the discussion anchored on immediate impact. The first wave should improve navigation, naming, announcements, and reachability in places users will notice right away.
 
 Likely decision to capture:
 

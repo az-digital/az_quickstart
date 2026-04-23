@@ -73,6 +73,13 @@ These decisions should be made before implementation starts:
 3. Should accessibility regressions block patch releases, minor releases, or both?
 4. Which issues clearly belong in patch releases, and which should remain minor-release candidates?
 
+Recommended starting positions for discussion:
+
+1. Treat Marketing Cloud export routes as browser-facing until the team explicitly confirms fragment-only usage, because that is the safer accessibility assumption.
+2. Start with a targeted representative page matrix built around common journeys and high-risk components rather than trying to certify the whole site at once.
+3. Block new serious or critical accessibility regressions on the approved representative pages for both patch and minor releases, so the verification bar is real but still scoped.
+4. Keep the first implementation wave focused on immediate, noticeable user-facing change on common pages, and leave broader structural rewrites in later phases unless the scope can be narrowed safely.
+
 ### 5. Friday Triage Items - 15 minutes
 
 Review the items most likely to need explicit team decisions:
@@ -92,7 +99,7 @@ Suggested focus:
 
 ### 6. Confirm First Implementation Wave - 10 minutes
 
-Recommended first wave for discussion:
+Recommended immediate-impact first wave for discussion:
 
 1. [#5541](https://github.com/az-digital/az_quickstart/issues/5541)
 2. [#5539](https://github.com/az-digital/az_quickstart/issues/5539)
@@ -101,7 +108,7 @@ Recommended first wave for discussion:
 5. [#5537](https://github.com/az-digital/az_quickstart/issues/5537)
 6. [#5514](https://github.com/az-digital/az_quickstart/issues/5514)
 
-The goal is to confirm what should be considered first, not to start coding in the meeting.
+The goal is to confirm a well-targeted first wave that creates meaningful and noticeable improvement quickly, not to start coding in the meeting.
 
 ### 7. Close With Assignments and Next Steps - 10 minutes
 

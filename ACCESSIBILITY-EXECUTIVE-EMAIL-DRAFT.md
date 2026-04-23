@@ -31,6 +31,8 @@ The work is organized into five phases:
 
 This gives the team a clearer way to prioritize the work by user impact and release risk.
 
+The recommended approach is intentionally well targeted. Rather than spreading effort evenly across every finding, the first wave should focus on changes that create immediate and noticeable improvement in common user journeys.
+
 For Friday, the most important remaining decisions are:
 
 1. What verification standard should apply before implementation begins.
@@ -38,6 +40,8 @@ For Friday, the most important remaining decisions are:
 3. Which ambiguous items should remain in the discussion queue until the team agrees on scope.
 
 No implementation work has started as part of this setup. The purpose of today’s work was to create the planning structure so the team can have a more disciplined discussion before coding begins.
+
+Because this package is broader than a normal issue review, it may make sense to hold a dedicated meeting focused on reviewing the planning materials and confirming the initial direction.
 
 The project dashboard itself is a standing program asset and is not tied to a feature or bug branch. The dedicated planning branch only stores the supporting documents for review.
 

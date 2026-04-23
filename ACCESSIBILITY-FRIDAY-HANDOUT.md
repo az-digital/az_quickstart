@@ -34,9 +34,9 @@ These issues still need explicit team direction:
 4. [#5544 - Gallery carousel release direction](https://github.com/az-digital/az_quickstart/issues/5544)
 5. [#5545 - Date picker release direction](https://github.com/az-digital/az_quickstart/issues/5545)
 
-## Recommended First-Wave Candidates
+## Recommended Immediate-Impact First Wave
 
-If the Friday decisions are confirmed, the strongest first-wave candidates are:
+If the Friday decisions are confirmed, the strongest first-wave candidates are the ones most likely to create immediate, noticeable improvement in common user journeys:
 
 1. [#5541](https://github.com/az-digital/az_quickstart/issues/5541)
 2. [#5539](https://github.com/az-digital/az_quickstart/issues/5539)
@@ -51,6 +51,15 @@ If the Friday decisions are confirmed, the strongest first-wave candidates are:
 2. Which issues are patch-safe versus minor-release work.
 3. Which undecided items need additional discovery before implementation planning.
 4. Whether the recommended first wave should stand as currently proposed.
+
+## Recommended Starting Positions
+
+These are recommended starting positions for discussion, not pre-made decisions:
+
+1. Treat Marketing Cloud export routes as browser-facing until fragment-only use is explicitly confirmed.
+2. Use a targeted representative page matrix built around common journeys and the highest-risk widgets.
+3. Block new serious or critical regressions on those representative pages for both patch and minor releases.
+4. Keep the first implementation wave focused on user-facing improvements that are meaningful and noticeable right away.
 
 ## Supporting Materials
 
