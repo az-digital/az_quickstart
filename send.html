@@ -1,175 +1,82 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="color-scheme" content="light dark">
-  <meta name="supported-color-schemes" content="light dark">
   <title>az_quickstart Accessibility Review Package</title>
-  <style>
-    body, table, td, a {
-      -webkit-text-size-adjust: 100%;
-      -ms-text-size-adjust: 100%;
-    }
-
-    table {
-      border-collapse: collapse;
-    }
-
-    img {
-      border: 0;
-      height: auto;
-      line-height: 100%;
-      outline: none;
-      text-decoration: none;
-    }
-
-    a {
-      color: #005a9c;
-      text-decoration: underline;
-    }
-
-    @media screen and (max-width: 680px) {
-      .container {
-        width: 100% !important;
-      }
-
-      .stack {
-        display: block !important;
-        width: 100% !important;
-      }
-
-      .mobile-pad {
-        padding-left: 20px !important;
-        padding-right: 20px !important;
-      }
-    }
-  </style>
 </head>
-<body style="margin: 0; padding: 0; background-color: #f4f6f8; color: #1f2933; font-family: Arial, Helvetica, sans-serif;">
-  <div style="display: none; max-height: 0; overflow: hidden; opacity: 0;">
-    I pulled together a focused accessibility planning package for az_quickstart. It may make sense to schedule a dedicated review meeting before any implementation begins.
+<body style="margin: 0; padding: 24px; background-color: #f4f6f8; color: #1f2933; font-family: Arial, Helvetica, sans-serif; line-height: 1.55;">
+  <div style="max-width: 680px; margin: 0 auto; background-color: #ffffff; border: 1px solid #d8dee4;">
+    <div style="padding: 32px 24px 20px 24px; background-color: #0c234b; color: #ffffff;">
+      <p style="margin: 0 0 8px 0; font-size: 13px; line-height: 18px; letter-spacing: 0.08em; text-transform: uppercase; color: #c5d7f2;">Accessibility Planning Package</p>
+      <h1 style="margin: 0; font-size: 30px; line-height: 38px; font-weight: 700; color: #ffffff;">az_quickstart WCAG 2.2 AA Review Materials</h1>
+      <p style="margin: 16px 0 0 0; font-size: 16px; line-height: 25px; color: #e8eef7;">The accessibility effort is now organized as a planning program with a live dashboard, a decision queue, and a focused documentation package ready for team review.</p>
+    </div>
+
+    <div style="padding: 28px 24px 8px 24px;">
+      <p style="margin: 0 0 16px 0; font-size: 16px; color: #1f2933;">Hello everyone,</p>
+      <p style="margin: 0 0 16px 0; font-size: 16px; color: #1f2933;">I wanted to share some accessibility planning work I put together for az_quickstart. This has not been widely socialized yet, so I wanted to bring it forward in one place before we decide what should happen next.</p>
+      <p style="margin: 0 0 16px 0; font-size: 16px; color: #1f2933;">No implementation work has started. The intent here is to give the team a practical starting point for discussion, and it may make sense to schedule a dedicated review meeting because this package is broader than a normal issue update.</p>
+      <p style="margin: 0 0 16px 0; font-size: 16px; color: #1f2933;">The approach is intentionally well targeted. The goal is to start with changes that create immediate, meaningful, and noticeable improvement for users on common journeys, then build from there together. That feels aligned with The Wildcat Way: doing work that makes a real difference.</p>
+    </div>
+
+    <div style="padding: 8px 24px;">
+      <h2 style="margin: 0 0 12px 0; font-size: 22px; line-height: 30px; color: #0c234b;">What Is Ready</h2>
+      <ol style="margin: 0; padding-left: 24px; font-size: 16px; color: #1f2933;">
+        <li style="margin-bottom: 10px;">A source-level accessibility review and remediation plan.</li>
+        <li style="margin-bottom: 10px;">A live project dashboard and umbrella issue structure.</li>
+        <li style="margin-bottom: 10px;">A narrowed Friday decision queue.</li>
+        <li style="margin-bottom: 0;">Meeting materials and send-out documents on a dedicated planning branch.</li>
+      </ol>
+    </div>
+
+    <div style="padding: 20px 24px 12px 24px;">
+      <p style="margin: 0 0 12px 0;"><a href="https://github.com/orgs/az-digital/projects/285" style="display: inline-block; padding: 12px 16px; background-color: #005a9c; border: 1px solid #005a9c; color: #ffffff; font-size: 16px; font-weight: 700; text-decoration: none; border-radius: 4px;">Open The Project Board</a></p>
+      <p style="margin: 0;"><a href="https://github.com/az-digital/az_quickstart/pull/5553" style="display: inline-block; padding: 12px 16px; background-color: #ffffff; border: 1px solid #005a9c; color: #005a9c; font-size: 16px; font-weight: 700; text-decoration: none; border-radius: 4px;">Open The Planning PR</a></p>
+    </div>
+
+    <div style="padding: 8px 24px;">
+      <h2 style="margin: 0 0 12px 0; font-size: 22px; line-height: 30px; color: #0c234b;">Recommended Starting Position</h2>
+      <p style="margin: 0 0 12px 0; font-size: 16px; color: #1f2933;">These are recommended starting positions for discussion, not pre-made decisions:</p>
+      <ol style="margin: 0; padding-left: 24px; font-size: 16px; color: #1f2933;">
+        <li style="margin-bottom: 10px;">Use a targeted representative page matrix based on common journeys and the highest-risk widgets.</li>
+        <li style="margin-bottom: 10px;">Focus the first wave on navigation, naming, announcements, and reachability where users will notice the difference quickly.</li>
+        <li style="margin-bottom: 10px;">Use patch releases for narrow, high-impact fixes on common pages.</li>
+        <li style="margin-bottom: 0;">Keep broader structural rewrites in later phases unless the scope can be narrowed safely.</li>
+      </ol>
+    </div>
+
+    <div style="padding: 20px 24px 8px 24px;">
+      <h2 style="margin: 0 0 12px 0; font-size: 22px; line-height: 30px; color: #0c234b;">Primary Review Links</h2>
+      <ul style="margin: 0; padding-left: 22px; font-size: 16px; color: #1f2933;">
+        <li style="margin-bottom: 10px;"><a href="https://github.com/orgs/az-digital/projects/285" style="color: #005a9c; text-decoration: underline;">Project board: Accessibility Program - az_quickstart</a></li>
+        <li style="margin-bottom: 10px;"><a href="https://github.com/az-digital/az_quickstart/issues/5533" style="color: #005a9c; text-decoration: underline;">Umbrella issue: #5533 - A11Y Program</a></li>
+        <li style="margin-bottom: 10px;"><a href="https://github.com/az-digital/az_quickstart/pull/5553" style="color: #005a9c; text-decoration: underline;">Planning PR: #5553</a></li>
+        <li style="margin-bottom: 10px;"><a href="https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-FRIDAY-HANDOUT.md" style="color: #005a9c; text-decoration: underline;">One-page Friday handout</a></li>
+        <li style="margin-bottom: 0;"><a href="https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-REVIEW-PLAN.md" style="color: #005a9c; text-decoration: underline;">Accessibility review plan</a></li>
+      </ul>
+    </div>
+
+    <div style="padding: 20px 24px 8px 24px;">
+      <h2 style="margin: 0 0 12px 0; font-size: 22px; line-height: 30px; color: #0c234b;">Supporting Materials</h2>
+      <ul style="margin: 0; padding-left: 22px; font-size: 16px; color: #1f2933;">
+        <li style="margin-bottom: 10px;"><a href="https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-GITHUB-PROJECT-PLAN.md" style="color: #005a9c; text-decoration: underline;">GitHub execution plan</a></li>
+        <li style="margin-bottom: 10px;"><a href="https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-FRIDAY-MEETING-AGENDA.md" style="color: #005a9c; text-decoration: underline;">Meeting agenda</a></li>
+        <li style="margin-bottom: 10px;"><a href="https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-FRIDAY-FACILITATOR-SCRIPT.md" style="color: #005a9c; text-decoration: underline;">Facilitator script</a></li>
+        <li style="margin-bottom: 0;"><a href="https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-SENDOUT-BRIEF.md" style="color: #005a9c; text-decoration: underline;">Consolidated send-out brief</a></li>
+      </ul>
+    </div>
+
+    <div style="padding: 20px 24px 12px 24px;">
+      <p style="margin: 0; font-size: 16px; color: #1f2933;">The project dashboard remains the standing program surface. The dedicated planning branch exists only to store the review package and meeting materials.</p>
+    </div>
+
+    <div style="padding: 20px 24px 32px 24px; border-top: 1px solid #d8dee4;">
+      <p style="margin: 0 0 12px 0; font-size: 16px; color: #1f2933;">Thanks,</p>
+      <p style="margin: 0; font-size: 16px; color: #1f2933;">Jeff</p>
+      <p style="margin: 20px 0 0 0; font-size: 13px; line-height: 20px; color: #5b6570;">This version intentionally avoids layout tables so it copies more cleanly into Outlook while remaining readable in a browser.</p>
+    </div>
   </div>
-
-  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f4f6f8; width: 100%;">
-    <tr>
-      <td align="center" style="padding: 24px;" class="mobile-pad">
-        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="680" class="container" style="width: 680px; max-width: 680px; background-color: #ffffff; border: 1px solid #d8dee4;">
-          <tr>
-            <td style="padding: 32px 36px 20px 36px; background-color: #0c234b; color: #ffffff;" class="mobile-pad">
-              <p style="margin: 0 0 8px 0; font-size: 13px; line-height: 18px; letter-spacing: 0.08em; text-transform: uppercase; color: #c5d7f2;">Accessibility Planning Package</p>
-              <h1 style="margin: 0; font-size: 30px; line-height: 38px; font-weight: 700; color: #ffffff;">az_quickstart WCAG 2.2 AA Review Materials</h1>
-              <p style="margin: 16px 0 0 0; font-size: 16px; line-height: 25px; color: #e8eef7;">The accessibility effort is now organized as a planning program with a live dashboard, a decision queue, and a focused documentation package ready for team review.</p>
-            </td>
-          </tr>
-
-          <tr>
-            <td style="padding: 28px 36px 8px 36px;" class="mobile-pad">
-              <p style="margin: 0 0 16px 0; font-size: 16px; line-height: 25px; color: #1f2933;">Hello everyone,</p>
-              <p style="margin: 0 0 16px 0; font-size: 16px; line-height: 25px; color: #1f2933;">I wanted to share some accessibility planning work I put together for az_quickstart. This has not been widely socialized yet, so I wanted to bring it forward in one place before we decide what should happen next.</p>
-              <p style="margin: 0 0 16px 0; font-size: 16px; line-height: 25px; color: #1f2933;">No implementation work has started. The intent here is to give the team a practical starting point for discussion, and it may make sense to schedule a dedicated review meeting because this package is broader than a normal issue update.</p>
-              <p style="margin: 0 0 16px 0; font-size: 16px; line-height: 25px; color: #1f2933;">The approach is intentionally well targeted. The goal is to start with changes that create immediate, meaningful, and noticeable improvement for users on common journeys, then build from there together. That feels aligned with The Wildcat Way: doing work that makes a real difference.</p>
-            </td>
-          </tr>
-
-          <tr>
-            <td style="padding: 8px 36px 8px 36px;" class="mobile-pad">
-              <h2 style="margin: 0 0 12px 0; font-size: 22px; line-height: 30px; color: #0c234b;">What Is Ready</h2>
-              <ol style="margin: 0; padding-left: 24px; font-size: 16px; line-height: 25px; color: #1f2933;">
-                <li style="margin-bottom: 10px;">A source-level accessibility review and remediation plan.</li>
-                <li style="margin-bottom: 10px;">A live project dashboard and umbrella issue structure.</li>
-                <li style="margin-bottom: 10px;">A narrowed Friday decision queue.</li>
-                <li style="margin-bottom: 0;">Meeting materials and send-out documents on a dedicated planning branch.</li>
-              </ol>
-            </td>
-          </tr>
-
-          <tr>
-            <td style="padding: 20px 36px 12px 36px;" class="mobile-pad">
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0">
-                <tr>
-                  <td style="padding: 0 12px 12px 0;" class="stack">
-                    <table role="presentation" cellspacing="0" cellpadding="0" border="0">
-                      <tr>
-                        <td style="border-radius: 4px; background-color: #005a9c;">
-                          <a href="https://github.com/orgs/az-digital/projects/285" style="display: block; padding: 14px 18px; border: 1px solid #005a9c; font-size: 16px; line-height: 20px; font-weight: 700; text-decoration: none; color: #ffffff; border-radius: 4px;">
-                            <span style="color: #ffffff;">Open The Project Board</span>
-                          </a>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                  <td style="padding: 0 0 12px 0;" class="stack">
-                    <table role="presentation" cellspacing="0" cellpadding="0" border="0">
-                      <tr>
-                        <td style="border-radius: 4px; background-color: #ffffff;">
-                          <a href="https://github.com/az-digital/az_quickstart/pull/5553" style="display: block; padding: 14px 18px; border: 1px solid #005a9c; font-size: 16px; line-height: 20px; font-weight: 700; text-decoration: none; color: #005a9c; border-radius: 4px;">
-                            <span style="color: #005a9c;">Open The Planning PR</span>
-                          </a>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-
-          <tr>
-            <td style="padding: 8px 36px 8px 36px;" class="mobile-pad">
-              <h2 style="margin: 0 0 12px 0; font-size: 22px; line-height: 30px; color: #0c234b;">Recommended Starting Position</h2>
-              <p style="margin: 0 0 12px 0; font-size: 16px; line-height: 25px; color: #1f2933;">These are recommended starting positions for discussion, not pre-made decisions:</p>
-              <ol style="margin: 0; padding-left: 24px; font-size: 16px; line-height: 25px; color: #1f2933;">
-                <li style="margin-bottom: 10px;">Use a targeted representative page matrix based on common journeys and the highest-risk widgets.</li>
-                <li style="margin-bottom: 10px;">Focus the first wave on navigation, naming, announcements, and reachability where users will notice the difference quickly.</li>
-                <li style="margin-bottom: 10px;">Use patch releases for narrow, high-impact fixes on common pages.</li>
-                <li style="margin-bottom: 0;">Keep broader structural rewrites in later phases unless the scope can be narrowed safely.</li>
-              </ol>
-            </td>
-          </tr>
-
-          <tr>
-            <td style="padding: 20px 36px 8px 36px;" class="mobile-pad">
-              <h2 style="margin: 0 0 12px 0; font-size: 22px; line-height: 30px; color: #0c234b;">Primary Review Links</h2>
-              <ul style="margin: 0; padding-left: 22px; font-size: 16px; line-height: 25px; color: #1f2933;">
-                <li style="margin-bottom: 10px;"><a href="https://github.com/orgs/az-digital/projects/285" style="color: #005a9c; text-decoration: underline;">Project board: Accessibility Program - az_quickstart</a></li>
-                <li style="margin-bottom: 10px;"><a href="https://github.com/az-digital/az_quickstart/issues/5533" style="color: #005a9c; text-decoration: underline;">Umbrella issue: #5533 - A11Y Program</a></li>
-                <li style="margin-bottom: 10px;"><a href="https://github.com/az-digital/az_quickstart/pull/5553" style="color: #005a9c; text-decoration: underline;">Planning PR: #5553</a></li>
-                <li style="margin-bottom: 10px;"><a href="https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-FRIDAY-HANDOUT.md" style="color: #005a9c; text-decoration: underline;">One-page Friday handout</a></li>
-                <li style="margin-bottom: 0;"><a href="https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-REVIEW-PLAN.md" style="color: #005a9c; text-decoration: underline;">Accessibility review plan</a></li>
-              </ul>
-            </td>
-          </tr>
-
-          <tr>
-            <td style="padding: 20px 36px 8px 36px;" class="mobile-pad">
-              <h2 style="margin: 0 0 12px 0; font-size: 22px; line-height: 30px; color: #0c234b;">Supporting Materials</h2>
-              <ul style="margin: 0; padding-left: 22px; font-size: 16px; line-height: 25px; color: #1f2933;">
-                <li style="margin-bottom: 10px;"><a href="https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-GITHUB-PROJECT-PLAN.md" style="color: #005a9c; text-decoration: underline;">GitHub execution plan</a></li>
-                <li style="margin-bottom: 10px;"><a href="https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-FRIDAY-MEETING-AGENDA.md" style="color: #005a9c; text-decoration: underline;">Meeting agenda</a></li>
-                <li style="margin-bottom: 10px;"><a href="https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-FRIDAY-FACILITATOR-SCRIPT.md" style="color: #005a9c; text-decoration: underline;">Facilitator script</a></li>
-                <li style="margin-bottom: 0;"><a href="https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-SENDOUT-BRIEF.md" style="color: #005a9c; text-decoration: underline;">Consolidated send-out brief</a></li>
-              </ul>
-            </td>
-          </tr>
-
-          <tr>
-            <td style="padding: 20px 36px 12px 36px;" class="mobile-pad">
-              <p style="margin: 0; font-size: 16px; line-height: 25px; color: #1f2933;">The project dashboard remains the standing program surface. The dedicated planning branch exists only to store the review package and meeting materials.</p>
-            </td>
-          </tr>
-
-          <tr>
-            <td style="padding: 20px 36px 32px 36px; border-top: 1px solid #d8dee4;" class="mobile-pad">
-              <p style="margin: 0 0 12px 0; font-size: 16px; line-height: 25px; color: #1f2933;">Thanks,</p>
-              <p style="margin: 0; font-size: 16px; line-height: 25px; color: #1f2933;">Jeff</p>
-              <p style="margin: 20px 0 0 0; font-size: 13px; line-height: 20px; color: #5b6570;">This HTML file is designed to be readable in a browser and conservative enough to reuse as email content. All links point to live GitHub resources.</p>
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
 </body>
 </html>
