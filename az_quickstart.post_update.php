@@ -69,24 +69,3 @@ function az_quickstart_post_update_remove_block_content_permissions_from_roles(&
     return $update;
   });
 }
-
-/**
- * Enables AZ Navbar.
- */
-function az_quickstart_post_update_enable_az_navbar(&$sandbox) {
-  $updated = FALSE;
-  $config_storage = \Drupal::service('config.storage');
-  $config_factory = \Drupal::configFactory();
-
-  if ($config_storage->exists('az_barrio.settings')) {
-    $theme_settings = $config_factory->getEditable('az_barrio.settings');
-    if ($theme_settings->get('az_navbar') !== TRUE) {
-      $theme_settings->set('az_navbar', TRUE)->save();
-      $updated = TRUE;
-    }
-  }
-
-  if ($updated) {
-    \Drupal::logger('az_quickstart')->notice('Enabled AZ Navbar during post update.');
-  }
-}
