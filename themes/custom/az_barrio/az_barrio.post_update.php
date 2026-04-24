@@ -269,3 +269,15 @@ function az_barrio_post_update_delete_az_bootstrap_cdn_version_setting(&$sandbox
     \Drupal::logger('az_quickstart')->notice('Deleted deprecated az_bootstrap_cdn_version configuration key during post update.');
   }
 }
+
+/**
+ * Enables AZ Navbar.
+ */
+function az_barrio_post_update_enable_az_navbar(&$sandbox = NULL) {
+  $config_factory = \Drupal::configFactory();
+  $theme_settings = $config_factory->getEditable('az_barrio.settings');
+  if ($theme_settings->get('az_navbar') !== TRUE) {
+    $theme_settings->set('az_navbar', TRUE)->save();
+    \Drupal::logger('az_quickstart')->notice('Enabled AZ Navbar during post update.');
+  }
+}
