@@ -54,21 +54,25 @@
                   onStateChange: window.onPlayerStateChange,
                 },
               });
-              const playButton =
-                element.getElementsByClassName('az-video-play')[0];
-              playButton.addEventListener('click', (event) => {
+
+              // Play/Pause button toggle.
+              const playPauseButton =
+                element.getElementsByClassName('az-video-playpause')[0];
+              playPauseButton.addEventListener('click', (event) => {
                 event.preventDefault();
-                element.player.playVideo();
-                parentParagraph.classList.remove('az-video-paused');
-                parentParagraph.classList.add('az-video-playing');
-              });
-              const pauseButton =
-                element.getElementsByClassName('az-video-pause')[0];
-              pauseButton.addEventListener('click', (event) => {
-                event.preventDefault();
-                element.player.pauseVideo();
-                parentParagraph.classList.remove('az-video-playing');
-                parentParagraph.classList.add('az-video-paused');
+                if (event.currentTarget.textContent === 'Play Video') {
+                  element.player.playVideo();
+                  parentParagraph.classList.remove('az-video-paused');
+                  parentParagraph.classList.add('az-video-playing');
+                  event.currentTarget.textContent = 'Pause Video';
+                  event.currentTarget.setAttribute('title', 'Pause the video');
+                } else {
+                  element.player.pauseVideo();
+                  parentParagraph.classList.remove('az-video-playing');
+                  parentParagraph.classList.add('az-video-paused');
+                  event.currentTarget.textContent = 'Play Video';
+                  event.currentTarget.setAttribute('title', 'Play the video');
+                }
               });
             });
           };
@@ -119,6 +123,10 @@
           };
 
           window.onPlayerReady = (event) => {
+            // Set the iframe tabindex to -1 to prevent focus from reaching iframe.
+            const iframe = event.target.getIframe();
+            iframe.setAttribute('tabindex', '-1');
+
             const id = event.target.options.videoId;
             if (!bgVideoSettings[id].autoplay) {
               return;
