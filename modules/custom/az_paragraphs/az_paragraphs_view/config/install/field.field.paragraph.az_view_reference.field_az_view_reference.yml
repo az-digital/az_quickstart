@@ -26,6 +26,7 @@ settings:
     block: block
     page: page
   preselect_views:
+    az_carousel: az_carousel
     az_courses: az_courses
     az_events: az_events
     az_news: az_news

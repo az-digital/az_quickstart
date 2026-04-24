@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.node.az_carousel_item.field_az_carousel_category
     - field.field.node.az_carousel_item.field_az_carousel_short_summary
     - field.field.node.az_carousel_item.field_az_link
     - field.field.node.az_carousel_item.field_az_media_image
@@ -144,4 +145,5 @@ content:
     third_party_settings: {  }
     weight: 1
     region: content
-hidden: {  }
+hidden:
+  field_az_carousel_category: true
