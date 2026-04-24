@@ -36,6 +36,12 @@ No implementation work has started. The purpose of today’s work was to make su
 
 - [Accessibility review plan](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-REVIEW-PLAN.md)
 - [GitHub execution plan](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-GITHUB-PROJECT-PLAN.md)
+- [Phase 0.1 verification proposal](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-P0.1-VERIFICATION-PROPOSAL.md)
+- [Phase 0.2 scanner workflow plan](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-P0.2-SCANNER-WORKFLOW-PLAN.md)
+- [Manual verification playbook](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-MANUAL-VERIFICATION-PLAYBOOK.md)
+- [Scanner triage guide](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-SCANNER-TRIAGE-GUIDE.md)
+- [Release sign-off checklist](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-RELEASE-SIGNOFF-CHECKLIST.md)
+- [Representative URL inventory and environment map](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-REPRESENTATIVE-URL-INVENTORY.md)
 
 ## Friday Meeting Materials
 

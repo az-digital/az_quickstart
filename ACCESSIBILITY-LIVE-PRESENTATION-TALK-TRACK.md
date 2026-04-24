@@ -14,18 +14,21 @@ Explain what was completed, how the work is now organized, what decisions still 
 
 Suggested script:
 
-"Today’s work focused on organization, not implementation. I completed the accessibility review and turned it into a structured GitHub program with an umbrella issue, phase parent issues, delivery issues, and a project board. The goal was to make Friday’s conversation a planning conversation instead of a loose issue review."
+"Today’s work focused on organization, not implementation. I completed the accessibility review and turned it into a structured GitHub program with an umbrella issue, phase parent issues, delivery issues, and a project board. I also added preliminary Phase 0 working drafts for the verification policy and scanner rollout so Friday’s conversation can stay focused on decisions instead of starting from a blank page."
 
 References:
 
 - Project board: https://github.com/orgs/az-digital/projects/285
 - Umbrella issue: https://github.com/az-digital/az_quickstart/issues/5533
+- Phase 0 parent: https://github.com/az-digital/az_quickstart/issues/5532
+- P0.1 verification policy: https://github.com/az-digital/az_quickstart/issues/5541
+- P0.2 scanner gate: https://github.com/az-digital/az_quickstart/issues/5539
 
 ### Minute 1 to 2 - What Exists in GitHub Now
 
 Suggested script:
 
-"The work is now grouped into five phases: guardrails and verification, global blockers, high-risk interactive components, content and template semantics, and final verification and release readiness. That gives us a way to discuss order, release risk, and ownership clearly."
+"The work is now grouped into five phases: guardrails and verification, global blockers, high-risk interactive components, content and template semantics, and final verification and release readiness. That gives us a way to discuss order, release risk, and ownership clearly. The Phase 0 issues now also have preliminary working drafts behind them, which means we can review a concrete direction for verification without pretending those documents are final."
 
 References:
 
@@ -45,7 +48,7 @@ Suggested script:
 
 Suggested script:
 
-"I narrowed the Friday decision queue to the items that still need explicit team direction. Those are the umbrella program issue, the verification policy spike, the Marketing Cloud export decision, and two items that still sit between patch-safe and minor-release territory: the gallery carousel and the date picker."
+"I narrowed the Friday decision queue to the items that still need explicit team direction. Those are the umbrella program issue, the verification policy spike, the Marketing Cloud export decision, and two items that still sit between patch-safe and minor-release territory: the gallery carousel and the date picker. Supporting that, there is now a preliminary Phase 0 working set for #5541 and #5539 covering the scanner workflow, manual verification, triage, release sign-off, and representative URL inventory."
 
 Decision queue:
 
@@ -74,7 +77,7 @@ References:
 
 Suggested script:
 
-"What I need from the team today is not implementation detail. I need agreement on scope, release direction, verification expectations, and the first implementation wave. Once those are settled, we can update the board and move into implementation planning cleanly."
+"What I need from the team today is not implementation detail. I need agreement on scope, release direction, verification expectations, the first implementation wave, and whether the new Phase 0 drafts are the right working direction for #5541 and #5539. Once those are settled, we can update the board and move into implementation planning cleanly."
 
 ### Optional Minute 6 to 7 - Close
 
@@ -87,6 +90,10 @@ Suggested script:
 If you only have 2 to 3 minutes, say this:
 
 "I completed the accessibility planning and GitHub setup so the work is now organized as a real program. We have a live board, an umbrella issue, phase parent issues, and child issues grouped by user impact and release risk. The main decisions still open are the verification policy, the Marketing Cloud export direction, and whether the gallery carousel and date picker stay minor-release work or can be narrowed further. If we agree on those decisions today, we can move into implementation planning with a much cleaner first wave."
+
+Suggested add-on if there is another 20 seconds:
+
+"We also now have preliminary Phase 0 working drafts tied to #5532, #5541, and #5539. Those drafts are not final policy, but they give the team something concrete to approve, adjust, or reject instead of discussing verification in the abstract."
 
 ## Presenter Notes
 

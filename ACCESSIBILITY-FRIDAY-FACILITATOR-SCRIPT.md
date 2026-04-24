@@ -7,8 +7,16 @@ This script is a facilitator aid for the Friday accessibility planning meeting. 
 Use this alongside:
 
 - [ACCESSIBILITY-FRIDAY-MEETING-AGENDA.md](ACCESSIBILITY-FRIDAY-MEETING-AGENDA.md)
+- [ACCESSIBILITY-P0.1-VERIFICATION-PROPOSAL.md](ACCESSIBILITY-P0.1-VERIFICATION-PROPOSAL.md)
+- [ACCESSIBILITY-P0.2-SCANNER-WORKFLOW-PLAN.md](ACCESSIBILITY-P0.2-SCANNER-WORKFLOW-PLAN.md)
+- [ACCESSIBILITY-MANUAL-VERIFICATION-PLAYBOOK.md](ACCESSIBILITY-MANUAL-VERIFICATION-PLAYBOOK.md)
+- [ACCESSIBILITY-SCANNER-TRIAGE-GUIDE.md](ACCESSIBILITY-SCANNER-TRIAGE-GUIDE.md)
+- [ACCESSIBILITY-RELEASE-SIGNOFF-CHECKLIST.md](ACCESSIBILITY-RELEASE-SIGNOFF-CHECKLIST.md)
+- [ACCESSIBILITY-REPRESENTATIVE-URL-INVENTORY.md](ACCESSIBILITY-REPRESENTATIVE-URL-INVENTORY.md)
 - [GitHub project board](https://github.com/orgs/az-digital/projects/285)
 - [Umbrella program issue #5533](https://github.com/az-digital/az_quickstart/issues/5533)
+
+These Phase 0 support documents are preliminary working drafts. The facilitator should frame them as decision aids for [#5532](https://github.com/az-digital/az_quickstart/issues/5532), [#5541](https://github.com/az-digital/az_quickstart/issues/5541), and [#5539](https://github.com/az-digital/az_quickstart/issues/5539), not as finalized policy.
 
 ## Facilitator Goal
 
@@ -105,8 +113,13 @@ These issues now carry the `needs discussion` label and are intended to represen
 Talking points:
 
 1. [#5541](https://github.com/az-digital/az_quickstart/issues/5541) determines the verification standard for everything else.
+2. [#5539](https://github.com/az-digital/az_quickstart/issues/5539) is now supported by a preliminary scanner workflow plan, manual verification playbook, triage guide, sign-off checklist, and URL inventory.
 2. [#5550](https://github.com/az-digital/az_quickstart/issues/5550) is an architectural and product-boundary decision.
 3. [#5544](https://github.com/az-digital/az_quickstart/issues/5544) and [#5545](https://github.com/az-digital/az_quickstart/issues/5545) are currently set to `Undecided` because they are the most likely to shift between a narrower patch approach and a fuller minor-release approach.
+
+Additional framing note:
+
+"The new Phase 0 documents should be reviewed as working drafts that support the board's Phase 0 placemarkers. They are here to accelerate decisions, not to bypass them."
 
 Recommended starting positions to bring into the room:
 
@@ -120,6 +133,7 @@ Prompts:
 1. "Which of these truly need a team decision before work begins?"
 2. "Which of these are clearly minor-release work, and which might still be narrowed into patch-safe work?"
 3. "Which open questions require discovery versus a policy decision?"
+4. "Are the preliminary Phase 0 working drafts directionally correct enough to use as the working basis for implementation planning on #5541 and #5539?"
 
 Likely decisions to capture:
 
@@ -158,6 +172,7 @@ Prompts:
 2. "Who owns keeping the board metadata current after Friday?"
 3. "Which issues need updates immediately after the meeting?"
 4. "What is the explicit signal that allows implementation planning to begin?"
+5. "Who owns converting the preliminary Phase 0 drafts into approved working documents after the meeting?"
 
 Likely decisions to capture:
 

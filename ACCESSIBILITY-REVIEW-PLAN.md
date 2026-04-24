@@ -87,8 +87,8 @@ The following areas were not proven broken from source alone, but they are high-
 
 This phase should begin immediately and run in parallel with code remediation. It is the only way to turn this review from a one-time cleanup into an ongoing compliance practice.
 
-1. Add automated accessibility scanning to CI. The recommended baseline is Playwright plus axe-core against a representative page matrix, because the project already has Node tooling and GitHub Actions.
-2. Define the manual assistive-technology matrix: NVDA with Firefox, NVDA with Chrome, JAWS with Chrome, VoiceOver with Safari on macOS, VoiceOver with Safari on iOS, and TalkBack with Chrome on Android where mobile interaction is important.
+1. Add automated accessibility scanning to CI. The recommended baseline is the GitHub Accessibility Scanner against a representative page matrix of live URLs, because the project already uses GitHub Actions and the scanner can surface findings directly in GitHub for maintainers.
+2. Define the manual assistive-technology matrix: NVDA with Firefox, NVDA with Chrome, JAWS with Chrome, JAWS with Edge, VoiceOver with Safari on macOS, VoiceOver with Safari on iOS, and TalkBack with Chrome on Android where mobile interaction is important.
 3. Add accessibility acceptance criteria to custom widget work. Every widget fix should ship with keyboard, focus, name, state, and announcement checks.
 4. Create a regression policy: no merge for new serious or critical accessibility issues on representative pages.
 
@@ -187,17 +187,19 @@ The following strategy is required if the team wants to move from source-level r
 
 ### Automated Checks
 
-1. Add Playwright plus axe-core for representative-page scanning.
-2. Fail pull requests on new serious or critical issues.
+1. Add the GitHub Accessibility Scanner for representative-page scanning against approved live URLs.
+2. Establish a brownfield baseline first, then fail pull requests on new serious or critical issues.
 3. Track accessibility regressions separately from lint and unit-test failures so they are visible and actionable.
+4. Use narrower supplemental checks only where authenticated or hard-to-reach flows cannot be covered by the primary scanner.
 
 ### Manual Checks
 
 1. Keyboard-only navigation for every representative page.
 2. Focus visibility review at 100 percent and 200 percent zoom.
-3. NVDA checks for navigation, search, filters, select menu, carousel, date picker, and tables.
-4. VoiceOver checks for the same high-risk flows on macOS and iOS.
-5. Screen-reader confirmation that status messages are announced once, politely when appropriate, and without duplicate noise.
+3. NVDA with Firefox and NVDA with Chrome checks for navigation, search, filters, select menu, carousel, date picker, and tables.
+4. JAWS with Chrome and JAWS with Edge checks for the same high-risk Windows flows.
+5. VoiceOver checks for the same high-risk flows on macOS and iOS.
+6. Screen-reader confirmation that status messages are announced once, politely when appropriate, and without duplicate noise.
 
 ### Content Governance Checks
 
@@ -212,7 +214,7 @@ az_quickstart should not be described as WCAG 2.2 AA compliant until all of the 
 1. All Phase 1 and Phase 2 issues are fixed and verified on rendered pages.
 2. No serious or critical accessibility issues remain on the representative page matrix.
 3. Core flows are usable with keyboard only: global navigation, site search, select menu navigation, alphabetical listing, gallery carousel, date picker, table interaction, and authentication-related forms.
-4. Manual checks pass with NVDA and VoiceOver on the defined matrix.
+4. Manual checks pass with NVDA, JAWS, and VoiceOver on the defined matrix.
 5. Accessibility checks run in CI and block regressions.
 6. Editorial guidance exists for alt text, decorative images, captions, transcripts, and background-image usage.
 

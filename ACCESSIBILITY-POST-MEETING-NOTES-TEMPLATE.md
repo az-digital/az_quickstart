@@ -41,6 +41,8 @@ Confirm the scope, decision queue, release direction, and first implementation w
 - Assistive-technology matrix:
 - Regression gate expectations:
 - Manual verification expectations:
+- Preliminary Phase 0 docs adopted as working direction for [#5541](https://github.com/az-digital/az_quickstart/issues/5541) and [#5539](https://github.com/az-digital/az_quickstart/issues/5539):
+- Docs that remain provisional after the meeting:
 
 ### First Implementation Wave
 
@@ -58,6 +60,11 @@ Use this section to capture direct outcomes for the Friday decision queue.
 - Follow-up needed:
 
 ### [#5541](https://github.com/az-digital/az_quickstart/issues/5541) - Verification Policy Spike
+
+- Outcome:
+- Follow-up needed:
+
+### [#5539](https://github.com/az-digital/az_quickstart/issues/5539) - Accessibility Regression Gate Task
 
 - Outcome:
 - Follow-up needed:

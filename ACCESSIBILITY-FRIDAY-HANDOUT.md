@@ -24,6 +24,25 @@ No implementation work has started. Friday is a planning and prioritization meet
 3. Project board:
    [Accessibility Program - az_quickstart](https://github.com/orgs/az-digital/projects/285)
 
+## Preliminary Phase 0 Working Drafts
+
+These documents now support the Phase 0 work on the board and should be treated as preliminary working drafts for Friday discussion, not finalized operating policy.
+
+Phase 0 anchor issues:
+
+1. [#5532 - Phase 0 parent issue](https://github.com/az-digital/az_quickstart/issues/5532)
+2. [#5541 - Verification policy and representative page matrix](https://github.com/az-digital/az_quickstart/issues/5541)
+3. [#5539 - Accessibility regression gate task](https://github.com/az-digital/az_quickstart/issues/5539)
+
+Operational drafts:
+
+1. [Phase 0.1 verification proposal](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-P0.1-VERIFICATION-PROPOSAL.md)
+2. [Phase 0.2 scanner workflow plan](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-P0.2-SCANNER-WORKFLOW-PLAN.md)
+3. [Manual verification playbook](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-MANUAL-VERIFICATION-PLAYBOOK.md)
+4. [Scanner triage guide](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-SCANNER-TRIAGE-GUIDE.md)
+5. [Release sign-off checklist](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-RELEASE-SIGNOFF-CHECKLIST.md)
+6. [Representative URL inventory and environment map](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-REPRESENTATIVE-URL-INVENTORY.md)
+
 ## Friday Decision Queue
 
 These issues still need explicit team direction:
@@ -51,6 +70,7 @@ If the Friday decisions are confirmed, the strongest first-wave candidates are t
 2. Which issues are patch-safe versus minor-release work.
 3. Which undecided items need additional discovery before implementation planning.
 4. Whether the recommended first wave should stand as currently proposed.
+5. Whether the preliminary Phase 0 working drafts for [#5541](https://github.com/az-digital/az_quickstart/issues/5541) and [#5539](https://github.com/az-digital/az_quickstart/issues/5539) are directionally correct enough to use as the working basis for implementation planning.
 
 ## Recommended Starting Positions
 
@@ -66,4 +86,10 @@ These are recommended starting positions for discussion, not pre-made decisions:
 - [Meeting agenda](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-FRIDAY-MEETING-AGENDA.md)
 - [Facilitator script](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-FRIDAY-FACILITATOR-SCRIPT.md)
 - [Talk track](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-LIVE-PRESENTATION-TALK-TRACK.md)
+- [Phase 0.1 verification proposal](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-P0.1-VERIFICATION-PROPOSAL.md)
+- [Phase 0.2 scanner workflow plan](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-P0.2-SCANNER-WORKFLOW-PLAN.md)
+- [Manual verification playbook](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-MANUAL-VERIFICATION-PLAYBOOK.md)
+- [Scanner triage guide](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-SCANNER-TRIAGE-GUIDE.md)
+- [Release sign-off checklist](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-RELEASE-SIGNOFF-CHECKLIST.md)
+- [Representative URL inventory and environment map](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-REPRESENTATIVE-URL-INVENTORY.md)
 - [Consolidated send-out brief](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-SENDOUT-BRIEF.md)

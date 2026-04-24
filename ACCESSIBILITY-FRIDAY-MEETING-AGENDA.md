@@ -12,9 +12,17 @@ Review these materials before the meeting if possible:
 
 - [ACCESSIBILITY-REVIEW-PLAN.md](ACCESSIBILITY-REVIEW-PLAN.md)
 - [ACCESSIBILITY-GITHUB-PROJECT-PLAN.md](ACCESSIBILITY-GITHUB-PROJECT-PLAN.md)
+- [ACCESSIBILITY-P0.1-VERIFICATION-PROPOSAL.md](ACCESSIBILITY-P0.1-VERIFICATION-PROPOSAL.md)
+- [ACCESSIBILITY-P0.2-SCANNER-WORKFLOW-PLAN.md](ACCESSIBILITY-P0.2-SCANNER-WORKFLOW-PLAN.md)
+- [ACCESSIBILITY-MANUAL-VERIFICATION-PLAYBOOK.md](ACCESSIBILITY-MANUAL-VERIFICATION-PLAYBOOK.md)
+- [ACCESSIBILITY-SCANNER-TRIAGE-GUIDE.md](ACCESSIBILITY-SCANNER-TRIAGE-GUIDE.md)
+- [ACCESSIBILITY-RELEASE-SIGNOFF-CHECKLIST.md](ACCESSIBILITY-RELEASE-SIGNOFF-CHECKLIST.md)
+- [ACCESSIBILITY-REPRESENTATIVE-URL-INVENTORY.md](ACCESSIBILITY-REPRESENTATIVE-URL-INVENTORY.md)
 - [ACCESSIBILITY-PROJECT-VIEWS-HANDOFF.md](ACCESSIBILITY-PROJECT-VIEWS-HANDOFF.md)
 - [GitHub project board](https://github.com/orgs/az-digital/projects/285)
 - [Umbrella program issue #5533](https://github.com/az-digital/az_quickstart/issues/5533)
+
+These Phase 0 supporting documents should be treated as preliminary working drafts for meeting review, not finalized operating policy.
 
 ## Meeting Goal
 
@@ -23,6 +31,7 @@ Leave the meeting with:
 1. Agreement on the scope and structure of the accessibility program.
 2. Agreement on the release and verification decisions that affect prioritization.
 3. Agreement on the first implementation wave, without starting work yet.
+4. Agreement on whether the preliminary Phase 0 working drafts linked to [#5532](https://github.com/az-digital/az_quickstart/issues/5532), [#5541](https://github.com/az-digital/az_quickstart/issues/5541), and [#5539](https://github.com/az-digital/az_quickstart/issues/5539) are the right working direction.
 
 ## Proposed Agenda
 
@@ -72,6 +81,7 @@ These decisions should be made before implementation starts:
 2. What is the representative page matrix for CI and manual verification?
 3. Should accessibility regressions block patch releases, minor releases, or both?
 4. Which issues clearly belong in patch releases, and which should remain minor-release candidates?
+5. Should the preliminary Phase 0 working drafts for [#5541](https://github.com/az-digital/az_quickstart/issues/5541) and [#5539](https://github.com/az-digital/az_quickstart/issues/5539) stand as the working direction while final URLs, environment details, and sign-off ownership are still being settled?
 
 Recommended starting positions for discussion:
 
@@ -96,6 +106,7 @@ Suggested focus:
 1. Which items are safe patch-release candidates.
 2. Which items should remain minor-release work.
 3. Which items need more discovery before they are implementation-ready.
+4. Whether the new Phase 0 operating docs are directionally correct enough to support the project board's Phase 0 work without being treated as final policy.
 
 ### 6. Confirm First Implementation Wave - 10 minutes
 
@@ -118,6 +129,7 @@ Confirm:
 2. Who will maintain the board and issue metadata.
 3. Which issues need follow-up edits after the meeting.
 4. What constitutes approval to begin implementation planning.
+5. Who owns finalizing the preliminary Phase 0 docs after the meeting.
 
 ## Suggested Outcome Notes Template
 

@@ -82,6 +82,12 @@ The planning structure described in this document has now been created in GitHub
 - Facilitator script: [ACCESSIBILITY-FRIDAY-FACILITATOR-SCRIPT.md](ACCESSIBILITY-FRIDAY-FACILITATOR-SCRIPT.md)
 - Post-meeting notes template: [ACCESSIBILITY-POST-MEETING-NOTES-TEMPLATE.md](ACCESSIBILITY-POST-MEETING-NOTES-TEMPLATE.md)
 - Live presentation talk track: [ACCESSIBILITY-LIVE-PRESENTATION-TALK-TRACK.md](ACCESSIBILITY-LIVE-PRESENTATION-TALK-TRACK.md)
+- Phase 0.1 verification proposal: [ACCESSIBILITY-P0.1-VERIFICATION-PROPOSAL.md](ACCESSIBILITY-P0.1-VERIFICATION-PROPOSAL.md)
+- Phase 0.2 scanner workflow plan: [ACCESSIBILITY-P0.2-SCANNER-WORKFLOW-PLAN.md](ACCESSIBILITY-P0.2-SCANNER-WORKFLOW-PLAN.md)
+- Manual verification playbook: [ACCESSIBILITY-MANUAL-VERIFICATION-PLAYBOOK.md](ACCESSIBILITY-MANUAL-VERIFICATION-PLAYBOOK.md)
+- Scanner triage guide: [ACCESSIBILITY-SCANNER-TRIAGE-GUIDE.md](ACCESSIBILITY-SCANNER-TRIAGE-GUIDE.md)
+- Release sign-off checklist: [ACCESSIBILITY-RELEASE-SIGNOFF-CHECKLIST.md](ACCESSIBILITY-RELEASE-SIGNOFF-CHECKLIST.md)
+- Representative URL inventory and environment map: [ACCESSIBILITY-REPRESENTATIVE-URL-INVENTORY.md](ACCESSIBILITY-REPRESENTATIVE-URL-INVENTORY.md)
 - Saved-view handoff for manual GitHub setup: [ACCESSIBILITY-PROJECT-VIEWS-HANDOFF.md](ACCESSIBILITY-PROJECT-VIEWS-HANDOFF.md)
 - Email draft summarizing today's work: [ACCESSIBILITY-PROGRAM-EMAIL-DRAFT.md](ACCESSIBILITY-PROGRAM-EMAIL-DRAFT.md)
 - Executive email draft: [ACCESSIBILITY-EXECUTIVE-EMAIL-DRAFT.md](ACCESSIBILITY-EXECUTIVE-EMAIL-DRAFT.md)
@@ -241,6 +247,8 @@ Conditions of satisfaction
 
 Suggested labels: `a11y`, `a11y:verification`, `priority:p0`
 
+Recommended working direction: [ACCESSIBILITY-P0.1-VERIFICATION-PROPOSAL.md](ACCESSIBILITY-P0.1-VERIFICATION-PROPOSAL.md). That proposal assumes the GitHub Accessibility Scanner is the primary automated checker and that the required Windows screen-reader matrix includes JAWS with both Chrome and Edge.
+
 ### Issue 0.2 - Add an accessibility regression gate to CI
 
 Suggested template: Task
@@ -259,6 +267,12 @@ Conditions of satisfaction
 - [ ] The workflow is documented for contributors.
 
 Suggested labels: `a11y`, `a11y:tooling`, `priority:p0`, `release:patch`
+
+Initial implementation direction: use the GitHub Accessibility Scanner against approved representative live URLs, then add narrower supplemental checks later only where the scanner cannot reach an authenticated or preview-only flow.
+
+Concrete implementation planning: [ACCESSIBILITY-P0.2-SCANNER-WORKFLOW-PLAN.md](ACCESSIBILITY-P0.2-SCANNER-WORKFLOW-PLAN.md).
+
+Operational support documents: [ACCESSIBILITY-MANUAL-VERIFICATION-PLAYBOOK.md](ACCESSIBILITY-MANUAL-VERIFICATION-PLAYBOOK.md), [ACCESSIBILITY-SCANNER-TRIAGE-GUIDE.md](ACCESSIBILITY-SCANNER-TRIAGE-GUIDE.md), [ACCESSIBILITY-RELEASE-SIGNOFF-CHECKLIST.md](ACCESSIBILITY-RELEASE-SIGNOFF-CHECKLIST.md), and [ACCESSIBILITY-REPRESENTATIVE-URL-INVENTORY.md](ACCESSIBILITY-REPRESENTATIVE-URL-INVENTORY.md).
 
 ## Phase 1 - Global User Experience Blockers
 
