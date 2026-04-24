@@ -19,18 +19,16 @@
 
   {{ exposed }}
 
-  {% if header %}
-    <div class="view-header">
-      {{ header }}
-    </div>
-  {% endif %}
+  <div class="view-header" role="status" aria-live="polite" aria-atomic="true">
+    {% if header %}{{ header }}{% endif %}
+  </div>
 
   {{ attachment_before }}
 
   {% if rows -%}
     {{ rows }}
   {% elseif empty -%}
-    {{ empty }}
+    <div aria-live="polite" aria-atomic="true">{{ empty }}</div>
   {% endif %}
 
   {{ pager }}
@@ -38,9 +36,9 @@
   {{ more }}
 
   {% if footer %}
-    <footer>
+    <div class="view-footer">
       {{ footer }}
-    </footer>
+    </div>
   {% endif %}
 
   {{ feed_icons }}
