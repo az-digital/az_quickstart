@@ -183,7 +183,7 @@ display:
           group_type: group
           admin_label: ''
           plugin_id: views_remote_data_property
-          label: NetID
+          label: 'Owner NetID'
           exclude: false
           alter:
             alter_text: false
