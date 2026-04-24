@@ -53,7 +53,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   $form['az_settings']['settings']['land_acknowledgment'] = [
     '#type' => 'checkbox',
     '#title' => t('Land Acknowledgment'),
-    '#description' => t('With few execeptions, this should always be enabled.'),
+    '#description' => t('With few exceptions, this should always be enabled.'),
     '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('land_acknowledgment'),
   ];
 
@@ -61,7 +61,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   $form['az_settings']['settings']['info_security_privacy'] = [
     '#type' => 'checkbox',
     '#title' => t('University Information Security and Privacy link'),
-    '#description' => t('With few execeptions, this should always be enabled.'),
+    '#description' => t('With few exceptions, this should always be enabled.'),
     '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('info_security_privacy'),
   ];
 
@@ -265,6 +265,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
       'stable' => t('Stable version: This option has undergone the most testing within the az_barrio theme. Currently: %stableversion (Recommended).', ['%stableversion' => AZ_BOOTSTRAP_STABLE_VERSION]),
       'latest-5.x' => t('Latest tagged version of 5.x. The most recently tagged stable release of AZ Bootstrap. While this has not been explicitly tested on this version of az_barrio, it’s probably OK to use on production sites. Please report bugs to the AZ Digital team.'),
       '5.x' => t('Latest dev version of <code>main</code>. This is the tip of the main branch of AZ Bootstrap. Please do not use on production unless you are following the AZ Bootstrap project closely. Please report bugs to the AZ Digital team.'),
+      'az-navbar-fullscreen' => t('AZ NAVBAR FULLSCREEN CSS: FOR TESTING ONLY.'),
     ],
     '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_bootstrap_cdn_version_css'),
   ];
@@ -275,6 +276,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
       'stable' => t('Stable version: This option has undergone the most testing within the az_barrio theme. Currently: %stableversion (Recommended).', ['%stableversion' => AZ_BOOTSTRAP_STABLE_VERSION]),
       'latest-5.x' => t('Latest tagged version of 5.x. The most recently tagged stable release of AZ Bootstrap. While this has not been explicitly tested on this version of az_barrio, it’s probably OK to use on production sites. Please report bugs to the AZ Digital team.'),
       '5.x' => t('Latest dev version of <code>main</code>. This is the tip of the main branch of AZ Bootstrap. Please do not use on production unless you are following the AZ Bootstrap project closely. Please report bugs to the AZ Digital team.'),
+      'az-navbar-fullscreen' => t('AZ NAVBAR FULLSCREEN JS: FOR TESTING ONLY.'),
     ],
     '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_bootstrap_cdn_version_js'),
   ];
@@ -335,7 +337,18 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
         '#wrapper_attributes' => ['class' => ['field-multiple-table']],
       ],
   ];
-  $form['components']['navbar_behaviour'] = $az_navbar_setting + $form['components']['navbar_behaviour'];
+  $az_navbar_fullscreen_setting = [
+    'az_navbar_fullscreen' =>
+      [
+        '#type' => 'checkbox',
+        '#prefix' => "<span class='form-item__label'>" . t('AZ Navbar Fullscreen') . "</span>",
+        '#title' => t('Enable AZ Navbar Fullscreen'),
+        '#description' => t('FOR TESTING: Enable the experimental AZ Navbar Fullscreen. This option also disables the AZ Navbar.'),
+        '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_navbar_fullscreen'),
+        '#wrapper_attributes' => ['class' => ['field-multiple-table']],
+      ],
+  ];
+  $form['components']['navbar_behaviour'] = $az_navbar_setting + $az_navbar_fullscreen_setting + $form['components']['navbar_behaviour'];
   $form['affix']['navbar_top'] = [];
   $form['affix']['navbar'] = [];
   // Logos.

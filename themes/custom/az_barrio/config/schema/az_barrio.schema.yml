@@ -314,6 +314,9 @@ az_barrio.settings:
     az_navbar:
       type: boolean
       label: 'Enable AZ Navbar'
+    az_navbar_fullscreen:
+      type: boolean
+      label: 'Enable AZ Navbar Fullscreen (Experimental)'
     primary_logo_alt_text:
       type: label
       label: 'Primary logo alt text'
