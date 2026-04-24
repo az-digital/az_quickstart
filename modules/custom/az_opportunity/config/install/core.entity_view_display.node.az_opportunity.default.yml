@@ -278,31 +278,12 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-    group_tags:
-      children:
-        - field_az_opportunity_category
-      label: Tags
-      parent_name: ''
-      region: content
-      weight: 20
-      format_type: html_element
-      format_settings:
-        classes: ''
-        show_empty_fields: false
-        id: ''
-        label_as_html: false
-        element: div
-        show_label: false
-        label_element: h3
-        label_element_classes: ''
-        attributes: ''
-        effect: none
-        speed: fast
     group_content_row:
       children:
         - field_az_body
         - field_az_eligibility
         - links
+        - field_az_opportunity_category
       label: 'Content row'
       parent_name: ''
       region: content
@@ -395,7 +376,7 @@ content:
       view_mode: az_badge
       link: false
     third_party_settings: {  }
-    weight: 20
+    weight: 5
     region: content
   field_az_opportunity_credit:
     type: list_default
