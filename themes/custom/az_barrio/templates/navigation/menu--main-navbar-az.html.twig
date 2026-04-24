@@ -71,7 +71,7 @@
             <div class="btn-group">
               {{ link(item.title, item.url, { 'class': 'dropdown-item' }) }}
               <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-bs-toggle="collapse" data-bs-target="#tertiary-{{ item.title|clean_class }}" aria-controls="tertiary-{{ item.title|clean_class }}" aria-expanded="{{ item.in_active_trail ? 'true' : 'false' }}">
-                <span class="visually-hidden">{{ item.in_active_trail ? 'Submenu for @title'|t({'@title': item.title}) : 'Submenu for @title'|t({'@title': item.title}) }}</span>
+                <span class="visually-hidden">{{ 'Submenu for @title'|t({'@title': item.title}) }}</span>
               </button>
             </div>
             {{ menus.menu_links(item.below, attributes, menu_level + 1, item) }}
