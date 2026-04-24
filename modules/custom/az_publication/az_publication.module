@@ -526,7 +526,7 @@ function _az_publication_publication_date_object(EntityInterface $entity) {
       $slices = 2;
       break;
 
-    default;
+    default:
       $slices = 3;
       break;
   }
@@ -580,7 +580,7 @@ function _az_publication_ajax_callback(array &$form, FormStateInterface $form_st
  *
  * Transforms the field_az_publication_date field into a text field allowing
  * different date formats depending on which date type is selected. The
- * bootstrap-datepicker library is attached and a javascript helper added
+ * vanilla-calendar-pro library is attached and a javascript helper added
  * that pads or removes components from the date as needed based on type.
  *
  * @param array $form
@@ -630,17 +630,20 @@ function _az_publication_form_revisions(array &$form, FormStateInterface $form_s
       case 'month':
       case 'season':
         $format = 'Y-m';
-        $viewmode = 'months';
+        $viewmode = 'month';
+        $placeholder = 'YYYY-MM';
         break;
 
       case 'year':
         $format = 'Y';
-        $viewmode = 'years';
+        $viewmode = 'year';
+        $placeholder = 'YYYY';
         break;
 
-      default;
+      default:
         $format = 'Y-m-d';
-        $viewmode = 'days';
+        $viewmode = 'default';
+        $placeholder = 'YYYY-MM-DD';
         break;
     }
 
@@ -649,6 +652,7 @@ function _az_publication_form_revisions(array &$form, FormStateInterface $form_s
     foreach ($components as $component) {
       $form[$date_field]['widget'][0][$component]['#attributes']['data-drupal-date-format'] = [$format];
       $form[$date_field]['widget'][0][$component]['#attributes']['data-az-publication-date-mode'] = [$viewmode];
+      $form[$date_field]['widget'][0][$component]['#attributes']['placeholder'] = $placeholder;
       $form[$date_field]['widget'][0][$component]['#attributes']['type'] = 'text';
       $form[$date_field]['widget'][0][$component]['#attributes']['class'][] = 'az-publication-date-picker';
       $form[$date_field]['widget'][0][$component]['#value_callback'] = '_az_publication_value_callback';
