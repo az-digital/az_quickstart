@@ -5,7 +5,7 @@ az_opportunity_trellis.az_opportunity_trellis_settings_task:
   weight: 0
 
 az_opportunity.import_form_task:
-  title: 'Trellis Opportunity Importer'
+  title: 'Trellis opportunity importer'
   route_name: view.az_opportunity_trellis_import.page_1
   parent_id: system.admin_content
   description: 'Import opportunities from the Trellis Opportunity API.'
