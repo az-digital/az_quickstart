@@ -130,8 +130,7 @@ final class AZOpportunityTrellisDataSubscriber implements EventSubscriberInterfa
       }
       $ids = $this->trellisHelper->searchOpportunities($parameters);
       if (!empty($ids)) {
-        // Set total before slicing so the pager knows the full result count.
-        $event->getView()->pager->total_items = count($ids);
+        $total = count($ids);
         $offset = $event->getOffset();
         $limit = $event->getLimit();
         if (!empty($limit)) {
@@ -139,6 +138,12 @@ final class AZOpportunityTrellisDataSubscriber implements EventSubscriberInterfa
         }
         // Run data fetch request.
         $results = $this->trellisHelper->getOpportunities($ids);
+
+        if (empty($results)) {
+          return;
+        }
+        // Set a results count to pager, only when the data fetch worked.
+        $event->getView()->pager->total_items = $total;
         $datefields = [
           'Last_Modified_Date',
           'Start_Date__c',
