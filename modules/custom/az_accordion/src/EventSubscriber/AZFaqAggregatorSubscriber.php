@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace Drupal\az_accordion\EventSubscriber;
 
+use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Render\HtmlResponse;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\node\NodeInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -17,8 +21,18 @@ use Symfony\Component\HttpKernel\KernelEvents;
  * HtmlResponseSubscriber (which processes attachments into HTML), finds all
  * such entries, merges the questions, and replaces them with a single
  * 'faq_schema' entry containing one FAQPage JSON-LD block.
+ *
+ * Group order matches authored page order, derived from the node's paragraph
+ * field: direct accordion paragraphs contribute their own id; text paragraphs
+ * are scanned for `<drupal-entity>` embeds whose flex blocks are inspected for
+ * accordion paragraphs one level deep.
  */
 class AZFaqAggregatorSubscriber implements EventSubscriberInterface {
+
+  public function __construct(
+    protected RouteMatchInterface $routeMatch,
+    protected EntityRepositoryInterface $entityRepository,
+  ) {}
 
   /**
    * {@inheritdoc}
@@ -71,15 +85,13 @@ class AZFaqAggregatorSubscriber implements EventSubscriberInterface {
       return;
     }
 
-    // Sort groups by the DOM order of each accordion wrapper's id attribute.
-    // Non-FAQ accordions that match this pattern are ignored since uksort
-    // only consults IDs that keyed an FAQ accordion group.
-    preg_match_all('/id="accordion-(\d+)/', $response->getContent(), $matches);
-    $order = array_flip($matches[1]);
-
-    uksort($groups, function ($a, $b) use ($order): int {
-      $pa = $order[$a] ?? PHP_INT_MAX;
-      $pb = $order[$b] ?? PHP_INT_MAX;
+    // Sort groups by authored order extracted from the node's paragraph tree.
+    // Accordions not found in the tree (e.g. on non-node routes, or rendered
+    // outside the main paragraph field) sort to the end via PHP_INT_MAX.
+    $position = array_flip($this->buildAccordionOrder());
+    uksort($groups, function ($a, $b) use ($position): int {
+      $pa = $position[$a] ?? PHP_INT_MAX;
+      $pb = $position[$b] ?? PHP_INT_MAX;
       return $pa <=> $pb;
     });
 
@@ -110,6 +122,87 @@ class AZFaqAggregatorSubscriber implements EventSubscriberInterface {
 
     $attachments['html_head'] = $remaining_head;
     $response->setAttachments($attachments);
+  }
+
+  /**
+   * Returns accordion paragraph ids in authored page order for this request.
+   *
+   * Covers two cases:
+   *   1. An accordion paragraph added directly to the node.
+   *   2. A flex block embedded in a text paragraph on the node, where the
+   *      flex block's paragraph field contains accordion paragraphs.
+   *
+   * @return string[]
+   *   Accordion paragraph ids in authored order, as strings matching the
+   *   entity-id form encoded in faq_questions_* attachment keys.
+   */
+  protected function buildAccordionOrder(): array {
+    $node = $this->routeMatch->getParameter('node');
+    if (!$node instanceof NodeInterface || !$node->hasField('field_az_main_content')) {
+      return [];
+    }
+
+    $order = [];
+
+    foreach ($node->get('field_az_main_content') as $item) {
+      $paragraph = $item->entity;
+      if (!$paragraph instanceof ContentEntityInterface) {
+        continue;
+      }
+
+      // Case 1: accordion paragraph directly on the node.
+      if ($paragraph->hasField('field_az_accordion')) {
+        $order[] = (string) $paragraph->id();
+        continue;
+      }
+
+      // Case 2: text paragraph whose body embeds a flex block that contains
+      // accordion paragraphs in its own paragraph field.
+      if (!$paragraph->hasField('field_az_text_area')) {
+        continue;
+      }
+      foreach ($paragraph->get('field_az_text_area') as $text_item) {
+        foreach ($this->parseEmbeddedEntities($text_item->value ?? '') as $embedded) {
+          if (!$embedded->hasField('field_az_main_content')) {
+            continue;
+          }
+          foreach ($embedded->get('field_az_main_content') as $nested_item) {
+            $nested = $nested_item->entity;
+            if ($nested instanceof ContentEntityInterface && $nested->hasField('field_az_accordion')) {
+              $order[] = (string) $nested->id();
+            }
+          }
+        }
+      }
+    }
+
+    return $order;
+  }
+
+  /**
+   * Parses <drupal-entity> tags from CKEditor HTML and returns loaded entities.
+   *
+   * @return \Drupal\Core\Entity\ContentEntityInterface[]
+   */
+  protected function parseEmbeddedEntities(string $html): array {
+    if (!str_contains($html, 'drupal-entity')) {
+      return [];
+    }
+    if (!preg_match_all('/<drupal-entity\b[^>]*>/i', $html, $tag_matches)) {
+      return [];
+    }
+    $entities = [];
+    foreach ($tag_matches[0] as $tag) {
+      if (!preg_match('/\bdata-entity-type="([^"]+)"/', $tag, $type_match) ||
+          !preg_match('/\bdata-entity-uuid="([^"]+)"/', $tag, $uuid_match)) {
+        continue;
+      }
+      $entity = $this->entityRepository->loadEntityByUuid($type_match[1], $uuid_match[1]);
+      if ($entity instanceof ContentEntityInterface) {
+        $entities[] = $entity;
+      }
+    }
+    return $entities;
   }
 
 }
