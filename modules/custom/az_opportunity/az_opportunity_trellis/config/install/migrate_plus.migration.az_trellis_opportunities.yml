@@ -1,0 +1,290 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az_trellis_opportunities
+class: null
+idMap: {  }
+field_plugin_method: null
+cck_plugin_method: null
+migration_tags:
+  - Opportunities
+migration_group: az_trellis_opportunities
+label: 'Trellis Opportunities'
+source:
+  plugin: az_trellis_opportunities_api
+  trellis_ids: {  }
+  track_changes: true
+  fields:
+    -
+      name: id
+      label: ID
+      selector: Id
+    -
+      name: name
+      label: Name
+      selector: Name
+    -
+      name: start_options
+      label: 'Start Options'
+      selector: Start_Options__c
+    -
+      name: program_format
+      label: 'Program Format'
+      selector: Program_Format__c
+    -
+      name: program_length
+      label: 'Program Length'
+      selector: Length_Of_Program__c
+    -
+      name: incentives
+      label: Incentives
+      selector: Incentives__c
+    -
+      name: credit_type
+      label: 'Credit Type'
+      selector: Credit_Type__c
+    -
+      name: location
+      label: Location
+      selector: Location__c
+    -
+      name: program_website
+      label: 'Program Website'
+      selector: Program_Website__c
+    -
+      name: description
+      label: 'Program Description'
+      selector: Program_Description__c
+    -
+      name: eligibility
+      label: Eligibility
+      selector: Eligibility__c
+    -
+      name: topic
+      label: Topic
+      selector: Topic__c
+    -
+      name: application_form_url
+      label: 'Application Form URL'
+      selector: Application_Form_URL__c
+    -
+      name: audiences
+      label: Audiences
+      selector: Audiences__c
+    -
+      name: application_open
+      label: 'Application Open Date'
+      selector: Application_Open__c
+    -
+      name: application_closed
+      label: 'Application Closed Date'
+      selector: Application_Closed__c
+    -
+      name: start_date
+      label: 'Program Start Date'
+      selector: Start_Date__c
+    -
+      name: end_date
+      label: 'Program End Date'
+      selector: End_Date__c
+    -
+      name: ongoing
+      label: Ongoing
+      selector: Ongoing__c
+    -
+      name: imported_date
+      label: 'Last Modified Date'
+      selector: Last_Modified_Date
+    -
+      name: parent_account
+      label: 'Parent Account Name'
+      selector: Parent_Account_Name
+    -
+      name: program_type
+      label: 'Program Type'
+      selector: Program_Type__c
+    -
+      name: audiences
+      label: Audiences
+      selector: Audiences__c
+    -
+      name: topic
+      label: Topic
+      selector: Topic__c
+    -
+      name: program_type
+      label: 'Program Type'
+      selector: Program_Type__c
+    -
+      name: publish
+      label: Publish
+      selector: Publish_Formula
+    -
+      name: owner_netid
+      label: 'Owner NetID'
+      selector: Owner_NetID
+  ids:
+    id:
+      type: string
+process:
+  field_az_enterprise_attributes:
+    - plugin: callback
+      callable: array_filter
+      source:
+        - audiences
+        - topic
+        - program_type
+        - program_format
+    -
+      plugin: multiple_values
+    -
+      plugin: callback
+      callable: trim
+    -
+      plugin: single_value
+    -
+      plugin: entity_lookup
+      entity_type: taxonomy_term
+      bundle_key: vid
+      bundle: az_enterprise_attributes
+      value_key: name
+      ignore_case: true
+  title: name
+  field_az_trellis_id: id
+  field_az_offered:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: start_options
+    -
+      plugin: entity_generate
+      entity_type: taxonomy_term
+      bundle_key: vid
+      bundle: az_opportunity_semester
+      source: start_options
+      value_key: name
+      ignore_case: true
+  field_az_opportunity_format:
+    -
+      plugin: skip_on_empty
+      method: process
+    -
+      plugin: explode
+      source: program_format
+      delimiter: ', '
+    -
+      plugin: multiple_values
+    -
+      plugin: static_map
+      map:
+        'Hybrid': hybrid
+        'In-Person': in_person
+        'Virtual': virtual
+  field_az_program_length: program_length
+  field_az_incentives:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: incentives
+    -
+      plugin: static_map
+      source: incentives
+      map:
+        'Yes': yes
+        'No': no
+        'Inquire Within': inquire_within
+  field_az_opportunity_credit:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: credit_type
+    -
+      plugin: explode
+      delimiter: ';'
+    -
+      plugin: callback
+      callable: trim
+    -
+      plugin: multiple_values
+    -
+      plugin: static_map
+      map:
+        'Non-Credit': non_credit
+        'UA Credit': ua_credit
+        'Transfer Credit': transfer_credit
+  field_az_opportunity_location: location
+  field_az_program_website/uri: program_website
+  field_az_program_website/title:
+    -
+      plugin: default_value
+      default_value: 'Program Website'
+  field_az_eligibility/value: eligibility
+  field_az_eligibility/format:
+    plugin: default_value
+    default_value: az_standard
+  field_az_body/value: description
+  field_az_body/format:
+    plugin: default_value
+    default_value: az_standard
+  field_az_application_link/uri: application_form_url
+  field_az_application_link/title:
+    -
+      plugin: default_value
+      default_value: 'Apply now'
+  field_az_application_date/value:
+    -
+      plugin: format_date
+      source: application_open
+      from_format: Y-m-d
+      to_format: 'Y-m-d\TH:i:s'
+  field_az_application_date/end_value:
+    -
+      plugin: format_date
+      source: application_closed
+      from_format: Y-m-d
+      to_format: 'Y-m-d\TH:i:s'
+  field_az_program_date/value:
+    -
+      plugin: format_date
+      source: start_date
+      from_format: Y-m-d
+      to_format: 'Y-m-d\TH:i:s'
+  field_az_program_date/end_value:
+    -
+      plugin: format_date
+      source: end_date
+      from_format: Y-m-d
+      to_format: 'Y-m-d\TH:i:s'
+  field_az_ongoing:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: ongoing
+    -
+      plugin: static_map
+      source: ongoing
+      map:
+        'false': 0
+        'true': 1
+  field_az_trellis_imported_date:
+    -
+      plugin: format_date
+      source: imported_date
+      from_format: 'Y-m-d\TH:i:s.vp'
+      to_format: 'Y-m-d\TH:i:s'
+  field_az_parent_account: parent_account
+  status:
+    -
+      plugin: get
+      source: publish
+    -
+      plugin: default_value
+      strict: true
+      default_value: 0
+destination:
+  plugin: 'entity:node'
+  default_bundle: az_opportunity
+  validate: false
+migration_dependencies:
+  null
+include: null
