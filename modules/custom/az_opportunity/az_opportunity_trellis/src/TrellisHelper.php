@@ -96,32 +96,75 @@ final class TrellisHelper {
   public function searchOpportunities(array $query) {
     $ids = [];
     // Compute cache key of query.
+    // TEMP: caching disabled for debugging — re-enable by restoring the block below.
     $key = 'az_trellis_opportunities.search:' . Crypt::hashBase64(serialize($query));
-    $cached = $this->cache->get($key);
-    // If we have this search cached, return it.
-    if ($cached !== FALSE) {
-      return $cached->data;
-    }
+    // $cached = $this->cache->get($key);
+    // if ($cached !== FALSE) {
+    //   return $cached->data;
+    // }
 
     $url = $this->getOpportunitySearchEndpoint();
-    try {
-      // Run search request.
-      $response = $this->httpClient->request('GET', $url, ['query' => $query]);
-      if ($response->getStatusCode() === 200) {
-        $json = (string) $response->getBody();
-        $json = json_decode($json, TRUE);
-        if ($json !== NULL) {
-          $ids = $json['data']['Program_Cycle_IDs'] ?? [];
-          // Ensure opportunities are in Id order.
-          sort($ids);
-          // @todo determine cache expiration.
-          $expire = time() + 1800;
-          // Cache search result.
-          $this->cache->set($key, $ids, $expire);
+    // Boomi's load balancer intermittently routes to a backend that returns
+    // 404 "No such path". Retry up to 3 times with brief backoff so a single
+    // bad-route doesn't surface as "No results" to the user.
+    $maxAttempts = 3;
+    $succeeded = FALSE;
+    for ($attempt = 1; $attempt <= $maxAttempts; $attempt++) {
+      try {
+        $response = $this->httpClient->request('GET', $url, [
+          'query' => $query,
+          'timeout' => 10,
+        ]);
+        $status = $response->getStatusCode();
+        if ($status === 200) {
+          $json = (string) $response->getBody();
+          $json = json_decode($json, TRUE);
+          if ($json !== NULL) {
+            $ids = $json['data']['Program_Cycle_IDs'] ?? [];
+            sort($ids);
+            // Only cache non-empty results — caching [] locks out a working
+            // search for the full 30-minute TTL if the API had a hiccup.
+            if (!empty($ids)) {
+              $expire = time() + 1800;
+              $this->cache->set($key, $ids, $expire);
+            }
+            $succeeded = TRUE;
+            if ($attempt > 1) {
+              \Drupal::logger('az_opportunity_trellis')->info('Trellis search succeeded on attempt @attempt of @max. Query: @query', [
+                '@attempt' => $attempt,
+                '@max' => $maxAttempts,
+                '@query' => http_build_query($query),
+              ]);
+            }
+            break;
+          }
+        }
+        else {
+          \Drupal::logger('az_opportunity_trellis')->warning('Trellis search returned non-200 status @status on attempt @attempt of @max. Query: @query', [
+            '@status' => $status,
+            '@attempt' => $attempt,
+            '@max' => $maxAttempts,
+            '@query' => http_build_query($query),
+          ]);
         }
       }
+      catch (GuzzleException $e) {
+        \Drupal::logger('az_opportunity_trellis')->warning('Trellis search attempt @attempt of @max failed: @message. Query: @query', [
+          '@attempt' => $attempt,
+          '@max' => $maxAttempts,
+          '@message' => $e->getMessage(),
+          '@query' => http_build_query($query),
+        ]);
+      }
+      if ($attempt < $maxAttempts) {
+        usleep(200000);
+      }
     }
-    catch (GuzzleException $e) {
+    if (!$succeeded) {
+      \Drupal::logger('az_opportunity_trellis')->error('Trellis search failed after @max attempts. Query: @query', [
+        '@max' => $maxAttempts,
+        '@query' => http_build_query($query),
+      ]);
     }
     return $ids;
   }
@@ -141,34 +184,76 @@ final class TrellisHelper {
     $url = $this->getOpportunityEndpoint();
     // Remove any duplicate ids to mimic remote API.
     $trellis_ids = array_unique($trellis_ids);
-    // Grab opportunities that are in cache.
-    foreach ($trellis_ids as $trellis_id) {
-      $cached = $this->getTrellisCache($trellis_id);
-      if ($cached === FALSE) {
-        $fetch[] = $trellis_id;
-      }
-      else {
-        $opportunities[] = $cached;
-      }
-    }
-    // Fetch opportunities we did not have cached.
+    // TEMP: caching disabled for debugging — re-enable by restoring the block below.
+    // foreach ($trellis_ids as $trellis_id) {
+    //   $cached = $this->getTrellisCache($trellis_id);
+    //   if ($cached === FALSE) {
+    //     $fetch[] = $trellis_id;
+    //   }
+    //   else {
+    //     $opportunities[] = $cached;
+    //   }
+    // }
+    $fetch = array_values($trellis_ids);
+    // Fetch opportunities we did not have cached. The Trellis/Boomi data POST
+    // is intermittently flaky — retry up to 3 times with brief backoff before
+    // giving up so a transient hiccup doesn't surface as "No results".
     if (!empty($fetch)) {
-      try {
-        $data = ['ids' => implode(',', $fetch)];
-        $response = $this->httpClient->request('POST', $url, ['json' => $data]);
-        if ($response->getStatusCode() === 200) {
-          $json = (string) $response->getBody();
-          $json = json_decode($json, TRUE);
-          if ($json !== NULL) {
-            $results = $json['data'] ?? [];
-            foreach ($results as $result) {
-              // Cache the opportunity and add it to the list.
-              $opportunities[] = $this->setTrellisCache($result);
+      $data = ['ids' => implode(',', $fetch)];
+      $maxAttempts = 3;
+      $succeeded = FALSE;
+      for ($attempt = 1; $attempt <= $maxAttempts; $attempt++) {
+        try {
+          $response = $this->httpClient->request('POST', $url, [
+            'json' => $data,
+            'timeout' => 10,
+          ]);
+          $status = $response->getStatusCode();
+          if ($status === 200) {
+            $json = (string) $response->getBody();
+            $json = json_decode($json, TRUE);
+            if ($json !== NULL) {
+              $results = $json['data'] ?? [];
+              foreach ($results as $result) {
+                // Cache the opportunity and add it to the list.
+                $opportunities[] = $this->setTrellisCache($result);
+              }
+              $succeeded = TRUE;
+              if ($attempt > 1) {
+                \Drupal::logger('az_opportunity_trellis')->info('Trellis data fetch succeeded on attempt @attempt of @max for @count ids.', [
+                  '@attempt' => $attempt,
+                  '@max' => $maxAttempts,
+                  '@count' => count($fetch),
+                ]);
+              }
+              break;
             }
           }
+          else {
+            \Drupal::logger('az_opportunity_trellis')->warning('Trellis data fetch returned non-200 status @status on attempt @attempt of @max.', [
+              '@status' => $status,
+              '@attempt' => $attempt,
+              '@max' => $maxAttempts,
+            ]);
+          }
+        }
+        catch (GuzzleException $e) {
+          \Drupal::logger('az_opportunity_trellis')->warning('Trellis data fetch attempt @attempt of @max failed: @message', [
+            '@attempt' => $attempt,
+            '@max' => $maxAttempts,
+            '@message' => $e->getMessage(),
+          ]);
+        }
+        if ($attempt < $maxAttempts) {
+          // 200ms backoff between retries.
+          usleep(200000);
         }
       }
-      catch (GuzzleException $e) {
+      if (!$succeeded) {
+        \Drupal::logger('az_opportunity_trellis')->error('Trellis data fetch failed after @max attempts for @count ids.', [
+          '@max' => $maxAttempts,
+          '@count' => count($fetch),
+        ]);
       }
     }
     // Make sure opportunities are in Id order regardless of cached/fetched.
