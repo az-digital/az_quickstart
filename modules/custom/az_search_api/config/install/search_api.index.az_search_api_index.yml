@@ -3,11 +3,13 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.search_index
+    - field.storage.node.field_az_enterprise_attributes
     - search_api.server.az_search_api_searchstax
   module:
     - az_search_api
     - node
     - search_api_solr
+    - taxonomy
 third_party_settings:
   search_api_solr:
     finalize: false
@@ -60,12 +62,28 @@ name: 'Quickstart Search API Index'
 description: ''
 read_only: false
 field_settings:
+  created:
+    label: Created
+    property_path: custom_value
+    type: string
+    configuration:
+      value: '[node:created:custom:Y]'
   description:
     label: 'Description Metatag'
     property_path: az_metatag
     type: text
     configuration:
       value: description
+  enterprise_attributes:
+    label: 'Enterprise Attributes'
+    datasource_id: 'entity:node'
+    property_path: 'field_az_enterprise_attributes:entity:name'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_az_enterprise_attributes
+      module:
+        - taxonomy
   rendered_item:
     label: 'Rendered HTML output'
     property_path: rendered_item
@@ -94,12 +112,10 @@ field_settings:
       value: title
   type:
     label: 'Content type'
-    datasource_id: 'entity:node'
-    property_path: type
+    property_path: custom_value
     type: string
-    dependencies:
-      module:
-        - node
+    configuration:
+      value: '[node:content-type:name]'
   url:
     label: URI
     property_path: search_api_url
@@ -125,12 +141,14 @@ processor_settings:
       preprocess_query: -15
     all_fields: 1
     fields:
-      - description
-      - rendered_item
-      - sitename
-      - title
       - type
+      - created
+      - description
+      - sitename
+      - rendered_item
+      - title
       - url
+      - enterprise_attributes
   az_canonical: {  }
   az_metatag: {  }
   az_robots_noindex: {  }
