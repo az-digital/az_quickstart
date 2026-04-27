@@ -450,6 +450,7 @@ td.menu-disabled {
 .az-search-block.az-search-block-blue .search-block-form .input-group button:hover,
 .az-search-block.az-search-block-blue .search-block-form .input-group button:focus {
   background-color: var(--bs-blue);
+  color: var(--bs-white);
 }
 
 /* AZ Barrio search form block (Mobile) */
