@@ -46,5 +46,5 @@ parameters:
 			paragraphs_type:
 				class: Drupal\paragraphs\Entity\ParagraphsType
 
-	phpVersion: 80400
+	phpVersion: 80500
 	level: 3

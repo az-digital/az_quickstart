@@ -25,7 +25,7 @@ jobs:
         with:
           token: ${{ secrets.REPO_DISPATCH_TOKEN }}
       - name: Setup PHP
-        uses: shivammathur/setup-php@44454db4f0199b8b9685a5d763dc37cbf79108e1 # 2.36.0
+        uses: shivammathur/setup-php@accd6127cb78bee3e8082180cb391013d204ef9f # 2.37.0
         with:
           php-version: '8.3'
       - name: Create Tag
@@ -67,7 +67,7 @@ jobs:
           tar --exclude '*.git*' -c -z -f az_quickstart.tar.gz az_quickstart
       - name: Create Release
         id: create_release
-        uses: softprops/action-gh-release@a06a81a03ee405af7f2048a818ed3f03bbf83c7b # v2.5.0
+        uses: softprops/action-gh-release@b4309332981a82ec1c5618f44dd2e27cc8bfbfda # v3.0.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           tag_name: ${{ github.event.inputs.version }}
