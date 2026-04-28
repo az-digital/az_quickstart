@@ -443,8 +443,8 @@ td.menu-disabled {
 
 .az-search-block .search-block-form .input-group button:hover,
 .az-search-block .search-block-form .input-group button:focus {
-  background-color: #8B0015;
-  color: #ffffff;
+  background-color: var(--bs-chili);
+  color: var(--bs-white);
 }
 
 .az-search-block.az-search-block-blue .search-block-form .input-group button:hover,
