@@ -1,0 +1,77 @@
+/* Styles for the Sidebar Collapsible region */
+
+#az-sidebar-collapsible {
+  min-width: 0;
+  /* overflow: hidden; */
+}
+
+#az-sidebar-collapsible:after {
+  content: " ";
+  height: 100%;
+  position: absolute;
+  top: 0;
+  width: 20px;
+  box-shadow: 20px 0px 20px -20px inset #0000003B;
+  right: -20px;
+}
+
+#az-sidebar-collapsible.show {
+  width: 288px;
+}
+
+#az-sidebar-collapsible.collapsing {
+  transition: none;
+}
+
+#az-sidebar-collapsible:not(.show) .region-az-sidebar-collapsible {
+  display: none;
+}
+
+#az-sidebar-collapsible.sticky:not(.show) > div {
+  border: 0 !important;
+  margin: 1px 0 !important;
+}
+
+#az-sidebar-collapsible.in-navbar:not(.show) > div {
+  border: 0 !important;
+  margin: 0 !important;
+}
+
+#az-sidebar-collapsible.close:not(.show) {
+  display: none !important;
+}
+
+#az-sidebar-collapse-btn {
+  /* width: 2.75rem; */
+  line-height: .675rem;
+}
+
+#az-sidebar-collapsible:not(.show):not(.sticky) #az-sidebar-collapse-btn {
+  padding-left: .25rem !important;
+  padding-right: .25rem !important;
+}
+
+#az-sidebar-collapsible.sticky:not(.show) .collapse-btn-div {
+  position: fixed;
+  margin: 0;
+  left: -2px;
+  right: unset;
+  border: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+  z-index: 1020;
+}
+
+#az-sidebar-collapse-icon {
+  font-size: 1.625rem;
+  /* margin-left: -.675rem; */
+}
+
+#container-with-sidebar-collapsible .region-content .full-width-background {
+  /* 
+  max-width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  */
+  overflow: hidden;
+}
