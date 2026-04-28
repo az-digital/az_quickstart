@@ -453,11 +453,6 @@ td.menu-disabled {
   color: var(--bs-white);
 }
 
-/* AZ Barrio search form block (Mobile) */
-.offcanvas-header.text-bg-blue + .region-navigation-offcanvas .search-block-form .input-group .button {
-  color: var(--bs-blue);
-}
-
 /* Removing mobile duplicate menu link only if it is a no-link (https://www.drupal.org/node/2032759) */
 a.nolink + ul .sf-clone-parent {
   display: none;
