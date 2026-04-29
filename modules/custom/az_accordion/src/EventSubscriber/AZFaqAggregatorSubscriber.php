@@ -6,6 +6,7 @@ namespace Drupal\az_accordion\EventSubscriber;
 
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityRepositoryInterface;
+use Drupal\Core\Field\Plugin\Field\FieldType\EntityReferenceItem;
 use Drupal\Core\Render\HtmlResponse;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\node\NodeInterface;
@@ -145,6 +146,12 @@ class AZFaqAggregatorSubscriber implements EventSubscriberInterface {
     $order = [];
 
     foreach ($node->get('field_az_main_content') as $item) {
+      try {
+        assert($item instanceof EntityReferenceItem);
+      }
+      catch (\AssertionError) {
+        continue;
+      }
       $paragraph = $item->entity;
       if (!$paragraph instanceof ContentEntityInterface) {
         continue;
@@ -167,6 +174,12 @@ class AZFaqAggregatorSubscriber implements EventSubscriberInterface {
             continue;
           }
           foreach ($embedded->get('field_az_main_content') as $nested_item) {
+            try {
+              assert($nested_item instanceof EntityReferenceItem);
+            }
+            catch (\AssertionError) {
+              continue;
+            }
             $nested = $nested_item->entity;
             if ($nested instanceof ContentEntityInterface && $nested->hasField('field_az_accordion')) {
               $order[] = (string) $nested->id();
@@ -183,6 +196,7 @@ class AZFaqAggregatorSubscriber implements EventSubscriberInterface {
    * Parses <drupal-entity> tags from CKEditor HTML and returns loaded entities.
    *
    * @return \Drupal\Core\Entity\ContentEntityInterface[]
+   *   Loaded content entities found in the HTML, keyed by UUID.
    */
   protected function parseEmbeddedEntities(string $html): array {
     if (!str_contains($html, 'drupal-entity')) {
