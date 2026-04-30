@@ -186,7 +186,8 @@ jobs:
       - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
         with:
           node-version: '20'
-      - run: yarn audit --level high --groups dependencies,optionalDependencies
+      - run: |
+          yarn npm audit --level high
 
   eslint:
     name: eslint
@@ -196,10 +197,13 @@ jobs:
       - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
         with:
           node-version: '20'
-      - run: yarn install --ignore-scripts
+      - run: |
+          corepack enable
+          yarn install
       - name: Generate eslint report
         continue-on-error: true
-        run: yarn run eslint . --format json --output-file eslint-report.json
+        run: |
+          yarn run eslint . --format json --output-file eslint-report.json
       - name: Annotate eslint results
         continue-on-error: true
         uses: ataylorme/eslint-annotate-action@d57a1193d4c59cbfbf3f86c271f42612f9dbd9e9 # 3.0.0
@@ -207,7 +211,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           report-json: "eslint-report.json"
       - name: Run eslint
-        run: yarn run eslint --color .
+        run: |
+          yarn run eslint --color .
 
   phpunit:
     name: PHPUnit (${{ matrix.test.name }})
