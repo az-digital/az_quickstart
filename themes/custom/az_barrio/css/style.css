@@ -432,11 +432,6 @@ td.menu-disabled {
   padding: 0 8px;
 }
 
-.az-search-block.az-search-block-blue .search-block-form .input-group .form-control:focus {
-  border-color: rgba(var(--bs-oasis-rgb), .5);
-  box-shadow: 0 0 0 .25rem rgba(var(--bs-oasis-rgb), .5);
-}
-
 .az-search-block.az-search-block-blue .search-block-form .input-group .button {
   color: var(--bs-blue);
 }
