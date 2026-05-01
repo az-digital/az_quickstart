@@ -60,9 +60,9 @@
                 if (
                   event.currentTarget.getAttribute('aria-pressed') === 'true'
                 ) {
-                  element.player.playVideo();
-                } else {
                   element.player.pauseVideo();
+                } else {
+                  element.player.playVideo();
                 }
               });
             });
@@ -147,12 +147,13 @@
             if (event.data === 1) {
               resize();
               parentContainer.classList.add('az-video-playing');
+              parentContainer.classList.remove('az-video-paused');
               parentContainer.classList.remove('az-video-loading');
               // Sync button state: video is confirmed playing.
               const btn = parentContainer.querySelector('.az-video-playpause');
               if (btn) {
                 btn.textContent = 'Pause Video';
-                btn.setAttribute('aria-pressed', 'false');
+                btn.setAttribute('aria-pressed', 'true');
               }
             }
             if (event.data === 2) {
@@ -162,7 +163,7 @@
               const btn = parentContainer.querySelector('.az-video-playpause');
               if (btn) {
                 btn.textContent = 'Play Video';
-                btn.setAttribute('aria-pressed', 'true');
+                btn.setAttribute('aria-pressed', 'false');
               }
             }
           };

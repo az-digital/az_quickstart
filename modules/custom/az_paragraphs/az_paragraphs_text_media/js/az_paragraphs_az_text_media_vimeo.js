@@ -99,7 +99,7 @@
             parentParagraph.classList.remove('az-video-paused');
             parentParagraph.classList.add('az-video-playing');
             playPauseButton.textContent = 'Pause Video';
-            playPauseButton.setAttribute('aria-pressed', 'false');
+            playPauseButton.setAttribute('aria-pressed', 'true');
           });
 
           // Sync button and class state when video pauses.
@@ -107,7 +107,7 @@
             parentParagraph.classList.remove('az-video-playing');
             parentParagraph.classList.add('az-video-paused');
             playPauseButton.textContent = 'Play Video';
-            playPauseButton.setAttribute('aria-pressed', 'true');
+            playPauseButton.setAttribute('aria-pressed', 'false');
           });
 
           // Set the iframe tabindex to -1 to prevent focus from reaching iframe.
@@ -122,9 +122,9 @@
           playPauseButton.addEventListener('click', (event) => {
             event.preventDefault();
             if (event.currentTarget.getAttribute('aria-pressed') === 'true') {
-              element.player.play().catch((error) => vimeoError(error));
-            } else {
               element.player.pause().catch((error) => vimeoError(error));
+            } else {
+              element.player.play().catch((error) => vimeoError(error));
             }
           });
         }
