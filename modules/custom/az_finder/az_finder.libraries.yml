@@ -6,6 +6,7 @@ active-filter-count:
   dependencies:
     - core/drupal
     - core/drupalSettings
+    - core/once
 active-filter-reset:
   js:
     js/active-filter-reset.js:
