@@ -248,6 +248,9 @@ az_barrio.settings:
     wordmark:
       type: boolean
       label: 'Enable wordmark logo'
+    az_header_blue:
+      type: boolean
+      label: 'Set header background color to Arizona Blue'
     az_main_menu_style:
       type: string
       label: 'Main menu style'

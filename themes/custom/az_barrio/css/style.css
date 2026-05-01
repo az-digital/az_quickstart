@@ -432,10 +432,20 @@ td.menu-disabled {
   padding: 0 8px;
 }
 
+.az-search-block.az-search-block-blue .search-block-form .input-group .button {
+  color: var(--bs-blue);
+}
+
 .az-search-block .search-block-form .input-group button:hover,
 .az-search-block .search-block-form .input-group button:focus {
-    background-color: #8B0015;
-    color: #ffffff;
+  background-color: var(--bs-chili);
+  color: var(--bs-white);
+}
+
+.az-search-block.az-search-block-blue .search-block-form .input-group button:hover,
+.az-search-block.az-search-block-blue .search-block-form .input-group button:focus {
+  background-color: var(--bs-blue);
+  color: var(--bs-white);
 }
 
 /* Removing mobile duplicate menu link only if it is a no-link (https://www.drupal.org/node/2032759) */

@@ -148,6 +148,8 @@ function az_barrio_preprocess_page(&$variables, $hook) {
   // Allow wordmark to be disabled.
   $variables['wordmark'] = (\Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('wordmark')) ? TRUE : FALSE;
 
+  $variables['az_header_blue'] = \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_header_blue');
+
   $variables['header_one_col_classes'] = \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('header_one_col_classes');
   $variables['header_two_col_classes'] = \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('header_two_col_classes');
   $variables['az_navbar'] = \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_navbar');
@@ -711,6 +713,9 @@ function az_barrio_preprocess_block(&$variables) {
   // @link https://github.com/az-digital/az_quickstart/issues/2251
   if ($variables['base_plugin_id'] === 'search_form_block' && $variables['elements']['#id'] === 'az_barrio_search') {
     $variables['attributes']['class'][] = 'az-search-block';
+    if (\Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_header_blue')) {
+      $variables['attributes']['class'][] = 'az-search-block-blue';
+    }
   }
 
   // Pass theme setting to hide sidebar menu for mobile.
