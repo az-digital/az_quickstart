@@ -290,11 +290,6 @@ function az_barrio_library_info_alter(&$libraries, $extension) {
     }
 
     $az_bootstrap_css_path .= $az_bootstrap_css_token;
-    /* @todo - Remove hardcoded path when AZ Navbar Fullscreen is available via CDN. */
-    if (\Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_bootstrap_cdn_version_css') === 'az-navbar-fullscreen') {
-      $az_bootstrap_css_path = 'https://review.digital.arizona.edu/arizona-bootstrap/issue/1937/docs/5.1/dist/css/arizona-bootstrap.min.css';
-      $az_bootstrap_css_token = '';
-    }
     $libraries['arizona-bootstrap-css']['css']['theme'] = [
       $az_bootstrap_css_path => $az_bootstrap_css_info,
     ];
@@ -376,11 +371,6 @@ function az_barrio_library_info_alter(&$libraries, $extension) {
     }
 
     $az_bootstrap_js_path .= $az_bootstrap_js_token;
-    /* @todo - Remove hardcoded path when AZ Navbar Fullscreen is available via CDN. */
-    if (\Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_bootstrap_cdn_version_js') === 'az-navbar-fullscreen') {
-      $az_bootstrap_js_path = 'https://review.digital.arizona.edu/arizona-bootstrap/issue/1937/docs/5.1/dist/js/arizona-bootstrap.bundle.min.js';
-      $az_bootstrap_js_token = '';
-    }
     $libraries['arizona-bootstrap-js']['js'] = [
       $az_bootstrap_js_path => $az_bootstrap_js_info,
     ];

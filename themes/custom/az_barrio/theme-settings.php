@@ -265,7 +265,6 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
       'stable' => t('Stable version: This option has undergone the most testing within the az_barrio theme. Currently: %stableversion (Recommended).', ['%stableversion' => AZ_BOOTSTRAP_STABLE_VERSION]),
       'latest-5.x' => t('Latest tagged version of 5.x. The most recently tagged stable release of AZ Bootstrap. While this has not been explicitly tested on this version of az_barrio, it’s probably OK to use on production sites. Please report bugs to the AZ Digital team.'),
       '5.x' => t('Latest dev version of <code>main</code>. This is the tip of the main branch of AZ Bootstrap. Please do not use on production unless you are following the AZ Bootstrap project closely. Please report bugs to the AZ Digital team.'),
-      'az-navbar-fullscreen' => t('AZ NAVBAR FULLSCREEN CSS: FOR TESTING ONLY.'),
     ],
     '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_bootstrap_cdn_version_css'),
   ];
@@ -276,7 +275,6 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
       'stable' => t('Stable version: This option has undergone the most testing within the az_barrio theme. Currently: %stableversion (Recommended).', ['%stableversion' => AZ_BOOTSTRAP_STABLE_VERSION]),
       'latest-5.x' => t('Latest tagged version of 5.x. The most recently tagged stable release of AZ Bootstrap. While this has not been explicitly tested on this version of az_barrio, it’s probably OK to use on production sites. Please report bugs to the AZ Digital team.'),
       '5.x' => t('Latest dev version of <code>main</code>. This is the tip of the main branch of AZ Bootstrap. Please do not use on production unless you are following the AZ Bootstrap project closely. Please report bugs to the AZ Digital team.'),
-      'az-navbar-fullscreen' => t('AZ NAVBAR FULLSCREEN JS: FOR TESTING ONLY.'),
     ],
     '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_bootstrap_cdn_version_js'),
   ];
@@ -342,8 +340,8 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
       [
         '#type' => 'checkbox',
         '#prefix' => "<span class='form-item__label'>" . t('AZ Navbar Fullscreen') . "</span>",
-        '#title' => t('Enable AZ Navbar Fullscreen'),
-        '#description' => t('FOR TESTING: Enable the experimental AZ Navbar Fullscreen. This option also disables the AZ Navbar.'),
+        '#title' => t('Enable AZ Navbar Fullscreen (experimental)'),
+        '#description' => t('Enable the experimental AZ Navbar Fullscreen. This option also disables the AZ Navbar.'),
         '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_navbar_fullscreen'),
         '#wrapper_attributes' => ['class' => ['field-multiple-table']],
       ],
