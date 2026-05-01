@@ -29,10 +29,6 @@
 }
 
 /* Overrides for blue Arizona Header */
-.offcanvas-header.text-bg-blue + .region-navigation-offcanvas #block-az-barrio-offcanvas-searchform .button {
-  color: var(--bs-blue);
-}
-
 .offcanvas-header.text-bg-blue + .region-navigation-offcanvas #block-az-barrio-offcanvas-searchform .button:focus {
   background-color: var(--bs-blue);
   color: var(--bs-white);
