@@ -183,8 +183,7 @@ class AZFaqAggregatorSubscriber implements EventSubscriberInterface {
             }
             $nested = $nested_item->entity;
             if ($nested instanceof ContentEntityInterface
-                && $nested->hasField('field_az_accordion')
-                && $nested->access('view')) {
+                && $nested->hasField('field_az_accordion')) {
               $order[] = (string) $nested->id();
             }
           }
@@ -224,7 +223,7 @@ class AZFaqAggregatorSubscriber implements EventSubscriberInterface {
       catch (\Exception) {
         continue;
       }
-      if ($entity instanceof ContentEntityInterface) {
+      if ($entity instanceof ContentEntityInterface && $entity->access('view')) {
         $entities[] = $entity;
       }
     }
