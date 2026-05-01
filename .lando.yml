@@ -69,7 +69,8 @@ services:
   node:
     type: node:20
     build:
-      - yarn install --ignore-scripts
+      - corepack enable
+      - yarn install
   chromedriver:
     type: compose
     services:
