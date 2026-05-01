@@ -49,7 +49,9 @@ use Drupal\az_opportunity_trellis\Form\AZRecurringImportRuleForm;
   config_export: [
     'id',
     'label',
+    'opportunity_name',
     'owner',
+    'account_id',
     'keyword',
     'attributes',
     'parent_account_name',
@@ -68,6 +70,11 @@ final class AZRecurringImportRule extends ConfigEntityBase implements AZRecurrin
   protected string $label;
 
   /**
+   * The az_opp_recurring_import_rule opportunity name.
+   */
+  protected string $opportunity_name;
+
+  /**
    * The az_opp_recurring_import_rule keyword.
    */
   protected string $keyword;
@@ -76,6 +83,11 @@ final class AZRecurringImportRule extends ConfigEntityBase implements AZRecurrin
    * The az_opp_recurring_import_rule owner.
    */
   protected string $owner;
+
+  /**
+   * The az_opp_recurring_import_rule account ID.
+   */
+  protected string $account_id;
 
   /**
    * The az_opp_recurring_import_rule enterprise attributes.
@@ -102,8 +114,10 @@ final class AZRecurringImportRule extends ConfigEntityBase implements AZRecurrin
     ];
     $attributes = array_filter($this->attributes ?? []);
     $params += $attributes;
-    $params['keyword'] = $this->get('keyword') ?? '';
+    $params['name'] = $this->get('opportunity_name') ?? '';
     $params['owner'] = $this->get('owner') ?? '';
+    $params['account_id'] = $this->get('account_id') ?? '';
+    $params['keyword'] = $this->get('keyword') ?? '';
     $params['parent_account'] = $this->get('parent_account_name') ?? '';
     $params = array_filter($params);
     return $params;

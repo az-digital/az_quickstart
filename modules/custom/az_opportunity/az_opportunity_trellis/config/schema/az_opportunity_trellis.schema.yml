@@ -12,7 +12,11 @@ az_opportunity_trellis.az_opp_recurring_import_rule.*:
       type: uuid
     host:
       type: string
+    opportunity_name:
+      type: string
     owner:
+      type: string
+    account_id:
       type: string
     keyword:
       type: string

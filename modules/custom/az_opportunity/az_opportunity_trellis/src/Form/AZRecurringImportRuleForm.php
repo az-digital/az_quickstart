@@ -81,11 +81,33 @@ final class AZRecurringImportRuleForm extends EntityForm {
       '#open' => TRUE,
     ];
 
+    $form['query_parameters']['opportunity_name'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Name'),
+      '#maxlength' => 255,
+      '#default_value' => $entity->get('opportunity_name'),
+    ];
+
     $form['query_parameters']['owner'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Owner'),
+      '#title' => $this->t('Owner NetID'),
       '#maxlength' => 255,
       '#default_value' => $entity->get('owner'),
+    ];
+
+    $form['query_parameters']['account_id'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Opportunity ID'),
+      '#maxlength' => 255,
+      '#description' => $this->t("The ID of the Program's Account"),
+      '#default_value' => $entity->get('account_id'),
+    ];
+
+    $form['query_parameters']['parent_account_name'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Parent Account Name'),
+      '#maxlength' => 255,
+      '#default_value' => $entity->get('parent_account_name'),
     ];
 
     // Cut from line 146.
@@ -94,13 +116,6 @@ final class AZRecurringImportRuleForm extends EntityForm {
       '#title' => $this->t('Keyword'),
       '#maxlength' => 255,
       '#default_value' => $entity->get('keyword'),
-    ];
-
-    $form['query_parameters']['parent_account_name'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Parent Account'),
-      '#maxlength' => 255,
-      '#default_value' => $entity->get('parent_account_name'),
     ];
 
     $form['query_parameters']['attributes']['#tree'] = TRUE;

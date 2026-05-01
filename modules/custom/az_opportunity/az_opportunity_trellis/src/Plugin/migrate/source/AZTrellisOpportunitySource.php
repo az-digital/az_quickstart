@@ -66,8 +66,10 @@ class AZTrellisOpportunitySource extends SourcePluginBase {
     $this->trellisIds = $configuration['trellis_ids'] ?? [];
     // If no arguments are supplied, fetch the list currently on the site.
     if (empty($this->trellisIds)) {
-      $ids = $this->trellisHelper->getImportedOpportunityIds();
-      $ids += $this->trellisHelper->getRecurringOpportunityIds();
+      $ids = array_merge(
+        $this->trellisHelper->getImportedOpportunityIds(),
+        $this->trellisHelper->getRecurringOpportunityIds(),
+      );
       $this->trellisIds = array_unique($ids);
     }
   }

@@ -147,7 +147,14 @@ function az_opportunity_trellis_gather_filter_options(&$form, FormStateInterface
               $search['attributes'][$identifier] = $value;
             }
             else {
-              $search[$identifier] = $value;
+              // Map exposed filter identifiers to entity property names.
+              $identifier_to_property = [
+                'property' => 'opportunity_name',
+                'property_2' => 'account_id',
+                'parent_account' => 'parent_account_name',
+              ];
+              $property = $identifier_to_property[$identifier] ?? $identifier;
+              $search[$property] = $value;
             }
           }
         }

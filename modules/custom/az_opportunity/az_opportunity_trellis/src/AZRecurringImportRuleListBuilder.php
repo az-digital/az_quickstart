@@ -36,6 +36,18 @@ final class AZRecurringImportRuleListBuilder extends ConfigEntityListBuilder {
     $params = $entity->getQueryParameters();
     unset($params['publish']);
 
+    // Map API param names to views exposed filter identifiers.
+    $api_to_view_identifier = [
+      'name' => 'property',
+      'account_id' => 'property_2',
+    ];
+    foreach ($api_to_view_identifier as $api_key => $view_key) {
+      if (array_key_exists($api_key, $params)) {
+        $params[$view_key] = $params[$api_key];
+        unset($params[$api_key]);
+      }
+    }
+
     if (!empty($params)) {
       // Generate link to results page.
       $row['result']['data'] = [
