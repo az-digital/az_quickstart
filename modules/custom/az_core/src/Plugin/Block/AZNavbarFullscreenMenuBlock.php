@@ -17,8 +17,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * Provides a AZ Navbar Fullscreen Menu Block.
  *
  * This block allows selection of three additional menus for the fullscreen
- * navigation display, with configuration options for menu depth and visibility
- * similar to the Drupal core System Menu Block.
+ * navigation display.
  */
 #[Block(
   id: "az_navbar_fullscreen_menu_block",
@@ -331,13 +330,18 @@ class AZNavbarFullscreenMenuBlock extends BlockBase implements ContainerFactoryP
 
     $parameters = new MenuTreeParameters();
 
-    // Only keep first level of menu items from additional menus.
-    if ($section_key !== 'primary') {
-      $parameters->setMaxDepth(1);
-    }
-
     // Skip disabled links in the menu.
     $parameters->onlyEnabledLinks();
+
+    if ($section_key === 'primary') {
+      // Primary menu: Set the active trail and limit depth to 3.
+      $parameters->setActiveTrail($this->menuActiveTrail->getActiveTrailIds($menu_name));
+      $parameters->setMaxDepth(3);
+    }
+    else {
+      // Additional menus: only keep the first level of menu items.
+      $parameters->setMaxDepth(1);
+    }
 
     // Load the menu tree.
     /** @var \Drupal\Core\Menu\MenuLinkTreeElement[] $tree */

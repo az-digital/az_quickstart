@@ -115,14 +115,14 @@
               <!-- primary nav items -->
               <div class="nav flex-column navbar-az-fullscreen-nav-primary" id="az-navbar-az-fullscreen-primary-tablist" role="tablist" aria-orientation="vertical">
                 {% for item in primary_items %}
-                  <button class="nav-link" id="az-navbar-az-fullscreen-primary-{{ loop.index }}-tab" data-bs-toggle="pill-hover" data-bs-target="#az-navbar-az-fullscreen-primary-{{ loop.index }}-content" type="button" role="tab" aria-controls="az-navbar-az-fullscreen-primary-{{ loop.index }}-content" aria-selected="false">{{ item.title }}</button>
+                  <button class="nav-link{{ item.in_active_trail ? ' active' }}" id="az-navbar-az-fullscreen-primary-{{ loop.index }}-tab" data-bs-toggle="pill-hover" data-bs-target="#az-navbar-az-fullscreen-primary-{{ loop.index }}-content" type="button" role="tab" aria-controls="az-navbar-az-fullscreen-primary-{{ loop.index }}-content" aria-selected="false">{{ item.title }}</button>
                 {% endfor %}
               </div>
             </div>
             <div class="col-8 d-none d-lg-flex navbar-az-fullscreen-nav-secondary-tertiary-cols">
               <div class="tab-content d-flex flex-grow-1 w-100" id="az-navbar-az-fullscreen-primary-tab-content">
                 {% for item in primary_items %}
-                <div class="tab-pane fade flex-grow-1 h-100 w-100" id="az-navbar-az-fullscreen-primary-{{ loop.index }}-content" role="tabpanel" aria-labelledby="az-navbar-az-fullscreen-primary-{{ loop.index }}-tab" tabindex="0">
+                <div class="tab-pane fade flex-grow-1 h-100 w-100{{ item.in_active_trail ? ' active show' }}" id="az-navbar-az-fullscreen-primary-{{ loop.index }}-content" role="tabpanel" aria-labelledby="az-navbar-az-fullscreen-primary-{{ loop.index }}-tab" tabindex="0">
                   <div class="h-100">
                     <div class="col h-100 d-flex flex-column p-0">
                       <!-- secondary nav items -->
@@ -131,16 +131,24 @@
                           {% for child in item.below %}
                             {% if child.below %}
                               <div class="d-flex align-items-center">
-                                <a class="nav-link flex-grow-1" href="{{ child.url }}">{{ child.title }}</a>
+                                {% if child.in_active_trail %}
+                                  {% set end_of_trail = true %}
+                                  {% for grandchild in child.below %}
+                                    {% if end_of_trail and grandchild.in_active_trail %}
+                                      {% set end_of_trail = false %}
+                                    {% endif %}
+                                  {% endfor %}
+                                {% endif %}
+                                <a class="nav-link{{ end_of_trail ? ' active' }} flex-grow-1" href="{{ child.url }}">{{ child.title }}</a>
                                 <div class="vr"></div>
-                                <button class="btn navbar-az-fullscreen-nav-toggle" id="az-navbar-az-fullscreen-{{ loop.parent.loop.index }}-secondary-{{ loop.index }}-tab" data-bs-toggle="collapse" data-bs-target="#az-navbar-az-fullscreen-{{ loop.parent.loop.index }}-secondary-{{ loop.index }}-content" type="button" aria-expanded="false" aria-controls="az-navbar-az-fullscreen-{{ loop.parent.loop.index }}-secondary-{{ loop.index }}-content" aria-label="Toggle {{ child.title }} submenu">
+                                <button class="btn navbar-az-fullscreen-nav-toggle" id="az-navbar-az-fullscreen-{{ loop.parent.loop.index }}-secondary-{{ loop.index }}-tab" data-bs-toggle="collapse" data-bs-target="#az-navbar-az-fullscreen-{{ loop.parent.loop.index }}-secondary-{{ loop.index }}-content" type="button" aria-expanded="{{ child.in_active_trail ? 'true' : 'false' }}" aria-controls="az-navbar-az-fullscreen-{{ loop.parent.loop.index }}-secondary-{{ loop.index }}-content" aria-label="Toggle {{ child.title }} submenu">
                                   <span class="navbar-az-fullscreen-nav-toggle-icon" aria-hidden="true"></span>
                                 </button>
                               </div>
-                              <div class="collapse navbar-az-fullscreen-nav-tertiary-panel" id="az-navbar-az-fullscreen-{{ loop.parent.loop.index }}-secondary-{{ loop.index }}-content" data-bs-parent="#az-navbar-az-fullscreen-{{ loop.parent.loop.index }}-secondary-nav">
+                              <div class="collapse{{ child.in_active_trail ? ' show' }} navbar-az-fullscreen-nav-tertiary-panel" id="az-navbar-az-fullscreen-{{ loop.parent.loop.index }}-secondary-{{ loop.index }}-content" data-bs-parent="#az-navbar-az-fullscreen-{{ loop.parent.loop.index }}-secondary-nav">
                                 <nav class="nav flex-column navbar-az-fullscreen-nav-secondary" aria-label="{{ child.title }} submenu">
                                   {% for grandchild in child.below %}
-                                    <a class="nav-link" href="{{ grandchild.url }}">{{ grandchild.title }}</a>
+                                    <a class="nav-link{{ grandchild.in_active_trail ? ' active' }}" href="{{ grandchild.url }}">{{ grandchild.title }}</a>
                                     {% if not loop.last %}
                                       <hr class="border-top border-azurite opacity-100" aria-hidden="true" role="presentation">
                                     {% endif %}
@@ -148,7 +156,7 @@
                                 </nav>
                               </div>
                             {% else %}
-                              <a class="nav-link" href="{{ child.url }}">{{ child.title }}</a>
+                              <a class="nav-link{{ child.in_active_trail ? ' active' }}" href="{{ child.url }}">{{ child.title }}</a>
                             {% endif %}
                             {% if not loop.last %}
                               <hr class="border-top border-azurite opacity-100" aria-hidden="true" role="presentation">
@@ -180,7 +188,7 @@
               <div class="nav flex-column navbar-az-fullscreen-nav-primary" role="tablist" aria-orientation="vertical">
                 <hr class="border-bottom border-azurite opacity-100 my-0" aria-hidden="true" role="presentation">
                 {% for item in primary_items %}
-                  <button class="nav-link" data-az-menu-element="#az-navbar-az-fullscreen-primary-{{ loop.index }}-content" type="button" aria-controls="navbar-az-fullscreen-nav-mobile-col">{{ item.title }}</button>
+                  <button class="nav-link{{ item.in_active_trail ? ' active' }}" data-az-menu-element="#az-navbar-az-fullscreen-primary-{{ loop.index }}-content" type="button" aria-controls="navbar-az-fullscreen-nav-mobile-col">{{ item.title }}</button>
                   <hr class="border-bottom border-azurite opacity-100 my-0" aria-hidden="true" role="presentation">
                 {% endfor %}
               </div>
