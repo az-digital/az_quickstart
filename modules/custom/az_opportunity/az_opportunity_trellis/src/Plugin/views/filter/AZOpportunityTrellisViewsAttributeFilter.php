@@ -84,7 +84,8 @@ class AZOpportunityTrellisViewsAttributeFilter extends FilterPluginBase {
     // Build option list.
     foreach ($terms as $term) {
       if ($term->hasField('field_az_attribute_key') && !empty($term->field_az_attribute_key->value)) {
-        $options[$term->field_az_attribute_key->value] = $this->entityRepository->getTranslationFromContext($term)->label();
+        $label = $this->entityRepository->getTranslationFromContext($term)->label();
+        $options[$label] = $label;
       }
     }
     $form['value'] = [

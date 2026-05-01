@@ -151,7 +151,8 @@ final class AZRecurringImportRuleForm extends EntityForm {
         $terms = $query->execute();
         $terms = $term_storage->loadMultiple($terms);
         foreach ($terms as $term) {
-          $options[$term->field_az_attribute_key->value] = $this->entityRepository->getTranslationFromContext($term)->label();
+          $label = $this->entityRepository->getTranslationFromContext($term)->label();
+          $options[$label] = $label;
         }
 
         // Build the select element for the attribute.
