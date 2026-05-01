@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\az_accordion\EventSubscriber;
 
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Field\Plugin\Field\FieldType\EntityReferenceItem;
@@ -181,7 +182,9 @@ class AZFaqAggregatorSubscriber implements EventSubscriberInterface {
               continue;
             }
             $nested = $nested_item->entity;
-            if ($nested instanceof ContentEntityInterface && $nested->hasField('field_az_accordion')) {
+            if ($nested instanceof ContentEntityInterface
+                && $nested->hasField('field_az_accordion')
+                && $nested->access('view')) {
               $order[] = (string) $nested->id();
             }
           }
@@ -198,20 +201,29 @@ class AZFaqAggregatorSubscriber implements EventSubscriberInterface {
    * @return \Drupal\Core\Entity\ContentEntityInterface[]
    *   Loaded content entities found in the HTML, keyed by UUID.
    */
-  protected function parseEmbeddedEntities(string $html): array {
-    if (!str_contains($html, 'drupal-entity')) {
+  protected function parseEmbeddedEntities(string $text_area_markup): array {
+    if (!str_contains($text_area_markup, 'drupal-entity')) {
       return [];
     }
-    if (!preg_match_all('/<drupal-entity\b[^>]*>/i', $html, $tag_matches)) {
-      return [];
-    }
+    $parsed_text_area = Html::load($text_area_markup);
+    $xpath = new \DOMXPath($parsed_text_area);
     $entities = [];
-    foreach ($tag_matches[0] as $tag) {
-      if (!preg_match('/\bdata-entity-type="([^"]+)"/', $tag, $type_match) ||
-          !preg_match('/\bdata-entity-uuid="([^"]+)"/', $tag, $uuid_match)) {
+    foreach ($xpath->query('//drupal-entity[@data-entity-type and @data-entity-uuid]') as $node) {
+      try {
+        assert($node instanceof \DOMElement);
+      }
+      catch (\AssertionError) {
         continue;
       }
-      $entity = $this->entityRepository->loadEntityByUuid($type_match[1], $uuid_match[1]);
+      try {
+        $entity = $this->entityRepository->loadEntityByUuid(
+          $node->getAttribute('data-entity-type'),
+          $node->getAttribute('data-entity-uuid'),
+        );
+      }
+      catch (\Exception) {
+        continue;
+      }
       if ($entity instanceof ContentEntityInterface) {
         $entities[] = $entity;
       }
