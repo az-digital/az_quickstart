@@ -417,12 +417,12 @@ td.menu-disabled {
 }
 
 /* AZ Barrio search form block (Desktop) */
-.az-search-block .search-block-form .form-search {
+.region-header-ua-utilities .az-search-block .search-block-form .form-search {
   height: 43px;
   margin-left: 0 !important;
 }
 
-.az-search-block .search-block-form .input-group button {
+.region-header-ua-utilities .az-search-block .search-block-form .input-group button {
   display: flex;
   align-items: center;
   font-size: 20px;
@@ -432,8 +432,8 @@ td.menu-disabled {
   padding: 0 8px;
 }
 
-.az-search-block .search-block-form .input-group button:hover,
-.az-search-block .search-block-form .input-group button:focus {
+.region-header-ua-utilities .az-search-block .search-block-form .input-group button:hover,
+.region-header-ua-utilities .az-search-block .search-block-form .input-group button:focus {
     background-color: #8B0015;
     color: #ffffff;
 }

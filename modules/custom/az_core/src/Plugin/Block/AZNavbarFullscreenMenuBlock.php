@@ -104,6 +104,8 @@ class AZNavbarFullscreenMenuBlock extends BlockBase implements ContainerFactoryP
       'cta_menu' => '',
       'resources_menu' => '',
       'helpful_links_menu' => '',
+      'search_form_block_desktop_navbar' => '',
+      'search_form_block_offcanvas' => '',
     ] + parent::defaultConfiguration();
   }
 
@@ -197,6 +199,31 @@ class AZNavbarFullscreenMenuBlock extends BlockBase implements ContainerFactoryP
       '#description' => $this->t('Select the menu to use for the Helpful Links section.'),
     ];
 
+    // Load search form blocks.
+    $search_blocks = [];
+    $blocks = $this->entityTypeManager->getStorage('block')->loadMultiple();
+    foreach ($blocks as $block) {
+      if ($block->getPluginId() === 'search_form_block') {
+        $search_blocks[$block->id()] = $block->label() . ' (' . $block->id() . ')';
+      }
+    }
+
+    $form['search_form_block_desktop_navbar'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Search Form Block - Desktop Navbar'),
+      '#default_value' => $config['search_form_block_desktop_navbar'] ?? '',
+      '#options' => ['' => $this->t('- None -')] + $search_blocks,
+      '#description' => $this->t('Select the search form block to display in the navbar on desktop devices.'),
+    ];
+
+    $form['search_form_block_offcanvas'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Search Form Block - Offcanvas'),
+      '#default_value' => $config['search_form_block_offcanvas'] ?? '',
+      '#options' => ['' => $this->t('- None -')] + $search_blocks,
+      '#description' => $this->t('Select the search form block to display in the offcanvas menu.'),
+    ];
+
     return $form;
   }
 
@@ -223,6 +250,8 @@ class AZNavbarFullscreenMenuBlock extends BlockBase implements ContainerFactoryP
     $this->configuration['cta_menu'] = $menu_selection['cta_menu'] ?? '';
     $this->configuration['resources_menu'] = $menu_selection['resources_menu'] ?? '';
     $this->configuration['helpful_links_menu'] = $menu_selection['helpful_links_menu'] ?? '';
+    $this->configuration['search_form_block_desktop_navbar'] = $form_state->getValue('search_form_block_desktop_navbar') ?? '';
+    $this->configuration['search_form_block_offcanvas'] = $form_state->getValue('search_form_block_offcanvas') ?? '';
   }
 
   /**
@@ -255,6 +284,33 @@ class AZNavbarFullscreenMenuBlock extends BlockBase implements ContainerFactoryP
 
       // Add cache tags for the menu.
       $build['#cache']['tags'][] = "config:system.menu.{$menu_name}";
+    }
+
+    // Add search form block for the desktop navbar if configured.
+    if (!empty($this->configuration['search_form_block_desktop_navbar'])) {
+      $search_form_block_desktop_navbar_id = $this->configuration['search_form_block_desktop_navbar'];
+      $search_form_block_desktop_navbar = $this->entityTypeManager->getStorage('block')->load($search_form_block_desktop_navbar_id);
+
+      if ($search_form_block_desktop_navbar) {
+        $build['search_form_block_desktop_navbar'] = $this->entityTypeManager->getViewBuilder('block')->view($search_form_block_desktop_navbar);
+        $build['#cache']['tags'][] = "config:block.block.{$search_form_block_desktop_navbar_id}";
+      }
+    }
+
+    // Add search form block for the offcanvas modal if configured.
+    if (!empty($this->configuration['search_form_block_offcanvas'])) {
+      $search_form_block_offcanvas_id = $this->configuration['search_form_block_offcanvas'];
+      $search_form_block_offcanvas = $this->entityTypeManager->getStorage('block')->load($search_form_block_offcanvas_id);
+
+      if ($search_form_block_offcanvas) {
+        /* Render with the generic search form block template.
+         * @todo Consider other solutions to avoid applying classes
+         * from the az-barrio-offcanvas-searchform template.
+         */
+        $plugin = $search_form_block_offcanvas->getPlugin();
+        $build['search_form_block_offcanvas'] = $plugin->build();
+        $build['#cache']['tags'][] = "config:block.block.{$search_form_block_offcanvas_id}";
+      }
     }
 
     return $build;

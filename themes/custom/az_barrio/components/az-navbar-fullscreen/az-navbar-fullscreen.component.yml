@@ -169,6 +169,14 @@ props:
             type: boolean
             title: In active trail
             description: TRUE if the link is in the active trail.
+    search_form_block_desktop_navbar:
+      type: array
+      title: Search Form Block - Desktop Navbar
+      description: The search form block content to display in the desktop navbar.
+    search_form_block_offcanvas:
+      type: array
+      title: Search Form Block - Offcanvas
+      description: The search form block content to display in the offcanvas modal.
     wordmark:
       type: boolean
       title: Wordmark
