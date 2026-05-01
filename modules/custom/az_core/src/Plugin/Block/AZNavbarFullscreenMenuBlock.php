@@ -22,7 +22,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 #[Block(
   id: "az_navbar_fullscreen_menu_block",
-  admin_label: new TranslatableMarkup("AZ Navbar Fullscreen Menu"),
+  admin_label: new TranslatableMarkup("AZ Navbar Fullscreen Menu (experimental)"),
   category: new TranslatableMarkup("Menus")
 )]
 class AZNavbarFullscreenMenuBlock extends BlockBase implements ContainerFactoryPluginInterface {
