@@ -216,7 +216,7 @@ final class TrellisHelper {
     $opportunity_api_ids = [];
     foreach ($imports as $import) {
       /** @var \Drupal\az_opportunity_trellis\Entity\AZRecurringImportRule $import */
-      $opportunity_api_ids += $import->getOpportunityIds();
+      $opportunity_api_ids = array_merge($opportunity_api_ids, $import->getOpportunityIds());
     }
     // Remove duplicates in case searches overlapped.
     $opportunity_api_ids = array_unique($opportunity_api_ids);
