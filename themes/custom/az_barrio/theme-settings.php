@@ -53,7 +53,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   $form['az_settings']['settings']['land_acknowledgment'] = [
     '#type' => 'checkbox',
     '#title' => t('Land Acknowledgment'),
-    '#description' => t('With few execeptions, this should always be enabled.'),
+    '#description' => t('With few exceptions, this should always be enabled.'),
     '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('land_acknowledgment'),
   ];
 
@@ -61,7 +61,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   $form['az_settings']['settings']['info_security_privacy'] = [
     '#type' => 'checkbox',
     '#title' => t('University Information Security and Privacy link'),
-    '#description' => t('With few execeptions, this should always be enabled.'),
+    '#description' => t('With few exceptions, this should always be enabled.'),
     '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('info_security_privacy'),
   ];
 
@@ -335,7 +335,18 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
         '#wrapper_attributes' => ['class' => ['field-multiple-table']],
       ],
   ];
-  $form['components']['navbar_behaviour'] = $az_navbar_setting + $form['components']['navbar_behaviour'];
+  $az_navbar_fullscreen_setting = [
+    'az_navbar_fullscreen' =>
+      [
+        '#type' => 'checkbox',
+        '#prefix' => "<span class='form-item__label'>" . t('AZ Navbar Fullscreen') . "</span>",
+        '#title' => t('Enable AZ Navbar Fullscreen (experimental)'),
+        '#description' => t('Enable the experimental AZ Navbar Fullscreen. This option also disables the AZ Navbar.'),
+        '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_navbar_fullscreen'),
+        '#wrapper_attributes' => ['class' => ['field-multiple-table']],
+      ],
+  ];
+  $form['components']['navbar_behaviour'] = $az_navbar_setting + $az_navbar_fullscreen_setting + $form['components']['navbar_behaviour'];
   $form['affix']['navbar_top'] = [];
   $form['affix']['navbar'] = [];
   // Logos.

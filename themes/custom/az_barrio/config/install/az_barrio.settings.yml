@@ -155,6 +155,7 @@ az_barrio_logo_svg_inline: false
 az_barrio_footer_logo_svg_inline: false
 az_remove_sidebar_menu_mobile: true
 az_navbar: true
+az_navbar_fullscreen: false
 primary_logo_alt_text: '[site:name] | Home'
 primary_logo_title_text: '[site:name] | Home'
 footer_logo_link_destination: null

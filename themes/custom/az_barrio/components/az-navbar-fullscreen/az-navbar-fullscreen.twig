@@ -1,0 +1,234 @@
+{#
+/**
+ * @file
+ * Theme template to display the AZ Navbar Fullscreen.
+ *
+ * Available variables:
+ * - attributes: Attributes for the menu.
+ * - primary_items: A nested list of primary menu items. Each menu item contains:
+ *   - attributes: HTML attributes for the menu item.
+ *   - below: The menu item child items.
+ *   - title: The menu link title.
+ *   - url: The menu link url, instance of \Drupal\Core\Url
+ *   - localized_options: Menu link localized options.
+ *   - is_expanded: TRUE if the link has visible children within the current
+ *     menu tree.
+ *   - is_collapsed: TRUE if the link has children within the current menu tree
+ *     that are not currently visible.
+ *   - in_active_trail: TRUE if the link is in the active trail.
+ * - cta_items: A list of call-to-action menu items.
+ * - resources_items: A list of "resources for" menu items.
+ * - helpful_links_items: A list of "helpful links" menu items.
+ * - search_form_block_desktop_navbar: The search form block content to display in the desktop navbar.
+ * - search_form_block_offcanvas: The search form block content to display in the offcanvas menu.
+ * - wordmark: Setting to display the University wordmark in the nav.
+ */
+#}
+
+<nav class="navbar navbar-az-fullscreen" aria-label="Main navigation">
+  <div class="container-lg">
+    {% if wordmark %}
+      <a class="navbar-brand" href="https://www.arizona.edu" title="The University of Arizona homepage">
+        <img alt="The University of Arizona Wordmark Logo White" src="https://digital.arizona.edu/arizona-bootstrap/v5/docs/5.1/assets/brand/arizona-bootstrap-logo-webheader-white.svg" fetchpriority="high"/>
+      </a>
+    {% endif %}
+
+    <div class="navbar-az-fullscreen-tools ms-auto">
+      <ul class="navbar-nav flex-row navbar-az-fullscreen-actions d-none d-lg-flex align-items-center mx-3">
+        {% for item in cta_items %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ item.url }}">{{ item.title }}</a>
+          </li>
+          {% if not loop.last %}
+            <li class="nav-item" role="presentation">
+              <span class="vr" aria-hidden="true"></span>
+            </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+
+      <div class="navbar-az-fullscreen-search">
+        {% if search_form_block_desktop_navbar %}
+          <div class="pe-4 d-none d-lg-block">
+             {{ search_form_block_desktop_navbar }}
+          </div>
+        {% endif %}
+        {% if search_form_block_offcanvas %}
+          <button class="btn navbar-toggler-search d-lg-none me-2" type="button" data-bs-toggle="modal" data-bs-target="#navbar-az-fullscreen-menu" aria-controls="navbar-az-fullscreen-menu" aria-label="Search the site" id="navbar-az-fullscreen-search-button">
+          </button>
+        {% endif %}
+      </div>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="modal" data-bs-target="#navbar-az-fullscreen-menu" aria-controls="navbar-az-fullscreen-menu" aria-label="Open site menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="modal navbar-az-fullscreen-modal" id="navbar-az-fullscreen-menu" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="navbar-az-fullscreen-menu-label" aria-hidden="true">
+  <h2 id="navbar-az-fullscreen-menu-label" class="visually-hidden">Site menu</h2>
+  <div class="modal-dialog modal-fullscreen">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="navbar navbar-az-fullscreen">
+          <div class="container-lg">
+            {% if wordmark %}
+              <a class="navbar-brand" href="https://www.arizona.edu" title="The University of Arizona homepage">
+                <img alt="The University of Arizona Wordmark Logo White" src="https://digital.arizona.edu/arizona-bootstrap/v5/docs/5.1/assets/brand/arizona-bootstrap-logo-webheader-white.svg" fetchpriority="high"/>
+              </a>
+            {% endif %}
+            <div class="navbar-az-fullscreen-tools ms-auto">
+              <ul class="navbar-nav flex-row navbar-az-fullscreen-actions d-none d-lg-flex align-items-center mx-3">
+                {% for item in cta_items %}
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{ item.url }}">{{ item.title }}</a>
+                  </li>
+                  {% if not loop.last %}
+                    <li class="nav-item" role="presentation">
+                      <span class="vr" aria-hidden="true"></span>
+                    </li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+              <button class="navbar-toggler" type="button" data-bs-dismiss="modal" aria-label="Close site menu">
+                <span class="navbar-toggler-icon" aria-hidden="true"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {% if search_form_block_offcanvas %}
+          <div class="container-lg">
+            <div class="navbar-az-fullscreen-search my-2 my-lg-5">
+              {{ search_form_block_offcanvas }}
+            </div>
+          </div>
+        {% endif %}
+      
+      </div>
+
+      <div class="modal-body">
+        <div class="container-lg text-white navbar-az-fullscreen-modal-menu">
+          <div class="row g-0">
+            <div class="col-4 d-none d-lg-block navbar-az-fullscreen-nav-primary-col">
+              <!-- primary nav items -->
+              <div class="nav flex-column navbar-az-fullscreen-nav-primary" id="az-navbar-az-fullscreen-primary-tablist" role="tablist" aria-orientation="vertical">
+                {% for item in primary_items %}
+                  <button class="nav-link{{ item.in_active_trail ? ' active' }}" id="az-navbar-az-fullscreen-primary-{{ loop.index }}-tab" data-bs-toggle="pill-hover" data-bs-target="#az-navbar-az-fullscreen-primary-{{ loop.index }}-content" type="button" role="tab" aria-controls="az-navbar-az-fullscreen-primary-{{ loop.index }}-content" aria-selected="false">{{ item.title }}</button>
+                {% endfor %}
+              </div>
+            </div>
+            <div class="col-8 d-none d-lg-flex navbar-az-fullscreen-nav-secondary-tertiary-cols">
+              <div class="tab-content d-flex flex-grow-1 w-100" id="az-navbar-az-fullscreen-primary-tab-content">
+                {% for item in primary_items %}
+                <div class="tab-pane fade flex-grow-1 h-100 w-100{{ item.in_active_trail ? ' active show' }}" id="az-navbar-az-fullscreen-primary-{{ loop.index }}-content" role="tabpanel" aria-labelledby="az-navbar-az-fullscreen-primary-{{ loop.index }}-tab" tabindex="0">
+                  <div class="h-100">
+                    <div class="col h-100 d-flex flex-column p-0">
+                      <!-- secondary nav items -->
+                      <nav class="nav flex-column navbar-az-fullscreen-nav-secondary" aria-label="{{ item.title }}" id="az-navbar-az-fullscreen-{{ loop.index }}-secondary-nav">
+                        <div class="navbar-az-fullscreen-nav-secondary-scroll">
+                          {% for child in item.below %}
+                            {% if child.below %}
+                              <div class="d-flex align-items-center">
+                                {% if child.in_active_trail %}
+                                  {% set end_of_trail = true %}
+                                  {% for grandchild in child.below %}
+                                    {% if end_of_trail and grandchild.in_active_trail %}
+                                      {% set end_of_trail = false %}
+                                    {% endif %}
+                                  {% endfor %}
+                                {% endif %}
+                                <a class="nav-link{{ end_of_trail ? ' active' }} flex-grow-1" href="{{ child.url }}">{{ child.title }}</a>
+                                <div class="vr"></div>
+                                <button class="btn navbar-az-fullscreen-nav-toggle" id="az-navbar-az-fullscreen-{{ loop.parent.loop.index }}-secondary-{{ loop.index }}-tab" data-bs-toggle="collapse" data-bs-target="#az-navbar-az-fullscreen-{{ loop.parent.loop.index }}-secondary-{{ loop.index }}-content" type="button" aria-expanded="{{ child.in_active_trail ? 'true' : 'false' }}" aria-controls="az-navbar-az-fullscreen-{{ loop.parent.loop.index }}-secondary-{{ loop.index }}-content" aria-label="Toggle {{ child.title }} submenu">
+                                  <span class="navbar-az-fullscreen-nav-toggle-icon" aria-hidden="true"></span>
+                                </button>
+                              </div>
+                              <div class="collapse{{ child.in_active_trail ? ' show' }} navbar-az-fullscreen-nav-tertiary-panel" id="az-navbar-az-fullscreen-{{ loop.parent.loop.index }}-secondary-{{ loop.index }}-content" data-bs-parent="#az-navbar-az-fullscreen-{{ loop.parent.loop.index }}-secondary-nav">
+                                <nav class="nav flex-column navbar-az-fullscreen-nav-secondary" aria-label="{{ child.title }} submenu">
+                                  {% for grandchild in child.below %}
+                                    <a class="nav-link{{ grandchild.in_active_trail ? ' active' }}" href="{{ grandchild.url }}">{{ grandchild.title }}</a>
+                                    {% if not loop.last %}
+                                      <hr class="border-top border-azurite opacity-100" aria-hidden="true" role="presentation">
+                                    {% endif %}
+                                  {% endfor %}
+                                </nav>
+                              </div>
+                            {% else %}
+                              <a class="nav-link{{ child.in_active_trail ? ' active' }}" href="{{ child.url }}">{{ child.title }}</a>
+                            {% endif %}
+                            {% if not loop.last %}
+                              <hr class="border-top border-azurite opacity-100" aria-hidden="true" role="presentation">
+                            {% endif %}
+                          {% endfor %}
+                        </div>
+                      </nav>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+            <div id="navbar-az-fullscreen-nav-mobile-col" class="col-12 d-lg-none">
+              <!-- call-to-action items -->
+              <ul class="navbar-nav navbar-az-fullscreen-actions d-flex flex-row align-items-center justify-content-center gap-2 mt-2 mb-card">
+                {% for item in cta_items %}
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{ item.url }}">{{ item.title }}</a>
+                  </li>
+                  {% if not loop.last %}
+                    <li class="nav-item" role="presentation">
+                      <span class="vr" aria-hidden="true"></span>
+                    </li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+              <!-- initial mobile nav display -->
+              <div class="nav flex-column navbar-az-fullscreen-nav-primary" role="tablist" aria-orientation="vertical">
+                <hr class="border-bottom border-azurite opacity-100 my-0" aria-hidden="true" role="presentation">
+                {% for item in primary_items %}
+                  <button class="nav-link{{ item.in_active_trail ? ' active' }}" data-az-menu-element="#az-navbar-az-fullscreen-primary-{{ loop.index }}-content" type="button" aria-controls="navbar-az-fullscreen-nav-mobile-col">{{ item.title }}</button>
+                  <hr class="border-bottom border-azurite opacity-100 my-0" aria-hidden="true" role="presentation">
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {% if resources_items %}
+        <div class="modal-footer justify-content-start">
+          <nav class="navbar" aria-labelledby="resources-for-label">
+            <div class="container-lg">
+              <div class="navbar-az-fullscreen-modal-footer-scroll">
+                <ul class="navbar-nav flex-row align-items-center mb-0">
+                  <li class="nav-item"><h2 class="navbar-brand" id="resources-for-label">Resources for:</h2></li>
+                  {% for item in resources_items %}
+                    <li class="nav-item"><a class="nav-link" href="{{ item.url }}">{{ item.title }}</a></li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+          </nav>
+        </div>
+      {% endif %}
+      {% if helpful_links_items %}
+        <div class="modal-footer justify-content-start">
+          <nav class="navbar" aria-labelledby="helpful-links-label">
+            <div class="container-lg">
+              <div class="navbar-az-fullscreen-modal-footer-scroll">
+                <ul class="navbar-nav flex-row align-items-center mb-0">
+                  <li class="nav-item"><h2 class="navbar-brand" id="helpful-links-label">Helpful Links:</h2></li>
+                  {% for item in helpful_links_items %}
+                    <li class="nav-item"><a class="nav-link" href="{{ item.url }}">{{ item.title }}</a></li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+          </nav>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
