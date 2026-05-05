@@ -234,9 +234,9 @@ class QuickstartExposedFilters extends BetterExposedFilters {
 
     // Move reset_button to maintain order.
     if (isset($form['bef']['general']['reset_button'])) {
-    $reset_button_option = $form['bef']['general']['reset_button'];
-    unset($form['bef']['general']['reset_button']);
-    $form['bef']['general']['reset_button'] = $reset_button_option;
+      $reset_button_option = $form['bef']['general']['reset_button'];
+      unset($form['bef']['general']['reset_button']);
+      $form['bef']['general']['reset_button'] = $reset_button_option;
     }
 
     $form['bef']['general']['reset_button_settings'] = [
