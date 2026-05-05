@@ -1,5 +1,5 @@
 ### DDev ###
-#/.ddev/config.y*ml
+/.ddev/config.y*ml
 
 ### Node ###
 /node_modules/
