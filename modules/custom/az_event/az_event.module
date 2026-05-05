@@ -155,11 +155,11 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
         // Add to Calendar button for an event with a single occurrence.
         $field_item = $entity->get('field_az_event_date')->first();
         $field_render_array = $field_item ? $field_item->view('default') : [];
-
-        foreach ($entity->field_az_event_date as $item) {
+        /** @var \Drupal\smart_date\Plugin\Field\FieldType\SmartDateItem $item */
+        foreach ($event_date_field as $item) {
           if (($item->value >= $now) || (!empty($item->end_value) && ($item->end_value >= $now))) {
             $start = $item->value;
-            $end = $item->end_value;
+            $end = $item->get('end_value')->getValue();
             $all_day = $smart_date_manager->isAllDay($start, $end);
             $build['field_az_event_date'][] = [
               '#theme' => 'az_event_calendar_add_button',

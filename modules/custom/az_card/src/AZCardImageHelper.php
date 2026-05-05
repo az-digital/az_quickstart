@@ -39,7 +39,7 @@ class AZCardImageHelper {
    * @param \Drupal\media\MediaInterface $media
    *   A Drupal media entity object.
    *
-   * @return string[]
+   * @return array
    *   An image render array.
    */
   public function generateImageRenderArray(MediaInterface $media) {

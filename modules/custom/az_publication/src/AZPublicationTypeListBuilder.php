@@ -56,26 +56,6 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
   /**
    * {@inheritdoc}
    */
-  public function load() {
-    $entities = [
-      'enabled' => [],
-      'disabled' => [],
-    ];
-    foreach (parent::load() as $entity) {
-      /** @var \Drupal\az_publication\Entity\AZPublicationTypeInterface $entity */
-      if ($entity->get('status')) {
-        $entities['enabled'][] = $entity;
-      }
-      else {
-        $entities['disabled'][] = $entity;
-      }
-    }
-    return $entities;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function buildRow(EntityInterface $entity) {
     /** @var \Drupal\az_publication\Entity\AZPublicationTypeInterface $entity */
     $row = parent::buildRow($entity);
@@ -155,7 +135,19 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
    * {@inheritdoc}
    */
   public function render() {
-    $entities = $this->load();
+    $entities = [
+      'enabled' => [],
+      'disabled' => [],
+    ];
+    foreach ($this->load() as $entity) {
+      /** @var \Drupal\az_publication\Entity\AZPublicationTypeInterface $entity */
+      if ($entity->get('status')) {
+        $entities['enabled'][] = $entity;
+      }
+      else {
+        $entities['disabled'][] = $entity;
+      }
+    }
     $list['#type'] = 'container';
     $list['#attributes']['id'] = 'az-publication-type-entity-list';
     $list['#attached']['library'][] = 'core/drupal.ajax';

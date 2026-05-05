@@ -47,7 +47,7 @@ class AZPoliteCacheStrategy extends PrivateCacheStrategy {
 
     if (!isset($this->statusAccepted[$response->getStatusCode()])) {
       // Don't cache it for invalid return codes.
-      return;
+      return NULL;
     }
 
     $cacheControl = new KeyValueHttpHeader($response->getHeader('Cache-Control'));
@@ -55,13 +55,13 @@ class AZPoliteCacheStrategy extends PrivateCacheStrategy {
 
     if ($varyHeader->has('*')) {
       // This will never match with a request.
-      return;
+      return NULL;
     }
 
     // @todo Determine our policy on other headers to avoid caching, such as Authorization.
     if ($cacheControl->has('no-store')) {
       // No store allowed.
-      return;
+      return NULL;
     }
 
     if ($cacheControl->has('no-cache')) {
