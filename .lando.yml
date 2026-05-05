@@ -70,7 +70,7 @@ services:
     type: node:20
     build:
       - corepack enable
-      - yarn install
+      - yarn install --immutable
   chromedriver:
     type: compose
     services:
