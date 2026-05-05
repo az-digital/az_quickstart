@@ -42,13 +42,13 @@
                 {% endif %}
               </h3>
             {% else %}
-              <h1 class="fw-bolder display-4 m-0 ranking-heading {% if text_color_override %}{{ text_color_override }}{% endif %}">
+              <h3 class="fw-bolder display-4 m-0 ranking-heading {% if text_color_override %}{{ text_color_override }}{% endif %}">
                 {% if ranking_clickable %}
                   <strong class="hover-text-underline">{{ ranking_heading }}</strong>
                 {% else %}
                   <strong>{{ ranking_heading }}</strong>
                 {% endif %}
-              </h1>
+              </h3>
             {% endif %}
           {% endif %}
           {% if ranking_description %}
