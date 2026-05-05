@@ -188,7 +188,7 @@ jobs:
           node-version: '20'
       - run: |
           corepack enable
-          yarn npm audit --level high
+          yarn npm audit --severity high
 
   eslint:
     name: eslint
