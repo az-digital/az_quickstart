@@ -1,0 +1,6 @@
+az_publication_crossref.import_crossref:
+  title: 'Import from Crossref'
+  description: 'Search the Crossref database for a publication to import.'
+  route_name: az_publication_crossref.az_publication_crossref_import_form
+  parent: az_publication_import.admin.content
+  weight: 2
