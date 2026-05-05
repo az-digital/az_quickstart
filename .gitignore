@@ -1,10 +1,9 @@
 ### DDev ###
-/.ddev/config.y*ml
+#/.ddev/config.y*ml
 
 ### Node ###
 /node_modules/
 /node_modules/*
-/yarn.lock
 /yarn-error.log
 .yarn/*
 

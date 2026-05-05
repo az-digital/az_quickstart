@@ -187,6 +187,7 @@ jobs:
         with:
           node-version: '20'
       - run: |
+          corepack enable
           yarn npm audit --level high
 
   eslint:
@@ -199,7 +200,7 @@ jobs:
           node-version: '20'
       - run: |
           corepack enable
-          yarn install
+          yarn install --immutable
       - name: Generate eslint report
         continue-on-error: true
         run: |

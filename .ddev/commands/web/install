@@ -27,4 +27,4 @@ drush --root=/var/www/html/web cache:rebuild
 # Install Yarn dev dependencies
 cd /usr/local/quickstart-install-profile
 yarn --version
-yarn install
+yarn install --immutable
