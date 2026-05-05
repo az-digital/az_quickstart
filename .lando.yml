@@ -68,6 +68,9 @@ services:
       - ln -s /usr/local/quickstart-install-profile/.vscode /app/.vscode
   node:
     type: node:20
+    overrides:
+      environment:
+        COREPACK_ENABLE_DOWNLOAD_PROMPT: '0'
     build:
       - corepack enable
       - yarn install --immutable
