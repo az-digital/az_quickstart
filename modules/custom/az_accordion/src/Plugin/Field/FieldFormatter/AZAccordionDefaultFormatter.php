@@ -13,6 +13,7 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\az_accordion\Plugin\Field\FieldType\AZAccordionItem;
 use Drupal\paragraphs\ParagraphInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Plugin implementation of the 'az_accordion_default' formatter.
@@ -41,6 +42,13 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
   protected $renderer;
 
   /**
+   * The request stack.
+   *
+   * @var \Symfony\Component\HttpFoundation\RequestStack
+   */
+  protected RequestStack $requestStack;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
@@ -53,6 +61,7 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
 
     $instance->entityTypeManager = $container->get('entity_type.manager');
     $instance->renderer = $container->get('renderer');
+    $instance->requestStack = $container->get('request_stack');
     return $instance;
   }
 
@@ -161,6 +170,7 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
    */
   protected function attachFaqSchema(array &$element, FieldItemListInterface $items) {
     $questions = [];
+    $scheme_and_host = $this->requestStack->getCurrentRequest()->getSchemeAndHttpHost();
 
     foreach ($items as $item) {
       try {
@@ -184,7 +194,7 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
         '#format' => $item->body_format,
         '#langcode' => $item->getLangcode(),
       ];
-      $rendered_body = (string) $this->renderer->renderInIsolation($processed);
+      $rendered_body = Html::transformRootRelativeUrlsToAbsolute((string) $this->renderer->renderInIsolation($processed), $scheme_and_host);
 
       // Keep only the HTML tags that Google displays in FAQ rich results.
       // @see https://developers.google.com/search/docs/appearance/structured-data/faqpage
