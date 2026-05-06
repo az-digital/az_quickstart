@@ -5,6 +5,7 @@ libraryOverrides:
   dependencies:
     - az_barrio/arizona-bootstrap-css
     - az_barrio/arizona-bootstrap-js
+    - az_barrio/garamond-premier-pro
     - core/drupal
 props:
   type: object
