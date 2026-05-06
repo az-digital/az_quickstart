@@ -50,7 +50,7 @@ final class AZRecurringImportRuleListBuilder extends ConfigEntityListBuilder {
 
     if (!empty($params)) {
       // Generate link to results page.
-      $row['result']['data'] = [
+      $row['results']['data'] = [
         '#type' => 'link',
         '#title' => $this->t('View Results'),
         '#url' => Url::fromRoute('view.az_opportunity_trellis_import.page_1'),
