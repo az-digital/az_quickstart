@@ -139,7 +139,7 @@
                                     {% endif %}
                                   {% endfor %}
                                 {% endif %}
-                                <a class="nav-link{{ end_of_trail ? ' active' }} flex-grow-1" href="{{ child.url }}">{{ child.title }}</a>
+                                <a class="nav-link{{ child.in_active_trail and end_of_trail ? ' active' }} flex-grow-1" href="{{ child.url }}">{{ child.title }}</a>
                                 <div class="vr"></div>
                                 <button class="btn navbar-az-fullscreen-nav-toggle" id="az-navbar-az-fullscreen-{{ loop.parent.loop.index }}-secondary-{{ loop.index }}-tab" data-bs-toggle="collapse" data-bs-target="#az-navbar-az-fullscreen-{{ loop.parent.loop.index }}-secondary-{{ loop.index }}-content" type="button" aria-expanded="{{ child.in_active_trail ? 'true' : 'false' }}" aria-controls="az-navbar-az-fullscreen-{{ loop.parent.loop.index }}-secondary-{{ loop.index }}-content" aria-label="Toggle {{ child.title }} submenu">
                                   <span class="navbar-az-fullscreen-nav-toggle-icon" aria-hidden="true"></span>
