@@ -576,7 +576,7 @@ display:
             operator: property_2_op
             operator_limit_selection: false
             operator_list: {  }
-            identifier: property_2
+            identifier: id
             required: false
             remember: false
             multiple: false

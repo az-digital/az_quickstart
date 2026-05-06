@@ -1,6 +1,6 @@
 name: Quickstart Opportunity
 description: 'Provides an Opportunity content type and related configuration. Use this content type to add non-academic opportunities such as Scholarships, Internships or Job Opportunities to your site.'
-core_version_requirement: ^10 || ^11 || ^12
+core_version_requirement: ^11.3 || ^12
 type: module
 package: The University of Arizona - Experimental
 lifecycle: experimental
