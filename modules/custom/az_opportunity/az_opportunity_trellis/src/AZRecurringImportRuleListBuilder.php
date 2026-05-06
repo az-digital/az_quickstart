@@ -59,7 +59,7 @@ final class AZRecurringImportRuleListBuilder extends ConfigEntityListBuilder {
       ];
     }
     else {
-      $row['result'] = '';
+      $row['results'] = '';
     }
     $row['status'] = $entity->status() ? $this->t('Enabled') : $this->t('Disabled');
     return $row + parent::buildRow($entity);
