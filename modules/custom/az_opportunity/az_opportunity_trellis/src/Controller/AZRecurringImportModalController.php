@@ -82,7 +82,8 @@ final class AZRecurringImportModalController extends ControllerBase {
     // Attempt to get cached search if we have a valid cache key.
     if (!empty($key) && str_starts_with($key, 'az_opp_recurring_import_modal:')) {
       // Get a cached search if there is one for our key.
-      $search = $this->cache->get($key)->data ?? [];
+      $cached = $this->cache->get($key);
+      $search = ($cached !== FALSE) ? $cached->data : [];
     }
 
     // Create an AjaxResponse that opens a modal copy of the config form.
