@@ -9,6 +9,7 @@ use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Field\Plugin\Field\FieldType\EntityReferenceItem;
 use Drupal\Core\Render\HtmlResponse;
+use Drupal\Core\Render\Markup;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\node\NodeInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -73,7 +74,7 @@ class AZFaqAggregatorSubscriber implements EventSubscriberInterface {
       [$element, $key] = $item;
       if (str_starts_with($key, 'faq_questions_')) {
         $entity_id = substr($key, strlen('faq_questions_'));
-        $data = json_decode($element['#value'], TRUE);
+        $data = json_decode((string) $element['#value'], TRUE);
         if (is_array($data) && !empty($data['questions'])) {
           $groups[$entity_id] = $data['questions'];
         }
@@ -117,7 +118,7 @@ class AZFaqAggregatorSubscriber implements EventSubscriberInterface {
         '#type' => 'html_tag',
         '#tag' => 'script',
         '#attributes' => ['type' => 'application/ld+json'],
-        '#value' => json_encode($faq_schema, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
+        '#value' => Markup::create(json_encode($faq_schema, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)),
       ],
       'faq_schema',
     ];

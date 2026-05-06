@@ -164,11 +164,21 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
 
     foreach ($items as $item) {
       $title = $item->title ?? '';
-      $body = $item->body ?? '';
+      $body_raw = $item->body ?? '';
 
-      if (empty($title) || empty($body)) {
+      if (empty($title) || empty($body_raw)) {
         continue;
       }
+
+      // Run the body through the same filter pipeline used for display so
+      // the JSON-LD reflects the final rendered HTML
+      $processed = [
+        '#type' => 'processed_text',
+        '#text' => $body_raw,
+        '#format' => $item->body_format,
+        '#langcode' => $item->getLangcode(),
+      ];
+      $rendered_body = (string) $this->renderer->renderInIsolation($processed);
 
       // Keep only the HTML tags that Google displays in FAQ rich results.
       // @see https://developers.google.com/search/docs/appearance/structured-data/faqpage
@@ -181,7 +191,7 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
 
       $questions[] = [
         '@type' => 'Question',
-        'name' => strip_tags($title),
+        'name' => trim(strip_tags($title)),
         'acceptedAnswer' => [
           '@type' => 'Answer',
           'text' => $clean_body,
@@ -196,7 +206,7 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
           '#type' => 'html_tag',
           '#tag' => 'script',
           '#attributes' => ['type' => 'application/ld+json'],
-          '#value' => json_encode($data),
+          '#value' => Markup::create(json_encode($data)),
         ],
         'faq_questions_' . $items->getEntity()->id(),
       ];
