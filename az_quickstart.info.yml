@@ -56,9 +56,11 @@ install:
   - drupal:search
   - drupal:shortcut
   - token:token
-  - drupal:toolbar
   - drupal:field_ui
   - drupal:file
+  - drupal:layout_builder
+  - drupal:layout_discovery
+  - drupal:navigation
   - drupal:views
   - drupal:views_ui
   - drupal:automated_cron
@@ -80,4 +82,5 @@ install:
 themes:
   - az_barrio
   - claro
+  - gin
 version: 3.4.x-dev
