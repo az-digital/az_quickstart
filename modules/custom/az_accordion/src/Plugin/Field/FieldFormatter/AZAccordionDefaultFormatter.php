@@ -163,6 +163,12 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
     $questions = [];
 
     foreach ($items as $item) {
+      try {
+        assert($item instanceof AZAccordionItem);
+      }
+      catch (\AssertionError) {
+        continue;
+      }
       $title = $item->title ?? '';
       $body_raw = $item->body ?? '';
 
