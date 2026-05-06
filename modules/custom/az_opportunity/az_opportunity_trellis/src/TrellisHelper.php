@@ -272,7 +272,8 @@ final class TrellisHelper {
    */
   protected function getTrellisCache(string $trellis_id) {
     $key = 'az_trellis_opportunities:' . $trellis_id;
-    return $this->cache->get($key)->data ?? FALSE;
+    $cached = $this->cache->get($key);
+    return ($cached !== FALSE) ? $cached->data : FALSE;
   }
 
   /**
