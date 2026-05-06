@@ -594,7 +594,7 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          property_path: account_id
+          property_path: id
         property_4:
           id: property_4
           table: az_opportunity_trellis_data
