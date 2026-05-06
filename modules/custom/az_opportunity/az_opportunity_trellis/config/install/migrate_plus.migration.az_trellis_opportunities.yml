@@ -164,22 +164,6 @@ process:
       source: start_options
       value_key: name
       ignore_case: true
-  field_az_opportunity_format:
-    -
-      plugin: skip_on_empty
-      method: process
-    -
-      plugin: explode
-      source: program_format
-      delimiter: ', '
-    -
-      plugin: multiple_values
-    -
-      plugin: static_map
-      map:
-        'Hybrid': hybrid
-        'In-Person': in_person
-        'Virtual': virtual
   field_az_program_length: program_length
   field_az_incentives:
     -
