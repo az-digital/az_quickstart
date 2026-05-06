@@ -37,16 +37,22 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#weight' => -10,
   ];
 
-  // Institutional logo.
-  $form['az_settings']['settings']['institutional_logo'] = [
+  // Institutional header settings.
+  $form['az_settings']['settings']['institutional_header'] = [
     '#type' => 'fieldset',
-    '#title' => t('Institutional Logo Settings'),
+    '#title' => t('Institutional Header Settings'),
   ];
-  $form['az_settings']['settings']['institutional_logo']['wordmark'] = [
+  $form['az_settings']['settings']['institutional_header']['wordmark'] = [
     '#type' => 'checkbox',
-    '#title' => t('Institutional header wordmark logo'),
+    '#title' => t('Enable wordmark logo in the Arizona Header'),
     '#description' => t('With few exceptions, this should always be enabled.'),
     '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('wordmark'),
+  ];
+  $form['az_settings']['settings']['institutional_header']['az_header_blue'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Enable blue Arizona Header (experimental)'),
+    '#description' => t('Set the Arizona Header background color to Arizona Blue instead of Arizona Red.'),
+    '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_header_blue'),
   ];
 
   // Land Acknowledgment.

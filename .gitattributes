@@ -29,3 +29,4 @@ themes/custom/az_core/lib/**/*.js linguist-generated=true
 *.neon export-ignore
 *.xml.dist export-ignore
 package.json export-ignore
+yarn.lock export-ignore linguist-generated=true
