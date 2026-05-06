@@ -16,7 +16,6 @@ dependencies:
   - drupal:field
   - drupal:file
   - drupal:link
-  - drupal:link_class
   - drupal:media
   - drupal:media_library
   - drupal:menu_ui
