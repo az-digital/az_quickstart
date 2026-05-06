@@ -42,7 +42,7 @@ class AZExtractUrl extends ProcessPluginBase {
       if (!empty($href)) {
         return Html::decodeEntities($href);
       }
-      // Anchor found but no usable href — return empty so the link field is skipped.
+      // Anchor found but no usable href, return empty.
       return '';
     }
 
