@@ -74,9 +74,6 @@
     position: absolute;
     width: 100%;
 }
-.full-width-background .az-video-background {
-    width: 100vw;
-}
 .az-video-loading .az-video-container {
   opacity: 0;
 }

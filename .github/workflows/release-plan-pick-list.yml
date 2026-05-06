@@ -1,0 +1,216 @@
+name: Create Release Plan Pick List
+
+on:
+  workflow_dispatch:
+    inputs:
+      project_number:
+        description: The project number in the az-digital organization (e.g. 42)
+        required: true
+        type: number
+      issue_number:
+        description: The release plan issue number in az-digital/az_quickstart (e.g. 1234)
+        required: true
+        type: number
+
+jobs:
+  generate-pick-list:
+    name: Generate pick list and comment on release plan issue
+    runs-on: ubuntu-latest
+    permissions: {}
+    steps:
+      - name: Generate pick list and comment on release plan issue
+        env:
+          GH_TOKEN: ${{ secrets.REPO_DISPATCH_TOKEN }}
+          PROJECT_NUMBER: ${{ inputs.project_number }}
+          ISSUE_NUMBER: ${{ inputs.issue_number }}
+        run: |
+          set -euo pipefail
+
+          # Fetch all pull requests in the "Done" status field of the project.
+          # GitHub Projects v2 uses a Status field; items whose status is "Done"
+          # are considered complete.  We page through all project items using
+          # the GraphQL API and keep only PRs that belong to az-digital/az_quickstart.
+
+          echo "Fetching project #${PROJECT_NUMBER} metadata from az-digital org..."
+
+          PROJECT_META=$(gh api graphql \
+            -f query='query($org: String!, $num: Int!) {
+              organization(login: $org) {
+                projectV2(number: $num) {
+                  title
+                  public
+                }
+              }
+            }' \
+            -f org="az-digital" \
+            -F num="$PROJECT_NUMBER")
+
+          PROJECT_PUBLIC=$(echo "$PROJECT_META" | jq -r '.data.organization.projectV2.public')
+          PROJECT_TITLE=$(echo "$PROJECT_META" | jq -r '.data.organization.projectV2.title')
+
+          if [ "$PROJECT_PUBLIC" != "true" ]; then
+            echo "Error: Project #${PROJECT_NUMBER} (\"${PROJECT_TITLE}\") is not a public project. This workflow only supports public projects." >&2
+            exit 1
+          fi
+
+          echo "Project: ${PROJECT_TITLE} (public)"
+          echo "Fetching project items from project #${PROJECT_NUMBER} in az-digital org..."
+
+          CURSOR="null"
+          HAS_NEXT_PAGE="true"
+          # pr_number -> merge_commit_sha (az-digital/az_quickstart PRs only)
+          declare -A PR_COMMITS
+          # pr_number -> committed date (ISO 8601)
+          declare -A PR_COMMIT_DATE
+          # pr_number -> "repo#number" for PRs from other repositories
+          declare -A EXTERNAL_PRS
+
+          GRAPHQL_QUERY='query($org: String!, $num: Int!, $after: String) {
+            organization(login: $org) {
+              projectV2(number: $num) {
+                items(first: 100, after: $after) {
+                  pageInfo {
+                    hasNextPage
+                    endCursor
+                  }
+                  nodes {
+                    fieldValueByName(name: "Status") {
+                      ... on ProjectV2ItemFieldSingleSelectValue {
+                        name
+                      }
+                    }
+                    content {
+                      ... on PullRequest {
+                        number
+                        repository {
+                          nameWithOwner
+                        }
+                        mergeCommit {
+                          oid
+                          committedDate
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }'
+
+          while [ "$HAS_NEXT_PAGE" = "true" ]; do
+            RESPONSE=$(gh api graphql \
+              -f query="$GRAPHQL_QUERY" \
+              -f org="az-digital" \
+              -F num="$PROJECT_NUMBER" \
+              -f after="$CURSOR")
+
+            HAS_NEXT_PAGE=$(echo "$RESPONSE" | jq -r '.data.organization.projectV2.items.pageInfo.hasNextPage')
+            CURSOR=$(echo "$RESPONSE" | jq -r '.data.organization.projectV2.items.pageInfo.endCursor')
+
+            # Parse items: keep only "Done" PRs, separating az-digital/az_quickstart from others
+            while IFS=$'\t' read -r STATUS REPO PR_NUM COMMIT_OID COMMITTED_DATE; do
+              if [ "$STATUS" = "Done" ] && [ "$PR_NUM" != "null" ]; then
+                if [ "$REPO" = "az-digital/az_quickstart" ]; then
+                  if [ "$COMMIT_OID" = "null" ]; then
+                    echo "Warning: PR #${PR_NUM} has no merge commit (may have been merged via rebase). Skipping."
+                  else
+                    PR_COMMITS["$PR_NUM"]="$COMMIT_OID"
+                    PR_COMMIT_DATE["$PR_NUM"]="$COMMITTED_DATE"
+                  fi
+                elif [ "$REPO" != "null" ]; then
+                  EXTERNAL_PRS["${REPO}#${PR_NUM}"]="$REPO"
+                fi
+              fi
+            done < <(echo "$RESPONSE" | jq -r '
+              .data.organization.projectV2.items.nodes[]
+              | [
+                  (.fieldValueByName.name // ""),
+                  (.content.repository.nameWithOwner // "null"),
+                  (.content.number // "null" | tostring),
+                  (.content.mergeCommit.oid // "null"),
+                  (.content.mergeCommit.committedDate // "null")
+                ]
+              | @tsv
+            ')
+          done
+
+          if [ ${#PR_COMMITS[@]} -eq 0 ]; then
+            echo "No completed (Done) pull requests from az-digital/az_quickstart found in project #${PROJECT_NUMBER}."
+            exit 1
+          fi
+
+          echo "Found ${#PR_COMMITS[@]} pull request(s) in Done status."
+
+          # Sort pull requests by committed date (oldest first).
+          # ISO 8601 dates sort correctly as plain strings.
+          SORTED_PRS=$(
+            for PR_NUM in "${!PR_COMMITS[@]}"; do
+              echo "${PR_COMMIT_DATE[$PR_NUM]} ${PR_NUM} ${PR_COMMITS[$PR_NUM]}"
+            done | sort
+          )
+
+          # Build the ordered PR list, commit hash list, and per-commit commands.
+          PR_LIST=""
+          COMMIT_HASHES=""
+          SPLIT_COMMANDS=""
+          PR_COUNTER=0
+
+          while IFS=' ' read -r _DATE PR_NUM COMMIT_OID; do
+            PR_COUNTER=$((PR_COUNTER + 1))
+            if [ -z "$PR_LIST" ]; then
+              PR_LIST="${PR_COUNTER}. #${PR_NUM}"
+            else
+              PR_LIST="${PR_LIST}"$'\n'"${PR_COUNTER}. #${PR_NUM}"
+            fi
+
+            if [ -z "$COMMIT_HASHES" ]; then
+              COMMIT_HASHES="${COMMIT_OID}"
+            else
+              COMMIT_HASHES="${COMMIT_HASHES} ${COMMIT_OID}"
+            fi
+
+            if [ -z "$SPLIT_COMMANDS" ]; then
+              SPLIT_COMMANDS="git cherry-pick -x ${COMMIT_OID}"
+            else
+              SPLIT_COMMANDS="${SPLIT_COMMANDS}"$'\n'"git cherry-pick -x ${COMMIT_OID}"
+            fi
+          done <<< "$SORTED_PRS"
+
+          CHERRY_PICK_CMD="git cherry-pick -x ${COMMIT_HASHES}"
+
+          # Build the list of external (non-az_quickstart) Done PRs, sorted for consistency.
+          EXTERNAL_PR_LIST=""
+          EXTERNAL_COUNTER=0
+          if [ ${#EXTERNAL_PRS[@]} -gt 0 ]; then
+            while IFS= read -r REPO_AND_NUM; do
+              EXTERNAL_COUNTER=$((EXTERNAL_COUNTER + 1))
+              if [ -z "$EXTERNAL_PR_LIST" ]; then
+                EXTERNAL_PR_LIST="${EXTERNAL_COUNTER}. ${REPO_AND_NUM}"
+              else
+                EXTERNAL_PR_LIST="${EXTERNAL_PR_LIST}"$'\n'"${EXTERNAL_COUNTER}. ${REPO_AND_NUM}"
+              fi
+            done < <(printf '%s\n' "${!EXTERNAL_PRS[@]}" | sort)
+          fi
+
+          # Build the comment body using printf to control newlines precisely.
+          if [ -n "$EXTERNAL_PR_LIST" ]; then
+            COMMENT_BODY=$(printf \
+              '## Pull Requests (in commit order from oldest to newest)\n\n%s\n\n## Pull Requests from Other Repositories\n\n%s\n\n## Pick List\n\n```\n%s\n```\n\n```\n%s\n```' \
+              "$PR_LIST" \
+              "$EXTERNAL_PR_LIST" \
+              "$CHERRY_PICK_CMD" \
+              "$SPLIT_COMMANDS")
+          else
+            COMMENT_BODY=$(printf \
+              '## Pull Requests (in commit order from oldest to newest)\n\n%s\n\n## Pick List\n\n```\n%s\n```\n\n```\n%s\n```' \
+              "$PR_LIST" \
+              "$CHERRY_PICK_CMD" \
+              "$SPLIT_COMMANDS")
+          fi
+
+          echo "Posting comment to issue #${ISSUE_NUMBER}..."
+          gh issue comment "${ISSUE_NUMBER}" \
+            --repo az-digital/az_quickstart \
+            --body "$COMMENT_BODY"
+
+          echo "Done. Comment posted to issue #${ISSUE_NUMBER}."
