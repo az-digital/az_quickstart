@@ -83,7 +83,7 @@
       {{ page.alert }}
     {% endif %}
     <header id="header" class="header" role="banner" aria-label="{{ 'Site header'|t}}">
-      <div class="arizona-header{{ page.navigation_offcanvas ? ' az-fixed-header-on-mobile' }} bg-red" id="header_arizona">
+      <div class="arizona-header{{ page.navigation_offcanvas ? ' az-fixed-header-on-mobile' }} {{ az_header_blue ? 'bg-blue' : 'bg-red' }}" id="header_arizona">
         <div class="{{ container }}">
           <div class="row flex-nowrap">
             {% if wordmark %}
@@ -109,7 +109,7 @@
                   </button>
                 {% endif %}
                 <div class="offcanvas offcanvas-end mw-100 w-100 bg-white d-flex d-lg-none overflow-y-auto" tabindex="-1" id="azMobileNav" aria-label="Mobile navigation">
-                  <div class="offcanvas-header sticky-top p-0 mb-2 text-bg-red d-flex justify-content-between align-items-center">
+                  <div class="offcanvas-header sticky-top p-0 mb-2 {{ az_header_blue ? 'text-bg-blue' : 'text-bg-red' }} d-flex justify-content-between align-items-center">
                     <a href="/" class="btn btn-arizona-header">
                       <span aria-hidden="true" class="icon material-symbols-rounded">home</span>
                       <span class="icon-text">Home</span>
