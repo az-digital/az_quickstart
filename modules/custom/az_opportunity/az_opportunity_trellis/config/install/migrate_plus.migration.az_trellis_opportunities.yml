@@ -104,18 +104,6 @@ source:
       label: 'Program Type'
       selector: Program_Type__c
     -
-      name: audiences
-      label: Audiences
-      selector: Audiences__c
-    -
-      name: topic
-      label: Topic
-      selector: Topic__c
-    -
-      name: program_type
-      label: 'Program Type'
-      selector: Program_Type__c
-    -
       name: publish
       label: Publish
       selector: Publish_Formula
