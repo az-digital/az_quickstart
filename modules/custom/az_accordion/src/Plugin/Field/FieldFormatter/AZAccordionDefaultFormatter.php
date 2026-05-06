@@ -171,7 +171,7 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
       }
 
       // Run the body through the same filter pipeline used for display so
-      // the JSON-LD reflects the final rendered HTML
+      // the JSON-LD reflects the final rendered HTML.
       $processed = [
         '#type' => 'processed_text',
         '#text' => $body_raw,
@@ -187,7 +187,7 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
         'br', 'ol', 'ul', 'li', 'a', 'p', 'div',
         'b', 'strong', 'i', 'em',
       ];
-      $clean_body = Xss::filter($body, $allowed_tags);
+      $clean_body = preg_replace('/\s+/', ' ', trim(Xss::filter($rendered_body, $allowed_tags)));
 
       $questions[] = [
         '@type' => 'Question',
