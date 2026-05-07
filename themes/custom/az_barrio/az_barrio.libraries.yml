@@ -36,6 +36,10 @@ az-proxima-nova:
   css:
     theme:
       https://use.typekit.net/emv3zbo.css: { external: true, preprocess: false }
+garamond-premier-pro:
+  css:
+    theme:
+      https://use.typekit.net/eyf6fhr.css: { external: true, preprocess: false }
 az-icons:
   css:
     theme:

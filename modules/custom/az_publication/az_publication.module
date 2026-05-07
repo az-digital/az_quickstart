@@ -526,7 +526,7 @@ function _az_publication_publication_date_object(EntityInterface $entity) {
       $slices = 2;
       break;
 
-    default;
+    default:
       $slices = 3;
       break;
   }
@@ -640,7 +640,7 @@ function _az_publication_form_revisions(array &$form, FormStateInterface $form_s
         $placeholder = 'YYYY';
         break;
 
-      default;
+      default:
         $format = 'Y-m-d';
         $viewmode = 'default';
         $placeholder = 'YYYY-MM-DD';
