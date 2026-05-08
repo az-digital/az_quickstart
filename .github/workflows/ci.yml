@@ -305,12 +305,19 @@ jobs:
         run: |
           cd az-quickstart-scaffolding
           ./vendor/bin/drush site:install az_quickstart --db-url=mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3306] }}/db --verbose --yes -n
-          ./vendor/bin/drush -y -n pm:install az_demo
       - name: Run php built-in server
         run: |
           cd az-quickstart-scaffolding
           php -S 127.0.0.1:8080 -t web &
-      - name: Check for PHP errors and notices
+      - name: Check for PHP errors and notices (without az_demo installed)
+        run: |
+          curl -sS -o /dev/null http://127.0.0.1:8080
+          curl -sS -o /dev/null http://127.0.0.1:8080/user
+          $GITHUB_WORKSPACE/az-quickstart-scaffolding/vendor/bin/drush -n watchdog:show --count=100 --type=php || true
+          if [ -z "$($GITHUB_WORKSPACE/az-quickstart-scaffolding/vendor/bin/drush -n watchdog:show --count=100 --type=php)" ]; then echo "No PHP notices/errors logged."; else echo "PHP notices/errors found in log." >&2 && exit 1; fi
+      - name: Install az_demo
+        run: ./vendor/bin/drush -y -n pm:install az_demo
+      - name: Check for PHP errors and notices (with az_demo installed)
         run: |
           curl -sS -o /dev/null http://127.0.0.1:8080
           curl -sS -o /dev/null http://127.0.0.1:8080/user
@@ -329,6 +336,8 @@ jobs:
           curl -sS -o /dev/null http://127.0.0.1:8080/pages/annual-events
           $GITHUB_WORKSPACE/az-quickstart-scaffolding/vendor/bin/drush -n watchdog:show --count=100 --type=php || true
           if [ -z "$($GITHUB_WORKSPACE/az-quickstart-scaffolding/vendor/bin/drush -n watchdog:show --count=100 --type=php)" ]; then echo "No PHP notices/errors logged."; else echo "PHP notices/errors found in log." >&2 && exit 1; fi
+
+
 
   upgrade-status:
     name: upgrade_status
