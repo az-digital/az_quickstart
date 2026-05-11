@@ -115,7 +115,7 @@
                     </button>
                   {% endif %}
                   {% for offcanvasblock in page.navigation_offcanvas %}
-                    {% if offcanvasblock['#mobile_nav_block'] %}
+                    {% if 'mobile_nav_block' in offcanvasblock['#cache']['keys'] %}
                       <button type="button" data-bs-toggle="offcanvas" data-bs-target="#azMobileNav" aria-controls="azMobileNav" class="btn btn-arizona-header">
                         <span aria-hidden="true" class="icon material-symbols-rounded">menu</span>
                         <span class="icon-text">Menu</span>
