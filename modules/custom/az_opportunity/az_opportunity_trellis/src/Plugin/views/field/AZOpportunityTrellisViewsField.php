@@ -132,6 +132,15 @@ class AZOpportunityTrellisViewsField extends BulkForm {
   /**
    * {@inheritdoc}
    */
+  public function getEntityTypeId() {
+    // Prevents EntityTranslationRenderTrait from checking remote data type.
+    // Attempting to do so causes errors because there is no entity involved.
+    return 'node';
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function isWorkspaceSafeForm(array $form, FormStateInterface $form_state): bool {
     // This field is not backed by an entity like BulkForm expects.
     return FALSE;
