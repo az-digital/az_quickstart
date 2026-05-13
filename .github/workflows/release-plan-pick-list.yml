@@ -102,7 +102,7 @@ jobs:
               -f query="$GRAPHQL_QUERY" \
               -f org="az-digital" \
               -F num="$PROJECT_NUMBER" \
-              -f after="$CURSOR")
+              -F after="$CURSOR")
 
             HAS_NEXT_PAGE=$(echo "$RESPONSE" | jq -r '.data.organization.projectV2.items.pageInfo.hasNextPage')
             CURSOR=$(echo "$RESPONSE" | jq -r '.data.organization.projectV2.items.pageInfo.endCursor')
