@@ -8,8 +8,8 @@ lifecycle_link: 'https://github.com/az-digital/az_quickstart/blob/main/RELEASES.
 
 dependencies:
   - az_core:az_core
+  - az_enterprise_attributes_import:az_enterprise_attributes_import
   - az_opportunity:az_opportunity
-  - az_migration:az_migration
   - az_migration:az_migration_remote
   - drupal:views
   - drupal:migrate
@@ -17,6 +17,5 @@ dependencies:
   - migrate_tools:migrate_tools
   - migrate_queue_importer:migrate_queue_importer
   - views_remote_data:views_remote_data
-  - az_enterprise_attributes_import:az_enterprise_attributes_import
 
 configure: az_opportunity_trellis.settings
