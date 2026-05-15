@@ -237,6 +237,9 @@
             "drupal/search_exclude": {
                 "Request for a Views Handler (2882683)": "https://www.drupal.org/files/issues/2023-06-29/request_for_a_views-2882683-14_0.patch"
             },
+            "drupal/views_bootstrap": {
+                "Views with responsive table display no longer works (2931301)": "https://www.drupal.org/files/issues/2024-10-07/views_bootstrap_responsive-2931301-14.patch"
+            },
             "drupal/viewsreference": {
                 "Add Label field formatter (2938433)": "https://www.drupal.org/files/issues/2024-12-18/2938433-20-add-label-field-formatter.patch"
             },
