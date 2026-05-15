@@ -213,6 +213,9 @@
             "drupal/menu_block": {
                 "Performance issue caused by build in access check (3509045)": "https://www.drupal.org/files/issues/2025-03-05/3509045-13.patch"
             },
+            "drupal/migmag": {
+                "Fix fatal error when MigrationConfigurationTrait is stubbed during plugin discovery (3590259)": "https://www.drupal.org/files/issues/2026-05-15/3590259-9-mr19.patch"
+            },
             "drupal/migrate_plus": {
                 "XML namespacing issue (2933531)": "https://www.drupal.org/files/issues/2019-08-22/register_namespaces-2933531-7.patch",
                 "entity_lookup plugin fails if $value is empty (2830058)": "https://www.drupal.org/files/issues/2022-10-11/migrate_plus-lookup-2830058-10.patch",
