@@ -1,3 +1,9 @@
+click-to-copy:
+  js:
+    js/click-to-copy.js: {}
+  css:
+    component:
+      css/click-to-copy.css: {}
 az_accordion:
   css:
     component:

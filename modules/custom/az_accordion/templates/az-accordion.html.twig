@@ -26,6 +26,7 @@
   </button>
 </h3>
 <div id="{{ accordion_item_id }}" class="accordion-collapse collapse {{ collapsed }}" aria-labelledby="{{ accordion_item_id }}" data-bs-parent="#{{ accordion_item_id }}">
+  <a onclick="click2copy('{{ accordion_item_id }}')" id="copy_{{ accordion_item_id }}" class="accordion_link" ><drupal-icon data-icon-id="material_symbols:link" data-icon-settings="">&nbsp;</drupal-icon></a>
   <div class="accordion-body">
     {% if body %}
       {{ body }}

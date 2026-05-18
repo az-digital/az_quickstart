@@ -1,0 +1,22 @@
+.js-click-copy--copied:before {
+    content: 'Link copied!';
+    color: white;
+    display: block;
+    position: absolute;
+    top: -30px;
+    left: 13px;
+    background-color: black;
+    padding: 5px;
+    border-radius: 5px;
+    white-space: nowrap;
+    font-weight: bold;
+}
+.js-click-copy--copied:after {
+    content: "";
+    position: absolute;
+    top: -8px;
+    left: 50px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: black transparent transparent transparent;
+}
