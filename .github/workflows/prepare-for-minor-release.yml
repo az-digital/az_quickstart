@@ -188,7 +188,7 @@ jobs:
         sed -i "s/SCAFFOLD_BRANCH=main/SCAFFOLD_BRANCH=$NEW_VERSION/g" .probo.yaml
 
     - name: Setup PHP with composer v2
-      uses: shivammathur/setup-php@accd6127cb78bee3e8082180cb391013d204ef9f # 2.37.0
+      uses: shivammathur/setup-php@7c071dfe9dc99bdf297fa79cb49ea005b9fcadbc # 2.37.1
       with:
          php-version: '8.3'
          tools: composer:v2
@@ -238,7 +238,7 @@ jobs:
           git config user.email "action@github.com"
 
       - name: Setup PHP with composer v2
-        uses: shivammathur/setup-php@accd6127cb78bee3e8082180cb391013d204ef9f # 2.37.0
+        uses: shivammathur/setup-php@7c071dfe9dc99bdf297fa79cb49ea005b9fcadbc # 2.37.1
         with:
           php-version: '8.3'
           tools: composer:v2
