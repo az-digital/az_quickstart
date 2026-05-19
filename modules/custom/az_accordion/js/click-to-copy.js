@@ -11,36 +11,37 @@
 const SCROLL_OFFSET = 75;
 
 /**
- * Expands accordion and scrolls to anchor with offset.
+ * Expands accordion and scrolls to anchor with vertical offset.
  */
-function expandAndScrollToAnchor() {
+function scrollToAccordion() {
+  console.log("method called");
   var anchortag = window.location.hash.substring(1); // Get anchor link hash without the #
   
-  if (!anchortag) {
+  if (!anchortag) { // No anchor link found
     return;
   }
 
-  var anchorelem = document.querySelector('[data-bs-target="#' + anchortag + '"]');
+  // Get the parent 
+  var parent_accordion = document.querySelector('[data-bs-target="#' + anchortag + '"]');
   console.log("anchor tag: ", anchortag);
-  console.log("anchor elem: ", anchorelem);
+  console.log("parent accordion: ", parent_accordion);
   
-  if (anchorelem !== null) {
-    // Disable automatic scroll restoration to handle it manually
-    if ('scrollRestoration' in history) {
-      history.scrollRestoration = 'manual';
-    }
+  if (parent_accordion !== null) {
+    // Disable browser automatic scroll restoration to handle it manually
+//    if ('scrollRestoration' in history) {
+//      history.scrollRestoration = 'manual';
+//    }
     
-    if (anchorelem.classList.contains("collapsed")) {
-      console.log("Un collapsing...");
-      anchorelem.classList.remove('collapsed');
-      anchorelem.setAttribute('aria-expanded', 'true');
-      // Body
+    // Un-collapse selected accordion if collapsed
+    if (parent_accordion.classList.contains("collapsed")) {
+      parent_accordion.classList.remove('collapsed');
+      parent_accordion.setAttribute('aria-expanded', 'true');
       var accordion_body_elem = document.getElementById(anchortag);
       accordion_body_elem.classList.add('show');
     }
     
     // Scroll to element with offset
-    var elementPosition = anchorelem.getBoundingClientRect().top + window.pageYOffset;
+    var elementPosition = parent_accordion.getBoundingClientRect().top + window.pageYOffset;
     window.scrollTo({
       top: elementPosition - SCROLL_OFFSET,
       behavior: 'smooth'
@@ -48,10 +49,17 @@ function expandAndScrollToAnchor() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', expandAndScrollToAnchor);
-window.addEventListener('hashchange', expandAndScrollToAnchor);
+// Function on content load and when changing the anchor link
+document.addEventListener('DOMContentLoaded', scrollToAccordion);
+window.addEventListener('hashchange', scrollToAccordion);
 
-function click2copy(accordionId) {
+function click2copy(accordionId, event) {
+  // Prevent the click from bubbling up to the accordion-button
+  if (event) {
+    event.stopPropagation();
+    event.preventDefault();
+  }
+
   // Get the current URL without any existing hash
   const baseUrl = window.location.href.split('#')[0];
 

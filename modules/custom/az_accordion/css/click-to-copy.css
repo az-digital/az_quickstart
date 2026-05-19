@@ -1,22 +1,23 @@
-.js-click-copy--copied:before {
-    content: 'Link copied!';
-    color: white;
-    display: block;
-    position: absolute;
-    top: -30px;
-    left: 13px;
-    background-color: black;
-    padding: 5px;
-    border-radius: 5px;
-    white-space: nowrap;
-    font-weight: bold;
+/* Accordion copy link styling */
+.accordion_link {
+    text-decoration: none;
+    color: inherit;
+    display: inline-flex;
+    align-items: center;
+    margin-left: 10px;
 }
-.js-click-copy--copied:after {
-    content: "";
-    position: absolute;
-    top: -8px;
-    left: 50px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: black transparent transparent transparent;
+
+.accordion_link:hover {
+    color: #0c63e4;
+}
+
+.accordion_link--float-right {
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.accordion_link--icon {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
 }
