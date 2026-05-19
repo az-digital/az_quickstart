@@ -9,11 +9,9 @@ dependencies:
     - field.storage.node.field_az_event_date
     - field.storage.node.field_az_location
     - node.type.az_event
-    - taxonomy.vocabulary.az_enterprise_attributes
     - taxonomy.vocabulary.az_event_categories
   module:
     - az_event
-    - az_finder
     - date_ical
     - link
     - node
