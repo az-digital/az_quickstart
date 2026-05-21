@@ -5,34 +5,27 @@
  * anchor link scrolling and expand content.
  */
 
-/**
- * Scroll offset in pixels to maintain space above the target element.
+/* 
+ * Scroll when loading document and when changing the hash URL
  */
-const SCROLL_OFFSET = 75;
+document.addEventListener('DOMContentLoaded', scrollToAccordion);
+window.addEventListener('hashchange', scrollToAccordion);
 
 /**
- * Expands accordion and scrolls to anchor with vertical offset.
+ * Expands accordion and scrolls to anchor link header with vertical offset.
  */
 function scrollToAccordion() {
-  console.log("method called");
+  var scroll_offset = 75; // How many Pixels above the scroll target (prevents anchor scroll being on very top of screen)
   var anchortag = window.location.hash.substring(1); // Get anchor link hash without the #
   
   if (!anchortag) { // No anchor link found
     return;
   }
 
-  // Get the parent 
-  var parent_accordion = document.querySelector('[data-bs-target="#' + anchortag + '"]');
-  console.log("anchor tag: ", anchortag);
-  console.log("parent accordion: ", parent_accordion);
-  
+  // Get the accordion
+  var parent_accordion = document.querySelector('[data-bs-target="#' + anchortag + '"]'); 
   if (parent_accordion !== null) {
-    // Disable browser automatic scroll restoration to handle it manually
-//    if ('scrollRestoration' in history) {
-//      history.scrollRestoration = 'manual';
-//    }
-    
-    // Un-collapse selected accordion if collapsed
+    // Un-collapse parent accordion if collapsed
     if (parent_accordion.classList.contains("collapsed")) {
       parent_accordion.classList.remove('collapsed');
       parent_accordion.setAttribute('aria-expanded', 'true');
@@ -43,18 +36,17 @@ function scrollToAccordion() {
     // Scroll to element with offset
     var elementPosition = parent_accordion.getBoundingClientRect().top + window.pageYOffset;
     window.scrollTo({
-      top: elementPosition - SCROLL_OFFSET,
+      top: elementPosition - scroll_offset,
       behavior: 'smooth'
     });
   }
 }
 
-// Function on content load and when changing the anchor link
-document.addEventListener('DOMContentLoaded', scrollToAccordion);
-window.addEventListener('hashchange', scrollToAccordion);
-
-function click2copy(accordionId, event) {
-  // Prevent the click from bubbling up to the accordion-button
+/**
+ * Copies anchor link when clicked
+ */
+function copyAnchor(accordionId, event) {
+  // Prevents anchor link from activating on click
   if (event) {
     event.stopPropagation();
     event.preventDefault();
@@ -69,6 +61,7 @@ function click2copy(accordionId, event) {
   // Copy to clipboard using the Clipboard API
   navigator.clipboard.writeText(urlToCopy)
     .then(() => {
+      //TODO: Visual Feedback, popup modal or temp icon animation
       console.log('URL copied to clipboard:', urlToCopy);
     })
     .catch(err => {

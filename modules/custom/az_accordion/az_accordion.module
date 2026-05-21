@@ -47,7 +47,7 @@ function az_accordion_theme($existing, $type, $theme, $path) {
  * Implements hook_preprocess_az_accordion().
  */
 function az_accordion_preprocess_az_accordion(&$variables) {
-  $variables['#attached']['library'][] = 'az_accordion/click-to-copy';
+  $variables['#attached']['library'][] = 'az_accordion/az-accordion-anchor';
 }
 
 /**
