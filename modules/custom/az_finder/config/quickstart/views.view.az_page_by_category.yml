@@ -160,6 +160,7 @@ display:
                 default_states: {  }
           reset_button_position: top
           reset_button_counter: true
+          reset_button_classes: 'btn btn-sm btn-blue w-100 mx-1 mb-3'
           orientation: vertical
           skip_link: true
           skip_link_text: 'Skip to search and filter'
@@ -473,6 +474,7 @@ display:
                 default_states: {  }
           reset_button_position: top
           reset_button_counter: true
+          reset_button_classes: 'btn btn-sm btn-blue w-100 mx-1 mb-3'
           orientation: vertical
           skip_link: true
           skip_link_text: 'Skip to search and filter'
@@ -566,6 +568,7 @@ display:
                 default_states: {  }
           reset_button_position: top
           reset_button_counter: true
+          reset_button_classes: 'btn btn-sm btn-blue w-100 mx-1 mb-3'
           orientation: vertical
           skip_link: true
           skip_link_text: 'Skip to search and filter'

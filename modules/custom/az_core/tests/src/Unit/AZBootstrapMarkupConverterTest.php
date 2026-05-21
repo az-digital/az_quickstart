@@ -4,19 +4,19 @@ namespace Drupal\Tests\az_core\Unit;
 
 use Drupal\az_core\Utility\AZBootstrapMarkupConverter;
 use Drupal\Tests\UnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Tests the AZ Bootstrap markup converter.
- *
- * @group az_core
  */
+#[Group('az_core')]
 class AZBootstrapMarkupConverterTest extends UnitTestCase {
 
   /**
    * Test fragments are converted correctly without adding document tags.
-   *
-   * @dataProvider provideFragments
    */
+  #[DataProvider('provideFragments')]
   public function testFragmentConversion($input, $expected) {
     $result = AZBootstrapMarkupConverter::convert($input);
     $this->assertEquals($expected, $result);
@@ -33,9 +33,8 @@ class AZBootstrapMarkupConverterTest extends UnitTestCase {
 
   /**
    * Test that compareProcessor returns converted text when changes are needed.
-   *
-   * @dataProvider provideFragments
    */
+  #[DataProvider('provideFragments')]
   public function testCompareProcessor($input, $expected) {
     $result = AZBootstrapMarkupConverter::compareProcessor($input);
     $this->assertEquals($expected, $result, 'Text with Bootstrap classes should be converted');

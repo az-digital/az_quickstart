@@ -2,6 +2,7 @@
 
 namespace Drupal\az_ranking\Plugin\Field\FieldFormatter;
 
+use Drupal\az_ranking\Plugin\Field\FieldType\AZRankingItem;
 use Drupal\Core\Field\Attribute\FieldFormatter;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
@@ -106,8 +107,8 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
     $settings = $this->getSettings();
     $element = [];
 
-    /** @var \Drupal\az_ranking\Plugin\Field\FieldType\AZRankingItem $item */
     foreach ($items as $delta => $item) {
+      assert($item instanceof AZRankingItem);
 
       // Format title.
       $ranking_heading = $item->ranking_heading ?? '';

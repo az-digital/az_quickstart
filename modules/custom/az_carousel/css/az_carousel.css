@@ -1,6 +1,5 @@
 /* Node Overrides */
-.az-carousel .node__content,
-.az-carousel .field--type-entity-reference {
+.az-carousel .node__content {
 	margin: 0;
 }
 

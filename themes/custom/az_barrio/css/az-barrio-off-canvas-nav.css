@@ -19,6 +19,17 @@
   border-color: transparent;
 }
 
+#block-az-barrio-offcanvas-searchform .btn:focus {
+  background-color: var(--bs-red);
+  color: var(--bs-white);
+}
+
 #block-az-barrio-offcanvas-searchform .material-symbols-rounded {
   vertical-align: text-bottom;
+}
+
+/* Overrides for blue Arizona Header */
+.offcanvas-header.text-bg-blue + .region-navigation-offcanvas #block-az-barrio-offcanvas-searchform .button:focus {
+  background-color: var(--bs-blue);
+  color: var(--bs-white);
 }

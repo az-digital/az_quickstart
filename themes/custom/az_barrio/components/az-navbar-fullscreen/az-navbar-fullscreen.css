@@ -1,0 +1,30 @@
+/* @todo Remove when Arizona Bootstrap is updated with a fix for this. */
+@media (max-width: 991.98px) {
+  .navbar-az-fullscreen-modal .navbar-az-fullscreen-tools .navbar-toggler-icon {
+    width: 1.5em;
+    height: 1.5em;
+    -webkit-transform: unset;
+    transform: unset;
+  }
+}
+
+.navbar-az-fullscreen-actions .nav-link {
+  white-space: nowrap;
+}
+
+.navbar-az-fullscreen-search #search-block-form {
+  padding: 0;
+}
+
+/* Remove duplicate search icon from search form block */
+.navbar-az-fullscreen-search .search-block-form .btn::before {
+  display: none;
+}
+
+.navbar-az-fullscreen-search .btn {
+  padding-bottom: 10px;
+}
+
+.navbar-az-fullscreen-search .btn .material-symbols-rounded {
+  font-size: 36px;
+}
