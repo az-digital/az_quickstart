@@ -2,86 +2,95 @@
 
 namespace Drupal\az_publication\Entity;
 
+use Drupal\Core\Entity\Attribute\ContentEntityType;
 use Drupal\Core\Entity\EditorialContentEntityBase;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityPublishedTrait;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Entity\EntityViewBuilder;
 use Drupal\Core\Entity\RevisionableInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\az_publication\AZAuthorAccessControlHandler;
+use Drupal\az_publication\AZAuthorHtmlRouteProvider;
+use Drupal\az_publication\AZAuthorListBuilder;
+use Drupal\az_publication\AZAuthorStorage;
+use Drupal\az_publication\AZAuthorTranslationHandler;
+use Drupal\az_publication\Form\AZAuthorDeleteForm;
+use Drupal\az_publication\Form\AZAuthorForm;
+use Drupal\az_publication\Form\AZAuthorInlineForm;
 use Drupal\user\UserInterface;
 
 /**
  * Defines the Author entity.
  *
  * @ingroup az_publication
- *
- * @ContentEntityType(
- *   id = "az_author",
- *   label = @Translation("Author"),
- *   label_collection = @Translation("Authors"),
- *   label_singular = @Translation("author"),
- *   label_plural = @Translation("authors"),
- *   label_count = @PluralTranslation(
- *     singular = "@count author",
- *     plural = "@count authors"
- *   ),
- *   handlers = {
- *     "storage" = "Drupal\az_publication\AZAuthorStorage",
- *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
- *     "list_builder" = "Drupal\az_publication\AZAuthorListBuilder",
- *     "views_data" = "Drupal\az_publication\Entity\AZAuthorViewsData",
- *     "translation" = "Drupal\az_publication\AZAuthorTranslationHandler",
- *     "inline_form" = "Drupal\az_publication\Form\AZAuthorInlineForm",
- *
- *     "form" = {
- *       "default" = "Drupal\az_publication\Form\AZAuthorForm",
- *       "add" = "Drupal\az_publication\Form\AZAuthorForm",
- *       "edit" = "Drupal\az_publication\Form\AZAuthorForm",
- *       "delete" = "Drupal\az_publication\Form\AZAuthorDeleteForm",
- *     },
- *     "route_provider" = {
- *       "html" = "Drupal\az_publication\AZAuthorHtmlRouteProvider",
- *     },
- *     "access" = "Drupal\az_publication\AZAuthorAccessControlHandler",
- *   },
- *   base_table = "az_author",
- *   data_table = "az_author_field_data",
- *   revision_table = "az_author_revision",
- *   revision_data_table = "az_author_field_revision",
- *   show_revision_ui = TRUE,
- *   translatable = TRUE,
- *   admin_permission = "administer author entities",
- *   entity_keys = {
- *     "id" = "id",
- *     "revision" = "vid",
- *     "label" = "name",
- *     "uuid" = "uuid",
- *     "uid" = "user_id",
- *     "langcode" = "langcode",
- *     "published" = "status",
- *   },
- *   revision_metadata_keys = {
- *     "revision_user" = "revision_uid",
- *     "revision_created" = "revision_timestamp",
- *     "revision_log_message" = "revision_log"
- *   },
- *   links = {
- *     "canonical" = "/admin/structure/az_author/{az_author}",
- *     "add-form" = "/admin/structure/az_author/add",
- *     "edit-form" = "/admin/structure/az_author/{az_author}/edit",
- *     "delete-form" = "/admin/structure/az_author/{az_author}/delete",
- *     "version-history" = "/admin/structure/az_author/{az_author}/revisions",
- *     "revision" = "/admin/structure/az_author/{az_author}/revisions/{az_author_revision}/view",
- *     "revision_revert" = "/admin/structure/az_author/{az_author}/revisions/{az_author_revision}/revert",
- *     "revision_delete" = "/admin/structure/az_author/{az_author}/revisions/{az_author_revision}/delete",
- *     "translation_revert" = "/admin/structure/az_author/{az_author}/revisions/{az_author_revision}/revert/{langcode}",
- *     "collection" = "/admin/structure/az_author",
- *     "auto-label" = "/admin/structure/az_author/auto-label",
- *   },
- *   field_ui_base_route = "az_author.settings"
- * )
  */
+#[ContentEntityType(
+  id: 'az_author',
+  label: new TranslatableMarkup('Author'),
+  label_collection: new TranslatableMarkup('Authors'),
+  label_singular: new TranslatableMarkup('author'),
+  label_plural: new TranslatableMarkup('authors'),
+  entity_keys: [
+    'id' => 'id',
+    'revision' => 'vid',
+    'label' => 'name',
+    'uuid' => 'uuid',
+    'uid' => 'user_id',
+    'langcode' => 'langcode',
+    'published' => 'status',
+  ],
+  handlers: [
+    'storage' => AZAuthorStorage::class,
+    'view_builder' => EntityViewBuilder::class,
+    'list_builder' => AZAuthorListBuilder::class,
+    'views_data' => AZAuthorViewsData::class,
+    'translation' => AZAuthorTranslationHandler::class,
+    'inline_form' => AZAuthorInlineForm::class,
+    'form' => [
+      'default' => AZAuthorForm::class,
+      'add' => AZAuthorForm::class,
+      'edit' => AZAuthorForm::class,
+      'delete' => AZAuthorDeleteForm::class,
+    ],
+    'route_provider' => [
+      'html' => AZAuthorHtmlRouteProvider::class,
+    ],
+    'access' => AZAuthorAccessControlHandler::class,
+  ],
+  links: [
+    'canonical' => '/admin/structure/az_author/{az_author}',
+    'add-form' => '/admin/structure/az_author/add',
+    'edit-form' => '/admin/structure/az_author/{az_author}/edit',
+    'delete-form' => '/admin/structure/az_author/{az_author}/delete',
+    'version-history' => '/admin/structure/az_author/{az_author}/revisions',
+    'revision' => '/admin/structure/az_author/{az_author}/revisions/{az_author_revision}/view',
+    'revision_revert' => '/admin/structure/az_author/{az_author}/revisions/{az_author_revision}/revert',
+    'revision_delete' => '/admin/structure/az_author/{az_author}/revisions/{az_author_revision}/delete',
+    'translation_revert' => '/admin/structure/az_author/{az_author}/revisions/{az_author_revision}/revert/{langcode}',
+    'collection' => '/admin/structure/az_author',
+    'auto-label' => '/admin/structure/az_author/auto-label',
+  ],
+  admin_permission: 'administer author entities',
+  base_table: 'az_author',
+  data_table: 'az_author_field_data',
+  revision_table: 'az_author_revision',
+  revision_data_table: 'az_author_field_revision',
+  translatable: TRUE,
+  show_revision_ui: TRUE,
+  label_count: [
+    'singular' => '@count author',
+    'plural' => '@count authors',
+  ],
+  field_ui_base_route: 'az_author.settings',
+  revision_metadata_keys: [
+    'revision_user' => 'revision_uid',
+    'revision_created' => 'revision_timestamp',
+    'revision_log_message' => 'revision_log',
+  ],
+)]
 class AZAuthor extends EditorialContentEntityBase implements AZAuthorInterface {
 
   use EntityChangedTrait;

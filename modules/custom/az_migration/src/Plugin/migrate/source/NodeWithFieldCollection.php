@@ -2,6 +2,7 @@
 
 namespace Drupal\az_migration\Plugin\migrate\source;
 
+use Drupal\migrate\Attribute\MigrateSource;
 use Drupal\migrate\Row;
 use Drupal\node\Plugin\migrate\source\d7\Node as D7Node;
 
@@ -9,6 +10,11 @@ use Drupal\node\Plugin\migrate\source\d7\Node as D7Node;
  * Extends D7Node source plugin with field collection to paragraphs conversion.
  *
  * Converts field collection content field values into paragraphs content.
+ *
+ * @deprecated in az_quickstart:3.3.0 and is removed from az_quickstart:4.0.0.
+ * There is no replacement.
+ *
+ * @see https://www.drupal.org/node/3533564
  *
  * Available configuration keys:
  * - node_type: The node_types to get from the source - can be a string or
@@ -43,12 +49,8 @@ use Drupal\node\Plugin\migrate\source\d7\Node as D7Node;
  * @see \Drupal\migrate\Plugin\migrate\source\SqlBase
  * @see \Drupal\migrate\Plugin\migrate\source\SourcePluginBase
  * @see \Drupal\node\Plugin\migrate\source\d7\Node
- *
- * @MigrateSource(
- *   id = "az_node_with_field_collection",
- *   source_module = "node"
- * )
  */
+#[MigrateSource('az_node_with_field_collection')]
 class NodeWithFieldCollection extends D7Node {
 
   /**
@@ -59,7 +61,6 @@ class NodeWithFieldCollection extends D7Node {
     // Get Item Id and revision Id of paragraph.
     $nid = $row->getSourceProperty('nid');
     $vid = $row->getSourceProperty('vid');
-    $type = $row->getSourceProperty('type');
 
     // Checking the field collection fields present in the paragraph.
     if (!empty($row->getSourceProperty('field_collection_names'))) {

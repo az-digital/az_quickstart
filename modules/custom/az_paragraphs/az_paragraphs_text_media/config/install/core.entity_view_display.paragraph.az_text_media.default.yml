@@ -66,7 +66,7 @@ third_party_settings:
         effect: none
         speed: fast
         id: ''
-        classes: 'bold mt-0'
+        classes: 'fw-bold mt-0'
         show_empty_fields: false
       label: Title
     group_az_content:

@@ -14,7 +14,7 @@ use RenanBr\BibTexParser\Processor\NamesProcessor;
 use RenanBr\BibTexParser\Processor\TagNameCaseProcessor;
 
 /**
- * Obtain BibTeX data for migration..
+ * Obtain BibTeX data for migration.
  *
  * @DataParser(
  *   id = "az_bibtex",

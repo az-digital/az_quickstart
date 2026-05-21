@@ -60,7 +60,7 @@
       "parent_link_id": "0",
       "menu": "main",
       "title": "Pages",
-      "urlpath": "route:<button>",
+      "urlpath": "/pages",
       "external": false,
       "expanded": true,
       "enabled": true,
@@ -144,6 +144,17 @@
       "weight": "6"
     },
     {
+      "link_id": "44",
+      "parent_link_id": "6",
+      "menu": "main",
+      "title": "Rankings",
+      "urlpath": "/pages/rankings",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "7"
+    },
+    {
       "link_id": "23",
       "parent_link_id": "6",
       "menu": "main",
@@ -152,7 +163,7 @@
       "external": false,
       "expanded": false,
       "enabled": true,
-      "weight": "7"
+      "weight": "8"
     },
     {
       "link_id": "24",
@@ -160,17 +171,6 @@
       "menu": "main",
       "title": "Split Screen No Sidebar",
       "urlpath": "/pages/split-screen-no-sidebar",
-      "external": false,
-      "expanded": false,
-      "enabled": true,
-      "weight": "8"
-    },
-    {
-      "link_id": "13",
-      "parent_link_id": "6",
-      "menu": "main",
-      "title": "Page Grid",
-      "urlpath": "/page-grid",
       "external": false,
       "expanded": false,
       "enabled": true,
@@ -185,7 +185,7 @@
       "external": false,
       "expanded": false,
       "enabled": true,
-      "weight": "11"
+      "weight": "12"
     },
     {
       "link_id": "27",
@@ -219,17 +219,6 @@
       "expanded": false,
       "enabled": true,
       "weight": "12"
-    },
-    {
-      "link_id": "14",
-      "parent_link_id": "6",
-      "menu": "main",
-      "title": "Page List",
-      "urlpath": "/page-list",
-      "external": false,
-      "expanded": false,
-      "enabled": true,
-      "weight": "10"
     },
     {
       "link_id": "15",
@@ -386,61 +375,6 @@
       "weight": "1"
     },
     {
-      "link_id": "36",
-      "parent_link_id": "35",
-      "menu": "main",
-      "title": "People Finder",
-      "urlpath": "/finders/people",
-      "external": false,
-      "expanded": false,
-      "enabled": true,
-      "weight": "18"
-    },
-    {
-      "link_id": "37",
-      "parent_link_id": "35",
-      "menu": "main",
-      "title": "News Finder",
-      "urlpath": "/finders/news",
-      "external": false,
-      "expanded": false,
-      "enabled": true,
-      "weight": "19"
-    },
-    {
-      "link_id": "38",
-      "parent_link_id": "35",
-      "menu": "main",
-      "title": "Event Finder",
-      "urlpath": "/finders/events",
-      "external": false,
-      "expanded": false,
-      "enabled": true,
-      "weight": "20"
-    },
-    {
-      "link_id": "39",
-      "parent_link_id": "35",
-      "menu": "main",
-      "title": "Page Finder",
-      "urlpath": "/finders/pages",
-      "external": false,
-      "expanded": false,
-      "enabled": true,
-      "weight": "21"
-    },
-    {
-      "link_id": "40",
-      "parent_link_id": "35",
-      "menu": "main",
-      "title": "Content Finder",
-      "urlpath": "/finders/content",
-      "external": false,
-      "expanded": false,
-      "enabled": true,
-      "weight": "22"
-    },
-    {
       "link_id": "41",
       "parent_link_id": "0",
       "menu": "main",
@@ -450,6 +384,160 @@
       "expanded": true,
       "enabled": true,
       "weight": "1"
+    },
+    {
+      "link_id": "42",
+      "parent_link_id": "6",
+      "menu": "main",
+      "title": "Media Embeds",
+      "urlpath": "/pages/media-embeds",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "18"
+    },
+    {
+      "link_id": "43",
+      "parent_link_id": "42",
+      "menu": "main",
+      "title": "Remote Video Embeds",
+      "urlpath": "/pages/media-embeds/remote-video",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "1"
+    },
+    {
+      "link_id": "400",
+      "parent_link_id": "35",
+      "menu": "main",
+      "title": "People Finder - Grid",
+      "urlpath": "/finders/az-person-grid",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "2"
+    },
+    {
+      "link_id": "401",
+      "parent_link_id": "35",
+      "menu": "main",
+      "title": "People Finder - Grid - Modal",
+      "urlpath": "/finders/az-person-grid-modal",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "3"
+    },
+    {
+      "link_id": "402",
+      "parent_link_id": "35",
+      "menu": "main",
+      "title": "People Finder - Row",
+      "urlpath": "/finders/az-person-row",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "4"
+    },
+    {
+      "link_id": "403",
+      "parent_link_id": "35",
+      "menu": "main",
+      "title": "People Finder - Grid 3 Columns",
+      "urlpath": "/finders/az-person-grid-block-3cols",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "5"
+    },
+    {
+      "link_id": "404",
+      "parent_link_id": "35",
+      "menu": "main",
+      "title": "People Finder - Grid - Modal 3 Columns",
+      "urlpath": "/finders/az-person-grid-modal-3cols",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "6"
+    },
+    {
+      "link_id": "405",
+      "parent_link_id": "35",
+      "menu": "main",
+      "title": "Event Finder - Grid",
+      "urlpath": "/finders/az-events-az-grid",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "8"
+    },
+    {
+      "link_id": "406",
+      "parent_link_id": "35",
+      "menu": "main",
+      "title": "Event Finder - Grid with Images",
+      "urlpath": "/finders/az-events-az-grid-images",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "9"
+    },
+    {
+      "link_id": "407",
+      "parent_link_id": "35",
+      "menu": "main",
+      "title": "Event Finder - Past Grid with Images",
+      "urlpath": "/finders/az-events-az-past-grid-images",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "10"
+    },
+    {
+      "link_id": "408",
+      "parent_link_id": "35",
+      "menu": "main",
+      "title": "News Finder - Row",
+      "urlpath": "/finders/az-news-az-paged-row",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "12"
+    },
+    {
+      "link_id": "409",
+      "parent_link_id": "35",
+      "menu": "main",
+      "title": "News Finder - Grid",
+      "urlpath": "/finders/az-news-az-grid",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "13"
+    },
+    {
+      "link_id": "410",
+      "parent_link_id": "35",
+      "menu": "main",
+      "title": "Page Finder - Row",
+      "urlpath": "/finders/az-page-by-category-row",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "15"
+    },
+    {
+      "link_id": "411",
+      "parent_link_id": "35",
+      "menu": "main",
+      "title": "Page Finder - Grid",
+      "urlpath": "/finders/az-page-by-category-grid",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "16"
     }
   ]
 }

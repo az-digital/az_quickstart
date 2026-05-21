@@ -5,6 +5,7 @@ namespace Drupal\az_core\Plugin\ConfigProvider;
 use Drupal\Component\Diff\Diff;
 use Drupal\Core\Config\InstallStorage;
 use Drupal\Core\Config\StorageInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\config_provider\Plugin\ConfigProviderBase;
 use Drupal\config_snapshot\ConfigSnapshotStorageTrait;
 use Drupal\config_sync\ConfigSyncSnapshotterInterface;
@@ -22,6 +23,7 @@ use Drupal\config_sync\ConfigSyncSnapshotterInterface;
 class QuickstartConfigProvider extends ConfigProviderBase {
 
   use ConfigSnapshotStorageTrait;
+  use StringTranslationTrait;
 
   /**
    * The configuration provider ID.
@@ -126,7 +128,7 @@ class QuickstartConfigProvider extends ConfigProviderBase {
             foreach ($profile_perms as $perm) {
               // @todo Use injection on user.permissions.
               // @phpstan-ignore-next-line
-              \Drupal::messenger()->addMessage(t("Added permission %perm to %label",
+              \Drupal::messenger()->addMessage($this->t("Added permission %perm to %label",
               [
                 '%perm' => $perm,
                 '%label' => $label,

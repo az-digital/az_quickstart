@@ -59,29 +59,29 @@ final class TrellisHelper {
   protected $httpClient;
 
   /**
-   * The node storage.
+   * The entity type manager service.
    *
-   * @var \Drupal\node\NodeStorageInterface
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
-  protected $nodeStorage;
+  protected $entityTypeManager;
 
   /**
    * Constructs a new TrellisHelper object.
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The Drupal config factory.
-   * @param \GuzzleHttp\ClientInterface $httpClient
+   * @param \GuzzleHttp\ClientInterface $http_client
    *   The HTTP client service.
    * @param \Drupal\Core\Cache\CacheBackendInterface $cache
    *   The cache backend.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager service.
    */
-  public function __construct(ConfigFactoryInterface $config_factory, ClientInterface $httpClient, CacheBackendInterface $cache, EntityTypeManagerInterface $entityTypeManager) {
+  public function __construct(ConfigFactoryInterface $config_factory, ClientInterface $http_client, CacheBackendInterface $cache, EntityTypeManagerInterface $entity_type_manager) {
     $this->configFactory = $config_factory;
-    $this->httpClient = $httpClient;
+    $this->httpClient = $http_client;
     $this->cache = $cache;
-    $this->nodeStorage = $entityTypeManager->getStorage('node');
+    $this->entityTypeManager = $entity_type_manager;
   }
 
   /**
@@ -172,11 +172,9 @@ final class TrellisHelper {
       }
     }
     // Make sure events are in Id order regardless of cached/fetched.
-    // phpcs:disable Security.BadFunctions.CallbackFunctions.WarnCallbackFunctions
     usort($events, function ($a, $b) {
       return strcmp($a['Id'], $b['Id']);
     });
-   // phpcs:enable Security.BadFunctions.CallbackFunctions.WarnCallbackFunctions
     return $events;
   }
 
@@ -187,14 +185,14 @@ final class TrellisHelper {
    *   Returns an array of event ids.
    */
   public function getImportedEventIds() {
+    $nodeStorage = $this->entityTypeManager->getStorage('node');
     // Check for events that have trellis ids.
-    $query = \Drupal::entityQuery('node')
+    $query = $nodeStorage->getQuery()
       ->accessCheck(FALSE)
       ->condition('type', 'az_event')
       ->exists('field_az_trellis_id');
     $nids = $query->execute();
-    $node_storage = \Drupal::entityTypeManager()->getStorage('node');
-    $nodes = $this->nodeStorage->loadMultiple($nids);
+    $nodes = $nodeStorage->loadMultiple($nids);
 
     $event_api_ids = [];
     foreach ($nodes as $n) {
@@ -211,7 +209,7 @@ final class TrellisHelper {
    */
   public function getRecurringEventIds() {
     // Find enabled import configurations.
-    $imports = \Drupal::entityTypeManager()->getStorage('az_recurring_import_rule')->loadByProperties([
+    $imports = $this->entityTypeManager->getStorage('az_recurring_import_rule')->loadByProperties([
       'status' => [1, TRUE],
     ]);
 

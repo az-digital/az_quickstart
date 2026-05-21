@@ -38,21 +38,21 @@ process:
     - plugin: static_map
       default_value: ''
       map:
-        bg-red: bg-red
-        bg-blue: bg-blue
-        bg-sky: bg-sky
-        bg-oasis: bg-oasis
-        bg-azurite: bg-azurite
-        bg-midnight: bg-midnight
-        bg-bloom: bg-bloom
-        bg-chili: bg-chili
-        bg-cool-gray: bg-cool-gray
-        bg-warm-gray: bg-warm-gray
-        bg-leaf: bg-leaf
-        bg-river: bg-river
-        bg-silver: bg-silver
-        bg-ash: bg-ash
-        bg-mesa: bg-mesa
+        bg-red: text-bg-red
+        bg-blue: text-bg-blue
+        bg-sky: text-bg-sky
+        bg-oasis: text-bg-oasis
+        bg-azurite: text-bg-azurite
+        bg-midnight: text-bg-midnight
+        bg-bloom: text-bg-bloom
+        bg-chili: text-bg-chili
+        bg-cool-gray: text-bg-cool-gray
+        bg-warm-gray: text-bg-warm-gray
+        bg-leaf: text-bg-leaf
+        bg-river: text-bg-river
+        bg-silver: text-bg-silver
+        bg-ash: text-bg-ash
+        bg-mesa: text-bg-mesa
   text_background_full_width_processed:
     plugin: default_value
     default_value: 'full-width-background'

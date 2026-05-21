@@ -56,7 +56,7 @@ class ParagraphsFWMediaRowFieldMerge extends ProcessPluginBase {
     if (!empty($this->configuration['link'])) {
       $link = $row->getSourceProperty($this->configuration['link']);
       foreach ($link as $link_item) {
-        $attributes = unserialize($link_item['attributes']);
+        $attributes = unserialize($link_item['attributes'], ['allowed_classes' => FALSE]);
         $value['markup'] .= '<a href="' . $link_item['url'] . '" class="' . $attributes['class'] . '">' . $link_item['title'] . '</a>';
       }
     }

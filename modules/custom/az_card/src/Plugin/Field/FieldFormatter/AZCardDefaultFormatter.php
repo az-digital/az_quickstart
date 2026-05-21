@@ -2,6 +2,7 @@
 
 namespace Drupal\az_card\Plugin\Field\FieldFormatter;
 
+use Drupal\az_card\Plugin\Field\FieldType\AZCardItem;
 use Drupal\Core\Field\Attribute\FieldFormatter;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
@@ -106,8 +107,8 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
     $settings = $this->getSettings();
     $element = [];
 
-    /** @var \Drupal\az_card\Plugin\Field\FieldType\AZCardItem $item */
     foreach ($items as $delta => $item) {
+      assert($item instanceof AZCardItem);
 
       // Format title.
       $title = $item->title ?? '';
@@ -143,11 +144,11 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
           '#type' => 'link',
           '#title' => $item->link_title ?? '',
           '#url' => $link_url ?: Url::fromRoute('<none>'),
-          '#attributes' => ['class' => ['btn', 'btn-default', 'w-100']],
         ];
-        if (!empty($item->options['link_style'])) {
-          $link_render_array['#attributes']['class'] = explode(' ', $item->options['link_style']);
-        }
+        $link_render_array['#attributes']['class'] =
+          empty($item->options['link_style']) ?
+          ['btn', 'w-100', 'btn-red'] :
+          explode(' ', $item->options['link_style']);
         if (empty($settings['interactive_links'])) {
           $link_render_array['#attributes']['class'][] = 'az-card-no-follow';
           $attached['library'][] = 'az_card/az_card_no_follow';
@@ -192,7 +193,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
             if (!empty($link_render_array)) {
               $link_render_array['#attributes']['class'][] = 'stretched-link';
             }
-            $card_classes .= ' shadow';
+            $card_classes .= ' shadow overflow-hidden';
             if ($item->link_uri) {
               $card_classes .= ' card-with-link';
             }
@@ -257,7 +258,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         '#link_url' => $link_url,
         '#title_style' => $title_style ?? 'default',
         '#title_level' => $title_level ?? 'h3',
-        '#title_alignment' => $title_alignment ?? 'text-left',
+        '#title_alignment' => $title_alignment ?? 'text-start',
         '#title_display' => $title_display ?? 'h5',
         '#attributes' => ['class' => $card_classes],
         '#attached' => $attached,

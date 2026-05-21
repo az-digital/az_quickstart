@@ -84,7 +84,7 @@ function az_event_trellis_gather_filter_options(&$form, FormStateInterface $form
     }
     // Loops through handlers to find inputs we want.
     /** @var \Drupal\views\Plugin\views\filter\FilterPluginBase $handler */
-    foreach ($handlers as $key => $handler) {
+    foreach ($handlers as $handler) {
       if ($handler->isExposed()) {
         $info = $handler->exposedInfo();
         $identifier = $info['value'] ?? '';

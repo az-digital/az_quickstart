@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * @file
+ * Contains az_eds.install.
+ */
+
+/**
+ * Implements hook_install().
+ *
+ * Performs recommended check for pantheon_secrets.
+ */
+function az_eds_install() {
+  /** @var Drupal\Core\Extension\ModuleHandlerInterface $moduleHandler */
+  $moduleHandler = \Drupal::service('module_handler');
+
+  // Check if we have a pantheon environment but no secrets module.
+  if (defined('PANTHEON_ENVIRONMENT') && !$moduleHandler->moduleExists('pantheon_secrets')) {
+    \Drupal::messenger()->addWarning(t('The <a href="@link">Pantheon Secrets</a> module is recommended.', [
+      '@link' => 'https://www.drupal.org/project/pantheon_secrets',
+    ]));
+  }
+}

@@ -1,5 +1,5 @@
 az_person_profiles_import.import_tab:
-  title: 'Import Person'
+  title: 'Import Person from Profiles API'
   route_name: az_person_profiles_import.form
   parent_id: system.admin_content
   description: 'Import a person from the Profiles API'

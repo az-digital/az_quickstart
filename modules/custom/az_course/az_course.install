@@ -1,0 +1,38 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for az_course module.
+ */
+
+/**
+ * Apply Bootstrap 5 compatibility updates to az_course text fields.
+ */
+function az_course_update_1130001(&$sandbox) {
+  if (!isset($sandbox['ids'])) {
+    $query = \Drupal::entityTypeManager()
+      ->getStorage('node')
+      ->getQuery()
+      ->condition('type', 'az_course')
+      ->condition('field_az_course_description.format', ['az_standard', 'full_html'], 'IN')
+      ->exists('field_az_course_description')
+      ->accessCheck(FALSE);
+
+    $sandbox['ids'] = $query->execute();
+    $sandbox['max'] = count($sandbox['ids']);
+  }
+
+  return \Drupal::service('az_core.content_field_updater')
+    ->processFieldUpdates(
+      'node',
+      'field_az_course_description',
+      'Drupal\az_core\Utility\AZBootstrapMarkupConverter::compareProcessor',
+      $sandbox,
+      [
+        'create_revisions' => TRUE,
+        'prefix' => __FUNCTION__,
+        'suffix' => 'for Bootstrap 5 compatibility',
+        'bundle_name' => 'az_course',
+      ]
+    );
+}

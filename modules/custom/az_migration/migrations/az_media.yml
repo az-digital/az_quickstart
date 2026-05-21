@@ -51,7 +51,7 @@ process:
       source: filemime
       method: process
       value: 'video/oembed'
-    - plugin: default_value
+    - plugin: get
       source: '@mfid'
   # The remote_video_thumb_fid field is temporary, and is not present in the source.
   remote_video_thumb_fid:

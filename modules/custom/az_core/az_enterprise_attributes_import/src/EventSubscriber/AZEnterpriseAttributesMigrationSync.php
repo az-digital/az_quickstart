@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Drupal\az_enterprise_attributes_import\EventSubscriber;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Logger\LoggerChannel;
+use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\migrate\Event\MigrateImportEvent;
 use Drupal\migrate_tools\EventSubscriber\MigrationImportSync;
 use Drupal\migrate_tools\MigrateTools;
@@ -22,7 +22,7 @@ final class AZEnterpriseAttributesMigrationSync extends MigrationImportSync {
   protected $entityTypeManager;
 
   /**
-   * @var \Drupal\Core\Logger\LoggerChannel
+   * @var \Drupal\Core\Logger\LoggerChannelInterface
    */
   protected $logger;
 
@@ -35,10 +35,10 @@ final class AZEnterpriseAttributesMigrationSync extends MigrationImportSync {
    *   The MigrateTools helper for source id tracking.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   The entity type manager service.
-   * @param \Drupal\Core\Logger\LoggerChannel $logger
+   * @param \Drupal\Core\Logger\LoggerChannelInterface $logger
    *   The logger channel service.
    */
-  public function __construct(EventDispatcherInterface $dispatcher, MigrateTools $migrateTools, EntityTypeManagerInterface $entityTypeManager, LoggerChannel $logger) {
+  public function __construct(EventDispatcherInterface $dispatcher, MigrateTools $migrateTools, EntityTypeManagerInterface $entityTypeManager, LoggerChannelInterface $logger) {
     $this->dispatcher = $dispatcher;
     $this->migrateTools = $migrateTools;
     $this->entityTypeManager = $entityTypeManager;
@@ -82,7 +82,6 @@ final class AZEnterpriseAttributesMigrationSync extends MigrationImportSync {
 
       $id_map = $migration->getIdMap();
       $id_map->rewind();
-      $destination = $migration->getDestinationPlugin();
 
       while ($id_map->valid()) {
         $map_source_id = $id_map->currentSource();

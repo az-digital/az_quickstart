@@ -1,0 +1,5 @@
+az_eds.az_eds_settings_form_tab:
+  route_name: az_eds.settings_form
+  title: 'EDS Query Settings'
+  base_route: az_core.az_settings
+  weight: 30

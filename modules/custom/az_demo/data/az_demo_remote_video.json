@@ -1,22 +1,28 @@
 {
   "videos": [
     {
-      "filename" : "https://www.youtube.com/watch?v=GHnSIobpE-0"
+      "filename" : "https://www.youtube.com/watch?v=GHnSIobpE-0",
+      "uuid" : "867fbfa9-218b-4d31-8611-db87f3f4a0bf"
     },
     {
-      "filename" : "https://www.youtube.com/watch?v=9VntGNAE4L8"
+      "filename" : "https://www.youtube.com/watch?v=9VntGNAE4L8",
+      "uuid" : "5e4301fa-d4ef-486c-b2ca-60d257875d1e"
     },
     {
-      "filename" : "https://www.youtube.com/watch?v=fePMsmtd7EU"
+      "filename" : "https://www.youtube.com/watch?v=fePMsmtd7EU",
+      "uuid" : "994cf496-d3fd-4e75-8f0e-46e00975ef9f"
     },
     {
-      "filename" : "https://www.youtube.com/watch?v=KkogmuRNt1M"
+      "filename" : "https://www.youtube.com/watch?v=KkogmuRNt1M",
+      "uuid" : "342edaf9-ccf9-4ce5-a4ec-9981a9ad6675"
     },
     {
-      "filename" : "https://www.youtube.com/watch?v=x_C7XpqJdso"
+      "filename" : "https://www.youtube.com/watch?v=x_C7XpqJdso",
+      "uuid" : "1775b8a6-aa3d-4da9-9720-51d60f322871"
     },
     {
-      "filename" : "https://www.youtube.com/watch?v=o5AcFV8f230"
+      "filename" : "https://www.youtube.com/watch?v=o5AcFV8f230",
+      "uuid" : "720173d6-33e9-4c59-a0a8-eb15136b66f0"
     }
   ]
 }

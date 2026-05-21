@@ -1,0 +1,33 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_block
+  theme:
+    - az_barrio
+id: az_demo_test_sidebar_menu
+theme: az_barrio
+region: sidebar_first
+weight: 10
+provider: null
+plugin: 'menu_block:main'
+settings:
+  id: 'menu_block:main'
+  label: 'Sidebar menu'
+  label_display: visible
+  provider: menu_block
+  follow: false
+  follow_parent: active
+  level: 2
+  depth: 0
+  expand_all_items: false
+  parent: 'main:'
+  suggestion: sidebar
+  label_type: root
+  label_link: false
+  expand: false
+visibility:
+  request_path:
+    id: request_path
+    pages: "/pages/combo-page-no-sidebar\n/pages/text-background-no-sidebar\n/pages/split-screen-no-sidebar\n/finders/*"
+    negate: true

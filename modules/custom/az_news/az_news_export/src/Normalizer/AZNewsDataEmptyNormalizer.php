@@ -13,13 +13,17 @@ class AZNewsDataEmptyNormalizer extends NormalizerBase {
   /**
    * {@inheritdoc}
    */
-  protected $supportedInterfaceOrClass = AZNewsDataEmpty::class;
+  public function normalize($object, $format = NULL, array $context = []): array|string|int|float|bool|\ArrayObject|NULL {
+    return new \ArrayObject();
+  }
 
   /**
    * {@inheritdoc}
    */
-  public function normalize($object, $format = NULL, array $context = []): array|string|int|float|bool|\ArrayObject|NULL {
-    return new \ArrayObject();
+  public function getSupportedTypes(?string $format): array {
+    return [
+      AZNewsDataEmpty::class => TRUE,
+    ];
   }
 
 }

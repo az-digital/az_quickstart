@@ -34,10 +34,29 @@ function az_accordion_theme($existing, $type, $theme, $path) {
         'title' => NULL,
         'body' => NULL,
         'accordion_item_id' => NULL,
+        'accordion_container_id' => NULL,
         'collapsed' => TRUE,
         'aria_expanded' => 'false',
       ],
       'template' => 'az-accordion',
     ],
   ];
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function az_accordion_preprocess_field(&$variables) : void {
+  $element = $variables['element'];
+  if ($element['#field_type'] === 'az_accordion') {
+    $variables['attributes']['class'][] = 'accordion';
+
+    if (!empty($element['#accordion_container_id'])) {
+      $variables['attributes']['id'] = $element['#accordion_container_id'];
+    }
+
+    foreach ($variables['items'] as $delta => $item) {
+      $variables['items'][$delta]['attributes']->addClass('accordion-item');
+    }
+  }
 }

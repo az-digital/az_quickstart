@@ -35,7 +35,7 @@ function az_news_export_views_data_alter(&$data) {
         /** @var \Drupal\Core\Entity\Sql\DefaultTableMapping $table_mapping */
         $table_mapping = $storage->getTableMapping();
         $table = $table_mapping->getDedicatedDataTableName($field_storage);
-        $label = views_entity_field_label($entity_type_id, $field_name);
+        $label = \Drupal::service('entity_field.manager')->getFieldLabels($entity_type_id, $field_name);
         $label = reset($label);
         $entity_label = $entity_type->getLabel();
         // Signal we provide a filter on the field.

@@ -2,8 +2,11 @@
 
 namespace Drupal\az_course\Form;
 
+use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\KeyValueStore\KeyValueFactoryInterface;
+use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\az_course\CourseMigrateBatchExecutable;
 use Drupal\migrate\MigrateExecutable;
 use Drupal\migrate\MigrateMessage;
@@ -44,6 +47,27 @@ class CourseImportForm extends ConfigFormBase {
   protected $courseSearch;
 
   /**
+   * The key/value factory.
+   *
+   * @var \Drupal\Core\KeyValueStore\KeyValueFactoryInterface
+   */
+  protected KeyValueFactoryInterface $keyValue;
+
+  /**
+   * The time service.
+   *
+   * @var \Drupal\Component\Datetime\TimeInterface
+   */
+  protected TimeInterface $time;
+
+  /**
+   * The translation manager.
+   *
+   * @var \Drupal\Core\StringTranslation\TranslationInterface
+   */
+  protected TranslationInterface $translation;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
@@ -52,6 +76,9 @@ class CourseImportForm extends ConfigFormBase {
     $instance->pluginManagerMigration = $container->get('plugin.manager.migration');
     $instance->courseSearch = $container->get('az_course.search');
     $instance->cron = $container->get('cron');
+    $instance->keyValue = $container->get('keyvalue');
+    $instance->time = $container->get('datetime.time');
+    $instance->translation = $container->get('string_translation');
     return $instance;
   }
 
@@ -130,7 +157,7 @@ class CourseImportForm extends ConfigFormBase {
 
     $form['run'] = [
       '#type' => 'submit',
-      '#value' => t('Save and Import Courses'),
+      '#value' => $this->t('Save and Import Courses'),
       '#attributes' => [
         'title' => $this->t("Import the listed courses. This may time out for very large subject codes."),
       ],
@@ -140,7 +167,7 @@ class CourseImportForm extends ConfigFormBase {
 
     $form['rollback'] = [
       '#type' => 'submit',
-      '#value' => t('Rollback'),
+      '#value' => $this->t('Rollback'),
       '#attributes' => [
         'title' => $this->t("Remove courses imported by this form from the site."),
       ],
@@ -160,7 +187,7 @@ class CourseImportForm extends ConfigFormBase {
 
     $courses = preg_split("/[\n\r]+/", $courses);
     if ($courses === FALSE) {
-      $form_state->setErrorByName('courses', t('Enter search terms to locate a course to import.'));
+      $form_state->setErrorByName('courses', $this->t('Enter search terms to locate a course to import.'));
     }
     else {
       foreach ($courses as $course) {
@@ -171,7 +198,7 @@ class CourseImportForm extends ConfigFormBase {
         elseif (preg_match("/^[[:space:]]*[[:alpha:]]+[[:space:]]*$/", $course)) {
         }
         else {
-          $form_state->setErrorByName('courses', t('Use format "MATH 123 or MATH" for courses.'));
+          $form_state->setErrorByName('courses', $this->t('Use format "MATH 123 or MATH" for courses.'));
         }
       }
     }
@@ -240,7 +267,15 @@ class CourseImportForm extends ConfigFormBase {
         ],
       ],
     ];
-    $executable = new CourseMigrateBatchExecutable($migration, new MigrateMessage(), $options);
+    $executable = new CourseMigrateBatchExecutable(
+      $migration,
+      new MigrateMessage(),
+      $this->keyValue,
+      $this->time,
+      $this->translation,
+      $this->pluginManagerMigration,
+      $options,
+    );
     $executable->batchImport();
   }
 

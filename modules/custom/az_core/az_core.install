@@ -2,8 +2,12 @@
 
 /**
  * @file
- * Contains install and update functions for az_core.
+ * Contains install update and uninstall functions for az_core module.
  */
+
+use Drupal\Core\Link;
+use Drupal\Core\Render\Markup;
+use Drupal\Core\Url;
 
 /**
  * Implements hook_update_last_removed().
@@ -16,19 +20,36 @@ function az_core_update_last_removed() {
 /**
  * Implements hook_requirements().
  */
-function az_core_requirements($phase) {
+function az_core_requirements($phase): array {
   $requirements = [];
   if ($phase === 'runtime') {
-    $extension = 'az_barrio';
-    $library_name = 'arizona-bootstrap';
-    $library_info = \Drupal::service('library.discovery')->getLibraryByName($extension, $library_name);
-    if ($library_info['deprecated']) {
-      $message = $library_info['deprecated'];
-      $message = strtr($message, ['%library_id%' => $library_name]);
-      $requirements['az_barrio.deprecated_library'] = [
-        'title' => t('Deprecated libraries'),
-        'value' => t('Deprecated: @extension/@library', ['@extension' => $extension, '@library' => $library_name]),
-        'description' => $message,
+    // Reset the extension lists.
+    /** @var \Drupal\Core\Extension\ModuleExtensionList $module_extension_list */
+    $module_extension_list = \Drupal::service('extension.list.module');
+    $module_extension_list->reset();
+
+    // Gather all deprecated modules that are enabled.
+    $azqs_deprecated_modules = [];
+    $enabled_deprecated_modules = [];
+    $enabled_modules = \Drupal::moduleHandler()->getModuleList();
+    foreach ($enabled_modules as $module => $data) {
+      if (in_array($module, $azqs_deprecated_modules)) {
+        $enabled_deprecated_modules[$module] = $module_extension_list->getExtensionInfo($module)['name'];
+      }
+    }
+
+    // Warn if any deprecated modules are installed.
+    if (!empty($enabled_deprecated_modules)) {
+      $deprecated_modules_link_list = [];
+      foreach ($enabled_deprecated_modules as $deprecated_module => $name) {
+        $deprecated_modules_link_list[] = (string) Link::fromTextAndUrl($name, Url::fromUri('https://www.drupal.org/project/' . $deprecated_module))->toString();
+      }
+      $requirements['azqs_deprecated_modules'] = [
+        'title' => t('Quickstart deprecated modules enabled'),
+        'description' => t('These modules are no longer used by Arizona Quickstart and will be removed in a future release.  These modules should be uninstalled or should be added to a site-specific composer.json file if they are still needed, or your site will not be able to be updated via Composer.  Some action is required prior to updating to the next minor version.'),
+        'value' => t('Enabled Quickstart deprecated modules found: %module_list.', [
+          '%module_list' => Markup::create(implode(', ', $deprecated_modules_link_list)),
+        ]),
         'severity' => REQUIREMENT_WARNING,
       ];
     }

@@ -3,12 +3,14 @@
 namespace Drupal\Tests\az_barrio\Functional;
 
 use Drupal\Tests\az_core\Functional\QuickstartFunctionalTestBase;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests the Arizona Barrio theme as an admin user.
- *
- * @group az_barrio
  */
+#[Group('az_barrio')]
+#[RunTestsInSeparateProcesses]
 class AzBarrioAdminTest extends QuickstartFunctionalTestBase {
 
   /**
@@ -56,25 +58,33 @@ class AzBarrioAdminTest extends QuickstartFunctionalTestBase {
    * Test AZ Barrio as an admin user.
    */
   public function testAdmin() {
-    // Tests that the navbar off-canvas region classes are set properly.
-    // When blocks are removed or added to regions, classes should change.
+    // Tests that navigation elements are correctly displayed.
     $this->drupalLogin($this->adminUser);
-    $this->drupalGet('admin/structure/block');
-    $this->cssSelect('ul[data-drupal-selector="edit-blocks-az-barrio-offcanvas-searchform-operations"] li.disable a')[0]->click();
-    $this->drupalGet('');
-    $this->assertSession()->elementExists('css', '#navbar-top.navbar-offcanvas.has-navigation-region.no-off-canvas-region');
     $this->drupalGet('admin/structure/block');
     $this->cssSelect('ul[data-drupal-selector="edit-blocks-az-barrio-main-menu-operations"] li.disable a')[0]->click();
     $this->drupalGet('');
-    $this->assertSession()->elementExists('css', '#navbar-top.navbar-offcanvas.no-navigation-region.no-off-canvas-region');
-    $this->drupalGet('admin/structure/block');
-    $this->cssSelect('ul[data-drupal-selector="edit-blocks-az-barrio-offcanvas-searchform-operations"] li.enable a')[0]->click();
-    $this->drupalGet('');
-    $this->assertSession()->elementExists('css', '#navbar-top.navbar-offcanvas.no-navigation-region.has-off-canvas-region');
+    $this->assertSession()->elementNotExists('css', '#navbar-top');
     $this->drupalGet('admin/structure/block');
     $this->cssSelect('ul[data-drupal-selector="edit-blocks-az-barrio-main-menu-operations"] li.enable a')[0]->click();
     $this->drupalGet('');
-    $this->assertSession()->elementExists('css', '#navbar-top.navbar-offcanvas.has-navigation-region.has-off-canvas-region');
+    $this->assertSession()->elementExists('css', '#navbar-top.navbar.navbar-expand');
+    $this->drupalGet('admin/structure/block');
+    $this->cssSelect('ul[data-drupal-selector="edit-blocks-az-barrio-offcanvas-searchform-operations"] li.disable a')[0]->click();
+    $this->drupalGet('');
+    $this->assertSession()->elementNotExists('css', '#jsAzSearch');
+    $this->drupalGet('admin/structure/block');
+    $this->cssSelect('ul[data-drupal-selector="edit-blocks-az-barrio-offcanvas-searchform-operations"] li.enable a')[0]->click();
+    $this->drupalGet('');
+    $this->assertSession()->elementExists('css', '#jsAzSearch');
+    $this->assertSession()->elementExists('css', '#block-az-barrio-offcanvas-searchform');
+    $this->drupalGet('admin/structure/block');
+    $this->cssSelect('ul[data-drupal-selector="edit-blocks-az-barrio-mobilenavblock-operations"] li.disable a')[0]->click();
+    $this->drupalGet('');
+    $this->assertSession()->elementNotExists('css', '.arizona-header > .container > .row > div > [data-bs-target="#azMobileNav"]:not(#jsAzSearch)');
+    $this->drupalGet('admin/structure/block');
+    $this->cssSelect('ul[data-drupal-selector="edit-blocks-az-barrio-mobilenavblock-operations"] li.enable a')[0]->click();
+    $this->drupalGet('');
+    $this->assertSession()->elementExists('css', '.arizona-header > .container > .row > div > [data-bs-target="#azMobileNav"]:not(#jsAzSearch)');
 
     // Tests that the Arizona Barrio theme can be uninstalled.
     $this->drupalGet('admin/appearance');

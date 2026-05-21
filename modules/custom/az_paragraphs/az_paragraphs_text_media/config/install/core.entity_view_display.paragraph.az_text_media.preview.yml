@@ -60,7 +60,7 @@ third_party_settings:
       weight: 21
       format_type: html_element
       format_settings:
-        classes: 'bold mt-0'
+        classes: 'fw-bold mt-0'
         show_empty_fields: false
         id: ''
         element: h2
