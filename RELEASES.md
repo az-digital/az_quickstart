@@ -90,6 +90,8 @@ _*Patch-level updates (non-security bug-fix updates) are typically included in Q
 _**Minor version updates for Drupal core are included in Quickstart LTS (patch-level) releases to maintain alignment with Drupal's long-term support cycle._
 
 
+
+
 ## Pre-Release Versions
 
 ### Alpha Releases (`alpha`)
@@ -146,7 +148,3 @@ This will allow us to continue to add DB update hooks to a minor release branch
 (e.g. 2.1.x) as needed without updating a site's schema version to a number
 that would prevent updates included in a later release branch (e.g. 2.2.x) to
 be applied when the site is upgraded.
-
-### Visual Changes included in Patch Releases
-
-Visual changes in patch releases will be avoided when possible. Visual changes will only be included when they fix a critical issue and cannot wait until the next minor (or major) release.
