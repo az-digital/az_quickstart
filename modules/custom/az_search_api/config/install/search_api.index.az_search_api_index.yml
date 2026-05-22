@@ -8,7 +8,6 @@ dependencies:
   module:
     - az_search_api
     - node
-    - search_api_attachments
     - search_api_solr
     - taxonomy
 third_party_settings:
@@ -87,7 +86,7 @@ field_settings:
         - taxonomy
   extracted_attachments:
     label: 'Extracted Attachments'
-    property_path: saa_field_az_attachments
+    property_path: az_attachments
     type: text
   rendered_item:
     label: 'Rendered HTML output'
@@ -140,21 +139,28 @@ processor_settings:
   aggregated_field: {  }
   auto_aggregated_fulltext_field: {  }
   az_anonymous_access: {  }
+  az_attachments:
+    excluded_extensions: 'csv json tsv'
+    number_indexed: '0'
+    number_first_bytes: '1 MB'
+    max_filesize: '0'
+    excluded_private: 1
+    excluded_mimes: 'text/csv application/json text/tab-separated-values'
   az_base_url:
     weights:
       preprocess_index: -15
       preprocess_query: -15
     all_fields: 1
     fields:
+      - type
       - created
       - description
-      - enterprise_attributes
+      - sitename
       - extracted_attachments
       - rendered_item
-      - sitename
       - title
-      - type
       - url
+      - enterprise_attributes
   az_canonical: {  }
   az_metatag: {  }
   az_robots_noindex: {  }
@@ -162,13 +168,6 @@ processor_settings:
   custom_value: {  }
   entity_status: {  }
   entity_type: {  }
-  file_attachments:
-    excluded_extensions: 'csv json tsv'
-    number_indexed: 0
-    number_first_bytes: '1 MB'
-    max_filesize: '0'
-    excluded_private: 1
-    excluded_mimes: 'text/csv application/json text/tab-separated-values'
   html_filter:
     weights:
       preprocess_index: -10
