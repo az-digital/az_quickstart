@@ -33,7 +33,7 @@ html.sticky-footer #main-wrapper {
 
 /* Footer Nav */
 #footer_sub .nav-utility {
-  line-height: 1.25;
+  line-height: 1.375;
 }
 
 /* Correct `inline-block` display not defined in IE 8/9. */
@@ -417,12 +417,12 @@ td.menu-disabled {
 }
 
 /* AZ Barrio search form block (Desktop) */
-.az-search-block .search-block-form .form-search {
+.region-header-ua-utilities .az-search-block .search-block-form .form-search {
   height: 43px;
   margin-left: 0 !important;
 }
 
-.az-search-block .search-block-form .input-group button {
+.region-header-ua-utilities .az-search-block .search-block-form .input-group button {
   display: flex;
   align-items: center;
   font-size: 20px;
@@ -432,10 +432,20 @@ td.menu-disabled {
   padding: 0 8px;
 }
 
-.az-search-block .search-block-form .input-group button:hover,
-.az-search-block .search-block-form .input-group button:focus {
-    background-color: #8B0015;
-    color: #ffffff;
+.region-header-ua-utilities .az-search-block.az-search-block-blue .search-block-form .input-group .button {
+  color: var(--bs-blue);
+}
+
+.region-header-ua-utilities .az-search-block .search-block-form .input-group button:hover,
+.region-header-ua-utilities .az-search-block .search-block-form .input-group button:focus {
+  background-color: var(--bs-chili);
+  color: var(--bs-white);
+}
+
+.region-header-ua-utilities .az-search-block.az-search-block-blue .search-block-form .input-group button:hover,
+.region-header-ua-utilities .az-search-block.az-search-block-blue .search-block-form .input-group button:focus {
+  background-color: var(--bs-blue);
+  color: var(--bs-white);
 }
 
 /* Removing mobile duplicate menu link only if it is a no-link (https://www.drupal.org/node/2032759) */
@@ -748,12 +758,20 @@ form.webform-submission-form {
 
 /* end Bootstrap Barrio image field styles */
 
+/* overrides Entity Reference fields and labels to match similar fields */
+.field.field--type-entity-reference {
+  margin-bottom: 0;
+}
+
 @media (min-width: 768px) {
   #content .form-select,
   #content .form-email,
   #content .form-file,
   #content .form-number,
   #content .form-tel,
+  #content .form-url,
+  #content .form-date,
+  #content .form-time,
   #content input[type="text"].form-control,
   #content .webform-signature-pad .button {
     width: initial;

@@ -1,0 +1,45 @@
+{#
+/**
+ * @file
+ * Template for the Trellis Opportunity Importer view.
+ *
+ * Overrides views-view.html.twig to place the result summary (header)
+ * between the exposed filters and the results table.
+ */
+#}
+{%
+  set classes = [
+    dom_id ? 'js-view-dom-id-' ~ dom_id,
+  ]
+%}
+<div{{ attributes.addClass(classes) }}>
+  {{ title_prefix }}
+  {{ title }}
+  {{ title_suffix }}
+
+  {{ exposed }}
+
+  <div class="view-header" role="status" aria-live="polite" aria-atomic="true">
+    {% if header %}{{ header }}{% endif %}
+  </div>
+
+  {{ attachment_before }}
+
+  {% if rows -%}
+    {{ rows }}
+  {% elseif empty -%}
+    <div aria-live="polite" aria-atomic="true">{{ empty }}</div>
+  {% endif %}
+
+  {{ pager }}
+  {{ attachment_after }}
+  {{ more }}
+
+  {% if footer %}
+    <div class="view-footer">
+      {{ footer }}
+    </div>
+  {% endif %}
+
+  {{ feed_icons }}
+</div>

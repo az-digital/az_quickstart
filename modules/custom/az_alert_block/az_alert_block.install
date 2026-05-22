@@ -1,0 +1,74 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the AZ Alert Block module.
+ */
+
+use Drupal\block_content\Entity\BlockContent;
+
+/**
+ * Implements hook_install().
+ *
+ * Creates a default "Emergency Alert Block" content entity and places it in
+ * the Alert region (disabled) so sites can enable it during incidents without
+ * manually creating or placing the block.
+ */
+function az_alert_block_install() {
+  $block = BlockContent::create([
+    'type' => 'az_alert_block',
+    'info' => 'Emergency Alert Block',
+    'body' => [
+      'value' => '<p class="text-center"><em>The University of Arizona is currently addressing a campus incident. For more information, visit <a href="https://arizona.edu/incident">arizona.edu/incident</a>.</em></p>',
+      'summary' => '',
+      'format' => 'az_standard',
+    ],
+  ]);
+  $block->save();
+
+  // Place the block in the Alert region (disabled) so it appears in Block
+  // layout and can be enabled during an incident without manual placement.
+  $theme = 'az_barrio';
+  $block_config_id = $theme . '_emergency_alert_block';
+  $plugin_id = 'block_content:' . $block->uuid();
+  \Drupal::configFactory()
+    ->getEditable('block.block.' . $block_config_id)
+    ->set('uuid', \Drupal::service('uuid')->generate())
+    ->set('langcode', 'en')
+    ->set('status', FALSE)
+    ->set('dependencies', [
+      'content' => 'block_content:az_alert_block:' . $block->uuid(),
+      'module' => ['block_content'],
+      'theme' => [$theme],
+    ])
+    ->set('id', $block_config_id)
+    ->set('theme', $theme)
+    ->set('region', 'alert')
+    ->set('weight', 0)
+    ->set('plugin', $plugin_id)
+    ->set('settings', [
+      'id' => $plugin_id,
+      'label' => 'Emergency Alert Block',
+      'label_display' => '0',
+      'provider' => 'block_content',
+      'view_mode' => 'full',
+    ])
+    ->set('visibility', [])
+    ->save();
+}
+
+/**
+ * Implements hook_uninstall().
+ *
+ * Removes AZ Alert Block entities.
+ */
+function az_alert_block_uninstall() {
+  $blocks = \Drupal::entityTypeManager()
+    ->getStorage('block_content')
+    ->loadByProperties([
+      'type' => 'az_alert_block',
+    ]);
+  foreach ($blocks as $block) {
+    $block->delete();
+  }
+}

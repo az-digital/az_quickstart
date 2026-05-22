@@ -5,6 +5,7 @@
             "az_photos" : "placeduck01.jpg|placeduck02.jpg|placeduck03.jpg|placeduck04.jpg|placeduck05.jpg|placeduck06.jpg|placeduck07.jpg|placeduck08.jpg|placeduck09.jpg|placeduck10.jpg|placeduck11.jpg",
             "bottom_spacing" : "mb-4",
             "gallery_display" : "grid",
+            "gallery_captions" : false,
             "ratio" : ""
         },
         {
@@ -12,6 +13,7 @@
             "az_photos" : "earth_solid.jpg|earth_solid_2.jpg|placeduck02.jpg|placeduck04.jpg|arizona_campus_fireworks.jpg|wilbur-wildcat.jpg",
             "bottom_spacing" : "mb-4",
             "gallery_display" : "slider",
+            "gallery_captions" : false,
             "ratio" : ""
         },
         {
@@ -19,6 +21,7 @@
             "az_photos" : "earth_solid.jpg|earth_solid_2.jpg|placeduck02.jpg|placeduck04.jpg|arizona_campus_fireworks.jpg|wilbur-wildcat.jpg",
             "bottom_spacing" : "mb-4",
             "gallery_display" : "slider_full",
+            "gallery_captions" : false,
             "ratio" : "16x9"
         }
     ]

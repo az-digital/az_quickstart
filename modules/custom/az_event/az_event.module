@@ -237,6 +237,11 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
               $occurrences_modal[$item_index++] = [
                 '#markup' => "<h3 class='h5 mt-0'>{$upcoming_events_heading}</h3>",
               ];
+
+              $start = $item['value'] ?? '';
+              $end = $item['end_value'] ?? '';
+              $all_day = $smart_date_manager->isAllDay($start, $end);
+
               // Render just the next occurrence's date for the modal.
               $next_occurrence_item = $entity->field_az_event_date[$key];
               $field_render_array = $next_occurrence_item->view('default');
@@ -246,8 +251,9 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
               $add_to_calendar_button = [
                 '#theme' => 'az_event_calendar_add_button',
                 '#title' => $entity->getTitle(),
-                '#start_date' => $item['value'] ?? '',
-                '#end_date' => $item['end_value'] ?? '',
+                '#start_date' => $start,
+                '#end_date' => $end,
+                '#all_day' => $all_day,
                 '#description' => $summary,
                 '#location' => $entity->field_az_location->title ?? '',
                 '#modal' => Html::getUniqueId('calendar-link-modal'),
@@ -458,6 +464,37 @@ function az_event_form_views_exposed_form_alter(&$form, FormStateInterface $form
         // Our goal is to hide the filter if it conflicts or has no terms.
         if (!$keep_filter) {
           $form['term_node_tid_depth']['#access'] = FALSE;
+        }
+      }
+    }
+    if (isset($form['az_enterprise_attributes'])) {
+      if (isset($form['az_enterprise_attributes']['#options']) &&
+        is_array($form['az_enterprise_attributes']['#options'])) {
+        // We will only show the category filter in some cases.
+        $keep_filter = TRUE;
+
+        // Get the arguments statically, as this hook is called multiple times.
+        // At some points in the request, the arguments disappear.
+        $view_args = &drupal_static(__FUNCTION__);
+        if (!isset($view_args)) {
+          $view_args = $view->args;
+        }
+
+        // Check if our event category filter doesn't contain multiple terms.
+        // The implication is this site probably doesn't use this vocabulary.
+        if (count($form['az_enterprise_attributes']['#options']) <= 1) {
+          $keep_filter = FALSE;
+        }
+
+        // Check if we seem to have contextual filter arguments.
+        if (isset($view_args) && is_array($view_args) && !empty($view_args)) {
+          $keep_filter = FALSE;
+        }
+
+        // Hide the category filter if either of the above were the case.
+        // Our goal is to hide the filter if it conflicts or has no terms.
+        if (!$keep_filter) {
+          $form['az_enterprise_attributes']['#access'] = FALSE;
         }
       }
     }
