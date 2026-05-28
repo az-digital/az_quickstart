@@ -176,7 +176,18 @@ jobs:
       - name: Run composer audit
         run: |
           cd az-quickstart-scaffolding
-          composer audit --no-dev --ignore-severity=low --ignore-severity=moderate
+          set +e
+          composer audit --no-dev --ignore-severity=low --ignore-severity=moderate > composer-audit.log 2>&1
+          composer_audit_status=$?
+          cat composer-audit.log
+          if [ "$composer_audit_status" -eq 0 ]; then
+            exit 0
+          fi
+          if [ "$composer_audit_status" -eq 2 ] && grep -q "No security vulnerability advisories found." composer-audit.log; then
+            echo "Composer audit reported only abandoned packages; continuing."
+            exit 0
+          fi
+          exit "$composer_audit_status"
 
   yarn-audit:
     name: yarn audit (security)
