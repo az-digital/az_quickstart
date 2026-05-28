@@ -10,5 +10,8 @@
  * @see template_preprocess_input()
  */
 #}
-<button{{attributes.removeClass('btn-primary')}}><span class="material-symbols-rounded">search</span></button>{{ children }}
-
+{% set button_label = attributes.value|default('Search'|t) %}
+<button{{ attributes.removeClass('btn-primary').setAttribute('aria-label', button_label) }}>
+  <span class="visually-hidden">{{ button_label }}</span>
+  <span aria-hidden="true" class="material-symbols-rounded">search</span>
+</button>{{ children }}
