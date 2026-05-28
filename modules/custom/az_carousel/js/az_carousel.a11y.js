@@ -1,7 +1,9 @@
 (function azCarouselA11yScript(Drupal, once, $) {
   function normalizeCarouselAria(carousel) {
     carousel
-      .querySelectorAll('.slick-track[role="listbox"], .slick-slide[role="option"]')
+      .querySelectorAll(
+        '.slick-track[role="listbox"], .slick-slide[role="option"]',
+      )
       .forEach((element) => {
         element.removeAttribute('role');
         element.removeAttribute('aria-describedby');
