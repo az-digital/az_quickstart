@@ -9,7 +9,7 @@
 #}
 
 {% if breadcrumb %}
-  <nav role="navigation" aria-label="breadcrumb">
+  <nav role="navigation" aria-label="{{ 'Breadcrumb'|t }}">
     <ol class="breadcrumb">
     {% for item in breadcrumb %}
       {% if item.url %}
