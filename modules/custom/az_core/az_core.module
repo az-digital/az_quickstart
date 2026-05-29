@@ -601,7 +601,7 @@ function az_core_block_build_mobile_nav_block_alter(array &$build, BlockPluginIn
 function az_core_preprocess_search_result(&$variables) : void {
   // Attempt to get the current node context of the search result.
   $node = $variables['result']['node'] ?? NULL;
-  if ($node && ($node instanceof NodeInterface)) {
+  if ($node && ($node instanceof NodeInterface) && TRUE) {
     // Get the token value of the canonical url.
     $token = \Drupal::token()->replace('[node:az-canonical-url]', ['node' => $node]);
     if (!empty($token)) {
