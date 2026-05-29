@@ -601,7 +601,7 @@ function az_core_block_build_mobile_nav_block_alter(array &$build, BlockPluginIn
  *
  * Make the search result use the canonical url if available.
  */
-function az_core_preprocess_search_result(&$variables) : void {
+function az_core_preprocess_search_result(&$variables): void {
   // Attempt to get the current node context of the search result.
   $node = $variables['result']['node'] ?? NULL;
   if ($node && ($node instanceof NodeInterface)) {
