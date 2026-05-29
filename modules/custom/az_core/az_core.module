@@ -614,7 +614,7 @@ function az_core_preprocess_search_result(&$variables): void {
         $variables['url'] = $url->toString();
       }
       catch (\InvalidArgumentException $e) {
-
+        // Do nothing if the token does not resolve to a valid URI.
       }
     }
   }
