@@ -10,14 +10,13 @@ dependencies:
   enforced:
     module:
       - az_core
-id: az_linkit
 label: 'Quickstart LinkIt'
+id: az_linkit
 description: 'Provides easy linking to Quickstart content and media for site editors.'
 matchers:
   3a30add7-6018-45d3-afea-c0c311ac4bc9:
-    uuid: 3a30add7-6018-45d3-afea-c0c311ac4bc9
     id: 'entity:node'
-    weight: 0
+    uuid: 3a30add7-6018-45d3-afea-c0c311ac4bc9
     settings:
       metadata: 'Path: [node:url:path] | ID: [node:nid]'
       bundles:
@@ -26,10 +25,10 @@ matchers:
       substitution_type: canonical
       limit: 100
       include_unpublished: false
-  829301bf-f4fa-42e3-a3fe-4c89a8868633:
-    uuid: 829301bf-f4fa-42e3-a3fe-4c89a8868633
-    id: 'entity:file'
     weight: 0
+  829301bf-f4fa-42e3-a3fe-4c89a8868633:
+    id: 'entity:file'
+    uuid: 829301bf-f4fa-42e3-a3fe-4c89a8868633
     settings:
       metadata: 'Created: [file:created:custom:m/d/Y - g:i a] | Modified: [file:changed:custom:m/d/Y - g:i a] | ID: [file:fid]'
       bundles: null
@@ -42,10 +41,10 @@ matchers:
         show_dimensions: false
         show_thumbnail: true
         thumbnail_image_style: az_tiny_thumbnail
-  b1491acc-6a1b-4122-998c-311aaa699e48:
-    uuid: b1491acc-6a1b-4122-998c-311aaa699e48
-    id: 'entity:node'
     weight: 0
+  b1491acc-6a1b-4122-998c-311aaa699e48:
+    id: 'entity:node'
+    uuid: b1491acc-6a1b-4122-998c-311aaa699e48
     settings:
       metadata: 'Date: [node:field_az_event_date:value-custom:m/d/Y - g:i a]'
       bundles:
@@ -54,10 +53,10 @@ matchers:
       substitution_type: canonical
       limit: 100
       include_unpublished: false
-  1d0eb8f7-5cd7-4d1b-9503-1a06dfdef879:
-    uuid: 1d0eb8f7-5cd7-4d1b-9503-1a06dfdef879
-    id: 'entity:node'
     weight: 0
+  1d0eb8f7-5cd7-4d1b-9503-1a06dfdef879:
+    id: 'entity:node'
+    uuid: 1d0eb8f7-5cd7-4d1b-9503-1a06dfdef879
     settings:
       metadata: 'Publication date: [node:field_az_published:date:custom:m/d/Y - g:i a]'
       bundles:
@@ -66,10 +65,10 @@ matchers:
       substitution_type: canonical
       limit: 100
       include_unpublished: false
-  5b479f8e-72a3-4398-91d2-fbd9e07b7cb0:
-    uuid: 5b479f8e-72a3-4398-91d2-fbd9e07b7cb0
-    id: 'entity:node'
     weight: 0
+  5b479f8e-72a3-4398-91d2-fbd9e07b7cb0:
+    id: 'entity:node'
+    uuid: 5b479f8e-72a3-4398-91d2-fbd9e07b7cb0
     settings:
       metadata: '[node:field_az_titles]'
       bundles:
@@ -78,3 +77,40 @@ matchers:
       substitution_type: canonical
       limit: 100
       include_unpublished: false
+    weight: 0
+  27dc18e6-17cf-46c9-9852-96d6d34b8e59:
+    id: 'entity:node'
+    uuid: 27dc18e6-17cf-46c9-9852-96d6d34b8e59
+    settings:
+      metadata: '[node:field_az_course_term]'
+      bundles:
+        az_course: az_course
+      group_by_bundle: true
+      substitution_type: canonical
+      limit: 100
+      include_unpublished: false
+    weight: 0
+  5115b30e-5340-4e09-9980-afc9e4eee793:
+    id: 'entity:node'
+    uuid: 5115b30e-5340-4e09-9980-afc9e4eee793
+    settings:
+      metadata: '[node:field_az_program_date:start_date:custom:M j Y - ][node:field_az_program_date:end_date:custom:M j Y]'
+      bundles:
+        az_opportunity: az_opportunity
+      group_by_bundle: true
+      substitution_type: canonical
+      limit: 100
+      include_unpublished: false
+    weight: 0
+  754ab04b-d3f3-421f-a38b-4af90b8d115c:
+    id: 'entity:node'
+    uuid: 754ab04b-d3f3-421f-a38b-4af90b8d115c
+    settings:
+      metadata: '[node:field_az_publication_link]'
+      bundles:
+        az_publication: az_publication
+      group_by_bundle: true
+      substitution_type: canonical
+      limit: 100
+      include_unpublished: false
+    weight: 0
