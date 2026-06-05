@@ -110,7 +110,7 @@ Aliases: `azbs5fg`
 - **Dry Run Mode**: Preview changes before applying them with `--dry-run`
 - **Interactive Mode**: Choose which field groups' classes/attributes to update one by one with no arguments (default behavior)
 - **Automatic Mode**: Update all eligible field groups' configs at once
-- **Smart Conversion**: Uses existing `AZBootstrapMarkupConverter::CLASS_MAP` for consistent conversions
+- **Smart Conversion**: Uses existing `AZBootstrapMarkupConverter::CLASS_MAP` and `AZBootstrapMarkupConverter::LEGACY_DATA_ATTRIBUTES` for consistent conversions
 - **Targeted Updates**: Only updates field groups that actually have classes and/or data-* attributes requiring conversion **Warning:** This is meant to be run only once in update mode. You can do as many dry runs as you like, but actual updates should only be run once.
 
 ### Output
