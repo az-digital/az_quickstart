@@ -13,6 +13,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
 use Drupal\node\Entity\NodeType;
 use Drupal\node\NodeInterface;
+use Drupal\text\TextSummary;
 use Recurr\Rule;
 use Recurr\Transformer\TextTransformer;
 use Recurr\Transformer\Translator;
@@ -146,7 +147,7 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
         $summary = $body_field->value ?? '';
       }
       // By default this hinges on text.settings default_summary_length.
-      $summary = text_summary($summary, 'plain_text');
+      $summary =  \Drupal::service(TextSummary::class)->generate($summary, 'plain_text');
       $now = \Drupal::time()->getCurrentTime();
       /** @var \Drupal\Core\Field\FieldItemList $event_date_field */
       $event_date_field = $entity->field_az_event_date;

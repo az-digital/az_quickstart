@@ -6,7 +6,7 @@ use Drupal\Component\Utility\Html;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\filter\Attribute\Filter;
 use Drupal\filter\FilterProcessResult;
-use Drupal\filter\Plugin\FilterBase;
+use Drupal\filter\Plugin\Filter\FilterUrl;
 use Drupal\filter\Plugin\FilterInterface;
 
 /**
@@ -17,7 +17,7 @@ use Drupal\filter\Plugin\FilterInterface;
   title: new TranslatableMarkup("Convert DOI (Digital Object Identifiers) to links"),
   type: FilterInterface::TYPE_TRANSFORM_IRREVERSIBLE
 )]
-class AZDOIFilter extends FilterBase {
+class AZDOIFilter extends FilterUrl {
 
   /**
    * {@inheritdoc}
@@ -30,8 +30,7 @@ class AZDOIFilter extends FilterBase {
     // Tags to skip and not recurse into.
     $ignore_tags = 'a|script|style|code|pre';
 
-    _filter_url_escape_comments('', TRUE);
-    $text = is_null($text) ? '' : preg_replace_callback('`<!--(.*?)-->`s', '_filter_url_escape_comments', $text);
+    $text = is_null($text) ? '' : preg_replace_callback('`<!--(.*?)-->`s',  static::class . '::escapeComments', $text);
 
     // Split at all tags; ensures that no tags or attributes are processed.
     $chunks = is_null($text) ? [
@@ -89,8 +88,7 @@ class AZDOIFilter extends FilterBase {
     }
 
     // Revert to the original comment contents.
-    _filter_url_escape_comments('', FALSE);
-    $text = $text ? preg_replace_callback('`<!--(.*?)-->`', '_filter_url_escape_comments', $text) : $text;
+    $text = $text ? preg_replace_callback('`<!--(.*?)-->`', static::class . '::unescapeComments', $text) : $text;
 
     // Make sure our regex chunking didn't eat the text due to a broken tag.
     $text = strlen((string) $text) > 0 ? $text : $saved_text;
