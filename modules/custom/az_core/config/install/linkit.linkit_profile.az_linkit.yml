@@ -30,7 +30,7 @@ matchers:
     id: 'entity:file'
     uuid: 829301bf-f4fa-42e3-a3fe-4c89a8868633
     settings:
-      metadata: 'Created: [file:created:custom:m/d/Y - g:i a] | Modified: [file:changed:custom:m/d/Y - g:i a] | ID: [file:fid]'
+      metadata: 'Created: [file:created:custom:M j Y - g:i a] | Modified: [file:changed:custom:M j Y - g:i a] | ID: [file:fid]'
       bundles: null
       group_by_bundle: null
       substitution_type: file
@@ -46,7 +46,7 @@ matchers:
     id: 'entity:node'
     uuid: b1491acc-6a1b-4122-998c-311aaa699e48
     settings:
-      metadata: 'Date: [node:field_az_event_date:value-custom:m/d/Y - g:i a]'
+      metadata: 'Date: [node:field_az_event_date:value-custom:M j Y - g:i a]'
       bundles:
         az_event: az_event
       group_by_bundle: true
@@ -58,7 +58,7 @@ matchers:
     id: 'entity:node'
     uuid: 1d0eb8f7-5cd7-4d1b-9503-1a06dfdef879
     settings:
-      metadata: 'Publication date: [node:field_az_published:date:custom:m/d/Y - g:i a]'
+      metadata: 'Publication date: [node:field_az_published:date:custom:M j Y]'
       bundles:
         az_news: az_news
       group_by_bundle: true
