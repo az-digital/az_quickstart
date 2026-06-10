@@ -37,7 +37,12 @@
         "composer/installers": "^2.0",
         "cweagans/composer-patches": "^1.7",
         "devanych/mime-types": "2.1.2",
+<<<<<<< HEAD
         "drupal/access_unpublished": "1.6.0",
+=======
+        "drupal/access_unpublished": "1.9.0",
+        "drupal/altcha": "1.1.0",
+>>>>>>> 6376f8b2 (Closes #5673: Add ALTCHA module as additional form spam mitigation option. (#5675))
         "drupal/antibot": "2.0.4",
         "drupal/asset_injector": "2.21.0",
         "drupal/auto_entitylabel": "3.4.0",
