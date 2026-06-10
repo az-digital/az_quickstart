@@ -58,7 +58,7 @@
         "drupal/config_split": "2.0.2",
         "drupal/config_sync": "3.0.0-alpha5",
         "drupal/config_update": "2.0.0-alpha4",
-        "drupal/core-recommended": "11.3.11",
+        "drupal/core-recommended": "11.4.0-beta1",
         "drupal/crop": "2.6.0",
         "drupal/date_ap_style": "3.0.0",
         "drupal/decorative_image_widget": "1.0.3",
@@ -177,12 +177,12 @@
                 "Unable to select single view display for view settings (2552541)": "https://www.drupal.org/files/issues/2025-07-23/2552541-69.patch",
                 "Move content overview default task link out of content_moderation module (3199682)": "https://www.drupal.org/files/issues/2022-02-10/3199682-11-9-4-x.patch",
                 "Improve migration system performance: statically cache DrupalSqlBase::$systemData (3154156)": "https://www.drupal.org/files/issues/2022-01-24/3154156-12.patch",
-                "filter_autop returns self closing br element with slash, lets alter to br (2350049)": "https://www.drupal.org/files/issues/2025-11-07/2350049-66-11.x.patch",
-                "[10.2 regression] CKEditor 5 breaks when 'Source'/Source editing button is added and 'Manually editable HTML tags' are specified (3410100)": "https://www.drupal.org/files/issues/2025-06-26/3410100-108-revert-3396628-11-x.patch",
+                "filter_autop returns self closing br element with slash, lets alter to br (2350049)": "https://www.drupal.org/files/issues/2026-06-08/%202350049-68-mr-9221.patch",
+                "[10.2 regression] CKEditor 5 breaks when 'Source'/Source editing button is added and 'Manually editable HTML tags' are specified (3410100)": "https://www.drupal.org/files/issues/2026-06-08/3410100-111-mr-12509.patch",
                 "[Apache only] Wrong file header returned, when converting an image for example to webp (3310963)": "https://www.drupal.org/files/issues/2024-05-15/3310963-32.patch",
                 "Hardcode a higher WebP conversion quality setting (3320689)": "https://gist.githubusercontent.com/joeparsons/d99b6c6eef240e8eaf768ba79e1c9f1b/raw/9b99325bd20907db0506969fc4f5823b46065c6b/3320689-10-3-x-hardcoded.patch",
                 "Provide option to display contextual links on embedded entities (3174252)": "https://www.drupal.org/files/issues/2024-12-11/3174252-provide-option-to-show-contextual-links-for-embedded-media.patch",
-                "user_user_role_insert should not exist (2672340)": "https://gist.githubusercontent.com/joeparsons/f31108ee18aaed01e03ef3005ecd3d92/raw/0fdd114d79083ea7c6d962a061d09d81d58a0bea/2672340-11.x.patch",
+                "user_user_role_insert should not exist (2672340)": "https://www.drupal.org/files/issues/2026-06-09/2672340-64-mr-12111.patch",
                 "[Regression] missing menu active trail since Drupal 9.5.9 (3359511)": "https://gist.githubusercontent.com/joeparsons/a6a2cc171e418e5507a54045e155988f/raw/cf96d1a1ad25775ff201767c1382b2f9865bf90e/3359511-143-no-tests.patch",
                 "Diffs with different line endings leads to Invalid $mode 3 specified (3389715)": "https://www.drupal.org/files/issues/2024-01-09/Diffs-with-different-line-endings-leads-to-Invalid-mode-3-specified.patch",
                 "Recent changes to migrate_drupal can break migrations that rely on hook_migration_plugins_alter() (3546325)": "https://www.drupal.org/files/issues/2025-11-07/3546325-15-11-3-x.patch",
@@ -235,7 +235,8 @@
                 "Add parentOrganization property/tag to schema_organization (3477869)": "https://www.drupal.org/files/issues/2025-01-13/add_parentOrganization.diff"
             },
             "drupal/search_exclude": {
-                "Request for a Views Handler (2882683)": "https://www.drupal.org/files/issues/2023-06-29/request_for_a_views-2882683-14_0.patch"
+                "Request for a Views Handler (2882683)": "https://www.drupal.org/files/issues/2023-06-29/request_for_a_views-2882683-14_0.patch",
+                "Module not compatible with Drupal 11.4+ (3594295)": "https://www.drupal.org/files/issues/2026-06-09/3594295-6-mr-17.patch"
             },
             "drupal/views_bootstrap": {
                 "Views with responsive table display no longer works (2931301)": "https://www.drupal.org/files/issues/2024-10-07/views_bootstrap_responsive-2931301-14.patch"
