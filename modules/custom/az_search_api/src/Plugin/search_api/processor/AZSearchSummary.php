@@ -132,7 +132,7 @@ class AZSearchSummary extends ProcessorPluginBase {
           $format = $entity->get('field_az_body')->format;
           if (!empty($value) && !empty($format)) {
             // Summarize the body for some kind of summary. Not very desirable.
-            $summary = $this->textSummary->generate($value, $format);
+            $summary = $this->getTextSummary()->generate($value, $format);
             if (!empty($summary)) {
               $field->addValue($summary);
             }
