@@ -30,7 +30,7 @@ class AZDOIFilter extends FilterUrl {
     // Tags to skip and not recurse into.
     $ignore_tags = 'a|script|style|code|pre';
 
-    $text = is_null($text) ? '' : preg_replace_callback('`<!--(.*?)-->`s',  static::class . '::escapeComments', $text);
+    $text = is_null($text) ? '' : preg_replace_callback('`<!--(.*?)-->`s', static::class . '::escapeComments', $text);
 
     // Split at all tags; ensures that no tags or attributes are processed.
     $chunks = is_null($text) ? [
