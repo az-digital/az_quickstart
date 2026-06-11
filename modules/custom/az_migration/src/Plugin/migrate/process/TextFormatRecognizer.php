@@ -150,5 +150,6 @@ class TextFormatRecognizer extends ProcessPluginBase implements ContainerFactory
       ->process((string) $formatted, NULL);
 
     return $result->getProcessedText();
+  }
 
 }
