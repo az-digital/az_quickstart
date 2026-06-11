@@ -145,9 +145,10 @@ class TextFormatRecognizer extends ProcessPluginBase implements ContainerFactory
     ];
     $formatted = $this->renderer->renderInIsolation($toRender);
 
-    return (string) $this->filterManager
+    $result = $this->filterManager
       ->createInstance('filter_autop')
-      ->process($formatted);
-  }
+      ->process((string) $formatted, NULL);
+
+    return $result->getProcessedText();
 
 }
