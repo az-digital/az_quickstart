@@ -31,9 +31,9 @@
   {% if items %}
     {% if menu_level == 0 %}
       <ul{{ attributes.addClass('navbar-nav flex-lg-row') }}>
-{% else %}
-  <div class="dropdown-menu">
-{% endif %}
+    {% else %}
+      <ul class="dropdown-menu">
+    {% endif %}
     {% for item in items %}
       {%
         set classes = [
@@ -46,6 +46,8 @@
       %}
         {% if menu_level == 0 %}
         <li{{ item.attributes.addClass(classes) }}>
+        {% else %}
+        <li>
         {% endif %}
           {%
             set link_classes = [
@@ -65,12 +67,14 @@
           {% endif %}
         {% if menu_level == 0 %}
         </li>
+        {% else %}
+        </li>
         {% endif %}
     {% endfor %}
     {% if menu_level == 0 %}
       </ul>
     {% else %}
-      </div>
+      </ul>
     {% endif %}
   {% endif %}
 {% endmacro %}
