@@ -8,7 +8,6 @@ use Drupal\captcha\Service\CaptchaService;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Form\BaseFormIdInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Render\Element;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\captcha\Constants\CaptchaConstants;
