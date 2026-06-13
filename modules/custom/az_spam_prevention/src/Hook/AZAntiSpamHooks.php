@@ -8,6 +8,7 @@ use Drupal\captcha\Service\CaptchaService;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Form\BaseFormIdInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Render\Element;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\captcha\Constants\CaptchaConstants;
@@ -75,6 +76,15 @@ class AZAntiSpamHooks {
         // Bail out if the user is allowed to skip.
         if ($this->currentUser->hasPermission('skip CAPTCHA')) {
           return;
+        }
+        // @todo multistep forms.
+        // Check existing elements for captcha element.
+        $elements = $form['elements'] ?? [];
+        foreach ($elements as $element) {
+          if (is_array($element) && !empty($element['#type']) && ($element['#type'] === 'captcha')) {
+            // Do nothing if we already have a captcha element.
+            return;
+          }
         }
         // Make sure captcha API functions are available.
         $this->moduleHandler->loadInclude('captcha', 'inc', 'captcha');
