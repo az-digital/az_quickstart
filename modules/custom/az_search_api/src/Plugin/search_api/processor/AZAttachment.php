@@ -13,7 +13,7 @@ use Drupal\search_api\SearchApiException;
 use Drupal\search_api_attachments\Plugin\search_api\processor\FilesExtractor;
 
 /**
- * Indexs all file fields.
+ * Indexes all file fields.
  */
 #[SearchApiProcessor(
   id: 'az_attachments',
