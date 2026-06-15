@@ -105,9 +105,6 @@ class AZNavbarFullscreenMenuBlock extends BlockBase implements ContainerFactoryP
   public function defaultConfiguration() {
     return [
       'primary_menu' => 'main',
-      'level' => 1,
-      'depth' => NULL,
-      'expand_all_items' => FALSE,
       'cta_menu' => '',
       'resources_menu' => '',
       'helpful_links_menu' => '',
@@ -122,7 +119,6 @@ class AZNavbarFullscreenMenuBlock extends BlockBase implements ContainerFactoryP
   public function blockForm($form, FormStateInterface $form_state) {
     $form = parent::blockForm($form, $form_state);
     $config = $this->configuration;
-    $defaults = $this->defaultConfiguration();
 
     // Get list of available menus.
     $menus = $this->entityTypeManager->getStorage('menu')->loadMultiple();
@@ -136,44 +132,6 @@ class AZNavbarFullscreenMenuBlock extends BlockBase implements ContainerFactoryP
       '#default_value' => $config['primary_menu'] ?? 'main',
       '#options' => ['' => $this->t('- None -')] + $menus,
       '#description' => $this->t('Select the primary menu for the fullscreen navigation.'),
-    ];
-
-    // Add the menu levels configuration from SystemMenuBlock.
-    $form['menu_levels'] = [
-      '#type' => 'details',
-      '#title' => $this->t('Menu levels'),
-      // Open if not set to defaults.
-      '#open' => $defaults['level'] !== $config['level'] || $defaults['depth'] !== $config['depth'],
-      '#process' => [[static::class, 'processMenuLevelParents']],
-    ];
-
-    $options = range(0, $this->menuLinkTree->maxDepth());
-    unset($options[0]);
-
-    $form['menu_levels']['level'] = [
-      '#type' => 'select',
-      '#title' => $this->t('Initial visibility level'),
-      '#default_value' => $config['level'],
-      '#options' => $options,
-      '#description' => $this->t('The menu is only visible if the menu link for the current page is at this level or below it. Use level 1 to always display this menu.'),
-      '#required' => TRUE,
-    ];
-
-    $options[0] = $this->t('Unlimited');
-    $form['menu_levels']['depth'] = [
-      '#type' => 'select',
-      '#title' => $this->t('Number of levels to display'),
-      '#default_value' => $config['depth'] ?? 0,
-      '#options' => $options,
-      '#description' => $this->t('This maximum number includes the initial level.'),
-      '#required' => TRUE,
-    ];
-
-    $form['menu_levels']['expand_all_items'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Expand all menu links'),
-      '#default_value' => !empty($config['expand_all_items']),
-      '#description' => $this->t('Override the option found on each menu link used for expanding children and instead display the whole menu tree as expanded.'),
     ];
 
     $form['menu_selection'] = [
@@ -235,24 +193,11 @@ class AZNavbarFullscreenMenuBlock extends BlockBase implements ContainerFactoryP
   }
 
   /**
-   * Form API callback: Processes the menu_levels field element.
-   *
-   * Adjusts the #parents of menu_levels to save its children at the top level.
-   */
-  public static function processMenuLevelParents(&$element, FormStateInterface $form_state, &$complete_form) {
-    array_pop($element['#parents']);
-    return $element;
-  }
-
-  /**
    * {@inheritdoc}
    */
   public function blockSubmit($form, FormStateInterface $form_state) {
     parent::blockSubmit($form, $form_state);
     $this->configuration['primary_menu'] = $form_state->getValue('primary_menu');
-    $this->configuration['level'] = $form_state->getValue('level');
-    $this->configuration['depth'] = $form_state->getValue('depth') ?: NULL;
-    $this->configuration['expand_all_items'] = $form_state->getValue('expand_all_items');
     $menu_selection = $form_state->getValue('menu_selection');
     $this->configuration['cta_menu'] = $menu_selection['cta_menu'] ?? '';
     $this->configuration['resources_menu'] = $menu_selection['resources_menu'] ?? '';
