@@ -2,10 +2,10 @@ langcode: en
 status: true
 dependencies:
   module:
-    - media
-id: media.field_media_az_media_remote
-field_name: field_media_az_media_remote
-entity_type: media
+    - node
+id: node.field_az_program_length
+field_name: field_az_program_length
+entity_type: node
 type: string
 settings:
   max_length: 255

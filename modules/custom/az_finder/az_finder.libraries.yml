@@ -6,6 +6,7 @@ active-filter-count:
   dependencies:
     - core/drupal
     - core/drupalSettings
+    - core/once
 active-filter-reset:
   js:
     js/active-filter-reset.js:
@@ -13,6 +14,14 @@ active-filter-reset:
       - minified: false
   dependencies:
     - core/drupal
+active-filter-indicator:
+  js:
+    js/active-filter-indicator.js:
+      - type: module
+      - minified: false
+  dependencies:
+    - core/drupal
+    - core/drupalSettings
 taxonomy-index-tid-widget:
   css:
     theme:

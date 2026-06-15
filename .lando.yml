@@ -1,7 +1,7 @@
 name: az_quickstart
 recipe: drupal11
 config:
-  php: '8.4'
+  php: '8.5'
   via: apache:2.4
   webroot: web
   database: mariadb:11.4
@@ -68,8 +68,12 @@ services:
       - ln -s /usr/local/quickstart-install-profile/.vscode /app/.vscode
   node:
     type: node:20
+    overrides:
+      environment:
+        COREPACK_ENABLE_DOWNLOAD_PROMPT: '0'
     build:
-      - yarn install --ignore-scripts
+      - corepack enable
+      - yarn install --immutable
   chromedriver:
     type: compose
     services:
@@ -83,7 +87,7 @@ tooling:
   install:
     service: appserver
     cmd:
-      - /app/vendor/bin/drush --root=/app/web site:install --account-mail=noreply@email.arizona.edu --account-name=azadmin --account-pass=azadmin2025 --db-url=mysql://drupal11:drupal11@database:3306/drupal11 -y --verbose
+      - /app/vendor/bin/drush --root=/app/web site:install --account-mail=noreply@email.arizona.edu --account-name=azadmin --account-pass=azadmin2026 --db-url=mysql://drupal11:drupal11@database:3306/drupal11 -y --verbose
       - /app/vendor/bin/drush --root=/app/web config:set -y az_cas.settings disable_login_form 0
       - /app/vendor/bin/drush --root=/app/web cache:rebuild
   # Enable theme debugging.

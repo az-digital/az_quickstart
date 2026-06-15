@@ -2,3 +2,5 @@ az_person:
   css:
     theme:
       css/az_person.css: {}
+  dependencies:
+    - az_barrio/arizona-bootstrap-css

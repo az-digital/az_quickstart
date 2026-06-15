@@ -9,6 +9,11 @@ use Drupal\migrate\Row;
 /**
  * Drupal 7 file source from database.
  *
+ * @deprecated in az_quickstart:3.3.0 and is removed from az_quickstart:4.0.0.
+ * There is no replacement.
+ *
+ * @see https://www.drupal.org/node/3533564
+ *
  * @todo Support file migration, copy all fid files.
  */
 #[MigrateSource('az_file_migration')]

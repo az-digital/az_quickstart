@@ -1,0 +1,28 @@
+# Library definition for AZ GDPR Consent Management
+
+# Intercept library - must load before everything else
+gdpr_intercept:
+  version: 1.0
+  js:
+    # Intercept script must load first to set up Drupal.attachBehaviors trap
+    js/az-gdpr-intercept.js: { preprocess: false, weight: -1000 }
+  # Load this script in the header
+  header: true
+
+gdpr_consent:
+  version: 1.0
+  css:
+    theme:
+      css/az-gdpr-consent.css: {}
+  js:
+    # Remote video consent handler must load first to intercept script creation
+    js/az-gdpr-remote-video-consent-handler.js: { preprocess: false }
+    # Main consent script loads after handler but before Klaro
+    # Uses early fetch (started inline in <head>) with async .then() to set cookie
+    js/az-gdpr-consent.js: { preprocess: false }
+  # Load this script in the header to ensure it runs before Klaro loads
+  header: true
+  # Depend on drupalSettings to ensure it's available
+  dependencies:
+    - core/drupalSettings
+    - az_gdpr_consent/gdpr_intercept
