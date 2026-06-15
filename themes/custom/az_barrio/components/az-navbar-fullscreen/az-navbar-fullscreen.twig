@@ -128,7 +128,7 @@
                         <div class="navbar-az-fullscreen-modal-menu-submenu navbar-az-fullscreen-modal-menu-primary-submenu collapse{{ expanded ? ' show' }}" id="az-navbar-az-fullscreen-primary-{{ loop.index }}-content" data-bs-parent="#az-navbar-az-fullscreen-primary-accordion">
                           <div class="navbar-az-fullscreen-modal-menu-submenu-inner">
                             <div class="col col-lg-6 navbar-az-fullscreen-modal-menu-nav-col navbar-az-fullscreen-modal-menu-nav-col-secondary">
-                              <ul class="nav" aria-label="{{ item.title }}">
+                              <ul class="nav" id="az-navbar-az-fullscreen-{{ loop.index }}-secondary-nav" aria-label="{{ item.title }}">
                                 {% for child in item.below %}
                                   {% set end_of_trail = true %}
                                   {% if child.below and child.in_active_trail %}
@@ -147,7 +147,7 @@
                                       <button class="btn nav-toggle nav-toggle-separated{{ not expanded ? ' collapsed' }}" id="az-navbar-az-fullscreen-{{ loop.parent.loop.index }}-secondary-{{ loop.index }}-tab" data-bs-toggle="collapse" data-bs-target="#az-navbar-az-fullscreen-{{ loop.parent.loop.index }}-secondary-{{ loop.index }}-content" type="button" aria-expanded="{{ expanded ? 'true' : 'false' }}" aria-controls="az-navbar-az-fullscreen-{{ loop.parent.loop.index }}-secondary-{{ loop.index }}-content" aria-label="Toggle {{ child.title }} submenu">
                                         <span class="nav-toggle-icon" aria-hidden="true"></span>
                                       </button>
-                                      <div class="navbar-az-fullscreen-modal-menu-submenu navbar-az-fullscreen-modal-menu-secondary-submenu collapse{{ expanded ? ' show' }}" id="az-navbar-az-fullscreen-{{ loop.parent.loop.index }}-secondary-{{ loop.index }}-content">
+                                      <div class="navbar-az-fullscreen-modal-menu-submenu navbar-az-fullscreen-modal-menu-secondary-submenu collapse{{ expanded ? ' show' }}" id="az-navbar-az-fullscreen-{{ loop.parent.loop.index }}-secondary-{{ loop.index }}-content" data-bs-parent="#az-navbar-az-fullscreen-{{ loop.parent.loop.index }}-secondary-nav">
                                         <div class="navbar-az-fullscreen-modal-menu-submenu-inner">
                                           <div class="col navbar-az-fullscreen-modal-menu-nav-col navbar-az-fullscreen-modal-menu-nav-col-tertiary">
                                             <ul class="nav navbar-az-fullscreen-nav-tertiary" aria-label="{{ child.title }} submenu">
