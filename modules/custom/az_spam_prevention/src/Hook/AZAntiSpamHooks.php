@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\az_spam_prevention\Hook;
 
 use Drupal\captcha\Service\CaptchaService;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Form\BaseFormIdInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
@@ -16,6 +17,13 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
  * Hook implementations for az_spam_prevention.
  */
 class AZAntiSpamHooks {
+
+  /**
+   * The module handler.
+   *
+   * @var \Drupal\Core\Extension\ModuleHandlerInterface
+   */
+  protected $moduleHandler;
 
   /**
    * The Captcha helper service.
@@ -34,18 +42,22 @@ class AZAntiSpamHooks {
   /**
    * Constructs a new AZSpamHooks object.
    *
+   * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
+   *   The module handler.
    * @param \Drupal\captcha\Service\CaptchaService $captcha_service
    *   The captcha helper service.
    * @param \Drupal\Core\Session\AccountProxyInterface $current_user
    *   The currently logged-in user.
    */
   public function __construct(
+    ModuleHandlerInterface $module_handler,
     // Captcha modoule doesn't autowire correctly.
     #[Autowire(service: 'captcha.helper')]
     CaptchaService $captcha_service,
     #[Autowire(service: 'current_user')]
     AccountProxyInterface $current_user,
   ) {
+    $this->moduleHandler = $module_handler;
     $this->captchaHelper = $captcha_service;
     $this->currentUser = $current_user;
   }
@@ -72,10 +84,8 @@ class AZAntiSpamHooks {
             return;
           }
         }
-        // Abort if this appears to be missing the normal actions element.
-        if (!isset($form['elements']['actions'])) {
-          return;
-        }
+        // Make sure captcha API functions are available.
+        $this->moduleHandler->loadInclude('captcha', 'inc', 'captcha');
         // Build CAPTCHA form element.
         $captcha_element = [
           '#type' => 'captcha',
@@ -83,12 +93,16 @@ class AZAntiSpamHooks {
         ];
 
         // Create placement position and insert in form.
-        // @todo we should use _captcha_get_captcha_placement() here.
-        // However, that function does not understand webform actions.
-        $captcha_placement = [
-          'path' => ['elements'],
-          'key' => 'actions',
-        ];
+        $captcha_placement = _captcha_get_captcha_placement($form_id, $form);
+        // @todo Workaround for webforms that contain an actions element.
+        // Captcha placement function does not understand webform actions.
+        if (isset($form['elements']['actions'])) {
+          $captcha_placement = [
+            'path' => ['elements'],
+            'key' => 'actions',
+          ];
+        }
+
         $this->captchaHelper->insertCaptchaElement($form, $captcha_placement, $captcha_element);
       }
     }
