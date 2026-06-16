@@ -733,4 +733,5 @@ function az_barrio_preprocess_block(&$variables) {
  */
 function az_barrio_preprocess_block__az_navbar_fullscreen_menu_block(array &$variables) {
   $variables['wordmark'] = (\Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('wordmark')) ? TRUE : FALSE;
+  $variables['wordmark_url'] = $variables['wordmark'] ? str_replace('arizona-bootstrap.min.css', 'img/arizona-bootstrap-logo-webheader-white.svg', \Drupal::state()->get(AZ_BOOTSTRAP_LOCATION)) : '';
 }

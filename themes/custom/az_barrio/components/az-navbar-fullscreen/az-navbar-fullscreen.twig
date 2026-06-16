@@ -21,7 +21,8 @@
  * - helpful_links_items: A list of "helpful links" menu items.
  * - search_form_block_desktop_navbar: The search form block content to display in the desktop navbar.
  * - search_form_block_offcanvas: The search form block content to display in the offcanvas menu.
- * - wordmark: Setting to display the University wordmark in the nav.
+ * - wordmark: Setting to display the university wordmark in the navbar.
+ * - wordmark_url: The URL for the wordmark logo.
  */
 #}
 
@@ -29,7 +30,7 @@
   <div class="container-lg">
     {% if wordmark %}
       <a class="navbar-brand" href="https://www.arizona.edu" title="The University of Arizona homepage">
-        <img alt="The University of Arizona Wordmark Logo White" src="https://digital.arizona.edu/arizona-bootstrap/v5/docs/5.1/assets/brand/arizona-bootstrap-logo-webheader-white.svg" fetchpriority="high"/>
+        <img alt="The University of Arizona Wordmark Logo White" src="{{ wordmark_url }}" fetchpriority="high"/>
       </a>
     {% endif %}
 
@@ -74,7 +75,7 @@
           <div class="container-lg">
             {% if wordmark %}
               <a class="navbar-brand" href="https://www.arizona.edu" title="The University of Arizona homepage">
-                <img alt="The University of Arizona Wordmark Logo White" src="https://digital.arizona.edu/arizona-bootstrap/v5/docs/5.1/assets/brand/arizona-bootstrap-logo-webheader-white.svg" fetchpriority="high"/>
+                <img alt="The University of Arizona Wordmark Logo White" src="{{ wordmark_url }}" fetchpriority="high"/>
               </a>
             {% endif %}
             <ul class="navbar-nav navbar-az-fullscreen-actions d-none d-lg-flex ms-auto me-3">
