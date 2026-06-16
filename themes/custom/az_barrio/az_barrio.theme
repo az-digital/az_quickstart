@@ -727,6 +727,18 @@ function az_barrio_preprocess_block(&$variables) {
 }
 
 /**
+ * Implements hook_preprocess_HOOK() for search block form submit buttons.
+ *
+ * Modify search block form submit button when AZ Navbar Fullscreen is enabled.
+ */
+function az_barrio_preprocess_input__search_block_form__submit(array &$variables) {
+  if (\Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_navbar_fullscreen')) {
+    $variables['attributes']['aria-label'] = 'Submit search';
+    $variables['az_navbar_fullscreen'] = TRUE;
+  }
+}
+
+/**
  * Implements hook_preprocess_HOOK() for the AZ Navbar Fullscreen menu block.
  *
  * Pass wordmark logo setting to the AZ Navbar Fullscreen menu block template.
