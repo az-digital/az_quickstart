@@ -50,7 +50,7 @@ class AZAttachment extends FilesExtractor {
     $extractor_plugin_id = $config->get('extraction_method');
     // Get the config option to read text files directly.
     $this->configuration['read_text_files_directly'] = $config->get('read_text_files_directly');
-    if ($extractor_plugin_id != '') {
+    if ($extractor_plugin_id !== '') {
       $configuration = $config->get($extractor_plugin_id . '_configuration');
       $extractor_plugin = $this->textExtractorPluginManager->createInstance($extractor_plugin_id, $configuration);
       // Get the entity.
@@ -63,15 +63,15 @@ class AZAttachment extends FilesExtractor {
       if (!$entity instanceof FieldableEntityInterface) {
         return;
       }
-      $is_entity_type_file = $entity->getEntityTypeId() == 'file';
+      $is_entity_type_file = $entity->getEntityTypeId() === 'file';
       foreach ($this->getFileFieldsAndFileEntityItems() as $field_name => $label) {
         $files = [];
         // If the parent entity is not a file, no need to parse the
         // saa static::SAA_FILE_ENTITY item.
-        if (!$is_entity_type_file && $field_name == static::SAA_FILE_ENTITY) {
+        if (!$is_entity_type_file && $field_name === static::SAA_FILE_ENTITY) {
           break;
         }
-        if ($is_entity_type_file && $field_name == static::SAA_FILE_ENTITY) {
+        if ($is_entity_type_file && $field_name === static::SAA_FILE_ENTITY) {
           $files[] = $entity;
         }
 
@@ -81,7 +81,7 @@ class AZAttachment extends FilesExtractor {
           if ($entity->hasField($field_name)) {
             // Get type to manage media entity reference case.
             $type = $entity->get($field_name)->getFieldDefinition()->getType();
-            if ($type == 'entity_reference') {
+            if ($type === 'entity_reference') {
               /** @var \Drupal\Core\Field\BaseFieldDefinition $field_def */
               $field_def = $entity->get($field_name)->getFieldDefinition();
               if ($field_def->getItemDefinition()->getSetting('target_type') === 'media') {
@@ -104,7 +104,7 @@ class AZAttachment extends FilesExtractor {
                 }
               }
             }
-            elseif ($type == "file") {
+            elseif ($type === "file") {
               $filefield_values = $entity->get($field_name)->filterEmptyItems()->getValue();
               foreach ($filefield_values as $filefield_value) {
                 $all_fids[] = $filefield_value['target_id'];
