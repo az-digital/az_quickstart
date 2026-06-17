@@ -759,5 +759,7 @@ function az_barrio_preprocess_input__search_block_form__submit(array &$variables
  */
 function az_barrio_preprocess_block__az_navbar_fullscreen_menu_block(array &$variables) {
   $variables['wordmark'] = (\Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('wordmark')) ? TRUE : FALSE;
-  $variables['wordmark_url'] = $variables['wordmark'] ? str_replace('arizona-bootstrap.min.css', 'img/arizona-bootstrap-logo-webheader-white.svg', \Drupal::state()->get(AZ_BOOTSTRAP_LOCATION)) : '';
+  $az_bootstrap_location = \Drupal::state()->get(AZ_BOOTSTRAP_LOCATION);
+  $css_path = strpos($az_bootstrap_location, '/css/') + 5;
+  $variables['wordmark_url'] = $variables['wordmark'] ? (substr($az_bootstrap_location, 0, $css_path) . 'img/arizona-bootstrap-logo-webheader-white.svg') : '';
 }
