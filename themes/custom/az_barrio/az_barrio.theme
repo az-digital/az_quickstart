@@ -732,7 +732,8 @@ function az_barrio_preprocess_block(&$variables) {
  * Modify search block form submit button when AZ Navbar Fullscreen is enabled.
  */
 function az_barrio_preprocess_input__search(array &$variables) {
-  $az_navbar_fullscreen_enabled = ($variables['element']['#form_id'] === 'search_block_form'
+  $az_navbar_fullscreen_enabled = (isset($variables['element']['#form_id'])
+    && $variables['element']['#form_id'] === 'search_block_form'
     && \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_navbar_fullscreen'));
   $search_text = $az_navbar_fullscreen_enabled ? 'Search' : 'Search this site';
   $variables['attributes']['placeholder'] = $search_text;
