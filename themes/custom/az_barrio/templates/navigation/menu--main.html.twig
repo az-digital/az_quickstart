@@ -65,16 +65,8 @@
           {% else %}
             {{ link(item.title, item.url, {'class': link_classes}) }}
           {% endif %}
-        {% if menu_level == 0 %}
         </li>
-        {% else %}
-        </li>
-        {% endif %}
     {% endfor %}
-    {% if menu_level == 0 %}
       </ul>
-    {% else %}
-      </ul>
-    {% endif %}
   {% endif %}
 {% endmacro %}
