@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.media.az_trellis.field_media_az_media_remote
+    - field.field.media.az_trellis.field_az_media_trellis_url
     - media.type.az_trellis
   module:
     - path
@@ -20,7 +20,7 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_media_az_media_remote:
+  field_az_media_trellis_url:
     type: string_textfield
     weight: 1
     region: content
