@@ -727,10 +727,39 @@ function az_barrio_preprocess_block(&$variables) {
 }
 
 /**
+ * Implements hook_preprocess_HOOK() for input search fields.
+ *
+ * Modify search block form submit button when AZ Navbar Fullscreen is enabled.
+ */
+function az_barrio_preprocess_input__search(array &$variables) {
+  $az_navbar_fullscreen_enabled = (isset($variables['element']['#form_id'])
+    && $variables['element']['#form_id'] === 'search_block_form'
+    && \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_navbar_fullscreen'));
+  $search_text = $az_navbar_fullscreen_enabled ? 'Search' : 'Search this site';
+  $variables['attributes']['placeholder'] = $search_text;
+  $variables['attributes']['aria-label'] = $search_text;
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for search block form submit buttons.
+ *
+ * Modify search block form submit button when AZ Navbar Fullscreen is enabled.
+ */
+function az_barrio_preprocess_input__search_block_form__submit(array &$variables) {
+  if (\Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_navbar_fullscreen')) {
+    $variables['attributes']['aria-label'] = 'Submit search';
+    $variables['az_navbar_fullscreen'] = TRUE;
+  }
+}
+
+/**
  * Implements hook_preprocess_HOOK() for the AZ Navbar Fullscreen menu block.
  *
  * Pass wordmark logo setting to the AZ Navbar Fullscreen menu block template.
  */
 function az_barrio_preprocess_block__az_navbar_fullscreen_menu_block(array &$variables) {
   $variables['wordmark'] = (\Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('wordmark')) ? TRUE : FALSE;
+  $az_bootstrap_location = \Drupal::state()->get(AZ_BOOTSTRAP_LOCATION);
+  $css_path = strpos($az_bootstrap_location, '/css/') + 5;
+  $variables['wordmark_url'] = $variables['wordmark'] ? (substr($az_bootstrap_location, 0, $css_path) . 'img/arizona-bootstrap-logo-webheader-white.svg') : '';
 }

@@ -84,6 +84,10 @@ field_settings:
         - field.storage.node.field_az_enterprise_attributes
       module:
         - taxonomy
+  extracted_attachments:
+    label: 'Extracted Attachments'
+    property_path: az_attachments
+    type: text
   rendered_item:
     label: 'Rendered HTML output'
     property_path: rendered_item
@@ -135,6 +139,13 @@ processor_settings:
   aggregated_field: {  }
   auto_aggregated_fulltext_field: {  }
   az_anonymous_access: {  }
+  az_attachments:
+    excluded_extensions: 'csv json tsv'
+    number_indexed: '0'
+    number_first_bytes: '1 MB'
+    max_filesize: '0'
+    excluded_private: 1
+    excluded_mimes: 'text/csv application/json text/tab-separated-values'
   az_base_url:
     weights:
       preprocess_index: -15
@@ -145,6 +156,7 @@ processor_settings:
       - created
       - description
       - sitename
+      - extracted_attachments
       - rendered_item
       - title
       - url
