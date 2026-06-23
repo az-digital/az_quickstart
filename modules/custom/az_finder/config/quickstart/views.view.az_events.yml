@@ -2034,7 +2034,7 @@ display:
           admin_label: ''
           plugin_id: result
           empty: false
-          content: '<p><em><div class="pager-summary">Displaying @start - @end of @total</em></p>'
+          content: '<p><em><div class="pager-summary">Page @current_page of @page_count</em></p>'
       exposed_block: true
       display_extenders: {  }
       path: calendar
