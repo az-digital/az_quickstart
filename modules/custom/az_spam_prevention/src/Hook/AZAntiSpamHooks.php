@@ -94,15 +94,6 @@ class AZAntiSpamHooks {
 
         // Create placement position and insert in form.
         $captcha_placement = _captcha_get_captcha_placement($form_id, $form);
-        // @todo Workaround for webforms that contain an actions element.
-        // Captcha placement function does not understand webform actions.
-        if (isset($form['elements']['actions'])) {
-          $captcha_placement = [
-            'path' => ['elements'],
-            'key' => 'actions',
-          ];
-        }
-
         $this->captchaHelper->insertCaptchaElement($form, $captcha_placement, $captcha_element);
       }
     }

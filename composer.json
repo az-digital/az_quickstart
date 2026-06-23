@@ -168,6 +168,9 @@
                 "Fix alerts (3485305)": "https://www.drupal.org/files/issues/2025-08-27/3485305-22.patch",
                 "Region class field: increase maxlength from 40 to 255 (3548552)": "https://www.drupal.org/files/issues/2025-09-24/3548552-4.patch"
             },
+            "drupal/captcha": {
+                "Captcha placement below Webform actions when Submit button(s) customized (3425585)": "https://gist.githubusercontent.com/tadean/f5d7f69bc12000d9e6316bb94f4afd44/raw/24be8269ddd5a8582ef99f18657c3eb93669e287/captcha-webform-placement-3425585-MR135.patch"
+            },
             "drupal/config_distro": {
                 "Storage comparer issue": "https://gist.githubusercontent.com/tadean/e2e0dd57f1a9c4eae28d8e713cb01d82/raw/e114987d4a76c183208c763de4dbfecbf41b7f35/config_distro_storage_comparer_issue.patch"
             },
