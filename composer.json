@@ -216,6 +216,9 @@
             "drupal/inline_entity_form": {
                 "Support Referencing the same entity multiple times (3363988)": "https://gist.githubusercontent.com/tadean/d3c4969f0c8dd7bacc3a3c0ba0521b3e/raw/f5ad64286fdcfcc23b2bf147656b012bba6a4872/inline_entity_form_multiple.patch"
             },
+            "drupal/masquerade_log": {
+                "Error when using Drush on Drupal 11.4 (3602814)": "https://www.drupal.org/files/issues/2026-06-23/3602814-7-mr19.patch"
+            },
             "drupal/menu_block": {
                 "Performance issue caused by build in access check (3509045)": "https://www.drupal.org/files/issues/2025-03-05/3509045-13.patch"
             },
