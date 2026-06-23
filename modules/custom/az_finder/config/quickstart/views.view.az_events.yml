@@ -162,7 +162,7 @@ display:
           field: area
           relationship: none
           group_type: group
-          admin_label: ''
+          admin_label: 'Pagination Summary'
           plugin_id: text
           empty: true
           content:
@@ -335,7 +335,12 @@ display:
       relationships: {  }
       css_class: ''
       header: {  }
-      footer: {  }
+      footer:
+        result:
+          id: result
+          table: views
+          field: result
+          plugin_id: result
       display_extenders: {  }
     cache_metadata:
       max-age: -1
@@ -2014,10 +2019,22 @@ display:
         sorts: false
         filters: false
         filter_groups: false
+        footer: false
       css_class: add-pager-top-margin
       use_ajax: true
       display_description: ''
       style_options: null
+      footer:
+        result:
+          id: result
+          table: views
+          field: result
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: result
+          empty: false
+          content: '<p><em><div class="pager-summary">Displaying @start - @end of @total</em></p>'
       exposed_block: true
       display_extenders: {  }
       path: calendar

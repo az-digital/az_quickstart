@@ -235,6 +235,9 @@ span.field-label {
   margin-top: 1rem;
 }
 
+.pager-summary {
+  margin-bottom: 1rem;
+}
 /**
  * Marker.
  */
