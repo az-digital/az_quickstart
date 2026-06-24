@@ -227,14 +227,10 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       $column_classes[] = $config['position'];
     }
     // Set column classes.
-<<<<<<< HEAD
-    $variables['elements']['#fieldgroups']['group_az_column']->format_settings['classes'] = implode(' ', $column_classes);
-=======
     if (!empty($variables['elements']['#fieldgroups']['group_az_column'])) {
       $variables['elements']['#fieldgroups']['group_az_column']->format_settings['classes'] = implode(' ', $column_classes);
     }
 
->>>>>>> 5f590058 (Fixes #5716 az_text_media_paragraph_behavior does not check field group existence (#5719))
     // Get content classes.
     $content_classes = [
       'content',
