@@ -66,8 +66,10 @@ class AZTrellisEventSource extends SourcePluginBase {
     $this->trellisIds = $configuration['trellis_ids'] ?? [];
     // If no arguments are supplied, fetch the list currently on the site.
     if (empty($this->trellisIds)) {
-      $ids = $this->trellisHelper->getImportedEventIds();
-      $ids += $this->trellisHelper->getRecurringEventIds();
+      $ids = array_merge(
+        $this->trellisHelper->getImportedEventIds(),
+        $this->trellisHelper->getRecurringEventIds(),
+      );
       $this->trellisIds = array_unique($ids);
     }
   }
