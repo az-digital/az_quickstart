@@ -1236,7 +1236,17 @@ display:
       display_description: 'Use in a region that spans at least 12 columns.'
       pager_options: null
       style_options: null
-      footer: {  }
+      footer:
+        result:
+          id: result
+          table: views
+          field: result
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: result
+          empty: false
+          content: '<p><em>Page @current_page of @page_count</em></p>'
       exposed_block: true
       display_extenders: {  }
       allow:
@@ -1247,163 +1257,6 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
-        - 'user.node_grants:view'
-        - user.permissions
-      tags: {  }
-  az_sidebar:
-    id: az_sidebar
-    display_title: 'Grid Sidebar'
-    display_plugin: block
-    position: 3
-    display_options:
-      title: ''
-      pager:
-        type: some
-        options:
-          offset: 0
-          items_per_page: 3
-      empty: {  }
-      sorts:
-        field_az_event_date_value:
-          id: field_az_event_date_value
-          table: node__field_az_event_date
-          field: field_az_event_date_value
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: date
-          order: ASC
-          expose:
-            label: ''
-            field_identifier: field_az_event_date_value
-          exposed: false
-          granularity: second
-      arguments:
-        term_node_tid_depth:
-          id: term_node_tid_depth
-          table: node_field_data
-          field: term_node_tid_depth
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: node
-          plugin_id: taxonomy_index_tid_depth
-          default_action: ignore
-          exception:
-            value: all
-            title_enable: false
-            title: All
-          title_enable: false
-          title: ''
-          default_argument_type: fixed
-          default_argument_options:
-            argument: ''
-          summary_options:
-            base_path: ''
-            count: true
-            override: false
-            items_per_page: 25
-          summary:
-            sort_order: asc
-            number_of_records: 0
-            format: default_summary
-          specify_validation: true
-          validate:
-            type: 'entity:taxonomy_term'
-            fail: 'not found'
-          validate_options:
-            bundles:
-              az_event_categories: az_event_categories
-            access: false
-            operation: view
-            multiple: 1
-          break_phrase: false
-          depth: 0
-          use_taxonomy_term_path: false
-        nid:
-          id: nid
-          table: node_field_data
-          field: nid
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: node
-          entity_field: nid
-          plugin_id: node_nid
-          default_action: default
-          exception:
-            value: all
-            title_enable: false
-            title: All
-          title_enable: false
-          title: ''
-          default_argument_type: node
-          default_argument_options: {  }
-          summary_options:
-            base_path: ''
-            count: true
-            override: false
-            items_per_page: 25
-          summary:
-            sort_order: asc
-            number_of_records: 0
-            format: default_summary
-          specify_validation: true
-          validate:
-            type: 'entity:node'
-            fail: 'not found'
-          validate_options:
-            bundles:
-              az_event: az_event
-            access: false
-            operation: view
-            multiple: 0
-          break_phrase: false
-          not: true
-      defaults:
-        empty: false
-        title: false
-        pager: false
-        sorts: false
-        arguments: false
-        pager_options: false
-        header: false
-        footer: false
-      display_description: 'Use in first or second sidebar regions'
-      pager_options: null
-      header:
-        area_text_custom:
-          id: area_text_custom
-          table: views
-          field: area_text_custom
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: text_custom
-          empty: false
-          content: '<h2 class="h5 margin-align-middle text-uppercase">Upcoming Events</h2>'
-          tokenize: false
-      footer:
-        area_text_custom:
-          id: area_text_custom
-          table: views
-          field: area_text_custom
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: text_custom
-          empty: false
-          content: "<div class=\"text-align-center\">\r\n<a title=\"View all events\" class=\"btn btn-outline-blue\" href=\"/calendar\">View all events</a>\r\n</div>"
-          tokenize: false
-      display_extenders: {  }
-      block_description: 'Sidebar Events Block'
-      allow:
-        items_per_page: false
-    cache_metadata:
-      max-age: -1
-      contexts:
-        - 'languages:language_interface'
-        - url
         - 'user.node_grants:view'
         - user.permissions
       tags: {  }
@@ -1714,7 +1567,17 @@ display:
       display_description: 'Use in a region that spans at least 12 columns.'
       pager_options: null
       style_options: null
-      footer: {  }
+      footer:
+        result:
+          id: result
+          table: views
+          field: result
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: result
+          empty: false
+          content: '<p><em>Page @current_page of @page_count</em></p>'
       exposed_block: true
       display_extenders: {  }
       allow:
@@ -1725,6 +1588,163 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
+        - 'user.node_grants:view'
+        - user.permissions
+      tags: {  }
+  az_sidebar:
+    id: az_sidebar
+    display_title: 'Grid Sidebar'
+    display_plugin: block
+    position: 3
+    display_options:
+      title: ''
+      pager:
+        type: some
+        options:
+          offset: 0
+          items_per_page: 3
+      empty: {  }
+      sorts:
+        field_az_event_date_value:
+          id: field_az_event_date_value
+          table: node__field_az_event_date
+          field: field_az_event_date_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: date
+          order: ASC
+          expose:
+            label: ''
+            field_identifier: field_az_event_date_value
+          exposed: false
+          granularity: second
+      arguments:
+        term_node_tid_depth:
+          id: term_node_tid_depth
+          table: node_field_data
+          field: term_node_tid_depth
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          plugin_id: taxonomy_index_tid_depth
+          default_action: ignore
+          exception:
+            value: all
+            title_enable: false
+            title: All
+          title_enable: false
+          title: ''
+          default_argument_type: fixed
+          default_argument_options:
+            argument: ''
+          summary_options:
+            base_path: ''
+            count: true
+            override: false
+            items_per_page: 25
+          summary:
+            sort_order: asc
+            number_of_records: 0
+            format: default_summary
+          specify_validation: true
+          validate:
+            type: 'entity:taxonomy_term'
+            fail: 'not found'
+          validate_options:
+            bundles:
+              az_event_categories: az_event_categories
+            access: false
+            operation: view
+            multiple: 1
+          break_phrase: false
+          depth: 0
+          use_taxonomy_term_path: false
+        nid:
+          id: nid
+          table: node_field_data
+          field: nid
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          entity_field: nid
+          plugin_id: node_nid
+          default_action: default
+          exception:
+            value: all
+            title_enable: false
+            title: All
+          title_enable: false
+          title: ''
+          default_argument_type: node
+          default_argument_options: {  }
+          summary_options:
+            base_path: ''
+            count: true
+            override: false
+            items_per_page: 25
+          summary:
+            sort_order: asc
+            number_of_records: 0
+            format: default_summary
+          specify_validation: true
+          validate:
+            type: 'entity:node'
+            fail: 'not found'
+          validate_options:
+            bundles:
+              az_event: az_event
+            access: false
+            operation: view
+            multiple: 0
+          break_phrase: false
+          not: true
+      defaults:
+        empty: false
+        title: false
+        pager: false
+        pager_options: false
+        sorts: false
+        arguments: false
+        header: false
+        footer: false
+      display_description: 'Use in first or second sidebar regions'
+      pager_options: null
+      header:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text_custom
+          empty: false
+          content: '<h2 class="h5 margin-align-middle text-uppercase">Upcoming Events</h2>'
+          tokenize: false
+      footer:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text_custom
+          empty: false
+          content: "<div class=\"text-align-center\">\r\n<a title=\"View all events\" class=\"btn btn-outline-blue\" href=\"/calendar\">View all events</a>\r\n</div>"
+          tokenize: false
+      display_extenders: {  }
+      block_description: 'Sidebar Events Block'
+      allow:
+        items_per_page: false
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_interface'
+        - url
         - 'user.node_grants:view'
         - user.permissions
       tags: {  }
@@ -2034,7 +2054,7 @@ display:
           admin_label: ''
           plugin_id: result
           empty: false
-          content: '<p id="az-page-summary"><em>Page @current_page of @page_count</em></p>'
+          content: '<p><em>Page @current_page of @page_count</em></p>'
       exposed_block: true
       display_extenders: {  }
       path: calendar
