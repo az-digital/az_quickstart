@@ -1,0 +1,10 @@
+name: Quickstart Spam Prevention
+description: 'Provides preconfigured defaults for spam prevention'
+core_version_requirement: ^11.3 || ^12
+type: module
+package: 'The University of Arizona - Experimental'
+lifecycle: experimental
+lifecycle_link: 'https://github.com/az-digital/az_quickstart/blob/main/RELEASES.md#experimental-features'
+dependencies:
+  - 'captcha:captcha'
+  - 'image_captcha:image_captcha'
