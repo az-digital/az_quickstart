@@ -763,3 +763,10 @@ function az_barrio_preprocess_block__az_navbar_fullscreen_menu_block(array &$var
   $css_path = strpos($az_bootstrap_location, '/css/') + 5;
   $variables['wordmark_url'] = $variables['wordmark'] ? (substr($az_bootstrap_location, 0, $css_path) . 'img/arizona-bootstrap-logo-webheader-white.svg') : '';
 }
+
+function az_barrio_preprocess_pager(&$variables) {
+  dpr($variables);
+  if(empty($variables['items'])) {
+    $variables['#attached']['library'][] = 'az_barrio/az-hide-single-pager';
+  }
+}

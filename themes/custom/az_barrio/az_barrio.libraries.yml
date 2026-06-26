@@ -14,6 +14,9 @@ az-media-display:
   css:
     component:
       css/az-media-display.css: {}
+az-hide-single-pager:
+  js:
+    js/az-hide-single-pager.js: {}
 az-back-to-top:
   js:
     js/az-back-to-top.js: {}
