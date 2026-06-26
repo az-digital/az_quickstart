@@ -1,3 +1,9 @@
+/**
+ * @file
+ * A JavaScript file to hide page count summaries in the footer
+ *  when there is only one page and no pagination.
+ */
+
 (function (Drupal, once) {
   Drupal.behaviors.hidePageSummary = {
     attach(context) {

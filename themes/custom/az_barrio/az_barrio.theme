@@ -765,10 +765,12 @@ function az_barrio_preprocess_block__az_navbar_fullscreen_menu_block(array &$var
 }
 
 /**
- *
+ * Implements hook_preprocess_HOOK() for view pagination.
+ * 
+ * If pager exists but theres only one page (therefore hidden),
+ * this hides the page count summary in the views footer.
  */
 function az_barrio_preprocess_pager(&$variables) {
-  dpr($variables);
   if (empty($variables['items'])) {
     $variables['#attached']['library'][] = 'az_barrio/az-hide-single-pager';
   }
