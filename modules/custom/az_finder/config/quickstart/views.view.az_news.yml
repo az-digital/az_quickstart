@@ -270,7 +270,17 @@ display:
           query_tags: {  }
       relationships: {  }
       header: {  }
-      footer: {  }
+      footer:
+        result:
+          id: result
+          table: views
+          field: result
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: result
+          empty: false
+          content: '<p id="az-page-summary"><em>Page @current_page of @page_count</em></p>'
       display_extenders: {  }
     cache_metadata:
       max-age: -1
@@ -1110,10 +1120,22 @@ display:
         row: false
         filters: false
         filter_groups: false
+        footer: false
       css_class: add-pager-top-margin
       use_ajax: true
       display_description: ''
       style_options: null
+      footer:
+        result:
+          id: result
+          table: views
+          field: result
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: result
+          empty: false
+          content: '<p id="az-page-summary"><em>Page @current_page of @page_count</em></p>'
       exposed_block: true
       display_extenders: {  }
       path: news
