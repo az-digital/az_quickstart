@@ -766,7 +766,7 @@ function az_barrio_preprocess_block__az_navbar_fullscreen_menu_block(array &$var
 
 /**
  * Implements hook_preprocess_HOOK() for view pagination.
- * 
+ *
  * If pager exists but theres only one page (therefore hidden),
  * this hides the page count summary in the views footer.
  */
