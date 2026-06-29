@@ -147,7 +147,7 @@ jobs:
       NEW_VERSION: ${{ inputs.release_branch_name }}
     steps:
     - name: Checkout az_quickstart
-      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       with:
         repository: az-digital/az_quickstart
         ref: ${{ github.ref_name }}
@@ -196,7 +196,7 @@ jobs:
         sed -i 's/SCAFFOLD_BRANCH="main"/SCAFFOLD_BRANCH="$NEW_VERSION"\n/g' .tugboat/config.yml
 
     - name: Setup PHP with composer v2
-      uses: shivammathur/setup-php@7c071dfe9dc99bdf297fa79cb49ea005b9fcadbc # 2.37.1
+      uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
       with:
          php-version: '8.3'
          tools: composer:v2
@@ -241,7 +241,7 @@ jobs:
     name: Update the composer dev branch alias on the `${{ github.ref_name }}` branch.
     steps:
       - name: Update `${{ github.ref_name }}` branch with new minor release branch alias.
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           ref: ${{ github.ref_name }}
           token: ${{ secrets.REPO_DISPATCH_TOKEN }}
@@ -256,7 +256,7 @@ jobs:
           sed -i "s/      - '2.x'/      - '2.x'\n      - '$NEW_VERSION'/g" .github/workflows/ci.yml
 
       - name: Setup PHP with composer v2
-        uses: shivammathur/setup-php@7c071dfe9dc99bdf297fa79cb49ea005b9fcadbc # 2.37.1
+        uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
         with:
           php-version: '8.3'
           tools: composer:v2

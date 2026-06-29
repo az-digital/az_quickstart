@@ -19,3 +19,26 @@ az_core.settings:
         locked:
           type: boolean
           label: 'Enterprise attribute edits prohibited'
+
+block.settings.az_navbar_fullscreen_menu_block:*:
+  type: block_settings
+  label: 'AZ Navbar Fullscreen Menu block'
+  mapping:
+    primary_menu:
+      type: string
+      label: 'Primary menu'
+    cta_menu:
+      type: string
+      label: 'Call to Action menu'
+    resources_menu:
+      type: string
+      label: 'Resources For menu'
+    helpful_links_menu:
+      type: string
+      label: 'Helpful Links menu'
+    search_form_block_desktop_navbar:
+      type: string
+      label: 'Search form block - Desktop navbar'
+    search_form_block_offcanvas:
+      type: string
+      label: 'Search form block - Offcanvas'

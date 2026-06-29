@@ -285,8 +285,11 @@ function az_core_canonical_url(array $data, bool $absolute = FALSE) {
   $url = $node->toUrl();
   $uri = $absolute ? $url->setOption('absolute', TRUE)->toString() : $url->toUriString();
 
-  if (!empty($node->field_az_link[0]->uri)) {
-    $uri = $node->field_az_link[0]->uri;
+  if ($node->hasField('field_az_link') && !$node->get('field_az_link')->isEmpty()) {
+    $canonical_link = $node->get('field_az_link')->first();
+    if (!empty($canonical_link->uri)) {
+      $uri = $canonical_link->uri;
+    }
   }
 
   return $uri;
@@ -591,4 +594,28 @@ function az_core_preprocess_entity_embed_container(array &$variables) {
  */
 function az_core_block_build_mobile_nav_block_alter(array &$build, BlockPluginInterface $block): void {
   $build['#cache']['keys'][] = 'mobile_nav_block';
+}
+
+/**
+ * Implements hook_preprocess_search_result().
+ *
+ * Make the search result use the canonical url if available.
+ */
+function az_core_preprocess_search_result(&$variables): void {
+  // Attempt to get the current node context of the search result.
+  $node = $variables['result']['node'] ?? NULL;
+  if ($node && ($node instanceof NodeInterface)) {
+    // Get the token value of the canonical url.
+    $token = \Drupal::token()->replace('[node:az-canonical-url]', ['node' => $node]);
+    if (!empty($token)) {
+      try {
+        // Turn routes and internal URIs into urls.
+        $url = Url::fromUri($token);
+        $variables['url'] = $url->toString();
+      }
+      catch (\InvalidArgumentException $e) {
+        // Do nothing if the token does not resolve to a valid URI.
+      }
+    }
+  }
 }
