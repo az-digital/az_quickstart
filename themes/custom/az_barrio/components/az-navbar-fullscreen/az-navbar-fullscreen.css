@@ -14,3 +14,15 @@
 .navbar-az-fullscreen-search .btn .material-symbols-rounded {
   font-size: 36px;
 }
+
+/* Drupal admin toolbar sits at top: 0 with position: fixed; shift the
+   fullscreen navbar down so it does not slide underneath. Body padding-top
+   set by toolbar.module already pushes page content (and therefore the
+   navbar-az-fullscreen-fixed-top-offset wrapper) by the same amount. */
+body.toolbar-fixed .navbar-az-fullscreen.fixed-top {
+  top: 39px;
+}
+
+body.toolbar-fixed.toolbar-horizontal.toolbar-tray-open .navbar-az-fullscreen.fixed-top {
+  top: 79px;
+}
