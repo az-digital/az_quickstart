@@ -4,6 +4,7 @@ ignored_config_entities:
   - az_enterprise_attributes_import.settings
   - 'az_event_trellis.az_recurring_import_rule.*'
   - az_event_trellis.settings
+  - az_news_feeds.settings
   - az_publication.settings
   - 'block.block.*'
   - block_class.settings
