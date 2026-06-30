@@ -7,4 +7,4 @@ lifecycle: experimental
 lifecycle_link: 'https://github.com/az-digital/az_quickstart/blob/main/RELEASES.md#experimental-features'
 dependencies:
   - 'captcha:captcha'
-  - 'image_captcha:image_captcha'
+  - 'altcha:altcha'

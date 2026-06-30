@@ -1,7 +1,7 @@
 langcode: en
 enable_globally: 0
 enable_globally_on_admin_routes: false
-default_challenge: image_captcha/Image
+default_challenge: altcha/ALTCHA
 description: ''
 title: ''
 administration_mode: false
