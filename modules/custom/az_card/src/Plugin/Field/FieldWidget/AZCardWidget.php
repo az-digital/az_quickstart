@@ -329,7 +329,7 @@ class AZCardWidget extends WidgetBase {
       $element['card_actions']['toggle'] = [
         '#type' => 'submit',
         '#limit_validation_errors' => [],
-        '#attributes' => ['class' => ['button--extrasmall', 'ml-3']],
+        '#attributes' => ['class' => ['button--extrasmall', 'ms-3']],
         '#submit' => [[$this, 'cardSubmit']],
         '#value' => ($status ? $this->t('Collapse Card') : $this->t('Edit Card')),
         '#name' => $button_name,
@@ -380,7 +380,7 @@ class AZCardWidget extends WidgetBase {
         $elements[$delta]['card_actions']['delete'] = $remove;
         // Attempt to style it like collapse button.
         $elements[$delta]['card_actions']['delete']['#attributes']['class'][] = 'button--extrasmall';
-        $elements[$delta]['card_actions']['delete']['#attributes']['class'][] = 'ml-3';
+        $elements[$delta]['card_actions']['delete']['#attributes']['class'][] = 'ms-3';
       }
     }
     return $elements;

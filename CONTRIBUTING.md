@@ -9,12 +9,12 @@ team of web-focused volunteers that meet weekly to create projects like [Arizona
 ## Things you'll need to get started
 
   * A [GitHub account](https://github.com/join).
-  * [Slack](https://uarizona.slack.com) is our main source of communications.
-    * Use the `#azdigital-quickstart` channel for questions/comments related to this
+  * [Teams](https://teams.microsoft.com/l/team/19%3A-MwdU6fBIuJVWL2G4F0NmFMqxrJ8kms2-qW5y3qCPe41%40thread.tacv2/conversations?groupId=56dd8bd6-c065-4f07-bef0-9293bb01f97f&tenantId=5ee35505-eb8e-4929-937d-645df5013288) is our main source of communications.
+    * Use the `Quickstart` channel for questions/comments related to this
       project.
-    * Use the `#azdigital-meetings` channel to ask questions or get updates related
+    * Use the `Meetings` channel to ask questions or get updates related
       to Arizona Digital meetings and workshops.
-    * Use the `#azdigital-support` channel to ask general questions related to
+    * Use the `Support` channel to ask general questions related to
       Arizona Digital and get support for Arizona Digital products.
   * A basic understanding of [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).
   * Local containerized (Docker) dev environment tool either Lando or DDEV.
@@ -217,34 +217,6 @@ Note that by default, Behavior form elements are shown on a **Behavior** tab
 on the paragraph. This can be avoided currently by
 [a workaround](https://www.drupal.org/project/paragraphs/issues/2928759).
 There will likely be a more official paragraphs API for this in the future.
-
-## Compiling Javascript in Local Development
-
-This project uses an ES6 to ES5 transpile process
-[similar to Drupal core](https://www.drupal.org/node/2815083).
-
-This means that you should only update `.js` files named `.es6.js` and should
-never manually edit files named `.js` as these are machine-generated.
-
-This can be done on demand with `yarn build`, or in response to changes
-with `yarn watch`. When in watch mode, javascript files will be transpiled as
-they are updated.
-
-### ES6 Transpiling on Lando
-
-```
-lando yarn build
-OR
-lando yarn watch
-```
-
-### ES6 Transpiling on DDEV
-
-```
-ddev yarn build
-OR
-ddev yarn watch
-```
 
 ## ESLint in Local Development
 

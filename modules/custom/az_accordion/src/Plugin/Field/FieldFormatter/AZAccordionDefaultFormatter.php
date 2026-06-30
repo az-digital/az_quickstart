@@ -3,14 +3,17 @@
 namespace Drupal\az_accordion\Plugin\Field\FieldFormatter;
 
 use Drupal\Component\Utility\Html;
+use Drupal\Component\Utility\Xss;
 use Drupal\Core\Field\Attribute\FieldFormatter;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Render\Markup;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\az_accordion\Plugin\Field\FieldType\AZAccordionItem;
 use Drupal\paragraphs\ParagraphInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Plugin implementation of the 'az_accordion_default' formatter.
@@ -39,6 +42,13 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
   protected $renderer;
 
   /**
+   * The request stack.
+   *
+   * @var \Symfony\Component\HttpFoundation\RequestStack
+   */
+  protected RequestStack $requestStack;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
@@ -51,38 +61,8 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
 
     $instance->entityTypeManager = $container->get('entity_type.manager');
     $instance->renderer = $container->get('renderer');
+    $instance->requestStack = $container->get('request_stack');
     return $instance;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function defaultSettings() {
-    return ['foo' => 'bar'] + parent::defaultSettings();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function settingsForm(array $form, FormStateInterface $form_state) {
-    $settings = $this->getSettings();
-
-    // @todo accordion style selection (based on custom config entities).
-    $element['foo'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Foo'),
-      '#default_value' => $settings['foo'],
-    ];
-    return $element;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function settingsSummary() {
-    $settings = $this->getSettings();
-    $summary[] = $this->t('Foo: @foo', ['@foo' => $settings['foo']]);
-    return $summary;
   }
 
   /**
@@ -93,9 +73,10 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
 
     $entity = $items->getEntity();
     $accordion_container_id = HTML::getUniqueId('accordion-' . $entity->id());
+    $faq_schema_enabled = FALSE;
 
-    /** @var \Drupal\az_accordion\Plugin\Field\FieldType\AZAccordionItem $item */
     foreach ($items as $delta => $item) {
+      assert($item instanceof AZAccordionItem);
       // Format title.
       $title = $item->title ?? '';
 
@@ -103,15 +84,13 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
       $column_classes[] = 'col-md-4 col-lg-4';
       $parent = $item->getEntity();
 
-      // Get settings from parent paragraph.
       if ($parent instanceof ParagraphInterface) {
         // Get the behavior settings for the parent.
         $parent_config = $parent->getAllBehaviorSettings();
 
-        // See if the parent behavior defines some accordion-specific
-        // settings.
-        if (!empty($parent_config['az_accordion_paragraph_behavior'])) {
-          // @todo implement az_accordion_paragraph_behavior handling.
+        // Check if FAQ schema markup is enabled.
+        if (!empty($parent_config['az_accordion_paragraph_behavior']['faq_schema'])) {
+          $faq_schema_enabled = TRUE;
         }
       }
 
@@ -137,14 +116,117 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
         '#collapsed' => $item->collapsed ? '' : 'show',
         '#aria_expanded' => !$item->collapsed ? 'true' : 'false',
       ];
+    }
 
+    $show_expand_all = FALSE;
+    if ($entity instanceof ParagraphInterface && method_exists($entity, 'getAllBehaviorSettings')) {
+      $parent_config = $entity->getAllBehaviorSettings();
+      if (!empty($parent_config['az_accordion_paragraph_behavior']) && !empty($parent_config['az_accordion_paragraph_behavior']['expand_all'])) {
+        $show_expand_all = TRUE;
+      }
+    }
+
+    if ($show_expand_all) {
+      $any_collapsed = FALSE;
+      foreach ($items as $item_check) {
+        if (!empty($item_check->collapsed)) {
+          $any_collapsed = TRUE;
+          break;
+        }
+      }
+
+      $button_text = $any_collapsed ? 'Expand all' : 'Collapse all';
+
+      $toggle_id = 'accordion-toggle-' . $accordion_container_id;
+      $element['#prefix'] = Markup::create('<div class="text-end"><button type="button" id="' . $toggle_id . '" class="btn btn-link btn-sm p-0" data-target="#' . $accordion_container_id . '">' . $button_text . '</button></div>');
     }
 
     if (!empty($element)) {
       $element['#accordion_container_id'] = $accordion_container_id;
     }
 
+    // Attach FAQ schema markup if enabled.
+    if ($faq_schema_enabled && !empty($element)) {
+      $this->attachFaqSchema($element, $items);
+    }
+
     return $element;
+  }
+
+  /**
+   * Attaches FAQ question data to the render array for later aggregation.
+   *
+   * Each FAQ-enabled accordion attaches its questions as a separate html_head
+   * entry with a unique key (faq_questions_ENTITY_ID). The
+   * AZFaqAggregatorSubscriber merges all such entries into a single
+   * FAQPage JSON-LD block before the response is sent. This approach is
+   * compatible with Drupal's render caching because #attached metadata
+   * survives caching.
+   *
+   * @param array &$element
+   *   The render array to attach the schema to.
+   * @param \Drupal\Core\Field\FieldItemListInterface $items
+   *   The accordion field items.
+   */
+  protected function attachFaqSchema(array &$element, FieldItemListInterface $items) {
+    $questions = [];
+    $scheme_and_host = $this->requestStack->getCurrentRequest()->getSchemeAndHttpHost();
+
+    foreach ($items as $item) {
+      try {
+        assert($item instanceof AZAccordionItem);
+      }
+      catch (\AssertionError) {
+        continue;
+      }
+      $title = $item->title ?? '';
+      $body_raw = $item->body ?? '';
+
+      if (empty($title) || empty($body_raw)) {
+        continue;
+      }
+
+      // Run the body through the same filter pipeline used for display so
+      // the JSON-LD reflects the final rendered HTML.
+      $processed = [
+        '#type' => 'processed_text',
+        '#text' => $body_raw,
+        '#format' => $item->body_format,
+        '#langcode' => $item->getLangcode(),
+      ];
+      $rendered_body = Html::transformRootRelativeUrlsToAbsolute((string) $this->renderer->renderInIsolation($processed), $scheme_and_host);
+
+      // Keep only the HTML tags that Google displays in FAQ rich results.
+      // @see https://developers.google.com/search/docs/appearance/structured-data/faqpage
+      $allowed_tags = [
+        'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+        'br', 'ol', 'ul', 'li', 'a', 'p', 'div',
+        'b', 'strong', 'i', 'em',
+      ];
+      $clean_body = preg_replace('/\s+/', ' ', trim(Xss::filter($rendered_body, $allowed_tags)));
+
+      $questions[] = [
+        '@type' => 'Question',
+        'name' => trim(strip_tags($title)),
+        'acceptedAnswer' => [
+          '@type' => 'Answer',
+          'text' => $clean_body,
+        ],
+      ];
+    }
+
+    if (!empty($questions)) {
+      $data = ['questions' => $questions];
+      $element['#attached']['html_head'][] = [
+        [
+          '#type' => 'html_tag',
+          '#tag' => 'script',
+          '#attributes' => ['type' => 'application/ld+json'],
+          '#value' => Markup::create(json_encode($data)),
+        ],
+        'faq_questions_' . $items->getEntity()->id(),
+      ];
+    }
   }
 
 }

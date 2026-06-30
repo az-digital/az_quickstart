@@ -34,14 +34,14 @@ class AzHttp extends Http {
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): self {
-    $instance = new static(
+    return new static(
       $configuration,
       $plugin_id,
       $plugin_definition,
+      $container->get('az_http.http_client'),
+      $container->get('plugin.manager.migrate_plus.authentication'),
     );
 
-    $instance->httpClient = $container->get('az_http.http_client');
-    return $instance;
   }
 
 }

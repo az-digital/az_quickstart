@@ -50,5 +50,3 @@ block.settings.az_select_menu:*:
         button_text_sr_only:
           type: string
           label: 'Text to help screen-reader users understand what to do.'
-
-

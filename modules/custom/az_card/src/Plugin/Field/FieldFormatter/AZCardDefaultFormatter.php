@@ -2,6 +2,7 @@
 
 namespace Drupal\az_card\Plugin\Field\FieldFormatter;
 
+use Drupal\az_card\Plugin\Field\FieldType\AZCardItem;
 use Drupal\Core\Field\Attribute\FieldFormatter;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
@@ -106,8 +107,8 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
     $settings = $this->getSettings();
     $element = [];
 
-    /** @var \Drupal\az_card\Plugin\Field\FieldType\AZCardItem $item */
     foreach ($items as $delta => $item) {
+      assert($item instanceof AZCardItem);
 
       // Format title.
       $title = $item->title ?? '';

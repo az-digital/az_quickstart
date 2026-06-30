@@ -1,3 +1,2 @@
 node_modules/**/*
-*.js
-!*.es6.js
+modules/custom/az_core/lib/**/*

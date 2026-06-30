@@ -5,4 +5,3 @@ az_news_feeds.admin_importers:
     _title: 'Configure University News Importer'
   requirements:
     _permission: 'administer quickstart configuration'
-

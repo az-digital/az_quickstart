@@ -5,6 +5,8 @@ dependencies:
     - core.entity_view_mode.media.media_library
     - field.field.media.az_image.field_az_caption
     - field.field.media.az_image.field_az_credit
+    - field.field.media.az_image.field_focal_point_x
+    - field.field.media.az_image.field_focal_point_y
     - field.field.media.az_image.field_media_az_image
     - image.style.medium
     - media.type.az_image
@@ -30,6 +32,8 @@ hidden:
   created: true
   field_az_caption: true
   field_az_credit: true
+  field_focal_point_x: true
+  field_focal_point_y: true
   field_media_az_image: true
   name: true
   uid: true

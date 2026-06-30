@@ -32,6 +32,7 @@ function az_event_theme($existing, $type, $theme, $path) {
         'location' => NULL,
         'modal' => NULL,
         'attributes' => NULL,
+        'formatted_date' => NULL,
       ],
       'render element' => 'children',
     ],
@@ -152,6 +153,9 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
       $number_of_occurrences = $event_date_field->count();
       if ($number_of_occurrences <= 1) {
         // Add to Calendar button for an event with a single occurrence.
+        $field_item = $entity->get('field_az_event_date')->first();
+        $field_render_array = $field_item ? $field_item->view('default') : [];
+
         foreach ($entity->field_az_event_date as $item) {
           if (($item->value >= $now) || (!empty($item->end_value) && ($item->end_value >= $now))) {
             $start = $item->value;
@@ -167,6 +171,7 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
               '#location' => $entity->field_az_location->title ?? '',
               '#modal' => Html::getUniqueId('calendar-link-modal'),
               '#attributes' => ['class' => 'mt-3'],
+              '#formatted_date' => $field_render_array,
             ];
             break;
           }
@@ -206,9 +211,9 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
           );
           // If the date field only has a recurring item, check for overrides.
           if (!$are_occurrences_modified) {
-            /** @var \Drupal\smart_date_recur\Entity\SmartDateRule $smart_date_rule */
+            /** @var ?\Drupal\smart_date_recur\Entity\SmartDateRule $smart_date_rule */
             $smart_date_rule = \Drupal::entityTypeManager()->getStorage('smart_date_rule')->load($event_rrules[0]);
-            $are_occurrences_modified = empty($smart_date_rule->getRuleOverrides()) ? FALSE : TRUE;
+            $are_occurrences_modified = (!isset($smart_date_rule) || empty($smart_date_rule->getRuleOverrides())) ? FALSE : TRUE;
           }
           // Add help text if occurrences do not match the recurrence exactly.
           if ($are_occurrences_modified) {
@@ -232,16 +237,28 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
               $occurrences_modal[$item_index++] = [
                 '#markup' => "<h3 class='h5 mt-0'>{$upcoming_events_heading}</h3>",
               ];
+
+              $start = $item['value'] ?? '';
+              $end = $item['end_value'] ?? '';
+              $all_day = $smart_date_manager->isAllDay($start, $end);
+
+              // Render just the next occurrence's date for the modal.
+              $next_occurrence_item = $entity->field_az_event_date[$key];
+              $field_render_array = $next_occurrence_item->view('default');
+              $field_render_array['#prefix'] = '<strong>' . t('Next event:') . '</strong> ';
+
               // Add to Calendar button for an event with multiple occurrences.
               $add_to_calendar_button = [
                 '#theme' => 'az_event_calendar_add_button',
                 '#title' => $entity->getTitle(),
-                '#start_date' => $item['value'] ?? '',
-                '#end_date' => $item['end_value'] ?? '',
+                '#start_date' => $start,
+                '#end_date' => $end,
+                '#all_day' => $all_day,
                 '#description' => $summary,
                 '#location' => $entity->field_az_location->title ?? '',
                 '#modal' => Html::getUniqueId('calendar-link-modal'),
                 '#attributes' => ['class' => 'mb-2'],
+                '#formatted_date' => $field_render_array,
               ];
             }
             $occurrences_modal[$item_index++] = $occurrence_items[$key]['render'];
@@ -306,8 +323,11 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
 function az_event_get_recurrence_text(string $rule_index, array $last_occurrence, string $event_langcode) {
   $recurrence_text = '';
 
-  /** @var \Drupal\smart_date_recur\Entity\SmartDateRule $smart_date_rule */
+  /** @var ?\Drupal\smart_date_recur\Entity\SmartDateRule $smart_date_rule */
   $smart_date_rule = \Drupal::entityTypeManager()->getStorage('smart_date_rule')->load($rule_index);
+  if (!isset($smart_date_rule)) {
+    return $recurrence_text;
+  }
   $start_date = (new \DateTime)->setTimestamp($smart_date_rule->get('start')[0]->getString());
   $recurr_rule = new Rule($smart_date_rule->getRule(), $start_date);
 
@@ -444,6 +464,37 @@ function az_event_form_views_exposed_form_alter(&$form, FormStateInterface $form
         // Our goal is to hide the filter if it conflicts or has no terms.
         if (!$keep_filter) {
           $form['term_node_tid_depth']['#access'] = FALSE;
+        }
+      }
+    }
+    if (isset($form['az_enterprise_attributes'])) {
+      if (isset($form['az_enterprise_attributes']['#options']) &&
+        is_array($form['az_enterprise_attributes']['#options'])) {
+        // We will only show the category filter in some cases.
+        $keep_filter = TRUE;
+
+        // Get the arguments statically, as this hook is called multiple times.
+        // At some points in the request, the arguments disappear.
+        $view_args = &drupal_static(__FUNCTION__);
+        if (!isset($view_args)) {
+          $view_args = $view->args;
+        }
+
+        // Check if our event category filter doesn't contain multiple terms.
+        // The implication is this site probably doesn't use this vocabulary.
+        if (count($form['az_enterprise_attributes']['#options']) <= 1) {
+          $keep_filter = FALSE;
+        }
+
+        // Check if we seem to have contextual filter arguments.
+        if (isset($view_args) && is_array($view_args) && !empty($view_args)) {
+          $keep_filter = FALSE;
+        }
+
+        // Hide the category filter if either of the above were the case.
+        // Our goal is to hide the filter if it conflicts or has no terms.
+        if (!$keep_filter) {
+          $form['az_enterprise_attributes']['#access'] = FALSE;
         }
       }
     }

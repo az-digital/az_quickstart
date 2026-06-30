@@ -1,0 +1,16 @@
+.navbar-az-fullscreen-actions .nav-link {
+  white-space: nowrap;
+}
+
+.navbar-az-fullscreen-search #search-block-form {
+  padding: 0;
+  width: 100%;
+}
+
+.navbar-az-fullscreen-search .btn {
+  padding-bottom: 10px;
+}
+
+.navbar-az-fullscreen-search .btn .material-symbols-rounded {
+  font-size: 36px;
+}

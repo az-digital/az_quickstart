@@ -29,5 +29,5 @@ settings:
 visibility:
   request_path:
     id: request_path
-    pages: "/pages/combo-page-no-sidebar\n/pages/text-background-no-sidebar\n/pages/split-screen-no-sidebar\n/finders/people\n/finders/news\n/finders/events\n/finders/pages\n/finders/content"
+    pages: "/pages/combo-page-no-sidebar\n/pages/text-background-no-sidebar\n/pages/split-screen-no-sidebar\n/finders/*"
     negate: true

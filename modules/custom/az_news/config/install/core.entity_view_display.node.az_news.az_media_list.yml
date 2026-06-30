@@ -97,8 +97,10 @@ third_party_settings:
       weight: 5
       format_type: html_element
       format_settings:
-        classes: 'col-4 pt-2'
+        classes: 'col-4 pt-2 pb-card mb-nmin'
+        show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -269,18 +271,18 @@ content:
     type: timestamp_ap_style
     label: hidden
     settings:
-      always_display_year: '1'
-      use_today: '1'
-      cap_today: '1'
-      display_day: '1'
-      display_noon_and_midnight: '1'
+      always_display_year: true
+      use_today: true
+      cap_today: true
+      display_day: true
+      display_time: false
+      hide_date: false
+      time_before_date: false
+      display_noon_and_midnight: true
+      capitalize_noon_and_midnight: false
+      use_all_day: false
       timezone: ''
-      display_time: 0
-      time_before_date: 0
-      use_all_day: 0
-      capitalize_noon_and_midnight: 0
-      hide_date: 0
-      month_only: 0
+      month_only: false
     third_party_settings: {  }
     weight: 5
     region: content

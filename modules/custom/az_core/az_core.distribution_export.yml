@@ -54,4 +54,4 @@ merge:
     name: ''
     mail: ''
   az_cas.settings:
-    disable_login_form: true  
+    disable_login_form: true

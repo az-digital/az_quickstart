@@ -1,0 +1,5 @@
+entity.az_ldap_role.add_form:
+  route_name: 'entity.az_ldap_role.add_form'
+  title: 'Add Quickstart LDAP Role Mapping'
+  appears_on:
+    - entity.az_ldap_role.collection

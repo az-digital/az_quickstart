@@ -42,6 +42,10 @@ function az_demo_install() {
     ->getEditable('az_flexible_page.settings')
     ->set('marketing_page_styles.enabled', TRUE)
     ->save();
+
+  // Import Finder view overrides so that exposed filter blocks have valid
+  // references during install.
+  \Drupal::service('az_core.override_import')->importOverrides(['az_finder']);
 }
 
 /**
