@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+id: node__az_course
+label: 'Content: Course'
+tags:
+  description: '[node:field_az_course_description]'
+  title: '[node:field_az_course_title] | [site:name]'
