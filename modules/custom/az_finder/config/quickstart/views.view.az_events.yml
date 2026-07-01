@@ -162,7 +162,7 @@ display:
           field: area
           relationship: none
           group_type: group
-          admin_label: 'Pagination Summary'
+          admin_label: ''
           plugin_id: text
           empty: true
           content:
