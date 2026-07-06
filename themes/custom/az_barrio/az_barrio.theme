@@ -752,19 +752,19 @@ function az_barrio_preprocess_input__search_block_form__submit(array &$variables
   $theme_settings = \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider');
   if ($theme_settings->getSetting('az_header_blue') || $theme_settings->getSetting('az_navbar_fullscreen')) {
     $variables['attributes']['aria-label'] = 'Submit site search';
-    $variables['az_search_icon'] = TRUE;
   }
 }
 
 /**
  * Implements hook_preprocess_HOOK() for search block forms.
  *
- * Add az-search class to the form when AZ Header Blue or AZ Navbar Fullscreen
- * is enabled.
+ * Add az-search class to the desktop search block when AZ Header Blue or AZ
+ * Navbar Fullscreen is enabled.
  */
 function az_barrio_preprocess_form__search_block_form(array &$variables) {
   $theme_settings = \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider');
-  if ($theme_settings->getSetting('az_header_blue') || $theme_settings->getSetting('az_navbar_fullscreen')) {
+  $is_desktop_search_block = ($variables['attributes']['block'] ?? '') === 'block-az-barrio-search';
+  if ($is_desktop_search_block && ($theme_settings->getSetting('az_header_blue') || $theme_settings->getSetting('az_navbar_fullscreen'))) {
     $variables['attributes']['class'][] = 'az-search';
   }
 }
