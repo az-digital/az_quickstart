@@ -6,15 +6,15 @@
  * Available variables:
  * - attributes: A list of HTML attributes for the input element.
  * - children: Optional additional rendered elements.
- * - az_search_icon: True if AZ Header Blue or AZ Navbar Fullscreen is enabled.
+ *
+ * The az-search-icon is styled only when a parent .az-search class is present
+ * (desktop). The material-symbols-rounded icon is hidden on desktop via CSS
+ * and serves as the fallback for other contexts (e.g. offcanvas).
  *
  * @see template_preprocess_input()
  */
 #}
 <button{{attributes.removeClass('btn-primary')}}>
-  {% if az_search_icon %}
-    <span class="az-search-icon" aria-hidden="true"></span>
-  {% else %}
-    <span class="material-symbols-rounded">search</span>
-  {% endif %}
+  <span class="az-search-icon" aria-hidden="true"></span>
+  <span class="material-symbols-rounded" aria-hidden="true">search</span>
 </button>{{ children }}
