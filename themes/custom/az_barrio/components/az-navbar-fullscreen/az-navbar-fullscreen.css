@@ -2,11 +2,7 @@
   white-space: nowrap;
 }
 
-.navbar-az-fullscreen-search #search-block-form {
+.az-search #search-block-form {
   padding: 0;
   width: 100%;
-}
-
-.navbar-az-fullscreen-search .btn {
-  padding-bottom: 10px;
 }
