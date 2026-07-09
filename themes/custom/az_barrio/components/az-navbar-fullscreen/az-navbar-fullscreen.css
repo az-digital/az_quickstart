@@ -19,10 +19,25 @@
    fullscreen navbar down so it does not slide underneath. Body padding-top
    set by toolbar.module already pushes page content (and therefore the
    navbar-az-fullscreen-fixed-top-offset wrapper) by the same amount. */
-body.toolbar-fixed .navbar-az-fullscreen.fixed-top {
+body.toolbar-fixed.toolbar-horizontal .navbar-az-fullscreen.fixed-top {
   top: 39px;
 }
 
 body.toolbar-fixed.toolbar-horizontal.toolbar-tray-open .navbar-az-fullscreen.fixed-top {
   top: 79px;
+}
+
+body.toolbar-vertical .navbar-az-fullscreen.fixed-top {
+  top: var(--drupal-displace-offset-top);
+  z-index: 1;
+}
+
+body.toolbar-vertical:not(.toolbar-fixed) .navbar-az-fullscreen.fixed-top {
+  position: absolute;
+}
+
+@media screen and (max-width: 672px) {
+  body.toolbar-vertical {
+    padding-top: var(--drupal-displace-offset-top) !important;
+  }
 }
