@@ -115,7 +115,7 @@
                     </button>
                   {% endif %}
                   {% for offcanvasblock in page.navigation_offcanvas %}
-                    {% if offcanvasblock['#mobile_nav_block'] %}
+                    {% if 'mobile_nav_block' in offcanvasblock['#cache']['keys'] %}
                       <button type="button" data-bs-toggle="offcanvas" data-bs-target="#azMobileNav" aria-controls="azMobileNav" class="btn btn-arizona-header">
                         <span aria-hidden="true" class="icon material-symbols-rounded">menu</span>
                         <span class="icon-text">Menu</span>
@@ -162,7 +162,7 @@
             {% if page.navigation %}
               <div class="row d-none d-lg-flex">
                 <div class="col-lg">
-                  <nav id="navbar-top" class="navbar navbar-expand{{ az_navbar ? ' navbar-az' }}">
+                  <nav id="navbar-top" class="navbar navbar-expand{{ az_navbar ? ' navbar-az' }}" aria-label="{{ 'Primary navigation'|t }}">
                     {{ page.navigation }}
                   </nav>
                 </div>
@@ -267,7 +267,7 @@
 
     <footer class="site-footer">
         {% if page.footer or page.footer_sub or footer_logo %}
-        <div class="text-bg-warm-gray py-5" role="contentinfo">
+        <div class="text-bg-warm-gray py-5">
           {% if page.footer or footer_logo %}
           <section{{ attributes.addClass(classes) }}>
             <div class="container">

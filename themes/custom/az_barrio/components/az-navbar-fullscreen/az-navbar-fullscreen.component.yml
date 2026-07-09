@@ -35,7 +35,7 @@ props:
             title: Child items
             description: The menu item child items.
             items:
-              $ref: '#/props/properties/items/items'
+              type: object
           title:
             type: string
             title: Title
@@ -73,7 +73,7 @@ props:
             title: Child items
             description: The menu item child items.
             items:
-              $ref: '#/props/properties/items/items'
+              type: object
           title:
             type: string
             title: Title
@@ -111,7 +111,7 @@ props:
             title: Child items
             description: The menu item child items.
             items:
-              $ref: '#/props/properties/items/items'
+              type: object
           title:
             type: string
             title: Title
@@ -149,7 +149,7 @@ props:
             title: Child items
             description: The menu item child items.
             items:
-              $ref: '#/props/properties/items/items'
+              type: object
           title:
             type: string
             title: Title
@@ -181,4 +181,8 @@ props:
     wordmark:
       type: boolean
       title: Wordmark
-      description: Setting to display the Arizona wordmark in the menu.
+      description: Setting to display the university wordmark in the navbar.
+    wordmark_url:
+      type: string
+      title: Wordmark URL
+      description: The URL for the wordmark logo.
