@@ -29,7 +29,7 @@ final class AZPersonProfilesImportForm extends FormBase {
    */
   protected $ldapQueryController;
   /**
-   * @var \Drupal\Core\Messenger\Messenger
+   * @var \Drupal\Core\Messenger\MessengerInterface
    */
   protected $messenger;
 
