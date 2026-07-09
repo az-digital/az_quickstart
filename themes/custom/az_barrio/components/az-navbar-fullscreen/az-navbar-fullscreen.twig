@@ -104,7 +104,7 @@
         <div class="navbar-az-fullscreen-modal-menu container-lg">
           <div class="row g-0">
             <div class="col d-none d-lg-flex position-relative" id="az-navbar-az-fullscreen-primary-accordion">
-              <div class="navbar-az-fullscreen-modal-menu-nav-col col-12 col-lg-4">
+              <div class="navbar-az-fullscreen-modal-menu-nav-col navbar-az-fullscreen-modal-menu-nav-col-primary col-12 col-lg-4">
                 <!-- primary nav items -->
                 <nav class="nav navbar-az-fullscreen-nav-primary" aria-label="Main navigation sections">
                   {% for item in primary_items %}
@@ -128,7 +128,7 @@
                         <div class="navbar-az-fullscreen-modal-menu-submenu navbar-az-fullscreen-modal-menu-primary-submenu collapse{{ expanded ? ' show' }}" id="az-navbar-az-fullscreen-primary-{{ loop.index }}-content" data-bs-parent="#az-navbar-az-fullscreen-primary-accordion">
                           <div class="navbar-az-fullscreen-modal-menu-submenu-inner">
                             <div class="col col-lg-6 navbar-az-fullscreen-modal-menu-nav-col navbar-az-fullscreen-modal-menu-nav-col-secondary">
-                              <ul class="nav" id="az-navbar-az-fullscreen-{{ loop.index }}-secondary-nav" aria-label="{{ item.title }}">
+                              <ul class="nav navbar-az-fullscreen-nav-secondary" id="az-navbar-az-fullscreen-{{ loop.index }}-secondary-nav" aria-label="{{ item.title }}">
                                 {% for child in item.below %}
                                   {% set end_of_trail = true %}
                                   {% if child.below and child.in_active_trail %}
@@ -176,7 +176,6 @@
               </div>
             </div>
             <div id="navbar-az-fullscreen-nav-mobile-col" class="col-12 d-lg-none">
-              <!-- call-to-action items -->
               <ul class="navbar-nav navbar-az-fullscreen-actions d-flex flex-row align-items-center justify-content-center my-4">
                 {% for item in cta_items %}
                   <li class="nav-item">
@@ -186,8 +185,7 @@
                   </li>
                 {% endfor %}
               </ul>
-              <!-- initial mobile nav display -->
-              <div class="navbar-az-fullscreen-modal-menu-nav-col col-12">
+              <div class="navbar-az-fullscreen-modal-menu-nav-col navbar-az-fullscreen-modal-menu-nav-col-primary col-12 col-lg-4">
                 <nav class="nav navbar-az-fullscreen-nav-primary" aria-label="Main navigation sections">
                   {% for item in primary_items %}
                     <div class="nav-item">
@@ -210,7 +208,7 @@
 
       {% if resources_items %}
         <div class="modal-footer d-lg-flex" id="navbar-az-fullscreen-modal-footer-top">
-          <nav class="navbar" aria-labelledby="resources-for-label">
+          <nav class="navbar d-none d-lg-flex" aria-labelledby="resources-for-label">
             <div class="container-lg">
               <ul class="navbar-nav">
                 <li class="nav-item">
@@ -226,11 +224,20 @@
               </ul>
             </div>
           </nav>
+          <button type="button" class="btn navbar navbar-az-fullscreen-mobile-footer-btn d-lg-none" aria-controls="navbar-az-fullscreen-nav-mobile-col" aria-label="Toggle Resources For submenu" data-az-menu-element="#navbar-az-fullscreen-modal-footer-top">
+            <span class="navbar-az-fullscreen-mobile-footer-btn-text">
+              <span class="h2 navbar-brand">Resources For:</span>
+              <span class="more-links-text"></span>
+            </span>
+            <span class="nav-toggle collapsed navbar-az-fullscreen-mobile-footer-btn-icon">
+              <span class="nav-toggle-icon" aria-hidden="true"></span>
+            </span>
+          </button>
         </div>
       {% endif %}
       {% if helpful_links_items %}
         <div class="modal-footer d-lg-flex" id="navbar-az-fullscreen-modal-footer-bottom">
-          <nav class="navbar" aria-labelledby="helpful-links-label">
+          <nav class="navbar d-none d-lg-flex" aria-labelledby="helpful-links-label">
             <div class="container-lg">
               <ul class="navbar-nav">
                 <li class="nav-item">
@@ -246,6 +253,15 @@
               </ul>
             </div>
           </nav>
+          <button type="button" class="btn navbar navbar-az-fullscreen-mobile-footer-btn d-lg-none" aria-controls="navbar-az-fullscreen-nav-mobile-col" aria-label="Toggle Helpful Links submenu" data-az-menu-element="#navbar-az-fullscreen-modal-footer-bottom">
+            <span class="navbar-az-fullscreen-mobile-footer-btn-text">
+              <span class="h2 navbar-brand">Helpful Links:</span>
+              <span class="more-links-text"></span>
+            </span>
+            <span class="nav-toggle collapsed navbar-az-fullscreen-mobile-footer-btn-icon">
+              <span class="nav-toggle-icon" aria-hidden="true"></span>
+            </span>
+          </button>
         </div>
       {% endif %}
     </div>
