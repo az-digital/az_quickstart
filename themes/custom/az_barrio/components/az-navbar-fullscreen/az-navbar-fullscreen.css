@@ -36,7 +36,7 @@ body.toolbar-vertical:not(.toolbar-fixed) .navbar-az-fullscreen.fixed-top {
   position: absolute;
 }
 
-@media screen and (max-width: 672px) {
+@media screen and (max-width: 842px) {
   body.toolbar-vertical {
     padding-top: var(--drupal-displace-offset-top) !important;
   }
