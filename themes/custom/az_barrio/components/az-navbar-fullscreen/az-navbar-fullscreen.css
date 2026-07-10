@@ -10,9 +10,12 @@
 /* Temporary overrides for styling issues in Arizona Bootstrap v5.1.5.
  * @todo Remove with upgrade to Arizona Bootstrap v5.1.6.
  */
+.az-search .input-group .btn {
+  min-width: var(--az-search-height);
+}
 @media (max-width: 991.98px) {
-  .navbar.navbar-az-fullscreen .az-search {
-    margin-right: 10px;
+  .navbar-az-fullscreen .az-search .btn {
+    min-width: initial;
   }
   .modal.navbar-az-fullscreen-modal .container-lg {
     padding-top: 0;
