@@ -7,12 +7,16 @@
   width: 100%;
 }
 
-/* Temporary override for search button position on mobile.
+/* Temporary overrides for styling issues in Arizona Bootstrap v5.1.5.
  * @todo Remove with upgrade to Arizona Bootstrap v5.1.6.
  */
 @media (max-width: 991.98px) {
   .navbar.navbar-az-fullscreen .az-search {
     margin-right: 10px;
+  }
+  .modal.navbar-az-fullscreen-modal .container-lg {
+    padding-top: 0;
+    padding-bottom: 0;
   }
 }
 
