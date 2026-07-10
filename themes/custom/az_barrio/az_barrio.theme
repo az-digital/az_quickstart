@@ -772,9 +772,11 @@ function az_barrio_preprocess_block__az_navbar_fullscreen_menu_block(array &$var
  * this hides the page count summary in the views footer.
  */
 function az_barrio_views_post_render(ViewExecutable $variables) {
-  $items_per_page = (int) $variables->pager->options['items_per_page'];
-  $total_rows = (int) $variables->total_rows;
-  if ($total_rows <= $items_per_page) {
-    unset($variables->footer['result']);
+  if (isset($variables->pager)) {
+    $items_per_page = (int) $variables->pager->options['items_per_page'];
+    $total_rows = (int) $variables->total_rows;
+    if ($total_rows <= $items_per_page) {
+      unset($variables->footer['result']);
+    }
   }
 }
