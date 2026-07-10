@@ -7,6 +7,15 @@
   width: 100%;
 }
 
+/* Temporary override for search button position on mobile.
+ * @todo Remove with upgrade to Arizona Bootstrap v5.1.6.
+ */
+@media (max-width: 991.98px) {
+  .navbar.navbar-az-fullscreen .az-search {
+    margin-right: 10px;
+  }
+}
+
 /* Drupal admin toolbar sits at top: 0 with position: fixed; shift the
    fullscreen navbar down so it does not slide underneath. Body padding-top
    set by toolbar.module already pushes page content (and therefore the
