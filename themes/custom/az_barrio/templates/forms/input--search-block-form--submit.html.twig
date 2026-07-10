@@ -6,9 +6,15 @@
  * Available variables:
  * - attributes: A list of HTML attributes for the input element.
  * - children: Optional additional rendered elements.
+ * - az_navbar_fullscreen: True if the AZ Navbar Fullscreen theme setting is enabled.
  *
  * @see template_preprocess_input()
  */
 #}
-<button{{attributes.removeClass('btn-primary')}}><span class="material-symbols-rounded">search</span></button>{{ children }}
-
+<button{{attributes.removeClass('btn-primary')}}>
+  {% if az_navbar_fullscreen %}
+    <span class="search-icon" aria-hidden="true"></span>
+  {% else %}
+    <span class="material-symbols-rounded">search</span>
+  {% endif %}
+</button>{{ children }}
