@@ -229,7 +229,7 @@
             },
             "drupal/pathauto": {
                 "Deprecated error with PHP 8.5 on entity forms without pathauto patterns (3579655)": "https://www.drupal.org/files/issues/2026-05-06/3579655-mr173-24.patch",
-                "d7_pathauto_patterns migration fails with 'must define the source_module property' on Drupal 11 (3588684)": "https://git.drupalcode.org/project/pathauto/-/merge_requests/174.diff"
+                "d7_pathauto_patterns migration fails with 'must define the source_module property' on Drupal 11 (3588684)": "https://git.drupalcode.org/project/pathauto/-/commit/fed80afad8657f3478a57f9f1c066885f72943b6.diff"
             },
             "drupal/role_delegation": {
                 "Restrict access to cancel/remove accounts with non-assignable roles (3299201)": "https://www.drupal.org/files/issues/2022-07-25/3299201-4.patch"
