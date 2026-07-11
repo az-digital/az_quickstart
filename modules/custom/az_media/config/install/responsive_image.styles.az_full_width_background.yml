@@ -6,25 +6,31 @@ dependencies:
     - image.style.az_full_width_bg_large
     - image.style.az_full_width_bg_medium
     - image.style.az_full_width_bg_small
+    - image.style.az_full_width_bg_xlarge
   module:
     - az_media
 id: az_full_width_background
 label: 'Full-width background'
 image_style_mappings:
   -
-    breakpoint_id: az_media.large
+    image_mapping_type: image_style
+    image_mapping: az_full_width_bg_xlarge
+    breakpoint_id: az_media.extra
     multiplier: 1x
+  -
     image_mapping_type: image_style
     image_mapping: az_full_width_bg_large
-  -
-    breakpoint_id: az_media.medium
+    breakpoint_id: az_media.large
     multiplier: 1x
+  -
     image_mapping_type: image_style
     image_mapping: az_full_width_bg_medium
-  -
-    breakpoint_id: az_media.small
+    breakpoint_id: az_media.medium
     multiplier: 1x
+  -
     image_mapping_type: image_style
     image_mapping: az_full_width_bg_small
+    breakpoint_id: az_media.small
+    multiplier: 1x
 breakpoint_group: az_media
 fallback_image_style: az_full_width_bg_extra_small
