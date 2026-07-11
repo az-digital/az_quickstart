@@ -11,6 +11,9 @@ media_types:
   file:
     source_type: file
     media_type: az_document
+  embed:
+    source_type: embed
+    media_type: az_digital_asset_library_embed
 dependencies:
   enforced:
     module:
