@@ -240,14 +240,23 @@ class AZCardWidget extends WidgetBase {
       '#default_value' => (!empty($item->options['class'])) ? $item->options['class'] : 'text-bg-white',
     ];
 
-    $element['media'] = [
-      '#type' => 'az_media_library',
-      '#title' => $this->t('Card Media'),
-      '#default_value' => $item->media ?? NULL,
-      '#allowed_bundles' => ['az_image'],
-      '#delta' => $delta,
-      '#cardinality' => 1,
-    ];
+    if ($status) {
+      $element['media'] = [
+        '#type' => 'az_media_library',
+        '#title' => $this->t('Card Media'),
+        '#default_value' => $item->media ?? NULL,
+        '#allowed_bundles' => ['az_image'],
+        '#delta' => $delta,
+        '#cardinality' => 1,
+      ];
+    }
+    else {
+      // Closed cards: keep values without rendering heavy widgets.
+      $element['media'] = [
+        '#type' => 'value',
+        '#value' => $item->media ?? NULL,
+      ];
+    }
 
     $element['title'] = [
       '#type' => 'textfield',
@@ -267,12 +276,23 @@ class AZCardWidget extends WidgetBase {
       '#default_value' => (!empty($item->options['title_alignment'])) ? $item->options['title_alignment'] : 'text-start',
     ];
 
-    $element['body'] = [
-      '#type' => 'text_format',
-      '#title' => $this->t('Card Body'),
-      '#default_value' => $item->body ?? NULL,
-      '#format' => $item->body_format ?? self::AZ_CARD_DEFAULT_TEXT_FORMAT,
-    ];
+    if ($status) {
+      $element['body'] = [
+        '#type' => 'text_format',
+        '#title' => $this->t('Card Body'),
+        '#default_value' => $item->body ?? NULL,
+        '#format' => $item->body_format ?? self::AZ_CARD_DEFAULT_TEXT_FORMAT,
+      ];
+    }
+    else {
+      $element['body'] = [
+        '#type' => 'value',
+        '#value' => [
+          'value' => $item->body ?? '',
+          'format' => $item->body_format ?? self::AZ_CARD_DEFAULT_TEXT_FORMAT,
+        ],
+      ];
+    }
 
     $element['link_title'] = [
       '#type' => 'textfield',
@@ -498,30 +518,45 @@ class AZCardWidget extends WidgetBase {
    */
   public function massageFormValues(array $values, array $form, FormStateInterface $form_state) {
     foreach ($values as $delta => $value) {
-      if ($value['title'] === '') {
-        $values[$delta]['title'] = NULL;
+      // Allow closed cards to submit lightweight value structures.
+      if (!is_array($value)) {
+        $value = ['body' => $value];
       }
-      if ($value['body'] === '') {
-        $values[$delta]['body'] = NULL;
+
+      $title = $value['title'] ?? '';
+      $values[$delta]['title'] = ($title === '') ? NULL : $title;
+
+      $body_value = NULL;
+      $body_format = $value['body_format'] ?? self::AZ_CARD_DEFAULT_TEXT_FORMAT;
+      if (isset($value['body'])) {
+        if (is_array($value['body'])) {
+          $body_value = $value['body']['value'] ?? NULL;
+          $body_format = $value['body']['format'] ?? $body_format;
+        }
+        else {
+          $body_value = $value['body'];
+        }
       }
+      $values[$delta]['body'] = ($body_value === '') ? NULL : $body_value;
+      $values[$delta]['body_format'] = $body_format;
+
       if (empty($value['media'])) {
         $values[$delta]['media'] = NULL;
       }
-      if ($value['link_title'] === '') {
-        $values[$delta]['link_title'] = NULL;
-      }
-      if ($value['link_uri'] === '') {
-        $values[$delta]['link_uri'] = NULL;
-      }
-      if (!empty($value['options']) || !empty($value['link_style'])) {
+
+      $link_title = $value['link_title'] ?? '';
+      $values[$delta]['link_title'] = ($link_title === '') ? NULL : $link_title;
+
+      $link_uri = $value['link_uri'] ?? '';
+      $values[$delta]['link_uri'] = ($link_uri === '') ? NULL : $link_uri;
+
+      if (!empty($value['options']) || !empty($value['link_style']) || !empty($value['title_alignment'])) {
         $values[$delta]['options'] = [
-          'class' => $value['options'],
-          'link_style' => $value['link_style'],
-          'title_alignment' => $value['title_alignment'],
+          'class' => $value['options'] ?? NULL,
+          'link_style' => $value['link_style'] ?? NULL,
+          'title_alignment' => $value['title_alignment'] ?? NULL,
         ];
       }
-      $values[$delta]['body'] = $value['body']['value'];
-      $values[$delta]['body_format'] = $value['body']['format'];
     }
     return $values;
   }
