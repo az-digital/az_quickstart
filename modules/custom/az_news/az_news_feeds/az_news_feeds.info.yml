@@ -10,6 +10,7 @@ dependencies:
   - az_news:az_news
   - az_media:az_media
   - drupal:migrate
+  - az_migration_remote:az_migration_remote
   - migrate_plus:migrate_plus
   - migrate_queue_importer:migrate_queue_importer
 
