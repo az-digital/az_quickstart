@@ -50,7 +50,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   ];
   $form['az_settings']['settings']['institutional_header']['az_header_blue'] = [
     '#type' => 'checkbox',
-    '#title' => t('Enable blue Arizona Header (experimental)'),
+    '#title' => t('Enable blue Arizona Header'),
     '#description' => t('Set the Arizona Header background color to Arizona Blue instead of Arizona Red.'),
     '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_header_blue'),
   ];
@@ -346,8 +346,8 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
       [
         '#type' => 'checkbox',
         '#prefix' => "<span class='form-item__label'>" . t('AZ Navbar Fullscreen') . "</span>",
-        '#title' => t('Enable AZ Navbar Fullscreen (experimental)'),
-        '#description' => t('Enable the experimental AZ Navbar Fullscreen. This option also disables the AZ Navbar.'),
+        '#title' => t('Enable AZ Navbar Fullscreen'),
+        '#description' => t('Enable AZ Navbar Fullscreen. This option also disables the AZ Navbar.'),
         '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_navbar_fullscreen'),
         '#wrapper_attributes' => ['class' => ['field-multiple-table']],
       ],
