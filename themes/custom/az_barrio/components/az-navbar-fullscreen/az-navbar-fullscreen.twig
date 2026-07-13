@@ -44,15 +44,15 @@
       {% endfor %}
     </ul>
 
-    <div class="az-search ms-auto ms-lg-0" role="search">
+    <div class="navbar-az-fullscreen-search ms-auto ms-lg-0" role="search">
       {% if search_form_block_desktop_navbar %}
         <div class="d-none d-lg-block w-100">
           {{ search_form_block_desktop_navbar }}
         </div>
       {% endif %}
       {% if search_form_block_offcanvas %}
-        <button class="btn az-search-toggle navbar-toggler-search d-lg-none" type="button" data-bs-toggle="modal" data-bs-target="#navbar-az-fullscreen-menu" aria-controls="navbar-az-fullscreen-menu" aria-label="Search the site">
-          <span class="az-search-icon" aria-hidden="true"></span>
+        <button class="btn navbar-toggler-search d-lg-none" type="button" data-bs-toggle="modal" data-bs-target="#navbar-az-fullscreen-menu" aria-controls="navbar-az-fullscreen-menu" aria-label="Search the site">
+          <span class="search-icon" aria-hidden="true"></span>
         </button>
       {% endif %}
     </div>
@@ -93,7 +93,7 @@
         </div>
         {% if search_form_block_offcanvas %}
           <div class="container-lg">
-            <div class="az-search">
+            <div class="navbar-az-fullscreen-search">
               {{ search_form_block_offcanvas }}
             </div>
           </div>

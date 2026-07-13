@@ -418,7 +418,7 @@ td.menu-disabled {
 
 /* AZ Barrio search form block (Desktop) */
 /* Hide the material symbols fallback icon when the new az-search-icon is active. */
-.az-search .btn .material-symbols-rounded {
+.region-header-ua-utilities .az-search .btn .material-symbols-rounded {
   display: none;
 }
 
