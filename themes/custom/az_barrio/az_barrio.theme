@@ -752,7 +752,7 @@ function az_barrio_preprocess_input__search_block_form__submit(array &$variables
     $variables['az_navbar_fullscreen'] = TRUE;
   }
   if ($theme_settings->getSetting('az_header_blue')) {
-    $variables['attributes']['aria-label'] = 'Search';
+    $variables['attributes']['aria-label'] = 'Submit search';
     $variables['az_header_blue_search'] = TRUE;
   }
 }
