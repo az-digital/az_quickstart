@@ -37,10 +37,18 @@ function az_news_entity_extra_field_info() {
     // Link title pseudo field.
     $extra['node'][$bundle->id()]['display']['az_news_read_more'] = [
       'label' => t('Read more pseudo link.'),
-      'description' => "This is a pseudo field from az_news",
+      'description' => 'This is a pseudo field from az_news',
       'weight' => 50,
       'visible' => FALSE,
     ];
+    // Byline combiner.
+    $extra['node'][$bundle->id()]['display']['az_news_byline_combined'] = [
+      'label' => t('Byline and Affiliation combined and formatted.'),
+      'description' => 'This is a pseudo field from az_news',
+      'weight' => 50,
+      'visible' => FALSE,
+    ];
+
   }
 
   return $extra;
@@ -51,20 +59,48 @@ function az_news_entity_extra_field_info() {
  */
 function az_news_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
 
-  if ($entity instanceof FieldableEntityInterface && $entity->hasField('field_az_link')) {
+  if ($entity instanceof FieldableEntityInterface) {
     // Read more pseudo field.
-    if ($display->getComponent('az_news_read_more')) {
-      $bubbleable_metadata = new BubbleableMetadata();
-      $build['az_news_read_more'][] = [
-        '#type' => 'markup',
-        '#markup' => Html::escape(\Drupal::service('token')
-          ->replace('[node:az-canonical-summary-link-title]', [
-            'node' => $entity,
-          ], [], $bubbleable_metadata)),
-      ];
+    if ($entity->hasField('field_az_link')) {
+      if ($display->getComponent('az_news_read_more')) {
+        $bubbleable_metadata = new BubbleableMetadata();
+        $build['az_news_read_more'][] = [
+          '#type' => 'markup',
+          '#weight' => $display->getComponent('az_news_read_more')['weight'],
+          '#markup' => Html::escape(\Drupal::service('token')
+            ->replace('[node:az-canonical-summary-link-title]', [
+              'node' => $entity,
+            ], [], $bubbleable_metadata)),
+        ];
+      }
+    }
+    // Byline combiner pseudo field.
+    if ($entity->hasField('field_az_byline') && $entity->hasField('field_az_byline_affiliation')) {
+      if ($display->getComponent('az_news_byline_combined')) {
+        $byline = '';
+
+        if (!$entity->get('field_az_byline')->isEmpty()) {
+          $byline = t('By') . ' ' . $entity->get('field_az_byline')->value;
+        }
+
+        if (!$entity->get('field_az_byline_affiliation')->isEmpty()) {
+          if (!empty($byline)) {
+            $byline .= ', ';
+          }
+          $byline .= $entity->get('field_az_byline_affiliation')->value;
+        }
+
+        if (!empty($byline)) {
+          $build['az_news_byline_combined'] = [
+            '#type' => 'markup',
+            '#markup' => $byline,
+            '#weight' => $display->getComponent('az_news_byline_combined')['weight'],
+          ];
+        }
+
+      }
     }
   }
-
 }
 
 /**
