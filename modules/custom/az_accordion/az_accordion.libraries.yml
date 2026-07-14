@@ -1,3 +1,9 @@
+az-accordion-anchor:
+  js:
+    js/az-accordion-anchor.js: {}
+  css:
+    component:
+      css/az-accordion-anchor.css: {}
 az_accordion:
   css:
     component:

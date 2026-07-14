@@ -1,0 +1,13 @@
+/* Accordion copy link styling */
+.accordion_anchor_link {
+    text-decoration: none;
+    color: inherit;
+    display: inline-flex;
+    align-items: center;
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.accordion_anchor_link:hover {
+    color: #378dbd; /* oasis */
+}
