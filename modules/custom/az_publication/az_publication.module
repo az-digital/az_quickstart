@@ -214,6 +214,9 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
         // Add cache tag based on citation mode.
         $cache_tag = "citation:az_publication.az_citation_style." . $style_context;
         $renderer = \Drupal::service('renderer');
+        // Causes warning in phpstan, due to no CacheableDependencyInterface.
+        // @todo needs careful consideration on how to resolve to create per-style caching.
+        // @phpstan-ignore-next-line
         $renderer->addCacheableDependency($build, $cache_tag);
         // Map authorship information.
         foreach ($pmap as $source => $destination) {
