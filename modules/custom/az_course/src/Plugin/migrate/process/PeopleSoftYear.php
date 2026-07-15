@@ -33,7 +33,7 @@ class PeopleSoftYear extends ProcessPluginBase {
     $matches = [];
     if (preg_match('/^(\d)(\d\d)(\d)$/', $value, $matches)) {
       // Start with century.
-      $year = 1800 + ((int) $matches[1] * 100);
+      $year = self::CENTURY_BASE_YEAR + ((int) $matches[1] * self::YEAR_MULTIPLIER);
       // Years.
       $year += (int) $matches[2];
       $code = (string) $matches[3];
