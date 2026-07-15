@@ -248,6 +248,9 @@ az_barrio.settings:
     wordmark:
       type: boolean
       label: 'Enable wordmark logo'
+    az_header_blue:
+      type: boolean
+      label: 'Set header background color to Arizona Blue'
     az_main_menu_style:
       type: string
       label: 'Main menu style'
@@ -314,6 +317,10 @@ az_barrio.settings:
     az_navbar:
       type: boolean
       label: 'Enable AZ Navbar'
+      deprecated: 'The "az_navbar" config schema is deprecated in az_quickstart:3.4.0 and is removed from az_quickstart:3.5.0. AZ Navbar is now enabled by default. See https://quickstart.arizona.edu/site-admin/managing-menus/main-navigation'
+    az_navbar_fullscreen:
+      type: boolean
+      label: 'Enable AZ Navbar Fullscreen (Experimental)'
     primary_logo_alt_text:
       type: label
       label: 'Primary logo alt text'

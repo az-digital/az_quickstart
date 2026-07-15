@@ -233,7 +233,9 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     }
 
     // Set column classes.
-    $variables['elements']['#fieldgroups']['group_az_column']->format_settings['classes'] = implode(' ', $column_classes);
+    if (!empty($variables['elements']['#fieldgroups']['group_az_column'])) {
+      $variables['elements']['#fieldgroups']['group_az_column']->format_settings['classes'] = implode(' ', $column_classes);
+    }
 
     // Get content classes.
     $content_classes = [
@@ -301,10 +303,12 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     }
 
     // Set content classes.
-    $variables['elements']['#fieldgroups']['group_az_content']->format_settings['classes'] = implode(' ', $content_classes);
+    if (!empty($variables['elements']['#fieldgroups']['group_az_content'])) {
+      $variables['elements']['#fieldgroups']['group_az_content']->format_settings['classes'] = implode(' ', $content_classes);
+    }
     // Set title element if a heading level other than h2 (the default) was
     // selected.
-    if ($config['title_level'] !== 'h2') {
+    if (($config['title_level'] !== 'h2') && (!empty($variables['elements']['#fieldgroups']['group_az_title']))) {
       $variables['elements']['#fieldgroups']['group_az_title']->format_settings['element'] = $config['title_level'];
     }
     // Get title classes.
@@ -317,7 +321,9 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       $title_classes[] = 'text-blue';
     }
     // Set title classes.
-    $variables['elements']['#fieldgroups']['group_az_title']->format_settings['classes'] = implode(' ', $title_classes);
+    if (!empty($variables['elements']['#fieldgroups']['group_az_title'])) {
+      $variables['elements']['#fieldgroups']['group_az_title']->format_settings['classes'] = implode(' ', $title_classes);
+    }
   }
 
 }

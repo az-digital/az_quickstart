@@ -37,23 +37,29 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#weight' => -10,
   ];
 
-  // Institutional logo.
-  $form['az_settings']['settings']['institutional_logo'] = [
+  // Institutional header settings.
+  $form['az_settings']['settings']['institutional_header'] = [
     '#type' => 'fieldset',
-    '#title' => t('Institutional Logo Settings'),
+    '#title' => t('Institutional Header Settings'),
   ];
-  $form['az_settings']['settings']['institutional_logo']['wordmark'] = [
+  $form['az_settings']['settings']['institutional_header']['wordmark'] = [
     '#type' => 'checkbox',
-    '#title' => t('Institutional header wordmark logo'),
+    '#title' => t('Enable wordmark logo in the Arizona Header'),
     '#description' => t('With few exceptions, this should always be enabled.'),
     '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('wordmark'),
+  ];
+  $form['az_settings']['settings']['institutional_header']['az_header_blue'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Enable blue Arizona Header (experimental)'),
+    '#description' => t('Set the Arizona Header background color to Arizona Blue instead of Arizona Red.'),
+    '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_header_blue'),
   ];
 
   // Land Acknowledgment.
   $form['az_settings']['settings']['land_acknowledgment'] = [
     '#type' => 'checkbox',
     '#title' => t('Land Acknowledgment'),
-    '#description' => t('With few execeptions, this should always be enabled.'),
+    '#description' => t('With few exceptions, this should always be enabled.'),
     '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('land_acknowledgment'),
   ];
 
@@ -61,7 +67,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   $form['az_settings']['settings']['info_security_privacy'] = [
     '#type' => 'checkbox',
     '#title' => t('University Information Security and Privacy link'),
-    '#description' => t('With few execeptions, this should always be enabled.'),
+    '#description' => t('With few exceptions, this should always be enabled.'),
     '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('info_security_privacy'),
   ];
 
@@ -330,12 +336,23 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
         '#type' => 'checkbox',
         '#prefix' => "<span class='form-item__label'>" . t('AZ Navbar') . "</span>",
         '#title' => t('Enable AZ Navbar'),
-        '#description' => t('Adds the `navbar-az` class to the main navigation bar, providing additional styling and support for a third level of navigation. DEPRECATION WARNING: The option to disable AZ Navbar will be removed in a future release.'),
+        '#description' => t('Adds the `navbar-az` class to the main navigation bar, providing additional styling and support for a third level of navigation. DEPRECATION WARNING: The option to not use this setting is now deprecated with Quickstart 3.4 and will be removed from Quickstart 3.5. See https://quickstart.arizona.edu/site-admin/managing-menus/main-navigation'),
         '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_navbar'),
         '#wrapper_attributes' => ['class' => ['field-multiple-table']],
       ],
   ];
-  $form['components']['navbar_behaviour'] = $az_navbar_setting + $form['components']['navbar_behaviour'];
+  $az_navbar_fullscreen_setting = [
+    'az_navbar_fullscreen' =>
+      [
+        '#type' => 'checkbox',
+        '#prefix' => "<span class='form-item__label'>" . t('AZ Navbar Fullscreen') . "</span>",
+        '#title' => t('Enable AZ Navbar Fullscreen (experimental)'),
+        '#description' => t('Enable the experimental AZ Navbar Fullscreen. This option also disables the AZ Navbar.'),
+        '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_navbar_fullscreen'),
+        '#wrapper_attributes' => ['class' => ['field-multiple-table']],
+      ],
+  ];
+  $form['components']['navbar_behaviour'] = $az_navbar_setting + $az_navbar_fullscreen_setting + $form['components']['navbar_behaviour'];
   $form['affix']['navbar_top'] = [];
   $form['affix']['navbar'] = [];
   // Logos.

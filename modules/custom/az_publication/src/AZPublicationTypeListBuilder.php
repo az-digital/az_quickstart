@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\az_publication;
 
+use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Config\Entity\ConfigEntityListBuilder;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Url;
@@ -32,7 +33,7 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
   /**
    * {@inheritdoc}
    */
-  public function getDefaultOperations(EntityInterface $entity) {
+  public function getDefaultOperations(EntityInterface $entity, ?CacheableMetadata $cacheability = NULL) {
     $operations = parent::getDefaultOperations($entity);
     $current_user = \Drupal::currentUser();
     if (!$current_user->hasPermission('delete publication type entities') && isset($operations['delete'])) {
