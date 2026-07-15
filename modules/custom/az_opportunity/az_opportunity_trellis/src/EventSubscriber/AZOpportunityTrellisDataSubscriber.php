@@ -1,11 +1,12 @@
 <?php
 
-namespace Drupal\az_event_trellis\EventSubscriber;
+namespace Drupal\az_opportunity_trellis\EventSubscriber;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Messenger\Messenger;
+use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Session\AccountProxy;
-use Drupal\az_event_trellis\TrellisHelper;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\az_opportunity_trellis\TrellisHelper;
 use Drupal\migrate\Event\MigrateEvents;
 use Drupal\migrate\Event\MigratePostRowSaveEvent;
 use Drupal\views\ResultRow;
@@ -15,7 +16,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 /**
  * Provides API integration for Trellis Views.
  */
-final class AZEventTrellisDataSubscriber implements EventSubscriberInterface {
+final class AZOpportunityTrellisDataSubscriber implements EventSubscriberInterface {
+
+  use StringTranslationTrait;
 
   /**
    * @var \Drupal\Core\Session\AccountProxy
@@ -28,12 +31,12 @@ final class AZEventTrellisDataSubscriber implements EventSubscriberInterface {
   protected $entityTypeManager;
 
   /**
-   * @var \Drupal\Core\Messenger\Messenger
+   * @var \Drupal\Core\Messenger\MessengerInterface
    */
   protected $messenger;
 
   /**
-   * @var \Drupal\az_event_trellis\TrellisHelper
+   * @var \Drupal\az_opportunity_trellis\TrellisHelper
    */
   protected $trellisHelper;
 
@@ -48,18 +51,18 @@ final class AZEventTrellisDataSubscriber implements EventSubscriberInterface {
   }
 
   /**
-   * Constructs an AZEventTrellisDataSubscriber.
+   * Constructs an AZOpportunitiesTrellisDataSubscriber.
    *
-   * @param \Drupal\az_event_trellis\TrellisHelper $trellisHelper
+   * @param \Drupal\az_opportunity_trellis\TrellisHelper $trellisHelper
    *   The Trellis helper server.
-   * @param \Drupal\Core\Messenger\Messenger $messenger
+   * @param \Drupal\Core\Messenger\MessengerInterface $messenger
    *   Database connection object.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   The entity type manager service.
    * @param \Drupal\Core\Session\AccountProxy $currentUser
    *   The currently logged in user.
    */
-  public function __construct(TrellisHelper $trellisHelper, Messenger $messenger, EntityTypeManagerInterface $entityTypeManager, AccountProxy $currentUser) {
+  public function __construct(TrellisHelper $trellisHelper, MessengerInterface $messenger, EntityTypeManagerInterface $entityTypeManager, AccountProxy $currentUser) {
     $this->trellisHelper = $trellisHelper;
     $this->messenger = $messenger;
     $this->entityTypeManager = $entityTypeManager;
@@ -76,16 +79,16 @@ final class AZEventTrellisDataSubscriber implements EventSubscriberInterface {
     $migration = $event->getMigration()->getBaseId();
     $ids = $event->getDestinationIdValues();
     $id = reset($ids);
-    if ($migration === 'az_trellis_events') {
-      $event = $this->entityTypeManager->getStorage('node')->load($id);
-      if (!empty($event)) {
-        $url = $event->toUrl()->toString();
+    if ($migration === 'az_trellis_opportunities') {
+      $opportunity = $this->entityTypeManager->getStorage('node')->load($id);
+      if (!empty($opportunity)) {
+        $url = $opportunity->toUrl()->toString();
         // Only show message if current user has permission.
-        if ($this->currentUser->hasPermission('create az_event content')) {
-          // Show status message that event was imported.
-          $this->messenger->addMessage(t('Imported <a href="@eventlink">@eventtitle</a>.', [
-            '@eventlink' => $url,
-            '@eventtitle' => $event->getTitle(),
+        if ($this->currentUser->hasPermission('create az_opportunity content')) {
+          // Show status message that opportunity was imported.
+          $this->messenger->addMessage($this->t('Imported <a href="@opportunitylink">@opportunitytitle</a>.', [
+            '@opportunitylink' => $url,
+            '@opportunitytitle' => $opportunity->getTitle(),
           ]));
         }
       }
@@ -99,7 +102,7 @@ final class AZEventTrellisDataSubscriber implements EventSubscriberInterface {
    *   The event.
    */
   public function onQuery(RemoteDataQueryEvent $event): void {
-    $supported_bases = ['az_event_trellis_data'];
+    $supported_bases = ['az_opportunity_trellis_data'];
     $base_tables = array_keys($event->getView()->getBaseTables());
     if (count(array_intersect($supported_bases, $base_tables)) > 0) {
       $parameters = [];
@@ -108,29 +111,37 @@ final class AZEventTrellisDataSubscriber implements EventSubscriberInterface {
       foreach ($condition_groups as $condition_group) {
         if (!empty($condition_group['conditions'])) {
           foreach ($condition_group['conditions'] as $condition) {
-            if (!empty($condition['field'][0]) & !empty($condition['value'])) {
+            if (!empty($condition['field'][0]) && !empty($condition['value'])) {
               $parameters[$condition['field'][0]] = $condition['value'];
             }
           }
         }
       }
       // Don't perform search if empty or publish is the only field.
-      if (empty($parameters) || (count($parameters) <= 1)) {
+      if (empty($parameters)) {
+        // If (empty($parameters) || (count($parameters) <= 1)) {.
         return;
       }
-      $ids = $this->trellisHelper->searchEvents($parameters);
+      $ids = $this->trellisHelper->searchOpportunities($parameters);
       if (!empty($ids)) {
+        $total = count($ids);
         $offset = $event->getOffset();
         $limit = $event->getLimit();
         if (!empty($limit)) {
           $ids = array_slice($ids, $offset, $limit);
         }
         // Run data fetch request.
-        $results = $this->trellisHelper->getEvents($ids);
+        $results = $this->trellisHelper->getOpportunities($ids);
+
+        if (empty($results)) {
+          return;
+        }
+        // Set a results count to pager, only when the data fetch worked.
+        $event->getView()->pager->total_items = $total;
         $datefields = [
           'Last_Modified_Date',
-          'Start_DateTime',
-          'End_DateTime',
+          'Start_Date__c',
+          'End_Date__c',
         ];
         foreach ($results as $result) {
           // Change date format fields to what views expects to see.
