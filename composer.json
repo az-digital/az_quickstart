@@ -127,7 +127,7 @@
         "drupal/views_bootstrap": "5.5.0",
         "drupal/views_bulk_operations": "4.4.5",
         "drupal/views_remote_data": "1.0.3",
-        "drupal/viewsreference": "2.0.0-beta12",
+        "drupal/viewsreference": "2.0.0-beta13",
         "drupal/webform": "6.3.0",
         "drupal/workbench_access": "2.0.4",
         "drupal/xmlsitemap": "2.0.0",
