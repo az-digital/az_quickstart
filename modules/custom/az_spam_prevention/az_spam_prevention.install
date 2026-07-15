@@ -1,0 +1,14 @@
+<?php
+
+/**
+ * @file
+ * Contains az_spam_prevention.install.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function az_spam_prevention_install() {
+  // Clear the placement cache, since we may be making changes.
+  \Drupal::cache()->delete('captcha_placement_map_cache');
+}
