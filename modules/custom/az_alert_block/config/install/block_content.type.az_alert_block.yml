@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az_alert_block
+label: 'Alert Block'
+revision: true
+description: 'Create an alert block to place in high-visibility areas.'

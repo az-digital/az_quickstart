@@ -2,6 +2,7 @@
 
 namespace Drupal\az_publication\Plugin\Field\FieldWidget;
 
+use Drupal\az_publication\Plugin\Field\FieldType\AZEntityRoleReferenceItem;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Field\FieldFilteredMarkup;
 use Drupal\Core\Field\FieldItemListInterface;
@@ -93,6 +94,7 @@ class AZEntityRoleInlineFormComplex extends InlineEntityFormComplex {
       // Store the $items entities in the widget state, for further
       // manipulation.
       foreach ($items as $delta => $item) {
+        assert($item instanceof AZEntityRoleReferenceItem);
         // Display the entity in the correct translation.
         $entity = $item->entity;
         $role = $item->role ?? 'author';
