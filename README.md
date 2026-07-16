@@ -181,32 +181,6 @@ will probably be a Trusted Host Settings error, needing a manual change to your
 settings file, and notice of some directory permissions that need relaxed to
 allow the web server to write there.
 
-## Deprecation Notice: asset-packagist Libraries
-
-Arizona Quickstart is moving away from JavaScript/CSS dependencies installed via
-asset-packagist. These packages currently remain in composer.json for backward
-compatibility with custom site implementations, but they are considered
-deprecated.
-
-What this means:
-
-* Existing sites continue to receive these packages for now.
-* New customizations should not introduce new dependencies on asset-packagist
-  packages.
-* Site owners should migrate custom code to libraries shipped by contrib,
-  custom modules/themes, or other supported package sources.
-
-Current deprecated asset-packagist packages retained for compatibility:
-
-* npm-asset/bootstrap-datepicker
-* npm-asset/easepick--bundle
-* npm-asset/slick-carousel
-
-Planned removal:
-
-* Deprecated asset-packagist packages will be removed in a future minor
-  Quickstart release.
-
 ### Using Xdebug with Lando and VSCode
 
 This repository contains the necessary config to run Xdebug inside a lando
