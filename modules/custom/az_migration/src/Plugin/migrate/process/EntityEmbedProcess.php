@@ -16,7 +16,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @deprecated in az_quickstart:3.5.0 and is removed from az_quickstart:4.0.0.
  * There is no replacement.
  *
- * @see https://github.com/az-digital/az_quickstart/issues/5332
+ * @see https://www.drupal.org/node/3533564
  *
  * This plugin processes HTML text that has had markup embedded within
  * it from the entity_embed module of D7. It does this by parsing the relevant

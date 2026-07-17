@@ -13,7 +13,7 @@ use Drupal\migrate\Row;
  * @deprecated in az_quickstart:3.5.0 and is removed from az_quickstart:4.0.0.
  * There is no replacement.
  *
- * @see https://github.com/az-digital/az_quickstart/issues/5332
+ * @see https://www.drupal.org/node/3533564
  *
  * Quickstart 1 to Quickstart 2 process plugin to extract specific field values
  * from the source, (uaqs_extra_info paragraphs), and transforming those values

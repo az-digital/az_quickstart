@@ -517,6 +517,10 @@ drush mr az_menu_links
 
 Migrate plugins provided by Quickstart modules.
 
+Several reusable process plugins previously documented in this README now live
+in `az_core`. See the [AZ Core README](../az_core/README.md#migrate-process-plugins)
+for the shared plugin list.
+
 ## Reusable plugins
 
 These plugins are designed to be reusable in custom migrations.
@@ -524,18 +528,11 @@ These plugins are designed to be reusable in custom migrations.
 ### Process plugins
 
 - [EntityEmbedProcess (az_entity_embed_process)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_migration/src/Plugin/migrate/process/EntityEmbedProcess.php)
-- [MigratedPathLookup (az_migrated_path_lookup)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_migration/src/Plugin/migrate/process/MigratedPathLookup.php)
-- [TextFormatRecognizer (text_format_recognizer)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_migration/src/Plugin/migrate/process/TextFormatRecognizer.php)
-- [ManualMigrationLookup (az_manual_migration_lookup)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_core/src/Plugin/migrate/process/ManualMigrationLookup.php)
-- [ArrayIntersect (array_intersect)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_core/src/Plugin/migrate/process/ArrayIntersect.php)
-- [ParagraphsMappingFlexiblePage (paragraphs_mapping_flexible_page)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_migration/src/Plugin/migrate/process/ParagraphMappingFlexiblePage.php)
 - [ParagraphsBehavior
   (paragraphs_behavior_settings)](https://github.com/az-digital/az_quickstart/blob/2.2.x/modules/custom/az_paragraphs/src/Plugin/migrate/process/ParagraphsBehavior.php)
   (**Deprecated in 2.2.x, Removed in 2.3.x: use `az_paragraphs_behavior_settings`**)
 - [ParagraphsBehaviorSettings (az_paragraphs_behavior_settings)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_paragraphs/src/Plugin/migrate/process/ParagraphsBehaviorSettings.php)
-- [DateTimeToSmartDate (az_drupal_date_to_smart_date)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_migration/src/Plugin/migrate/process/DateTimeToSmartDate.php)
 - [ViewsReferenceMapping (az_views_reference_mapping)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_migration/src/Plugin/migrate/process/ViewsReferenceMapping.php)
-- [DefaultLangcode (az_default_langcode)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_migration/src/Plugin/migrate/process/DefaultLangcode.php)
 
 ### Source plugins
 
@@ -548,14 +545,12 @@ These plugins are designed to be reusable in custom migrations.
 
 These plugins are used in various built-in Quickstart migrations but were not designed with reusability in mind.
 
-- `az_media_bundle_recognizer`
 - `paragraphs_callout_field_merge`
 - `paragraphs_chunks_view_display_mapping` (Deprecated: use `az_views_reference_mapping`)
 - `paragraphs_column_image_field_merge`
 - `paragraphs_extra_info_field_merge`
 - `paragraphs_file_download_field_merge`
 - `paragraphs_fw_media_row_field_merge`
-- `az_paragraphs_media_caption`
 
 # Useful modules
 

@@ -14,7 +14,7 @@ use Drupal\migrate\Row;
  * @deprecated in az_quickstart:3.5.0 and is removed from az_quickstart:4.0.0.
  * There is no replacement.
  *
- * @see https://github.com/az-digital/az_quickstart/issues/5332
+ * @see https://www.drupal.org/node/3533564
  *
  * NOTE: This plugin is only designed to be used with uaqs_file_download source
  * paragraphs and is not generically reusable for other use cases.

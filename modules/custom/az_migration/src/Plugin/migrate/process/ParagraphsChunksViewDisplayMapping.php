@@ -13,7 +13,7 @@ use Drupal\migrate\Row;
  * @deprecated in az_quickstart:3.5.0 and is removed from az_quickstart:4.0.0.
  * There is no replacement.
  *
- * @see https://github.com/az-digital/az_quickstart/issues/5332
+ * @see https://www.drupal.org/node/3533564
  *
  * Used to map view and display names in uaqs_content_chunks_view Quickstart 1
  * source paragraphs into view and display names suitable for use
