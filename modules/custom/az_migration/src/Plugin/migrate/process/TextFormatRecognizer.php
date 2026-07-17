@@ -54,6 +54,20 @@ class TextFormatRecognizer extends ProcessPluginBase implements ContainerFactory
   protected $moduleHandler;
 
   /**
+   * Drupal\Core\Render\RendererInterface definition.
+   *
+   * @var \Drupal\Core\Render\RendererInterface
+   */
+  protected $renderer;
+
+  /**
+   * Drupal\filter\FilterPluginManager definition.
+   *
+   * @var \Drupal\filter\FilterPluginManager
+   */
+  protected $filterManager;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
@@ -64,6 +78,8 @@ class TextFormatRecognizer extends ProcessPluginBase implements ContainerFactory
     );
 
     $instance->moduleHandler = $container->get('module_handler');
+    $instance->renderer = $container->get('renderer');
+    $instance->filterManager = $container->get('plugin.manager.filter');
     return $instance;
   }
 
@@ -87,7 +103,7 @@ class TextFormatRecognizer extends ProcessPluginBase implements ContainerFactory
       $format = $this->configuration['format'];
 
       // Render as full html first.
-      $full = trim(_filter_autop(check_markup($value, 'full_html')));
+      $full = trim($this->renderWithFormatAndAutoP($value, 'full_html'));
       // Attempt to parse the resultant html and convert back to canonical html
       // if successful.
       $fullDoc = new \DOMDocument();
@@ -98,7 +114,7 @@ class TextFormatRecognizer extends ProcessPluginBase implements ContainerFactory
       // Render the text according to the format.
       // Attempt to put autoparagraphs back in after the fact, since they are
       // likely to exist in the source regardless of intent.
-      $markup = trim(_filter_autop(check_markup($value, $format)));
+      $markup = trim($this->renderWithFormatAndAutoP($value, $format));
       if (!empty($markup)) {
         // Attempt to parse the resultant html and convert back to canonical
         // html if successful.
@@ -116,6 +132,24 @@ class TextFormatRecognizer extends ProcessPluginBase implements ContainerFactory
     }
 
     return $this->configuration['failed'];
+  }
+
+  /**
+   * Renders text with a text format, applies auto_p filter.
+   */
+  protected function renderWithFormatAndAutoP(string $value, string $format): string {
+    $toRender = [
+      '#type' => 'processed_text',
+      '#text' => $value,
+      '#format' => $format,
+    ];
+    $formatted = $this->renderer->renderInIsolation($toRender);
+
+    $result = $this->filterManager
+      ->createInstance('filter_autop')
+      ->process((string) $formatted, NULL);
+
+    return $result->getProcessedText();
   }
 
 }

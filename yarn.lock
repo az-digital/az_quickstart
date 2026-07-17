@@ -282,10 +282,10 @@ __metadata:
   dependencies:
     eslint: "npm:^8.57.1"
     eslint-config-airbnb-base: "npm:^15.0.0"
-    eslint-config-prettier: "npm:^10.1.3"
-    eslint-plugin-import: "npm:^2.31.0"
+    eslint-config-prettier: "npm:^10.1.8"
+    eslint-plugin-import: "npm:^2.32.0"
     eslint-plugin-prettier: "npm:^5.5.6"
-    eslint-plugin-yml: "npm:^1.18.0"
+    eslint-plugin-yml: "npm:^1.19.1"
     prettier: "npm:^3.8.5"
   languageName: unknown
   linkType: soft
@@ -666,7 +666,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-prettier@npm:^10.1.3":
+"eslint-config-prettier@npm:^10.1.8":
   version: 10.1.8
   resolution: "eslint-config-prettier@npm:10.1.8"
   peerDependencies:
@@ -700,7 +700,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-import@npm:^2.31.0":
+"eslint-plugin-import@npm:^2.32.0":
   version: 2.32.0
   resolution: "eslint-plugin-import@npm:2.32.0"
   dependencies:
@@ -749,7 +749,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-yml@npm:^1.18.0":
+"eslint-plugin-yml@npm:^1.19.1":
   version: 1.19.1
   resolution: "eslint-plugin-yml@npm:1.19.1"
   dependencies:

@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.node.search_index
+    - core.entity_view_mode.node.full
     - field.storage.node.field_az_enterprise_attributes
     - search_api.server.az_search_api_searchstax
   module:
@@ -97,7 +97,7 @@ field_settings:
         - anonymous
       view_mode:
         'entity:node':
-          ':default': search_index
+          ':default': full
           az_event: ':default'
           az_flexible_page: ':default'
           az_news: ':default'
