@@ -45,13 +45,14 @@ module.
 - `az_prepare_array_for_sub_process` - Reshapes flat arrays for use with
 	`sub_process`.
 - `az_phone` - Normalizes phone number values during migration.
-- `paragraphs_mapping_flexible_page` - Maps paragraph data for flexible page
-	migrations.
 
-### Migration support plugins
+### Plugins provided by az_paragraphs
 
-- `az_paragraphs_media_caption` - Updates media captions while migrating
-	paragraph content.
+The following process plugins are provided by `az_paragraphs`:
+
+- `paragraphs_mapping_flexible_page` - [ParagraphMappingFlexiblePage](../az_paragraphs/src/Plugin/migrate/process/ParagraphMappingFlexiblePage.php)
+- `az_paragraphs_behavior_settings` - [ParagraphsBehaviorSettings](../az_paragraphs/src/Plugin/migrate/process/ParagraphsBehaviorSettings.php)
+- `az_paragraphs_media_caption` - `ParagraphsUpdateMediaCaption`
 
 These plugins are intended to support both the built-in Quickstart migrations
 and custom migration work for sites extending the distribution.

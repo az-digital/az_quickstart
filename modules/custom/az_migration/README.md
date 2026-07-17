@@ -1,5 +1,8 @@
 # Quickstart Migration Module
 
+## Deprecation notice
+Note: this module is deprecated as of Quickstart 3.5.0 and will be removed as of version 4.0.0 (see https://github.com/az-digital/az_quickstart/issues/5332).
+
 ## Contents
 
  * [Introduction](#introduction)
@@ -518,8 +521,11 @@ drush mr az_menu_links
 Migrate plugins provided by Quickstart modules.
 
 Several reusable process plugins previously documented in this README now live
-in `az_core`. See the [AZ Core README](../az_core/README.md#migrate-process-plugins)
-for the shared plugin list.
+in `az_core`. Several paragraph-related process plugins have also moved to
+`az_paragraphs`.
+
+See the [AZ Core README](../az_core/README.md#migrate-process-plugins) for the
+current shared plugin list.
 
 ## Reusable plugins
 
@@ -528,10 +534,6 @@ These plugins are designed to be reusable in custom migrations.
 ### Process plugins
 
 - [EntityEmbedProcess (az_entity_embed_process)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_migration/src/Plugin/migrate/process/EntityEmbedProcess.php)
-- [ParagraphsBehavior
-  (paragraphs_behavior_settings)](https://github.com/az-digital/az_quickstart/blob/2.2.x/modules/custom/az_paragraphs/src/Plugin/migrate/process/ParagraphsBehavior.php)
-  (**Deprecated in 2.2.x, Removed in 2.3.x: use `az_paragraphs_behavior_settings`**)
-- [ParagraphsBehaviorSettings (az_paragraphs_behavior_settings)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_paragraphs/src/Plugin/migrate/process/ParagraphsBehaviorSettings.php)
 - [ViewsReferenceMapping (az_views_reference_mapping)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_migration/src/Plugin/migrate/process/ViewsReferenceMapping.php)
 
 ### Source plugins

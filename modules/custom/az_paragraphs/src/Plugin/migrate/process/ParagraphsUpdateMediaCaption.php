@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\az_core\Plugin\migrate\process;
+namespace Drupal\az_paragraphs\Plugin\migrate\process;
 
 use Drupal\media\Entity\Media;
 use Drupal\migrate\Attribute\MigrateProcess;
