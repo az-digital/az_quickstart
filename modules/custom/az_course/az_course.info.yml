@@ -7,6 +7,7 @@ lifecycle: experimental
 lifecycle_link: 'https://github.com/az-digital/az_quickstart/blob/main/RELEASES.md#experimental-features'
 dependencies:
   - auto_entitylabel:auto_entitylabel
+  - az_seo:az_seo
   - drupal:field
   - field_group:field_group
   - drupal:image
