@@ -1,0 +1,6 @@
+langcode: en
+status: true
+dependencies: {  }
+id: node__az_flexible_page
+label: 'Content: Flexible Page'
+tags: {  }

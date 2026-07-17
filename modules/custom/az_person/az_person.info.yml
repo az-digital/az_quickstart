@@ -7,6 +7,7 @@ dependencies:
   - auto_entitylabel:auto_entitylabel
   - az_core:az_core
   - az_media:az_media
+  - az_seo:az_seo
   - drupal:block
   - draggableviews:draggableviews
   - drupal:field

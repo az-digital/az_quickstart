@@ -34,21 +34,32 @@ function az_seo_update_1021101() {
  * Install xmlsitemap config for AZ Event, News, Person and Publication.
  */
 function az_seo_update_1021301() {
-  $config_names = [
-    'xmlsitemap.settings.node.az_event',
-    'xmlsitemap.settings.node.az_news',
-    'xmlsitemap.settings.node.az_person',
-    'xmlsitemap.settings.node.az_publication',
+  $module_config_paths = [
+    'az_event' => ['xmlsitemap.settings.node.az_event'],
+    'az_news' => ['xmlsitemap.settings.node.az_news'],
+    'az_person' => ['xmlsitemap.settings.node.az_person'],
+    'az_flexible_page' => ['xmlsitemap.settings.node.az_flexible_page'],
+    'az_publication' => ['xmlsitemap.settings.node.az_publication'],
   ];
 
   $module_handler = \Drupal::service('module_handler');
-  $config_path = $module_handler->getModule('az_seo')->getPath() . '/config/quickstart';
-  $storage = new FileStorage($config_path);
   $config_storage = \Drupal::service('config.storage');
 
-  foreach ($config_names as $name) {
-    if (!\Drupal::config($name)->get()) {
-      $config_storage->write($name, $storage->read($name));
+  foreach ($module_config_paths as $module_name => $config_names) {
+    if (!$module_handler->moduleExists($module_name)) {
+      continue;
+    }
+
+    $module_path = $module_handler->getModule($module_name)->getPath();
+    $storage = new FileStorage($module_path . '/config/install');
+
+    foreach ($config_names as $name) {
+      if (!\Drupal::config($name)->get()) {
+        $config_data = $storage->read($name);
+        if ($config_data !== FALSE) {
+          $config_storage->write($name, $config_data);
+        }
+      }
     }
   }
 

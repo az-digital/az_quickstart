@@ -12,3 +12,26 @@ function az_flexible_page_update_last_removed() {
   // Remove updates added before 2.6.0.
   return 9201;
 }
+
+/**
+ * Adds metatag configuration for Flexible Page content.
+ */
+function az_flexible_page_update_113051(): void {
+  \Drupal::service('config.installer')
+    ->installDefaultConfig('module', 'az_flexible_page');
+
+  $form_display = \Drupal::configFactory()
+    ->getEditable('core.entity_form_display.node.az_flexible_page.default');
+
+  $dependencies = $form_display->get('dependencies.config') ?? [];
+  $field_dependency = 'field.field.node.az_flexible_page.field_az_metatag';
+
+  if (!in_array($field_dependency, $dependencies, TRUE)) {
+    $dependencies[] = $field_dependency;
+    sort($dependencies);
+
+    $form_display
+      ->set('dependencies.config', $dependencies)
+      ->save();
+  }
+}
