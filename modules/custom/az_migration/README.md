@@ -1,7 +1,7 @@
 # Quickstart Migration Module
 
 ## Deprecation notice
-Note: this module is deprecated as of Quickstart 3.5.0 and will be removed as of version 4.0.0 (see https://github.com/az-digital/az_quickstart/issues/5332).
+Note: this module is deprecated as of Quickstart 3.5.0 and will be removed as of version 4.0.0 (see https://github.com/az-digital/az_quickstart/issues/5332). The az_migration_remote module has been moved to a submodule of az_core.
 
 ## Contents
 
