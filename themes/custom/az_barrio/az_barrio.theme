@@ -61,6 +61,11 @@ function az_barrio_preprocess_form_element(array &$variables) {
 function az_barrio_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   if ($form_id === 'search_block_form') {
     az_barrio_attach_form_id($form, $form_id);
+    // Suppress the browser's history-based autocomplete dropdown on the AZ
+    // Search input (blue header + fullscreen navbar). Port of
+    // arizona-bootstrap PR #2175 (fixes AZBS #2172).
+    // @todo Reassess with upgrade to Arizona Bootstrap v5.1.6.
+    $form['keys']['#attributes']['autocomplete'] = 'off';
   }
 }
 
@@ -730,13 +735,13 @@ function az_barrio_preprocess_block(&$variables) {
 /**
  * Implements hook_preprocess_HOOK() for input search fields.
  *
- * Modify search block form submit button when AZ Navbar Fullscreen is enabled.
+ * Modify search block form input when AZ Header Blue is enabled.
  */
 function az_barrio_preprocess_input__search(array &$variables) {
-  $az_navbar_fullscreen_enabled = (isset($variables['element']['#form_id'])
+  $use_new_search_style = (isset($variables['element']['#form_id'])
     && $variables['element']['#form_id'] === 'search_block_form'
-    && \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_navbar_fullscreen'));
-  $search_text = $az_navbar_fullscreen_enabled ? 'Search' : 'Search this site';
+    && \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_header_blue'));
+  $search_text = $use_new_search_style ? 'Search' : 'Search this site';
   $variables['attributes']['placeholder'] = $search_text;
   $variables['attributes']['aria-label'] = $search_text;
 }
@@ -744,12 +749,31 @@ function az_barrio_preprocess_input__search(array &$variables) {
 /**
  * Implements hook_preprocess_HOOK() for search block form submit buttons.
  *
- * Modify search block form submit button when AZ Navbar Fullscreen is enabled.
+ * Modify search block form submit button when AZ Header Blue is enabled.
  */
 function az_barrio_preprocess_input__search_block_form__submit(array &$variables) {
-  if (\Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_navbar_fullscreen')) {
+  $theme_settings = \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider');
+  if ($theme_settings->getSetting('az_navbar_fullscreen')) {
     $variables['attributes']['aria-label'] = 'Submit search';
     $variables['az_navbar_fullscreen'] = TRUE;
+  }
+  if ($theme_settings->getSetting('az_header_blue')) {
+    $variables['attributes']['aria-label'] = 'Submit search';
+    $variables['az_header_blue_search'] = TRUE;
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for search block forms.
+ *
+ * Add az-search class to the desktop search block when AZ Header Blue is
+ * enabled.
+ */
+function az_barrio_preprocess_form__search_block_form(array &$variables) {
+  $theme_settings = \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider');
+  $is_desktop_search_block = ($variables['attributes']['block'] ?? '') === 'block-az-barrio-search';
+  if ($is_desktop_search_block && $theme_settings->getSetting('az_header_blue')) {
+    $variables['attributes']['class'][] = 'az-search';
   }
 }
 

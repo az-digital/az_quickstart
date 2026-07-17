@@ -238,7 +238,7 @@ display:
             access: false
             operation: view
             multiple: 1
-          break_phrase: false
+          break_phrase: true
           depth: 0
           use_taxonomy_term_path: false
       filters:
@@ -1949,7 +1949,7 @@ display:
             identifier: ''
             optional: true
             widget: select
-            multiple: false
+            multiple: true
             remember: false
             default_group: All
             default_group_multiple: {  }
