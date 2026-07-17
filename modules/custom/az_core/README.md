@@ -52,7 +52,7 @@ The following process plugins are provided by `az_paragraphs`:
 
 - `paragraphs_mapping_flexible_page` - [ParagraphMappingFlexiblePage](../az_paragraphs/src/Plugin/migrate/process/ParagraphMappingFlexiblePage.php)
 - `az_paragraphs_behavior_settings` - [ParagraphsBehaviorSettings](../az_paragraphs/src/Plugin/migrate/process/ParagraphsBehaviorSettings.php)
-- `az_paragraphs_media_caption` - `ParagraphsUpdateMediaCaption`
+- `az_paragraphs_media_caption` - [ParagraphsUpdateMediaCaption](../az_paragraphs/src/Plugin/migrate/process/ParagraphsUpdateMediaCaption.php)
 
 These plugins are intended to support both the built-in Quickstart migrations
 and custom migration work for sites extending the distribution.
