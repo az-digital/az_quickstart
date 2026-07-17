@@ -183,7 +183,7 @@ function az_core_block_access(Block $block, $operation, AccountInterface $accoun
       ->getViewBuilder('block')
       ->view($block);
     $markup = \Drupal::service('renderer')->renderRoot($block_content);
-    return AccessResult::forbiddenIf($markup === '')->addCacheableDependency($block);
+    return AccessResult::forbiddenIf((string) $markup === '')->addCacheableDependency($block);
   }
   return AccessResult::neutral();
 }
