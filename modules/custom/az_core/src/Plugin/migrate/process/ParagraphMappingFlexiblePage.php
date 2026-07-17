@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\az_migration\Plugin\migrate\process;
+namespace Drupal\az_core\Plugin\migrate\process;
 
 use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\MigrateExecutableInterface;
@@ -27,7 +27,7 @@ class ParagraphMappingFlexiblePage extends ProcessPluginBase {
   /**
    * Processes incoming value array.
    *
-   * Internal, recurive function. This function iterates the incoming array
+   * Internal, recursive function. This function iterates the incoming array
    * of values to transform and searches for valid values to pull-
    * out and return as an array of paragraph ids to associate
    * with a given node.

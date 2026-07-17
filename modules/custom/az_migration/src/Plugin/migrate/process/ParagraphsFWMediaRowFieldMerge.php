@@ -10,6 +10,11 @@ use Drupal\migrate\Row;
 /**
  * Process Plugin to handle Full-Width Media Row Paragraphs from QS1.
  *
+ * @deprecated in az_quickstart:3.5.0 and is removed from az_quickstart:4.0.0.
+ * There is no replacement.
+ *
+ * @see https://github.com/az-digital/az_quickstart/issues/5332
+ *
  * Quickstart 1 to Quickstart 2 Process plugin to extract specific field values
  * from the source, (uaqs_full_width_media_row paragraphs), and transforming
  * those values by wrapping them in specific arizona-bootstrap markup.

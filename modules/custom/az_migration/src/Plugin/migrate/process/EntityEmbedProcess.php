@@ -13,6 +13,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * Process Plugin to handle embedded entities in HTML text.
  *
+ * @deprecated in az_quickstart:3.5.0 and is removed from az_quickstart:4.0.0.
+ * There is no replacement.
+ *
+ * @see https://github.com/az-digital/az_quickstart/issues/5332
+ *
  * This plugin processes HTML text that has had markup embedded within
  * it from the entity_embed module of D7. It does this by parsing the relevant
  * HTML, seeking out embed tags, and transforming the id numbers to those of

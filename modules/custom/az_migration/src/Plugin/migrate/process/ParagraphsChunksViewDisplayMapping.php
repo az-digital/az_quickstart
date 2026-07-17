@@ -10,6 +10,11 @@ use Drupal\migrate\Row;
 /**
  * Process plugin that maps QS1 view & display names QS2 view & display names.
  *
+ * @deprecated in az_quickstart:3.5.0 and is removed from az_quickstart:4.0.0.
+ * There is no replacement.
+ *
+ * @see https://github.com/az-digital/az_quickstart/issues/5332
+ *
  * Used to map view and display names in uaqs_content_chunks_view Quickstart 1
  * source paragraphs into view and display names suitable for use
  * in az_view_reference paragraphs in Quickstart 2.
