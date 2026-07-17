@@ -11,23 +11,27 @@ use Drupal\Core\Entity\Entity\EntityFormDisplay;
  * Adds metatag configuration for Course content.
  */
 function az_course_update_113051(): void {
-  $config_installer = \Drupal::service('config.installer');
+  // Install missing default configuration owned by az_course.
+  \Drupal::service('config.installer')
+    ->installDefaultConfig('module', 'az_course');
 
-  // Install missing default configuration from both modules.
-  $config_installer->installDefaultConfig('module', 'az_course');
+  // Add the new field config as a dependency of the existing form display.
+  $form_display = \Drupal::configFactory()
+    ->getEditable('core.entity_form_display.node.az_course.default');
 
-  // Update the existing Course form display's configuration dependencies.
-  $form_display = EntityFormDisplay::load('node.az_course.default');
-  $field_config = \Drupal::entityTypeManager()
-    ->getStorage('field_config')
-    ->load('node.az_course.field_az_metatag');
+  $dependencies = $form_display->get('dependencies.config') ?? [];
+  $field_dependency = 'field.field.node.az_course.field_az_metatag';
 
-  if ($form_display && $field_config) {
+  if (!in_array($field_dependency, $dependencies, TRUE)) {
+    $dependencies[] = $field_dependency;
+    sort($dependencies);
+
     $form_display
-      ->addDependency('config', $field_config->getConfigDependencyName())
+      ->set('dependencies.config', $dependencies)
       ->save();
   }
 }
+
 /**
  * Apply Bootstrap 5 compatibility updates to az_course text fields.
  */
