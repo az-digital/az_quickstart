@@ -61,6 +61,11 @@ function az_barrio_preprocess_form_element(array &$variables) {
 function az_barrio_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   if ($form_id === 'search_block_form') {
     az_barrio_attach_form_id($form, $form_id);
+    // Suppress the browser's history-based autocomplete dropdown on the AZ
+    // Search input (blue header + fullscreen navbar). Port of
+    // arizona-bootstrap PR #2175 (fixes AZBS #2172).
+    // @todo Reassess with upgrade to Arizona Bootstrap v5.1.6.
+    $form['keys']['#attributes']['autocomplete'] = 'off';
   }
 }
 
