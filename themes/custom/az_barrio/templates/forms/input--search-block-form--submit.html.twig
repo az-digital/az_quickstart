@@ -6,7 +6,11 @@
  * Available variables:
  * - attributes: A list of HTML attributes for the input element.
  * - children: Optional additional rendered elements.
- * - az_navbar_fullscreen: True if the AZ Navbar Fullscreen theme setting is enabled.
+ * - az_navbar_fullscreen: True if the AZ Navbar Fullscreen theme setting is
+ *   enabled.
+ * - az_header_blue_search: True for Blue header desktop search block.
+ *
+ * The az-search-icon is styled when a parent .az-search class is present.
  *
  * @see template_preprocess_input()
  */
@@ -14,6 +18,9 @@
 <button{{attributes.removeClass('btn-primary')}}>
   {% if az_navbar_fullscreen %}
     <span class="search-icon" aria-hidden="true"></span>
+  {% elseif az_header_blue_search %}
+    <span class="az-search-icon" aria-hidden="true"></span>
+    <span class="material-symbols-rounded" aria-hidden="true">search</span>
   {% else %}
     <span class="material-symbols-rounded">search</span>
   {% endif %}
