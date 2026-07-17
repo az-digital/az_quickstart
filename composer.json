@@ -127,7 +127,7 @@
         "drupal/views_bootstrap": "5.5.0",
         "drupal/views_bulk_operations": "4.4.5",
         "drupal/views_remote_data": "1.0.3",
-        "drupal/viewsreference": "2.0.0-beta12",
+        "drupal/viewsreference": "2.0.0-beta13",
         "drupal/webform": "6.3.0",
         "drupal/workbench_access": "2.0.4",
         "drupal/xmlsitemap": "2.0.0",
@@ -248,9 +248,6 @@
             },
             "drupal/views_bootstrap": {
                 "Views with responsive table display no longer works (2931301)": "https://www.drupal.org/files/issues/2024-10-07/views_bootstrap_responsive-2931301-14.patch"
-            },
-            "drupal/viewsreference": {
-                "Add Label field formatter (2938433)": "https://www.drupal.org/files/issues/2024-12-18/2938433-20-add-label-field-formatter.patch"
             },
             "drupal/workbench_access": {
                 "Allow multiple access schemas (2982550)": "https://www.drupal.org/files/issues/2024-05-07/2982550-41.patch",
