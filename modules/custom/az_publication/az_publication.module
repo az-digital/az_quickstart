@@ -184,20 +184,16 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
       $repository = \Drupal::service('entity.repository');
       $style_context = $default_config->get('default_citation_style');
       // Attempt to find citation argument context.
-      if (function_exists('views_get_current_view')) {
-        $view = views_get_current_view();
-        // Phpstan doesn't know this can be NULL.
-        // @phpstan-ignore-next-line
-        if (!empty($view)) {
-          if (!empty($view->argument)) {
-            foreach ($view->argument as $arg) {
-              // Only use the argument as style if it's a style argument.
-              if ($arg instanceof AZCitationStyleArgument) {
-                $citation_style_argument = $arg->getValue();
-                // If the argument exists, set our style to it.
-                if (!empty($citation_style_argument)) {
-                  $style_context = $citation_style_argument;
-                }
+      if (!empty($entity->view)) {
+        $view = $entity->view;
+        if (!empty($view->argument)) {
+          foreach ($view->argument as $arg) {
+            // Only use the argument as style if it's a style argument.
+            if ($arg instanceof AZCitationStyleArgument) {
+              $citation_style_argument = $arg->getValue();
+              // If the argument exists, set our style to it.
+              if (!empty($citation_style_argument)) {
+                $style_context = $citation_style_argument;
               }
             }
           }
@@ -381,7 +377,12 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
         $az_citation_format = FilterFormat::load('az_citation');
         if ($az_citation_format !== NULL) {
           // Provide reference-specific filters.
-          $biblio = check_markup($biblio, 'az_citation');
+          $toRender = [
+            '#type' => 'processed_text',
+            '#text' => $biblio,
+            '#format' => 'az_citation',
+          ];
+          $biblio = \Drupal::service('renderer')->renderInIsolation($toRender);
         }
         $build['az_publication_bibliography'] = [
           '#type' => 'markup',

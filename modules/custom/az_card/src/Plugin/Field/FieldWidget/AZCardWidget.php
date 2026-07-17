@@ -51,6 +51,13 @@ class AZCardWidget extends WidgetBase {
   protected $entityTypeManager;
 
   /**
+   * Drupal\Core\Render\RendererInterface definition.
+   *
+   * @var \Drupal\Core\Render\RendererInterface
+   */
+  protected $renderer;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
@@ -64,6 +71,7 @@ class AZCardWidget extends WidgetBase {
     $instance->cardImageHelper = $container->get('az_card.image');
     $instance->pathValidator = $container->get('path.validator');
     $instance->entityTypeManager = $container->get('entity_type.manager');
+    $instance->renderer = $container->get('renderer');
     return $instance;
   }
 
@@ -164,12 +172,16 @@ class AZCardWidget extends WidgetBase {
       }
 
       // Card item.
+      $toRender = [
+        '#type' => 'processed_text',
+        '#text' => $item->body ?? '',
+        '#format' => $item->body_format ?? self::AZ_CARD_DEFAULT_TEXT_FORMAT,
+      ];
+      $body = $this->renderer->renderInIsolation($toRender);
       $element['preview_container']['card_preview'] = [
         '#theme' => 'az_card',
         '#title' => $item->title ?? '',
-        '#body' => check_markup(
-          $item->body ?? '',
-          $item->body_format ?? self::AZ_CARD_DEFAULT_TEXT_FORMAT),
+        '#body' => $body,
         '#attributes' => ['class' => $card_classes],
       ];
 

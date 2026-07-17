@@ -281,3 +281,15 @@ function az_barrio_post_update_enable_az_navbar(&$sandbox = NULL) {
     \Drupal::logger('az_quickstart')->notice('Enabled AZ Navbar during post update.');
   }
 }
+
+/**
+ * Enables the blue Arizona Header.
+ */
+function az_barrio_post_update_enable_az_header_blue(&$sandbox = NULL) {
+  $config_factory = \Drupal::configFactory();
+  $theme_settings = $config_factory->getEditable('az_barrio.settings');
+  if ($theme_settings->get('az_header_blue') !== TRUE) {
+    $theme_settings->set('az_header_blue', TRUE)->save();
+    \Drupal::logger('az_quickstart')->notice('Enabled the blue Arizona Header during post update.');
+  }
+}

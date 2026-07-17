@@ -30,7 +30,6 @@ install:
   - az_seo
   - az_google_tag
   - drupal:node
-  - drupal:history
   - drupal:block
   - drupal:breakpoint
   - drupal:ckeditor5
