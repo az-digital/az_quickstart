@@ -13,3 +13,42 @@ function az_carousel_preprocess_node__az_carousel_item(&$variables) {
   $variables['#attached']['library'][] = 'az_carousel/az_carousel';
 
 }
+
+/**
+ * Implements hook_module_implements_alter().
+ */
+function az_carousel_module_implements_alter(&$implementations, $hook) {
+  // Run last so this override wins after blazy/slick dynamic library alters.
+  if ($hook === 'library_info_alter' && isset($implementations['az_carousel'])) {
+    $group = $implementations['az_carousel'];
+    unset($implementations['az_carousel']);
+    $implementations['az_carousel'] = $group;
+  }
+}
+
+/**
+ * Implements hook_library_info_alter().
+ */
+function az_carousel_library_info_alter(array &$libraries, $extension) {
+  if ($extension !== 'slick') {
+    return;
+  }
+
+  $module_path = \Drupal::service('extension.list.module')->getPath('az_carousel');
+  $slick_path = '/' . $module_path . '/lib/slick-carousel/slick';
+
+  if (isset($libraries['slick'])) {
+    $libraries['slick']['js'] = [
+      $slick_path . '/slick.min.js' => ['weight' => -3, 'minified' => TRUE],
+    ];
+    $libraries['slick']['css']['base'] = [
+      $slick_path . '/slick.css' => [],
+    ];
+  }
+
+  if (isset($libraries['slick.css'])) {
+    $libraries['slick.css']['css']['theme'] = [
+      $slick_path . '/slick-theme.css' => ['weight' => -2],
+    ];
+  }
+}

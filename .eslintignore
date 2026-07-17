@@ -1,2 +1,3 @@
 node_modules/**/*
+modules/custom/az_carousel/lib/**/*
 modules/custom/az_core/lib/**/*
