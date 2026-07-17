@@ -27,7 +27,7 @@
         "php": ">=8.3",
         "az-digital/arizona-bootstrap": "5.1.5",
         "az-digital/az-icons": "1.0.4",
-        "citation-style-language/locales": "0.0.94",
+        "citation-style-language/locales": "0.0.95",
         "citation-style-language/styles": "0.0.668",
         "composer/installers": "^2.0",
         "cweagans/composer-patches": "^1.7",
@@ -59,7 +59,7 @@
         "drupal/config_split": "2.0.2",
         "drupal/config_sync": "3.0.0-alpha5",
         "drupal/config_update": "2.0.0-alpha4",
-        "drupal/core-recommended": "11.3.13",
+        "drupal/core-recommended": "11.3.14",
         "drupal/crop": "2.6.0",
         "drupal/date_ap_style": "3.0.0",
         "drupal/decorative_image_widget": "1.0.3",
@@ -80,7 +80,7 @@
         "drupal/image_widget_crop": "3.0.0",
         "drupal/imagemagick": "4.0.2",
         "drupal/inline_entity_form": "3.0.0",
-        "drupal/intelligencebank": "5.2.1",
+        "drupal/intelligencebank": "5.2.2",
         "drupal/jquery_ui": "1.8.0",
         "drupal/jquery_ui_datepicker": "2.1.1",
         "drupal/key": "1.22.0",
@@ -128,7 +128,7 @@
         "drupal/views_bulk_operations": "4.4.5",
         "drupal/views_remote_data": "1.0.3",
         "drupal/viewsreference": "2.0.0-beta12",
-        "drupal/webform": "6.3.0-rc2",
+        "drupal/webform": "6.3.0",
         "drupal/workbench_access": "2.0.4",
         "drupal/xmlsitemap": "2.0.0",
         "giggsey/libphonenumber-for-php": "^9.0",
@@ -167,6 +167,9 @@
                 "Js error if table not found (3519060)": "https://www.drupal.org/files/issues/2025-04-14/bootstrap-barrio-table-not-found-3519060-1.patch",
                 "Fix alerts (3485305)": "https://www.drupal.org/files/issues/2025-08-27/3485305-22.patch",
                 "Region class field: increase maxlength from 40 to 255 (3548552)": "https://www.drupal.org/files/issues/2025-09-24/3548552-4.patch"
+            },
+            "drupal/captcha": {
+                "Captcha placement below Webform actions when Submit button(s) customized (3425585)": "https://gist.githubusercontent.com/tadean/f5d7f69bc12000d9e6316bb94f4afd44/raw/24be8269ddd5a8582ef99f18657c3eb93669e287/captcha-webform-placement-3425585-MR135.patch"
             },
             "drupal/config_distro": {
                 "Storage comparer issue": "https://gist.githubusercontent.com/tadean/e2e0dd57f1a9c4eae28d8e713cb01d82/raw/e114987d4a76c183208c763de4dbfecbf41b7f35/config_distro_storage_comparer_issue.patch"

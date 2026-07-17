@@ -13,6 +13,7 @@ use Drupal\Core\Link;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Url;
+use Drupal\views\ViewExecutable;
 
 /**
  * Implements hook_theme_suggestions_HOOK_alter().
@@ -781,4 +782,20 @@ function az_barrio_preprocess_block__az_navbar_fullscreen_menu_block(array &$var
   $az_bootstrap_location = \Drupal::state()->get(AZ_BOOTSTRAP_LOCATION);
   $css_path = strpos($az_bootstrap_location, '/css/') + 5;
   $variables['wordmark_url'] = $variables['wordmark'] ? (substr($az_bootstrap_location, 0, $css_path) . 'img/arizona-bootstrap-logo-webheader-white.svg') : '';
+}
+
+/**
+ * Implements hook_views_post_render_HOOK() for view pagination.
+ *
+ * In a paged view, if pager exists but theres only one page (therefore hidden),
+ * this hides the page count summary in the views footer.
+ */
+function az_barrio_views_post_render(ViewExecutable $variables) {
+  if (isset($variables->pager)) {
+    $items_per_page = (int) $variables->pager->options['items_per_page'];
+    $total_rows = (int) $variables->total_rows;
+    if ($total_rows <= $items_per_page) {
+      unset($variables->footer['result']);
+    }
+  }
 }
