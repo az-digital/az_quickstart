@@ -5,6 +5,17 @@
  * Contains az_seo.module.
  */
 
+use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\node\NodeInterface;
+use Drupal\simple_sitemap\Exception\SkipElementException;
+
+/**
+ * Determines whether a node should be excluded from sitemap output.
+ */
+function az_seo_is_excluded_node_for_sitemap(NodeInterface $node): bool {
+  return $node->hasField('field_az_link') && !empty($node->field_az_link[0]->uri);
+}
+
 /**
  * Implements hook_xmlsitemap_link_alter().
  *
@@ -13,12 +24,29 @@
 function az_seo_xmlsitemap_link_alter(array &$link) {
   $check_types = ['az_event', 'az_news', 'az_person'];
 
-  if (in_array($link['subtype'], $check_types)) {
+  if (in_array($link['subtype'], $check_types, TRUE)) {
     $node = \Drupal::entityTypeManager()->getStorage('node')->load($link['id']);
 
-    if (!empty($node->field_az_link[0]->uri)) {
+    if ($node instanceof NodeInterface && az_seo_is_excluded_node_for_sitemap($node)) {
       $link['status'] = 0;
       $link['status_override'] = 1;
     }
+  }
+}
+
+/**
+ * Implements hook_simple_sitemap_entity_process().
+ */
+function az_seo_simple_sitemap_entity_process(ContentEntityInterface $entity): void {
+  if (!$entity instanceof NodeInterface) {
+    return;
+  }
+
+  if (!in_array($entity->bundle(), ['az_event', 'az_news', 'az_person'], TRUE)) {
+    return;
+  }
+
+  if (az_seo_is_excluded_node_for_sitemap($entity)) {
+    throw new SkipElementException();
   }
 }

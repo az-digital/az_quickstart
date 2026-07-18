@@ -7,6 +7,7 @@
 
 use Drupal\Core\Block\BlockPluginInterface;
 use Drupal\Core\Datetime\Element\Datetime;
+use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -17,6 +18,7 @@ use Drupal\az_publication\Plugin\views\argument\AZCitationStyleArgument;
 use Drupal\filter\Entity\FilterFormat;
 use Drupal\node\Entity\NodeType;
 use Drupal\node\NodeInterface;
+use Drupal\simple_sitemap\Exception\SkipElementException;
 use Drupal\views\Plugin\Block\ViewsBlock;
 use Seboettg\CiteProc\CiteProc;
 use Symfony\Component\HttpFoundation\Request;
@@ -865,28 +867,48 @@ function template_preprocess_az_inline_entity_role_form_entity_table(array &$var
 }
 
 /**
+ * Determines whether a publication node is noncanonical for sitemap indexing.
+ */
+function az_publication_is_noncanonical_for_sitemap(NodeInterface $entity): bool {
+  if ($entity->bundle() !== 'az_publication') {
+    return FALSE;
+  }
+
+  $canonicals = [
+    'field_az_publication_doi',
+    'field_az_publication_link',
+  ];
+
+  foreach ($canonicals as $canonical) {
+    if ($entity->hasField($canonical) && !empty($entity->get($canonical)->getValue())) {
+      return TRUE;
+    }
+  }
+
+  return FALSE;
+}
+
+/**
  * Implements hook_xmlsitemap_link_alter().
  */
 function az_publication_xmlsitemap_link_alter(array &$link, array $context) {
 
   // Modify publication links to not appear if they are noncanonical.
   // This behavior is skipped for overridden links.
-  if (!empty($context['entity']) && $context['entity'] instanceof NodeInterface && $link['access'] && ($context['entity']->bundle() === 'az_publication') && (empty($link['status_override']))) {
-    // Fields that represent a canonical copy of the publication exists.
-    $canonicals = [
-      'field_az_publication_doi',
-      'field_az_publication_link',
-    ];
-
-    // If a publication has a canonical field, exclude this publication..
+  if (!empty($context['entity']) && $context['entity'] instanceof NodeInterface && $link['access'] && empty($link['status_override'])) {
     $entity = $context['entity'];
-    foreach ($canonicals as $canonical) {
-      // Publications are noncanonical if a canonical reference exists.
-      if ($entity->hasField($canonical) && !empty($entity->get($canonical)->getValue())) {
-        $link['access'] = FALSE;
-        break;
-      }
+    if (az_publication_is_noncanonical_for_sitemap($entity)) {
+      $link['access'] = FALSE;
     }
+  }
+}
+
+/**
+ * Implements hook_simple_sitemap_entity_process().
+ */
+function az_publication_simple_sitemap_entity_process(ContentEntityInterface $entity): void {
+  if ($entity instanceof NodeInterface && az_publication_is_noncanonical_for_sitemap($entity)) {
+    throw new SkipElementException();
   }
 }
 

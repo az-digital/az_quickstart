@@ -64,3 +64,245 @@ function az_seo_update_1021301() {
 function az_seo_update_1021302() {
   \Drupal::service('module_installer')->install(['schema_organization']);
 }
+
+/**
+ * Implements hook_install().
+ */
+function az_seo_install() {
+  _az_seo_apply_simple_sitemap_settings();
+}
+
+/**
+ * Ensures simple_sitemap modules are installed and configured.
+ */
+function az_seo_update_1021303() {
+  \Drupal::service('module_installer')->install([
+    'simple_sitemap',
+    'simple_sitemap_engines',
+  ]);
+
+  _az_seo_apply_simple_sitemap_settings();
+}
+
+/**
+ * Migrates active xmlsitemap config to simple_sitemap settings.
+ *
+ * This intentionally overwrites simple_sitemap defaults so existing site
+ * behavior is preserved after running updates, including custom bundle config.
+ */
+function az_seo_update_1021304() {
+  if (!\Drupal::moduleHandler()->moduleExists('simple_sitemap')) {
+    return;
+  }
+
+  $generator = \Drupal::service('simple_sitemap.generator');
+  $entity_manager = $generator->entityManager();
+  $entity_manager->setSitemaps(['default']);
+
+  $config_factory = \Drupal::configFactory();
+  $storage = \Drupal::service('config.storage');
+
+  // Migrate global xmlsitemap setting values where equivalents exist.
+  $xmlsitemap_settings = $config_factory->get('xmlsitemap.settings');
+  if ($xmlsitemap_settings->get('xsl') !== NULL) {
+    $generator->saveSetting('xsl', (bool) $xmlsitemap_settings->get('xsl'));
+  }
+
+  foreach ($storage->listAll('xmlsitemap.settings.') as $config_name) {
+    $parts = explode('.', $config_name);
+    // Expected pattern: xmlsitemap.settings.<entity_type>.<bundle>.
+    if (count($parts) !== 4) {
+      continue;
+    }
+
+    [, , $entity_type_id, $bundle] = $parts;
+    $legacy = $config_factory->get($config_name);
+
+    $entity_manager->enableEntityType($entity_type_id);
+    $entity_manager->setBundleSettings($entity_type_id, $bundle, [
+      'index' => (bool) $legacy->get('status'),
+      'priority' => (string) ($legacy->get('priority') ?? '0.5'),
+      'changefreq' => _az_seo_map_xmlsitemap_changefreq($legacy->get('changefreq')),
+    ]);
+  }
+}
+
+/**
+ * Migrates per-entity XML sitemap overrides to simple_sitemap overrides.
+ */
+function az_seo_update_1021305() {
+  if (!\Drupal::moduleHandler()->moduleExists('simple_sitemap')) {
+    return;
+  }
+
+  $database = \Drupal::database();
+  if (!$database->schema()->tableExists('xmlsitemap')) {
+    return;
+  }
+
+  $generator = \Drupal::service('simple_sitemap.generator');
+  $entity_manager = $generator->entityManager();
+  $entity_manager->setSitemaps(['default']);
+
+  // Dedupe by entity type + id (xmlsitemap stores one row per language).
+  $migrated = [];
+
+  $result = $database->select('xmlsitemap', 'x')
+    ->fields('x', [
+      'type',
+      'subtype',
+      'id',
+      'language',
+      'status',
+      'status_override',
+      'priority',
+      'priority_override',
+      'changefreq',
+    ])
+    ->condition('x.type', 'frontpage', '<>')
+    ->condition('x.id', 0, '>')
+    ->orderBy('x.language', 'ASC')
+    ->execute();
+
+  foreach ($result as $row) {
+    $entity_type_id = (string) $row->type;
+    $entity_id = (string) $row->id;
+    $key = $entity_type_id . ':' . $entity_id;
+
+    if (isset($migrated[$key])) {
+      continue;
+    }
+
+    $bundle_changefreq = _az_seo_get_xmlsitemap_bundle_changefreq($entity_type_id, (string) $row->subtype);
+
+    $settings = [];
+    if (!empty($row->status_override)) {
+      $settings['index'] = (bool) $row->status;
+    }
+    if (!empty($row->priority_override) && $row->priority !== NULL) {
+      $settings['priority'] = (string) $row->priority;
+    }
+
+    $has_changefreq_override = !empty($row->changefreq)
+      && ((int) $row->changefreq !== $bundle_changefreq
+      || !empty($row->status_override)
+      || !empty($row->priority_override));
+    if ($has_changefreq_override) {
+      $settings['changefreq'] = _az_seo_map_xmlsitemap_changefreq($row->changefreq);
+    }
+
+    if (!empty($settings)) {
+      $entity_manager->setEntityInstanceSettings($entity_type_id, $entity_id, $settings);
+      $migrated[$key] = TRUE;
+    }
+  }
+}
+
+/**
+ * Migrates legacy xmlsitemap permissions to simple_sitemap permissions.
+ */
+function az_seo_update_1021306() {
+  $role_storage = \Drupal::entityTypeManager()->getStorage('user_role');
+  $roles = $role_storage->loadMultiple();
+
+  foreach ($roles as $role) {
+    if ($role->hasPermission('administer xmlsitemap')) {
+      $role->grantPermission('administer sitemap settings');
+      $role->grantPermission('edit entity sitemap settings');
+      $role->revokePermission('administer xmlsitemap');
+      $role->save();
+    }
+  }
+
+  // Preserve expected defaults for managed content-admin role on upgraded sites.
+  if ($content_admin = $role_storage->load('az_content_admin')) {
+    $changed = FALSE;
+    foreach (['administer sitemap settings', 'edit entity sitemap settings'] as $permission) {
+      if (!$content_admin->hasPermission($permission)) {
+        $content_admin->grantPermission($permission);
+        $changed = TRUE;
+      }
+    }
+    if ($changed) {
+      $content_admin->save();
+    }
+  }
+}
+
+/**
+ * Applies bundle and base URL settings for simple_sitemap.
+ */
+function _az_seo_apply_simple_sitemap_settings() {
+  if (!\Drupal::moduleHandler()->moduleExists('simple_sitemap')) {
+    return;
+  }
+
+  $generator = \Drupal::service('simple_sitemap.generator');
+  $entity_manager = $generator->entityManager();
+  $entity_manager->setSitemaps(['default']);
+  $entity_manager->enableEntityType('node');
+
+  $bundle_settings = [
+    'index' => TRUE,
+    'priority' => '0.5',
+  ];
+
+  foreach (['az_event', 'az_flexible_page', 'az_news', 'az_person', 'az_publication'] as $bundle) {
+    if (\Drupal::service('entity_type.bundle.info')->getBundleInfo('node')[$bundle] ?? FALSE) {
+      $entity_manager->setBundleSettings('node', $bundle, $bundle_settings);
+    }
+  }
+
+  if (\Drupal::service('entity_type.bundle.info')->getBundleInfo('menu_link_content')['menu_link_content'] ?? FALSE) {
+    $entity_manager->enableEntityType('menu_link_content');
+    $entity_manager->setBundleSettings('menu_link_content', 'menu_link_content', $bundle_settings);
+  }
+
+  $legacy_base_url = \Drupal::state()->get('xmlsitemap_base_url');
+  if (!empty($legacy_base_url) && !$generator->getSetting('base_url')) {
+    $generator->saveSetting('base_url', rtrim($legacy_base_url, '/'));
+  }
+}
+
+/**
+ * Maps XML sitemap numeric change frequency to simple_sitemap values.
+ */
+function _az_seo_map_xmlsitemap_changefreq($interval) {
+  if (!is_numeric($interval) || $interval <= 0) {
+    return '';
+  }
+
+  $interval = (int) $interval;
+
+  if ($interval <= 60) {
+    return 'always';
+  }
+  if ($interval <= 3600) {
+    return 'hourly';
+  }
+  if ($interval <= 86400) {
+    return 'daily';
+  }
+  if ($interval <= 604800) {
+    return 'weekly';
+  }
+  if ($interval <= 2419200) {
+    return 'monthly';
+  }
+  if ($interval <= 31449600) {
+    return 'yearly';
+  }
+
+  return 'never';
+}
+
+/**
+ * Returns XML sitemap bundle default changefreq interval in seconds.
+ */
+function _az_seo_get_xmlsitemap_bundle_changefreq(string $entity_type_id, string $bundle): int {
+  $settings = \Drupal::configFactory()
+    ->get("xmlsitemap.settings.$entity_type_id.$bundle");
+
+  $changefreq = $settings->get('changefreq');
+  return is_numeric($changefreq) ? (int) $changefreq : 0;
+}

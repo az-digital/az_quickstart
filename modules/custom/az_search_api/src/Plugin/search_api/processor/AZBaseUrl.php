@@ -9,12 +9,12 @@ use Drupal\search_api\Processor\FieldsProcessorPluginBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Transforms base_url into a value matching xmlsitemap.
+ * Transforms base_url into a value matching sitemap generation settings.
  */
 #[SearchApiProcessor(
   id: 'az_base_url',
   label: new TranslatableMarkup('Transform Base URL'),
-  description: new TranslatableMarkup('Transform the base url with the XML sitemap default'),
+  description: new TranslatableMarkup('Transform the base url with the sitemap base URL override'),
   stages: [
     'pre_index_save' => 0,
     'preprocess_index' => -10,
@@ -37,9 +37,14 @@ class AZBaseUrl extends FieldsProcessorPluginBase {
     /** @var static $processor */
     $processor = parent::create($container, $configuration, $plugin_id, $plugin_definition);
 
-    // \Drupal\Core\State\StateInterface $state;
-    $state = $container->get('state');
-    $baseUrl = $state->get('xmlsitemap_base_url');
+    $config = $container->get('config.factory')->get('simple_sitemap.settings');
+    $baseUrl = $config->get('base_url');
+
+    // Backward compatible fallback for sites that have not migrated settings.
+    if (empty($baseUrl)) {
+      $baseUrl = $container->get('state')->get('xmlsitemap_base_url');
+    }
+
     if (!empty($baseUrl)) {
       // Append a trailing slash if there isn't one.
       if (!str_ends_with($baseUrl, '/')) {

@@ -118,6 +118,7 @@
         "drupal/seckit": "2.0.3",
         "drupal/slick": "3.0.7",
         "drupal/slick_views": "3.0.3",
+        "drupal/simple_sitemap": "4.2.3",
         "drupal/smart_date": "4.2.8",
         "drupal/smart_title": "1.0.0",
         "drupal/smtp": "1.4.0",
