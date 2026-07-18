@@ -214,10 +214,14 @@ function az_seo_update_1021306() {
     }
   }
 
-  // Preserve expected defaults for managed content-admin role on upgraded sites.
+  // Preserve expected defaults for managed content-admin role
+  // on upgraded sites.
   if ($content_admin = $role_storage->load('az_content_admin')) {
     $changed = FALSE;
-    foreach (['administer sitemap settings', 'edit entity sitemap settings'] as $permission) {
+    foreach ([
+      'administer sitemap settings',
+      'edit entity sitemap settings',
+    ] as $permission) {
       if (!$content_admin->hasPermission($permission)) {
         $content_admin->grantPermission($permission);
         $changed = TRUE;
