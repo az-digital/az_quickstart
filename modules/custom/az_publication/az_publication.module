@@ -890,6 +890,10 @@ function az_publication_is_noncanonical_for_sitemap(NodeInterface $entity): bool
 
 /**
  * Implements hook_xmlsitemap_link_alter().
+ *
+ * Legacy compatibility hook for XML Sitemap.
+ *
+ * Prefer az_publication_simple_sitemap_entity_process() for exclusion logic.
  */
 function az_publication_xmlsitemap_link_alter(array &$link, array $context) {
 

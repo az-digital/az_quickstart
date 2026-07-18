@@ -20,6 +20,10 @@ function az_seo_is_excluded_node_for_sitemap(NodeInterface $node): bool {
  * Implements hook_xmlsitemap_link_alter().
  *
  * Exclude AZQS nodes that have an external link (az_link) set.
+ *
+ * Legacy compatibility hook for XML Sitemap.
+ *
+ * Prefer az_seo_simple_sitemap_entity_process() for sitemap exclusion logic.
  */
 function az_seo_xmlsitemap_link_alter(array &$link) {
   $check_types = ['az_event', 'az_news', 'az_person'];
