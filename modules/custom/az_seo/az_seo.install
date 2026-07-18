@@ -230,6 +230,26 @@ function az_seo_update_1021306() {
 }
 
 /**
+ * Uninstalls legacy XML Sitemap modules after migration.
+ */
+function az_seo_update_1021307() {
+  $module_installer = \Drupal::service('module_installer');
+  $module_handler = \Drupal::moduleHandler();
+
+  $to_uninstall = [];
+  if ($module_handler->moduleExists('xmlsitemap_engines')) {
+    $to_uninstall[] = 'xmlsitemap_engines';
+  }
+  if ($module_handler->moduleExists('xmlsitemap')) {
+    $to_uninstall[] = 'xmlsitemap';
+  }
+
+  if (!empty($to_uninstall)) {
+    $module_installer->uninstall($to_uninstall, TRUE);
+  }
+}
+
+/**
  * Applies bundle and base URL settings for simple_sitemap.
  */
 function _az_seo_apply_simple_sitemap_settings() {
