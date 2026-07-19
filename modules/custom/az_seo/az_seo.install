@@ -251,6 +251,8 @@ function az_seo_update_1021307() {
   if (!empty($to_uninstall)) {
     $module_installer->uninstall($to_uninstall, TRUE);
   }
+
+  _az_seo_rebuild_simple_sitemap();
 }
 
 /**
@@ -329,4 +331,16 @@ function _az_seo_get_xmlsitemap_bundle_changefreq(string $entity_type_id, string
 
   $changefreq = $settings->get('changefreq');
   return is_numeric($changefreq) ? (int) $changefreq : 0;
+}
+
+/**
+ * Rebuilds and regenerates Simple XML Sitemap after migration updates.
+ */
+function _az_seo_rebuild_simple_sitemap() {
+  if (!\Drupal::moduleHandler()->moduleExists('simple_sitemap')) {
+    return;
+  }
+
+  $generator = \Drupal::service('simple_sitemap.generator');
+  $generator->rebuildQueue()->generate();
 }
