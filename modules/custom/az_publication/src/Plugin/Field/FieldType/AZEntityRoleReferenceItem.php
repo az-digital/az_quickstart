@@ -140,7 +140,7 @@ class AZEntityRoleReferenceItem extends EntityReferenceItem implements OptionsPr
         $roles[$key] = $value;
       }
       else {
-        return;
+        return NULL;
       }
     }
 
