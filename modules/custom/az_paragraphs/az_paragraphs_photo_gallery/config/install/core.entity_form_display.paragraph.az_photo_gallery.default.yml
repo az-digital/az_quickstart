@@ -15,12 +15,12 @@ content:
   field_az_photos:
     type: media_library_widget
     weight: 0
+    region: content
     settings:
       media_types: {  }
     third_party_settings:
       media_library_edit:
-        show_edit: '1'
-    region: content
+        show_edit: true
 hidden:
   created: true
   status: true
