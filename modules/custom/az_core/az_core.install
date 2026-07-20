@@ -58,7 +58,7 @@ function az_core_requirements($phase): array {
       'title' => t('Asset-packagist library deprecation'),
       'value' => t('Deprecated packages still present for backward compatibility'),
       'severity' => REQUIREMENT_WARNING,
-      'description' => t('Arizona Quickstart is deprecating asset-packagist-delivered libraries, including npm-asset/bootstrap-datepicker, npm-asset/easepick--bundle, and npm-asset/slick-carousel. These packages will be removed in a future minor Quickstart release. Migrate any custom references to local or otherwise supported library sources.'),
+      'description' => t('Arizona Quickstart is deprecating asset-packagist-delivered libraries, including npm-asset/easepick--bundle, and npm-asset/slick-carousel. These packages will be removed in a future minor Quickstart release. Migrate any custom references to local or otherwise supported library sources.'),
     ];
   }
 

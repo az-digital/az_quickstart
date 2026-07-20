@@ -107,7 +107,6 @@ Deprecation and removal process:
 
 Current deprecated asset-packagist packages retained for compatibility:
 
-* npm-asset/bootstrap-datepicker
 * npm-asset/easepick--bundle
 * npm-asset/slick-carousel
 
