@@ -91,6 +91,25 @@ _**Minor version updates for Drupal core are included in Quickstart LTS (patch-l
 
 _***Visual changes in patch releases will be avoided when possible. Visual changes will only be included when they fix a critical issue and cannot wait until the next minor (or major) release._
 
+## Deprecation Policy: asset-packagist Libraries
+
+Arizona Quickstart is deprecating third-party frontend libraries installed via
+asset-packagist.
+
+Deprecation and removal process:
+
+* During deprecation, packages remain in composer.json to avoid sudden breaks
+  for downstream custom code.
+* Composer install/update warnings and Drupal status report warnings are used to
+  notify maintainers ahead of removal.
+* Deprecated asset-packagist packages are removed in a future minor Quickstart
+  release.
+
+Current deprecated asset-packagist packages retained for compatibility:
+
+* npm-asset/easepick--bundle
+* npm-asset/slick-carousel
+
 ## Pre-Release Versions
 
 ### Alpha Releases (`alpha`)
