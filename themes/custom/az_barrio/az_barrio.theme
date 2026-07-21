@@ -61,11 +61,6 @@ function az_barrio_preprocess_form_element(array &$variables) {
 function az_barrio_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   if ($form_id === 'search_block_form') {
     az_barrio_attach_form_id($form, $form_id);
-    // Suppress the browser's history-based autocomplete dropdown on the AZ
-    // Search input (blue header + fullscreen navbar). Port of
-    // arizona-bootstrap PR #2175 (fixes AZBS #2172).
-    // @todo Reassess with upgrade to Arizona Bootstrap v5.1.6.
-    $form['keys']['#attributes']['autocomplete'] = 'off';
   }
 }
 
@@ -735,15 +730,19 @@ function az_barrio_preprocess_block(&$variables) {
 /**
  * Implements hook_preprocess_HOOK() for input search fields.
  *
- * Modify search block form input when AZ Header Blue is enabled.
+ * Modify search block form input for AZ Header Blue and AZ Navbar Fullscreen.
  */
 function az_barrio_preprocess_input__search(array &$variables) {
   $use_new_search_style = (isset($variables['element']['#form_id'])
     && $variables['element']['#form_id'] === 'search_block_form'
-    && \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_header_blue'));
+    && (\Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_header_blue')
+    || \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_navbar_fullscreen')));
   $search_text = $use_new_search_style ? 'Search' : 'Search this site';
   $variables['attributes']['placeholder'] = $search_text;
   $variables['attributes']['aria-label'] = $search_text;
+  if ($use_new_search_style) {
+    $variables['attributes']['autocomplete'] = 'off';
+  }
 }
 
 /**
