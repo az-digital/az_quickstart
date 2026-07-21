@@ -3,5 +3,5 @@ status: true
 dependencies: {  }
 id: az_flexible_block
 label: 'Flexible Block'
-revision: 1
+revision: true
 description: 'Create a block using Arizona Bootstrap components'

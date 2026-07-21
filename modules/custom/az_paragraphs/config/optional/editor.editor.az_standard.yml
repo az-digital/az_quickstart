@@ -111,6 +111,7 @@ settings:
       properties:
         reversed: false
         startIndex: true
+        styles: true
       multiBlock: true
     ckeditor5_sourceEditing:
       allowed_tags:
@@ -125,8 +126,8 @@ settings:
         - '<img src alt data-entity-type data-entity-uuid>'
         - '<footer class>'
         - '<blockquote class>'
-        - '<ul type class>'
-        - '<ol type class>'
+        - '<ul class>'
+        - '<ol class>'
         - '<li class>'
         - '<h1 class name id>'
         - '<h2 class name id>'
