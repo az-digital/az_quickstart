@@ -186,4 +186,3 @@ props:
       type: string
       title: Wordmark URL
       description: The URL for the wordmark logo.
-
