@@ -106,8 +106,12 @@ class AZNavbarFullscreenMenuBlock extends BlockBase implements ContainerFactoryP
     return [
       'primary_menu' => 'main',
       'cta_menu' => '',
-      'resources_menu' => '',
-      'helpful_links_menu' => '',
+      'footer_top_menu' => '',
+      'footer_top_desktop_heading' => 'Resources For',
+      'footer_top_mobile_heading' => 'Resources by Audience',
+      'footer_bottom_menu' => '',
+      'footer_bottom_desktop_heading' => 'Helpful Links',
+      'footer_bottom_mobile_heading' => 'Helpful Links',
       'search_form_block_desktop_navbar' => '',
       'search_form_block_offcanvas' => '',
     ] + parent::defaultConfiguration();
@@ -148,20 +152,48 @@ class AZNavbarFullscreenMenuBlock extends BlockBase implements ContainerFactoryP
       '#description' => $this->t('Select the menu to use for the Call to Action section.'),
     ];
 
-    $form['menu_selection']['resources_menu'] = [
+    $form['menu_selection']['footer_top_menu'] = [
       '#type' => 'select',
-      '#title' => $this->t('Resources For Menu'),
-      '#default_value' => $config['resources_menu'],
+      '#title' => $this->t('Footer Top Menu'),
+      '#default_value' => $config['footer_top_menu'],
       '#options' => ['' => $this->t('- None -')] + $menus,
-      '#description' => $this->t('Select the menu to use for the Resources For section.'),
+      '#description' => $this->t('Select the menu to use for the top footer.'),
     ];
 
-    $form['menu_selection']['helpful_links_menu'] = [
+    $form['menu_selection']['footer_top_desktop_heading'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Footer Top Desktop Heading'),
+      '#default_value' => $config['footer_top_desktop_heading'],
+      '#description' => $this->t('Heading for the top footer on desktop devices.'),
+    ];
+
+    $form['menu_selection']['footer_top_mobile_heading'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Footer Top Mobile Heading'),
+      '#default_value' => $config['footer_top_mobile_heading'],
+      '#description' => $this->t('Heading for the top footer on mobile devices. Since the mobile footer will lack the extra context of the footer links, the mobile heading may need to be more descriptive than the desktop heading.'),
+    ];
+
+    $form['menu_selection']['footer_bottom_menu'] = [
       '#type' => 'select',
-      '#title' => $this->t('Helpful Links Menu'),
-      '#default_value' => $config['helpful_links_menu'],
+      '#title' => $this->t('Footer Bottom Menu'),
+      '#default_value' => $config['footer_bottom_menu'],
       '#options' => ['' => $this->t('- None -')] + $menus,
-      '#description' => $this->t('Select the menu to use for the Helpful Links section.'),
+      '#description' => $this->t('Select the menu to use for the bottom footer.'),
+    ];
+
+    $form['menu_selection']['footer_bottom_desktop_heading'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Footer Bottom Desktop Heading'),
+      '#default_value' => $config['footer_bottom_desktop_heading'],
+      '#description' => $this->t('Heading for the bottom footer on desktop devices.'),
+    ];
+
+    $form['menu_selection']['footer_bottom_mobile_heading'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Footer Bottom Mobile Heading'),
+      '#default_value' => $config['footer_bottom_mobile_heading'],
+      '#description' => $this->t('Heading for the bottom footer on mobile devices. Since the mobile footer will lack the extra context of the footer links, the mobile heading may need to be more descriptive than the desktop heading.'),
     ];
 
     // Load search form blocks.
@@ -200,8 +232,12 @@ class AZNavbarFullscreenMenuBlock extends BlockBase implements ContainerFactoryP
     $this->configuration['primary_menu'] = $form_state->getValue('primary_menu');
     $menu_selection = $form_state->getValue('menu_selection');
     $this->configuration['cta_menu'] = $menu_selection['cta_menu'] ?? '';
-    $this->configuration['resources_menu'] = $menu_selection['resources_menu'] ?? '';
-    $this->configuration['helpful_links_menu'] = $menu_selection['helpful_links_menu'] ?? '';
+    $this->configuration['footer_top_menu'] = $menu_selection['footer_top_menu'] ?? '';
+    $this->configuration['footer_top_desktop_heading'] = $menu_selection['footer_top_desktop_heading'] ?? '';
+    $this->configuration['footer_top_mobile_heading'] = $menu_selection['footer_top_mobile_heading'] ?? '';
+    $this->configuration['footer_bottom_menu'] = $menu_selection['footer_bottom_menu'] ?? '';
+    $this->configuration['footer_bottom_desktop_heading'] = $menu_selection['footer_bottom_desktop_heading'] ?? '';
+    $this->configuration['footer_bottom_mobile_heading'] = $menu_selection['footer_bottom_mobile_heading'] ?? '';
     $this->configuration['search_form_block_desktop_navbar'] = $form_state->getValue('search_form_block_desktop_navbar') ?? '';
     $this->configuration['search_form_block_offcanvas'] = $form_state->getValue('search_form_block_offcanvas') ?? '';
   }
@@ -221,8 +257,8 @@ class AZNavbarFullscreenMenuBlock extends BlockBase implements ContainerFactoryP
     $menus_config = [
       'primary_menu' => 'primary',
       'cta_menu' => 'cta',
-      'resources_menu' => 'resources',
-      'helpful_links_menu' => 'helpful_links',
+      'footer_top_menu' => 'footer_top',
+      'footer_bottom_menu' => 'footer_bottom',
     ];
 
     foreach ($menus_config as $config_key => $section_key) {
@@ -237,6 +273,12 @@ class AZNavbarFullscreenMenuBlock extends BlockBase implements ContainerFactoryP
       // Add cache tags for the menu.
       $build['#cache']['tags'][] = "config:system.menu.{$menu_name}";
     }
+
+    // Add footer headings.
+    $build['footer_top_desktop_heading'] = $this->configuration['footer_top_desktop_heading'] ?? '';
+    $build['footer_top_mobile_heading'] = $this->configuration['footer_top_mobile_heading'] ?? '';
+    $build['footer_bottom_desktop_heading'] = $this->configuration['footer_bottom_desktop_heading'] ?? '';
+    $build['footer_bottom_mobile_heading'] = $this->configuration['footer_bottom_mobile_heading'] ?? '';
 
     // Add search form block for the desktop navbar if configured.
     if (!empty($this->configuration['search_form_block_desktop_navbar'])) {
@@ -324,11 +366,11 @@ class AZNavbarFullscreenMenuBlock extends BlockBase implements ContainerFactoryP
     if (!empty($this->configuration['cta_menu'])) {
       $cache_tags[] = 'config:system.menu.' . $this->configuration['cta_menu'];
     }
-    if (!empty($this->configuration['resources_menu'])) {
-      $cache_tags[] = 'config:system.menu.' . $this->configuration['resources_menu'];
+    if (!empty($this->configuration['footer_top_menu'])) {
+      $cache_tags[] = 'config:system.menu.' . $this->configuration['footer_top_menu'];
     }
-    if (!empty($this->configuration['helpful_links_menu'])) {
-      $cache_tags[] = 'config:system.menu.' . $this->configuration['helpful_links_menu'];
+    if (!empty($this->configuration['footer_bottom_menu'])) {
+      $cache_tags[] = 'config:system.menu.' . $this->configuration['footer_bottom_menu'];
     }
     return $cache_tags;
   }
