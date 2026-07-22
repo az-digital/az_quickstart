@@ -1,6 +1,6 @@
 $schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
 name: AZ Navbar Fullscreen
-status: experimental
+status: stable
 libraryOverrides:
   dependencies:
     - az_barrio/arizona-bootstrap-css
