@@ -5,6 +5,7 @@ core_version_requirement: ^11.3 || ^12
 package: The University of Arizona
 configure: az_flexible_page.settings
 dependencies:
+  - az_seo:az_seo
   - drupal:field
   - drupal:menu_ui
   - drupal:node

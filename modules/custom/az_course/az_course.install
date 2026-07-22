@@ -6,6 +6,31 @@
  */
 
 /**
+ * Adds metatag configuration for Course content.
+ */
+function az_course_update_113051(): void {
+  // Install missing default configuration owned by az_course.
+  \Drupal::service('config.installer')
+    ->installDefaultConfig('module', 'az_course');
+
+  // Add the new field config as a dependency of the existing form display.
+  $form_display = \Drupal::configFactory()
+    ->getEditable('core.entity_form_display.node.az_course.default');
+
+  $dependencies = $form_display->get('dependencies.config') ?? [];
+  $field_dependency = 'field.field.node.az_course.field_az_metatag';
+
+  if (!in_array($field_dependency, $dependencies, TRUE)) {
+    $dependencies[] = $field_dependency;
+    sort($dependencies);
+
+    $form_display
+      ->set('dependencies.config', $dependencies)
+      ->save();
+  }
+}
+
+/**
  * Apply Bootstrap 5 compatibility updates to az_course text fields.
  */
 function az_course_update_1130001(&$sandbox) {

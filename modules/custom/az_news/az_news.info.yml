@@ -6,6 +6,7 @@ package: The University of Arizona
 dependencies:
   - az_core:az_core
   - az_media:az_media
+  - az_seo:az_seo
   - az_paragraphs:az_paragraphs
   - az_paragraphs:az_paragraphs_cards
   - az_paragraphs:az_paragraphs_contact

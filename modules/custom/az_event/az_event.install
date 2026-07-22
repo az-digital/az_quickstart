@@ -23,6 +23,29 @@ function az_event_update_1021301() {
 /**
  * Apply Bootstrap 5 compatibility updates to event body fields.
  */
+function az_event_update_113051(): void {
+  \Drupal::service('config.installer')
+    ->installDefaultConfig('module', 'az_event');
+
+  $form_display = \Drupal::configFactory()
+    ->getEditable('core.entity_form_display.node.az_event.default');
+
+  $dependencies = $form_display->get('dependencies.config') ?? [];
+  $field_dependency = 'field.field.node.az_event.field_az_metatag';
+
+  if (!in_array($field_dependency, $dependencies, TRUE)) {
+    $dependencies[] = $field_dependency;
+    sort($dependencies);
+
+    $form_display
+      ->set('dependencies.config', $dependencies)
+      ->save();
+  }
+}
+
+/**
+ * Apply Bootstrap 5 compatibility updates to event body fields.
+ */
 function az_event_update_1130001(&$sandbox) {
   if (!isset($sandbox['ids'])) {
     $query = \Drupal::entityTypeManager()
