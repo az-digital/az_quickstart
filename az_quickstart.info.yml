@@ -53,6 +53,7 @@ install:
   - drupal:taxonomy
   - drupal:dblog
   - drupal:search
+  - drupal:search_node
   - drupal:shortcut
   - token:token
   - drupal:toolbar
