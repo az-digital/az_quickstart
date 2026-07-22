@@ -17,8 +17,12 @@
  *     that are not currently visible.
  *   - in_active_trail: TRUE if the link is in the active trail.
  * - cta_items: A list of call-to-action menu items.
- * - resources_items: A list of "resources for" menu items.
- * - helpful_links_items: A list of "helpful links" menu items.
+ * - footer_top_items: A list of menu items for the top footer.
+ * - footer_top_desktop_heading: The heading for the top footer on desktop devices.
+ * - footer_top_mobile_heading: The heading for the top footer on mobile devices.
+ * - footer_bottom_items: A list of menu items for the bottom footer.
+ * - footer_bottom_desktop_heading: The heading for the bottom footer on desktop devices.
+ * - footer_bottom_mobile_heading: The heading for the bottom footer on mobile devices.
  * - search_form_block_desktop_navbar: The search form block content to display in the desktop navbar.
  * - search_form_block_offcanvas: The search form block content to display in the offcanvas menu.
  * - wordmark: Setting to display the university wordmark in the navbar.
@@ -206,15 +210,15 @@
         </div>
       </div>
 
-      {% if resources_items %}
+      {% if footer_top_items %}
         <div class="modal-footer d-lg-flex" id="navbar-az-fullscreen-modal-footer-top">
-          <nav class="navbar d-none d-lg-flex" aria-labelledby="resources-for-label">
+          <nav class="navbar d-none d-lg-flex" aria-labelledby="footer-top-label">
             <div class="container-lg">
               <ul class="navbar-nav">
                 <li class="nav-item">
-                  <h2 class="navbar-brand" id="resources-for-label">Resources For:</h2>
+                  <h2 class="navbar-brand" id="footer-top-label">{{ footer_top_desktop_heading }}:</h2>
                 </li>
-                {% for item in resources_items %}
+                {% for item in footer_top_items %}
                   <li class="nav-item">
                     <a class="nav-link" href="{{ item.url }}">
                       <span class="nav-link-text">{{ item.title }}</span>
@@ -224,9 +228,9 @@
               </ul>
             </div>
           </nav>
-          <button type="button" class="btn navbar navbar-az-fullscreen-mobile-footer-btn d-lg-none" aria-controls="navbar-az-fullscreen-nav-mobile-col" aria-label="Toggle Resources by Audience submenu" data-az-menu-element="#navbar-az-fullscreen-modal-footer-top">
+          <button type="button" class="btn navbar navbar-az-fullscreen-mobile-footer-btn d-lg-none" aria-controls="navbar-az-fullscreen-nav-mobile-col" aria-label="Toggle {{ footer_top_mobile_heading }} submenu" data-az-menu-element="#navbar-az-fullscreen-modal-footer-top">
             <span class="navbar-az-fullscreen-mobile-footer-btn-text">
-              <span class="h2 navbar-brand">Resources by Audience</span>
+              <span class="h2 navbar-brand">{{ footer_top_mobile_heading }}</span>
             </span>
             <span class="nav-toggle collapsed navbar-az-fullscreen-mobile-footer-btn-icon">
               <span class="nav-toggle-icon" aria-hidden="true"></span>
@@ -234,15 +238,15 @@
           </button>
         </div>
       {% endif %}
-      {% if helpful_links_items %}
+      {% if footer_bottom_items %}
         <div class="modal-footer d-lg-flex" id="navbar-az-fullscreen-modal-footer-bottom">
-          <nav class="navbar d-none d-lg-flex" aria-labelledby="helpful-links-label">
+          <nav class="navbar d-none d-lg-flex" aria-labelledby="footer-bottom-label">
             <div class="container-lg">
               <ul class="navbar-nav">
                 <li class="nav-item">
-                  <h2 class="navbar-brand" id="helpful-links-label">Helpful Links:</h2>
+                  <h2 class="navbar-brand" id="footer-bottom-label">{{ footer_bottom_desktop_heading }}:</h2>
                 </li>
-                {% for item in helpful_links_items %}
+                {% for item in footer_bottom_items %}
                   <li class="nav-item">
                     <a class="nav-link" href="{{ item.url }}">
                       <span class="nav-link-text">{{ item.title }}</span>
@@ -252,9 +256,9 @@
               </ul>
             </div>
           </nav>
-          <button type="button" class="btn navbar navbar-az-fullscreen-mobile-footer-btn d-lg-none" aria-controls="navbar-az-fullscreen-nav-mobile-col" aria-label="Toggle Helpful Links submenu" data-az-menu-element="#navbar-az-fullscreen-modal-footer-bottom">
+          <button type="button" class="btn navbar navbar-az-fullscreen-mobile-footer-btn d-lg-none" aria-controls="navbar-az-fullscreen-nav-mobile-col" aria-label="Toggle {{ footer_bottom_mobile_heading }} submenu" data-az-menu-element="#navbar-az-fullscreen-modal-footer-bottom">
             <span class="navbar-az-fullscreen-mobile-footer-btn-text">
-              <span class="h2 navbar-brand">Helpful Links</span>
+              <span class="h2 navbar-brand">{{ footer_bottom_mobile_heading }}</span>
             </span>
             <span class="nav-toggle collapsed navbar-az-fullscreen-mobile-footer-btn-icon">
               <span class="nav-toggle-icon" aria-hidden="true"></span>
