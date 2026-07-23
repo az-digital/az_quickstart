@@ -14,17 +14,6 @@ filters:
     status: true
     weight: 0
     settings: {  }
-  bootstrap_utilities_table_filter:
-    id: bootstrap_utilities_table_filter
-    provider: bootstrap_utilities
-    status: false
-    weight: 0
-    settings:
-      table_remove_width_height: true
-      table_row_striping: false
-      table_bordered: false
-      table_row_hover: false
-      table_small: false
   editor_file_reference:
     id: editor_file_reference
     provider: editor
