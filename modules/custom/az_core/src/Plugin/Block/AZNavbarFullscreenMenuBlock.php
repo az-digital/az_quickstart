@@ -328,15 +328,15 @@ class AZNavbarFullscreenMenuBlock extends BlockBase implements ContainerFactoryP
     // Skip disabled links in the menu.
     $parameters->onlyEnabledLinks();
 
-    if ($section_key === 'primary') {
-      // Primary menu: Set the active trail and limit depth to 3.
-      $parameters->setActiveTrail($this->menuActiveTrail->getActiveTrailIds($menu_name));
-      $parameters->setMaxDepth(3);
-    }
-    else {
-      // Additional menus: only keep the first level of menu items.
-      $parameters->setMaxDepth(1);
-    }
+    // Set the active trail.
+    $parameters->setActiveTrail($this->menuActiveTrail->getActiveTrailIds($menu_name));
+
+    // Set the maximum depth to 3 for the primary menu and 1 otherwise.
+    $section_key === 'primary' ? $parameters->setMaxDepth(3) : $parameters->setMaxDepth(1);
+
+    // Load the menu tree.
+    /** @var \Drupal\Core\Menu\MenuLinkTreeElement[] $tree */
+    $tree = $this->menuLinkTree->load($menu_name, $parameters);
 
     // Load the menu tree.
     /** @var \Drupal\Core\Menu\MenuLinkTreeElement[] $tree */
