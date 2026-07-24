@@ -41,7 +41,7 @@
     <ul class="navbar-nav navbar-az-fullscreen-actions d-none d-lg-flex ms-auto me-3">
       {% for item in cta_items %}
         <li class="nav-item">
-          <a class="nav-link" href="{{ item.url }}">
+          <a class="nav-link{{ item.in_active_trail ? ' active' }}" href="{{ item.url }}">
             <span class="nav-link-text">{{ item.title }}</span>
           </a>
         </li>
@@ -84,7 +84,7 @@
             <ul class="navbar-nav navbar-az-fullscreen-actions d-none d-lg-flex ms-auto me-3">
               {% for item in cta_items %}
                 <li class="nav-item">
-                  <a class="nav-link" href="{{ item.url }}">
+                  <a class="nav-link{{ item.in_active_trail ? ' active' }}" href="{{ item.url }}">
                     <span class="nav-link-text">{{ item.title }}</span>
                   </a>
                 </li>
@@ -183,7 +183,7 @@
               <ul class="navbar-nav navbar-az-fullscreen-actions">
                 {% for item in cta_items %}
                   <li class="nav-item">
-                    <a class="nav-link" href="{{ item.url }}">
+                    <a class="nav-link{{ item.in_active_trail ? ' active' }}" href="{{ item.url }}">
                       <span class="nav-link-text">{{ item.title }}</span>
                     </a>
                   </li>
@@ -220,7 +220,7 @@
                 </li>
                 {% for item in footer_top_items %}
                   <li class="nav-item">
-                    <a class="nav-link" href="{{ item.url }}">
+                    <a class="nav-link{{ item.in_active_trail ? ' active' }}" href="{{ item.url }}">
                       <span class="nav-link-text">{{ item.title }}</span>
                     </a>
                   </li>
@@ -248,7 +248,7 @@
                 </li>
                 {% for item in footer_bottom_items %}
                   <li class="nav-item">
-                    <a class="nav-link" href="{{ item.url }}">
+                    <a class="nav-link{{ item.in_active_trail ? ' active' }}" href="{{ item.url }}">
                       <span class="nav-link-text">{{ item.title }}</span>
                     </a>
                   </li>
