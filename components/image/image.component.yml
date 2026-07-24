@@ -1,0 +1,53 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Image
+status: experimental
+description: A layout- and accessibility-aware image, backed by the media library. Works standalone on a page, or dropped into a Ranking Deck alongside Ranking cards.
+props:
+  type: object
+  properties:
+    src:
+      type: string
+      title: Image
+      description: Pick an image from the media library.
+      format: uri
+      contentMediaType: image/*
+      x-allowed-schemes:
+        - public
+      examples:
+        - public://canyon_running.jpg
+    decorative:
+      type: boolean
+      title: Decorative
+      description: Hide this image from screen readers and other assistive technology, and ignore Alternative Text. Only enable for purely decorative images that carry no information.
+      examples:
+        - false
+    alt:
+      type: string
+      title: Alternative Text
+      description: Describes the image for screen readers and other assistive technology. Ignored when Decorative is enabled.
+      examples:
+        - Canyon Running
+    width_span:
+      type: string
+      title: Width Span
+      description: How many grid columns this image spans when placed inside a Ranking Deck (or any other CSS grid layout). Has no effect outside a grid layout.
+      enum:
+        - '1'
+        - '2'
+        - '3'
+        - '4'
+      meta:enum:
+        '1': 1 column
+        '2': 2 columns (default)
+        '3': 3 columns
+        '4': 4 columns
+      examples:
+        - '2'
+    utility_classes:
+      type: array
+      title: Utility Classes
+      description: Additional Bootstrap utility classes for the image wrapper, e.g. bottom spacing (mb-4) before the next item on the page. Not needed when the image is placed inside a Ranking Deck.
+      items:
+        type: string
+      examples:
+        - - mb-0

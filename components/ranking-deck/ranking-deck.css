@@ -1,0 +1,72 @@
+/**
+ * Ranking Deck component.
+ *
+ * Responsive CSS grid for Ranking cards. The grid (not the cards) owns the
+ * layout and spacing: per-breakpoint column counts come from modifier
+ * classes, and the gap matches the legacy pb-4 rhythm (1.5rem). Grid items
+ * stretch by default, giving equal-height cards per row.
+ */
+
+.az-ranking-deck {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.az-ranking-deck > * {
+  min-width: 0;
+}
+
+/* Phone (base). */
+.az-ranking-deck--phone-1 {
+  grid-template-columns: repeat(1, 1fr);
+}
+
+.az-ranking-deck--phone-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.az-ranking-deck--phone-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.az-ranking-deck--phone-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* Tablet. */
+@media (min-width: 768px) {
+  .az-ranking-deck--tablet-1 {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .az-ranking-deck--tablet-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .az-ranking-deck--tablet-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .az-ranking-deck--tablet-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Desktop. */
+@media (min-width: 992px) {
+  .az-ranking-deck--desktop-1 {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .az-ranking-deck--desktop-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .az-ranking-deck--desktop-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .az-ranking-deck--desktop-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

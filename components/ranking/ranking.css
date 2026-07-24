@@ -1,0 +1,88 @@
+/**
+ * Ranking component.
+ *
+ * Ported from modules/custom/az_ranking/css/az-ranking.css and
+ * css/az-ranking-image.css with namespaced selectors so the component can
+ * coexist with the legacy paragraph styles until the paragraph template
+ * delegates to this component. Color tokens come from Arizona Bootstrap.
+ */
+
+.az-ranking-sdc {
+  position: relative;
+  /* Small viewports. */
+  min-height: 190px;
+  /* Overrides the .card default (--bs-border-radius, 0.375rem) to match the
+     Ranking Card component (components/ranking-card in az_storybook) for
+     visual consistency across the two ranking designs. Neither the legacy
+     az_ranking module nor this port ever set this deliberately before; the
+     mockup calls for 1rem. */
+  border-radius: 1rem;
+}
+
+/* Medium viewports. */
+@media (min-width: 768px) {
+  .az-ranking-sdc {
+    min-height: 230px;
+  }
+}
+
+/* Large viewports. */
+@media (min-width: 992px) {
+  .az-ranking-sdc {
+    min-height: 260px;
+  }
+}
+
+/* Keep visually-hidden link titles in flow so stretched-link covers the card. */
+.az-ranking-sdc .card-body .visually-hidden {
+  display: block;
+  position: static !important;
+}
+
+/*
+ * Preset hover colors, paired to the hover background color.
+ * !important is required to out-rank the text-bg-* utility colors.
+ */
+.text-bg-chili.az-ranking-sdc--bold-hover:hover * {
+  background-color: var(--bs-white) !important;
+  color: RGBA(var(--bs-chili-rgb), var(--bs-bg-opacity, 1)) !important;
+}
+
+.text-bg-blue.az-ranking-sdc--bold-hover:hover * {
+  background-color: var(--bs-white) !important;
+  color: RGBA(var(--bs-blue-rgb), var(--bs-bg-opacity, 1)) !important;
+}
+
+.bg-sky.az-ranking-sdc--bold-hover:hover * {
+  background-color: RGBA(var(--bs-blue-rgb), var(--bs-bg-opacity, 1)) !important;
+  color: RGBA(var(--bs-sky-rgb), var(--bs-bg-opacity, 1)) !important;
+}
+
+.bg-cool-gray.az-ranking-sdc--bold-hover:hover * {
+  background-color: RGBA(var(--bs-azurite-rgb), var(--bs-bg-opacity, 1)) !important;
+  color: RGBA(var(--bs-cool-gray-rgb), var(--bs-bg-opacity, 1)) !important;
+}
+
+.bg-oasis.az-ranking-sdc--bold-hover:hover * {
+  background-color: RGBA(var(--bs-midnight-rgb), var(--bs-bg-opacity, 1)) !important;
+  color: RGBA(var(--bs-oasis-rgb), var(--bs-bg-opacity, 1)) !important;
+}
+
+/*
+ * Transparent-background font color overrides. Links keep their own colors.
+ */
+.az-ranking-sdc--text-white *:not(a) {
+  color: var(--bs-white) !important;
+}
+
+.az-ranking-sdc--text-black *:not(a) {
+  color: var(--bs-black) !important;
+}
+
+.az-ranking-sdc--text-az-blue *:not(a) {
+  color: RGBA(var(--bs-blue-rgb), var(--bs-bg-opacity, 1));
+}
+
+.az-ranking-sdc--text-midnight *:not(a) {
+  color: RGBA(var(--bs-midnight-rgb), var(--bs-bg-opacity, 1)) !important;
+}

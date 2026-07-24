@@ -1,0 +1,54 @@
+{#
+/**
+ * @file
+ * Template for the az_quickstart Image component.
+ *
+ * Renders an <img> directly from a media-library-backed prop — no slot, no
+ * Canvas dependency. The `src` prop's shape (type: string, format: uri,
+ * contentMediaType: image/*, x-allowed-schemes: [public]) is recognized by
+ * Drupal core's media_library module via a canvas_storable_prop_shape_alter
+ * hook Canvas ships — that's what gives editors a real media-library picker
+ * in Canvas, with no canvas:image / canvas.module $ref needed, so this stays
+ * safe to render on sites without the Canvas module installed.
+ *
+ * Props:
+ * - src: Image URI, picked via the media library in Canvas. Resolves to a
+ *   Drupal stream-wrapper URI (public://...), not a browser-loadable URL —
+ *   converted via the file_url() Twig function before rendering.
+ * - decorative: When true, forces empty alt text AND hides the image from
+ *   assistive technology via aria-hidden. Defaults to false.
+ * - alt: Alternative text. Ignored when decorative is true.
+ * - width_span: 1-4. Grid columns this image spans when placed inside a
+ *   Ranking Deck (or any CSS grid layout). No effect outside a grid
+ *   context. Defaults to 2.
+ * - utility_classes: Additional Bootstrap utility classes for the wrapper
+ *   (e.g. bottom spacing). Not needed when placed inside a Ranking Deck.
+ */
+#}
+{% set attributes = attributes|default(create_attribute()) %}
+
+{% set decorative = decorative|default(false) %}
+{% set alt = decorative ? '' : alt|default('') %}
+
+{% set width_span = width_span|default('2') in ['1', '2', '3', '4'] ? width_span|default('2') : '2' %}
+
+{% set utility_classes = utility_classes|default([]) %}
+{% if utility_classes is not iterable %}
+  {% set utility_classes = [utility_classes] %}
+{% endif %}
+
+{% set root_classes = ['az-image', 'az-image--span-' ~ width_span] %}
+{% if utility_classes %}
+  {% set root_classes = root_classes|merge(utility_classes) %}
+{% endif %}
+
+{% set root_attributes = attributes.addClass(root_classes) %}
+{% if decorative %}
+  {% set root_attributes = root_attributes.setAttribute('aria-hidden', 'true') %}
+{% endif %}
+
+<div{{ root_attributes }}>
+  {% if src|default('') %}
+    <img src="{{ file_url(src) }}" alt="{{ alt }}" loading="lazy">
+  {% endif %}
+</div>

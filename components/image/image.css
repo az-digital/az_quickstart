@@ -1,0 +1,70 @@
+/**
+ * Image component.
+ *
+ * A layout wrapper around a media-library-backed <img>. `grid-column: span N`
+ * only has an effect when this component is placed inside a CSS grid
+ * container (for example, the Ranking Deck component) — it is inert
+ * everywhere else, so the same width_span prop works whether the image is
+ * placed inside a deck or standalone on a page.
+ *
+ * Known limitation: if width_span is set wider than the number of columns
+ * the surrounding grid currently has (e.g. span 4 inside a 2-column
+ * Ranking Deck), the browser may create extra implicit grid tracks rather
+ * than clamping — this has not been visually verified. Editors should
+ * pick a span that fits the deck's current per-row setting.
+ */
+
+.az-image {
+  position: relative;
+  overflow: hidden;
+  /* Matches .az-ranking-sdc's own responsive min-height (ranking.css) so an
+     image-only row (or an image taller than its siblings) has a sensible
+     floor, and so the image never dictates the row's height (see img rule
+     below) — same technique the legacy .ranking-image-wrapper used.
+     Small viewports. */
+  min-height: 190px;
+}
+
+/* Medium viewports. */
+@media (min-width: 768px) {
+  .az-image {
+    min-height: 230px;
+  }
+}
+
+/* Large viewports. */
+@media (min-width: 992px) {
+  .az-image {
+    min-height: 260px;
+  }
+}
+
+.az-image img {
+  /* Absolutely positioned so the image's own intrinsic aspect ratio never
+     affects the grid row's height — the row is sized by its other content
+     (Ranking cards), and this image crops via object-fit to fill whatever
+     height that produces, exactly like the legacy .ranking-image-wrapper. */
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.az-image--span-1 {
+  grid-column: span 1;
+}
+
+.az-image--span-2 {
+  grid-column: span 2;
+}
+
+.az-image--span-3 {
+  grid-column: span 3;
+}
+
+.az-image--span-4 {
+  grid-column: span 4;
+}
