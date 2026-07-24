@@ -238,6 +238,9 @@
             "drupal/pathauto": {
                 "Deprecated error with PHP 8.5 on entity forms without pathauto patterns (3579655)": "https://www.drupal.org/files/issues/2026-04-13/pathauto-3579655-11-fix-deprecation-errors-on-8-1-14.patch"
             },
+            "drupal/recaptcha": {
+                "Upon Submit, This page cannot be displayed error (3603531)": "https://www.drupal.org/files/issues/2026-07-22/recaptcha_php8_return_type.patch"
+            },
             "drupal/role_delegation": {
                 "Restrict access to cancel/remove accounts with non-assignable roles (3299201)": "https://www.drupal.org/files/issues/2022-07-25/3299201-4.patch"
             },
