@@ -31,12 +31,12 @@ props:
         - '3'
         - '4'
       meta:enum:
-        '1': 1 (default)
-        '2': '2'
+        '1': '1'
+        '2': 2 (default)
         '3': '3'
         '4': '4'
       examples:
-        - '1'
+        - '2'
     columns_phone:
       type: string
       title: Rankings per row on phone

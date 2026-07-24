@@ -18,9 +18,18 @@
  * - decorative: When true, forces empty alt text AND hides the image from
  *   assistive technology via aria-hidden. Defaults to false.
  * - alt: Alternative text. Ignored when decorative is true.
- * - width_span: 1-4. Grid columns this image spans when placed inside a
- *   Ranking Deck (or any CSS grid layout). No effect outside a grid
- *   context. Defaults to 2.
+ * - width_span_desktop / width_span_tablet / width_span_phone: 1-4 each.
+ *   Grid columns this image spans at each breakpoint when placed inside a
+ *   Ranking Deck (or any CSS grid layout) — deliberately per-breakpoint,
+ *   not a single dynamic value, because CSS Grid has no way for a grid
+ *   item to clamp its own span against its container's actual column
+ *   count (a confirmed, still-open CSS spec gap, not a browser-support
+ *   issue: https://github.com/w3c/csswg-drafts/issues/5852). No effect
+ *   outside a grid context. Defaults: desktop 2, tablet 2, phone 1 —
+ *   matching Ranking Deck's own default columns, so an image is always
+ *   safe out of the box. Keep each at or below the deck's matching
+ *   "Rankings per row" setting, or the image will overflow into extra
+ *   columns at that breakpoint.
  * - utility_classes: Additional Bootstrap utility classes for the wrapper
  *   (e.g. bottom spacing). Not needed when placed inside a Ranking Deck.
  */
@@ -30,14 +39,22 @@
 {% set decorative = decorative|default(false) %}
 {% set alt = decorative ? '' : alt|default('') %}
 
-{% set width_span = width_span|default('2') in ['1', '2', '3', '4'] ? width_span|default('2') : '2' %}
+{% set allowed_spans = ['1', '2', '3', '4'] %}
+{% set width_span_desktop = width_span_desktop|default('2') in allowed_spans ? width_span_desktop|default('2') : '2' %}
+{% set width_span_tablet = width_span_tablet|default('2') in allowed_spans ? width_span_tablet|default('2') : '2' %}
+{% set width_span_phone = width_span_phone|default('1') in allowed_spans ? width_span_phone|default('1') : '1' %}
 
 {% set utility_classes = utility_classes|default([]) %}
 {% if utility_classes is not iterable %}
   {% set utility_classes = [utility_classes] %}
 {% endif %}
 
-{% set root_classes = ['az-image', 'az-image--span-' ~ width_span] %}
+{% set root_classes = [
+  'az-image',
+  'az-image--span-desktop-' ~ width_span_desktop,
+  'az-image--span-tablet-' ~ width_span_tablet,
+  'az-image--span-phone-' ~ width_span_phone,
+] %}
 {% if utility_classes %}
   {% set root_classes = root_classes|merge(utility_classes) %}
 {% endif %}

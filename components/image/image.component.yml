@@ -27,10 +27,10 @@ props:
       description: Describes the image for screen readers and other assistive technology. Ignored when Decorative is enabled.
       examples:
         - Canyon Running
-    width_span:
+    width_span_desktop:
       type: string
-      title: Width Span
-      description: How many grid columns this image spans when placed inside a Ranking Deck (or any other CSS grid layout). Has no effect outside a grid layout.
+      title: Width Span (Desktop)
+      description: How many grid columns this image spans on desktop when placed inside a Ranking Deck (or any other CSS grid layout). Has no effect outside a grid layout. Keep at or below the deck's "Rankings per row on desktop" setting, or the image will overflow into extra columns.
       enum:
         - '1'
         - '2'
@@ -43,6 +43,38 @@ props:
         '4': 4 columns
       examples:
         - '2'
+    width_span_tablet:
+      type: string
+      title: Width Span (Tablet)
+      description: How many grid columns this image spans on tablet. Keep at or below the deck's "Rankings per row on tablet" setting, or the image will overflow into extra columns.
+      enum:
+        - '1'
+        - '2'
+        - '3'
+        - '4'
+      meta:enum:
+        '1': 1 column
+        '2': 2 columns (default)
+        '3': 3 columns
+        '4': 4 columns
+      examples:
+        - '2'
+    width_span_phone:
+      type: string
+      title: Width Span (Phone)
+      description: How many grid columns this image spans on phone. Keep at or below the deck's "Rankings per row on phone" setting, or the image will overflow into extra columns.
+      enum:
+        - '1'
+        - '2'
+        - '3'
+        - '4'
+      meta:enum:
+        '1': 1 column (default)
+        '2': 2 columns
+        '3': 3 columns
+        '4': 4 columns
+      examples:
+        - '1'
     utility_classes:
       type: array
       title: Utility Classes

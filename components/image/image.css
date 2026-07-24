@@ -4,14 +4,23 @@
  * A layout wrapper around a media-library-backed <img>. `grid-column: span N`
  * only has an effect when this component is placed inside a CSS grid
  * container (for example, the Ranking Deck component) — it is inert
- * everywhere else, so the same width_span prop works whether the image is
+ * everywhere else, so the same width_span_* props work whether the image is
  * placed inside a deck or standalone on a page.
  *
- * Known limitation: if width_span is set wider than the number of columns
- * the surrounding grid currently has (e.g. span 4 inside a 2-column
- * Ranking Deck), the browser may create extra implicit grid tracks rather
- * than clamping — this has not been visually verified. Editors should
- * pick a span that fits the deck's current per-row setting.
+ * Width span is deliberately THREE separate props (desktop/tablet/phone),
+ * not one dynamic value, and this is not a stylistic choice — CSS Grid has
+ * no way for a grid item to clamp its own span against its container's
+ * actual column count. That was confirmed to be a genuine, still-open CSS
+ * Working Group spec gap, not a browser-support question:
+ * https://github.com/w3c/csswg-drafts/issues/5852 ("Ability to clamp track
+ * spanning"). A grid item whose span exceeds its container's explicit
+ * track count gets an IMPLICIT extra track instead of clamping, which also
+ * squeezes every sibling card in that row, not just the image.
+ *
+ * Each width_span_* prop defaults to Ranking Deck's own matching default
+ * column count (desktop 2, tablet 2, phone 1), so an image is always safe
+ * out of the box. Editors who configure a deck with more columns at a given
+ * breakpoint can explicitly raise that breakpoint's span to match.
  */
 
 .az-image {
@@ -53,18 +62,57 @@
   object-fit: cover;
 }
 
-.az-image--span-1 {
+/* Phone (base). */
+.az-image--span-phone-1 {
   grid-column: span 1;
 }
 
-.az-image--span-2 {
+.az-image--span-phone-2 {
   grid-column: span 2;
 }
 
-.az-image--span-3 {
+.az-image--span-phone-3 {
   grid-column: span 3;
 }
 
-.az-image--span-4 {
+.az-image--span-phone-4 {
   grid-column: span 4;
+}
+
+/* Tablet. */
+@media (min-width: 768px) {
+  .az-image--span-tablet-1 {
+    grid-column: span 1;
+  }
+
+  .az-image--span-tablet-2 {
+    grid-column: span 2;
+  }
+
+  .az-image--span-tablet-3 {
+    grid-column: span 3;
+  }
+
+  .az-image--span-tablet-4 {
+    grid-column: span 4;
+  }
+}
+
+/* Desktop. */
+@media (min-width: 992px) {
+  .az-image--span-desktop-1 {
+    grid-column: span 1;
+  }
+
+  .az-image--span-desktop-2 {
+    grid-column: span 2;
+  }
+
+  .az-image--span-desktop-3 {
+    grid-column: span 3;
+  }
+
+  .az-image--span-desktop-4 {
+    grid-column: span 4;
+  }
 }

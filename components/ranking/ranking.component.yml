@@ -19,8 +19,9 @@ props:
         - of World Universities
     source:
       type: string
+      pattern: (.|\r?\n)*
       title: Source
-      description: Source or attribution displayed at the bottom of the card. Line breaks are preserved.
+      description: Source or attribution displayed at the bottom of the card. Use a line break to control exactly where the text wraps, e.g. between "Times Higher Education" and "World University Rankings, 2026".
       examples:
         - Center for World University Rankings, 2025
     heading_level:

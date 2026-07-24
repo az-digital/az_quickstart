@@ -7,7 +7,7 @@
  *
  * Props:
  * - columns_desktop: Rankings per row on desktop (1-4). Defaults to 4.
- * - columns_tablet: Rankings per row on tablet (1-4). Defaults to 1.
+ * - columns_tablet: Rankings per row on tablet (1-4). Defaults to 2.
  * - columns_phone: Rankings per row on phone (1-4). Defaults to 1.
  * - utility_classes: Additional Bootstrap utility classes for the deck
  *   wrapper (e.g. bottom spacing).
@@ -21,7 +21,7 @@
 {# Runtime guards: coerce invalid or missing values to safe defaults. #}
 {% set allowed = ['1', '2', '3', '4'] %}
 {% set columns_desktop = columns_desktop|default('4') in allowed ? columns_desktop|default('4') : '4' %}
-{% set columns_tablet = columns_tablet|default('1') in allowed ? columns_tablet|default('1') : '1' %}
+{% set columns_tablet = columns_tablet|default('2') in allowed ? columns_tablet|default('2') : '2' %}
 {% set columns_phone = columns_phone|default('1') in allowed ? columns_phone|default('1') : '1' %}
 {% set utility_classes = utility_classes|default([]) %}
 {% if utility_classes is not iterable %}

@@ -116,4 +116,38 @@ class AZRankingImageHelper {
     return $media_render_array;
   }
 
+  /**
+   * Get a plain file URI and alt text for the az_quickstart:image SDC.
+   *
+   * Unlike generateImageRenderArray(), this does not apply the
+   * az_ranking_responsive image style or add focal-point positioning data —
+   * az_quickstart:image takes a plain file URI as a prop, not a themed
+   * render array, so image style processing and focal-point-aware cropping
+   * are not available through this path.
+   *
+   * @param \Drupal\media\MediaInterface $media
+   *   A Drupal media entity object.
+   *
+   * @return array
+   *   An array with 'src' (a public:// URI, or an empty string if the media
+   *   has no image) and 'alt' keys.
+   */
+  public function getImageSourceAndAlt(MediaInterface $media): array {
+    $media_attributes = $media->get('field_media_az_image')->getValue();
+
+    if (empty($media_attributes[0]['target_id'])) {
+      return ['src' => '', 'alt' => ''];
+    }
+
+    $file = $this->entityTypeManager->getStorage('file')->load($media_attributes[0]['target_id']);
+    if (!$file) {
+      return ['src' => '', 'alt' => ''];
+    }
+
+    return [
+      'src' => $file->getFileUri(),
+      'alt' => $media_attributes[0]['alt'] ?? '',
+    ];
+  }
+
 }
