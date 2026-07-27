@@ -2,15 +2,50 @@
   white-space: nowrap;
 }
 
-.navbar-az-fullscreen-search #search-block-form {
+.az-search #search-block-form {
   padding: 0;
   width: 100%;
 }
 
-.navbar-az-fullscreen-search .btn {
-  padding-bottom: 10px;
+/* Temporary overrides for styling issues in Arizona Bootstrap v5.1.5.
+ * @todo Remove with upgrade to Arizona Bootstrap v5.1.6.
+ */
+.az-search .input-group .btn {
+  min-width: var(--az-search-height);
+}
+@media (max-width: 991.98px) {
+  .navbar-az-fullscreen .az-search .btn {
+    min-width: initial;
+  }
+  .modal.navbar-az-fullscreen-modal .container-lg {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
 }
 
-.navbar-az-fullscreen-search .btn .material-symbols-rounded {
-  font-size: 36px;
+/* Drupal admin toolbar sits at top: 0 with position: fixed; shift the
+   fullscreen navbar down so it does not slide underneath. Body padding-top
+   set by toolbar.module already pushes page content (and therefore the
+   navbar-az-fullscreen-fixed-top-offset wrapper) by the same amount. */
+body.toolbar-fixed.toolbar-horizontal .navbar-az-fullscreen.fixed-top {
+  top: 39px;
+}
+
+body.toolbar-fixed.toolbar-horizontal.toolbar-tray-open .navbar-az-fullscreen.fixed-top {
+  top: 79px;
+}
+
+body.toolbar-vertical .navbar-az-fullscreen.fixed-top {
+  top: var(--drupal-displace-offset-top);
+  z-index: 1;
+}
+
+body.toolbar-vertical:not(.toolbar-fixed) .navbar-az-fullscreen.fixed-top {
+  position: absolute;
+}
+
+@media screen and (max-width: 842px) {
+  body.toolbar-vertical {
+    padding-top: var(--drupal-displace-offset-top) !important;
+  }
 }

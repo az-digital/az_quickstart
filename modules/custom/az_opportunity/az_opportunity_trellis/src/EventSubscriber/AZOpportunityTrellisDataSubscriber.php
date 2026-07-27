@@ -36,11 +36,6 @@ final class AZOpportunityTrellisDataSubscriber implements EventSubscriberInterfa
   protected $messenger;
 
   /**
-   * @var \Drupal\node\NodeStorageInterface
-   */
-  protected $nodeStorage;
-
-  /**
    * @var \Drupal\az_opportunity_trellis\TrellisHelper
    */
   protected $trellisHelper;
@@ -71,7 +66,6 @@ final class AZOpportunityTrellisDataSubscriber implements EventSubscriberInterfa
     $this->trellisHelper = $trellisHelper;
     $this->messenger = $messenger;
     $this->entityTypeManager = $entityTypeManager;
-    $this->nodeStorage = $this->entityTypeManager->getStorage('node');
     $this->currentUser = $currentUser;
   }
 
@@ -86,7 +80,7 @@ final class AZOpportunityTrellisDataSubscriber implements EventSubscriberInterfa
     $ids = $event->getDestinationIdValues();
     $id = reset($ids);
     if ($migration === 'az_trellis_opportunities') {
-      $opportunity = $this->nodeStorage->load($id);
+      $opportunity = $this->entityTypeManager->getStorage('node')->load($id);
       if (!empty($opportunity)) {
         $url = $opportunity->toUrl()->toString();
         // Only show message if current user has permission.
