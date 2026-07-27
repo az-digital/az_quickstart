@@ -186,7 +186,7 @@ class AZNavbarFullscreenMenuBlock extends BlockBase implements ContainerFactoryP
       '#type' => 'textfield',
       '#title' => $this->t('Footer Bottom Desktop Heading'),
       '#default_value' => $config['footer_bottom_desktop_heading'],
-      '#description' => $this->t('Heading for the bottom footer on desktop devices.  Trailing colon is added automatically.'),
+      '#description' => $this->t('Heading for the bottom footer on desktop devices. Trailing colon is added automatically.'),
     ];
 
     $form['menu_selection']['footer_bottom_mobile_heading'] = [
