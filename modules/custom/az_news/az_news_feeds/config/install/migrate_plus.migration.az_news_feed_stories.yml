@@ -18,6 +18,9 @@ source:
   ids:
     uuid:
       type: uuid
+  constants:
+    read_more_prefix: 'Read more at '
+    read_more_default_publisher: 'University of Arizona News'
   fields:
     -
       name: uuid
@@ -55,6 +58,15 @@ source:
       name: image
       label: Image
       selector: /story/img-large
+    -
+      name: byline
+      label: 'Byline'
+      selector: /story/byline
+    -
+      name: byline-affiliation
+      label: 'Byline Affiliation'
+      selector: /story/byline-affiliation
+
 process:
   title: title
   field_az_published/value:
@@ -63,9 +75,30 @@ process:
     to_format: Y-m-d
     source: date-of-publication
   field_az_link/uri: canonical-url
+  _default_byline:
+  - plugin: callback
+    callable: strpos
+    source: canonical-url
+    arguments: 'https://news.arizona.edu/'
+  - plugin: skip_on_empty
+    method: process
+  - plugin: concat
+    source:
+      - constants/read_more_prefix
+      - byline_affiliation
+  _byline_from_link_title:
+  - plugin: skip_on_empty
+    source: byline_affiliation
+    method: process
+  - plugin: concat
+    source:
+      - constants/read_more_prefix
+      - byline_affiliation
   field_az_link/title:
-    plugin: default_value
-    default_value: 'Read more at University of Arizona News'
+  - plugin: null_coalesce
+    source:
+      - _default_byline
+      - _byline_from_link_title
   field_az_summary/value:
     plugin: callback
     callable: trim
