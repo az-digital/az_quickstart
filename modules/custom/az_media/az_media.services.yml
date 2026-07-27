@@ -1,0 +1,7 @@
+services:
+  az_media.image_style_twig_extension:
+    class: Drupal\az_media\Twig\ImageStyleTwigExtension
+    arguments:
+      - '@file_url_generator'
+    tags:
+      - { name: twig.extension }

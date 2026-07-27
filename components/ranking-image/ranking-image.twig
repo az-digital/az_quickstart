@@ -1,7 +1,7 @@
 {#
 /**
  * @file
- * Template for the az_quickstart Image component.
+ * Template for the az_quickstart Ranking Image component.
  *
  * Renders an <img> directly from a media-library-backed prop — no slot, no
  * Canvas dependency. The `src` prop's shape (type: string, format: uri,
@@ -14,10 +14,34 @@
  * Props:
  * - src: Image URI, picked via the media library in Canvas. Resolves to a
  *   Drupal stream-wrapper URI (public://...), not a browser-loadable URL —
- *   converted via the file_url() Twig function before rendering.
+ *   converted via the image_style Twig filter (az_media's
+ *   ImageStyleTwigExtension), which applies the az_ranking_responsive
+ *   image style (scale + WebP conversion) and falls back to plain
+ *   file_url()-equivalent behavior if that style is ever unavailable, so a
+ *   missing/misconfigured style degrades gracefully rather than breaking
+ *   the page. This is a genuine, if soft, dependency on az_media (not
+ *   az_ranking) — the filter itself is generic and lives in az_media
+ *   regardless of which style name gets passed to it here.
  * - decorative: When true, forces empty alt text AND hides the image from
  *   assistive technology via aria-hidden. Defaults to false.
  * - alt: Alternative text. Ignored when decorative is true.
+ * - focal_x / focal_y: Focal point as a 0-1 fraction of the image's width/
+ *   height, kept visible when object-fit: cover crops the image to fill
+ *   its container. Rendered as data-focal-x/data-focal-y attributes and
+ *   applied client-side (ranking-image.js) — no server-side cropping, since the
+ *   image's effective on-screen aspect ratio depends on live CSS Grid
+ *   layout, not a fixed, enumerable set of image styles (same reasoning
+ *   as width_span_* below). Only takes effect when original_width/
+ *   original_height are also set; otherwise ignored and the image falls
+ *   back to plain centered object-fit: cover cropping.
+ * - original_width / original_height: The image's true pixel dimensions
+ *   before any cropping, needed because focal points are stored relative
+ *   to the original image, not whatever size ends up displayed. Also
+ *   rendered as native width/height <img> attributes whenever present
+ *   (independent of whether focal_x/focal_y are also set) — gives any
+ *   renderer a correct intrinsic aspect ratio before CSS loads, including
+ *   contexts that may not apply this component's own stylesheet, like
+ *   Canvas's library hover-preview.
  * - width_span_desktop / width_span_tablet / width_span_phone: 1-4 each.
  *   Grid columns this image spans at each breakpoint when placed inside a
  *   Ranking Deck (or any CSS grid layout) — deliberately per-breakpoint,
@@ -39,6 +63,12 @@
 {% set decorative = decorative|default(false) %}
 {% set alt = decorative ? '' : alt|default('') %}
 
+{% set focal_x = focal_x|default(null) %}
+{% set focal_y = focal_y|default(null) %}
+{% set original_width = original_width|default(null) %}
+{% set original_height = original_height|default(null) %}
+{% set has_focal_point = focal_x is not null and focal_y is not null and original_width is not null and original_height is not null %}
+
 {% set allowed_spans = ['1', '2', '3', '4'] %}
 {% set width_span_desktop = width_span_desktop|default('2') in allowed_spans ? width_span_desktop|default('2') : '2' %}
 {% set width_span_tablet = width_span_tablet|default('2') in allowed_spans ? width_span_tablet|default('2') : '2' %}
@@ -50,10 +80,10 @@
 {% endif %}
 
 {% set root_classes = [
-  'az-image',
-  'az-image--span-desktop-' ~ width_span_desktop,
-  'az-image--span-tablet-' ~ width_span_tablet,
-  'az-image--span-phone-' ~ width_span_phone,
+  'az-ranking-image',
+  'az-ranking-image--span-desktop-' ~ width_span_desktop,
+  'az-ranking-image--span-tablet-' ~ width_span_tablet,
+  'az-ranking-image--span-phone-' ~ width_span_phone,
 ] %}
 {% if utility_classes %}
   {% set root_classes = root_classes|merge(utility_classes) %}
@@ -66,6 +96,21 @@
 
 <div{{ root_attributes }}>
   {% if src|default('') %}
-    <img src="{{ file_url(src) }}" alt="{{ alt }}" loading="lazy">
+    <img
+      src="{{ src|image_style('az_ranking_responsive') }}"
+      alt="{{ alt }}"
+      loading="lazy"
+      class="az-ranking-image__img"
+      {% if original_width is not null and original_height is not null %}
+      width="{{ original_width }}"
+      height="{{ original_height }}"
+      {% endif %}
+      {% if has_focal_point %}
+      data-focal-x="{{ focal_x }}"
+      data-focal-y="{{ focal_y }}"
+      data-original-width="{{ original_width }}"
+      data-original-height="{{ original_height }}"
+      {% endif %}
+    >
   {% endif %}
 </div>

@@ -1,5 +1,5 @@
 /**
- * Image component.
+ * Ranking Image component.
  *
  * A layout wrapper around a media-library-backed <img>. `grid-column: span N`
  * only has an effect when this component is placed inside a CSS grid
@@ -23,7 +23,7 @@
  * breakpoint can explicitly raise that breakpoint's span to match.
  */
 
-.az-image {
+.az-ranking-image {
   position: relative;
   overflow: hidden;
   /* Matches .az-ranking-sdc's own responsive min-height (ranking.css) so an
@@ -36,19 +36,19 @@
 
 /* Medium viewports. */
 @media (min-width: 768px) {
-  .az-image {
+  .az-ranking-image {
     min-height: 230px;
   }
 }
 
 /* Large viewports. */
 @media (min-width: 992px) {
-  .az-image {
+  .az-ranking-image {
     min-height: 260px;
   }
 }
 
-.az-image img {
+.az-ranking-image img {
   /* Absolutely positioned so the image's own intrinsic aspect ratio never
      affects the grid row's height — the row is sized by its other content
      (Ranking cards), and this image crops via object-fit to fill whatever
@@ -63,56 +63,56 @@
 }
 
 /* Phone (base). */
-.az-image--span-phone-1 {
+.az-ranking-image--span-phone-1 {
   grid-column: span 1;
 }
 
-.az-image--span-phone-2 {
+.az-ranking-image--span-phone-2 {
   grid-column: span 2;
 }
 
-.az-image--span-phone-3 {
+.az-ranking-image--span-phone-3 {
   grid-column: span 3;
 }
 
-.az-image--span-phone-4 {
+.az-ranking-image--span-phone-4 {
   grid-column: span 4;
 }
 
 /* Tablet. */
 @media (min-width: 768px) {
-  .az-image--span-tablet-1 {
+  .az-ranking-image--span-tablet-1 {
     grid-column: span 1;
   }
 
-  .az-image--span-tablet-2 {
+  .az-ranking-image--span-tablet-2 {
     grid-column: span 2;
   }
 
-  .az-image--span-tablet-3 {
+  .az-ranking-image--span-tablet-3 {
     grid-column: span 3;
   }
 
-  .az-image--span-tablet-4 {
+  .az-ranking-image--span-tablet-4 {
     grid-column: span 4;
   }
 }
 
 /* Desktop. */
 @media (min-width: 992px) {
-  .az-image--span-desktop-1 {
+  .az-ranking-image--span-desktop-1 {
     grid-column: span 1;
   }
 
-  .az-image--span-desktop-2 {
+  .az-ranking-image--span-desktop-2 {
     grid-column: span 2;
   }
 
-  .az-image--span-desktop-3 {
+  .az-ranking-image--span-desktop-3 {
     grid-column: span 3;
   }
 
-  .az-image--span-desktop-4 {
+  .az-ranking-image--span-desktop-4 {
     grid-column: span 4;
   }
 }
