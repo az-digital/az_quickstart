@@ -766,8 +766,8 @@ function az_barrio_preprocess_input__search_block_form__submit(array &$variables
  * Implements hook_preprocess_HOOK() for search block forms.
  *
  * Add az-search class to the desktop search block when AZ Header Blue is
- * enabled. Skip when AZ Navbar Fullscreen is enabled since the
- * its template already provides the az-search class.
+ * enabled. Skip when AZ Navbar Fullscreen is enabled since the its template
+ * already provides the az-search class.
  */
 function az_barrio_preprocess_form__search_block_form(array &$variables) {
   $theme_settings = \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider');
