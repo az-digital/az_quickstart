@@ -5,12 +5,10 @@ declare(strict_types=1);
 namespace Drupal\az_event_trellis\Plugin\views\filter;
 
 use Drupal\Component\Utility\Html;
-use Drupal\Core\Asset\AttachedAssets;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\views\Attribute\ViewsFilter;
 use Drupal\views\Plugin\views\filter\FilterPluginBase;
 use Drupal\views_remote_data\Plugin\views\query\RemoteDataQuery;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Filter Trellis event API values according to dates.
@@ -46,35 +44,6 @@ class AZEventTrellisViewsDateFilter extends FilterPluginBase {
   }
 
   /**
-   * The asset resolver service.
-   *
-   * @var \Drupal\Core\Asset\AssetResolver
-   */
-  protected $assetResolver;
-
-  /**
-   * The file url generator service.
-   *
-   * @var \Drupal\Core\File\FileUrlGeneratorInterface
-   */
-  protected $fileUrlGenerator;
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    $instance = new static(
-      $configuration,
-      $plugin_id,
-      $plugin_definition
-    );
-
-    $instance->assetResolver = $container->get('asset.resolver');
-    $instance->fileUrlGenerator = $container->get('file_url_generator');
-    return $instance;
-  }
-
-  /**
    * {@inheritdoc}
    */
   protected function valueForm(&$form, FormStateInterface $form_state): void {
@@ -97,27 +66,6 @@ class AZEventTrellisViewsDateFilter extends FilterPluginBase {
     if (!empty($exposed_info['label'])) {
       $form['value']['value']['#title'] = $exposed_info['label'];
     }
-    // Fetch library information for shadow DOM inclusion.
-    $css = [];
-    try {
-      $attached = AttachedAssets::createFromRenderArray([
-        '#attached' => [
-          'library' => [
-            'az_event_trellis/easepick_styles',
-          ],
-        ],
-      ]);
-      $assets = $this->assetResolver->getCssAssets($attached, TRUE);
-      foreach ($assets as $asset) {
-        if (!empty($asset['data'])) {
-          $css[] = $this->fileUrlGenerator->generateString($asset['data']);
-        }
-      }
-    }
-    catch (\Exception $e) {
-      // Failed to fetch assets.
-    }
-    $form['#attached']['drupalSettings']['trellisDatePicker']['css'] = $css;
     // Prepare unique id for data attribute.
     $end_id = Html::getUniqueId('az-trellis-daterange-end');
     $form['value']['begin'] = [

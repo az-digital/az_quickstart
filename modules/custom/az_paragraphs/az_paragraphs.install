@@ -411,3 +411,75 @@ function az_paragraphs_update_1130001(&$sandbox) {
 
   return NULL;
 }
+
+/**
+ * Migrate accordion paragraphs behavior plugin settings.
+ */
+function az_paragraphs_update_1130301(&$sandbox) {
+  if (!isset($sandbox['total'])) {
+    $count = \Drupal::entityQuery('paragraph')
+      ->accessCheck(FALSE)
+      ->condition('type', 'az_accordion')
+      ->count()
+      ->execute();
+    // Set the total number of paragraphs to be updated.
+    $sandbox['total'] = $count;
+    // Set current to 0.
+    $sandbox['current'] = 0;
+    // Set updated_count to 0.
+    $sandbox['updated_count'] = 0;
+    // If there are no paragraphs to be updated, set the finished flag to 1.
+    if (empty($sandbox['total'])) {
+      \Drupal::messenger()
+        ->addMessage('No az_accordion paragraphs found.');
+      $sandbox['#finished'] = 1;
+      return;
+    }
+  }
+
+  // Set the number of paragraphs to be updated per batch.
+  $paragraphs_per_batch = 25;
+  // Get the paragraph ids to be updated.
+  $paragraph_ids = \Drupal::entityQuery('paragraph')
+    ->accessCheck(FALSE)
+    ->condition('type', 'az_accordion')
+    ->range($sandbox['current'], $sandbox['current'] + $paragraphs_per_batch)
+    ->execute();
+
+  $paragraphs = \Drupal::entityTypeManager()->getStorage('paragraph')->loadMultiple($paragraph_ids);
+  foreach ($paragraphs as $paragraph) {
+    $needs_update = FALSE;
+    $behavior_settings = $paragraph->getAllBehaviorSettings();
+
+    // Migrate az_default_paragraph_behavior to az_accordion_paragraph_behavior.
+    if (isset($behavior_settings['az_default_paragraph_behavior']['az_display_settings'])) {
+      // Ensure az_accordion_paragraph_behavior exists.
+      if (!isset($behavior_settings['az_accordion_paragraph_behavior'])) {
+        $behavior_settings['az_accordion_paragraph_behavior']['expand_all'] = FALSE;
+      }
+
+      // Migrate the display settings.
+      $behavior_settings['az_accordion_paragraph_behavior']['az_display_settings'] =
+        $behavior_settings['az_default_paragraph_behavior']['az_display_settings'];
+
+      // Remove the old behavior settings.
+      unset($behavior_settings['az_default_paragraph_behavior']);
+      $needs_update = TRUE;
+    }
+    // Remove old behavior if no migration was needed but it still exists.
+    elseif (isset($behavior_settings['az_default_paragraph_behavior'])) {
+      unset($behavior_settings['az_default_paragraph_behavior']);
+      $needs_update = TRUE;
+    }
+
+    if ($needs_update) {
+      $paragraph->setAllBehaviorSettings($behavior_settings);
+      $paragraph->save();
+      $sandbox['updated_count']++;
+    }
+    $sandbox['current']++;
+  }
+
+  $sandbox['#finished'] = ($sandbox['total'] === '0') ? 1 : ($sandbox['current'] / $sandbox['total']);
+  return t('Migrated behavior settings on @count az_accordion paragraphs.', ['@count' => $sandbox['updated_count']]);
+}

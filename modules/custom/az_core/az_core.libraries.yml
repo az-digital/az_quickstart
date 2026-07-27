@@ -29,3 +29,26 @@ az-mobile-nav:
   dependencies:
     - core/drupal
     - core/once
+vanilla-calendar-pro:
+  remote: https://github.com/uvarov-frontend/vanilla-calendar-pro
+  version: 3.1.0
+  license:
+    name: MIT
+    url: https://github.com/uvarov-frontend/vanilla-calendar-pro/blob/v3.1.0/LICENSE
+    gpl-compatible: true
+  css:
+    theme:
+      # TODO: Replace individual CSS files with styles/index.css and update
+      # theme settings in library implementations if we want to enable automatic
+      # dark mode support.
+      lib/vanilla-calendar-pro/styles/layout.css: { minified: true }
+      lib/vanilla-calendar-pro/styles/themes/light.css: { minified: true }
+  js:
+    lib/vanilla-calendar-pro/index.js: { minified: true }
+    lib/vanilla-calendar-pro/utils/index.js: { minified: true }
+az-date-picker-integration:
+  js:
+    js/az-date-picker-integration.js: {}
+  dependencies:
+    - core/drupal
+    - az_core/vanilla-calendar-pro

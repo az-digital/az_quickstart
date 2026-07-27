@@ -45,15 +45,18 @@ class MobileNavController implements ContainerInjectionInterface {
   /**
    * Callback for the Quickstart mobile nav block.
    *
+   * @param string $menu_id
+   *   The menu ID.
    * @param string $menu_root
    *   The menu link ID for the root of the nav menu.
    *
    * @return \Drupal\Core\Cache\CacheableAjaxResponse
    *   An CacheableAjaxResponse object.
    */
-  public function mobileNavCallback($menu_root = '') {
+  public function mobileNavCallback($menu_id, $menu_root = '') {
     $mobile_nav_block = $this->blockManager->createInstance('mobile_nav_block',
       [
+        'menu_id' => $menu_id,
         'menu_root' => $menu_root,
       ]);
     $mobile_nav_block_build = $mobile_nav_block->build();
@@ -63,7 +66,7 @@ class MobileNavController implements ContainerInjectionInterface {
 
     // Add necessary cacheable metadata for the Mobile Nav Block.
     $cacheableMetadata = $cacheable_response->getCacheableMetadata();
-    $cacheableMetadata->addCacheTags(['config:system.menu.main']);
+    $cacheableMetadata->addCacheTags(['config:system.menu.' . $menu_id]);
     $cacheableMetadata->addCacheContexts(['route']);
 
     return $cacheable_response;

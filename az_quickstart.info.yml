@@ -1,7 +1,7 @@
 name: Arizona Quickstart
 type: profile
 description: 'The University of Arizona Quickstart Installation Profile'
-core_version_requirement: ^10 || ^11 || ^12
+core_version_requirement: ^11.3 || ^12
 
 distribution:
   name: Arizona Quickstart
@@ -30,7 +30,6 @@ install:
   - az_seo
   - az_google_tag
   - drupal:node
-  - drupal:history
   - drupal:block
   - drupal:breakpoint
   - drupal:ckeditor5
@@ -54,6 +53,7 @@ install:
   - drupal:taxonomy
   - drupal:dblog
   - drupal:search
+  - drupal:search_node
   - drupal:shortcut
   - token:token
   - drupal:toolbar
@@ -80,4 +80,4 @@ install:
 themes:
   - az_barrio
   - claro
-version: 3.3.x-dev
+version: 3.6.x-dev

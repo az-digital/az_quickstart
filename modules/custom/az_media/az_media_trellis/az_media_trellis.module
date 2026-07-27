@@ -66,8 +66,8 @@ function az_media_trellis_preprocess_media(&$variables) {
     $media = $variables['elements']['#media'];
 
     // Check if this media entity has a Trellis form URL.
-    if ($media->hasField('field_media_az_media_remote') && !$media->get('field_media_az_media_remote')->isEmpty()) {
-      $url = $media->get('field_media_az_media_remote')->value;
+    if ($media->hasField('field_az_media_trellis_url') && !$media->get('field_az_media_trellis_url')->isEmpty()) {
+      $url = $media->get('field_az_media_trellis_url')->value;
 
       // Determine if the user is currently editing this media.
       // This affects form validation and field requirements.

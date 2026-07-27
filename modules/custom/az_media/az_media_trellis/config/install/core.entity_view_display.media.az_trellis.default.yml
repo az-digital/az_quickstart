@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.media.az_trellis.field_media_az_media_remote
+    - field.field.media.az_trellis.field_az_media_trellis_url
     - media.type.az_trellis
   module:
     - az_media_trellis
@@ -14,7 +14,7 @@ third_party_settings:
   field_group:
     group_responsive_embed:
       children:
-        - field_media_az_media_remote
+        - field_az_media_trellis_url
       label: 'Responsive Embed'
       parent_name: ''
       region: content
@@ -37,7 +37,7 @@ targetEntityType: media
 bundle: az_trellis
 mode: default
 content:
-  field_media_az_media_remote:
+  field_az_media_trellis_url:
     type: az_media_remote_trellis
     label: visually_hidden
     settings:
