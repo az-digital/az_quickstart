@@ -338,10 +338,6 @@ class AZNavbarFullscreenMenuBlock extends BlockBase implements ContainerFactoryP
     /** @var \Drupal\Core\Menu\MenuLinkTreeElement[] $tree */
     $tree = $this->menuLinkTree->load($menu_name, $parameters);
 
-    // Load the menu tree.
-    /** @var \Drupal\Core\Menu\MenuLinkTreeElement[] $tree */
-    $tree = $this->menuLinkTree->load($menu_name, $parameters);
-
     // Apply manipulators to filter and sort the tree.
     $manipulators = [
       ['callable' => 'menu.default_tree_manipulators:checkNodeAccess'],
