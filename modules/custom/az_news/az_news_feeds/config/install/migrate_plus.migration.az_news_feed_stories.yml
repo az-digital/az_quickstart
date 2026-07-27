@@ -79,15 +79,15 @@ process:
       callable: strpos
       unpack_source: true
       source:
-      - canonical-url
-      - 'https://news.arizona.edu/'
+        - canonical-url
+        - 'https://news.arizona.edu/'
     -
       plugin: callback
       callable: strpos
       unpack_source: true
       source:
-      - canonical-url
-      - 'ua-news-redesign.pantheonsite.io/'
+        - canonical-url
+        - 'ua-news-redesign.pantheonsite.io/'
     -
       plugin: skip_on_empty
       method: process
