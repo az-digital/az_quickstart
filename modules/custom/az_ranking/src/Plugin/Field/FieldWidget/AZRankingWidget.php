@@ -31,13 +31,6 @@ class AZRankingWidget extends WidgetBase {
   const AZ_RANKING_DEFAULT_TEXT_FORMAT = 'az_standard';
 
   /**
-   * The AZRankingImageHelper service.
-   *
-   * @var \Drupal\az_ranking\AZRankingImageHelper
-   */
-  protected $rankingImageHelper;
-
-  /**
    * Drupal\Core\Path\PathValidator definition.
    *
    * @var \Drupal\Core\Path\PathValidator
@@ -45,11 +38,11 @@ class AZRankingWidget extends WidgetBase {
   protected $pathValidator;
 
   /**
-   * Drupal\Core\Entity\EntityTypeManagerInterface definition.
+   * The AZRankingComponentBuilder service.
    *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   * @var \Drupal\az_ranking\AZRankingComponentBuilder
    */
-  protected $entityTypeManager;
+  protected $componentBuilder;
 
   /**
    * {@inheritdoc}
@@ -62,9 +55,8 @@ class AZRankingWidget extends WidgetBase {
       $plugin_definition,
     );
 
-    $instance->rankingImageHelper = $container->get('az_ranking.image');
     $instance->pathValidator = $container->get('path.validator');
-    $instance->entityTypeManager = $container->get('entity_type.manager');
+    $instance->componentBuilder = $container->get('az_ranking.component_builder');
     return $instance;
   }
 
@@ -118,66 +110,55 @@ class AZRankingWidget extends WidgetBase {
     $widget_state = static::getWidgetState($field_parents, $field_name, $form_state);
     $status = (isset($widget_state['open_status'][$delta])) ? $widget_state['open_status'][$delta] : FALSE;
 
-    // We may have had a deleted row. This shouldn't be necessary to check, but
-    // The experimental paragraphs widget extracts values before the submit
-    // handler.
-    if (isset($widget_state['original_deltas'][$delta]) && ($widget_state['original_deltas'][$delta] !== $delta)) {
-      $delta = $widget_state['original_deltas'][$delta];
-    }
-
     // New field values shouldn't be considered collapsed.
     if ($item->isEmpty()) {
       $status = TRUE;
     }
 
-    // Determine current ranking style for preview.
-    $ranking_classes = 'ranking card';
+    // Needed for the unique-ID generation (behavior-settings lookup) and
+    // for rebuildRankingPreview() (see AZRankingItemElement).
     $parent = $item->getEntity();
-
-    // Get settings from parent paragraph.
-    if ($parent instanceof ParagraphInterface) {
-      // Get the behavior settings for the parent.
-      $parent_config = $parent->getAllBehaviorSettings();
-
-      // See if the parent behavior defines some ranking-specific settings.
-      if (!empty($parent_config['az_rankings_paragraph_behavior'])) {
-        $ranking_defaults = $parent_config['az_rankings_paragraph_behavior'];
-        $ranking_classes = $ranking_defaults['ranking_hover_style'] ?? 'ranking card';
-      }
-    }
-
-    // Add overflow-hidden class.
-    $ranking_classes .= ' overflow-hidden';
-
-    // Handle hover effect and background classes like the formatter does.
-    $ranking_hover_effect = FALSE;
+    $ranking_defaults = [];
     if ($parent instanceof ParagraphInterface) {
       $parent_config = $parent->getAllBehaviorSettings();
-      if (!empty($parent_config['az_rankings_paragraph_behavior'])) {
-        $ranking_hover_effect = $parent_config['az_rankings_paragraph_behavior']['ranking_hover_effect'] ?? FALSE;
-      }
+      $ranking_defaults = $parent_config['az_rankings_paragraph_behavior'] ?? [];
     }
 
-    // Hover effect takes precedence over non-hover-effect backgrounds.
-    if ($ranking_hover_effect) {
-      // Try to read hover-specific value from the item.
-      $hover_class = '';
-      if (!empty($item->options['hover_class'])) {
-        $hover_class = $item->options['hover_class'];
-      }
-      // Fallback to persisted background class if no hover-specific value.
-      if (empty($hover_class) && !empty($item->options['class'])) {
-        $hover_class = $item->options['class'];
-      }
-      if (!empty($hover_class) && $item->options['ranking_type'] !== 'image_only') {
-        $ranking_classes .= ' from-hover-effect ' . $hover_class;
-      }
-    }
-    else {
-      if (!empty($item->options['class']) && $item->options['ranking_type'] !== 'image_only') {
-        $ranking_classes .= ' non-hover-effect ' . $item->options['class'];
-      }
-    }
+    // Building the actual fields + preview is delegated to a real Element
+    // plugin (AZRankingItemElement) instead of happening directly here -
+    // see that class's docblock for why. #widget carries the widget
+    // instance through so its own instance methods (element_validate/
+    // after_build callbacks used by individual fields, and the two methods
+    // below) are reachable from the Element class's static callbacks. This
+    // is safe to cache/serialize across AJAX rebuilds because WidgetBase ->
+    // PluginBase uses DependencySerializationTrait.
+    $element['#type'] = 'az_ranking_item';
+    $element['#widget'] = $this;
+    $element['#az_item'] = $item;
+    $element['#ranking_defaults'] = $ranking_defaults;
+    $element['#status'] = $status;
+    $element['#delta'] = $delta;
+    $element['#field_name'] = $field_name;
+
+    $element['#attached']['library'][] = 'az_ranking/az_ranking';
+
+    return $element;
+  }
+
+  /**
+   * Builds the details fields and preview placeholder for a ranking item.
+   *
+   * Called from AZRankingItemElement::processRankingItem() (this widget's
+   * #type => az_ranking_item elements stash $this on #widget for exactly
+   * this purpose).
+   */
+  public function buildRankingItemElement(array $element, FormStateInterface $form_state): array {
+    /** @var \Drupal\az_ranking\Plugin\Field\FieldType\AZRankingItem $item */
+    $item = $element['#az_item'];
+    $status = $element['#status'];
+    $delta = $element['#delta'];
+    $field_parents = $element['#field_parents'];
+    $parent = $item->getEntity();
 
     // Wrap everything in a details element.
     $element['details'] = [
@@ -188,7 +169,7 @@ class AZRankingWidget extends WidgetBase {
       '#attributes' => ['class' => ['az-ranking-widget']],
     ];
 
-    // When closed, show a preview of the ranking.
+    // When closed, add a preview wrapper.
     if (!$status) {
       $element['preview_wrapper'] = [
         '#type' => 'container',
@@ -200,8 +181,16 @@ class AZRankingWidget extends WidgetBase {
         '#weight' => -10,
       ];
 
-      // Build the preview using the helper method.
-      $element['preview_wrapper']['preview'] = $this->buildRankingPreview($item, $ranking_classes);
+      // Placeholder - rebuildRankingPreview() populates this from the
+      // Form API-populated field #values, which stay correct through
+      // drag-and-drop reorder + AJAX rebuilds. Building it here from $item
+      // instead (as this used to) reflects $items' stored array order,
+      // which can drift out of sync with the visual row after a reorder.
+      $element['preview_wrapper']['preview'] = [
+        '#type' => 'component',
+        '#component' => 'az_quickstart:ranking',
+        '#props' => [],
+      ];
     }
 
     // Create a globally unique ID that includes
@@ -446,12 +435,95 @@ class AZRankingWidget extends WidgetBase {
       ],
     ];
 
-    // Attach the library and return the element.
-    $element['#attached']['library'][] = 'az_ranking/az_ranking';
+    return $element;
+  }
 
-    // Store delta and field name for reference.
-    $element['#delta'] = $delta;
-    $element['#field_name'] = $field_name;
+  /**
+   * Rebuilds the preview from the Form API-populated field values.
+   *
+   * Called from AZRankingItemElement::afterBuildRebuildPreview() (this
+   * widget's #type => az_ranking_item elements declare that as their own
+   * #after_build in AZRankingItemElement::getInfo()).
+   *
+   * Rebuilds preview_wrapper.preview from the same Form API-populated
+   * #value the form fields themselves use, instead of $item, so the
+   * preview stays in sync with its row after drag-and-drop reorder + an
+   * AJAX rebuild. #after_build runs after this element's children
+   * (including details' fields) have already gone through the Form API's
+   * own value-population, so #value here is already correct for wherever
+   * this element currently sits in the (possibly just-reordered) tree.
+   *
+   * @see https://github.com/az-digital/az_quickstart/pull/5309
+   */
+  public function rebuildRankingPreview(array $element, FormStateInterface $form_state) {
+    // Nothing to rebuild when the details are open (no preview shown).
+    if (!isset($element['preview_wrapper']['preview'])) {
+      return $element;
+    }
+
+    $details = $element['details'] ?? [];
+    $ranking_defaults = $element['#ranking_defaults'] ?? [];
+
+    $values = [
+      'ranking_heading' => $details['ranking_heading']['#value'] ?? $details['ranking_heading']['#default_value'] ?? '',
+      'ranking_description' => $details['ranking_description']['#value'] ?? $details['ranking_description']['#default_value'] ?? '',
+      'ranking_source' => $details['ranking_source']['#value'] ?? $details['ranking_source']['#default_value'] ?? '',
+      'link_uri' => $details['link_uri']['#value'] ?? $details['link_uri']['#default_value'] ?? '',
+      'link_title' => $details['link_title']['#value'] ?? $details['link_title']['#default_value'] ?? '',
+      'ranking_link_style' => $details['ranking_link_style']['#value'] ?? $details['ranking_link_style']['#default_value'] ?? 'w-100 btn btn-red mt-2',
+      'ranking_font_color' => $details['ranking_font_color']['#value'] ?? $details['ranking_font_color']['#default_value'] ?? 'ranking-text-midnight',
+      'options' => [
+        'class' => $details['options']['#value'] ?? $details['options']['#default_value'] ?? 'text-bg-chili',
+        'hover_class' => $details['options_hover_effect']['#value'] ?? $details['options_hover_effect']['#default_value'] ?? 'text-bg-chili',
+        'ranking_type' => $details['ranking_type']['#value'] ?? $details['ranking_type']['#default_value'] ?? 'standard',
+        'column_span' => $details['column_span']['#value'] ?? $details['column_span']['#default_value'] ?? 2,
+      ],
+    ];
+
+    // az_media_library implements a real #value_callback (see
+    // Drupal\media_library_form_element\Element\MediaLibrary::valueCallback,
+    // confirmed by reading it directly), so #value should already be
+    // reorder-correct here just like the fields above. Still read from raw
+    // user input as a fallback/cross-check - PR #5309 found the equivalent
+    // field unreliable via #value/#default_value alone on this same widget
+    // family, and this is cheap insurance against the same class of bug.
+    $media_id = NULL;
+    $delta = $element['#delta'];
+    $field_name = $element['#field_name'];
+    $field_parents = $element['#field_parents'];
+    $user_input = $form_state->getUserInput() ?? [];
+    $input_path = array_merge($field_parents, [$field_name, $delta, 'details', 'media']);
+    $media_input = NestedArray::getValue($user_input, $input_path);
+    if (is_array($media_input) && !empty($media_input['media_library_selection'])) {
+      $ids = array_filter(explode(',', $media_input['media_library_selection']));
+      $media_id = $ids ? (int) reset($ids) : NULL;
+    }
+    elseif (is_numeric($media_input)) {
+      $media_id = (int) $media_input;
+    }
+    // Fallback for initial load (no user input for this field yet).
+    if ($media_id === NULL && $media_input === NULL) {
+      $media_id = $details['media']['#value'] ?? $details['media']['#default_value'] ?? NULL;
+    }
+    $values['media'] = $media_id;
+
+    $ranking_type = $values['options']['ranking_type'] ?? 'standard';
+    if ($ranking_type === 'image_only') {
+      // width_span_* has no visual effect here (this preview is a single
+      // box, not a grid), but computing deck_props the same way the
+      // formatter does keeps the props themselves accurate, in case that
+      // ever changes.
+      $deck_props = $this->componentBuilder->buildDeckProps($ranking_defaults);
+      $preview = $this->componentBuilder->buildImageComponent($values, $deck_props);
+    }
+    else {
+      $preview = $this->componentBuilder->buildRankingComponent($values, $ranking_defaults);
+    }
+
+    $preview['#attributes']['class'][] = 'widget-preview-ranking';
+    $preview['#attributes']['style'] = 'transform: scale(0.8); transform-origin: center;';
+
+    $element['preview_wrapper']['preview'] = $preview;
 
     return $element;
   }
@@ -754,201 +826,6 @@ class AZRankingWidget extends WidgetBase {
       unset($values[$delta]['details']);
     }
     return $values;
-  }
-
-  /**
-   * Build the preview render array for a ranking item.
-   *
-   * @param \Drupal\az_ranking\Plugin\Field\FieldType\AZRankingItem $item
-   *   The ranking item.
-   * @param string $ranking_classes
-   *   The ranking CSS classes.
-   *
-   * @return array
-   *   The preview render array.
-   */
-  protected function buildRankingPreview($item, $ranking_classes) {
-    $parent = $item->getEntity();
-
-    // Get ranking settings from parent paragraph.
-    $ranking_hover_effect = FALSE;
-    $ranking_clickable = FALSE;
-    $ranking_header_style = NULL;
-    $ranking_alignment = NULL;
-    if ($parent instanceof ParagraphInterface) {
-      $parent_config = $parent->getAllBehaviorSettings();
-      if (!empty($parent_config['az_rankings_paragraph_behavior'])) {
-        $ranking_defaults = $parent_config['az_rankings_paragraph_behavior'];
-        $ranking_hover_effect = $ranking_defaults['ranking_hover_effect'] ?? FALSE;
-        $ranking_clickable = $ranking_defaults['ranking_clickable'] ?? FALSE;
-        $ranking_header_style = $ranking_defaults['ranking_header_style'] ?? NULL;
-        $ranking_alignment = $ranking_defaults['ranking_alignment'] ?? 'text-left';
-      }
-    }
-    // Apply paragraph settings found in AZRankingDefaultFormatter.
-    if ($item->options['ranking_type'] !== 'image_only') {
-      $ranking_classes .= ' ' . $ranking_alignment;
-    }
-
-    // Apply clickable ranking styles (like formatter does).
-    $link_title = $item->link_title ?? '';
-    $ranking_link_style = $item->ranking_link_style ?? 'w-100 btn btn-red mt-2';
-
-    if ($ranking_clickable) {
-      // Add shadow when ranking is clickable.
-      $ranking_classes .= ' shadow';
-      if (!empty($ranking_hover_effect) && $item->options['ranking_type'] !== 'image_only') {
-        $ranking_classes .= ' ranking-bold-hover';
-      }
-    }
-    else {
-      // Ranking is not clickable.
-      $ranking_hover_effect = FALSE;
-    }
-
-    // Link color override.
-    if (str_contains($ranking_link_style, 'link')) {
-      if (str_contains($item->options['class'], 'bg-oasis') ||
-        str_contains($item->options['class'], 'bg-sky')) {
-        $ranking_link_style .= ' text-midnight';
-      }
-    }
-    // Determine font color and text color override.
-    $ranking_font_color = $item->ranking_font_color ?? 'ranking-text-midnight';
-    $text_color_override = '';
-
-    // Determine source classes based on background color (like formatter does).
-    $ranking_source_classes = '';
-    $background_class = '';
-
-    // Get the appropriate background class depending on hover effect.
-    if ($ranking_hover_effect) {
-      if (!empty($item->options['hover_class'])) {
-        $background_class = $item->options['hover_class'];
-      }
-      // Fallback to the persisted background class.
-      if (empty($background_class) && !empty($item->options['class'])) {
-        $background_class = $item->options['class'];
-      }
-    }
-    else {
-      $background_class = $item->options['class'] ?? '';
-    }
-
-    // Apply mt-auto if NOT transparent background.
-    if (!str_contains($background_class, 'bg-transparent')) {
-      $ranking_source_classes = 'mt-auto';
-    }
-    else {
-      // transparent: apply font color to ranking _font_color and _classes.
-      $ranking_font_color = ' ' . $item->ranking_font_color;
-      $ranking_classes .= ' ' . $item->ranking_font_color;
-    }
-
-    // Set text_color_override based on background color (like formatter does).
-    if (!$ranking_hover_effect) {
-      if (!empty($item->options['class'])) {
-        switch (TRUE) {
-          case str_contains($item->options['class'], 'bg-sky'):
-            $text_color_override = 'text-midnight';
-            break;
-
-          case str_contains($item->options['class'], 'bg-cool-gray'):
-            $text_color_override = 'text-azurite';
-            break;
-
-          case str_contains($item->options['class'], 'bg-warm-gray'):
-            $text_color_override = 'text-midnight';
-            break;
-
-          case str_contains($item->options['class'], 'bg-white'):
-            $text_color_override = 'text-midnight';
-            break;
-
-          case str_contains($item->options['class'], 'bg-oasis'):
-            $text_color_override = 'text-midnight';
-            break;
-        }
-      }
-    }
-    else {
-      // Override hover class.
-      if (!empty($item->options['hover_class'])) {
-        switch (TRUE) {
-          case str_contains($item->options['hover_class'], 'bg-sky'):
-            $text_color_override = 'text-midnight';
-            break;
-
-          case str_contains($item->options['hover_class'], 'bg-cool-gray'):
-            $text_color_override = 'text-azurite';
-            break;
-
-          case str_contains($item->options['hover_class'], 'bg-oasis'):
-            $text_color_override = 'text-midnight';
-            break;
-        }
-      }
-    }
-
-    // Build media render array.
-    $media_render_array = NULL;
-    $media_id = $item->media ?? NULL;
-    if (!empty($media_id)) {
-      if ($media = $this->entityTypeManager->getStorage('media')->load($media_id)) {
-        $media_render_array = $this->rankingImageHelper->generateImageRenderArray($media);
-      }
-    }
-
-    // Build link render array and URL.
-    $link_render_array = NULL;
-    $link_url = NULL;
-    if ($item->link_uri) {
-      if (!empty($item->link_uri) && str_starts_with($item->link_uri, '/' . PublicStream::basePath())) {
-        $link_url = Url::fromUri(urldecode('base:' . $item->link_uri));
-      }
-      else {
-        $link_url = $this->pathValidator->getUrlIfValid($item->link_uri ?? '<none>');
-      }
-
-      if ($link_url) {
-        $link_classes = explode(' ', $ranking_link_style);
-
-        // Add stretched-link class if ranking is clickable.
-        if (!empty($ranking_clickable)) {
-          $link_classes[] = 'stretched-link';
-        }
-
-        $link_render_array = [
-          '#type' => 'link',
-          '#title' => $link_title ?: ($item->ranking_source ?? ''),
-          '#url' => $link_url,
-          '#attributes' => ['class' => $link_classes],
-        ];
-      }
-    }
-
-    return [
-      '#theme' => 'az_ranking',
-      '#media' => $media_render_array,
-      '#ranking_heading' => $item->ranking_heading ?? '',
-      '#ranking_description' => $item->ranking_description ?? '',
-      '#ranking_source' => $item->ranking_source ?? '',
-      '#ranking_header_style' => $ranking_header_style,
-      '#ranking_alignment' => $ranking_alignment,
-      '#ranking_hover_effect' => $ranking_hover_effect,
-      '#ranking_clickable' => $ranking_clickable,
-      '#ranking_font_color' => $ranking_font_color,
-      '#text_color_override' => $text_color_override,
-      '#ranking_link_style' => $ranking_link_style,
-      '#ranking_source_classes' => $ranking_source_classes,
-      '#link' => $link_render_array,
-      '#link_url' => $link_url,
-      '#link_title' => $link_title,
-      '#attributes' => [
-        'class' => $ranking_classes . ' widget-preview-ranking',
-        'style' => 'transform: scale(0.8); transform-origin: center;',
-      ],
-    ];
   }
 
   /**
