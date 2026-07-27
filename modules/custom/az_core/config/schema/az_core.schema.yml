@@ -30,12 +30,24 @@ block.settings.az_navbar_fullscreen_menu_block:*:
     cta_menu:
       type: string
       label: 'Call to Action menu'
-    resources_menu:
+    footer_top_menu:
       type: string
-      label: 'Resources For menu'
-    helpful_links_menu:
+      label: 'Footer Top menu'
+    footer_top_desktop_heading:
       type: string
-      label: 'Helpful Links menu'
+      label: 'Footer Top Desktop Heading'
+    footer_top_mobile_heading:
+      type: string
+      label: 'Footer Top Mobile Heading'
+    footer_bottom_menu:
+      type: string
+      label: 'Footer Bottom menu'
+    footer_bottom_desktop_heading:
+      type: string
+      label: 'Footer Bottom Desktop Heading'
+    footer_bottom_mobile_heading:
+      type: string
+      label: 'Footer Bottom Mobile Heading'
     search_form_block_desktop_navbar:
       type: string
       label: 'Search form block - Desktop navbar'
