@@ -53,6 +53,7 @@ install:
   - drupal:taxonomy
   - drupal:dblog
   - drupal:search
+  - drupal:search_node
   - drupal:shortcut
   - token:token
   - drupal:toolbar
@@ -79,4 +80,4 @@ install:
 themes:
   - az_barrio
   - claro
-version: 3.5.x-dev
+version: 3.6.x-dev

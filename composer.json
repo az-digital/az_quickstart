@@ -25,7 +25,7 @@
     ],
     "require": {
         "php": ">=8.3",
-        "az-digital/arizona-bootstrap": "5.1.5",
+        "az-digital/arizona-bootstrap": "5.1.6",
         "az-digital/az-icons": "1.0.5",
         "citation-style-language/locales": "0.0.95",
         "citation-style-language/styles": "0.0.668",
@@ -33,7 +33,7 @@
         "cweagans/composer-patches": "^1.7",
         "devanych/mime-types": "2.1.2",
         "drupal/access_unpublished": "1.9.0",
-        "drupal/altcha": "1.1.0",
+        "drupal/altcha": "1.2.0",
         "drupal/antibot": "2.0.5",
         "drupal/asset_injector": "2.21.0",
         "drupal/auto_entitylabel": "3.4.0",
@@ -80,7 +80,7 @@
         "drupal/image_widget_crop": "3.0.0",
         "drupal/imagemagick": "4.0.2",
         "drupal/inline_entity_form": "3.0.0",
-        "drupal/intelligencebank": "5.2.2",
+        "drupal/intelligencebank": "5.2.3",
         "drupal/jquery_ui": "1.8.0",
         "drupal/jquery_ui_datepicker": "2.1.1",
         "drupal/key": "1.22.0",
@@ -106,7 +106,7 @@
         "drupal/paragraphs_admin": "1.7.0",
         "drupal/pathauto": "1.14.0",
         "drupal/quick_node_clone": "1.22.0",
-        "drupal/recaptcha": "3.4",
+        "drupal/recaptcha": "3.5-rc1",
         "drupal/redirect": "1.13.0",
         "drupal/role_delegation": "1.6.0",
         "drupal/schema_metatag": "3.0.4",
@@ -133,9 +133,7 @@
         "drupal/xmlsitemap": "2.0.0",
         "giggsey/libphonenumber-for-php": "^9.0",
         "kevinrob/guzzle-cache-middleware": "7.0.0",
-        "npm-asset/bootstrap-datepicker": "1.10.1",
         "npm-asset/easepick--bundle": "1.2.1",
-        "npm-asset/noli42--chosen": "3.0.1",
         "npm-asset/slick-carousel": "1.6.0",
         "renanbr/bibtex-parser": "2.3.0",
         "seboettg/citeproc-php": "2.7.1"
@@ -156,7 +154,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "3.5.x-dev",
+            "dev-main": "3.6.x-dev",
             "2.x-dev": "2.14.x-dev"
         },
         "patches": {
@@ -226,6 +224,9 @@
             "drupal/menu_block": {
                 "Performance issue caused by build in access check (3509045)": "https://www.drupal.org/files/issues/2025-03-05/3509045-13.patch"
             },
+            "drupal/metatag": {
+                "Merge special page metatags with node pages (2949963)": "https://gist.githubusercontent.com/tadean/42e1c5046e991ad1dba312c086450735/raw/cf95e6e2376afec56da425234f5c773301eade8e/metatag-special-page-metatags-2949963-MR34-2.2.0.patch"
+            },
             "drupal/migmag": {
                 "Fix fatal error when MigrationConfigurationTrait is stubbed during plugin discovery (3590259)": "https://www.drupal.org/files/issues/2026-05-15/3590259-9-mr19.patch"
             },
@@ -244,7 +245,8 @@
                 "Add parentOrganization property/tag to schema_organization (3477869)": "https://www.drupal.org/files/issues/2025-01-13/add_parentOrganization.diff"
             },
             "drupal/search_exclude": {
-                "Request for a Views Handler (2882683)": "https://www.drupal.org/files/issues/2023-06-29/request_for_a_views-2882683-14_0.patch"
+                "Request for a Views Handler (2882683)": "https://www.drupal.org/files/issues/2023-06-29/request_for_a_views-2882683-14_0.patch",
+                "Module not compatible with Drupal 11.4+ (3594295)": "https://www.drupal.org/files/issues/2026-06-09/3594295-6-mr-17.patch"
             },
             "drupal/views_bootstrap": {
                 "Views with responsive table display no longer works (2931301)": "https://www.drupal.org/files/issues/2024-10-07/views_bootstrap_responsive-2931301-14.patch"
