@@ -164,7 +164,7 @@ class AZNavbarFullscreenMenuBlock extends BlockBase implements ContainerFactoryP
       '#type' => 'textfield',
       '#title' => $this->t('Footer Top Desktop Heading'),
       '#default_value' => $config['footer_top_desktop_heading'],
-      '#description' => $this->t('Heading for the top footer on desktop devices. Trailing colon is added automatically.'),
+      '#description' => $this->t('Heading for the top footer on desktop devices. A trailing colon is added automatically to the displayed heading.'),
     ];
 
     $form['menu_selection']['footer_top_mobile_heading'] = [
@@ -186,7 +186,7 @@ class AZNavbarFullscreenMenuBlock extends BlockBase implements ContainerFactoryP
       '#type' => 'textfield',
       '#title' => $this->t('Footer Bottom Desktop Heading'),
       '#default_value' => $config['footer_bottom_desktop_heading'],
-      '#description' => $this->t('Heading for the bottom footer on desktop devices. Trailing colon is added automatically.'),
+      '#description' => $this->t('Heading for the bottom footer on desktop devices. A trailing colon is added automatically to the displayed heading.'),
     ];
 
     $form['menu_selection']['footer_bottom_mobile_heading'] = [
