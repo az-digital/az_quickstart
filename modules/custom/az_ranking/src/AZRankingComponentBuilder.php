@@ -243,8 +243,6 @@ class AZRankingComponentBuilder {
         if ($image_data['focal_x'] !== NULL && $image_data['focal_y'] !== NULL) {
           $props['focal_x'] = $image_data['focal_x'];
           $props['focal_y'] = $image_data['focal_y'];
-          $props['original_width'] = $image_data['original_width'];
-          $props['original_height'] = $image_data['original_height'];
         }
       }
     }

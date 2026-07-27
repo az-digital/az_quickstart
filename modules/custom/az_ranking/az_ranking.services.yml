@@ -3,7 +3,6 @@ services:
     class: Drupal\az_ranking\AZRankingImageHelper
     arguments:
       - '@entity_type.manager'
-      - '@image.factory'
   az_ranking.component_builder:
     class: Drupal\az_ranking\AZRankingComponentBuilder
     arguments:

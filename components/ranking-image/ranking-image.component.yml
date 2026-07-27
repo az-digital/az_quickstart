@@ -91,20 +91,6 @@ props:
       maximum: 1
       examples:
         - 0.5
-    original_width:
-      type: integer
-      title: Original Width
-      description: The image's true width in pixels, before any cropping. Required alongside Focal Point X/Y for accurate focal-point cropping; ignored otherwise.
-      minimum: 1
-      examples:
-        - 1000
-    original_height:
-      type: integer
-      title: Original Height
-      description: The image's true height in pixels, before any cropping. Required alongside Focal Point X/Y for accurate focal-point cropping; ignored otherwise.
-      minimum: 1
-      examples:
-        - 500
     utility_classes:
       type: array
       title: Utility Classes
