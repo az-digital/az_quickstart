@@ -2,8 +2,8 @@
 
 namespace Drupal\az_media\Twig;
 
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\File\FileUrlGeneratorInterface;
-use Drupal\image\Entity\ImageStyle;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
@@ -21,6 +21,7 @@ class ImageStyleTwigExtension extends AbstractExtension {
 
   public function __construct(
     protected FileUrlGeneratorInterface $fileUrlGenerator,
+    protected EntityTypeManagerInterface $entityTypeManager,
   ) {}
 
   /**
@@ -48,7 +49,7 @@ class ImageStyleTwigExtension extends AbstractExtension {
     if (empty($uri)) {
       return '';
     }
-    $style = ImageStyle::load($style_name);
+    $style = $this->entityTypeManager->getStorage('image_style')->load($style_name);
     if ($style) {
       return $style->buildUrl($uri);
     }

@@ -4,7 +4,7 @@ namespace Drupal\az_ranking\Element;
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Attribute\RenderElement;
-use Drupal\Core\Render\Element\RenderElement as RenderElementBase;
+use Drupal\Core\Render\Element\RenderElementBase;
 
 /**
  * Provides a render element for one az_ranking field item.

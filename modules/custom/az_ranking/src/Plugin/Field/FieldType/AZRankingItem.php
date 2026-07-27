@@ -138,9 +138,7 @@ class AZRankingItem extends FieldItemBase {
 
   /**
    * {@inheritdoc}
-   */
-
-  /**
+   *
    * @todo samplePreview
    */
   public static function generateSampleValue(FieldDefinitionInterface $field_definition) {
