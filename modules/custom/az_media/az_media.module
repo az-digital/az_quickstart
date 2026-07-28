@@ -5,6 +5,16 @@
  * Contains az_media.module.
  */
 
+use Drupal\canvas\PropExpressions\StructuredData\ReferencedBundleSpecificBranches;
+use Drupal\canvas\PropExpressions\StructuredData\FieldTypePropExpression;
+use Drupal\canvas\PropExpressions\StructuredData\ReferenceFieldTypePropExpression;
+use Drupal\canvas\TypedData\BetterEntityDataDefinition;
+use Drupal\canvas\PropExpressions\StructuredData\FieldPropExpression;
+use Drupal\canvas\PropExpressions\StructuredData\ReferenceFieldPropExpression;
+use Drupal\media\Plugin\media\Source\Image;
+use Drupal\media\MediaTypeInterface;
+use Drupal\media\Entity\MediaType;
+use Drupal\canvas\PropShape\CandidateStorablePropShape;
 use Drupal\Core\Entity\EntityFormInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -18,11 +28,12 @@ use Drupal\responsive_image\ResponsiveImageBuilder;
 function az_media_module_implements_alter(&$implementations, $hook) {
   // Ensure az_media_canvas_storable_prop_shape_alter() runs LAST for this
   // hook, so it can reliably override whatever Canvas's own
-  // media_library-registered implementation (mediaLibraryStorablePropShapeAlter())
-  // set. Module weight alone doesn't guarantee this - both az_media and
-  // media_library currently have weight 0, so without this, ordering would
-  // depend on install order / core.extension's module list order, which
-  // isn't something to rely on implicitly.
+  // media_library-registered implementation
+  // (mediaLibraryStorablePropShapeAlter()) set. Module weight alone
+  // doesn't guarantee this - both az_media and media_library currently
+  // have weight 0, so without this, ordering would depend on install
+  // order / core.extension's module list order, which isn't something to
+  // rely on implicitly.
   if ($hook === 'canvas_storable_prop_shape_alter' && isset($implementations['az_media'])) {
     $group = $implementations['az_media'];
     unset($implementations['az_media']);
@@ -241,7 +252,8 @@ function az_media_form_media_form_alter(&$form, FormStateInterface $form_state, 
  * it's safe for this to reference Canvas's own classes without a typed
  * parameter or file-level `use` imports for them.
  *
- * Canvas's own \Drupal\canvas\Hook\ShapeMatchingHooks::mediaLibraryStorablePropShapeAlter()
+ * Canvas's own
+ * \Drupal\canvas\Hook\ShapeMatchingHooks::mediaLibraryStorablePropShapeAlter()
  * (registered "on behalf of" media_library) only applies the media-library
  * widget when x-allowed-schemes is EXACTLY `['public']` (strict ===
  * match, confirmed by reading it directly). Adding 'https' to the array
@@ -270,7 +282,7 @@ function az_media_form_media_form_alter(&$form, FormStateInterface $form_state, 
  * @see \Drupal\canvas\PropShape\CandidateStorablePropShape
  */
 function az_media_canvas_storable_prop_shape_alter($storable_prop_shape) {
-  if (!is_object($storable_prop_shape) || !($storable_prop_shape instanceof \Drupal\canvas\PropShape\CandidateStorablePropShape)) {
+  if (!is_object($storable_prop_shape) || !($storable_prop_shape instanceof CandidateStorablePropShape)) {
     return;
   }
   $schema = $storable_prop_shape->shape->schema;
@@ -283,8 +295,8 @@ function az_media_canvas_storable_prop_shape_alter($storable_prop_shape) {
   }
 
   $media_types = array_filter(
-    \Drupal\media\Entity\MediaType::loadMultiple(),
-    fn (\Drupal\media\MediaTypeInterface $type): bool => is_a($type->getSource(), \Drupal\media\Plugin\media\Source\Image::class)
+    MediaType::loadMultiple(),
+    fn (MediaTypeInterface $type): bool => is_a($type->getSource(), Image::class)
   );
   if (empty($media_types)) {
     return;
@@ -298,15 +310,15 @@ function az_media_canvas_storable_prop_shape_alter($storable_prop_shape) {
   $branches = [];
   foreach ($media_types as $media_type_id => $media_type) {
     $source_field_name = $media_type->getSource()->getSourceFieldDefinition($media_type)->getName();
-    $branches["entity:media:$media_type_id"] = new \Drupal\canvas\PropExpressions\StructuredData\ReferenceFieldPropExpression(
-      new \Drupal\canvas\PropExpressions\StructuredData\FieldPropExpression(\Drupal\canvas\TypedData\BetterEntityDataDefinition::create('media', $media_type_id), $source_field_name, NULL, 'entity'),
-      new \Drupal\canvas\PropExpressions\StructuredData\FieldPropExpression(\Drupal\canvas\TypedData\BetterEntityDataDefinition::create('file'), 'uri', NULL, 'value'),
+    $branches["entity:media:$media_type_id"] = new ReferenceFieldPropExpression(
+      new FieldPropExpression(BetterEntityDataDefinition::create('media', $media_type_id), $source_field_name, NULL, 'entity'),
+      new FieldPropExpression(BetterEntityDataDefinition::create('file'), 'uri', NULL, 'value'),
     );
   }
 
-  $storable_prop_shape->fieldTypeProp = new \Drupal\canvas\PropExpressions\StructuredData\ReferenceFieldTypePropExpression(
-    new \Drupal\canvas\PropExpressions\StructuredData\FieldTypePropExpression('entity_reference', 'entity'),
-    count($branches) === 1 ? reset($branches) : new \Drupal\canvas\PropExpressions\StructuredData\ReferencedBundleSpecificBranches($branches),
+  $storable_prop_shape->fieldTypeProp = new ReferenceFieldTypePropExpression(
+    new FieldTypePropExpression('entity_reference', 'entity'),
+    count($branches) === 1 ? reset($branches) : new ReferencedBundleSpecificBranches($branches),
   );
   $media_type_ids = array_keys($media_types);
   $storable_prop_shape->fieldStorageSettings = ['target_type' => 'media'];
