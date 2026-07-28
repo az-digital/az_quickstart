@@ -34,6 +34,16 @@
   min-height: 190px;
 }
 
+/**
+ * Matches ranking-image component's public://placeholder-1000x500.png
+ * placeholder image in the schema. Makes the hover preview in Canvas library
+ * left panel display with correct aspect ratio (#component-wrapper is the id
+ * Canvas's ComponentPreview.tsx uses to wrap it with).
+ */
+#component-wrapper .az-ranking-image {
+  aspect-ratio: 2 / 1;
+}
+
 /* Medium viewports. */
 @media (min-width: 768px) {
   .az-ranking-image {
