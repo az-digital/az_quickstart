@@ -62,7 +62,7 @@ name: 'Quickstart Search API Index'
 description: ''
 read_only: false
 field_settings:
-  az_source_domain:
+  source_domain:
     label: 'Source Domain'
     property_path: az_source_domain
     type: string
