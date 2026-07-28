@@ -13,8 +13,9 @@ props:
       contentMediaType: image/*
       x-allowed-schemes:
         - public
+        - https
       examples:
-        - public://placeholder-1000x500.png
+        - https://placehold.co/1000x500
     decorative:
       type: boolean
       title: Decorative

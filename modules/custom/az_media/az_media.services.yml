@@ -4,5 +4,6 @@ services:
     arguments:
       - '@file_url_generator'
       - '@entity_type.manager'
+      - '@stream_wrapper_manager'
     tags:
       - { name: twig.extension }
