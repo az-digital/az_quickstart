@@ -7,7 +7,7 @@ use Drupal\search_api\Attribute\SearchApiProcessor;
 use Drupal\search_api\Processor\FieldsProcessorPluginBase;
 
 /**
- * Transforms base_url into a value matching xmlsitemap.
+ * Transforms values into predictable slug identifiers.
  */
 #[SearchApiProcessor(
   id: 'az_clean_tags',

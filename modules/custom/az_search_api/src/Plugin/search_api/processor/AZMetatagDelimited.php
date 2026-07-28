@@ -9,7 +9,7 @@ use Drupal\search_api\Item\ItemInterface;
 use Drupal\az_search_api\Plugin\search_api\processor\Property\AZMetatagProperty;
 
 /**
- * Adds an individual metatag from the item into the index.
+ * Adds an individual metatag from the item into the index, splitting on commas.
  */
 #[SearchApiProcessor(
   id: 'az_metatag_delimited',
