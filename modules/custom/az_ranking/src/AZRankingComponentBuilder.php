@@ -3,6 +3,7 @@
 namespace Drupal\az_ranking;
 
 use Drupal\az_ranking\Plugin\Field\FieldType\AZRankingItem;
+use Drupal\Core\Cache\Cache;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Path\PathValidatorInterface;
 use Drupal\Core\StreamWrapper\PublicStream;
@@ -196,14 +197,18 @@ class AZRankingComponentBuilder {
   /**
    * Builds an az_quickstart:ranking-image component render array for one item.
    *
-   * Unlike the legacy #theme => image_formatter path, this does not apply
-   * the az_ranking_responsive image style — az_quickstart:ranking-image
-   * takes a plain file URI, not a themed render array, so server-side image
-   * style processing is a known, disclosed gap versus the legacy image_only
-   * rendering, not an oversight. Focal point data IS passed through (see
-   * AZRankingImageHelper::getImageSourceAltAndFocalPoint()), so
-   * focal-point-aware cropping works client-side via the ranking-image
-   * SDC's own JS.
+   * Passes a plain file URI as the `src` prop rather than a themed render
+   * array (which an SDC prop cannot carry). The az_ranking_responsive image
+   * style is still applied — by ranking-image.twig itself, via az_media's
+   * `image_style` Twig filter — so scaling and WebP delivery match the
+   * legacy #theme => image_formatter path. Focal point data is passed
+   * through as props and applied client-side by the component's own JS.
+   *
+   * Cache tags for the media and file entities are attached here because
+   * AZRankingItem stores its media reference as a plain integer, not an
+   * entity reference, so nothing upstream contributes them automatically.
+   * Without this, replacing a media entity's image or moving its focal
+   * point would not invalidate an already-cached ranking.
    *
    * width_span_desktop/tablet/phone are computed here, not just passed
    * through legacy's single column_span value, because CSS Grid cannot
@@ -232,10 +237,17 @@ class AZRankingComponentBuilder {
       'width_span_phone' => (string) min($legacy_span, (int) ($deck_props['columns_phone'] ?? 1)),
     ];
 
+    $cache_tags = [];
     if (!empty($values['media'])) {
       $media = $this->entityTypeManager->getStorage('media')->load($values['media']);
       if ($media) {
+        // Tag on the media entity itself even when it turns out to carry no
+        // image: alt text and both focal point values live on the media, so
+        // editing any of them - or adding an image to a media entity that
+        // previously had none - has to invalidate this render.
+        $cache_tags = $media->getCacheTags();
         $image_data = $this->rankingImageHelper->getImageSourceAltAndFocalPoint($media);
+        $cache_tags = Cache::mergeTags($cache_tags, $image_data['cache_tags']);
         if ($image_data['src'] !== '') {
           $props['src'] = $image_data['src'];
           $props['alt'] = $image_data['alt'];
@@ -247,11 +259,15 @@ class AZRankingComponentBuilder {
       }
     }
 
-    return [
+    $build = [
       '#type' => 'component',
       '#component' => 'az_quickstart:ranking-image',
       '#props' => $props,
     ];
+    if ($cache_tags) {
+      $build['#cache']['tags'] = $cache_tags;
+    }
+    return $build;
   }
 
   /**

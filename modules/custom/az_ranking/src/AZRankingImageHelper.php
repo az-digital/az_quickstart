@@ -40,7 +40,13 @@ class AZRankingImageHelper {
    * @return array
    *   An array with 'src' and 'alt' (empty strings if the media has no
    *   image), plus 'focal_x' and 'focal_y' (both NULL if the media has no
-   *   focal point set).
+   *   focal point set), plus 'cache_tags' - the file entity's own cache
+   *   tags, which the caller MUST attach to whatever render array it builds
+   *   from this data. az_ranking stores its media reference as a plain
+   *   integer property (see AZRankingItem::propertyDefinitions()), not an
+   *   entity reference, so Drupal derives no cache metadata for it
+   *   automatically - nothing else in the render pipeline will invalidate a
+   *   cached ranking when the underlying file is replaced.
    */
   public function getImageSourceAltAndFocalPoint(MediaInterface $media): array {
     $empty = [
@@ -48,6 +54,7 @@ class AZRankingImageHelper {
       'alt' => '',
       'focal_x' => NULL,
       'focal_y' => NULL,
+      'cache_tags' => [],
     ];
 
     $media_attributes = $media->get('field_media_az_image')->getValue();
@@ -63,6 +70,7 @@ class AZRankingImageHelper {
     $result = $empty;
     $result['src'] = $file->getFileUri();
     $result['alt'] = $media_attributes[0]['alt'] ?? '';
+    $result['cache_tags'] = $file->getCacheTags();
 
     if ($media instanceof FieldableEntityInterface) {
       try {
