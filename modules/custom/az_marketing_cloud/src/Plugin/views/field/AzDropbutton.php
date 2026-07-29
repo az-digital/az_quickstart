@@ -81,6 +81,7 @@ class AzDropbutton extends Links {
       $dropbutton['#attached']['library'][] = 'az_marketing_cloud/admin';
     }
 
+    /* @phpstan-ignore-next-line */
     return $dropbutton;
   }
 

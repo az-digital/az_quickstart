@@ -16,26 +16,22 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 class AZParagraphsJavascriptTest extends QuickstartFunctionalJavascriptTestBase {
 
   /**
-   * The profile to install as a basis for testing.
-   *
-   * @var string
+   * {@inheritdoc}
    */
   protected $profile = 'az_quickstart';
 
   /**
-   * @var bool
+   * {@inheritdoc}
    */
   protected $strictConfigSchema = FALSE;
 
   /**
-   * @var string
+   * {@inheritdoc}
    */
   protected $defaultTheme = 'az_barrio';
 
   /**
-   * Modules to enable.
-   *
-   * @var string[]
+   * {@inheritdoc}
    */
   protected static $modules = [
     'az_paragraphs',
