@@ -192,12 +192,21 @@
               <div class="navbar-az-fullscreen-modal-menu-nav-col navbar-az-fullscreen-modal-menu-nav-col-primary col-12 col-lg-4">
                 <nav class="nav navbar-az-fullscreen-nav-primary" aria-label="Main navigation sections">
                   {% for item in primary_items %}
+                    {% set end_of_trail = true %}
+                    {% if item.below and item.in_active_trail %}
+                      {% for child in item.below %}
+                        {% if end_of_trail and child.in_active_trail %}
+                          {% set end_of_trail = false %}
+                        {% endif %}
+                      {% endfor %}
+                    {% endif %}
                     <div class="nav-item">
-                      <a class="nav-link{{ item.in_active_trail ? ' active' }}" href="{{ item.url }}">
+                      <a class="nav-link{{ item.in_active_trail and end_of_trail ? ' active' }}" href="{{ item.url }}">
                         <span class="nav-link-text">{{ item.title }}</span>
                       </a>
                       {% if item.below %}
-                        <button class="btn nav-toggle nav-toggle-separated collapsed" type="button" data-az-menu-element="#az-navbar-az-fullscreen-primary-{{ loop.index }}-content" aria-controls="navbar-az-fullscreen-nav-mobile-col" aria-label="Toggle {{ item.title }} submenu">
+                        {% set expanded = item.in_active_trail or not end_of_trail %}
+                        <button class="btn nav-toggle nav-toggle-separated{{ not expanded ? ' collapsed' }}" type="button" data-az-menu-element="#az-navbar-az-fullscreen-primary-{{ loop.index }}-content" aria-controls="navbar-az-fullscreen-nav-mobile-col" aria-label="Toggle {{ item.title }} submenu">
                           <span class="nav-toggle-icon" aria-hidden="true"></span>
                         </button>
                       {% endif %}
