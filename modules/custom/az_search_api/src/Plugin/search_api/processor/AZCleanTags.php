@@ -14,7 +14,7 @@ use Drupal\search_api\Processor\FieldsProcessorPluginBase;
   label: new TranslatableMarkup('Clean Tags (Quickstart)'),
   description: new TranslatableMarkup('Forces lowercase and changes whitespace to hyphens.'),
   stages: [
-    'pre_index_save' => 0,
+    'pre_index_save' => 15,
     'preprocess_index' => 15,
     'preprocess_query' => 15,
   ],
