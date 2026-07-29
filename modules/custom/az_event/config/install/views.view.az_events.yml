@@ -209,7 +209,7 @@ display:
             access: false
             operation: view
             multiple: 1
-          break_phrase: false
+          break_phrase: true
           depth: 0
           use_taxonomy_term_path: false
       filters:
@@ -1096,7 +1096,7 @@ display:
             identifier: term_node_tid_depth
             required: false
             remember: false
-            multiple: false
+            multiple: true
             remember_roles:
               authenticated: authenticated
             reduce: false
@@ -1107,7 +1107,7 @@ display:
             identifier: ''
             optional: true
             widget: select
-            multiple: false
+            multiple: true
             remember: false
             default_group: All
             default_group_multiple: {  }

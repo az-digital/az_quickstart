@@ -211,6 +211,7 @@ class AZAuthor extends EditorialContentEntityBase implements AZAuthorInterface {
    * {@inheritdoc}
    */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
+    /** @var \Drupal\Core\Field\BaseFieldDefinition[] */
     $fields = parent::baseFieldDefinitions($entity_type);
 
     // Add the published field.
