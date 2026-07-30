@@ -27,9 +27,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class AZSourceDomain extends ProcessorPluginBase {
 
   /**
-   * The base_url.
+   * The baseDomain.
    *
-   * @var string
+   * @var string|null
    */
   protected ?string $baseDomain = NULL;
 
