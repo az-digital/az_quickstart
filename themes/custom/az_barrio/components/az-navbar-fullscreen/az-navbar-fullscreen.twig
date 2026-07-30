@@ -55,8 +55,8 @@
         </div>
       {% endif %}
       {% if search_form_block_offcanvas %}
-        <button class="btn navbar-toggler-search d-lg-none" type="button" data-bs-toggle="modal" data-bs-target="#navbar-az-fullscreen-menu" aria-controls="navbar-az-fullscreen-menu" aria-label="Search the site">
-          <span class="search-icon" aria-hidden="true"></span>
+        <button class="btn az-search-toggle d-lg-none" type="button" data-bs-toggle="modal" data-bs-target="#navbar-az-fullscreen-menu" aria-controls="navbar-az-fullscreen-menu" aria-label="Search site">
+          <span class="az-search-icon" aria-hidden="true"></span>
         </button>
       {% endif %}
     </div>
@@ -192,8 +192,16 @@
               <div class="navbar-az-fullscreen-modal-menu-nav-col navbar-az-fullscreen-modal-menu-nav-col-primary col-12 col-lg-4">
                 <nav class="nav navbar-az-fullscreen-nav-primary" aria-label="Main navigation sections">
                   {% for item in primary_items %}
+                    {% set end_of_trail = true %}
+                    {% if item.below and item.in_active_trail %}
+                      {% for child in item.below %}
+                        {% if end_of_trail and child.in_active_trail %}
+                          {% set end_of_trail = false %}
+                        {% endif %}
+                      {% endfor %}
+                    {% endif %}
                     <div class="nav-item">
-                      <a class="nav-link{{ item.in_active_trail ? ' active' }}" href="{{ item.url }}">
+                      <a class="nav-link{{ item.in_active_trail and end_of_trail ? ' active' }}" href="{{ item.url }}">
                         <span class="nav-link-text">{{ item.title }}</span>
                       </a>
                       {% if item.below %}
