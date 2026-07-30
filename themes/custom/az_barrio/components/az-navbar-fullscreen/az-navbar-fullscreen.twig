@@ -205,8 +205,7 @@
                         <span class="nav-link-text">{{ item.title }}</span>
                       </a>
                       {% if item.below %}
-                        {% set expanded = item.in_active_trail or not end_of_trail %}
-                        <button class="btn nav-toggle nav-toggle-separated{{ not expanded ? ' collapsed' }}" type="button" data-az-menu-element="#az-navbar-az-fullscreen-primary-{{ loop.index }}-content" aria-controls="navbar-az-fullscreen-nav-mobile-col" aria-label="Toggle {{ item.title }} submenu">
+                        <button class="btn nav-toggle nav-toggle-separated collapsed" type="button" data-az-menu-element="#az-navbar-az-fullscreen-primary-{{ loop.index }}-content" aria-controls="navbar-az-fullscreen-nav-mobile-col" aria-label="Toggle {{ item.title }} submenu">
                           <span class="nav-toggle-icon" aria-hidden="true"></span>
                         </button>
                       {% endif %}
