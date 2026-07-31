@@ -168,11 +168,8 @@ processor_settings:
       preprocess_query: -15
     all_fields: 1
     fields:
-<<<<<<< HEAD
       - type
-=======
       - az_source_domain
->>>>>>> 1489d4da (Fixes #5833, Fixes #5835 metatag keywords, source domain. (#5851))
       - created
       - description
       - sitename
@@ -184,8 +181,6 @@ processor_settings:
       - url
       - enterprise_attributes
   az_canonical: {  }
-<<<<<<< HEAD
-=======
   az_clean_tags:
     weights:
       preprocess_index: 15
@@ -200,7 +195,6 @@ processor_settings:
     all_fields: 0
     fields:
       - url
->>>>>>> 1489d4da (Fixes #5833, Fixes #5835 metatag keywords, source domain. (#5851))
   az_metatag: {  }
   az_metatag_delimited: {  }
   az_robots_noindex: {  }
