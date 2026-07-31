@@ -17,16 +17,14 @@ props:
         - public://placeholder-1000x500.png
     decorative:
       type: boolean
-      title: Decorative
-      description: Hide this image from screen readers and other assistive technology, and ignore Alternative Text. Only enable for purely decorative images that carry no information.
+      title: Decorative (this placement)
+      description: Hides this image from screen readers and other assistive technology, and ignores Alternative Text, for this placement only. Independent of the Decorative setting on the media item. Only enable for purely decorative images that carry no information.
       examples:
         - false
     alt:
       type: string
-      title: Alternative Text
-      description: Describes the image for screen readers and other assistive technology. Ignored when Decorative is enabled.
-      examples:
-        - Placeholder image, 1000 by 500 pixels
+      title: Alternative Text (this placement)
+      description: Describes this image for screen readers and other assistive technology, for this placement only. Leave empty to use the Alternative text set on the media item in the Media Library. Text entered here overrides it for this placement only, and does not change the Media Library. Ignored when Decorative is enabled.
     width_span_desktop:
       type: string
       title: Width Span (Desktop)

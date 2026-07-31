@@ -6,3 +6,9 @@ services:
       - '@entity_type.manager'
     tags:
       - { name: twig.extension }
+  az_media.media_alt_twig_extension:
+    class: Drupal\az_media\Twig\MediaAltTwigExtension
+    arguments:
+      - '@entity_type.manager'
+    tags:
+      - { name: twig.extension }

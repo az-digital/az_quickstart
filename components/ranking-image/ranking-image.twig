@@ -11,6 +11,19 @@
  * in Canvas, with no canvas:image / canvas.module $ref needed, so this stays
  * safe to render on sites without the Canvas module installed.
  *
+ * That last point is a hard constraint, not an incidental property: this
+ * component also renders the legacy az_ranking paragraph type, on sites that
+ * may never install Canvas. So keep every Canvas-owned mechanism out of this
+ * template and out of the component's schema — in particular the
+ * `json-schema-definitions://` $ref scheme and the `apply_image_style` Twig
+ * filter, both registered by canvas.services.yml. Either one makes this
+ * template fail on a Canvas-less site, and a missing Twig filter fails at
+ * compile time (SyntaxError), so there is no graceful degradation. Use
+ * az_media's own filters instead; if an object-shaped image prop is ever
+ * wanted, declare it inline and map it with our own
+ * hook_canvas_storable_prop_shape_alter(), which Canvas invokes even when it
+ * has no mapping of its own.
+ *
  * Props:
  * - src: Image URI, picked via the media library in Canvas. Resolves to a
  *   Drupal stream-wrapper URI (public://...), not a browser-loadable URL —
@@ -23,8 +36,17 @@
  *   az_ranking) — the filter itself is generic and lives in az_media
  *   regardless of which style name gets passed to it here.
  * - decorative: When true, forces empty alt text AND hides the image from
- *   assistive technology via aria-hidden. Defaults to false.
- * - alt: Alternative text. Ignored when decorative is true.
+ *   assistive technology via aria-hidden. Defaults to false. Set per
+ *   placement; unrelated to the media item's own Decorative checkbox.
+ * - alt: Alternative text for this placement. Ignored when decorative is
+ *   true. When left empty, falls back to the alt text stored on the media
+ *   item itself, resolved by az_media's `media_alt` filter — so an image
+ *   described once in the Media Library stays described everywhere,
+ *   while a placement can still override it. Deliberately carries no
+ *   `examples` value: Canvas uses examples[0] as a prop's stored default,
+ *   so any example here would ship verbatim as the alt text of every
+ *   image an author does not edit, and would also mask the fallback by
+ *   never being empty.
  * - focal_x / focal_y: Focal point as a 0-1 fraction of the image's width/
  *   height, kept visible when object-fit: cover crops the image to fill
  *   its container. Rendered as data-focal-x/data-focal-y attributes and
@@ -52,7 +74,8 @@
 {% set attributes = attributes|default(create_attribute()) %}
 
 {% set decorative = decorative|default(false) %}
-{% set alt = decorative ? '' : alt|default('') %}
+{# Per-placement alt wins; empty falls back to the media item's own alt. #}
+{% set alt = decorative ? '' : (alt|default('') ?: src|default('')|media_alt) %}
 
 {% set focal_x = focal_x|default(null) %}
 {% set focal_y = focal_y|default(null) %}
