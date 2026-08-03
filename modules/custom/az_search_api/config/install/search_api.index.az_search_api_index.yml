@@ -168,18 +168,18 @@ processor_settings:
       preprocess_query: -15
     all_fields: 1
     fields:
-      - type
       - az_source_domain
       - created
       - description
-      - sitename
+      - enterprise_attributes
       - extracted_attachments
       - keyword_tags
       - keywords
       - rendered_item
+      - sitename
       - title
+      - type
       - url
-      - enterprise_attributes
   az_canonical: {  }
   az_clean_tags:
     weights:
