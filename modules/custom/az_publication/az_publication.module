@@ -187,6 +187,7 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
       if (function_exists('views_get_current_view')) {
         // @todo deprecated function to be removed in Drupal 13.
         // @todo this should be refactored to not use this API.
+        // @todo $entity->view does not contain complete argument information.
         // @see https://www.drupal.org/node/3572594
         // @phpstan-ignore-next-line
         $view = views_get_current_view();
