@@ -15,7 +15,7 @@ function scrollToAccordion() {
         return
     }
 
-    const scrollOffset = 75; // How many Pixels above the scroll target (top of screen)
+    const scrollOffset = 85; // How many Pixels above the scroll target (top of screen)
 
     // Get the accordion
     const parentAccordion = document.querySelector(
@@ -25,7 +25,7 @@ function scrollToAccordion() {
         // Un-collapse parent accordion if collapsed
         if (parentAccordion.classList.contains('collapsed')) {
             parentAccordion.classList.remove('collapsed');
-            parentAccordion.setAttribute('aira-expanded', 'true');
+            parentAccordion.setAttribute('aria-expanded', 'true');
             const accordionBodyElem = document.getElementById(anchorTag);
             accordionBodyElem.classList.add('show');
         }
