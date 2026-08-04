@@ -108,6 +108,10 @@ field_settings:
     type: text
     configuration:
       value: og_site_name
+  source_domain:
+    label: 'Source Domain'
+    property_path: az_source_domain
+    type: string
   title:
     label: 'Title Metatag'
     property_path: az_metatag
@@ -158,6 +162,7 @@ processor_settings:
       - extracted_attachments
       - rendered_item
       - sitename
+      - source_domain
       - title
       - type
       - url
