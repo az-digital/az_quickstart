@@ -62,6 +62,10 @@ name: 'Quickstart Search API Index'
 description: ''
 read_only: false
 field_settings:
+  source_domain:
+    label: 'Source Domain'
+    property_path: az_source_domain
+    type: string
   created:
     label: Created
     property_path: custom_value
@@ -88,6 +92,18 @@ field_settings:
     label: 'Extracted Attachments'
     property_path: az_attachments
     type: text
+  keyword_tags:
+    label: 'Keyword Tags'
+    property_path: az_metatag_delimited
+    type: string
+    configuration:
+      value: keywords
+  keywords:
+    label: Keywords
+    property_path: az_metatag_delimited
+    type: text
+    configuration:
+      value: keywords
   rendered_item:
     label: 'Rendered HTML output'
     property_path: rendered_item
@@ -156,10 +172,13 @@ processor_settings:
       preprocess_query: -15
     all_fields: 1
     fields:
+      - az_source_domain
       - created
       - description
       - enterprise_attributes
       - extracted_attachments
+      - keyword_tags
+      - keywords
       - rendered_item
       - sitename
       - source_domain
@@ -167,6 +186,13 @@ processor_settings:
       - type
       - url
   az_canonical: {  }
+  az_clean_tags:
+    weights:
+      preprocess_index: 15
+      preprocess_query: 15
+    all_fields: 0
+    fields:
+      - keyword_tags
   az_front_page:
     weights:
       preprocess_index: -20
@@ -175,8 +201,10 @@ processor_settings:
     fields:
       - url
   az_metatag: {  }
+  az_metatag_delimited: {  }
   az_robots_noindex: {  }
   az_search_summary: {  }
+  az_source_domain: {  }
   custom_value: {  }
   entity_status: {  }
   entity_type: {  }
