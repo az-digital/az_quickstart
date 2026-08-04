@@ -49,6 +49,7 @@
         "drupal/bootstrap_barrio": "5.1.12",
         "drupal/bootstrap_utilities": "3.0.1",
         "drupal/calendar_link": "3.0.4",
+        "drupal/captcha": "2.0.10",
         "drupal/cas": "2.3.2",
         "drupal/chosen": "4.0.3",
         "drupal/ckeditor_bs_grid": "2.2.0-alpha1",
@@ -106,6 +107,7 @@
         "drupal/paragraphs_admin": "1.6.0",
         "drupal/pathauto": "1.13.0",
         "drupal/quick_node_clone": "1.22.0",
+        "drupal/recaptcha": "3.5-rc1",
         "drupal/redirect": "1.11.0",
         "drupal/role_delegation": "1.5.0",
         "drupal/schema_metatag": "3.0.3",
@@ -156,6 +158,11 @@
             "drupal/bootstrap_barrio": {
                 "Fix schema (3217958)": "https://gist.githubusercontent.com/joeparsons/7d36cefca83823e93b44cb5b36374b04/raw/c495d02fddcb8364f9d6163bcd74f75e3d47f24f/3217958-5-x.patch",
                 "Subtheme not D10 Compatible (3291051)": "https://www.drupal.org/files/issues/2023-10-27/3291051-5.1.x-subtheme-not-d10-compatible.patch"
+            },
+            "drupal/captcha": {
+                "Captcha placement below Webform actions when Submit button(s) customized (3425585)": "https://gist.githubusercontent.com/tadean/f5d7f69bc12000d9e6316bb94f4afd44/raw/24be8269ddd5a8582ef99f18657c3eb93669e287/captcha-webform-placement-3425585-MR135.patch",
+                "Add captcha to all webforms automatically (3380095)": "https://www.drupal.org/files/issues/2023-08-08/3380095-add-captcha-to-webforms.patch",
+                "CAPTCHA persistence ignored when 'cacheable' attribute is enabled (3496865)": "https://gist.githubusercontent.com/joshuasosa/7f3617e1f42aef7873ae4f180fa5c50c/raw/c54019ea7df57b1c03f00d6652b1f455f807e5f7/captcha-3496865"
             },
             "drupal/cas": {
                 "ServiceNotFoundException when logging out (2948185)": "https://www.drupal.org/files/issues/cas_logout_error-2948185-2.patch"
