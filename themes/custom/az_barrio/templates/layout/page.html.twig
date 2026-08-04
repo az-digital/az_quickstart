@@ -89,11 +89,6 @@
             {{ page.navigation }}
           {% endblock %}
         {% endif %}
-        {% if page.help %}
-          <div class="row">
-            {{ page.help }}
-          </div>
-        {% endif %}
       {% else %}
         <div class="arizona-header{{ page.navigation_offcanvas ? ' az-fixed-header-on-mobile' }} {{ az_header_blue ? 'bg-blue' : 'bg-red' }}" id="header_arizona">
           <div class="{{ container }}">
@@ -178,7 +173,14 @@
       {% endif %}
     </header>
 
-    <div id="main-wrapper" class="layout-main-wrapper clearfix">
+    <div id="main-wrapper" class="layout-main-wrapper clearfix{{ az_navbar_fullscreen ? ' navbar-az-fullscreen-fixed-top-offset' }}">
+        {% if az_navbar_fullscreen and page.help %}
+          <div class="{{ container }}">
+            <div class="row">
+              {{ page.help }}
+            </div>
+          </div>
+        {% endif %}
         <div id="main">
           {% if page.content_featured %}
           <section id="content_featured">

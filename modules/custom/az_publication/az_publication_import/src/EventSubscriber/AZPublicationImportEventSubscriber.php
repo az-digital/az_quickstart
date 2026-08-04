@@ -27,11 +27,6 @@ class AZPublicationImportEventSubscriber implements EventSubscriberInterface {
   protected $messenger;
 
   /**
-   * @var \Drupal\node\NodeStorageInterface
-   */
-  protected $nodeStorage;
-
-  /**
    * Constructs an AZPublicationImportEventSubscriber.
    *
    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
@@ -42,7 +37,6 @@ class AZPublicationImportEventSubscriber implements EventSubscriberInterface {
   public function __construct(MessengerInterface $messenger, EntityTypeManagerInterface $entityTypeManager) {
     $this->messenger = $messenger;
     $this->entityTypeManager = $entityTypeManager;
-    $this->nodeStorage = $this->entityTypeManager->getStorage('node');
   }
 
   /**
@@ -67,7 +61,7 @@ class AZPublicationImportEventSubscriber implements EventSubscriberInterface {
     $ids = $event->getDestinationIdValues();
     $id = reset($ids);
     if ($migration === 'az_publication_bibtex_import') {
-      $publication = $this->nodeStorage->load($id);
+      $publication = $this->entityTypeManager->getStorage('node')->load($id);
       $url = $publication->toUrl()->toString();
       if (!empty($publication)) {
         $this->messenger->addMessage($this->t('Imported <a href="@publink">@pubtitle</a>.', [
