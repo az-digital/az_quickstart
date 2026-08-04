@@ -62,10 +62,6 @@ name: 'Quickstart Search API Index'
 description: ''
 read_only: false
 field_settings:
-  source_domain:
-    label: 'Source Domain'
-    property_path: az_source_domain
-    type: string
   created:
     label: Created
     property_path: custom_value
@@ -172,7 +168,6 @@ processor_settings:
       preprocess_query: -15
     all_fields: 1
     fields:
-      - az_source_domain
       - created
       - description
       - enterprise_attributes
