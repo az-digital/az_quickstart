@@ -1,0 +1,3 @@
+services:
+  az_media.placeholder_image_generator:
+    class: Drupal\az_media\AZPlaceholderImageGenerator
