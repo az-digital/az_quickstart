@@ -14,7 +14,7 @@ props:
       x-allowed-schemes:
         - public
       examples:
-        - public://placeholder-1000x500.png
+        - public://az-placeholder/1000x500/placeholder.svg
     decorative:
       type: boolean
       title: Decorative (this placement)

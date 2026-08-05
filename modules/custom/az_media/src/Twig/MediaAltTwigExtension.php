@@ -7,17 +7,24 @@ use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
 /**
- * Provides a `media_alt` Twig filter for SDCs.
+ * Provides a `media_alt` Twig filter for components.
  *
- * Resolves the alt text stored on the media item that a stream-wrapper URI
- * belongs to, so a component can fall back to the Media Library's own alt
- * text when no per-placement override was entered.
+ * Looks up the alt text an editor typed in the Media Library, so a
+ * component can use it when nobody filled in alt text for this particular
+ * placement:
  *
- * An SDC image prop carries only a URI string - Canvas resolves
- * media -> file -> uri and hands the template the last of those. Recovering
- * the alt text therefore means walking that chain backwards: uri -> file ->
- * media. Deliberately generic (any image-bearing SDC can use it), which is
- * why it lives in az_media rather than in a consuming module.
+ * @code
+ * {% set alt = alt|default('') ?: src|media_alt %}
+ * @endcode
+ *
+ * The lookup is backwards. When an editor picks an image, Canvas walks
+ * media -> file -> uri and hands the template only the last one, so all we
+ * have is a string like public://cactus.jpg. Getting to the alt text means
+ * retracing those steps: find the file with that uri, find the media item
+ * pointing at that file, then read its alt.
+ *
+ * Any component with an image can use this, which is why it lives in
+ * az_media rather than in one consuming module.
  *
  * @todo Drop this if an image prop ever carries `alt` directly.
  *
@@ -26,10 +33,12 @@ use Twig\TwigFilter;
 class MediaAltTwigExtension extends AbstractExtension {
 
   /**
-   * Per-request memo of resolved alt text, keyed by URI.
+   * Alt text already looked up on this request, keyed by field name and URI.
    *
-   * The lookup costs two entity queries, and a page can place the same image
-   * many times (a Ranking Deck of image cards, for example).
+   * Each lookup costs two entity queries and a load, and one page can place
+   * the same image many times - a Ranking Deck of image cards, for example.
+   * Empty results get stored too, so a URI with no media item behind it is
+   * only looked up once.
    *
    * @var array<string, string>
    */
@@ -75,10 +84,11 @@ class MediaAltTwigExtension extends AbstractExtension {
     }
     $this->cache[$key] = '';
 
-    // Alt text is a nicety; never let resolving it take down a page. An
-    // unknown $field_name makes the entity query throw, and a template is
-    // free to pass one. Degrade to '' like the sibling image_style filter
-    // degrades to an unstyled URL.
+    // Wrap the whole lookup so a failure here can never take down a page.
+    // For example, a template is free to pass a $field_name that no media
+    // type has, and the entity query throws on it. Alt text is worth
+    // having, not worth a white screen - so fall back to '', the same way
+    // the sibling image_style filter falls back to an unstyled URL.
     try {
       $file_ids = $this->entityTypeManager->getStorage('file')->getQuery()
         ->accessCheck(FALSE)
@@ -89,10 +99,11 @@ class MediaAltTwigExtension extends AbstractExtension {
         return '';
       }
 
-      // A file can in principle be referenced by more than one media item;
-      // take the lowest ID for a stable, repeatable answer rather than an
-      // arbitrary one. In practice the Media Library creates one media item
-      // per upload.
+      // Sort by mid so repeated lookups return the same media item. Two
+      // media items can point at one file if someone uploaded the same
+      // image twice, and without the sort we would get whichever the
+      // database handed back first. The Media Library makes one media
+      // item per upload, so this is rare.
       $media_ids = $this->entityTypeManager->getStorage('media')->getQuery()
         ->accessCheck(FALSE)
         ->condition($field_name . '.target_id', reset($file_ids))

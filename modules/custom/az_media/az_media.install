@@ -8,32 +8,6 @@
  * az_media module.
  */
 
-use Drupal\Core\File\FileExists;
-
-/**
- * Implements hook_install().
- */
-function az_media_install() {
-  _az_media_copy_placeholder_images();
-}
-
-/**
- * Copies az_media's shipped placeholder images into public://.
- *
- * These are plain files, not media entities - they exist only to back
- * SDC prop `examples` values (e.g. az_quickstart:ranking-image's `src`)
- * so those examples resolve to a real, renderable public:// file on
- * every site, without ever appearing in the Media Library.
- */
-function _az_media_copy_placeholder_images() {
-  $file_system = \Drupal::service('file_system');
-  $source_dir = \Drupal::service('extension.list.module')->getPath('az_media') . '/images';
-  $filenames = ['placeholder-1000x500.png'];
-  foreach ($filenames as $filename) {
-    $file_system->copy("{$source_dir}/{$filename}", "public://{$filename}", FileExists::Replace);
-  }
-}
-
 /**
  * Implements hook_update_last_removed().
  */
@@ -54,11 +28,4 @@ function az_media_update_1021301() {
  */
 function az_media_update_1130101() {
   \Drupal::service('module_installer')->install(['media_library_form_element']);
-}
-
-/**
- * Copy az_media's shipped placeholder images into public:// on existing sites.
- */
-function az_media_update_1130102() {
-  _az_media_copy_placeholder_images();
 }
