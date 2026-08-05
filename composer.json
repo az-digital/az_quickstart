@@ -37,9 +37,15 @@
         "composer/installers": "^2.0",
         "cweagans/composer-patches": "^1.7",
         "devanych/mime-types": "2.1.2",
+<<<<<<< HEAD
         "drupal/access_unpublished": "1.6.0",
         "drupal/altcha": "1.2.0",
         "drupal/antibot": "2.0.4",
+=======
+        "drupal/access_unpublished": "1.9.0",
+        "drupal/altcha": "2.0.0-beta1",
+        "drupal/antibot": "2.0.5",
+>>>>>>> 3e91541a (Fixes #5862 Update to altcha 2.0.0-beta1. (#5863))
         "drupal/asset_injector": "2.21.0",
         "drupal/auto_entitylabel": "3.4.0",
         "drupal/better_exposed_filters": "7.0.5",
