@@ -227,7 +227,7 @@ class AZRankingComponentBuilder {
    *   The az_quickstart:ranking-deck props this item's parent deck will
    *   receive (columns_desktop/tablet/phone), from buildDeckProps().
    *
-   * @see \Drupal\az_ranking\AZRankingImageHelper::getImageSourceAltAndFocalPoint()
+   * @see \Drupal\az_ranking\AZRankingImageHelper::getImageSourceAndFocalPoint()
    */
   public function buildImageComponent(array $values, array $deck_props): array {
     $legacy_span = (int) ($values['options']['column_span'] ?? 2);
@@ -242,15 +242,14 @@ class AZRankingComponentBuilder {
       $media = $this->entityTypeManager->getStorage('media')->load($values['media']);
       if ($media) {
         // Tag on the media entity itself even when it turns out to carry no
-        // image: alt text and both focal point values live on the media, so
-        // editing any of them - or adding an image to a media entity that
-        // previously had none - has to invalidate this render.
+        // image: both focal point values live on the media, so editing them
+        // - or adding an image to a media entity that previously had none -
+        // has to invalidate this render.
         $cache_tags = $media->getCacheTags();
-        $image_data = $this->rankingImageHelper->getImageSourceAltAndFocalPoint($media);
+        $image_data = $this->rankingImageHelper->getImageSourceAndFocalPoint($media);
         $cache_tags = Cache::mergeTags($cache_tags, $image_data['cache_tags']);
         if ($image_data['src'] !== '') {
           $props['src'] = $image_data['src'];
-          $props['alt'] = $image_data['alt'];
         }
         if ($image_data['focal_x'] !== NULL && $image_data['focal_y'] !== NULL) {
           $props['focal_x'] = $image_data['focal_x'];

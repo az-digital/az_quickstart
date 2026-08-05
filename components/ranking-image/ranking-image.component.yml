@@ -1,7 +1,7 @@
 $schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
 name: Ranking Image
 status: experimental
-description: A layout- and accessibility-aware image, backed by the media library. Works standalone on a page, or dropped into a Ranking Deck alongside Ranking cards.
+description: A decorative, layout-aware image backed by the media library. Works standalone on a page, or dropped into a Ranking Deck alongside Ranking cards.
 props:
   type: object
   properties:
@@ -15,16 +15,6 @@ props:
         - public
       examples:
         - public://az-placeholder/1000x500/placeholder.svg
-    decorative:
-      type: boolean
-      title: Decorative (this placement)
-      description: Hides this image from screen readers and other assistive technology, and ignores Alternative Text, for this placement only. Independent of the Decorative setting on the media item. Only enable for purely decorative images that carry no information.
-      examples:
-        - false
-    alt:
-      type: string
-      title: Alternative Text (this placement)
-      description: Describes this image for screen readers and other assistive technology, for this placement only. Leave empty to use the Alternative text set on the media item in the Media Library. Text entered here overrides it for this placement only, and does not change the Media Library. Ignored when Decorative is enabled.
     width_span_desktop:
       type: string
       title: Width Span (Desktop)

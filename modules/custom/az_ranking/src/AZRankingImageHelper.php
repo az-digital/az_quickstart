@@ -26,7 +26,10 @@ class AZRankingImageHelper {
   }
 
   /**
-   * Get a plain file URI, alt text, and focal point data for ranking-image.
+   * Get a plain file URI and focal point data for ranking-image.
+   *
+   * No alt text: ranking-image is always decorative, so the component has
+   * no alt prop to fill.
    *
    * Used for both the published az_quickstart:ranking-image render and the
    * widget's own live edit-form preview, via AZRankingComponentBuilder::
@@ -38,8 +41,8 @@ class AZRankingImageHelper {
    *   A Drupal media entity object.
    *
    * @return array
-   *   An array with 'src' and 'alt' (empty strings if the media has no
-   *   image), plus 'focal_x' and 'focal_y' (both NULL if the media has no
+   *   An array with 'src' (an empty string if the media has no image),
+   *   plus 'focal_x' and 'focal_y' (both NULL if the media has no
    *   focal point set), plus 'cache_tags' - the file entity's own cache
    *   tags, which the caller MUST attach to whatever render array it builds
    *   from this data. az_ranking stores its media reference as a plain
@@ -48,10 +51,9 @@ class AZRankingImageHelper {
    *   automatically - nothing else in the render pipeline will invalidate a
    *   cached ranking when the underlying file is replaced.
    */
-  public function getImageSourceAltAndFocalPoint(MediaInterface $media): array {
+  public function getImageSourceAndFocalPoint(MediaInterface $media): array {
     $empty = [
       'src' => '',
-      'alt' => '',
       'focal_x' => NULL,
       'focal_y' => NULL,
       'cache_tags' => [],
@@ -69,7 +71,6 @@ class AZRankingImageHelper {
 
     $result = $empty;
     $result['src'] = $file->getFileUri();
-    $result['alt'] = $media_attributes[0]['alt'] ?? '';
     $result['cache_tags'] = $file->getCacheTags();
 
     if ($media instanceof FieldableEntityInterface) {
