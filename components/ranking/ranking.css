@@ -1,22 +1,16 @@
 /**
  * Ranking component.
  *
- * Ported from modules/custom/az_ranking/css/az-ranking.css and
- * css/az-ranking-image.css with namespaced selectors so the component can
- * coexist with the legacy paragraph styles until the paragraph template
- * delegates to this component. Color tokens come from Arizona Bootstrap.
+ * Ported from az_ranking's legacy az-ranking.css and az-ranking-image.css,
+ * both now deleted. Color tokens come from Arizona Bootstrap. Everything is
+ * scoped to an .az-ranking-sdc class, and the hover and font-color rules
+ * carry !important so Bootstrap's utilities don't override them.
  */
 
 .az-ranking-sdc {
   position: relative;
   /* Small viewports. */
   min-height: 190px;
-  /* Overrides the .card default (--bs-border-radius, 0.375rem) to match the
-     Ranking Card component (components/ranking-card in az_storybook) for
-     visual consistency across the two ranking designs. Neither the legacy
-     az_ranking module nor this port ever set this deliberately before; the
-     mockup calls for 1rem. */
-  border-radius: 1rem;
 }
 
 /* Medium viewports. */
@@ -45,8 +39,8 @@
 .az-ranking-sdc .az-ranking-sdc__heading,
 .az-ranking-sdc.hover:hover .az-ranking-sdc__heading,
 .az-ranking-sdc.hover:focus .az-ranking-sdc__heading {
-  text-decoration-thickness: 2px;
-  text-underline-offset: 2px;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 3px;
 }
 
 .az-ranking-sdc .az-ranking-sdc__heading {
@@ -74,15 +68,40 @@
   font-family: var(--az-ranking-heading-serif);
 }
 
-/* Keep visually-hidden link titles in flow so stretched-link covers the card. */
+/*
+ * Keep the whole card clickable when the link title is hidden.
+ *
+ * The "Hidden link title" style puts Bootstrap's .visually-hidden on the
+ * same <a> as .stretched-link. stretched-link's invisible click layer sizes
+ * itself against the nearest positioned ancestor - normally the card - but
+ * visually-hidden sets position: absolute on the <a>, so the layer shrinks
+ * to the <a>'s own 1px box and only that pixel is clickable. Going back to
+ * static skips the <a> and finds .az-ranking-sdc again.
+ *
+ * display: block is the other half: a static <a> is an inline box, and
+ * width/height do not apply to those, so visually-hidden's 1px sizing would
+ * be ignored and the text would show.
+ */
 .az-ranking-sdc .card-body .visually-hidden {
   display: block;
   position: static !important;
 }
 
 /*
- * Preset hover colors, paired to the hover background color.
- * !important is required to out-rank the text-bg-* utility colors.
+ * Hover pairs. Each background gets a specific background and text color
+ * when the card is hovered.
+ *
+ * The `*` reaches every descendant because a card's text sits across the
+ * heading, description and source elements, and repainting their background
+ * is what produces the effect - the card root's own color would otherwise
+ * show through the gaps.
+ *
+ * !important is here for the classes that land on those descendants
+ * directly: the text-midnight / text-azurite contrast utilities ranking.twig
+ * adds, which carry !important themselves, and the .btn-* colors on the
+ * link. It is not needed against the card's own text-bg-* utility, since a
+ * descendant inherits that and any direct declaration already beats an
+ * inherited value.
  */
 .text-bg-chili.az-ranking-sdc--bold-hover:hover * {
   background-color: var(--bs-white) !important;
@@ -110,7 +129,9 @@
 }
 
 /*
- * Transparent-background font color overrides. Links keep their own colors.
+ * Font color for transparent cards, which have no text-bg-* utility to
+ * inherit one from. :not(a) leaves links alone so they keep their own color
+ * and stay distinguishable from the text around them.
  */
 .az-ranking-sdc--text-white *:not(a) {
   color: var(--bs-white) !important;
@@ -121,7 +142,7 @@
 }
 
 .az-ranking-sdc--text-az-blue *:not(a) {
-  color: RGBA(var(--bs-blue-rgb), var(--bs-bg-opacity, 1));
+  color: RGBA(var(--bs-blue-rgb), var(--bs-bg-opacity, 1)) !important;
 }
 
 .az-ranking-sdc--text-midnight *:not(a) {

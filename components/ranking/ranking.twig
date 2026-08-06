@@ -3,8 +3,29 @@
  * @file
  * Template for the az_quickstart Ranking component.
  *
- * For an image card, use the Ranking Image component instead (place it in a
- * Ranking Deck alongside Ranking cards — see components/ranking-image).
+ * Renders one card - a large heading holding the ranking value, a
+ * supporting line, and an attribution, on a colored background:
+ *
+ *   <div class="az-ranking-sdc card ... text-bg-chili">
+ *     <div class="card-body ...">
+ *       <div class="card-text ...">
+ *         <div class="az-ranking-sdc__content">
+ *           <h3 class="az-ranking-sdc__heading ...">TOP 1%</h3>
+ *           <h4 class="az-ranking-sdc__description">of World Universities</h4>
+ *         </div>
+ *         <div class="az-ranking-sdc__source">US News, 2026</div>
+ *
+ * The card-body level is not just padding - ranking.css hangs the
+ * visually-hidden link fix off it.
+ *
+ * The card's own colors and styling are decided here. Callers pass semantic
+ * values like background: 'blue' or link_style: 'btn-red' and this template
+ * turns them into Bootstrap classes; the one exception is utility_classes,
+ * which callers pass through as written. That is what lets one component
+ * serve both Canvas and the page builder.
+ *
+ * For an image card use the Ranking Image component instead, dropped into a
+ * Ranking Deck alongside these.
  *
  * Props:
  * - heading: Main ranking value.
@@ -36,7 +57,15 @@
 #}
 {% set attributes = attributes|default(create_attribute()) %}
 
-{# Runtime guards: coerce invalid or missing values to safe defaults. #}
+{#
+  Fall back to a safe default for anything missing or out of range.
+  Rationale: these all get interpolated further down. Most land in class
+  names - 'az-ranking-sdc--text-' ~ font_color, or the heading's
+  '--' ~ header_style - where a stray value produces a class no CSS matches
+  and the card quietly loses that piece of its styling. heading_level is the
+  one that matters more: it is printed as the heading's tag name, so a bad
+  value there emits broken markup rather than unstyled markup.
+#}
 {% set heading_level = heading_level|default('h3') %}
 {% if heading_level not in ['h2', 'h3', 'h4', 'h5', 'h6'] %}
   {% set heading_level = 'h3' %}

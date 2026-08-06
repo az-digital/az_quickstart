@@ -16,11 +16,12 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * Plugin implementation of the 'az_ranking_default' formatter.
  *
  * Renders the field through the az_quickstart:ranking,
- * az_quickstart:ranking-image, and az_quickstart:ranking-deck Single
- * Directory Components, so paragraph-authored rankings and Canvas-composed
- * rankings share the same markup.
- * The actual item-to-props mapping lives in AZRankingComponentBuilder,
- * shared with AZRankingWidget's live edit-form preview.
+ * az_quickstart:ranking-image and az_quickstart:ranking-deck Single
+ * Directory Components, so a ranking built in the page builder and one
+ * composed in Canvas come out as the same markup.
+ *
+ * The item-to-props mapping lives in AZRankingComponentBuilder, which
+ * AZRankingWidget also uses for its live edit-form preview.
  *
  * @see https://github.com/az-digital/az_quickstart/issues/5813
  */
@@ -98,10 +99,10 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
     $rankings = [];
     $interactive_links = (bool) $this->getSetting('interactive_links');
 
-    // Computed before the loop (not after, as an earlier version of this
-    // method did) because buildImageComponent() needs the deck's actual
-    // per-breakpoint column counts to clamp each image's width_span_* props
-    // against them - see that method's docblock for why this matters.
+    // Build the deck's props first, before the loop. Rationale:
+    // buildImageComponent() needs the deck's column count at each
+    // breakpoint so it can clamp every image's width_span_* props against
+    // it - see that method's docblock.
     $deck_props = [];
     $ranking_defaults = [];
     $parent = $items->getEntity();
@@ -119,14 +120,15 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
         ? $this->componentBuilder->buildImageComponent($values, $deck_props)
         : $this->componentBuilder->buildRankingComponent($values, $ranking_defaults);
 
-      // "Interactive Links" off: disable navigation on this item's link,
-      // if it has one (az_quickstart:ranking-image never sets link_url, so this
-      // never applies to image_only items - matches legacy's own scope,
-      // which only ever put this on the #type => link element itself).
-      // Deliberately NOT a ranking.component.yml prop - "disable my own
-      // links because I'm being viewed in a Paragraphs Preview view mode"
-      // isn't a property of what a ranking card is, it's specific to one
-      // admin workflow Canvas has no equivalent of.
+      // With "Interactive Links" off, stop this item's link navigating - if
+      // it has one. ranking-image never sets link_url, so image_only items
+      // are untouched, which matches the legacy template: it only ever put
+      // this on the #type => link element.
+      //
+      // Kept out of ranking.component.yml on purpose. "Disable my own links
+      // because a Paragraphs Preview view mode is rendering me" says nothing
+      // about what a ranking card is; it belongs to one admin workflow that
+      // Canvas has no equivalent of.
       if (!$interactive_links && isset($ranking['#props']['link_url'])) {
         $ranking['#attributes']['class'][] = 'az-ranking-no-follow';
         $ranking['#attached']['library'][] = 'az_ranking/az_ranking_no_follow';

@@ -3,63 +3,51 @@
  * @file
  * Template for the az_quickstart Ranking Image component.
  *
- * Renders an <img> directly from a media-library-backed prop — no slot, no
- * Canvas dependency. The `src` prop's shape (type: string, format: uri,
- * contentMediaType: image/*, x-allowed-schemes: [public]) is recognized by
- * Drupal core's media_library module via a canvas_storable_prop_shape_alter
- * hook Canvas ships — that's what gives editors a real media-library picker
- * in Canvas, with no canvas:image / canvas.module $ref needed, so this stays
- * safe to render on sites without the Canvas module installed.
+ * Renders one <img> inside a positioned wrapper:
  *
- * That last point is a hard constraint, not an incidental property: this
- * component also renders the legacy az_ranking paragraph type, on sites that
- * may never install Canvas. So keep every Canvas-owned mechanism out of this
- * template and out of the component's schema — in particular the
- * `json-schema-definitions://` $ref scheme and the `apply_image_style` Twig
- * filter, both registered by canvas.services.yml. Either one makes this
- * template fail on a Canvas-less site, and a missing Twig filter fails at
- * compile time (SyntaxError), so there is no graceful degradation. Use
- * az_media's own filters instead; if an object-shaped image prop is ever
- * wanted, declare it inline and map it with our own
- * hook_canvas_storable_prop_shape_alter(), which Canvas invokes even when it
+ *   <div class="az-ranking-image az-ranking-image--span-desktop-2 ...">
+ *     <img src="..." alt="" class="az-ranking-image__img">
+ *   </div>
+ *
+ * The image is always decorative - alt="" plus aria-hidden on the wrapper -
+ * and there is no alt or decorative prop for an editor to set.
+ *
+ * Keep Canvas out of this file. The same component renders the az_ranking
+ * paragraph in the page builder, on sites that may never install Canvas, so
+ * anything Canvas owns breaks it there. Two to avoid in particular: the
+ * `json-schema-definitions://` $ref scheme, and the `apply_image_style` Twig
+ * filter. canvas.services.yml registers both, and a Twig filter that does
+ * not exist fails when the template compiles, so nothing degrades
+ * gracefully. Use az_media's filters instead. If an object-shaped image prop
+ * is ever wanted, declare it inline and map it with our own
+ * hook_canvas_storable_prop_shape_alter(), which Canvas calls even when it
  * has no mapping of its own.
  *
- * This component is always decorative. It renders alt="" and hides the
- * image from screen readers.
+ * Editors still get a real media library picker in Canvas without any of
+ * that. The shape of the `src` prop - string, format: uri,
+ * contentMediaType: image/*, x-allowed-schemes: [public] - is what core's
+ * media_library matches on, through a hook Canvas ships.
  *
  * Props:
- * - src: Image URI, picked via the media library in Canvas. Resolves to a
- *   Drupal stream-wrapper URI (public://...), not a browser-loadable URL —
- *   converted via the image_style Twig filter (az_media's
- *   ImageStyleTwigExtension), which applies the az_ranking_responsive
- *   image style (scale + WebP conversion) and falls back to plain
- *   file_url()-equivalent behavior if that style is ever unavailable, so a
- *   missing/misconfigured style degrades gracefully rather than breaking
- *   the page. This is a soft dependency on az_media (not
- *   az_ranking) — the filter itself is generic and lives in az_media
- *   regardless of which style name gets passed to it here.
- * - focal_x / focal_y: Focal point as a 0-1 fraction of the image's width/
- *   height, kept visible when object-fit: cover crops the image to fill
- *   its container. Rendered as data-focal-x/data-focal-y attributes and
- *   applied client-side (ranking-image.js) — no server-side cropping,
- *   since the image's effective on-screen aspect ratio depends on live
- *   CSS Grid layout, not a fixed, enumerable set of image styles (same
- *   reasoning as width_span_* below). ranking-image.js computes the crop
- *   from the loaded <img>'s own naturalWidth/naturalHeight.
- * - width_span_desktop / width_span_tablet / width_span_phone: 1-4 each.
- *   Grid columns this image spans at each breakpoint when placed inside a
- *   Ranking Deck (or any CSS grid layout) — deliberately per-breakpoint,
- *   not a single dynamic value, because CSS Grid has no way for a grid
- *   item to clamp its own span against its container's actual column
- *   count (a confirmed, still-open CSS spec gap, not a browser-support
- *   issue: https://github.com/w3c/csswg-drafts/issues/5852). No effect
- *   outside a grid context. Defaults: desktop 2, tablet 2, phone 1 —
- *   matching Ranking Deck's own default columns, so an image is always
- *   safe out of the box. Keep each at or below the deck's matching
- *   "Rankings per row" setting, or the image will overflow into extra
- *   columns at that breakpoint.
- * - utility_classes: Additional Bootstrap utility classes for the wrapper
- *   (e.g. bottom spacing). Not needed when placed inside a Ranking Deck.
+ * - src: A stream-wrapper URI like public://cactus.jpg, which a browser
+ *   cannot load on its own. az_media's image_style filter turns it into a
+ *   URL for the az_ranking_responsive style (scale plus WebP), and falls
+ *   back to a plain file URL if that style is missing, so a misconfigured
+ *   style does not take the page down. The filter is generic, which is why
+ *   it lives in az_media rather than az_ranking.
+ * - focal_x / focal_y: The point to keep in view when object-fit: cover
+ *   crops the image, as a 0-1 fraction of width and height. Rendered as
+ *   data attributes and applied by ranking-image.js. Not cropped server
+ *   side, because how much gets cropped depends on the live grid layout
+ *   rather than on a fixed set of image styles.
+ * - width_span_desktop / width_span_tablet / width_span_phone: 1-4 grid
+ *   columns to span at each breakpoint. Inert outside a grid. Defaults
+ *   match Ranking Deck's own (2/2/1), so an image is safe out of the box.
+ *   Keep each at or below the deck's "Rankings per row" for that
+ *   breakpoint, or the image spills into an extra column. See
+ *   ranking-image.css for why this is three props and not one.
+ * - utility_classes: Extra Bootstrap utility classes for the wrapper, e.g.
+ *   bottom spacing. Not needed inside a Ranking Deck.
  */
 #}
 {% set attributes = attributes|default(create_attribute()) %}

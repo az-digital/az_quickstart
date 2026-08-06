@@ -9,22 +9,19 @@ use Drupal\Core\Render\Element\RenderElementBase;
 /**
  * Provides a render element for one az_ranking field item.
  *
- * Owns building both the editable fields (details) and the live preview
- * (preview_wrapper) together, as one real, reusable Element plugin -
- * instead of the fields being built directly in
- * AZRankingWidget::formElement() with the preview patched on afterwards
- * via #after_build bolted onto Field API's own opaque per-delta wrapper.
+ * One element builds both halves of a ranking's row in the edit form: the
+ * editable fields (details) and the live preview (preview_wrapper).
+ * Previously the fields were built in AZRankingWidget::formElement() and
+ * the preview was attached afterwards, through #after_build on the wrapper
+ * Field API generates for each delta.
  *
- * #after_build is still what rebuilds the preview (see
- * AZRankingWidget::rebuildRankingPreview()) - a #value_callback doesn't fit
- * here, since the preview isn't itself a single resolvable value, it's a
- * render array derived from many sibling fields' already-resolved values.
- * What changes is WHERE that logic lives: a self-contained Element type
- * with direct, local access to its own details/preview_wrapper children
- * (preserving the direct-sibling access #after_build needs - scoping a
- * custom element to the preview alone would lose that, since #after_build
- * only sees its own descendants, not a parent's other children), not glue
- * entangled in widget/Field API internals.
+ * #after_build still does the rebuilding (see
+ * AZRankingWidget::rebuildRankingPreview()) - a #value_callback wouldn't
+ * fit, since the preview isn't one resolvable value but a render array
+ * built from many sibling fields. What changed is where that callback
+ * sits. It needs those siblings' resolved values, and #after_build only
+ * sees its own descendants, so it has to hang off a parent of both
+ * halves. This element is that parent.
  *
  * @see \Drupal\az_ranking\Plugin\Field\FieldWidget\AZRankingWidget
  * @see https://github.com/az-digital/az_quickstart/pull/5309
@@ -52,11 +49,11 @@ class AZRankingItemElement extends RenderElementBase {
   /**
    * Builds the details fields and the preview placeholder.
    *
-   * Delegates to the widget instance (stashed on #widget by formElement())
-   * since building these fields needs several widget instance methods as
-   * #element_validate/#after_build callbacks
-   * (validateRankingLink()/addAzRankingContextToMediaEdit()/etc.) that
-   * only make sense as instance methods, not static ones.
+   * Hands off to the widget instance stashed on #widget by formElement().
+   * Building the fields needs several widget methods as #element_validate
+   * and #after_build callbacks - validateRankingLink(),
+   * addAzRankingContextToMediaEdit() and so on - and those are instance
+   * methods, not static ones.
    */
   public static function processRankingItem(array $element, FormStateInterface $form_state, &$complete_form) {
     /** @var \Drupal\az_ranking\Plugin\Field\FieldWidget\AZRankingWidget $widget */

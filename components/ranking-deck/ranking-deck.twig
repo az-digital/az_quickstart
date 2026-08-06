@@ -3,7 +3,15 @@
  * @file
  * Template for the az_quickstart Ranking Deck component.
  *
- * Lays out Ranking cards in a responsive CSS grid with consistent spacing.
+ * Renders one <div> that arranges whatever is placed in its `rankings` slot
+ * into a CSS grid:
+ *
+ *   <div class="az-ranking-deck az-ranking-deck--desktop-4
+ *               az-ranking-deck--tablet-2 az-ranking-deck--phone-1">
+ *
+ * The deck owns the layout, not the cards inside it. How many columns show
+ * at each breakpoint comes from those modifier classes, so a Ranking card
+ * never has to know how many siblings it has.
  *
  * Props:
  * - columns_desktop: Rankings per row on desktop (1-4). Defaults to 4.
@@ -18,7 +26,14 @@
 #}
 {% set attributes = attributes|default(create_attribute()) %}
 
-{# Runtime guards: coerce invalid or missing values to safe defaults. #}
+{#
+  If a column count is missing or is not 1-4, fall back to a safe default.
+  Rationale: the classes further down are built by sticking the number on
+  the end of a string, so a value like '7' would produce
+  az-ranking-deck--desktop-7, which no CSS matches. The next breakpoint down
+  then wins by default - a bad desktop value leaves the deck on its tablet
+  count, and only a deck with all three broken drops to one column.
+#}
 {% set allowed = ['1', '2', '3', '4'] %}
 {% set columns_desktop = columns_desktop|default('4') in allowed ? columns_desktop|default('4') : '4' %}
 {% set columns_tablet = columns_tablet|default('2') in allowed ? columns_tablet|default('2') : '2' %}

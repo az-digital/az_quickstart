@@ -65,9 +65,9 @@ class AZRankingWidget extends WidgetBase {
    */
   public function form(FieldItemListInterface $items, array &$form, FormStateInterface $form_state, $get_delta = NULL) {
 
-    // Create shared settings for widget elements.
-    // This is necessary because widgets have to be AJAX replaced together,
-    // And in general we need a place to store shared settings.
+    // Every row has to be AJAX-replaced as one block, so the wrapper id has
+    // to be agreed on before any row is built. Widget state is the only
+    // place both this method and formElement() can reach it.
     $wrapper_id = Html::getUniqueId('az-ranking-wrapper');
     $field_name = $this->fieldDefinition->getName();
     $field_parents = $form['#parents'];
@@ -79,9 +79,6 @@ class AZRankingWidget extends WidgetBase {
     $field_state['items_count'] = (!empty($field_state['items_count'])) ? $field_state['items_count'] : max(0, $count - 1);
 
     $field_state['array_parents'] = [];
-    if (empty($field_state['open_status'])) {
-      $field_state['open_status'] = [];
-    }
 
     // Persist the widget state so formElement() can access it.
     static::setWidgetState($field_parents, $field_name, $form_state, $field_state);
@@ -104,22 +101,18 @@ class AZRankingWidget extends WidgetBase {
     /** @var \Drupal\az_ranking\Plugin\Field\FieldType\AZRankingItem $item */
     $item = $items[$delta];
 
-    // Get current collapse status.
     $field_name = $this->fieldDefinition->getName();
-    $field_parents = $element['#field_parents'];
-    $widget_state = static::getWidgetState($field_parents, $field_name, $form_state);
-    $status = (isset($widget_state['open_status'][$delta])) ? $widget_state['open_status'][$delta] : FALSE;
 
-    // New field values shouldn't be considered collapsed.
-    if ($item->isEmpty()) {
-      $status = TRUE;
-    }
+    // Start a row open only if it has nothing in it yet, so a new ranking is
+    // ready to type into and saved ones stay out of the way.
+    $status = $item->isEmpty();
 
     // Needed for the unique-ID generation (behavior-settings lookup) and
     // for rebuildRankingPreview() (see AZRankingItemElement).
     $parent = $item->getEntity();
     $ranking_defaults = [];
     if ($parent instanceof ParagraphInterface) {
+      // Get the behavior settings for the parent.
       $parent_config = $parent->getAllBehaviorSettings();
       $ranking_defaults = $parent_config['az_rankings_paragraph_behavior'] ?? [];
     }
@@ -164,12 +157,12 @@ class AZRankingWidget extends WidgetBase {
     $element['details'] = [
       '#type' => 'details',
       '#title' => $this->t('Edit Ranking'),
-      // Open when in edit mode, closed when in preview mode.
+      // Closed rows show the preview instead; see below.
       '#open' => $status,
       '#attributes' => ['class' => ['az-ranking-widget']],
     ];
 
-    // When closed, add a preview wrapper.
+    // A closed row shows a rendered card in place of its fields.
     if (!$status) {
       $element['preview_wrapper'] = [
         '#type' => 'container',
@@ -177,15 +170,15 @@ class AZRankingWidget extends WidgetBase {
           'class' => ['widget-preview-wrapper'],
           'style' => 'max-width: 320px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; height: 260px;',
         ],
-        // Show before the details element.
+        // Negative weight puts the preview above the details element.
         '#weight' => -10,
       ];
 
-      // Placeholder - rebuildRankingPreview() populates this from the
-      // Form API-populated field #values, which stay correct through
-      // drag-and-drop reorder + AJAX rebuilds. Building it here from $item
-      // instead (as this used to) reflects $items' stored array order,
-      // which can drift out of sync with the visual row after a reorder.
+      // Left empty on purpose. rebuildRankingPreview() fills it in later,
+      // from the Form API #values rather than from $item. Rationale: after a
+      // drag-and-drop reorder, $items still holds the stored order, so a
+      // preview built here would show the card that used to be in this
+      // position. #value reflects the row the editor is actually looking at.
       $element['preview_wrapper']['preview'] = [
         '#type' => 'component',
         '#component' => 'az_quickstart:ranking',
@@ -203,7 +196,10 @@ class AZRankingWidget extends WidgetBase {
     $ranking_type_unique_id = 'ranking-type-' . $parent_id . '-' . $field_parents_string . '-' . $delta;
     $ranking_background_unique_id = 'ranking-bg-' . $parent_id . '-' . $field_parents_string . '-' . $delta;
 
-    // Generate unique IDs that match the paragraph behavior.
+    // These IDs have to match the ones AZRankingsParagraphBehavior builds
+    // independently, because the #states selectors below reference its
+    // checkboxes by data attribute. Both sides derive them from the form
+    // parents so they agree without either passing anything to the other.
     $ranking_clickable_unique_id = '';
     $ranking_hover_effect_unique_id = '';
     if ($parent instanceof ParagraphInterface) {
@@ -501,7 +497,8 @@ class AZRankingWidget extends WidgetBase {
     elseif (is_numeric($media_input)) {
       $media_id = (int) $media_input;
     }
-    // Fallback for initial load (no user input for this field yet).
+    // First render of a fresh form - no user input exists yet, so fall back
+    // to what was stored.
     if ($media_id === NULL && $media_input === NULL) {
       $media_id = $details['media']['#value'] ?? $details['media']['#default_value'] ?? NULL;
     }
@@ -543,7 +540,6 @@ class AZRankingWidget extends WidgetBase {
       case FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED:
         $field_state = static::getWidgetState($parents, $field_name, $form_state);
         $max = $field_state['items_count'];
-        // $is_unlimited_not_programmed = !$form_state->isProgrammed();
         break;
 
       default:
@@ -555,20 +551,31 @@ class AZRankingWidget extends WidgetBase {
     $field_state = static::getWidgetState($parents, $field_name, $form_state);
     $wrapper_id = $field_state['ajax_wrapper_id'] ?? NULL;
 
-    // Check to see if we have delete buttons.
     for ($delta = 0; $delta <= $max; $delta++) {
-      // Let's relocate the core remove button if we can.
+      // Keep the buttons below the "Edit Ranking" details element. Rationale:
+      // details is built later, by AZRankingItemElement's #process callback,
+      // so ranking_actions is the first child at this point and would tie
+      // with it on weight 0 and win. An explicit weight stops the render
+      // order depending on which of the two happens to be added first.
+      $elements[$delta]['ranking_actions']['#weight'] = 10;
+
+      // Check to see if we have delete buttons.
+      //
+      // Move core's remove button into our own actions area, and match its
+      // sizing, so it sits beside the Update Preview button added below
+      // instead of landing in a separate actions area of its own.
       if (!empty($elements[$delta]['_actions']['delete'])) {
         $remove = $elements[$delta]['_actions']['delete'];
         unset($elements[$delta]['_actions']['delete']);
-        // Relocate the delete button alongside our field collapse button.
         $elements[$delta]['ranking_actions']['delete'] = $remove;
-        // Attempt to style it like collapse button.
         $elements[$delta]['ranking_actions']['delete']['#attributes']['class'][] = 'button--extrasmall';
         $elements[$delta]['ranking_actions']['delete']['#attributes']['class'][] = 'ms-3';
       }
 
-      // Add a "Refresh Preview" button with AJAX.
+      // The preview only refreshes on an AJAX round trip, so an editor needs
+      // a way to ask for one without saving. #limit_validation_errors is
+      // empty because refreshing a half-filled row should show what is there,
+      // not refuse until every required field is valid.
       $elements[$delta]['ranking_actions']['refresh_preview'] = [
         '#type' => 'submit',
         '#value' => $this->t('Update Preview'),
@@ -585,43 +592,6 @@ class AZRankingWidget extends WidgetBase {
       ];
     }
     return $elements;
-  }
-
-  /**
-   * Submit handler for toggle button.
-   *
-   * @param array $form
-   *   The build form.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   The form state.
-   */
-  public function rankingSubmit(array $form, FormStateInterface $form_state) {
-
-    // Get triggering element.
-    $triggering_element = $form_state->getTriggeringElement();
-    $array_parents = $array_parents = array_slice($triggering_element['#array_parents'], 0, -2);
-
-    // Determine delta.
-    $delta = array_pop($array_parents);
-
-    // Get the widget.
-    $element = NestedArray::getValue($form, $array_parents);
-    $field_name = $element['#field_name'];
-    $field_parents = $element['#field_parents'];
-
-    // Load current widget settings.
-    $settings = static::getWidgetState($field_parents, $field_name, $form_state);
-
-    // Prepare to toggle state.
-    $status = TRUE;
-    if (isset($settings['open_status'][$delta])) {
-      $status = !$settings['open_status'][$delta];
-    }
-    $settings['open_status'][$delta] = $status;
-
-    // Save new state and rebuild form.
-    static::setWidgetState($field_parents, $field_name, $form_state, $settings);
-    $form_state->setRebuild();
   }
 
   /**

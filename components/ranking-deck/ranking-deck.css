@@ -1,10 +1,14 @@
 /**
  * Ranking Deck component.
  *
- * Responsive CSS grid for Ranking cards. The grid (not the cards) owns the
- * layout and spacing: per-breakpoint column counts come from modifier
- * classes, and the gap matches the legacy pb-4 rhythm (1.5rem). Grid items
- * stretch by default, giving equal-height cards per row.
+ * A CSS grid for Ranking cards. The deck owns the layout, not the cards -
+ * how many columns show at each breakpoint comes from the modifier classes
+ * below.
+ *
+ * The 1.5rem gap matches the spacing pb-4 gave in the legacy markup, kept so
+ * decks look the same after the port. Grid items stretch to fill their row
+ * by default, which is what makes cards in a row match heights without
+ * anything setting a height.
  */
 
 .az-ranking-deck {
@@ -12,6 +16,11 @@
   gap: 1.5rem;
 }
 
+/*
+ * Grid items start at min-width: auto, so a long unbroken word - a URL in a
+ * source line, say - can push its column wider than the track it was given
+ * and skew the whole row. Zero lets the item shrink and wrap instead.
+ */
 .az-ranking-deck > * {
   min-width: 0;
 }

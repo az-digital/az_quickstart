@@ -10,28 +10,33 @@ use Drupal\Core\StreamWrapper\PublicStream;
 use Drupal\Core\Url;
 
 /**
- * Maps normalized ranking item values to az_quickstart SDC render arrays.
+ * Turns stored ranking values into render arrays for the ranking components.
  *
- * Shared by AZRankingDefaultFormatter (published rendering) and
- * AZRankingWidget (the live edit-form preview), so both render through the
- * exact same components and can't drift apart into two implementations.
+ * Both page builder paths use it: AZRankingDefaultFormatter for the
+ * published page, and AZRankingWidget for the live preview on the edit form.
+ * Sharing it is what keeps the preview honest - the two cannot drift into
+ * separate implementations of the same card.
  *
- * buildRankingComponent()/buildImageComponent() take a plain values array
- * rather than an AZRankingItem directly. AZRankingDefaultFormatter always
- * has a real, correctly-ordered AZRankingItem and uses extractItemValues()
- * to build that array. AZRankingWidget's live preview needs to stay correct
- * through drag-and-drop reorder + AJAX rebuilds, which means reading values
- * from the Form API's own #value (populated from user input, always correct
- * for the current row) instead of $items[$delta] (which reflects stored
- * array order and can drift out of sync with the visual row after a
- * reorder) - so it builds this same array from form state instead of an
- * item. Keeping the builder itself item-agnostic is what lets both callers
- * share it.
+ * The build methods take a plain values array rather than an AZRankingItem.
+ * Rationale: the formatter always holds a real item in the right order, but
+ * the widget's preview does not. It has to survive drag-and-drop reordering
+ * and AJAX rebuilds, so it reads from the Form API's #value, which reflects
+ * the row the user is actually looking at, instead of $items[$delta], which
+ * still holds the stored order and goes stale the moment a row moves.
+ * Staying item-agnostic is what lets one builder serve both callers.
  */
 class AZRankingComponentBuilder {
 
   /**
-   * Legacy background/hover-background select values, keyed to SDC tokens.
+   * Background select values from the widget, mapped to our tokens.
+   *
+   * The keys look like CSS classes because that is literally what the widget
+   * stores on the item, in options['class'] and options['hover_class'] - the
+   * legacy template printed the setting straight into a class attribute. The
+   * components take semantic values instead, so every one of these maps
+   * translates on the way through.
+   *
+   * @see \Drupal\az_ranking\Plugin\Field\FieldWidget\AZRankingWidget
    */
   const BACKGROUND_CLASS_MAP = [
     'text-bg-chili' => 'chili',
@@ -46,7 +51,7 @@ class AZRankingComponentBuilder {
   ];
 
   /**
-   * Legacy font color select values, keyed to SDC tokens.
+   * Font color select values from the widget, mapped to our tokens.
    */
   const FONT_COLOR_CLASS_MAP = [
     'ranking-text-midnight' => 'midnight',
@@ -56,7 +61,7 @@ class AZRankingComponentBuilder {
   ];
 
   /**
-   * Legacy link style select values, keyed to SDC tokens.
+   * Link style select values from the widget, mapped to our tokens.
    */
   const LINK_STYLE_CLASS_MAP = [
     'visually-hidden' => 'hidden',
@@ -69,7 +74,7 @@ class AZRankingComponentBuilder {
   ];
 
   /**
-   * Legacy header style select values, keyed to SDC tokens.
+   * Header style select values from the page builder, mapped to our tokens.
    *
    * @see \Drupal\az_paragraphs\Plugin\paragraphs\Behavior\AZRankingsParagraphBehavior
    */
@@ -80,7 +85,7 @@ class AZRankingComponentBuilder {
   ];
 
   /**
-   * Legacy per-breakpoint Bootstrap column classes, keyed to column counts.
+   * Bootstrap column classes the page builder stores, mapped to counts.
    */
   const DESKTOP_COLUMN_MAP = [
     'col-lg-12' => '1',
@@ -156,11 +161,10 @@ class AZRankingComponentBuilder {
   /**
    * Builds an az_quickstart:ranking component render array for one item.
    *
-   * Props like clickable/hover_effect/link_style interactions (e.g. link
-   * title and style being ignored while clickable) are NOT resolved here —
-   * ranking.twig's own guards are the single source of truth for that
-   * behavior, so this only needs to map field/behavior values onto clean
-   * prop values.
+   * This only translates stored values into props. How those props interact
+   * - link title and style being ignored while the card is clickable, say -
+   * is decided by ranking.twig's guards. Keeping it there means Canvas gets
+   * the same behavior without going anywhere near this class.
    *
    * @param array $values
    *   Normalized ranking item values - see extractItemValues().
@@ -174,12 +178,12 @@ class AZRankingComponentBuilder {
       'source' => $values['ranking_source'] ?? '',
     ];
 
-    // Gate on the RAW stored link_uri, not the resolved URL string — a bare
-    // '#' (a common placeholder in demo content) is a real, present link
-    // that legacy always showed a button for, but Url::fromUserInput('#')
-    // legitimately stringifies to '' (confirmed empirically, not assumed).
-    // Checking the resolved string's emptiness instead of the source value
-    // silently dropped every ranking using such a placeholder link.
+    // If a link was stored, pass the link props through. Rationale: the
+    // question here is whether the editor entered a link at all, which is
+    // what the raw value answers. resolveLinkUrl() can return '' for a link
+    // that was entered but no longer resolves - a path to a deleted node,
+    // say - and those should still get link_title and link_style, so the
+    // card renders consistently with any other unresolvable link.
     if (!empty($values['link_uri'])) {
       $props['link_url'] = $this->resolveLinkUrl($values['link_uri']);
       $props['link_title'] = $values['link_title'] ?? '';
@@ -209,29 +213,28 @@ class AZRankingComponentBuilder {
   /**
    * Builds an az_quickstart:ranking-image component render array for one item.
    *
-   * Passes a plain file URI as the `src` prop rather than a themed render
-   * array (which an SDC prop cannot carry). The az_ranking_responsive image
-   * style is still applied — by ranking-image.twig itself, via az_media's
-   * `image_style` Twig filter — so scaling and WebP delivery match the
-   * legacy #theme => image_formatter path. Focal point data is passed
-   * through as props and applied client-side by the component's own JS.
+   * The `src` prop gets a plain file URI, because a component prop cannot
+   * carry a render array. The az_ranking_responsive style still gets applied
+   * - ranking-image.twig does it with az_media's image_style filter - so
+   * scaling and WebP delivery match what #theme => image_formatter used to
+   * produce. Focal point values ride along as props and are applied in the
+   * browser by the component's own JS.
    *
-   * Cache tags for the media and file entities are attached here because
-   * AZRankingItem stores its media reference as a plain integer, not an
-   * entity reference, so nothing upstream contributes them automatically.
-   * Without this, replacing a media entity's image or moving its focal
-   * point would not invalidate an already-cached ranking.
+   * Cache tags for the media and file are attached here because
+   * AZRankingItem stores its media reference as a plain integer rather than
+   * an entity reference, so nothing upstream contributes them. Without them,
+   * swapping a media entity's image or moving its focal point would leave an
+   * already-cached ranking showing the old one.
    *
-   * width_span_desktop/tablet/phone are computed here, not just passed
-   * through legacy's single column_span value, because CSS Grid cannot
-   * clamp a span against its container's actual column count (a confirmed
-   * CSS spec gap, not a browser quirk - see ranking-image.css's own
-   * docblock and
-   * https://github.com/w3c/csswg-drafts/issues/5852). This reproduces
-   * legacy's own "min(current row width, column_span)" behavior exactly,
-   * per breakpoint, using the SAME $deck_props the sibling ranking-deck
-   * component receives, so the clamp is always correct for whatever the
-   * paragraph is actually configured to - not a fixed, conservative cap.
+   * The three width_span_* props are computed rather than passed straight
+   * from the single stored column_span. Rationale: CSS Grid gives an item no
+   * way to clamp its own span against its container's column count, so a
+   * span of 4 in a 2-column deck grows an extra track and squeezes every
+   * sibling in that row. Taking min() per breakpoint against the same
+   * $deck_props the sibling ranking-deck receives reproduces what the legacy
+   * template did, and stays correct for whatever the paragraph is actually
+   * set to instead of capping at some safe guess. See ranking-image.css for
+   * the spec-gap detail.
    *
    * @param array $values
    *   Normalized ranking item values - see extractItemValues().
@@ -242,11 +245,11 @@ class AZRankingComponentBuilder {
    * @see \Drupal\az_ranking\AZRankingImageHelper::getImageSourceAndFocalPoint()
    */
   public function buildImageComponent(array $values, array $deck_props): array {
-    $legacy_span = (int) ($values['options']['column_span'] ?? 2);
+    $stored_span = (int) ($values['options']['column_span'] ?? 2);
     $props = [
-      'width_span_desktop' => (string) min($legacy_span, (int) ($deck_props['columns_desktop'] ?? 4)),
-      'width_span_tablet' => (string) min($legacy_span, (int) ($deck_props['columns_tablet'] ?? 1)),
-      'width_span_phone' => (string) min($legacy_span, (int) ($deck_props['columns_phone'] ?? 1)),
+      'width_span_desktop' => (string) min($stored_span, (int) ($deck_props['columns_desktop'] ?? 4)),
+      'width_span_tablet' => (string) min($stored_span, (int) ($deck_props['columns_tablet'] ?? 1)),
+      'width_span_phone' => (string) min($stored_span, (int) ($deck_props['columns_phone'] ?? 1)),
     ];
 
     $cache_tags = [];
@@ -296,10 +299,10 @@ class AZRankingComponentBuilder {
   /**
    * Resolves a stored link_uri value to a plain URL string, or ''.
    *
-   * Mirrors the URL resolution the legacy formatter already performed
-   * (public file links, page anchors, and validated internal/external
-   * paths), only stringified for use as an SDC prop value instead of being
-   * kept as a Url object for a #type => link render array.
+   * Same resolution the formatter did before this port - public file links,
+   * page anchors, and validated internal or external paths - but returned as
+   * a string, because a component prop cannot hold the Url object a
+   * #type => link render array wanted.
    */
   protected function resolveLinkUrl(string $link_uri): string {
     if ($link_uri === '') {
@@ -311,15 +314,13 @@ class AZRankingComponentBuilder {
     }
 
     if (str_starts_with($link_uri, '#')) {
-      // Url::fromUserInput('#') is valid but its ->toString() legitimately
-      // returns '' for a bare fragment (confirmed empirically) - preserve
-      // the literal anchor directly instead of losing it. A BARE '#' (no
-      // fragment name) is also rejected by the SDC prop's own
-      // format: uri-reference validation (confirmed empirically: '#top'
-      // passes, '#' alone does not) - normalize the empty-fragment case to
-      // a named one so common placeholder links ('#', used throughout demo
-      // content) don't fail validation. Same practical behavior (no real
-      // destination); only the literal href text differs from legacy's '#'.
+      // Keep an anchor as written, and turn a bare '#' into '#top'.
+      // Rationale: two separate things go wrong with '#'. Url::fromUserInput
+      // resolves it to an empty string, so routing it through Url loses the
+      // anchor entirely. And the prop's own format: uri-reference validation
+      // rejects a fragment with no name - '#top' passes where '#' does not.
+      // Demo content uses '#' as a placeholder all over, so both would bite.
+      // Neither goes anywhere either way; only the href text differs.
       return $link_uri === '#' ? '#top' : $link_uri;
     }
 

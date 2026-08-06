@@ -7,7 +7,10 @@ use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\media\MediaInterface;
 
 /**
- * Class AZRankingImageHelper generates image render arrays for ranking images.
+ * Pulls the image file and focal point off a ranking's media entity.
+ *
+ * Returns plain data, not a render array. Turning that into markup is the
+ * az_quickstart:ranking-image component's job.
  */
 class AZRankingImageHelper {
 
@@ -26,30 +29,27 @@ class AZRankingImageHelper {
   }
 
   /**
-   * Get a plain file URI and focal point data for ranking-image.
+   * Gets the image file URI and focal point from a ranking's media entity.
    *
-   * No alt text: ranking-image is always decorative, so the component has
-   * no alt prop to fill.
-   *
-   * Used for both the published az_quickstart:ranking-image render and the
-   * widget's own live edit-form preview, via AZRankingComponentBuilder::
-   * buildImageComponent() (shared by AZRankingDefaultFormatter and
-   * AZRankingWidget::rebuildRankingPreview()) — both render through the
-   * same SDC, so the two can't drift apart.
+   * The published ranking and the widget's edit-form preview both reach
+   * this through AZRankingComponentBuilder::buildImageComponent(), so the
+   * two can't drift apart.
    *
    * @param \Drupal\media\MediaInterface $media
    *   A Drupal media entity object.
    *
    * @return array
-   *   An array with 'src' (an empty string if the media has no image),
-   *   plus 'focal_x' and 'focal_y' (both NULL if the media has no
-   *   focal point set), plus 'cache_tags' - the file entity's own cache
-   *   tags, which the caller MUST attach to whatever render array it builds
-   *   from this data. az_ranking stores its media reference as a plain
-   *   integer property (see AZRankingItem::propertyDefinitions()), not an
-   *   entity reference, so Drupal derives no cache metadata for it
-   *   automatically - nothing else in the render pipeline will invalidate a
-   *   cached ranking when the underlying file is replaced.
+   *   An array with these keys:
+   *   - 'src': the image's file URI, or an empty string if the media has
+   *     no image on it.
+   *   - 'focal_x', 'focal_y': the focal point, or NULL if none is set.
+   *   - 'cache_tags': the file's cache tags. Attach these to whatever
+   *     render array you build from this data, or a cached ranking will
+   *     keep showing the old picture after someone replaces the file.
+   *     Nothing upstream does it for you: az_ranking stores its media
+   *     reference as a plain integer property (see
+   *     AZRankingItem::propertyDefinitions()) rather than an entity
+   *     reference, so Drupal derives no cache metadata from it.
    */
   public function getImageSourceAndFocalPoint(MediaInterface $media): array {
     $empty = [
@@ -83,7 +83,10 @@ class AZRankingImageHelper {
         }
       }
       catch (\Throwable $e) {
-        // Defensive: do not break rendering if fields are not present.
+        // If reading the focal point goes wrong, leave focal_x and focal_y
+        // NULL and carry on. Rationale: with no focal point the image just
+        // stays centered, which is a fine-looking result. Not worth taking
+        // the page down over.
       }
     }
 
