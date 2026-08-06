@@ -94,10 +94,10 @@ props:
             type: boolean
             title: In active trail
             description: TRUE if the link is in the active trail.
-    resources_items:
+    footer_top_items:
       type: array
-      title: Resources Menu Items
-      description: A nested list of resources menu items.
+      title: Footer Top Menu Items
+      description: A nested list of footer top menu items.
       items:
         type: object
         title: Menu Item
@@ -132,10 +132,18 @@ props:
             type: boolean
             title: In active trail
             description: TRUE if the link is in the active trail.
-    helpful_links_items:
+    footer_top_desktop_heading:
+      type: string
+      title: Footer Top Desktop Heading
+      description: The heading text for the footer top menu on desktop devices.
+    footer_top_mobile_heading:
+      type: string
+      title: Footer Top Mobile Heading
+      description: The heading text for the footer top menu on mobile devices.
+    footer_bottom_items:
       type: array
-      title: Helpful Links Menu Items
-      description: A nested list of helpful links menu items.
+      title: Footer Bottom Menu Items
+      description: A nested list of footer bottom menu items.
       items:
         type: object
         title: Menu Item
@@ -170,6 +178,14 @@ props:
             type: boolean
             title: In active trail
             description: TRUE if the link is in the active trail.
+    footer_bottom_desktop_heading:
+      type: string
+      title: Footer Bottom Desktop Heading
+      description: The heading text for the footer bottom menu on desktop devices.
+    footer_bottom_mobile_heading:
+      type: string
+      title: Footer Bottom Mobile Heading
+      description: The heading text for the footer bottom menu on mobile devices.
     search_form_block_desktop_navbar:
       type: array
       title: Search Form Block - Desktop Navbar

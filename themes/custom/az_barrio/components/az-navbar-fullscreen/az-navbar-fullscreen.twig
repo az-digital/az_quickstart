@@ -17,8 +17,12 @@
  *     that are not currently visible.
  *   - in_active_trail: TRUE if the link is in the active trail.
  * - cta_items: A list of call-to-action menu items.
- * - resources_items: A list of "resources for" menu items.
- * - helpful_links_items: A list of "helpful links" menu items.
+ * - footer_top_items: A list of menu items for the top footer.
+ * - footer_top_desktop_heading: The heading for the top footer on desktop devices.
+ * - footer_top_mobile_heading: The heading for the top footer on mobile devices.
+ * - footer_bottom_items: A list of menu items for the bottom footer.
+ * - footer_bottom_desktop_heading: The heading for the bottom footer on desktop devices.
+ * - footer_bottom_mobile_heading: The heading for the bottom footer on mobile devices.
  * - search_form_block_desktop_navbar: The search form block content to display in the desktop navbar.
  * - search_form_block_offcanvas: The search form block content to display in the offcanvas menu.
  * - wordmark: Setting to display the university wordmark in the navbar.
@@ -37,7 +41,7 @@
     <ul class="navbar-nav navbar-az-fullscreen-actions d-none d-lg-flex ms-auto me-3">
       {% for item in cta_items %}
         <li class="nav-item">
-          <a class="nav-link" href="{{ item.url }}">
+          <a class="nav-link{{ item.in_active_trail ? ' active' }}" href="{{ item.url }}">
             <span class="nav-link-text">{{ item.title }}</span>
           </a>
         </li>
@@ -51,8 +55,8 @@
         </div>
       {% endif %}
       {% if search_form_block_offcanvas %}
-        <button class="btn navbar-toggler-search d-lg-none" type="button" data-bs-toggle="modal" data-bs-target="#navbar-az-fullscreen-menu" aria-controls="navbar-az-fullscreen-menu" aria-label="Search the site">
-          <span class="search-icon" aria-hidden="true"></span>
+        <button class="btn az-search-toggle d-lg-none" type="button" data-bs-toggle="modal" data-bs-target="#navbar-az-fullscreen-menu" aria-controls="navbar-az-fullscreen-menu" aria-label="Search site">
+          <span class="az-search-icon" aria-hidden="true"></span>
         </button>
       {% endif %}
     </div>
@@ -80,7 +84,7 @@
             <ul class="navbar-nav navbar-az-fullscreen-actions d-none d-lg-flex ms-auto me-3">
               {% for item in cta_items %}
                 <li class="nav-item">
-                  <a class="nav-link" href="{{ item.url }}">
+                  <a class="nav-link{{ item.in_active_trail ? ' active' }}" href="{{ item.url }}">
                     <span class="nav-link-text">{{ item.title }}</span>
                   </a>
                 </li>
@@ -176,10 +180,10 @@
               </div>
             </div>
             <div id="navbar-az-fullscreen-nav-mobile-col" class="col-12 d-lg-none">
-              <ul class="navbar-nav navbar-az-fullscreen-actions d-flex flex-row align-items-center justify-content-center my-4">
+              <ul class="navbar-nav navbar-az-fullscreen-actions">
                 {% for item in cta_items %}
                   <li class="nav-item">
-                    <a class="nav-link" href="{{ item.url }}">
+                    <a class="nav-link{{ item.in_active_trail ? ' active' }}" href="{{ item.url }}">
                       <span class="nav-link-text">{{ item.title }}</span>
                     </a>
                   </li>
@@ -188,8 +192,16 @@
               <div class="navbar-az-fullscreen-modal-menu-nav-col navbar-az-fullscreen-modal-menu-nav-col-primary col-12 col-lg-4">
                 <nav class="nav navbar-az-fullscreen-nav-primary" aria-label="Main navigation sections">
                   {% for item in primary_items %}
+                    {% set end_of_trail = true %}
+                    {% if item.below and item.in_active_trail %}
+                      {% for child in item.below %}
+                        {% if end_of_trail and child.in_active_trail %}
+                          {% set end_of_trail = false %}
+                        {% endif %}
+                      {% endfor %}
+                    {% endif %}
                     <div class="nav-item">
-                      <a class="nav-link{{ item.in_active_trail ? ' active' }}" href="{{ item.url }}">
+                      <a class="nav-link{{ item.in_active_trail and end_of_trail ? ' active' }}" href="{{ item.url }}">
                         <span class="nav-link-text">{{ item.title }}</span>
                       </a>
                       {% if item.below %}
@@ -206,17 +218,17 @@
         </div>
       </div>
 
-      {% if resources_items %}
+      {% if footer_top_items %}
         <div class="modal-footer d-lg-flex" id="navbar-az-fullscreen-modal-footer-top">
-          <nav class="navbar d-none d-lg-flex" aria-labelledby="resources-for-label">
+          <nav class="navbar d-none d-lg-flex" aria-labelledby="navbar-az-fullscreen-modal-footer-top-label">
             <div class="container-lg">
               <ul class="navbar-nav">
                 <li class="nav-item">
-                  <h2 class="navbar-brand" id="resources-for-label">Resources for:</h2>
+                  <h2 class="navbar-brand" id="navbar-az-fullscreen-modal-footer-top-label">{{ footer_top_desktop_heading }}:</h2>
                 </li>
-                {% for item in resources_items %}
+                {% for item in footer_top_items %}
                   <li class="nav-item">
-                    <a class="nav-link" href="{{ item.url }}">
+                    <a class="nav-link{{ item.in_active_trail ? ' active' }}" href="{{ item.url }}">
                       <span class="nav-link-text">{{ item.title }}</span>
                     </a>
                   </li>
@@ -224,10 +236,9 @@
               </ul>
             </div>
           </nav>
-          <button type="button" class="btn navbar navbar-az-fullscreen-mobile-footer-btn d-lg-none" aria-controls="navbar-az-fullscreen-nav-mobile-col" aria-label="Toggle Resources For submenu" data-az-menu-element="#navbar-az-fullscreen-modal-footer-top">
+          <button type="button" class="btn navbar navbar-az-fullscreen-mobile-footer-btn d-lg-none" aria-controls="navbar-az-fullscreen-nav-mobile-col" aria-label="Toggle {{ footer_top_mobile_heading }} submenu" data-az-menu-element="#navbar-az-fullscreen-modal-footer-top">
             <span class="navbar-az-fullscreen-mobile-footer-btn-text">
-              <span class="h2 navbar-brand">Resources For:</span>
-              <span class="more-links-text"></span>
+              <span class="h2 navbar-brand">{{ footer_top_mobile_heading }}</span>
             </span>
             <span class="nav-toggle collapsed navbar-az-fullscreen-mobile-footer-btn-icon">
               <span class="nav-toggle-icon" aria-hidden="true"></span>
@@ -235,17 +246,17 @@
           </button>
         </div>
       {% endif %}
-      {% if helpful_links_items %}
+      {% if footer_bottom_items %}
         <div class="modal-footer d-lg-flex" id="navbar-az-fullscreen-modal-footer-bottom">
-          <nav class="navbar d-none d-lg-flex" aria-labelledby="helpful-links-label">
+          <nav class="navbar d-none d-lg-flex" aria-labelledby="navbar-az-fullscreen-modal-footer-bottom-label">
             <div class="container-lg">
               <ul class="navbar-nav">
                 <li class="nav-item">
-                  <h2 class="navbar-brand" id="helpful-links-label">Helpful Links:</h2>
+                  <h2 class="navbar-brand" id="navbar-az-fullscreen-modal-footer-bottom-label">{{ footer_bottom_desktop_heading }}:</h2>
                 </li>
-                {% for item in helpful_links_items %}
+                {% for item in footer_bottom_items %}
                   <li class="nav-item">
-                    <a class="nav-link" href="{{ item.url }}">
+                    <a class="nav-link{{ item.in_active_trail ? ' active' }}" href="{{ item.url }}">
                       <span class="nav-link-text">{{ item.title }}</span>
                     </a>
                   </li>
@@ -253,10 +264,9 @@
               </ul>
             </div>
           </nav>
-          <button type="button" class="btn navbar navbar-az-fullscreen-mobile-footer-btn d-lg-none" aria-controls="navbar-az-fullscreen-nav-mobile-col" aria-label="Toggle Helpful Links submenu" data-az-menu-element="#navbar-az-fullscreen-modal-footer-bottom">
+          <button type="button" class="btn navbar navbar-az-fullscreen-mobile-footer-btn d-lg-none" aria-controls="navbar-az-fullscreen-nav-mobile-col" aria-label="Toggle {{ footer_bottom_mobile_heading }} submenu" data-az-menu-element="#navbar-az-fullscreen-modal-footer-bottom">
             <span class="navbar-az-fullscreen-mobile-footer-btn-text">
-              <span class="h2 navbar-brand">Helpful Links:</span>
-              <span class="more-links-text"></span>
+              <span class="h2 navbar-brand">{{ footer_bottom_mobile_heading }}</span>
             </span>
             <span class="nav-toggle collapsed navbar-az-fullscreen-mobile-footer-btn-icon">
               <span class="nav-toggle-icon" aria-hidden="true"></span>
