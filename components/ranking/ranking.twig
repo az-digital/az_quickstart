@@ -11,14 +11,18 @@
  * - description: Supporting line displayed below the heading.
  * - source: Attribution text; newlines are preserved.
  * - heading_level: Heading tag, h2-h6. Defaults to h3.
- * - header_style: bold | thin. Defaults to bold.
+ * - header_style: bold | thin | bolder. Defaults to bold. Sets the heading's
+ *   font weight; see ranking.css for the values.
+ * - heading_font: sans | serif. Defaults to sans.
  * - alignment: left | center. Defaults to left.
  * - background: chili | blue | sky | oasis | azurite | cool-gray | warm-gray |
  *   white | transparent. Defaults to chili. Ignored when hover effect is active.
  * - font_color: midnight | black | white | az-blue. Only used when background
  *   is transparent. Defaults to midnight.
- * - clickable: Whole card links to link_url.
- * - hover_effect: Contrasting hover colors; only honored when clickable.
+ * - clickable: Whole card links to link_url. Ignored without a link_url —
+ *   see the guard below.
+ * - hover_effect: Contrasting hover colors; only honored when clickable, so
+ *   also ignored without a link_url.
  * - hover_background: chili | blue | sky | cool-gray | oasis. Defaults to chili.
  * - link_url: Link destination.
  * - link_title: Link text when the card is not clickable; falls back to source.
@@ -37,7 +41,8 @@
 {% if heading_level not in ['h2', 'h3', 'h4', 'h5', 'h6'] %}
   {% set heading_level = 'h3' %}
 {% endif %}
-{% set header_style = header_style|default('bold') in ['bold', 'thin'] ? header_style|default('bold') : 'bold' %}
+{% set header_style = header_style|default('bold') in ['bold', 'thin', 'bolder'] ? header_style|default('bold') : 'bold' %}
+{% set heading_font = heading_font|default('sans') in ['sans', 'serif'] ? heading_font|default('sans') : 'sans' %}
 {% set alignment = alignment|default('left') in ['left', 'center'] ? alignment|default('left') : 'left' %}
 
 {% set background_classes = {
@@ -55,7 +60,7 @@
 
 {% set font_color = font_color|default('midnight') in ['midnight', 'black', 'white', 'az-blue'] ? font_color|default('midnight') : 'midnight' %}
 
-{% set clickable = clickable|default(false) %}
+{% set clickable = clickable|default(false) and link_url|default('') %}
 {# Hover effect requires a clickable card. #}
 {% set hover_effect = clickable ? hover_effect|default(false) : false %}
 {% set hover_background = hover_background|default('chili') in ['chili', 'blue', 'sky', 'cool-gray', 'oasis'] ? hover_background|default('chili') : 'chili' %}
@@ -125,13 +130,7 @@
     <div class="card-text d-flex flex-column flex-grow-1">
       <div class="az-ranking-sdc__content">
         {% if heading|default('') %}
-          <{{ heading_level }} class="display-4 m-0 az-ranking-sdc__heading{{ header_style == 'bold' ? ' fw-bolder' : '' }}{{ text_override ? ' ' ~ text_override : '' }}">
-            {% if clickable %}
-              <strong class="hover-text-underline">{{ heading }}</strong>
-            {% else %}
-              <strong>{{ heading }}</strong>
-            {% endif %}
-          </{{ heading_level }}>
+          <{{ heading_level }} class="m-0 az-ranking-sdc__heading{{ header_style != 'thin' ? ' az-ranking-sdc__heading--' ~ header_style : '' }}{{ heading_font == 'serif' ? ' az-ranking-sdc__heading--serif' : '' }}{{ clickable ? ' hover-text-underline' : '' }}{{ text_override ? ' ' ~ text_override : '' }}">{{ heading }}</{{ heading_level }}>
         {% endif %}
         {% if description|default('') %}
           <h4 class="m-0 az-ranking-sdc__description{{ text_override ? ' ' ~ text_override : '' }}">{{ description }}</h4>

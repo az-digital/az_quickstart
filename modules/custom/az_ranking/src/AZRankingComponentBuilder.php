@@ -69,6 +69,17 @@ class AZRankingComponentBuilder {
   ];
 
   /**
+   * Legacy header style select values, keyed to SDC tokens.
+   *
+   * @see \Drupal\az_paragraphs\Plugin\paragraphs\Behavior\AZRankingsParagraphBehavior
+   */
+  const HEADER_STYLE_MAP = [
+    'ranking-title-thin' => 'thin',
+    'ranking-title-bold' => 'bold',
+    'ranking-title-bolder' => 'bolder',
+  ];
+
+  /**
    * Legacy per-breakpoint Bootstrap column classes, keyed to column counts.
    */
   const DESKTOP_COLUMN_MAP = [
@@ -175,7 +186,8 @@ class AZRankingComponentBuilder {
       $props['link_style'] = self::LINK_STYLE_CLASS_MAP[$values['ranking_link_style'] ?? ''] ?? 'btn-red';
     }
 
-    $props['header_style'] = ($ranking_defaults['ranking_header_style'] ?? '') === 'ranking-title-thin' ? 'thin' : 'bold';
+    $props['header_style'] = self::HEADER_STYLE_MAP[$ranking_defaults['ranking_header_style'] ?? ''] ?? 'bold';
+    $props['heading_font'] = ($ranking_defaults['ranking_heading_font'] ?? '') === 'serif' ? 'serif' : 'sans';
     $props['alignment'] = ($ranking_defaults['ranking_alignment'] ?? '') === 'text-center' ? 'center' : 'left';
     $props['clickable'] = !empty($ranking_defaults['ranking_clickable']);
     $props['hover_effect'] = !empty($ranking_defaults['ranking_hover_effect']);

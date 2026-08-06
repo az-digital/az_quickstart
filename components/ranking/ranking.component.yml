@@ -45,15 +45,29 @@ props:
     header_style:
       type: string
       title: Header Style
-      description: Bold or thin lettering for the heading.
+      description: How heavy the heading lettering is.
       enum:
         - bold
         - thin
+        - bolder
       meta:enum:
         bold: Bold headers (default)
         thin: Thin headers
+        bolder: Bolder headers
       examples:
         - bold
+    heading_font:
+      type: string
+      title: Heading Font
+      description: Typeface for the heading. Serif uses Garamond Premier Pro where available, otherwise a system serif. Depending on your site environment, serif might not be available in thin or bolder Header Style.
+      enum:
+        - sans
+        - serif
+      meta:enum:
+        sans: Sans-serif (default)
+        serif: Serif
+      examples:
+        - sans
     alignment:
       type: string
       title: Content Alignment
@@ -69,7 +83,7 @@ props:
     clickable:
       type: boolean
       title: Clickable
-      description: Make the whole card a link to the link URL.
+      description: Make the whole card a link to the Link URL. Has no effect unless a Link URL is set.
       examples:
         - true
     hover_effect:

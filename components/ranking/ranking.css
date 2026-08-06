@@ -33,6 +33,47 @@
   }
 }
 
+/*
+ * Heading Styles
+ */
+.az-ranking-sdc .az-ranking-sdc__heading {
+  font-size: 58px;
+  line-height: 1.05;
+  letter-spacing: 0;
+}
+
+.az-ranking-sdc .az-ranking-sdc__heading,
+.az-ranking-sdc.hover:hover .az-ranking-sdc__heading,
+.az-ranking-sdc.hover:focus .az-ranking-sdc__heading {
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2px;
+}
+
+.az-ranking-sdc .az-ranking-sdc__heading {
+  font-weight: 400;
+}
+
+.az-ranking-sdc .az-ranking-sdc__heading--bold {
+  font-weight: 700;
+}
+
+.az-ranking-sdc .az-ranking-sdc__heading--bolder {
+  font-weight: 900;
+}
+
+.az-ranking-sdc {
+  --az-ranking-heading-sans: var(--bs-body-font-family);
+  --az-ranking-heading-serif: garamond-premier-pro, Georgia, "Times New Roman", serif;
+}
+
+.az-ranking-sdc .az-ranking-sdc__heading {
+  font-family: var(--az-ranking-heading-sans);
+}
+
+.az-ranking-sdc .az-ranking-sdc__heading--serif {
+  font-family: var(--az-ranking-heading-serif);
+}
+
 /* Keep visually-hidden link titles in flow so stretched-link covers the card. */
 .az-ranking-sdc .card-body .visually-hidden {
   display: block;
