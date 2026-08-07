@@ -107,7 +107,7 @@ display:
           offset: 0
           pagination_heading_level: h4
           items_per_page: 0
-          total_pages: null
+          total_pages: ''
           id: 0
       exposed_form:
         type: basic
