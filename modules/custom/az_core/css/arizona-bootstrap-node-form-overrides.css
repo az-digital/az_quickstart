@@ -34,10 +34,6 @@ legend.fieldset__legend {
   font-size: unset;
 }
 
-a.chosen-single {
-  font-weight: unset;
-}
-
 .tabledrag-cell-content .tabledrag-handle::after {
   padding: 16px 16px 16px 33px;
 }

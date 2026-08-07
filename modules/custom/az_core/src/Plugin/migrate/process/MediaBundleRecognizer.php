@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\az_migration\Plugin\migrate\process;
+namespace Drupal\az_core\Plugin\migrate\process;
 
 use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\MigrateExecutableInterface;

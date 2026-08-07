@@ -3,7 +3,7 @@
 namespace Drupal\az_publication_import\EventSubscriber;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Messenger\Messenger;
+use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\migrate\Event\MigrateEvents;
 use Drupal\migrate\Event\MigratePostRowSaveEvent;
@@ -22,27 +22,21 @@ class AZPublicationImportEventSubscriber implements EventSubscriberInterface {
   protected $entityTypeManager;
 
   /**
-   * @var \Drupal\Core\Messenger\Messenger
+   * @var \Drupal\Core\Messenger\MessengerInterface
    */
   protected $messenger;
 
   /**
-   * @var \Drupal\node\NodeStorageInterface
-   */
-  protected $nodeStorage;
-
-  /**
    * Constructs an AZPublicationImportEventSubscriber.
    *
-   * @param \Drupal\Core\Messenger\Messenger $messenger
+   * @param \Drupal\Core\Messenger\MessengerInterface $messenger
    *   Database connection object.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   The entity type manager service.
    */
-  public function __construct(Messenger $messenger, EntityTypeManagerInterface $entityTypeManager) {
+  public function __construct(MessengerInterface $messenger, EntityTypeManagerInterface $entityTypeManager) {
     $this->messenger = $messenger;
     $this->entityTypeManager = $entityTypeManager;
-    $this->nodeStorage = $this->entityTypeManager->getStorage('node');
   }
 
   /**
@@ -67,7 +61,7 @@ class AZPublicationImportEventSubscriber implements EventSubscriberInterface {
     $ids = $event->getDestinationIdValues();
     $id = reset($ids);
     if ($migration === 'az_publication_bibtex_import') {
-      $publication = $this->nodeStorage->load($id);
+      $publication = $this->entityTypeManager->getStorage('node')->load($id);
       $url = $publication->toUrl()->toString();
       if (!empty($publication)) {
         $this->messenger->addMessage($this->t('Imported <a href="@publink">@pubtitle</a>.', [
