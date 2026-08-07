@@ -17,9 +17,9 @@ The main outcome is that the work is now structured as a program rather than a f
 What is now in place:
 
 - A source-level accessibility review and remediation plan in GitHub:
-  - https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-REVIEW-PLAN.md
+  - https://github.com/az-digital/az_quickstart/blob/main/ACCESSIBILITY-REVIEW-PLAN.md
 - A GitHub execution plan with issue structure and phase logic:
-  - https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-GITHUB-PROJECT-PLAN.md
+  - https://github.com/az-digital/az_quickstart/blob/main/ACCESSIBILITY-GITHUB-PROJECT-PLAN.md
 - A live GitHub project board:
   - https://github.com/orgs/az-digital/projects/285
 - An umbrella program issue:
@@ -38,13 +38,13 @@ The existing Slick accessibility issue https://github.com/az-digital/az_quicksta
 I also prepared supporting documents for Friday:
 
 - Meeting agenda:
-  - https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-FRIDAY-MEETING-AGENDA.md
+  - https://github.com/az-digital/az_quickstart/blob/main/ACCESSIBILITY-FRIDAY-MEETING-AGENDA.md
 - Recommended project views and manual setup guide:
-  - https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-PROJECT-VIEWS-HANDOFF.md
+  - https://github.com/az-digital/az_quickstart/blob/main/ACCESSIBILITY-PROJECT-VIEWS-HANDOFF.md
 - Facilitator script:
-  - https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-FRIDAY-FACILITATOR-SCRIPT.md
+  - https://github.com/az-digital/az_quickstart/blob/main/ACCESSIBILITY-FRIDAY-FACILITATOR-SCRIPT.md
 - Consolidated send-out brief:
-  - https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-SENDOUT-BRIEF.md
+  - https://github.com/az-digital/az_quickstart/blob/main/ACCESSIBILITY-SENDOUT-BRIEF.md
 
 One limitation to note: GitHub Projects v2 does not currently expose saved view creation through the available automation surface, so the board itself is created and populated, but the recommended saved views still need to be created manually in the GitHub UI. I documented the exact view definitions in the handoff note above.
 

@@ -28,25 +28,25 @@ Use this when sharing the work with stakeholders so everyone has one place to fi
 
 ## Detailed Planning Documents
 
-These files currently live on the dedicated `docs/accessibility-planning-2026-04-23` planning branch and can be viewed directly in GitHub with the links below.
+These files live in this repository and can be viewed directly in GitHub with the links below (links point at `main`; while this package is still in review, browse the PR branch instead).
 
-- Review plan: https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-REVIEW-PLAN.md
-- GitHub execution plan: https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-GITHUB-PROJECT-PLAN.md
-- Phase 0.1 verification proposal: https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-P0.1-VERIFICATION-PROPOSAL.md
-- Phase 0.2 scanner workflow plan: https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-P0.2-SCANNER-WORKFLOW-PLAN.md
-- Manual verification playbook: https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-MANUAL-VERIFICATION-PLAYBOOK.md
-- Scanner triage guide: https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-SCANNER-TRIAGE-GUIDE.md
-- Release sign-off checklist: https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-RELEASE-SIGNOFF-CHECKLIST.md
-- Representative URL inventory and environment map: https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-REPRESENTATIVE-URL-INVENTORY.md
-- Friday meeting agenda: https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-FRIDAY-MEETING-AGENDA.md
-- Facilitator script: https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-FRIDAY-FACILITATOR-SCRIPT.md
-- Project views handoff: https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-PROJECT-VIEWS-HANDOFF.md
-- Post-meeting notes template: https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-POST-MEETING-NOTES-TEMPLATE.md
-- Live presentation talk track: https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-LIVE-PRESENTATION-TALK-TRACK.md
-- Team email draft: https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-PROGRAM-EMAIL-DRAFT.md
-- Executive email draft: https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-EXECUTIVE-EMAIL-DRAFT.md
-- Final review email: https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-FINAL-REVIEW-EMAIL.md
-- One-page Friday handout: https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-FRIDAY-HANDOUT.md
+- Review plan: https://github.com/az-digital/az_quickstart/blob/main/ACCESSIBILITY-REVIEW-PLAN.md
+- GitHub execution plan: https://github.com/az-digital/az_quickstart/blob/main/ACCESSIBILITY-GITHUB-PROJECT-PLAN.md
+- Phase 0.1 verification proposal: https://github.com/az-digital/az_quickstart/blob/main/ACCESSIBILITY-P0.1-VERIFICATION-PROPOSAL.md
+- Phase 0.2 scanner workflow plan: https://github.com/az-digital/az_quickstart/blob/main/ACCESSIBILITY-P0.2-SCANNER-WORKFLOW-PLAN.md
+- Manual verification playbook: https://github.com/az-digital/az_quickstart/blob/main/ACCESSIBILITY-MANUAL-VERIFICATION-PLAYBOOK.md
+- Scanner triage guide: https://github.com/az-digital/az_quickstart/blob/main/ACCESSIBILITY-SCANNER-TRIAGE-GUIDE.md
+- Release sign-off checklist: https://github.com/az-digital/az_quickstart/blob/main/ACCESSIBILITY-RELEASE-SIGNOFF-CHECKLIST.md
+- Representative URL inventory and environment map: https://github.com/az-digital/az_quickstart/blob/main/ACCESSIBILITY-REPRESENTATIVE-URL-INVENTORY.md
+- Friday meeting agenda: https://github.com/az-digital/az_quickstart/blob/main/ACCESSIBILITY-FRIDAY-MEETING-AGENDA.md
+- Facilitator script: https://github.com/az-digital/az_quickstart/blob/main/ACCESSIBILITY-FRIDAY-FACILITATOR-SCRIPT.md
+- Project views handoff: https://github.com/az-digital/az_quickstart/blob/main/ACCESSIBILITY-PROJECT-VIEWS-HANDOFF.md
+- Post-meeting notes template: https://github.com/az-digital/az_quickstart/blob/main/ACCESSIBILITY-POST-MEETING-NOTES-TEMPLATE.md
+- Live presentation talk track: https://github.com/az-digital/az_quickstart/blob/main/ACCESSIBILITY-LIVE-PRESENTATION-TALK-TRACK.md
+- Team email draft: https://github.com/az-digital/az_quickstart/blob/main/ACCESSIBILITY-PROGRAM-EMAIL-DRAFT.md
+- Executive email draft: https://github.com/az-digital/az_quickstart/blob/main/ACCESSIBILITY-EXECUTIVE-EMAIL-DRAFT.md
+- Final review email: https://github.com/az-digital/az_quickstart/blob/main/ACCESSIBILITY-FINAL-REVIEW-EMAIL.md
+- One-page Friday handout: https://github.com/az-digital/az_quickstart/blob/main/ACCESSIBILITY-FRIDAY-HANDOUT.md
 
 ## Friday Decision Queue
 

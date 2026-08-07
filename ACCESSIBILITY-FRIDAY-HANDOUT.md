@@ -18,9 +18,9 @@ No implementation work has started. Friday is a planning and prioritization meet
 ## What Exists Now
 
 1. Accessibility review plan:
-   [ACCESSIBILITY-REVIEW-PLAN.md](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-REVIEW-PLAN.md)
+   [ACCESSIBILITY-REVIEW-PLAN.md](ACCESSIBILITY-REVIEW-PLAN.md)
 2. GitHub execution plan:
-   [ACCESSIBILITY-GITHUB-PROJECT-PLAN.md](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-GITHUB-PROJECT-PLAN.md)
+   [ACCESSIBILITY-GITHUB-PROJECT-PLAN.md](ACCESSIBILITY-GITHUB-PROJECT-PLAN.md)
 3. Project board:
    [Accessibility Program - az_quickstart](https://github.com/orgs/az-digital/projects/285)
 
@@ -36,12 +36,12 @@ Phase 0 anchor issues:
 
 Operational drafts:
 
-1. [Phase 0.1 verification proposal](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-P0.1-VERIFICATION-PROPOSAL.md)
-2. [Phase 0.2 scanner workflow plan](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-P0.2-SCANNER-WORKFLOW-PLAN.md)
-3. [Manual verification playbook](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-MANUAL-VERIFICATION-PLAYBOOK.md)
-4. [Scanner triage guide](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-SCANNER-TRIAGE-GUIDE.md)
-5. [Release sign-off checklist](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-RELEASE-SIGNOFF-CHECKLIST.md)
-6. [Representative URL inventory and environment map](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-REPRESENTATIVE-URL-INVENTORY.md)
+1. [Phase 0.1 verification proposal](ACCESSIBILITY-P0.1-VERIFICATION-PROPOSAL.md)
+2. [Phase 0.2 scanner workflow plan](ACCESSIBILITY-P0.2-SCANNER-WORKFLOW-PLAN.md)
+3. [Manual verification playbook](ACCESSIBILITY-MANUAL-VERIFICATION-PLAYBOOK.md)
+4. [Scanner triage guide](ACCESSIBILITY-SCANNER-TRIAGE-GUIDE.md)
+5. [Release sign-off checklist](ACCESSIBILITY-RELEASE-SIGNOFF-CHECKLIST.md)
+6. [Representative URL inventory and environment map](ACCESSIBILITY-REPRESENTATIVE-URL-INVENTORY.md)
 
 ## Friday Decision Queue
 
@@ -83,13 +83,13 @@ These are recommended starting positions for discussion, not pre-made decisions:
 
 ## Supporting Materials
 
-- [Meeting agenda](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-FRIDAY-MEETING-AGENDA.md)
-- [Facilitator script](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-FRIDAY-FACILITATOR-SCRIPT.md)
-- [Talk track](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-LIVE-PRESENTATION-TALK-TRACK.md)
-- [Phase 0.1 verification proposal](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-P0.1-VERIFICATION-PROPOSAL.md)
-- [Phase 0.2 scanner workflow plan](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-P0.2-SCANNER-WORKFLOW-PLAN.md)
-- [Manual verification playbook](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-MANUAL-VERIFICATION-PLAYBOOK.md)
-- [Scanner triage guide](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-SCANNER-TRIAGE-GUIDE.md)
-- [Release sign-off checklist](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-RELEASE-SIGNOFF-CHECKLIST.md)
-- [Representative URL inventory and environment map](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-REPRESENTATIVE-URL-INVENTORY.md)
-- [Consolidated send-out brief](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-SENDOUT-BRIEF.md)
+- [Meeting agenda](ACCESSIBILITY-FRIDAY-MEETING-AGENDA.md)
+- [Facilitator script](ACCESSIBILITY-FRIDAY-FACILITATOR-SCRIPT.md)
+- [Talk track](ACCESSIBILITY-LIVE-PRESENTATION-TALK-TRACK.md)
+- [Phase 0.1 verification proposal](ACCESSIBILITY-P0.1-VERIFICATION-PROPOSAL.md)
+- [Phase 0.2 scanner workflow plan](ACCESSIBILITY-P0.2-SCANNER-WORKFLOW-PLAN.md)
+- [Manual verification playbook](ACCESSIBILITY-MANUAL-VERIFICATION-PLAYBOOK.md)
+- [Scanner triage guide](ACCESSIBILITY-SCANNER-TRIAGE-GUIDE.md)
+- [Release sign-off checklist](ACCESSIBILITY-RELEASE-SIGNOFF-CHECKLIST.md)
+- [Representative URL inventory and environment map](ACCESSIBILITY-REPRESENTATIVE-URL-INVENTORY.md)
+- [Consolidated send-out brief](ACCESSIBILITY-SENDOUT-BRIEF.md)

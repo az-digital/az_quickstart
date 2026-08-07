@@ -18,8 +18,8 @@ Key artifacts:
 
 - Project board: https://github.com/orgs/az-digital/projects/285
 - Umbrella issue: https://github.com/az-digital/az_quickstart/issues/5533
-- Review plan in GitHub: https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-REVIEW-PLAN.md
-- GitHub execution plan in GitHub: https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-GITHUB-PROJECT-PLAN.md
+- Review plan in GitHub: https://github.com/az-digital/az_quickstart/blob/main/ACCESSIBILITY-REVIEW-PLAN.md
+- GitHub execution plan in GitHub: https://github.com/az-digital/az_quickstart/blob/main/ACCESSIBILITY-GITHUB-PROJECT-PLAN.md
 
 The work is organized into five phases:
 

@@ -29,27 +29,27 @@ No implementation work has started. The purpose of today’s work was to make su
 
 - [Project board](https://github.com/orgs/az-digital/projects/285)
 - [Umbrella issue](https://github.com/az-digital/az_quickstart/issues/5533)
-- [Consolidated send-out brief](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-SENDOUT-BRIEF.md)
-- [One-page Friday handout](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-FRIDAY-HANDOUT.md)
+- [Consolidated send-out brief](ACCESSIBILITY-SENDOUT-BRIEF.md)
+- [One-page Friday handout](ACCESSIBILITY-FRIDAY-HANDOUT.md)
 
 ## Detailed Planning Documents
 
-- [Accessibility review plan](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-REVIEW-PLAN.md)
-- [GitHub execution plan](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-GITHUB-PROJECT-PLAN.md)
-- [Phase 0.1 verification proposal](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-P0.1-VERIFICATION-PROPOSAL.md)
-- [Phase 0.2 scanner workflow plan](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-P0.2-SCANNER-WORKFLOW-PLAN.md)
-- [Manual verification playbook](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-MANUAL-VERIFICATION-PLAYBOOK.md)
-- [Scanner triage guide](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-SCANNER-TRIAGE-GUIDE.md)
-- [Release sign-off checklist](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-RELEASE-SIGNOFF-CHECKLIST.md)
-- [Representative URL inventory and environment map](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-REPRESENTATIVE-URL-INVENTORY.md)
+- [Accessibility review plan](ACCESSIBILITY-REVIEW-PLAN.md)
+- [GitHub execution plan](ACCESSIBILITY-GITHUB-PROJECT-PLAN.md)
+- [Phase 0.1 verification proposal](ACCESSIBILITY-P0.1-VERIFICATION-PROPOSAL.md)
+- [Phase 0.2 scanner workflow plan](ACCESSIBILITY-P0.2-SCANNER-WORKFLOW-PLAN.md)
+- [Manual verification playbook](ACCESSIBILITY-MANUAL-VERIFICATION-PLAYBOOK.md)
+- [Scanner triage guide](ACCESSIBILITY-SCANNER-TRIAGE-GUIDE.md)
+- [Release sign-off checklist](ACCESSIBILITY-RELEASE-SIGNOFF-CHECKLIST.md)
+- [Representative URL inventory and environment map](ACCESSIBILITY-REPRESENTATIVE-URL-INVENTORY.md)
 
 ## Friday Meeting Materials
 
-- [Meeting agenda](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-FRIDAY-MEETING-AGENDA.md)
-- [Facilitator script](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-FRIDAY-FACILITATOR-SCRIPT.md)
-- [Presentation talk track](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-LIVE-PRESENTATION-TALK-TRACK.md)
-- [Project views handoff](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-PROJECT-VIEWS-HANDOFF.md)
-- [Post-meeting notes template](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-POST-MEETING-NOTES-TEMPLATE.md)
+- [Meeting agenda](ACCESSIBILITY-FRIDAY-MEETING-AGENDA.md)
+- [Facilitator script](ACCESSIBILITY-FRIDAY-FACILITATOR-SCRIPT.md)
+- [Presentation talk track](ACCESSIBILITY-LIVE-PRESENTATION-TALK-TRACK.md)
+- [Project views handoff](ACCESSIBILITY-PROJECT-VIEWS-HANDOFF.md)
+- [Post-meeting notes template](ACCESSIBILITY-POST-MEETING-NOTES-TEMPLATE.md)
 
 ## Friday Decision Queue
 
@@ -76,10 +76,10 @@ If the Friday decisions are confirmed, these are the strongest first-wave candid
 
 If time is limited, review these in order:
 
-1. The [one-page Friday handout](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-FRIDAY-HANDOUT.md)
+1. The [one-page Friday handout](ACCESSIBILITY-FRIDAY-HANDOUT.md)
 2. The [project board](https://github.com/orgs/az-digital/projects/285)
 3. The [umbrella issue](https://github.com/az-digital/az_quickstart/issues/5533)
-4. The [review plan](https://github.com/az-digital/az_quickstart/blob/docs/accessibility-planning-2026-04-23/ACCESSIBILITY-REVIEW-PLAN.md)
+4. The [review plan](ACCESSIBILITY-REVIEW-PLAN.md)
 
 Thanks,
 
