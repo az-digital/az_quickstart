@@ -1,0 +1,95 @@
+{#
+/**
+ * @file
+ * Template for the az_quickstart Ranking Image component.
+ *
+ * Renders one <img> inside a positioned wrapper:
+ *
+ *   <div class="az-ranking-image az-ranking-image--span-desktop-2 ...">
+ *     <img src="..." alt="" class="az-ranking-image__img">
+ *   </div>
+ *
+ * The image is always decorative - alt="" plus aria-hidden on the wrapper -
+ * and there is no alt or decorative prop for an editor to set.
+ *
+ * Keep Canvas out of this file. The same component renders the az_ranking
+ * paragraph in the page builder, on sites that may never install Canvas, so
+ * anything Canvas owns breaks it there. Two to avoid in particular: the
+ * `json-schema-definitions://` $ref scheme, and the `apply_image_style` Twig
+ * filter. canvas.services.yml registers both, and a Twig filter that does
+ * not exist fails when the template compiles, so nothing degrades
+ * gracefully. Use az_media's filters instead. If an object-shaped image prop
+ * is ever wanted, declare it inline and map it with our own
+ * hook_canvas_storable_prop_shape_alter(), which Canvas calls even when it
+ * has no mapping of its own.
+ *
+ * Editors still get a real media library picker in Canvas without any of
+ * that. The shape of the `src` prop - string, format: uri,
+ * contentMediaType: image/*, x-allowed-schemes: [public] - is what core's
+ * media_library matches on, through a hook Canvas ships.
+ *
+ * Props:
+ * - src: A stream-wrapper URI like public://cactus.jpg, which a browser
+ *   cannot load on its own. az_media's image_style filter turns it into a
+ *   URL for the az_ranking_responsive style (scale plus WebP), and falls
+ *   back to a plain file URL if that style is missing, so a misconfigured
+ *   style does not take the page down. The filter is generic, which is why
+ *   it lives in az_media rather than az_ranking.
+ * - focal_x / focal_y: The point to keep in view when object-fit: cover
+ *   crops the image, as a 0-1 fraction of width and height. Rendered as
+ *   data attributes and applied by ranking-image.js. Not cropped server
+ *   side, because how much gets cropped depends on the live grid layout
+ *   rather than on a fixed set of image styles.
+ * - width_span_desktop / width_span_tablet / width_span_phone: 1-4 grid
+ *   columns to span at each breakpoint. Inert outside a grid. Defaults
+ *   match Ranking Deck's own (2/2/1), so an image is safe out of the box.
+ *   Keep each at or below the deck's "Rankings per row" for that
+ *   breakpoint, or the image spills into an extra column. See
+ *   ranking-image.css for why this is three props and not one.
+ * - utility_classes: Extra Bootstrap utility classes for the wrapper, e.g.
+ *   bottom spacing. Not needed inside a Ranking Deck.
+ */
+#}
+{% set attributes = attributes|default(create_attribute()) %}
+
+{% set focal_x = focal_x|default(null) %}
+{% set focal_y = focal_y|default(null) %}
+{% set has_focal_point = focal_x is not null and focal_y is not null %}
+
+{% set allowed_spans = ['1', '2', '3', '4'] %}
+{% set width_span_desktop = width_span_desktop|default('2') in allowed_spans ? width_span_desktop|default('2') : '2' %}
+{% set width_span_tablet = width_span_tablet|default('2') in allowed_spans ? width_span_tablet|default('2') : '2' %}
+{% set width_span_phone = width_span_phone|default('1') in allowed_spans ? width_span_phone|default('1') : '1' %}
+
+{% set utility_classes = utility_classes|default([]) %}
+{% if utility_classes is not iterable %}
+  {% set utility_classes = [utility_classes] %}
+{% endif %}
+
+{% set root_classes = [
+  'az-ranking-image',
+  'az-ranking-image--span-desktop-' ~ width_span_desktop,
+  'az-ranking-image--span-tablet-' ~ width_span_tablet,
+  'az-ranking-image--span-phone-' ~ width_span_phone,
+] %}
+{% if utility_classes %}
+  {% set root_classes = root_classes|merge(utility_classes) %}
+{% endif %}
+
+{# Always decorative - see the @file block above. #}
+{% set root_attributes = attributes.addClass(root_classes).setAttribute('aria-hidden', 'true') %}
+
+<div{{ root_attributes }}>
+  {% if src|default('') %}
+    <img
+      src="{{ src|az_media_image_style('az_ranking_responsive') }}"
+      alt=""
+      loading="lazy"
+      class="az-ranking-image__img"
+      {% if has_focal_point %}
+      data-focal-x="{{ focal_x }}"
+      data-focal-y="{{ focal_y }}"
+      {% endif %}
+    >
+  {% endif %}
+</div>
