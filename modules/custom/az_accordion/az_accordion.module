@@ -51,6 +51,7 @@ function az_accordion_preprocess_field(&$variables) : void {
   if ($element['#field_type'] === 'az_accordion') {
     $variables['attributes']['class'][] = 'accordion';
 
+    $variables['#attached']['library'][] = 'az_accordion/az_accordion';
     if (!empty($element['#accordion_container_id'])) {
       $variables['attributes']['id'] = $element['#accordion_container_id'];
     }

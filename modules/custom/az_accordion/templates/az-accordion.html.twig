@@ -19,7 +19,8 @@
 {% set button_classes = (aria_expanded == 'false') ? 'collapsed' : '' %}
 
 <h3 class="accordion-header">
-  <button class="accordion-button {{ button_classes }}" type="button" data-bs-toggle="collapse" data-bs-target="#{{ accordion_item_id }}" aria-expanded="{{ aria_expanded }}" aria-controls="{{ accordion_item_id }}">
+  <a onclick="copyAnchor('{{ accordion_item_id }}', event)" class="me-2 accordion-anchor z-1 pt-2"><span class="material-symbols-rounded " style="font-size:32px;">link</span></a>
+  <button class="accordion-button z-0 ps-5 {{ button_classes }}" type="button" data-bs-toggle="collapse" data-bs-target="#{{ accordion_item_id }}" aria-expanded="{{ aria_expanded }}" aria-controls="{{ accordion_item_id }}">
     {% if title %}
       {{ title }}
     {% endif %}
