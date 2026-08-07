@@ -7,6 +7,8 @@ use Drupal\Core\Block\BlockManager;
 use Drupal\Core\Cache\CacheableAjaxResponse;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Defines a controller to update a mobile nav block.
@@ -24,13 +26,23 @@ class MobileNavController implements ContainerInjectionInterface {
   protected $blockManager;
 
   /**
+   * The request stack.
+   *
+   * @var \Symfony\Component\HttpFoundation\RequestStack
+   */
+  protected $requestStack;
+
+  /**
    * MobileNavController constructor.
    *
    * @param \Drupal\Core\Block\BlockManager $block_manager
    *   The block manager.
+   * @param \Symfony\Component\HttpFoundation\RequestStack $request_stack
+   *   The request stack.
    */
-  public function __construct(BlockManager $block_manager) {
+  public function __construct(BlockManager $block_manager, RequestStack $request_stack) {
     $this->blockManager = $block_manager;
+    $this->requestStack = $request_stack;
   }
 
   /**
@@ -38,7 +50,8 @@ class MobileNavController implements ContainerInjectionInterface {
    */
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('plugin.manager.block')
+      $container->get('plugin.manager.block'),
+      $container->get('request_stack')
     );
   }
 
@@ -54,6 +67,11 @@ class MobileNavController implements ContainerInjectionInterface {
    *   An CacheableAjaxResponse object.
    */
   public function mobileNavCallback($menu_id, $menu_root = '') {
+    $request = $this->requestStack->getCurrentRequest();
+    if (!$request || !$request->isXmlHttpRequest()) {
+      throw new NotFoundHttpException();
+    }
+
     $mobile_nav_block = $this->blockManager->createInstance('mobile_nav_block',
       [
         'menu_id' => $menu_id,
