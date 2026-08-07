@@ -161,7 +161,9 @@ class AzSelectMenu extends MenuBlock {
         'disabled',
       ],
       'aria-disabled' => 'true',
+      'role' => 'button',
       'type' => 'button',
+      'tabindex' => '0',
     ]);
 
     $build['#button_attributes'] = $button_attributes;
