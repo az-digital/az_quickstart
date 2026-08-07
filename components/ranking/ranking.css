@@ -68,6 +68,17 @@
   font-family: var(--az-ranking-heading-serif);
 }
 
+.az-ranking-sdc .az-ranking-sdc__description {
+  font-size: 22px;
+  line-height: 30px;
+  font-weight: 700;
+}
+
+.az-ranking-sdc .az-ranking-sdc__source {
+  font-size: 18px;
+  line-height: 24px;
+}
+
 /*
  * Keep the whole card clickable when the link title is hidden.
  *

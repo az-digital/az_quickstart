@@ -24,6 +24,7 @@
 .az-ranking-image {
   position: relative;
   overflow: hidden;
+  border-radius: var(--bs-border-radius);
   /*
    * The same responsive floor .az-ranking-sdc uses in ranking.css, so a row
    * holding only images still has a sensible height, and so the image never
@@ -65,7 +66,8 @@
   }
 }
 
-.az-ranking-image img {
+/* Two classes, to beat Bootstrap's img:not(.card-img) rule for border radius */
+.az-ranking-image .az-ranking-image__img {
   /*
    * Positioned absolutely so the image's own proportions never affect how
    * tall the grid row gets. The row is sized by its other content - Ranking
@@ -79,6 +81,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: inherit;
 }
 
 /* Phone (base). */

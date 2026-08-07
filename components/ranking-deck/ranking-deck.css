@@ -7,13 +7,18 @@
  *
  * The 1.5rem gap matches the spacing pb-4 gave in the legacy markup, kept so
  * decks look the same after the port. Grid items stretch to fill their row
- * by default, which is what makes cards in a row match heights without
- * anything setting a height.
+ * by default, which is what makes cards match heights without anything
+ * setting a height.
  */
 
 .az-ranking-deck {
   display: grid;
   gap: 1.5rem;
+  /*
+   * Make every row as tall as the tallest row, so they look uniform within
+   * the whole deck.
+   */
+  grid-auto-rows: 1fr;
 }
 
 /*
