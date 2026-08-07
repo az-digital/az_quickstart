@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\az_migration\Plugin\migrate\process;
+namespace Drupal\az_core\Plugin\migrate\process;
 
 use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
 use Drupal\migrate\Attribute\MigrateProcess;

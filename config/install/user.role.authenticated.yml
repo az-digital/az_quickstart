@@ -17,6 +17,7 @@ permissions:
   - 'bypass honeypot protection'
   - 'post comments'
   - 'search content'
+  - 'skip CAPTCHA'
   - 'skip antibot'
   - 'skip comment approval'
   - 'view media'

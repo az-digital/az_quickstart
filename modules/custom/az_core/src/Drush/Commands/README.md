@@ -82,3 +82,37 @@ Aliases: `azbs5bc`
 
 The command scans all block configurations and identifies blocks with `block_class` settings that contain Arizona Bootstrap 2 classes. It then converts these to their Arizona Bootstrap 5 equivalents and provides detailed feedback on what was changed.
 
+## Arizona Bootstrap 5 Field Group Updates
+
+Provides a Drush command for updating deprecated AZ Bootstrap 2 attributes in field group settings.
+
+### Usage
+
+This module provides the following Drush command:
+`drush azbs5:update-field-groups`
+This command will convert legacy Arizona Bootstrap 2 classes in field_group module settings to their Arizona Bootstrap 5 equivalents.
+
+```
+Options:
+ --dry-run     Show what would be updated without making changes
+ --yes         Apply all replacements non-interactively
+
+Examples:
+ azbs5:update-field-groups               Interactively replace deprecated Arizona Bootstrap 2 classes/attributes in field_group settings.
+ azbs5:update-field-groups --dry-run     Preview proposed replacements without modifying configs.
+ azbs5:update-field-groups --yes         Apply all replacements non-interactively.
+```
+
+Aliases: `azbs5fg`
+
+### Features
+
+- **Dry Run Mode**: Preview changes before applying them with `--dry-run`
+- **Interactive Mode**: Choose which field groups' classes/attributes to update one by one with no arguments (default behavior)
+- **Automatic Mode**: Update all eligible field groups' configs at once
+- **Smart Conversion**: Uses existing `AZBootstrapMarkupConverter::CLASS_MAP` and `AZBootstrapMarkupConverter::LEGACY_DATA_ATTRIBUTES` for consistent conversions
+- **Targeted Updates**: Only updates field groups that actually have classes and/or `data-*` attributes requiring conversion **Warning:** This is meant to be run only once in update mode. You can do as many dry runs as you like, but actual updates should only be run once.
+
+### Output
+
+This command scans entity display configurations for field groups containing deprecated Arizona Bootstrap 2 classes and `data-*` attributes, then optionally replaces them with Bootstrap 5 equivalents. Use `--dry-run` to preview changes.
