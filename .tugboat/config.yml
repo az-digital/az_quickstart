@@ -14,6 +14,7 @@ services:
         - set -eux
         - echo "memory_limit = 2G" >> /usr/local/etc/php/conf.d/tugboat.ini
         - echo "output_buffering = On" >> /usr/local/etc/php/conf.d/tugboat.ini
+        - echo "max_input_vars = 10000" >> /usr/local/etc/php/conf.d/tugboat.ini
         - composer self-update
         # Install additional PHP extensions.
         - pecl install apcu
