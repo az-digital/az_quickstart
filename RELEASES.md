@@ -53,7 +53,7 @@ Major releases include major changes such as Drupal core and Arizona Bootstrap m
 |- Additions and updates to experimental modules|✅|||✅|✅|
 |- New features||||✅|✅|
 |- Changes to behavior that existing sites may rely on||||✅|✅|
-|- Changes to visual appearance, CSS, templates, or markup (Including breaking changes that may require manual adjustment)||||✅|✅|
+|- Changes to visual appearance, CSS, templates, or markup (Including breaking changes that may require manual adjustment)***||||✅|✅|
 |- Experimental modules promoted to Stable||||✅|✅|
 |- Enabling stable modules by default||||✅|✅|
 ||**Included in Bug-fix Patch Releases**|**Included in Security Patch Releases**|**Included in LTS Patch Releases**|**Included in Minor Releases**|**Included in Major Releases**|
@@ -89,6 +89,26 @@ _*Patch-level updates (non-security bug-fix updates) are typically included in Q
 
 _**Minor version updates for Drupal core are included in Quickstart LTS (patch-level) releases to maintain alignment with Drupal's long-term support cycle._
 
+_***Visual changes in patch releases will be avoided when possible. Visual changes will only be included when they fix a critical issue and cannot wait until the next minor (or major) release._
+
+## Deprecation Policy: asset-packagist Libraries
+
+Arizona Quickstart is deprecating third-party frontend libraries installed via
+asset-packagist.
+
+Deprecation and removal process:
+
+* During deprecation, packages remain in composer.json to avoid sudden breaks
+  for downstream custom code.
+* Composer install/update warnings and Drupal status report warnings are used to
+  notify maintainers ahead of removal.
+* Deprecated asset-packagist packages are removed in a future minor Quickstart
+  release.
+
+Current deprecated asset-packagist packages retained for compatibility:
+
+* npm-asset/easepick--bundle
+* npm-asset/slick-carousel
 
 ## Pre-Release Versions
 
