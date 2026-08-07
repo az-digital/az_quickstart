@@ -5,12 +5,14 @@ namespace Drupal\Tests\az_demo\Functional;
 use Drupal\Core\Url;
 use Drupal\Core\Config\FileStorage;
 use Drupal\Tests\az_core\Functional\QuickstartFunctionalTestBase;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Verify successful importing of demo content.
- *
- * @group az_demo
  */
+#[Group('az_demo')]
+#[RunTestsInSeparateProcesses]
 class AZDemoContentTest extends QuickstartFunctionalTestBase {
 
   /**
@@ -159,7 +161,7 @@ class AZDemoContentTest extends QuickstartFunctionalTestBase {
     $this->assertStringNotContainsString('layout-no-sidebars', $classes, 'Since the block has content, the `layout-no-sidebars` class should NOT be present on the page.');
 
     // Finder pages hide the menu but keep other sidebar blocks visible.
-    $this->drupalGet('/finders/news');
+    $this->drupalGet('/finders/az-news-az-paged-row');
     $assert = $this->assertSession();
     $assert->statusCodeEquals(200);
     $body = $assert->elementExists('css', 'body');

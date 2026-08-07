@@ -51,6 +51,13 @@ class AZCardWidget extends WidgetBase {
   protected $entityTypeManager;
 
   /**
+   * Drupal\Core\Render\RendererInterface definition.
+   *
+   * @var \Drupal\Core\Render\RendererInterface
+   */
+  protected $renderer;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
@@ -64,6 +71,7 @@ class AZCardWidget extends WidgetBase {
     $instance->cardImageHelper = $container->get('az_card.image');
     $instance->pathValidator = $container->get('path.validator');
     $instance->entityTypeManager = $container->get('entity_type.manager');
+    $instance->renderer = $container->get('renderer');
     return $instance;
   }
 
@@ -164,12 +172,16 @@ class AZCardWidget extends WidgetBase {
       }
 
       // Card item.
+      $toRender = [
+        '#type' => 'processed_text',
+        '#text' => $item->body ?? '',
+        '#format' => $item->body_format ?? self::AZ_CARD_DEFAULT_TEXT_FORMAT,
+      ];
+      $body = $this->renderer->renderInIsolation($toRender);
       $element['preview_container']['card_preview'] = [
         '#theme' => 'az_card',
         '#title' => $item->title ?? '',
-        '#body' => check_markup(
-          $item->body ?? '',
-          $item->body_format ?? self::AZ_CARD_DEFAULT_TEXT_FORMAT),
+        '#body' => $body,
         '#attributes' => ['class' => $card_classes],
       ];
 
@@ -197,15 +209,15 @@ class AZCardWidget extends WidgetBase {
           '#type' => 'link',
           '#title' => $item->link_title ?? '',
           '#url' => $link_url ?: Url::fromRoute('<none>'),
-          '#attributes' => ['class' => ['btn', 'btn-default', 'w-100']],
         ];
       }
     }
 
-    // Add link class from options.
-    if (!empty($item->options['link_style'])) {
-      $element['preview_container']['card_preview']['#link']['#attributes']['class'] = explode(' ', $item->options['link_style']);
-    }
+    // Add link style classes.
+    $element['preview_container']['card_preview']['#link']['#attributes']['class'] =
+      empty($item->options['link_style']) ?
+      ['btn', 'w-100', 'btn-red'] :
+      explode(' ', $item->options['link_style']);
 
     if (!empty($element['preview_container']['card_preview']['#link'])) {
       $element['preview_container']['card_preview']['#link']['#attributes']['class'][] = 'az-card-no-follow';
@@ -317,7 +329,7 @@ class AZCardWidget extends WidgetBase {
         'btn w-100 btn-outline-white' => $this->t('White outline button'),
       ],
       '#title' => $this->t('Card Link Style'),
-      '#default_value' => (!empty($item->options['link_style'])) ? $item->options['link_style'] : 'w-100',
+      '#default_value' => (!empty($item->options['link_style'])) ? $item->options['link_style'] : 'btn w-100 btn-red',
     ];
 
     if (!$item->isEmpty()) {
@@ -329,7 +341,7 @@ class AZCardWidget extends WidgetBase {
       $element['card_actions']['toggle'] = [
         '#type' => 'submit',
         '#limit_validation_errors' => [],
-        '#attributes' => ['class' => ['button--extrasmall', 'ml-3']],
+        '#attributes' => ['class' => ['button--extrasmall', 'ms-3']],
         '#submit' => [[$this, 'cardSubmit']],
         '#value' => ($status ? $this->t('Collapse Card') : $this->t('Edit Card')),
         '#name' => $button_name,
@@ -380,7 +392,7 @@ class AZCardWidget extends WidgetBase {
         $elements[$delta]['card_actions']['delete'] = $remove;
         // Attempt to style it like collapse button.
         $elements[$delta]['card_actions']['delete']['#attributes']['class'][] = 'button--extrasmall';
-        $elements[$delta]['card_actions']['delete']['#attributes']['class'][] = 'ml-3';
+        $elements[$delta]['card_actions']['delete']['#attributes']['class'][] = 'ms-3';
       }
     }
     return $elements;

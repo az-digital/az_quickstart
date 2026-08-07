@@ -3,12 +3,15 @@
 namespace Drupal\Tests\az_select_menu\Functional;
 
 use Drupal\Tests\BrowserTestBase;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests the Quickstart select menu block.
- *
- * @group az_select_menu
  */
+#[Group('az_select_menu')]
+#[RunTestsInSeparateProcesses]
 class AzSelectMenuTest extends BrowserTestBase {
 
   /**
@@ -32,9 +35,8 @@ class AzSelectMenuTest extends BrowserTestBase {
 
   /**
    * Tests that the Quickstart Select Menu Block module can be uninstalled.
-   *
-   * @group az_select_menu
    */
+  #[DoesNotPerformAssertions]
   public function testIsUninstallableAndReinstallable() {
 
     // Uninstalls the az_select_menu module, so hook_modules_uninstalled()

@@ -54,20 +54,12 @@ function az_core_requirements($phase): array {
       ];
     }
 
-    // Add warning about deprecated az_barrio/arizona-bootstrap library.
-    $extension = 'az_barrio';
-    $library_name = 'arizona-bootstrap';
-    $library_info = \Drupal::service('library.discovery')->getLibraryByName($extension, $library_name);
-    if ($library_info['deprecated']) {
-      $message = $library_info['deprecated'];
-      $message = strtr($message, ['%library_id%' => $library_name]);
-      $requirements['az_barrio.deprecated_library'] = [
-        'title' => t('Deprecated libraries'),
-        'value' => t('Deprecated: @extension/@library', ['@extension' => $extension, '@library' => $library_name]),
-        'description' => $message,
-        'severity' => REQUIREMENT_WARNING,
-      ];
-    }
+    $requirements['az_quickstart_asset_packagist_deprecation'] = [
+      'title' => t('Asset-packagist library deprecation'),
+      'value' => t('Deprecated packages still present for backward compatibility'),
+      'severity' => REQUIREMENT_WARNING,
+      'description' => t('Arizona Quickstart is deprecating asset-packagist-delivered libraries, including npm-asset/easepick--bundle and npm-asset/slick-carousel. These packages will be removed in a future minor Quickstart release. Migrate any custom references to local or otherwise supported library sources.'),
+    ];
   }
 
   return $requirements;

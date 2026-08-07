@@ -1,0 +1,6 @@
+entity.az_ldap_role.collection:
+  title: Quickstart LDAP Role Mapping
+  base_route: entity.ldap_server.collection
+  description: 'Mappings used for provisioning Quickstart user accounts'
+  route_name: entity.az_ldap_role.collection
+  weight: 55

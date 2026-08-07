@@ -75,7 +75,7 @@ third_party_settings:
       weight: 0
       format_type: html_element
       format_settings:
-        classes: card border-0 hover
+        classes: 'card border-0 hover'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -111,9 +111,10 @@ third_party_settings:
       weight: 8
       format_type: html_element
       format_settings:
-        classes: col-4
+        classes: 'col-4 pb-card mb-nmin'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3

@@ -1,0 +1,43 @@
+langcode: en
+status: true
+dependencies: {  }
+id: facebook
+label: Facebook
+description: 'Facebook is a social media platform by Meta Platforms, Inc (USA).'
+default: true
+required: false
+opt_out: false
+only_once: false
+contextual_consent_only: null
+contextual_consent_text: null
+info_url: 'https://about.meta.com/company-info'
+privacy_policy_url: 'https://www.facebook.com/privacy/policy/'
+purposes:
+  - external_content
+cookies:
+  -
+    regex: '^_fbp$'
+    path: /
+    domain: ''
+  -
+    regex: '^_fbc$'
+    path: /
+    domain: ''
+  -
+    regex: '^fbm_'
+    path: /
+    domain: ''
+  -
+    regex: '^fbsr_'
+    path: /
+    domain: ''
+  -
+    regex: '^fr$'
+    path: /
+    domain: ''
+callback_code: ''
+javascripts:
+  - www.facebook.com
+wrapper_identifier: {  }
+attachments: {  }
+weight: 0

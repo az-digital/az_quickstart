@@ -42,7 +42,7 @@ process:
     plugin: default_value
     default_value: az_trellis
   name: name
-  field_media_az_media_remote: url
+  field_az_media_trellis_url: url
   field_az_media_trellis_form_id: form_id
   field_az_media_trellis_rec_id: rec_id
   uuid: uuid

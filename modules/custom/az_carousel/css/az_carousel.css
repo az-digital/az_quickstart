@@ -1,10 +1,9 @@
 /* Node Overrides */
-.az-carousel .node__content,
-.az-carousel .field--type-entity-reference {
+.az-carousel .node__content {
 	margin: 0;
 }
 
-/* 
+/*
 * 	Slick Track
 * 	Fix problem causing the next item slide to jump down and cause taller track
 */
@@ -101,7 +100,7 @@
 	}
 
 /* Slide Image */
-.az-carousel-slide img {
+.az-carousel-slide .field__item img {
 	border-bottom-left-radius: 0;
 	border-bottom-right-radius: 0;
 	border-top-left-radius: 0;
@@ -128,7 +127,7 @@
 }
 
 /* Desktop Styles */
-@media (min-width: 1110px) {
+@media (min-width: 1296px) {
 
 	.az-carousel .slick-initialized .slick-slide {
 		display: block;
@@ -141,6 +140,6 @@
 	}
 	.az-carousel-slide img {
 		min-height: 500px;
-		width: 1110px;
+		width: 1296px;
 	}
 }

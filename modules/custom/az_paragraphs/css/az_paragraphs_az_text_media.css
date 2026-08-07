@@ -49,7 +49,6 @@
   right: 0;
   font-size: 0.9em;
   color: #0c234b;
-  z-index: -102;
   cursor: pointer;
   padding: 0.3em 0.6em;
   border: none;
@@ -60,12 +59,6 @@
   color: #ab0520;
   border-color: #ab0520;
 }
-.az-video-playing .az-video-pause {
-  z-index: 2;
-}
-.az-video-paused .az-video-play {
-  z-index: 2;
-}
 .az-video-container iframe {
   position: absolute;
 }
@@ -73,9 +66,6 @@
     overflow: hidden;
     position: absolute;
     width: 100%;
-}
-.full-width-background .az-video-background {
-    width: 100vw;
 }
 .az-video-loading .az-video-container {
   opacity: 0;

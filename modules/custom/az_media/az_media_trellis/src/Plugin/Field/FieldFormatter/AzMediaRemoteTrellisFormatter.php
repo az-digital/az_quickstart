@@ -27,11 +27,14 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * - Caching optimization for performance.
  *
  * The formatter transforms standard Trellis form URLs into the Quick Publish
- * format required for JavaScript embedding:
+ * format required for JavaScript embedding, preserving query parameters so
+ * that FormAssembly handles prefill natively:
  * - Input: https://forms-a.trellis.arizona.edu/185?tfa_4=value
- * - Output: https://forms-a.trellis.arizona.edu/publish/185
+ * - Output: https://forms-a.trellis.arizona.edu/publish/185?tfa_4=value
  * - Input: https://trellis.tfaforms.net/72?tfa_4=value
- * - Output: https://trellis.tfaforms.net/publish/72
+ * - Output: https://trellis.tfaforms.net/publish/72?tfa_4=value
+ * - Input: https://forms-a.trellis.arizona.edu/192
+ * - Output: https://forms-a.trellis.arizona.edu/publish/192
  *
  * @see https://help.formassembly.com/help/javascript-form-publishing
  * @see \Drupal\media_remote\Plugin\Field\FieldFormatter\MediaRemoteFormatterBase
@@ -125,7 +128,7 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase implements 
    *   both supported domains.
    */
   public static function getUrlRegexPattern() {
-    return '/^https:\/\/(forms-a\.trellis\.arizona\.edu|trellis\.tfaforms\.net)\/([0-9]+)/';
+    return '/^https:\/\/(forms-a\.trellis\.arizona\.edu|trellis\.tfaforms\.net)\/[0-9]+\/?(?:[?#].*)?$/';
   }
 
   /**
@@ -191,11 +194,11 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase implements 
    * process involves:
    *
    * 1. URL Transformation: Converts standard Trellis URLs to Quick Publish
-   *    format
+   *    format, preserving query parameters for native prefill
    *    - Input: https://forms-a.trellis.arizona.edu/185?params
-   *    - Output: https://forms-a.trellis.arizona.edu/publish/185
+   *    - Output: https://forms-a.trellis.arizona.edu/publish/185?params
    *    - Input: https://trellis.tfaforms.net/72?params
-   *    - Output: https://trellis.tfaforms.net/publish/72
+   *    - Output: https://trellis.tfaforms.net/publish/72?params
    *
    * 2. Context Detection: Determines if the current environment is an
    *    editing context (node edit, media library, etc.) to adjust form
@@ -334,7 +337,14 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase implements 
     $parts = explode('/', trim($parsed['path'], '/'));
     $parts = array_merge(['publish'], $parts);
     $new_path = '/' . implode('/', $parts);
-    return $parsed['scheme'] . '://' . $parsed['host'] . $new_path;
+    $quick_publish = $parsed['scheme'] . '://' . $parsed['host'] . $new_path;
+    // Preserve original query parameters on the Quick Publish URL so that
+    // FormAssembly handles prefill natively (fields arrive pre-populated).
+    // The parameters are also kept in $query_params for JS-side logic.
+    if (!empty($parsed['query'])) {
+      $quick_publish .= '?' . $parsed['query'];
+    }
+    return $quick_publish;
   }
 
   /**
@@ -390,10 +400,10 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase implements 
   public function settingsForm(array $form, FormStateInterface $form_state) {
     return parent::settingsForm($form, $form_state) + [
       'url' => [
-        '#type' => 'string',
+        '#type' => 'url',
         '#title' => $this->t('URL'),
-        '#size' => 255,
-        '#maxlength' => 255,
+        '#size' => 60,
+        '#maxlength' => 2048,
         '#description' => $this->t('The URL of the Trellis form. Must be a valid FormAssembly Trellis URL from forms-a.trellis.arizona.edu or trellis.tfaforms.net.'),
       ],
     ];

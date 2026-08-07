@@ -3,12 +3,14 @@
 namespace Drupal\Tests\az_barrio\Functional;
 
 use Drupal\Tests\az_core\Functional\QuickstartFunctionalTestBase;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests the Arizona Barrio theme as an admin user.
- *
- * @group az_barrio
  */
+#[Group('az_barrio')]
+#[RunTestsInSeparateProcesses]
 class AzBarrioAdminTest extends QuickstartFunctionalTestBase {
 
   /**
@@ -88,6 +90,7 @@ class AzBarrioAdminTest extends QuickstartFunctionalTestBase {
     $this->drupalGet('admin/appearance');
     $this->cssSelect('a[title="Set Bootstrap Barrio as default theme"]')[0]->click();
     $this->cssSelect('a[title="Uninstall Arizona Barrio theme"]')[0]->click();
+    $this->submitForm([], 'Uninstall');
     $this->assertSession()->pageTextContains('The Arizona Barrio theme has been uninstalled.');
   }
 

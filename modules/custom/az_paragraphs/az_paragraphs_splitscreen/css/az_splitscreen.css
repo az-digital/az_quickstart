@@ -15,9 +15,6 @@
   object-fit: cover;
   border-radius: 0;
 }
-.az-splitscreen-image .field--type-entity-reference {
-  margin: 0;
-}
 .az-splitscreen-text {
   width: 100%;
 }
