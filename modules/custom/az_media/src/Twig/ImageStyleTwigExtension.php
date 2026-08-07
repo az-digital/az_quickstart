@@ -9,7 +9,7 @@ use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
 /**
- * Provides an `image_style` Twig filter for components.
+ * Provides an `az_media_image_style` Twig filter for components.
  *
  * A component template gets its image as a URI string like
  * public://cactus.jpg. Image styles (resize, crop, convert to WebP) are
@@ -17,7 +17,7 @@ use Twig\TwigFilter;
  * hold. This filter bridges the gap:
  *
  * @code
- * <img src="{{ src|image_style('az_ranking_responsive') }}">
+ * <img src="{{ src|az_media_image_style('az_ranking_responsive') }}">
  * @endcode
  *
  * It hands back the URL of the styled copy. Drupal generates that copy the
@@ -40,7 +40,7 @@ class ImageStyleTwigExtension extends AbstractExtension {
    */
   public function getFilters(): array {
     return [
-      new TwigFilter('image_style', [$this, 'applyImageStyle']),
+      new TwigFilter('az_media_image_style', [$this, 'applyImageStyle']),
     ];
   }
 
