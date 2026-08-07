@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - key.key.az_profiles_api_endpoint
+    - az_person_profiles_import.settings
+id: az_profiles_api_endpoint
+label: 'Profiles API Endpoint'
+config_type: system.simple
+config_prefix: ''
+config_name: az_person_profiles_import.settings
+config_item: endpoint
+key_id: az_profiles_api_endpoint

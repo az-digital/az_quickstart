@@ -46,6 +46,7 @@ final class AZPersonProfilesImportForm extends FormBase {
   public static function create(ContainerInterface $container) {
     $instance = parent::create($container);
     $instance->entityTypeManager = $container->get('entity_type.manager');
+
     try {
       // This service may not exist if ldap_query is not enabled.
       $instance->ldapQueryController = $container->get('ldap.query');
@@ -71,7 +72,10 @@ final class AZPersonProfilesImportForm extends FormBase {
   public function buildForm(array $form, FormStateInterface $form_state): array {
 
     $config = $this->config('az_person_profiles_import.settings');
+
+    // Check if we have an API key from either config or secrets (via override).
     $has_key = !empty(trim($config->get('apikey')));
+
     if (!$has_key) {
       $url = Url::fromRoute('az_person_profiles_import.settings_form')->toString();
       $this->messenger->addWarning($this->t('You must first configure a Profiles API token <a href=":link">here</a>.', [
