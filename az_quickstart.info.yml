@@ -30,7 +30,6 @@ install:
   - az_seo
   - az_google_tag
   - drupal:node
-  - drupal:history
   - drupal:block
   - drupal:breakpoint
   - drupal:ckeditor5
@@ -54,6 +53,7 @@ install:
   - drupal:taxonomy
   - drupal:dblog
   - drupal:search
+  - drupal:search_node
   - drupal:shortcut
   - token:token
   - drupal:toolbar
@@ -80,4 +80,4 @@ install:
 themes:
   - az_barrio
   - claro
-version: 3.4.x-dev
+version: 3.6.x-dev

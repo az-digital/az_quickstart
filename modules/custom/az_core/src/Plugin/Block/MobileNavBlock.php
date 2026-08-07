@@ -7,12 +7,14 @@ use Drupal\Core\Block\Attribute\Block;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Cache\Context\AccountPermissionsCacheContext;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Menu\MenuLinkTreeInterface;
 use Drupal\Core\Menu\MenuTreeParameters;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
+use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -69,6 +71,13 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
   protected $accountPermissionsContext;
 
   /**
+   * The entity type manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $entityTypeManager;
+
+  /**
    * Constructs a MobileNavBlock object.
    *
    * @param array $configuration
@@ -85,6 +94,8 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
    *   The menu link tree service.
    * @param \Drupal\Core\Cache\Context\AccountPermissionsCacheContext $account_permissions_context
    *   The account permissions cache context.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   The entity type manager.
    */
   public function __construct(
     array $configuration,
@@ -94,12 +105,14 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
     CacheBackendInterface $cache_backend,
     MenuLinkTreeInterface $menu_link_tree,
     AccountPermissionsCacheContext $account_permissions_context,
+    EntityTypeManagerInterface $entity_type_manager,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->routeMatch = $route_match;
     $this->cache = $cache_backend;
     $this->menuLinkTree = $menu_link_tree;
     $this->accountPermissionsContext = $account_permissions_context;
+    $this->entityTypeManager = $entity_type_manager;
   }
 
   /**
@@ -113,7 +126,8 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
       $container->get('current_route_match'),
       $container->get('cache.default'),
       $container->get('menu.link_tree'),
-      $container->get('cache_context.user.permissions')
+      $container->get('cache_context.user.permissions'),
+      $container->get('entity_type.manager')
     );
   }
 
@@ -125,7 +139,7 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
    */
   protected function initMenuTree(): array {
     $userPermissionsContext = $this->accountPermissionsContext->getContext();
-    $cachedTreeData = $this->cache->get('az_mobile_nav_menu.menu_tree:' . $userPermissionsContext);
+    $cachedTreeData = $this->cache->get('az_mobile_nav_menu.menu_tree:' . $this->configuration['menu_id'] . ':' . $userPermissionsContext);
     if ($cachedTreeData) {
       return $cachedTreeData->data;
     }
@@ -135,7 +149,7 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
 
     // Load the menu tree for the Main Navigation menu.
     /** @var \Drupal\Core\Menu\MenuLinkTreeElement[] $tree */
-    $tree = $this->menuLinkTree->load('main', $parameters);
+    $tree = $this->menuLinkTree->load($this->configuration['menu_id'], $parameters);
 
     // Apply manipulators.
     $manipulators = [
@@ -147,11 +161,11 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
 
     // Save the tree to the cache backend.
     $this->cache->set(
-      'az_mobile_nav_menu.menu_tree:' . $userPermissionsContext,
+      'az_mobile_nav_menu.menu_tree:' . $this->configuration['menu_id'] . ':' . $userPermissionsContext,
       $tree,
       CacheBackendInterface::CACHE_PERMANENT,
       [
-        'config:system.menu.main',
+        'config:system.menu.' . $this->configuration['menu_id'],
       ]);
     return $tree;
   }
@@ -181,7 +195,7 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
         ],
       ],
       '#cache' => [
-        'tags' => ['config:system.menu.main'],
+        'tags' => ['config:system.menu.' . $this->configuration['menu_id']],
         'contexts' => ['route'],
         'max-age' => CacheBackendInterface::CACHE_PERMANENT,
       ],
@@ -279,6 +293,7 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
         '#url' => Url::fromRoute(
           'az_core.mobile_nav_callback',
           [
+            'menu_id' => $this->configuration['menu_id'],
             'menu_root' => $parent === '' ? $this->t('@root', ['@root' => self::NAV_MENU_ROOT_TEXT]) : $parent,
           ],
         ),
@@ -387,6 +402,7 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
           '#title' => $chevronRight,
           '#url' => Url::fromRoute('az_core.mobile_nav_callback',
             [
+              'menu_id' => $this->configuration['menu_id'],
               'menu_root' => $item->link->getPluginId(),
             ],
           ),
@@ -418,6 +434,37 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
     }
 
     return $build;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function blockForm($form, FormStateInterface $form_state) {
+    $form = parent::blockForm($form, $form_state);
+
+    $menus = $this->entityTypeManager->getStorage('menu')->loadMultiple();
+    $options = [];
+    foreach ($menus as $menu) {
+      $options[$menu->id()] = $menu->label();
+    }
+
+    $form['menu_id'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Menu'),
+      '#options' => $options,
+      '#default_value' => $this->configuration['menu_id'],
+      '#required' => TRUE,
+    ];
+
+    return $form;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function blockSubmit($form, FormStateInterface $form_state): void {
+    parent::blockSubmit($form, $form_state);
+    $this->configuration['menu_id'] = $form_state->getValue('menu_id');
   }
 
   /**
