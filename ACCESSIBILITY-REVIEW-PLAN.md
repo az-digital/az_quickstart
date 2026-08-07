@@ -5,7 +5,8 @@
 This document captures a source-level accessibility review of az_quickstart and a prioritized remediation plan for reaching and maintaining WCAG 2.2 AA conformance.
 
 - Audit date: April 23, 2026
-- Auditor: GitHub Copilot
+- Auditor: Jeff Bishop (accesswatch)
+- Drafting/review assistance: GitHub Copilot
 - Repository scope: custom theme, custom modules, project templates, CI configuration, and accessibility-related frontend assets across az_quickstart
 - Review method: targeted source inspection, project-wide pattern searches, and a secondary specialist pass focused on Drupal frontend accessibility risks
 
