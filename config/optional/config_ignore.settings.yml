@@ -14,10 +14,8 @@ ignored_config_entities:
   - 'language.entity.*'
   - 'metatag.metatag_defaults.*'
   - 'shortcut.set.*'
+  - simple_sitemap.settings
   - 'system.menu.*'
   - system.site
   - 'taxonomy.vocabulary.*'
   - 'webform.webform.*'
-  - xmlsitemap.settings
-  - 'xmlsitemap.settings.*.*'
-  - 'xmlsitemap.xmlsitemap.*'
