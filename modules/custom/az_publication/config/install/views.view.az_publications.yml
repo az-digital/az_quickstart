@@ -415,13 +415,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              az_profile_editor: '0'
-              az_content_editor: '0'
-              az_content_admin: '0'
-              az_user_admin: '0'
-              az_html_admin: '0'
-              administrator: '0'
             placeholder: ''
           is_grouped: false
           group_info:
@@ -463,12 +456,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              az_content_editor: '0'
-              az_content_admin: '0'
-              az_user_admin: '0'
-              az_html_admin: '0'
-              administrator: '0'
             placeholder: ''
           is_grouped: false
           group_info:
@@ -512,12 +499,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              az_content_editor: '0'
-              az_content_admin: '0'
-              az_user_admin: '0'
-              az_html_admin: '0'
-              administrator: '0'
             min_placeholder: ''
             max_placeholder: ''
             placeholder: ''
@@ -558,14 +539,7 @@ display:
             required: false
             remember: false
             multiple: false
-            remember_roles:
-              anonymous: '0'
-              authenticated: '0'
-              az_content_editor: '0'
-              az_content_admin: '0'
-              az_user_admin: '0'
-              az_html_admin: '0'
-              administrator: '0'
+            remember_roles: {  }
             reduce: false
           is_grouped: false
           group_info:
@@ -946,6 +920,7 @@ display:
         arguments: false
         filters: false
         filter_groups: false
+        footer: false
       relationships:
         field_az_contributors:
           id: field_az_contributors
@@ -967,6 +942,17 @@ display:
           required: true
       display_description: ''
       style_options: null
+      footer:
+        result:
+          id: result
+          table: views
+          field: result
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: result
+          empty: false
+          content: '<p><em>Page @current_page of @page_count</em></p>'
       display_extenders: {  }
       block_hide_empty: true
     cache_metadata:
@@ -1146,11 +1132,23 @@ display:
         arguments: false
         filters: false
         filter_groups: false
+        footer: false
       relationships: {  }
       use_ajax: false
       group_by: false
       display_description: ''
       style_options: null
+      footer:
+        result:
+          id: result
+          table: views
+          field: result
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: result
+          empty: false
+          content: '<p><em>Page @current_page of @page_count</em></p>'
       display_extenders: {  }
     cache_metadata:
       max-age: -1
@@ -1189,8 +1187,20 @@ display:
         style: false
         style_options: false
         row: false
+        footer: false
       display_description: ''
       style_options: null
+      footer:
+        result:
+          id: result
+          table: views
+          field: result
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: result
+          empty: false
+          content: '<p><em>Page @current_page of @page_count</em></p>'
       display_extenders: {  }
     cache_metadata:
       max-age: -1

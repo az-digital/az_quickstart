@@ -2,10 +2,10 @@ langcode: en
 status: false
 dependencies:
   module:
-    - node
+    - search_node
 id: node_search
-label: 'Content (old)'
-path: default
+label: Content
+path: node
 weight: -10
 plugin: node_search
 configuration:

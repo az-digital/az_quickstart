@@ -256,10 +256,8 @@ process:
           - end_year
         suffix: ')'
   field_az_phones:
-    plugin: sub_process
+    plugin: az_phone
     source: phone
-    process:
-      value: number
   field_az_address:
     -
       plugin: sub_process

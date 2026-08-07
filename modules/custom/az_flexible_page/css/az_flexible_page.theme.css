@@ -6,3 +6,8 @@
   /* Remove extra space at the top of content. */
   margin-top: 0;
 }
+
+.node--type-az-flexible-page.node--view-mode-az-card .card .img-fluid {
+	/* Sharpen bottom corners of images in the top img card position */
+	border-radius: 0;
+}

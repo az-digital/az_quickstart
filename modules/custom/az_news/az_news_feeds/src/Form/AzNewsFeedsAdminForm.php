@@ -83,7 +83,7 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
     $terms = json_decode($response->getBody(), TRUE);
 
     $options = ['all' => 'All'];
-    foreach ($terms['terms'] as $key => $value) {
+    foreach ($terms['terms'] as $value) {
       $options[$value['term']['tid']] = $value['term']['name'];
     }
 
@@ -97,7 +97,7 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
     $term_options = $this->getRemoteTermOptions();
     $form['links'] = [
       '#type' => 'item',
-      '#markup' => t('You can @migrate_queue_importer_link, or @migrate_tools_link separately.', [
+      '#markup' => $this->t('You can @migrate_queue_importer_link, or @migrate_tools_link separately.', [
         '@migrate_queue_importer_link' => Link::fromTextAndUrl(
           'configure the import schedule', Url::fromRoute('entity.cron_migration.collection')
         )->toString(),
@@ -158,7 +158,7 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
       '#title' => $this->t('News Categories'),
       '#type' => 'select',
       '#multiple' => TRUE,
-      '#required' => FALSE,
+      '#required' => TRUE,
       '#description' => $this->t('Select which terms you want to import.'),
       '#options' => $form['term_options']['#value'],
       '#config_target' => new ConfigTarget(

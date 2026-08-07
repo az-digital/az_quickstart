@@ -1,0 +1,5 @@
+/* Do not traverse ranking preview links. */
+
+.az-ranking-no-follow, .az-ranking-no-follow.btn:not(:disabled):not(.disabled) {
+    cursor: not-allowed;
+}

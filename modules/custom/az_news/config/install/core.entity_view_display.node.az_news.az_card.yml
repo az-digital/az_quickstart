@@ -43,8 +43,10 @@ third_party_settings:
       weight: 0
       format_type: html_element
       format_settings:
-        classes: 'card card-borderless card-clickable mb-4'
+        classes: 'card border-0 mb-4 hover'
+        show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -54,7 +56,7 @@ third_party_settings:
         speed: fast
     group_link:
       children:
-        - field_az_media_thumbnail_image
+        - group_media
         - group_heading
         - group_text_muted
         - group_summary
@@ -65,8 +67,10 @@ third_party_settings:
       weight: 4
       format_type: link
       format_settings:
-        classes: 'card-body p-0'
+        classes: 'card-body p-0 stretched-link link-primary text-decoration-none'
+        show_empty_fields: false
         id: ''
+        label_as_html: false
         target: custom_uri
         custom_uri: '[node:az-canonical-url]'
         target_attribute: default
@@ -76,11 +80,13 @@ third_party_settings:
       label: Heading
       parent_name: group_link
       region: content
-      weight: 2
+      weight: 22
       format_type: html_element
       format_settings:
         classes: 'card-title text-midnight h5 mb-0'
+        show_empty_fields: false
         id: ''
+        label_as_html: false
         element: h4
         show_label: false
         label_element: h3
@@ -91,14 +97,16 @@ third_party_settings:
     group_text_muted:
       children:
         - field_az_published
-      label: 'Text Muted'
+      label: 'Text Body Secondary'
       parent_name: group_link
       region: content
-      weight: 3
+      weight: 23
       format_type: html_element
       format_settings:
-        classes: 'text-muted font-weight-normal small mt-2'
+        classes: 'text-body-secondary fw-normal small mt-2'
+        show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -112,11 +120,13 @@ third_party_settings:
       label: Summary
       parent_name: group_link
       region: content
-      weight: 4
+      weight: 24
       format_type: html_element
       format_settings:
-        classes: 'card-text font-weight-normal mt-2'
+        classes: 'card-text fw-normal mt-2 text-body'
+        show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -130,12 +140,13 @@ third_party_settings:
       label: 'Read more'
       parent_name: group_link
       region: content
-      weight: 5
+      weight: 25
       format_type: html_element
       format_settings:
-        classes: 'card-clickable-link mt-2'
+        classes: mt-2
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: ''
@@ -152,9 +163,30 @@ third_party_settings:
       weight: 6
       format_type: html_element
       format_settings:
-        classes: 'text-chili text-left'
+        classes: 'text-start hover-text-underline'
         show_empty_fields: false
         id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_media:
+      children:
+        - field_az_media_thumbnail_image
+      label: Media
+      parent_name: group_link
+      region: content
+      weight: 20
+      format_type: html_element
+      format_settings:
+        classes: 'pb-card mb-nmin'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -179,22 +211,24 @@ content:
       view_mode: az_card_image
       link: false
     third_party_settings: {  }
-    weight: 0
+    weight: 21
     region: content
   field_az_published:
     type: timestamp_ap_style
     label: hidden
     settings:
-      always_display_year: '1'
-      cap_today: '1'
-      display_day: '1'
-      display_noon_and_midnight: '1'
+      always_display_year: true
+      use_today: false
+      cap_today: true
+      display_day: true
+      display_time: false
+      hide_date: false
+      time_before_date: false
+      display_noon_and_midnight: true
+      capitalize_noon_and_midnight: false
+      use_all_day: false
       timezone: ''
-      use_today: 0
-      display_time: 0
-      time_before_date: 0
-      use_all_day: 0
-      capitalize_noon_and_midnight: 0
+      month_only: false
     third_party_settings: {  }
     weight: 5
     region: content

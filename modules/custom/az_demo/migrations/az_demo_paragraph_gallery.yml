@@ -27,6 +27,12 @@ source:
     -
       name: gallery_display
       selector: gallery_display
+    -
+      name: gallery_captions
+      selector: gallery_captions
+    -
+      name: ratio
+      selector: ratio
 
 destination:
   plugin: 'entity_reference_revisions:paragraph'
@@ -58,11 +64,12 @@ process:
   behavior_settings:
     plugin: az_paragraphs_behavior_settings
     paragraph_behavior_plugins:
-      az_default_paragraph_behavior:
-        az_display_settings:
-          bottom_spacing: bottom_spacing
       az_photo_gallery_paragraph_behavior:
         gallery_display: gallery_display
+        gallery_captions: gallery_captions
+        ratio: ratio
+        az_display_settings:
+          bottom_spacing: bottom_spacing
 
 dependencies:
   enforced:

@@ -33,14 +33,14 @@ process:
   field_az_cards/options:
     plugin: default_value
     default_value:
-      class: 'bg-cool-gray'
+      class: 'text-bg-cool-gray'
 
   behavior_settings:
     plugin: az_paragraphs_behavior_settings
     paragraph_behavior_plugins:
       az_cards_paragraph_behavior:
         card_width: 'col-md-12 col-lg-12'
-        card_style: 'card card-borderless'
+        card_style: 'card border-0'
         card_clickable: 0
         az_display_settings:
           bottom_spacing: bottom_spacing

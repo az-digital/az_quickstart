@@ -1,0 +1,36 @@
+langcode: en
+status: true
+dependencies: {  }
+id: ga
+label: 'Google Analytics'
+description: 'Tracks online visits of the website as a service.'
+default: true
+required: false
+opt_out: false
+only_once: false
+contextual_consent_only: null
+contextual_consent_text: null
+info_url: 'https://marketingplatform.google.com/intl/de/about/analytics/'
+privacy_policy_url: 'https://policies.google.com/privacy'
+purposes:
+  - analytics
+cookies:
+  -
+    regex: '^_ga(_.*)?'
+    path: ''
+    domain: ''
+  -
+    regex: ^_gid
+    path: ''
+    domain: ''
+  -
+    regex: ^IDE
+    path: ''
+    domain: ''
+callback_code: ''
+javascripts:
+  - analytics.js
+wrapper_identifier: {  }
+attachments:
+  - ga4_google_analytics
+weight: 1

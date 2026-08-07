@@ -3,12 +3,14 @@
 namespace Drupal\Tests\az_barrio\Functional;
 
 use Drupal\Tests\az_core\Functional\QuickstartFunctionalTestBase;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests the Arizona Barrio theme.
- *
- * @group az_barrio
  */
+#[Group('az_barrio')]
+#[RunTestsInSeparateProcesses]
 class AzBarrioTest extends QuickstartFunctionalTestBase {
 
   /**
@@ -37,7 +39,7 @@ class AzBarrioTest extends QuickstartFunctionalTestBase {
     // Test AZ Barrio's defaults.
     $this->drupalGet('');
     $this->assertSession()->statusCodeEquals(200);
-    $this->assertSession()->responseContains('https://fonts.googleapis.com/css?family=Material+Icons+Sharp');
+    $this->assertSession()->responseContains('https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0');
     $this->assertSession()->responseContains('https://use.typekit.net/emv3zbo.css');
 
     // Tests that the header column class settings work on install.
@@ -45,9 +47,11 @@ class AzBarrioTest extends QuickstartFunctionalTestBase {
     $this->assertSession()->elementExists('css', '#header_site > div:nth-child(1) > div > div.col-12.col-sm-6.col-lg-4');
     $this->assertSession()->elementExists('css', '#header_site > div:nth-child(1) > div > div.col-12.col-sm-6.col-lg-8');
 
-    // Tests that the navbar off-canvas region classes are set on install.
+    // Tests that navigation elements are present on install.
     $this->drupalGet('');
-    $this->assertSession()->elementExists('css', '#navbar-top.navbar-offcanvas.has-navigation-region.has-off-canvas-region');
+    $this->assertSession()->elementExists('css', '#navbar-top.navbar.navbar-expand');
+    $this->assertSession()->elementExists('css', '#block-az-barrio-offcanvas-searchform');
+    $this->assertSession()->elementExists('css', '#block-az-barrio-mobilenavblock');
   }
 
 }

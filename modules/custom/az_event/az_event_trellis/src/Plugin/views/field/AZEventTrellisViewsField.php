@@ -105,7 +105,7 @@ class AZEventTrellisViewsField extends BulkForm {
       $ids = array_filter($ids);
       foreach ($ids as $value) {
         if (!empty($value)) {
-          \Drupal::service('messenger')->addMessage(t('Importing Trellis Event <strong>@id</strong>.', [
+          \Drupal::service('messenger')->addMessage($this->t('Importing Trellis Event <strong>@id</strong>.', [
             '@id' => $value,
           ]));
         }
@@ -147,6 +147,15 @@ class AZEventTrellisViewsField extends BulkForm {
       $this->migrationRemoteTools->batch($migrations);
     }
 
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getEntityTypeId() {
+    // Prevents EntityTranslationRenderTrait from checking remote data type.
+    // Attempting to do so causes errors because there is no entity involved.
+    return 'node';
   }
 
   /**

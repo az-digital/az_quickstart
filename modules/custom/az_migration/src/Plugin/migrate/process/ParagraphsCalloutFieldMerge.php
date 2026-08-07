@@ -10,6 +10,11 @@ use Drupal\migrate\Row;
 /**
  * Process Plugin to handle Callout Paragraphs from QS1.
  *
+ * @deprecated in az_quickstart:3.5.0 and is removed from az_quickstart:4.0.0.
+ * There is no replacement.
+ *
+ * @see https://www.drupal.org/node/3533564
+ *
  * Quickstart 1 to Quickstart2 Process plugin to extract specific field values
  * from the source, (uaqs_callout paragraphs), and transforming those values
  * by wrapping them in specific arizona-bootstrap markup.
@@ -57,7 +62,7 @@ class ParagraphsCalloutFieldMerge extends ProcessPluginBase {
     if (!empty($this->configuration['background'])) {
       $field_uaqs_callout_background = $row->getSourceProperty($this->configuration['background']);
       if (!empty($field_uaqs_callout_background[0]['value'])) {
-        $bg_light = 'bg-light';
+        $bg_light = 'text-bg-light';
       }
     }
     // Color and text Mapping.

@@ -3,7 +3,8 @@
 namespace Drupal\az_person_profiles_import\EventSubscriber;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Messenger\Messenger;
+use Drupal\Core\Messenger\MessengerInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\migrate\Event\MigrateEvents;
 use Drupal\migrate\Event\MigrateIdMapMessageEvent;
 use Drupal\migrate\Event\MigratePostRowSaveEvent;
@@ -14,25 +15,27 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class AZPersonProfilesImportEventSubscriber implements EventSubscriberInterface {
 
+  use StringTranslationTrait;
+
   /**
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
   protected $entityTypeManager;
 
   /**
-   * @var \Drupal\Core\Messenger\Messenger
+   * @var \Drupal\Core\Messenger\MessengerInterface
    */
   protected $messenger;
 
   /**
    * Constructs an AZPersonProfilesImportEventSubscriber.
    *
-   * @param \Drupal\Core\Messenger\Messenger $messenger
+   * @param \Drupal\Core\Messenger\MessengerInterface $messenger
    *   The messenger service.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   The entity type manager service.
    */
-  public function __construct(Messenger $messenger, EntityTypeManagerInterface $entityTypeManager) {
+  public function __construct(MessengerInterface $messenger, EntityTypeManagerInterface $entityTypeManager) {
     $this->messenger = $messenger;
     $this->entityTypeManager = $entityTypeManager;
   }
@@ -65,7 +68,7 @@ class AZPersonProfilesImportEventSubscriber implements EventSubscriberInterface 
       // Consume name of migration and field that prepends message.
       $message = preg_replace('/^.*:.*: /', '', $message);
       // Output the migration message.
-      $this->messenger->addWarning(t('NetID %netid @message.', ['%netid' => $netid, '@message' => $message]));
+      $this->messenger->addWarning($this->t('NetID %netid @message.', ['%netid' => $netid, '@message' => $message]));
     }
   }
 
@@ -83,7 +86,7 @@ class AZPersonProfilesImportEventSubscriber implements EventSubscriberInterface 
       $person = $this->entityTypeManager->getStorage('node')->load($id);
       if (!empty($person)) {
         $url = $person->toUrl()->toString();
-        $this->messenger->addMessage(t('Imported <a href="@link">@name</a>.', [
+        $this->messenger->addMessage($this->t('Imported <a href="@link">@name</a>.', [
           '@link' => $url,
           '@name' => $person->getTitle(),
         ]));

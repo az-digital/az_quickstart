@@ -30,7 +30,7 @@
   {% import _self as menus %}
   {% if items %}
     {% if menu_level == 0 %}
-      <ul{{ attributes.addClass('nav nav-utility ml-auto justify-content-end') }}>
+      <ul{{ attributes.addClass('nav nav-utility justify-content-end') }}>
     {% else %}
       <ul class="menu">
     {% endif %}
@@ -46,7 +46,7 @@
       <li{{ item.attributes.addClass(classes) }}>
         {%
           set link_classes = [
-            'text-muted',
+            'text-body-secondary',
             'nav-link',
             item.in_active_trail ? 'active',
             item.url.getOption('attributes').class ? item.url.getOption('attributes').class | join(''),
