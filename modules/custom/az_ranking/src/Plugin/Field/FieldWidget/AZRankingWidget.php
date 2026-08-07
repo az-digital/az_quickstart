@@ -75,8 +75,18 @@ class AZRankingWidget extends WidgetBase {
     $field_state['ajax_wrapper_id'] = $wrapper_id;
 
     // Remove extra field added on form instantiation for existing content.
+    //
+    // items_count is the highest row index, not the number of rows: core
+    // renders deltas 0 through items_count, so it draws one more row than
+    // the number stored here. Seeding it one below count($items) is what
+    // drops that spare blank row.
+    //
+    // Only on the first build though - after that the stored value is what
+    // the add and delete buttons have been adjusting. ?? falls through only
+    // when the left side is null, so a stored 0 survives; !empty() would
+    // treat that 0 as unset, and 0 is real here - it means one row.
     $count = count($items);
-    $field_state['items_count'] = (!empty($field_state['items_count'])) ? $field_state['items_count'] : max(0, $count - 1);
+    $field_state['items_count'] = $field_state['items_count'] ?? max(0, $count - 1);
 
     $field_state['array_parents'] = [];
 

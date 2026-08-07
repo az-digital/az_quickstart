@@ -96,6 +96,13 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
    * {@inheritdoc}
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
+    // Render nothing when every ranking has been removed, rather than an
+    // empty deck. Carrying on would hand the slot below an empty array,
+    // which core rejects with a fatal.
+    if ($items->isEmpty()) {
+      return [];
+    }
+
     $rankings = [];
     $interactive_links = (bool) $this->getSetting('interactive_links');
 
