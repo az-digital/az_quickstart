@@ -1,0 +1,11 @@
+services:
+  az_media.image_style_twig_extension:
+    class: Drupal\az_media\Twig\ImageStyleTwigExtension
+    arguments:
+      - '@file_url_generator'
+      - '@entity_type.manager'
+      - '@image.toolkit.manager'
+    tags:
+      - { name: twig.extension }
+  az_media.placeholder_image_generator:
+    class: Drupal\az_media\AZPlaceholderImageGenerator

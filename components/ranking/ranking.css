@@ -1,0 +1,161 @@
+/**
+ * Ranking component.
+ *
+ * Ported from az_ranking's legacy az-ranking.css and az-ranking-image.css,
+ * both now deleted. Color tokens come from Arizona Bootstrap. Everything is
+ * scoped to an .az-ranking-sdc class, and the hover and font-color rules
+ * carry !important so Bootstrap's utilities don't override them.
+ */
+
+.az-ranking-sdc {
+  position: relative;
+  /* Small viewports. */
+  min-height: 190px;
+}
+
+/* Medium viewports. */
+@media (min-width: 768px) {
+  .az-ranking-sdc {
+    min-height: 230px;
+  }
+}
+
+/* Large viewports. */
+@media (min-width: 992px) {
+  .az-ranking-sdc {
+    min-height: 260px;
+  }
+}
+
+/*
+ * Heading Styles
+ */
+.az-ranking-sdc .az-ranking-sdc__heading {
+  font-size: 58px;
+  line-height: 1.05;
+  letter-spacing: 0;
+}
+
+.az-ranking-sdc .az-ranking-sdc__heading,
+.az-ranking-sdc.hover:hover .az-ranking-sdc__heading,
+.az-ranking-sdc.hover:focus .az-ranking-sdc__heading {
+  text-decoration-thickness: 3px;
+  text-underline-offset: 3px;
+}
+
+.az-ranking-sdc .az-ranking-sdc__heading {
+  font-weight: 400;
+}
+
+.az-ranking-sdc .az-ranking-sdc__heading--bold {
+  font-weight: 700;
+}
+
+.az-ranking-sdc .az-ranking-sdc__heading--bolder {
+  font-weight: 900;
+}
+
+.az-ranking-sdc {
+  --az-ranking-heading-sans: var(--bs-body-font-family);
+  --az-ranking-heading-serif: garamond-premier-pro, Georgia, "Times New Roman", serif;
+}
+
+.az-ranking-sdc .az-ranking-sdc__heading {
+  font-family: var(--az-ranking-heading-sans);
+}
+
+.az-ranking-sdc .az-ranking-sdc__heading--serif {
+  font-family: var(--az-ranking-heading-serif);
+}
+
+.az-ranking-sdc .az-ranking-sdc__description {
+  font-size: 22px;
+  line-height: 30px;
+  font-weight: 700;
+}
+
+.az-ranking-sdc .az-ranking-sdc__source {
+  font-size: 18px;
+  line-height: 24px;
+}
+
+/*
+ * Keep the whole card clickable when the link title is hidden.
+ *
+ * The "Hidden link title" style puts Bootstrap's .visually-hidden on the
+ * same <a> as .stretched-link. stretched-link's invisible click layer sizes
+ * itself against the nearest positioned ancestor - normally the card - but
+ * visually-hidden sets position: absolute on the <a>, so the layer shrinks
+ * to the <a>'s own 1px box and only that pixel is clickable. Going back to
+ * static skips the <a> and finds .az-ranking-sdc again.
+ *
+ * display: block is the other half: a static <a> is an inline box, and
+ * width/height do not apply to those, so visually-hidden's 1px sizing would
+ * be ignored and the text would show.
+ */
+.az-ranking-sdc .card-body .visually-hidden {
+  display: block;
+  position: static !important;
+}
+
+/*
+ * Hover pairs. Each background gets a specific background and text color
+ * when the card is hovered.
+ *
+ * The `*` reaches every descendant because a card's text sits across the
+ * heading, description and source elements, and repainting their background
+ * is what produces the effect - the card root's own color would otherwise
+ * show through the gaps.
+ *
+ * !important is here for the classes that land on those descendants
+ * directly: the text-midnight / text-azurite contrast utilities ranking.twig
+ * adds, which carry !important themselves, and the .btn-* colors on the
+ * link. It is not needed against the card's own text-bg-* utility, since a
+ * descendant inherits that and any direct declaration already beats an
+ * inherited value.
+ */
+.text-bg-chili.az-ranking-sdc--bold-hover:hover * {
+  background-color: var(--bs-white) !important;
+  color: RGBA(var(--bs-chili-rgb), var(--bs-bg-opacity, 1)) !important;
+}
+
+.text-bg-blue.az-ranking-sdc--bold-hover:hover * {
+  background-color: var(--bs-white) !important;
+  color: RGBA(var(--bs-blue-rgb), var(--bs-bg-opacity, 1)) !important;
+}
+
+.bg-sky.az-ranking-sdc--bold-hover:hover * {
+  background-color: RGBA(var(--bs-blue-rgb), var(--bs-bg-opacity, 1)) !important;
+  color: RGBA(var(--bs-sky-rgb), var(--bs-bg-opacity, 1)) !important;
+}
+
+.bg-cool-gray.az-ranking-sdc--bold-hover:hover * {
+  background-color: RGBA(var(--bs-azurite-rgb), var(--bs-bg-opacity, 1)) !important;
+  color: RGBA(var(--bs-cool-gray-rgb), var(--bs-bg-opacity, 1)) !important;
+}
+
+.bg-oasis.az-ranking-sdc--bold-hover:hover * {
+  background-color: RGBA(var(--bs-midnight-rgb), var(--bs-bg-opacity, 1)) !important;
+  color: RGBA(var(--bs-oasis-rgb), var(--bs-bg-opacity, 1)) !important;
+}
+
+/*
+ * Font color for transparent cards, which have no text-bg-* utility to
+ * inherit one from. :not(a) leaves links alone so they keep their own color
+ * and stay distinguishable from the text around them.
+ */
+.az-ranking-sdc--text-white *:not(a) {
+  color: var(--bs-white) !important;
+}
+
+.az-ranking-sdc--text-black *:not(a) {
+  color: var(--bs-black) !important;
+}
+
+.az-ranking-sdc--text-az-blue *:not(a) {
+  color: RGBA(var(--bs-blue-rgb), var(--bs-bg-opacity, 1)) !important;
+}
+
+.az-ranking-sdc--text-midnight *:not(a) {
+  color: RGBA(var(--bs-midnight-rgb), var(--bs-bg-opacity, 1)) !important;
+}

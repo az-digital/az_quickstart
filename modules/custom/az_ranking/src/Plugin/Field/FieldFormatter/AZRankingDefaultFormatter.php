@@ -8,14 +8,22 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\Core\StreamWrapper\PublicStream;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
-use Drupal\Core\Url;
 use Drupal\paragraphs\ParagraphInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Plugin implementation of the 'az_ranking_default' formatter.
+ *
+ * Renders the field through the az_quickstart:ranking,
+ * az_quickstart:ranking-image and az_quickstart:ranking-deck Single
+ * Directory Components, so a ranking built in the page builder and one
+ * composed in Canvas come out as the same markup.
+ *
+ * The item-to-props mapping lives in AZRankingComponentBuilder, which
+ * AZRankingWidget also uses for its live edit-form preview.
+ *
+ * @see https://github.com/az-digital/az_quickstart/issues/5813
  */
 #[FieldFormatter(
   id: 'az_ranking_default',
@@ -27,25 +35,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactoryPluginInterface {
 
   /**
-   * The entity type manager service.
+   * The AZRankingComponentBuilder service.
    *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   * @var \Drupal\az_ranking\AZRankingComponentBuilder
    */
-  protected $entityTypeManager;
-
-  /**
-   * The AZRankingImageHelper service.
-   *
-   * @var \Drupal\az_ranking\AZRankingImageHelper
-   */
-  protected $rankingImageHelper;
-
-  /**
-   * Drupal\Core\Path\PathValidator definition.
-   *
-   * @var \Drupal\Core\Path\PathValidator
-   */
-  protected $pathValidator;
+  protected $componentBuilder;
 
   /**
    * {@inheritdoc}
@@ -58,9 +52,7 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
       $plugin_definition,
     );
 
-    $instance->rankingImageHelper = $container->get('az_ranking.image');
-    $instance->entityTypeManager = $container->get('entity_type.manager');
-    $instance->pathValidator = $container->get('path.validator');
+    $instance->componentBuilder = $container->get('az_ranking.component_builder');
     return $instance;
   }
 
@@ -104,282 +96,62 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
    * {@inheritdoc}
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
-    $settings = $this->getSettings();
-    $element = [];
-
-    foreach ($items as $delta => $item) {
-      assert($item instanceof AZRankingItem);
-
-      // Format title.
-      $ranking_heading = $item->ranking_heading ?? '';
-      $ranking_description = $item->ranking_description ?? '';
-
-      $attached = [];
-      $attached['library'][] = 'az_ranking/az_ranking';
-
-      // Media.
-      $column_span = $item->options['column_span'] ?? '';
-      $media_render_array = [];
-      if (!empty($item->media)) {
-        if ($media = $this->entityTypeManager->getStorage('media')->load($item->media)) {
-          $media_render_array = $this->rankingImageHelper->generateImageRenderArray($media);
-          $attached['library'][] = 'az_ranking/az_ranking_image';
-        }
-      }
-
-      // Define Ranking Variabbles.
-      $ranking_classes = 'ranking card';
-      $ranking_clickable = FALSE;
-      $ranking_hover_effect = FALSE;
-      $ranking_source_classes = '';
-      $ranking_font_color = '';
-      $ranking_defaults = [];
-      $column_classes = [];
-      $column_classes[] = 'col-md-4 col-lg-4';
-      $parent = $item->getEntity();
-
-      // Link and link style.
-      $link_render_array = [];
-      $link_url = '';
-      $link_title = $item->link_title ?? '';
-      $ranking_link_style = '';
-      if ($item->link_uri) {
-        if (str_starts_with($item->link_uri ?? '', '/' . PublicStream::basePath())) {
-          // Link to public file: use fromUri() to get the URL.
-          $link_url = Url::fromUri(urldecode('base:' . $item->link_uri));
-        }
-        else {
-          // Check if the link is an anchor within the current page.
-          if (str_starts_with($item->link_uri ?? '', "#")) {
-            $link_url = Url::fromUserInput($item->link_uri);
-          }
-          else {
-            $link_url = $this->pathValidator->getUrlIfValid($item->link_uri ?? '<none>');
-          }
-        }
-        $link_render_array = [
-          '#type' => 'link',
-          '#title' => $link_title ?: ($item->ranking_source ?? ''),
-          '#url' => $link_url ?: Url::fromRoute('<none>'),
-          '#attributes' => ['class' => ['']],
-        ];
-        $ranking_link_style = $item->ranking_link_style;
-        // Link color override.
-        if (str_contains($ranking_link_style, 'link')) {
-          if (str_contains($item->options['class'], 'bg-oasis') ||
-            str_contains($item->options['class'], 'bg-sky')) {
-            $ranking_link_style .= ' text-midnight';
-          }
-        }
-        $link_render_array['#attributes']['class'] = explode(' ', $ranking_link_style);
-        if (empty($settings['interactive_links'])) {
-          $link_render_array['#attributes']['class'][] = 'az-ranking-no-follow';
-          $attached['library'][] = 'az_ranking/az_ranking_no_follow';
-        }
-      }
-
-      // Get settings from parent paragraph.
-      if ($parent instanceof ParagraphInterface) {
-        // Get the behavior settings for the parent.
-        $parent_config = $parent->getAllBehaviorSettings();
-        // See if the parent behavior defines some ranking-specific settings.
-        if (!empty($parent_config['az_rankings_paragraph_behavior'])) {
-          $ranking_defaults = $parent_config['az_rankings_paragraph_behavior'];
-
-          // Set ranking classes according to behavior settings.
-          $column_classes = [];
-          if (!empty($ranking_defaults['az_display_settings'])) {
-            $column_classes[] = $ranking_defaults['az_display_settings']['ranking_width_xs'] ?? 'col-6';
-            $column_classes[] = $ranking_defaults['az_display_settings']['ranking_width_sm'] ?? 'col-md-4';
-          }
-          $column_classes[] = $ranking_defaults['ranking_width'] ?? 'col-md-4 col-lg-3';
-          $ranking_clickable = $ranking_defaults['ranking_clickable'] ?? FALSE;
-          $ranking_hover_effect = $ranking_defaults['ranking_hover_effect'] ?? FALSE;
-          if ($item->options['ranking_type'] !== 'image_only') {
-            $ranking_classes .= ' ' . ($ranking_defaults['ranking_alignment'] ?? 'text-left');
-          }
-          // Calculate column classes for image based on column_span.
-          if ($item->options['ranking_type'] === 'image_only' &&
-            !empty($item->options['column_span']) &&
-            ($item->options['column_span'] != '')) {
-
-            // Multiply column classes by column_span value.
-            $column_span_multiplier = (int) $item->options['column_span'];
-            if ($column_span_multiplier > 1) {
-              foreach ($column_classes as $key => $class_string) {
-                // Handle single classes AND space-separated multiple classes.
-                $classes = explode(' ', $class_string);
-                $multiplied_classes = [];
-
-                foreach ($classes as $class) {
-                  if (preg_match('/^col(-\w+)?-(\d+)$/', $class, $matches)) {
-                    $prefix = $matches[1] ?? '';
-                    $current_width = (int) $matches[2];
-                    $new_width = min(12, $current_width * $column_span_multiplier);
-                    $multiplied_classes[] = 'col' . $prefix . '-' . $new_width;
-                  }
-                  else {
-                    // Keep non-column classes as-is.
-                    $multiplied_classes[] = $class;
-                  }
-                }
-                $column_classes[$key] = implode(' ', $multiplied_classes);
-              }
-            }
-          }
-          else {
-            $column_classes[] = $ranking_defaults['ranking_width'] ?? 'col-md-4 col-lg-4';
-          }
-
-          // Is the ranking clickable?
-          if ($ranking_clickable) {
-            // Whole card is clickable.
-            $ranking_classes .= ' shadow';
-            if (!empty($link_render_array)) {
-              $link_render_array['#attributes']['class'][] = 'stretched-link';
-            }
-            $link_title = '';
-            $ranking_link_style = '';
-            if (!empty($ranking_hover_effect)) {
-              // Add hover effect to ranking card.
-              if ($item->options['ranking_type'] !== 'image_only') {
-                $ranking_classes .= ' ranking-bold-hover hover';
-              }
-            }
-            else {
-              // No hover effect but ranking is still clickable.
-              if (!empty($item->link_uri) && $item->options['ranking_type'] !== 'image_only') {
-                $ranking_classes .= ' ranking-with-link hover';
-              }
-            }
-          }
-          // If ranking is not clickable.
-          else {
-            $link_title = $item->link_title ?? '';
-            $ranking_link_style = $item->ranking_link_style ?? '';
-            // Unset hover effect if not clickable.
-            $ranking_hover_effect = FALSE;
-          }
-        }
-      }
-      if (!str_contains($item->options['class'], 'bg-transparent')) {
-        // Add mt-auto class to source on all styles, except bg-transparent.
-        $ranking_source_classes = 'mt-auto';
-      }
-      else {
-        $ranking_font_color = ' ' . $item->ranking_font_color;
-        $ranking_classes .= ' ' . $item->ranking_font_color . ' ';
-      }
-
-      // Handle class keys that contained multiple classes.
-      $column_classes = implode(' ', $column_classes);
-      $column_classes = explode(' ', $column_classes);
-      $column_classes[] = 'pb-4';
-
-      // Hover effect takes precedence over non-hover-effect backgrounds.
-      if ($ranking_hover_effect) {
-        // Try to read hover-specific value from the item.
-        $hover_class = '';
-        if (!empty($item->options['hover_class'])) {
-          $hover_class = $item->options['hover_class'];
-        }
-        // Fallback to persisted background class if no hover-specific value.
-        if (empty($hover_class) && !empty($item->options['class'])) {
-          $hover_class = $item->options['class'];
-        }
-        if (!empty($hover_class) && $item->options['ranking_type'] !== 'image_only') {
-          $ranking_classes .= ' ' . $hover_class;
-        }
-      }
-      // If ranking has no hover effect...
-      else {
-        if (!empty($item->options['class']) && $item->options['ranking_type'] !== 'image_only') {
-          $ranking_classes .= ' ' . $item->options['class'];
-        }
-      }
-
-      // Set custom text classes based on background color.
-      $text_color_override = '';
-      if (!$ranking_hover_effect) {
-        if (!empty($item->options['class'])) {
-          switch (TRUE) {
-            case str_contains($item->options['class'], 'bg-sky'):
-              $text_color_override = 'text-midnight';
-              break;
-
-            case str_contains($item->options['class'], 'bg-cool-gray'):
-              $text_color_override = 'text-azurite';
-              break;
-
-            case str_contains($item->options['class'], 'bg-warm-gray'):
-              $text_color_override = 'text-midnight';
-              break;
-
-            case str_contains($item->options['class'], 'bg-white'):
-              $text_color_override = 'text-midnight';
-              break;
-
-            case str_contains($item->options['class'], 'bg-oasis'):
-              $text_color_override = 'text-midnight';
-              break;
-          }
-        }
-      }
-      // Override hover class.
-      else {
-        if (!empty($item->options['hover_class'])) {
-          switch (TRUE) {
-            case str_contains($item->options['hover_class'], 'bg-sky'):
-              $text_color_override = 'text-midnight';
-              break;
-
-            case str_contains($item->options['hover_class'], 'bg-cool-gray'):
-              $text_color_override = 'text-azurite';
-              break;
-
-            case str_contains($item->options['hover_class'], 'bg-oasis'):
-              $text_color_override = 'text-midnight';
-              break;
-          }
-        }
-      }
-
-      $element[$delta] = [
-        '#theme' => 'az_ranking',
-        '#media' => $media_render_array,
-        '#column_span' => $column_span,
-        '#ranking_heading' => $ranking_heading,
-        '#ranking_clickable' => $ranking_clickable,
-        '#ranking_hover_effect' => $ranking_hover_effect,
-        '#ranking_header_style' => $ranking_defaults['ranking_header_style'],
-        // The ProcessedText element handles cache context & tag bubbling.
-        // @see \Drupal\filter\Element\ProcessedText::preRenderText()
-        '#ranking_description' => $ranking_description,
-        '#ranking_source' => $item->ranking_source,
-        '#link' => $link_render_array,
-        '#link_url' => $link_url,
-        '#link_title' => $link_title,
-        '#ranking_link_style' => $ranking_link_style,
-        '#ranking_source_classes' => $ranking_source_classes,
-        '#ranking_font_color' => $ranking_font_color,
-        '#text_color_override' => $text_color_override,
-        '#attributes' => ['class' => $ranking_classes],
-        '#attached' => $attached,
-      ];
-
-      $element['#items'][$delta] = new \stdClass();
-      $element['#items'][$delta]->_attributes = [
-        'class' => $column_classes,
-      ];
-
-      $element['#attributes']['class'][] = 'content';
-      $element['#attributes']['class'][] = 'h-100';
-      $element['#attributes']['class'][] = 'row';
-      $element['#attributes']['class'][] = 'd-flex';
-      $element['#attributes']['class'][] = 'flex-wrap';
+    // Render nothing when every ranking has been removed, rather than an
+    // empty deck. Carrying on would hand the slot below an empty array,
+    // which core rejects with a fatal.
+    if ($items->isEmpty()) {
+      return [];
     }
 
-    return $element;
+    $rankings = [];
+    $interactive_links = (bool) $this->getSetting('interactive_links');
+
+    // Build the deck's props first, before the loop. Rationale:
+    // buildImageComponent() needs the deck's column count at each
+    // breakpoint so it can clamp every image's width_span_* props against
+    // it - see that method's docblock.
+    $deck_props = [];
+    $ranking_defaults = [];
+    $parent = $items->getEntity();
+    if ($parent instanceof ParagraphInterface) {
+      $behavior_settings = $parent->getAllBehaviorSettings();
+      $ranking_defaults = $behavior_settings['az_rankings_paragraph_behavior'] ?? [];
+      $deck_props = $this->componentBuilder->buildDeckProps($ranking_defaults);
+    }
+
+    foreach ($items as $item) {
+      assert($item instanceof AZRankingItem);
+      $values = $this->componentBuilder->extractItemValues($item);
+      $ranking_type = $values['options']['ranking_type'] ?? 'standard';
+      $ranking = $ranking_type === 'image_only'
+        ? $this->componentBuilder->buildImageComponent($values, $deck_props)
+        : $this->componentBuilder->buildRankingComponent($values, $ranking_defaults);
+
+      // With "Interactive Links" off, stop this item's link navigating - if
+      // it has one. ranking-image never sets link_url, so image_only items
+      // are untouched, which matches the legacy template: it only ever put
+      // this on the #type => link element.
+      //
+      // Kept out of ranking.component.yml on purpose. "Disable my own links
+      // because a Paragraphs Preview view mode is rendering me" says nothing
+      // about what a ranking card is; it belongs to one admin workflow that
+      // Canvas has no equivalent of.
+      if (!$interactive_links && isset($ranking['#props']['link_url'])) {
+        $ranking['#attributes']['class'][] = 'az-ranking-no-follow';
+        $ranking['#attached']['library'][] = 'az_ranking/az_ranking_no_follow';
+      }
+
+      $rankings[] = $ranking;
+    }
+
+    return [
+      0 => [
+        '#type' => 'component',
+        '#component' => 'az_quickstart:ranking-deck',
+        '#props' => $deck_props,
+        '#slots' => ['rankings' => $rankings],
+      ],
+    ];
   }
 
 }
