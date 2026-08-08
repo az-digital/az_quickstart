@@ -10,36 +10,44 @@
  *   </div>
  *
  * The image is always decorative - alt="" plus aria-hidden on the wrapper -
- * and there is no alt or decorative prop for an editor to set.
+ * and there is no alt or decorative prop for an editor to set, even though
+ * the `image` prop carries one.
  *
  * Keep Canvas out of this file. The same component renders the az_ranking
  * paragraph in the page builder, on sites that may never install Canvas, so
- * anything Canvas owns breaks it there. Two to avoid in particular: the
- * `json-schema-definitions://` $ref scheme, and the `apply_image_style` Twig
- * filter. canvas.services.yml registers both, and a Twig filter that does
- * not exist fails when the template compiles, so nothing degrades
- * gracefully. Use az_media's filters instead. If an object-shaped image prop
- * is ever wanted, declare it inline and map it with our own
- * hook_canvas_storable_prop_shape_alter(), which Canvas calls even when it
- * has no mapping of its own.
+ * anything Canvas owns breaks it there. In particular, never call the
+ * `apply_image_style` Twig filter here: canvas.services.yml registers it,
+ * and a Twig filter that does not exist fails when the template compiles, so
+ * nothing degrades gracefully. `az_media_image_style`, below, is az_media's
+ * own - it exists regardless of Canvas.
  *
- * Editors still get a real media library picker in Canvas without any of
- * that. The shape of the `src` prop - string, format: uri,
- * contentMediaType: image/*, x-allowed-schemes: [public] - is what core's
- * media_library matches on, through a hook Canvas ships.
+ * The `image` prop's object shape (src/alt/width/height) is Canvas's own
+ * well-known image shape, structurally matched - no `$ref` written here, so
+ * nothing about parsing or validating this component's schema depends on
+ * Canvas being installed. Matching it is what gets editors a real media
+ * library picker in Canvas, with `image.src` resolved from the selected
+ * media's file.
  *
  * Props:
- * - src: A stream-wrapper URI like public://cactus.jpg, which a browser
- *   cannot load on its own. az_media's image_style filter turns it into a
- *   URL for the az_ranking_responsive style (scale plus WebP), and falls
- *   back to a plain file URL if that style is missing, so a misconfigured
- *   style does not take the page down. The filter is generic, which is why
- *   it lives in az_media rather than az_ranking.
+ * - image.src: Either a stream-wrapper URI (AZRankingComponentBuilder, on
+ *   the paragraph path) or an already-resolved URL (Canvas's own field
+ *   mapping, src_with_alternate_widths). `az_media_image_style` accepts
+ *   both - it reverses a resolved URL back to a URI when needed - so this
+ *   template never has to know or care which path built the prop.
+ *   image.alt/width/height are part of the matched shape but unused here;
+ *   see above.
  * - focal_x / focal_y: The point to keep in view when object-fit: cover
  *   crops the image, as a 0-1 fraction of width and height. Rendered as
  *   data attributes and applied by ranking-image.js. Not cropped server
  *   side, because how much gets cropped depends on the live grid layout
  *   rather than on a fixed set of image styles.
+ *
+ *   Note the style below deliberately does not upscale. ranking-image.js
+ *   reads naturalWidth/naturalHeight only as a *ratio*, and image_scale
+ *   preserves aspect ratio, so the focal point lands identically whatever
+ *   the derivative's pixel size - while object-fit: cover does any
+ *   enlarging in the browser. Upscaling server side would only add
+ *   interpolated pixels and bytes.
  * - width_span_desktop / width_span_tablet / width_span_phone: 1-4 grid
  *   columns to span at each breakpoint. Inert outside a grid. Defaults
  *   match Ranking Deck's own (2/2/1), so an image is safe out of the box.
@@ -80,9 +88,9 @@
 {% set root_attributes = attributes.addClass(root_classes).setAttribute('aria-hidden', 'true') %}
 
 <div{{ root_attributes }}>
-  {% if src|default('') %}
+  {% if image.src|default('') %}
     <img
-      src="{{ src|az_media_image_style('az_ranking_responsive') }}"
+      src="{{ image.src|az_media_image_style('max_1300x1300') }}"
       alt=""
       loading="lazy"
       class="az-ranking-image__img"

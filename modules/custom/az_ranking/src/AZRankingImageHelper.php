@@ -4,6 +4,7 @@ namespace Drupal\az_ranking;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
+use Drupal\Core\File\FileUrlGeneratorInterface;
 use Drupal\media\MediaInterface;
 
 /**
@@ -22,10 +23,18 @@ class AZRankingImageHelper {
   protected $entityTypeManager;
 
   /**
+   * The file URL generator service.
+   *
+   * @var \Drupal\Core\File\FileUrlGeneratorInterface
+   */
+  protected $fileUrlGenerator;
+
+  /**
    * Constructs a new AZRankingImageHelper object.
    */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager) {
+  public function __construct(EntityTypeManagerInterface $entity_type_manager, FileUrlGeneratorInterface $file_url_generator) {
     $this->entityTypeManager = $entity_type_manager;
+    $this->fileUrlGenerator = $file_url_generator;
   }
 
   /**
@@ -40,8 +49,13 @@ class AZRankingImageHelper {
    *
    * @return array
    *   An array with these keys:
-   *   - 'src': the image's file URI, or an empty string if the media has
-   *     no image on it.
+   *   - 'src': the image's file URL, or an empty string if the media has
+   *     no image on it. A resolved URL, not a public:// URI - the
+   *     `image.src` prop's schema only allows http/https, matching the
+   *     shape Canvas's own field mapping produces (see ranking-image.twig's
+   *     docblock), so this always has to be at least URL-resolved even
+   *     though the actual styling happens later, in the template's
+   *     `az_media_image_style` filter call.
    *   - 'focal_x', 'focal_y': the focal point, or NULL if none is set.
    *   - 'cache_tags': the file's cache tags. Attach these to whatever
    *     render array you build from this data, or a cached ranking will
@@ -70,7 +84,7 @@ class AZRankingImageHelper {
     }
 
     $result = $empty;
-    $result['src'] = $file->getFileUri();
+    $result['src'] = $this->fileUrlGenerator->generateString($file->getFileUri());
     $result['cache_tags'] = $file->getCacheTags();
 
     if ($media instanceof FieldableEntityInterface) {
