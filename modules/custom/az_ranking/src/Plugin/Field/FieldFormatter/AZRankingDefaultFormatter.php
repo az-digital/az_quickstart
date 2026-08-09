@@ -117,6 +117,11 @@ class AZRankingDefaultFormatter extends FormatterBase implements ContainerFactor
       $behavior_settings = $parent->getAllBehaviorSettings();
       $ranking_defaults = $behavior_settings['az_rankings_paragraph_behavior'] ?? [];
       $deck_props = $this->componentBuilder->buildDeckProps($ranking_defaults);
+      // Legacy version of this flie used `pb-4` to make a gap between rows
+      // of rankings. New SDC's use `gap: 1.5rem`, which doesn't apply to the
+      // last row of rankings in a ranking-deck. So we're putting it here to
+      // match.
+      $deck_props['utility_classes'] = ['pb-4'];
     }
 
     foreach ($items as $item) {
