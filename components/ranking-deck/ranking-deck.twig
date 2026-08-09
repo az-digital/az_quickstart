@@ -1,0 +1,58 @@
+{#
+/**
+ * @file
+ * Template for the az_quickstart Ranking Deck component.
+ *
+ * Renders one <div> that arranges whatever is placed in its `rankings` slot
+ * into a CSS grid:
+ *
+ *   <div class="az-ranking-deck az-ranking-deck--desktop-4
+ *               az-ranking-deck--tablet-2 az-ranking-deck--phone-1">
+ *
+ * The deck owns the layout, not the cards inside it. How many columns show
+ * at each breakpoint comes from those modifier classes, so a Ranking card
+ * never has to know how many siblings it has.
+ *
+ * Props:
+ * - columns_desktop: Rankings per row on desktop (1-4). Defaults to 4.
+ * - columns_tablet: Rankings per row on tablet (1-4). Defaults to 2.
+ * - columns_phone: Rankings per row on phone (1-4). Defaults to 1.
+ * - utility_classes: Additional Bootstrap utility classes for the deck
+ *   wrapper (e.g. bottom spacing).
+ *
+ * Slots:
+ * - rankings: The Ranking cards (or other content) placed in the grid.
+ */
+#}
+{% set attributes = attributes|default(create_attribute()) %}
+
+{#
+  If a column count is missing or is not 1-4, fall back to a safe default.
+  Rationale: the classes further down are built by sticking the number on
+  the end of a string, so a value like '7' would produce
+  az-ranking-deck--desktop-7, which no CSS matches. The next breakpoint down
+  then wins by default - a bad desktop value leaves the deck on its tablet
+  count, and only a deck with all three broken drops to one column.
+#}
+{% set allowed = ['1', '2', '3', '4'] %}
+{% set columns_desktop = columns_desktop|default('4') in allowed ? columns_desktop|default('4') : '4' %}
+{% set columns_tablet = columns_tablet|default('2') in allowed ? columns_tablet|default('2') : '2' %}
+{% set columns_phone = columns_phone|default('1') in allowed ? columns_phone|default('1') : '1' %}
+{% set utility_classes = utility_classes|default([]) %}
+{% if utility_classes is not iterable %}
+  {% set utility_classes = [utility_classes] %}
+{% endif %}
+
+{% set deck_classes = [
+  'az-ranking-deck',
+  'az-ranking-deck--desktop-' ~ columns_desktop,
+  'az-ranking-deck--tablet-' ~ columns_tablet,
+  'az-ranking-deck--phone-' ~ columns_phone,
+] %}
+{% if utility_classes %}
+  {% set deck_classes = deck_classes|merge(utility_classes) %}
+{% endif %}
+
+<div{{ attributes.addClass(deck_classes) }}>
+  {{ rankings }}
+</div>

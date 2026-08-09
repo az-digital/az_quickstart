@@ -1,0 +1,100 @@
+{#
+/**
+ * @file
+ * Template for the az_quickstart Ranking Image component.
+ *
+ * Renders one <img> inside a positioned wrapper:
+ *
+ *   <div class="az-ranking-image az-ranking-image--span-desktop-2 ...">
+ *     <img src="..." alt="" class="az-ranking-image__img">
+ *   </div>
+ *
+ * The image is always decorative - alt="" plus aria-hidden on the wrapper -
+ * and there is no alt or decorative prop for an editor to set, even though
+ * the `image` prop carries one.
+ *
+ * Keep Canvas out of this file. The same component renders the az_ranking
+ * paragraph in the page builder, on sites that may never install Canvas, so
+ * anything Canvas owns breaks it there. In particular, never call the
+ * `apply_image_style` Twig filter here: canvas.services.yml registers it,
+ * and a Twig filter that does not exist fails when the template compiles, so
+ * nothing degrades gracefully. `az_media_image_style`, below, is az_media's
+ * own - it exists regardless of Canvas.
+ *
+ * The `image` prop's object shape (src/alt/width/height) is Canvas's own
+ * well-known image shape, structurally matched - no `$ref` written here, so
+ * nothing about parsing or validating this component's schema depends on
+ * Canvas being installed. Matching it is what gets editors a real media
+ * library picker in Canvas, with `image.src` resolved from the selected
+ * media's file.
+ *
+ * Props:
+ * - image.src: An image URL. AZRankingComponentBuilder resolves one from
+ *   the ranking's media entity; in Canvas it arrives from that component's
+ *   own field mapping. `az_media_image_style` handles either, so this
+ *   template never has to know which built it. image.alt, image.width and
+ *   image.height come with the matched shape but go unused - see above.
+ *
+ *   max_1300x1300 caps the long edge and converts to WebP. It does not
+ *   upscale, and does not need to: ranking-image.js uses naturalWidth and
+ *   naturalHeight only as a ratio, image_scale keeps that ratio whatever
+ *   the pixel size, and object-fit: cover does any enlarging in the
+ *   browser.
+ * - focal_x / focal_y: The point to keep in view when object-fit: cover
+ *   crops the image, as a 0-1 fraction of width and height. Rendered as
+ *   data attributes and applied by ranking-image.js. Not cropped server
+ *   side, because how much gets cropped depends on the live grid layout
+ *   rather than on a fixed set of image styles.
+ * - width_span_desktop / width_span_tablet / width_span_phone: 1-4 grid
+ *   columns to span at each breakpoint. Inert outside a grid. Defaults
+ *   match Ranking Deck's own (2/2/1), so an image is safe out of the box.
+ *   Keep each at or below the deck's "Rankings per row" for that
+ *   breakpoint, or the image spills into an extra column. See
+ *   ranking-image.css for why this is three props and not one.
+ * - utility_classes: Extra Bootstrap utility classes for the wrapper, e.g.
+ *   bottom spacing. Not needed inside a Ranking Deck.
+ */
+#}
+{% set attributes = attributes|default(create_attribute()) %}
+
+{% set focal_x = focal_x|default(null) %}
+{% set focal_y = focal_y|default(null) %}
+{% set has_focal_point = focal_x is not null and focal_y is not null %}
+
+{% set allowed_spans = ['1', '2', '3', '4'] %}
+{% set width_span_desktop = width_span_desktop|default('2') in allowed_spans ? width_span_desktop|default('2') : '2' %}
+{% set width_span_tablet = width_span_tablet|default('2') in allowed_spans ? width_span_tablet|default('2') : '2' %}
+{% set width_span_phone = width_span_phone|default('1') in allowed_spans ? width_span_phone|default('1') : '1' %}
+
+{% set utility_classes = utility_classes|default([]) %}
+{% if utility_classes is not iterable %}
+  {% set utility_classes = [utility_classes] %}
+{% endif %}
+
+{% set root_classes = [
+  'az-ranking-image',
+  'az-ranking-image--span-desktop-' ~ width_span_desktop,
+  'az-ranking-image--span-tablet-' ~ width_span_tablet,
+  'az-ranking-image--span-phone-' ~ width_span_phone,
+] %}
+{% if utility_classes %}
+  {% set root_classes = root_classes|merge(utility_classes) %}
+{% endif %}
+
+{# Always decorative - see the @file block above. #}
+{% set root_attributes = attributes.addClass(root_classes).setAttribute('aria-hidden', 'true') %}
+
+<div{{ root_attributes }}>
+  {% if image.src|default('') %}
+    <img
+      src="{{ image.src|az_media_image_style('max_1300x1300') }}"
+      alt=""
+      loading="lazy"
+      class="az-ranking-image__img"
+      {% if has_focal_point %}
+      data-focal-x="{{ focal_x }}"
+      data-focal-y="{{ focal_y }}"
+      {% endif %}
+    >
+  {% endif %}
+</div>
