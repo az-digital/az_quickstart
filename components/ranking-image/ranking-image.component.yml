@@ -5,16 +5,35 @@ description: A decorative, layout-aware image backed by the media library. Works
 props:
   type: object
   properties:
-    src:
-      type: string
+    image:
       title: Image
       description: Pick an image from the media library.
-      format: uri
-      contentMediaType: image/*
-      x-allowed-schemes:
-        - public
+      type: object
+      required:
+        - src
+      properties:
+        src:
+          title: Image URL
+          type: string
+          format: uri-reference
+          contentMediaType: image/*
+          x-allowed-schemes:
+            - http
+            - https
+        alt:
+          title: Alternative text
+          type: string
+        width:
+          title: Image width
+          type: integer
+        height:
+          title: Image height
+          type: integer
       examples:
-        - public://az-placeholder/1000x500/placeholder.svg
+        - src: https://placehold.co/1000x500
+          alt: ''
+          width: 1000
+          height: 500
     width_span_desktop:
       type: string
       title: Width Span (Desktop)

@@ -213,12 +213,13 @@ class AZRankingComponentBuilder {
   /**
    * Builds an az_quickstart:ranking-image component render array for one item.
    *
-   * The `src` prop gets a plain file URI, because a component prop cannot
-   * carry a render array. The az_ranking_responsive style still gets applied
-   * - ranking-image.twig does it with az_media's image_style filter - so
-   * scaling and WebP delivery match what #theme => image_formatter used to
-   * produce. Focal point values ride along as props and are applied in the
-   * browser by the component's own JS.
+   * The `image` prop is an object ({src}) matching Canvas's own image
+   * shape, which is what gets the component a media library picker in
+   * Canvas. See ranking-image.twig's docblock.
+   * AZRankingImageHelper resolves the URL that goes in it, and
+   * ranking-image.twig applies the image style, so no image processing
+   * happens here. Focal point values ride along as separate props and are
+   * applied in the browser by the component's own JS.
    *
    * Cache tags for the media and file are attached here because
    * AZRankingItem stores its media reference as a plain integer rather than
@@ -264,7 +265,7 @@ class AZRankingComponentBuilder {
         $image_data = $this->rankingImageHelper->getImageSourceAndFocalPoint($media);
         $cache_tags = Cache::mergeTags($cache_tags, $image_data['cache_tags']);
         if ($image_data['src'] !== '') {
-          $props['src'] = $image_data['src'];
+          $props['image'] = ['src' => $image_data['src']];
         }
         if ($image_data['focal_x'] !== NULL && $image_data['focal_y'] !== NULL) {
           $props['focal_x'] = $image_data['focal_x'];
