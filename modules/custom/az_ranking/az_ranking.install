@@ -8,43 +8,31 @@
 use Drupal\image\Entity\ImageStyle;
 
 /**
- * Remove the obsolete az_ranking_responsive image style.
+ * Remove the az_ranking_responsive image style.
  *
- * The ranking image component no longer needs a ranking-specific image
- * style. It uses the profile's existing max_1300x1300 instead, which
- * already scales and converts to WebP, via az_media's
- * `az_media_image_style` filter.
+ * az_ranking_responsive upscaled images because we thought focal point
+ * needed that. But after testing, we realized it's not necessary, so
+ * this is no longer needed. max_1300x1300, an image style that comes
+ * with Quickstart out of the box, is used instead.
  *
- * This hook lives in az_ranking rather than az_media because that is the
- * module that installed the style on every existing site: it shipped in
- * az_ranking/config/install until it was moved to az_media, and then deleted
- * outright, both within the same unreleased change. So no released version
- * ever had az_media install it, and every site that has this style has
- * az_ranking installed.
- *
- * The style carried no `dependencies.enforced.module`, so uninstalling
- * either module would never have removed it - without this hook it would
- * linger in the image styles UI forever.
- *
- * Deletion is skipped if any other configuration still depends on the style.
- * Rationale: az_quickstart is a distribution, so a site may have repurposed
- * this style in a view display of its own. Deleting it out from under such a
- * site would silently fall its images back to unstyled originals, which is a
- * worse outcome than leaving one unused style behind.
+ * Skips the deletion when other configuration still depends on the style.
+ * Rationale: a site running this distribution could have (not likely but
+ * still a possibility) picked az_ranking_responsive for a view display
+ * that's not ranking related.
  */
 function az_ranking_update_1130601() {
   $style = ImageStyle::load('az_ranking_responsive');
-  // Skip silently when it is already gone: a site may have deleted it by
-  // hand, and a fresh install never creates it in the first place.
+  // If the style has already gone, there is nothing to do. A site may have
+  // deleted it by hand, and a fresh install never creates it.
   if (!$style) {
     return NULL;
   }
 
-  // Ask the config dependency system rather than scanning raw config data:
-  // anything genuinely using an image style - an entity view display's
-  // image formatter, a responsive image style - records it as a config
-  // dependency, while incidental copies of the style's own data (a
-  // config_snapshot entry, say) are correctly not counted.
+  // Ask the config dependency system rather than searching raw config text.
+  // Anything really using an image style - an entity view display's image
+  // formatter, a responsive image style - records it as a config
+  // dependency, and a stray copy of the style's own data, such as a
+  // config_snapshot entry, does not.
   $dependents = \Drupal::service('config.manager')
     ->findConfigEntityDependencies('config', ['image.style.az_ranking_responsive']);
 
@@ -54,9 +42,9 @@ function az_ranking_update_1130601() {
       $dependents
     );
     sort($names);
-    // Returned strings are shown to whoever runs the update. Do not use t()
-    // in an update hook.
-    return 'The az_ranking_responsive image style is no longer used by the ranking image component, but it was kept because other configuration still depends on it: '
+    // This string is shown to whoever runs the update. Don't use t() in an
+    // update hook.
+    return 'The az_ranking_responsive image style is unused by the ranking image component, but was kept because other configuration still depends on it: '
       . implode(', ', $names)
       . '. Delete it manually once those are updated.';
   }

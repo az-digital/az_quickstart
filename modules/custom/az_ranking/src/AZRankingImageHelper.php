@@ -49,13 +49,12 @@ class AZRankingImageHelper {
    *
    * @return array
    *   An array with these keys:
-   *   - 'src': the image's file URL, or an empty string if the media has
-   *     no image on it. A resolved URL, not a public:// URI - the
-   *     `image.src` prop's schema only allows http/https, matching the
-   *     shape Canvas's own field mapping produces (see ranking-image.twig's
-   *     docblock), so this always has to be at least URL-resolved even
-   *     though the actual styling happens later, in the template's
-   *     `az_media_image_style` filter call.
+   *   - 'src': the image's URL, or an empty string when the media has no
+   *     image or its file has gone. Root-relative, like
+   *     /sites/default/files/cactus.jpg. The `image.src` prop is
+   *     `format: uri-reference`, so a path with no scheme is fine; its
+   *     `x-allowed-schemes` list rules out public://, not local files.
+   *     The image style is applied later, in ranking-image.twig.
    *   - 'focal_x', 'focal_y': the focal point, or NULL if none is set.
    *   - 'cache_tags': the file's cache tags. Attach these to whatever
    *     render array you build from this data, or a cached ranking will

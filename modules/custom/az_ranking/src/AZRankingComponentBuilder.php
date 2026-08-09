@@ -213,14 +213,13 @@ class AZRankingComponentBuilder {
   /**
    * Builds an az_quickstart:ranking-image component render array for one item.
    *
-   * The `image` prop is an object ({src}) rather than a plain file URI,
-   * matching Canvas's own well-known image shape (see ranking-image.twig's
-   * docblock) - it's what gets the component a real media library picker in
-   * Canvas. `image.src` here is a plain stream-wrapper URI: the template's
-   * `az_media_image_style` filter call is what turns it (and, on the Canvas
-   * path, Canvas's own resolved URL) into a final <img src>, so this class
-   * does no image processing of its own. Focal point values ride along as
-   * separate props and are applied in the browser by the component's own JS.
+   * The `image` prop is an object ({src}) matching Canvas's own image
+   * shape, which is what gets the component a media library picker in
+   * Canvas. See ranking-image.twig's docblock.
+   * AZRankingImageHelper resolves the URL that goes in it, and
+   * ranking-image.twig applies the image style, so no image processing
+   * happens here. Focal point values ride along as separate props and are
+   * applied in the browser by the component's own JS.
    *
    * Cache tags for the media and file are attached here because
    * AZRankingItem stores its media reference as a plain integer rather than

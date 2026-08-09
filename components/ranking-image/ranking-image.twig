@@ -29,25 +29,22 @@
  * media's file.
  *
  * Props:
- * - image.src: Either a stream-wrapper URI (AZRankingComponentBuilder, on
- *   the paragraph path) or an already-resolved URL (Canvas's own field
- *   mapping, src_with_alternate_widths). `az_media_image_style` accepts
- *   both - it reverses a resolved URL back to a URI when needed - so this
- *   template never has to know or care which path built the prop.
- *   image.alt/width/height are part of the matched shape but unused here;
- *   see above.
+ * - image.src: An image URL. AZRankingComponentBuilder resolves one from
+ *   the ranking's media entity; in Canvas it arrives from that component's
+ *   own field mapping. `az_media_image_style` handles either, so this
+ *   template never has to know which built it. image.alt, image.width and
+ *   image.height come with the matched shape but go unused - see above.
+ *
+ *   max_1300x1300 caps the long edge and converts to WebP. It does not
+ *   upscale, and does not need to: ranking-image.js uses naturalWidth and
+ *   naturalHeight only as a ratio, image_scale keeps that ratio whatever
+ *   the pixel size, and object-fit: cover does any enlarging in the
+ *   browser.
  * - focal_x / focal_y: The point to keep in view when object-fit: cover
  *   crops the image, as a 0-1 fraction of width and height. Rendered as
  *   data attributes and applied by ranking-image.js. Not cropped server
  *   side, because how much gets cropped depends on the live grid layout
  *   rather than on a fixed set of image styles.
- *
- *   Note the style below deliberately does not upscale. ranking-image.js
- *   reads naturalWidth/naturalHeight only as a *ratio*, and image_scale
- *   preserves aspect ratio, so the focal point lands identically whatever
- *   the derivative's pixel size - while object-fit: cover does any
- *   enlarging in the browser. Upscaling server side would only add
- *   interpolated pixels and bytes.
  * - width_span_desktop / width_span_tablet / width_span_phone: 1-4 grid
  *   columns to span at each breakpoint. Inert outside a grid. Defaults
  *   match Ranking Deck's own (2/2/1), so an image is safe out of the box.

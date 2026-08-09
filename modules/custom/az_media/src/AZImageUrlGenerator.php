@@ -19,21 +19,17 @@ use Symfony\Component\HttpFoundation\RequestStack;
  * <img src="{{ image.src|az_media_image_style('max_1300x1300') }}">
  * @endcode
  *
- * The reason this exists rather than the template just calling an image
- * style directly is that a component prop arrives in one of two forms,
- * depending on who built it: a stream-wrapper URI (public://foo.jpg, what
- * AZRankingComponentBuilder and the paragraph path produce) or an
- * already-resolved URL pointing at a local public file (what Canvas's own
- * field mapping produces, via src_with_alternate_widths). ImageStyle only
- * accepts the former, so a resolved URL is reversed back into a URI first -
- * see toStreamWrapperUri(). That reversal is the whole point: it lets one
- * template serve both render paths without knowing which one built its
- * props.
+ * A component prop holds a plain string, which may be a resolved URL like
+ * /sites/default/files/cactus.jpg or a stream-wrapper URI like
+ * public://cactus.jpg. ImageStyle::buildUrl() only takes the URI form, so
+ * toStreamWrapperUri() converts a URL back into one first. Taking both
+ * means a template never has to know which form its prop arrived in -
+ * ranking-image, for one, is handed a URL by AZRankingComponentBuilder on
+ * the paragraph path and a different URL by Canvas's own field mapping.
  *
- * Everything else is core's: ImageStyleDownloadController generates and
- * caches the derivative on first request, and flushes it when the style
- * changes or the source file is replaced, exactly as for an image style
- * used anywhere else.
+ * Core does the rest. ImageStyleDownloadController generates the styled
+ * copy the first time someone requests it, then serves it from disk, and
+ * flushes it when the style changes or the source file is replaced.
  */
 class AZImageUrlGenerator {
 
@@ -70,8 +66,8 @@ class AZImageUrlGenerator {
 
     $uri = $this->toStreamWrapperUri($src);
     if ($uri === NULL) {
-      // Not a local public file - e.g. a genuinely remote URL. Nothing to
-      // style, hand it back untouched.
+      // If the file isn't a local public one - a remote URL, say - there is
+      // nothing to style, so hand it back as it came.
       return $src;
     }
 
@@ -90,11 +86,11 @@ class AZImageUrlGenerator {
   /**
    * Resolves $src to a public:// URI, or NULL if that's not possible.
    *
-   * Ported from Canvas's own (unreleased) apply_image_style filter: reverses
-   * a resolved URL back into the stream-wrapper URI PublicStream::
-   * getLocalPath() derived it from, so this works the same whether $src
-   * arrived as a raw URI (the paragraph path) or an already-resolved URL
-   * (Canvas's src_with_alternate_widths).
+   * Reverses what PublicStream::getLocalPath() does, so a URL like
+   * /sites/default/files/cactus.jpg comes back as public://cactus.jpg. A
+   * URI is returned as it came. Copes with a site installed in a
+   * subdirectory and with an absolute URL carrying a port, and decodes the
+   * path so Drupal doesn't encode it twice when it builds the styled URL.
    */
   protected function toStreamWrapperUri(string $src): ?string {
     // Drop a query string - e.g. Canvas's own ?alternateWidths= - before
