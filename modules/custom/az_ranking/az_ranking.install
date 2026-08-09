@@ -10,9 +10,9 @@ use Drupal\image\Entity\ImageStyle;
 /**
  * Remove the az_ranking_responsive image style.
  *
- * az_ranking_responsive upscaled images because we thought focal point
+ * Az_ranking_responsive upscaled images because we thought focal point
  * needed that. But after testing, we realized it's not necessary, so
- * this is no longer needed. max_1300x1300, an image style that comes
+ * this is no longer needed. Max_1300x1300, an image style that comes
  * with Quickstart out of the box, is used instead.
  *
  * Skips the deletion when other configuration still depends on the style.
