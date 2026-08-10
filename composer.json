@@ -106,7 +106,7 @@
         "drupal/paragraphs_admin": "1.7.0",
         "drupal/pathauto": "1.14.0",
         "drupal/quick_node_clone": "1.22.0",
-        "drupal/recaptcha": "3.5-rc1",
+        "drupal/recaptcha": "3.5.0",
         "drupal/redirect": "1.13.0",
         "drupal/role_delegation": "1.6.0",
         "drupal/schema_metatag": "3.0.4",
