@@ -31,9 +31,9 @@ class AZEDSSettingsForm extends ConfigFormBase {
     $az_eds_config = $this->config('az_eds.settings');
 
     $form['students_allowed'] = [
-      '#title' => t('Allow EDS queries to retrieve students'),
+      '#title' => $this->t('Allow EDS queries to retrieve students'),
       '#type' => 'checkbox',
-      '#description' => t("Check to allow EDS migrations to return student information."),
+      '#description' => $this->t("Check to allow EDS migrations to return student information."),
       '#default_value' => $az_eds_config->get('students_allowed'),
     ];
 

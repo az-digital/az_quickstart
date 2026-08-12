@@ -1,8 +1,8 @@
 langcode: en
-status: true
+status: false
 dependencies:
   module:
-    - node
+    - search_node
 id: node_search
 label: Content
 path: node

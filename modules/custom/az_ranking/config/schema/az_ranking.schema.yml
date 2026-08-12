@@ -1,0 +1,39 @@
+# Default value.
+field.value.az_ranking:
+  type: mapping
+  label: Default value
+  mapping:
+    stat_heading:
+      type: string
+      label: Ranking Title
+    stat_description:
+      type: text
+      label: Ranking Body
+    media:
+      type: integer
+      label: Ranking Media
+    stat_source:
+      type: text
+      label: Ranking Link Title
+    link_uri:
+      type: string
+      label: Ranking Link URI
+    options:
+      type: mapping
+      label: Ranking Options
+      mapping:
+        ranking_type:
+          type: string
+          label: Ranking Type
+        column_span:
+          type: string
+          label: Column Span
+        class:
+          type: string
+          label: CSS Class
+        hover_class:
+          type: string
+          label: Hover CSS Class
+        link_style:
+          type: string
+          label: Link Style

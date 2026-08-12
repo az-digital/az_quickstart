@@ -15,7 +15,7 @@ class CourseMigrateBatchExecutable extends MigrateBatchExecutable {
    */
   protected function batchOperations(array $migrations, $operation, array $options = []): array {
     $operations = [];
-    foreach ($migrations as $id => $migration) {
+    foreach ($migrations as $migration) {
 
       if (!empty($options['update'])) {
         $migration->getIdMap()->prepareUpdate();
@@ -112,7 +112,7 @@ class CourseMigrateBatchExecutable extends MigrateBatchExecutable {
     $executable->setBatchContext($context);
 
     // Do the import.
-    $result = $executable->import();
+    $executable->import();
 
     // Store the result; will need to combine the results of all our iterations.
     $context['results'][$migration->id()] = [

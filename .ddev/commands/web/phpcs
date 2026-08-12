@@ -5,4 +5,4 @@
 ## Example: "ddev phpcs --version"
 ## ExecRaw: true
 
-vendor/bin/phpcs --colors --standard=web/profiles/custom/az_quickstart/phpcs.xml.dist web/profiles/custom/az_quickstart "$@"
+vendor/bin/phpcs -s --colors --standard=web/profiles/custom/az_quickstart/phpcs.xml.dist web/profiles/custom/az_quickstart "$@"

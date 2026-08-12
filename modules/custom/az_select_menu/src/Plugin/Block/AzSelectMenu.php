@@ -41,7 +41,6 @@ class AzSelectMenu extends MenuBlock {
    */
   public function blockForm($form, FormStateInterface $form_state) {
     $config = $this->configuration;
-    $defaults = $this->defaultConfiguration();
 
     $form = parent::blockForm($form, $form_state);
     $form['menu_levels']['depth']['#access'] = FALSE;
@@ -54,13 +53,13 @@ class AzSelectMenu extends MenuBlock {
 
     $form['az_select_menu']['empty_option'] = [
       '#type' => 'checkbox',
-      '#title' => t('Include an empty option.'),
+      '#title' => $this->t('Include an empty option.'),
       '#default_value' => $config['az_select_menu']['empty_option'],
     ];
 
     $form['az_select_menu']['empty_option_label'] = [
       '#type' => 'textfield',
-      '#title' => t('Empty option label.'),
+      '#title' => $this->t('Empty option label.'),
       '#default_value' => $config['az_select_menu']['empty_option_label'],
       '#states' => [
         'visible' => [
@@ -71,27 +70,27 @@ class AzSelectMenu extends MenuBlock {
 
     $form['az_select_menu']['preform_text'] = [
       '#type' => 'textfield',
-      '#title' => t('Text to display inline before the select form.'),
+      '#title' => $this->t('Text to display inline before the select form.'),
       '#default_value' => $config['az_select_menu']['preform_text'],
-      '#description' => t('You may use hyphens, underscores, and alphanumeric characters.'),
+      '#description' => $this->t('You may use hyphens, underscores, and alphanumeric characters.'),
     ];
 
     $form['az_select_menu']['preform_text_sr_only'] = [
       '#type' => 'textfield',
-      '#title' => t('Form help for screen-readers.'),
+      '#title' => $this->t('Form help for screen-readers.'),
       '#default_value' => $config['az_select_menu']['preform_text_sr_only'],
-      '#description' => t('Depending on the preform text, screen readers do not necessarily show their users this form in a helpful context.'),
+      '#description' => $this->t('Depending on the preform text, screen readers do not necessarily show their users this form in a helpful context.'),
     ];
 
     $form['az_select_menu']['button_text'] = [
       '#type' => 'textfield',
-      '#title' => t('Text you would like to appear in the button.'),
+      '#title' => $this->t('Text you would like to appear in the button.'),
       '#default_value' => $config['az_select_menu']['button_text'],
     ];
 
     $form['az_select_menu']['button_text_sr_only'] = [
       '#type' => 'textfield',
-      '#title' => t('Text to help screen-reader users understand what to do.'),
+      '#title' => $this->t('Text to help screen-reader users understand what to do.'),
       '#default_value' => $config['az_select_menu']['button_text_sr_only'],
     ];
 
@@ -137,7 +136,7 @@ class AzSelectMenu extends MenuBlock {
       'data-bs-toggle' => 'popover',
       'data-bs-trigger' => 'focus',
       'data-bs-placement' => 'top',
-      'data-bs-content' => t('Please make a selection.'),
+      'data-bs-content' => $this->t('Please make a selection.'),
     ]);
 
     $build['#form_attributes'] = $form_attributes;

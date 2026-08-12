@@ -6,6 +6,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\views\Attribute\ViewsFilter;
 use Drupal\views\Plugin\views\filter\Date;
 use Drupal\views\Views;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Filter to handle dates stored as a timestamp.
@@ -16,17 +17,35 @@ use Drupal\views\Views;
 class AZCalendarFilter extends Date {
 
   /**
+   * The current route match service.
+   *
+   * @var \Drupal\Core\Routing\RouteMatchInterface
+   */
+  protected $routeMatch;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    $instance = parent::create($container, $configuration, $plugin_id, $plugin_definition);
+    $instance->routeMatch = $container->get('current_route_match');
+    return $instance;
+  }
+
+  /**
    * {@inheritdoc}
    */
   protected function valueForm(&$form, FormStateInterface $form_state) {
     parent::valueForm($form, $form_state);
 
     // Only add modifications if this is the exposed filter.
-    if ($exposed = $form_state->get('exposed')) {
+    if ($form_state->get('exposed')) {
       $filter_settings = [];
 
-      // Only attempt to get cell data if we're not already.
-      if (empty($this->view->cellQuery)) {
+      // Only attempt to get cell data if we're not already, and not in
+      // Views UI.
+      $is_views_ui = $this->routeMatch->getRouteName() === 'views_ui.form_display';
+      if (empty($this->view->cellQuery) && !$is_views_ui) {
         $filter_settings[$this->options['expose']['identifier']] = $this->calendarCells();
       }
 
@@ -92,7 +111,7 @@ class AZCalendarFilter extends Date {
 
     $view->execute();
 
-    foreach ($view->result as $index => $row) {
+    foreach ($view->result as $row) {
       if (!empty($row->az_calendar_filter_start) && !empty($row->az_calendar_filter_end)) {
         $cells[] = [
           $row->az_calendar_filter_start,

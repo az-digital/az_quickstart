@@ -1,0 +1,5 @@
+services:
+  logger.channel.az_search_api:
+    parent: logger.channel_base
+    arguments:
+      - 'az_search_api'

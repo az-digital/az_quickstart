@@ -7,10 +7,10 @@
 
 /**
  * Implements hook_install().
+ *
+ * Performs recommended check for pantheon_secrets.
  */
 function az_eds_install() {
-  // Perform recommended check for pantheon_secrets.
-
   /** @var Drupal\Core\Extension\ModuleHandlerInterface $moduleHandler */
   $moduleHandler = \Drupal::service('module_handler');
 

@@ -170,7 +170,6 @@ function az_person_node_presave(EntityInterface $entity) {
       $last = \Drupal::service('transliteration')->removeDiacritics($last);
       // Get the list of allowed characters for the index field.
       $allowed = $index->getSetting('allowed_values');
-      $matches = [];
       // Get first letter after beginning or space.
       // Unicode mode is a deliberate attempt to support multibyte characters.
       if (preg_match('/(?<=^|\s)\w/u', $last, $match) !== FALSE) {

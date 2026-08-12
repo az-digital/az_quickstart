@@ -1,0 +1,32 @@
+langcode: en
+status: true
+dependencies: {  }
+id: stackadapt
+label: StackAdapt
+description: 'StackAdapt is an advertising technology platform that tracks visitors across websites to deliver targeted advertisements.'
+default: true
+required: false
+opt_out: false
+only_once: false
+contextual_consent_only: null
+contextual_consent_text: null
+info_url: 'https://www.stackadapt.com/'
+privacy_policy_url: 'https://www.stackadapt.com/privacy'
+purposes:
+  - advertising
+cookies:
+  -
+    regex: '^sa-user-id'
+    path: /
+    domain: ''
+  -
+    regex: '^_sa_'
+    path: /
+    domain: ''
+callback_code: ''
+javascripts:
+  - stackadapt.com
+  - tags.srv.stackadapt.com
+wrapper_identifier: {  }
+attachments: {  }
+weight: 0

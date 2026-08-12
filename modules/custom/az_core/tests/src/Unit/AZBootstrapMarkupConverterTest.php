@@ -4,19 +4,19 @@ namespace Drupal\Tests\az_core\Unit;
 
 use Drupal\az_core\Utility\AZBootstrapMarkupConverter;
 use Drupal\Tests\UnitTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Tests the AZ Bootstrap markup converter.
- *
- * @group az_core
  */
+#[Group('az_core')]
 class AZBootstrapMarkupConverterTest extends UnitTestCase {
 
   /**
    * Test fragments are converted correctly without adding document tags.
-   *
-   * @dataProvider provideFragments
    */
+  #[DataProvider('provideFragments')]
   public function testFragmentConversion($input, $expected) {
     $result = AZBootstrapMarkupConverter::convert($input);
     $this->assertEquals($expected, $result);
@@ -33,9 +33,8 @@ class AZBootstrapMarkupConverterTest extends UnitTestCase {
 
   /**
    * Test that compareProcessor returns converted text when changes are needed.
-   *
-   * @dataProvider provideFragments
    */
+  #[DataProvider('provideFragments')]
   public function testCompareProcessor($input, $expected) {
     $result = AZBootstrapMarkupConverter::compareProcessor($input);
     $this->assertEquals($expected, $result, 'Text with Bootstrap classes should be converted');
@@ -63,24 +62,24 @@ class AZBootstrapMarkupConverterTest extends UnitTestCase {
         '<button data-bs-toggle="modal" data-bs-target="#myModal">Click</button>',
       ],
       'mixed text and elements' => [
-        'Some text <span class="badge-primary">Badge</span> more text',
-        'Some text <span class="text-bg-primary">Badge</span> more text',
+        'Some text <span class="badge-success">Badge</span> more text',
+        'Some text <span class="text-bg-success">Badge</span> more text',
       ],
       'multiple classes' => [
-        '<div class="ml-3 text-left badge-primary">Multiple</div>',
-        '<div class="ms-3 text-start text-bg-primary">Multiple</div>',
+        '<div class="ml-3 text-left badge-success">Multiple</div>',
+        '<div class="ms-3 text-start text-bg-success">Multiple</div>',
       ],
       'complex nested structure' => [
         '<div class="mr-3">
           <div class="text-left">
-            <p class="badge-primary">One</p>
+            <p class="badge-success">One</p>
             <p class="ml-2">Two</p>
           </div>
           <button data-toggle="tooltip">Info</button>
         </div>',
         '<div class="me-3">
           <div class="text-start">
-            <p class="text-bg-primary">One</p>
+            <p class="text-bg-success">One</p>
             <p class="ms-2">Two</p>
           </div>
           <button data-bs-toggle="tooltip">Info</button>

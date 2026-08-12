@@ -3,3 +3,7 @@
 .region .background-wrapper.full-width-background {
   width: initial;
 }
+
+.paragraph--type--az-text-background:not(.full-width-background) {
+  border-radius: .375rem;
+}

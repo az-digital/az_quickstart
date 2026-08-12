@@ -27,10 +27,6 @@
   --ck-z-modal: calc( var(--ck-z-default) + 999 );
 }
 
-.ck.ck-content .field--type-entity-reference.field--name-field-az-media-image {
-  margin-bottom: 0;
-}
-
 .ck.ck-content ul {
   list-style-type: initial;
 }
@@ -75,4 +71,11 @@
   overflow: auto;
   overflow-wrap: anywhere;
   padding-inline-start: revert;
+}
+
+/**
+ * Ensure dark table preview in style picker renders with a dark background.
+ */
+.ck-dropdown__panel .ck-style-panel .ck-content .table-dark {
+  background-color: var(--bs-table-bg);
 }
