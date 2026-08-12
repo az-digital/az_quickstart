@@ -58,3 +58,5 @@ libraries-extend:
 
 libraries-override:
   bootstrap_barrio/toast: az_barrio/toasts
+
+enforce_prop_schemas: true
