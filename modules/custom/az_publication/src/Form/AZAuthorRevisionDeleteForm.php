@@ -25,7 +25,7 @@ class AZAuthorRevisionDeleteForm extends ConfirmFormBase {
   /**
    * The Author revision.
    *
-   * @var \Drupal\az_publication\Entity\AZAuthorInterface
+   * @var \Drupal\az_publication\Entity\AZAuthorInterface|null
    */
   protected $revision;
 
@@ -88,6 +88,7 @@ class AZAuthorRevisionDeleteForm extends ConfirmFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state, $az_author_revision = NULL) {
+    /* @phpstan-ignore-next-line */
     $this->revision = $this->authorStorage->loadRevision($az_author_revision);
     $form = parent::buildForm($form, $form_state);
 
