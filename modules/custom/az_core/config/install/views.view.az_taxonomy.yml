@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.az_row
+    - core.entity_view_mode.node.rss
   module:
     - node
     - taxonomy
