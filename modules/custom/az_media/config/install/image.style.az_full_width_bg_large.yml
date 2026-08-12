@@ -6,7 +6,7 @@ dependencies:
   module:
     - crop
 name: az_full_width_bg_large
-label: 'Large full-width background (Scales width down to 1140px)'
+label: 'Large full-width background (Scales width down to 1199px)'
 effects:
   97cf4f70-46ce-4581-85e0-d3b996645664:
     uuid: 97cf4f70-46ce-4581-85e0-d3b996645664
