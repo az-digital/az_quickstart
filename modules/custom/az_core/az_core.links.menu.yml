@@ -2,10 +2,31 @@ az_core.az_quickstart:
   route_name: az_core.az_quickstart
   parent: system.admin_config
   title: 'Arizona Quickstart'
-  description: 'Settings provided by Arizona Quickstart modules.'
+  description: 'Settings provided by Arizona Quickstart modules'
 
 az_core.az_settings:
   route_name: az_core.az_settings
   parent: az_core.az_quickstart
   title: 'Arizona Quickstart Settings'
-  description: 'Settings provided by Quickstart Core and various other Arizona Quickstart modules.'
+  description: 'Settings provided by Quickstart Core and various other Arizona Quickstart modules'
+  weight: 0
+
+az_core.az_docs:
+  url: 'https://quickstart.arizona.edu'
+  parent: az_core.az_quickstart
+  title: 'Documentation'
+  description: 'Arizona Quickstart 2 Documentation'
+  options:
+    attributes:
+      target: '_blank'
+  weight: 2
+
+az_core.az_releases:
+  url: 'https://github.com/az-digital/az_quickstart/releases'
+  parent: az_core.az_quickstart
+  title: 'Releases'
+  description: 'Arizona Quickstart 2 Releases'
+  options:
+    attributes:
+      target: '_blank'
+  weight: 1
