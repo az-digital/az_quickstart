@@ -2,6 +2,8 @@ az_accordion:
   css:
     component:
       css/az-accordion-widget.css: {}
+  js:
+    js/az-accordion-anchor.js: {}
   dependencies:
     - az_barrio/arizona-bootstrap-css
     - az_barrio/arizona-bootstrap-js

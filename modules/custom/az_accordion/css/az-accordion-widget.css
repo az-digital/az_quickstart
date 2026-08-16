@@ -1,1 +1,8 @@
+.accordion-anchor {
+    position: absolute;
+    margin-left: 0.5rem;
+}
 
+.accordion-anchor:hover {
+    cursor: pointer;
+}
