@@ -7,8 +7,8 @@
  * Contains common functionality for the entire theme.
  */
 
-define('AZ_BOOTSTRAP_STABLE_VERSION', '5.1.4');
-define('AZ_ICONS_STABLE_VERSION', '1.0.4');
+define('AZ_BOOTSTRAP_STABLE_VERSION', '5.1.7');
+define('AZ_ICONS_STABLE_VERSION', '1.0.5');
 
 /**
  * Persistent variable name for exporting the AZ Bootstrap CSS location.
