@@ -2,16 +2,6 @@ az_ranking:
   css:
     component:
       css/az-ranking-widget.css: {}
-      css/az-ranking.css: {}
-  dependencies:
-    - core/drupal
-    - core/once
-az_ranking_image:
-  css:
-    component:
-      css/az-ranking-image.css: {}
-  js:
-    js/az-ranking-focal-point-calc.js: {}
   dependencies:
     - core/drupal
     - core/once

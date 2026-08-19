@@ -60,11 +60,23 @@ class AZRankingsParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#title' => $this->t('Ranking header style'),
       '#type' => 'select',
       '#options' => [
-        'ranking-title-bold' => $this->t('Bold Headers'),
         'ranking-title-thin' => $this->t('Thin Headers'),
+        'ranking-title-bold' => $this->t('Bold Headers'),
+        'ranking-title-bolder' => $this->t('Bolder Headers'),
       ],
       '#default_value' => $config['ranking_header_style'] ?? 'ranking-title-bold',
-      '#description' => $this->t('Uses large bold lettering or thin-styled font for headers'),
+      '#description' => $this->t('How heavy the heading lettering is. These map to the Header Style options on the Ranking component.'),
+    ];
+
+    $form['ranking_heading_font'] = [
+      '#title' => $this->t('Ranking heading font'),
+      '#type' => 'select',
+      '#options' => [
+        'sans' => $this->t('Sans-serif'),
+        'serif' => $this->t('Serif'),
+      ],
+      '#default_value' => $config['ranking_heading_font'] ?? 'sans',
+      '#description' => $this->t('Typeface for ranking headings. Serif uses Garamond Premier Pro where available, otherwise a system serif. Depending on your site environment, serif might not be available in thin or bolder Header Style.'),
     ];
 
     $form['ranking_clickable'] = [
