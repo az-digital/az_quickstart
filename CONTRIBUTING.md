@@ -218,34 +218,6 @@ on the paragraph. This can be avoided currently by
 [a workaround](https://www.drupal.org/project/paragraphs/issues/2928759).
 There will likely be a more official paragraphs API for this in the future.
 
-## Compiling Javascript in Local Development
-
-This project uses an ES6 to ES5 transpile process
-[similar to Drupal core](https://www.drupal.org/node/2815083).
-
-This means that you should only update `.js` files named `.es6.js` and should
-never manually edit files named `.js` as these are machine-generated.
-
-This can be done on demand with `yarn build`, or in response to changes
-with `yarn watch`. When in watch mode, javascript files will be transpiled as
-they are updated.
-
-### ES6 Transpiling on Lando
-
-```
-lando yarn build
-OR
-lando yarn watch
-```
-
-### ES6 Transpiling on DDEV
-
-```
-ddev yarn build
-OR
-ddev yarn watch
-```
-
 ## ESLint in Local Development
 
 To maintain high-quality JavaScript code, contributors are encouraged to use
