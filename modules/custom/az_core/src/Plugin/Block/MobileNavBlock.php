@@ -298,7 +298,6 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
           ],
         ),
         '#attributes' => [
-          'type' => 'button',
           'class' => [
             'use-ajax',
             'ps-0',
@@ -343,7 +342,6 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
         $build['az_mobile_nav_menu']['heading_div']['heading'] = [
           '#type' => 'link',
           '#attributes' => [
-            'role' => 'button',
             'class' => [
               'px-3',
               'text-blue',
@@ -382,7 +380,6 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
         $pageLink = [
           '#type' => 'link',
           '#attributes' => [
-            'role' => 'button',
             'class' => [
               'nav-link',
               $isMainMenu ? 'ms-2' : 'ms-3',
@@ -407,7 +404,6 @@ class MobileNavBlock extends BlockBase implements ContainerFactoryPluginInterfac
             ],
           ),
           '#attributes' => [
-            'type' => 'button',
             'class' => [
               'use-ajax',
               'btn',
