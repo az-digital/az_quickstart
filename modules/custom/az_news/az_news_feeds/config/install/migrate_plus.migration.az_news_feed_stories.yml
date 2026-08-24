@@ -18,9 +18,6 @@ source:
   ids:
     uuid:
       type: uuid
-  constants:
-    read_more_prefix: 'Read more at '
-    read_more_default_publisher: 'University of Arizona News'
   fields:
     -
       name: uuid
@@ -66,6 +63,10 @@ source:
       name: byline-affiliation
       label: 'Byline Affiliation'
       selector: /story/byline-affiliation
+  constants:
+    read_more_domain: 'https://news.arizona.edu/'
+    read_more_prefix: 'Read more at '
+    read_more_default_publisher: 'University of Arizona News'
 process:
   title: title
   field_az_published/value:
@@ -73,41 +74,6 @@ process:
     from_format: 'Y-m-d\TH:i:sP'
     to_format: Y-m-d
     source: date-of-publication
-  _default_byline:
-    -
-      plugin: callback
-      callable: strpos
-      unpack_source: true
-      source:
-        - canonical-url
-        - 'https://news.arizona.edu/'
-    -
-      plugin: callback
-      callable: strpos
-      unpack_source: true
-      source:
-        - canonical-url
-        - 'ua-news-redesign.pantheonsite.io/'
-    -
-      plugin: skip_on_empty
-      method: process
-    -
-      plugin: concat
-      source:
-        - constants/read_more_prefix
-        - byline-affiliation
-  _byline_from_link_title:
-    -
-      plugin: skip_on_empty
-      source: byline-affiliation
-      method: process
-  field_az_link/0/uri: canonical-url
-  field_az_link/0/title:
-    -
-      plugin: null_coalesce
-      source:
-        - '@_default_byline'
-        - '@_byline_from_link_title'
   field_az_summary/value:
     plugin: callback
     callable: trim
@@ -144,9 +110,39 @@ process:
     source: fid
     migration:
       - az_news_feed_stories_media
+  _default_byline:
+    -
+      plugin: callback
+      callable: str_starts_with
+      unpack_source: true
+      source:
+        - canonical-url
+        - constants/read_more_domain
+    -
+      plugin: skip_on_empty
+      method: process
+    -
+      plugin: concat
+      source:
+        - constants/read_more_prefix
+        - byline-affiliation
+  _byline_from_link_title:
+    -
+      plugin: skip_on_empty
+      source: byline-affiliation
+      method: process
+  field_az_link/0/uri: canonical-url
+  field_az_link/0/title:
+    -
+      plugin: null_coalesce
+      source:
+        - '@_default_byline'
+        - '@_byline_from_link_title'
 destination:
   plugin: 'entity:node'
   default_bundle: az_news
+idMap: {  }
 migration_dependencies:
   required:
     - az_news_feed_stories_media
+include: null
