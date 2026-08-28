@@ -1,0 +1,31 @@
+{#
+/**
+ * @file
+ * Renders the container Slate injects a form into.
+ *
+ * The fallback link sits outside that container on purpose. Slate replaces
+ * everything inside the container it is given, so a link placed in there
+ * disappears the moment Slate touches it - including when Slate clears the
+ * container and then stalls, which is exactly when the link is needed. Keeping
+ * it outside means the loader can always bring it back.
+ *
+ * It points at the canonical form URL. The embed URL returns JavaScript, so
+ * linking to that would hand someone a script file instead of the form.
+ *
+ * The link and the status region both ship in the markup. The loader hides the
+ * link as soon as it takes charge, which leaves it visible for a browser with
+ * no JavaScript - where the embed was never going to load anyway.
+ *
+ * Available variables:
+ * - attributes: (Attribute) Attributes for the container, including the id
+ *   passed to Slate as the embed's "div" parameter.
+ * - canonical_url: (string) The browser-navigable form URL.
+ */
+#}
+<div class="az-media-slate">
+  <div{{ attributes }}></div>
+  <a href="{{ canonical_url }}" class="az-media-slate__fallback" rel="noopener">
+    {{ 'Open this form'|t }}
+  </a>
+  <p class="az-media-slate__status" aria-live="polite"></p>
+</div>

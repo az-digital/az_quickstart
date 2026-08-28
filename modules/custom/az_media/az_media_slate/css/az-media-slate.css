@@ -1,0 +1,124 @@
+/**
+ * @file
+ * Styles for az_media_slate.
+ *
+ * Slate's own stylesheets are left alone on purpose. Slate ships an
+ * embed-scoped variant (base_safe.css) and its guidance when an embed looks
+ * wrong is to adjust the host page's CSS, so this file is where that
+ * adjusting happens. Blocking their stylesheet would put us outside what
+ * Slate will support.
+ *
+ * Anything here that touches the form's own markup must leave the "hidden"
+ * class alone: Slate's show and hide logic is built on it, so styling over it
+ * breaks conditional questions.
+ *
+ * @see https://knowledge.technolutions.net/docs/embedding-forms
+ */
+
+:root {
+  --az-slate-min-height: 200px;
+  --az-slate-width-very-small: 320px;
+  --az-slate-width-small: 480px;
+  --az-slate-width-medium: 760px;
+}
+
+.az-media-slate {
+  min-height: var(--az-slate-min-height);
+}
+
+.az-media-slate__form {
+  width: 100%;
+}
+
+/* Widths per view mode.
+ *
+ * Two selectors for each, because the embed is wrapped differently depending
+ * on where it renders. On a normal page the field group puts it under
+ * .az-media.az-small and so on; inside CKEditor it sits under a figure
+ * carrying data-view-mode instead.
+ *
+ * The default view mode is deliberately absent: a Slate form runs to many
+ * questions, so it fills whatever container it is given. */
+.az-media.az-very-small .az-media-slate,
+figure[data-view-mode="az_very_small"] .az-media-slate {
+  max-width: var(--az-slate-width-very-small);
+}
+
+.az-media.az-small .az-media-slate,
+figure[data-view-mode="az_small"] .az-media-slate {
+  max-width: var(--az-slate-width-small);
+}
+
+.az-media.az-medium .az-media-slate,
+figure[data-view-mode="az_medium"] .az-media-slate {
+  max-width: var(--az-slate-width-medium);
+}
+
+/* The fallback link.
+ *
+ * It ships visible so that a browser with no JavaScript still offers a way to
+ * reach the form - without JavaScript the embed was never going to load. The
+ * loader adds --js as soon as it takes charge, which hides the link, and adds
+ * --failed if the form does not arrive, which brings it back. --failed wins
+ * because it comes later in the file. */
+.az-media-slate__fallback {
+  display: inline-block;
+  padding: 0.5rem 0;
+}
+
+.az-media-slate--js .az-media-slate__fallback {
+  display: none;
+}
+
+.az-media-slate--failed .az-media-slate__fallback {
+  display: inline-block;
+}
+
+/* The status region is announced by screen readers, so it stays in the
+ * accessibility tree from the start. A live region that is display:none when
+ * its text arrives is not reliably announced, so hide it visually instead. */
+.az-media-slate__status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.az-media-slate--failed .az-media-slate__status {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0.5rem 0 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+  color: #a11b0a;
+}
+
+/* Shown instead of a form on editing routes. */
+.az-media-slate-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--az-slate-min-height);
+  padding: 1rem;
+  border: 1px dashed #7c7c7c;
+  background-color: #f4f4f4;
+  text-align: center;
+}
+
+.az-media-slate-placeholder__label {
+  margin: 0;
+  color: #49595e;
+}
+
+.az-media-slate-error {
+  padding: 0.75rem 1rem;
+  border-left: 4px solid #a11b0a;
+  background-color: #f4f4f4;
+}
