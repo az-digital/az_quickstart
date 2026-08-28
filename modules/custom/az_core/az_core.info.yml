@@ -1,6 +1,6 @@
 name: 'Quickstart Core'
 type: module
-description: 'Settings and configuration common to other Quickstart componenets.'
+description: 'Settings and configuration common to other Quickstart components.'
 core_version_requirement: ^11.3 || ^12
 package: 'The University of Arizona'
 container_rebuild_required: true
@@ -16,5 +16,6 @@ dependencies:
   - drupal:telephone
   - drupal:text
   - linkit:linkit
+  - pathauto:pathauto
   - search_exclude:search_exclude
 configure: az_core.az_settings
