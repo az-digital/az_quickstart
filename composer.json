@@ -155,7 +155,8 @@
     "extra": {
         "patches": {
             "drupal/auto_entitylabel": {
-                "Support entities without bundles (2945387)": "https://www.drupal.org/files/issues/2024-06-07/2945387-28.patch"
+                "Support entities without bundles (2945387)": "https://www.drupal.org/files/issues/2024-06-07/2945387-28.patch",
+                "Automatic label after first save not working any more (3609192)": "https://gist.githubusercontent.com/tadean/acdad5f7703f9371d48d69dcd31be88f/raw/eaab325a464f90edb36035d83bee719df69e0a7a/auto-entitylabel-first-save-3609192-MR45.patch"
             },
             "drupal/bootstrap_barrio": {
                 "Js error if table not found (3519060)": "https://www.drupal.org/files/issues/2025-04-14/bootstrap-barrio-table-not-found-3519060-1.patch",
