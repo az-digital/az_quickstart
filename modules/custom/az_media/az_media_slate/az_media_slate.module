@@ -1,0 +1,36 @@
+<?php
+
+/**
+ * @file
+ * Hook implementations for az_media_slate.
+ *
+ * Lets an editor embed a Slate (Technolutions) form by pasting its share link
+ * into a media entity, then placing that media through the Media Library.
+ *
+ * Slate serves an embed as a script that fetches the form and injects it into
+ * a container div we name. The interesting parts live elsewhere:
+ * - \Drupal\az_media_slate\SlateUrl validates the pasted link and builds the
+ *   two URLs we need from it.
+ * - AzMediaRemoteSlateFormatter renders the container and attaches the loader.
+ *
+ * @see https://knowledge.technolutions.net/docs/embedding-forms
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function az_media_slate_theme($existing, $type, $theme, $path) {
+  return [
+    'az_media_slate' => [
+      'variables' => [
+        // Attributes for the container Slate injects the form into. Carries
+        // the id we passed to Slate as the embed's "div" parameter.
+        'attributes' => [],
+        // The browser-navigable form URL, used for the fallback link. Never
+        // the embed URL, which returns JavaScript.
+        'canonical_url' => NULL,
+      ],
+      'template' => 'az-media-slate',
+    ],
+  ];
+}
