@@ -133,11 +133,11 @@ function az_core_toolbar() {
  * Reference: https://www.drupal.org/i/2904757#comment-13421490
  */
 function az_core_pathauto_pattern_alter(PathautoPatternInterface $pattern, array $context) {
-  // Manually specify default AZQS pattern.
-  $azqs_pattern = '[node:menu-link:parents:join-path]/[node:menu-link]';
+  // Get the default Pathauto pattern for Quickstart.
+  $azqs_default_pattern = \Drupal::config('pathauto.pattern.default')->get('pattern');
 
-  // Check if context is node and pattern is the AZQS default.
-  if ($context['module'] === 'node' && $pattern->getPattern() === $azqs_pattern) {
+  // Check if context is node and pattern is the Quickstart default.
+  if ($context['module'] === 'node' && $pattern->getPattern() === $azqs_default_pattern) {
     $menu = $context['data']['node']->__get('menu');
 
     // Set pattern to fallback if menu is not enabled.
