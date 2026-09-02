@@ -33,10 +33,12 @@ az-navbar-hover:
     - core/drupal
     - core/once
 az-proxima-nova:
+  deprecated: The "%library_id%" CSS library is deprecated in az_quickstart:3.6.x and is removed from az_quickstart:3.7.x. Use `az_barrio/arizona-digital-fonts` including both Proxima Nova and Garamond Premier Pro instead.
   css:
     theme:
       https://use.typekit.net/emv3zbo.css: { external: true, preprocess: false }
 garamond-premier-pro:
+  deprecated: The "%library_id%" CSS library is deprecated in az_quickstart:3.6.x and is removed from az_quickstart:3.7.x. Use `az_barrio/arizona-digital-fonts` including both Proxima Nova and Garamond Premier Pro instead.
   css:
     theme:
       https://use.typekit.net/eyf6fhr.css: { external: true, preprocess: false }
@@ -44,6 +46,10 @@ az-icons:
   css:
     theme:
       /libraries/az-icons/az-icons-styles.min.css: { minified: true }
+arizona-digital-fonts:
+  css:
+    theme:
+      https://use.typekit.net/sgx0zzg.css: { external: true, preprocess: false }
 arizona-bootstrap-css:
   css:
     theme:
