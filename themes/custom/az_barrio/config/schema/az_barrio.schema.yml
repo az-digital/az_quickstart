@@ -283,7 +283,7 @@ az_barrio.settings:
       label: 'Enable AZ Bootstrap minification'
     az_barrio_font:
       type: boolean
-      label: 'Use the centrally-managed Typekit webfonts (Proxima Nova and Garamond Premier Pro)'
+      label: 'Use the centrally-managed Typekit webfonts (Proxima Nova, Proxima Nova Condensed, and Garamond Premier Pro)'
     az_barrio_material_symbols_rounded:
       type: boolean
       label: 'Use Material Symbols Rounded Icons'
