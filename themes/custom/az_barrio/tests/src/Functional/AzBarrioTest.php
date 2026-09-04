@@ -40,7 +40,7 @@ class AzBarrioTest extends QuickstartFunctionalTestBase {
     $this->drupalGet('');
     $this->assertSession()->statusCodeEquals(200);
     $this->assertSession()->responseContains('https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0');
-    $this->assertSession()->responseContains('https://use.typekit.net/emv3zbo.css');
+    $this->assertSession()->responseContains('https://use.typekit.net/sgx0zzg.css');
 
     // Tests that the header column class settings work on install.
     $this->drupalGet('');
