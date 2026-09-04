@@ -271,14 +271,25 @@ function az_barrio_post_update_delete_az_bootstrap_cdn_version_setting(&$sandbox
 }
 
 /**
- * Enables AZ Navbar.
+ * Deletes the removed az_navbar setting.
  */
-function az_barrio_post_update_enable_az_navbar(&$sandbox = NULL) {
+function az_barrio_post_update_delete_az_navbar_setting(&$sandbox = NULL) {
   $config_factory = \Drupal::configFactory();
   $theme_settings = $config_factory->getEditable('az_barrio.settings');
-  if ($theme_settings->get('az_navbar') !== TRUE) {
-    $theme_settings->set('az_navbar', TRUE)->save();
-    \Drupal::logger('az_quickstart')->notice('Enabled AZ Navbar during post update.');
+  $az_navbar = $theme_settings->get('az_navbar');
+
+  // Delete the az_navbar key if it exists. AZ Navbar is now the only main
+  // navigation implementation and can no longer be disabled.
+  if ($az_navbar !== NULL) {
+    $theme_settings
+      ->clear('az_navbar')
+      ->save();
+    if ($az_navbar !== TRUE) {
+      \Drupal::logger('az_quickstart')->warning('The AZ Navbar theme setting was disabled on this site. The former main navigation implementation has been removed and AZ Navbar is now always used, which changes the main navigation markup. Custom styling that targets the former markup may need to be updated. See https://quickstart.arizona.edu/site-admin/managing-menus/main-navigation');
+    }
+    else {
+      \Drupal::logger('az_quickstart')->notice('Deleted removed az_navbar configuration key during post update.');
+    }
   }
 }
 
