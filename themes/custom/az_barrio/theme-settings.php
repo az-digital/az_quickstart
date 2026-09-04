@@ -91,7 +91,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   unset($form['fonts']['fonts']['bootstrap_barrio_google_fonts']);
   $form['fonts']['fonts']['az_barrio_font'] = [
     '#type' => 'checkbox',
-    '#title' => t('Use the centrally-managed Typekit webfonts (Proxima Nova and Garamond Premier Pro)'),
+    '#title' => t('Use the centrally-managed Typekit webfonts (Proxima Nova, Proxima Nova Condensed, and Garamond Premier Pro)'),
     '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_barrio_font'),
     '#description' => t(
         'If selected, a Typekit CDN <code>&lt;link&gt;</code> will be added to every page importing the @font_docs_link CSS.', [
