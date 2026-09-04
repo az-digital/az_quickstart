@@ -38,7 +38,7 @@ az-proxima-nova:
     theme:
       https://use.typekit.net/emv3zbo.css: { external: true, preprocess: false }
 garamond-premier-pro:
-  deprecated: The "%library_id%" CSS library is deprecated in az_quickstart:3.6.x and is removed from az_quickstart:3.7.x. Use `az_barrio/arizona-digital-fonts` including both Proxima Nova and Garamond Premier Pro instead.
+  deprecated: The "%library_id%" CSS library is deprecated in az_quickstart:3.6.x and is removed from az_quickstart:3.7.x. Use `az_barrio/arizona-digital-fonts` which includes Proxima Nova, Proxima Nova Condensed, and Garamond Premier Pro instead.
   css:
     theme:
       https://use.typekit.net/eyf6fhr.css: { external: true, preprocess: false }
