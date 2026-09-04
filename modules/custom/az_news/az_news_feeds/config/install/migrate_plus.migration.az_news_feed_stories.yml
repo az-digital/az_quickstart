@@ -55,6 +55,18 @@ source:
       name: image
       label: Image
       selector: /story/img-large
+    -
+      name: byline
+      label: Byline
+      selector: /story/byline
+    -
+      name: byline-affiliation
+      label: 'Byline Affiliation'
+      selector: /story/byline-affiliation
+  constants:
+    read_more_domain: 'https://news.arizona.edu/'
+    read_more_prefix: 'Read more at '
+    read_more_default_publisher: 'University of Arizona News'
 process:
   title: title
   field_az_published/value:
@@ -62,10 +74,6 @@ process:
     from_format: 'Y-m-d\TH:i:sP'
     to_format: Y-m-d
     source: date-of-publication
-  field_az_link/uri: canonical-url
-  field_az_link/title:
-    plugin: default_value
-    default_value: 'Read more at University of Arizona News'
   field_az_summary/value:
     plugin: callback
     callable: trim
@@ -102,9 +110,39 @@ process:
     source: fid
     migration:
       - az_news_feed_stories_media
+  _default_byline:
+    -
+      plugin: callback
+      callable: str_starts_with
+      unpack_source: true
+      source:
+        - canonical-url
+        - constants/read_more_domain
+    -
+      plugin: skip_on_empty
+      method: process
+    -
+      plugin: concat
+      source:
+        - constants/read_more_prefix
+        - constants/read_more_default_publisher
+  _byline_from_link_title:
+    -
+      plugin: skip_on_empty
+      source: byline-affiliation
+      method: process
+  field_az_link/0/uri: canonical-url
+  field_az_link/0/title:
+    -
+      plugin: null_coalesce
+      source:
+        - '@_default_byline'
+        - '@_byline_from_link_title'
 destination:
   plugin: 'entity:node'
   default_bundle: az_news
+idMap: {  }
 migration_dependencies:
   required:
     - az_news_feed_stories_media
+include: null
