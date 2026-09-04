@@ -204,6 +204,12 @@ settings:
           label: 'Triangle Bullets'
           element: '<ul class="az-list-triangles">'
         -
+          label: 'Focus Point Bullets'
+          element: '<ul class="az-list-focus-points">'
+        -
+          label: 'Checkmark Bullets'
+          element: '<ul class="az-list-checkmarks">'
+        -
           label: 'Unordered List Pills'
           element: '<ul class="nav nav-pills">'
         -
