@@ -75,6 +75,8 @@ class AZTextWithBackgroundParagraphBehavior extends AZDefaultParagraphsBehavior 
         'bg-triangles-centered' => $this->t('Triangles Centered'),
         'bg-triangles-top-right' => $this->t('Triangles Right'),
         'bg-trilines' => $this->t('Trilines'),
+        'bg-monsoon-sky-start' => $this->t('Monsoon Sky Start'),
+        'bg-monsoon-sky-end' => $this->t('Monsoon Sky End'),
       ],
       '#default_value' => $config['text_background_pattern'] ?? '',
       '#description' => $this->t('<br><big><strong>Important:</strong></big> Patterns are intended to be used sparingly.<ul><li>Please ensure sufficient contrast between text and its background.</li><li> More detail on background pattern options can be found in the @arizona_bootstrap_docs_bg_wrappers_link.</li></ul>',
