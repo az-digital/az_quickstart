@@ -294,6 +294,25 @@ function az_barrio_post_update_delete_az_navbar_setting(&$sandbox = NULL) {
 }
 
 /**
+ * Formerly enabled AZ Navbar.
+ *
+ * Intentionally left as a no-op rather than deleted. The az_navbar theme
+ * setting no longer exists, so this update must not run its former body: post
+ * updates run in alphabetical order, which places this function after
+ * az_barrio_post_update_delete_az_navbar_setting() and would write back a
+ * configuration key that no longer has a schema entry.
+ *
+ * Keeping the empty function also keeps the update registry consistent between
+ * existing sites, which recorded this update when they ran the Quickstart 3.4
+ * updates, and fresh installs.
+ *
+ * @see az_barrio_post_update_delete_az_navbar_setting()
+ */
+function az_barrio_post_update_enable_az_navbar(&$sandbox = NULL) {
+  // Intentionally empty. See the documentation above.
+}
+
+/**
  * Enables the blue Arizona Header.
  */
 function az_barrio_post_update_enable_az_header_blue(&$sandbox = NULL) {
