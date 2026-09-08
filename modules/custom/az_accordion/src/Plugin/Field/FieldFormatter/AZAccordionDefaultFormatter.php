@@ -74,6 +74,14 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
     $entity = $items->getEntity();
     $accordion_container_id = HTML::getUniqueId('accordion-' . $entity->id());
     $faq_schema_enabled = FALSE;
+    $anchor_link_enabled = FALSE;
+
+    if ($entity instanceof ParagraphInterface && method_exists($entity, 'getAllBehaviorSettings')) {
+      $parent_config = $entity->getAllBehaviorSettings();
+      $behavior_settings = $parent_config['az_accordion_paragraph_behavior'] ?? [];
+      $faq_schema_enabled = !empty($behavior_settings['faq_schema']);
+      $anchor_link_enabled = !empty($behavior_settings['anchor_link']);
+    }
 
     foreach ($items as $delta => $item) {
       assert($item instanceof AZAccordionItem);
@@ -82,24 +90,14 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
 
       $column_classes = [];
       $column_classes[] = 'col-md-4 col-lg-4';
-      $parent = $item->getEntity();
-
-      if ($parent instanceof ParagraphInterface) {
-        // Get the behavior settings for the parent.
-        $parent_config = $parent->getAllBehaviorSettings();
-
-        // Check if FAQ schema markup is enabled.
-        if (!empty($parent_config['az_accordion_paragraph_behavior']['faq_schema'])) {
-          $faq_schema_enabled = TRUE;
-        }
-      }
 
       // Handle class keys that contained multiple classes.
       $column_classes = implode(' ', $column_classes);
       $column_classes = explode(' ', $column_classes);
       $column_classes[] = 'pb-4';
       $accordion_id = Html::getUniqueId('az_accordion');
-
+      $accordion_header_id = Html::getUniqueId('az_accordion_header-' . $title);
+      
       $element[$delta] = [
         '#theme' => 'az_accordion',
         '#title' => $title,
@@ -112,7 +110,9 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
           '#langcode' => $item->getLangcode(),
         ],
         '#accordion_item_id' => $accordion_id,
+        '#accordion_header_id' => $accordion_header_id,
         '#accordion_container_id' => $accordion_container_id,
+        '#anchor_link' => $anchor_link_enabled,
         '#collapsed' => $item->collapsed ? '' : 'show',
         '#aria_expanded' => !$item->collapsed ? 'true' : 'false',
       ];
