@@ -343,12 +343,10 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
       switch ($media->bundle()) {
         case 'az_remote_video':
           $element[$delta] = $this->remoteVideo($settings, $media);
-          $element[$delta]['#media_type'] = $media->bundle();
           break;
 
         case 'az_image':
           $element[$delta] = $this->image($settings, $media);
-          $element[$delta]['#media_type'] = $media->bundle();
           break;
       }
       $element[$delta]['#media_type'] = $media->bundle();
