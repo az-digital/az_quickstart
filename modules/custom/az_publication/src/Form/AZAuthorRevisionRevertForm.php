@@ -7,6 +7,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\az_publication\Entity\AZAuthorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Provides a form for reverting a Author revision.
@@ -97,8 +98,11 @@ class AZAuthorRevisionRevertForm extends ConfirmFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state, $az_author_revision = NULL) {
     $authorStorage = $this->entityTypeManager->getStorage('az_author');
-    /** @var \Drupal\az_publication\Entity\AZAuthorInterface $revision */
+    /** @var \Drupal\az_publication\Entity\AZAuthorInterface|null $revision */
     $revision = $authorStorage->loadRevision($az_author_revision);
+    if ($revision === NULL) {
+      throw new NotFoundHttpException();
+    }
     $this->revision = $revision;
     $form = parent::buildForm($form, $form_state);
 
