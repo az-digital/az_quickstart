@@ -179,9 +179,10 @@ class AZAuthor extends EditorialContentEntityBase implements AZAuthorInterface {
    * {@inheritdoc}
    */
   public function getOwner() {
-    $user = $this->get('user_id')->entity;
-    assert($user instanceof UserInterface);
-    return $user;
+    // The referenced user entity may be NULL if no owner has been set yet,
+    // or if the referenced user was deleted; see preSave().
+    // @phpstan-ignore return.type
+    return $this->get('user_id')->entity;
   }
 
   /**
