@@ -6,6 +6,20 @@
  * of these @include files will be combined into a single file.
  */
 
+/* Declare font variables */
+:root {
+  --az-heading-font-style: garamond-premier-pro, Georgia, Times New Roman, serif;
+}
+
+/* Header styles */
+h1, .h1, h2, .h2, h3, .h3 {
+  font-family: var(--az-heading-font-style);
+}
+
+h4, .h4, h5, .h5, h6, .h6 {
+  font-family: proxima-nova, calibri, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
 /* Sticky footer */
 html.sticky-footer #page {
   display: -webkit-box;

@@ -216,6 +216,20 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
       '#default_value' => $az_core_config->get('enterprise_attributes.locked'),
     ];
 
+    $form['heading'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Heading styles'),
+      '#open' => FALSE,
+      '#access' => $this->currentUser()->hasPermission('administer site configuration'),
+    ];
+
+    $form['heading']['heading_font_styles'] = [
+      '#title' => $this->t('Use Serif headings'),
+      '#type' => 'checkbox',
+      '#description' => $this->t("Use the Garamond serif font for headings H1, H2, and H3."),
+      '#default_value' => $az_core_config->get('heading_font_styles.enabled'),
+    ];
+
     return parent::buildForm($form, $form_state);
   }
 
@@ -307,6 +321,7 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
       ->set('monitoring_page.enabled', $form_state->getValue('monitoring_page_enabled'))
       ->set('monitoring_page.path', $form_state->getValue('monitoring_page_path'))
       ->set('enterprise_attributes.locked', $form_state->getValue('enterprise_attributes_locked'))
+      ->set('heading_font_styles.enabled', $form_state->getValue('heading_font_styles'))
       ->save();
 
     $this->routeBuilder->setRebuildNeeded();
