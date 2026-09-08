@@ -88,8 +88,7 @@ class AZAuthorRevisionRevertForm extends ConfirmFormBase {
    * {@inheritdoc}
    */
   public function getDescription() {
-    /* @phpstan-ignore-next-line */
-    return '';
+    return $this->t('');
   }
 
   /**

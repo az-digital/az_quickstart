@@ -213,7 +213,6 @@ class AZNewsDataFieldRow extends DataFieldRow {
       }
     }
 
-    /* @phpstan-ignore-next-line */
     return $output;
   }
 

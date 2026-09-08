@@ -81,7 +81,10 @@ class AzDropbutton extends Links {
       $dropbutton['#attached']['library'][] = 'az_marketing_cloud/admin';
     }
 
-    /* @phpstan-ignore-next-line */
+    // Core's own Dropbutton field plugin returns a render array here too,
+    // even though FieldHandlerInterface::render() is documented as
+    // string|MarkupInterface; Views' render pipeline supports both.
+    // @phpstan-ignore method.childReturnType, return.type
     return $dropbutton;
   }
 
