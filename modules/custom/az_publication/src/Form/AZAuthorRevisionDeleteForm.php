@@ -99,7 +99,8 @@ class AZAuthorRevisionDeleteForm extends ConfirmFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $this->authorStorage->deleteRevision($this->revision->getRevisionId());
+    $authorStorage = $this->entityTypeManager->getStorage('az_author');
+    $authorStorage->deleteRevision($this->revision->getRevisionId());
 
     $this->logger('content')->notice('Author: deleted %title revision %revision.', [
       '%title' => $this->revision->label(),
