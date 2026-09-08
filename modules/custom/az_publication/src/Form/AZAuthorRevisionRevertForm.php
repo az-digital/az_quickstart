@@ -97,7 +97,9 @@ class AZAuthorRevisionRevertForm extends ConfirmFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state, $az_author_revision = NULL) {
     $authorStorage = $this->entityTypeManager->getStorage('az_author');
-    $this->revision = $authorStorage->loadRevision($az_author_revision);
+    /** @var \Drupal\az_publication\Entity\AZAuthorInterface $revision */
+    $revision = $authorStorage->loadRevision($az_author_revision);
+    $this->revision = $revision;
     $form = parent::buildForm($form, $form_state);
 
     return $form;

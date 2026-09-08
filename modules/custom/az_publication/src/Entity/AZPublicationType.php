@@ -93,7 +93,7 @@ class AZPublicationType extends ConfigEntityBase implements AZPublicationTypeInt
    * @return array
    *   An associative array of publication type mapping options.
    */
-  public static function getMappableTypeOptions():array {
+  public static function getMappableTypeOptions(): array {
     return [
       'article' => 'Article',
       'article-journal' => 'Journal Article',
