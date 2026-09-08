@@ -2,6 +2,7 @@
 
 namespace Drupal\az_paragraphs\Plugin\paragraphs\Behavior;
 
+use Drupal\Component\Serialization\Json;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
@@ -20,10 +21,29 @@ use Drupal\paragraphs\ParagraphInterface;
 class AZTextWithBackgroundParagraphBehavior extends AZDefaultParagraphsBehavior {
 
   /**
+   * Background patterns that are limited to certain background colors.
+   *
+   * Keyed by background pattern class, with the background color classes that
+   * the pattern may be paired with as values. Patterns that are absent from
+   * this list may be used with any background color.
+   *
+   * @var array<string, string[]>
+   */
+  const RESTRICTED_PATTERNS = [
+    'bg-monsoon-sky-start' => ['text-bg-azurite', 'text-bg-blue'],
+    'bg-monsoon-sky-end' => ['text-bg-azurite', 'text-bg-blue'],
+  ];
+
+  /**
    * {@inheritdoc}
    */
   public function buildBehaviorForm(ParagraphInterface $paragraph, array &$form, FormStateInterface $form_state) {
     $config = $this->getSettings($paragraph);
+
+    // Create a deterministic unique ID based on form structure, so that the
+    // background pattern select can be paired with the background color select
+    // belonging to the same paragraph.
+    $background_color_unique_id = 'text-background-color--' . implode('-', $form['#parents'] ?? []);
 
     $form['text_background_full_width'] = [
       '#title' => $this->t('Full Width'),
@@ -59,6 +79,9 @@ class AZTextWithBackgroundParagraphBehavior extends AZDefaultParagraphsBehavior 
         'text-bg-mesa' => $this->t('Mesa'),
       ],
       '#default_value' => $config['text_background_color'] ?? 'text-bg-white',
+      '#attributes' => [
+        'data-az-text-background-color-input-id' => $background_color_unique_id,
+      ],
       '#description' => $this->t('<br><big><b>Important:</b></big> Site editors are responsible for accessibility and brand guideline considerations.<ul><li>To ensure proper color contrast, use the text color accessibility test at the bottom of the @arizona_bootstrap_color_docs_link.</li><li>For guidance on using the University of Arizona color palette, visit @ua_brand_colors_link.</li></ul>',
       [
         '@arizona_bootstrap_color_docs_link' => Link::fromTextAndUrl('Arizona Bootstrap color documentation', Url::fromUri('https://digital.arizona.edu/arizona-bootstrap/docs/2.0/getting-started/color-contrast/', ['attributes' => ['target' => '_blank']]))->toString(),
@@ -79,7 +102,11 @@ class AZTextWithBackgroundParagraphBehavior extends AZDefaultParagraphsBehavior 
         'bg-monsoon-sky-end' => $this->t('Monsoon Sky End'),
       ],
       '#default_value' => $config['text_background_pattern'] ?? '',
-      '#description' => $this->t('<br><big><strong>Important:</strong></big> Patterns are intended to be used sparingly.<ul><li>Please ensure sufficient contrast between text and its background.</li><li> More detail on background pattern options can be found in the @arizona_bootstrap_docs_bg_wrappers_link.</li></ul>',
+      '#attributes' => [
+        'data-az-text-background-pattern-for' => $background_color_unique_id,
+        'data-az-restricted-patterns' => Json::encode(self::RESTRICTED_PATTERNS),
+      ],
+      '#description' => $this->t('<br><big><strong>Important:</strong></big> Patterns are intended to be used sparingly.<ul><li>Please ensure sufficient contrast between text and its background.</li><li>The Monsoon Sky patterns are only available with the Azurite and Arizona Blue background colors.</li><li> More detail on background pattern options can be found in the @arizona_bootstrap_docs_bg_wrappers_link.</li></ul>',
         [
           '@arizona_bootstrap_docs_bg_wrappers_link' => Link::fromTextAndUrl('Arizona Bootstrap Background Wrappers documentation', Url::fromUri('https://digital.arizona.edu/arizona-bootstrap/docs/2.0/components/background-wrappers/', ['attributes' => ['target' => '_blank']]))->toString(),
         ]),
@@ -109,10 +136,34 @@ class AZTextWithBackgroundParagraphBehavior extends AZDefaultParagraphsBehavior 
 
     parent::buildBehaviorForm($paragraph, $form, $form_state);
 
+    // JavaScript that limits the background pattern options to those allowed
+    // by the currently selected background color.
+    $form['#attached']['library'][] = 'az_paragraphs/az_paragraphs.az_text_background_form';
+
     // This places the form fields on the content tab rather than behavior tab.
     // Note that form is passed by reference.
     // @see https://www.drupal.org/project/paragraphs/issues/2928759
     return [];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function validateBehaviorForm(ParagraphInterface $paragraph, array &$form, FormStateInterface $form_state) {
+    parent::validateBehaviorForm($paragraph, $form, $form_state);
+
+    // The background pattern select offers every pattern regardless of the
+    // selected background color, so the restricted pairings have to be checked
+    // here. This is the fallback for when the JavaScript does not run; it
+    // normally removes the disallowed options before they can be selected.
+    $pattern = $form_state->getValue('text_background_pattern');
+    $color = $form_state->getValue('text_background_color');
+    $allowed_colors = self::RESTRICTED_PATTERNS[$pattern] ?? NULL;
+    if ($allowed_colors !== NULL && !in_array($color, $allowed_colors, TRUE)) {
+      $form_state->setError($form['text_background_pattern'], $this->t('The %pattern background pattern is only available with the Azurite and Arizona Blue background colors.', [
+        '%pattern' => $form['text_background_pattern']['#options'][$pattern] ?? $pattern,
+      ]));
+    }
   }
 
   /**
