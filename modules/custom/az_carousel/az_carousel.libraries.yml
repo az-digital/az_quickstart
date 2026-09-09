@@ -1,4 +1,10 @@
 az_carousel:
+  js:
+    js/az_carousel.a11y.js: {}
   css:
     theme:
       css/az_carousel.css: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/once
