@@ -29,6 +29,19 @@ class AZBibtex extends DataParserPluginBase {
   protected $citations = [];
 
   /**
+   * Additional arguments for the citation key.
+   */
+  protected array $suffix;
+
+  /**
+   * {@inheritdoc}
+   */
+  public function __construct(array $configuration, $plugin_id, $plugin_definition) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition);
+    $this->suffix = $configuration['citation_key_suffix'] ?? [];
+  }
+
+  /**
    * {@inheritdoc}
    */
   protected function openSourceUrl($url): bool {
@@ -51,6 +64,15 @@ class AZBibtex extends DataParserPluginBase {
       $citations = array_filter($citations, function ($citation) {
         return (isset($citation['citation-key']) && isset($citation['title']));
       });
+      // Concat configured suffixes onto the citation key.
+      // @todo make into a processor.
+      foreach ($citations as &$citation) {
+        foreach ($this->suffix as $s) {
+          if (!empty($citation[$s])) {
+            $citation['citation-key'] .= '_' . (string) $citation[$s];
+          }
+        }
+      }
       $this->citations = $citations;
     }
     catch (ExceptionInterface $exception) {
