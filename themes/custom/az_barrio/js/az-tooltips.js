@@ -1,6 +1,6 @@
 /**
  * @file
- * Initializes tooltips for anchored accordions.
+ * Initializes Arizona Bootstrap tooltips.
  */
 
 /* global arizonaBootstrap */
@@ -9,7 +9,7 @@
   Drupal.behaviors.azAccordionAnchors = {
     attach: (context) => {
       once(
-        'az-accordion-anchor-tooltip',
+        'az-tooltips',
         '[data-bs-toggle="tooltip"]',
         context,
       ).forEach((trigger) => {
