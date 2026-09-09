@@ -327,7 +327,7 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
     $this->config('az_barrio.settings')
       ->set('heading_font_styles', $form_state->getValue('heading_font_styles'))
       ->save();
-    
+
     $this->routeBuilder->setRebuildNeeded();
 
     parent::submitForm($form, $form_state);
