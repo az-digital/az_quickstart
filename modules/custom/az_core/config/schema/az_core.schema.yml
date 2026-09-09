@@ -19,6 +19,7 @@ az_core.settings:
         locked:
           type: boolean
           label: 'Enterprise attribute edits prohibited'
+
 block.settings.az_navbar_fullscreen_menu_block:*:
   type: block_settings
   label: 'AZ Navbar Fullscreen Menu block'
