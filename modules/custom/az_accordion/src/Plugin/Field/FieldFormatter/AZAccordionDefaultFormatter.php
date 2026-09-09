@@ -147,6 +147,7 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
 
     if (!empty($element)) {
       $element['#accordion_container_id'] = $accordion_container_id;
+      $element['#attached']['library'][] = 'az_accordion/az_accordion';
     }
 
     // Attach FAQ schema markup if enabled.

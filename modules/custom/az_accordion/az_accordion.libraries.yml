@@ -1,4 +1,6 @@
 az_accordion:
+  js:
+    js/az-accordion.js: {}
   css:
     component:
       css/az-accordion-widget.css: {}
