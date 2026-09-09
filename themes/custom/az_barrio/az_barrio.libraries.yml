@@ -46,6 +46,13 @@ az-icons:
   css:
     theme:
       /libraries/az-icons/az-icons-styles.min.css: { minified: true }
+az-tooltips:
+  js:
+    js/az-tooltips.js: {}
+  dependencies:
+    - az_barrio/arizona-bootstrap-js
+    - core/drupal
+    - core/once
 arizona-digital-fonts:
   css:
     theme:
