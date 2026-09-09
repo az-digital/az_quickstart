@@ -8,8 +8,12 @@
 ((Drupal, once) => {
   Drupal.behaviors.azAccordionAnchors = {
     attach: (context) => {
-      once('az-accordion-anchor-tooltip', '[data-bs-toggle="tooltip"]', context).forEach((trigger) => {
-        new arizonaBootstrap.Tooltip(trigger, {
+      once(
+        'az-accordion-anchor-tooltip',
+        '[data-bs-toggle="tooltip"]',
+        context,
+      ).forEach((trigger) => {
+        arizonaBootstrap.Tooltip.getOrCreateInstance(trigger, {
           container: 'body',
         });
       });
