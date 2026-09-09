@@ -39,7 +39,7 @@ class AZAccordionParagraphBehavior extends AZDefaultParagraphsBehavior {
 
     $form['anchor_link'] = [
       '#type' => 'checkbox',
-      '#title' => $this->t('Add anchor link'),
+      '#title' => $this->t('Display copy link'),
       '#default_value' => $config['anchor_link'] ?? FALSE,
       '#description' => $this->t('Display a link to copy this accordion to your clipboard.'),
     ];
