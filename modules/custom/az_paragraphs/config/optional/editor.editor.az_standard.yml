@@ -156,6 +156,15 @@ settings:
           label: 'Button Blue'
           element: '<a class="btn btn-blue">'
         -
+          label: 'Button Sky'
+          element: '<a class="btn btn-sky">'
+        -
+          label: 'Button White (Red Text)'
+          element: '<a class="btn btn-white-text-red">'
+        -
+          label: 'Button White (Blue Text)'
+          element: '<a class="btn btn-white-text-blue">'
+        -
           label: 'Button Outline Red'
           element: '<a class="btn btn-outline-red">'
         -
@@ -164,6 +173,9 @@ settings:
         -
           label: 'Button Outline White'
           element: '<a class="btn btn-outline-white">'
+        -
+          label: 'Button Outline Sky'
+          element: '<a class="btn btn-outline-sky">'
         -
           label: 'Button Link'
           element: '<a class="btn btn-link">'
