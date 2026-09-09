@@ -302,9 +302,9 @@ function az_barrio_library_info_alter(&$libraries, $extension) {
 
     $font = \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_barrio_font');
     if ($font === TRUE) {
-      // Add Proxima Nova CSS based on theme settings.
-      // Ensure Proxima Nova is loaded before Arizona Bootstrap.
-      $libraries['arizona-bootstrap-css']['dependencies'][] = 'az_barrio/az-proxima-nova';
+      // Add Typekit font CSS based on theme settings.
+      // Ensure the Typekit fonts are loaded before Arizona Bootstrap.
+      $libraries['arizona-bootstrap-css']['dependencies'][] = 'az_barrio/arizona-digital-fonts';
     }
 
     $material_symbols_rounded = \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_barrio_material_symbols_rounded');
