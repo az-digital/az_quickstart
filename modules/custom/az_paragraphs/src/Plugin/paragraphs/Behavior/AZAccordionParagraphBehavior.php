@@ -41,7 +41,7 @@ class AZAccordionParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#type' => 'checkbox',
       '#title' => $this->t('Add anchor link'),
       '#default_value' => $config['anchor_link'] ?? FALSE,
-      '#description' => $this->t('Add an anchor link to this accordion for easy navigation.'),
+      '#description' => $this->t('Display a link to copy this accordion to your clipboard.'),
     ];
 
     parent::buildBehaviorForm($paragraph, $form, $form_state);
