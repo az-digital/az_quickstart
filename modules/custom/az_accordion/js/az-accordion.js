@@ -13,7 +13,7 @@
         '[data-bs-toggle="tooltip"]',
         context,
       ).forEach((trigger) => {
-        new arizonaBootstrap.Tooltip.getOrCreateInstance(trigger, {
+        arizonaBootstrap.Tooltip.getOrCreateInstance(trigger, {
           container: 'body',
         });
       });
