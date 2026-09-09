@@ -37,10 +37,10 @@ class AZAccordionParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#description' => $this->t('Enable FAQ (FAQPage) schema markup for this accordion. When checked, structured data will be added to the page so search engines can display these items as rich FAQ results. Only use this for content that is genuinely a list of frequently asked questions.'),
     ];
 
-    $form['anchor_link'] = [
+    $form['clipboard_link'] = [
       '#type' => 'checkbox',
-      '#title' => $this->t('Display copy link'),
-      '#default_value' => $config['anchor_link'] ?? FALSE,
+      '#title' => $this->t('Display clipboard link'),
+      '#default_value' => $config['clipboard_link'] ?? FALSE,
       '#description' => $this->t('Display a link to copy this accordion to your clipboard.'),
     ];
 

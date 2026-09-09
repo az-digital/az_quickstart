@@ -12,7 +12,7 @@
  * - accordion_header_id: Unique ID for an accordion item header.
  * - accordion_container_id: Unique ID for the accordion container.
  * - aria_expanded: Aria field equal to the collapsed value.
- * - anchor_link: Whether to render a link to the accordion item.
+ * - clipboard_link: Whether to render a clipboard link in the accordion item.
  *
  * @ingroup themeable
  */
@@ -27,11 +27,11 @@
     {% endif %}
   </button>
 </h3>
-<div id="{{ accordion_item_id }}" class="accordion-collapse collapse {{ collapsed }}" aria-labelledby="{{ accordion_header_id }}"{% if not anchor_link %} data-bs-parent="#{{ accordion_container_id }}"{% endif %}>
+<div id="{{ accordion_item_id }}" class="accordion-collapse collapse {{ collapsed }}" aria-labelledby="{{ accordion_header_id }}"{% if not clipboard_link %} data-bs-parent="#{{ accordion_container_id }}"{% endif %}>
   <div class="accordion-body">
     {% if body %}
       {{ body }}
-      {% if anchor_link %}
+      {% if clipboard_link %}
         <div class="pt-2">
           <a class="az-accordion-anchor icon-link" href="#{{ accordion_header_id }}" data-bs-toggle="tooltip" data-bs-title="Copied!" data-bs-trigger="click">
             <span class="material-symbols-rounded" aria-hidden="true">link</span>

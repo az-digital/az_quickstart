@@ -74,13 +74,13 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
     $entity = $items->getEntity();
     $accordion_container_id = HTML::getUniqueId('accordion-' . $entity->id());
     $faq_schema_enabled = FALSE;
-    $anchor_link_enabled = FALSE;
+    $clipboard_link_enabled = FALSE;
 
     if ($entity instanceof ParagraphInterface && method_exists($entity, 'getAllBehaviorSettings')) {
       $parent_config = $entity->getAllBehaviorSettings();
       $behavior_settings = $parent_config['az_accordion_paragraph_behavior'] ?? [];
       $faq_schema_enabled = !empty($behavior_settings['faq_schema']);
-      $anchor_link_enabled = !empty($behavior_settings['anchor_link']);
+      $clipboard_link_enabled = !empty($behavior_settings['clipboard_link']);
     }
 
     foreach ($items as $delta => $item) {
@@ -116,7 +116,7 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
         '#accordion_item_id' => $accordion_id,
         '#accordion_header_id' => $accordion_header_id,
         '#accordion_container_id' => $accordion_container_id,
-        '#anchor_link' => $anchor_link_enabled,
+        '#clipboard_link' => $clipboard_link_enabled,
         '#collapsed' => $item->collapsed ? '' : 'show',
         '#aria_expanded' => !$item->collapsed ? 'true' : 'false',
       ];
@@ -147,7 +147,9 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
 
     if (!empty($element)) {
       $element['#accordion_container_id'] = $accordion_container_id;
-      $element['#attached']['library'][] = 'az_accordion/az_accordion';
+      if ($clipboard_link_enabled) {
+        $element['#attached']['library'][] = 'az_barrio/az-tooltips';
+      }
     }
 
     // Attach FAQ schema markup if enabled.
