@@ -96,7 +96,11 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
       $column_classes = explode(' ', $column_classes);
       $column_classes[] = 'pb-4';
       $accordion_id = Html::getUniqueId('az_accordion');
-      $accordion_header_id = Html::getUniqueId('az_accordion_header-' . $title);
+      $anchor_title = strtolower($title);
+      $anchor_title = preg_replace('/[^a-z0-9\s]/', '', $anchor_title);
+      $anchor_title = preg_replace('/\s+/', '-', trim($anchor_title));
+      $anchor_title = substr($anchor_title, 0, 50);
+      $accordion_header_id = Html::getUniqueId($anchor_title);
 
       $element[$delta] = [
         '#theme' => 'az_accordion',
