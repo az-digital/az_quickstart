@@ -6,7 +6,7 @@
 /* global arizonaBootstrap */
 
 ((Drupal, once) => {
-  Drupal.behaviors.azAccordionAnchors = {
+  Drupal.behaviors.azTooltips = {
     attach: (context) => {
       once('az-tooltips', '[data-bs-toggle="tooltip"]', context).forEach(
         (trigger) => {
