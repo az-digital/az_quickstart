@@ -97,9 +97,8 @@ class AZAuthorRevisionRevertForm extends ConfirmFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state, $az_author_revision = NULL) {
-    $authorStorage = $this->entityTypeManager->getStorage('az_author');
     /** @var \Drupal\az_publication\Entity\AZAuthorInterface|null $revision */
-    $revision = $authorStorage->loadRevision($az_author_revision);
+    $revision = $this->entityTypeManager->getStorage('az_author')->loadRevision($az_author_revision);
     if ($revision === NULL) {
       throw new NotFoundHttpException();
     }
