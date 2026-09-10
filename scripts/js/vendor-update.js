@@ -56,6 +56,7 @@ const ASSET_LIST = [
     files: [
       'slick/slick.min.js',
       'slick/slick.css',
+      'slick/slick-theme.css',
       'slick/ajax-loader.gif',
       'slick/fonts/slick.eot',
       'slick/fonts/slick.svg',

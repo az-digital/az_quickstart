@@ -320,6 +320,7 @@
                 "[web-root]/libraries/easepick--bundle/dist/index.css": "assets/vendor/easepick--bundle/dist/index.css",
                 "[web-root]/libraries/slick/slick/slick.min.js": "assets/vendor/slick-carousel/slick/slick.min.js",
                 "[web-root]/libraries/slick/slick/slick.css": "assets/vendor/slick-carousel/slick/slick.css",
+                "[web-root]/libraries/slick/slick/slick-theme.css": "assets/vendor/slick-carousel/slick/slick-theme.css",
                 "[web-root]/libraries/slick/slick/ajax-loader.gif": "assets/vendor/slick-carousel/slick/ajax-loader.gif",
                 "[web-root]/libraries/slick/slick/fonts/slick.eot": "assets/vendor/slick-carousel/slick/fonts/slick.eot",
                 "[web-root]/libraries/slick/slick/fonts/slick.svg": "assets/vendor/slick-carousel/slick/fonts/slick.svg",
