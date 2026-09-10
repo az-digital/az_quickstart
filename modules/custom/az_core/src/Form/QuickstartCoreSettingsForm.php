@@ -108,7 +108,7 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   protected function getEditableConfigNames() {
-    return ['az_core.settings', 'az_barrio.settings', 'system.site'];
+    return ['az_core.settings', 'system.site'];
   }
 
   /**
@@ -117,7 +117,6 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
     $az_core_config = $this->config('az_core.settings');
     $site_config = $this->config('system.site');
-    $az_barrio_config = $this->config('az_barrio.settings');
 
     $form['clear_cache'] = [
       '#type' => 'details',
@@ -217,20 +216,6 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
       '#default_value' => $az_core_config->get('enterprise_attributes.locked'),
     ];
 
-    $form['az_bootstrap_style'] = [
-      '#type' => 'details',
-      '#title' => $this->t('AZ Bootstrap Style Settings'),
-      '#open' => FALSE,
-      '#access' => $this->currentUser()->hasPermission('administer site configuration'),
-    ];
-
-    $form['az_bootstrap_style']['heading_font_styles'] = [
-      '#title' => $this->t('Use Serif headings'),
-      '#type' => 'checkbox',
-      '#description' => $this->t("Use the Garamond serif font for headings H1, H2, and H3."),
-      '#default_value' => $az_barrio_config->get('heading_font_styles') ?? FALSE,
-    ];
-
     return parent::buildForm($form, $form_state);
   }
 
@@ -322,10 +307,6 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
       ->set('monitoring_page.enabled', $form_state->getValue('monitoring_page_enabled'))
       ->set('monitoring_page.path', $form_state->getValue('monitoring_page_path'))
       ->set('enterprise_attributes.locked', $form_state->getValue('enterprise_attributes_locked'))
-      ->save();
-
-    $this->config('az_barrio.settings')
-      ->set('heading_font_styles', $form_state->getValue('heading_font_styles'))
       ->save();
 
     $this->routeBuilder->setRebuildNeeded();
