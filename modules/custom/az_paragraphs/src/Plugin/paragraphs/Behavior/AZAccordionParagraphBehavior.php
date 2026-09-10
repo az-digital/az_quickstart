@@ -41,7 +41,7 @@ class AZAccordionParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#type' => 'checkbox',
       '#title' => $this->t('Display clipboard link'),
       '#default_value' => $config['clipboard_link'] ?? FALSE,
-      '#description' => $this->t('Display a link to copy a specific accordion item's URL to your clipboard.'),
+      '#description' => $this->t("Display a link to copy a specific accordion item's URL to your clipboard."),
     ];
 
     parent::buildBehaviorForm($paragraph, $form, $form_state);
