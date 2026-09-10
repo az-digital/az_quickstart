@@ -47,13 +47,23 @@ final class SlateUrl {
   private const ID_PATTERN = '/^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i';
 
   /**
-   * Prefill keys Slate documents, e.g. form_sys:first or form_myfield.
+   * The shape of a prefill key: a form field's export key, all lowercase.
    *
-   * Slate requires parameter keys to be lowercase; values may be mixed case.
+   * Slate prefills a field by naming that field's export key directly in the
+   * query string - sys:first, sys:field:acainterest, or a form-specific key
+   * like lunch_preference. There is no prefix on these. Slate requires keys to
+   * be lowercase; values may be mixed case.
+   *
+   * This is a shape check, not an allowlist of names. Export keys are defined
+   * per form inside Slate, so the set cannot be known here, which means an
+   * unrecognised Slate parameter passes too. That is accepted: the scheme,
+   * host, and path checks decide whose script we load, and person is refused
+   * outright below, so what is left can only change how Slate renders its own
+   * form.
    *
    * @see https://knowledge.technolutions.net/docs/prepopulating-or-prefilling-forms-using-query-string-parameters
    */
-  private const PREFILL_PATTERN = '/^form_[a-z0-9_:.-]+$/';
+  private const PREFILL_PATTERN = '/^[a-z0-9_:.-]+$/';
 
   /**
    * Query keys we set ourselves, so a pasted copy of them is dropped.
@@ -77,7 +87,7 @@ final class SlateUrl {
   private string $origin;
 
   /**
-   * Prefill parameters that survived the allowlist, as key => value.
+   * Prefill parameters that survived the query checks, as key => value.
    */
   private array $prefill;
 
@@ -150,8 +160,8 @@ final class SlateUrl {
 
     // Split the query by hand rather than with parse_str(). parse_str()
     // rewrites "." and " " in a key to "_", left over from register_globals,
-    // so a prefill key like form_sys.first would silently become
-    // form_sys_first and the field would quietly not prefill.
+    // so an export key like my.field would silently become my_field and the
+    // field it names would quietly not prefill.
     $pairs = [];
     if (isset($parts['query']) && $parts['query'] !== '') {
       foreach (explode('&', $parts['query']) as $pair) {
@@ -190,9 +200,9 @@ final class SlateUrl {
         $reason = 'person_param';
         return NULL;
       }
-      // Allow the documented prefill keys and nothing else. Slate's parameter
-      // set is not published beyond the prefill page, and an unrecognised one
-      // could change rendering, redirects, or how a submission is recorded.
+      // Everything else is carried through as a prefill key, provided it has
+      // the shape of an export key. See PREFILL_PATTERN for why this is a
+      // shape check rather than a list of names.
       if (!preg_match(self::PREFILL_PATTERN, $key)) {
         $reason = 'unknown_param';
         return NULL;

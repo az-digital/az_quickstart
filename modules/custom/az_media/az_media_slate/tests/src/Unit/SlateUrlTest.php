@@ -47,16 +47,36 @@ class SlateUrlTest extends UnitTestCase {
         'https://uaz.technolutions.net/register/?id=' . strtoupper(self::ID),
         'https://uaz.technolutions.net/register/?id=' . strtoupper(self::ID),
       ],
-      'prefill parameter' => [
-        $base . '&form_sys%3Afirst=Wilbur',
-        $base . '&form_sys:first=Wilbur',
+      // A prefill key is the form field's export key, used with no prefix.
+      // These three are the examples in Slate's own prefill documentation.
+      'system export key' => [
+        $base . '&sys%3Afirst=Alexander',
+        $base . '&sys:first=Alexander',
       ],
-      // parse_str() would turn this key into form_sys_first, so the parser
-      // splits the query itself. A prefill key has to survive intact or the
-      // field it names quietly does not get filled in.
-      'prefill key containing a dot' => [
-        $base . '&form_sys.first=Wilbur',
-        $base . '&form_sys.first=Wilbur',
+      'mapped field export key' => [
+        $base . '&sys%3Afield%3Aacainterest=84fcea7a-72e6-4743-8594-4c25c1c25015',
+        $base . '&sys:field:acainterest=84fcea7a-72e6-4743-8594-4c25c1c25015',
+      ],
+      'form-specific export key' => [
+        $base . '&lunch_preference=Chicken',
+        $base . '&lunch_preference=Chicken',
+      ],
+      'several parameters at once' => [
+        $base . '&sys%3Afirst=Alexander&sys%3Alast=Hamilton',
+        $base . '&sys:first=Alexander&sys:last=Hamilton',
+      ],
+      // parse_str() would turn this key into my_field, so the parser splits
+      // the query itself. An export key has to survive intact or the field it
+      // names quietly does not get filled in.
+      'export key containing a dot' => [
+        $base . '&my.field=Wilbur',
+        $base . '&my.field=Wilbur',
+      ],
+      // The person key is refused, but a key that merely begins with those
+      // letters is an ordinary export key. The rule must match the whole key.
+      'export key beginning with person' => [
+        $base . '&personal_email=wilbur%40example.edu',
+        $base . '&personal_email=wilbur@example.edu',
       ],
       // Slate sets output and div itself. A pasted copy is dropped rather
       // than rejected, because it is our parameter to own.
@@ -94,10 +114,14 @@ class SlateUrlTest extends UnitTestCase {
       // One stored URL serves every visitor, so a person parameter would show
       // one record's data to all of them.
       'person parameter' => [$base . '&person=' . self::ID, 'person_param'],
-      'undocumented parameter' => [$base . '&redirect=https://example.com', 'unknown_param'],
-      'uppercase prefill key' => [$base . '&FORM_sys=x', 'unknown_param'],
-      'over-long value' => [$base . '&form_a=' . str_repeat('x', 513), 'param_too_long'],
-      'over-long key' => [$base . '&form_' . str_repeat('a', 60) . '=x', 'param_too_long'],
+      // Slate requires query keys to be all lowercase.
+      'uppercase export key' => [$base . '&SYS:first=x', 'unknown_param'],
+      'uppercase inside an export key' => [$base . '&sys:FIRST=x', 'unknown_param'],
+      // The parser decodes a key before checking it, so an encoded space is
+      // caught rather than being carried into the URL we build.
+      'export key containing a space' => [$base . '&sys%20first=x', 'unknown_param'],
+      'over-long value' => [$base . '&sys:first=' . str_repeat('x', 513), 'param_too_long'],
+      'over-long key' => [$base . '&' . str_repeat('a', 65) . '=x', 'param_too_long'],
     ];
   }
 
@@ -176,10 +200,17 @@ class SlateUrlTest extends UnitTestCase {
     $accepted = [
       'plain form URL' => $base,
       'test environment host' => 'https://uaz.test.technolutions.net/register/?id=' . self::ID,
-      'documented prefill key' => $base . '&form_sys%3Afirst=Wilbur',
-      'dotted prefill key' => $base . '&form_sys.first=Wilbur',
+      // Slate writes export keys unencoded, which is the form that has to
+      // agree on both sides.
+      'documented export key' => $base . '&sys:first=Alexander',
+      'mapped field export key' => $base . '&sys:field:acainterest=' . self::ID,
+      'form-specific export key' => $base . '&lunch_preference=Chicken',
+      'dotted export key' => $base . '&my.field=Wilbur',
+      'several parameters at once' => $base . '&sys:first=Alexander&sys:last=Hamilton',
+      // The person key is refused, but this is a normal export key.
+      'export key beginning with person' => $base . '&personal_email=x',
       // Keys must be lowercase; values may be any case.
-      'uppercase prefill value' => $base . '&form_sys=WILBUR',
+      'uppercase prefill value' => $base . '&sys:first=ALEXANDER',
       // The regex is case-insensitive for the host and id, so the parser has
       // to accept those too.
       'mixed case host and id' => 'HTTPS://UAZ.Technolutions.NET/register/?id=' . strtoupper(self::ID),
@@ -191,7 +222,6 @@ class SlateUrlTest extends UnitTestCase {
 
     $rejected = [
       'person parameter' => $base . '&person=' . self::ID,
-      'undocumented parameter' => $base . '&redirect=https://example.com',
       'another host' => 'https://example.com/register/?id=' . self::ID,
       'lookalike host' => 'https://eviltechnolutions.net/register/?id=' . self::ID,
       'fragment' => $base . '#section',
@@ -199,12 +229,17 @@ class SlateUrlTest extends UnitTestCase {
       // Slate requires lowercase query keys. Case-insensitivity in the regex
       // is scoped to the host and id for this reason: a blanket /i flag would
       // accept these on save and leave the parser to reject them at render.
-      'uppercase prefill key' => $base . '&FORM_sys=x',
+      'uppercase export key' => $base . '&SYS:first=x',
       'uppercase reserved key' => $base . '&OUTPUT=embed',
       'uppercase path' => 'https://uaz.technolutions.net/REGISTER/?id=' . self::ID,
-      // Uppercase after the form_ prefix, not just in it.
-      'uppercase inside prefill key' => $base . '&form_SYS=x',
-      'uppercase in encoded key' => $base . '&form_sys%3AFirst=x',
+      // Uppercase anywhere in the key, not only at the front.
+      'uppercase inside export key' => $base . '&sys:FIRST=x',
+      // A percent escape in a key is refused on both sides. The regex refuses
+      // every escape outright; the parser decodes first and refuses what the
+      // escape turns into. Without that the regex would accept these and the
+      // parser would reject them at render.
+      'uppercase in encoded key' => $base . '&sys%3AFirst=x',
+      'encoded space in key' => $base . '&sys%20first=x',
     ];
     foreach ($rejected as $label => $url) {
       $this->assertSame(0, preg_match($pattern, $url), $label);

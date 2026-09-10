@@ -99,23 +99,30 @@ class AzMediaRemoteSlateFormatter extends MediaRemoteFormatterBase implements Co
    * check cannot be relied on. This pattern exists because media_remote
    * requires one, and it is kept close to what the parser accepts so that an
    * editor finds out about a bad URL while saving rather than seeing an empty
-   * space on the page afterwards. Only Slate's documented prefill keys are
-   * allowed through, which is what catches a pasted person parameter here.
+   * space on the page afterwards. A pasted person parameter is refused here as
+   * well as in the parser, so an editor sees that one while saving.
    */
   public static function getUrlRegexPattern() {
     // Case-insensitivity is scoped to the scheme, host, and id with (?i:...)
     // rather than applied to the whole pattern with the /i flag. Slate requires
     // query keys to be lowercase and SlateUrl enforces that, so a blanket /i
-    // would accept FORM_sys=x on save and then reject it at render.
+    // would accept SYS:first=x on save and then reject it at render.
     //
-    // The prefill key allows lowercase characters or a percent escape, which
-    // mirrors SlateUrl::PREFILL_PATTERN as closely as a regex over an encoded
-    // URL can. The two cannot agree perfectly, because this reads the URL
-    // encoded and the parser reads it decoded: form_%53YS decodes to form_SYS,
-    // so it passes here and is rejected there. That is a contrived URL rather
-    // than an editor's mistake, and SlateUrl remains the check that decides
-    // what loads.
-    return '/^(?i:https:\/\/([a-z0-9]([a-z0-9-]*[a-z0-9])?\.)+technolutions\.net)\/register\/\?id=(?i:[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12})(&(form_(?:[a-z0-9_:.-]|%[0-9A-Fa-f]{2})+|output|div)=[^&#]*)*$/';
+    // A query key is a form field's export key, so this matches the shape of
+    // one rather than a list of names. See SlateUrl::PREFILL_PATTERN for why
+    // the set cannot be listed. The negative lookahead is what keeps person
+    // out; it is anchored to the whole key, so a real export key such as
+    // personal_email still passes.
+    //
+    // A key here is unencoded characters only, no percent escapes, which makes
+    // this stricter than the parser rather than looser. The parser decodes a
+    // key before checking it, so allowing escapes would let this accept keys
+    // the parser then refuses - %20 decodes to a space, %53 to an S - and an
+    // editor would save happily and find an empty space on the page. Refusing
+    // every escape drops that whole class. Slate writes export keys unencoded,
+    // so the cost is a save-time error on a hand-encoded URL that would have
+    // worked, which is the safe way round.
+    return '/^(?i:https:\/\/([a-z0-9]([a-z0-9-]*[a-z0-9])?\.)+technolutions\.net)\/register\/\?id=(?i:[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12})(&(?!person=)[a-z0-9_:.-]+=[^&#]*)*$/';
   }
 
   /**
@@ -124,7 +131,7 @@ class AzMediaRemoteSlateFormatter extends MediaRemoteFormatterBase implements Co
   public static function getValidUrlExampleStrings(): array {
     return [
       'https://uaz.technolutions.net/register/?id=dbfabd84-d348-4bf9-88ef-1832b354fcb0',
-      'https://uaz.technolutions.net/register/?id=dbfabd84-d348-4bf9-88ef-1832b354fcb0&form_sys:first=Wilbur',
+      'https://uaz.technolutions.net/register/?id=dbfabd84-d348-4bf9-88ef-1832b354fcb0&sys:first=Wilbur',
     ];
   }
 
