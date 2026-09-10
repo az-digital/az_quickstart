@@ -5,7 +5,18 @@
  * of resolved from an external registry at composer-install time.
  *
  * Modeled on Drupal core's core/scripts/js/vendor-update.js.
+ *
+ * IMPORTANT: this overwrites assets/vendor/slick-carousel/slick/slick.min.js
+ * with the raw npm release, which is NOT jQuery 4 compatible. After running
+ * this script, re-apply the jQuery 4 compatibility fix (drupal.org issue
+ * #3467129) to that file before committing:
+ *   https://www.drupal.org/files/issues/2025-02-17/compatibility_jQuery_4.patch
+ * (patch -p2 assets/vendor/slick-carousel/slick/slick.min.js < that-file)
+ * Check whether a newer slick-carousel release has fixed this upstream
+ * before reapplying, in case the patch is no longer needed.
  */
+
+/* eslint-disable no-console -- CLI script; console output is the point. */
 
 const path = require('node:path');
 const { copyFile, mkdir } = require('node:fs').promises;
@@ -58,15 +69,23 @@ function normalizeFile(file) {
   return typeof file === 'string' ? { from: file, to: file } : file;
 }
 
-(async () => {
-  for (const { pack, files, folder = pack } of ASSET_LIST) {
-    for (const file of files.map(normalizeFile)) {
-      const sourceFile = `${packageFolder}/${pack}/${file.from}`;
-      const destFile = `${assetsFolder}/${folder}/${file.to}`;
+/**
+ * Copy a single vendored file, creating its destination folder as needed.
+ */
+async function copyVendorFile({ pack, folder, file }) {
+  const sourceFile = `${packageFolder}/${pack}/${file.from}`;
+  const destFile = `${assetsFolder}/${folder}/${file.to}`;
 
-      await mkdir(path.dirname(destFile), { recursive: true });
-      console.log(`Copy ${pack}/${file.from} to ${folder}/${file.to}`);
-      await copyFile(sourceFile, destFile);
-    }
-  }
-})();
+  await mkdir(path.dirname(destFile), { recursive: true });
+  console.log(`Copy ${pack}/${file.from} to ${folder}/${file.to}`);
+  await copyFile(sourceFile, destFile);
+}
+
+const copyTasks = ASSET_LIST.flatMap(({ pack, files, folder = pack }) =>
+  files.map(normalizeFile).map((file) => ({ pack, folder, file })),
+);
+
+Promise.all(copyTasks.map(copyVendorFile)).catch((error) => {
+  console.error(error);
+  process.exitCode = 1;
+});
