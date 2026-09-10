@@ -97,7 +97,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
         'If selected, a Typekit CDN <code>&lt;link&gt;</code> will be added to every page importing the @proxima_nova_docs_link CSS.', [
           '@proxima_nova_docs_link' => Link::fromTextAndUrl(
             'Arizona Digital, centrally-managed Proxima Nova font', Url::fromUri(
-                'https://digital.arizona.edu/arizona-bootstrap/docs/2.0/content/font/',
+                'https://digital.arizona.edu/arizona-bootstrap/v5/docs/5.2/content/font/',
                 [
                   'attributes' => [
                     'target' => '_blank',
