@@ -326,10 +326,10 @@
                 "[web-root]/libraries/slick/slick/fonts/slick.svg": "assets/vendor/slick-carousel/slick/fonts/slick.svg",
                 "[web-root]/libraries/slick/slick/fonts/slick.ttf": "assets/vendor/slick-carousel/slick/fonts/slick.ttf",
                 "[web-root]/libraries/slick/slick/fonts/slick.woff": "assets/vendor/slick-carousel/slick/fonts/slick.woff",
-                "[web-root]/libraries/styles/layout.css": "assets/vendor/styles/layout.css",
-                "[web-root]/libraries/styles/themes/light.css": "assets/vendor/styles/themes/light.css",
-                "[web-root]/libraries/index.js": "assets/vendor/index.js",
-                "[web-root]/libraries/utils/index.js": "assets/vendor/utils/index.js"
+                "[web-root]/libraries/vanilla-calendar-pro/styles/layout.css": "assets/vendor/vanilla-calendar-pro/styles/layout.css",
+                "[web-root]/libraries/vanilla-calendar-pro/styles/themes/light.css": "assets/vendor/vanilla-calendar-pro/styles/themes/light.css",
+                "[web-root]/libraries/vanilla-calendar-pro/index.js": "assets/vendor/vanilla-calendar-pro/index.js",
+                "[web-root]/libraries/vanilla-calendar-pro/utils/index.js": "assets/vendor/vanilla-calendar-pro/utils/index.js"
             }
         }
     },
