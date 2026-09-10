@@ -19,8 +19,28 @@
             "url": "https://packages.drupal.org/8"
         },
         {
-            "type": "composer",
-            "url": "https://asset-packagist.org"
+            "type": "package",
+            "package": {
+                "name": "npm-asset/easepick--bundle",
+                "version": "1.2.1",
+                "type": "npm-asset",
+                "dist": {
+                    "url": "https://registry.npmjs.org/@easepick/bundle/-/bundle-1.2.1.tgz",
+                    "type": "tar"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "npm-asset/slick-carousel",
+                "version": "1.6.0",
+                "type": "npm-asset",
+                "dist": {
+                    "url": "https://registry.npmjs.org/slick-carousel/-/slick-carousel-1.6.0.tgz",
+                    "type": "tar"
+                }
+            }
         }
     ],
     "require": {
