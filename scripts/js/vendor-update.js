@@ -46,8 +46,8 @@ const ASSET_LIST = [
     pack: '@easepick/bundle',
     folder: 'easepick--bundle',
     files: [
-      { from: 'dist/index.umd.js', to: 'dist/index.umd.js' },
-      { from: 'dist/index.css', to: 'dist/index.css' },
+      'dist/index.umd.js',
+      'dist/index.css',
     ],
   },
   {
