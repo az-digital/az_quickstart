@@ -46,8 +46,8 @@ const ASSET_LIST = [
     pack: '@easepick/bundle',
     folder: 'easepick--bundle',
     files: [
-      { from: 'dist/index.umd.js', to: 'dist/index.umd.js' },
-      { from: 'dist/index.css', to: 'dist/index.css' },
+      'dist/index.umd.js',
+      'dist/index.css',
     ],
   },
   {
@@ -62,6 +62,16 @@ const ASSET_LIST = [
       'slick/fonts/slick.svg',
       'slick/fonts/slick.ttf',
       'slick/fonts/slick.woff',
+    ],
+  },
+  {
+    pack: 'vanilla-calendar-pro',
+    folder: 'vanilla-calendar-pro',
+    files: [
+      'styles/layout.css',
+      'styles/themes/light.css',
+      'index.js',
+      'utils/index.js',
     ],
   },
 ];
