@@ -24,6 +24,14 @@
   const INIT_TIMEOUT_MS = 15000;
 
   /**
+   * The only domain we will load an embed script from.
+   *
+   * This repeats SlateUrl::HOST_SUFFIX on purpose. See loadEmbed() for why the
+   * browser checks the address again rather than trusting the markup.
+   */
+  const SLATE_HOST_SUFFIX = '.technolutions.net';
+
+  /**
    * Whether Slate has put a form into the container yet.
    *
    * @param {HTMLElement} container The element Slate was told to fill.
@@ -51,12 +59,39 @@
    * Appends the Slate script for one container and watches how it goes.
    *
    * @param {HTMLElement} container The element Slate was told to fill.
+   * @return {boolean} True if a script was appended, false if the address was
+   *   missing or refused. The caller uses this to decide whether the page has
+   *   spent its one embed.
    */
   function loadEmbed(container) {
     const wrapper = container.closest('.az-media-slate');
     const src = container.getAttribute('data-az-slate-embed-src');
     if (!src) {
-      return;
+      return false;
+    }
+
+    // Check the address again here, in the browser. SlateUrl has already
+    // refused anything that is not a Slate form URL, but that check is in PHP
+    // and this is the line that turns a string into a script tag. A guard at
+    // the point of use still holds if this markup is ever produced by
+    // something other than our own formatter. The suffix matches
+    // SlateUrl::HOST_SUFFIX; the two have to stay in step.
+    let embedUrl;
+    try {
+      embedUrl = new URL(src, window.location.href);
+    } catch (e) {
+      embedUrl = null;
+    }
+    if (
+      embedUrl === null ||
+      embedUrl.protocol !== 'https:' ||
+      !embedUrl.hostname.endsWith(SLATE_HOST_SUFFIX)
+    ) {
+      showFallback(
+        wrapper,
+        Drupal.t('The form could not be loaded. Use the link to open it.'),
+      );
+      return false;
     }
 
     // Hide the fallback link now that we are driving the embed. It ships
@@ -75,7 +110,9 @@
 
     const script = document.createElement('script');
     script.async = true;
-    script.src = src;
+    // Assign the parsed URL rather than the raw attribute, so the value that
+    // reaches the script tag is the one the check above accepted.
+    script.src = embedUrl.href;
     script.addEventListener('error', () => {
       window.clearTimeout(timer);
       showFallback(
@@ -86,6 +123,7 @@
       );
     });
     document.head.appendChild(script);
+    return true;
   }
 
   Drupal.behaviors.azMediaSlate = {
@@ -112,8 +150,12 @@
           );
           return;
         }
-        document.documentElement.setAttribute('data-az-slate-loaded', 'true');
-        loadEmbed(container);
+        // Mark the page as spent only once a script is actually on its way.
+        // A container we refused has not used up the one embed Slate allows,
+        // so a later valid one on the same page still gets its turn.
+        if (loadEmbed(container)) {
+          document.documentElement.setAttribute('data-az-slate-loaded', 'true');
+        }
       });
     },
   };
