@@ -37,9 +37,10 @@ function az_quickstart_install() {
   if (defined('PANTHEON_ENVIRONMENT')) {
     // Modules to install only on Pantheon.
     $extra_modules = [
-      'pantheon_advanced_page_cache',
       'environment_indicator',
       'environment_indicator_toolbar',
+      'imagemagick',
+      'pantheon_advanced_page_cache',
     ];
   }
   else {
@@ -164,6 +165,25 @@ function az_quickstart_update_1020901(&$sandbox) {
   }
   $sandbox['#finished'] = empty($sandbox['max']) ? 1 : $sandbox['progress'] / $sandbox['max'];
   return t('Updated langcode on %count menu links.', ['%count' => $sandbox['progress']]);
+}
+
+/**
+ * Ensure Pantheon sites have the imagemagick module installed.
+ */
+function az_quickstart_update_1021201() {
+  if (defined('PANTHEON_ENVIRONMENT')) {
+    try {
+      \Drupal::service('module_installer')->install(['imagemagick']);
+    }
+    catch (MissingDependencyException $e) {
+      return t('ImageMagick module not available to install.');
+    }
+    
+    \Drupal::service('config.factory')-getEditable('system.image')->set('toolkit', 'imagemagick');
+    \Drupal::service('config.factory')-getEditable('imagemagick.settings')->set('quality', 92);
+
+    return t('ImageMagick module installed and configured.');
+  }
 }
 
 /**
