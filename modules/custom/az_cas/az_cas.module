@@ -8,6 +8,7 @@
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Url;
 use Drupal\user\RoleInterface;
 
 /**
@@ -20,10 +21,19 @@ function az_cas_help($route_name, RouteMatchInterface $route_match) {
       $output = '';
       $output .= '<h3>' . t('About') . '</h3>';
       $output .= '<p>' . t('Pre-configures contrib CAS module to work with University of Arizona WebAuth.') . '</p>';
+      $output .= '<p>' . t('The Quickstart CAS Guest Authentication functionality allows site visitors to authenticate via University of Arizona WebAuth without creating Drupal user accounts.') . '</p>';
       return $output;
 
     default:
   }
+}
+
+/**
+ * Implements hook_cron().
+ */
+function az_cas_cron() {
+  // Clean up expired guest sessions.
+  \Drupal::service('az_cas.guest_session_manager')->cleanupExpiredSessions();
 }
 
 /**
@@ -95,6 +105,84 @@ function az_cas_form_user_login_form_alter(&$form, FormStateInterface $form_stat
     $form_elements = ['name', 'pass', 'actions'];
     foreach ($form_elements as $element) {
       $form[$element]['#access'] = FALSE;
+    }
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Modify the CAS settings form to prevent disabling auto_register when
+ * AZ CAS guest mode is enabled.
+ */
+function az_cas_form_cas_settings_alter(&$form, FormStateInterface $form_state) {
+  $az_cas_config = \Drupal::config('az_cas.settings');
+  $guest_mode = $az_cas_config->get('guest_mode');
+
+  if ($guest_mode) {
+    // Add a notice about guest mode requiring auto_register.
+    $form['user_accounts']['auto_register']['#description'] .= '<br><strong>' . t('This setting is required for AZ CAS guest authentication mode and cannot be disabled while guest mode is enabled.') . '</strong>';
+
+    // Force auto_register to be enabled and disable the checkbox.
+    $form['user_accounts']['auto_register']['#default_value'] = TRUE;
+    $form['user_accounts']['auto_register']['#disabled'] = TRUE;
+
+    // Add a custom validation to ensure auto_register remains enabled.
+    $form['#validate'][] = 'az_cas_cas_settings_validate';
+  }
+}
+
+/**
+ * Custom validation for CAS settings form.
+ *
+ * Ensures auto_register remains enabled when guest mode is active.
+ */
+function az_cas_cas_settings_validate($form, FormStateInterface $form_state) {
+  $az_cas_config = \Drupal::config('az_cas.settings');
+  $guest_mode = $az_cas_config->get('guest_mode');
+
+  if ($guest_mode && !$form_state->getValue(['user_accounts', 'auto_register'])) {
+    $form_state->setErrorByName('user_accounts][auto_register', t('Auto register users cannot be disabled while AZ CAS guest authentication mode is enabled.'));
+    $form_state->setValue(['user_accounts', 'auto_register'], TRUE);
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function az_cas_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // Check if this is a node edit form.
+  if (strpos($form_id, 'node_') === 0 && strpos($form_id, '_edit_form') !== FALSE) {
+    // Get the form object.
+    $form_object = $form_state->getFormObject();
+
+    // Check if the form object has the getEntity method.
+    if (method_exists($form_object, 'getEntity')) {
+      // Get the node from the form.
+      $node = $form_object->getEntity();
+
+      // Get the node path.
+      $path = '/node/' . $node->id();
+
+      // Use the guest path matcher service to check if this path is protected.
+      $guest_path_matcher = \Drupal::service('az_cas.guest_path_matcher');
+      $path_matches = $guest_path_matcher->isPathProtected($path);
+
+      // If guest mode is enabled and node's path matches a guest auth path.
+      if ($path_matches) {
+        // Add a notice to the form.
+        $form['guest_auth_notice'] = [
+          '#type' => 'markup',
+          '#markup' => '<div class="messages messages--warning">' .
+          t('This content requires NetID authentication to access because its path matches a pattern in the <a href="@settings_url">Guest Authentication settings</a>.',
+              [
+                '@settings_url' => \Drupal::currentUser()->hasPermission('administer az_cas configuration') ?
+                Url::fromRoute('az_cas.settings')->toString() : '#',
+              ]) .
+          '</div>',
+          '#weight' => -100,
+        ];
+      }
     }
   }
 }
