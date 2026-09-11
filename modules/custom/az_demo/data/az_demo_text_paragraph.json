@@ -134,6 +134,11 @@
             "id": 199,
             "az_text_area": "<h2>Square Size</h2><p>The square size view mode scales the video to 220x220px.</p>",
             "bottom_spacing": "mb-0"
+        },
+        {
+            "id": 415,
+            "az_text_area": "<h2>List Bullet Styles</h2>\r\n\r\n<p>An unordered list can use a bullet style other than the default. Select the list in the editor, then choose a bullet style from the <strong>Styles dropdown</strong>. Each style replaces the bullet and sets the spacing between list items.</p>\r\n\r\n<h3>Focus Point Bullets</h3>\r\n\r\n<ul class=\"az-list-focus-points\">\r\n\t<li>Applied by selecting <strong>Focus Point Bullets</strong> from the Styles dropdown</li>\r\n\t<li>The marker is a fixed size, so it does not scale with the surrounding text</li>\r\n\t<li>A list item long enough to wrap keeps its following lines indented past the marker, the way this one does at most screen widths</li>\r\n</ul>\r\n\r\n<h3>Checkmark Bullets</h3>\r\n\r\n<ul class=\"az-list-checkmarks\">\r\n\t<li>Applied by selecting <strong>Checkmark Bullets</strong> from the Styles dropdown</li>\r\n\t<li>Nested lists keep the marker and run tighter than the list above them\r\n\t<ul>\r\n\t\t<li>A nested checkmark item</li>\r\n\t\t<li>Another nested checkmark item</li>\r\n\t</ul>\r\n\t</li>\r\n\t<li>Placed on a dark background, such as inside a Text with Background element, the checkmark switches to Sky so that it stays legible</li>\r\n</ul>\r\n",
+            "bottom_spacing": "mb-0"
         }
     ]
 }
