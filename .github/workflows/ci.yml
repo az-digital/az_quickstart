@@ -180,7 +180,9 @@ jobs:
       - uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
           node-version: '20'
-      - run: yarn audit
+      - run: |
+          corepack enable
+          yarn npm audit --severity high
 
   eslint:
     name: eslint
@@ -190,10 +192,13 @@ jobs:
       - uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
           node-version: '20'
-      - run: yarn install --ignore-scripts
+      - run: |
+          corepack enable
+          yarn install --immutable
       - name: Generate eslint report
         continue-on-error: true
-        run: yarn run eslint . --format json --output-file eslint-report.json
+        run: |
+          yarn run eslint . --format json --output-file eslint-report.json
       - name: Annotate eslint results
         continue-on-error: true
         uses: ataylorme/eslint-annotate-action@v3
@@ -201,7 +206,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           report-json: "eslint-report.json"
       - name: Run eslint
-        run: yarn run eslint --color .
+        run: |
+          yarn run eslint --color .
 
   phpunit:
     name: PHPUnit (${{ matrix.test.name }})

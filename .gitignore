@@ -4,8 +4,8 @@
 ### Node ###
 /node_modules/
 /node_modules/*
-/yarn.lock
 /yarn-error.log
+.yarn/*
 
 ### Drupal ###
 settings.local.php
