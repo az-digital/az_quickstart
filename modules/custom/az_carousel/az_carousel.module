@@ -38,7 +38,8 @@ function az_carousel_library_info_alter(array &$libraries, $extension) {
   // az_quickstart's assets/vendor/slick-carousel) instead of drupal/slick's
   // own library path, which expects the library to be manually placed in
   // the site's /libraries directory.
-  $slick_path = '/profiles/custom/az_quickstart/assets/vendor/slick-carousel/slick';
+  $profile_path = \Drupal::service('extension.list.profile')->getPath('az_quickstart');
+  $slick_path = '/' . $profile_path . '/assets/vendor/slick-carousel/slick';
 
   if (isset($libraries['slick'])) {
     $libraries['slick']['js'] = [
