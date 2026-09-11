@@ -101,7 +101,7 @@
         "drupal/migrate_plus": "6.0.10",
         "drupal/migrate_queue_importer": "2.1.2",
         "drupal/migrate_tools": "6.1.4",
-        "drupal/optional_end_date": "1.4.0",
+        "drupal/optional_end_date": "2.0.0",
         "drupal/paragraphs": "1.23.0",
         "drupal/paragraphs_admin": "1.7.0",
         "drupal/pathauto": "1.15.0",
