@@ -43,14 +43,6 @@ const assetsFolder = `${rootFolder}/assets/vendor`;
 /** @type {VendorAsset[]} */
 const ASSET_LIST = [
   {
-    pack: '@easepick/bundle',
-    folder: 'easepick--bundle',
-    files: [
-      'dist/index.umd.js',
-      'dist/index.css',
-    ],
-  },
-  {
     pack: 'slick-carousel',
     folder: 'slick-carousel',
     files: [
@@ -62,6 +54,16 @@ const ASSET_LIST = [
       'slick/fonts/slick.svg',
       'slick/fonts/slick.ttf',
       'slick/fonts/slick.woff',
+    ],
+  },
+  {
+    pack: 'vanilla-calendar-pro',
+    folder: 'vanilla-calendar-pro',
+    files: [
+      'styles/layout.css',
+      'styles/themes/light.css',
+      'index.js',
+      'utils/index.js',
     ],
   },
 ];

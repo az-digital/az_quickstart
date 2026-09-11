@@ -316,8 +316,6 @@
                     "path": "assets/site.webmanifest",
                     "overwrite": false
                 },
-                "[web-root]/libraries/easepick--bundle/dist/index.umd.js": "assets/vendor/easepick--bundle/dist/index.umd.js",
-                "[web-root]/libraries/easepick--bundle/dist/index.css": "assets/vendor/easepick--bundle/dist/index.css",
                 "[web-root]/libraries/slick/slick/slick.min.js": "assets/vendor/slick-carousel/slick/slick.min.js",
                 "[web-root]/libraries/slick/slick/slick.css": "assets/vendor/slick-carousel/slick/slick.css",
                 "[web-root]/libraries/slick/slick/slick-theme.css": "assets/vendor/slick-carousel/slick/slick-theme.css",
@@ -325,7 +323,11 @@
                 "[web-root]/libraries/slick/slick/fonts/slick.eot": "assets/vendor/slick-carousel/slick/fonts/slick.eot",
                 "[web-root]/libraries/slick/slick/fonts/slick.svg": "assets/vendor/slick-carousel/slick/fonts/slick.svg",
                 "[web-root]/libraries/slick/slick/fonts/slick.ttf": "assets/vendor/slick-carousel/slick/fonts/slick.ttf",
-                "[web-root]/libraries/slick/slick/fonts/slick.woff": "assets/vendor/slick-carousel/slick/fonts/slick.woff"
+                "[web-root]/libraries/slick/slick/fonts/slick.woff": "assets/vendor/slick-carousel/slick/fonts/slick.woff",
+                "[web-root]/libraries/vanilla-calendar-pro/styles/layout.css": "assets/vendor/vanilla-calendar-pro/styles/layout.css",
+                "[web-root]/libraries/vanilla-calendar-pro/styles/themes/light.css": "assets/vendor/vanilla-calendar-pro/styles/themes/light.css",
+                "[web-root]/libraries/vanilla-calendar-pro/index.js": "assets/vendor/vanilla-calendar-pro/index.js",
+                "[web-root]/libraries/vanilla-calendar-pro/utils/index.js": "assets/vendor/vanilla-calendar-pro/utils/index.js"
             }
         }
     },

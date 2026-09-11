@@ -5,103 +5,6 @@ __metadata:
   version: 9
   cacheKey: 10c0
 
-"@easepick/amp-plugin@npm:^1.1.0":
-  version: 1.2.1
-  resolution: "@easepick/amp-plugin@npm:1.2.1"
-  dependencies:
-    "@easepick/base-plugin": "npm:^1.1.0"
-  checksum: 10c0/711f0284455cd7752049aa71cc6ab96b256b616eca680b80302bac1b36462d09ff1194a35a6e5754736c203bbd20fc704f273a4b256ed4b203825414e4eab981
-  languageName: node
-  linkType: hard
-
-"@easepick/base-plugin@npm:^1.1.0":
-  version: 1.2.1
-  resolution: "@easepick/base-plugin@npm:1.2.1"
-  dependencies:
-    "@easepick/core": "npm:^1.1.0"
-  checksum: 10c0/3ab01921eb0f838c6472b1b40befb79297d0369055b3ebaae60be3ca22710adef9f5a7b1f7fa32ea5a102edc2667e1882096c93e03020b6a9a808f81ce2855db
-  languageName: node
-  linkType: hard
-
-"@easepick/bundle@npm:1.2.1":
-  version: 1.2.1
-  resolution: "@easepick/bundle@npm:1.2.1"
-  dependencies:
-    "@easepick/amp-plugin": "npm:^1.1.0"
-    "@easepick/base-plugin": "npm:^1.1.0"
-    "@easepick/core": "npm:^1.1.0"
-    "@easepick/datetime": "npm:^1.1.0"
-    "@easepick/kbd-plugin": "npm:^1.1.0"
-    "@easepick/lock-plugin": "npm:^1.1.0"
-    "@easepick/preset-plugin": "npm:^1.1.0"
-    "@easepick/range-plugin": "npm:^1.1.0"
-    "@easepick/time-plugin": "npm:^1.1.0"
-  checksum: 10c0/df80cdf00b424fd03f6a869dd71fb643432ddbc722e31a09471ddbfbd547f2ded81f7a9f2b2a1c30296332448cec5b9400f54e725944ff6318c5da6dbf80aed3
-  languageName: node
-  linkType: hard
-
-"@easepick/core@npm:^1.1.0":
-  version: 1.2.1
-  resolution: "@easepick/core@npm:1.2.1"
-  dependencies:
-    "@easepick/datetime": "npm:^1.1.0"
-  checksum: 10c0/06918a18d979cbb1151241db242fcf8fa2260783e53c45d64dadd480a0874da712da556bdd3d008cf8c4652c73cce92cc318d7b7ea519a281371e8e59276848c
-  languageName: node
-  linkType: hard
-
-"@easepick/datetime@npm:^1.1.0":
-  version: 1.2.1
-  resolution: "@easepick/datetime@npm:1.2.1"
-  checksum: 10c0/1c98656630f332b6f94dd262d1897be38906be0c6fa4c9d59174a978871a9a1a8c43978f398ab13ac73e82e6ccdf574af0657a4e5f772140a1febc8f829a3751
-  languageName: node
-  linkType: hard
-
-"@easepick/kbd-plugin@npm:^1.1.0":
-  version: 1.2.1
-  resolution: "@easepick/kbd-plugin@npm:1.2.1"
-  dependencies:
-    "@easepick/base-plugin": "npm:^1.1.0"
-  checksum: 10c0/21875904c8c3b6dd001cb6120b8241490b4bcf09f902c6a0890f48ca17cc00671330fbd9063995f0c46a670e7997dc08f8dbbb52492be99bc6ad3d74dbbd59f2
-  languageName: node
-  linkType: hard
-
-"@easepick/lock-plugin@npm:^1.1.0":
-  version: 1.2.1
-  resolution: "@easepick/lock-plugin@npm:1.2.1"
-  dependencies:
-    "@easepick/base-plugin": "npm:^1.1.0"
-  checksum: 10c0/6e8ce48199dcfc36935b7766140886f592ccd06b386dc74d22e5b7a7492dd88a12cacfcb0daf4a29ee306df5c3074ff908c0d198c952ed4faf2693c0ba246b8e
-  languageName: node
-  linkType: hard
-
-"@easepick/preset-plugin@npm:^1.1.0":
-  version: 1.2.1
-  resolution: "@easepick/preset-plugin@npm:1.2.1"
-  dependencies:
-    "@easepick/base-plugin": "npm:^1.1.0"
-    "@easepick/range-plugin": "npm:^1.1.0"
-  checksum: 10c0/8d129e61a98ff688d7ec4f05054204e292b261bb4b105f1a7bae793646c8e19d7a77dafd112d311ab57eb77cfa46f1968e9500f3c2ae8969433e56f8f02b5c4c
-  languageName: node
-  linkType: hard
-
-"@easepick/range-plugin@npm:^1.1.0":
-  version: 1.2.1
-  resolution: "@easepick/range-plugin@npm:1.2.1"
-  dependencies:
-    "@easepick/base-plugin": "npm:^1.1.0"
-  checksum: 10c0/b4e835d38a47ca26b8245c8912cd03c85dd2bef52b011bdafab5b083a554a3c985a75bb7680e5aca90b20893f46ed061e12dc62e3e3262e2f1bb4797069e73de
-  languageName: node
-  linkType: hard
-
-"@easepick/time-plugin@npm:^1.1.0":
-  version: 1.2.1
-  resolution: "@easepick/time-plugin@npm:1.2.1"
-  dependencies:
-    "@easepick/base-plugin": "npm:^1.1.0"
-  checksum: 10c0/3aea58f5a95ca281cca839ff7cea72e04a658995c9131d92d6ec178a8c67e8fedf2b021712cc089badf57fabcc23bf6595b83a5146e42f2b3e3ff833faedca63
-  languageName: node
-  linkType: hard
-
 "@eslint-community/eslint-utils@npm:^4.2.0":
   version: 4.9.1
   resolution: "@eslint-community/eslint-utils@npm:4.9.1"
@@ -377,7 +280,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "az_quickstart@workspace:."
   dependencies:
-    "@easepick/bundle": "npm:1.2.1"
     eslint: "npm:^8.57.1"
     eslint-config-airbnb-base: "npm:^15.0.0"
     eslint-config-prettier: "npm:^10.1.8"
@@ -386,6 +288,7 @@ __metadata:
     eslint-plugin-yml: "npm:^1.19.1"
     prettier: "npm:^3.8.5"
     slick-carousel: "npm:1.6.0"
+    vanilla-calendar-pro: "npm:3.1.0"
   languageName: unknown
   linkType: soft
 
@@ -2352,6 +2255,13 @@ __metadata:
   dependencies:
     punycode: "npm:^2.1.0"
   checksum: 10c0/4ef57b45aa820d7ac6496e9208559986c665e49447cb072744c13b66925a362d96dd5a46c4530a6b8e203e5db5fe849369444440cb22ecfc26c679359e5dfa3c
+  languageName: node
+  linkType: hard
+
+"vanilla-calendar-pro@npm:3.1.0":
+  version: 3.1.0
+  resolution: "vanilla-calendar-pro@npm:3.1.0"
+  checksum: 10c0/b7d71d23b3a5e26e4f55bf525fd12a209833b2de1659d87de0ca8851fd50ce3838a180f1170f47b9ab08b38a0d4086f69b606f96206e92203e7901650b83ddc0
   languageName: node
   linkType: hard
 

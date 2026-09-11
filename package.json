@@ -10,7 +10,6 @@
     "vendor-update": "node ./scripts/js/vendor-update.js"
   },
   "devDependencies": {
-    "@easepick/bundle": "1.2.1",
     "eslint": "^8.57.1",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^10.1.8",
@@ -18,7 +17,8 @@
     "eslint-plugin-prettier": "^5.5.6",
     "eslint-plugin-yml": "^1.19.1",
     "prettier": "^3.8.5",
-    "slick-carousel": "1.6.0"
+    "slick-carousel": "1.6.0",
+    "vanilla-calendar-pro": "3.1.0"
   },
   "browserslist": [
     "last 2 Chrome major versions",
