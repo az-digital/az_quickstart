@@ -424,11 +424,26 @@ function _az_core_check_attribute_form(array &$form, FormStateInterface $form_st
 /**
  * Implements hook_library_info_alter().
  *
- * Add style overrides for Chosen.
+ * Add style overrides for Chosen, and point vanilla-calendar-pro at its
+ * vendored location in the az_quickstart profile.
  */
 function az_core_library_info_alter(array &$libraries, $module) {
   if ($module === 'chosen' && isset($libraries['chosen.claro'])) {
     $libraries['chosen.claro']['dependencies'][] = 'az_core/az-core-chosen';
+  }
+
+  if ($module === 'az_core' && isset($libraries['vanilla-calendar-pro'])) {
+    $profile_path = \Drupal::service('extension.list.profile')->getPath('az_quickstart');
+    $vendor_path = '/' . $profile_path . '/assets/vendor/vanilla-calendar-pro';
+
+    $libraries['vanilla-calendar-pro']['js'] = [
+      $vendor_path . '/index.js' => ['minified' => TRUE],
+      $vendor_path . '/utils/index.js' => ['minified' => TRUE],
+    ];
+    $libraries['vanilla-calendar-pro']['css']['theme'] = [
+      $vendor_path . '/styles/layout.css' => ['minified' => TRUE],
+      $vendor_path . '/styles/themes/light.css' => ['minified' => TRUE],
+    ];
   }
 }
 
