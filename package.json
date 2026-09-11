@@ -10,7 +10,6 @@
     "vendor-update": "node ./scripts/js/vendor-update.js"
   },
   "devDependencies": {
-    "@easepick/bundle": "1.2.1",
     "eslint": "^8.57.1",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^10.1.8",
