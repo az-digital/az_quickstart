@@ -1,0 +1,11 @@
+/**
+ * @file
+ * Styles for the az_opportunity content type.
+ */
+
+.field--name-field-az-opportunity-category.field__items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding-bottom: 1.5rem;
+}

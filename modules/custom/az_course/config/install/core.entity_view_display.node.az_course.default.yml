@@ -39,7 +39,7 @@ third_party_settings:
         element: div
         show_label: true
         label_element: h2
-        label_element_classes: 'font-weight-bold mb-0 text-body text-size-h6'
+        label_element_classes: 'fw-bold mb-0 text-body text-size-h6'
         attributes: ''
         effect: none
         speed: fast

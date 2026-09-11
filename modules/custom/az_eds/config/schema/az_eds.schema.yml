@@ -1,0 +1,8 @@
+# Schema for the configuration files of the Quickstart EDS module.
+az_eds.settings:
+  type: config_object
+  label: 'Quickstart EDS settings'
+  mapping:
+    students_allowed:
+      type: boolean
+      label: 'Allow students in EDS queries'

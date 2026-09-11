@@ -17,11 +17,5 @@
  * @see template_preprocess_container()
  */
 #}
-{%
-  set classes = [
-    has_parent ? 'js-form-wrapper',
-    'input-group-append'
-  ]
-%}
-<div{{ attributes.addClass(classes) }}>{{ children }}</div>
+{{ children }}
 

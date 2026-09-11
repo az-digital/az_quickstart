@@ -42,7 +42,7 @@ class AZCardsParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#type' => 'select',
       '#options' => [
         'card' => $this->t('Bordered cards'),
-        'card card-borderless' => $this->t('Borderless cards'),
+        'card border-0' => $this->t('Borderless cards'),
       ],
       '#default_value' => $config['card_style'] ?? 'card',
       '#description' => $this->t('Select a card style.'),
@@ -128,6 +128,25 @@ class AZCardsParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#default_value' => $config['az_display_settings']['card_width_xs'] ?? 'col-12',
       '#description' => $this->t('Choose how many cards appear per row. Additional cards will wrap to a new row. This selection sets the cards per row on phones.'),
       '#weight' => 2,
+    ];
+
+    // Card deck title color.
+    $form['card_deck_title_color'] = [
+      '#title' => $this->t('Card group title color'),
+      '#type' => 'select',
+      '#options' => [
+        'text-dark-silver' => $this->t('Dark Silver (default)'),
+        'text-blue' => $this->t('Blue'),
+        'text-sky' => $this->t('Sky'),
+        'text-oasis' => $this->t('Oasis'),
+        'text-azurite' => $this->t('Azurite'),
+        'text-midnight' => $this->t('Midnight'),
+        'text-ash' => $this->t('Ash'),
+        'text-black' => $this->t('Black'),
+        'text-white' => $this->t('White'),
+      ],
+      '#default_value' => $config['card_deck_title_color'] ?? 'text-dark-silver',
+      '#description' => $this->t('Change the color of the Card group title.'),
     ];
 
     // This places the form fields on the content tab rather than behavior tab.

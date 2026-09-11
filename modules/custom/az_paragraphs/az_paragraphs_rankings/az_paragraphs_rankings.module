@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * @file
+ * Contains az_paragraphs_rankings.module.
+ */
+
+use Drupal\paragraphs\ParagraphInterface;
+use Drupal\Core\Template\Attribute;
+
+/**
+ * Implements hook_field_group_pre_render_alter().
+ */
+function az_paragraphs_rankings_field_group_pre_render_alter(array &$element, &$group, &$rendering_object) {
+
+  // Special rules for rendering the paragraph title.
+  if (($group->group_name === 'group_title') && !empty($rendering_object['#paragraph'])) {
+    $paragraph = $rendering_object['#paragraph'];
+    // Make sure we have a paragraph entity.
+    if ($paragraph instanceof ParagraphInterface) {
+      // Only run for rankings.
+      if ($paragraph->bundle() === 'az_rankings') {
+        // Get the behavior settings.
+        $settings = $paragraph->getAllBehaviorSettings();
+        $ranking_settings = $settings['az_rankings_paragraph_behavior'] ?? [];
+        // If we have a color, apply it to the field group.
+        if (!empty($ranking_settings['ranking_deck_title_color'])) {
+          if (!empty($element['#attributes']) && ($element['#attributes'] instanceof Attribute)) {
+            $element['#attributes']->addClass($ranking_settings['ranking_deck_title_color']);
+          }
+        }
+      }
+    }
+  }
+}

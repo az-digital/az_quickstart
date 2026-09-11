@@ -37,9 +37,10 @@ third_party_settings:
       weight: 0
       format_type: html_element
       format_settings:
-        classes: 'bg-gray-100 card card-borderless card-clickable hover mb-4'
+        classes: 'text-bg-gray-100 card border-0 hover mb-4'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -56,9 +57,10 @@ third_party_settings:
       weight: 4
       format_type: link
       format_settings:
-        classes: text-decoration-none
+        classes: 'stretched-link text-decoration-none'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         target: custom_uri
         custom_uri: '[node:az-canonical-url]'
         target_attribute: default
@@ -72,7 +74,7 @@ third_party_settings:
       weight: 7
       format_type: html_element
       format_settings:
-        classes: 'row no-gutters'
+        classes: 'row g-0'
         show_empty_fields: false
         id: ''
         element: div
@@ -110,7 +112,7 @@ third_party_settings:
       weight: 7
       format_type: html_element
       format_settings:
-        classes: 'col-12 col-lg-4 pr-3 mb-3'
+        classes: 'col-12 position-relative col-lg-4 pe-3 mb-3'
         show_empty_fields: false
         id: ''
         element: div
@@ -150,9 +152,10 @@ third_party_settings:
       weight: 2
       format_type: html_element
       format_settings:
-        classes: 'text-muted font-weight-normal'
+        classes: 'text-body-secondary fw-normal'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -168,13 +171,14 @@ third_party_settings:
       weight: 3
       format_type: html_element
       format_settings:
-        classes: 'card-clickable-link mt-2 pb-3'
+        classes: 'mt-2 pb-3'
         show_empty_fields: true
         id: ''
+        label_as_html: false
         element: div
         show_label: true
         label_element: span
-        label_element_classes: ''
+        label_element_classes: hover-text-underline
         attributes: ''
         effect: none
         speed: fast

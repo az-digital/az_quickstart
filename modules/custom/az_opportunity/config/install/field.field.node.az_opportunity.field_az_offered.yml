@@ -1,0 +1,28 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_az_offered
+    - node.type.az_opportunity
+    - taxonomy.vocabulary.az_opportunity_semester
+id: node.az_opportunity.field_az_offered
+field_name: field_az_offered
+entity_type: node
+bundle: az_opportunity
+label: Offered
+description: 'Which semester or season this opportunity is offered.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      az_opportunity_semester: az_opportunity_semester
+    sort:
+      field: name
+      direction: asc
+    auto_create: true
+    auto_create_bundle: ''
+field_type: entity_reference

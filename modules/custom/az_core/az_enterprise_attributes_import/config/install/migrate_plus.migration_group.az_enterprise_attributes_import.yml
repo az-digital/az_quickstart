@@ -1,6 +1,8 @@
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - az_enterprise_attributes_import
 id: az_enterprise_attributes_import
 label: 'AZ Enterprise Attributes'
 description: 'Import Enterprise Attributes'

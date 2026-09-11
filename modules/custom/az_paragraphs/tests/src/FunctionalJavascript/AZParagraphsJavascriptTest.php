@@ -3,37 +3,35 @@
 namespace Drupal\Tests\az_paragraphs\FunctionalJavascript;
 
 use Drupal\Tests\az_core\FunctionalJavascript\QuickstartFunctionalJavascriptTestBase;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\IgnoreDeprecations;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Run tests of paragraph bundles.
- *
- * @ingroup az_paragraphs_js
- *
- * @group az_paragraphs_js
  */
+#[Group('az_paragraphs_js')]
+#[IgnoreDeprecations]
+#[RunTestsInSeparateProcesses]
 class AZParagraphsJavascriptTest extends QuickstartFunctionalJavascriptTestBase {
 
   /**
-   * The profile to install as a basis for testing.
-   *
-   * @var string
+   * {@inheritdoc}
    */
   protected $profile = 'az_quickstart';
 
   /**
-   * @var bool
+   * {@inheritdoc}
    */
   protected $strictConfigSchema = FALSE;
 
   /**
-   * @var string
+   * {@inheritdoc}
    */
   protected $defaultTheme = 'az_barrio';
 
   /**
-   * Modules to enable.
-   *
-   * @var array
+   * {@inheritdoc}
    */
   protected static $modules = [
     'az_paragraphs',

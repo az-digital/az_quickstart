@@ -7,6 +7,7 @@
             "ordering" : "order_1",
             "full_width" : "full-width-background",
             "bg_color" : "",
+            "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -15,7 +16,8 @@
             "filename" : "The_Hay_Wain_by_Hieronymus_Bosch.jpeg",
             "full_width" : "full-width-background",
             "ordering" : "order_0",
-            "bg_color" : "bg-red",
+            "bg_color" : "text-bg-red",
+            "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -24,7 +26,8 @@
             "filename" : "study.jpeg",
             "full_width" : false,
             "ordering" : "order_0",
-            "bg_color" : "bg-blue",
+            "bg_color" : "text-bg-blue",
+            "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -33,7 +36,8 @@
             "filename" : "mecklerphoto_mens-wearhouse.jpeg",
             "full_width" : "full-width-background",
             "ordering" : "order_1",
-            "bg_color" : "bg-sky",
+            "bg_color" : "text-bg-sky",
+            "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -42,7 +46,8 @@
             "filename" : "june_bugs.jpeg",
             "full_width" : false,
             "ordering" : "order_0",
-            "bg_color" : "bg-oasis",
+            "bg_color" : "text-bg-oasis",
+            "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -52,7 +57,8 @@
             "filename" : "arizona_campus_fireworks.jpg",
             "full_width" : "full-width-background",
             "ordering" : "order_1",
-            "bg_color" : "bg-azurite",
+            "bg_color" : "text-bg-azurite",
+            "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -61,7 +67,8 @@
             "filename" : "daisy.jpg",
             "full_width" : false,
             "ordering" : "order_0",
-            "bg_color" : "bg-midnight",
+            "bg_color" : "text-bg-midnight",
+            "text_width" : "content_width",
             "bottom_spacing" : "mb-5"
         },
         {
@@ -71,7 +78,8 @@
             "filename" : "https://www.youtube.com/watch?v=fePMsmtd7EU",
             "full_width" : false,
             "ordering" : "order_1",
-            "bg_color" : "bg-bloom",
+            "bg_color" : "text-bg-bloom",
+            "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -80,7 +88,8 @@
             "filename" : "https://www.youtube.com/watch?v=9VntGNAE4L8",
             "full_width" : "full-width-background",
             "ordering" : "order_0",
-            "bg_color" : "bg-chili",
+            "bg_color" : "text-bg-chili",
+            "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -89,7 +98,8 @@
             "filename" : "https://www.youtube.com/watch?v=KkogmuRNt1M",
             "full_width" : false,
             "ordering" : "order_1",
-            "bg_color" : "bg-cool-gray",
+            "bg_color" : "text-bg-cool-gray",
+            "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -98,7 +108,8 @@
             "filename" : "https://www.youtube.com/watch?v=x_C7XpqJdso",
             "full_width" : "full-width-background",
             "ordering" : "order_0",
-            "bg_color" : "bg-warm-gray",
+            "bg_color" : "text-bg-warm-gray",
+            "text_width" : "content_width",
             "bottom_spacing" : "mb-5"
         },
         {
@@ -107,7 +118,8 @@
             "filename" : "https://www.youtube.com/watch?v=o5AcFV8f230",
             "full_width" : false,
             "ordering" : "order_1",
-            "bg_color" : "bg-leaf",
+            "bg_color" : "text-bg-leaf",
+            "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -116,7 +128,8 @@
             "filename" : "https://www.youtube.com/watch?v=GHnSIobpE-0",
             "full_width" : "full-width-background",
             "ordering" : "order_0",
-            "bg_color" : "bg-river",
+            "bg_color" : "text-bg-river",
+            "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -125,7 +138,8 @@
             "filename" : "june_bugs.jpeg",
             "full_width" : "full-width-background",
             "ordering" : "order_1",
-            "bg_color" : "bg-silver",
+            "bg_color" : "text-bg-silver",
+            "text_width" : "content_width",
             "bottom_spacing" : "mb-5"
         },
         {
@@ -134,7 +148,8 @@
             "filename" : "june_bugs.jpeg",
             "full_width" : "full-width-background",
             "ordering" : "order_0",
-            "bg_color" : "bg-ash",
+            "bg_color" : "text-bg-ash",
+            "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -143,7 +158,8 @@
             "filename" : "lynx.jpg",
             "full_width" : "full-width-background",
             "ordering" : "order_1",
-            "bg_color" : "bg-gray-200",
+            "bg_color" : "text-bg-gray-200",
+            "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -152,7 +168,8 @@
             "filename" : "june_bugs.jpeg",
             "full_width" : false,
             "ordering" : "order_0",
-            "bg_color" : "bg-warm-gray",
+            "bg_color" : "text-bg-warm-gray",
+            "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -161,7 +178,8 @@
             "filename" : "mecklerphoto_mens-wearhouse.jpeg",
             "full_width" : "full-width-background",
             "ordering" : "order_1",
-            "bg_color" : "bg-sky",
+            "bg_color" : "text-bg-sky",
+            "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -170,7 +188,8 @@
             "filename" : "study.jpeg",
             "full_width" : false,
             "ordering" : "order_0",
-            "bg_color" : "bg-blue",
+            "bg_color" : "text-bg-blue",
+            "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -179,7 +198,8 @@
             "filename" : "arizona_campus_fireworks.jpg",
             "full_width" : "full-width-background",
             "ordering" : "order_1",
-            "bg_color" : "bg-chili",
+            "bg_color" : "text-bg-chili",
+            "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -188,7 +208,8 @@
             "filename" : "arizona_campus_fireworks.jpg",
             "full_width" : "full-width-background",
             "ordering" : "order_1",
-            "bg_color" : "bg-chili",
+            "bg_color" : "text-bg-chili",
+            "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         }
     ]

@@ -41,8 +41,10 @@ class AZProfilesAPIFetcher extends Http {
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): self {
-    $instance = new static(
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): static {
+    /** @var static $instance */
+    $instance = parent::create(
+      $container,
       $configuration,
       $plugin_id,
       $plugin_definition,

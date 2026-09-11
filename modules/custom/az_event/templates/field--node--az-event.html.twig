@@ -41,7 +41,11 @@
   {% if multiple %}
     <div{{ attributes.addClass(classes, 'field__items') }}>
       {% for item in items %}
-        <div{{ item.attributes.addClass('field__item') }}>{{ item.content }}</div>
+        {% if item.content['#modal'] %}
+          <div{{ item.attributes.addClass('d-inline-block') }}>{{ item.content }}</div>
+        {% else %}
+          <div{{ item.attributes.addClass('field__item') }}>{{ item.content }}</div>
+        {% endif %}
       {% endfor %}
     </div>
   {% else %}

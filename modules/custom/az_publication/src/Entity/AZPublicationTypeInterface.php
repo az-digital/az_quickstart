@@ -12,11 +12,6 @@ use Drupal\Core\Config\Entity\ConfigEntityInterface;
 interface AZPublicationTypeInterface extends ConfigEntityInterface {
 
   /**
-   * {@inheritdoc}
-   */
-  public static function load($id): ?AZPublicationTypeInterface;
-
-  /**
    * Gets the publication type mapping options.
    *
    * @return array

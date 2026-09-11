@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies: {  }
+name: az_ranking_responsive
+label: 'AZ Ranking Responsive'
+effects:
+  3ecac8c9-f804-4edb-bab8-f50cee0cd3e4:
+    uuid: 3ecac8c9-f804-4edb-bab8-f50cee0cd3e4
+    id: image_scale
+    weight: -10
+    data:
+      width: 1920
+      height: 1300
+      upscale: true
+  9b89b248-2cca-4433-bb75-427cda5535d9:
+    uuid: 9b89b248-2cca-4433-bb75-427cda5535d9
+    id: image_convert
+    weight: 0
+    data:
+      extension: webp

@@ -90,14 +90,17 @@ process:
       method: process
       source: uuid
   title: title
-  field_az_authors:
+  field_az_contributors:
     - plugin: skip_on_empty
       method: process
       source: authors
-    - plugin: explode
-      delimiter: '|'
-    - plugin: migration_lookup
-      migration: az_demo_az_author_author
+    - plugin: sub_process
+      process:
+        target_id:
+          plugin: migration_lookup
+          source: '0'
+          migration: az_demo_az_author_author
+        role: '1'
   field_az_accessed_date: accessed_date
   field_az_publication_abstract/value: abstract
   field_az_publication_abstract/format:

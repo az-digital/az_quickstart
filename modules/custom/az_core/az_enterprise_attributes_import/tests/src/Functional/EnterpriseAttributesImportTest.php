@@ -5,35 +5,34 @@ namespace Drupal\Tests\az_core\Functional;
 use Drupal\Tests\BrowserTestBase;
 use Drupal\migrate\MigrateMessage;
 use Drupal\migrate_tools\MigrateExecutable;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Test of attribute import functionality.
- *
- * @group az_enterprise_attributes_import
  */
+#[Group('az_enterprise_attributes_import')]
+#[RunTestsInSeparateProcesses]
 class EnterpriseAttributesImportTest extends BrowserTestBase {
 
   /**
-   * The profile to install as a basis for testing.
-   *
-   * @var string
+   * {@inheritdoc}
    */
   protected $profile = 'az_quickstart';
 
   /**
-   * @var bool
+   * {@inheritdoc}
    */
   protected $strictConfigSchema = FALSE;
 
   /**
-   * @var string
+   * {@inheritdoc}
    */
   protected $defaultTheme = 'stark';
 
+
   /**
-   * Modules to enable.
-   *
-   * @var array
+   * {@inheritdoc}
    */
   protected static $modules = [
     'az_core',
@@ -51,7 +50,13 @@ class EnterpriseAttributesImportTest extends BrowserTestBase {
     // Remove initial attributes from enabling az_enterprise_attributes_import.
     $manager = $this->container->get('plugin.manager.migration');
     $migration = $manager->createInstance('az_enterprise_attributes_import');
-    $migrate_exec = new MigrateExecutable($migration, new MigrateMessage());
+    $migrate_exec = new MigrateExecutable(
+      $migration,
+      new MigrateMessage(),
+      $this->container->get('keyvalue'),
+      $this->container->get('datetime.time'),
+      $this->container->get('string_translation'),
+    );
     $migrate_exec->rollback();
 
     // Build a test attribute list.
@@ -69,7 +74,13 @@ class EnterpriseAttributesImportTest extends BrowserTestBase {
     ];
     // Run migration.
     $migration = $manager->createInstance('az_enterprise_attributes_import', $options);
-    $migrate_exec = new MigrateExecutable($migration, new MigrateMessage());
+    $migrate_exec = new MigrateExecutable(
+      $migration,
+      new MigrateMessage(),
+      $this->container->get('keyvalue'),
+      $this->container->get('datetime.time'),
+      $this->container->get('string_translation'),
+    );
     $migrate_exec->import();
     // Get published terms.
     $terms = $term_storage->loadByProperties([
@@ -89,7 +100,14 @@ class EnterpriseAttributesImportTest extends BrowserTestBase {
       'sync' => 1,
       'update' => 1,
     ];
-    $migrate_exec = new MigrateExecutable($migration, new MigrateMessage(), $sync);
+    $migrate_exec = new MigrateExecutable(
+      $migration,
+      new MigrateMessage(),
+      $this->container->get('keyvalue'),
+      $this->container->get('datetime.time'),
+      $this->container->get('string_translation'),
+      $sync,
+    );
     $migrate_exec->import();
     // Get unpublished terms.
     $terms = $term_storage->loadByProperties([

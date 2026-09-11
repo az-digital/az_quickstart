@@ -1,0 +1,170 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.paragraph.preview
+    - field.field.paragraph.az_text_media.field_az_media
+    - field.field.paragraph.az_text_media.field_az_text_area
+    - field.field.paragraph.az_text_media.field_az_title
+    - paragraphs.paragraphs_type.az_text_media
+  module:
+    - az_paragraphs
+    - field_group
+    - text
+third_party_settings:
+  field_group:
+    group_az_container:
+      children:
+        - group_az_full_width_row
+      label: Container
+      parent_name: ''
+      region: content
+      weight: 1
+      format_type: html_element
+      format_settings:
+        classes: container
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_az_full_width_row:
+      children:
+        - group_az_column
+      label: Row
+      parent_name: group_az_container
+      region: content
+      weight: 20
+      format_type: html_element
+      format_settings:
+        classes: 'd-flex az-full-width-row'
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_az_title:
+      children:
+        - field_az_title
+      label: Title
+      parent_name: group_az_content_wrapper
+      region: content
+      weight: 21
+      format_type: html_element
+      format_settings:
+        classes: 'fw-bold mt-0'
+        show_empty_fields: false
+        id: ''
+        element: h2
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_az_content:
+      children:
+        - group_az_content_wrapper
+      label: Content
+      parent_name: group_az_column
+      region: content
+      weight: 21
+      format_type: html_element
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_az_column:
+      children:
+        - group_az_content
+      label: Column
+      parent_name: group_az_full_width_row
+      region: content
+      weight: 20
+      format_type: html_element
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_az_content_wrapper:
+      children:
+        - group_az_title
+        - field_az_text_area
+      label: 'Content Wrapper'
+      parent_name: group_az_content
+      region: content
+      weight: 20
+      format_type: html_element
+      format_settings:
+        classes: az-full-width-column-content-wrapper
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+id: paragraph.az_text_media.preview
+targetEntityType: paragraph
+bundle: az_text_media
+mode: preview
+content:
+  field_az_media:
+    type: az_background_media
+    label: hidden
+    settings:
+      image_style: az_full_width_background
+      css_settings:
+        z_index: auto
+        color: transparent
+        x: center
+        'y': center
+        attachment: scroll
+        repeat: no-repeat
+        size: cover
+        important: false
+        selector: '#[paragraph:type:target_id]-[paragraph:id]'
+      autoplay_remote_video: 0
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_az_text_area:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 22
+    region: content
+  field_az_title:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 21
+    region: content
+hidden: {  }

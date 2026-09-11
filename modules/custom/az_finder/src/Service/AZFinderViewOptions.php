@@ -74,7 +74,7 @@ final class AZFinderViewOptions {
         }
         $exposed_form_options = $display_handler->getOption('exposed_form') ?? [];
         $filters = $exposed_form_options['options']['bef']['filter'] ?? [];
-        foreach ($filters as $filter_id => $filter_settings) {
+        foreach ($filters as $filter_settings) {
           if (isset($filter_settings['plugin_id']) && $filter_settings['plugin_id'] === $plugin_id) {
             $options[$view->id() . ':' . $display_id] = $view->label() . ' (' . $displays[$display_id]['display_title'] . ')';
             break;

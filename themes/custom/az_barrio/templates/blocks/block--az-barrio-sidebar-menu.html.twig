@@ -37,13 +37,14 @@
     'block-menu',
     'navigation',
     'menu--' ~ derivative_plugin_id|clean_class,
+    az_remove_sidebar_menu_mobile ? 'd-none d-md-block'
   ]
 %}
 {% set heading_id = attributes.id ~ '-menu'|clean_id %}
 <nav role="navigation" aria-labelledby="{{ heading_id }}"{{ attributes.addClass(classes)|without('role', 'aria-labelledby') }}>
   {# Label. If not displayed, we still provide it for screen readers. #}
   {% if not configuration.label_display %}
-    {% set title_attributes = title_attributes.addClass('sr-only') %}
+    {% set title_attributes = title_attributes.addClass('visually-hidden') %}
   {% endif %}
   {% if content['#items'] %}
     {{ title_prefix }}
@@ -56,4 +57,3 @@
     {{ content }}
   {% endblock %}
 </nav>
-

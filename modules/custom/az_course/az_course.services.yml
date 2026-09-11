@@ -3,3 +3,8 @@ services:
     class: Drupal\az_course\CourseSearch
     arguments:
       - '@http_client'
+      - '@logger.channel.az_course'
+  logger.channel.az_course:
+    parent: logger.channel_base
+    arguments:
+      - 'az_course'

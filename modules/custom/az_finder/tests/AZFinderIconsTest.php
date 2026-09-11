@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Drupal\Tests\az_finder\Unit;
 
 use Drupal\az_finder\Service\AZFinderIcons;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Tests the AZFinderIcons class.
- *
- * @group az_finder
  */
+#[Group('az_finder')]
 class AZFinderIconsTest extends TestCase {
 
   /**

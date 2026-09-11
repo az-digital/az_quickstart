@@ -1,18 +1,27 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - az_core
 id: az_enterprise_attributes_import
-label: Enterprise Attributes
+class: null
+field_plugin_method: null
+cck_plugin_method: null
 migration_tags:
-  - Enterprise Attributes
+  - 'Enterprise Attributes'
   - Taxonomy
+migration_group: az_enterprise_attributes_import
+label: 'Enterprise Attributes'
 source:
   plugin: url
   data_fetcher_plugin: http
   data_parser_plugin: az_enterprise_attributes_import_json
-  urls: []
+  urls: {  }
   item_selector: attributes
   ids:
     key:
       type: string
-
   fields:
     -
       name: value
@@ -26,7 +35,6 @@ source:
     -
       name: parent
       selector: parent
-
 process:
   name:
     - plugin: skip_on_value
@@ -49,12 +57,7 @@ process:
     -
       plugin: default_value
       default_value: 0
-
 destination:
-  plugin: entity:taxonomy_term
+  plugin: 'entity:taxonomy_term'
   default_bundle: az_enterprise_attributes
-
-dependencies:
-  enforced:
-    module:
-      - az_core
+migration_dependencies: null

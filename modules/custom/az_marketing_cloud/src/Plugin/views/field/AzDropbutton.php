@@ -43,8 +43,8 @@ class AzDropbutton extends Links {
       '#description' => $this->t('Dropbutton type.'),
       '#default_value' => $this->options['dropbutton_type'],
       '#options' => [
-        'small' => 'Small',
-        'extrasmall' => 'Extra small',
+        'small' => $this->t('Small'),
+        'extrasmall' => $this->t('Extra small'),
       ],
     ];
     $form['click_action'] = [
@@ -53,8 +53,8 @@ class AzDropbutton extends Links {
       '#description' => $this->t('Determine how links should behave.'),
       '#default_value' => $this->options['click_action'],
       '#options' => [
-        'none' => 'None',
-        'js-click2copy' => 'Click to copy to clipboard via JS',
+        'none' => $this->t('None'),
+        'js-click2copy' => $this->t('Click to copy to clipboard via JS'),
       ],
     ];
   }
@@ -81,6 +81,10 @@ class AzDropbutton extends Links {
       $dropbutton['#attached']['library'][] = 'az_marketing_cloud/admin';
     }
 
+    // Core's own Dropbutton field plugin returns a render array here too,
+    // even though FieldHandlerInterface::render() is documented as
+    // string|MarkupInterface; Views' render pipeline supports both.
+    // @phpstan-ignore method.childReturnType, return.type
     return $dropbutton;
   }
 

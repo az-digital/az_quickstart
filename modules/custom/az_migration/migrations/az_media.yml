@@ -1,5 +1,5 @@
 id: az_media
-label: All Media (media_migration)
+label: All Media
 migration_group: az_migration
 audit: true
 migration_tags:
@@ -7,7 +7,7 @@ migration_tags:
   - Content
   - Quickstart Content Migration
 source:
-  plugin: d7_file_entity_item
+  plugin: az_file_entity
 process:
   uid:
     -
@@ -51,7 +51,7 @@ process:
       source: filemime
       method: process
       value: 'video/oembed'
-    - plugin: default_value
+    - plugin: get
       source: '@mfid'
   # The remote_video_thumb_fid field is temporary, and is not present in the source.
   remote_video_thumb_fid:

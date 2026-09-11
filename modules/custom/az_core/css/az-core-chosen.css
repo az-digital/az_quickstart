@@ -7,3 +7,8 @@
 .chosen-container-multi {
   min-width: 250px;
 }
+
+/* Hide the chosen dropdown on disabled elements. */
+select[disabled] + .chosen-container .chosen-drop {
+  display: none;
+}

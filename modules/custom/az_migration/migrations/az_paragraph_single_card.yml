@@ -73,9 +73,9 @@ process:
   field_az_cards/options:
     plugin: default_value
     default_value:
-      class: 'bg-white'
+      class: 'text-bg-white'
       # Set the link style to default, since we can't migrate classes to this field.
-      link_style: 'btn-block'
+      link_style: 'w-100'
 
   bottom_spacing_processed:
     - plugin: default_value

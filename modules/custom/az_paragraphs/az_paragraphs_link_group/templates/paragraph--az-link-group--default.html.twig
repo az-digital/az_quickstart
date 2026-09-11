@@ -54,7 +54,7 @@
 {% set button_attributes = create_attribute() %}
 {% set dropdown_attributes = create_attribute() %}
 
-{% 
+{%
   set button_classes = [
     'btn',
     'my-1',
@@ -63,7 +63,7 @@
   ]
 %}
 
-{% 
+{%
   set dropdown_classes = [
     'btn',
     'dropdown-toggle',
@@ -72,7 +72,7 @@
   ]
 %}
 
-{% 
+{%
   set listgroup_classes = [
     'list-group-item',
     'list-group-item-action'
@@ -94,7 +94,7 @@
         <h2>{{ paragraph.field_az_title.value }}</h2>
       {% endif %}
       {% if link_group.group_style == 'dropdown' %}
-        <button {{ dropdown_attributes.addClass(dropdown_classes) }} type="button" id="az-link-group-dropdown-{{ paragraph.id() }}" data-toggle="dropdown" aria-expanded="false">{{ link_group.dropdown_title }}</button>
+        <button {{ dropdown_attributes.addClass(dropdown_classes) }} type="button" id="az-link-group-dropdown-{{ paragraph.id() }}" data-bs-toggle="dropdown" aria-expanded="false">{{ link_group.dropdown_title }}</button>
         <div class="dropdown-menu" aria-labelledby="az-link-group-dropdown-{{ paragraph.id() }}">
       {% endif %}
       {% for key, item in paragraph.field_az_link_item %}

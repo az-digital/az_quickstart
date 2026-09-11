@@ -13,6 +13,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * Process Plugin to handle embedded entities in HTML text.
  *
+ * @deprecated in az_quickstart:3.5.0 and is removed from az_quickstart:4.0.0.
+ * There is no replacement.
+ *
+ * @see https://www.drupal.org/node/3533564
+ *
  * This plugin processes HTML text that has had markup embedded within
  * it from the entity_embed module of D7. It does this by parsing the relevant
  * HTML, seeking out embed tags, and transforming the id numbers to those of
@@ -58,7 +63,7 @@ class EntityEmbedProcess extends Dom implements ContainerFactoryPluginInterface 
   protected $migrateStub;
 
   /**
-   * The entity type manager service..
+   * The entity type manager service.
    *
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
@@ -175,7 +180,7 @@ class EntityEmbedProcess extends Dom implements ContainerFactoryPluginInterface 
    * @param string $storage
    *   Storage controller for embedded item, eg. node or media.
    *
-   * @return \DOMDocument
+   * @return \DOMElement|null
    *   The new DOM element to use for replacement. NULL if none.
    */
   public function updateEmbedTag($id, $type, $tag, $view, \DOMDocument $dom, \DOMElement $element, $migration, $storage) {
@@ -186,6 +191,9 @@ class EntityEmbedProcess extends Dom implements ContainerFactoryPluginInterface 
 
     // Set up our replacement element.
     $changed = $dom->createElement($tag);
+    if ($changed === FALSE) {
+      return NULL;
+    }
     $changed->setAttribute('data-entity-type', $type);
     $ids = $this->migrateLookup->lookup($migration, [$id]);
     if (empty($ids)) {

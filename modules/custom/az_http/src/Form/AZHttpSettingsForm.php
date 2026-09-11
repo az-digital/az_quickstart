@@ -31,9 +31,9 @@ class AZHttpSettingsForm extends ConfigFormBase {
     $az_http_config = $this->config('az_http.settings');
 
     $form['migrations_http_cached'] = [
-      '#title' => t('Cache Migration HTTP Requests'),
+      '#title' => $this->t('Cache Migration HTTP Requests'),
       '#type' => 'checkbox',
-      '#description' => t("Migrations from remote HTTP endpoints will be cached (recommended)."),
+      '#description' => $this->t("Migrations from remote HTTP endpoints will be cached (recommended)."),
       '#default_value' => $az_http_config->get('migrations.http_cached'),
     ];
 

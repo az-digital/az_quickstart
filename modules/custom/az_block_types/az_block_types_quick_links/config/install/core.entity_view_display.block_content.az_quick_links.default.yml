@@ -13,14 +13,15 @@ third_party_settings:
     group_az_heading:
       children:
         - field_az_short_title
+      label: Heading
       parent_name: ''
+      region: content
       weight: 0
       format_type: html_element
-      region: content
       format_settings:
+        classes: 'h4 mt-md-5'
         show_empty_fields: false
         id: ''
-        classes: 'h4 mt-md-5'
         element: h2
         show_label: false
         label_element: h3
@@ -28,18 +29,18 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-      label: Heading
     group_az_list_group:
       children:
         - field_az_links
+      label: 'List Group'
       parent_name: ''
+      region: content
       weight: 1
       format_type: html_element
-      region: content
       format_settings:
+        classes: 'list-group align-middle'
         show_empty_fields: false
         id: ''
-        classes: 'list-group margin-align-middle'
         element: div
         show_label: false
         label_element: h3
@@ -47,14 +48,13 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-      label: 'List Group'
 id: block_content.az_quick_links.default
 targetEntityType: block_content
 bundle: az_quick_links
 mode: default
 content:
   field_az_links:
-    weight: 2
+    type: link
     label: hidden
     settings:
       trim_length: 80
@@ -63,14 +63,14 @@ content:
       rel: '0'
       target: '0'
     third_party_settings: {  }
-    type: link
+    weight: 2
     region: content
   field_az_short_title:
-    weight: 2
+    type: string
     label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    type: string
+    weight: 2
     region: content
 hidden: {  }

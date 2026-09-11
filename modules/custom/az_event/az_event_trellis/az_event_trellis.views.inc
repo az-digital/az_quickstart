@@ -13,7 +13,7 @@ function az_event_trellis_views_data(): array {
 
   $data['az_event_trellis_data']['table']['group'] = 'az_event_trellis_data';
   $data['az_event_trellis_data']['table']['base'] = [
-    'title' => 'Trellis Events',
+    'title' => t('Trellis Events'),
     'query_id' => 'views_remote_data_query',
   ];
   $data['az_event_trellis_data']['Id'] = [

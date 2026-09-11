@@ -1,0 +1,8 @@
+arizona_icons:
+  css:
+    theme:
+      /libraries/az-icons/az-icons-styles.css: {}
+material_symbols:
+  css:
+    theme: 
+      https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0#.css: {}

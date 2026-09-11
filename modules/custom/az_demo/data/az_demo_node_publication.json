@@ -3,7 +3,7 @@
     {
       "id": 1,
       "title": "The Most Fearsome Life of the Great Gargantua, Father of Pantagruel.",
-      "authors": "10",
+      "authors": [["10","author"]],
       "accessed_date": "2023-07-20",
       "abstract": "A detailed account of the life and adventures of Gargantua.",
       "approximate": "false",
@@ -32,7 +32,7 @@
     {
       "id": 2,
       "title": "The trissotetras: or, a most exquisite table for resolving all manner of triangles...",
-      "authors": "9",
+      "authors": [["9","author"]],
       "accessed_date": "2023-07-21",
       "abstract": "An intricate guide on solving various types of triangles.",
       "approximate": "true",
@@ -61,7 +61,7 @@
     {
       "id": 3,
       "title": "An Exploration of Quantum Mechanics",
-      "authors": "1|2",
+      "authors": [["1","author"],["2","author"]],
       "accessed_date": "2023-07-22",
       "abstract": "",
       "approximate": "false",
@@ -90,7 +90,7 @@
     {
       "id": 4,
       "title": "Advanced Data Structures",
-      "authors": "3",
+      "authors": [["3","author"]],
       "accessed_date": "2023-07-23",
       "abstract": "An in-depth guide to modern data structures.",
       "approximate": "true",
@@ -119,7 +119,7 @@
     {
       "id": 5,
       "title": "Modern Approaches to Machine Learning",
-      "authors": "4|5",
+      "authors": [["4","author"],["5","author"]],
       "accessed_date": "2023-07-24",
       "abstract": "Current methodologies in the field of machine learning.",
       "approximate": "false",
@@ -148,7 +148,7 @@
     {
       "id": 6,
       "title": "Introduction to Algorithms",
-      "authors": "6|7|8",
+      "authors": [["6","author"],["7","author"],["8","editor"]],
       "accessed_date": "2023-07-25",
       "abstract": "A comprehensive guide to algorithms and their applications.",
       "approximate": "false",
@@ -177,7 +177,7 @@
     {
       "id": 7,
       "title": "Deep Learning",
-      "authors": "9|10",
+      "authors": [["9","author"],["10","author"]],
       "accessed_date": "2023-07-26",
       "abstract": "An in-depth exploration of deep learning techniques.",
       "approximate": "false",
@@ -206,7 +206,7 @@
     {
       "id": 8,
       "title": "Statistical Learning with Applications",
-      "authors": "11|12",
+      "authors": [["11","author"],["12","author"]],
       "accessed_date": "2023-07-27",
       "abstract": "",
       "approximate": "true",
@@ -235,7 +235,7 @@
     {
       "id": 9,
       "title": "Ethics in Artificial Intelligence",
-      "authors": "13|14",
+      "authors": [["13","author"],["14","author"]],
       "accessed_date": "2023-07-28",
       "abstract": "A critical look at the ethical implications of AI.",
       "approximate": "false",
@@ -264,7 +264,7 @@
     {
       "id": 10,
       "title": "Climate Change: Impacts and Solutions",
-      "authors": "15",
+      "authors": [["15","author"]],
       "accessed_date": "2023-07-29",
       "abstract": "An overview of climate change impacts and potential solutions.",
       "approximate": "true",
@@ -293,7 +293,7 @@
     {
       "id": 11,
       "title": "The Life of Leonardo da Vinci",
-      "authors": "1",
+      "authors": [["1","author"]],
       "accessed_date": "2023-11-26",
       "abstract": "Wilbur Wildcat's book review on The Life of Leonardo da Vinci, exploring the Renaissance master's boundless creativity and curiosity.",
       "approximate": "false",
@@ -323,7 +323,7 @@
     {
       "id": 12,
       "title": "The Life of Leonardo da Vinci",
-      "authors": "2",
+      "authors": [["2","author"]],
       "accessed_date": "2023-11-26",
       "abstract": "Wilma Wildcat's book review on The Life of Leonardo da Vinci, highlighting the passion and creativity of the Renaissance master.",
       "approximate": "false",

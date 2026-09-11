@@ -58,9 +58,15 @@ function az_finder_preprocess_views_view(&$variables) {
         '#attributes' => [
           'href' => '#' . $skip_link_id,
           'class' => [
-            'visually-hidden',
-            'focusable',
-            'skip-link',
+            'visually-hidden-focusable',
+            'btn',
+            'btn-dark',
+            'position-fixed',
+            'start-50',
+            'top-0',
+            'translate-middle-x',
+            'z-1',
+            'mt-1',
           ],
         ],
       ];

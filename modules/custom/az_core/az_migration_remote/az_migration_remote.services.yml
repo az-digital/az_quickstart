@@ -1,0 +1,4 @@
+services:
+  az_migration_remote.tools:
+    class: Drupal\az_migration_remote\MigrationRemoteTools
+    arguments: ['@plugin.manager.migration']

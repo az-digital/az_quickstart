@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * @file
+ * Contains az_opportunity.module.
+ */
+
+/**
+ * Implements hook_preprocess_node().
+ */
+function az_opportunity_preprocess_node(&$variables) {
+  if ($variables['node']->getType() === 'az_opportunity') {
+    $variables['#attached']['library'][] = 'az_opportunity/az_opportunity';
+  }
+}

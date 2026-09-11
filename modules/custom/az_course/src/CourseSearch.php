@@ -2,14 +2,18 @@
 
 namespace Drupal\az_course;
 
+use Drupal\Core\Logger\LoggerChannelInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
 
 /**
- * Contructs URLs for Courses API and performs subject-wide queries.
+ * Constructs URLs for Courses API and performs subject-wide queries.
  */
 class CourseSearch {
+
+  use StringTranslationTrait;
 
   /**
    * GuzzleHttp\ClientInterface definition.
@@ -17,6 +21,13 @@ class CourseSearch {
    * @var \GuzzleHttp\ClientInterface
    */
   protected $httpClient;
+
+  /**
+   * Drupal\Core\Logger\LoggerChannelInterface definition.
+   *
+   * @var \Drupal\Core\Logger\LoggerChannelInterface
+   */
+  protected $logger;
 
   /**
    * The source URLs to retrieve.
@@ -30,9 +41,12 @@ class CourseSearch {
    *
    * @param \GuzzleHttp\ClientInterface $http_client
    *   A guzzle client for making http requests.
+   * @param \Drupal\Core\Logger\LoggerChannelInterface $logger
+   *   The logger channel service.
    */
-  public function __construct(ClientInterface $http_client) {
+  public function __construct(ClientInterface $http_client, LoggerChannelInterface $logger) {
     $this->httpClient = $http_client;
+    $this->logger = $logger;
   }
 
   /**
@@ -84,34 +98,45 @@ class CourseSearch {
       $response = $this->httpClient->request('GET', $queryUrl);
       $body = $response->getBody();
       $xml = new \XMLReader();
-      if ($xml->xml($body)) {
-        $item = [];
-        while ($xml->read()) {
-          if ($xml->nodeType === \XMLReader::ELEMENT) {
-            if ($xml->name === $itemSelector) {
-              $item = [];
+      try {
+        if ($xml->xml($body)) {
+          $item = [];
+          while ($xml->read()) {
+            if ($xml->nodeType === \XMLReader::ELEMENT) {
+              if ($xml->name === $itemSelector) {
+                $item = [];
+              }
+              if ($xml->name === $subjectSelector) {
+                $item['subject'] = $xml->readInnerXML();
+              }
+              if ($xml->name === $catalogSelector) {
+                $item['catalog'] = $xml->readInnerXML();
+              }
+              if ($xml->name === $descriptionSelector) {
+                $item['description'] = $xml->readInnerXML();
+              }
             }
-            if ($xml->name === $subjectSelector) {
-              $item['subject'] = $xml->readInnerXML();
-            }
-            if ($xml->name === $catalogSelector) {
-              $item['catalog'] = $xml->readInnerXML();
-            }
-            if ($xml->name === $descriptionSelector) {
-              $item['description'] = $xml->readInnerXML();
+            if ($xml->nodeType === \XMLReader::END_ELEMENT) {
+              if ($xml->name === $itemSelector) {
+                $items[] = $item;
+              }
             }
           }
-          if ($xml->nodeType === \XMLReader::END_ELEMENT) {
-            if ($xml->name === $itemSelector) {
-              $items[] = $item;
-            }
-          }
+          $xml->close();
         }
-        $xml->close();
       }
+      catch (\ValueError $v) {
+        $this->logger->error($this->t("Invalid response from Courses API when searching for %search: %message", [
+          '%search' => $search,
+          '%message' => $v->getMessage(),
+        ]));
+      }
+
     }
     catch (RequestException $e) {
-      \Drupal::logger('az_course')->error("Request exception.");
+      $this->logger->error($this->t("Request exception while searching for courses: %message", [
+        '%message' => $e->getMessage(),
+      ]));
     }
 
     foreach ($items as $item) {

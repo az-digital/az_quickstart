@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - az_opportunity_trellis
+id: az_opportunity_trellis
+label: 'Quickstart Trellis Opportunites'
+migration: az_trellis_opportunities
+time: 43200
+update: true
+sync: false
+ignore_dependencies: 0

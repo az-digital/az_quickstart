@@ -3,18 +3,19 @@
 namespace Drupal\Tests\az_migration\Functional;
 
 use Drupal\Tests\BrowserTestBase;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests the Quickstart Global Footer.
- *
- * @group az_global_footer
  */
+#[Group('az_migration')]
+#[Group('az_global_footer')]
+#[RunTestsInSeparateProcesses]
 class MigrateExceptionsTest extends BrowserTestBase {
 
   /**
-   * The profile to install as a basis for testing.
-   *
-   * @var string
+   * {@inheritdoc}
    */
   protected $profile = 'az_quickstart';
 
@@ -24,24 +25,19 @@ class MigrateExceptionsTest extends BrowserTestBase {
   protected $defaultTheme = 'az_barrio';
 
   /**
-   * Disable strict schema checking.
-   *
-   * @var bool
+   * {@inheritdoc}
    */
   protected $strictConfigSchema = FALSE;
 
   /**
-   * Modules to enable.
-   *
-   * @var array
+   * {@inheritdoc}
    */
   protected static $modules = ['az_migration'];
 
   /**
    * Tests that the Quickstart Global Footer module can be installed.
-   *
-   * @group regression
    */
+  #[Group('regression')]
   public function testGlobalFooterMigration() {
     // Install the az_global_footer module.
     $this->container
@@ -49,6 +45,7 @@ class MigrateExceptionsTest extends BrowserTestBase {
       ->install([
         'az_global_footer',
       ]);
+    $this->assertSession()->statusCodeEquals(200);
   }
 
 }

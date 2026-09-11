@@ -43,7 +43,7 @@ class RetryHttp extends Http {
       try {
         $options = ['headers' => $this->getRequestHeaders()];
         if (!empty($this->configuration['authentication'])) {
-          $options = array_merge($options, $this->getAuthenticationPlugin()->getAuthenticationOptions());
+          $options = array_merge($options, $this->getAuthenticationPlugin()->getAuthenticationOptions($url));
         }
         if (!empty($this->configuration['request_options'])) {
           $options = array_merge($options, $this->configuration['request_options']);
