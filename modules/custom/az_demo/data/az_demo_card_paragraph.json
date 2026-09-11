@@ -10,13 +10,13 @@
           "az_cards": [
             {
               "delta": 0,
-              "title": "Gray 100",
+              "title": "Cool Gray",
               "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>",
-              "link_title": "Card link",
+              "link_title": "Card Link",
               "link_url": "#top",
               "media": "",
-              "background": "text-bg-gray-100",
-              "link_style": "btn w-100 btn-blue"
+              "background": "text-bg-cool-gray",
+              "link_style": "btn w-100 btn-red"
             },
             {
               "delta": 1,
@@ -43,11 +43,11 @@
             "delta": 0,
             "title": "Arizona Blue",
             "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>",
-            "link_title": "Card link",
+            "link_title": "Card Link",
             "link_url": "#top",
             "media": "runners_brains.jpeg",
             "background": "text-bg-blue",
-            "link_style": "btn w-100 btn-outline-white"
+            "link_style": "btn w-100 btn-outline-sky"
           },
           {
             "delta": 1,
@@ -88,7 +88,7 @@
           "link_url": "#top",
           "media": "runners_brains.jpeg",
           "background": "text-bg-warm-gray",
-          "link_style": "btn btn-blue w-100"
+          "link_style": "btn btn-red w-100"
         },
         {
           "delta": 1,
