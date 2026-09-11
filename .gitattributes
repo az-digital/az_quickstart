@@ -5,7 +5,7 @@
 *.theme linguist-language=PHP
 
 # Classify library folders as vendor code.
-assets/vendor/** linguist-vendored
+libraries/** linguist-vendored
 
 # Classify generated library files as such.
 *.min.css linguist-generated=true
