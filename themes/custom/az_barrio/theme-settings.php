@@ -298,6 +298,12 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#title' => t('Use the AZ Bootstrap sticky footer template.'),
     '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('sticky_footer'),
   ];
+  $form['azbs_settings']['settings']['az_bootstrap_style']['serif_headings'] = [
+    '#title' => t('Use serif headings'),
+    '#type' => 'checkbox',
+    '#description' => t("Use the Garamond Premier Pro serif font for headings H1, H2 and H3. Proxima Nova sans-serif font will remain in use for headings H4, H5 and H6."),
+    '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('serif_headings'),
+  ];
   // Responsive Header Grid.
   $form['layout']['header_grid'] = [
     '#type' => 'details',

@@ -305,6 +305,9 @@ az_barrio.settings:
     sticky_footer:
       type: boolean
       label: 'Enable AZ Bootstrap sticky footer template'
+    serif_headings:
+      type: boolean
+      label: 'Heading styles'
     az_barrio_logo_svg_inline:
       type: boolean
       label: 'Inline logo SVG (Experimental)'
