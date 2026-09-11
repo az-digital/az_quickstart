@@ -287,6 +287,8 @@ __metadata:
     eslint-plugin-prettier: "npm:^5.5.6"
     eslint-plugin-yml: "npm:^1.19.1"
     prettier: "npm:^3.8.5"
+    slick-carousel: "npm:1.6.0"
+    vanilla-calendar-pro: "npm:3.1.0"
   languageName: unknown
   linkType: soft
 
@@ -1449,6 +1451,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jquery@npm:>=1.7.2":
+  version: 4.0.0
+  resolution: "jquery@npm:4.0.0"
+  checksum: 10c0/06d8d0f51121af5a691f8b59c74823157bb5b60eea915b30eaa920d6c0ffd91e60ba81e9b97bd8203f331f9dd8d0ec9a4b010935ea314bdd2f15453c29bc780b
+  languageName: node
+  linkType: hard
+
 "js-yaml@npm:^4.1.0":
   version: 4.3.2
   resolution: "js-yaml@npm:4.3.2"
@@ -2035,6 +2044,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"slick-carousel@npm:1.6.0":
+  version: 1.6.0
+  resolution: "slick-carousel@npm:1.6.0"
+  dependencies:
+    jquery: "npm:>=1.7.2"
+  checksum: 10c0/85ac4677991ae12fe44e766df98f6076d191647d46bdd636b2e7b44324dbc62a722cfeed06f5b58c02fbf0c9f375a340cfc4b60708b4d35b8352ba5f2808a9fa
+  languageName: node
+  linkType: hard
+
 "stop-iteration-iterator@npm:^1.1.0":
   version: 1.1.0
   resolution: "stop-iteration-iterator@npm:1.1.0"
@@ -2237,6 +2255,13 @@ __metadata:
   dependencies:
     punycode: "npm:^2.1.0"
   checksum: 10c0/4ef57b45aa820d7ac6496e9208559986c665e49447cb072744c13b66925a362d96dd5a46c4530a6b8e203e5db5fe849369444440cb22ecfc26c679359e5dfa3c
+  languageName: node
+  linkType: hard
+
+"vanilla-calendar-pro@npm:3.1.0":
+  version: 3.1.0
+  resolution: "vanilla-calendar-pro@npm:3.1.0"
+  checksum: 10c0/b7d71d23b3a5e26e4f55bf525fd12a209833b2de1659d87de0ca8851fd50ce3838a180f1170f47b9ab08b38a0d4086f69b606f96206e92203e7901650b83ddc0
   languageName: node
   linkType: hard
 
