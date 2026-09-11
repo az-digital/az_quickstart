@@ -336,7 +336,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
         '#type' => 'checkbox',
         '#prefix' => "<span class='form-item__label'>" . t('AZ Navbar Fullscreen') . "</span>",
         '#title' => t('Enable AZ Navbar Fullscreen (experimental)'),
-        '#description' => t('Enable the experimental AZ Navbar Fullscreen. This option replaces the AZ Navbar with a fullscreen menu.'),
+        '#description' => t('Enable the experimental AZ Navbar Fullscreen. This option replaces the main menu with a fullscreen menu.'),
         '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_navbar_fullscreen'),
         '#wrapper_attributes' => ['class' => ['field-multiple-table']],
       ],
