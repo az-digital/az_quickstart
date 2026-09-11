@@ -11,9 +11,8 @@ use Drupal\Tests\UnitTestCase;
 /**
  * Tests the Slate URL parser.
  *
- * This is the check that stands between a string an editor pasted and a
- * script we load into a page, so the rejection cases below matter more than
- * the accepting ones.
+ * SlateUrl stands between a string an editor pasted and a script we load onto
+ * a page, so the rejection cases below matter most.
  *
  * @coversDefaultClass \Drupal\az_media_slate\SlateUrl
  * @group az_media_slate
@@ -21,7 +20,7 @@ use Drupal\Tests\UnitTestCase;
 class SlateUrlTest extends UnitTestCase {
 
   /**
-   * A valid form id, reused across the cases below.
+   * The test form's id, used by the cases below.
    */
   private const ID = 'dbfabd84-d348-4bf9-88ef-1832b354fcb0';
 
@@ -36,9 +35,9 @@ class SlateUrlTest extends UnitTestCase {
         'https://uaz.test.technolutions.net/register/?id=' . self::ID,
         'https://uaz.test.technolutions.net/register/?id=' . self::ID,
       ],
-      // The regex media_remote uses is case-insensitive, so a mixed-case host
-      // passes on save. The parser has to accept it too, or a URL could save
-      // and then fail to render.
+      // The save-time regex ignores case in the host, so a mixed-case host
+      // saves. The parser must accept it too, or the URL would save and then
+      // fail to render.
       'mixed case scheme and host' => [
         'HTTPS://UAZ.Technolutions.NET/register/?id=' . self::ID,
         $base,
@@ -47,8 +46,8 @@ class SlateUrlTest extends UnitTestCase {
         'https://uaz.technolutions.net/register/?id=' . strtoupper(self::ID),
         'https://uaz.technolutions.net/register/?id=' . strtoupper(self::ID),
       ],
-      // A prefill key is the form field's export key, used with no prefix.
-      // These three are the examples in Slate's own prefill documentation.
+      // A prefill key is the field's export key, with no prefix. The next four
+      // cases come from Slate's prefill documentation.
       'system export key' => [
         $base . '&sys%3Afirst=Alexander',
         $base . '&sys:first=Alexander',
@@ -65,26 +64,53 @@ class SlateUrlTest extends UnitTestCase {
         $base . '&sys%3Afirst=Alexander&sys%3Alast=Hamilton',
         $base . '&sys:first=Alexander&sys:last=Hamilton',
       ],
-      // parse_str() would turn this key into my_field, so the parser splits
-      // the query itself. An export key has to survive intact or the field it
-      // names quietly does not get filled in.
+      // The parser splits the query itself. For example, parse_str() would
+      // turn this key into my_field, and the field would quietly never
+      // prefill.
       'export key containing a dot' => [
         $base . '&my.field=Wilbur',
         $base . '&my.field=Wilbur',
       ],
-      // The person key is refused, but a key that merely begins with those
-      // letters is an ordinary export key. The rule must match the whole key.
+      // The person key is refused, but personal_email is an ordinary export
+      // key. The rule must match the whole key.
       'export key beginning with person' => [
         $base . '&personal_email=wilbur%40example.edu',
         $base . '&personal_email=wilbur@example.edu',
       ],
-      // Slate sets output and div itself. A pasted copy is dropped rather
-      // than rejected, because it is our parameter to own.
+      // We set output and div ourselves. A pasted copy is dropped, not
+      // rejected, so ours wins.
       'reserved parameters are dropped' => [
         $base . '&output=embed&div=someone-elses-id',
         $base,
       ],
       'surrounding whitespace' => [' ' . $base . ' ', $base],
+      // Slate's own page for a form gives /register/form?id=<guid> as its link.
+      // A link with an id always comes back out as /register/?id=<guid>.
+      'form path with an id' => [
+        'https://uaz.technolutions.net/register/form?id=' . self::ID,
+        $base,
+      ],
+      'named path with an id' => [
+        'https://uaz.technolutions.net/register/moreinfo?id=' . self::ID,
+        $base,
+      ],
+      'id after another parameter' => [
+        'https://uaz.technolutions.net/register/?sys:first=Alexander&id=' . self::ID,
+        $base . '&sys:first=Alexander',
+      ],
+      // A link by name, with no id, keeps its name.
+      'named path' => [
+        'https://uaz.technolutions.net/register/moreinfo',
+        'https://uaz.technolutions.net/register/moreinfo',
+      ],
+      'named path with a trailing slash' => [
+        'https://uaz.technolutions.net/register/moreinfo/',
+        'https://uaz.technolutions.net/register/moreinfo',
+      ],
+      'named path with prefill' => [
+        'https://uaz.technolutions.net/register/moreinfo?sys:first=Alexander',
+        'https://uaz.technolutions.net/register/moreinfo?sys:first=Alexander',
+      ],
     ];
   }
 
@@ -99,8 +125,8 @@ class SlateUrlTest extends UnitTestCase {
       'http' => ['http://uaz.technolutions.net/register/?id=' . self::ID, 'bad_scheme'],
       'javascript scheme' => ['javascript:alert(1)', 'unparseable'],
       'another host entirely' => ['https://example.com/register/?id=' . self::ID, 'bad_host'],
-      // The suffix is checked with a leading dot, so a lookalike domain that
-      // merely ends in the same letters does not pass.
+      // The suffix check includes the leading dot, so a lookalike domain that
+      // only ends in the same letters fails.
       'lookalike host' => ['https://eviltechnolutions.net/register/?id=' . self::ID, 'bad_host'],
       'host as a path segment' => ['https://evil.com/uaz.technolutions.net/register/?id=' . self::ID, 'bad_host'],
       'credentials in the url' => ['https://user:pass@uaz.technolutions.net/register/?id=' . self::ID, 'has_userinfo'],
@@ -108,17 +134,25 @@ class SlateUrlTest extends UnitTestCase {
       'fragment' => [$base . '#section', 'has_fragment'],
       'fragment after a parameter' => [$base . '&form_a=b#section', 'has_fragment'],
       'wrong path' => ['https://uaz.technolutions.net/other/?id=' . self::ID, 'bad_path'],
-      'no id' => ['https://uaz.technolutions.net/register/', 'missing_id'],
+      // A form name goes back into the script src, so it has to be one plain
+      // word. For example, a browser resolves /register/../manage to /manage.
+      'path that climbs out of register' => ['https://uaz.technolutions.net/register/../manage/x', 'bad_path'],
+      'encoded dots in the path' => ['https://uaz.technolutions.net/register/%2e%2e/manage', 'bad_path'],
+      'nested path' => ['https://uaz.technolutions.net/register/a/b', 'bad_path'],
+      'no id and no name' => ['https://uaz.technolutions.net/register/', 'missing_id'],
+      // The id has to be its own parameter, not text inside another value.
+      'id hidden inside a value' => ['https://uaz.technolutions.net/register/?sys:first=a?id=x', 'missing_id'],
+      'named path with a malformed id' => ['https://uaz.technolutions.net/register/moreinfo?id=nope', 'bad_id'],
       'malformed id' => ['https://uaz.technolutions.net/register/?id=not-a-guid', 'bad_id'],
       'id missing a group' => ['https://uaz.technolutions.net/register/?id=dbfabd84-d348-4bf9-1832b354fcb0', 'bad_id'],
-      // One stored URL serves every visitor, so a person parameter would show
-      // one record's data to all of them.
+      // One stored URL serves every visitor, so person would show one record's
+      // details to all of them.
       'person parameter' => [$base . '&person=' . self::ID, 'person_param'],
       // Slate requires query keys to be all lowercase.
       'uppercase export key' => [$base . '&SYS:first=x', 'unknown_param'],
       'uppercase inside an export key' => [$base . '&sys:FIRST=x', 'unknown_param'],
       // The parser decodes a key before checking it, so an encoded space is
-      // caught rather than being carried into the URL we build.
+      // caught instead of being passed along to Slate.
       'export key containing a space' => [$base . '&sys%20first=x', 'unknown_param'],
       'over-long value' => [$base . '&sys:first=' . str_repeat('x', 513), 'param_too_long'],
       'over-long key' => [$base . '&' . str_repeat('a', 65) . '=x', 'param_too_long'],
@@ -152,7 +186,7 @@ class SlateUrlTest extends UnitTestCase {
   }
 
   /**
-   * The embed URL carries our container id and Slate's output parameter.
+   * The embed URL carries our container id and output=embed.
    *
    * @covers ::getEmbedUrl
    */
@@ -166,10 +200,22 @@ class SlateUrlTest extends UnitTestCase {
   }
 
   /**
+   * A link by name keeps its name in the embed URL.
+   *
+   * @covers ::getEmbedUrl
+   */
+  public function testEmbedUrlForNamedPath(): void {
+    $parsed = SlateUrl::parse('https://uaz.technolutions.net/register/moreinfo?sys:first=Alexander');
+    $embed = urldecode($parsed->getEmbedUrl('az-media-slate-abc-0'));
+
+    $this->assertSame('https://uaz.technolutions.net/register/moreinfo?sys:first=Alexander&output=embed&div=az-media-slate-abc-0', $embed);
+  }
+
+  /**
    * The canonical URL never carries the parameters that make Slate return JS.
    *
-   * Linking to the embed URL would hand someone a script file instead of the
-   * form, so the two must not converge.
+   * A link to the embed URL would show someone a script instead of the form,
+   * so the two URLs must stay different.
    *
    * @covers ::getCanonicalUrl
    * @covers ::getEmbedUrl
@@ -183,13 +229,12 @@ class SlateUrlTest extends UnitTestCase {
   }
 
   /**
-   * The save-time pattern agrees with the parser on the dangerous cases.
+   * The save-time regex agrees with the parser on the cases that matter.
    *
-   * The media_remote module checks a pasted URL against a regex when the media
-   * is saved, while SlateUrl decides what actually gets loaded. The regex is
-   * not the security boundary, but if it is looser than the parser an editor
-   * saves a URL happily and then finds an empty space where the form should
-   * be. These are the cases where the two must not drift apart.
+   * The media_remote module checks a pasted URL against a regex when media is
+   * saved, and SlateUrl decides what actually loads. If the regex accepts a URL
+   * the parser rejects, an editor saves without error and then finds an empty
+   * space where the form should be. These cases keep the two in step.
    *
    * @covers \Drupal\az_media_slate\Plugin\Field\FieldFormatter\AzMediaRemoteSlateFormatter::getUrlRegexPattern
    */
@@ -200,20 +245,27 @@ class SlateUrlTest extends UnitTestCase {
     $accepted = [
       'plain form URL' => $base,
       'test environment host' => 'https://uaz.test.technolutions.net/register/?id=' . self::ID,
-      // Slate writes export keys unencoded, which is the form that has to
-      // agree on both sides.
+      // Slate's docs write export keys unencoded, so both checks must agree on
+      // URLs written that way.
       'documented export key' => $base . '&sys:first=Alexander',
       'mapped field export key' => $base . '&sys:field:acainterest=' . self::ID,
       'form-specific export key' => $base . '&lunch_preference=Chicken',
       'dotted export key' => $base . '&my.field=Wilbur',
       'several parameters at once' => $base . '&sys:first=Alexander&sys:last=Hamilton',
-      // The person key is refused, but this is a normal export key.
+      // The person key is refused, but this is an ordinary export key.
       'export key beginning with person' => $base . '&personal_email=x',
-      // Keys must be lowercase; values may be any case.
+      // Keys must be lowercase; values can be any case.
       'uppercase prefill value' => $base . '&sys:first=ALEXANDER',
-      // The regex is case-insensitive for the host and id, so the parser has
-      // to accept those too.
+      // The regex ignores case in the host and id, so the parser must accept
+      // those too.
       'mixed case host and id' => 'HTTPS://UAZ.Technolutions.NET/register/?id=' . strtoupper(self::ID),
+      'form path with an id' => 'https://uaz.technolutions.net/register/form?id=' . self::ID,
+      'id after another parameter' => $base . '&sys:first=Alexander',
+      'id not first' => 'https://uaz.technolutions.net/register/?sys:first=Alexander&id=' . self::ID,
+      'named path' => 'https://uaz.technolutions.net/register/moreinfo',
+      'named path with prefill' => 'https://uaz.technolutions.net/register/moreinfo?sys:first=Alexander',
+      // The id and person rules must match the whole key.
+      'export key beginning with id' => 'https://uaz.technolutions.net/register/moreinfo?identity=x',
     ];
     foreach ($accepted as $label => $url) {
       $this->assertSame(1, preg_match($pattern, $url), $label);
@@ -226,20 +278,28 @@ class SlateUrlTest extends UnitTestCase {
       'lookalike host' => 'https://eviltechnolutions.net/register/?id=' . self::ID,
       'fragment' => $base . '#section',
       'plain http' => 'http://uaz.technolutions.net/register/?id=' . self::ID,
-      // Slate requires lowercase query keys. Case-insensitivity in the regex
-      // is scoped to the host and id for this reason: a blanket /i flag would
-      // accept these on save and leave the parser to reject them at render.
+      // A blanket /i flag on the regex would accept these three on save, and
+      // the parser would reject them at render. So the regex ignores case only
+      // in the scheme, host, and id.
       'uppercase export key' => $base . '&SYS:first=x',
       'uppercase reserved key' => $base . '&OUTPUT=embed',
       'uppercase path' => 'https://uaz.technolutions.net/REGISTER/?id=' . self::ID,
-      // Uppercase anywhere in the key, not only at the front.
+      // Uppercase anywhere in the key, not only at the start.
       'uppercase inside export key' => $base . '&sys:FIRST=x',
-      // A percent escape in a key is refused on both sides. The regex refuses
-      // every escape outright; the parser decodes first and refuses what the
-      // escape turns into. Without that the regex would accept these and the
-      // parser would reject them at render.
+      // A percent escape in a key fails both checks. The regex refuses any
+      // escape; the parser decodes first and then refuses the result. If the
+      // regex allowed escapes, it would accept these and the parser would
+      // reject them at render.
       'uppercase in encoded key' => $base . '&sys%3AFirst=x',
       'encoded space in key' => $base . '&sys%20first=x',
+      // A path either names a form in one plain word or names nothing.
+      'path that climbs out of register' => 'https://uaz.technolutions.net/register/../manage/x',
+      'nested path' => 'https://uaz.technolutions.net/register/a/b',
+      'no id and no name' => 'https://uaz.technolutions.net/register/',
+      // A ? inside a value doesn't start a new parameter, so this has no id.
+      'id hidden inside a value' => 'https://uaz.technolutions.net/register/?sys:first=a?id=x',
+      'malformed id' => 'https://uaz.technolutions.net/register/?id=not-a-guid',
+      'named path with a person parameter' => 'https://uaz.technolutions.net/register/moreinfo?person=' . self::ID,
     ];
     foreach ($rejected as $label => $url) {
       $this->assertSame(0, preg_match($pattern, $url), $label);
@@ -248,7 +308,7 @@ class SlateUrlTest extends UnitTestCase {
   }
 
   /**
-   * A caller-supplied div does not survive into the embed URL.
+   * A div parameter in the pasted URL doesn't make it into the embed URL.
    *
    * @covers ::getEmbedUrl
    */

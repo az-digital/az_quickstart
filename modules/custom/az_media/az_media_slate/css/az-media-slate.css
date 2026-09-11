@@ -1,16 +1,17 @@
 /**
  * @file
- * Styles for az_media_slate.
+ * Styles for Slate form embeds.
  *
- * Slate's own stylesheets are left alone on purpose. Slate ships an
- * embed-scoped variant (base_safe.css) and its guidance when an embed looks
- * wrong is to adjust the host page's CSS, so this file is where that
- * adjusting happens. Blocking their stylesheet would put us outside what
- * Slate will support.
+ * Covers the embed's width per view mode, the Arizona Bootstrap fixes for
+ * Slate's form, the loading spinner, the fallback link, and the grey
+ * placeholder shown while editing.
  *
- * Anything here that touches the form's own markup must leave the "hidden"
- * class alone: Slate's show and hide logic is built on it, so styling over it
- * breaks conditional questions.
+ * Leave Slate's own stylesheets loaded. When an embed looks wrong, Slate's
+ * docs say to adjust the host page's CSS, and this file is where we do that.
+ *
+ * Careful: never set display on elements Slate hides with its "hidden" class.
+ * Slate's conditional logic shows and hides questions with that class, so
+ * overriding it shows questions that should be hidden, with no error.
  *
  * @see https://knowledge.technolutions.net/docs/embedding-forms
  */
@@ -32,13 +33,13 @@
 
 /* Widths per view mode.
  *
- * Two selectors for each, because the embed is wrapped differently depending
- * on where it renders. On a normal page the field group puts it under
- * .az-media.az-small and so on; inside CKEditor it sits under a figure
- * carrying data-view-mode instead.
+ * Each has two selectors because the embed is wrapped differently depending
+ * on where it renders. On a page, the media's display wraps it in
+ * .az-media.az-small (and so on). Inside CKEditor, it sits in a figure with a
+ * data-view-mode attribute instead.
  *
- * The default view mode is deliberately absent: a Slate form runs to many
- * questions, so it fills whatever container it is given. */
+ * Default and natural size have no rule. A Slate form has many questions, so
+ * let it fill whatever width it's given. */
 .az-media.az-very-small .az-media-slate,
 figure[data-view-mode="az_very_small"] .az-media-slate {
   max-width: var(--az-slate-width-very-small);
@@ -54,30 +55,32 @@ figure[data-view-mode="az_medium"] .az-media-slate {
   max-width: var(--az-slate-width-medium);
 }
 
-/* The form itself.
+/* Slate's form.
  *
- * The loader adds Arizona Bootstrap's own classes to Slate's controls, so the
- * look comes from Arizona Bootstrap. The rules below only settle the few
- * places where Slate's stylesheet and Bootstrap disagree. Scoping each one
- * under .az-media-slate is also what lets it outrank Slate's selectors. */
+ * The loader adds Arizona Bootstrap's classes to Slate's fields, so the look
+ * comes from Arizona Bootstrap. These rules only fix the places where Slate's
+ * stylesheet and Bootstrap clash. Each is scoped under .az-media-slate so it
+ * outranks the rule it fixes. */
 
-/* Slate gives an option's label a left margin. Bootstrap's form-check already
- * spaces the label from its input, so keeping both leaves a wide gap. */
+/* Slate puts a left margin on an option's label. Bootstrap's form-check
+ * already spaces the label from its input, so together they leave a wide gap.
+ * This outranks Slate's div.form_response input + label. */
 .az-media-slate .form-check > .form-check-label {
   margin-left: 0;
 }
 
-/* Bootstrap makes every control full width. Keep controls that Slate lays out
- * side by side on one line, like a birthdate's month, day, and year. */
+/* Bootstrap's form-control and form-select are display: block, which would
+ * stack fields Slate puts side by side, like a birthdate's month, day, and
+ * year. The loader marks those rows with az-media-slate__inline-controls. */
 .az-media-slate .az-media-slate__inline-controls > .form-control,
 .az-media-slate .az-media-slate__inline-controls > .form-select {
   display: inline-block;
   width: auto;
 }
 
-/* Slate marks a field that fails validation with aria-invalid="true" and the
- * class validate_error. Bootstrap only styles its own is-invalid class, so
- * give Slate's markers Bootstrap's invalid border colour. */
+/* Slate marks a field that fails validation with aria-invalid="true" and a
+ * validate_error class. Bootstrap only styles its own is-invalid class, so
+ * give Slate's markers Bootstrap's invalid border color. */
 .az-media-slate .form-control[aria-invalid="true"],
 .az-media-slate .form-select[aria-invalid="true"],
 .az-media-slate .form-check-input[aria-invalid="true"],
@@ -86,9 +89,16 @@ figure[data-view-mode="az_medium"] .az-media-slate {
   border-color: var(--bs-form-invalid-border-color);
 }
 
-/* The loading spinner, centred in the space the form is about to fill, the
- * same way the Trellis spinner sits. The spinner itself is Arizona
- * Bootstrap's spinner-border. */
+/* Slate's signature question uses its label for a whole consent statement,
+ * which reads badly in form-label's bold. Keep form-label's spacing but use
+ * normal text, so only what the form's author bolded stands out. */
+.az-media-slate .form_signature .form-label {
+  font-size: inherit;
+  font-weight: normal;
+}
+
+/* The loading spinner (Arizona Bootstrap's spinner-border), centered in the
+ * space the form will fill, like the Trellis spinner. */
 .az-media-slate__spinner {
   display: flex;
   align-items: center;
@@ -98,11 +108,11 @@ figure[data-view-mode="az_medium"] .az-media-slate {
 
 /* The fallback link.
  *
- * It ships visible so that a browser with no JavaScript still offers a way to
- * reach the form - without JavaScript the embed was never going to load. The
- * loader adds --js as soon as it takes charge, which hides the link, and adds
- * --failed if the form does not arrive, which brings it back. --failed wins
- * because it comes later in the file. */
+ * It's visible by default, so a browser with no JavaScript, where the embed
+ * can't load anyway, still gets it. The loader adds --js, which hides it, and
+ * adds --failed if the form doesn't arrive, which shows it again. Keep the
+ * --failed rule below the --js rule: they have the same specificity, so the
+ * later one wins. */
 .az-media-slate__fallback {
   display: inline-block;
   padding: 0.5rem 0;
@@ -116,9 +126,10 @@ figure[data-view-mode="az_medium"] .az-media-slate {
   display: inline-block;
 }
 
-/* The status region is announced by screen readers, so it stays in the
- * accessibility tree from the start. A live region that is display:none when
- * its text arrives is not reliably announced, so hide it visually instead. */
+/* The status message is read out by screen readers, so hide it visually
+ * instead of with display: none. Rationale: a live region (an element screen
+ * readers watch for new text) that's display: none when its text arrives
+ * isn't reliably announced. */
 .az-media-slate__status {
   position: absolute;
   width: 1px;
@@ -142,10 +153,9 @@ figure[data-view-mode="az_medium"] .az-media-slate {
   color: #a11b0a;
 }
 
-/* Shown instead of a form on editing routes.
- *
- * Matches the Trellis placeholder in az_media_trellis, so both form embeds
- * look the same in the editor and the Media Library. */
+/* The grey box shown instead of the form while editing. It matches the
+ * Trellis placeholder in az_media_trellis, so both form embeds look the same
+ * in the editor and the Media Library. */
 .az-media-slate-placeholder {
   display: flex;
   align-items: center;

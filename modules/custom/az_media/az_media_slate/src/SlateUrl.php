@@ -5,81 +5,107 @@ declare(strict_types=1);
 namespace Drupal\az_media_slate;
 
 /**
- * A Slate form URL that has been validated and rebuilt from its parts.
+ * A Slate form URL that has been checked and rebuilt from its parts.
  *
- * Whatever survives this class becomes a <script src> we inject into a page,
- * so this is the module's security boundary. Nothing else should decide that a
- * stored URL is safe.
+ * Whatever passes this class ends up as the src of a script tag on a page, so
+ * this is the module's security boundary.
  *
- * Two URLs come out of one pasted link, and they are not interchangeable:
+ * Before a stored URL goes into a script tag, run it through parse(), even
+ * though the save-time regex already checked it. Rationale: that check can be
+ * skipped. For example, a migration saves media without validating it unless
+ * told to.
  *
- * - The canonical URL, https://<host>/register/?id=<guid>, is what a person
- *   opens in a browser. It is the href of the fallback link.
+ * One pasted link gives two URLs, and they aren't interchangeable:
+ * - The canonical URL is the page a person opens in a browser, such as
+ *   https://<host>/register/?id=<guid> plus any prefill. It's the fallback
+ *   link's href.
  * - The embed URL adds output=embed and div=<container id>. Slate answers it
- *   with JavaScript, so using it as a link href would show or download a
- *   script file instead of the form.
+ *   with JavaScript, so as a link href it would show or download a script
+ *   instead of the form.
  *
- * Only getEmbedUrl() can produce the second one, and it needs a container id
- * to do it, which is what keeps the two apart.
+ * Only getEmbedUrl() builds the embed URL, and it needs a container id to do
+ * it, which keeps the two from getting mixed up.
  *
  * @see https://knowledge.technolutions.net/docs/embedding-forms
  */
 final class SlateUrl {
 
   /**
-   * Slate instances live under this domain. Checked as a suffix, not a match.
+   * The domain Slate's hosted sites live under, checked as a suffix.
+   *
+   * For example, uaz.test.technolutions.net passes. The leading dot matters:
+   * eviltechnolutions.net ends in the same letters but fails. Keep this in step
+   * with SLATE_HOST_SUFFIX in js/az-media-slate.js.
    */
   private const HOST_SUFFIX = '.technolutions.net';
 
   /**
-   * Every Slate form is served from this path.
+   * The path every Slate form link starts with.
    */
   private const PATH = '/register/';
 
   /**
+   * The paths we accept: /register/, optionally followed by a form's name.
+   *
+   * Slate links to a form by id, as in /register/?id=<guid>, or by name, as in
+   * /register/moreinfo (Slate's prefill docs show links like that). The name
+   * has to be one word of letters, digits, hyphens, or underscores. Rationale:
+   * the name goes back into the script src we build, and a browser resolves
+   * /register/../manage to /manage, a different page on Slate's site.
+   */
+  private const PATH_PATTERN = '#^/register/(?:([A-Za-z0-9_-]+)/?)?$#';
+
+  /**
    * The form id, shaped like a GUID.
    *
-   * This checks grouping only - not UUID version, variant, or that the value
-   * is non-zero. Slate's ids have not been confirmed to be RFC 4122 valid, so
-   * tightening this risks rejecting a real form. The host and path checks are
-   * what actually constrain what we will load.
+   * This checks the grouping only (8-4-4-4-12 hex digits), not the UUID version
+   * or variant. Rationale: nobody has confirmed that Slate's ids follow
+   * RFC 4122, the UUID spec, so a stricter check could reject a real form. The
+   * host and path checks are what limit what we'll load.
    */
   private const ID_PATTERN = '/^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i';
 
   /**
    * The shape of a prefill key: a form field's export key, all lowercase.
    *
-   * Slate prefills a field by naming that field's export key directly in the
-   * query string - sys:first, sys:field:acainterest, or a form-specific key
-   * like lunch_preference. There is no prefix on these. Slate requires keys to
-   * be lowercase; values may be mixed case.
+   * An export key is the name Slate gives each field. Slate prefills a field
+   * when the query string names its export key, for example
+   * sys:first=Alexander or lunch_preference=Chicken. There's no prefix. Slate
+   * requires keys to be lowercase; values can be any case.
    *
-   * This is a shape check, not an allowlist of names. Export keys are defined
-   * per form inside Slate, so the set cannot be known here, which means an
-   * unrecognised Slate parameter passes too. That is accepted: the scheme,
-   * host, and path checks decide whose script we load, and person is refused
-   * outright below, so what is left can only change how Slate renders its own
-   * form.
+   * This checks the shape, not a list of names. Rationale: each form defines
+   * its own export keys inside Slate, so we can't know them here. That means
+   * an unknown Slate parameter passes too. It only travels to Slate in the
+   * query string. The scheme, host, and path checks decide whose script we
+   * load, and person is refused by name in parse().
    *
    * @see https://knowledge.technolutions.net/docs/prepopulating-or-prefilling-forms-using-query-string-parameters
    */
   private const PREFILL_PATTERN = '/^[a-z0-9_:.-]+$/';
 
   /**
-   * Query keys we set ourselves, so a pasted copy of them is dropped.
+   * Query keys we set ourselves. A pasted copy is dropped, so ours wins.
    */
   private const RESERVED_KEYS = ['output', 'div'];
 
   /**
-   * Caps on a single query key and value, to keep the generated URL sane.
+   * Length limits for one query key and one value.
+   *
+   * Both are far above the examples in Slate's prefill docs. They stop a
+   * pasted URL from growing without limit.
    */
   private const MAX_KEY_LENGTH = 64;
   private const MAX_VALUE_LENGTH = 512;
 
   /**
-   * The form id from the pasted URL.
+   * The form id from the pasted URL, or NULL for a link by name.
    */
-  private string $id;
+  private ?string $id;
+
+  /**
+   * The form's name from the path, such as moreinfo, or NULL if there's none.
+   */
+  private ?string $name;
 
   /**
    * The scheme and host, lowercased, e.g. https://uaz.technolutions.net.
@@ -87,13 +113,14 @@ final class SlateUrl {
   private string $origin;
 
   /**
-   * Prefill parameters that survived the query checks, as key => value.
+   * Prefill parameters that passed the checks, as key => value.
    */
   private array $prefill;
 
-  private function __construct(string $origin, string $id, array $prefill) {
+  private function __construct(string $origin, ?string $id, ?string $name, array $prefill) {
     $this->origin = $origin;
     $this->id = $id;
+    $this->name = $name;
     $this->prefill = $prefill;
   }
 
@@ -103,9 +130,9 @@ final class SlateUrl {
    * @param string $url
    *   The URL as an editor typed or pasted it.
    * @param string|null $reason
-   *   Set to a short machine-readable reason when the URL is rejected, for
-   *   logging. Never contains any part of the URL - a rejected URL can carry
-   *   anything, including personal data, and watchdog is not the place for it.
+   *   Set to a short reason when the URL is rejected, such as 'bad_host', for
+   *   the log. It never includes any part of the URL, because a rejected URL
+   *   can hold anything, including someone's personal data.
    *
    * @return self|null
    *   The parsed URL, or NULL if it was rejected.
@@ -124,9 +151,10 @@ final class SlateUrl {
       return NULL;
     }
 
-    // Lowercase the scheme and host before comparing. The regex media_remote
-    // validates against is case-insensitive, so without this a mixed-case host
-    // would pass on save and then be rejected here at render time.
+    // Lowercase the scheme and host before comparing. Rationale: the save-time
+    // regex in AzMediaRemoteSlateFormatter ignores case there, so
+    // HTTPS://UAZ.Technolutions.NET saves fine. Without this, that URL would
+    // then be rejected here, at render.
     $scheme = strtolower($parts['scheme']);
     $host = strtolower($parts['host']);
 
@@ -134,9 +162,9 @@ final class SlateUrl {
       $reason = 'bad_scheme';
       return NULL;
     }
-    // A URL carrying credentials, a port, or a fragment is not a share link an
-    // editor would get from Slate, so treat any of them as a rejection rather
-    // than stripping them and loading something close to what was pasted.
+    // If the URL has credentials, a port, or a fragment, reject it. Rationale:
+    // a share link from Slate has none of those. Don't strip them and carry on,
+    // or we'd load something other than what the editor pasted.
     if (isset($parts['user']) || isset($parts['pass'])) {
       $reason = 'has_userinfo';
       return NULL;
@@ -153,15 +181,15 @@ final class SlateUrl {
       $reason = 'bad_host';
       return NULL;
     }
-    if ($parts['path'] !== self::PATH) {
+    if (!preg_match(self::PATH_PATTERN, $parts['path'], $path_match)) {
       $reason = 'bad_path';
       return NULL;
     }
+    $name = $path_match[1] ?? NULL;
 
-    // Split the query by hand rather than with parse_str(). parse_str()
-    // rewrites "." and " " in a key to "_", left over from register_globals,
-    // so an export key like my.field would silently become my_field and the
-    // field it names would quietly not prefill.
+    // Split the query string by hand. Don't use parse_str() here. For example,
+    // parse_str() turns the key my.field into my_field, a leftover from PHP's
+    // old register_globals, so that field would quietly never prefill.
     $pairs = [];
     if (isset($parts['query']) && $parts['query'] !== '') {
       foreach (explode('&', $parts['query']) as $pair) {
@@ -177,12 +205,16 @@ final class SlateUrl {
       }
     }
 
-    if (!isset($pairs['id'])) {
-      $reason = 'missing_id';
-      return NULL;
+    // If there's no id, the path has to name the form instead. For example,
+    // /register/moreinfo is enough on its own, but /register/ names nothing.
+    if (isset($pairs['id'])) {
+      if (!preg_match(self::ID_PATTERN, $pairs['id'])) {
+        $reason = 'bad_id';
+        return NULL;
+      }
     }
-    if (!preg_match(self::ID_PATTERN, $pairs['id'])) {
-      $reason = 'bad_id';
+    elseif ($name === NULL) {
+      $reason = 'missing_id';
       return NULL;
     }
 
@@ -192,17 +224,16 @@ final class SlateUrl {
         continue;
       }
       // If a person parameter is present, reject the whole URL. Rationale: one
-      // stored URL serves every visitor to the page, and person=<guid> tells
-      // Slate to prefill that specific record's data and to route submissions
-      // onto it. So a person parameter here would show one applicant's details
-      // to everyone and file all their answers against that one record.
+      // stored URL serves every visitor, and person=<guid> tells Slate to fill
+      // the form with that record's details and update that record on submit.
+      // So every visitor would see one applicant's details, and every
+      // submission would land on that one record.
       if ($key === 'person') {
         $reason = 'person_param';
         return NULL;
       }
-      // Everything else is carried through as a prefill key, provided it has
-      // the shape of an export key. See PREFILL_PATTERN for why this is a
-      // shape check rather than a list of names.
+      // Any other key passes if it has the shape of an export key. See
+      // PREFILL_PATTERN.
       if (!preg_match(self::PREFILL_PATTERN, $key)) {
         $reason = 'unknown_param';
         return NULL;
@@ -214,40 +245,52 @@ final class SlateUrl {
       $prefill[$key] = $value;
     }
 
-    return new self($scheme . '://' . $host, $pairs['id'], $prefill);
+    return new self($scheme . '://' . $host, $pairs['id'] ?? NULL, $name, $prefill);
   }
 
   /**
    * The URL a person can open in a browser. Safe to use as a link href.
    */
   public function getCanonicalUrl(): string {
-    return $this->origin . self::PATH . '?' . http_build_query(
-      ['id' => $this->id] + $this->prefill
-    );
+    return $this->buildUrl($this->prefill);
   }
 
   /**
-   * The URL Slate answers with JavaScript. Only ever a script src.
+   * The URL Slate answers with JavaScript. Use it only as a script src.
    *
    * @param string $container_id
-   *   The id of the element Slate should inject the form into. Slate echoes
-   *   this back inside the script it returns, so it has to match the container
-   *   we render.
+   *   The id of the element Slate should write the form into. Slate's script
+   *   looks this id up with document.getElementById(), so it must match the
+   *   container we render.
    */
   public function getEmbedUrl(string $container_id): string {
-    return $this->origin . self::PATH . '?' . http_build_query(
-      ['id' => $this->id] + $this->prefill + [
-        'output' => 'embed',
-        'div' => $container_id,
-      ]
-    );
+    return $this->buildUrl($this->prefill + [
+      'output' => 'embed',
+      'div' => $container_id,
+    ]);
   }
 
   /**
-   * The form id, used to build a container id that survives caching.
+   * Builds a URL to this form with the given query parameters.
+   *
+   * A link with an id always comes out as /register/?id=<guid>, even when it
+   * was pasted as /register/form?id=<guid>. Slate serves the form by id on
+   * either path, and /register/?id= is what Slate's own embed code uses. A
+   * link by name keeps its name, as in /register/moreinfo.
+   *
+   * @param array $query
+   *   Query parameters to add after the id, as key => value.
    */
-  public function getId(): string {
-    return $this->id;
+  private function buildUrl(array $query): string {
+    if ($this->id !== NULL) {
+      $path = self::PATH;
+      $query = ['id' => $this->id] + $query;
+    }
+    else {
+      $path = self::PATH . $this->name;
+    }
+    $query_string = http_build_query($query);
+    return $this->origin . $path . ($query_string === '' ? '' : '?' . $query_string);
   }
 
 }

@@ -1,25 +1,30 @@
 {#
 /**
  * @file
- * Renders the container Slate injects a form into.
+ * Theme implementation for a Slate form embed.
  *
- * The fallback link sits outside that container on purpose. Slate replaces
- * everything inside the container it is given, so a link placed in there
- * disappears the moment Slate touches it - including when Slate clears the
- * container and then stalls, which is exactly when the link is needed. Keeping
- * it outside means the loader can always bring it back.
+ * Renders an empty div for Slate's script to write the form into, with a
+ * fallback link and a status message beside it.
  *
- * It points at the canonical form URL. The embed URL returns JavaScript, so
- * linking to that would hand someone a script file instead of the form.
+ * Keep the link and the status message outside the div. Rationale: Slate
+ * replaces everything inside that div. For example, if Slate can't fetch the
+ * form, it overwrites the div with its own "To complete this form, click
+ * here." message, so a link inside would vanish right when someone needs it.
+ * The loading spinner goes inside the div for the same reason: the form
+ * replaces it.
  *
- * The link and the status region both ship in the markup. The loader hides the
- * link as soon as it takes charge, which leaves it visible for a browser with
- * no JavaScript - where the embed was never going to load anyway.
+ * The link goes to the form's plain URL, not the embed URL. Slate answers the
+ * embed URL with JavaScript, so a link to it would show a script instead of
+ * the form.
+ *
+ * The link is visible in the markup. The loader hides it once it takes over
+ * and shows it again if the form fails, so a browser with no JavaScript,
+ * where the embed can't load anyway, still gets it.
  *
  * Available variables:
- * - attributes: (Attribute) Attributes for the container, including the id
- *   passed to Slate as the embed's "div" parameter.
- * - canonical_url: (string) The browser-navigable form URL.
+ * - attributes: (Attribute) Attributes for the div Slate writes into,
+ *   including the id we pass to Slate as the embed's "div" parameter.
+ * - canonical_url: (string) The form's plain URL, safe to link to.
  */
 #}
 <div class="az-media-slate">

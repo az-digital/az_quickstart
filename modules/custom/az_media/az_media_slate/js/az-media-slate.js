@@ -1,49 +1,56 @@
 /**
  * @file
- * Loads the Slate form embed script.
+ * Loads a Slate form into the page and styles it with Arizona Bootstrap.
  *
- * Slate serves an embed as a script that fetches the form and injects it into
- * a container we name. This behavior appends that script, keeps a page to the
- * one form Slate supports, and makes sure a form that never appears leaves a
- * usable link behind instead of an empty box.
+ * This runs on any page that shows a Slate Form media item. The formatter
+ * renders an empty div whose data-az-slate-embed-src holds the embed URL,
+ * such as uaz.test.technolutions.net/register/?id=<guid>&output=embed.
+ * This script checks that URL, adds it as a script tag, and shows a spinner.
+ * Slate's script then fetches the form over a few more requests and writes it
+ * into the div.
+ *
+ * Once the form is in, this adds Arizona Bootstrap classes to its fields. If
+ * the form never arrives, it shows a fallback link instead. Slate allows one
+ * form per page, so only the first Slate embed on a page loads.
  *
  * @see https://knowledge.technolutions.net/docs/embedding-forms
  */
 
 ((Drupal, once) => {
   /**
-   * How long to wait for Slate to render before showing the fallback.
+   * How long to wait for Slate's form before showing the fallback link.
    *
-   * A script.onerror handler only catches a script that failed to download.
-   * It does not catch the failure Slate documents, where the script loads and
-   * runs but the form never appears because something on the host page got in
-   * its way - the container just sits there. So we also watch the clock.
+   * The script's error event only fires when the script fails to download.
+   * Slate's troubleshooting page also describes a form stuck on "Loading...",
+   * for example from a conditional logic error, or custom JavaScript or CSS on
+   * the form. Nothing errors when that happens, so we also watch the clock.
    *
    * @see https://knowledge.technolutions.net/docs/troubleshooting-forms
    */
   const INIT_TIMEOUT_MS = 15000;
 
   /**
-   * The only domain we will load an embed script from.
+   * The only domain we'll load an embed script from.
    *
-   * This repeats SlateUrl::HOST_SUFFIX on purpose. See loadEmbed() for why the
-   * browser checks the address again rather than trusting the markup.
+   * Keep this in step with SlateUrl::HOST_SUFFIX in PHP. See loadEmbed() for
+   * why the browser checks the URL again.
    */
   const SLATE_HOST_SUFFIX = '.technolutions.net';
 
   /**
-   * Input types that take form-control, and the class Drupal adds beside it.
+   * Input types that get form-control, and the Drupal class to add with it.
    *
-   * The second class is the one a native Drupal field of that type carries in
-   * Quickstart's theme, such as form-email on an email input. The theme sizes
-   * fields using those classes, so giving Slate's fields the same ones makes
-   * the theme treat them like any other form on the site. Text and password
-   * inputs get none: the theme strips Drupal's form-text from them, because in
-   * Bootstrap form-text is the small grey help-text style.
+   * The second class is what a native Drupal field of that type carries, for
+   * example form-email on an email input. az_barrio sizes form fields by those
+   * classes (see its css/style.css), so matching them makes Slate's fields
+   * size like any other form on the site.
    *
-   * Anything not listed here, and not a checkbox, radio, range, or button, is
-   * left with Slate's own styling. That includes hidden inputs, which Slate
-   * uses to carry values and must never be made visible.
+   * Text and password inputs get no second class. Don't add form-text to them:
+   * the base theme, bootstrap_barrio, strips it, because in Bootstrap
+   * form-text is the small grey help-text style.
+   *
+   * Types not listed here, apart from checkbox, radio, range, and buttons, keep
+   * Slate's styling. That includes hidden inputs, which only carry values.
    */
   const FORM_CONTROL_TYPES = {
     date: 'form-date',
@@ -62,7 +69,7 @@
   };
 
   /**
-   * Adds a set of classes to an element, skipping any it already has.
+   * Adds classes to an element, skipping any it already has.
    *
    * @param {Element|null} element The element to add classes to.
    * @param {string[]} classes The classes to add.
@@ -81,10 +88,13 @@
   /**
    * Gives a checkbox or radio Bootstrap's form-check layout.
    *
-   * Slate already renders each option the way Bootstrap's form-check expects -
-   * a wrapper holding the input and then its label - so this only has to add
-   * classes to what is there. Likert grids are skipped: they lay their options
-   * out as a table, which form-check's padding and block display would break.
+   * Slate already renders each option the way form-check expects: a wrapper
+   * holding the input, then its label. So this only adds classes.
+   *
+   * Likert questions (a grid of options per row) are skipped. Rationale: Slate
+   * lays their options out as a table, and form-check's block display and left
+   * padding would likely pull that apart. The test form has no likert
+   * question, so this is untested.
    *
    * @param {HTMLInputElement} input The checkbox or radio.
    */
@@ -109,17 +119,19 @@
   /**
    * Adds Arizona Bootstrap classes to the form Slate rendered.
    *
-   * This only ever adds classes. Slate's own classes and markup stay exactly as
-   * they are - nothing is moved, wrapped, removed, or given an inline style.
-   * Slate's conditional logic works by toggling "hidden" on the questions it
-   * already rendered, and its event handlers are bound to those same elements,
-   * so changing the structure would break both. Adding classes does neither.
+   * Careful: only ever add classes here. Don't move, wrap, or remove Slate's
+   * elements, or give them inline styles. Rationale: Slate's conditional logic
+   * shows and hides questions by toggling a "hidden" class on elements it
+   * already rendered, and its event handlers are attached to those elements.
+   * Rebuilding them risks breaking both, and nothing would error. Adding a
+   * class leaves both alone.
    *
-   * Slate's stylesheets stay loaded too. Blocking them does not make the inputs
-   * look any more like Bootstrap - they look plain because they lack
-   * Bootstrap's classes - and it uncovers labels Slate means to hide.
+   * Don't block Slate's stylesheets either. In testing, the fields looked the
+   * same without them, because they look plain from lacking Bootstrap's
+   * classes. And blocking them showed labels Slate hides, such as each
+   * fieldset's legend.
    *
-   * Safe to run again on the same form: anything already styled is skipped.
+   * Safe to run more than once on the same form.
    *
    * @param {HTMLElement} container The element Slate filled.
    */
@@ -137,8 +149,8 @@
           type === 'submit' ||
           type === 'button'
         ) {
-          // Slate marks its main action with "default". Match it to the
-          // btn-primary that Quickstart's own form submit buttons use.
+          // Slate marks its main action with a "default" class. Give it
+          // btn-primary, like Quickstart's own submit buttons, such as Log in.
           const primary = control.matches('.default, .form_button_submit');
           addClasses(control, [
             'btn',
@@ -158,9 +170,8 @@
       });
 
     container.querySelectorAll('.form_question').forEach((question) => {
-      // A question label only gets form-label when it labels something a
-      // person fills in. Section headers and paragraphs also use .form_label
-      // in Slate's markup, and are left alone.
+      // Only label questions someone fills in. Slate's section headers and
+      // paragraphs also use .form_label, and shouldn't get form-label's bold.
       if (
         question.querySelector(
           'input:not([type="hidden"]), select, textarea, .form_signature_editable',
@@ -171,9 +182,9 @@
     });
 
     container.querySelectorAll('.form_responses').forEach((responses) => {
-      // Bootstrap makes every control full width, which would stack controls
-      // Slate places side by side, like a birthdate's month, day, and year.
-      // Mark those rows so the stylesheet can keep them on one line.
+      // Bootstrap's form-control and form-select are display: block, so fields
+      // Slate puts side by side, like a birthdate's month, day, and year, would
+      // stack. Mark those rows so the stylesheet keeps them on one line.
       const controls = responses.querySelectorAll(
         ':scope > .form-control, :scope > .form-select',
       );
@@ -194,10 +205,10 @@
   }
 
   /**
-   * Brings the fallback link back and says why the form is not there.
+   * Removes the spinner, shows the fallback link, and says why.
    *
    * @param {HTMLElement} wrapper The .az-media-slate element.
-   * @param {string} message Text for the status region.
+   * @param {string} message Text for the status message.
    */
   function showFallback(wrapper, message) {
     wrapper.classList.add('az-media-slate--failed');
@@ -212,12 +223,11 @@
   }
 
   /**
-   * Builds the loading spinner shown until Slate's form arrives.
+   * Builds the spinner shown until Slate's form arrives.
    *
-   * This is Arizona Bootstrap's spinner, the same one az_media_trellis shows
-   * while a Trellis form loads, so both embeds look alike. Slate's form takes
-   * a second or more to appear, because it arrives over several requests to
-   * Slate's servers one after another, and without this the space stays blank.
+   * It's Arizona Bootstrap's spinner, the same one az_media_trellis shows for a
+   * Trellis form. Slate's form arrives over several requests to Slate's
+   * servers, one after another, so it can take a second or more.
    *
    * @return {HTMLElement} The spinner, ready to insert.
    */
@@ -236,7 +246,7 @@
   }
 
   /**
-   * Appends the Slate script for one container and watches how it goes.
+   * Adds Slate's script for one container and watches how it goes.
    *
    * @param {HTMLElement} container The element Slate was told to fill.
    * @return {boolean} True if a script was appended, false if the address was
@@ -250,12 +260,11 @@
       return false;
     }
 
-    // Check the address again here, in the browser. SlateUrl has already
-    // refused anything that is not a Slate form URL, but that check is in PHP
-    // and this is the line that turns a string into a script tag. A guard at
-    // the point of use still holds if this markup is ever produced by
-    // something other than our own formatter. The suffix matches
-    // SlateUrl::HOST_SUFFIX; the two have to stay in step.
+    // If the URL isn't https on a technolutions.net host, show the fallback
+    // and stop. Rationale: SlateUrl already checked it in PHP, but the code
+    // below is what turns a string into a script tag, so check again right
+    // here. That still holds if this markup ever comes from somewhere other
+    // than our formatter.
     let embedUrl;
     try {
       embedUrl = new URL(src, window.location.href);
@@ -274,15 +283,14 @@
       return false;
     }
 
-    // Hide the fallback link now that we are driving the embed. It ships
-    // visible so a browser with no JavaScript still gets a way to reach the
-    // form.
+    // Hide the fallback link while the embed loads. It's visible in the
+    // markup so a browser with no JavaScript still gets it.
     wrapper.classList.add('az-media-slate--js');
 
-    // The spinner goes inside the container on purpose. When the form arrives,
-    // Slate replaces everything in the container with it, which takes the
-    // spinner away at exactly that moment. If the form never arrives,
-    // showFallback() removes it instead.
+    // Put the spinner inside the container. When the form arrives, Slate
+    // replaces everything in the container, which removes the spinner at
+    // exactly that moment. If the form never arrives, showFallback() removes
+    // it.
     container.appendChild(buildSpinner());
 
     const timer = window.setTimeout(() => {
@@ -294,11 +302,10 @@
       }
     }, INIT_TIMEOUT_MS);
 
-    // Slate fills the container some time after its script runs, so watch for
-    // markup arriving rather than styling once. This keeps watching after the
-    // first render in case Slate adds controls later. It only listens for
-    // added and removed nodes, and adding a class is neither, so the styling
-    // does not set the observer off again.
+    // Slate writes the form in a little after its script runs, so watch for it
+    // instead of styling once. Keep watching afterward in case Slate adds
+    // fields later. This only listens for added and removed elements, and
+    // adding a class is neither, so styling can't set it off again.
     const observer = new MutationObserver(() => {
       applyBootstrapClasses(container);
     });
@@ -306,8 +313,8 @@
 
     const script = document.createElement('script');
     script.async = true;
-    // Assign the parsed URL rather than the raw attribute, so the value that
-    // reaches the script tag is the one the check above accepted.
+    // Use the parsed URL, not the raw attribute, so the script tag gets exactly
+    // the value checked above.
     script.src = embedUrl.href;
     script.addEventListener('error', () => {
       window.clearTimeout(timer);
@@ -331,11 +338,11 @@
       );
 
       containers.forEach((container) => {
-        // Slate supports one embedded form per page. Two live embeds break
-        // each other, so only the first container on the page gets a script;
-        // any other keeps its fallback link. The flag lives on <html> rather
-        // than in this closure so that a container arriving later through
-        // AJAX or Layout Builder is measured against the same page.
+        // If a Slate form already loaded on this page, show this one's
+        // fallback link instead. Rationale: Slate's docs say only one Slate
+        // form can be embedded on a page. The flag is on <html>, not in a
+        // variable here, so a container added later by AJAX or Layout Builder
+        // counts against the same page.
         if (document.documentElement.hasAttribute('data-az-slate-loaded')) {
           const wrapper = container.closest('.az-media-slate');
           showFallback(
@@ -346,9 +353,9 @@
           );
           return;
         }
-        // Mark the page as spent only once a script is actually on its way.
-        // A container we refused has not used up the one embed Slate allows,
-        // so a later valid one on the same page still gets its turn.
+        // Mark the page only once a script is on its way. A container we
+        // refused hasn't used up the one form, so a later valid one still
+        // loads.
         if (loadEmbed(container)) {
           document.documentElement.setAttribute('data-az-slate-loaded', 'true');
         }

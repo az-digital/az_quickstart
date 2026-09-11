@@ -7,31 +7,33 @@ namespace Drupal\az_media_slate;
 use Drupal\Core\Routing\RouteMatchInterface;
 
 /**
- * Helper functions for the az_media_slate module.
+ * Decides whether an editor is working on the current page.
  *
- * Tells the formatter whether the page being built is somewhere an editor is
- * working, so it can render a placeholder instead of a live form.
+ * AzMediaRemoteSlateFormatter asks this before it renders. On an editing page,
+ * such as a node edit form or the Media Library, it shows a grey placeholder
+ * with the media's name instead of the live form.
  */
 class AzMediaSlateService {
 
   /**
    * Routes where a live Slate form must not render.
    *
-   * A real form inside an edit form fights the editor: its required fields can
-   * block saving, and its scripts run inside CKEditor's preview.
+   * Rationale: a live form would load Slate's scripts and a working form into
+   * the page the editor is working on, including inside CKEditor's preview.
    */
   private const EDITING_ROUTES = [
     // Node add, edit, and preview.
     'entity.node.add_form',
     'entity.node.edit_form',
     'entity.node.preview',
-    // Media add and edit, including the media the form itself lives on.
+    // Media add and edit.
     'entity.media.add_form',
     'entity.media.edit_form',
-    // Media Library, and CKEditor's inline preview of an embedded media.
+    // The Media Library, and CKEditor's preview of media embedded in text.
     'media_library.ui',
     'media.filter.preview',
-    // Block content editing.
+    // Adding and editing a custom block. A custom block's canonical route is
+    // its edit form.
     'block_content.add_form',
     'entity.block_content.canonical',
   ];
@@ -39,8 +41,8 @@ class AzMediaSlateService {
   /**
    * Route name prefixes where a live Slate form must not render.
    *
-   * Layout Builder has many routes and adds more between releases, so match on
-   * the prefix rather than trying to keep a list of them current.
+   * Layout Builder has many routes, such as layout_builder.choose_block, so
+   * match the prefix instead of listing each one.
    */
   private const EDITING_ROUTE_PREFIXES = [
     'layout_builder.',
@@ -56,13 +58,15 @@ class AzMediaSlateService {
   }
 
   /**
-   * Whether the current request is an editing context.
+   * Checks whether the current page is one where an editor is working.
    *
-   * Anything branching on this needs the route.name cache context, or a
-   * placeholder rendered for an editor can be served from cache to a visitor.
+   * Careful: anything that branches on this needs the route.name cache
+   * context. Without it, Drupal can cache the placeholder built for an editor
+   * and serve that copy to a visitor, with no error. A cache context tells
+   * Drupal to keep a separate cached copy per value, here one per route.
    *
    * @return bool
-   *   TRUE when an editor is working on this page.
+   *   TRUE when the current route is an editing route.
    */
   public function isEditingContext(): bool {
     $route_name = $this->routeMatch->getRouteName();
