@@ -4,12 +4,14 @@ namespace Drupal\az_ranking;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
-use Drupal\Core\Image\ImageFactory;
-use Drupal\Core\Render\RendererInterface;
+use Drupal\Core\File\FileUrlGeneratorInterface;
 use Drupal\media\MediaInterface;
 
 /**
- * Class AZRankingImageHelper generates image render arrays for ranking images.
+ * Pulls the image file and focal point off a ranking's media entity.
+ *
+ * Returns plain data, not a render array. Turning that into markup is the
+ * az_quickstart:ranking-image component's job.
  */
 class AZRankingImageHelper {
 
@@ -21,99 +23,87 @@ class AZRankingImageHelper {
   protected $entityTypeManager;
 
   /**
-   * Drupal\Core\Render\RendererInterface definition.
+   * The file URL generator service.
    *
-   * @var \Drupal\Core\Render\RendererInterface
+   * @var \Drupal\Core\File\FileUrlGeneratorInterface
    */
-  protected $renderer;
-
-  /**
-   * The image factory service.
-   *
-   * @var \Drupal\Core\Image\ImageFactory
-   */
-  protected $imageFactory;
+  protected $fileUrlGenerator;
 
   /**
    * Constructs a new AZRankingImageHelper object.
    */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, RendererInterface $renderer, ImageFactory $image_factory) {
+  public function __construct(EntityTypeManagerInterface $entity_type_manager, FileUrlGeneratorInterface $file_url_generator) {
     $this->entityTypeManager = $entity_type_manager;
-    $this->renderer = $renderer;
-    $this->imageFactory = $image_factory;
+    $this->fileUrlGenerator = $file_url_generator;
   }
 
   /**
-   * Prepare an image render array.
+   * Gets the image file URI and focal point from a ranking's media entity.
+   *
+   * The published ranking and the widget's edit-form preview both reach
+   * this through AZRankingComponentBuilder::buildImageComponent(), so the
+   * two can't drift apart.
    *
    * @param \Drupal\media\MediaInterface $media
    *   A Drupal media entity object.
    *
    * @return array
-   *   An image render array.
+   *   An array with these keys:
+   *   - 'src': the image's URL, or an empty string when the media has no
+   *     image or its file has gone. Root-relative, like
+   *     /sites/default/files/cactus.jpg. The `image.src` prop is
+   *     `format: uri-reference`, so a path with no scheme is fine; its
+   *     `x-allowed-schemes` list rules out public://, not local files.
+   *     The image style is applied later, in ranking-image.twig.
+   *   - 'focal_x', 'focal_y': the focal point, or NULL if none is set.
+   *   - 'cache_tags': the file's cache tags. Attach these to whatever
+   *     render array you build from this data, or a cached ranking will
+   *     keep showing the old picture after someone replaces the file.
+   *     Nothing upstream does it for you: az_ranking stores its media
+   *     reference as a plain integer property (see
+   *     AZRankingItem::propertyDefinitions()) rather than an entity
+   *     reference, so Drupal derives no cache metadata from it.
    */
-  public function generateImageRenderArray(MediaInterface $media) {
-    $media_render_array = [];
-    $media_attributes = $media->get('field_media_az_image')->getValue();
+  public function getImageSourceAndFocalPoint(MediaInterface $media): array {
+    $empty = [
+      'src' => '',
+      'focal_x' => NULL,
+      'focal_y' => NULL,
+      'cache_tags' => [],
+    ];
 
+    $media_attributes = $media->get('field_media_az_image')->getValue();
     if (empty($media_attributes[0]['target_id'])) {
-      return [];
+      return $empty;
     }
 
-    if ($file = $this->entityTypeManager->getStorage('file')->load($media_attributes[0]['target_id'])) {
-      $image = new \stdClass();
-      $image->title = NULL;
-      $image->alt = $media_attributes[0]['alt'] ?? '';
-      $image->entity = $file;
-      $image->uri = $file->getFileUri();
-      $image->width = NULL;
-      $image->height = NULL;
+    $file = $this->entityTypeManager->getStorage('file')->load($media_attributes[0]['target_id']);
+    if (!$file) {
+      return $empty;
+    }
 
-      $media_render_array = [
-        '#theme' => 'image_formatter',
-        '#item' => $image,
-        '#image_style' => 'az_ranking_responsive',
-        '#item_attributes' => [
-          'class' => ['ranking-img'],
-        ],
-      ];
-      // Add focal point data attributes for JavaScript to calculate
-      // object-position dynamically based on container size.
-      if ($media instanceof FieldableEntityInterface) {
-        try {
-          if ($media->hasField('field_focal_point_x') && $media->hasField('field_focal_point_y')) {
-            if (!$media->get('field_focal_point_x')->isEmpty() && !$media->get('field_focal_point_y')->isEmpty()) {
-              $focal_x = (float) $media->get('field_focal_point_x')->value;
-              $focal_y = (float) $media->get('field_focal_point_y')->value;
+    $result = $empty;
+    $result['src'] = $this->fileUrlGenerator->generateString($file->getFileUri());
+    $result['cache_tags'] = $file->getCacheTags();
 
-              // Get original image dimensions for JavaScript calculations.
-              // When image styles scale the image, naturalWidth/Height in JS
-              // will be the scaled dimensions, but focal points are relative
-              // to the original image dimensions.
-              $original_image = $this->imageFactory->get($file->getFileUri());
-              $original_width = $original_image->getWidth();
-              $original_height = $original_image->getHeight();
-
-              // Store focal point as decimal values (0-1) for JavaScript,
-              // along with original image dimensions.
-              $media_render_array['#item_attributes'] += [
-                'data-focal-x' => $focal_x,
-                'data-focal-y' => $focal_y,
-                'data-original-width' => $original_width,
-                'data-original-height' => $original_height,
-              ];
-            }
+    if ($media instanceof FieldableEntityInterface) {
+      try {
+        if ($media->hasField('field_focal_point_x') && $media->hasField('field_focal_point_y')) {
+          if (!$media->get('field_focal_point_x')->isEmpty() && !$media->get('field_focal_point_y')->isEmpty()) {
+            $result['focal_x'] = (float) $media->get('field_focal_point_x')->value;
+            $result['focal_y'] = (float) $media->get('field_focal_point_y')->value;
           }
         }
-        catch (\Throwable $e) {
-          // Defensive: do not break rendering if fields are not present.
-        }
       }
-      // Add the file entity to the cache dependencies.
-      // This will clear our cache when this entity updates.
-      $this->renderer->addCacheableDependency($media_render_array, $file);
+      catch (\Throwable $e) {
+        // If reading the focal point goes wrong, leave focal_x and focal_y
+        // NULL and carry on. Rationale: with no focal point the image just
+        // stays centered, which is a fine-looking result. Not worth taking
+        // the page down over.
+      }
     }
-    return $media_render_array;
+
+    return $result;
   }
 
 }
