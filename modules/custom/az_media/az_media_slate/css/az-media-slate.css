@@ -54,6 +54,48 @@ figure[data-view-mode="az_medium"] .az-media-slate {
   max-width: var(--az-slate-width-medium);
 }
 
+/* The form itself.
+ *
+ * The loader adds Arizona Bootstrap's own classes to Slate's controls, so the
+ * look comes from Arizona Bootstrap. The rules below only settle the few
+ * places where Slate's stylesheet and Bootstrap disagree. Scoping each one
+ * under .az-media-slate is also what lets it outrank Slate's selectors. */
+
+/* Slate gives an option's label a left margin. Bootstrap's form-check already
+ * spaces the label from its input, so keeping both leaves a wide gap. */
+.az-media-slate .form-check > .form-check-label {
+  margin-left: 0;
+}
+
+/* Bootstrap makes every control full width. Keep controls that Slate lays out
+ * side by side on one line, like a birthdate's month, day, and year. */
+.az-media-slate .az-media-slate__inline-controls > .form-control,
+.az-media-slate .az-media-slate__inline-controls > .form-select {
+  display: inline-block;
+  width: auto;
+}
+
+/* Slate marks a field that fails validation with aria-invalid="true" and the
+ * class validate_error. Bootstrap only styles its own is-invalid class, so
+ * give Slate's markers Bootstrap's invalid border colour. */
+.az-media-slate .form-control[aria-invalid="true"],
+.az-media-slate .form-select[aria-invalid="true"],
+.az-media-slate .form-check-input[aria-invalid="true"],
+.az-media-slate .form-control.validate_error,
+.az-media-slate .form-select.validate_error {
+  border-color: var(--bs-form-invalid-border-color);
+}
+
+/* The loading spinner, centred in the space the form is about to fill, the
+ * same way the Trellis spinner sits. The spinner itself is Arizona
+ * Bootstrap's spinner-border. */
+.az-media-slate__spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--az-slate-min-height);
+}
+
 /* The fallback link.
  *
  * It ships visible so that a browser with no JavaScript still offers a way to
@@ -100,21 +142,27 @@ figure[data-view-mode="az_medium"] .az-media-slate {
   color: #a11b0a;
 }
 
-/* Shown instead of a form on editing routes. */
+/* Shown instead of a form on editing routes.
+ *
+ * Matches the Trellis placeholder in az_media_trellis, so both form embeds
+ * look the same in the editor and the Media Library. */
 .az-media-slate-placeholder {
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: var(--az-slate-min-height);
-  padding: 1rem;
-  border: 1px dashed #7c7c7c;
-  background-color: #f4f4f4;
+  background-color: #c9c9c9;
+  font-size: 0.95rem;
   text-align: center;
 }
 
 .az-media-slate-placeholder__label {
   margin: 0;
-  color: #49595e;
+  padding: 0 1rem;
+  color: #222;
+  font-weight: 600;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
 }
 
 .az-media-slate-error {

@@ -6,6 +6,7 @@ namespace Drupal\az_media_slate\Plugin\Field\FieldFormatter;
 
 use Drupal\az_media_slate\AzMediaSlateService;
 use Drupal\az_media_slate\SlateUrl;
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Field\Attribute\FieldFormatter;
 use Drupal\Core\Field\FieldItemListInterface;
@@ -225,9 +226,11 @@ class AzMediaRemoteSlateFormatter extends MediaRemoteFormatterBase implements Co
       'label' => [
         '#type' => 'html_tag',
         '#tag' => 'p',
-        '#value' => $this->t('@label - Slate form preview unavailable while editing.', [
-          '@label' => $label,
-        ]),
+        // Only the media name, the same as the Trellis placeholder shows. It is
+        // escaped because html_tag runs a plain string through
+        // Xss::filterAdmin(), which keeps tags like <b>, so a name containing
+        // markup would otherwise render as markup instead of as typed.
+        '#value' => Html::escape($label),
         '#attributes' => [
           'class' => ['az-media-slate-placeholder__label'],
         ],
