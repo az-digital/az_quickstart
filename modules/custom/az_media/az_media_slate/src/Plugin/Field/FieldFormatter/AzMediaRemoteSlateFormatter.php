@@ -153,12 +153,13 @@ class AzMediaRemoteSlateFormatter extends MediaRemoteFormatterBase implements Co
 
   /**
    * {@inheritdoc}
+   *
+   * The Name field starts with this static placeholder for the editor to
+   * replace. It leaves out the URL, because a pasted Slate link is long and
+   * makes a poor name.
    */
   public static function deriveMediaDefaultNameFromUrl($url) {
-    if (SlateUrl::parse($url) !== NULL) {
-      return t('Slate Form at @url', ['@url' => $url]);
-    }
-    return parent::deriveMediaDefaultNameFromUrl($url);
+    return t('Slate Form Name');
   }
 
   /**
