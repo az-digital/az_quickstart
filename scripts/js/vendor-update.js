@@ -17,9 +17,10 @@
  * Modeled on Drupal core's core/scripts/js/vendor-update.js.
  *
  * IMPORTANT: this overwrites libraries/slick/slick/slick.min.js with the raw
- * npm release, which is NOT jQuery 4 compatible. After running this script,
- * re-apply the jQuery 4 compatibility fix (drupal.org issue #3467129) to
- * that file before committing:
+ * npm release, which is NOT jQuery 4 compatible (upstream issue:
+ * https://github.com/kenwheeler/slick/issues/4350). After running this
+ * script, re-apply the jQuery 4 compatibility fix (drupal.org issue
+ * #3467129) to that file before committing:
  *   https://www.drupal.org/files/issues/2025-02-17/compatibility_jQuery_4.patch
  * (patch -p2 libraries/slick/slick/slick.min.js < that-file)
  * Check whether a newer slick-carousel release has fixed this upstream
