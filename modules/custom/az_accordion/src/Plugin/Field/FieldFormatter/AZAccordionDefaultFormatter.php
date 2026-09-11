@@ -74,6 +74,14 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
     $entity = $items->getEntity();
     $accordion_container_id = HTML::getUniqueId('accordion-' . $entity->id());
     $faq_schema_enabled = FALSE;
+    $clipboard_link_enabled = FALSE;
+
+    if ($entity instanceof ParagraphInterface && method_exists($entity, 'getAllBehaviorSettings')) {
+      $parent_config = $entity->getAllBehaviorSettings();
+      $behavior_settings = $parent_config['az_accordion_paragraph_behavior'] ?? [];
+      $faq_schema_enabled = !empty($behavior_settings['faq_schema']);
+      $clipboard_link_enabled = !empty($behavior_settings['clipboard_link']);
+    }
 
     foreach ($items as $delta => $item) {
       assert($item instanceof AZAccordionItem);
@@ -82,23 +90,17 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
 
       $column_classes = [];
       $column_classes[] = 'col-md-4 col-lg-4';
-      $parent = $item->getEntity();
-
-      if ($parent instanceof ParagraphInterface) {
-        // Get the behavior settings for the parent.
-        $parent_config = $parent->getAllBehaviorSettings();
-
-        // Check if FAQ schema markup is enabled.
-        if (!empty($parent_config['az_accordion_paragraph_behavior']['faq_schema'])) {
-          $faq_schema_enabled = TRUE;
-        }
-      }
 
       // Handle class keys that contained multiple classes.
       $column_classes = implode(' ', $column_classes);
       $column_classes = explode(' ', $column_classes);
       $column_classes[] = 'pb-4';
       $accordion_id = Html::getUniqueId('az_accordion');
+      $anchor_title = strtolower($title);
+      $anchor_title = preg_replace('/[^a-z0-9\s]/', '', $anchor_title);
+      $anchor_title = preg_replace('/\s+/', '-', trim($anchor_title));
+      $anchor_title = substr($anchor_title, 0, 50);
+      $accordion_header_id = Html::getUniqueId($anchor_title);
 
       $element[$delta] = [
         '#theme' => 'az_accordion',
@@ -112,7 +114,9 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
           '#langcode' => $item->getLangcode(),
         ],
         '#accordion_item_id' => $accordion_id,
+        '#accordion_header_id' => $accordion_header_id,
         '#accordion_container_id' => $accordion_container_id,
+        '#clipboard_link' => $clipboard_link_enabled,
         '#collapsed' => $item->collapsed ? '' : 'show',
         '#aria_expanded' => !$item->collapsed ? 'true' : 'false',
       ];
@@ -143,6 +147,9 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
 
     if (!empty($element)) {
       $element['#accordion_container_id'] = $accordion_container_id;
+      if ($clipboard_link_enabled) {
+        $element['#attached']['library'][] = 'az_barrio/az-tooltips';
+      }
     }
 
     // Attach FAQ schema markup if enabled.
