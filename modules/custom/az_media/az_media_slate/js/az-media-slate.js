@@ -307,6 +307,14 @@
     // fields later. This only listens for added and removed elements, and
     // adding a class is neither, so styling can't set it off again.
     const observer = new MutationObserver(() => {
+      // Once the form has appeared, cancel the timeout. Rationale: when a
+      // visitor submits, Slate replaces the form with its confirmation, so a
+      // timeout still waiting would find no form and wrongly show the
+      // fallback. For example, a visitor who submits 3 seconds after the page
+      // loads would otherwise see "The form did not load" 12 seconds later.
+      if (hasRendered(container)) {
+        window.clearTimeout(timer);
+      }
       applyBootstrapClasses(container);
     });
     observer.observe(container, { childList: true, subtree: true });
