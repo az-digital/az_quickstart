@@ -271,15 +271,22 @@ function az_barrio_post_update_delete_az_bootstrap_cdn_version_setting(&$sandbox
 }
 
 /**
- * Enables AZ Navbar.
+ * Formerly enabled AZ Navbar.
+ *
+ * Intentionally left as a no-op rather than deleted. The az_navbar theme
+ * setting no longer exists, so this update must not run its former body: post
+ * updates run in alphabetical order, which places this function after
+ * az_barrio_post_update_delete_az_navbar_setting() and would write back a
+ * configuration key that no longer has a schema entry.
+ *
+ * Keeping the empty function also keeps the update registry consistent between
+ * existing sites, which recorded this update when they ran the Quickstart 3.4
+ * updates, and fresh installs.
+ *
+ * @see az_barrio_post_update_delete_az_navbar_setting()
  */
 function az_barrio_post_update_enable_az_navbar(&$sandbox = NULL) {
-  $config_factory = \Drupal::configFactory();
-  $theme_settings = $config_factory->getEditable('az_barrio.settings');
-  if ($theme_settings->get('az_navbar') !== TRUE) {
-    $theme_settings->set('az_navbar', TRUE)->save();
-    \Drupal::logger('az_quickstart')->notice('Enabled AZ Navbar during post update.');
-  }
+  // Intentionally empty. See the documentation above.
 }
 
 /**
@@ -291,5 +298,28 @@ function az_barrio_post_update_enable_az_header_blue(&$sandbox = NULL) {
   if ($theme_settings->get('az_header_blue') !== TRUE) {
     $theme_settings->set('az_header_blue', TRUE)->save();
     \Drupal::logger('az_quickstart')->notice('Enabled the blue Arizona Header during post update.');
+  }
+}
+
+/**
+ * Deletes the removed az_navbar setting.
+ */
+function az_barrio_post_update_delete_az_navbar_setting(&$sandbox = NULL) {
+  $config_factory = \Drupal::configFactory();
+  $theme_settings = $config_factory->getEditable('az_barrio.settings');
+  $az_navbar = $theme_settings->get('az_navbar');
+
+  // Delete the az_navbar key if it exists. AZ Navbar is now the only main
+  // navigation implementation and can no longer be disabled.
+  if ($az_navbar !== NULL) {
+    $theme_settings
+      ->clear('az_navbar')
+      ->save();
+    if ($az_navbar !== TRUE) {
+      \Drupal::logger('az_quickstart')->warning('The AZ Navbar theme setting was disabled on this site. The former main navigation implementation has been removed and AZ Navbar is now always used, which changes the main navigation markup. Custom styling that targets the former markup may need to be updated. See https://quickstart.arizona.edu/site-admin/managing-menus/main-navigation');
+    }
+    else {
+      \Drupal::logger('az_quickstart')->notice('Deleted removed az_navbar configuration key during post update.');
+    }
   }
 }
