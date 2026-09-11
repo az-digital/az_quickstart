@@ -34,7 +34,7 @@ class AzCasTest extends QuickstartFunctionalTestBase {
   /**
    * The created user.
    *
-   * @var \Drupal\user\Entity\User
+   * @var \Drupal\user\UserInterface
    */
   protected $adminUser;
 

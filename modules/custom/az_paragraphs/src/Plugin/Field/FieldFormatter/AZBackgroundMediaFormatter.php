@@ -340,8 +340,6 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
 
     /** @var \Drupal\media\MediaInterface $media */
     foreach ($media_items as $delta => $media) {
-      $element['#media_type'] = $media->bundle();
-
       switch ($media->bundle()) {
         case 'az_remote_video':
           $element[$delta] = $this->remoteVideo($settings, $media);
@@ -350,10 +348,8 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
         case 'az_image':
           $element[$delta] = $this->image($settings, $media);
           break;
-
-        default:
-          return $element;
       }
+      $element[$delta]['#media_type'] = $media->bundle();
 
     }
     return $element;

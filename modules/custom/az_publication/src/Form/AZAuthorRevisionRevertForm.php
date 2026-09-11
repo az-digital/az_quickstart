@@ -7,6 +7,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\az_publication\Entity\AZAuthorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Provides a form for reverting a Author revision.
@@ -18,16 +19,16 @@ class AZAuthorRevisionRevertForm extends ConfirmFormBase {
   /**
    * The Author revision.
    *
-   * @var \Drupal\az_publication\Entity\AZAuthorInterface
+   * @var \Drupal\az_publication\Entity\AZAuthorInterface|null
    */
   protected $revision;
 
   /**
-   * The Author storage.
+   * The entity type manager.
    *
-   * @var \Drupal\az_publication\AZAuthorStorageInterface
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
-  protected $authorStorage;
+  protected $entityTypeManager;
 
   /**
    * The date formatter service.
@@ -48,7 +49,7 @@ class AZAuthorRevisionRevertForm extends ConfirmFormBase {
    */
   public static function create(ContainerInterface $container) {
     $instance = parent::create($container);
-    $instance->authorStorage = $container->get('entity_type.manager')->getStorage('az_author');
+    $instance->entityTypeManager = $container->get('entity_type.manager');
     $instance->dateFormatter = $container->get('date.formatter');
     $instance->time = $container->get('datetime.time');
     return $instance;
@@ -88,6 +89,7 @@ class AZAuthorRevisionRevertForm extends ConfirmFormBase {
    * {@inheritdoc}
    */
   public function getDescription() {
+    /* @phpstan-ignore-next-line */
     return '';
   }
 
@@ -95,7 +97,12 @@ class AZAuthorRevisionRevertForm extends ConfirmFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state, $az_author_revision = NULL) {
-    $this->revision = $this->authorStorage->loadRevision($az_author_revision);
+    /** @var \Drupal\az_publication\Entity\AZAuthorInterface|null $revision */
+    $revision = $this->entityTypeManager->getStorage('az_author')->loadRevision($az_author_revision);
+    if ($revision === NULL) {
+      throw new NotFoundHttpException();
+    }
+    $this->revision = $revision;
     $form = parent::buildForm($form, $form_state);
 
     return $form;
