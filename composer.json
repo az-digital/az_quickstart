@@ -316,8 +316,6 @@
                     "path": "assets/site.webmanifest",
                     "overwrite": false
                 },
-                "[web-root]/libraries/easepick--bundle/dist/index.umd.js": "assets/vendor/easepick--bundle/dist/index.umd.js",
-                "[web-root]/libraries/easepick--bundle/dist/index.css": "assets/vendor/easepick--bundle/dist/index.css",
                 "[web-root]/libraries/slick/slick/slick.min.js": "assets/vendor/slick-carousel/slick/slick.min.js",
                 "[web-root]/libraries/slick/slick/slick.css": "assets/vendor/slick-carousel/slick/slick.css",
                 "[web-root]/libraries/slick/slick/slick-theme.css": "assets/vendor/slick-carousel/slick/slick-theme.css",
