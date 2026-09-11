@@ -93,7 +93,7 @@ function az_barrio_preprocess_html(&$variables) {
   if (\Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('sticky_footer')) {
     $variables['html_attributes']->addClass('sticky-footer');
   }
-  // Set header font styles for the body tag.
+  // Set heading font styles for the body tag.
   $variables['serif_headings'] = (\Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('serif_headings') ?? FALSE);
 }
 
