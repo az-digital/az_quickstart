@@ -88,7 +88,7 @@ class AZCardsParagraphBehavior extends AZDefaultParagraphsBehavior {
         'display-1' => $this->t('Largest Display Heading'),
       ],
       '#default_value' => $config['card_title_display'] ?? 'h5',
-      '#description' => $this->t('Select the display size of the title. <a href="https://digital.arizona.edu/arizona-bootstrap/docs/2.0/content/typography/#display-headings" target="_blank">Learn about display heading sizes</a>.'),
+      '#description' => $this->t('Select the display size of the title. <a href="https://digital.arizona.edu/arizona-bootstrap/v5/docs/5.2/content/typography/#display-headings" target="_blank">Learn about display heading sizes</a>.'),
     ];
 
     $form['card_clickable'] = [
