@@ -2,9 +2,12 @@
  * @file
  * Styles for Slate form embeds.
  *
- * Covers the embed's width per view mode, the Arizona Bootstrap fixes for
- * Slate's form, the loading spinner, the fallback link, and the grey
- * placeholder shown while editing.
+ * Covers the Arizona Bootstrap fixes for Slate's form, the loading spinner,
+ * the fallback link, and the grey placeholder shown while editing.
+ *
+ * Nothing here sets how wide the embed is. Quickstart's theme sizes the
+ * wrapper around every media item by view mode, in az_barrio's
+ * css/az-media-display.css, and the form fills that wrapper.
  *
  * Leave Slate's own stylesheets loaded. When an embed looks wrong, Slate's
  * docs say to adjust the host page's CSS, and this file is where we do that.
@@ -18,9 +21,6 @@
 
 :root {
   --az-slate-min-height: 200px;
-  --az-slate-width-very-small: 320px;
-  --az-slate-width-small: 480px;
-  --az-slate-width-medium: 760px;
 }
 
 .az-media-slate {
@@ -29,30 +29,6 @@
 
 .az-media-slate__form {
   width: 100%;
-}
-
-/* Widths per view mode.
- *
- * Each has two selectors because the embed is wrapped differently depending
- * on where it renders. On a page, the media's display wraps it in
- * .az-media.az-small (and so on). Inside CKEditor, it sits in a figure with a
- * data-view-mode attribute instead.
- *
- * Default and natural size have no rule. A Slate form has many questions, so
- * let it fill whatever width it's given. */
-.az-media.az-very-small .az-media-slate,
-figure[data-view-mode="az_very_small"] .az-media-slate {
-  max-width: var(--az-slate-width-very-small);
-}
-
-.az-media.az-small .az-media-slate,
-figure[data-view-mode="az_small"] .az-media-slate {
-  max-width: var(--az-slate-width-small);
-}
-
-.az-media.az-medium .az-media-slate,
-figure[data-view-mode="az_medium"] .az-media-slate {
-  max-width: var(--az-slate-width-medium);
 }
 
 /* Slate's form.
@@ -71,10 +47,28 @@ figure[data-view-mode="az_medium"] .az-media-slate {
 
 /* Bootstrap's form-control and form-select are display: block, which would
  * stack fields Slate puts side by side, like a birthdate's month, day, and
- * year. The loader marks those rows with az-media-slate__inline-controls. */
+ * year. The loader marks those rows with az-media-slate__inline-controls.
+ *
+ * The gaps do the spacing: 8px between lines when the row is too narrow to
+ * fit, as a birthdate is in the Very Small view mode at 220px, and 5px
+ * between fields, which is the spacing Slate itself uses.
+ *
+ * Slate sets that 5px as an inline margin on each field after the first, so a
+ * wrapped line used to start 5px in from the line above. Only !important
+ * beats an inline style. It is scoped to the rows the loader marked, which
+ * are rows holding more than one field. */
+.az-media-slate .az-media-slate__inline-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 5px;
+}
+
+.az-media-slate .az-media-slate__inline-controls > * {
+  margin-left: 0 !important;
+}
+
 .az-media-slate .az-media-slate__inline-controls > .form-control,
 .az-media-slate .az-media-slate__inline-controls > .form-select {
-  display: inline-block;
   width: auto;
 }
 
@@ -87,6 +81,17 @@ figure[data-view-mode="az_medium"] .az-media-slate {
 .az-media-slate .form-control.validate_error,
 .az-media-slate .form-select.validate_error {
   border-color: var(--bs-form-invalid-border-color);
+}
+
+/* Slate sizes some of its own parts in pixels, so they hang outside a narrow
+ * embed. Its signature box is 400px wide, and stuck out by 180px in the Very
+ * Small view mode, which is 220px. Let anything Slate renders shrink to fit.
+ *
+ * Careful: this doesn't catch every case. A min-width beats max-width, and
+ * Slate's table layout gives an address label min-width: 150px. An inline
+ * style from Slate's JavaScript beats a stylesheet too. */
+.az-media-slate [class*="form_"] {
+  max-width: 100%;
 }
 
 /* Slate's signature question uses its label for a whole consent statement,
