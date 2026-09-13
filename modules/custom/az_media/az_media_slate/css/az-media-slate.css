@@ -1,0 +1,182 @@
+/**
+ * @file
+ * Styles for Slate form embeds.
+ *
+ * Covers the embed's width per view mode, the Arizona Bootstrap fixes for
+ * Slate's form, the loading spinner, the fallback link, and the grey
+ * placeholder shown while editing.
+ *
+ * Leave Slate's own stylesheets loaded. When an embed looks wrong, Slate's
+ * docs say to adjust the host page's CSS, and this file is where we do that.
+ *
+ * Careful: never set display on elements Slate hides with its "hidden" class.
+ * Slate's conditional logic shows and hides questions with that class, so
+ * overriding it shows questions that should be hidden, with no error.
+ *
+ * @see https://knowledge.technolutions.net/docs/embedding-forms
+ */
+
+:root {
+  --az-slate-min-height: 200px;
+  --az-slate-width-very-small: 320px;
+  --az-slate-width-small: 480px;
+  --az-slate-width-medium: 760px;
+}
+
+.az-media-slate {
+  min-height: var(--az-slate-min-height);
+}
+
+.az-media-slate__form {
+  width: 100%;
+}
+
+/* Widths per view mode.
+ *
+ * Each has two selectors because the embed is wrapped differently depending
+ * on where it renders. On a page, the media's display wraps it in
+ * .az-media.az-small (and so on). Inside CKEditor, it sits in a figure with a
+ * data-view-mode attribute instead.
+ *
+ * Default and natural size have no rule. A Slate form has many questions, so
+ * let it fill whatever width it's given. */
+.az-media.az-very-small .az-media-slate,
+figure[data-view-mode="az_very_small"] .az-media-slate {
+  max-width: var(--az-slate-width-very-small);
+}
+
+.az-media.az-small .az-media-slate,
+figure[data-view-mode="az_small"] .az-media-slate {
+  max-width: var(--az-slate-width-small);
+}
+
+.az-media.az-medium .az-media-slate,
+figure[data-view-mode="az_medium"] .az-media-slate {
+  max-width: var(--az-slate-width-medium);
+}
+
+/* Slate's form.
+ *
+ * The loader adds Arizona Bootstrap's classes to Slate's fields, so the look
+ * comes from Arizona Bootstrap. These rules only fix the places where Slate's
+ * stylesheet and Bootstrap clash. Each is scoped under .az-media-slate so it
+ * outranks the rule it fixes. */
+
+/* Slate puts a left margin on an option's label. Bootstrap's form-check
+ * already spaces the label from its input, so together they leave a wide gap.
+ * This outranks Slate's div.form_response input + label. */
+.az-media-slate .form-check > .form-check-label {
+  margin-left: 0;
+}
+
+/* Bootstrap's form-control and form-select are display: block, which would
+ * stack fields Slate puts side by side, like a birthdate's month, day, and
+ * year. The loader marks those rows with az-media-slate__inline-controls. */
+.az-media-slate .az-media-slate__inline-controls > .form-control,
+.az-media-slate .az-media-slate__inline-controls > .form-select {
+  display: inline-block;
+  width: auto;
+}
+
+/* Slate marks a field that fails validation with aria-invalid="true" and a
+ * validate_error class. Bootstrap only styles its own is-invalid class, so
+ * give Slate's markers Bootstrap's invalid border color. */
+.az-media-slate .form-control[aria-invalid="true"],
+.az-media-slate .form-select[aria-invalid="true"],
+.az-media-slate .form-check-input[aria-invalid="true"],
+.az-media-slate .form-control.validate_error,
+.az-media-slate .form-select.validate_error {
+  border-color: var(--bs-form-invalid-border-color);
+}
+
+/* Slate's signature question uses its label for a whole consent statement,
+ * which reads badly in form-label's bold. Keep form-label's spacing but use
+ * normal text, so only what the form's author bolded stands out. */
+.az-media-slate .form_signature .form-label {
+  font-size: inherit;
+  font-weight: normal;
+}
+
+/* The loading spinner (Arizona Bootstrap's spinner-border), centered in the
+ * space the form will fill, like the Trellis spinner. */
+.az-media-slate__spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--az-slate-min-height);
+}
+
+/* The fallback link.
+ *
+ * It's visible by default, so a browser with no JavaScript, where the embed
+ * can't load anyway, still gets it. The loader adds --js, which hides it, and
+ * adds --failed if the form doesn't arrive, which shows it again. Keep the
+ * --failed rule below the --js rule: they have the same specificity, so the
+ * later one wins. */
+.az-media-slate__fallback {
+  display: inline-block;
+  padding: 0.5rem 0;
+}
+
+.az-media-slate--js .az-media-slate__fallback {
+  display: none;
+}
+
+.az-media-slate--failed .az-media-slate__fallback {
+  display: inline-block;
+}
+
+/* The status message is read out by screen readers, so hide it visually
+ * instead of with display: none. Rationale: a live region (an element screen
+ * readers watch for new text) that's display: none when its text arrives
+ * isn't reliably announced. */
+.az-media-slate__status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.az-media-slate--failed .az-media-slate__status {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0.5rem 0 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+  color: #a11b0a;
+}
+
+/* The grey box shown instead of the form while editing. It matches the
+ * Trellis placeholder in az_media_trellis, so both form embeds look the same
+ * in the editor and the Media Library. */
+.az-media-slate-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--az-slate-min-height);
+  background-color: #c9c9c9;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+.az-media-slate-placeholder__label {
+  margin: 0;
+  padding: 0 1rem;
+  color: #222;
+  font-weight: 600;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.az-media-slate-error {
+  padding: 0.75rem 1rem;
+  border-left: 4px solid #a11b0a;
+  background-color: #f4f4f4;
+}

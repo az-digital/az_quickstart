@@ -1,0 +1,36 @@
+{#
+/**
+ * @file
+ * Theme implementation for a Slate form embed.
+ *
+ * Renders an empty div for Slate's script to write the form into, with a
+ * fallback link and a status message beside it.
+ *
+ * Keep the link and the status message outside the div. Rationale: Slate
+ * replaces everything inside that div. For example, if Slate can't fetch the
+ * form, it overwrites the div with its own "To complete this form, click
+ * here." message, so a link inside would vanish right when someone needs it.
+ * The loading spinner goes inside the div for the same reason: the form
+ * replaces it.
+ *
+ * The link goes to the form's plain URL, not the embed URL. Slate answers the
+ * embed URL with JavaScript, so a link to it would show a script instead of
+ * the form.
+ *
+ * The link is visible in the markup. The loader hides it once it takes over
+ * and shows it again if the form fails, so a browser with no JavaScript,
+ * where the embed can't load anyway, still gets it.
+ *
+ * Available variables:
+ * - attributes: (Attribute) Attributes for the div Slate writes into,
+ *   including the id we pass to Slate as the embed's "div" parameter.
+ * - canonical_url: (string) The form's plain URL, safe to link to.
+ */
+#}
+<div class="az-media-slate">
+  <div{{ attributes }}></div>
+  <a href="{{ canonical_url }}" class="az-media-slate__fallback" rel="noopener">
+    {{ 'Open this form'|t }}
+  </a>
+  <p class="az-media-slate__status" aria-live="polite"></p>
+</div>

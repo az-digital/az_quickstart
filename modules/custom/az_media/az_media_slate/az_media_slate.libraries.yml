@@ -1,0 +1,14 @@
+az-media-slate:
+  css:
+    theme:
+      css/az-media-slate.css: {}
+  js:
+    js/az-media-slate.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
+
+az-media-slate.styles:
+  css:
+    theme:
+      css/az-media-slate.css: {}
