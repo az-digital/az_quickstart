@@ -49,7 +49,7 @@ class AzBarrioTest extends QuickstartFunctionalTestBase {
 
     // Tests that navigation elements are present on install.
     $this->drupalGet('');
-    $this->assertSession()->elementExists('css', '#navbar-top.navbar.navbar-expand');
+    $this->assertSession()->elementExists('css', '#navbar-top.navbar.navbar-expand.navbar-az');
     $this->assertSession()->elementExists('css', '#block-az-barrio-offcanvas-searchform');
     $this->assertSession()->elementExists('css', '#block-az-barrio-mobilenavblock');
   }

@@ -71,28 +71,27 @@ interface AZAuthorInterface extends ContentEntityInterface, RevisionLogInterface
    * @param int $timestamp
    *   The UNIX timestamp of when this revision was created.
    *
-   * @return \Drupal\az_publication\Entity\AZAuthorInterface
-   *   The called Author entity.
+   * @return $this
    */
   public function setRevisionCreationTime($timestamp);
 
   /**
    * Gets the Author revision author.
    *
-   * @return \Drupal\user\UserInterface
-   *   The user entity for the revision author.
+   * @return \Drupal\user\UserInterface|null
+   *   The user entity for the revision author, or NULL if not set or user was
+   *   deleted.
    */
   public function getRevisionUser();
 
   /**
-   * Sets the Author revision author.
+   * Sets the Author revision author by ID.
    *
-   * @param int $uid
+   * @param int $user_id
    *   The user ID of the revision author.
    *
-   * @return \Drupal\az_publication\Entity\AZAuthorInterface
-   *   The called Author entity.
+   * @return $this
    */
-  public function setRevisionUserId($uid);
+  public function setRevisionUserId($user_id);
 
 }
