@@ -41,11 +41,11 @@ vanilla-calendar-pro:
       # TODO: Replace individual CSS files with styles/index.css and update
       # theme settings in library implementations if we want to enable automatic
       # dark mode support.
-      lib/vanilla-calendar-pro/styles/layout.css: { minified: true }
-      lib/vanilla-calendar-pro/styles/themes/light.css: { minified: true }
+      /libraries/vanilla-calendar-pro/styles/layout.css: { minified: true }
+      /libraries/vanilla-calendar-pro/styles/themes/light.css: { minified: true }
   js:
-    lib/vanilla-calendar-pro/index.js: { minified: true }
-    lib/vanilla-calendar-pro/utils/index.js: { minified: true }
+    /libraries/vanilla-calendar-pro/index.js: { minified: true }
+    /libraries/vanilla-calendar-pro/utils/index.js: { minified: true }
 az-date-picker-integration:
   js:
     js/az-date-picker-integration.js: {}
