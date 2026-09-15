@@ -623,7 +623,7 @@ function az_core_preprocess_search_result(&$variables): void {
 
 /**
  * Implements hook_system_info_alter().
- * 
+ *
  * Add the AZ Bootstrap CSS location to the CKEditor5 stylesheets.
  */
 function az_core_system_info_alter(array &$info, Extension $file, string $type): void {
