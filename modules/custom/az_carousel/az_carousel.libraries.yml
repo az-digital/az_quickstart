@@ -1,4 +1,9 @@
 az_carousel:
   css:
     theme:
+      # drupal/slick doesn't ship slick-theme.css (the source of .slick-dots
+      # styling) itself; its own fallback (css/theme/slick.theme.css) is
+      # missing the dot-hiding rule. Load the vendored original alongside
+      # our own overrides instead of altering slick's own library.
+      /libraries/slick/slick/slick-theme.css: { weight: -2 }
       css/az_carousel.css: {}
