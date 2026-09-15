@@ -105,10 +105,9 @@ Deprecation and removal process:
 * Deprecated asset-packagist packages are removed in a future minor Quickstart
   release.
 
-Current deprecated asset-packagist packages retained for compatibility:
-
-* npm-asset/easepick--bundle
-* npm-asset/slick-carousel
+npm-asset/easepick--bundle and npm-asset/slick-carousel have been removed.
+easepick was replaced by vanilla-calendar-pro; slick-carousel is still used
+but is now vendored directly instead of installed via asset-packagist.
 
 ## Pre-Release Versions
 

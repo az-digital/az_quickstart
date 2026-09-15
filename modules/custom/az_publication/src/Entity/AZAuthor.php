@@ -179,6 +179,9 @@ class AZAuthor extends EditorialContentEntityBase implements AZAuthorInterface {
    * {@inheritdoc}
    */
   public function getOwner() {
+    // The referenced user entity may be NULL if no owner has been set yet,
+    // or if the referenced user was deleted; see preSave().
+    // @phpstan-ignore return.type
     return $this->get('user_id')->entity;
   }
 
@@ -186,7 +189,8 @@ class AZAuthor extends EditorialContentEntityBase implements AZAuthorInterface {
    * {@inheritdoc}
    */
   public function getOwnerId() {
-    return $this->get('user_id')->target_id;
+    $target_id = $this->get('user_id')->target_id;
+    return $target_id === NULL ? NULL : (int) $target_id;
   }
 
   /**
