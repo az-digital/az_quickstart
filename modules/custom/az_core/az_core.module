@@ -623,14 +623,16 @@ function az_core_preprocess_search_result(&$variables): void {
 
 /**
  * Implements hook_system_info_alter().
+ *
+ * Add the AZ Bootstrap CSS location to the CKEditor5 stylesheets.
  */
 function az_core_system_info_alter(array &$info, Extension $file, string $type): void {
   if ($type !== 'theme' || $file->getName() !== 'az_barrio') {
     return;
   }
 
-  $az_bootstrap_location = \Drupal::state()->get('az_bootstrap_location');
-  if (!is_string($az_bootstrap_location) || $az_bootstrap_location === '') {
+  $az_bootstrap_css_location = \Drupal::state()->get('az_bootstrap_css_location');
+  if (!is_string($az_bootstrap_css_location) || $az_bootstrap_css_location === '') {
     return;
   }
   $stylesheets = $info['ckeditor5-stylesheets'] ?? [];
@@ -640,6 +642,6 @@ function az_core_system_info_alter(array &$info, Extension $file, string $type):
     static fn ($stylesheet): bool => is_string($stylesheet)
       && !str_contains($stylesheet, 'arizona-bootstrap')
   );
-  $stylesheets[] = $az_bootstrap_location;
+  $stylesheets[] = $az_bootstrap_css_location;
   $info['ckeditor5-stylesheets'] = array_values(array_unique($stylesheets));
 }
