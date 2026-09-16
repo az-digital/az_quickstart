@@ -125,7 +125,7 @@
         "drupal/views_remote_data": "1.0.3",
         "drupal/viewsreference": "2.0.0-beta14",
         "drupal/webform": "6.3.0",
-        "drupal/workbench_access": "2.0.4",
+        "drupal/workbench_access": "2.0.5",
         "drupal/xmlsitemap": "2.0.0",
         "giggsey/libphonenumber-for-php": "^9.0",
         "kevinrob/guzzle-cache-middleware": "8.0.0",
