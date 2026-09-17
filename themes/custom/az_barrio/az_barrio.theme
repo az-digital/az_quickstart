@@ -261,18 +261,23 @@ function az_barrio_library_info_alter(&$libraries, $extension) {
   }
 
   if ($extension === 'az_barrio' && isset($libraries['arizona-bootstrap-css'])) {
-    $az_bootstrap_css_path = \Drupal::state()->get(AZ_BOOTSTRAP_CSS_LOCATION);
-    $is_az_bootstrap_stable_version_updated = \Drupal::state()->get(AZ_BOOTSTRAP_CDN_STABLE_VERSION) !== AZ_BOOTSTRAP_STABLE_VERSION;
+    $state = \Drupal::state();
+    $az_bootstrap_css_path = $state->get(AZ_BOOTSTRAP_LOCATION);
+    $is_az_bootstrap_stable_version_updated = $state->get(AZ_BOOTSTRAP_CDN_STABLE_VERSION) !== AZ_BOOTSTRAP_STABLE_VERSION;
     if ($is_az_bootstrap_stable_version_updated) {
-      \Drupal::state()->set(AZ_BOOTSTRAP_CDN_STABLE_VERSION, AZ_BOOTSTRAP_STABLE_VERSION);
+      $state->set(AZ_BOOTSTRAP_CDN_STABLE_VERSION, AZ_BOOTSTRAP_STABLE_VERSION);
     }
     if (!$az_bootstrap_css_path || $is_az_bootstrap_stable_version_updated) {
-      $az_bootstrap_css_path = \Drupal::service('az_core.az_bootstrap_asset_path')->getAssetPath('css');
-      if (!$az_bootstrap_css_path) {
-        return;
+      $az_bootstrap_css_path = az_barrio_az_bootstrap_asset_path('css');
+      if ($az_bootstrap_css_path) {
+        $state->set(AZ_BOOTSTRAP_LOCATION, $az_bootstrap_css_path);
       }
-      \Drupal::state()->set(AZ_BOOTSTRAP_CSS_LOCATION, $az_bootstrap_css_path);
+
+      // Clear cached libraries so Bootstrap updates take effect immediately.
+      \Drupal::service('library.discovery')->clear();
+      \Drupal::service('extension.list.theme')->reset();
     }
+
     $theme_settings = \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider');
     $libraries['arizona-bootstrap-css']['css']['theme'] = [
       $az_bootstrap_css_path => [
@@ -307,14 +312,7 @@ function az_barrio_library_info_alter(&$libraries, $extension) {
   }
 
   if ($extension === 'az_barrio' && isset($libraries['arizona-bootstrap-js'])) {
-    $az_bootstrap_js_path = \Drupal::state()->get(AZ_BOOTSTRAP_JS_LOCATION);
-    if (!$az_bootstrap_js_path || (isset($is_az_bootstrap_stable_version_updated) && $is_az_bootstrap_stable_version_updated)) {
-      $az_bootstrap_js_path = \Drupal::service('az_core.az_bootstrap_asset_path')->getAssetPath('js');
-      if (!$az_bootstrap_js_path) {
-        return;
-      }
-      \Drupal::state()->set(AZ_BOOTSTRAP_JS_LOCATION, $az_bootstrap_js_path);
-    }
+    $az_bootstrap_js_path = az_barrio_az_bootstrap_asset_path('js');
     $theme_settings = \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider');
     $libraries['arizona-bootstrap-js']['js'] = [
       $az_bootstrap_js_path => [
@@ -323,6 +321,52 @@ function az_barrio_library_info_alter(&$libraries, $extension) {
       ],
     ];
   }
+}
+
+/**
+ * Helper function for constructing an Arizona Bootstrap asset path.
+ *
+ * @param string $type
+ *   The asset type to load, e.g. css or js.
+ * @param array $settings
+ *   Optional theme settings override values.
+ *
+ * @return string
+ *   The resolved asset URL or path.
+ */
+function az_barrio_az_bootstrap_asset_path(string $type, array $settings = []): string {
+  $theme_settings = \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider');
+  $source = $settings['az_bootstrap_source'] ?? $theme_settings->getSetting('az_bootstrap_source');
+  $version = $settings['az_bootstrap_cdn_version_' . $type] ?? $theme_settings->getSetting('az_bootstrap_cdn_version_' . $type);
+  $stable_version = $settings['az_bootstrap_cdn_stable_version'] ?? \Drupal::state()->get('az_bootstrap_cdn_stable_version');
+  $minified = $settings['az_bootstrap_minified'] ?? $theme_settings->getSetting('az_bootstrap_minified');
+
+  if ($source === 'cdn') {
+    if ($version === 'stable') {
+      $version = $stable_version;
+    }
+    $path = 'https://cdn.digital.arizona.edu/lib/arizona-bootstrap/' . $version;
+  }
+  else {
+    $path = base_path() . 'libraries/arizona-bootstrap';
+  }
+
+  $path .= '/' . $type . '/arizona-bootstrap';
+  if ($type === 'js') {
+    $path .= '.bundle';
+  }
+  if ($minified) {
+    $path .= '.min';
+  }
+
+  $path .= '.' . $type;
+
+  if ($source === 'cdn' && $version !== 'stable') {
+    $query_string = \Drupal::state()->get('asset.css_js_query_string') ?: '0';
+    $path .= '?=' . $query_string;
+  }
+
+  return $path;
 }
 
 /**
@@ -688,7 +732,7 @@ function az_barrio_preprocess_form__search_block_form(array &$variables) {
  */
 function az_barrio_preprocess_block__az_navbar_fullscreen_menu_block(array &$variables) {
   $variables['wordmark'] = (\Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('wordmark')) ? TRUE : FALSE;
-  $az_bootstrap_css_location = \Drupal::state()->get(AZ_BOOTSTRAP_CSS_LOCATION);
+  $az_bootstrap_css_location = \Drupal::state()->get(AZ_BOOTSTRAP_LOCATION);
   $css_path = strpos($az_bootstrap_css_location, '/css/') + 5;
   $variables['wordmark_url'] = $variables['wordmark'] ? (substr($az_bootstrap_css_location, 0, $css_path) . 'img/arizona-bootstrap-logo-webheader-white.svg') : '';
 }

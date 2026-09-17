@@ -631,7 +631,9 @@ function az_core_system_info_alter(array &$info, Extension $file, string $type):
     return;
   }
 
-  $az_bootstrap_css_location = \Drupal::state()->get('az_bootstrap_css_location');
+  // Get the AZ Bootstrap CSS location. The state key should match the
+  // AZ_BOOTSTRAP_LOCATION constant defined in az_barrio/includes/common.inc.
+  $az_bootstrap_css_location = \Drupal::state()->get('az_bootstrap_location');
   if (!is_string($az_bootstrap_css_location) || $az_bootstrap_css_location === '') {
     return;
   }

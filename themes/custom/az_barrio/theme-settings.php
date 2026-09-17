@@ -476,30 +476,20 @@ function az_barrio_form_system_theme_settings_submit($form, FormStateInterface &
   $form_state->unsetValue('footer_logo_upload');
 
   // Update AZ Bootstrap stable version in state if it has changed.
-  if (\Drupal::state()->get(AZ_BOOTSTRAP_CDN_STABLE_VERSION) !== AZ_BOOTSTRAP_STABLE_VERSION) {
-    \Drupal::state()->set(AZ_BOOTSTRAP_CDN_STABLE_VERSION, AZ_BOOTSTRAP_STABLE_VERSION);
+  $state = \Drupal::state();
+  if ($state->get(AZ_BOOTSTRAP_CDN_STABLE_VERSION) !== AZ_BOOTSTRAP_STABLE_VERSION) {
+    $state->set(AZ_BOOTSTRAP_CDN_STABLE_VERSION, AZ_BOOTSTRAP_STABLE_VERSION);
   }
 
   $form_state_values[] = ['az_bootstrap_cdn_stable_version' => AZ_BOOTSTRAP_STABLE_VERSION];
-  $az_bootstrap_css_path = \Drupal::service('az_core.az_bootstrap_asset_path')->getAssetPath('css', $form_state_values);
-  $az_bootstrap_js_path = \Drupal::service('az_core.az_bootstrap_asset_path')->getAssetPath('js', $form_state_values);
+  $az_bootstrap_css_path = az_barrio_az_bootstrap_asset_path('css', $form_state_values);
+  az_barrio_az_bootstrap_asset_path('js', $form_state_values);
 
-  $state = \Drupal::state();
   if ($az_bootstrap_css_path) {
-    $state->set(AZ_BOOTSTRAP_CSS_LOCATION, $az_bootstrap_css_path);
-  }
-  else {
-    $state->delete(AZ_BOOTSTRAP_CSS_LOCATION);
+    $state->set(AZ_BOOTSTRAP_LOCATION, $az_bootstrap_css_path);
   }
 
-  if ($az_bootstrap_js_path) {
-    $state->set(AZ_BOOTSTRAP_JS_LOCATION, $az_bootstrap_js_path);
-  }
-  else {
-    $state->delete(AZ_BOOTSTRAP_JS_LOCATION);
-  }
-
-  // Clear cached libraries so any Bootstrap changes take effect immediately.
+  // Clear cached libraries so Bootstrap changes take effect immediately.
   \Drupal::service('library.discovery')->clear();
   \Drupal::service('extension.list.theme')->reset();
 }

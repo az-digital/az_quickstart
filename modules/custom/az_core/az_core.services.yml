@@ -41,6 +41,3 @@ services:
   az_core.content_field_updater:
     class: Drupal\az_core\AZContentFieldUpdater
     arguments: ['@entity_type.manager', '@logger.factory']
-  az_core.az_bootstrap_asset_path:
-    class: Drupal\az_core\AZBootstrapAssetPath
-    arguments: []
