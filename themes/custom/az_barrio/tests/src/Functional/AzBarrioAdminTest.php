@@ -35,7 +35,7 @@ class AzBarrioAdminTest extends QuickstartFunctionalTestBase {
   /**
    * The created user.
    *
-   * @var \Drupal\user\Entity\User
+   * @var \Drupal\user\UserInterface
    */
   protected $adminUser;
 
@@ -67,7 +67,7 @@ class AzBarrioAdminTest extends QuickstartFunctionalTestBase {
     $this->drupalGet('admin/structure/block');
     $this->cssSelect('ul[data-drupal-selector="edit-blocks-az-barrio-main-menu-operations"] li.enable a')[0]->click();
     $this->drupalGet('');
-    $this->assertSession()->elementExists('css', '#navbar-top.navbar.navbar-expand');
+    $this->assertSession()->elementExists('css', '#navbar-top.navbar.navbar-expand.navbar-az');
     $this->drupalGet('admin/structure/block');
     $this->cssSelect('ul[data-drupal-selector="edit-blocks-az-barrio-offcanvas-searchform-operations"] li.disable a')[0]->click();
     $this->drupalGet('');
@@ -90,6 +90,7 @@ class AzBarrioAdminTest extends QuickstartFunctionalTestBase {
     $this->drupalGet('admin/appearance');
     $this->cssSelect('a[title="Set Bootstrap Barrio as default theme"]')[0]->click();
     $this->cssSelect('a[title="Uninstall Arizona Barrio theme"]')[0]->click();
+    $this->submitForm([], 'Uninstall');
     $this->assertSession()->pageTextContains('The Arizona Barrio theme has been uninstalled.');
   }
 

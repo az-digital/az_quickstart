@@ -50,7 +50,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   ];
   $form['az_settings']['settings']['institutional_header']['az_header_blue'] = [
     '#type' => 'checkbox',
-    '#title' => t('Enable blue Arizona Header (experimental)'),
+    '#title' => t('Enable blue Arizona Header'),
     '#description' => t('Set the Arizona Header background color to Arizona Blue instead of Arizona Red.'),
     '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_header_blue'),
   ];
@@ -91,13 +91,13 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   unset($form['fonts']['fonts']['bootstrap_barrio_google_fonts']);
   $form['fonts']['fonts']['az_barrio_font'] = [
     '#type' => 'checkbox',
-    '#title' => t('Use the centrally-managed Typekit webfont, Proxima Nova'),
+    '#title' => t('Use the centrally-managed Typekit webfonts (Proxima Nova, Proxima Nova Condensed, and Garamond Premier Pro)'),
     '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_barrio_font'),
     '#description' => t(
-        'If selected, a Typekit CDN <code>&lt;link&gt;</code> will be added to every page importing the @proxima_nova_docs_link CSS.', [
-          '@proxima_nova_docs_link' => Link::fromTextAndUrl(
-            'Arizona Digital, centrally-managed Proxima Nova font', Url::fromUri(
-                'https://digital.arizona.edu/arizona-bootstrap/docs/2.0/content/font/',
+        'If selected, a Typekit CDN <code>&lt;link&gt;</code> will be added to every page importing the @font_docs_link CSS.', [
+          '@font_docs_link' => Link::fromTextAndUrl(
+            'Arizona Digital centrally-managed fonts', Url::fromUri(
+                'https://digital.arizona.edu/arizona-bootstrap/v5/docs/5.2/content/font/',
                 [
                   'attributes' => [
                     'target' => '_blank',
@@ -298,6 +298,12 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#title' => t('Use the AZ Bootstrap sticky footer template.'),
     '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('sticky_footer'),
   ];
+  $form['azbs_settings']['settings']['az_bootstrap_style']['serif_headings'] = [
+    '#title' => t('Use serif headings'),
+    '#type' => 'checkbox',
+    '#description' => t("Use the Garamond Premier Pro serif font for headings H1, H2 and H3. Proxima Nova sans-serif font will remain in use for headings H4, H5 and H6."),
+    '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('serif_headings'),
+  ];
   // Responsive Header Grid.
   $form['layout']['header_grid'] = [
     '#type' => 'details',
@@ -328,31 +334,20 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#description' => t('If checked, the sidebar menu will not be displayed on mobile devices.'),
     '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_remove_sidebar_menu_mobile'),
   ];
-  // Remove navbar options and add AZ Navbar setting.
+  // Remove navbar options and add AZ Navbar Fullscreen setting.
   $form['components']['navbar'] = [];
-  $az_navbar_setting = [
-    'az_navbar' =>
-      [
-        '#type' => 'checkbox',
-        '#prefix' => "<span class='form-item__label'>" . t('AZ Navbar') . "</span>",
-        '#title' => t('Enable AZ Navbar'),
-        '#description' => t('Adds the `navbar-az` class to the main navigation bar, providing additional styling and support for a third level of navigation. DEPRECATION WARNING: The option to not use this setting is now deprecated with Quickstart 3.4 and will be removed from Quickstart 3.5. See https://quickstart.arizona.edu/site-admin/managing-menus/main-navigation'),
-        '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_navbar'),
-        '#wrapper_attributes' => ['class' => ['field-multiple-table']],
-      ],
-  ];
   $az_navbar_fullscreen_setting = [
     'az_navbar_fullscreen' =>
       [
         '#type' => 'checkbox',
         '#prefix' => "<span class='form-item__label'>" . t('AZ Navbar Fullscreen') . "</span>",
         '#title' => t('Enable AZ Navbar Fullscreen (experimental)'),
-        '#description' => t('Enable the experimental AZ Navbar Fullscreen. This option also disables the AZ Navbar.'),
+        '#description' => t('Enable the experimental AZ Navbar Fullscreen. This option replaces the main menu with a fullscreen menu.'),
         '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_navbar_fullscreen'),
         '#wrapper_attributes' => ['class' => ['field-multiple-table']],
       ],
   ];
-  $form['components']['navbar_behaviour'] = $az_navbar_setting + $az_navbar_fullscreen_setting + $form['components']['navbar_behaviour'];
+  $form['components']['navbar_behaviour'] = $az_navbar_fullscreen_setting + $form['components']['navbar_behaviour'];
   $form['affix']['navbar_top'] = [];
   $form['affix']['navbar'] = [];
   // Logos.

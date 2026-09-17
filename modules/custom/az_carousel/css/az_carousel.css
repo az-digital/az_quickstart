@@ -3,7 +3,7 @@
 	margin: 0;
 }
 
-/* 
+/*
 * 	Slick Track
 * 	Fix problem causing the next item slide to jump down and cause taller track
 */
@@ -127,7 +127,7 @@
 }
 
 /* Desktop Styles */
-@media (min-width: 1110px) {
+@media (min-width: 1296px) {
 
 	.az-carousel .slick-initialized .slick-slide {
 		display: block;
@@ -140,6 +140,6 @@
 	}
 	.az-carousel-slide img {
 		min-height: 500px;
-		width: 1110px;
+		width: 1296px;
 	}
 }

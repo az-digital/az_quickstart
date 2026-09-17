@@ -27,6 +27,12 @@ source:
     -
       name: bottom_spacing
       selector: bottom_spacing
+    -
+      name: expand_all
+      selector: expand_all
+    -
+      name: clipboard_link
+      selector: clipboard_link
 
 destination:
   plugin: 'entity_reference_revisions:paragraph'
@@ -57,5 +63,7 @@ process:
     plugin: az_paragraphs_behavior_settings
     paragraph_behavior_plugins:
       az_accordion_paragraph_behavior:
+        expand_all: expand_all
+        clipboard_link: clipboard_link
         az_display_settings:
           bottom_spacing: bottom_spacing
