@@ -25,7 +25,7 @@ content:
     weight: 1
     region: content
     settings:
-      size: 200
+      size: 100
       placeholder: ''
     third_party_settings: {  }
   name:
