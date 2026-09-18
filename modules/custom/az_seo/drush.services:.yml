@@ -1,0 +1,5 @@
+services:
+  az_seo.commands:
+    class: \Drupal\az_seo\Drush\Commands\AZMetatagSetCommand
+    tags:
+      - { name: drush.command }
