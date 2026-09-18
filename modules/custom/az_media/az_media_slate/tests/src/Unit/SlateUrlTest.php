@@ -224,11 +224,12 @@ class SlateUrlTest extends UnitTestCase {
    */
   public function testEmbedUrl(): void {
     $parsed = SlateUrl::parse('https://slate.admissions.arizona.edu/register/?id=' . self::ID);
-    $embed = $parsed->getEmbedUrl('az-media-slate-abc-0');
+    $embed = $parsed->getEmbedUrl();
 
     $this->assertStringContainsString('output=embed', $embed);
-    $this->assertStringContainsString('div=az-media-slate-abc-0', $embed);
     $this->assertStringContainsString('id=' . self::ID, $embed);
+    // The loader adds div, because the id is picked in the browser.
+    $this->assertStringNotContainsString('div=', $embed);
   }
 
   /**
@@ -238,9 +239,9 @@ class SlateUrlTest extends UnitTestCase {
    */
   public function testEmbedUrlForNamedPath(): void {
     $parsed = SlateUrl::parse('https://slate.admissions.arizona.edu/register/moreinfo?sys:first=Alexander');
-    $embed = urldecode($parsed->getEmbedUrl('az-media-slate-abc-0'));
+    $embed = urldecode($parsed->getEmbedUrl());
 
-    $this->assertSame('https://slate.admissions.arizona.edu/register/moreinfo?sys:first=Alexander&output=embed&div=az-media-slate-abc-0', $embed);
+    $this->assertSame('https://slate.admissions.arizona.edu/register/moreinfo?sys:first=Alexander&output=embed', $embed);
   }
 
   /**
@@ -346,18 +347,18 @@ class SlateUrlTest extends UnitTestCase {
   }
 
   /**
-   * A div parameter in the pasted URL doesn't make it into the embed URL.
+   * A div parameter in the pasted URL never reaches Slate.
    *
    * @covers ::getEmbedUrl
+   * @covers ::getCanonicalUrl
    */
-  public function testPastedDivDoesNotOverrideOurs(): void {
+  public function testPastedDivIsDropped(): void {
     $parsed = SlateUrl::parse(
       'https://slate.admissions.arizona.edu/register/?id=' . self::ID . '&div=someone-elses-id'
     );
-    $embed = $parsed->getEmbedUrl('az-media-slate-ours-0');
 
-    $this->assertStringContainsString('div=az-media-slate-ours-0', $embed);
-    $this->assertStringNotContainsString('someone-elses-id', $embed);
+    $this->assertStringNotContainsString('someone-elses-id', $parsed->getEmbedUrl());
+    $this->assertStringNotContainsString('someone-elses-id', $parsed->getCanonicalUrl());
   }
 
   /**

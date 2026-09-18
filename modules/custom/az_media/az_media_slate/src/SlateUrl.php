@@ -19,12 +19,12 @@ namespace Drupal\az_media_slate;
  * - The canonical URL is the page a person opens in a browser, such as
  *   https://<host>/register/?id=<guid> plus any prefill. It's the fallback
  *   link's href.
- * - The embed URL adds output=embed and div=<container id>. Slate answers it
- *   with JavaScript, so as a link href it would show or download a script
- *   instead of the form.
+ * - The embed URL adds output=embed. Slate answers it with JavaScript, so as
+ *   a link href it would show or download a script instead of the form. The
+ *   loader adds one more parameter, div, naming the element to fill.
  *
- * Only getEmbedUrl() builds the embed URL, and it needs a container id to do
- * it, which keeps the two from getting mixed up.
+ * Only getEmbedUrl() builds the embed URL, which keeps the two from getting
+ * mixed up.
  *
  * @see https://knowledge.technolutions.net/docs/embedding-forms
  */
@@ -286,16 +286,17 @@ final class SlateUrl {
   /**
    * The URL Slate answers with JavaScript. Use it only as a script src.
    *
-   * @param string $container_id
-   *   The id of the element Slate should write the form into. Slate's script
-   *   looks this id up with document.getElementById(), so it must match the
-   *   container we render.
+   * Slate also wants a div parameter, naming the element to write the form
+   * into, and the loader adds that one. Rationale: only the browser can see
+   * whether an id is already taken on the page, so the id is picked there.
+   *
+   * A div an editor pasted never reaches Slate either way. parse() drops it,
+   * because it's in RESERVED_KEYS.
+   *
+   * @see js/az-media-slate.js
    */
-  public function getEmbedUrl(string $container_id): string {
-    return $this->buildUrl($this->prefill + [
-      'output' => 'embed',
-      'div' => $container_id,
-    ]);
+  public function getEmbedUrl(): string {
+    return $this->buildUrl($this->prefill + ['output' => 'embed']);
   }
 
   /**

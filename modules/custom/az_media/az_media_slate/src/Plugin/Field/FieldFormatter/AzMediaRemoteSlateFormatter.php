@@ -21,10 +21,10 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * Renders a Slate form embed.
  *
- * This runs when a page shows a Slate Form media item. It renders an empty div
- * with an id we choose, such as az-media-slate-<media uuid>-0, and passes that
- * id to Slate as the embed URL's "div" parameter. js/az-media-slate.js then
- * loads Slate's script, which fetches the form and writes it into that div.
+ * This runs when a page shows a Slate Form media item. It renders an empty
+ * div carrying the embed URL. js/az-media-slate.js then gives that div an id,
+ * tells Slate to write the form into it, and loads Slate's script, which
+ * fetches the form.
  *
  * While someone is editing, it renders a grey placeholder instead. If the
  * stored URL fails SlateUrl's checks, people who can administer media see a
@@ -205,23 +205,20 @@ class AzMediaRemoteSlateFormatter extends MediaRemoteFormatterBase implements Co
         continue;
       }
 
-      // Build the container id from the media's UUID. Don't use
-      // Html::getUniqueId() here. Rationale: it numbers ids within one request
-      // (az-media-slate, then az-media-slate--2), and the render cache saves
-      // that markup for later requests. So two embeds cached on different
-      // requests can both come back as az-media-slate on the same page.
-      $container_id = 'az-media-slate-' . preg_replace('/[^a-z0-9-]/i', '', $entity->uuid()) . '-' . $delta;
-
+      // The loader gives the container its id, and tells Slate to use it.
+      // Rationale: only the browser can see the whole page. An id written
+      // here would repeat itself if the same media were placed twice, and
+      // Html::getUniqueId() is no way out either, because it numbers within
+      // one request and the render cache replays that number on later ones.
       $elements[$delta] = [
         '#theme' => 'az_media_slate',
         '#label' => $entity->label(),
         '#canonical_url' => $slate_url->getCanonicalUrl(),
         '#attributes' => new Attribute([
-          'id' => $container_id,
           'class' => [
             'az-media-slate__form',
           ],
-          'data-az-slate-embed-src' => $slate_url->getEmbedUrl($container_id),
+          'data-az-slate-embed-src' => $slate_url->getEmbedUrl(),
         ]),
         '#attached' => [
           'library' => ['az_media_slate/az-media-slate'],

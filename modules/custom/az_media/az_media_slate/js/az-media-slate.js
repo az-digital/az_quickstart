@@ -263,6 +263,31 @@
   }
 
   /**
+   * An id for the container that no element on the page is already using.
+   *
+   * Slate finds the element with document.getElementById(), so the name has
+   * to be unique. It's chosen here rather than in PHP because only the
+   * browser can see the whole page: the formatter renders each media item on
+   * its own and can't tell that the same one sits further down.
+   *
+   * Only one Slate form loads per page, so the first name is normally free.
+   * The loop is for a page that already holds something called
+   * az-media-slate.
+   *
+   * @return {string} An id no element on the page is using.
+   */
+  function uniqueContainerId() {
+    const base = 'az-media-slate';
+    let id = base;
+    let n = 2;
+    while (document.getElementById(id)) {
+      id = `${base}-${n}`;
+      n += 1;
+    }
+    return id;
+  }
+
+  /**
    * Picks which of the page's own query parameters may travel to Slate.
    *
    * Forwarding them is what makes an embed dynamic: a visitor who arrives
@@ -450,6 +475,12 @@
       applyBootstrapClasses(container);
     });
     observer.observe(container, { childList: true, subtree: true });
+
+    // Give the container its id, and point Slate at it. The embed URL
+    // arrives without a div parameter, because PHP can't see what other ids
+    // the page holds.
+    container.id = uniqueContainerId();
+    embedUrl.searchParams.set('div', container.id);
 
     // Add the page's own parameters, filtered. Only the query string changes,
     // so the scheme and host checked above still hold.
