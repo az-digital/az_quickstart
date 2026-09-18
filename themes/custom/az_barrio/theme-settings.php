@@ -481,10 +481,9 @@ function az_barrio_form_system_theme_settings_submit($form, FormStateInterface &
     $state->set(AZ_BOOTSTRAP_CDN_STABLE_VERSION, AZ_BOOTSTRAP_STABLE_VERSION);
   }
 
+  // Update CSS path using a helper function from az_barrio.theme.
   $form_state_values[] = ['az_bootstrap_cdn_stable_version' => AZ_BOOTSTRAP_STABLE_VERSION];
   $az_bootstrap_css_path = az_barrio_az_bootstrap_asset_path('css', $form_state_values);
-  az_barrio_az_bootstrap_asset_path('js', $form_state_values);
-
   if ($az_bootstrap_css_path) {
     $state->set(AZ_BOOTSTRAP_LOCATION, $az_bootstrap_css_path);
   }
