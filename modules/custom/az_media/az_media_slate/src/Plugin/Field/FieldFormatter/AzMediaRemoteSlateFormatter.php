@@ -224,6 +224,12 @@ class AzMediaRemoteSlateFormatter extends MediaRemoteFormatterBase implements Co
         ]),
         '#attached' => [
           'library' => ['az_media_slate/az-media-slate'],
+          // The loader forwards the page's own query parameters to Slate, and
+          // these are the rules it filters them with. They're the same for
+          // every request, so this doesn't make the markup vary by URL.
+          'drupalSettings' => [
+            'azMediaSlate' => SlateUrl::getForwardingRules(),
+          ],
         ],
         '#cache' => [
           // Cache a separate copy per route. Rationale: editing routes get the

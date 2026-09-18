@@ -91,9 +91,18 @@ final class SlateUrl {
    * query string. The scheme, host, and path checks decide whose script we
    * load, and person is refused by name in parse().
    *
+   * The browser needs this same rule, to filter the page's own query string
+   * before any of it reaches Slate. Keep it without the slashes PHP wants, so
+   * a browser can compile it too. See getForwardingRules().
+   *
    * @see https://knowledge.technolutions.net/docs/prepopulating-or-prefilling-forms-using-query-string-parameters
    */
-  private const PREFILL_PATTERN = '/^[a-z0-9_:.-]+$/';
+  private const PREFILL_PATTERN_BODY = '^[a-z0-9_:.-]+$';
+
+  /**
+   * PREFILL_PATTERN_BODY as a PHP pattern, for preg_match() in this class.
+   */
+  private const PREFILL_PATTERN = '/' . self::PREFILL_PATTERN_BODY . '/';
 
   /**
    * Query keys we set ourselves. A pasted copy is dropped, so ours wins.
@@ -287,6 +296,42 @@ final class SlateUrl {
       'output' => 'embed',
       'div' => $container_id,
     ]);
+  }
+
+  /**
+   * The rules the browser needs to filter the page's own query string.
+   *
+   * The loader, js/az-media-slate.js, adds the page's query parameters to the
+   * embed URL, which is what makes an embed dynamic: someone arriving from a
+   * link that carries their details gets those fields filled in. So the
+   * browser has to decide what may travel, using the same rules parse()
+   * applies here.
+   *
+   * Pass the rules rather than restating them in JavaScript. Rationale: two
+   * copies of one rule drift apart, and a drift here is quiet: a URL saves
+   * without complaint and then never renders.
+   *
+   * Note what isn't blocked. A person parameter is forwarded, even though
+   * parse() refuses one in a stored URL. A stored URL is saved once and shown
+   * to every visitor, so person there would mean one record for all of them.
+   * A forwarded one is the visitor's own, from their own link, which is what
+   * Slate built the parameter for.
+   *
+   * @return array
+   *   keyPattern, a regular expression body a browser can compile;
+   *   blockedKeys, the keys the embed URL sets for itself; and the two length
+   *   limits.
+   */
+  public static function getForwardingRules(): array {
+    return [
+      'keyPattern' => self::PREFILL_PATTERN_BODY,
+      // Block id as well, not only output and div. Rationale: a link that
+      // names its form by path carries no id of its own, so nothing would
+      // stop a forwarded one, and Slate would load a different form.
+      'blockedKeys' => array_merge(self::RESERVED_KEYS, ['id']),
+      'maxKeyLength' => self::MAX_KEY_LENGTH,
+      'maxValueLength' => self::MAX_VALUE_LENGTH,
+    ];
   }
 
   /**

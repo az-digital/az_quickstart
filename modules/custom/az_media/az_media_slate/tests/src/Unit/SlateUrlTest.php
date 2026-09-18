@@ -360,4 +360,35 @@ class SlateUrlTest extends UnitTestCase {
     $this->assertStringNotContainsString('someone-elses-id', $embed);
   }
 
+  /**
+   * The browser is handed the same rules the parser applies.
+   *
+   * @covers ::getForwardingRules
+   */
+  public function testForwardingRules(): void {
+    $rules = SlateUrl::getForwardingRules();
+    $pattern = '/' . $rules['keyPattern'] . '/';
+
+    // The pattern has to compile and accept the keys Slate's docs use.
+    $accepted = ['sys:first', 'sys:field:acainterest', 'lunch_preference', 'my.field', 'person'];
+    foreach ($accepted as $key) {
+      $this->assertSame(1, preg_match($pattern, $key), $key);
+    }
+    foreach (['SYS:first', 'sys first', 'sys/first', ''] as $key) {
+      $this->assertSame(0, preg_match($pattern, $key), $key);
+    }
+
+    // The keys the embed URL sets for itself. Slate honors the last copy of
+    // a parameter, so a forwarded one would beat ours.
+    $this->assertSame(['output', 'div', 'id'], $rules['blockedKeys']);
+
+    // The person key is forwarded on purpose. A visitor's own link is the
+    // one place it means what Slate says it means, unlike a URL saved once
+    // for everyone, which parse() still refuses.
+    $this->assertNotContains('person', $rules['blockedKeys']);
+
+    $this->assertSame(64, $rules['maxKeyLength']);
+    $this->assertSame(512, $rules['maxValueLength']);
+  }
+
 }

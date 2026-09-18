@@ -9,6 +9,10 @@
  * Slate's script then fetches the form over a few more requests and writes it
  * into the div.
  *
+ * Some of the page's own query parameters travel with that address, which is
+ * how someone arriving from a personal link gets fields filled in. Slate
+ * calls that a dynamic embed, and forwardedParams() decides which may go.
+ *
  * Once the form is in, this adds Arizona Bootstrap classes to its fields. If
  * the form never arrives, it shows a fallback link instead. Slate allows one
  * form per page, so only the first Slate embed on a page loads.
@@ -207,6 +211,49 @@
   }
 
   /**
+   * Picks which of the page's own query parameters may travel to Slate.
+   *
+   * Forwarding them is what makes an embed dynamic: a visitor who arrives
+   * from a link carrying their details, such as one Slate emailed them, finds
+   * those fields already filled in.
+   *
+   * Careful: don't forward the query string as it stands, the way Slate's own
+   * dynamic snippet does. The embed URL sets output, div and id for itself,
+   * and Slate honors the last copy of a parameter it is given, so an
+   * appended one wins. For example, anyone can hand out a link ending ?div=x.
+   * Slate then writes the form into an element that doesn't exist, so the
+   * form never appears and nothing errors.
+   *
+   * The rules come from SlateUrl::getForwardingRules() in PHP, so there's one
+   * source of truth for what a Slate parameter may look like.
+   *
+   * @param {URL} embedUrl The embed URL built from the link the editor saved.
+   * @param {object} settings Drupal's settings for this page.
+   * @return {string} Parameters to append, or an empty string.
+   */
+  function forwardedParams(embedUrl, settings) {
+    const rules = settings && settings.azMediaSlate;
+    if (!rules || window.location.search === '') {
+      return '';
+    }
+    const keyPattern = new RegExp(rules.keyPattern);
+    const allowed = new URLSearchParams();
+    new URLSearchParams(window.location.search).forEach((value, key) => {
+      if (
+        keyPattern.test(key) &&
+        !rules.blockedKeys.includes(key) &&
+        key.length <= rules.maxKeyLength &&
+        value.length <= rules.maxValueLength &&
+        // What the editor saved beats what the visitor asked for.
+        !embedUrl.searchParams.has(key)
+      ) {
+        allowed.append(key, value);
+      }
+    });
+    return allowed.toString();
+  }
+
+  /**
    * Whether Slate has put a form into the container yet.
    *
    * @param {HTMLElement} container The element Slate was told to fill.
@@ -261,11 +308,12 @@
    * Adds Slate's script for one container and watches how it goes.
    *
    * @param {HTMLElement} container The element Slate was told to fill.
+   * @param {object} settings Drupal's settings for this page.
    * @return {boolean} True if a script was appended, false if the address was
    *   missing or refused. The caller uses this to decide whether the page has
    *   spent its one embed.
    */
-  function loadEmbed(container) {
+  function loadEmbed(container, settings) {
     const wrapper = container.closest('.az-media-slate');
     const src = container.getAttribute('data-az-slate-embed-src');
     if (!src) {
@@ -331,10 +379,19 @@
     });
     observer.observe(container, { childList: true, subtree: true });
 
+    // Add the page's own parameters, filtered. Only the query string changes,
+    // so the scheme and host checked above still hold.
+    const forwarded = forwardedParams(embedUrl, settings);
+    if (forwarded !== '') {
+      embedUrl.search = embedUrl.search
+        ? `${embedUrl.search}&${forwarded}`
+        : forwarded;
+    }
+
     const script = document.createElement('script');
     script.async = true;
-    // Use the parsed URL, not the raw attribute, so the script tag gets exactly
-    // the value checked above.
+    // Use the parsed URL, not the raw attribute, so the script tag gets the
+    // address checked above plus only the parameters the filter allowed.
     script.src = embedUrl.href;
     script.addEventListener('error', () => {
       window.clearTimeout(timer);
@@ -350,7 +407,7 @@
   }
 
   Drupal.behaviors.azMediaSlate = {
-    attach(context) {
+    attach(context, settings) {
       const containers = once(
         'az-media-slate',
         '[data-az-slate-embed-src]',
@@ -376,7 +433,7 @@
         // Mark the page only once a script is on its way. A container we
         // refused hasn't used up the one form, so a later valid one still
         // loads.
-        if (loadEmbed(container)) {
+        if (loadEmbed(container, settings)) {
           document.documentElement.setAttribute('data-az-slate-loaded', 'true');
         }
       });
