@@ -3,5 +3,10 @@ services:
     class: Drupal\az_ranking\AZRankingImageHelper
     arguments:
       - '@entity_type.manager'
-      - '@renderer'
-      - '@image.factory'
+      - '@file_url_generator'
+  az_ranking.component_builder:
+    class: Drupal\az_ranking\AZRankingComponentBuilder
+    arguments:
+      - '@entity_type.manager'
+      - '@az_ranking.image'
+      - '@path.validator'

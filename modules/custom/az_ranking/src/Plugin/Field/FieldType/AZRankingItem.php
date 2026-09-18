@@ -33,6 +33,15 @@ class AZRankingItem extends FieldItemBase {
 
   /**
    * {@inheritdoc}
+   *
+   * A ranking is empty when it has no content, whatever styling it carries.
+   * Only the six content properties are checked; the styling ones -
+   * ranking_link_style, ranking_font_color, options - are not, because their
+   * widget selects always submit a default rather than an empty string, and
+   * a row would never look empty again once the form had been submitted.
+   *
+   * Drupal drops empty items on save, so anything counted here is something
+   * an editor would lose by leaving it blank.
    */
   public function isEmpty() {
     $ranking_heading = $this->get('ranking_heading')->getValue();
@@ -41,9 +50,7 @@ class AZRankingItem extends FieldItemBase {
     $ranking_source = $this->get('ranking_source')->getValue();
     $link_uri = $this->get('link_uri')->getValue();
     $link_title = $this->get('link_title')->getValue();
-    $ranking_link_style = $this->get('ranking_link_style')->getValue();
-    $ranking_font_color = $this->get('ranking_font_color')->getValue();
-    return empty($ranking_heading) && empty($ranking_description) && empty($media) && empty($ranking_source) && empty($link_uri) && empty($link_title) && empty($ranking_link_style) && empty($ranking_font_color);
+    return empty($ranking_heading) && empty($ranking_description) && empty($media) && empty($ranking_source) && empty($link_uri) && empty($link_title);
   }
 
   /**
@@ -138,9 +145,7 @@ class AZRankingItem extends FieldItemBase {
 
   /**
    * {@inheritdoc}
-   */
-
-  /**
+   *
    * @todo samplePreview
    */
   public static function generateSampleValue(FieldDefinitionInterface $field_definition) {
