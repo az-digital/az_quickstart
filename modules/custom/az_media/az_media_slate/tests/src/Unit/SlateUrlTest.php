@@ -258,7 +258,7 @@ class SlateUrlTest extends UnitTestCase {
 
     $this->assertStringNotContainsString('output=embed', $parsed->getCanonicalUrl());
     $this->assertStringNotContainsString('div=', $parsed->getCanonicalUrl());
-    $this->assertNotSame($parsed->getCanonicalUrl(), $parsed->getEmbedUrl('x'));
+    $this->assertNotSame($parsed->getCanonicalUrl(), $parsed->getEmbedUrl());
   }
 
   /**
