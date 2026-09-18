@@ -23,8 +23,16 @@
   --az-slate-min-height: 200px;
 }
 
+/* Hold space for the form while it loads, so the page doesn't jump when the
+ * form arrives. Give that space back once the fallback alert shows.
+ * Rationale: the alert is far shorter than a form, and the space left under
+ * it looks like a gap. */
 .az-media-slate {
   min-height: var(--az-slate-min-height);
+}
+
+.az-media-slate--failed {
+  min-height: 0;
 }
 
 .az-media-slate__form {
@@ -182,6 +190,16 @@
 /* The alert's sentence, sitting directly above the link. */
 .az-media-slate__message {
   margin-bottom: 0.5rem;
+}
+
+/* The retry button, shown only when the form took too long. It carries
+ * alert-link, like the "Open the form" link below it. These declarations
+ * strip the rest of a button's look so the two match. */
+.az-media-slate__retry {
+  padding: 0;
+  border: 0;
+  background: none;
+  text-decoration: underline;
 }
 
 /* The form's name inside that sentence. Drupal's placeholder filter wraps it

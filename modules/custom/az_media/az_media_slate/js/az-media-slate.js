@@ -14,8 +14,9 @@
  * calls that a dynamic embed, and forwardedParams() decides which may go.
  *
  * Once the form is in, this adds Arizona Bootstrap classes to its fields. If
- * the form never arrives, it shows an alert instead. Slate allows one
- * form per page, so only the first Slate embed on a page loads.
+ * the form never arrives, it shows an alert instead, with a retry button when
+ * the form was only slow. Slate allows one form per page, so only the first
+ * Slate embed on a page loads.
  *
  * @see https://knowledge.technolutions.net/docs/embedding-forms
  */
@@ -272,15 +273,16 @@
    *
    * Only one Slate form loads per page, so the first name is normally free.
    * The loop is for a page that already holds something called
-   * az-media-slate.
+   * az-media-slate, and for retries, which pass the ids they've used.
    *
+   * @param {string[]} [skip] Ids to pass over even though they're free.
    * @return {string} An id no element on the page is using.
    */
-  function uniqueContainerId() {
+  function uniqueContainerId(skip = []) {
     const base = 'az-media-slate';
     let id = base;
     let n = 2;
-    while (document.getElementById(id)) {
+    while (document.getElementById(id) || skip.includes(id)) {
       id = `${base}-${n}`;
       n += 1;
     }
@@ -349,11 +351,13 @@
    *
    * @param {HTMLElement} wrapper The .az-media-slate element.
    * @param {string} reason The clause finishing the alert's sentence.
-   * @param {string} [named] A form's name to stand in for @other in the
-   *   reason. It goes in as an element of its own, so the stylesheet can
+   * @param {object} [options] Extra parts of the alert to fill in.
+   * @param {string} [options.named] A form's name to stand in for @other in
+   *   the reason. It goes in as an element of its own, so the stylesheet can
    *   find it.
+   * @param {boolean} [options.retry] Whether to show the retry button.
    */
-  function showFallback(wrapper, reason, named) {
+  function showFallback(wrapper, reason, { named, retry = false } = {}) {
     // Show the alert before writing into it. Rationale: it's display: none
     // until this class lands, and a live region (an element screen readers
     // watch for new text) that's hidden when its text arrives isn't reliably
@@ -362,6 +366,13 @@
     const spinner = wrapper.querySelector('.az-media-slate__spinner');
     if (spinner) {
       spinner.remove();
+    }
+    // Set the retry button every time, hiding it as well as showing it. For
+    // example, a retry can end in a download error instead of a timeout, and
+    // that alert shouldn't still offer the retry.
+    const button = wrapper.querySelector('.az-media-slate__retry');
+    if (button) {
+      button.hidden = !retry;
     }
     const target = wrapper.querySelector('.az-media-slate__reason');
     if (!target) {
@@ -447,17 +458,21 @@
     // browser with no JavaScript still gets the link inside it.
     wrapper.classList.add('az-media-slate--js');
 
-    // Put the spinner inside the container. When the form arrives, Slate
-    // replaces everything in the container, which removes the spinner at
-    // exactly that moment. If the form never arrives, showFallback() removes
-    // it.
-    container.appendChild(buildSpinner());
+    // Add the page's own parameters, filtered. Only the query string changes,
+    // so the scheme and host checked above still hold.
+    const forwarded = forwardedParams(embedUrl, settings);
+    if (forwarded !== '') {
+      embedUrl.search = embedUrl.search
+        ? `${embedUrl.search}&${forwarded}`
+        : forwarded;
+    }
 
-    const timer = window.setTimeout(() => {
-      if (!hasRendered(container)) {
-        showFallback(wrapper, Drupal.t('because it took too long to respond.'));
-      }
-    }, INIT_TIMEOUT_MS);
+    // What every attempt shares: the timeout now running, how many attempts
+    // there have been, and each container id used so far. A handler compares
+    // its own attempt number to the count to tell whether it's out of date.
+    let timer = null;
+    let attempt = 0;
+    const usedIds = [];
 
     // Slate writes the form in a little after its script runs, so watch for it
     // instead of styling once. Keep watching afterward in case Slate adds
@@ -468,42 +483,99 @@
       // visitor submits, Slate replaces the form with its confirmation, so a
       // timeout still waiting would find no form and wrongly show the
       // fallback. For example, a visitor who submits 3 seconds after the page
-      // loads would otherwise see "The form did not load" 12 seconds later.
+      // loads would otherwise see "A form couldn't load" 12 seconds later.
       if (hasRendered(container)) {
         window.clearTimeout(timer);
+        // Hide the alert too, in case the form arrived after the timeout
+        // showed it. For example, Slate's test server can answer slowly while
+        // it wakes up, so its form can arrive after the alert.
+        wrapper.classList.remove('az-media-slate--failed');
       }
       applyBootstrapClasses(container);
     });
     observer.observe(container, { childList: true, subtree: true });
 
-    // Give the container its id, and point Slate at it. The embed URL
-    // arrives without a div parameter, because PHP can't see what other ids
-    // the page holds.
-    container.id = uniqueContainerId();
-    embedUrl.searchParams.set('div', container.id);
+    /**
+     * Adds Slate's script, pointed at a new container id each time.
+     *
+     * The new id keeps a late script from an earlier attempt out of the
+     * container. For example, the first attempt times out, someone clicks
+     * retry, and then the first script finally arrives. Removing its script
+     * tag wouldn't stop it running. But Slate's script starts by looking up
+     * the id it was given with document.getElementById(), and does nothing
+     * if that id isn't on the page.
+     *
+     * Careful: this relies on that check in Slate's script. If Slate drops
+     * it, a late script writes a second copy of the form into the container,
+     * and nothing errors.
+     */
+    const start = () => {
+      attempt += 1;
+      const thisAttempt = attempt;
 
-    // Add the page's own parameters, filtered. Only the query string changes,
-    // so the scheme and host checked above still hold.
-    const forwarded = forwardedParams(embedUrl, settings);
-    if (forwarded !== '') {
-      embedUrl.search = embedUrl.search
-        ? `${embedUrl.search}&${forwarded}`
-        : forwarded;
+      // Skip every id an earlier attempt used. For example, on a second retry
+      // az-media-slate is free again, and the first attempt's script, if it
+      // finally arrives, is looking for it.
+      container.id = uniqueContainerId(usedIds);
+      usedIds.push(container.id);
+
+      // Point Slate at that id. The embed URL arrives without a div
+      // parameter, because PHP can't see what other ids the page holds.
+      const attemptUrl = new URL(embedUrl.href);
+      attemptUrl.searchParams.set('div', container.id);
+
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => {
+        if (thisAttempt === attempt && !hasRendered(container)) {
+          showFallback(
+            wrapper,
+            Drupal.t('because it took too long to respond.'),
+            { retry: true },
+          );
+        }
+      }, INIT_TIMEOUT_MS);
+
+      const script = document.createElement('script');
+      script.async = true;
+      // Use the parsed URL, not the raw attribute, so the script tag gets the
+      // address checked above plus only the parameters the filter allowed.
+      script.src = attemptUrl.href;
+      script.addEventListener('error', () => {
+        if (thisAttempt !== attempt) {
+          return;
+        }
+        window.clearTimeout(timer);
+        showFallback(
+          wrapper,
+          Drupal.t('because there was a problem reaching it.'),
+        );
+      });
+      document.head.appendChild(script);
+    };
+
+    // Put the spinner inside the container. When the form arrives, Slate
+    // replaces everything in the container, which removes the spinner at
+    // exactly that moment. If the form never arrives, showFallback() removes
+    // it.
+    container.appendChild(buildSpinner());
+
+    // Try again the way the page first loaded: alert hidden, spinner showing.
+    // Move focus to the container. Rationale: the clicked button is inside
+    // the alert, and hiding the alert would drop focus to the top of the
+    // page. tabindex="-1" lets the container take focus from a script
+    // without adding it to the Tab order.
+    const retry = wrapper.querySelector('.az-media-slate__retry');
+    if (retry) {
+      retry.addEventListener('click', () => {
+        wrapper.classList.remove('az-media-slate--failed');
+        container.replaceChildren(buildSpinner());
+        container.setAttribute('tabindex', '-1');
+        container.focus();
+        start();
+      });
     }
 
-    const script = document.createElement('script');
-    script.async = true;
-    // Use the parsed URL, not the raw attribute, so the script tag gets the
-    // address checked above plus only the parameters the filter allowed.
-    script.src = embedUrl.href;
-    script.addEventListener('error', () => {
-      window.clearTimeout(timer);
-      showFallback(
-        wrapper,
-        Drupal.t('because there was a problem reaching it.'),
-      );
-    });
-    document.head.appendChild(script);
+    start();
     return true;
   }
 
@@ -529,7 +601,7 @@
           // visitor hits, and neither word would mean anything to them.
           wrapper.classList.add('az-media-slate--names-form');
           const { reason, other } = alreadyEmbeddedMessage(wrapper);
-          showFallback(wrapper, reason, other);
+          showFallback(wrapper, reason, { named: other });
           return;
         }
         // Mark the page only once a script is on its way. A container we

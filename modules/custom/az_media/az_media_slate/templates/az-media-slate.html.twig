@@ -21,6 +21,14 @@
  * still gets the link. That browser is also the only one that reads the
  * reason written below, because the loader replaces it in every other case.
  *
+ * The retry button ends the sentence and looks like the link below it. It's
+ * a button, not a link, because it loads the form again in place instead of
+ * going anywhere. It starts with the hidden attribute, and the loader shows
+ * it only when the form took too long to arrive. The cause is usually a
+ * slow server, such as Slate's test server waking up, and a second try often
+ * works. A browser with no JavaScript never sees it, because without
+ * JavaScript it couldn't do anything.
+ *
  * Two openings are written and the stylesheet shows one. The plain one is for
  * a visitor, and names neither Slate nor the form, because neither means
  * anything to them. The loader asks for the named one, by adding
@@ -43,6 +51,16 @@
       <span class="az-media-slate__opening az-media-slate__opening--plain">{{ 'A form couldn\'t load'|t }}</span>
       <span class="az-media-slate__opening az-media-slate__opening--named">{% trans %}The Slate form {{ label|placeholder }} was not embedded{% endtrans %}</span>
       <span class="az-media-slate__reason">{{ 'because this browser has JavaScript turned off.'|t }}</span>
+      <button type="button" class="az-media-slate__retry alert-link" hidden>
+        {{- 'Try again'|t }}
+        <svg class="az-media-slate__link-icon" xmlns="http://www.w3.org/2000/svg"
+             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round"
+             aria-hidden="true" focusable="false">
+          <polyline points="23 4 23 10 17 10"/>
+          <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+        </svg>
+      </button>
     </p>
     <a href="{{ canonical_url }}" class="az-media-slate__link alert-link" rel="noopener">
       {{ 'Open the form'|t }}
