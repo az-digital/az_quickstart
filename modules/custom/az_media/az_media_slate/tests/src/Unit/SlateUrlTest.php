@@ -7,16 +7,19 @@ namespace Drupal\Tests\az_media_slate\Unit;
 use Drupal\az_media_slate\Plugin\Field\FieldFormatter\AzMediaRemoteSlateFormatter;
 use Drupal\az_media_slate\SlateUrl;
 use Drupal\Tests\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Tests the Slate URL parser.
  *
  * SlateUrl stands between a string an editor pasted and a script we load onto
  * a page, so the rejection cases below matter most.
- *
- * @coversDefaultClass \Drupal\az_media_slate\SlateUrl
- * @group az_media_slate
  */
+#[CoversClass(SlateUrl::class)]
+#[CoversClass(AzMediaRemoteSlateFormatter::class)]
+#[Group('az_media_slate')]
 class SlateUrlTest extends UnitTestCase {
 
   /**
@@ -192,10 +195,9 @@ class SlateUrlTest extends UnitTestCase {
   }
 
   /**
-   * @covers ::parse
-   * @covers ::getCanonicalUrl
-   * @dataProvider validUrlProvider
+   * The parser accepts each valid URL and returns its canonical URL.
    */
+  #[DataProvider('validUrlProvider')]
   public function testValidUrls(string $input, string $expected_canonical): void {
     $reason = 'unset';
     $parsed = SlateUrl::parse($input, $reason);
@@ -206,9 +208,9 @@ class SlateUrlTest extends UnitTestCase {
   }
 
   /**
-   * @covers ::parse
-   * @dataProvider invalidUrlProvider
+   * The parser rejects each invalid URL, with the reason it should report.
    */
+  #[DataProvider('invalidUrlProvider')]
   public function testInvalidUrls(string $input, string $expected_reason): void {
     $reason = NULL;
     $parsed = SlateUrl::parse($input, $reason);
@@ -218,9 +220,7 @@ class SlateUrlTest extends UnitTestCase {
   }
 
   /**
-   * The embed URL carries our container id and output=embed.
-   *
-   * @covers ::getEmbedUrl
+   * The embed URL carries the form's id and output=embed, and no div.
    */
   public function testEmbedUrl(): void {
     $parsed = SlateUrl::parse('https://slate.admissions.arizona.edu/register/?id=' . self::ID);
@@ -234,8 +234,6 @@ class SlateUrlTest extends UnitTestCase {
 
   /**
    * A link by name keeps its name in the embed URL.
-   *
-   * @covers ::getEmbedUrl
    */
   public function testEmbedUrlForNamedPath(): void {
     $parsed = SlateUrl::parse('https://slate.admissions.arizona.edu/register/moreinfo?sys:first=Alexander');
@@ -249,9 +247,6 @@ class SlateUrlTest extends UnitTestCase {
    *
    * A link to the embed URL would show someone a script instead of the form,
    * so the two URLs must stay different.
-   *
-   * @covers ::getCanonicalUrl
-   * @covers ::getEmbedUrl
    */
   public function testCanonicalUrlIsNotTheEmbedUrl(): void {
     $parsed = SlateUrl::parse('https://slate.admissions.arizona.edu/register/?id=' . self::ID);
@@ -268,8 +263,6 @@ class SlateUrlTest extends UnitTestCase {
    * saved, and SlateUrl decides what actually loads. If the regex accepts a URL
    * the parser rejects, an editor saves without error and then finds an empty
    * space where the form should be. These cases keep the two in step.
-   *
-   * @covers \Drupal\az_media_slate\Plugin\Field\FieldFormatter\AzMediaRemoteSlateFormatter::getUrlRegexPattern
    */
   public function testSaveTimePatternMatchesParser(): void {
     $pattern = AzMediaRemoteSlateFormatter::getUrlRegexPattern();
@@ -348,9 +341,6 @@ class SlateUrlTest extends UnitTestCase {
 
   /**
    * A div parameter in the pasted URL never reaches Slate.
-   *
-   * @covers ::getEmbedUrl
-   * @covers ::getCanonicalUrl
    */
   public function testPastedDivIsDropped(): void {
     $parsed = SlateUrl::parse(
@@ -363,8 +353,6 @@ class SlateUrlTest extends UnitTestCase {
 
   /**
    * The browser is handed the same rules the parser applies.
-   *
-   * @covers ::getForwardingRules
    */
   public function testForwardingRules(): void {
     $rules = SlateUrl::getForwardingRules();
