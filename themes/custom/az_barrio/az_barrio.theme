@@ -261,162 +261,112 @@ function az_barrio_library_info_alter(&$libraries, $extension) {
   }
 
   if ($extension === 'az_barrio' && isset($libraries['arizona-bootstrap-css'])) {
-    // Add AZ Bootstrap CSS based on theme settings.
-    $az_bootstrap_css_path = az_barrio_az_bootstrap_assets_path('css');
-
-    if (!$az_bootstrap_css_path) {
-      return;
+    $state = \Drupal::state();
+    $az_bootstrap_css_path = $state->get(AZ_BOOTSTRAP_LOCATION);
+    $is_az_bootstrap_stable_version_updated = $state->get(AZ_BOOTSTRAP_CDN_STABLE_VERSION) !== AZ_BOOTSTRAP_STABLE_VERSION;
+    if ($is_az_bootstrap_stable_version_updated) {
+      $state->set(AZ_BOOTSTRAP_CDN_STABLE_VERSION, AZ_BOOTSTRAP_STABLE_VERSION);
     }
-
-    $az_bootstrap_css_token = '';
-    $az_bootstrap_css_info = [
-      'media' => 'all',
-      'preprocess' => FALSE,
-      'browsers' => [
-        'IE' => TRUE,
-        '!IE' => TRUE,
-      ],
-      'minified' => FALSE,
-    ];
-
-    // AZ Bootstrap source.
-    if (\Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_bootstrap_source') === 'cdn') {
-      // AZ Bootstrap CDN version.
-      if (\Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_bootstrap_cdn_version_css') !== 'stable') {
-        $az_bootstrap_css_token = '?=' . \Drupal::state()->get('asset.css_js_query_string') ?: '0';
+    if (!$az_bootstrap_css_path || $is_az_bootstrap_stable_version_updated) {
+      $az_bootstrap_css_path = az_barrio_az_bootstrap_asset_path('css');
+      if ($az_bootstrap_css_path) {
+        $state->set(AZ_BOOTSTRAP_LOCATION, $az_bootstrap_css_path);
       }
-      $az_bootstrap_css_info['type'] = 'external';
-    }
-    else {
-      $az_bootstrap_css_info['type'] = 'file';
-    }
-    if (\Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_bootstrap_minified')) {
-      $az_bootstrap_css_info['minified'] = TRUE;
+
+      // Clear cached libraries so Bootstrap updates take effect immediately.
+      \Drupal::service('library.discovery')->clear();
+      \Drupal::service('extension.list.theme')->reset();
     }
 
-    $az_bootstrap_css_path .= $az_bootstrap_css_token;
+    $theme_settings = \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider');
     $libraries['arizona-bootstrap-css']['css']['theme'] = [
-      $az_bootstrap_css_path => $az_bootstrap_css_info,
+      $az_bootstrap_css_path => [
+        'media' => 'all',
+        'preprocess' => FALSE,
+        'browsers' => ['IE' => TRUE, '!IE' => TRUE],
+        'minified' => (bool) $theme_settings->getSetting('az_bootstrap_minified'),
+        'type' => $theme_settings->getSetting('az_bootstrap_source') === 'cdn' ? 'external' : 'file',
+      ],
     ];
-
-    // Populate AZ Bootstrap location variable for CKEditor.
-    \Drupal::state()->set(AZ_BOOTSTRAP_LOCATION, $az_bootstrap_css_path);
-
-    $font = \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_barrio_font');
-    if ($font === TRUE) {
+    if ($theme_settings->getSetting('az_barrio_font') === TRUE) {
       // Add Typekit font CSS based on theme settings.
       // Ensure the Typekit fonts are loaded before Arizona Bootstrap.
       $libraries['arizona-bootstrap-css']['dependencies'][] = 'az_barrio/arizona-digital-fonts';
     }
-
-    $material_symbols_rounded = \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_barrio_material_symbols_rounded');
-    if ($material_symbols_rounded === TRUE) {
-      // Add Material Symbols Rounded Icon CSS based on theme settings.
-      // Ensure icon CSS is loaded before Arizona Bootstrap.
+    if ($theme_settings->getSetting('az_barrio_material_symbols_rounded') === TRUE) {
       $libraries['arizona-bootstrap-css']['dependencies'][] = 'az_barrio/material-symbols-rounded';
     }
-
-    $az_icons = \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_barrio_az_icons');
-    if ($az_icons === TRUE) {
-      if ($extension === 'az_barrio' && isset($libraries['az-icons'])) {
-        // Add Arizona Icons CSS based on theme settings.
-        $az_icons_path = az_barrio_az_icons_assets_path('css');
-        // Ensure icons are loaded before Arizona Bootstrap.
-        $libraries['arizona-bootstrap-css']['dependencies'][] = 'az_barrio/az-icons';
-        $az_barrio_az_icons_css_info = [
+    if ($theme_settings->getSetting('az_barrio_az_icons') === TRUE && isset($libraries['az-icons'])) {
+      $libraries['arizona-bootstrap-css']['dependencies'][] = 'az_barrio/az-icons';
+      $az_icons_path = az_barrio_az_icons_assets_path('css');
+      $libraries['az-icons']['css']['theme'] = [
+        $az_icons_path => [
           'media' => 'all',
           'preprocess' => FALSE,
-          'browsers' => [
-            'IE' => TRUE,
-            '!IE' => TRUE,
-          ],
+          'browsers' => ['IE' => TRUE, '!IE' => TRUE],
           'minified' => TRUE,
-        ];
-        // AZ Brand Icons source.
-        if (\Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_barrio_az_icons_source') === 'cdn') {
-          $az_barrio_az_icons_css_info['type'] = 'external';
-        }
-        else {
-          $az_barrio_az_icons_css_info['type'] = 'file';
-        }
-
-        $libraries['az-icons']['css']['theme'] = [
-          $az_icons_path => $az_barrio_az_icons_css_info,
-        ];
-      }
+          'type' => $theme_settings->getSetting('az_barrio_az_icons_source') === 'cdn' ? 'external' : 'file',
+        ],
+      ];
     }
   }
 
   if ($extension === 'az_barrio' && isset($libraries['arizona-bootstrap-js'])) {
-    // Add AZ Bootstrap JS based on theme settings.
-    $az_bootstrap_js_path = az_barrio_az_bootstrap_assets_path('js');
-    if (!$az_bootstrap_js_path) {
-      return;
-    }
-
-    $az_bootstrap_js_token = '';
-    $az_bootstrap_js_info = [
-      'preprocess' => FALSE,
-    ];
-
-    // AZ Bootstrap source.
-    if (\Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_bootstrap_source') === 'cdn') {
-      // AZ Bootstrap CDN version.
-      if (\Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_bootstrap_cdn_version_js') !== 'stable') {
-        $az_bootstrap_js_token = '?=' . \Drupal::state()->get('asset.css_js_query_string') ?: '0';
-      }
-      $az_bootstrap_js_info['type'] = 'external';
-    }
-    else {
-      $az_bootstrap_js_info['type'] = 'file';
-    }
-
-    if (\Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_bootstrap_minified')) {
-      $az_bootstrap_js_info['minified'] = TRUE;
-    }
-
-    $az_bootstrap_js_path .= $az_bootstrap_js_token;
+    $az_bootstrap_js_path = az_barrio_az_bootstrap_asset_path('js');
+    $theme_settings = \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider');
     $libraries['arizona-bootstrap-js']['js'] = [
-      $az_bootstrap_js_path => $az_bootstrap_js_info,
+      $az_bootstrap_js_path => [
+        'preprocess' => FALSE,
+        'type' => $theme_settings->getSetting('az_bootstrap_source') === 'cdn' ? 'external' : 'file',
+      ],
     ];
   }
 }
 
 /**
- * Helper function for constructing AZ Bootstrap asset paths.
+ * Helper function for constructing an Arizona Bootstrap asset path.
+ *
+ * @param string $type
+ *   The asset type to load, e.g. css or js.
+ * @param array $settings
+ *   Optional theme settings override values.
+ *
+ * @return string
+ *   The resolved asset URL or path.
  */
-function az_barrio_az_bootstrap_assets_path($type) {
-  if (empty($type)) {
-    return FALSE;
-  }
+function az_barrio_az_bootstrap_asset_path(string $type, array $settings = []): string {
+  $theme_settings = \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider');
+  $source = $settings['az_bootstrap_source'] ?? $theme_settings->getSetting('az_bootstrap_source');
+  $version = $settings['az_bootstrap_cdn_version_' . $type] ?? $theme_settings->getSetting('az_bootstrap_cdn_version_' . $type);
+  $stable_version = $settings['az_bootstrap_cdn_stable_version'] ?? \Drupal::state()->get('az_bootstrap_cdn_stable_version');
+  $minified = $settings['az_bootstrap_minified'] ?? $theme_settings->getSetting('az_bootstrap_minified');
 
-  $az_bootstrap_path = '';
-  // AZ Bootstrap source.
-  if (\Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_bootstrap_source') === 'cdn') {
-    $version_setting = 'az_bootstrap_cdn_version_' . $type;
-    $az_bootstrap_cdn_version = \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting($version_setting);
-    if ($az_bootstrap_cdn_version === 'stable') {
-      $az_bootstrap_cdn_version = AZ_BOOTSTRAP_STABLE_VERSION;
+  if ($source === 'cdn') {
+    if ($version === 'stable') {
+      $version = $stable_version;
     }
-    $az_bootstrap_path = 'https://cdn.digital.arizona.edu/lib/arizona-bootstrap/' . $az_bootstrap_cdn_version;
+    $path = 'https://cdn.digital.arizona.edu/lib/arizona-bootstrap/' . $version;
   }
   else {
-    $az_bootstrap_path = base_path() . 'libraries/arizona-bootstrap';
+    $path = base_path() . 'libraries/arizona-bootstrap';
   }
 
-  $az_bootstrap_path .= '/' . $type . '/arizona-bootstrap';
-
-  // Use AZ Bootstrap Javascript bundle (contains Popper.js).
+  $path .= '/' . $type . '/arizona-bootstrap';
   if ($type === 'js') {
-    $az_bootstrap_path .= '.bundle';
+    $path .= '.bundle';
+  }
+  if ($minified) {
+    $path .= '.min';
   }
 
-  // AZ Bootstrap minified.
-  if (\Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_bootstrap_minified')) {
-    $az_bootstrap_path .= '.min';
+  $path .= '.' . $type;
+
+  if ($source === 'cdn' && $version !== 'stable') {
+    $query_string = \Drupal::state()->get('asset.css_js_query_string') ?: '0';
+    $path .= '?=' . $query_string;
   }
 
-  return $az_bootstrap_path . '.' . $type;
+  return $path;
 }
 
 /**
@@ -782,9 +732,9 @@ function az_barrio_preprocess_form__search_block_form(array &$variables) {
  */
 function az_barrio_preprocess_block__az_navbar_fullscreen_menu_block(array &$variables) {
   $variables['wordmark'] = (\Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('wordmark')) ? TRUE : FALSE;
-  $az_bootstrap_location = \Drupal::state()->get(AZ_BOOTSTRAP_LOCATION);
-  $css_path = strpos($az_bootstrap_location, '/css/') + 5;
-  $variables['wordmark_url'] = $variables['wordmark'] ? (substr($az_bootstrap_location, 0, $css_path) . 'img/arizona-bootstrap-logo-webheader-white.svg') : '';
+  $az_bootstrap_css_location = \Drupal::state()->get(AZ_BOOTSTRAP_LOCATION);
+  $css_path = strpos($az_bootstrap_css_location, '/css/') + 5;
+  $variables['wordmark_url'] = $variables['wordmark'] ? (substr($az_bootstrap_css_location, 0, $css_path) . 'img/arizona-bootstrap-logo-webheader-white.svg') : '';
 }
 
 /**
