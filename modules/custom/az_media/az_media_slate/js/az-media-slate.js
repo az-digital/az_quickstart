@@ -177,7 +177,17 @@
           'input:not([type="hidden"]), select, textarea, .form_signature_editable',
         )
       ) {
-        addClasses(question.querySelector('.form_label'), ['form-label']);
+        // Label every field in the question, not just the first. Slate's
+        // address question holds six labels: one for the question, then one
+        // each for country, street, city, state, and postal code.
+        question.querySelectorAll('.form_label').forEach((label) => {
+          // Skip a label that belongs to a question nested inside this one.
+          // Rationale: this question has a field, but a nested one might not,
+          // such as a section header, which shouldn't get form-label's bold.
+          if (label.closest('.form_question') === question) {
+            addClasses(label, ['form-label']);
+          }
+        });
       }
     });
 

@@ -72,6 +72,24 @@
   width: auto;
 }
 
+/* Space apart the parts of a question when each part carries its own label.
+ * Slate's address question holds five: country, street, city, state, and
+ * postal code. Each sits in a bare div with no margin, so without this the
+ * next label touches the field above it.
+ *
+ * Slate has no need for the margin, because its own labels are plain text.
+ * Ours are 18px bold, from Bootstrap's form-label, which is what makes the
+ * crowding show.
+ *
+ * :has() matches an element by what it contains, so this picks only a part
+ * that has a label of its own. That leaves alone the question's own label,
+ * and a birthdate, whose three dropdowns share one box and have no labels of
+ * their own. Skipping the last part keeps the gap below the whole question at
+ * the 18px Slate puts between questions. */
+.az-media-slate .form_question fieldset > div:has(> .form_label):not(:last-of-type) {
+  margin-bottom: 1rem;
+}
+
 /* Slate marks a field that fails validation with aria-invalid="true" and a
  * validate_error class. Bootstrap only styles its own is-invalid class, so
  * give Slate's markers Bootstrap's invalid border color. */
