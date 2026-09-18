@@ -7,8 +7,8 @@
  * This module lets an editor put a Slate form on a page. Slate is a
  * Technolutions product the university's Slate team builds forms in. The
  * editor pastes the form's share link, for example
- * https://uaz.technolutions.net/register/?id=<form GUID>, into a Slate Form
- * media item, then places it through the Media Library.
+ * https://slate.admissions.arizona.edu/register/?id=<form GUID>, into a
+ * Slate Form media item, then places it through the Media Library.
  *
  * On the page, Slate's embed script fetches the form and writes it into an
  * empty div we render. The work is split across three places:

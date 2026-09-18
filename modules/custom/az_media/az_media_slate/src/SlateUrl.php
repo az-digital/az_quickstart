@@ -31,13 +31,25 @@ namespace Drupal\az_media_slate;
 final class SlateUrl {
 
   /**
-   * The domain Slate's hosted sites live under, checked as a suffix.
+   * The domains a Slate form can be served from, checked as suffixes.
    *
-   * For example, uaz.test.technolutions.net passes. The leading dot matters:
-   * eviltechnolutions.net ends in the same letters but fails. Keep this in step
-   * with SLATE_HOST_SUFFIX in js/az-media-slate.js.
+   * Slate hosts its own sites under technolutions.net, as in
+   * uaz.test.technolutions.net. UA's production forms sit on arizona.edu
+   * vanity domains instead, such as slate.admissions.arizona.edu, which are
+   * DNS aliases pointing at Slate's own servers.
+   *
+   * The leading dot matters: eviltechnolutions.net and evil-arizona.edu end in
+   * the same letters but fail. Keep this in step with SLATE_HOST_SUFFIXES in
+   * js/az-media-slate.js.
+   *
+   * The host is not the only check. A URL still has to be https and sit at
+   * /register/, so accepting a whole domain here doesn't by itself let a page
+   * load someone else's script.
    */
-  private const HOST_SUFFIX = '.technolutions.net';
+  private const HOST_SUFFIXES = [
+    '.technolutions.net',
+    '.arizona.edu',
+  ];
 
   /**
    * The path every Slate form link starts with.
@@ -108,7 +120,7 @@ final class SlateUrl {
   private ?string $name;
 
   /**
-   * The scheme and host, lowercased, e.g. https://uaz.technolutions.net.
+   * The scheme and host, lowercased, e.g. https://slate.grad.arizona.edu.
    */
   private string $origin;
 
@@ -177,7 +189,14 @@ final class SlateUrl {
       $reason = 'has_fragment';
       return NULL;
     }
-    if (!str_ends_with($host, self::HOST_SUFFIX)) {
+    $host_allowed = FALSE;
+    foreach (self::HOST_SUFFIXES as $suffix) {
+      if (str_ends_with($host, $suffix)) {
+        $host_allowed = TRUE;
+        break;
+      }
+    }
+    if (!$host_allowed) {
       $reason = 'bad_host';
       return NULL;
     }

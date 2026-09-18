@@ -12,7 +12,7 @@ field_name: field_az_media_slate_url
 entity_type: media
 bundle: az_slate
 label: 'Slate Form URL'
-description: 'The share link for the form, for example https://uaz.technolutions.net/register/?id=00000000-0000-0000-0000-000000000000. Only one Slate form can be shown on a single page. Do not include a person parameter, and do not put personal or confidential information in the address.'
+description: 'The share link for the form, for example https://slate.admissions.arizona.edu/register/?id=00000000-0000-0000-0000-000000000000. Only one Slate form can be shown on a single page. Do not include a person parameter, and do not put personal or confidential information in the address.'
 required: true
 default_value: {  }
 default_value_callback: ''

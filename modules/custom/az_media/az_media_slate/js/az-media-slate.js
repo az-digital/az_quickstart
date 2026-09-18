@@ -30,12 +30,14 @@
   const INIT_TIMEOUT_MS = 15000;
 
   /**
-   * The only domain we'll load an embed script from.
+   * The domains we'll load an embed script from.
    *
-   * Keep this in step with SlateUrl::HOST_SUFFIX in PHP. See loadEmbed() for
-   * why the browser checks the URL again.
+   * Slate serves its own sites from technolutions.net, and UA's production
+   * forms come from arizona.edu vanity domains. Keep this in step with
+   * SlateUrl::HOST_SUFFIXES in PHP. See loadEmbed() for why the browser
+   * checks the URL again.
    */
-  const SLATE_HOST_SUFFIX = '.technolutions.net';
+  const SLATE_HOST_SUFFIXES = ['.technolutions.net', '.arizona.edu'];
 
   /**
    * Input types that get form-control, and the Drupal class to add with it.
@@ -284,7 +286,7 @@
     if (
       embedUrl === null ||
       embedUrl.protocol !== 'https:' ||
-      !embedUrl.hostname.endsWith(SLATE_HOST_SUFFIX)
+      !SLATE_HOST_SUFFIXES.some((suffix) => embedUrl.hostname.endsWith(suffix))
     ) {
       showFallback(
         wrapper,

@@ -113,7 +113,14 @@ class AzMediaRemoteSlateFormatter extends MediaRemoteFormatterBase implements Co
     // Only the scheme, host, and id ignore case, via (?i:...). Don't put /i on
     // the whole pattern. For example, SYS:first=x would then pass here, but
     // Slate requires lowercase keys, so the parser rejects it.
-    $host = '(?i:https:\/\/([a-z0-9]([a-z0-9-]*[a-z0-9])?\.)+technolutions\.net)';
+    //
+    // Two domains, the same pair as SlateUrl::HOST_SUFFIXES: Slate's own
+    // technolutions.net, and the arizona.edu vanity domains UA's production
+    // forms use. The repeated label group needs a label and a dot before
+    // either, so arizona.edu on its own and evil-arizona.edu both fail here,
+    // which is what the parser does with them too.
+    $host = '(?i:https:\/\/([a-z0-9]([a-z0-9-]*[a-z0-9])?\.)+'
+      . '(?:technolutions\.net|arizona\.edu))';
 
     // An optional form name after /register/, the same shape as
     // SlateUrl::PATH_PATTERN, as in /register/moreinfo.
@@ -145,9 +152,9 @@ class AzMediaRemoteSlateFormatter extends MediaRemoteFormatterBase implements Co
    */
   public static function getValidUrlExampleStrings(): array {
     return [
-      'https://uaz.technolutions.net/register/?id=dbfabd84-d348-4bf9-88ef-1832b354fcb0',
-      'https://uaz.technolutions.net/register/?id=dbfabd84-d348-4bf9-88ef-1832b354fcb0&sys:first=Wilbur',
-      'https://uaz.technolutions.net/register/moreinfo',
+      'https://slate.admissions.arizona.edu/register/?id=dbfabd84-d348-4bf9-88ef-1832b354fcb0',
+      'https://slate.grad.arizona.edu/register/?id=dbfabd84-d348-4bf9-88ef-1832b354fcb0&sys:first=Wilbur',
+      'https://uaz.test.technolutions.net/register/referawildcat',
     ];
   }
 
