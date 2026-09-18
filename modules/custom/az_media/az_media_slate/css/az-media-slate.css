@@ -1,0 +1,247 @@
+/**
+ * @file
+ * Styles for Slate form embeds.
+ *
+ * Covers the Arizona Bootstrap fixes for Slate's form, the loading spinner,
+ * the fallback alert, and the grey placeholder shown while editing.
+ *
+ * Nothing here sets how wide the embed is. Quickstart's theme sizes the
+ * wrapper around every media item by view mode, in az_barrio's
+ * css/az-media-display.css, and the form fills that wrapper.
+ *
+ * Leave Slate's own stylesheets loaded. When an embed looks wrong, Slate's
+ * docs say to adjust the host page's CSS, and this file is where we do that.
+ *
+ * Careful: never set display on elements Slate hides with its "hidden" class.
+ * Slate's conditional logic shows and hides questions with that class, so
+ * overriding it shows questions that should be hidden, with no error.
+ *
+ * @see https://knowledge.technolutions.net/docs/embedding-forms
+ */
+
+:root {
+  --az-slate-min-height: 200px;
+}
+
+/* Hold space for the form while it loads, so the page doesn't jump when the
+ * form arrives. Give that space back once the fallback alert shows.
+ * Rationale: the alert is far shorter than a form, and the space left under
+ * it looks like a gap. */
+.az-media-slate {
+  min-height: var(--az-slate-min-height);
+}
+
+.az-media-slate--failed {
+  min-height: 0;
+}
+
+.az-media-slate__form {
+  width: 100%;
+}
+
+/* Slate's form.
+ *
+ * The loader adds Arizona Bootstrap's classes to Slate's fields, so the look
+ * comes from Arizona Bootstrap. These rules only fix the places where Slate's
+ * stylesheet and Bootstrap clash. Each is scoped under .az-media-slate so it
+ * outranks the rule it fixes. */
+
+/* Slate puts a left margin on an option's label. Bootstrap's form-check
+ * already spaces the label from its input, so together they leave a wide gap.
+ * This outranks Slate's div.form_response input + label. */
+.az-media-slate .form-check > .form-check-label {
+  margin-left: 0;
+}
+
+/* Bootstrap's form-control and form-select are display: block, which would
+ * stack fields Slate puts side by side, like a birthdate's month, day, and
+ * year. The loader marks those rows with az-media-slate__inline-controls.
+ *
+ * The gaps do the spacing: 8px between lines when the row is too narrow to
+ * fit, as a birthdate is in the Very Small view mode at 220px, and 5px
+ * between fields, which is the spacing Slate itself uses.
+ *
+ * Slate sets that 5px as an inline margin on each field after the first, so a
+ * wrapped line used to start 5px in from the line above. Only !important
+ * beats an inline style. It is scoped to the rows the loader marked, which
+ * are rows holding more than one field. */
+.az-media-slate .az-media-slate__inline-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 5px;
+}
+
+.az-media-slate .az-media-slate__inline-controls > * {
+  margin-left: 0 !important;
+}
+
+.az-media-slate .az-media-slate__inline-controls > .form-control,
+.az-media-slate .az-media-slate__inline-controls > .form-select {
+  width: auto;
+}
+
+/* Space apart the parts of a question when each part carries its own label.
+ * Slate's address question holds five: country, street, city, state, and
+ * postal code. Each sits in a bare div with no margin, so without this the
+ * next label touches the field above it.
+ *
+ * Slate has no need for the margin, because its own labels are plain text.
+ * Ours are 18px bold, from Bootstrap's form-label, which is what makes the
+ * crowding show.
+ *
+ * :has() matches an element by what it contains, so this picks only a part
+ * that has a label of its own. That leaves alone the question's own label,
+ * and a birthdate, whose three dropdowns share one box and have no labels of
+ * their own. Skipping the last part keeps the gap below the whole question at
+ * the 18px Slate puts between questions. */
+.az-media-slate .form_question fieldset > div:has(> .form_label):not(:last-of-type) {
+  margin-bottom: 1rem;
+}
+
+/* Slate marks a field that fails validation with aria-invalid="true" and a
+ * validate_error class. Bootstrap only styles its own is-invalid class, so
+ * give Slate's markers Bootstrap's invalid border color. */
+.az-media-slate .form-control[aria-invalid="true"],
+.az-media-slate .form-select[aria-invalid="true"],
+.az-media-slate .form-check-input[aria-invalid="true"],
+.az-media-slate .form-control.validate_error,
+.az-media-slate .form-select.validate_error {
+  border-color: var(--bs-form-invalid-border-color);
+}
+
+/* Slate sizes some of its own parts in pixels, so they hang outside a narrow
+ * embed. Its signature box is 400px wide, and stuck out by 180px in the Very
+ * Small view mode, which is 220px. Let anything Slate renders shrink to fit.
+ *
+ * Careful: this doesn't catch every case. A min-width beats max-width, and
+ * Slate's table layout gives an address label min-width: 150px. An inline
+ * style from Slate's JavaScript beats a stylesheet too. */
+.az-media-slate [class*="form_"] {
+  max-width: 100%;
+}
+
+/* Slate's signature question uses its label for a whole consent statement,
+ * which reads badly in form-label's bold. Keep form-label's spacing but use
+ * normal text, so only what the form's author bolded stands out. */
+.az-media-slate .form_signature .form-label {
+  font-size: inherit;
+  font-weight: normal;
+}
+
+/* The loading spinner (Arizona Bootstrap's spinner-border), centered in the
+ * space the form will fill, like the Trellis spinner. */
+.az-media-slate__spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--az-slate-min-height);
+}
+
+/* The fallback alert, saying which form is missing and why, and linking to it
+ * on Slate's own site. Its look is Arizona Bootstrap's alert; the rules below
+ * show and hide it, and fix the places Slate's stylesheet reaches it.
+ *
+ * It's visible by default, so a browser with no JavaScript, where the embed
+ * can't load anyway, still gets the link. The loader adds --js, which hides
+ * it, and adds --failed if the form doesn't arrive, which shows it again.
+ * Keep the --failed rule below the --js rule: they have the same specificity,
+ * so the later one wins. */
+.az-media-slate--js .az-media-slate__fallback {
+  display: none;
+}
+
+.az-media-slate--failed .az-media-slate__fallback {
+  display: block;
+}
+
+/* Slate's stylesheet defines .alert too, and it loads after Arizona
+ * Bootstrap's, so an alert on a page holding a Slate form picks up Slate's
+ * look instead: a 5px black left bar, 10px padding, black text. Restate
+ * Bootstrap's own declarations at a specificity Slate can't reach.
+ *
+ * These are Bootstrap's variables, not copied values, so an alert here still
+ * follows Arizona Bootstrap when Arizona Bootstrap changes.
+ *
+ * Careful: the collision isn't ours alone, and this only rescues our own
+ * alert. Any other Bootstrap alert on such a page still looks like Slate's,
+ * and nothing errors to say so. */
+.az-media-slate .az-media-slate__fallback.alert {
+  padding: var(--bs-alert-padding-y) var(--bs-alert-padding-x);
+  color: var(--bs-alert-color);
+  border: var(--bs-alert-border);
+  border-radius: var(--bs-alert-border-radius);
+}
+
+/* One of the two openings shows. The plain one, for a visitor, is the
+ * default; the loader asks for the named one where naming the form helps
+ * whoever has to fix the page. */
+.az-media-slate__opening--named {
+  display: none;
+}
+
+.az-media-slate--names-form .az-media-slate__opening--plain {
+  display: none;
+}
+
+.az-media-slate--names-form .az-media-slate__opening--named {
+  display: inline;
+}
+
+/* The alert's sentence, sitting directly above the link. */
+.az-media-slate__message {
+  margin-bottom: 0.5rem;
+}
+
+/* The retry button, shown only when the form took too long. It carries
+ * alert-link, like the "Open the form" link below it. These declarations
+ * strip the rest of a button's look so the two match. */
+.az-media-slate__retry {
+  padding: 0;
+  border: 0;
+  background: none;
+  text-decoration: underline;
+}
+
+/* The form's name inside that sentence. Drupal's placeholder filter wraps it
+ * in an em, which browsers render italic. Bold reads better here, and the
+ * name is the part of the sentence worth finding at a glance. */
+.az-media-slate__message .placeholder {
+  font-style: normal;
+  font-weight: 700;
+}
+
+/* The arrow marking a link that leaves the site, sized against the text it
+ * follows rather than in pixels. */
+.az-media-slate__link-icon {
+  width: 0.85em;
+  height: 0.85em;
+  margin-left: 0.25rem;
+}
+
+/* The grey box shown instead of the form while editing. It matches the
+ * Trellis placeholder in az_media_trellis, so both form embeds look the same
+ * in the editor and the Media Library. */
+.az-media-slate-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--az-slate-min-height);
+  background-color: #c9c9c9;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+.az-media-slate-placeholder__label {
+  margin: 0;
+  padding: 0 1rem;
+  color: #222;
+  font-weight: 600;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.az-media-slate-error {
+  padding: 0.75rem 1rem;
+  border-left: 4px solid #a11b0a;
+  background-color: #f4f4f4;
+}
