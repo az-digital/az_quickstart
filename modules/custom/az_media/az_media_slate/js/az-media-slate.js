@@ -14,7 +14,7 @@
  * calls that a dynamic embed, and forwardedParams() decides which may go.
  *
  * Once the form is in, this adds Arizona Bootstrap classes to its fields. If
- * the form never arrives, it shows a fallback link instead. Slate allows one
+ * the form never arrives, it shows an alert instead. Slate allows one
  * form per page, so only the first Slate embed on a page loads.
  *
  * @see https://knowledge.technolutions.net/docs/embedding-forms
@@ -22,7 +22,7 @@
 
 ((Drupal, once) => {
   /**
-   * How long to wait for Slate's form before showing the fallback link.
+   * How long to wait for Slate's form before showing the fallback alert.
    *
    * The script's error event only fires when the script fails to download.
    * Slate's troubleshooting page also describes a form stuck on "Loading...",
@@ -211,6 +211,58 @@
   }
 
   /**
+   * What to say when the page already holds a Slate form.
+   *
+   * It names the other form wherever it can. That's the part worth having:
+   * whoever fixes this gets both names and has nothing to hunt for. Every
+   * embed renders its own name, so the one that loaded still carries its name
+   * in the markup even though its alert is hidden.
+   *
+   * One media item placed twice needs different words. Naming the other form
+   * would print the same name twice in a row, and the fix there is to delete
+   * a copy rather than to choose between two forms.
+   *
+   * @param {HTMLElement} wrapper The .az-media-slate element being refused.
+   * @return {object} reason, the clause to show, and other, the name to put
+   *   where its @other placeholder sits. other is undefined when there's no
+   *   name to give.
+   */
+  function alreadyEmbeddedMessage(wrapper) {
+    // The name sits in the em.placeholder Drupal's placeholder filter writes.
+    // There's no class of our own to aim at, because that element is Drupal's.
+    const nameInside = '.az-media-slate__message .placeholder';
+    const loaded = document.querySelector(
+      `.az-media-slate--js:not(.az-media-slate--failed) ${nameInside}`,
+    );
+    const other = loaded ? loaded.textContent.trim() : '';
+    const mine = wrapper.querySelector(nameInside);
+    if (other !== '' && mine && other === mine.textContent.trim()) {
+      return {
+        reason: Drupal.t(
+          'because this page already embeds this same form. Slate allows only one embedded form per page. Remove the duplicate.',
+        ),
+      };
+    }
+    if (other === '') {
+      return {
+        reason: Drupal.t(
+          'because this page already embeds another Slate form. Slate allows only one embedded form per page. Remove one of them, or move it to its own page.',
+        ),
+      };
+    }
+    // Leave @other in the string for showFallback() to replace with an
+    // element. Rationale: Drupal.t() would escape the name for HTML, and this
+    // clause is written into the page as text nodes, so an ampersand in a
+    // form's name would arrive as "&amp;".
+    return {
+      reason: Drupal.t(
+        'because this page already embeds @other. Slate allows only one embedded form per page. Remove one of them, or move it to its own page.',
+      ),
+      other,
+    };
+  }
+
+  /**
    * Picks which of the page's own query parameters may travel to Slate.
    *
    * Forwarding them is what makes an embed dynamic: a visitor who arrives
@@ -264,21 +316,47 @@
   }
 
   /**
-   * Removes the spinner, shows the fallback link, and says why.
+   * Removes the spinner, shows the fallback alert, and says why.
+   *
+   * The template writes the first half of the sentence, up to "was not
+   * embedded", because that half holds the form's name. So every reason
+   * passed here is the clause that finishes it, starting with "because".
    *
    * @param {HTMLElement} wrapper The .az-media-slate element.
-   * @param {string} message Text for the status message.
+   * @param {string} reason The clause finishing the alert's sentence.
+   * @param {string} [named] A form's name to stand in for @other in the
+   *   reason. It goes in as an element of its own, so the stylesheet can
+   *   find it.
    */
-  function showFallback(wrapper, message) {
+  function showFallback(wrapper, reason, named) {
+    // Show the alert before writing into it. Rationale: it's display: none
+    // until this class lands, and a live region (an element screen readers
+    // watch for new text) that's hidden when its text arrives isn't reliably
+    // announced.
     wrapper.classList.add('az-media-slate--failed');
     const spinner = wrapper.querySelector('.az-media-slate__spinner');
     if (spinner) {
       spinner.remove();
     }
-    const status = wrapper.querySelector('.az-media-slate__status');
-    if (status) {
-      status.textContent = message;
+    const target = wrapper.querySelector('.az-media-slate__reason');
+    if (!target) {
+      return;
     }
+    if (named === undefined) {
+      target.textContent = reason;
+      return;
+    }
+    // Build the clause from nodes rather than substituting into the string.
+    // Rationale: the name has to sit in an element of its own to be styled,
+    // and setting each node's textContent keeps a name that looks like markup
+    // as plain text.
+    const [before, after] = reason.split('@other');
+    const name = document.createElement('em');
+    name.className = 'placeholder';
+    name.textContent = named;
+    target.textContent = before;
+    target.appendChild(name);
+    target.appendChild(document.createTextNode(after || ''));
   }
 
   /**
@@ -336,15 +414,12 @@
       embedUrl.protocol !== 'https:' ||
       !SLATE_HOST_SUFFIXES.some((suffix) => embedUrl.hostname.endsWith(suffix))
     ) {
-      showFallback(
-        wrapper,
-        Drupal.t('The form could not be loaded. Use the link to open it.'),
-      );
+      showFallback(wrapper, Drupal.t('because its web address is not valid.'));
       return false;
     }
 
-    // Hide the fallback link while the embed loads. It's visible in the
-    // markup so a browser with no JavaScript still gets it.
+    // Hide the alert while the embed loads. It's visible in the markup so a
+    // browser with no JavaScript still gets the link inside it.
     wrapper.classList.add('az-media-slate--js');
 
     // Put the spinner inside the container. When the form arrives, Slate
@@ -355,10 +430,7 @@
 
     const timer = window.setTimeout(() => {
       if (!hasRendered(container)) {
-        showFallback(
-          wrapper,
-          Drupal.t('The form did not load. Use the link to open it directly.'),
-        );
+        showFallback(wrapper, Drupal.t('because it took too long to respond.'));
       }
     }, INIT_TIMEOUT_MS);
 
@@ -397,9 +469,7 @@
       window.clearTimeout(timer);
       showFallback(
         wrapper,
-        Drupal.t(
-          'The form could not be reached. Use the link to open it directly.',
-        ),
+        Drupal.t('because there was a problem reaching it.'),
       );
     });
     document.head.appendChild(script);
@@ -415,19 +485,20 @@
       );
 
       containers.forEach((container) => {
-        // If a Slate form already loaded on this page, show this one's
-        // fallback link instead. Rationale: Slate's docs say only one Slate
-        // form can be embedded on a page. The flag is on <html>, not in a
-        // variable here, so a container added later by AJAX or Layout Builder
-        // counts against the same page.
+        // If a Slate form already loaded on this page, show this one's alert
+        // instead. Rationale: Slate's docs say only one Slate form can be
+        // embedded on a page. The flag is on <html>, not in a variable here,
+        // so a container added later by AJAX or Layout Builder counts against
+        // the same page.
         if (document.documentElement.hasAttribute('data-az-slate-loaded')) {
           const wrapper = container.closest('.az-media-slate');
-          showFallback(
-            wrapper,
-            Drupal.t(
-              'Only one Slate form can be shown per page. Use the link to open this one.',
-            ),
-          );
+          // Name Slate and the form for this one. Rationale: it's a mistake
+          // in how the page was built, so the person who can act on it needs
+          // to know which form and why. Every other failure is something a
+          // visitor hits, and neither word would mean anything to them.
+          wrapper.classList.add('az-media-slate--names-form');
+          const { reason, other } = alreadyEmbeddedMessage(wrapper);
+          showFallback(wrapper, reason, other);
           return;
         }
         // Mark the page only once a script is on its way. A container we

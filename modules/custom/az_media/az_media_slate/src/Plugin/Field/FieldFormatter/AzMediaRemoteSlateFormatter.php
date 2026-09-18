@@ -36,7 +36,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 #[FieldFormatter(
   id: 'az_media_remote_slate',
   label: new TranslatableMarkup('Remote Media - Slate Form'),
-  description: new TranslatableMarkup('Renders a Slate form embed with a fallback link and responsive sizing.'),
+  description: new TranslatableMarkup('Renders a Slate form embed, with a link to the form if it cannot be shown.'),
   field_types: [
     'string',
   ],
@@ -214,6 +214,7 @@ class AzMediaRemoteSlateFormatter extends MediaRemoteFormatterBase implements Co
 
       $elements[$delta] = [
         '#theme' => 'az_media_slate',
+        '#label' => $entity->label(),
         '#canonical_url' => $slate_url->getCanonicalUrl(),
         '#attributes' => new Attribute([
           'id' => $container_id,

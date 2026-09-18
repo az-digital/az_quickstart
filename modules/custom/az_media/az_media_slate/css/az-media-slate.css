@@ -3,7 +3,7 @@
  * Styles for Slate form embeds.
  *
  * Covers the Arizona Bootstrap fixes for Slate's form, the loading spinner,
- * the fallback link, and the grey placeholder shown while editing.
+ * the fallback alert, and the grey placeholder shown while editing.
  *
  * Nothing here sets how wide the embed is. Quickstart's theme sizes the
  * wrapper around every media item by view mode, in az_barrio's
@@ -129,51 +129,75 @@
   min-height: var(--az-slate-min-height);
 }
 
-/* The fallback link.
+/* The fallback alert, saying which form is missing and why, and linking to it
+ * on Slate's own site. Its look is Arizona Bootstrap's alert; the rules below
+ * show and hide it, and fix the places Slate's stylesheet reaches it.
  *
  * It's visible by default, so a browser with no JavaScript, where the embed
- * can't load anyway, still gets it. The loader adds --js, which hides it, and
- * adds --failed if the form doesn't arrive, which shows it again. Keep the
- * --failed rule below the --js rule: they have the same specificity, so the
- * later one wins. */
-.az-media-slate__fallback {
-  display: inline-block;
-  padding: 0.5rem 0;
-}
-
+ * can't load anyway, still gets the link. The loader adds --js, which hides
+ * it, and adds --failed if the form doesn't arrive, which shows it again.
+ * Keep the --failed rule below the --js rule: they have the same specificity,
+ * so the later one wins. */
 .az-media-slate--js .az-media-slate__fallback {
   display: none;
 }
 
 .az-media-slate--failed .az-media-slate__fallback {
-  display: inline-block;
+  display: block;
 }
 
-/* The status message is read out by screen readers, so hide it visually
- * instead of with display: none. Rationale: a live region (an element screen
- * readers watch for new text) that's display: none when its text arrives
- * isn't reliably announced. */
-.az-media-slate__status {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  padding: 0;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
+/* Slate's stylesheet defines .alert too, and it loads after Arizona
+ * Bootstrap's, so an alert on a page holding a Slate form picks up Slate's
+ * look instead: a 5px black left bar, 10px padding, black text. Restate
+ * Bootstrap's own declarations at a specificity Slate can't reach.
+ *
+ * These are Bootstrap's variables, not copied values, so an alert here still
+ * follows Arizona Bootstrap when Arizona Bootstrap changes.
+ *
+ * Careful: the collision isn't ours alone, and this only rescues our own
+ * alert. Any other Bootstrap alert on such a page still looks like Slate's,
+ * and nothing errors to say so. */
+.az-media-slate .az-media-slate__fallback.alert {
+  padding: var(--bs-alert-padding-y) var(--bs-alert-padding-x);
+  color: var(--bs-alert-color);
+  border: var(--bs-alert-border);
+  border-radius: var(--bs-alert-border-radius);
 }
 
-.az-media-slate--failed .az-media-slate__status {
-  position: static;
-  width: auto;
-  height: auto;
-  margin: 0.5rem 0 0;
-  overflow: visible;
-  clip: auto;
-  white-space: normal;
-  color: #a11b0a;
+/* One of the two openings shows. The plain one, for a visitor, is the
+ * default; the loader asks for the named one where naming the form helps
+ * whoever has to fix the page. */
+.az-media-slate__opening--named {
+  display: none;
+}
+
+.az-media-slate--names-form .az-media-slate__opening--plain {
+  display: none;
+}
+
+.az-media-slate--names-form .az-media-slate__opening--named {
+  display: inline;
+}
+
+/* The alert's sentence, sitting directly above the link. */
+.az-media-slate__message {
+  margin-bottom: 0.5rem;
+}
+
+/* The form's name inside that sentence. Drupal's placeholder filter wraps it
+ * in an em, which browsers render italic. Bold reads better here, and the
+ * name is the part of the sentence worth finding at a glance. */
+.az-media-slate__message .placeholder {
+  font-style: normal;
+  font-weight: 700;
+}
+
+/* The arrow marking a link that leaves the site, sized against the text it
+ * follows rather than in pixels. */
+.az-media-slate__link-icon {
+  width: 0.85em;
+  height: 0.85em;
+  margin-left: 0.25rem;
 }
 
 /* The grey box shown instead of the form while editing. It matches the
