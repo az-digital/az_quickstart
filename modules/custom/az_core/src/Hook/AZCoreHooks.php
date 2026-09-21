@@ -13,7 +13,7 @@ class AZCoreHooks {
   /**
    * Implements hook_system_info_alter().
    *
-   * Add the AZ Bootstrap CSS location to the CKEditor5 stylesheets.
+   * Adds the AZ Bootstrap CSS location to the CKEditor5 stylesheets.
    */
   #[Hook('system_info_alter')]
   public function systemInfoAlter(array &$info, Extension $file, string $type): void {
@@ -21,22 +21,14 @@ class AZCoreHooks {
       return;
     }
 
-    // Get the AZ Bootstrap CSS location. The state key should match the
+    // Get the AZ Bootstrap CSS location. The state key must match the
     // AZ_BOOTSTRAP_LOCATION constant defined in az_barrio/includes/common.inc.
     $az_bootstrap_css_location = \Drupal::state()->get('az_bootstrap_location');
-    dpm($az_bootstrap_css_location, 'AZ Bootstrap CSS Location fetched in systemInfoAlter()');
-    if (!is_string($az_bootstrap_css_location) || $az_bootstrap_css_location === '') {
-      return;
+    if (is_string($az_bootstrap_css_location)
+      && $az_bootstrap_css_location !== ''
+      && array_key_exists('ckeditor5-stylesheets', $info)) {
+      $info['ckeditor5-stylesheets'][] = $az_bootstrap_css_location;
     }
-    $stylesheets = $info['ckeditor5-stylesheets'] ?? [];
-    $stylesheets = is_array($stylesheets) ? $stylesheets : [];
-    $stylesheets = array_filter(
-      $stylesheets,
-      static fn ($stylesheet): bool => is_string($stylesheet)
-        && !str_contains($stylesheet, 'arizona-bootstrap')
-    );
-    $stylesheets[] = $az_bootstrap_css_location;
-    $info['ckeditor5-stylesheets'] = array_values(array_unique($stylesheets));
   }
 
 }
