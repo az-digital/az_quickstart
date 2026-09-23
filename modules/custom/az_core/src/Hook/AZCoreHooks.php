@@ -14,29 +14,13 @@ class AZCoreHooks {
    * Implements hook_system_info_alter().
    *
    * Adds the AZ Bootstrap CSS location to the CKEditor5 stylesheets for the
-   * AZ Barrio theme and any of its subthemes.
+   * AZ Barrio theme. Subthemes of AZ Barrio will also use the updated
+   * CKEditor5 stylesheets property.
    */
   #[Hook('system_info_alter')]
   public function systemInfoAlter(array &$info, Extension $file, string $type): void {
-    if ($type !== 'theme') {
+    if ($type !== 'theme' || $file->getName() !== 'az_barrio') {
       return;
-    }
-
-    $theme_name = $file->getName();
-    if ($theme_name !== 'az_barrio') {
-      // Check if the theme is a subtheme of az_barrio.
-      $base_theme = $info['base theme'] ?? NULL;
-      if ($base_theme === NULL) {
-        return;
-      }
-      $themes = \Drupal::service('theme_handler')->listInfo();
-      while ($theme_name !== 'az_barrio' && $base_theme !== NULL) {
-        $theme_name = $base_theme;
-        $base_theme = $themes[$base_theme]->base_theme ?? NULL;
-      }
-      if ($theme_name !== 'az_barrio') {
-        return;
-      }
     }
 
     // Get the AZ Bootstrap CSS location. The state key must match the
