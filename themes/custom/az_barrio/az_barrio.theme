@@ -102,12 +102,19 @@ function az_barrio_preprocess_html(&$variables) {
  */
 function az_barrio_preprocess_page(&$variables, $hook) {
   $variables['az_back_to_top'] = (\Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_back_to_top')) ? TRUE : FALSE;
+  $variables['has_offcanvas_search'] = FALSE;
   if ($variables['az_back_to_top']) {
     $variables['#attached']['library'][] = 'az_barrio/az-back-to-top';
   }
 
-  if (isset($variables['page']['navigation_offcanvas']['az_barrio_offcanvas_searchform'])) {
-    $variables['#attached']['library'][] = 'az_barrio/az-barrio-off-canvas-nav';
+  if (!empty($variables['page']['navigation_offcanvas'])) {
+    foreach ($variables['page']['navigation_offcanvas'] as $offcanvas_block) {
+      if (!empty($offcanvas_block['#cache']['keys']) && in_array('search_form_block', $offcanvas_block['#cache']['keys'], TRUE)) {
+        $variables['has_offcanvas_search'] = TRUE;
+        $variables['#attached']['library'][] = 'az_barrio/az-barrio-off-canvas-nav';
+        break;
+      }
+    }
   }
 
   // Check if land acknowledgment should be displayed.

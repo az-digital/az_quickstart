@@ -103,7 +103,7 @@
               {% endif %}
               {% if page.navigation_offcanvas %}
                 <div class="d-lg-none d-flex col-auto px-0">
-                  {% if page.navigation_offcanvas.az_barrio_offcanvas_searchform %}
+                  {% if has_offcanvas_search %}
                     <button type="button" data-bs-toggle="offcanvas" data-bs-target="#azMobileNav" aria-controls="azMobileNav" class="btn btn-arizona-header" id="jsAzSearch">
                       <span aria-hidden="true" class="icon material-symbols-rounded">search</span>
                       <span class="icon-text">Search</span>
