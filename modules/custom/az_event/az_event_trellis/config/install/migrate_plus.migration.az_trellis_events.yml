@@ -131,5 +131,5 @@ destination:
   default_bundle: az_event
   validate: false
 migration_dependencies:
-  optional:
+  required:
     - az_trellis_events_media
