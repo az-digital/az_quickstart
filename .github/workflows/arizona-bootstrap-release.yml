@@ -3,11 +3,17 @@ on:
   repository_dispatch:
     types: az_bootstrap_release
 
+permissions:
+  contents: read
+
 jobs:
   release:
     name: Create PR
     if: ${{ github.event.client_payload.branch == '2.x' }}
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
 
     steps:
       - name: Checkout
