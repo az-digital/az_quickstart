@@ -590,7 +590,7 @@ function az_core_preprocess_entity_embed_container(array &$variables) {
  * Implements hook_block_build_BASE_BLOCK_ID_alter().
  *
  * Adds a cache key to identify mobile nav blocks. The az_barrio page template
- * checks this key prior to the lazy building of the block.
+* Adds a cache key to identify mobile nav blocks.
  */
 function az_core_block_build_mobile_nav_block_alter(array &$build, BlockPluginInterface $block): void {
   $build['#cache']['keys'][] = 'mobile_nav_block';
