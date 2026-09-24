@@ -600,7 +600,6 @@ function az_core_block_build_mobile_nav_block_alter(array &$build, BlockPluginIn
  * Implements hook_block_build_BASE_BLOCK_ID_alter().
  *
  * Adds a cache key to identify search form blocks in navigation_offcanvas.
- * The az_barrio page template checks this key prior to lazy building.
  */
 function az_core_block_build_search_form_block_alter(array &$build, BlockPluginInterface $block): void {
   $build['#cache']['keys'][] = 'search_form_block';
