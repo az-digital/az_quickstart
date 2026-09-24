@@ -3,6 +3,10 @@ on:
   push:
     branches:
       - main
+
+env:
+  DEMO_SITE_NAME: ${{ secrets.DEMO_SITE_NAME }}
+
 concurrency: kitten-deploy
 jobs:
   watch-workflow:
@@ -23,7 +27,7 @@ jobs:
       - name: Watch workflow logs
         run: |
           START_TIME="$(date '+%s')"
-          while [ -z "$(terminus workflow:list ${{ secrets.DEMO_SITE_NAME }} --format=json | jq --arg start_time "${START_TIME}" '.[] | select((.started_at|tostring > $start_time) and (.workflow == "Sync code on \"dev\"") and (.finished_at != null))')" ]; do
+          while [ -z "$(terminus workflow:list "${DEMO_SITE_NAME}" --format=json | jq --arg start_time "${START_TIME}" '.[] | select((.started_at|tostring > $start_time) and (.workflow == "Sync code on \"dev\"") and (.finished_at != null))')" ]; do
             echo 'watching workflows...'
             sleep 2
           done
@@ -50,17 +54,19 @@ jobs:
           pantheon-machine-token: ${{ secrets.TERMINUS_TOKEN }}
 
       - name: Sync code to pantheon
+        env:
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
         run: |
-          terminus -y -n connection:set ${{ secrets.DEMO_SITE_NAME }}.dev git
+          terminus -y -n connection:set "${DEMO_SITE_NAME}.dev" git
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git config --global user.name "${GITHUB_ACTOR}"
-          $(terminus -y -n connection:info --field "Git Command" ${{ secrets.DEMO_SITE_NAME }}.dev)
-          cd ${{ secrets.DEMO_SITE_NAME }}
+          $(terminus -y -n connection:info --field "Git Command" "${DEMO_SITE_NAME}.dev")
+          cd "${DEMO_SITE_NAME}"
           rm composer.lock
           UPSTREAM_VERSION=$(jq -r '.require."az-digital/az_quickstart"' upstream/composer.json)
           COMPOSER_MEMORY_LIMIT=-1 composer -n require "az-digital/az_quickstart:dev-main as ${UPSTREAM_VERSION}"
           git add composer.json composer.lock
-          git commit --allow-empty -m '${{ github.event.head_commit.message }}'
+          git commit --allow-empty -m "${COMMIT_MESSAGE}"
           git push
 
   install-azqs:
@@ -87,17 +93,17 @@ jobs:
 
       - name: Wake env
         run: |
-          terminus env:wake ${{ secrets.DEMO_SITE_NAME }}.dev
+          terminus env:wake "${DEMO_SITE_NAME}.dev"
           sleep 5
 
       - name: Wipe existing site
         run: |
-          terminus -y -n env:wipe ${{ secrets.DEMO_SITE_NAME }}.dev
+          terminus -y -n env:wipe "${DEMO_SITE_NAME}.dev"
 
       - name: Install site
         run: |
-          terminus -y -n connection:set ${{ secrets.DEMO_SITE_NAME }}.dev sftp
-          terminus -y -n drush ${{ secrets.DEMO_SITE_NAME }}.dev -- \
+          terminus -y -n connection:set "${DEMO_SITE_NAME}.dev" sftp
+          terminus -y -n drush "${DEMO_SITE_NAME}.dev" -- \
           site:install az_quickstart install_configure_form.enable_update_status_module=NULL \
           --account-name="azadmin" \
           --account-mail="noreply@email.arizona.edu" \
@@ -105,9 +111,9 @@ jobs:
           --site-name="Kitten" \
           --yes \
           --verbose
-          terminus -y -n drush ${{ secrets.DEMO_SITE_NAME }}.dev -- pm:install -n -y az_demo
-          terminus -y -n connection:set ${{ secrets.DEMO_SITE_NAME }}.dev git
+          terminus -y -n drush "${DEMO_SITE_NAME}.dev" -- pm:install -n -y az_demo
+          terminus -y -n connection:set "${DEMO_SITE_NAME}.dev" git
 
       - name: Clear caches
         run: |
-          terminus -y -n env:clear-cache ${{ secrets.DEMO_SITE_NAME }}.dev
+          terminus -y -n env:clear-cache "${DEMO_SITE_NAME}.dev"
