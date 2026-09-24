@@ -91,13 +91,13 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   unset($form['fonts']['fonts']['bootstrap_barrio_google_fonts']);
   $form['fonts']['fonts']['az_barrio_font'] = [
     '#type' => 'checkbox',
-    '#title' => t('Use the centrally-managed Typekit webfont, Proxima Nova'),
+    '#title' => t('Use the centrally-managed Typekit webfonts (Proxima Nova, Proxima Nova Condensed, and Garamond Premier Pro)'),
     '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_barrio_font'),
     '#description' => t(
-        'If selected, a Typekit CDN <code>&lt;link&gt;</code> will be added to every page importing the @proxima_nova_docs_link CSS.', [
-          '@proxima_nova_docs_link' => Link::fromTextAndUrl(
-            'Arizona Digital, centrally-managed Proxima Nova font', Url::fromUri(
-                'https://digital.arizona.edu/arizona-bootstrap/docs/2.0/content/font/',
+        'If selected, a Typekit CDN <code>&lt;link&gt;</code> will be added to every page importing the @font_docs_link CSS.', [
+          '@font_docs_link' => Link::fromTextAndUrl(
+            'Arizona Digital centrally-managed fonts', Url::fromUri(
+                'https://digital.arizona.edu/arizona-bootstrap/v5/docs/5.2/content/font/',
                 [
                   'attributes' => [
                     'target' => '_blank',
@@ -298,6 +298,12 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#title' => t('Use the AZ Bootstrap sticky footer template.'),
     '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('sticky_footer'),
   ];
+  $form['azbs_settings']['settings']['az_bootstrap_style']['serif_headings'] = [
+    '#title' => t('Use serif headings'),
+    '#type' => 'checkbox',
+    '#description' => t("Use the Garamond Premier Pro serif font for headings H1, H2 and H3. Proxima Nova sans-serif font will remain in use for headings H4, H5 and H6."),
+    '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('serif_headings'),
+  ];
   // Responsive Header Grid.
   $form['layout']['header_grid'] = [
     '#type' => 'details',
@@ -453,13 +459,13 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
  * Submit handler for az_barrio_form_settings.
  */
 function az_barrio_form_system_theme_settings_submit($form, FormStateInterface &$form_state) {
-  $values = $form_state->getValues();
+  $form_state_values = $form_state->getValues();
   // If the user uploaded a new logo or favicon, save it to a permanent location
   // and use it in place of the default theme-provided file.
   $default_scheme = \Drupal::config('system.file')->get('default_scheme');
   try {
-    if (!empty($values['footer_logo_upload'])) {
-      $filename = \Drupal::service('file_system')->copy($values['footer_logo_upload']->getFileUri(), $default_scheme . '://');
+    if (!empty($form_state_values['footer_logo_upload'])) {
+      $filename = \Drupal::service('file_system')->copy($form_state_values['footer_logo_upload']->getFileUri(), $default_scheme . '://');
       $form_state->setValue('footer_logo_path', $filename);
       $form_state->setValue('footer_default_logo', 0);
     }
@@ -468,9 +474,23 @@ function az_barrio_form_system_theme_settings_submit($form, FormStateInterface &
     // Ignore.
   }
   $form_state->unsetValue('footer_logo_upload');
-  // theme_settings_convert_to_config($values, $config)->save();
-  // Clear cached libraries so any Bootstrap changes take effect immediately.
+
+  // Update AZ Bootstrap stable version in state if it has changed.
+  $state = \Drupal::state();
+  if ($state->get(AZ_BOOTSTRAP_CDN_STABLE_VERSION) !== AZ_BOOTSTRAP_STABLE_VERSION) {
+    $state->set(AZ_BOOTSTRAP_CDN_STABLE_VERSION, AZ_BOOTSTRAP_STABLE_VERSION);
+  }
+
+  // Update CSS path using a helper function from az_barrio.theme.
+  $form_state_values[] = ['az_bootstrap_cdn_stable_version' => AZ_BOOTSTRAP_STABLE_VERSION];
+  $az_bootstrap_css_path = az_barrio_az_bootstrap_asset_path('css', $form_state_values);
+  if ($az_bootstrap_css_path) {
+    $state->set(AZ_BOOTSTRAP_LOCATION, $az_bootstrap_css_path);
+  }
+
+  // Clear cached libraries so Bootstrap changes take effect immediately.
   \Drupal::service('library.discovery')->clear();
+  \Drupal::service('extension.list.theme')->reset();
 }
 
 /**

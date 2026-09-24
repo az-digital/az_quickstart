@@ -4,9 +4,9 @@ dependencies:
   enforced:
     module:
       - az_event_trellis
-id: az_event_trellis
-label: 'Quickstart Trellis Events'
-migration: az_trellis_events
+id: az_event_trellis_files
+label: 'Quickstart Trellis Events Files'
+migration: az_trellis_events_files
 time: 43200
 update: true
 sync: false
