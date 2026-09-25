@@ -109,10 +109,9 @@ function az_quickstart_update_920701() {
 }
 
 /**
- * Enable az_paragraphs_splitscreen module by default.
+ * Empty update moved to az_paragraphs_update_1130101().
  */
 function az_quickstart_update_920702() {
-  \Drupal::service('module_installer')->install(['az_paragraphs_splitscreen']);
 }
 
 /**
