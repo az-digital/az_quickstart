@@ -15,10 +15,16 @@ on:
         required: false
         default: false
         type: boolean
+
+permissions:
+  contents: read
+
 jobs:
   build:
     name: Upload Release Asset
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
