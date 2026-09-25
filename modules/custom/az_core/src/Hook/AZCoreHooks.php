@@ -34,12 +34,12 @@ class AZCoreHooks {
     }
   }
 
-  #[Hook('block_build_search_form_block_alter')]
   /**
    * Implements hook_block_build_BASE_BLOCK_ID_alter().
    *
    * Adds a cache key to identify search form blocks in navigation_offcanvas.
    */
+  #[Hook('block_build_search_form_block_alter')]
   public function blockBuildSearchFormBlockAlter(array &$build, BlockPluginInterface $block): void {
     $build['#cache']['keys'][] = 'search_form_block';
   }
