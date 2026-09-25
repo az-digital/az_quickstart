@@ -131,7 +131,7 @@
         "kevinrob/guzzle-cache-middleware": "8.0.0",
         "renanbr/bibtex-parser": "2.3.0",
         "seboettg/citeproc-php": "2.7.1",
-        "twig/twig": "3.29.0"
+        "twig/twig": "3.28.0"
     },
     "require-dev": {
         "az-digital/az-quickstart-dev": "~3"
