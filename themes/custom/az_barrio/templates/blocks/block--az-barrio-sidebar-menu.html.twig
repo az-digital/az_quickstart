@@ -40,8 +40,11 @@
     az_remove_sidebar_menu_mobile ? 'd-none d-md-block'
   ]
 %}
+{% set base_navigation_label = configuration.label|default('Navigation'|t) %}
+{% set navigation_context = attributes.id matches '/mobile|offcanvas/' ? 'Mobile'|t : ('Sidebar'|t) %}
+{% set navigation_label = navigation_context ? navigation_context ~ ' ' ~ base_navigation_label : base_navigation_label %}
 {% set heading_id = attributes.id ~ '-menu'|clean_id %}
-<nav role="navigation" aria-labelledby="{{ heading_id }}"{{ attributes.addClass(classes)|without('role', 'aria-labelledby') }}>
+<nav role="navigation" aria-label="{{ navigation_label }}"{{ attributes.addClass(classes)|without('role', 'aria-label') }}>
   {# Label. If not displayed, we still provide it for screen readers. #}
   {% if not configuration.label_display %}
     {% set title_attributes = title_attributes.addClass('visually-hidden') %}
