@@ -15,13 +15,15 @@
  * @see template_preprocess_input()
  */
 #}
-<button{{attributes.removeClass('btn-primary')}}>
+{% set button_label = attributes.value|default('Search'|t) %}
+<button{{ attributes.removeClass('btn-primary').setAttribute('aria-label', button_label) }}>
+  <span class="visually-hidden">{{ button_label }}</span>
   {% if az_navbar_fullscreen %}
     <span class="az-search-icon" aria-hidden="true"></span>
   {% elseif az_header_blue_search %}
     <span class="az-search-icon" aria-hidden="true"></span>
     <span class="material-symbols-rounded" aria-hidden="true">search</span>
   {% else %}
-    <span class="material-symbols-rounded">search</span>
+    <span class="material-symbols-rounded" aria-hidden="true">search</span>
   {% endif %}
 </button>{{ children }}
