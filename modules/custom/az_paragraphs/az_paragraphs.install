@@ -413,6 +413,19 @@ function az_paragraphs_update_1130001(&$sandbox) {
 }
 
 /**
+ * Enable az_paragraphs_splitscreen module when az_paragraphs is installed.
+ */
+function az_paragraphs_update_1130101() {
+  if (\Drupal::service('update.update_hook_registry')->getInstalledVersion('az_quickstart') >= 920702) {
+    return;
+  }
+
+  if (!\Drupal::moduleHandler()->moduleExists('az_paragraphs_splitscreen')) {
+    \Drupal::service('module_installer')->install(['az_paragraphs_splitscreen']);
+  }
+}
+
+/**
  * Migrate accordion paragraphs behavior plugin settings.
  */
 function az_paragraphs_update_1130301(&$sandbox) {
