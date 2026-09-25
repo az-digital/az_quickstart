@@ -1,0 +1,197 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Ranking
+status: experimental
+description: A University of Arizona ranking card with configurable background, hover, and link behavior. For an image card, use the Ranking Image component instead (drop it into a Ranking Deck alongside Ranking cards).
+props:
+  type: object
+  properties:
+    heading:
+      type: string
+      title: Heading
+      description: Main ranking value.
+      examples:
+        - TOP 1%
+    description:
+      type: string
+      title: Description
+      description: Supporting line displayed below the heading.
+      examples:
+        - of World Universities
+    source:
+      type: string
+      pattern: (.|\r?\n)*
+      title: Source
+      description: Source or attribution displayed at the bottom of the card. Use a line break to control exactly where the text wraps, e.g. between "Times Higher Education" and "World University Rankings, 2026".
+      examples:
+        - Center for World University Rankings, 2025
+    heading_level:
+      type: string
+      title: Heading Level
+      description: Semantic heading tag for the ranking value.
+      enum:
+        - h2
+        - h3
+        - h4
+        - h5
+        - h6
+      meta:enum:
+        h2: H2
+        h3: H3 (default)
+        h4: H4
+        h5: H5
+        h6: H6
+      examples:
+        - h3
+    header_style:
+      type: string
+      title: Header Style
+      description: How heavy the heading lettering is.
+      enum:
+        - bold
+        - thin
+        - bolder
+      meta:enum:
+        bold: Bold headers (default)
+        thin: Thin headers
+        bolder: Bolder headers
+      examples:
+        - bold
+    heading_font:
+      type: string
+      title: Heading Font
+      description: Typeface for the heading. Serif uses Garamond Premier Pro where available, otherwise a system serif. Depending on your site environment, serif might not be available in thin or bolder Header Style.
+      enum:
+        - sans
+        - serif
+      meta:enum:
+        sans: Sans-serif (default)
+        serif: Serif
+      examples:
+        - sans
+    alignment:
+      type: string
+      title: Content Alignment
+      description: Aligns the card content left or centered.
+      enum:
+        - left
+        - center
+      meta:enum:
+        left: Left aligned (default)
+        center: Center aligned
+      examples:
+        - left
+    clickable:
+      type: boolean
+      title: Clickable
+      description: Make the whole card a link to the Link URL. Has no effect unless a Link URL is set.
+      examples:
+        - true
+    hover_effect:
+      type: boolean
+      title: Hover Effect
+      description: Contrasting hover colors. Only applies when the card is clickable.
+      examples:
+        - true
+    hover_background:
+      type: string
+      title: Background Color (when Hover Effect is On)
+      description: Background color used when the hover effect is active.
+      enum:
+        - chili
+        - blue
+        - sky
+        - cool-gray
+        - oasis
+      meta:enum:
+        chili: Chili (default)
+        blue: Arizona Blue
+        sky: Sky
+        cool-gray: Cool Gray
+        oasis: Oasis
+      examples:
+        - chili
+    background:
+      type: string
+      title: Background Color (when Hover Effect is Off)
+      description: Card background color. Ignored when the hover effect is active.
+      enum:
+        - chili
+        - blue
+        - sky
+        - oasis
+        - azurite
+        - cool-gray
+        - warm-gray
+        - white
+        - transparent
+      meta:enum:
+        chili: Chili (default)
+        blue: Arizona Blue
+        sky: Sky
+        oasis: Oasis
+        azurite: Azurite
+        cool-gray: Cool Gray
+        warm-gray: Warm Gray
+        white: White
+        transparent: Transparent
+      examples:
+        - chili
+    font_color:
+      type: string
+      title: Font Color (transparent background only)
+      description: Text color used when the background is transparent. Ignored otherwise.
+      enum:
+        - midnight
+        - black
+        - white
+        - az-blue
+      meta:enum:
+        midnight: Midnight (default)
+        black: Black
+        white: White
+        az-blue: Arizona Blue
+      examples:
+        - midnight
+    link_url:
+      type: string
+      title: Link URL
+      description: Destination for the card link or the styled link.
+      format: uri-reference
+      examples:
+        - /about/rankings
+    link_title:
+      type: string
+      title: Link Title
+      description: Link text when the card is not clickable. Falls back to the source text.
+      examples:
+        - See all rankings
+    link_style:
+      type: string
+      title: Link Style
+      description: Style of the link. Ignored when the card is clickable with the hover effect.
+      enum:
+        - hidden
+        - text-link
+        - btn-red
+        - btn-blue
+        - btn-outline-red
+        - btn-outline-blue
+        - btn-outline-white
+      meta:enum:
+        hidden: Hidden link title
+        text-link: Text link
+        btn-red: Red button (default)
+        btn-blue: Blue button
+        btn-outline-red: Red outline button
+        btn-outline-blue: Blue outline button
+        btn-outline-white: White outline button
+      examples:
+        - btn-red
+    utility_classes:
+      type: array
+      title: Utility Classes
+      description: Additional Bootstrap utility classes for the card root, e.g. bottom spacing (mb-0) before the next item on the page. Not needed when the card is placed inside a Ranking Deck.
+      items:
+        type: string
+      examples:
+        - - mb-0
