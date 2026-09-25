@@ -4,10 +4,16 @@ on:
   repository_dispatch:
     types: az_icons_release
 
+permissions:
+  contents: read
+
 jobs:
   release:
     name: Create PR
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
 
     steps:
       - name: Checkout
