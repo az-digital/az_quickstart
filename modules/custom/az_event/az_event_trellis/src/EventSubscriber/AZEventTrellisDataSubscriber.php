@@ -3,7 +3,7 @@
 namespace Drupal\az_event_trellis\EventSubscriber;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Messenger\Messenger;
+use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Session\AccountProxy;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\az_event_trellis\TrellisHelper;
@@ -31,14 +31,9 @@ final class AZEventTrellisDataSubscriber implements EventSubscriberInterface {
   protected $entityTypeManager;
 
   /**
-   * @var \Drupal\Core\Messenger\Messenger
+   * @var \Drupal\Core\Messenger\MessengerInterface
    */
   protected $messenger;
-
-  /**
-   * @var \Drupal\node\NodeStorageInterface
-   */
-  protected $nodeStorage;
 
   /**
    * @var \Drupal\az_event_trellis\TrellisHelper
@@ -60,18 +55,17 @@ final class AZEventTrellisDataSubscriber implements EventSubscriberInterface {
    *
    * @param \Drupal\az_event_trellis\TrellisHelper $trellisHelper
    *   The Trellis helper server.
-   * @param \Drupal\Core\Messenger\Messenger $messenger
+   * @param \Drupal\Core\Messenger\MessengerInterface $messenger
    *   Database connection object.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   The entity type manager service.
    * @param \Drupal\Core\Session\AccountProxy $currentUser
    *   The currently logged in user.
    */
-  public function __construct(TrellisHelper $trellisHelper, Messenger $messenger, EntityTypeManagerInterface $entityTypeManager, AccountProxy $currentUser) {
+  public function __construct(TrellisHelper $trellisHelper, MessengerInterface $messenger, EntityTypeManagerInterface $entityTypeManager, AccountProxy $currentUser) {
     $this->trellisHelper = $trellisHelper;
     $this->messenger = $messenger;
     $this->entityTypeManager = $entityTypeManager;
-    $this->nodeStorage = $this->entityTypeManager->getStorage('node');
     $this->currentUser = $currentUser;
   }
 
@@ -86,7 +80,7 @@ final class AZEventTrellisDataSubscriber implements EventSubscriberInterface {
     $ids = $event->getDestinationIdValues();
     $id = reset($ids);
     if ($migration === 'az_trellis_events') {
-      $event = $this->nodeStorage->load($id);
+      $event = $this->entityTypeManager->getStorage('node')->load($id);
       if (!empty($event)) {
         $url = $event->toUrl()->toString();
         // Only show message if current user has permission.

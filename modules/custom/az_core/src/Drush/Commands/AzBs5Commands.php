@@ -104,7 +104,7 @@ final class AzBs5Commands extends DrushCommands {
             elseif ($answer === 'yes') {
               $data['third_party_settings']['block_class']['classes'] = $converted_classes;
               $config->setData($data);
-              $config->save(TRUE);
+              $config->save();
               $updated_configs[] = $change_info;
               $this->output()->writeln('<info>✓ Updated</info>');
             }
@@ -120,7 +120,7 @@ final class AzBs5Commands extends DrushCommands {
             // Non-interactive mode: update automatically.
             $data['third_party_settings']['block_class']['classes'] = $converted_classes;
             $config->setData($data);
-            $config->save(TRUE);
+            $config->save();
             $updated_configs[] = $change_info;
           }
         }

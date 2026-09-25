@@ -7,6 +7,9 @@ on:
         description: The name of the new release branch (e.g. 2.9.x) to create.
         required: true
 
+permissions:
+  contents: read
+
 jobs:
   print_inputs:
     runs-on: ubuntu-latest
@@ -139,6 +142,8 @@ jobs:
   prepare_for_new_minor_release:
     name: Prepare for a new minor release
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     needs:
       - validate_source_branch
       - validate_release_branch
@@ -147,7 +152,7 @@ jobs:
       NEW_VERSION: ${{ inputs.release_branch_name }}
     steps:
     - name: Checkout az_quickstart
-      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       with:
         repository: az-digital/az_quickstart
         ref: ${{ github.ref_name }}
@@ -196,7 +201,7 @@ jobs:
         sed -i 's/SCAFFOLD_BRANCH="main"/SCAFFOLD_BRANCH="$NEW_VERSION"\n/g' .tugboat/config.yml
 
     - name: Setup PHP with composer v2
-      uses: shivammathur/setup-php@accd6127cb78bee3e8082180cb391013d204ef9f # 2.37.0
+      uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
       with:
          php-version: '8.3'
          tools: composer:v2
@@ -241,7 +246,7 @@ jobs:
     name: Update the composer dev branch alias on the `${{ github.ref_name }}` branch.
     steps:
       - name: Update `${{ github.ref_name }}` branch with new minor release branch alias.
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ github.ref_name }}
           token: ${{ secrets.REPO_DISPATCH_TOKEN }}
@@ -256,7 +261,7 @@ jobs:
           sed -i "s/      - '2.x'/      - '2.x'\n      - '$NEW_VERSION'/g" .github/workflows/ci.yml
 
       - name: Setup PHP with composer v2
-        uses: shivammathur/setup-php@accd6127cb78bee3e8082180cb391013d204ef9f # 2.37.0
+        uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
         with:
           php-version: '8.3'
           tools: composer:v2

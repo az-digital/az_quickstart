@@ -20,9 +20,9 @@
         if (!el?.classList) return;
 
         // Get or create Bootstrap collapse instance.
-        const bsCollapse =
-          arizonaBootstrap.Collapse.getInstance(el) ||
-          new arizonaBootstrap.Collapse(el, { toggle: false });
+        const bsCollapse = arizonaBootstrap.Collapse.getOrCreateInstance(el, {
+          toggle: false,
+        });
 
         if (isOpen) {
           bsCollapse.show();

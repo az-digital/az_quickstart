@@ -920,6 +920,7 @@ display:
         arguments: false
         filters: false
         filter_groups: false
+        footer: false
       relationships:
         field_az_contributors:
           id: field_az_contributors
@@ -941,6 +942,17 @@ display:
           required: true
       display_description: ''
       style_options: null
+      footer:
+        result:
+          id: result
+          table: views
+          field: result
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: result
+          empty: false
+          content: '<p><em>Page @current_page of @page_count</em></p>'
       display_extenders: {  }
       block_hide_empty: true
     cache_metadata:
@@ -1120,11 +1132,23 @@ display:
         arguments: false
         filters: false
         filter_groups: false
+        footer: false
       relationships: {  }
       use_ajax: false
       group_by: false
       display_description: ''
       style_options: null
+      footer:
+        result:
+          id: result
+          table: views
+          field: result
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: result
+          empty: false
+          content: '<p><em>Page @current_page of @page_count</em></p>'
       display_extenders: {  }
     cache_metadata:
       max-age: -1
@@ -1163,8 +1187,20 @@ display:
         style: false
         style_options: false
         row: false
+        footer: false
       display_description: ''
       style_options: null
+      footer:
+        result:
+          id: result
+          table: views
+          field: result
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: result
+          empty: false
+          content: '<p><em>Page @current_page of @page_count</em></p>'
       display_extenders: {  }
     cache_metadata:
       max-age: -1

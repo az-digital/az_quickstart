@@ -8,6 +8,7 @@ use Drupal\search_api\Attribute\SearchApiProcessor;
 use Drupal\search_api\Datasource\DatasourceInterface;
 use Drupal\search_api\Item\ItemInterface;
 use Drupal\search_api\Processor\ProcessorPluginBase;
+use Drupal\text\TextSummary;
 use Drupal\az_search_api\Plugin\search_api\processor\Property\AZSummaryProperty;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -32,12 +33,18 @@ class AZSearchSummary extends ProcessorPluginBase {
   protected ?MetatagManager $metatagManager = NULL;
 
   /**
+   * The text summary service.
+   */
+  protected ?TextSummary $textSummary = NULL;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
     /** @var static $processor */
     $processor = parent::create($container, $configuration, $plugin_id, $plugin_definition);
     $processor->setMetatagManager($container->get('metatag.manager'));
+    $processor->setTextSummary($container->get(TextSummary::class));
     return $processor;
   }
 
@@ -61,6 +68,29 @@ class AZSearchSummary extends ProcessorPluginBase {
    */
   public function setMetatagManager(MetatagManager $metatag_manager): static {
     $this->metatagManager = $metatag_manager;
+    return $this;
+  }
+
+  /**
+   * Retrieves the text summary service.
+   *
+   * @return \Drupal\text\TextSummary
+   *   The text summary service.
+   */
+  public function getTextSummary(): TextSummary {
+    return $this->textSummary ?: \Drupal::service(TextSummary::class);
+  }
+
+  /**
+   * Sets the text summary service.
+   *
+   * @param \Drupal\text\TextSummary $text_summary
+   *   The text summary service.
+   *
+   * @return $this
+   */
+  public function setTextSummary(TextSummary $text_summary): static {
+    $this->textSummary = $text_summary;
     return $this;
   }
 
@@ -102,7 +132,7 @@ class AZSearchSummary extends ProcessorPluginBase {
           $format = $entity->get('field_az_body')->format;
           if (!empty($value) && !empty($format)) {
             // Summarize the body for some kind of summary. Not very desirable.
-            $summary = text_summary($value, $format);
+            $summary = $this->getTextSummary()->generate($value, $format);
             if (!empty($summary)) {
               $field->addValue($summary);
             }

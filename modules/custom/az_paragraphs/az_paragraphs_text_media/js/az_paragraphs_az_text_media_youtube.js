@@ -26,9 +26,6 @@
           );
           window.onYouTubeIframeAPIReady = () => {
             Array.from(bgVideoParagraphs).forEach((element) => {
-              const parentParagraph = document.getElementById(
-                element.dataset.parentid,
-              );
               const youtubeId = element.dataset.youtubeid;
               bgVideoSettings[youtubeId] = {
                 autoplay: element.dataset.autoplay === 'true',
@@ -54,21 +51,19 @@
                   onStateChange: window.onPlayerStateChange,
                 },
               });
-              const playButton =
-                element.getElementsByClassName('az-video-play')[0];
-              playButton.addEventListener('click', (event) => {
+
+              // Play/Pause button: delegate state changes to player events.
+              const playPauseButton =
+                element.getElementsByClassName('az-video-playpause')[0];
+              playPauseButton.addEventListener('click', (event) => {
                 event.preventDefault();
-                element.player.playVideo();
-                parentParagraph.classList.remove('az-video-paused');
-                parentParagraph.classList.add('az-video-playing');
-              });
-              const pauseButton =
-                element.getElementsByClassName('az-video-pause')[0];
-              pauseButton.addEventListener('click', (event) => {
-                event.preventDefault();
-                element.player.pauseVideo();
-                parentParagraph.classList.remove('az-video-playing');
-                parentParagraph.classList.add('az-video-paused');
+                if (
+                  event.currentTarget.getAttribute('aria-pressed') === 'true'
+                ) {
+                  element.player.pauseVideo();
+                } else {
+                  element.player.playVideo();
+                }
               });
             });
           };
@@ -119,6 +114,10 @@
           };
 
           window.onPlayerReady = (event) => {
+            // Set the iframe tabindex to -1 to prevent focus from reaching iframe.
+            const iframe = event.target.getIframe();
+            iframe.setAttribute('tabindex', '-1');
+
             const id = event.target.options.videoId;
             if (!bgVideoSettings[id].autoplay) {
               return;
@@ -126,6 +125,7 @@
             if (defaultSettings.mute) {
               event.target.mute();
             }
+
             event.target.seekTo(bgVideoSettings[id].start);
             event.target.playVideo();
             // Create and dispatch a new event when video starts playing.
@@ -147,7 +147,24 @@
             if (event.data === 1) {
               resize();
               parentContainer.classList.add('az-video-playing');
+              parentContainer.classList.remove('az-video-paused');
               parentContainer.classList.remove('az-video-loading');
+              // Sync button state: video is confirmed playing.
+              const btn = parentContainer.querySelector('.az-video-playpause');
+              if (btn) {
+                btn.textContent = 'Pause Video';
+                btn.setAttribute('aria-pressed', 'true');
+              }
+            }
+            if (event.data === 2) {
+              // Video paused: sync button state.
+              parentContainer.classList.remove('az-video-playing');
+              parentContainer.classList.add('az-video-paused');
+              const btn = parentContainer.querySelector('.az-video-playpause');
+              if (btn) {
+                btn.textContent = 'Play Video';
+                btn.setAttribute('aria-pressed', 'false');
+              }
             }
           };
 

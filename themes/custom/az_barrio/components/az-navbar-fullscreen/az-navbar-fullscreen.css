@@ -1,30 +1,35 @@
-/* @todo Remove when Arizona Bootstrap is updated with a fix for this. */
-@media (max-width: 991.98px) {
-  .navbar-az-fullscreen-modal .navbar-az-fullscreen-tools .navbar-toggler-icon {
-    width: 1.5em;
-    height: 1.5em;
-    -webkit-transform: unset;
-    transform: unset;
-  }
-}
-
 .navbar-az-fullscreen-actions .nav-link {
   white-space: nowrap;
 }
 
-.navbar-az-fullscreen-search #search-block-form {
+.az-search #search-block-form {
   padding: 0;
+  width: 100%;
 }
 
-/* Remove duplicate search icon from search form block */
-.navbar-az-fullscreen-search .search-block-form .btn::before {
-  display: none;
+/* Drupal admin toolbar sits at top: 0 with position: fixed; shift the
+   fullscreen navbar down so it does not slide underneath. Body padding-top
+   set by toolbar.module already pushes page content (and therefore the
+   navbar-az-fullscreen-fixed-top-offset wrapper) by the same amount. */
+body.toolbar-fixed.toolbar-horizontal .navbar-az-fullscreen.fixed-top {
+  top: 39px;
 }
 
-.navbar-az-fullscreen-search .btn {
-  padding-bottom: 10px;
+body.toolbar-fixed.toolbar-horizontal.toolbar-tray-open .navbar-az-fullscreen.fixed-top {
+  top: 79px;
 }
 
-.navbar-az-fullscreen-search .btn .material-symbols-rounded {
-  font-size: 36px;
+body.toolbar-vertical .navbar-az-fullscreen.fixed-top {
+  top: var(--drupal-displace-offset-top);
+  z-index: 1;
+}
+
+body.toolbar-vertical:not(.toolbar-fixed) .navbar-az-fullscreen.fixed-top {
+  position: absolute;
+}
+
+@media screen and (max-width: 842px) {
+  body.toolbar-vertical {
+    padding-top: var(--drupal-displace-offset-top) !important;
+  }
 }

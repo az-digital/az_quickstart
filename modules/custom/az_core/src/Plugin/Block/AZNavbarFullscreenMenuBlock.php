@@ -105,12 +105,13 @@ class AZNavbarFullscreenMenuBlock extends BlockBase implements ContainerFactoryP
   public function defaultConfiguration() {
     return [
       'primary_menu' => 'main',
-      'level' => 1,
-      'depth' => NULL,
-      'expand_all_items' => FALSE,
       'cta_menu' => '',
-      'resources_menu' => '',
-      'helpful_links_menu' => '',
+      'footer_top_menu' => '',
+      'footer_top_desktop_heading' => 'Resources For',
+      'footer_top_mobile_heading' => 'Resources by Audience',
+      'footer_bottom_menu' => '',
+      'footer_bottom_desktop_heading' => 'Helpful Links',
+      'footer_bottom_mobile_heading' => 'Helpful Links',
       'search_form_block_desktop_navbar' => '',
       'search_form_block_offcanvas' => '',
     ] + parent::defaultConfiguration();
@@ -122,7 +123,6 @@ class AZNavbarFullscreenMenuBlock extends BlockBase implements ContainerFactoryP
   public function blockForm($form, FormStateInterface $form_state) {
     $form = parent::blockForm($form, $form_state);
     $config = $this->configuration;
-    $defaults = $this->defaultConfiguration();
 
     // Get list of available menus.
     $menus = $this->entityTypeManager->getStorage('menu')->loadMultiple();
@@ -136,44 +136,6 @@ class AZNavbarFullscreenMenuBlock extends BlockBase implements ContainerFactoryP
       '#default_value' => $config['primary_menu'] ?? 'main',
       '#options' => ['' => $this->t('- None -')] + $menus,
       '#description' => $this->t('Select the primary menu for the fullscreen navigation.'),
-    ];
-
-    // Add the menu levels configuration from SystemMenuBlock.
-    $form['menu_levels'] = [
-      '#type' => 'details',
-      '#title' => $this->t('Menu levels'),
-      // Open if not set to defaults.
-      '#open' => $defaults['level'] !== $config['level'] || $defaults['depth'] !== $config['depth'],
-      '#process' => [[static::class, 'processMenuLevelParents']],
-    ];
-
-    $options = range(0, $this->menuLinkTree->maxDepth());
-    unset($options[0]);
-
-    $form['menu_levels']['level'] = [
-      '#type' => 'select',
-      '#title' => $this->t('Initial visibility level'),
-      '#default_value' => $config['level'],
-      '#options' => $options,
-      '#description' => $this->t('The menu is only visible if the menu link for the current page is at this level or below it. Use level 1 to always display this menu.'),
-      '#required' => TRUE,
-    ];
-
-    $options[0] = $this->t('Unlimited');
-    $form['menu_levels']['depth'] = [
-      '#type' => 'select',
-      '#title' => $this->t('Number of levels to display'),
-      '#default_value' => $config['depth'] ?? 0,
-      '#options' => $options,
-      '#description' => $this->t('This maximum number includes the initial level.'),
-      '#required' => TRUE,
-    ];
-
-    $form['menu_levels']['expand_all_items'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Expand all menu links'),
-      '#default_value' => !empty($config['expand_all_items']),
-      '#description' => $this->t('Override the option found on each menu link used for expanding children and instead display the whole menu tree as expanded.'),
     ];
 
     $form['menu_selection'] = [
@@ -190,20 +152,48 @@ class AZNavbarFullscreenMenuBlock extends BlockBase implements ContainerFactoryP
       '#description' => $this->t('Select the menu to use for the Call to Action section.'),
     ];
 
-    $form['menu_selection']['resources_menu'] = [
+    $form['menu_selection']['footer_top_menu'] = [
       '#type' => 'select',
-      '#title' => $this->t('Resources For Menu'),
-      '#default_value' => $config['resources_menu'],
+      '#title' => $this->t('Footer Top Menu'),
+      '#default_value' => $config['footer_top_menu'],
       '#options' => ['' => $this->t('- None -')] + $menus,
-      '#description' => $this->t('Select the menu to use for the Resources For section.'),
+      '#description' => $this->t('Select the menu to use for the top footer.'),
     ];
 
-    $form['menu_selection']['helpful_links_menu'] = [
+    $form['menu_selection']['footer_top_desktop_heading'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Footer Top Desktop Heading'),
+      '#default_value' => $config['footer_top_desktop_heading'],
+      '#description' => $this->t('Heading for the top footer on desktop devices. A trailing colon is added automatically to the displayed heading.'),
+    ];
+
+    $form['menu_selection']['footer_top_mobile_heading'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Footer Top Mobile Heading'),
+      '#default_value' => $config['footer_top_mobile_heading'],
+      '#description' => $this->t('Heading for the top footer on mobile devices. Since the mobile footer will lack the extra context of the footer links, the mobile heading may need to be more descriptive than the desktop heading.'),
+    ];
+
+    $form['menu_selection']['footer_bottom_menu'] = [
       '#type' => 'select',
-      '#title' => $this->t('Helpful Links Menu'),
-      '#default_value' => $config['helpful_links_menu'],
+      '#title' => $this->t('Footer Bottom Menu'),
+      '#default_value' => $config['footer_bottom_menu'],
       '#options' => ['' => $this->t('- None -')] + $menus,
-      '#description' => $this->t('Select the menu to use for the Helpful Links section.'),
+      '#description' => $this->t('Select the menu to use for the bottom footer.'),
+    ];
+
+    $form['menu_selection']['footer_bottom_desktop_heading'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Footer Bottom Desktop Heading'),
+      '#default_value' => $config['footer_bottom_desktop_heading'],
+      '#description' => $this->t('Heading for the bottom footer on desktop devices. A trailing colon is added automatically to the displayed heading.'),
+    ];
+
+    $form['menu_selection']['footer_bottom_mobile_heading'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Footer Bottom Mobile Heading'),
+      '#default_value' => $config['footer_bottom_mobile_heading'],
+      '#description' => $this->t('Heading for the bottom footer on mobile devices. Since the mobile footer will lack the extra context of the footer links, the mobile heading may need to be more descriptive than the desktop heading.'),
     ];
 
     // Load search form blocks.
@@ -235,28 +225,19 @@ class AZNavbarFullscreenMenuBlock extends BlockBase implements ContainerFactoryP
   }
 
   /**
-   * Form API callback: Processes the menu_levels field element.
-   *
-   * Adjusts the #parents of menu_levels to save its children at the top level.
-   */
-  public static function processMenuLevelParents(&$element, FormStateInterface $form_state, &$complete_form) {
-    array_pop($element['#parents']);
-    return $element;
-  }
-
-  /**
    * {@inheritdoc}
    */
   public function blockSubmit($form, FormStateInterface $form_state) {
     parent::blockSubmit($form, $form_state);
     $this->configuration['primary_menu'] = $form_state->getValue('primary_menu');
-    $this->configuration['level'] = $form_state->getValue('level');
-    $this->configuration['depth'] = $form_state->getValue('depth') ?: NULL;
-    $this->configuration['expand_all_items'] = $form_state->getValue('expand_all_items');
     $menu_selection = $form_state->getValue('menu_selection');
     $this->configuration['cta_menu'] = $menu_selection['cta_menu'] ?? '';
-    $this->configuration['resources_menu'] = $menu_selection['resources_menu'] ?? '';
-    $this->configuration['helpful_links_menu'] = $menu_selection['helpful_links_menu'] ?? '';
+    $this->configuration['footer_top_menu'] = $menu_selection['footer_top_menu'] ?? '';
+    $this->configuration['footer_top_desktop_heading'] = $menu_selection['footer_top_desktop_heading'] ?? '';
+    $this->configuration['footer_top_mobile_heading'] = $menu_selection['footer_top_mobile_heading'] ?? '';
+    $this->configuration['footer_bottom_menu'] = $menu_selection['footer_bottom_menu'] ?? '';
+    $this->configuration['footer_bottom_desktop_heading'] = $menu_selection['footer_bottom_desktop_heading'] ?? '';
+    $this->configuration['footer_bottom_mobile_heading'] = $menu_selection['footer_bottom_mobile_heading'] ?? '';
     $this->configuration['search_form_block_desktop_navbar'] = $form_state->getValue('search_form_block_desktop_navbar') ?? '';
     $this->configuration['search_form_block_offcanvas'] = $form_state->getValue('search_form_block_offcanvas') ?? '';
   }
@@ -276,8 +257,8 @@ class AZNavbarFullscreenMenuBlock extends BlockBase implements ContainerFactoryP
     $menus_config = [
       'primary_menu' => 'primary',
       'cta_menu' => 'cta',
-      'resources_menu' => 'resources',
-      'helpful_links_menu' => 'helpful_links',
+      'footer_top_menu' => 'footer_top',
+      'footer_bottom_menu' => 'footer_bottom',
     ];
 
     foreach ($menus_config as $config_key => $section_key) {
@@ -292,6 +273,12 @@ class AZNavbarFullscreenMenuBlock extends BlockBase implements ContainerFactoryP
       // Add cache tags for the menu.
       $build['#cache']['tags'][] = "config:system.menu.{$menu_name}";
     }
+
+    // Add footer headings.
+    $build['footer_top_desktop_heading'] = $this->configuration['footer_top_desktop_heading'] ?? '';
+    $build['footer_top_mobile_heading'] = $this->configuration['footer_top_mobile_heading'] ?? '';
+    $build['footer_bottom_desktop_heading'] = $this->configuration['footer_bottom_desktop_heading'] ?? '';
+    $build['footer_bottom_mobile_heading'] = $this->configuration['footer_bottom_mobile_heading'] ?? '';
 
     // Add search form block for the desktop navbar if configured.
     if (!empty($this->configuration['search_form_block_desktop_navbar'])) {
@@ -341,15 +328,11 @@ class AZNavbarFullscreenMenuBlock extends BlockBase implements ContainerFactoryP
     // Skip disabled links in the menu.
     $parameters->onlyEnabledLinks();
 
-    if ($section_key === 'primary') {
-      // Primary menu: Set the active trail and limit depth to 3.
-      $parameters->setActiveTrail($this->menuActiveTrail->getActiveTrailIds($menu_name));
-      $parameters->setMaxDepth(3);
-    }
-    else {
-      // Additional menus: only keep the first level of menu items.
-      $parameters->setMaxDepth(1);
-    }
+    // Set the active trail.
+    $parameters->setActiveTrail($this->menuActiveTrail->getActiveTrailIds($menu_name));
+
+    // Set the maximum depth to 3 for the primary menu and 1 otherwise.
+    $section_key === 'primary' ? $parameters->setMaxDepth(3) : $parameters->setMaxDepth(1);
 
     // Load the menu tree.
     /** @var \Drupal\Core\Menu\MenuLinkTreeElement[] $tree */
@@ -379,11 +362,11 @@ class AZNavbarFullscreenMenuBlock extends BlockBase implements ContainerFactoryP
     if (!empty($this->configuration['cta_menu'])) {
       $cache_tags[] = 'config:system.menu.' . $this->configuration['cta_menu'];
     }
-    if (!empty($this->configuration['resources_menu'])) {
-      $cache_tags[] = 'config:system.menu.' . $this->configuration['resources_menu'];
+    if (!empty($this->configuration['footer_top_menu'])) {
+      $cache_tags[] = 'config:system.menu.' . $this->configuration['footer_top_menu'];
     }
-    if (!empty($this->configuration['helpful_links_menu'])) {
-      $cache_tags[] = 'config:system.menu.' . $this->configuration['helpful_links_menu'];
+    if (!empty($this->configuration['footer_bottom_menu'])) {
+      $cache_tags[] = 'config:system.menu.' . $this->configuration['footer_bottom_menu'];
     }
     return $cache_tags;
   }
