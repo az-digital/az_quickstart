@@ -1,5 +1,6 @@
 id: az_trellis_events_files
 label: Trellis Events Files
+migration_group: az_trellis_events
 source:
   plugin: az_trellis_events_api
   trellis_ids: {  }
