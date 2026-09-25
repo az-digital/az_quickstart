@@ -40,7 +40,7 @@ class AZCoreHooks {
    *
    * Adds a cache key to identify search form blocks in navigation_offcanvas.
    */
-  public function blockBuildSearchFormBlockAlter (array &$build, BlockPluginInterface $block): void {
+  public function blockBuildSearchFormBlockAlter(array &$build, BlockPluginInterface $block): void {
     $build['#cache']['keys'][] = 'search_form_block';
   }
 
