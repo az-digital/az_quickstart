@@ -105,9 +105,21 @@ function az_barrio_preprocess_page(&$variables, $hook) {
   if ($variables['az_back_to_top']) {
     $variables['#attached']['library'][] = 'az_barrio/az-back-to-top';
   }
+  $variables['has_offcanvas_search'] = FALSE;
+  $variables['has_offcanvas_menu'] = FALSE;
 
-  if (isset($variables['page']['navigation_offcanvas']['az_barrio_offcanvas_searchform'])) {
-    $variables['#attached']['library'][] = 'az_barrio/az-barrio-off-canvas-nav';
+  if (!empty($variables['page']['navigation_offcanvas'])) {
+    foreach ($variables['page']['navigation_offcanvas'] as $offcanvas_block) {
+      if (!empty($offcanvas_block['#cache']['keys'])) {
+        if (!$variables['has_offcanvas_search'] && in_array('search_form_block', $offcanvas_block['#cache']['keys'], TRUE)) {
+          $variables['has_offcanvas_search'] = TRUE;
+          $variables['#attached']['library'][] = 'az_barrio/az-barrio-off-canvas-nav';
+        }
+        if (!$variables['has_offcanvas_menu'] && in_array('mobile_nav_block', $offcanvas_block['#cache']['keys'], TRUE)) {
+          $variables['has_offcanvas_menu'] = TRUE;
+        }
+      }
+    }
   }
 
   // Check if land acknowledgment should be displayed.
