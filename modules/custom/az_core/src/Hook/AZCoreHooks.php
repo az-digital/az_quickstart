@@ -2,6 +2,7 @@
 
 namespace Drupal\az_core\Hook;
 
+use Drupal\Core\Block\BlockPluginInterface;
 use Drupal\Core\Extension\Extension;
 use Drupal\Core\Hook\Attribute\Hook;
 
@@ -31,6 +32,16 @@ class AZCoreHooks {
       && array_key_exists('ckeditor5-stylesheets', $info)) {
       $info['ckeditor5-stylesheets'][] = $az_bootstrap_css_location;
     }
+  }
+
+  #[Hook('block_build_search_form_block_alter')]
+  /**
+   * Implements hook_block_build_BASE_BLOCK_ID_alter().
+   *
+   * Adds a cache key to identify search form blocks in navigation_offcanvas.
+   */
+  public function blockBuildSearchFormBlockAlter (array &$build, BlockPluginInterface $block): void {
+    $build['#cache']['keys'][] = 'search_form_block';
   }
 
 }
