@@ -597,26 +597,26 @@ a.nolink + ul .sf-clone-parent {
 .sidebar {
   .h1, h1 {
     font-size: calc(1.375rem + 1.5vw);
-    font-family: unset;
   }
-  
+
   .h2, h2 {
     font-size: calc(1.325rem + .9vw);
-    font-family: unset;
   }
 
   .h3, h3 {
     font-size: calc(1.3rem + .6vw);
-    font-family: unset;
   }
 
   .h4, h4 {
     font-size: calc(1.275rem + .3vw);
-    font-family: unset;
   }
 
   .h6, h6 {
     font-size: 1rem;
+  }
+
+  .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    font-weight: 500;
     font-family: unset;
   }
 
