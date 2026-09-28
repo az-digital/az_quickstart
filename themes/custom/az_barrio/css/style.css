@@ -594,6 +594,51 @@ a.nolink + ul .sf-clone-parent {
   min-height: 1px;
 }
 
+.sidebar {
+  .h1, h1 {
+    font-size: calc(1.375rem + 1.5vw);
+    font-family: unset;
+  }
+  
+  .h2, h2 {
+    font-size: calc(1.325rem + .9vw);
+    font-family: unset;
+  }
+
+  .h3, h3 {
+    font-size: calc(1.3rem + .6vw);
+    font-family: unset;
+  }
+
+  .h4, h4 {
+    font-size: calc(1.275rem + .3vw);
+    font-family: unset;
+  }
+
+  .h6, h6 {
+    font-size: 1rem;
+    font-family: unset;
+  }
+
+  @media (min-width: 1200px) {
+    .h1, h1 {
+      font-size: 2.5rem;
+    }
+
+    .h2, h2 {
+      font-size: 2rem;
+    }
+
+    .h3, h3 {
+      font-size: 1.75rem;
+    }
+
+    .h4, h4 {
+      font-size: 1.5rem;
+    }
+  }
+}
+
 .webform-grid .radio,
 .webform-grid .checkbox {
   display: table-cell;
@@ -800,7 +845,7 @@ form.webform-submission-form {
   color: #333;
 }
 
-/* Place contextual link trigger button directly on centered embeds. 
+/* Place contextual link trigger button directly on centered embeds.
  * See https://github.com/az-digital/az_quickstart/pull/3844
  */
 .field--name-field-az-text-area .align-center.contextual-region {
