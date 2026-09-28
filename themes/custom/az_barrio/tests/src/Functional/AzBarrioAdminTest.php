@@ -2,6 +2,7 @@
 
 namespace Drupal\Tests\az_barrio\Functional;
 
+use Drupal\block\Entity\Block;
 use Drupal\Tests\az_core\Functional\QuickstartFunctionalTestBase;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
@@ -72,11 +73,28 @@ class AzBarrioAdminTest extends QuickstartFunctionalTestBase {
     $this->cssSelect('ul[data-drupal-selector="edit-blocks-az-barrio-offcanvas-searchform-operations"] li.disable a')[0]->click();
     $this->drupalGet('');
     $this->assertSession()->elementNotExists('css', '#jsAzSearch');
-    $this->drupalGet('admin/structure/block');
-    $this->cssSelect('ul[data-drupal-selector="edit-blocks-az-barrio-offcanvas-searchform-operations"] li.enable a')[0]->click();
+
+    Block::create([
+      'id' => 'test_offcanvas_searchform',
+      'theme' => 'az_barrio',
+      'region' => 'navigation_offcanvas',
+      'plugin' => 'search_form_block',
+      'weight' => 0,
+      'status' => 1,
+      'visibility' => [],
+      'settings' => [
+        'id' => 'search_form_block',
+        'label' => 'Search',
+        'label_display' => FALSE,
+        'provider' => 'search',
+        'page_id' => '',
+      ],
+    ])->save();
+
     $this->drupalGet('');
     $this->assertSession()->elementExists('css', '#jsAzSearch');
-    $this->assertSession()->elementExists('css', '#block-az-barrio-offcanvas-searchform');
+    $this->assertSession()->elementExists('css', '#block-test-offcanvas-searchform');
+    $this->assertSession()->responseContains('themes/custom/az_barrio/js/az-barrio-off-canvas-nav.js');
     $this->drupalGet('admin/structure/block');
     $this->cssSelect('ul[data-drupal-selector="edit-blocks-az-barrio-mobilenavblock-operations"] li.disable a')[0]->click();
     $this->drupalGet('');
