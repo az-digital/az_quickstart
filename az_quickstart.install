@@ -109,7 +109,7 @@ function az_quickstart_update_920701() {
 }
 
 /**
- * Empty update moved to az_paragraphs_update_1130101().
+ * Empty update moved to az_paragraphs_update_1130501().
  */
 function az_quickstart_update_920702() {
 }
