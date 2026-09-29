@@ -8,6 +8,7 @@ use Drupal\Core\Config\TypedConfigManagerInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Routing\RouteBuilderInterface;
+use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -71,7 +72,7 @@ class AzCasSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   protected function getEditableConfigNames() {
-    return ['az_cas.settings'];
+    return ['az_cas.settings', 'cas.settings'];
   }
 
   /**
@@ -79,26 +80,108 @@ class AzCasSettingsForm extends ConfigFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $az_cas_config = $this->config('az_cas.settings');
+    $cas_config = $this->config('cas.settings');
 
-    $form['disable_login_form'] = [
+    $form['login_settings'] = [
+      '#type' => 'fieldset',
+      '#title' => $this->t('Login Settings'),
+      '#description' => $this->t('Configure how Drupal login forms interact with CAS.'),
+    ];
+
+    $form['login_settings']['disable_login_form'] = [
       '#title' => $this->t("Disable login form"),
       '#type' => 'checkbox',
       '#description' => $this->t("Disables the default user login form provided by Drupal core."),
       '#default_value' => $az_cas_config->get('disable_login_form'),
     ];
 
-    $form['disable_admin_add_user_button'] = [
+    $form['login_settings']['disable_password_recovery_link'] = [
+      '#title' => $this->t("Disable 'request new password' form"),
+      '#type' => 'checkbox',
+      '#description' => $this->t("Disables the default password recovery functionality provided by Drupal core."),
+      '#default_value' => $az_cas_config->get('disable_password_recovery_link'),
+    ];
+
+    $form['admin_settings'] = [
+      '#type' => 'fieldset',
+      '#title' => $this->t('Admin Settings'),
+      '#description' => $this->t('Configure how CAS interacts with the admin interface.'),
+    ];
+
+    $form['admin_settings']['disable_admin_add_user_button'] = [
       '#title' => $this->t("Disable 'Add user' button"),
       '#type' => 'checkbox',
       '#description' => $this->t("Removes button for adding non-CAS users in admin interface."),
       '#default_value' => $az_cas_config->get('disable_admin_add_user_button'),
     ];
 
-    $form['disable_password_recovery_link'] = [
-      '#title' => $this->t("Disable 'request new password' form"),
+    $form['guest_authentication'] = [
+      '#type' => 'fieldset',
+      '#title' => $this->t('Guest Authentication'),
+    ];
+
+    $form['guest_authentication']['guest_mode'] = [
       '#type' => 'checkbox',
-      '#description' => $this->t("Disables the default password recovery functionality provided by Drupal core."),
-      '#default_value' => $az_cas_config->get('disable_password_recovery_link'),
+      '#title' => $this->t('Enable guest authentication mode'),
+      '#description' => $this->t('Allows restricting access to certain paths to anyone with a valid NetID without creating Drupal user accounts.'),
+      '#default_value' => $az_cas_config->get('guest_mode'),
+    ];
+
+    // Add notice about auto_register requirement.
+    $cas_settings_url = Url::fromRoute('cas.settings')->toString() . '#edit-user-accounts';
+    $form['guest_authentication']['auto_register_notice'] = [
+      '#type' => 'markup',
+      '#markup' => '<div class="messages messages--warning">' . $this->t('Guest authentication requires the CAS module\'s "Auto register users" setting to be enabled. This setting will be automatically enabled when guest mode is activated. <a href="@cas_settings_url">View CAS settings</a>', ['@cas_settings_url' => $cas_settings_url]) . '</div>',
+      '#states' => [
+        'visible' => [
+          ':input[name="guest_mode"]' => ['checked' => TRUE],
+        ],
+      ],
+      '#weight' => 1,
+    ];
+
+    $form['guest_authentication']['guest_auth_settings'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Guest Authentication Settings'),
+      '#open' => TRUE,
+      '#states' => [
+        'visible' => [
+          ':input[name="guest_mode"]' => ['checked' => TRUE],
+        ],
+      ],
+      '#weight' => 2,
+    ];
+
+    // Add warning about regulated content.
+    $form['guest_authentication']['guest_auth_settings']['regulated_content_warning'] = [
+      '#type' => 'markup',
+      '#markup' => '<div class="messages messages--warning">' .
+      $this->t('<strong>Important:</strong> Guest authentication mode should not be used to restrict access to content that is regulated (e.g., FERPA protected, HIPAA, or other sensitive information). This feature is intended for general access control only.') .
+      '</div>',
+      '#weight' => -10,
+    ];
+
+    $form['guest_authentication']['guest_auth_settings']['guest_auth_paths'] = [
+      '#type' => 'textarea',
+      '#title' => $this->t('Guest authentication paths'),
+      '#default_value' => implode("\n", $az_cas_config->get('guest_auth_paths') ?: []),
+      '#description' => $this->t('Specify pages that should be restricted to authenticated NetID users without requiring Drupal accounts. Enter one path per line. The * character is a wildcard. An example path is /content/* for all content pages. &lt;front&gt; is the front page.'),
+    ];
+
+    $form['guest_authentication']['guest_auth_settings']['guest_ip_validation'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Enable IP validation for guest sessions'),
+      '#description' => $this->t('When enabled, guest sessions will be validated against the IP address they were created with. This adds security but may cause issues for users whose IP address changes during their session.'),
+      '#default_value' => $az_cas_config->get('guest_ip_validation') ?? FALSE,
+    ];
+
+    $form['guest_authentication']['guest_auth_settings']['guest_session_lifetime'] = [
+      '#type' => 'number',
+      '#title' => $this->t('Guest session lifetime (hours)'),
+      '#description' => $this->t('The number of hours a guest session remains valid before requiring re-authentication. Default is 8 hours.'),
+      '#default_value' => $az_cas_config->get('guest_session_lifetime') ?? 8,
+      '#min' => 1,
+      '#max' => 72,
     ];
 
     return parent::buildForm($form, $form_state);
@@ -108,10 +191,29 @@ class AzCasSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
+    // Get guest mode value.
+    $guest_mode = $form_state->getValue('guest_mode');
+
+    // Process guest authentication paths if guest mode is enabled.
+    $guest_auth_paths = [];
+    if ($guest_mode) {
+      $guest_auth_paths = array_filter(preg_split('/[\n\r]+/', $form_state->getValue('guest_auth_paths')));
+
+      // Ensure CAS auto_register is enabled when guest mode is enabled.
+      $this->config('cas.settings')
+        ->set('user_accounts.auto_register', TRUE)
+        ->save();
+    }
+
+    // Save AZ CAS settings.
     $this->config('az_cas.settings')
       ->set('disable_login_form', $form_state->getValue('disable_login_form'))
       ->set('disable_admin_add_user_button', $form_state->getValue('disable_admin_add_user_button'))
       ->set('disable_password_recovery_link', $form_state->getValue('disable_password_recovery_link'))
+      ->set('guest_mode', $guest_mode)
+      ->set('guest_auth_paths', $guest_auth_paths)
+      ->set('guest_ip_validation', $form_state->getValue('guest_ip_validation'))
+      ->set('guest_session_lifetime', $form_state->getValue('guest_session_lifetime'))
       ->save();
 
     $this->routeBuilder->setRebuildNeeded();
