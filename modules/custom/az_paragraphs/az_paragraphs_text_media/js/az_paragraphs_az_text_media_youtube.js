@@ -22,11 +22,22 @@
           var firstScriptTag = document.getElementsByTagName('script')[0];
           tag.src = 'https://www.youtube.com/iframe_api';
           firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+<<<<<<< HEAD
           var bgVideoParagraphs = document.getElementsByClassName('az-js-video-background');
           window.onYouTubeIframeAPIReady = function () {
             Array.from(bgVideoParagraphs).forEach(function (element) {
               var parentParagraph = document.getElementById(element.dataset.parentid);
               var youtubeId = element.dataset.youtubeid;
+=======
+
+          // Set up IFrame player
+          const bgVideoParagraphs = document.getElementsByClassName(
+            'az-js-video-background',
+          );
+          window.onYouTubeIframeAPIReady = () => {
+            Array.from(bgVideoParagraphs).forEach((element) => {
+              const youtubeId = element.dataset.youtubeid;
+>>>>>>> 2fe00c66 (Closes #5490 Update text on media video play/pause buttons. (#5505))
               bgVideoSettings[youtubeId] = {
                 autoplay: element.dataset.autoplay === 'true',
                 start: element.dataset.start
@@ -48,6 +59,7 @@
                   onStateChange: window.onPlayerStateChange
                 }
               });
+<<<<<<< HEAD
               var playButton = element.getElementsByClassName('az-video-play')[0];
               playButton.addEventListener('click', function (event) {
                 event.preventDefault();
@@ -61,6 +73,21 @@
                 element.player.pauseVideo();
                 parentParagraph.classList.remove('az-video-playing');
                 parentParagraph.classList.add('az-video-paused');
+=======
+
+              // Play/Pause button: delegate state changes to player events.
+              const playPauseButton =
+                element.getElementsByClassName('az-video-playpause')[0];
+              playPauseButton.addEventListener('click', (event) => {
+                event.preventDefault();
+                if (
+                  event.currentTarget.getAttribute('aria-pressed') === 'true'
+                ) {
+                  element.player.pauseVideo();
+                } else {
+                  element.player.playVideo();
+                }
+>>>>>>> 2fe00c66 (Closes #5490 Update text on media video play/pause buttons. (#5505))
               });
             });
           };
@@ -98,14 +125,25 @@
               setDimensions(element);
             });
           };
+<<<<<<< HEAD
           window.onPlayerReady = function (event) {
             var id = event.target.options.videoId;
+=======
+
+          window.onPlayerReady = (event) => {
+            // Set the iframe tabindex to -1 to prevent focus from reaching iframe.
+            const iframe = event.target.getIframe();
+            iframe.setAttribute('tabindex', '-1');
+
+            const id = event.target.options.videoId;
+>>>>>>> 2fe00c66 (Closes #5490 Update text on media video play/pause buttons. (#5505))
             if (!bgVideoSettings[id].autoplay) {
               return;
             }
             if (defaultSettings.mute) {
               event.target.mute();
             }
+
             event.target.seekTo(bgVideoSettings[id].start);
             event.target.playVideo();
             dispatchEvent(new Event('azVideoPlay'));
@@ -120,7 +158,24 @@
             if (event.data === 1) {
               resize();
               parentContainer.classList.add('az-video-playing');
+              parentContainer.classList.remove('az-video-paused');
               parentContainer.classList.remove('az-video-loading');
+              // Sync button state: video is confirmed playing.
+              const btn = parentContainer.querySelector('.az-video-playpause');
+              if (btn) {
+                btn.textContent = 'Pause Video';
+                btn.setAttribute('aria-pressed', 'true');
+              }
+            }
+            if (event.data === 2) {
+              // Video paused: sync button state.
+              parentContainer.classList.remove('az-video-playing');
+              parentContainer.classList.add('az-video-paused');
+              const btn = parentContainer.querySelector('.az-video-playpause');
+              if (btn) {
+                btn.textContent = 'Play Video';
+                btn.setAttribute('aria-pressed', 'false');
+              }
             }
           };
           window.addEventListener('load', function () {
