@@ -46,3 +46,11 @@ tr.odd {
   overflow-wrap: anywhere;
   padding-inline-start: revert;
 }
+
+/**
+ * Keep original color of anchor elements in Webforms overview table after modal dialogs have loaded.
+ * See https://github.com/az-digital/az_quickstart/issues/5949.
+ */
+table.webform-forms a {
+  color: var(--color-link)
+}
