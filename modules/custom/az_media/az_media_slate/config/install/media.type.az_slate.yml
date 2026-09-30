@@ -1,0 +1,17 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - media_remote
+  enforced:
+    module:
+      - az_media_slate
+id: az_slate
+label: 'Slate Form'
+description: 'A remotely hosted Slate form. Only one Slate form can be shown on a single page.'
+source: media_remote
+queue_thumbnail_downloads: false
+new_revision: false
+source_configuration:
+  source_field: field_az_media_slate_url
+field_map: {  }

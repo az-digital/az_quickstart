@@ -1,0 +1,5 @@
+services:
+  az_media_slate:
+    class: \Drupal\az_media_slate\AzMediaSlateService
+    arguments:
+      - '@current_route_match'
