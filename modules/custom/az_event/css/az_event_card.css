@@ -1,0 +1,52 @@
+.start-date {
+  margin-left: 24px;
+  margin-top: -38px;
+  z-index: 1;
+  width: min-content;
+  font-size: 20px;
+  padding: 10px 11.37px;
+  background: var(--bs-red);
+  border-radius: 4px;
+  color: var(--bs-white);
+  font-family: proxima-nova;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: .08px;
+  line-height: 24px;
+  word-wrap: normal;
+  text-transform: uppercase;
+}
+
+.azs-event-card {
+  background: var(--bs-cool-gray);
+}
+
+.azs-event-card:hover, .azs-event-card:focus {
+  background: var(--bs-blue);
+}
+
+.azs-event-card > .card-title {
+  margin: 0 24px;
+  color: var(--bs-blue);
+}
+.azs-event-card:hover .card-title, .azs-event-card:focus .card-title {
+  color: var(--bs-sky);
+}
+
+.azs-event-card > .card-text {
+  margin: 0 24px;
+  color: var(--bs-midnight);
+}
+
+.azs-event-card:hover .card-text, .azs-event-card:focus .card-text {
+  color: #fff;
+}
+
+.start-end-time {
+  color: var(--bs-red);
+  font-weight: 700;
+}
+
+.azs-event-card:hover .start-end-time, .azs-event-card:focus .start-end-time {
+  color: var(--bs-sky);
+}
