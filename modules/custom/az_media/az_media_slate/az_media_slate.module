@@ -8,37 +8,129 @@
  * Technolutions product the university's Slate team builds forms in. The
  * editor pastes the form's share link, for example
  * https://slate.admissions.arizona.edu/register/?id=<form GUID>, into a
- * Slate Form media item, then places it through the Media Library.
+ * Slate Form media item, then places it through the Media Library, or picks
+ * it in Canvas.
  *
  * On the page, Slate's embed script fetches the form and writes it into an
- * empty div we render. The work is split across three places:
+ * empty div. The work is split across these places:
  * - \Drupal\az_media_slate\SlateUrl checks the pasted link and builds the
  *   URLs we need from it.
- * - AzMediaRemoteSlateFormatter renders that div, or a placeholder while
- *   someone is editing.
- * - js/az-media-slate.js loads Slate's script, styles the form with Arizona
- *   Bootstrap, and shows an alert with a link if the form doesn't arrive.
+ * - The computed az_media_slate_form field holds those URLs on each Slate
+ *   Form media item, ready to pass to the component.
+ * - The Slate Form component, in the profile's components/slate-form,
+ *   renders the div and the fallback alert, and its JavaScript loads Slate's
+ *   script, styles the form with Arizona Bootstrap, and shows the alert if
+ *   the form doesn't arrive.
+ * - AzMediaRemoteSlateFormatter renders that component in the page builder,
+ *   or a placeholder while someone is editing.
+ * - az_media_slate_canvas_storable_prop_shape_alter() lets Canvas fill the
+ *   component from a picked media item.
  *
  * @see https://knowledge.technolutions.net/docs/embedding-forms
  */
 
+use Drupal\az_media_slate\SlateUrl;
+use Drupal\canvas\PropExpressions\StructuredData\FieldObjectPropsExpression;
+use Drupal\canvas\PropExpressions\StructuredData\FieldPropExpression;
+use Drupal\canvas\PropExpressions\StructuredData\FieldTypePropExpression;
+use Drupal\canvas\PropExpressions\StructuredData\ReferenceFieldTypePropExpression;
+use Drupal\canvas\PropShape\CandidateStorablePropShape;
+use Drupal\canvas\TypedData\BetterEntityDataDefinition;
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+
 /**
- * Implements hook_theme().
+ * Implements hook_entity_bundle_field_info().
+ *
+ * Adds the computed az_media_slate_form field to Slate Form media.
  */
-function az_media_slate_theme($existing, $type, $theme, $path) {
+function az_media_slate_entity_bundle_field_info(EntityTypeInterface $entity_type, $bundle, array $base_field_definitions) {
+  if ($entity_type->id() !== 'media' || $bundle !== 'az_slate') {
+    return [];
+  }
   return [
-    'az_media_slate' => [
-      'variables' => [
-        // Attributes for the div Slate writes the form into. The loader adds
-        // the id, and tells Slate to use it.
-        'attributes' => [],
-        // The media item's name, named in the fallback alert's sentence.
-        'label' => NULL,
-        // The form's plain URL, for the fallback link. Don't pass the embed
-        // URL here: Slate answers that one with JavaScript, not a page.
-        'canonical_url' => NULL,
-      ],
-      'template' => 'az-media-slate',
+    'az_media_slate_form' => BaseFieldDefinition::create('az_media_slate_form')
+      ->setLabel(new TranslatableMarkup('Slate form embed'))
+      ->setDescription(new TranslatableMarkup('The checked URLs and name the Slate Form component needs.'))
+      ->setComputed(TRUE)
+      ->setReadOnly(TRUE),
+  ];
+}
+
+/**
+ * Implements hook_library_info_alter().
+ *
+ * Gives the Slate Form component's library the rules its loader filters the
+ * page's query parameters with.
+ *
+ * Rationale: the component can be rendered without our formatter, for
+ * example by Canvas, so it can't count on the formatter to attach them.
+ * Adding them to its library means they arrive wherever the component does.
+ * Without them, the loader forwards nothing.
+ *
+ * @see \Drupal\az_media_slate\SlateUrl::getForwardingRules()
+ */
+function az_media_slate_library_info_alter(array &$libraries, $extension) {
+  // Drupal registers every component's library under core, with the
+  // component's id in the name.
+  if ($extension === 'core' && isset($libraries['components.az_quickstart--slate-form'])) {
+    $libraries['components.az_quickstart--slate-form']['drupalSettings']['azMediaSlate'] = SlateUrl::getForwardingRules();
+  }
+}
+
+/**
+ * Implements hook_canvas_storable_prop_shape_alter().
+ *
+ * Makes Canvas offer a media library picker, limited to Slate Form media,
+ * for the Slate Form component's form prop. The picked media item's
+ * az_media_slate_form field then fills the prop.
+ *
+ * Canvas calls this for each prop shape it finds in a component, and a
+ * shape is the prop's schema without its titles, descriptions and examples.
+ * So the check below matches that shape, not the component's name. Keep the
+ * array below in step with the form prop in slate-form.component.yml. If
+ * they drift apart, Canvas can't fill the prop and leaves the component out
+ * of its library, the same as when this module is off.
+ *
+ * Without this module, nothing tells Canvas how to fill that shape, so
+ * Canvas leaves the component out of its library.
+ *
+ * @see https://git.drupalcode.org/project/canvas/-/blob/1.x/canvas.api.php
+ */
+function az_media_slate_canvas_storable_prop_shape_alter(CandidateStorablePropShape $storable_prop_shape) {
+  $form_prop_shape = [
+    'type' => 'object',
+    'properties' => [
+      'embed_url' => ['type' => 'string', 'format' => 'uri'],
+      'canonical_url' => ['type' => 'string', 'format' => 'uri'],
+      'label' => ['type' => 'string'],
+    ],
+    'required' => ['embed_url', 'canonical_url'],
+  ];
+  // Compare with == and not ===. Rationale: Canvas sorts the keys at each
+  // level, so its order can differ from the array above, and only == ignores
+  // key order.
+  if ($storable_prop_shape->shape->schema != $form_prop_shape) {
+    return;
+  }
+
+  $slate_media = BetterEntityDataDefinition::create('media', 'az_slate');
+  $field = fn (string $property) => new FieldPropExpression($slate_media, 'az_media_slate_form', NULL, $property);
+  $storable_prop_shape->fieldTypeProp = new ReferenceFieldTypePropExpression(
+    new FieldTypePropExpression('entity_reference', 'entity'),
+    new FieldObjectPropsExpression($slate_media, 'az_media_slate_form', NULL, [
+      'embed_url' => $field('embed_url'),
+      'canonical_url' => $field('canonical_url'),
+      'label' => $field('label'),
+    ]),
+  );
+  $storable_prop_shape->fieldStorageSettings = ['target_type' => 'media'];
+  $storable_prop_shape->fieldInstanceSettings = [
+    'handler' => 'default:media',
+    'handler_settings' => [
+      'target_bundles' => ['az_slate' => 'az_slate'],
     ],
   ];
+  $storable_prop_shape->fieldWidget = 'media_library_widget';
 }

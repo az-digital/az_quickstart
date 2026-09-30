@@ -1,0 +1,39 @@
+/**
+ * @file
+ * Styles for what the Slate formatter shows in place of the form.
+ *
+ * That's the grey box shown while editing, and the notice shown when a stored
+ * URL fails SlateUrl's checks. The form itself is styled by the Slate Form
+ * component, in the profile's components/slate-form/slate-form.css.
+ */
+
+/* The grey box shown instead of the form while editing. It matches the
+ * Trellis placeholder in az_media_trellis, so both form embeds look the same
+ * in the editor and the Media Library.
+ *
+ * The height falls back to 200px, the space the component holds for a
+ * loading form, because this box stands in for that space. */
+.az-media-slate-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--az-slate-min-height, 200px);
+  background-color: #c9c9c9;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+.az-media-slate-placeholder__label {
+  margin: 0;
+  padding: 0 1rem;
+  color: #222;
+  font-weight: 600;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.az-media-slate-error {
+  padding: 0.75rem 1rem;
+  border-left: 4px solid #a11b0a;
+  background-color: #f4f4f4;
+}

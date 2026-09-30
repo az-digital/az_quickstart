@@ -1,0 +1,34 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Slate Form
+status: experimental
+group: Forms
+description: A Slate form, picked from the media library. Only one Slate form can load on a page.
+props:
+  type: object
+  properties:
+    form:
+      title: Slate form
+      description: Pick a Slate Form from the media library.
+      type: object
+      required:
+        - embed_url
+        - canonical_url
+      properties:
+        embed_url:
+          title: Embed URL
+          description: The URL Slate answers with its embed script. Use it only as a script src.
+          type: string
+          format: uri
+        canonical_url:
+          title: Form URL
+          description: The form's plain URL, safe to link to.
+          type: string
+          format: uri
+        label:
+          title: Form name
+          description: The media item's name, shown in the alert when the form can't load.
+          type: string
+libraryOverrides:
+  dependencies:
+    - core/drupal
+    - core/once

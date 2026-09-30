@@ -2,7 +2,7 @@
  * @file
  * Loads a Slate form into the page and styles it with Arizona Bootstrap.
  *
- * This runs on any page that shows a Slate Form media item. The formatter
+ * This runs on any page that shows the Slate Form component. Its template
  * renders an empty div whose data-az-slate-embed-src holds the embed URL,
  * such as uaz.test.technolutions.net/register/?id=<guid>&output=embed.
  * This script checks that URL, adds it as a script tag, and shows a spinner.
@@ -268,8 +268,8 @@
    *
    * Slate finds the element with document.getElementById(), so the name has
    * to be unique. It's chosen here rather than in PHP because only the
-   * browser can see the whole page: the formatter renders each media item on
-   * its own and can't tell that the same one sits further down.
+   * browser can see the whole page: Drupal renders each component on its own
+   * and can't tell that the same form sits further down.
    *
    * Only one Slate form loads per page, so the first name is normally free.
    * The loop is for a page that already holds something called
@@ -304,7 +304,9 @@
    * form never appears and nothing errors.
    *
    * The rules come from SlateUrl::getForwardingRules() in PHP, so there's one
-   * source of truth for what a Slate parameter may look like.
+   * source of truth for what a Slate parameter may look like. az_media_slate
+   * adds them to this component's library. Without them, for example where
+   * the component is used without that module, nothing is forwarded.
    *
    * @param {URL} embedUrl The embed URL built from the link the editor saved.
    * @param {object} settings Drupal's settings for this page.
@@ -438,7 +440,7 @@
     // and stop. Rationale: SlateUrl already checked it in PHP, but the code
     // below is what turns a string into a script tag, so check again right
     // here. That still holds if this markup ever comes from somewhere other
-    // than our formatter.
+    // than SlateUrl.
     let embedUrl;
     try {
       embedUrl = new URL(src, window.location.href);

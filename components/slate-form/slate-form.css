@@ -1,9 +1,11 @@
 /**
  * @file
- * Styles for Slate form embeds.
+ * Styles for the Slate Form component.
  *
  * Covers the Arizona Bootstrap fixes for Slate's form, the loading spinner,
- * the fallback alert, and the grey placeholder shown while editing.
+ * and the fallback alert. The grey box shown while editing isn't part of the
+ * component, so its styles are in az_media_slate's
+ * css/az-media-slate-placeholder.css.
  *
  * Nothing here sets how wide the embed is. Quickstart's theme sizes the
  * wrapper around every media item by view mode, in az_barrio's
@@ -216,32 +218,4 @@
   width: 0.85em;
   height: 0.85em;
   margin-left: 0.25rem;
-}
-
-/* The grey box shown instead of the form while editing. It matches the
- * Trellis placeholder in az_media_trellis, so both form embeds look the same
- * in the editor and the Media Library. */
-.az-media-slate-placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: var(--az-slate-min-height);
-  background-color: #c9c9c9;
-  font-size: 0.95rem;
-  text-align: center;
-}
-
-.az-media-slate-placeholder__label {
-  margin: 0;
-  padding: 0 1rem;
-  color: #222;
-  font-weight: 600;
-  line-height: 1.2;
-  overflow-wrap: anywhere;
-}
-
-.az-media-slate-error {
-  padding: 0.75rem 1rem;
-  border-left: 4px solid #a11b0a;
-  background-color: #f4f4f4;
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\az_media_slate\Plugin\Field\FieldFormatter;
 
 use Drupal\az_media_slate\AzMediaSlateService;
+use Drupal\az_media_slate\Plugin\Field\FieldType\AzMediaSlateFormItem;
 use Drupal\az_media_slate\SlateUrl;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Access\AccessResult;
@@ -13,7 +14,6 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
-use Drupal\Core\Template\Attribute;
 use Drupal\media_remote\Plugin\Field\FieldFormatter\MediaRemoteFormatterBase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -21,10 +21,10 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * Renders a Slate form embed.
  *
- * This runs when a page shows a Slate Form media item. It renders an empty
- * div carrying the embed URL. js/az-media-slate.js then gives that div an id,
- * tells Slate to write the form into it, and loads Slate's script, which
- * fetches the form.
+ * This runs when a page shows a Slate Form media item, for example in the
+ * page builder. It renders the Slate Form component, whose JavaScript loads
+ * Slate's script, which fetches the form. Canvas renders that component too,
+ * without this formatter.
  *
  * While someone is editing, it renders a grey placeholder instead. If the
  * stored URL fails SlateUrl's checks, people who can administer media see a
@@ -174,7 +174,12 @@ class AzMediaRemoteSlateFormatter extends MediaRemoteFormatterBase implements Co
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $elements = [];
-    $editing = $this->slateService->isEditingContext();
+    // Also show the placeholder in the Media Library's own view mode, on any
+    // route. Rationale: Canvas opens the Media Library from its own form
+    // route, which isn't in AzMediaSlateService's list. A live form there
+    // loads Slate's scripts inside the dialog, and with those loaded, the
+    // dialog's backdrop ends up on top of the dialog, so no click reaches it.
+    $editing = $this->slateService->isEditingContext() || $this->viewMode === 'media_library';
     $entity = $items->getEntity();
 
     foreach ($items as $delta => $item) {
@@ -205,29 +210,14 @@ class AzMediaRemoteSlateFormatter extends MediaRemoteFormatterBase implements Co
         continue;
       }
 
-      // The loader gives the container its id, and tells Slate to use it.
-      // Rationale: only the browser can see the whole page. An id written
-      // here would repeat itself if the same media were placed twice, and
-      // Html::getUniqueId() is no way out either, because it numbers within
-      // one request and the render cache replays that number on later ones.
+      // Render the same component Canvas renders, with the same values.
+      // Its library brings the loader and the rules for forwarding the
+      // page's query parameters; see az_media_slate_library_info_alter().
       $elements[$delta] = [
-        '#theme' => 'az_media_slate',
-        '#label' => $entity->label(),
-        '#canonical_url' => $slate_url->getCanonicalUrl(),
-        '#attributes' => new Attribute([
-          'class' => [
-            'az-media-slate__form',
-          ],
-          'data-az-slate-embed-src' => $slate_url->getEmbedUrl(),
-        ]),
-        '#attached' => [
-          'library' => ['az_media_slate/az-media-slate'],
-          // The loader forwards the page's own query parameters to Slate, and
-          // these are the rules it filters them with. They're the same for
-          // every request, so this doesn't make the markup vary by URL.
-          'drupalSettings' => [
-            'azMediaSlate' => SlateUrl::getForwardingRules(),
-          ],
+        '#type' => 'component',
+        '#component' => 'az_quickstart:slate-form',
+        '#props' => [
+          'form' => AzMediaSlateFormItem::valuesFromUrl($slate_url, (string) $entity->label()),
         ],
         '#cache' => [
           // Cache a separate copy per route. Rationale: editing routes get the
