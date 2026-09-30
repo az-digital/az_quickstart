@@ -1,0 +1,109 @@
+<?php
+
+/**
+ * @file
+ * Hook implementations for az_form_embed.
+ *
+ * This module lets an editor put a form hosted by another service, such as
+ * Slate, on a page. The editor pastes the form's share link into a Form embed
+ * media item, then places it through the Media Library, or picks it in
+ * Canvas. Each service is a vendor, and each vendor is a submodule, such as
+ * az_form_embed_slate.
+ *
+ * The work is split across these places:
+ * - Vendor plugins check a pasted link and build the addresses the page
+ *   needs. See \Drupal\az_form_embed\FormEmbedVendorManager.
+ * - The computed az_form_embed_form field holds those addresses on each Form
+ *   embed item, ready to pass to the component.
+ * - The Form embed component, in the profile's components/form-embed, renders
+ *   the box the form loads into. Its JavaScript runs the vendor's handler,
+ *   which each vendor submodule adds to the component's library.
+ * - FormEmbedFormatter renders that component for the page builder.
+ * - az_form_embed_canvas_storable_prop_shape_alter() lets Canvas fill the
+ *   component from a picked media item.
+ */
+
+use Drupal\az_form_embed\FormEmbedVendorManager;
+use Drupal\az_form_embed\Plugin\Field\FieldType\FormEmbedFormItem;
+use Drupal\canvas\PropExpressions\StructuredData\FieldObjectPropsExpression;
+use Drupal\canvas\PropExpressions\StructuredData\FieldPropExpression;
+use Drupal\canvas\PropExpressions\StructuredData\FieldTypePropExpression;
+use Drupal\canvas\PropExpressions\StructuredData\ReferenceFieldTypePropExpression;
+use Drupal\canvas\PropShape\CandidateStorablePropShape;
+use Drupal\canvas\TypedData\BetterEntityDataDefinition;
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+
+/**
+ * Implements hook_entity_bundle_field_info().
+ *
+ * Adds the computed az_form_embed_form field to Form embed media.
+ */
+function az_form_embed_entity_bundle_field_info(EntityTypeInterface $entity_type, $bundle, array $base_field_definitions) {
+  if ($entity_type->id() !== 'media' || $bundle !== 'az_form_embed') {
+    return [];
+  }
+  return [
+    'az_form_embed_form' => BaseFieldDefinition::create('az_form_embed_form')
+      ->setLabel(new TranslatableMarkup('Form embed values'))
+      ->setDescription(new TranslatableMarkup('The checked addresses and names the Form embed component needs.'))
+      ->setComputed(TRUE)
+      ->setReadOnly(TRUE),
+  ];
+}
+
+/**
+ * Implements hook_canvas_storable_prop_shape_alter().
+ *
+ * Makes Canvas offer a media library picker, limited to Form embed media, for
+ * the Form embed component's form prop. The picked item's az_form_embed_form
+ * field then fills the prop.
+ *
+ * This hook is also what hides the component from Canvas when it can't work.
+ * Canvas lists a component only if it knows how to fill every prop, and
+ * nothing else teaches it to fill this one. So Canvas leaves the component
+ * out when this module is off, and when no vendor is on.
+ *
+ * Canvas calls this for each prop shape it finds in a component. A shape is
+ * the prop's schema without its titles, descriptions and examples, so the
+ * check below matches that, not the component's name.
+ *
+ * @see \Drupal\az_form_embed\Plugin\Field\FieldType\FormEmbedFormItem::PROP_SHAPE
+ * @see https://git.drupalcode.org/project/canvas/-/blob/1.x/canvas.api.php
+ */
+function az_form_embed_canvas_storable_prop_shape_alter(CandidateStorablePropShape $storable_prop_shape) {
+  // Compare with == and not ===. Rationale: Canvas sorts the keys at each
+  // level, so its order can differ from the constant's, and only == ignores
+  // key order.
+  if ($storable_prop_shape->shape->schema != FormEmbedFormItem::PROP_SHAPE) {
+    return;
+  }
+  // Canvas caches what this hook decides. Tell it to decide again when a
+  // vendor is turned on or off.
+  $storable_prop_shape->addCacheTags([FormEmbedVendorManager::CACHE_TAG]);
+  // If no vendor is on, stop here. Canvas then can't fill the prop, and
+  // hides the component.
+  if (\Drupal::service('plugin.manager.az_form_embed_vendor')->getDefinitions() === []) {
+    return;
+  }
+
+  $form_media = BetterEntityDataDefinition::create('media', 'az_form_embed');
+  $field = fn (string $property) => new FieldPropExpression($form_media, 'az_form_embed_form', NULL, $property);
+  $properties = [];
+  foreach (array_keys(FormEmbedFormItem::PROP_SHAPE['properties']) as $property) {
+    $properties[$property] = $field($property);
+  }
+  $storable_prop_shape->fieldTypeProp = new ReferenceFieldTypePropExpression(
+    new FieldTypePropExpression('entity_reference', 'entity'),
+    new FieldObjectPropsExpression($form_media, 'az_form_embed_form', NULL, $properties),
+  );
+  $storable_prop_shape->fieldStorageSettings = ['target_type' => 'media'];
+  $storable_prop_shape->fieldInstanceSettings = [
+    'handler' => 'default:media',
+    'handler_settings' => [
+      'target_bundles' => ['az_form_embed' => 'az_form_embed'],
+    ],
+  ];
+  $storable_prop_shape->fieldWidget = 'media_library_widget';
+}

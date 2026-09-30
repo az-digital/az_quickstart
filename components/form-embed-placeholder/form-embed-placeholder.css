@@ -1,0 +1,65 @@
+/**
+ * @file
+ * Styles for the Form embed placeholder component.
+ *
+ * az_form_embed.ckeditor5.yml also loads this file into CKEditor, because
+ * CKEditor's preview drops the libraries a component attaches.
+ */
+
+/* The box stands in for the space a loading form holds, so it uses the same
+ * minimum height as the Form embed component, with 200px as the fallback. */
+.az-form-embed-placeholder {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--az-form-embed-min-height, 200px);
+  padding: 1rem;
+  background-color: #c9c9c9;
+  color: #222;
+  text-align: center;
+}
+
+.az-form-embed-placeholder__icon {
+  width: 3rem;
+  height: 3rem;
+}
+
+.az-form-embed-placeholder__label {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.az-form-embed-placeholder__vendor {
+  margin: 0;
+  font-size: 0.8rem;
+}
+
+/* Inside CKEditor, give the box the width the form will have on the page,
+ * so editors can see it. CKEditor wraps each embed in a figure that carries
+ * the view mode. The widths match az_media's css/az-media-edit.css, which
+ * sizes video embeds the same way. */
+figure.drupal-media .az-form-embed-placeholder {
+  width: 400px;
+  max-width: 100%;
+}
+
+figure[data-view-mode="az_natural_size"] .az-form-embed-placeholder {
+  width: 100%;
+}
+
+figure[data-view-mode="az_medium"] .az-form-embed-placeholder {
+  width: 740px;
+}
+
+figure[data-view-mode="az_small"] .az-form-embed-placeholder {
+  width: 360px;
+}
+
+figure[data-view-mode="az_very_small"] .az-form-embed-placeholder {
+  width: 220px;
+}
