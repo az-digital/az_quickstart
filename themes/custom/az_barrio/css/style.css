@@ -611,6 +611,10 @@ a.nolink + ul .sf-clone-parent {
     font-size: calc(1.275rem + .3vw);
   }
 
+  .h5, h5 {
+    font-size: 1.25rem;
+  }
+
   .h6, h6 {
     font-size: 1rem;
   }
