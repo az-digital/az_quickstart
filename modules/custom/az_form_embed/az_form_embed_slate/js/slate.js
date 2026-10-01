@@ -241,11 +241,12 @@
    * Gives Slate's own scripts the global $ they expect.
    *
    * Slate loads its own copy of jQuery as FW.$ (FW is Slate's framework
-   * object), and on Slate's own pages $ points at that copy too. Some of Slate's scripts call $ directly. For
-   * example, the signature question's dialog runs a short script that sets up
-   * its six signature styles with $(...). Drupal doesn't define a global $, so
-   * on our pages that script fails with "$ is not a function", and a visitor
-   * can type a name but can't pick a style.
+   * object), and on Slate's own pages $ points at that copy too. Some of
+   * Slate's scripts call $ directly. For example, the signature question's
+   * dialog runs a short script that sets up its six signature styles with
+   * $(...). Drupal doesn't define a global $, so on our pages that script
+   * fails with "$ is not a function", and a visitor can type a name but
+   * can't pick a style.
    *
    * If $ is already set, leave it. Rationale: another script on the page may
    * rely on its own $.
