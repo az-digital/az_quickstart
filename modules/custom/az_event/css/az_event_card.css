@@ -1,4 +1,4 @@
-.start-date-background {
+.start-date-background:not(:has(img)) {
   padding-top: 56px;
 }
 
