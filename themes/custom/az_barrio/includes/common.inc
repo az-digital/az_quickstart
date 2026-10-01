@@ -11,6 +11,11 @@ define('AZ_BOOTSTRAP_STABLE_VERSION', '5.2.1');
 define('AZ_ICONS_STABLE_VERSION', '1.0.5');
 
 /**
- * Persistent variable name for exporting the AZ Bootstrap CSS location.
+ * Persistent variable name for the AZ Bootstrap CSS location.
  */
 const AZ_BOOTSTRAP_LOCATION = 'az_bootstrap_location';
+
+/**
+ * Variable for the AZBS CDN stable version currently used by the theme.
+ */
+const AZ_BOOTSTRAP_CDN_STABLE_VERSION = 'az_bootstrap_cdn_stable_version';

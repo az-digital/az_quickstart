@@ -156,9 +156,10 @@ class MigrationRemoteFile extends ProcessPluginBase implements ContainerFactoryP
         $destination_id_array = [];
       }
       $destination_id_array = reset($destination_id_array);
-      if (!empty($destination_id_array)) {
+      $fid = $destination_id_array['fid'] ?? NULL;
+      if (!empty($fid)) {
         // Attempt to load the destination file entity and see if it has a uri.
-        $file = $this->entityTypeManager->getStorage('file')->load(reset($destination_id_array));
+        $file = $this->entityTypeManager->getStorage('file')->load($fid);
         if (!empty($file)) {
           $original_uri = $file->getFileUri();
         }
