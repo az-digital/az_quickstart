@@ -370,7 +370,7 @@ function az_event_preprocess_node(&$variables) {
 
       $media_items = $node->get('field_az_media_thumbnail_image')->referencedEntities();
       if (!empty($media_items)) {
-        $card_image = 
+        $card_image =
           \Drupal::service('az_card.image')->generateImageRenderArray($media_items[0]);
         if (!empty($card_image['#item_attributes']['class'])) {
           $card_image['#item_attributes']['class'][] = 'card-img-top';
