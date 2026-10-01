@@ -41,25 +41,42 @@
 
 /* Inside CKEditor, give the box the width the form will have on the page,
  * so editors can see it. CKEditor wraps each embed in a figure that carries
- * the view mode. The widths match az_media's css/az-media-edit.css, which
- * sizes video embeds the same way. */
+ * the view mode as data-view-mode, and the alignment as a
+ * drupal-media-style-align-* class. The widths match az_barrio's
+ * css/az-media-display.css, which sizes the form on the page.
+ *
+ * Default and Natural Size fill the content width, like any block. CKEditor
+ * draws its figure as a table that shrinks to fit, and caps a centered one at
+ * half the width, so widen the figure itself for those two. */
+figure.drupal-media:is(:not([data-view-mode]), [data-view-mode="default"], [data-view-mode="az_natural_size"]):not(.drupal-media-style-align-left, .drupal-media-style-align-right):has(.az-form-embed-placeholder) {
+  width: 100%;
+  max-width: none;
+}
+
 figure.drupal-media .az-form-embed-placeholder {
+  width: 100%;
+}
+
+/* Aligned left or right, Default and Natural Size are 400px wide on the
+ * page. Keep this rule above the view mode rules below, so Medium, Small and
+ * Very Small keep their own widths when aligned. */
+figure.drupal-media-style-align-left .az-form-embed-placeholder,
+figure.drupal-media-style-align-right .az-form-embed-placeholder {
   width: 400px;
   max-width: 100%;
 }
 
-figure[data-view-mode="az_natural_size"] .az-form-embed-placeholder {
-  width: 100%;
-}
-
 figure[data-view-mode="az_medium"] .az-form-embed-placeholder {
   width: 740px;
+  max-width: 100%;
 }
 
 figure[data-view-mode="az_small"] .az-form-embed-placeholder {
   width: 360px;
+  max-width: 100%;
 }
 
 figure[data-view-mode="az_very_small"] .az-form-embed-placeholder {
   width: 220px;
+  max-width: 100%;
 }

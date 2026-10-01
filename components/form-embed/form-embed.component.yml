@@ -37,6 +37,15 @@ props:
           title: Form name
           description: The media item's name, shown in the alert when the form can't load.
           type: string
+    # No examples. Rationale: Canvas copies the first example into every new
+    # placement, so an example here would add that class to every form placed
+    # in Canvas.
+    utility_classes:
+      type: array
+      title: Utility classes
+      description: Additional Bootstrap utility classes for the form's outer wrapper, for example mb-5 for more space below it.
+      items:
+        type: string
 libraryOverrides:
   dependencies:
     - core/drupal

@@ -53,6 +53,8 @@
  * - form.label: The media item's name. The placeholder filter puts it in as
  *   Drupal's own em.placeholder, so the sentence stays one translatable
  *   string, and the loader can read the name back out of that element.
+ * - utility_classes: Additional Bootstrap utility classes for the outer
+ *   wrapper, such as mb-5.
  *
  * Renders nothing without an embed address, except in Canvas's editor. There
  * the placeholder's icon shows until a form is picked, so the editor can see
@@ -66,9 +68,16 @@
 {% set embed_url = form.embed_url|default('') %}
 {% set canonical_url = form.canonical_url|default('') %}
 {% set label = form.label|default('') %}
+{% set utility_classes = utility_classes|default([]) %}
+{# If a caller passes one class as a string, wrap it in a list. The schema asks
+   for a list, but Drupal only checks that while PHP assertions are on, which
+   they aren't in production. #}
+{% if utility_classes is not iterable %}
+  {% set utility_classes = [utility_classes] %}
+{% endif %}
 
 {% if embed_url and vendor %}
-  <div{{ attributes.addClass('az-form-embed', ('az-form-embed--' ~ vendor)|clean_class) }}>
+  <div{{ attributes.addClass('az-form-embed', ('az-form-embed--' ~ vendor)|clean_class, utility_classes) }}>
     <div class="az-form-embed__form" data-az-form-embed-vendor="{{ vendor }}" data-az-form-embed-src="{{ embed_url }}"></div>
     <div class="az-form-embed__fallback alert alert-warning" role="alert">
       <p class="az-form-embed__message">
