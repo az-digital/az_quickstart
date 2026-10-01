@@ -21,6 +21,15 @@
  * - decorate(container): Adds Arizona Bootstrap classes to the vendor's form.
  *   It must be safe to run many times.
  *
+ * A handler can also have these, for vendors whose script needs more:
+ * - scriptAttributes(containerId): Extra attributes for the script tag, as
+ *   an object. Only names starting with data- are used. For example,
+ *   FormAssembly's script finds its container through data-qp-target-id.
+ * - afterScriptLoad(container, embedUrl): Runs once the vendor's script has
+ *   loaded. For example, FormAssembly's script waits for the page's
+ *   DOMContentLoaded event, which has already fired by then, so its handler
+ *   starts it here.
+ *
  * If the form never arrives, this shows an alert instead, with a retry
  * button when the form was only slow.
  */
@@ -44,6 +53,15 @@
    * this keeps anything odd out of both.
    */
   const VENDOR_ID_PATTERN = /^[a-z0-9_]+$/;
+
+  /**
+   * The attribute names a handler may add to the script tag.
+   *
+   * Rationale: a handler's extra attributes mustn't be able to change the
+   * script's src, which the loader checked, or add an inline event handler,
+   * such as onload.
+   */
+  const SCRIPT_ATTRIBUTE_PATTERN = /^data-[a-z0-9-]+$/;
 
   // Where vendor handlers add themselves. A handler's library loads before
   // this one, so keep what's already here.
@@ -242,6 +260,7 @@
     let timer = null;
     let attempt = 0;
     const usedIds = [];
+    let previousScript = null;
 
     // The vendor writes the form in a little after its script runs, so watch
     // for it instead of styling once. Keep watching afterward in case the
@@ -259,6 +278,12 @@
         // showed it. For example, Slate's test server can answer slowly while
         // it wakes up, so its form can arrive after the alert.
         wrapper.classList.remove('az-form-embed--failed');
+        // Remove the spinner, for vendors that add their form beside it
+        // instead of replacing it, as FormAssembly does.
+        const spinner = container.querySelector('.az-form-embed__spinner');
+        if (spinner) {
+          spinner.remove();
+        }
       }
       handler.decorate(container);
     });
@@ -298,11 +323,34 @@
         }
       }, INIT_TIMEOUT_MS);
 
+      // Remove the previous attempt's script tag. That doesn't stop its
+      // script, but some vendors' scripts look up their own tag. For example,
+      // FormAssembly's reads data-qp-target-id from the first script tag on
+      // the page that has one, so a tag left from the last attempt would
+      // send this attempt's form to a container id that's gone.
+      if (previousScript) {
+        previousScript.remove();
+      }
+
       const script = document.createElement('script');
       script.async = true;
       // Use the handler's URL object, not the raw attribute, so the script
       // tag gets the address checked above plus only what the handler added.
       script.src = handler.scriptUrl(embedUrl, container.id, settings).href;
+      if (handler.scriptAttributes) {
+        Object.entries(handler.scriptAttributes(container.id)).forEach(
+          ([name, value]) => {
+            if (SCRIPT_ATTRIBUTE_PATTERN.test(name)) {
+              script.setAttribute(name, String(value));
+            }
+          },
+        );
+      }
+      script.addEventListener('load', () => {
+        if (thisAttempt === attempt && handler.afterScriptLoad) {
+          handler.afterScriptLoad(container, embedUrl);
+        }
+      });
       script.addEventListener('error', () => {
         if (thisAttempt !== attempt) {
           return;
@@ -314,12 +362,12 @@
         );
       });
       document.head.appendChild(script);
+      previousScript = script;
     };
 
     // Put the spinner inside the container. When the form arrives, the
-    // vendor replaces everything in the container, which removes the spinner
-    // at exactly that moment. If the form never arrives, showFallback()
-    // removes it.
+    // observer above removes it, if the vendor hasn't already replaced it.
+    // If the form never arrives, showFallback() removes it.
     container.appendChild(buildSpinner());
 
     // Try again the way the page first loaded: alert hidden, spinner showing.

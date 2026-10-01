@@ -1,0 +1,120 @@
+/**
+ * @file
+ * Fixes where FormAssembly's layout stylesheet and Arizona Bootstrap clash.
+ *
+ * Trellis's handler adds Arizona Bootstrap's classes to FormAssembly's
+ * fields, so the look comes from Arizona Bootstrap. It also removes the
+ * form's Trellis theme stylesheet, which is only looks. FormAssembly's layout
+ * stylesheets stay, because its scripts show and hide fields with their
+ * rules, such as .offstate for conditional logic.
+ *
+ * These rules only fix the places where wforms-layout.css still gets in the
+ * way. Each is scoped under .az-form-embed--trellis, the Form embed
+ * component's class for a Trellis form, so it outranks the rule it fixes.
+ * They don't need !important, because that stylesheet doesn't use it. The
+ * one rule that does need it, for empty fields, beats a form's own <style>.
+ *
+ * Careful: never set display on .offstate, .wfPage or .wfCurrentPage.
+ * FormAssembly's scripts hide conditional fields and the pages of a
+ * multi-page form with those classes, so overriding them shows what should
+ * be hidden, with no error.
+ */
+
+/* FormAssembly centers its form in a 770px column. Let the form fill the
+ * component like any other content on the page. */
+.az-form-embed--trellis .wFormContainer {
+  max-width: none;
+  margin: 0;
+}
+
+/* FormAssembly pads the box around its fields, and puts a transparent
+ * border and padding around each text section and the buttons. Together
+ * they push the form in from the page's content edge. */
+.az-form-embed--trellis .wFormContainer .wForm,
+.az-form-embed--trellis .wForm .htmlSection,
+.az-form-embed--trellis .wForm .actions {
+  padding: 0;
+  border: 0;
+}
+
+/* FormAssembly spaces each field with a 2px transparent border, 2px by 6px
+ * of padding, and a 15px top margin. Space them like Bootstrap's mb-3
+ * instead. */
+.az-form-embed--trellis .wForm .oneField {
+  padding: 0;
+  margin: 0 0 1rem;
+  border: 0;
+}
+
+/* FormAssembly makes each field's wrapper inline-block, so it shrinks to
+ * fit, and form-control's 100% width has nothing to fill. */
+.az-form-embed--trellis .wForm .inputWrapper,
+.az-form-embed--trellis .wForm .oneFieldWrapper {
+  display: block;
+}
+
+/* FormAssembly resets the padding of every input and textarea to 0. Put back
+ * form-control's, copied from Arizona Bootstrap 5.2.1, which has no variable
+ * for it. Spot check after an Arizona Bootstrap upgrade. */
+.az-form-embed--trellis .wForm .form-control:not(.form-control-plaintext) {
+  padding: 0.375rem 0.75rem;
+}
+
+/* A read-only text box, shown as plain text, is only as tall as its text.
+ * For example, a newsletter's campaign name takes one line, not the box's two
+ * rows. Browsers without field-sizing keep the rows. */
+.az-form-embed--trellis .wForm textarea.form-control-plaintext {
+  min-height: 0;
+  resize: none;
+  field-sizing: content;
+}
+
+/* FormAssembly gives a label a 200px minimum width, and padding on its right
+ * and bottom. Arizona Bootstrap's form-label already spaces the label from
+ * its field, so the bottom padding would widen that gap. */
+.az-form-embed--trellis .wForm .preField.form-label {
+  min-width: 0;
+  padding: 0;
+}
+
+/* FormAssembly sets its buttons' padding, and sets their text color to
+ * inherit. Its rule outranks Bootstrap's btn in every state, hover included.
+ * Put Bootstrap's back, from the variables the btn classes set, such as
+ * btn-primary's. */
+.az-form-embed--trellis .wForm :is(.primaryAction, .secondaryAction).btn {
+  padding: var(--bs-btn-padding-y) var(--bs-btn-padding-x);
+  color: var(--bs-btn-color);
+}
+
+.az-form-embed--trellis .wForm :is(.primaryAction, .secondaryAction).btn:is(:hover, :focus-visible) {
+  color: var(--bs-btn-hover-color);
+}
+
+.az-form-embed--trellis .wForm :is(.primaryAction, .secondaryAction).btn:active {
+  color: var(--bs-btn-active-color);
+}
+
+.az-form-embed--trellis .wForm :is(.primaryAction, .secondaryAction).btn:disabled {
+  color: var(--bs-btn-disabled-color);
+}
+
+/* FormAssembly's footer, such as its privacy statement link, lines up with
+ * the fields instead of sitting 19px in, behind 17px of padding and a 2px
+ * transparent border. */
+.az-form-embed--trellis .wFormContainer .supportInfo {
+  padding: 0;
+  border: 0;
+}
+
+/* The handler marks the wrapper of an empty text box that has no label.
+ * Some forms set the wrapper's display by its id in their own <style>, such
+ * as #tfa_7-D, and only !important beats an id. */
+.az-form-embed--trellis .wForm .oneField.az-form-embed-trellis__empty {
+  display: none !important;
+}
+
+/* FormAssembly marks a field that fails validation with an errFld class on
+ * its wrapper. Give the field Bootstrap's invalid border color. */
+.az-form-embed--trellis .wForm .oneField.errFld .form-control {
+  border-color: var(--bs-form-invalid-border-color);
+}

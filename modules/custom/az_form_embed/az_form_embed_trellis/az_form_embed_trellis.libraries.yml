@@ -1,0 +1,11 @@
+# Trellis's handler for the Form embed component's loader, and Trellis's CSS
+# fixes. az_form_embed_trellis_library_info_alter() adds this library to the
+# component's own, so it loads wherever the component does, Canvas included.
+trellis:
+  js:
+    js/trellis.js: {}
+  css:
+    component:
+      css/trellis.css: {}
+  dependencies:
+    - core/drupal
