@@ -101,18 +101,24 @@
   font-weight: normal;
 }
 
-/* Slate's stylesheet defines .alert too, and it loads after Arizona
- * Bootstrap's, so an alert on a page holding a Slate form picks up Slate's
- * look instead: a 5px black left bar, 10px padding, black text. Restate
- * Bootstrap's own declarations at a specificity Slate can't reach.
+/* Slate's stylesheet styles every .alert on the page, not just its own, and
+ * it loads after Arizona Bootstrap's. So on a page holding a Slate form,
+ * every Bootstrap alert, such as Drupal's status messages, gets Slate's look
+ * instead: a 5px black left bar, 10px padding, black text. Restate
+ * Bootstrap's own declarations for those alerts.
  *
- * These are Bootstrap's variables, not copied values, so an alert here still
- * follows Arizona Bootstrap when Arizona Bootstrap changes.
+ * :has() limits this to pages holding a Slate form, and also makes the rule
+ * outrank Slate's, which is one class. Leave alerts inside the form Slate
+ * wrote alone, in case Slate uses that rule for its own messages there.
  *
- * Careful: the collision isn't ours alone, and this only rescues our own
- * alert. Any other Bootstrap alert on such a page still looks like Slate's,
- * and nothing errors to say so. */
-.az-form-embed--slate .az-form-embed__fallback.alert {
+ * These are Bootstrap's variables, not copied values, so the alerts still
+ * follow Arizona Bootstrap when Arizona Bootstrap changes.
+ *
+ * Careful: the same Slate rule also styles the error class, which Drupal
+ * adds to a field that fails validation. This doesn't fix those fields. So
+ * on a page with a Slate form, a Drupal field with an error gets Slate's left
+ * bar and padding. */
+html:has(.az-form-embed--slate) .alert:not(.az-form-embed__form .alert) {
   padding: var(--bs-alert-padding-y) var(--bs-alert-padding-x);
   color: var(--bs-alert-color);
   border: var(--bs-alert-border);

@@ -8,6 +8,7 @@ use Drupal\az_form_embed\EditingContext;
 use Drupal\az_form_embed\FormEmbedVendorManager;
 use Drupal\az_form_embed\Plugin\media\Source\FormEmbed;
 use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Cache\Cache;
 use Drupal\Core\Field\Attribute\FieldFormatter;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
@@ -138,7 +139,10 @@ class FormEmbedFormatter extends FormatterBase implements ContainerFactoryPlugin
       // placeholder instead. Without this, a placeholder built for an editor
       // can be cached and served to a visitor.
       'contexts' => ['route.name'],
-      'tags' => $media->getCacheTags(),
+      // Also render again when a vendor is turned on or off. Rationale: which
+      // vendors are on decides whether a link shows its form, and turning a
+      // module on doesn't clear cached pages by itself.
+      'tags' => Cache::mergeTags($media->getCacheTags(), [FormEmbedVendorManager::CACHE_TAG]),
     ];
 
     foreach ($items as $delta => $item) {
