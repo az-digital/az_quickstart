@@ -27,6 +27,14 @@
   const SLATE_HOST_SUFFIXES = ['.technolutions.net', '.arizona.edu'];
 
   /**
+   * The paths we'll load Slate's script from: /register/, optionally
+   * followed by a form's name, as in /register/referawildcat.
+   *
+   * Keep this in step with SlateUrl::PATH_PATTERN in PHP.
+   */
+  const SLATE_PATH_PATTERN = /^\/register\/(?:[A-Za-z0-9_-]+\/?)?$/;
+
+  /**
    * Input types that get form-control, and the Drupal class to add with it.
    *
    * The second class is what a native Drupal field of that type carries, for
@@ -269,10 +277,14 @@
     // Slate's docs say only one Slate form can be embedded on a page.
     onePerPage: true,
 
+    // Check the scheme, port, host and path the way SlateUrl::parse() does.
+    // A URL's port is '' when the URL names none.
     isAllowedUrl(url) {
       return (
         url.protocol === 'https:' &&
-        SLATE_HOST_SUFFIXES.some((suffix) => url.hostname.endsWith(suffix))
+        url.port === '' &&
+        SLATE_HOST_SUFFIXES.some((suffix) => url.hostname.endsWith(suffix)) &&
+        SLATE_PATH_PATTERN.test(url.pathname)
       );
     },
 

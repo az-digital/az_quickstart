@@ -134,7 +134,12 @@ final class SlateUrl {
   private string $origin;
 
   /**
-   * Prefill parameters that passed the checks, as key => value.
+   * Prefill parameters that passed the checks, in the order they were pasted.
+   *
+   * Each is a [key, value] pair, and a key can appear more than once. See
+   * parse() for why.
+   *
+   * @var list<array{string, string}>
    */
   private array $prefill;
 
@@ -217,6 +222,11 @@ final class SlateUrl {
     // Split the query string by hand. Don't use parse_str() here. For example,
     // parse_str() turns the key my.field into my_field, a leftover from PHP's
     // old register_globals, so that field would quietly never prefill.
+    //
+    // Keep the pairs as a list, not keyed by name. Rationale: Slate fills in
+    // a field with several choices from a key repeated once per choice. For
+    // example, sys:field:academic_interest three times ticks three boxes, and
+    // an array keyed by name would keep only the last.
     $pairs = [];
     if (isset($parts['query']) && $parts['query'] !== '') {
       foreach (explode('&', $parts['query']) as $pair) {
@@ -228,14 +238,22 @@ final class SlateUrl {
           $reason = 'unknown_param';
           return NULL;
         }
-        $pairs[urldecode(substr($pair, 0, $split))] = urldecode(substr($pair, $split + 1));
+        $pairs[] = [urldecode(substr($pair, 0, $split)), urldecode(substr($pair, $split + 1))];
+      }
+    }
+
+    // Use the last id in the query, because that's the copy Slate uses.
+    $id = NULL;
+    foreach ($pairs as [$key, $value]) {
+      if ($key === 'id') {
+        $id = $value;
       }
     }
 
     // If there's no id, the path has to name the form instead. For example,
     // /register/moreinfo is enough on its own, but /register/ names nothing.
-    if (isset($pairs['id'])) {
-      if (!preg_match(self::ID_PATTERN, $pairs['id'])) {
+    if ($id !== NULL) {
+      if (!preg_match(self::ID_PATTERN, $id)) {
         $reason = 'bad_id';
         return NULL;
       }
@@ -246,7 +264,7 @@ final class SlateUrl {
     }
 
     $prefill = [];
-    foreach ($pairs as $key => $value) {
+    foreach ($pairs as [$key, $value]) {
       if ($key === 'id' || in_array($key, self::RESERVED_KEYS, TRUE)) {
         continue;
       }
@@ -269,10 +287,10 @@ final class SlateUrl {
         $reason = 'param_too_long';
         return NULL;
       }
-      $prefill[$key] = $value;
+      $prefill[] = [$key, $value];
     }
 
-    return new self($scheme . '://' . $host, $pairs['id'] ?? NULL, $name, $prefill);
+    return new self($scheme . '://' . $host, $id, $name, $prefill);
   }
 
   /**
@@ -325,7 +343,7 @@ final class SlateUrl {
    * @see js/slate.js
    */
   public function getEmbedUrl(): string {
-    return $this->buildUrl($this->prefill + ['output' => 'embed']);
+    return $this->buildUrl([...$this->prefill, ['output', 'embed']]);
   }
 
   /**
@@ -372,18 +390,23 @@ final class SlateUrl {
    * either path, and /register/?id= is what Slate's own embed code uses. A
    * link by name keeps its name, as in /register/moreinfo.
    *
-   * @param array $query
-   *   Query parameters to add after the id, as key => value.
+   * @param list<array{string, string}> $pairs
+   *   Query parameters to add after the id, as [key, value] pairs.
    */
-  private function buildUrl(array $query): string {
+  private function buildUrl(array $pairs): string {
     if ($this->id !== NULL) {
       $path = self::PATH;
-      $query = ['id' => $this->id] + $query;
+      array_unshift($pairs, ['id', $this->id]);
     }
     else {
       $path = self::PATH . $this->name;
     }
-    $query_string = http_build_query($query);
+    // Build the query by hand, because http_build_query() can't repeat a key.
+    // urlencode() encodes each part the way http_build_query() would.
+    $query_string = implode('&', array_map(
+      fn (array $pair) => urlencode($pair[0]) . '=' . urlencode($pair[1]),
+      $pairs,
+    ));
     return $this->origin . $path . ($query_string === '' ? '' : '?' . $query_string);
   }
 

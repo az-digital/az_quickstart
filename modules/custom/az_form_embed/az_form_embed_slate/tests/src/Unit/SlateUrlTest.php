@@ -80,6 +80,17 @@ class SlateUrlTest extends UnitTestCase {
         $base . '&sys%3Afirst=Alexander&sys%3Alast=Hamilton',
         $base . '&sys:first=Alexander&sys:last=Hamilton',
       ],
+      // A field with several choices takes one copy of its key per choice.
+      // Every copy is kept, in order.
+      'repeated key for several choices' => [
+        $base . '&sys:field:academic_interest=engineering&sys:first=Alexander&sys:field:academic_interest=undecided',
+        $base . '&sys:field:academic_interest=engineering&sys:first=Alexander&sys:field:academic_interest=undecided',
+      ],
+      // Slate uses the last id it's given, so the rebuilt link does too.
+      'repeated id' => [
+        'https://slate.admissions.arizona.edu/register/?id=' . strtoupper(self::ID) . '&id=' . self::ID,
+        $base,
+      ],
       // The parser splits the query itself. For example, parse_str() would
       // turn this key into my_field, and the field would quietly never
       // prefill.
@@ -239,6 +250,16 @@ class SlateUrlTest extends UnitTestCase {
     $embed = urldecode($parsed->getEmbedUrl());
 
     $this->assertSame('https://slate.admissions.arizona.edu/register/moreinfo?sys:first=Alexander&output=embed', $embed);
+  }
+
+  /**
+   * The embed URL keeps every copy of a repeated key, before output=embed.
+   */
+  public function testEmbedUrlKeepsRepeatedKeys(): void {
+    $parsed = SlateUrl::parse('https://uaz.test.technolutions.net/register/referawildcat?sys:field:academic_interest=engineering&sys:field:academic_interest=undecided');
+    $embed = urldecode($parsed->getEmbedUrl());
+
+    $this->assertSame('https://uaz.test.technolutions.net/register/referawildcat?sys:field:academic_interest=engineering&sys:field:academic_interest=undecided&output=embed', $embed);
   }
 
   /**
