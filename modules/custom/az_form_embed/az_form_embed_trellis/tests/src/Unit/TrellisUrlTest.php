@@ -55,6 +55,11 @@ class TrellisUrlTest extends UnitTestCase {
         'https://forms-a.trellis.arizona.edu/publish/72?tfa_4=701V400000liWCQ',
         'https://forms-a.trellis.arizona.edu/72?tfa_4=701V400000liWCQ',
       ],
+      'repeated key keeps its last copy, as FormAssembly does' => [
+        'https://forms-a.trellis.arizona.edu/185?tfa_5=Red&tfa_5=Red;Blue',
+        'https://forms-a.trellis.arizona.edu/publish/185?tfa_5=Red%3BBlue',
+        'https://forms-a.trellis.arizona.edu/185?tfa_5=Red%3BBlue',
+      ],
       'host case ignored' => [
         'https://Forms-A.Trellis.Arizona.edu/185/',
         'https://forms-a.trellis.arizona.edu/publish/185',

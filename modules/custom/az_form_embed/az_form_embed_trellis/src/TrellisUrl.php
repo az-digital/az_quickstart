@@ -149,6 +149,12 @@ final class TrellisUrl {
     // Read the query by hand rather than with parse_str(). Rationale:
     // parse_str() turns a key like tfa_4[] into a nested array, and renames
     // keys with dots in them.
+    //
+    // If a key repeats, keep only its last copy. Rationale: FormAssembly's own
+    // prefill does the same. A field with several choices takes them in one
+    // value, separated by semicolons, as in tfa_5=Red;Blue. Don't keep every
+    // copy the way SlateUrl does, because Slate repeats keys and FormAssembly
+    // doesn't.
     $prefill = [];
     foreach (explode('&', $parts['query'] ?? '') as $pair) {
       if ($pair === '') {

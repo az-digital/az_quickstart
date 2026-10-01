@@ -259,9 +259,13 @@
     // listen for the same event.
     onePerPage: true,
 
+    // Check the scheme, port and host the way TrellisUrl::parse() does, and
+    // that the path is a Quick Publish script's. A URL's port is '' when the
+    // URL names none.
     isAllowedUrl(url) {
       return (
         url.protocol === 'https:' &&
+        url.port === '' &&
         TRELLIS_HOSTS.includes(url.hostname) &&
         PUBLISH_PATH_PATTERN.test(url.pathname)
       );
