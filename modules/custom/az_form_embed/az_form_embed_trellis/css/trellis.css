@@ -54,7 +54,7 @@
 }
 
 /* FormAssembly resets the padding of every input and textarea to 0. Put back
- * form-control's, copied from Arizona Bootstrap 5.2.1, which has no variable
+ * form-control's, copied from Arizona Bootstrap 5.2.2, which has no variable
  * for it. Spot check after an Arizona Bootstrap upgrade. */
 .az-form-embed--trellis .wForm .form-control:not(.form-control-plaintext) {
   padding: 0.375rem 0.75rem;
