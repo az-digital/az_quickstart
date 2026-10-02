@@ -376,9 +376,17 @@ function az_core_form_taxonomy_term_form_alter(&$form, FormStateInterface $form_
  *
  * Adds style overrides for claro/node-form and arizona-bootstrap.
  */
-function az_core_form_webform_edit_form_alter(&$form, FormStateInterface $form_state) {
-  $form['#attached']['library'][] = 'az_core/claro-node-form-overrides';
-  $form['#attached']['library'][] = 'az_core/arizona-bootstrap-node-form-overrides';
+function az_core_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $webform_forms = [
+    'webform_add_form',
+    'webform_edit_form',
+    'webform_duplicate_form',
+    'webform_delete_form',
+  ];
+  if (in_array($form_id, $webform_forms, TRUE)) {
+    $form['#attached']['library'][] = 'az_core/claro-node-form-overrides';
+    $form['#attached']['library'][] = 'az_core/arizona-bootstrap-node-form-overrides';
+  }
 }
 
 /**
