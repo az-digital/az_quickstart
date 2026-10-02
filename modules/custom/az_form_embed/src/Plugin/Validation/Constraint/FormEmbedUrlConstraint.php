@@ -42,7 +42,7 @@ class FormEmbedUrlConstraint extends SymfonyConstraint {
     mixed $options = NULL,
     public $noVendorsMessage = 'This site can\'t embed forms yet, because no form provider is turned on. Ask a site administrator to turn one on, such as Slate.',
     public $refusedMessage = 'This @vendor link can\'t be used because @reason. A link that works looks like this: @example',
-    public $unknownMessage = 'This site can\'t embed a form from this link. It accepts forms from @vendors. A link that works looks like this: @example',
+    public $unknownMessage = 'This site can\'t embed a form from this link. It embeds only @vendors forms, and only from the university\'s own @vendors addresses. A link that works looks like this: @example',
     ?array $groups = NULL,
     mixed $payload = NULL,
   ) {

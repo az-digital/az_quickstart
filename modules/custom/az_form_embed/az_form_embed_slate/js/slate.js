@@ -16,15 +16,22 @@
  * @see https://knowledge.technolutions.net/docs/embedding-forms
  */
 
-((Drupal) => {
+((Drupal, drupalSettings) => {
   /**
-   * The domains we'll load Slate's script from.
+   * Returns the hosts we'll load Slate's script from.
    *
-   * Slate serves its own sites from technolutions.net, and UA's production
-   * forms come from arizona.edu vanity domains. Keep this in step with
-   * SlateUrl::HOST_SUFFIXES in PHP.
+   * They come from SlateUrl::getHosts() in PHP, through drupalSettings, so
+   * there's only one list. If they're missing, return none, so nothing loads.
+   *
+   * @return {string[]} The hosts, lowercase.
    */
-  const SLATE_HOST_SUFFIXES = ['.technolutions.net', '.arizona.edu'];
+  function slateHosts() {
+    const hosts =
+      drupalSettings.azFormEmbed &&
+      drupalSettings.azFormEmbed.hosts &&
+      drupalSettings.azFormEmbed.hosts.slate;
+    return Array.isArray(hosts) ? hosts : [];
+  }
 
   /**
    * The paths we'll load Slate's script from: /register/, optionally
@@ -283,7 +290,7 @@
       return (
         url.protocol === 'https:' &&
         url.port === '' &&
-        SLATE_HOST_SUFFIXES.some((suffix) => url.hostname.endsWith(suffix)) &&
+        slateHosts().includes(url.hostname) &&
         SLATE_PATH_PATTERN.test(url.pathname)
       );
     },
@@ -317,4 +324,4 @@
       applyBootstrapClasses(container);
     },
   };
-})(Drupal);
+})(Drupal, drupalSettings);

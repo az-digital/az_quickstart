@@ -31,24 +31,36 @@ namespace Drupal\az_form_embed_slate;
 final class SlateUrl {
 
   /**
-   * The domains a Slate form can be served from, checked as suffixes.
+   * The hosts the university's Slate forms are served from, matched exactly.
    *
-   * Slate hosts its own sites under technolutions.net, as in
-   * uaz.test.technolutions.net. UA's production forms sit on arizona.edu
-   * vanity domains instead, such as slate.admissions.arizona.edu, which are
-   * DNS aliases pointing at Slate's own servers.
+   * Each of the university's Slate instances has a production host on an
+   * arizona.edu vanity domain (a DNS alias pointing at Slate's servers) and a
+   * test host on Slate's own technolutions.net. The university's Slate team
+   * keeps the list. When it adds an instance, add its hosts here.
    *
-   * The leading dot matters: eviltechnolutions.net and evil-arizona.edu end in
-   * the same letters but fail. Keep this in step with SLATE_HOST_SUFFIXES in
-   * js/slate.js.
+   * Careful: keep this an exact list, not a pattern. Rationale: the embed
+   * loads a script from the form's host, so whoever controls that host can
+   * run their own code on the page. A pattern trusts more than the
+   * university's Slate. For example, ua[a-z].test.technolutions.net also
+   * matches uab.test.technolutions.net, the University of Alberta's Slate.
+   * And slate.[a-z]+.arizona.edu matches hosts that departments running
+   * their own DNS, such as cs.arizona.edu, can create.
    *
-   * The host is not the only check. A URL still has to be https and sit at
-   * /register/, so accepting a whole domain here doesn't by itself let a page
-   * load someone else's script.
+   * js/slate.js gets this list through getHosts(), so the two can't drift.
    */
-  private const HOST_SUFFIXES = [
-    '.technolutions.net',
-    '.arizona.edu',
+  private const HOSTS = [
+    'slate.admissions.arizona.edu',
+    'slate.grad.arizona.edu',
+    'slate.law.arizona.edu',
+    'slate.uaonline.arizona.edu',
+    'slate.vetmed.arizona.edu',
+    // The test hosts, in the same order: uaz is admissions' test host, uag is
+    // grad's, and so on.
+    'uaz.test.technolutions.net',
+    'uag.test.technolutions.net',
+    'ual.test.technolutions.net',
+    'uao.test.technolutions.net',
+    'uav.test.technolutions.net',
   ];
 
   /**
@@ -178,8 +190,8 @@ final class SlateUrl {
     }
 
     // Lowercase the scheme and host before comparing. Rationale: browsers
-    // treat both as case-insensitive, so HTTPS://UAZ.Technolutions.NET is the
-    // same form as https://uaz.technolutions.net.
+    // treat both as case-insensitive, so HTTPS://UAZ.Test.Technolutions.NET is
+    // the same form as https://uaz.test.technolutions.net.
     $scheme = strtolower($parts['scheme']);
     $host = strtolower($parts['host']);
 
@@ -202,14 +214,7 @@ final class SlateUrl {
       $reason = 'has_fragment';
       return NULL;
     }
-    $host_allowed = FALSE;
-    foreach (self::HOST_SUFFIXES as $suffix) {
-      if (str_ends_with($host, $suffix)) {
-        $host_allowed = TRUE;
-        break;
-      }
-    }
-    if (!$host_allowed) {
+    if (!in_array($host, self::HOSTS, TRUE)) {
       $reason = 'bad_host';
       return NULL;
     }
@@ -296,31 +301,29 @@ final class SlateUrl {
   /**
    * Checks whether a URL looks like a Slate form link, even if it's invalid.
    *
-   * This only checks the host and that the path starts with /register. It's
-   * how the Form embed module decides which vendor explains a refused link.
-   * For example, a Slate link with a person parameter still looks like
-   * Slate's, so the editor hears why Slate refused it. parse() is the real
-   * check.
+   * This only checks that the host is one of HOSTS and that the path starts
+   * with /register. It's how the Form embed module decides which vendor
+   * explains a refused link. For example, a Slate link with a person
+   * parameter still looks like Slate's, so the editor hears why Slate refused
+   * it. parse() is the real check.
    *
    * @param string $url
    *   The link an editor pasted.
    *
    * @return bool
-   *   TRUE if the URL is on a Slate host with a /register path.
+   *   TRUE if the URL is on one of the university's Slate hosts, with a
+   *   /register path.
    */
   public static function looksLikeSlate(string $url): bool {
     $parts = parse_url(trim($url));
     if (!is_array($parts) || !isset($parts['host'])) {
       return FALSE;
     }
-    $host = strtolower($parts['host']);
-    foreach (self::HOST_SUFFIXES as $suffix) {
-      if (str_ends_with($host, $suffix)) {
-        // No trailing slash, so /register?id=... still counts as Slate's.
-        return str_starts_with($parts['path'] ?? '', '/register');
-      }
+    if (!in_array(strtolower($parts['host']), self::HOSTS, TRUE)) {
+      return FALSE;
     }
-    return FALSE;
+    // No trailing slash, so /register?id=... still counts as Slate's.
+    return str_starts_with($parts['path'] ?? '', '/register');
   }
 
   /**
@@ -344,6 +347,16 @@ final class SlateUrl {
    */
   public function getEmbedUrl(): string {
     return $this->buildUrl([...$this->prefill, ['output', 'embed']]);
+  }
+
+  /**
+   * The hosts parse() accepts, for js/slate.js to check against.
+   *
+   * @return string[]
+   *   The hosts, lowercase.
+   */
+  public static function getHosts(): array {
+    return self::HOSTS;
   }
 
   /**

@@ -70,7 +70,7 @@ class FormEmbedUrlConstraintValidator extends ConstraintValidator implements Con
     if ($claiming === NULL) {
       $first = reset($vendors);
       $this->context->addViolation($constraint->unknownMessage, [
-        '@vendors' => implode(', ', array_map(fn ($vendor) => $vendor->label(), $vendors)),
+        '@vendors' => implode(' or ', array_map(fn ($vendor) => $vendor->label(), $vendors)),
         '@example' => $first->examples()[0] ?? '',
       ]);
       return;
