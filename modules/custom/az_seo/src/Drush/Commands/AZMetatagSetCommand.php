@@ -6,6 +6,8 @@ namespace Drupal\az_seo\Drush\Commands;
 
 use Consolidation\AnnotatedCommand\Input\StdinAwareInterface;
 use Consolidation\AnnotatedCommand\Input\StdinAwareTrait;
+use Consolidation\OutputFormatters\FormatterManager;
+use Consolidation\OutputFormatters\StructuredData\UnstructuredListData;
 use Consolidation\SiteAlias\SiteAliasManagerInterface;
 use Drupal\Component\Plugin\PluginManagerInterface;
 use Drupal\Component\Utility\NestedArray;
@@ -30,7 +32,8 @@ final class AZMetatagSetCommand extends DrushCommands implements StdinAwareInter
   use StdinAwareTrait;
   use ExecTrait;
 
-  const SET = 'az-seo:tag';
+  const SET = 'az-seo:metatag:set';
+  const GET = 'az-seo:metatag:get';
 
   /**
    * Return the ConfigFactory service.
@@ -56,14 +59,15 @@ final class AZMetatagSetCommand extends DrushCommands implements StdinAwareInter
     protected SiteAliasManagerInterface $siteAliasManager,
     protected StorageManagerInterface $configStorageExport,
     protected ImportStorageTransformer $importStorageTransformer,
+    protected FormatterManager $formatterManager,
   ) {
     parent::__construct();
   }
 
   /**
-   * Save a global metatag default directly.
+   * Save a metatag default directly.
    */
-  #[CLI\Command(name: self::SET, aliases: ['azm', 'azm-set'])]
+  #[CLI\Command(name: self::SET, aliases: ['azm-set'])]
   #[CLI\Argument(name: 'default', description: 'The defaults to alter, e.g. global, node.')]
   #[CLI\Argument(name: 'key', description: 'The key of the tag to set, can be nested (title, schema_organization_parent_organization.@id).')]
   #[CLI\Argument(name: 'value', description: 'The value to assign to the tag. Use <info>-</info> to read from stdin.')]
@@ -71,8 +75,8 @@ final class AZMetatagSetCommand extends DrushCommands implements StdinAwareInter
     description: 'Format to parse the object. Recognized values: <info>string</info>, <info>yaml</info>. Since JSON is a subset of YAML, $value may be in JSON format.',
     suggestedValues: ['string', 'json',
     ])]
-  #[CLI\Usage(name: 'drush az-seo:tag global schema_organization_name sitename', description: 'Sets a global metatag default of <info>sitename</info> for the <info>schema_organization_name</info> tag.')]
-  #[CLI\Usage(name: 'drush az-seo:tag global schema_organization_parent_organization.@id https://quickstart.arizona.edu', description: 'Sets a global metatag default of <info>https://quickstart.arizona.edu</info> for the <info>@id</info> element of the <info>schema_organization_parent_organization</info> tag.')]
+  #[CLI\Usage(name: 'drush az-seo:metatag:set global schema_organization_name sitename', description: 'Sets a global metatag default of <info>sitename</info> for the <info>schema_organization_name</info> tag.')]
+  #[CLI\Usage(name: 'drush az-seo:metatag:set global schema_organization_parent_organization.@id https://quickstart.arizona.edu', description: 'Sets a global metatag default of <info>https://quickstart.arizona.edu</info> for the <info>@id</info> element of the <info>schema_organization_parent_organization</info> tag.')]
   public function set($default, $key, $value, $options = ['input-format' => 'string']) {
 
     // Special flag indicating that the value has been passed via STDIN.
@@ -143,6 +147,51 @@ final class AZMetatagSetCommand extends DrushCommands implements StdinAwareInter
       $metatag_default->set('tags', $tags);
       $metatag_default->save();
     }
+  }
+
+  /**
+   * Get a metatag default directly.
+   */
+  #[CLI\Command(name: self::GET, aliases: ['azm-get'])]
+  #[CLI\Argument(name: 'default', description: 'The default to put from, e.g. global, node.')]
+  #[CLI\Argument(name: 'key', description: 'The key of the tag to get, can be nested (title, schema_organization_parent_organization.@id).')]
+  #[CLI\Option(name: 'format',
+    description: 'Format to output',
+    suggestedValues: ['yaml', 'json',
+    ])]
+  #[CLI\Usage(name: 'drush az-seo:metatag:get global schema_organization_name', description: 'Gets the global metatag default for the <info>schema_organization_name</info> tag.')]
+  #[CLI\Usage(name: 'drush az-seo:metatag:get global schema_organization_parent_organization.@id', description: 'Gets the global metatag default for the <info>@id</info> element of the <info>schema_organization_parent_organization</info> tag.')]
+  public function get($default, $key, $options = ['format' => 'yaml']) {
+
+    // Get the metatag_defaults storage so we can load a particular default.
+    $metatag_default_storage = $this->entityTypeManager->getStorage('metatag_defaults');
+    $metatag_default = $metatag_default_storage->load($default);
+    if (!$metatag_default) {
+      throw new \Exception(dt('Could not find !default metatag_default.', ['!default' => $default]));
+    }
+
+    // Get the current tags for the metatag dafaults.
+    $tags = $metatag_default->get('tags');
+
+    // The tag is the first element in the list, the rest is nested properties.
+    $path = explode('.', $key);
+    $tag = array_shift($path);
+
+    // Ask the schemaMetatagManager to unserialize the value.
+    $current_value = $tags[$tag] ?? [];
+    $current_value = $this->schemaMetatagManager->unserialize($current_value);
+
+    // If the user specified a nested path we're dealing with an array.
+    // Get a value at arbitrary depth.
+    if (!empty($path)) {
+      $current_value = NestedArray::getValue($current_value, $path);
+    }
+
+    // See if we have a nested value or array.
+    if (!is_scalar($current_value)) {
+      $current_value = new UnstructuredListData($current_value);
+    }
+    return $current_value;
   }
 
 }
