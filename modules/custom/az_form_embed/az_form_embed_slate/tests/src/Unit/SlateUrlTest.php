@@ -33,9 +33,34 @@ class SlateUrlTest extends UnitTestCase {
   public static function validUrlProvider(): array {
     $base = 'https://slate.admissions.arizona.edu/register/?id=' . self::ID;
     return [
-      // UA's production forms sit on arizona.edu vanity domains, each a DNS
-      // alias for Slate's own servers. All three known hosts are covered.
+      // Each of the university's Slate instances has a production host on
+      // arizona.edu and a test host on technolutions.net. Every one is
+      // covered.
       'production vanity host' => [$base, $base],
+      'law vanity host' => [
+        'https://slate.law.arizona.edu/register/?id=' . self::ID,
+        'https://slate.law.arizona.edu/register/?id=' . self::ID,
+      ],
+      'vetmed vanity host' => [
+        'https://slate.vetmed.arizona.edu/register/?id=' . self::ID,
+        'https://slate.vetmed.arizona.edu/register/?id=' . self::ID,
+      ],
+      'grad test host' => [
+        'https://uag.test.technolutions.net/register/?id=' . self::ID,
+        'https://uag.test.technolutions.net/register/?id=' . self::ID,
+      ],
+      'law test host' => [
+        'https://ual.test.technolutions.net/register/?id=' . self::ID,
+        'https://ual.test.technolutions.net/register/?id=' . self::ID,
+      ],
+      'uaonline test host' => [
+        'https://uao.test.technolutions.net/register/?id=' . self::ID,
+        'https://uao.test.technolutions.net/register/?id=' . self::ID,
+      ],
+      'vetmed test host' => [
+        'https://uav.test.technolutions.net/register/?id=' . self::ID,
+        'https://uav.test.technolutions.net/register/?id=' . self::ID,
+      ],
       'grad vanity host' => [
         'https://slate.grad.arizona.edu/register/?id=' . self::ID,
         'https://slate.grad.arizona.edu/register/?id=' . self::ID,
@@ -157,13 +182,18 @@ class SlateUrlTest extends UnitTestCase {
       'http' => ['http://slate.admissions.arizona.edu/register/?id=' . self::ID, 'bad_scheme'],
       'javascript scheme' => ['javascript:alert(1)', 'unparseable'],
       'another host entirely' => ['https://example.com/register/?id=' . self::ID, 'bad_host'],
-      // The suffix check includes the leading dot, so a lookalike domain that
-      // only ends in the same letters fails.
+      // Hosts are matched exactly, so a host that only resembles one on the
+      // list fails.
       'lookalike host' => ['https://eviltechnolutions.net/register/?id=' . self::ID, 'bad_host'],
       'host as a path segment' => ['https://evil.com/slate.admissions.arizona.edu/register/?id=' . self::ID, 'bad_host'],
-      // The leading dot on the suffix rules out the bare domain too, and any
-      // host that merely ends in the same letters.
       'bare arizona.edu' => ['https://arizona.edu/register/?id=' . self::ID, 'bad_host'],
+      // Another school's Slate test site, which a pattern like
+      // ua[a-z].test.technolutions.net would let through.
+      "another school's Slate" => ['https://uab.test.technolutions.net/register/?id=' . self::ID, 'bad_host'],
+      // A host a department running its own DNS could create, which a pattern
+      // like slate.[a-z]+.arizona.edu would let through.
+      'department-made slate host' => ['https://slate.cs.arizona.edu/register/?id=' . self::ID, 'bad_host'],
+      'subdomain of a listed host' => ['https://evil.slate.admissions.arizona.edu/register/?id=' . self::ID, 'bad_host'],
       'hyphenated lookalike' => ['https://evil-arizona.edu/register/?id=' . self::ID, 'bad_host'],
       'unhyphenated lookalike' => ['https://notarizona.edu/register/?id=' . self::ID, 'bad_host'],
       'suffix moved into the middle' => ['https://arizona.edu.evil.com/register/?id=' . self::ID, 'bad_host'],
@@ -308,7 +338,7 @@ class SlateUrlTest extends UnitTestCase {
       'uppercase prefill value' => $base . '&sys:first=ALEXANDER',
       // Browsers treat the scheme and host as case-insensitive, and Slate
       // ids are hex, so case doesn't matter there.
-      'mixed case host and id' => 'HTTPS://UAZ.Technolutions.NET/register/?id=' . strtoupper(self::ID),
+      'mixed case host and id' => 'HTTPS://UAZ.Test.Technolutions.NET/register/?id=' . strtoupper(self::ID),
       'form path with an id' => 'https://slate.admissions.arizona.edu/register/form?id=' . self::ID,
       'id after another parameter' => $base . '&sys:first=Alexander',
       'id not first' => 'https://slate.admissions.arizona.edu/register/?sys:first=Alexander&id=' . self::ID,
@@ -332,6 +362,7 @@ class SlateUrlTest extends UnitTestCase {
       'bare arizona.edu' => 'https://arizona.edu/register/?id=' . self::ID,
       'hyphenated lookalike' => 'https://evil-arizona.edu/register/?id=' . self::ID,
       'suffix moved into the middle' => 'https://arizona.edu.evil.com/register/?id=' . self::ID,
+      "another school's Slate" => 'https://uab.test.technolutions.net/register/?id=' . self::ID,
       'fragment' => $base . '#section',
       'plain http' => 'http://slate.admissions.arizona.edu/register/?id=' . self::ID,
       // Slate requires lowercase keys and paths.
@@ -359,10 +390,15 @@ class SlateUrlTest extends UnitTestCase {
       $this->assertNotNull($reason, $label);
       $this->assertNotSame('', $vendor->explain($reason), $label);
     }
+
+    // A link on another school's Slate isn't claimed, because its host isn't
+    // one of the university's. So no vendor explains it, and the editor sees
+    // the Form embed module's general message instead.
+    $this->assertFalse($vendor->claims('https://uab.test.technolutions.net/register/?id=' . self::ID));
   }
 
   /**
-   * Only a link on a Slate host, under /register, looks like Slate's.
+   * Only a link on a listed Slate host, under /register, looks like Slate's.
    */
   public function testLooksLikeSlate(): void {
     $looks_like_slate = [
@@ -378,6 +414,7 @@ class SlateUrlTest extends UnitTestCase {
       'a Trellis form, also on arizona.edu' => 'https://forms-a.trellis.arizona.edu/192',
       'another host' => 'https://example.com/register/?id=' . self::ID,
       'lookalike host' => 'https://eviltechnolutions.net/register/?id=' . self::ID,
+      "another school's Slate" => 'https://uab.test.technolutions.net/register/?id=' . self::ID,
       'not a URL' => 'not a url',
     ];
     foreach ($not_slate as $label => $url) {

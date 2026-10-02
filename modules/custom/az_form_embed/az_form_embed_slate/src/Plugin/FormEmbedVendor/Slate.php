@@ -57,7 +57,7 @@ class Slate extends FormEmbedVendorBase {
       'has_userinfo' => $this->t('it contains a user name or password'),
       'has_port' => $this->t('it contains a port number'),
       'has_fragment' => $this->t('it contains a # section'),
-      'bad_host' => $this->t('it is not on a Slate address'),
+      'bad_host' => $this->t("it is not on one of the university's Slate addresses"),
       'bad_path' => $this->t('it does not point to a Slate form page, under /register/'),
       'missing_id' => $this->t('it does not say which form to show. Use the link with ?id= that Slate gives you'),
       'bad_id' => $this->t('its form id is not valid'),
