@@ -188,7 +188,7 @@ final class AZMetatagSetCommand extends DrushCommands implements StdinAwareInter
     }
 
     // See if we have a nested value or array.
-    if (!is_scalar($current_value)) {
+    if ($current_value !== NULL && !is_scalar($current_value)) {
       $current_value = new UnstructuredListData($current_value);
     }
     return $current_value;
