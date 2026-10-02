@@ -290,7 +290,7 @@ final class SlateUrl {
       // If a person parameter is present, reject the whole URL. Rationale: one
       // stored URL serves every visitor, and person=<guid> tells Slate to fill
       // the form with that record's details and update that record on submit.
-      // So every visitor would see one applicant's details, and every
+      // So every visitor would see one person's details, and every
       // submission would land on that one record.
       if ($key === 'person') {
         $reason = 'person_param';
