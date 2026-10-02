@@ -76,8 +76,22 @@ final class SlateUrl {
    * has to be one word of letters, digits, hyphens, or underscores. Rationale:
    * the name goes back into the script src we build, and a browser resolves
    * /register/../manage to /manage, a different page on Slate's site.
+   *
+   * The browser needs this same rule, to check the script's address right
+   * before it adds the script tag. Keep it without the # characters PHP wraps
+   * a pattern in, so a browser can compile it too. See getPathPattern().
    */
-  private const PATH_PATTERN = '#^/register/(?:([A-Za-z0-9_-]+)/?)?$#';
+  private const PATH_PATTERN_BODY = '^/register/(?:([A-Za-z0-9_-]+)/?)?$';
+
+  /**
+   * PATH_PATTERN_BODY as a PHP pattern, for preg_match() in this class.
+   *
+   * It wraps the body in #, not the usual /, because the body is full of
+   * slashes. The D modifier makes $ match only at the very end. Rationale:
+   * that's what $ means in a browser. Without D, PHP's $ also matches just
+   * before a final line break, so PHP and the browser could disagree.
+   */
+  private const PATH_PATTERN = '#' . self::PATH_PATTERN_BODY . '#D';
 
   /**
    * The form id, shaped like a GUID.
@@ -357,6 +371,17 @@ final class SlateUrl {
    */
   public static function getHosts(): array {
     return self::HOSTS;
+  }
+
+  /**
+   * The path rule parse() applies, for js/slate.js to check against.
+   *
+   * @return string
+   *   A regular expression body, without the # characters PHP wraps it in,
+   *   that a browser can compile.
+   */
+  public static function getPathPattern(): string {
+    return self::PATH_PATTERN_BODY;
   }
 
   /**

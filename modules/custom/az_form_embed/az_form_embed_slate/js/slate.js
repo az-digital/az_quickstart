@@ -34,12 +34,31 @@
   }
 
   /**
-   * The paths we'll load Slate's script from: /register/, optionally
-   * followed by a form's name, as in /register/referawildcat.
+   * Returns the pattern for paths we'll load Slate's script from.
    *
-   * Keep this in step with SlateUrl::PATH_PATTERN in PHP.
+   * That's /register/, optionally followed by a form's name, as in
+   * /register/referawildcat. The pattern comes from SlateUrl::getPathPattern()
+   * in PHP, through drupalSettings, so there's only one copy. If it's missing,
+   * or doesn't compile here, return null, so nothing loads.
+   *
+   * @return {RegExp|null} The pattern, or null.
    */
-  const SLATE_PATH_PATTERN = /^\/register\/(?:[A-Za-z0-9_-]+\/?)?$/;
+  function slatePathPattern() {
+    const body =
+      drupalSettings.azFormEmbed &&
+      drupalSettings.azFormEmbed.pathPattern &&
+      drupalSettings.azFormEmbed.pathPattern.slate;
+    if (typeof body !== 'string') {
+      return null;
+    }
+    // If the pattern doesn't compile, refuse every path. For example, PHP's
+    // possessive a++ is a syntax error in a browser.
+    try {
+      return new RegExp(body);
+    } catch (e) {
+      return null;
+    }
+  }
 
   /**
    * Input types that get form-control, and the Drupal class to add with it.
@@ -287,11 +306,13 @@
     // Check the scheme, port, host and path the way SlateUrl::parse() does.
     // A URL's port is '' when the URL names none.
     isAllowedUrl(url) {
+      const pathPattern = slatePathPattern();
       return (
         url.protocol === 'https:' &&
         url.port === '' &&
         slateHosts().includes(url.hostname) &&
-        SLATE_PATH_PATTERN.test(url.pathname)
+        pathPattern !== null &&
+        pathPattern.test(url.pathname)
       );
     },
 

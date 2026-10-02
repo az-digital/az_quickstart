@@ -463,4 +463,22 @@ class SlateUrlTest extends UnitTestCase {
     $this->assertSame(512, $rules['maxValueLength']);
   }
 
+  /**
+   * The browser is handed the same path rule the parser applies.
+   */
+  public function testPathPattern(): void {
+    // Wrap it so it behaves the way it does in js/slate.js: no flags, and $
+    // matching only at the very end.
+    $pattern = '#' . SlateUrl::getPathPattern() . '#D';
+
+    $accepted = ['/register/', '/register/referawildcat', '/register/referawildcat/'];
+    foreach ($accepted as $path) {
+      $this->assertSame(1, preg_match($pattern, $path), $path);
+    }
+    $refused = ['/register', '/register/../manage', '/register/a/b', '/manage/', "/register/\n"];
+    foreach ($refused as $path) {
+      $this->assertSame(0, preg_match($pattern, $path), $path);
+    }
+  }
+
 }

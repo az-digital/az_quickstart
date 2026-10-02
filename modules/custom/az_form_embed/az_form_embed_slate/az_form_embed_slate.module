@@ -20,17 +20,19 @@ use Drupal\az_form_embed_slate\SlateUrl;
  *   it loads wherever the component does. Rationale: Canvas renders the
  *   component without az_form_embed's formatter, so the handler can't count
  *   on the formatter to attach it.
- * - Gives the handler the hosts it may load Slate's script from. Without
- *   them, it loads none.
+ * - Gives the handler the hosts and the path it may load Slate's script
+ *   from. Without them, it loads none.
  * - Gives the handler the rules its loader filters the page's query
  *   parameters with. Without them, it forwards nothing.
  *
  * @see \Drupal\az_form_embed_slate\SlateUrl::getHosts()
+ * @see \Drupal\az_form_embed_slate\SlateUrl::getPathPattern()
  * @see \Drupal\az_form_embed_slate\SlateUrl::getForwardingRules()
  */
 function az_form_embed_slate_library_info_alter(array &$libraries, $extension) {
   if ($extension === 'az_form_embed_slate' && isset($libraries['slate'])) {
     $libraries['slate']['drupalSettings']['azFormEmbed']['hosts']['slate'] = SlateUrl::getHosts();
+    $libraries['slate']['drupalSettings']['azFormEmbed']['pathPattern']['slate'] = SlateUrl::getPathPattern();
     $libraries['slate']['drupalSettings']['azFormEmbed']['forwarding']['slate'] = SlateUrl::getForwardingRules();
   }
   // Drupal registers every component's library under core, with the
