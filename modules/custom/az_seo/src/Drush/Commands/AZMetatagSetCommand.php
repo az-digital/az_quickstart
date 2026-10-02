@@ -25,7 +25,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Yaml\Parser;
 
 /**
- * Convenience command to alter global metatag defaults.
+ * Convenience commands to work with global metatag defaults.
  */
 final class AZMetatagSetCommand extends DrushCommands implements StdinAwareInterface {
   use AutowireTrait;
