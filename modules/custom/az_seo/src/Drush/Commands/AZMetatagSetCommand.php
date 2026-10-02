@@ -8,13 +8,8 @@ use Consolidation\AnnotatedCommand\Input\StdinAwareInterface;
 use Consolidation\AnnotatedCommand\Input\StdinAwareTrait;
 use Consolidation\OutputFormatters\FormatterManager;
 use Consolidation\OutputFormatters\StructuredData\UnstructuredListData;
-use Consolidation\SiteAlias\SiteAliasManagerInterface;
 use Drupal\Component\Plugin\PluginManagerInterface;
 use Drupal\Component\Utility\NestedArray;
-use Drupal\Core\Config\ConfigFactoryInterface;
-use Drupal\Core\Config\ImportStorageTransformer;
-use Drupal\Core\Config\StorageInterface;
-use Drupal\Core\Config\StorageManagerInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\schema_metatag\SchemaMetatagManagerInterface;
 use Drush\Attributes as CLI;
@@ -36,19 +31,12 @@ final class AZMetatagSetCommand extends DrushCommands implements StdinAwareInter
   const GET = 'az-seo:metatag:get';
 
   public function __construct(
-    // @todo remove unnecessary services.
-    protected ConfigFactoryInterface $configFactory,
-    #[Autowire(service: 'config.storage')]
-    protected StorageInterface $configStorage,
     #[Autowire(service: 'entity_type.manager')]
     protected EntityTypeManagerInterface $entityTypeManager,
     #[Autowire(service: 'plugin.manager.metatag.tag')]
     protected PluginManagerInterface $pluginMetatagManager,
     #[Autowire(service: 'schema_metatag.schema_metatag_manager')]
     protected SchemaMetatagManagerInterface $schemaMetatagManager,
-    protected SiteAliasManagerInterface $siteAliasManager,
-    protected StorageManagerInterface $configStorageExport,
-    protected ImportStorageTransformer $importStorageTransformer,
     protected FormatterManager $formatterManager,
   ) {
     parent::__construct();
