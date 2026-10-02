@@ -35,16 +35,6 @@ final class AZMetatagSetCommand extends DrushCommands implements StdinAwareInter
   const SET = 'az-seo:metatag:set';
   const GET = 'az-seo:metatag:get';
 
-  /**
-   * Return the ConfigFactory service.
-   *
-   * @return \Drupal\Core\Config\ConfigFactoryInterface
-   *   The config factory.
-   */
-  public function getConfigFactory(): ConfigFactoryInterface {
-    return $this->configFactory;
-  }
-
   public function __construct(
     // @todo remove unnecessary services.
     protected ConfigFactoryInterface $configFactory,
