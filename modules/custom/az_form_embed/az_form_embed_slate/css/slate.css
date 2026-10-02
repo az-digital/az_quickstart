@@ -1,0 +1,126 @@
+/**
+ * @file
+ * Fixes where Slate's stylesheet and Arizona Bootstrap clash.
+ *
+ * Slate's handler adds Arizona Bootstrap's classes to Slate's fields, so the
+ * look comes from Arizona Bootstrap. These rules only fix the places where
+ * Slate's own stylesheet gets in the way. Each is scoped under
+ * .az-form-embed--slate, the Form embed component's class for a Slate form,
+ * so it outranks the rule it fixes.
+ *
+ * Leave Slate's own stylesheets loaded. When an embed looks wrong, Slate's
+ * docs say to adjust the host page's CSS, and this file is where we do that.
+ *
+ * Careful: never set display on elements Slate hides with its "hidden" class.
+ * Slate's conditional logic shows and hides questions with that class, so
+ * overriding it shows questions that should be hidden, with no error.
+ *
+ * @see https://knowledge.technolutions.net/docs/embedding-forms
+ */
+
+/* Slate puts a left margin on an option's label. Bootstrap's form-check
+ * already spaces the label from its input, so together they leave a wide gap.
+ * This outranks Slate's div.form_response input + label. */
+.az-form-embed--slate .form-check > .form-check-label {
+  margin-left: 0;
+}
+
+/* Bootstrap's form-control and form-select are display: block, which would
+ * stack fields Slate puts side by side, like a birthdate's month, day, and
+ * year. Slate's handler marks those rows with
+ * az-form-embed-slate__inline-controls.
+ *
+ * The gaps do the spacing: 8px between lines when the row is too narrow to
+ * fit, as a birthdate is in the Very Small view mode at 220px, and 5px
+ * between fields, which is the spacing Slate itself uses.
+ *
+ * Slate sets that 5px as an inline margin on each field after the first.
+ * Without the reset below, a wrapped line would start 5px in from the line
+ * above. Only !important beats an inline style. It is scoped to the rows the handler marked, which
+ * are rows holding more than one field. */
+.az-form-embed--slate .az-form-embed-slate__inline-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 5px;
+}
+
+.az-form-embed--slate .az-form-embed-slate__inline-controls > * {
+  margin-left: 0 !important;
+}
+
+.az-form-embed--slate .az-form-embed-slate__inline-controls > .form-control,
+.az-form-embed--slate .az-form-embed-slate__inline-controls > .form-select {
+  width: auto;
+}
+
+/* Space apart the parts of a question when each part carries its own label.
+ * Slate's address question holds five: country, street, city, state, and
+ * postal code. Each sits in a bare div with no margin, so without this the
+ * next label touches the field above it.
+ *
+ * Slate has no need for the margin, because its own labels are plain text.
+ * Ours are 18px bold, from Bootstrap's form-label, which is what makes the
+ * crowding show.
+ *
+ * :has() matches an element by what it contains, so this picks only a part
+ * that has a label of its own. That leaves alone the question's own label,
+ * and a birthdate, whose three dropdowns share one box and have no labels of
+ * their own. Skipping the last part keeps the gap below the whole question at
+ * the 18px Slate puts between questions. */
+.az-form-embed--slate .form_question fieldset > div:has(> .form_label):not(:last-of-type) {
+  margin-bottom: 1rem;
+}
+
+/* Slate marks a field that fails validation with aria-invalid="true" and a
+ * validate_error class. Bootstrap only styles its own is-invalid class, so
+ * give Slate's markers Bootstrap's invalid border color. */
+.az-form-embed--slate .form-control[aria-invalid="true"],
+.az-form-embed--slate .form-select[aria-invalid="true"],
+.az-form-embed--slate .form-check-input[aria-invalid="true"],
+.az-form-embed--slate .form-control.validate_error,
+.az-form-embed--slate .form-select.validate_error {
+  border-color: var(--bs-form-invalid-border-color);
+}
+
+/* Slate sizes some of its own parts in pixels, so they hang outside a narrow
+ * embed. Its signature box is 400px wide, and stuck out by 180px in the Very
+ * Small view mode, which is 220px. Let anything Slate renders shrink to fit.
+ *
+ * Careful: this doesn't catch every case. A min-width beats max-width, and
+ * Slate's table layout gives an address label min-width: 150px. An inline
+ * style from Slate's JavaScript beats a stylesheet too. */
+.az-form-embed--slate [class*="form_"] {
+  max-width: 100%;
+}
+
+/* Slate's signature question uses its label for a whole consent statement,
+ * which reads badly in form-label's bold. Keep form-label's spacing but use
+ * normal text, so only what the form's author bolded stands out. */
+.az-form-embed--slate .form_signature .form-label {
+  font-size: inherit;
+  font-weight: normal;
+}
+
+/* Slate's stylesheet styles every .alert on the page, not just its own, and
+ * it loads after Arizona Bootstrap's. So on a page holding a Slate form,
+ * every Bootstrap alert, such as Drupal's status messages, gets Slate's look
+ * instead: a 5px black left bar, 10px padding, black text. Restate
+ * Bootstrap's own declarations for those alerts.
+ *
+ * :has() limits this to pages holding a Slate form, and also makes the rule
+ * outrank Slate's, which is one class. Leave alerts inside the form Slate
+ * wrote alone, in case Slate uses that rule for its own messages there.
+ *
+ * These are Bootstrap's variables, not copied values, so the alerts still
+ * follow Arizona Bootstrap when Arizona Bootstrap changes.
+ *
+ * Careful: the same Slate rule also styles the error class, which Drupal
+ * adds to a field that fails validation. This doesn't fix those fields. So
+ * on a page with a Slate form, a Drupal field with an error gets Slate's left
+ * bar and padding. */
+html:has(.az-form-embed--slate) .alert:not(.az-form-embed__form .alert) {
+  padding: var(--bs-alert-padding-y) var(--bs-alert-padding-x);
+  color: var(--bs-alert-color);
+  border: var(--bs-alert-border);
+  border-radius: var(--bs-alert-border-radius);
+}

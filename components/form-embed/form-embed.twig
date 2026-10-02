@@ -1,0 +1,114 @@
+{#
+/**
+ * @file
+ * Template for the Form embed component.
+ *
+ * Renders an empty div for the vendor's script to write the form into, and
+ * beside it an alert naming the form, saying why it isn't there, and linking
+ * to it. form-embed.js loads the script, using the handler the vendor's
+ * submodule adds to this component's library.
+ *
+ * This template only displays what it's given, and calls nothing from a
+ * module. The addresses arrive already checked: from the media item's
+ * az_form_embed_form field when Canvas renders it, or from az_form_embed's
+ * formatter in the page builder. Both get them from the vendor that accepted
+ * the link.
+ *
+ * Keep the alert outside the div. Rationale: a vendor's script replaces
+ * everything inside it. For example, if Slate can't fetch the form, it
+ * overwrites the div with its own "To complete this form, click here."
+ * message, so a link inside would vanish right when someone needs it. The
+ * loading spinner goes inside the div for the same reason: the form replaces
+ * it.
+ *
+ * The link goes to the form's plain address, not the embed address. A vendor
+ * answers the embed address with JavaScript, so a link to it would show a
+ * script instead of the form.
+ *
+ * The alert is visible here in the markup. The loader hides it once it takes
+ * over, and shows it again if the form fails, so a browser with no JavaScript
+ * still gets the link. That browser is also the only one that reads the
+ * reason written below, because the loader replaces it in every other case.
+ *
+ * The retry button ends the sentence and looks like the link below it. It's
+ * a button, not a link, because it loads the form again in place instead of
+ * going anywhere. The loader shows it only when the form took too long to
+ * arrive. The cause is usually a slow server, such as Slate's test server
+ * waking up, and a second try often works.
+ *
+ * Two openings are written and the stylesheet shows one. The plain one is for
+ * a visitor, and doesn't name the form, because its name means nothing to
+ * them. The loader asks for the named one, by adding --names-form, when the
+ * reason is something a person can act on.
+ *
+ * In Canvas's editor and its Preview page, the live form loads too, so
+ * editors see the real form. Only CKEditor and the Media Library show the
+ * Form embed placeholder instead, and az_form_embed's formatter decides that.
+ *
+ * Props:
+ * - form.vendor: The vendor's machine name, such as slate. The loader runs
+ *   that vendor's handler.
+ * - form.embed_url: The address the vendor's embed script loads from.
+ * - form.canonical_url: The form's plain address, safe to link to.
+ * - form.label: The media item's name. The placeholder filter puts it in as
+ *   Drupal's own em.placeholder, so the sentence stays one translatable
+ *   string, and the loader can read the name back out of that element.
+ * - utility_classes: Additional Bootstrap utility classes for the outer
+ *   wrapper, such as mb-5.
+ *
+ * Renders nothing without an embed address, except in Canvas's editor. There
+ * the placeholder's icon shows until a form is picked, so the editor can see
+ * and select the component. Canvas passes canvas_is_preview to every
+ * component it renders. Reading it needs nothing from Canvas, and elsewhere
+ * it's simply undefined.
+ */
+#}
+{% set attributes = attributes|default(create_attribute()) %}
+{% set vendor = form.vendor|default('') %}
+{% set embed_url = form.embed_url|default('') %}
+{% set canonical_url = form.canonical_url|default('') %}
+{% set label = form.label|default('') %}
+{% set utility_classes = utility_classes|default([]) %}
+{# If a caller passes one class as a string, wrap it in a list. The schema asks
+   for a list, but Drupal only checks that while PHP assertions are on, which
+   they aren't in production. #}
+{% if utility_classes is not iterable %}
+  {% set utility_classes = [utility_classes] %}
+{% endif %}
+
+{% if embed_url and vendor %}
+  <div{{ attributes.addClass('az-form-embed', ('az-form-embed--' ~ vendor)|clean_class, utility_classes) }}>
+    <div class="az-form-embed__form" data-az-form-embed-vendor="{{ vendor }}" data-az-form-embed-src="{{ embed_url }}"></div>
+    <div class="az-form-embed__fallback alert alert-warning" role="alert">
+      <p class="az-form-embed__message">
+        <span class="az-form-embed__icon" aria-hidden="true">⚠️</span>
+        <span class="az-form-embed__opening az-form-embed__opening--plain">{{ 'A form couldn\'t load'|t }}</span>
+        <span class="az-form-embed__opening az-form-embed__opening--named">{% trans %}The form {{ label|placeholder }} was not embedded{% endtrans %}</span>
+        <span class="az-form-embed__reason">{{ 'because this browser has JavaScript turned off.'|t }}</span>
+        <button type="button" class="az-form-embed__retry alert-link" hidden>
+          {{- 'Try again'|t }}
+          <svg class="az-form-embed__link-icon" xmlns="http://www.w3.org/2000/svg"
+               viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round"
+               aria-hidden="true" focusable="false">
+            <polyline points="23 4 23 10 17 10"/>
+            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+          </svg>
+        </button>
+      </p>
+      <a href="{{ canonical_url }}" class="az-form-embed__link alert-link" rel="noopener">
+        {{ 'Open the form'|t }}
+        <svg class="az-form-embed__link-icon" xmlns="http://www.w3.org/2000/svg"
+             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round"
+             aria-hidden="true" focusable="false">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+          <polyline points="15 3 21 3 21 9"/>
+          <line x1="10" y1="14" x2="21" y2="3"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+{% elseif canvas_is_preview|default(false) %}
+  {{ include('az_quickstart:form-embed-placeholder', {}, with_context = false) }}
+{% endif %}

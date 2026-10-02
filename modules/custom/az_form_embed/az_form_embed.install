@@ -1,0 +1,62 @@
+<?php
+
+/**
+ * @file
+ * Install and requirements hooks for az_form_embed.
+ */
+
+use Drupal\Core\File\Exception\FileException;
+use Drupal\Core\File\FileExists;
+use Drupal\Core\File\FileSystemInterface;
+
+/**
+ * Implements hook_install().
+ *
+ * Copies the Form embed icon into the folder media icons are served from.
+ * Rationale: the Form embed media source names it as the default thumbnail,
+ * so it shows on the media admin page. Core copies its own media icons the
+ * same way, in media_install().
+ */
+function az_form_embed_install($is_syncing) {
+  $source = \Drupal::service('extension.list.module')->getPath('az_form_embed') . '/images/icons';
+  $destination = \Drupal::config('media.settings')->get('icon_base_uri');
+  $file_system = \Drupal::service('file_system');
+  $file_system->prepareDirectory($destination, FileSystemInterface::CREATE_DIRECTORY | FileSystemInterface::MODIFY_PERMISSIONS);
+  foreach ($file_system->scanDirectory($source, '/\.png$/') as $file) {
+    // Keep a file that's already there. Rationale: a site may have replaced
+    // the icon on purpose.
+    if (file_exists($destination . '/' . $file->filename)) {
+      continue;
+    }
+    try {
+      $file_system->copy($file->uri, $destination, FileExists::Error);
+    }
+    catch (FileException) {
+      // If the copy fails, carry on. The thumbnail then shows as a broken
+      // image, which isn't worth failing the install over.
+    }
+  }
+}
+
+/**
+ * Implements hook_requirements().
+ *
+ * Warns on the status report when no form provider is turned on. Rationale:
+ * with none on, the Form embed media type refuses every link, which looks
+ * broken to an editor.
+ */
+function az_form_embed_requirements($phase): array {
+  $requirements = [];
+  if ($phase !== 'runtime') {
+    return $requirements;
+  }
+  if (\Drupal::service('plugin.manager.az_form_embed_vendor')->getDefinitions() === []) {
+    $requirements['az_form_embed_vendors'] = [
+      'title' => t('Form embed providers'),
+      'value' => t('None turned on'),
+      'description' => t('The Form embed media type refuses every link until a form provider is turned on. Turn on a Quickstart Form Embed submodule, such as the Slate one, or turn off Quickstart Form Embed.'),
+      'severity' => REQUIREMENT_WARNING,
+    ];
+  }
+  return $requirements;
+}

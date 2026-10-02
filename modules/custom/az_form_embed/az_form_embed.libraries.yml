@@ -1,0 +1,8 @@
+# The Form embed placeholder's styles, for CKEditor.
+#
+# The placeholder is its own component, so its CSS is that component's
+# library. This library only points at it, to give az_form_embed.ckeditor5.yml
+# a name to load.
+placeholder:
+  dependencies:
+    - core/components.az_quickstart--form-embed-placeholder
