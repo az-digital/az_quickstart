@@ -73,7 +73,7 @@ final class AZMetatagSetCommand extends DrushCommands implements StdinAwareInter
   #[CLI\Argument(name: 'value', description: 'The value to assign to the tag. Use <info>-</info> to read from stdin.')]
   #[CLI\Option(name: 'input-format',
     description: 'Format to parse the object. Recognized values: <info>string</info>, <info>yaml</info>. Since JSON is a subset of YAML, $value may be in JSON format.',
-    suggestedValues: ['string', 'json',
+    suggestedValues: ['string', 'yaml',
     ])]
   #[CLI\Usage(name: 'drush az-seo:metatag:set global schema_organization_name sitename', description: 'Sets a global metatag default of <info>sitename</info> for the <info>schema_organization_name</info> tag.')]
   #[CLI\Usage(name: 'drush az-seo:metatag:set global schema_organization_parent_organization.@id https://quickstart.arizona.edu', description: 'Sets a global metatag default of <info>https://quickstart.arizona.edu</info> for the <info>@id</info> element of the <info>schema_organization_parent_organization</info> tag.')]
