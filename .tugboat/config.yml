@@ -125,3 +125,11 @@ services:
   # Define the database service.
   database:
     image: tugboatqa/mariadb:10
+    commands:
+      # Start with an empty database, even when building from a base preview
+      # snapshot, so the site install on the webserver doesn't fail with
+      # "already installed". This has to happen here since drush can't drop
+      # the database from the webserver (its mariadb client requires SSL).
+      build:
+        - mysqladmin -f drop tugboat
+        - mysqladmin -f create tugboat
