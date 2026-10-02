@@ -102,7 +102,16 @@ final class AZMetatagSetCommand extends DrushCommands implements StdinAwareInter
     // If the user specified a nested path we're dealing with an array.
     // Set a value at arbitrary depth.
     if (!empty($path)) {
-      NestedArray::setValue($current_value, $path, $value);
+      try {
+        NestedArray::setValue($current_value, $path, $value);
+      }
+      catch (\Throwable $e) {
+        throw new \Exception(dt('Could not set nested property !key on !default metatag_default: !msg', [
+          '!key' => $key,
+          '!default' => $default,
+          '!msg' => $e->getMessage(),
+        ]));
+      }
     }
     else {
       $current_value = $value;
@@ -162,7 +171,16 @@ final class AZMetatagSetCommand extends DrushCommands implements StdinAwareInter
     // If the user specified a nested path we're dealing with an array.
     // Get a value at arbitrary depth.
     if (!empty($path)) {
-      $current_value = NestedArray::getValue($current_value, $path);
+      try {
+        $current_value = NestedArray::getValue($current_value, $path);
+      }
+      catch (\Throwable $e) {
+        throw new \Exception(dt('Could not get nested property !key on !default metatag_default: !msg', [
+          '!key' => $key,
+          '!default' => $default,
+          '!msg' => $e->getMessage(),
+        ]));
+      }
     }
 
     // See if we have a nested value or array.
