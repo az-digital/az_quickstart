@@ -94,7 +94,7 @@ final class AZMetatagSetCommand extends DrushCommands implements StdinAwareInter
       $value = [];
     }
 
-    if ($options['input-format'] === 'yaml') {
+    if ($options['input-format'] === 'yaml' && is_string($value)) {
       $parser = new Parser();
       $value = $parser->parse($value);
     }
