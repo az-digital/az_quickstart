@@ -106,7 +106,7 @@ final class AZMetatagSetCommand extends DrushCommands implements StdinAwareInter
       throw new \Exception(dt('Could not find !default metatag_default.', ['!default' => $default]));
     }
 
-    // Get the current tags for the metatag dafaults.
+    // Get the current tags for the metatag defaults.
     $tags = $metatag_default->get('tags');
 
     // The tag is the first element in the list, the rest is nested properties.
@@ -170,7 +170,7 @@ final class AZMetatagSetCommand extends DrushCommands implements StdinAwareInter
       throw new \Exception(dt('Could not find !default metatag_default.', ['!default' => $default]));
     }
 
-    // Get the current tags for the metatag dafaults.
+    // Get the current tags for the metatag defaults.
     $tags = $metatag_default->get('tags');
 
     // The tag is the first element in the list, the rest is nested properties.
