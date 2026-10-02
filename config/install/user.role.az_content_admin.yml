@@ -31,7 +31,6 @@ permissions:
   - 'administer taxonomy'
   - 'administer url aliases'
   - 'administer webform overview'
-  - 'administer xmlsitemap'
   - 'batch update workbench access'
   - 'bypass node access'
   - 'bypass workbench access'
@@ -108,3 +107,5 @@ permissions:
   - 'view disabled publication type entities'
   - 'view enabled publication type entities'
   - 'view post access counter'
+  - 'administer sitemap settings'
+  - 'edit entity sitemap settings'
