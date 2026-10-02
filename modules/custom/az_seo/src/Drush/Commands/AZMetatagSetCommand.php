@@ -153,7 +153,7 @@ final class AZMetatagSetCommand extends DrushCommands implements StdinAwareInter
    * Get a metatag default directly.
    */
   #[CLI\Command(name: self::GET, aliases: ['azm-get'])]
-  #[CLI\Argument(name: 'default', description: 'The default to put from, e.g. global, node.')]
+  #[CLI\Argument(name: 'default', description: 'The default to get from, e.g. global, node.')]
   #[CLI\Argument(name: 'key', description: 'The key of the tag to get, can be nested (title, schema_organization_parent_organization.@id).')]
   #[CLI\Option(name: 'format',
     description: 'Format to output',
