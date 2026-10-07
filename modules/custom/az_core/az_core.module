@@ -376,7 +376,7 @@ function az_core_form_taxonomy_term_form_alter(&$form, FormStateInterface $form_
  *
  * Adds style overrides for claro/node-form and arizona-bootstrap.
  */
-function az_core_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+function az_core_form_webform_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   $webform_forms = [
     'webform_add_form',
     'webform_edit_form',
