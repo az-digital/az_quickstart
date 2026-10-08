@@ -4,7 +4,7 @@ migration_tags:
   - Courses
 source:
   plugin: url
-  data_fetcher_plugin: retry_http
+  data_fetcher_plugin: http
   data_parser_plugin: xml
   skip_count: True
   namespaces:

@@ -8,7 +8,6 @@ use Drupal\migrate\MigrateException;
 use Drupal\migrate_plus\Plugin\migrate_plus\data_fetcher\Http;
 use GuzzleHttp\Exception\RequestException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 
 /**
  * Retrieve data from the profiles API.
@@ -50,14 +49,7 @@ class AZProfilesAPIFetcher extends Http {
       $plugin_definition,
     );
 
-    try {
-      // Use the distribution cached http client if it is available.
-      $instance->httpClient = $container->get('az_http.http_client');
-    }
-    catch (ServiceNotFoundException $e) {
-      // Otherwise, fall back on the Drupal core guzzle client.
-      $instance->httpClient = $container->get('http_client');
-    }
+    $instance->httpClient = $container->get('az_http.http_client');
     $instance->configFactory = $container->get('config.factory');
     return $instance;
   }
