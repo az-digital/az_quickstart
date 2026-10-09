@@ -25,6 +25,10 @@
   background: var(--bs-cool-gray);
 }
 
+.azs-event-card .card-text p {
+  margin-bottom: 0px;
+}
+
 .azs-event-card:hover, .azs-event-card:focus {
   background: var(--bs-blue);
 }
