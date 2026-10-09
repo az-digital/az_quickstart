@@ -36,8 +36,8 @@ class AZBibtex extends DataParserPluginBase {
   /**
    * {@inheritdoc}
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition) {
-    parent::__construct($configuration, $plugin_id, $plugin_definition);
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, DataFetcherPluginManager $plugin_Manager) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition, $plugin_Manager);
     $this->suffix = $configuration['citation_key_suffix'] ?? [];
   }
 
