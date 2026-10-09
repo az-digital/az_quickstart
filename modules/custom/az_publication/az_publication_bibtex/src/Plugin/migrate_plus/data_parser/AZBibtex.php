@@ -6,6 +6,7 @@ use Drupal\az_publication_bibtex\Processor\AZDateProcessor;
 use Drupal\az_publication_bibtex\Processor\AZLatexProcessor;
 use Drupal\az_publication_bibtex\Processor\AZStripHtmlProcessor;
 use Drupal\migrate\MigrateException;
+use Drupal\migrate_plus\DataFetcherPluginManager;
 use Drupal\migrate_plus\DataParserPluginBase;
 use RenanBr\BibTexParser\Exception\ExceptionInterface;
 use RenanBr\BibTexParser\Listener;
