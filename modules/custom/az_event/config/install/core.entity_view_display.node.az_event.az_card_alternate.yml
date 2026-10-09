@@ -35,7 +35,7 @@ third_party_settings:
       weight: 0
       format_type: html_element
       format_settings:
-        classes: 'card border-0 mt-0 mb-4 p-0 card-with-link shadow overflow-hidden'
+        classes: 'card border-0 mt-0 mb-4 p-0 h-100 card-with-link shadow overflow-hidden'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -51,13 +51,14 @@ third_party_settings:
         - group_media
         - group_heading
         - group_summary
+        - group_az_when
       label: Link
       parent_name: group_card_clickable
       region: content
       weight: 1
       format_type: link
       format_settings:
-        classes: 'card-body stretched-link text-decoration-none p-0 azs-event-card'
+        classes: 'card-body stretched-link text-decoration-none azs-event-card p-0 d-flex flex-column'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -108,14 +109,13 @@ third_party_settings:
     group_summary:
       children:
         - field_az_summary
-        - field_az_event_date
       label: Summary
       parent_name: group_link
       region: content
-      weight: 5
+      weight: 4
       format_type: html_element
       format_settings:
-        classes: 'card-text fw-normal small mb-0 pb-4'
+        classes: 'card-text fw-normal small mb-0'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -167,6 +167,26 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
+    group_az_when:
+      children:
+        - field_az_event_date
+      label: 'AZ When'
+      parent_name: group_link
+      region: content
+      weight: 5
+      format_type: html_element
+      format_settings:
+        classes: 'pb-4 card-event-when'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
   smart_title:
     enabled: true
     settings:
@@ -175,7 +195,7 @@ third_party_settings:
       smart_title__classes:
         - node__title
 _core:
-  default_config_hash: X41e84YgVpUNPyQFL3utjUl0mtI5p1K2Yz3psPPf5Vk
+  default_config_hash: 1CKBHkycXvGdvrIYXPX4T0BoSt8NOZKWHlkY2kamg2k
 id: node.az_event.az_card_alternate
 targetEntityType: node
 bundle: az_event

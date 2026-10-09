@@ -409,7 +409,7 @@ function az_event_preprocess_node(&$variables) {
 
             // Format the replacement value.
             if (!empty($variables['content']['az_event_day'])) {
-              $variables['content']['az_event_day'][0]['#markup'] = Html::escape($formatter->format($timestamp, 'az_event_day'));
+              $variables['content']['az_event_day'][0]['#markup'] = Html::escape($formatter->format($timestamp, 'az_event_card_day'));
               $variables['content']['az_event_day']['#cache']['max-age'] = 0;
             }
             if (!empty($variables['content']['az_event_month'])) {

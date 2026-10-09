@@ -46,11 +46,34 @@
   color: #fff;
 }
 
+.azs-event-card .card-event-when {
+  font-weight: 700;
+  color: var(--bs-red);
+  margin: auto 24px 0 24px;
+}
+
+.azs-event-card:hover .card-event-when {
+  color: var(--bs-sky);
+}
+
 .start-end-time {
   color: var(--bs-red);
   font-weight: 700;
 }
 
+
 .azs-event-card:hover .start-end-time, .azs-event-card:focus .start-end-time {
   color: var(--bs-sky);
+}
+
+.node--view-mode-az-card-alternate, .node--view-mode-az-card-alternate .node__content {
+  height: 100%;
+}
+
+.view-display-id-az_grid_images > .view-content > div > div {
+  margin-bottom: 2rem;
+}
+
+.view-display-id-az_past_grid_images > .view-content > div > div {
+  margin-bottom: 2rem;
 }
