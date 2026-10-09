@@ -12,3 +12,7 @@ az_calendar_filter:
     - core/drupal
     - core/drupal.ajax
     - core/drupalSettings
+az_event_card:
+  css:
+    theme:
+      css/az_event_card.css: {}
