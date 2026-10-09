@@ -23,21 +23,32 @@ services:
         - a2enmod headers rewrite
         - service apache2 restart
 
-      # TODO: Determine how to best utilize the 'update' stage.
+      # Nothing to import, so there is nothing to do in the 'update' stage.
       update: []
 
+      # Previews built from a base preview only run the 'build' stage, starting
+      # from a snapshot of the base preview (which already has the scaffolding,
+      # vendor directory, and an installed site). Everything below must work
+      # both on a fresh container and on top of a base preview snapshot.
       build: |
         set -eux
         # Setup AZQS Scaffolding using matching branch if available.
-        if [ $(git ls-remote --heads $AZQS_SCAFFOLD_REPO $TUGBOAT_GITHUB_HEAD | wc -l) = 1 ]; then
+        if [ -n "${TUGBOAT_GITHUB_HEAD:-}" ] && [ $(git ls-remote --heads $AZQS_SCAFFOLD_REPO "$TUGBOAT_GITHUB_HEAD" | wc -l) = 1 ]; then
           SCAFFOLD_BRANCH="$TUGBOAT_GITHUB_HEAD"
         else
           SCAFFOLD_BRANCH="main"
         fi
-        git clone --branch $SCAFFOLD_BRANCH $AZQS_SCAFFOLD_REPO $AZQS_COMPOSER_ROOT
+        if [ -d "${AZQS_COMPOSER_ROOT}/.git" ]; then
+          # Reset the scaffolding inherited from the base preview, keeping the
+          # (gitignored) vendor and web directories so composer has less to do.
+          git -C $AZQS_COMPOSER_ROOT fetch origin $SCAFFOLD_BRANCH
+          git -C $AZQS_COMPOSER_ROOT checkout --force -B $SCAFFOLD_BRANCH FETCH_HEAD
+        else
+          git clone --branch $SCAFFOLD_BRANCH $AZQS_SCAFFOLD_REPO $AZQS_COMPOSER_ROOT
+        fi
 
         # Use the matching require-dev metapackage branch if available.
-        if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-dev.git $TUGBOAT_GITHUB_HEAD | wc -l) = 1 ]; then
+        if [ -n "${TUGBOAT_GITHUB_HEAD:-}" ] && [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-dev.git "$TUGBOAT_GITHUB_HEAD" | wc -l) = 1 ]; then
           DEV_PACKAGE_BRANCH="$TUGBOAT_GITHUB_HEAD"
         else
           DEV_PACKAGE_BRANCH=main
@@ -53,10 +64,21 @@ services:
         composer --working-dir=$AZQS_COMPOSER_ROOT config repositories.tugboat path $TUGBOAT_ROOT
         composer --working-dir=$AZQS_COMPOSER_ROOT require --no-update az-digital/az_quickstart:\*@dev
 
+        # Remove settings.php and files inherited from a base preview so they
+        # get recreated by composer and the site install below exactly as they
+        # would be on a fresh container.
+        if [ -d "${AZQS_DOCROOT}/sites/default" ]; then
+          chmod u+w "${AZQS_DOCROOT}/sites/default"
+          rm -rf "${AZQS_DOCROOT}/sites/default/settings.php" "${AZQS_DOCROOT}/sites/default/files"
+        fi
+
+        # The scaffolding has no lock file, so always resolve dependencies
+        # against the current code (including any composer.lock inherited from
+        # a base preview).
         composer \
           --working-dir=$AZQS_COMPOSER_ROOT \
           --no-interaction \
-          install --optimize-autoloader
+          update --optimize-autoloader
 
         # Link the document root to the expected path.
         ln -snf "${AZQS_DOCROOT}" "${DOCROOT}"
@@ -103,3 +125,11 @@ services:
   # Define the database service.
   database:
     image: tugboatqa/mariadb:10
+    commands:
+      # Start with an empty database, even when building from a base preview
+      # snapshot, so the site install on the webserver doesn't fail with
+      # "already installed". This has to happen here since drush can't drop
+      # the database from the webserver (its mariadb client requires SSL).
+      build:
+        - mysqladmin -f drop tugboat
+        - mysqladmin -f create tugboat
