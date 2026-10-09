@@ -6,6 +6,7 @@ use Drupal\az_publication_bibtex\Processor\AZDateProcessor;
 use Drupal\az_publication_bibtex\Processor\AZLatexProcessor;
 use Drupal\az_publication_bibtex\Processor\AZStripHtmlProcessor;
 use Drupal\migrate\MigrateException;
+use Drupal\migrate_plus\DataFetcherPluginManager;
 use Drupal\migrate_plus\DataParserPluginBase;
 use RenanBr\BibTexParser\Exception\ExceptionInterface;
 use RenanBr\BibTexParser\Listener;
@@ -27,6 +28,19 @@ class AZBibtex extends DataParserPluginBase {
    * @var array
    */
   protected $citations = [];
+
+  /**
+   * Additional arguments for the citation key.
+   */
+  protected array $suffix;
+
+  /**
+   * {@inheritdoc}
+   */
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, DataFetcherPluginManager $plugin_Manager) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition, $plugin_Manager);
+    $this->suffix = $configuration['citation_key_suffix'] ?? [];
+  }
 
   /**
    * {@inheritdoc}
@@ -51,6 +65,15 @@ class AZBibtex extends DataParserPluginBase {
       $citations = array_filter($citations, function ($citation) {
         return (isset($citation['citation-key']) && isset($citation['title']));
       });
+      // Concat configured suffixes onto the citation key.
+      // @todo make into a processor.
+      foreach ($citations as &$citation) {
+        foreach ($this->suffix as $s) {
+          if (!empty($citation[$s])) {
+            $citation['citation-key'] .= '_' . (string) $citation[$s];
+          }
+        }
+      }
       $this->citations = $citations;
     }
     catch (ExceptionInterface $exception) {
