@@ -37,6 +37,17 @@ class AZPhotoGalleryParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#description' => $this->t('The type of display to use for the photo gallery.'),
     ];
 
+    $form['gallery_captions'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Show captions under each thumbnail'),
+      '#default_value' => $config['gallery_captions'] ?? FALSE,
+      '#states' => [
+        'visible' => [
+          ':input[name$="[behavior_plugins][az_photo_gallery_paragraph_behavior][gallery_display]"]' => ['value' => 'grid'],
+        ],
+      ],
+    ];
+
     $form['gallery_ratio'] = [
       '#title' => $this->t('Gallery Aspect Ratio'),
       '#type' => 'select',
@@ -86,6 +97,9 @@ class AZPhotoGalleryParagraphBehavior extends AZDefaultParagraphsBehavior {
 
     // Variable to control which display to use.
     $variables['gallery_display'] = $config['gallery_display'] ?? 'grid';
+
+    // Variable to control which display to use.
+    $variables['gallery_captions'] = $config['gallery_captions'] ?? FALSE;
 
     // Variable to control the aspect ratio for the gallery display.
     $variables['ratio'] = $config['gallery_ratio'] ?? '16x9';

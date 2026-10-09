@@ -9,8 +9,10 @@
  * - body: The body field of a accordion.
  * - collapsed: The collapsed field of an accordion.
  * - accordion_item_id: Unique ID for an accordion item.
+ * - accordion_header_id: Unique ID for an accordion item header.
  * - accordion_container_id: Unique ID for the accordion container.
  * - aria_expanded: Aria field equal to the collapsed value.
+ * - clipboard_link: Whether to render a clipboard link in the accordion item.
  *
  * @ingroup themeable
  */
@@ -18,17 +20,25 @@
 
 {% set button_classes = (aria_expanded == 'false') ? 'collapsed' : '' %}
 
-<h3 class="accordion-header">
+<h3 id="{{ accordion_header_id }}" class="accordion-header">
   <button class="accordion-button {{ button_classes }}" type="button" data-bs-toggle="collapse" data-bs-target="#{{ accordion_item_id }}" aria-expanded="{{ aria_expanded }}" aria-controls="{{ accordion_item_id }}">
     {% if title %}
       {{ title }}
     {% endif %}
   </button>
 </h3>
-<div id="{{ accordion_item_id }}" class="accordion-collapse collapse {{ collapsed }}" aria-labelledby="{{ accordion_item_id }}" data-bs-parent="#{{ accordion_item_id }}">
+<div id="{{ accordion_item_id }}" class="accordion-collapse collapse {{ collapsed }}" aria-labelledby="{{ accordion_header_id }}">
   <div class="accordion-body">
     {% if body %}
       {{ body }}
+      {% if clipboard_link %}
+        <div class="pt-2">
+          <a class="az-accordion-anchor icon-link" href="#{{ accordion_header_id }}" data-bs-toggle="tooltip" data-bs-title="Copied!" data-bs-trigger="click">
+            <span class="material-symbols-rounded" aria-hidden="true">link</span>
+            <span>{{ 'Copy link'|t }}</span>
+          </a>
+        </div>
+      {% endif %}
     {% endif %}
   </div>
 </div>

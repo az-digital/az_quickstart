@@ -12,6 +12,7 @@ updates:
         update-types:
           - "version-update:semver-major"
           - "version-update:semver-minor"
+      - dependency-name: "az-digital/arizona-bootstrap"
 
   # Composer updates for 2.x branch
   - package-ecosystem: "composer"

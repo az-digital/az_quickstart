@@ -5,7 +5,6 @@ namespace Drupal\Tests\az_publication\FunctionalJavascript;
 use Drupal\Tests\az_core\FunctionalJavascript\QuickstartFunctionalJavascriptTestBase;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\IgnoreDeprecations;
-use PHPUnit\Framework\Attributes\IgnorePhpunitDeprecations;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
@@ -13,31 +12,26 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  */
 #[Group('az_publication')]
 #[IgnoreDeprecations]
-#[IgnorePhpunitDeprecations]
 #[RunTestsInSeparateProcesses]
 class AZPublicationInlineContributorTest extends QuickstartFunctionalJavascriptTestBase {
 
   /**
-   * The profile to install as a basis for testing.
-   *
-   * @var string
+   * {@inheritdoc}
    */
   protected $profile = 'az_quickstart';
 
   /**
-   * @var bool
+   * {@inheritdoc}
    */
   protected $strictConfigSchema = FALSE;
 
   /**
-   * @var string
+   * {@inheritdoc}
    */
   protected $defaultTheme = 'az_barrio';
 
   /**
-   * Modules to enable.
-   *
-   * @var array
+   * {@inheritdoc}
    */
   protected static $modules = [
     'az_publication',

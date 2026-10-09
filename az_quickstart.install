@@ -109,10 +109,9 @@ function az_quickstart_update_920701() {
 }
 
 /**
- * Enable az_paragraphs_splitscreen module by default.
+ * Empty update moved to az_paragraphs_update_1130501().
  */
 function az_quickstart_update_920702() {
-  \Drupal::service('module_installer')->install(['az_paragraphs_splitscreen']);
 }
 
 /**
@@ -158,7 +157,7 @@ function az_quickstart_update_1020901(&$sandbox) {
     ->execute();
   $menu_links = \Drupal::entityTypeManager()->getStorage('menu_link_content')->loadMultiple($ids);
   foreach ($menu_links as $menu_link) {
-    $menu_link->langcode = $default_langcode;
+    $menu_link->set('langcode', $default_langcode);
     $menu_link->save();
     $sandbox['progress']++;
   }

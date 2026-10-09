@@ -31,9 +31,6 @@
   width: auto;
   max-width: 100%;
 }
-.field--type-entity-reference.field--name-field-az-media-image {
-  margin-bottom: 0 !important;
-}
 @media (min-width:576px) {
   .align-left .az-default.az-media,
   .align-left .az-natural-size.az-media,

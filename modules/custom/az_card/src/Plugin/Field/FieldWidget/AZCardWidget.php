@@ -51,6 +51,13 @@ class AZCardWidget extends WidgetBase {
   protected $entityTypeManager;
 
   /**
+   * Drupal\Core\Render\RendererInterface definition.
+   *
+   * @var \Drupal\Core\Render\RendererInterface
+   */
+  protected $renderer;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
@@ -64,6 +71,7 @@ class AZCardWidget extends WidgetBase {
     $instance->cardImageHelper = $container->get('az_card.image');
     $instance->pathValidator = $container->get('path.validator');
     $instance->entityTypeManager = $container->get('entity_type.manager');
+    $instance->renderer = $container->get('renderer');
     return $instance;
   }
 
@@ -164,12 +172,16 @@ class AZCardWidget extends WidgetBase {
       }
 
       // Card item.
+      $toRender = [
+        '#type' => 'processed_text',
+        '#text' => $item->body ?? '',
+        '#format' => $item->body_format ?? self::AZ_CARD_DEFAULT_TEXT_FORMAT,
+      ];
+      $body = $this->renderer->renderInIsolation($toRender);
       $element['preview_container']['card_preview'] = [
         '#theme' => 'az_card',
         '#title' => $item->title ?? '',
-        '#body' => check_markup(
-          $item->body ?? '',
-          $item->body_format ?? self::AZ_CARD_DEFAULT_TEXT_FORMAT),
+        '#body' => $body,
         '#attributes' => ['class' => $card_classes],
       ];
 
@@ -312,8 +324,12 @@ class AZCardWidget extends WidgetBase {
         'w-100' => $this->t('Text link'),
         'btn w-100 btn-red' => $this->t('Red button'),
         'btn w-100 btn-blue' => $this->t('Blue button'),
+        'btn w-100 btn-sky' => $this->t('Sky button'),
+        'btn w-100 btn-white-text-red' => $this->t('White button (red text)'),
+        'btn w-100 btn-white-text-blue' => $this->t('White button (blue text)'),
         'btn w-100 btn-outline-red' => $this->t('Red outline button'),
         'btn w-100 btn-outline-blue' => $this->t('Blue outline button'),
+        'btn w-100 btn-outline-sky' => $this->t('Sky outline button'),
         'btn w-100 btn-outline-white' => $this->t('White outline button'),
       ],
       '#title' => $this->t('Card Link Style'),

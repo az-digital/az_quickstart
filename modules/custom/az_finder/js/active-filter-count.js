@@ -5,11 +5,13 @@
  * This file contains the JavaScript needed to count active filters in
  * exposed filter forms.
  */
-((drupalSettings, Drupal) => {
+((drupalSettings, Drupal, once) => {
   Drupal.behaviors.azFinderFilterCount = {
     attach(context, settings) {
-      const filterContainers = context.querySelectorAll(
+      const filterContainers = once(
+        'az-filter-count',
         '[data-az-better-exposed-filters]',
+        context,
       );
 
       filterContainers.forEach((container) => {
@@ -29,11 +31,36 @@
           let count = container.querySelectorAll(
             'input[type="checkbox"]:checked, input[type="radio"]:checked',
           ).length;
+
+          // Get calendar filter inputs within the calendar widget
+          const calendarInputs = container.querySelectorAll(
+            '.views-widget-az-calendar-filter input[type="text"]',
+          );
+          let hasCalendarFilter = false;
+
+          calendarInputs.forEach((inputField) => {
+            const val = inputField.value.trim();
+            // Only count if not empty and not a default relative value
+            if (val.length >= 1 && val !== 'today' && val !== '+3 years') {
+              hasCalendarFilter = true;
+            }
+          });
+
+          // If calendar has active filters, count it as 1 (not 2)
+          if (hasCalendarFilter) {
+            count += 1;
+          }
+
+          // Count other text inputs (excluding calendar ones)
           textInputFields.forEach((inputField) => {
-            if (inputField.value.trim().length >= 1) {
+            if (
+              !inputField.closest('.views-widget-az-calendar-filter') &&
+              inputField.value.trim().length >= 1
+            ) {
               count += 1;
             }
           });
+
           return count;
         };
 
@@ -85,6 +112,11 @@
             passive: true,
           }),
         );
+        textInputFields.forEach((inputField) =>
+          inputField.addEventListener('change', updateActiveFilterDisplay, {
+            passive: true,
+          }),
+        );
         checkboxesAndRadios.forEach((input) =>
           input.addEventListener('change', updateActiveFilterDisplay, {
             passive: true,
@@ -101,4 +133,4 @@
       });
     },
   };
-})(drupalSettings, Drupal);
+})(drupalSettings, Drupal, once);

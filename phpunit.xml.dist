@@ -11,6 +11,7 @@
          failOnPhpunitDeprecation="false"
          displayDetailsOnTestsThatTriggerErrors="true"
          displayDetailsOnTestsThatTriggerWarnings="true"
+         displayDetailsOnTestsThatTriggerNotices="true"
          displayDetailsOnTestsThatTriggerDeprecations="true"
          displayDetailsOnPhpunitDeprecations="true"
          cacheResult="false"

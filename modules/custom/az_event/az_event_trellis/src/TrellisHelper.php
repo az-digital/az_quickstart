@@ -216,7 +216,7 @@ final class TrellisHelper {
     $event_api_ids = [];
     foreach ($imports as $import) {
       /** @var \Drupal\az_event_trellis\Entity\AZRecurringImportRule $import */
-      $event_api_ids += $import->getEventIds();
+      $event_api_ids = array_merge($event_api_ids, $import->getEventIds());
     }
     // Remove duplicates in case searches overlapped.
     $event_api_ids = array_unique($event_api_ids);

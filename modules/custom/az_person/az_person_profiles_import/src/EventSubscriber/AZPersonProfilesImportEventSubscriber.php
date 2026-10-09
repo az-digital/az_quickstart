@@ -3,7 +3,7 @@
 namespace Drupal\az_person_profiles_import\EventSubscriber;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Messenger\Messenger;
+use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\migrate\Event\MigrateEvents;
 use Drupal\migrate\Event\MigrateIdMapMessageEvent;
@@ -23,19 +23,19 @@ class AZPersonProfilesImportEventSubscriber implements EventSubscriberInterface 
   protected $entityTypeManager;
 
   /**
-   * @var \Drupal\Core\Messenger\Messenger
+   * @var \Drupal\Core\Messenger\MessengerInterface
    */
   protected $messenger;
 
   /**
    * Constructs an AZPersonProfilesImportEventSubscriber.
    *
-   * @param \Drupal\Core\Messenger\Messenger $messenger
+   * @param \Drupal\Core\Messenger\MessengerInterface $messenger
    *   The messenger service.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   The entity type manager service.
    */
-  public function __construct(Messenger $messenger, EntityTypeManagerInterface $entityTypeManager) {
+  public function __construct(MessengerInterface $messenger, EntityTypeManagerInterface $entityTypeManager) {
     $this->messenger = $messenger;
     $this->entityTypeManager = $entityTypeManager;
   }

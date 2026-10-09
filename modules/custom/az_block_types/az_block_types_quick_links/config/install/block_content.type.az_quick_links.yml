@@ -3,5 +3,5 @@ status: true
 dependencies: {  }
 id: az_quick_links
 label: 'Quick Links'
-revision: 1
+revision: true
 description: 'Add quick links to a site.'

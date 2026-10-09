@@ -67,26 +67,6 @@
           }
         }
 
-        // Helper function for play button click
-        function handlePlayButtonClick(element, parentParagraph) {
-          return (event) => {
-            event.preventDefault();
-            element.player.play().catch((error) => vimeoError(error));
-            parentParagraph.classList.add('az-video-playing');
-            parentParagraph.classList.remove('az-video-paused');
-          };
-        }
-
-        // Helper function for pause button click
-        function handlePauseButtonClick(element, parentParagraph) {
-          return (event) => {
-            event.preventDefault();
-            element.player.pause().catch((error) => vimeoError(error));
-            parentParagraph.classList.add('az-video-paused');
-            parentParagraph.classList.remove('az-video-playing');
-          };
-        }
-
         // Helper function to initialize a single Vimeo element
         function initVimeoElement(element, defaultOptions) {
           const parentParagraph = element.parentNode;
@@ -105,29 +85,48 @@
             muted: defaultOptions.muted,
           });
 
-          // Event listener for starting play.
+          // Play/Pause button reference used by event handlers below.
+          const playPauseButton =
+            element.getElementsByClassName('az-video-playpause')[0];
+
+          // Update dimensions when buffering completes.
           element.player.on('bufferend', () => {
             setDimensions(element);
-            parentParagraph.classList.add('az-video-playing');
           });
 
-          // Play Button
-          const playButtons = element.getElementsByClassName('az-video-play');
-          if (playButtons[0]) {
-            playButtons[0].addEventListener(
-              'click',
-              handlePlayButtonClick(element, parentParagraph),
-            );
-          }
+          // Sync button and class state when video plays.
+          element.player.on('play', () => {
+            parentParagraph.classList.remove('az-video-paused');
+            parentParagraph.classList.add('az-video-playing');
+            playPauseButton.textContent = 'Pause Video';
+            playPauseButton.setAttribute('aria-pressed', 'true');
+          });
 
-          // Pause Button
-          const pauseButtons = element.getElementsByClassName('az-video-pause');
-          if (pauseButtons[0]) {
-            pauseButtons[0].addEventListener(
-              'click',
-              handlePauseButtonClick(element, parentParagraph),
-            );
-          }
+          // Sync button and class state when video pauses.
+          element.player.on('pause', () => {
+            parentParagraph.classList.remove('az-video-playing');
+            parentParagraph.classList.add('az-video-paused');
+            playPauseButton.textContent = 'Play Video';
+            playPauseButton.setAttribute('aria-pressed', 'false');
+          });
+
+          // Set the iframe tabindex to -1 to prevent focus from reaching iframe.
+          element.player.ready().then(() => {
+            const iframe = element.player.element;
+            if (iframe) {
+              iframe.setAttribute('tabindex', '-1');
+            }
+          });
+
+          // Play/Pause button: delegate state changes to player events.
+          playPauseButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            if (event.currentTarget.getAttribute('aria-pressed') === 'true') {
+              element.player.pause().catch((error) => vimeoError(error));
+            } else {
+              element.player.play().catch((error) => vimeoError(error));
+            }
+          });
         }
 
         // Helper function to handle API loaded callback
@@ -175,7 +174,6 @@
           });
         }
       }
-
       once('vimeoTextOnMedia-init', 'body').forEach(initVimeoBackgrounds);
     },
   };

@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+  enforced:
+    module:
+      - az_media_trellis
+id: media.field_az_media_trellis_url
+field_name: field_az_media_trellis_url
+entity_type: media
+type: string
+settings:
+  max_length: 2048
+  case_sensitive: false
+  is_ascii: false
+module: core
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

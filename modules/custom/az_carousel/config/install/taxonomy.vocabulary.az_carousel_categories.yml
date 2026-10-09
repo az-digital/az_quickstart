@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'Carousel Categories'
+vid: az_carousel_categories
+description: 'Taxonomy for categorizing carousels'
+weight: 0
+new_revision: false

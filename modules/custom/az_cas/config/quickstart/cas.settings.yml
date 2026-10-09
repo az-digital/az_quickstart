@@ -34,6 +34,7 @@ user_accounts:
   auto_assigned_roles: {  }
   restrict_password_management: true
   restrict_email_management: true
+  admin_bypass_password_email_restrictions: false
 error_handling:
   login_failure_page: /user/login
   message_validation_failure: 'There was a problem validating your login, please contact a site administrator.'

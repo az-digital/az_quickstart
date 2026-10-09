@@ -57,7 +57,6 @@ function az_publication_update_1020702() {
   // Normally this is a protected value so we must use reflection.
   $rc = new \ReflectionClass($field_storage_definitions[$field_name]);
   $schema_property = $rc->getProperty('schema');
-  $schema_property->setAccessible(TRUE);
   $schema = $schema_property->getValue($field_storage_definitions[$field_name]);
   $schema['columns']['value']['length'] = $field_length;
   $schema_property->setValue($field_storage_definitions[$field_name], $schema);
