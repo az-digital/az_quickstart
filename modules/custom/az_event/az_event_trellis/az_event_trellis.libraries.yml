@@ -6,13 +6,6 @@ az_event_trellis_date:
       css/az_event_trellis_datewrapper.css: {}
   dependencies:
     - core/drupal
-    - core/drupalSettings
     - core/once
-    - az_event_trellis/easepick_bundle
-easepick_bundle:
-  js:
-    /libraries/easepick--bundle/dist/index.umd.js: { minified: true }
-easepick_styles:
-  css:
-    theme:
-      /libraries/easepick--bundle/dist/index.css: { minified: true }
+    - az_core/vanilla-calendar-pro
+    - az_core/az-date-picker-integration

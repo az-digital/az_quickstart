@@ -181,6 +181,19 @@ will probably be a Trusted Host Settings error, needing a manual change to your
 settings file, and notice of some directory permissions that need relaxed to
 allow the web server to write there.
 
+## Deprecation Notice: asset-packagist Libraries
+
+Arizona Quickstart has moved away from JavaScript/CSS dependencies installed
+via asset-packagist.
+
+npm-asset/easepick--bundle and npm-asset/slick-carousel have been removed.
+easepick was replaced by vanilla-calendar-pro; slick-carousel is still used
+but is now vendored directly instead of installed via asset-packagist.
+
+New customizations should not introduce new dependencies on asset-packagist
+packages. Site owners should migrate custom code to libraries shipped by
+contrib, custom modules/themes, or other supported package sources.
+
 ### Using Xdebug with Lando and VSCode
 
 This repository contains the necessary config to run Xdebug inside a lando

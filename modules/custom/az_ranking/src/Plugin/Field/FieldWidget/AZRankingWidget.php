@@ -433,8 +433,12 @@ class AZRankingWidget extends WidgetBase {
         'link mt-2' => $this->t('Text link'),
         'w-100 btn btn-red mt-2' => $this->t('Red button (default)'),
         'w-100 btn btn-blue mt-2' => $this->t('Blue button'),
+        'w-100 btn btn-sky mt-2' => $this->t('Sky button'),
+        'w-100 btn btn-white-text-red mt-2' => $this->t('White button (red text)'),
+        'w-100 btn btn-white-text-blue mt-2' => $this->t('White button (blue text)'),
         'w-100 btn btn-outline-red mt-2' => $this->t('Red outline button'),
         'w-100 btn btn-outline-blue mt-2' => $this->t('Blue outline button'),
+        'w-100 btn btn-outline-sky mt-2' => $this->t('Sky outline button'),
         'w-100 btn btn-outline-white mt-2' => $this->t('White outline button'),
       ],
       '#default_value' => $item->ranking_link_style ?? 'w-100 btn btn-red mt-2',
@@ -493,7 +497,7 @@ class AZRankingWidget extends WidgetBase {
         $elements[$delta]['ranking_actions']['delete'] = $remove;
         // Attempt to style it like collapse button.
         $elements[$delta]['ranking_actions']['delete']['#attributes']['class'][] = 'button--extrasmall';
-        $elements[$delta]['ranking_actions']['delete']['#attributes']['class'][] = 'ml-3';
+        $elements[$delta]['ranking_actions']['delete']['#attributes']['class'][] = 'ms-3';
       }
 
       // Add a "Refresh Preview" button with AJAX.
@@ -507,7 +511,7 @@ class AZRankingWidget extends WidgetBase {
           'wrapper' => $wrapper_id,
         ],
         '#attributes' => [
-          'class' => ['button--extrasmall', 'ml-3'],
+          'class' => ['button--extrasmall', 'ms-3'],
         ],
         '#limit_validation_errors' => [],
       ];

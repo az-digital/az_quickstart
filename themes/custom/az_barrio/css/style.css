@@ -33,7 +33,7 @@ html.sticky-footer #main-wrapper {
 
 /* Footer Nav */
 #footer_sub .nav-utility {
-  line-height: 1.25;
+  line-height: 1.375;
 }
 
 /* Correct `inline-block` display not defined in IE 8/9. */
@@ -417,12 +417,17 @@ td.menu-disabled {
 }
 
 /* AZ Barrio search form block (Desktop) */
-.az-search-block .search-block-form .form-search {
+/* Hide the material symbols fallback icon when the new az-search-icon is active. */
+.region-header-ua-utilities .az-search .btn .material-symbols-rounded {
+  display: none;
+}
+
+.region-header-ua-utilities .az-search-block .search-block-form .form-search {
   height: 43px;
   margin-left: 0 !important;
 }
 
-.az-search-block .search-block-form .input-group button {
+.region-header-ua-utilities .az-search-block .search-block-form:not(.az-search) .input-group button {
   display: flex;
   align-items: center;
   font-size: 20px;
@@ -432,10 +437,20 @@ td.menu-disabled {
   padding: 0 8px;
 }
 
-.az-search-block .search-block-form .input-group button:hover,
-.az-search-block .search-block-form .input-group button:focus {
-    background-color: #8B0015;
-    color: #ffffff;
+.region-header-ua-utilities .az-search-block.az-search-block-blue .search-block-form:not(.az-search) .input-group .button {
+  color: var(--bs-blue);
+}
+
+.region-header-ua-utilities .az-search-block .search-block-form:not(.az-search) .input-group button:hover,
+.region-header-ua-utilities .az-search-block .search-block-form:not(.az-search) .input-group button:focus {
+  background-color: var(--bs-chili);
+  color: var(--bs-white);
+}
+
+.region-header-ua-utilities .az-search-block.az-search-block-blue .search-block-form:not(.az-search) .input-group button:hover,
+.region-header-ua-utilities .az-search-block.az-search-block-blue .search-block-form:not(.az-search) .input-group button:focus {
+  background-color: var(--bs-blue);
+  color: var(--bs-white);
 }
 
 /* Removing mobile duplicate menu link only if it is a no-link (https://www.drupal.org/node/2032759) */
@@ -577,6 +592,56 @@ a.nolink + ul .sf-clone-parent {
 .one-sidebar .container-collapsed .column,
 .two-sidebars .container-collapsed .column {
   min-height: 1px;
+}
+
+.sidebar {
+  .h1, h1 {
+    font-size: calc(1.375rem + 1.5vw);
+  }
+
+  .h2, h2 {
+    font-size: calc(1.325rem + .9vw);
+  }
+
+  .h3, h3 {
+    font-size: calc(1.3rem + .6vw);
+  }
+
+  .h4, h4 {
+    font-size: calc(1.275rem + .3vw);
+  }
+
+  .h5, h5 {
+    font-size: 1.25rem;
+  }
+
+  .h6, h6 {
+    font-size: 1rem;
+  }
+
+  .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    font-weight: 500;
+    --az-heading-font-family: unset;
+    line-height: 1.2;
+  }
+
+  @media (min-width: 1200px) {
+    .h1, h1 {
+      font-size: 2.5rem;
+    }
+
+    .h2, h2 {
+      font-size: 2rem;
+    }
+
+    .h3, h3 {
+      font-size: 1.75rem;
+    }
+
+    .h4, h4 {
+      font-size: 1.5rem;
+    }
+  }
 }
 
 .webform-grid .radio,
@@ -748,12 +813,20 @@ form.webform-submission-form {
 
 /* end Bootstrap Barrio image field styles */
 
+/* overrides Entity Reference fields and labels to match similar fields */
+.field.field--type-entity-reference {
+  margin-bottom: 0;
+}
+
 @media (min-width: 768px) {
   #content .form-select,
   #content .form-email,
   #content .form-file,
   #content .form-number,
   #content .form-tel,
+  #content .form-url,
+  #content .form-date,
+  #content .form-time,
   #content input[type="text"].form-control,
   #content .webform-signature-pad .button {
     width: initial;
@@ -777,7 +850,7 @@ form.webform-submission-form {
   color: #333;
 }
 
-/* Place contextual link trigger button directly on centered embeds. 
+/* Place contextual link trigger button directly on centered embeds.
  * See https://github.com/az-digital/az_quickstart/pull/3844
  */
 .field--name-field-az-text-area .align-center.contextual-region {
@@ -791,4 +864,9 @@ form.webform-submission-form {
 .align-left ~ ol {
   overflow: auto;
   overflow-wrap: anywhere;
+}
+
+/* Set standard Material Symbols axis values. */
+.material-symbols-rounded {
+  font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24;
 }

@@ -217,7 +217,7 @@ content:
       media_types: {  }
     third_party_settings:
       media_library_edit:
-        show_edit: '1'
+        show_edit: true
   field_az_netid:
     type: string_textfield
     weight: 8
@@ -227,13 +227,13 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_az_person_category:
-    type: options_buttons
+    type: options_select
     weight: 1
     region: content
     settings: {  }
     third_party_settings: {  }
   field_az_person_category_sec:
-    type: options_buttons
+    type: options_select
     weight: 2
     region: content
     settings: {  }

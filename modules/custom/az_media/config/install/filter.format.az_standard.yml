@@ -9,11 +9,11 @@ dependencies:
     - core.entity_view_mode.media.az_square
     - core.entity_view_mode.media.az_very_small
   module:
-    - az_icons
     - bootstrap_utilities
     - entity_embed
     - linkit
     - media
+    - ui_icons_text
 name: Standard
 format: az_standard
 weight: -10

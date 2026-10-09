@@ -3,12 +3,14 @@
 namespace Drupal\Tests\az_barrio\Functional;
 
 use Drupal\Tests\az_core\Functional\QuickstartFunctionalTestBase;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests the Arizona Barrio theme.
- *
- * @group az_barrio
  */
+#[Group('az_barrio')]
+#[RunTestsInSeparateProcesses]
 class AzBarrioTest extends QuickstartFunctionalTestBase {
 
   /**
@@ -38,7 +40,7 @@ class AzBarrioTest extends QuickstartFunctionalTestBase {
     $this->drupalGet('');
     $this->assertSession()->statusCodeEquals(200);
     $this->assertSession()->responseContains('https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0');
-    $this->assertSession()->responseContains('https://use.typekit.net/emv3zbo.css');
+    $this->assertSession()->responseContains('https://use.typekit.net/sgx0zzg.css');
 
     // Tests that the header column class settings work on install.
     $this->drupalGet('');
@@ -47,7 +49,7 @@ class AzBarrioTest extends QuickstartFunctionalTestBase {
 
     // Tests that navigation elements are present on install.
     $this->drupalGet('');
-    $this->assertSession()->elementExists('css', '#navbar-top.navbar.navbar-expand');
+    $this->assertSession()->elementExists('css', '#navbar-top.navbar.navbar-expand.navbar-az');
     $this->assertSession()->elementExists('css', '#block-az-barrio-offcanvas-searchform');
     $this->assertSession()->elementExists('css', '#block-az-barrio-mobilenavblock');
   }

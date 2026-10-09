@@ -1,0 +1,28 @@
+extraction_method: searchstax
+cache_backend: search_api_attachments.cache_keyvalue
+cache_file_scheme: public
+tika_extractor_configuration:
+  java_path: java
+  tika_path: ''
+  tika_config_path: ''
+  debug_mode: false
+tika_server_extractor_configuration:
+  scheme: http
+  host: localhost
+  port: '9998'
+  timeout: 5
+docconv_extractor_configuration:
+  docconv_path: /usr/bin/docd
+solr_extractor_configuration:
+  solr_server: ''
+python_pdf2txt_extractor_configuration:
+  python_path: python
+  python_pdf2txt_script: /usr/bin/pdf2txt.py
+pdftotext_extractor_configuration:
+  pdftotext_path: pdftotext
+preserve_cache: true
+read_text_files_directly: false
+searchstax_configuration:
+  endpoint: null
+  token: null
+  timeout: 20

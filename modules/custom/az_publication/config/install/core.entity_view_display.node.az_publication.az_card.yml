@@ -43,7 +43,7 @@ third_party_settings:
       label: Reference
       parent_name: group_link
       region: content
-      weight: 7
+      weight: 4
       format_type: html_element
       format_settings:
         classes: 'text-body-secondary fw-normal small mt-2'
@@ -79,7 +79,7 @@ third_party_settings:
         speed: fast
     group_link:
       children:
-        - field_az_publication_image
+        - group_media
         - group_heading
         - group_az_publication_reference
       label: Link
@@ -101,13 +101,33 @@ third_party_settings:
       label: Heading
       parent_name: group_link
       region: content
-      weight: 6
+      weight: 3
       format_type: html_element
       format_settings:
         classes: 'card-title text-midnight h5 mb-0'
         show_empty_fields: false
         id: ''
         element: h4
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_media:
+      children:
+        - field_az_publication_image
+      label: Media
+      parent_name: group_link
+      region: content
+      weight: 1
+      format_type: html_element
+      format_settings:
+        classes: 'pb-card mb-nmin'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
         show_label: false
         label_element: h3
         label_element_classes: ''
@@ -139,7 +159,7 @@ content:
       view_mode: az_card_image
       link: false
     third_party_settings: {  }
-    weight: 5
+    weight: 2
     region: content
   smart_title:
     settings: {  }

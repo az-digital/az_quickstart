@@ -1,3 +1,4 @@
+langcode: en
 login_link_enabled: true
 login_link_label: 'Log in using University of Arizona WebAuth'
 login_success_message: 'Logged in via University of Arizona WebAuth as [cas:username].'
@@ -26,12 +27,14 @@ forced_login:
 user_accounts:
   prevent_normal_login: true
   auto_register: false
+  auto_register_follow_registration_policy: false
   email_assignment_strategy: 0
   email_hostname: arizona.edu
   email_attribute: ''
   auto_assigned_roles: {  }
   restrict_password_management: true
   restrict_email_management: true
+  admin_bypass_password_email_restrictions: false
 error_handling:
   login_failure_page: /user/login
   message_validation_failure: 'There was a problem validating your login, please contact a site administrator.'

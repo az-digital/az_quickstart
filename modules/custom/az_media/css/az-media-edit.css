@@ -14,12 +14,14 @@ figure[data-view-mode="az_natural_size"] .az-media.ratio {
   width: 100%;
 }
 
-figure[data-view-mode="az_natural_size"].drupal-media:has(iframe) {
+figure[data-view-mode="az_natural_size"].drupal-media:has(iframe),
+figure[data-view-mode="az_large"].drupal-media:has(iframe) {
   display: block;
 }
 
 figure[data-view-mode="az_large"] .az-media.ratio {
-  width: 1140px;
+  max-width: 1140px;
+  width: 100%;
 }
 
 figure[data-view-mode="az_medium"] .az-media.ratio {

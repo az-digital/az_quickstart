@@ -5,35 +5,34 @@ namespace Drupal\Tests\az_core\Functional;
 use Drupal\Tests\BrowserTestBase;
 use Drupal\migrate\MigrateMessage;
 use Drupal\migrate_tools\MigrateExecutable;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Test of attribute import functionality.
- *
- * @group az_enterprise_attributes_import
  */
+#[Group('az_enterprise_attributes_import')]
+#[RunTestsInSeparateProcesses]
 class EnterpriseAttributesImportTest extends BrowserTestBase {
 
   /**
-   * The profile to install as a basis for testing.
-   *
-   * @var string
+   * {@inheritdoc}
    */
   protected $profile = 'az_quickstart';
 
   /**
-   * @var bool
+   * {@inheritdoc}
    */
   protected $strictConfigSchema = FALSE;
 
   /**
-   * @var string
+   * {@inheritdoc}
    */
   protected $defaultTheme = 'stark';
 
+
   /**
-   * Modules to enable.
-   *
-   * @var string[]
+   * {@inheritdoc}
    */
   protected static $modules = [
     'az_core',

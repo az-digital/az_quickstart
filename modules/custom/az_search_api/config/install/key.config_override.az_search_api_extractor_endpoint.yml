@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - key.key.az_search_api_extractor_endpoint
+    - search_api_attachments.admin_config
+id: az_search_api_extractor_endpoint
+label: 'Quickstart Search API Extractor Endpoint'
+config_type: system.simple
+config_prefix: ''
+config_name: search_api_attachments.admin_config
+config_item: searchstax_configuration.endpoint
+key_id: az_search_api_extractor_endpoint

@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * @file
+ * Install functions for az_search_api module.
+ */
+
+/**
+ * Ensure search_api_attachments module is installed.
+ */
+function az_search_api_update_1021401() {
+  \Drupal::service('module_installer')->install(['search_api_attachments']);
+}

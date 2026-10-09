@@ -1,0 +1,54 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - search_api_solr
+    - searchstax
+id: az_search_api_searchstax
+name: 'Quickstart Enterprise Searchstax'
+description: ''
+backend: search_api_solr
+backend_config:
+  retrieve_data: true
+  highlight_data: true
+  site_hash: false
+  server_prefix: ''
+  domain: generic
+  environment: default
+  connector: searchstax
+  connector_config:
+    scheme: https
+    host: ''
+    port: 443
+    path: /
+    core: ''
+    timeout: 5
+    index_timeout: 15
+    optimize_timeout: 10
+    finalize_timeout: 30
+    skip_schema_check: false
+    solr_version: ''
+    http_method: AUTO
+    commit_within: 1000
+    jmx: false
+    jts: false
+    solr_install_dir: ''
+    update_endpoint: ''
+    update_token: ''
+    autosuggest_core: ''
+    context: ''
+    key_id: az_search_api_token
+  optimize: false
+  fallback_multiple: false
+  disabled_field_types: {  }
+  disabled_caches: {  }
+  disabled_request_handlers:
+    - request_handler_elevate_default_7_0_0
+    - request_handler_replicationmaster_default_7_0_0
+    - request_handler_replicationslave_default_7_0_0
+  disabled_request_dispatchers:
+    - request_dispatcher_httpcaching_default_7_0_0
+  rows: 10
+  index_single_documents_fallback_count: 10
+  index_empty_text_fields: false
+  suppress_missing_languages: false

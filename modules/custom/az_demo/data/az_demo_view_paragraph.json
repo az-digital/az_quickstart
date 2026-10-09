@@ -159,6 +159,22 @@
       "display_id" : "grid",
       "data" : "",
       "bottom_spacing" : "mb-4"
+    },
+    {
+      "id" : 413,
+      "title" : "List of All Pages",
+      "target_id" : "az_page_by_category",
+      "display_id" : "row",
+      "data" : "",
+      "bottom_spacing" : "mb-4"
+    },
+    {
+      "id" : 414,
+      "title" : "Grid of All Pages",
+      "target_id" : "az_page_by_category",
+      "display_id" : "grid",
+      "data" : "",
+      "bottom_spacing" : "mb-4"
     }
   ]
 }

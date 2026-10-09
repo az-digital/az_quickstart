@@ -2,13 +2,16 @@
 
 namespace Drupal\Tests\az_barrio\Functional;
 
+use Drupal\block\Entity\Block;
 use Drupal\Tests\az_core\Functional\QuickstartFunctionalTestBase;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests the Arizona Barrio theme as an admin user.
- *
- * @group az_barrio
  */
+#[Group('az_barrio')]
+#[RunTestsInSeparateProcesses]
 class AzBarrioAdminTest extends QuickstartFunctionalTestBase {
 
   /**
@@ -33,7 +36,7 @@ class AzBarrioAdminTest extends QuickstartFunctionalTestBase {
   /**
    * The created user.
    *
-   * @var \Drupal\user\Entity\User
+   * @var \Drupal\user\UserInterface
    */
   protected $adminUser;
 
@@ -65,16 +68,33 @@ class AzBarrioAdminTest extends QuickstartFunctionalTestBase {
     $this->drupalGet('admin/structure/block');
     $this->cssSelect('ul[data-drupal-selector="edit-blocks-az-barrio-main-menu-operations"] li.enable a')[0]->click();
     $this->drupalGet('');
-    $this->assertSession()->elementExists('css', '#navbar-top.navbar.navbar-expand');
+    $this->assertSession()->elementExists('css', '#navbar-top.navbar.navbar-expand.navbar-az');
     $this->drupalGet('admin/structure/block');
     $this->cssSelect('ul[data-drupal-selector="edit-blocks-az-barrio-offcanvas-searchform-operations"] li.disable a')[0]->click();
     $this->drupalGet('');
     $this->assertSession()->elementNotExists('css', '#jsAzSearch');
-    $this->drupalGet('admin/structure/block');
-    $this->cssSelect('ul[data-drupal-selector="edit-blocks-az-barrio-offcanvas-searchform-operations"] li.enable a')[0]->click();
+
+    Block::create([
+      'id' => 'test_offcanvas_searchform',
+      'theme' => 'az_barrio',
+      'region' => 'navigation_offcanvas',
+      'plugin' => 'search_form_block',
+      'weight' => 0,
+      'status' => 1,
+      'visibility' => [],
+      'settings' => [
+        'id' => 'search_form_block',
+        'label' => 'Search',
+        'label_display' => FALSE,
+        'provider' => 'search',
+        'page_id' => '',
+      ],
+    ])->save();
+
     $this->drupalGet('');
     $this->assertSession()->elementExists('css', '#jsAzSearch');
-    $this->assertSession()->elementExists('css', '#block-az-barrio-offcanvas-searchform');
+    $this->assertSession()->elementExists('css', '#block-test-offcanvas-searchform');
+    $this->assertSession()->responseContains('themes/custom/az_barrio/js/az-barrio-off-canvas-nav.js');
     $this->drupalGet('admin/structure/block');
     $this->cssSelect('ul[data-drupal-selector="edit-blocks-az-barrio-mobilenavblock-operations"] li.disable a')[0]->click();
     $this->drupalGet('');
@@ -88,6 +108,7 @@ class AzBarrioAdminTest extends QuickstartFunctionalTestBase {
     $this->drupalGet('admin/appearance');
     $this->cssSelect('a[title="Set Bootstrap Barrio as default theme"]')[0]->click();
     $this->cssSelect('a[title="Uninstall Arizona Barrio theme"]')[0]->click();
+    $this->submitForm([], 'Uninstall');
     $this->assertSession()->pageTextContains('The Arizona Barrio theme has been uninstalled.');
   }
 

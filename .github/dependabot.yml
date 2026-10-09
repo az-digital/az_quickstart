@@ -12,6 +12,7 @@ updates:
         update-types:
           - "version-update:semver-major"
           - "version-update:semver-minor"
+      - dependency-name: "az-digital/arizona-bootstrap"
 
   # Composer updates for 2.x branch
   - package-ecosystem: "composer"
@@ -42,6 +43,11 @@ updates:
     open-pull-requests-limit: 5
     cooldown:
       default-days: 5
+    ignore:
+      - dependency-name: "*"
+        update-types:
+          - "version-update:semver-major"
+          - "version-update:semver-minor"
     labels:
       - "dependencies"
       - "ci"
@@ -55,6 +61,11 @@ updates:
     open-pull-requests-limit: 5
     cooldown:
       default-days: 5
+    ignore:
+      - dependency-name: "*"
+        update-types:
+          - "version-update:semver-major"
+          - "version-update:semver-minor"
     labels:
       - "dependencies"
       - "2.x only"

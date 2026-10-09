@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.node.az_carousel_item.field_az_carousel_category
     - field.field.node.az_carousel_item.field_az_carousel_short_summary
     - field.field.node.az_carousel_item.field_az_link
     - field.field.node.az_carousel_item.field_az_media_image
@@ -18,13 +19,19 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 5
+    weight: 6
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_az_carousel_category:
+    type: options_select
+    weight: 1
     region: content
     settings: {  }
     third_party_settings: {  }
   field_az_carousel_short_summary:
     type: string_textfield
-    weight: 2
+    weight: 3
     region: content
     settings:
       size: 60
@@ -32,7 +39,7 @@ content:
     third_party_settings: {  }
   field_az_link:
     type: link_class_field_widget
-    weight: 3
+    weight: 4
     region: content
     settings:
       placeholder_url: ''
@@ -43,37 +50,37 @@ content:
     third_party_settings: {  }
   field_az_media_image:
     type: media_library_widget
-    weight: 1
+    weight: 2
     region: content
     settings:
       media_types: {  }
     third_party_settings:
       media_library_edit:
-        show_edit: '1'
+        show_edit: true
         edit_form_mode: default
   path:
     type: path
-    weight: 8
+    weight: 9
     region: content
     settings: {  }
     third_party_settings: {  }
   promote:
     type: boolean_checkbox
-    weight: 6
+    weight: 7
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 10
+    weight: 11
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
-    weight: 7
+    weight: 8
     region: content
     settings:
       display_label: true
@@ -88,7 +95,7 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 4
+    weight: 5
     region: content
     settings:
       match_operator: CONTAINS
@@ -97,7 +104,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
   url_redirects:
-    weight: 9
+    weight: 10
     region: content
     settings: {  }
     third_party_settings: {  }
