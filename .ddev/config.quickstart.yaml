@@ -26,6 +26,8 @@ web_environment:
   - BROWSERTEST_OUTPUT_BASE_URL=${DDEV_PRIMARY_URL}
   - SIMPLETEST_BASE_URL=http://web
   - SIMPLETEST_DB=mysql://db:db@db/db
+  # Only fail on deprecations in Quickstart code; see .deprecation-ignore.txt.
+  - SYMFONY_DEPRECATIONS_HELPER=ignoreFile=/var/www/html/web/profiles/custom/az_quickstart/.deprecation-ignore.txt
   # Use disable-dev-shm-usage instead of setting shm_usage
   # https://developers.google.com/web/tools/puppeteer/troubleshooting#tips
   # The format of chromeOptions is defined at https://chromedriver.chromium.org/capabilities
