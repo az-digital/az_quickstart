@@ -1,25 +1,27 @@
 # Recipe for AZ Quickstart local development
-type: php
+
+# DDEV 1.25.4 increased the nginx FastCGI buffer sizes for Drupal project
+# types, which Drupal functional tests need to avoid 502 responses.
+ddev_version_constraint: ">=1.25.4"
+
+# This repository is an install profile, not a Drupal site codebase. The site
+# codebase is built by `ddev install` in the web container's web_data volume
+# (/var/www/html), using az-quickstart-scaffolding, so it isn't on the host.
+# Use the drupal11 project type for its Drupal-specific defaults, but disable
+# settings management: otherwise DDEV writes web/sites/default/settings*.php
+# into this repository on the host, where the site never reads them.
+type: drupal11
+disable_settings_management: true
 docroot: web
 php_version: "8.5"
 webserver_type: nginx-fpm
 corepack_enable: true
 
-# Default application ports
-router_http_port: "80"
-router_https_port: "443"
-
-# Optional, enable for greater windows performance
-nfs_mount_enabled: false
-
-# Other configuration
-xdebug_enabled: false
-additional_hostnames: []
-additional_fqdns: []
-mariadb_version: "10.11"
-provider: default
-use_dns_when_possible: true
-timezone: ""
+# Use the `database` setting rather than the legacy `mariadb_version`, which
+# conflicts with the `database` setting `ddev config` writes to config.yaml.
+database:
+  type: mariadb
+  version: "10.11"
 
 web_environment:
   - BROWSERTEST_OUTPUT_DIRECTORY=/tmp
