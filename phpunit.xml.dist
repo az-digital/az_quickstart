@@ -55,7 +55,7 @@
     </testsuite>
   </testsuites>
   <!-- Settings for coverage reports. -->
-  <source>
+  <source ignoreSuppressionOfDeprecations="true">
     <include>
       <directory>./modules</directory>
     </include>
