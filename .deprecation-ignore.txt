@@ -14,7 +14,10 @@
 # Only fail on deprecations in Quickstart's own code: ignore any deprecation
 # whose message doesn't mention a Quickstart extension (az_*). Deprecated core
 # APIs that Quickstart calls are still caught by PHPStan deprecation rules.
-%^(?!.*(?:^|[^a-zA-Z0-9])az_[a-z0-9]).*$%s
+# An az_* name in a file path only counts directly under a "custom/" directory
+# (e.g. profiles/custom/az_quickstart/...), so absolute paths like GitHub
+# Actions' /home/runner/work/az_quickstart/az_quickstart/... don't match.
+%^(?!.*(?:(?:^|[^a-zA-Z0-9/])|(?<=custom/))az_[a-z0-9]).*$%s
 
 # az_migration is intentionally deprecated.
 # See https://github.com/az-digital/az_quickstart/issues/5332
