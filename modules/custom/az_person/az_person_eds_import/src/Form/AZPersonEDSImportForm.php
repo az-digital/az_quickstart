@@ -21,7 +21,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 final class AZPersonEDSImportForm extends FormBase {
 
   /**
-   * @var \Drupal\Core\Messenger\Messenger
+   * @var \Drupal\Core\Messenger\MessengerInterface
    */
   protected $messenger;
 

@@ -36,6 +36,10 @@ class AzCasRouteSubscriber extends RouteSubscriberBase {
       $collection->get('user.pass')->setRequirement('_access', 'FALSE');
       $collection->get('user.pass.http')->setRequirement('_access', 'FALSE');
     }
+    if ($this->configFactory->get('az_cas.settings')->get('disable_login_form')) {
+      // user.login.http will eventually be moved to the REST module.
+      $collection->get('user.login.http')?->setRequirement('_access', 'FALSE');
+    }
   }
 
 }

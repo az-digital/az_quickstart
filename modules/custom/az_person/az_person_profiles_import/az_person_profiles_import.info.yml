@@ -4,7 +4,7 @@ description: 'Import people via UA Vitae Profiles.'
 core_version_requirement: ^11.3 || ^12
 package: 'The University of Arizona - Experimental'
 dependencies:
-  - az_migration:az_migration_remote
+  - az_core:az_migration_remote
   - az_person:az_person
   - drupal:field
   - drupal:migrate

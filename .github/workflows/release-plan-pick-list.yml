@@ -16,7 +16,8 @@ jobs:
   generate-pick-list:
     name: Generate pick list and comment on release plan issue
     runs-on: ubuntu-latest
-    permissions: {}
+    permissions:
+      issues: write
     steps:
       - name: Generate pick list and comment on release plan issue
         env:
@@ -59,11 +60,11 @@ jobs:
           CURSOR="null"
           HAS_NEXT_PAGE="true"
           # pr_number -> merge_commit_sha (az-digital/az_quickstart PRs only)
-          declare -A PR_COMMITS
+          declare -A PR_COMMITS=()
           # pr_number -> committed date (ISO 8601)
-          declare -A PR_COMMIT_DATE
-          # pr_number -> "repo#number" for PRs from other repositories
-          declare -A EXTERNAL_PRS
+          declare -A PR_COMMIT_DATE=()
+          # repo#number entries for PRs from other repositories
+          declare -a EXTERNAL_PRS=()
 
           GRAPHQL_QUERY='query($org: String!, $num: Int!, $after: String) {
             organization(login: $org) {
@@ -102,7 +103,7 @@ jobs:
               -f query="$GRAPHQL_QUERY" \
               -f org="az-digital" \
               -F num="$PROJECT_NUMBER" \
-              -f after="$CURSOR")
+              -F after="$CURSOR")
 
             HAS_NEXT_PAGE=$(echo "$RESPONSE" | jq -r '.data.organization.projectV2.items.pageInfo.hasNextPage')
             CURSOR=$(echo "$RESPONSE" | jq -r '.data.organization.projectV2.items.pageInfo.endCursor')
@@ -118,7 +119,7 @@ jobs:
                     PR_COMMIT_DATE["$PR_NUM"]="$COMMITTED_DATE"
                   fi
                 elif [ "$REPO" != "null" ]; then
-                  EXTERNAL_PRS["${REPO}#${PR_NUM}"]="$REPO"
+                  EXTERNAL_PRS+=("${REPO}#${PR_NUM}")
                 fi
               fi
             done < <(echo "$RESPONSE" | jq -r '
@@ -189,7 +190,7 @@ jobs:
               else
                 EXTERNAL_PR_LIST="${EXTERNAL_PR_LIST}"$'\n'"${EXTERNAL_COUNTER}. ${REPO_AND_NUM}"
               fi
-            done < <(printf '%s\n' "${!EXTERNAL_PRS[@]}" | sort)
+            done < <(printf '%s\n' "${EXTERNAL_PRS[@]}" | sort -u)
           fi
 
           # Build the comment body using printf to control newlines precisely.

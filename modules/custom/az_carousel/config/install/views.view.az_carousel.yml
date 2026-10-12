@@ -4,10 +4,12 @@ dependencies:
   config:
     - field.storage.node.field_az_carousel_short_summary
     - node.type.az_carousel_item
+    - taxonomy.vocabulary.az_carousel_categories
   module:
     - draggableviews
     - node
     - slick_views
+    - taxonomy
     - user
 id: az_carousel
 label: 'AZ Carousel'
@@ -143,7 +145,48 @@ display:
             field_identifier: created
           exposed: false
           granularity: second
-      arguments: {  }
+      arguments:
+        term_node_tid_depth:
+          id: term_node_tid_depth
+          table: node_field_data
+          field: term_node_tid_depth
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          plugin_id: taxonomy_index_tid_depth
+          default_action: ignore
+          exception:
+            value: all
+            title_enable: false
+            title: All
+          title_enable: false
+          title: ''
+          default_argument_type: fixed
+          default_argument_options:
+            argument: ''
+          summary_options:
+            base_path: ''
+            count: true
+            override: false
+            items_per_page: 25
+          summary:
+            sort_order: asc
+            number_of_records: 0
+            format: default_summary
+          specify_validation: true
+          validate:
+            type: 'entity:taxonomy_term'
+            fail: 'not found'
+          validate_options:
+            bundles:
+              az_carousel_categories: az_carousel_categories
+            access: false
+            operation: view
+            multiple: 1
+          break_phrase: false
+          depth: 0
+          use_taxonomy_term_path: false
       filters:
         status:
           id: status
@@ -231,6 +274,7 @@ display:
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
+        - url
         - 'user.node_grants:view'
         - user.permissions
       tags: {  }
@@ -285,6 +329,7 @@ display:
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
+        - url
         - 'user.node_grants:view'
         - user.permissions
       tags: {  }
@@ -605,12 +650,12 @@ display:
         title: false
         css_class: false
         pager: false
+        pager_options: false
         style: false
         style_options: false
         row: false
         fields: false
         sorts: false
-        pager_options: false
       css_class: ''
       display_description: ''
       pager_options: null
@@ -636,6 +681,7 @@ display:
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
+        - url
         - 'user.node_grants:view'
         - user.permissions
       tags:

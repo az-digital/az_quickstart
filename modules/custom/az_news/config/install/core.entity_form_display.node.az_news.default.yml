@@ -180,7 +180,7 @@ content:
       media_types: {  }
     third_party_settings:
       media_library_edit:
-        show_edit: '1'
+        show_edit: true
   field_az_media_thumbnail_image:
     type: media_library_widget
     weight: 14
@@ -189,7 +189,7 @@ content:
       media_types: {  }
     third_party_settings:
       media_library_edit:
-        show_edit: '1'
+        show_edit: true
   field_az_news_tags:
     type: options_select
     weight: 7

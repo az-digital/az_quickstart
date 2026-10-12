@@ -1,0 +1,6 @@
+az_opportunity:
+  css:
+    theme:
+      css/az_opportunity.css: {}
+  dependencies:
+    - az_barrio/arizona-bootstrap-css

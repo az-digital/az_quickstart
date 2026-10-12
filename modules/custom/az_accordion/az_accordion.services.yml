@@ -1,0 +1,6 @@
+services:
+  az_accordion.faq_schema_aggregator_subscriber:
+    class: Drupal\az_accordion\EventSubscriber\AZFaqAggregatorSubscriber
+    arguments: ['@current_route_match', '@entity.repository']
+    tags:
+      - { name: event_subscriber }

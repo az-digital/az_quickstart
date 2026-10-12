@@ -1,5 +1,5 @@
 // Give $().bootstrapBtn the Bootstrap functionality.
-// See https://digital.arizona.edu/arizona-bootstrap/docs/2.0/getting-started/javascript/#no-conflict
+// See https://digital.arizona.edu/arizona-bootstrap/v5/docs/5.2/getting-started/javascript/#no-conflict
 (($, Drupal) => {
   Drupal.behaviors.azBarrioButtonNoConflict = {
     attach: () => {

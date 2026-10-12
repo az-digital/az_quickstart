@@ -49,7 +49,13 @@ final class AZFinderVocabulary {
         if (($filter['exposed'] ?? FALSE) !== TRUE) {
           continue;
         }
-        if (isset($filter['plugin_id']) && $filter['plugin_id'] === 'taxonomy_index_tid') {
+        // Check for all taxonomy filter plugin types.
+        $taxonomy_plugins = [
+          'taxonomy_index_tid',
+          'taxonomy_index_tid_depth',
+          'az_attribute_tid',
+        ];
+        if (isset($filter['plugin_id']) && in_array($filter['plugin_id'], $taxonomy_plugins)) {
           $vocabulary_ids[] = $filter['vid'];
         }
       }

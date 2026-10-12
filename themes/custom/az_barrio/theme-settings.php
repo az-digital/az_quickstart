@@ -37,23 +37,29 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#weight' => -10,
   ];
 
-  // Institutional logo.
-  $form['az_settings']['settings']['institutional_logo'] = [
+  // Institutional header settings.
+  $form['az_settings']['settings']['institutional_header'] = [
     '#type' => 'fieldset',
-    '#title' => t('Institutional Logo Settings'),
+    '#title' => t('Institutional Header Settings'),
   ];
-  $form['az_settings']['settings']['institutional_logo']['wordmark'] = [
+  $form['az_settings']['settings']['institutional_header']['wordmark'] = [
     '#type' => 'checkbox',
-    '#title' => t('Institutional header wordmark logo'),
+    '#title' => t('Enable wordmark logo in the Arizona Header'),
     '#description' => t('With few exceptions, this should always be enabled.'),
     '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('wordmark'),
+  ];
+  $form['az_settings']['settings']['institutional_header']['az_header_blue'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Enable blue Arizona Header'),
+    '#description' => t('Set the Arizona Header background color to Arizona Blue instead of Arizona Red.'),
+    '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_header_blue'),
   ];
 
   // Land Acknowledgment.
   $form['az_settings']['settings']['land_acknowledgment'] = [
     '#type' => 'checkbox',
     '#title' => t('Land Acknowledgment'),
-    '#description' => t('With few execeptions, this should always be enabled.'),
+    '#description' => t('With few exceptions, this should always be enabled.'),
     '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('land_acknowledgment'),
   ];
 
@@ -61,7 +67,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   $form['az_settings']['settings']['info_security_privacy'] = [
     '#type' => 'checkbox',
     '#title' => t('University Information Security and Privacy link'),
-    '#description' => t('With few execeptions, this should always be enabled.'),
+    '#description' => t('With few exceptions, this should always be enabled.'),
     '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('info_security_privacy'),
   ];
 
@@ -85,13 +91,13 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   unset($form['fonts']['fonts']['bootstrap_barrio_google_fonts']);
   $form['fonts']['fonts']['az_barrio_font'] = [
     '#type' => 'checkbox',
-    '#title' => t('Use the centrally-managed Typekit webfont, Proxima Nova'),
+    '#title' => t('Use the centrally-managed Typekit webfonts (Proxima Nova, Proxima Nova Condensed, and Garamond Premier Pro)'),
     '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_barrio_font'),
     '#description' => t(
-        'If selected, a Typekit CDN <code>&lt;link&gt;</code> will be added to every page importing the @proxima_nova_docs_link CSS.', [
-          '@proxima_nova_docs_link' => Link::fromTextAndUrl(
-            'Arizona Digital, centrally-managed Proxima Nova font', Url::fromUri(
-                'https://digital.arizona.edu/arizona-bootstrap/docs/2.0/content/font/',
+        'If selected, a Typekit CDN <code>&lt;link&gt;</code> will be added to every page importing the @font_docs_link CSS.', [
+          '@font_docs_link' => Link::fromTextAndUrl(
+            'Arizona Digital centrally-managed fonts', Url::fromUri(
+                'https://digital.arizona.edu/arizona-bootstrap/v5/docs/5.2/content/font/',
                 [
                   'attributes' => [
                     'target' => '_blank',
@@ -292,6 +298,12 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#title' => t('Use the AZ Bootstrap sticky footer template.'),
     '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('sticky_footer'),
   ];
+  $form['azbs_settings']['settings']['az_bootstrap_style']['serif_headings'] = [
+    '#title' => t('Use serif headings'),
+    '#type' => 'checkbox',
+    '#description' => t("Use the Garamond Premier Pro serif font for headings H1, H2 and H3. Proxima Nova sans-serif font will remain in use for headings H4, H5 and H6."),
+    '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('serif_headings'),
+  ];
   // Responsive Header Grid.
   $form['layout']['header_grid'] = [
     '#type' => 'details',
@@ -322,20 +334,20 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#description' => t('If checked, the sidebar menu will not be displayed on mobile devices.'),
     '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_remove_sidebar_menu_mobile'),
   ];
-  // Remove navbar options and add AZ Navbar setting.
+  // Remove navbar options and add AZ Navbar Fullscreen setting.
   $form['components']['navbar'] = [];
-  $az_navbar_setting = [
-    'az_navbar' =>
+  $az_navbar_fullscreen_setting = [
+    'az_navbar_fullscreen' =>
       [
         '#type' => 'checkbox',
-        '#prefix' => "<span class='form-item__label'>" . t('AZ Navbar') . "</span>",
-        '#title' => t('Enable AZ Navbar'),
-        '#description' => t('Adds the `navbar-az` class to the main navigation bar, providing additional styling and support for a third level of navigation. DEPRECATION WARNING: The option to disable AZ Navbar will be removed in a future release.'),
-        '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_navbar'),
+        '#prefix' => "<span class='form-item__label'>" . t('AZ Navbar Fullscreen') . "</span>",
+        '#title' => t('Enable AZ Navbar Fullscreen (experimental)'),
+        '#description' => t('Enable the experimental AZ Navbar Fullscreen. This option replaces the main menu with a fullscreen menu.'),
+        '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_navbar_fullscreen'),
         '#wrapper_attributes' => ['class' => ['field-multiple-table']],
       ],
   ];
-  $form['components']['navbar_behaviour'] = $az_navbar_setting + $form['components']['navbar_behaviour'];
+  $form['components']['navbar_behaviour'] = $az_navbar_fullscreen_setting + $form['components']['navbar_behaviour'];
   $form['affix']['navbar_top'] = [];
   $form['affix']['navbar'] = [];
   // Logos.
@@ -447,13 +459,13 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
  * Submit handler for az_barrio_form_settings.
  */
 function az_barrio_form_system_theme_settings_submit($form, FormStateInterface &$form_state) {
-  $values = $form_state->getValues();
+  $form_state_values = $form_state->getValues();
   // If the user uploaded a new logo or favicon, save it to a permanent location
   // and use it in place of the default theme-provided file.
   $default_scheme = \Drupal::config('system.file')->get('default_scheme');
   try {
-    if (!empty($values['footer_logo_upload'])) {
-      $filename = \Drupal::service('file_system')->copy($values['footer_logo_upload']->getFileUri(), $default_scheme . '://');
+    if (!empty($form_state_values['footer_logo_upload'])) {
+      $filename = \Drupal::service('file_system')->copy($form_state_values['footer_logo_upload']->getFileUri(), $default_scheme . '://');
       $form_state->setValue('footer_logo_path', $filename);
       $form_state->setValue('footer_default_logo', 0);
     }
@@ -462,9 +474,23 @@ function az_barrio_form_system_theme_settings_submit($form, FormStateInterface &
     // Ignore.
   }
   $form_state->unsetValue('footer_logo_upload');
-  // theme_settings_convert_to_config($values, $config)->save();
-  // Clear cached libraries so any Bootstrap changes take effect immediately.
+
+  // Update AZ Bootstrap stable version in state if it has changed.
+  $state = \Drupal::state();
+  if ($state->get(AZ_BOOTSTRAP_CDN_STABLE_VERSION) !== AZ_BOOTSTRAP_STABLE_VERSION) {
+    $state->set(AZ_BOOTSTRAP_CDN_STABLE_VERSION, AZ_BOOTSTRAP_STABLE_VERSION);
+  }
+
+  // Update CSS path using a helper function from az_barrio.theme.
+  $form_state_values[] = ['az_bootstrap_cdn_stable_version' => AZ_BOOTSTRAP_STABLE_VERSION];
+  $az_bootstrap_css_path = az_barrio_az_bootstrap_asset_path('css', $form_state_values);
+  if ($az_bootstrap_css_path) {
+    $state->set(AZ_BOOTSTRAP_LOCATION, $az_bootstrap_css_path);
+  }
+
+  // Clear cached libraries so Bootstrap changes take effect immediately.
   \Drupal::service('library.discovery')->clear();
+  \Drupal::service('extension.list.theme')->reset();
 }
 
 /**

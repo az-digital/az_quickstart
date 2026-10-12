@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.az_opportunity_semester
+  module:
+    - text
+id: taxonomy_term.az_opportunity_semester.default
+targetEntityType: taxonomy_term
+bundle: az_opportunity_semester
+mode: default
+content:
+  description:
+    type: text_trimmed
+    label: hidden
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden: {  }

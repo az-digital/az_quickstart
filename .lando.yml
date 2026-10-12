@@ -1,7 +1,7 @@
 name: az_quickstart
 recipe: drupal11
 config:
-  php: '8.4'
+  php: '8.5'
   via: apache:2.4
   webroot: web
   database: mariadb:11.4
@@ -68,8 +68,12 @@ services:
       - ln -s /usr/local/quickstart-install-profile/.vscode /app/.vscode
   node:
     type: node:20
+    overrides:
+      environment:
+        COREPACK_ENABLE_DOWNLOAD_PROMPT: '0'
     build:
-      - yarn install --ignore-scripts
+      - corepack enable
+      - yarn install --immutable
   chromedriver:
     type: compose
     services:

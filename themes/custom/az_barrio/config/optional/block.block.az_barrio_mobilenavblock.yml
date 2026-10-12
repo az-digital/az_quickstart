@@ -16,4 +16,5 @@ settings:
   label: 'Mobile Nav Block'
   label_display: '0'
   provider: az_core
+  menu_id: main
 visibility: {  }

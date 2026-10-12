@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\az_publication;
 
+use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Config\Entity\ConfigEntityListBuilder;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Url;
@@ -32,7 +33,7 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
   /**
    * {@inheritdoc}
    */
-  public function getDefaultOperations(EntityInterface $entity) {
+  public function getDefaultOperations(EntityInterface $entity, ?CacheableMetadata $cacheability = NULL) {
     $operations = parent::getDefaultOperations($entity);
     $current_user = \Drupal::currentUser();
     if (!$current_user->hasPermission('delete publication type entities') && isset($operations['delete'])) {
@@ -51,26 +52,6 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
     }
 
     return $operations;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function load() {
-    $entities = [
-      'enabled' => [],
-      'disabled' => [],
-    ];
-    foreach (parent::load() as $entity) {
-      /** @var \Drupal\az_publication\Entity\AZPublicationTypeInterface $entity */
-      if ($entity->get('status')) {
-        $entities['enabled'][] = $entity;
-      }
-      else {
-        $entities['disabled'][] = $entity;
-      }
-    }
-    return $entities;
   }
 
   /**
@@ -155,7 +136,19 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
    * {@inheritdoc}
    */
   public function render() {
-    $entities = $this->load();
+    $entities = [
+      'enabled' => [],
+      'disabled' => [],
+    ];
+    foreach ($this->load() as $entity) {
+      /** @var \Drupal\az_publication\Entity\AZPublicationTypeInterface $entity */
+      if ($entity->get('status')) {
+        $entities['enabled'][] = $entity;
+      }
+      else {
+        $entities['disabled'][] = $entity;
+      }
+    }
     $list['#type'] = 'container';
     $list['#attributes']['id'] = 'az-publication-type-entity-list';
     $list['#attached']['library'][] = 'core/drupal.ajax';

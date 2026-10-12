@@ -109,7 +109,7 @@ content:
       media_types: {  }
     third_party_settings:
       media_library_edit:
-        show_edit: '1'
+        show_edit: true
   field_az_page_category:
     type: options_select
     weight: 13

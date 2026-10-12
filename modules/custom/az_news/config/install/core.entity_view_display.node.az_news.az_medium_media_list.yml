@@ -117,7 +117,7 @@ third_party_settings:
       format_settings:
         classes: 'card-title text-midnight h5 mt-0 mb-0'
         id: ''
-        element: h5
+        element: h3
         show_label: false
         label_element: h3
         label_element_classes: ''

@@ -49,22 +49,17 @@
   right: 0;
   font-size: 0.9em;
   color: #0c234b;
-  z-index: -102;
   cursor: pointer;
   padding: 0.3em 0.6em;
   border: none;
   margin: 10px;
+  z-index:1;
+  border: 1px solid #adb5bd;
 }
 .az-video-background .bg-video-player-control:focus,
 .az-video-background .bg-video-player-control:hover {
   color: #ab0520;
   border-color: #ab0520;
-}
-.az-video-playing .az-video-pause {
-  z-index: 2;
-}
-.az-video-paused .az-video-play {
-  z-index: 2;
 }
 .az-video-container iframe {
   position: absolute;

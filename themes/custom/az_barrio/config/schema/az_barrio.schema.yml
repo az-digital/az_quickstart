@@ -248,6 +248,9 @@ az_barrio.settings:
     wordmark:
       type: boolean
       label: 'Enable wordmark logo'
+    az_header_blue:
+      type: boolean
+      label: 'Set header background color to Arizona Blue'
     az_main_menu_style:
       type: string
       label: 'Main menu style'
@@ -280,7 +283,7 @@ az_barrio.settings:
       label: 'Enable AZ Bootstrap minification'
     az_barrio_font:
       type: boolean
-      label: 'Use the centrally-managed Typekit webfont, Proxima Nova'
+      label: 'Use the centrally-managed Typekit webfonts (Proxima Nova, Proxima Nova Condensed, and Garamond Premier Pro)'
     az_barrio_material_symbols_rounded:
       type: boolean
       label: 'Use Material Symbols Rounded Icons'
@@ -302,6 +305,9 @@ az_barrio.settings:
     sticky_footer:
       type: boolean
       label: 'Enable AZ Bootstrap sticky footer template'
+    serif_headings:
+      type: boolean
+      label: 'Heading styles'
     az_barrio_logo_svg_inline:
       type: boolean
       label: 'Inline logo SVG (Experimental)'
@@ -311,9 +317,9 @@ az_barrio.settings:
     az_remove_sidebar_menu_mobile:
       type: boolean
       label: 'Remove sidebar menu on mobile devices'
-    az_navbar:
+    az_navbar_fullscreen:
       type: boolean
-      label: 'Enable AZ Navbar'
+      label: 'Enable AZ Navbar Fullscreen (Experimental)'
     primary_logo_alt_text:
       type: label
       label: 'Primary logo alt text'
