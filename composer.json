@@ -38,16 +38,18 @@
         "cweagans/composer-patches": "^1.7",
         "devanych/mime-types": "2.1.2",
         "drupal/access_unpublished": "1.6.0",
+        "drupal/altcha": "2.0.0-beta1",
         "drupal/antibot": "2.0.4",
         "drupal/asset_injector": "2.21.0",
         "drupal/auto_entitylabel": "3.4.0",
         "drupal/better_exposed_filters": "7.0.5",
-        "drupal/blazy": "3.0.13",
+        "drupal/blazy": "3.0.19",
         "drupal/block_class": "4.0.1",
         "drupal/block_field": "1.0.0-rc5",
         "drupal/bootstrap_barrio": "5.1.12",
         "drupal/bootstrap_utilities": "3.0.1",
         "drupal/calendar_link": "3.0.4",
+        "drupal/captcha": "2.0.10",
         "drupal/cas": "2.3.2",
         "drupal/chosen": "4.0.3",
         "drupal/ckeditor_bs_grid": "2.2.0-alpha1",
@@ -62,21 +64,21 @@
         "drupal/config_split": "2.0.2",
         "drupal/config_sync": "3.0.0-alpha4",
         "drupal/config_update": "2.0.0-alpha4",
-        "drupal/core-recommended": "10.6.7",
+        "drupal/core-recommended": "10.6.18",
         "drupal/crop": "2.4.0",
         "drupal/date_ap_style": "2.1.2",
         "drupal/decorative_image_widget": "1.0.2",
         "drupal/draggableviews": "2.1.4",
-        "drupal/easy_breadcrumb": "2.0.9",
+        "drupal/easy_breadcrumb": "2.0.11",
         "drupal/embed": "1.10.0",
         "drupal/entity_embed": "1.7.0",
         "drupal/environment_indicator": "4.0.21",
         "drupal/exclude_node_title": "1.4.0",
-        "drupal/externalauth": "2.0.8",
+        "drupal/externalauth": "2.0.13",
         "drupal/extlink": "2.0.4",
         "drupal/field_group": "4.0.0",
         "drupal/field_group_link": "3.3.0",
-        "drupal/flag": "4.0.0-beta7",
+        "drupal/flag": "5.1.0",
         "drupal/google_tag": "2.0.8",
         "drupal/honeypot": "2.2.2",
         "drupal/image_widget_crop": "3.0.0",
@@ -94,21 +96,23 @@
         "drupal/media_library_edit": "3.0.4",
         "drupal/media_library_form_element": "2.1.2",
         "drupal/menu_block": "1.13.0",
-        "drupal/menu_link_attributes": "1.5.0",
+        "drupal/menu_link_attributes": "1.10.0",
         "drupal/metatag": "2.1.1",
         "drupal/migmag": "1.8.4",
         "drupal/migrate_plus": "6.0.5",
         "drupal/migrate_queue_importer": "2.1.2",
         "drupal/migrate_tools": "6.0.5",
         "drupal/optional_end_date": "1.4.0",
-        "drupal/paragraphs": "1.19.0",
+        "drupal/paragraphs": "1.21.0",
         "drupal/paragraphs_admin": "1.6.0",
         "drupal/pathauto": "1.13.0",
         "drupal/quick_node_clone": "1.22.0",
+        "drupal/recaptcha": "3.5.0",
         "drupal/redirect": "1.11.0",
         "drupal/role_delegation": "1.5.0",
         "drupal/schema_metatag": "3.0.3",
         "drupal/search_api": "1.40.0",
+        "drupal/search_api_attachments": "10.0.8",
         "drupal/search_api_solr": "4.3.10",
         "drupal/search_exclude": "3.0.0-beta2",
         "drupal/searchstax": "1.9.3",
@@ -119,12 +123,12 @@
         "drupal/smart_title": "1.0.0",
         "drupal/smtp": "1.4.0",
         "drupal/token": "1.15.0",
-        "drupal/user_expire": "2.1.2",
+        "drupal/user_expire": "2.1.3",
         "drupal/views_bootstrap": "5.4.1",
         "drupal/views_bulk_operations": "4.3.4",
         "drupal/views_remote_data": "1.0.3",
         "drupal/viewsreference": "2.0.0-beta10",
-        "drupal/webform": "6.2.9",
+        "drupal/webform": "6.2.12",
         "drupal/workbench_access": "2.0.4",
         "drupal/xmlsitemap": "1.5.0",
         "jjj/chosen": "2.2.1",
@@ -154,6 +158,11 @@
             "drupal/bootstrap_barrio": {
                 "Fix schema (3217958)": "https://gist.githubusercontent.com/joeparsons/7d36cefca83823e93b44cb5b36374b04/raw/c495d02fddcb8364f9d6163bcd74f75e3d47f24f/3217958-5-x.patch",
                 "Subtheme not D10 Compatible (3291051)": "https://www.drupal.org/files/issues/2023-10-27/3291051-5.1.x-subtheme-not-d10-compatible.patch"
+            },
+            "drupal/captcha": {
+                "Captcha placement below Webform actions when Submit button(s) customized (3425585)": "https://gist.githubusercontent.com/tadean/f5d7f69bc12000d9e6316bb94f4afd44/raw/24be8269ddd5a8582ef99f18657c3eb93669e287/captcha-webform-placement-3425585-MR135.patch",
+                "Add captcha to all webforms automatically (3380095)": "https://www.drupal.org/files/issues/2023-08-08/3380095-add-captcha-to-webforms.patch",
+                "CAPTCHA persistence ignored when 'cacheable' attribute is enabled (3496865)": "https://gist.githubusercontent.com/joshuasosa/7f3617e1f42aef7873ae4f180fa5c50c/raw/c54019ea7df57b1c03f00d6652b1f455f807e5f7/captcha-3496865"
             },
             "drupal/cas": {
                 "ServiceNotFoundException when logging out (2948185)": "https://www.drupal.org/files/issues/cas_logout_error-2948185-2.patch"
@@ -196,6 +205,9 @@
             "drupal/menu_block": {
                 "Menu blocks disappear randomly on sites for anonymous users. (3475039)": "https://www.drupal.org/files/issues/2024-09-17/revert-3271218-for-3475039.patch"
             },
+            "drupal/metatag": {
+                "Merge special page metatags with node pages (2949963)": "https://gist.githubusercontent.com/tadean/42e1c5046e991ad1dba312c086450735/raw/cf95e6e2376afec56da425234f5c773301eade8e/metatag-special-page-metatags-2949963-MR34-2.2.0.patch"
+            },
             "drupal/migrate_plus": {
                 "XML namespacing issue (2933531)": "https://www.drupal.org/files/issues/2019-08-22/register_namespaces-2933531-7.patch",
                 "entity_lookup plugin fails if $value is empty (2830058)": "https://www.drupal.org/files/issues/2022-10-11/migrate_plus-lookup-2830058-10.patch",
@@ -209,6 +221,9 @@
             },
             "drupal/search_exclude": {
                 "Request for a Views Handler (2882683)": "https://www.drupal.org/files/issues/2023-06-29/request_for_a_views-2882683-14_0.patch"
+            },
+            "drupal/views_bootstrap": {
+                "Views with responsive table display no longer works (2931301)": "https://www.drupal.org/files/issues/2024-10-07/views_bootstrap_responsive-2931301-14.patch"
             },
             "drupal/viewsreference": {
                 "Add Label field formatter (2938433)": "https://www.drupal.org/files/issues/2024-12-18/2938433-20-add-label-field-formatter.patch",

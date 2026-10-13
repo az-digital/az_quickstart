@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - az_event_trellis
+id: az_event_trellis_media
+label: 'Quickstart Trellis Events Media'
+migration: az_trellis_events_media
+time: 43200
+update: true
+sync: false
+ignore_dependencies: 0

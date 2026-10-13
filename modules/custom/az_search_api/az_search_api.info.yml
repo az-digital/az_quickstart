@@ -11,7 +11,9 @@ dependencies:
   - drupal:file
   - drupal:media
   - drupal:node
+  - drupal:path_alias
   - search_api:search_api
+  - search_api_attachments:search_api_attachments
   - search_api_solr:search_api_solr
   - searchstax:searchstax
   - xmlsitemap:xmlsitemap

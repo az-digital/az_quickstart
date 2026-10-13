@@ -4,6 +4,10 @@ on:
     branches:
       - main
 concurrency: kitten-deploy
+
+permissions:
+  contents: read
+
 jobs:
   watch-workflow:
     name: Watch workflow logs
