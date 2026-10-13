@@ -20,7 +20,7 @@
   gap: 0 36px;
 }
 
-.media-list-row {
+.add-pager-top-margin .media-list-row {
   width: calc(50% - 18px);
   display: flex;
   flex-wrap: wrap;
@@ -29,11 +29,11 @@
   margin-bottom: 18px;
 }
 
-.media-list-row .node--view-mode-az-media-list {
+.add-pager-top-margin .media-list-row .node--view-mode-az-media-list {
   width: 100%;
 }
 
-.media-list-row .node__content {
+.add-pager-top-margin .media-list-row .node__content {
   height: 100%;
 }
 
