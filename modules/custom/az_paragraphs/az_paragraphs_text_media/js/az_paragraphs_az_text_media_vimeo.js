@@ -55,8 +55,6 @@
             thisPlayer.style.left = 0;
           }
         }
-<<<<<<< HEAD
-=======
 
         // Helper function to initialize a single Vimeo element
         function initVimeoElement(element, defaultOptions) {
@@ -127,7 +125,6 @@
           });
         }
 
->>>>>>> 2fe00c66 (Closes #5490 Update text on media video play/pause buttons. (#5505))
         if (window.screen && window.screen.width > 768) {
           var defaultOptions = {
             vimeoId: '',
