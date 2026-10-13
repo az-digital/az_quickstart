@@ -1,0 +1,67 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Ranking Deck
+status: experimental
+description: A responsive grid of Ranking cards with per-breakpoint columns and consistent spacing. Drop Ranking components into the rankings slot.
+props:
+  type: object
+  properties:
+    columns_desktop:
+      type: string
+      title: Rankings per row on desktop
+      description: How many rankings appear per row on desktop. Additional rankings wrap to a new row.
+      enum:
+        - '1'
+        - '2'
+        - '3'
+        - '4'
+      meta:enum:
+        '1': '1'
+        '2': '2'
+        '3': '3'
+        '4': 4 (default)
+      examples:
+        - '4'
+    columns_tablet:
+      type: string
+      title: Rankings per row on tablet
+      description: How many rankings appear per row on tablet.
+      enum:
+        - '1'
+        - '2'
+        - '3'
+        - '4'
+      meta:enum:
+        '1': '1'
+        '2': 2 (default)
+        '3': '3'
+        '4': '4'
+      examples:
+        - '2'
+    columns_phone:
+      type: string
+      title: Rankings per row on phone
+      description: How many rankings appear per row on phone.
+      enum:
+        - '1'
+        - '2'
+        - '3'
+        - '4'
+      meta:enum:
+        '1': 1 (default)
+        '2': '2'
+        '3': '3'
+        '4': '4'
+      examples:
+        - '1'
+    utility_classes:
+      type: array
+      title: Utility Classes
+      description: Additional Bootstrap utility classes for the deck wrapper, e.g. bottom spacing (mb-4) before the next item on the page.
+      items:
+        type: string
+      examples:
+        - - mb-4
+slots:
+  rankings:
+    title: Rankings
+    description: The Ranking cards (or other content) laid out by the deck grid.
