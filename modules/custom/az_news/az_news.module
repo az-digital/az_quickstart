@@ -81,13 +81,16 @@ function az_news_node_presave(EntityInterface $entity) {
   }
 }
 
+/**
+ *
+ */
 function az_news_preprocess_node(&$variables) {
   $node = $variables['node'];
   if ($node->getType() === 'az_news') {
     if (isset($variables['elements']) && $variables['elements']['#view_mode'] == 'az_media_list') {
       $variables['#attached']['library'][] = 'az_card/az_card_title_hover';
       $variables['#attached']['library'][] = 'az_news/az_news_card';
-      //dpr($variables);
+      // dpr($variables);
     }
   }
 }
