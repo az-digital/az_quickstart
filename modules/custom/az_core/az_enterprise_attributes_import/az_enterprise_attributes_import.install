@@ -5,7 +5,7 @@
  * Contains az_enterprise_attributes_import.install.
  */
 
-use Drupal\migrate\MigrateExecutable;
+use Drupal\migrate_tools\MigrateExecutable;
 use Drupal\migrate\MigrateMessage;
 
 /**

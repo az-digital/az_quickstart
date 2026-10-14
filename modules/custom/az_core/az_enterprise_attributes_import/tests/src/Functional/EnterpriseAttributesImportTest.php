@@ -46,10 +46,6 @@ class EnterpriseAttributesImportTest extends BrowserTestBase {
    * Tests that our event subscriber can unpublish terms.
    */
   public function testUnpublishAttributes() {
-    // Flush cache for az_http, memory backend seems to cause race conditions?
-    // @todo determine why this happens.
-    $this->container->get('cache.az_http_cache')->deleteAll();
-
     // Get term storage interface.
     $term_storage = $this->container->get('entity_type.manager')->getStorage('taxonomy_term');
     // Remove initial attributes from enabling az_enterprise_attributes_import.
