@@ -364,6 +364,24 @@ function az_event_preprocess_node(&$variables) {
 
   // Only for the event content type.
   if ($node->getType() === 'az_event') {
+    if (isset($variables['elements']) && $variables['elements']['#view_mode'] == 'az_card_alternate') {
+      $variables['#attached']['library'][] = 'az_card/az_card_title_hover';
+      $variables['#attached']['library'][] = 'az_event/az_event_card';
+
+      $media_items = $node->get('field_az_media_thumbnail_image')->referencedEntities();
+      if (!empty($media_items)) {
+        $card_image =
+          \Drupal::service('az_card.image')->generateImageRenderArray($media_items[0]);
+        if (!empty($card_image['#item_attributes']['class'])) {
+          $card_image['#item_attributes']['class'][] = 'card-img-top';
+          $card_image['#item_attributes']['class'] = array_values(array_unique($card_image['#item_attributes']['class']));
+        }
+        else {
+          $card_image['#item_attributes'] = ['class' => ['card-img-top']];
+        }
+        $variables['content']['field_az_media_thumbnail_image'] = $card_image;
+      }
+    }
 
     // Only process if we see view information.
     if (isset($variables['elements']['#az_view_row_index'])) {
@@ -391,7 +409,7 @@ function az_event_preprocess_node(&$variables) {
 
             // Format the replacement value.
             if (!empty($variables['content']['az_event_day'])) {
-              $variables['content']['az_event_day'][0]['#markup'] = Html::escape($formatter->format($timestamp, 'az_event_day'));
+              $variables['content']['az_event_day'][0]['#markup'] = Html::escape($formatter->format($timestamp, 'az_event_card_day'));
               $variables['content']['az_event_day']['#cache']['max-age'] = 0;
             }
             if (!empty($variables['content']['az_event_month'])) {
