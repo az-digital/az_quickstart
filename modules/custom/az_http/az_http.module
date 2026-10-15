@@ -7,6 +7,12 @@
 
 /**
  * Implements hook_migration_plugins_alter().
+ *
+ * @deprecated in az_quickstart:3.6.0 and is removed from az_quickstart:4.0.0.
+ * Use az_http directly instead of relying on this hook.
+ *
+ * phpcs:ignore Drupal.Commenting.Deprecated.DeprecatedWrongSeeUrlFormat
+ * @see https://github.com/az-digital/az_quickstart/issues/6117
  */
 function az_http_migration_plugins_alter(array &$migrations) {
   // Check to see if the migration setting is enabled.
@@ -21,6 +27,11 @@ function az_http_migration_plugins_alter(array &$migrations) {
     $fetcher = $migration['source']['data_fetcher_plugin'] ?? '';
     if (in_array($fetcher, $affected_plugins)) {
       $migration['source']['data_fetcher_plugin'] = 'az_http';
+      $id = $migration['id'] ?? 'unknown migration';
+      \Drupal::logger('az_http')->warning('migration %id was dynamically updated to use the az_http data fetcher plugin. This behavior is deprecated and will be removed in Quickstart 4.0.0. Use az_http as the fetcher plugin directly if you rely on this behavior.',
+      [
+        '%id' => $id,
+      ]);
     }
   }
 }
