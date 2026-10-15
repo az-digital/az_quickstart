@@ -12,7 +12,7 @@
  * Use az_http directly instead of relying on this hook.
  *
  * phpcs:ignore Drupal.Commenting.Deprecated.DeprecatedWrongSeeUrlFormat
- * @see https://github.com/az-digital/az_quickstart/issues/6117
+ * @see https://github.com/az-digital/az_quickstart/issues/6116
  */
 function az_http_migration_plugins_alter(array &$migrations) {
   // Check to see if the migration setting is enabled.
