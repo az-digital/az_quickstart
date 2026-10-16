@@ -37,7 +37,11 @@ services:
       - '@entity_type.manager'
       - '@entity_field.manager'
       - '@?externalauth.authmap'
-
+  az_core.http_client_factory:
+    public: false
+    class: Drupal\az_core\Http\AZClientFactory
+    decorates: http_client_factory
+    arguments: ['@http_handler_stack']
   az_core.content_field_updater:
     class: Drupal\az_core\AZContentFieldUpdater
     arguments: ['@entity_type.manager', '@logger.factory']
