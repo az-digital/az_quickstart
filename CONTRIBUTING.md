@@ -108,6 +108,7 @@ lando install
 ```
 
 ### DDEV
+Requires DDEV 1.25.4 or newer.
 ```
 git clone https://github.com/az-digital/az_quickstart.git foldername
 cd foldername
