@@ -59,7 +59,7 @@ services:
       - '@az_http.http_handler_stack_configurator'
       - 'configure'
   az_http.http_client_factory:
-    class: Drupal\Core\Http\ClientFactory
+    class: Drupal\az_core\Http\AZClientFactory
     arguments:
       - '@az_http.http_handler_stack'
   az_http.http_client:
