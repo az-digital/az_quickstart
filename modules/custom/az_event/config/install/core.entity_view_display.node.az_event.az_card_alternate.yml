@@ -35,7 +35,7 @@ third_party_settings:
       weight: 0
       format_type: html_element
       format_settings:
-        classes: 'card border-0 mt-0 mb-4 p-0 h-100 card-with-link shadow overflow-hidden'
+        classes: 'card rounded-4 border-0 mt-0 mb-4 p-0 h-100 card-with-link shadow overflow-hidden'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -95,7 +95,7 @@ third_party_settings:
       weight: 3
       format_type: html_element
       format_settings:
-        classes: 'card-title fw-bold h5'
+        classes: 'card-title fw-bold h6'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -195,7 +195,7 @@ third_party_settings:
       smart_title__classes:
         - node__title
 _core:
-  default_config_hash: 1CKBHkycXvGdvrIYXPX4T0BoSt8NOZKWHlkY2kamg2k
+  default_config_hash: jcGUl-DHeE2vVrs4LeMfJc4XmEm8R-aMQqe3Xt7T_hw
 id: node.az_event.az_card_alternate
 targetEntityType: node
 bundle: az_event
