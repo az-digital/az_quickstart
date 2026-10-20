@@ -1131,7 +1131,7 @@ display:
         filters: false
         filter_groups: false
         footer: false
-      css_class: add-pager-top-margin
+      css_class: 'add-pager-top-margin az-news'
       use_ajax: true
       display_description: ''
       style_options: null
