@@ -5,7 +5,7 @@
  * Contains az_enterprise_attributes_import.install.
  */
 
-use Drupal\migrate\MigrateExecutable;
+use Drupal\migrate_tools\MigrateExecutable;
 use Drupal\migrate\MigrateMessage;
 
 /**
@@ -28,4 +28,11 @@ function az_enterprise_attributes_import_install() {
  */
 function az_enterprise_attributes_import_update_1021101() {
   \Drupal::service('module_installer')->install(['migrate_queue_importer']);
+}
+
+/**
+ * Ensure az_http is installed.
+ */
+function az_enterprise_attributes_import_update_1130601() {
+  \Drupal::service('module_installer')->install(['az_http']);
 }

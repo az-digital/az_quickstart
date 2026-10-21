@@ -36,6 +36,7 @@ class EnterpriseAttributesImportTest extends BrowserTestBase {
    */
   protected static $modules = [
     'az_core',
+    'az_http',
     'az_enterprise_attributes_import',
     'migrate',
     'migrate_tools',
