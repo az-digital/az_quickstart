@@ -37,7 +37,7 @@
         "drupal/blazy": "3.0.19",
         "drupal/block_class": "4.0.2",
         "drupal/block_field": "1.0.0-rc5",
-        "drupal/bootstrap_barrio": "5.5.20",
+        "drupal/bootstrap_barrio": "5.5.22",
         "drupal/bootstrap_utilities": "3.0.1",
         "drupal/calendar_link": "3.0.4",
         "drupal/captcha": "2.0.10",
@@ -155,11 +155,6 @@
             "drupal/auto_entitylabel": {
                 "Support entities without bundles (2945387)": "https://www.drupal.org/files/issues/2024-06-07/2945387-28.patch",
                 "Automatic label after first save not working any more (3609192)": "https://gist.githubusercontent.com/tadean/acdad5f7703f9371d48d69dcd31be88f/raw/eaab325a464f90edb36035d83bee719df69e0a7a/auto-entitylabel-first-save-3609192-MR45.patch"
-            },
-            "drupal/bootstrap_barrio": {
-                "Js error if table not found (3519060)": "https://www.drupal.org/files/issues/2025-04-14/bootstrap-barrio-table-not-found-3519060-1.patch",
-                "Fix alerts (3485305)": "https://www.drupal.org/files/issues/2025-08-27/3485305-22.patch",
-                "Region class field: increase maxlength from 40 to 255 (3548552)": "https://www.drupal.org/files/issues/2025-09-24/3548552-4.patch"
             },
             "drupal/captcha": {
                 "Captcha placement below Webform actions when Submit button(s) customized (3425585)": "https://gist.githubusercontent.com/tadean/f5d7f69bc12000d9e6316bb94f4afd44/raw/24be8269ddd5a8582ef99f18657c3eb93669e287/captcha-webform-placement-3425585-MR135.patch",
