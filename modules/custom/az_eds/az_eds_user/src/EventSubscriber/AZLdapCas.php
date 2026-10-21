@@ -216,12 +216,22 @@ class AZLdapCas implements EventSubscriberInterface {
         return;
       }
       // User does not exist, but is allowed, attempt LDAP provisioning.
-      $result = $this->drupalUserProcessor->createDrupalUserFromLdapEntry(
+      try {
+        $result = $this->drupalUserProcessor->createDrupalUserFromLdapEntry(
+          [
+            'name' => $username,
+            'status' => TRUE,
+          ]
+        );
+      }
+      catch (\Exception $e) {
+        $this->logger->notice('Failed to provision @username during LDAP mapping: %msg',
         [
-          'name' => $username,
-          'status' => TRUE,
-        ]
-      );
+          '@username' => $username,
+          '%msg' => $e->getMessage(),
+        ]);
+        return;
+      }
       // Successfully provisioned LDAP user for which there is no cas account.
       if ($result) {
         // Get the mapped uid of the new user.
