@@ -6,8 +6,8 @@ package: The University of Arizona
 container_rebuild_required: true
 dependencies:
   - az_core:az_core
-  - xmlsitemap:xmlsitemap
-  - xmlsitemap:xmlsitemap_engines
+  - simple_sitemap:simple_sitemap
+  - simple_sitemap:simple_sitemap_engines
   - redirect:redirect
   - metatag:metatag
   - metatag:metatag_open_graph
