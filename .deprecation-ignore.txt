@@ -1,0 +1,44 @@
+# Deprecation patterns to ignore when running Quickstart's PHPUnit tests.
+#
+# Drupal core's DeprecationBridge test extension reads this file from the
+# SYMFONY_DEPRECATIONS_HELPER environment variable, which is set in
+# .github/workflows/ci.yml and .ddev/config.quickstart.yaml:
+#   SYMFONY_DEPRECATIONS_HELPER="ignoreFile=/path/to/az_quickstart/.deprecation-ignore.txt"
+# Each non-comment line is a PCRE pattern matched against deprecation messages.
+# See https://www.drupal.org/node/3285162
+#
+# phpunit.xml.dist sets ignoreSuppressionOfDeprecations="true" so that
+# deprecations Drupal reports with @trigger_error() also fail tests. That
+# includes deprecations raised by the test site during functional tests.
+
+# Only fail on deprecations in Quickstart's own code: ignore any deprecation
+# whose message doesn't mention a Quickstart extension (az_*). Deprecated core
+# APIs that Quickstart calls are still caught by PHPStan deprecation rules.
+# An az_* name in a file path only counts directly under a "custom/" directory
+# (e.g. profiles/custom/az_quickstart/...), so absolute paths like GitHub
+# Actions' /home/runner/work/az_quickstart/az_quickstart/... don't match.
+%^(?!.*(?:(?:^|[^a-zA-Z0-9/])|(?<=custom/))az_[a-z0-9]).*$%s
+
+# az_migration is intentionally deprecated.
+# See https://github.com/az-digital/az_quickstart/issues/5332
+%^The module 'az_migration' is deprecated\.%
+
+# Known deprecations in Quickstart code. Remove each pattern once it's fixed.
+
+# @todo Remove in https://github.com/az-digital/az_quickstart/issues/6125
+#   Deprecations removed in Drupal 12.
+%^az_cas_module_implements_alter without a \#\[LegacyModuleImplementsAlter\] attribute is deprecated%
+%Autoloading hooks in the file \(profiles/custom/az_quickstart/modules/custom/az_(event/az_event|publication/az_publication)\.views\.inc\) is deprecated%
+%Providing template_preprocess_az_(responsive_background_image|publication_type_listing_table|inline_entity_role_form_entity_table|finder_widget)\(\) is deprecated%
+%Providing a file for theme hook az_publication_type_listing_table is deprecated%
+%The update to add a default table CSS class for view "az_publications_curate" is deprecated%
+
+# @todo Remove in https://github.com/az-digital/az_quickstart/issues/6126
+#   Deprecations removed in Drupal 13, and Symfony return type notices.
+%Using @ParagraphsBehavior annotation for plugin with ID az_(accordion_paragraph_behavior|cards_paragraph_behavior|default_paragraph_behavior|link_group|photo_gallery_paragraph_behavior|rankings_paragraph_behavior|split_screen|text_background_paragraph_behavior|text_media_paragraph_behavior) is deprecated%
+%Using @EntityReferenceSelection annotation for plugin with ID default:az_publication_type is deprecated%
+%Using @FieldWidget annotation for plugin with ID az_entity_role_inline_entity_form_complex is deprecated%
+%Using @DataParser annotation for plugin with ID az_enterprise_attributes_import_json is deprecated%
+%Using @BetterExposedFiltersFilterWidget annotation for plugin with ID az_finder_tid_widget is deprecated%
+%^az_(core|google_tag)_requirements without a \#\[LegacyRequirementsHook\] attribute is deprecated%
+%getSubscribedEvents\(\)" might add "array" as a native return type declaration in the future\. Do the same in implementation "Drupal\\az_(finder\\EventSubscriber\\AZFinderAjaxResponseSubscriber|metrics\\EventSubscriber\\AZMetricsSubscriber)"%
