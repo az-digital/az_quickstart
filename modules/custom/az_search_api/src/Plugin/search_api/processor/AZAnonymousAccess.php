@@ -90,6 +90,7 @@ class AZAnonymousAccess extends ProcessorPluginBase {
           '@path' => $path,
           '@pages' => $pages,
         ]);
+        return TRUE;
       }
     }
     return FALSE;
