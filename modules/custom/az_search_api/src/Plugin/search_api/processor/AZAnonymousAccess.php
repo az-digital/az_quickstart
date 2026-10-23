@@ -114,6 +114,7 @@ class AZAnonymousAccess extends ProcessorPluginBase {
         }
       }
       if ($entity instanceof EntityInterface) {
+        // Exclude an item if entity is protected by CAS forced login settings.
         if ($this->checkForcedLogin($entity)) {
           unset($items[$item_id]);
         }
