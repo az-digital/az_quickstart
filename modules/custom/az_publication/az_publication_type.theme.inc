@@ -19,7 +19,7 @@ use Drupal\Core\Template\Attribute;
  *   - rows: An associative array containing the rows data for the type
  *     listing table.
  */
-function template_preprocess_az_publication_type_listing_table(&$variables) {
+function _az_publication_initial_preprocess_az_publication_type_listing_table(&$variables) {
   // Convert the attributes to valid attribute objects for headers.
   foreach ($variables['headers'] as $key => $header) {
     // Check if '#attributes' exists and is an array before trying to access it.

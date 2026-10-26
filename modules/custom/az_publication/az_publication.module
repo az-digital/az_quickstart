@@ -116,6 +116,7 @@ function az_publication_theme() {
   return [
     'az_inline_entity_role_form_entity_table' => [
       'render element' => 'form',
+      'initial preprocess' => '_az_publication_initial_preprocess_az_inline_entity_role_form_entity_table',
     ],
     'block__views_block__az_publications_az_author_person' => [
       'template' => 'block--views-block--az-publications-az-author-person',
@@ -132,6 +133,7 @@ function az_publication_theme() {
         '#attributes' => [],
       ],
       'file' => 'az_publication_type.theme.inc',
+      'initial preprocess' => '_az_publication_initial_preprocess_az_publication_type_listing_table',
     ],
   ];
 }
@@ -737,7 +739,7 @@ function az_publication_form_node_az_publication_edit_form_alter(&$form, FormSta
  *   An associative array containing:
  *   - form: A render element representing the form.
  */
-function template_preprocess_az_inline_entity_role_form_entity_table(array &$variables) {
+function _az_publication_initial_preprocess_az_inline_entity_role_form_entity_table(array &$variables) {
   $form = $variables['form'];
   $entity_type = $form['#entity_type'];
 
