@@ -25,14 +25,6 @@
 
 # Known deprecations in Quickstart code. Remove each pattern once it's fixed.
 
-# @todo Remove in https://github.com/az-digital/az_quickstart/issues/6125
-#   Deprecations removed in Drupal 12.
-%^az_cas_module_implements_alter without a \#\[LegacyModuleImplementsAlter\] attribute is deprecated%
-%Autoloading hooks in the file \(profiles/custom/az_quickstart/modules/custom/az_(event/az_event|publication/az_publication)\.views\.inc\) is deprecated%
-%Providing template_preprocess_az_(responsive_background_image|publication_type_listing_table|inline_entity_role_form_entity_table|finder_widget)\(\) is deprecated%
-%Providing a file for theme hook az_publication_type_listing_table is deprecated%
-%The update to add a default table CSS class for view "az_publications_curate" is deprecated%
-
 # @todo Remove in https://github.com/az-digital/az_quickstart/issues/6126
 #   Deprecations removed in Drupal 13, and Symfony return type notices.
 %Using @ParagraphsBehavior annotation for plugin with ID az_(accordion_paragraph_behavior|cards_paragraph_behavior|default_paragraph_behavior|link_group|photo_gallery_paragraph_behavior|rankings_paragraph_behavior|split_screen|text_background_paragraph_behavior|text_media_paragraph_behavior) is deprecated%
