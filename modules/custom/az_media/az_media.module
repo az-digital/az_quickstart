@@ -60,7 +60,7 @@ function az_media_form_alter(&$form, FormStateInterface $form_state, $form_id) {
  *
  *   For CSS settings, if there is no value a default will be used.
  */
-function template_preprocess_az_responsive_background_image(array &$variables) {
+function _az_media_initial_preprocess_az_responsive_background_image(array &$variables) {
 
   $responsive_image_style = ResponsiveImageStyle::load($variables['responsive_image_style_id']);
 
@@ -167,6 +167,7 @@ function az_media_theme() {
         'y' => 'center',
         'z_index' => 'auto',
       ],
+      'initial preprocess' => '_az_media_initial_preprocess_az_responsive_background_image',
     ],
   ];
 }
