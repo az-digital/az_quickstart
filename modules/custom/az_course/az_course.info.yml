@@ -6,6 +6,7 @@ package: 'The University of Arizona - Experimental'
 lifecycle: experimental
 lifecycle_link: 'https://github.com/az-digital/az_quickstart/blob/main/RELEASES.md#experimental-features'
 dependencies:
+  - az_http:az_http
   - auto_entitylabel:auto_entitylabel
   - drupal:field
   - field_group:field_group
