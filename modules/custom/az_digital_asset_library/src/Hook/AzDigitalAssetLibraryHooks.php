@@ -6,6 +6,7 @@ use Drupal\Component\Serialization\Json;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Hook\Order\Order;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
  * Hook implementations for az_digital_asset_library.
@@ -14,6 +15,8 @@ use Drupal\Core\Hook\Order\Order;
  * are already applied.
  */
 class AzDigitalAssetLibraryHooks {
+
+  use StringTranslationTrait;
 
   /**
    * Implements hook_form_FORM_ID_alter().
@@ -26,7 +29,7 @@ class AzDigitalAssetLibraryHooks {
   #[Hook('form_media_library_add_form_upload_alter', order: Order::Last)]
   public function formMediaLibraryAddFormUploadAlter(array &$form, FormStateInterface $form_state): void {
     $data_dialog_options = [];
-    $form['ib_dam_container']['asset_browser']['#title'] = t('Add Arizona Digital Asset Library Media');
+    $form['ib_dam_container']['asset_browser']['#title'] = $this->t('Add Arizona Digital Asset Library Media');
     if (isset($form['ib_dam_container']['asset_browser']['#attributes']['data-dialog-options'])) {
       $data_dialog_options = Json::decode($form['ib_dam_container']['asset_browser']['#attributes']['data-dialog-options']);
     }
