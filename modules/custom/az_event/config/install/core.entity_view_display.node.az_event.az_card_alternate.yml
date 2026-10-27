@@ -259,7 +259,6 @@ hidden:
   field_az_featured_image_as_thumb: true
   field_az_link: true
   field_az_location: true
-  field_az_metatag: true
   field_az_photos: true
   field_az_subheading: true
   field_az_trellis_id: true
