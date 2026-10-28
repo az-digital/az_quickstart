@@ -6,54 +6,20 @@
 **/
 (function ($, Drupal) {
   Drupal.behaviors.azAlphabeticalListing = {
-<<<<<<< HEAD
     attach: function attach() {
-      $('#az-js-alpha-navigation li').each(function (index, element) {
-        var groupId = $(element).children().attr('data-href');
-        if ($(groupId).length !== 0) {
-          $(element).removeClass('disabled');
-          $(element).children().attr('tabindex', '0').attr('aria-hidden', 'false').attr('href', groupId);
-        } else {
-=======
-    attach() {
-      /**
-       * Returns the results group element referenced by a "#id" style href.
-       *
-       * Looks the element up by ID instead of passing the href to jQuery,
-       * which would parse it as HTML if it were not a valid selector.
-       * @param {string} href The href value, e.g. "#A".
-       * @return {HTMLElement|null} The matching results group, if any.
-       */
       function azAlphabeticalListingGetGroup(href) {
         if (typeof href !== 'string' || href.charAt(0) !== '#') {
           return null;
         }
         return document.getElementById(href.slice(1));
       }
-
-      /**
-       * Loop through each alpha navigation list item and determine if the
-       * corresponding search result group exists on the page. If it doesn't
-       * exist on the page, then hide the navigation item.
-       */
-      $('#az-js-alpha-navigation li').each((index, element) => {
-        // Get ID of current nav item.
-        const groupId = $(element).children().attr('data-href');
-        const group = azAlphabeticalListingGetGroup(groupId);
-
-        // Enable nav item if results group exists on page
+      $('#az-js-alpha-navigation li').each(function (index, element) {
+        var groupId = $(element).children().attr('data-href');
+        var group = azAlphabeticalListingGetGroup(groupId);
         if (group) {
           $(element).removeClass('disabled');
-          $(element)
-            .children()
-            .attr('tabindex', '0')
-            .attr('aria-hidden', 'false')
-            .attr('href', `#${group.id}`);
-        }
-
-        // Disable nav item if no results group exists on page
-        else {
->>>>>>> 56d5f393 (Fixes #6150: Alphabetical listing nav throws errors and sets bare hrefs after searching (#6151))
+          $(element).children().attr('tabindex', '0').attr('aria-hidden', 'false').attr('href', "#".concat(group.id));
+        } else {
           $(element).addClass('disabled');
           $(element).children().attr('tabindex', '-1').attr('aria-hidden', 'true').removeAttr('href');
         }
@@ -92,14 +58,7 @@
             $(element).show();
             $(element).removeClass('hide-result');
             navTarget.parent().removeClass('disabled');
-<<<<<<< HEAD
-            navTarget.attr('tabindex', '0').attr('aria-hidden', 'false').attr('href', $(element).attr('id'));
-=======
-            navTarget
-              .attr('tabindex', '0')
-              .attr('aria-hidden', 'false')
-              .attr('href', `#${elementId}`);
->>>>>>> 56d5f393 (Fixes #6150: Alphabetical listing nav throws errors and sets bare hrefs after searching (#6151))
+            navTarget.attr('tabindex', '0').attr('aria-hidden', 'false').attr('href', "#".concat(elementId));
           }
         });
       }
@@ -124,9 +83,12 @@
       var breakpoint = 600;
       $('#az-js-alpha-navigation a').on('click', function (event) {
         event.preventDefault();
-<<<<<<< HEAD
         var $alphaNav = $('#az-js-floating-alpha-nav-container');
         var href = $.attr(event.currentTarget, 'data-href');
+        var group = azAlphabeticalListingGetGroup(href);
+        if (!group) {
+          return;
+        }
         var fixedNavHeight = $alphaNav.outerHeight();
         var headingHeight = $('.az-alphabetical-listing-group-title:first').outerHeight();
         var offsetHeight = fixedNavHeight + headingHeight;
@@ -134,37 +96,10 @@
           fixedNavHeight = 0;
         }
         $root.animate({
-          scrollTop: $(href).offset().top - offsetHeight
+          scrollTop: $(group).offset().top - offsetHeight
         }, 500, function () {
           window.location.hash = href;
         });
-=======
-        const $alphaNav = $('#az-js-floating-alpha-nav-container');
-        const href = $.attr(event.currentTarget, 'data-href');
-        const group = azAlphabeticalListingGetGroup(href);
-        if (!group) {
-          return;
-        }
-        let fixedNavHeight = $alphaNav.outerHeight();
-        const headingHeight = $(
-          '.az-alphabetical-listing-group-title:first',
-        ).outerHeight();
-        const offsetHeight = fixedNavHeight + headingHeight;
-
-        if ($(window).width() <= breakpoint) {
-          fixedNavHeight = 0;
-        }
-
-        $root.animate(
-          {
-            scrollTop: $(group).offset().top - offsetHeight,
-          },
-          500,
-          () => {
-            window.location.hash = href;
-          },
-        );
->>>>>>> 56d5f393 (Fixes #6150: Alphabetical listing nav throws errors and sets bare hrefs after searching (#6151))
       });
       if ($('body.toolbar-tray-open').length) {
         $('#az-js-floating-alpha-nav-container').css('top', '79px');
