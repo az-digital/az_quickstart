@@ -36,6 +36,10 @@ html.sticky-footer #main-wrapper {
   line-height: 1.375;
 }
 
+#footer_sub .nav-utility li {
+  break-inside: avoid;
+}
+
 /* Correct `inline-block` display not defined in IE 8/9. */
 audio,
 canvas,
