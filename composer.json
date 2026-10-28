@@ -209,6 +209,9 @@
             "drupal/inline_entity_form": {
                 "Support Referencing the same entity multiple times (3363988)": "https://gist.githubusercontent.com/tadean/d3c4969f0c8dd7bacc3a3c0ba0521b3e/raw/f5ad64286fdcfcc23b2bf147656b012bba6a4872/inline_entity_form_multiple.patch"
             },
+            "drupal/linkit": {
+                "Add Webform Matcher (2946234)": "https://gist.githubusercontent.com/joshuasosa/4d7de6636d98b672ecb1c3cb867adb09/raw/2d72cb44c9c3845fb8bac4aa72625ea771f6a413/linkit_webform-2946234.diff"
+            },
             "drupal/masquerade_log": {
                 "Error when using Drush on Drupal 11.4 (3602814)": "https://www.drupal.org/files/issues/2026-06-23/3602814-7-mr19.patch"
             },
