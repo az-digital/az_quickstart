@@ -126,3 +126,13 @@ matchers:
       limit: 100
       include_unpublished: false
     weight: 0
+  6eee3301-f4d9-4787-9659-9cee0ea6ca70:
+    id: 'entity:webform'
+    uuid: 6eee3301-f4d9-4787-9659-9cee0ea6ca70
+    settings:
+      metadata: 'URL: [webform:url] | ID: [webform:id]'
+      bundles: null
+      group_by_bundle: null
+      substitution_type: canonical
+      limit: 100
+    weight: 0
