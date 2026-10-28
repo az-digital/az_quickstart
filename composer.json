@@ -29,7 +29,7 @@
         "cweagans/composer-patches": "^1.7",
         "devanych/mime-types": "2.1.2",
         "drupal/access_unpublished": "1.9.0",
-        "drupal/altcha": "2.0.0-beta1",
+        "drupal/altcha": "2.0.0-rc1",
         "drupal/antibot": "2.0.5",
         "drupal/asset_injector": "2.21.0",
         "drupal/auto_entitylabel": "3.4.0",
@@ -76,11 +76,11 @@
         "drupal/image_widget_crop": "3.0.0",
         "drupal/imagemagick": "4.0.2",
         "drupal/inline_entity_form": "3.0.0",
-        "drupal/intelligencebank": "5.2.3",
+        "drupal/intelligencebank": "5.2.4",
         "drupal/jquery_ui": "1.8.0",
         "drupal/jquery_ui_datepicker": "2.1.1",
         "drupal/key": "1.22.0",
-        "drupal/klaro": "3.1.1",
+        "drupal/klaro": "3.1.2",
         "drupal/ldap": "4.13.0",
         "drupal/link_class": "2.2.0",
         "drupal/linkit": "7.0.17",
@@ -92,7 +92,7 @@
         "drupal/media_remote": "1.10",
         "drupal/menu_block": "1.14.0",
         "drupal/menu_link_attributes": "1.10.0",
-        "drupal/metatag": "2.2.0",
+        "drupal/metatag": "2.2.3",
         "drupal/migmag": "1.8.4",
         "drupal/migrate_plus": "6.0.10",
         "drupal/migrate_queue_importer": "2.1.2",
@@ -107,7 +107,7 @@
         "drupal/role_delegation": "1.6.0",
         "drupal/scheduler": "2.3.0",
         "drupal/scheduler_content_moderation_integration": "3.0.0",
-        "drupal/schema_metatag": "3.0.4",
+        "drupal/schema_metatag": "3.1.0",
         "drupal/search_api": "1.41.0",
         "drupal/search_api_attachments": "10.0.13",
         "drupal/search_api_solr": "4.4.0",
@@ -120,7 +120,7 @@
         "drupal/smart_title": "1.0.0",
         "drupal/smtp": "1.4.0",
         "drupal/token": "1.17.0",
-        "drupal/ui_icons": "2.0.2",
+        "drupal/ui_icons": "2.1.0",
         "drupal/user_expire": "2.1.3",
         "drupal/views_bootstrap": "5.5.6",
         "drupal/views_bulk_operations": "4.4.9",
@@ -218,7 +218,7 @@
                 "Performance issue caused by build in access check (3509045)": "https://www.drupal.org/files/issues/2025-03-05/3509045-13.patch"
             },
             "drupal/metatag": {
-                "Merge special page metatags with node pages (2949963)": "https://gist.githubusercontent.com/tadean/42e1c5046e991ad1dba312c086450735/raw/cf95e6e2376afec56da425234f5c773301eade8e/metatag-special-page-metatags-2949963-MR34-2.2.0.patch"
+                "Merge special page metatags with node pages (2949963)": "https://www.drupal.org/files/issues/2026-10-26/2949963-mr-290-45.patch"
             },
             "drupal/migmag": {
                 "Fix fatal error when MigrationConfigurationTrait is stubbed during plugin discovery (3590259)": "https://www.drupal.org/files/issues/2026-05-15/3590259-9-mr19.patch"
@@ -234,9 +234,6 @@
             },
             "drupal/role_delegation": {
                 "Restrict access to cancel/remove accounts with non-assignable roles (3299201)": "https://www.drupal.org/files/issues/2022-07-25/3299201-4.patch"
-            },
-            "drupal/schema_metatag": {
-                "Add parentOrganization property/tag to schema_organization (3477869)": "https://www.drupal.org/files/issues/2025-01-13/add_parentOrganization.diff"
             },
             "drupal/search_exclude": {
                 "Request for a Views Handler (2882683)": "https://www.drupal.org/files/issues/2023-06-29/request_for_a_views-2882683-14_0.patch",
