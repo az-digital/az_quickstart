@@ -24,6 +24,9 @@ database:
   version: "10.11"
 
 web_environment:
+  # Give Drush the site URL for links and `drush uli`. DDEV only sets this
+  # automatically when settings management is enabled.
+  - DRUSH_OPTIONS_URI=${DDEV_PRIMARY_URL}
   - BROWSERTEST_OUTPUT_DIRECTORY=/tmp
   - BROWSERTEST_OUTPUT_BASE_URL=${DDEV_PRIMARY_URL}
   - SIMPLETEST_BASE_URL=http://web
