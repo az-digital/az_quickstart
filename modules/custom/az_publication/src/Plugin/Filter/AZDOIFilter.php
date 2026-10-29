@@ -8,6 +8,7 @@ use Drupal\filter\Attribute\Filter;
 use Drupal\filter\FilterProcessResult;
 use Drupal\filter\Plugin\Filter\FilterUrl;
 use Drupal\filter\Plugin\FilterInterface;
+use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Provides a filter to convert DOI identifiers to links.
@@ -18,6 +19,14 @@ use Drupal\filter\Plugin\FilterInterface;
   type: FilterInterface::TYPE_TRANSFORM_IRREVERSIBLE
 )]
 class AZDOIFilter extends FilterUrl {
+
+  /**
+   * {@inheritdoc}
+   */
+  public function settingsForm(array $form, FormStateInterface $form_state) {
+    // This filter has no configurable settings.
+    return $form;
+  }
 
   /**
    * {@inheritdoc}
