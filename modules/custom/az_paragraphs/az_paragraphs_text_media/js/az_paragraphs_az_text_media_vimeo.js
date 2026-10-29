@@ -55,76 +55,61 @@
             thisPlayer.style.left = 0;
           }
         }
-
-        // Helper function to initialize a single Vimeo element
+        function syncPlayPause(parentParagraph, playPauseButton, isPlaying) {
+          parentParagraph.classList.toggle('az-video-playing', isPlaying);
+          parentParagraph.classList.toggle('az-video-paused', !isPlaying);
+          if (playPauseButton) {
+            playPauseButton.textContent = isPlaying ? Drupal.t('Pause Video') : Drupal.t('Play Video');
+            playPauseButton.setAttribute('aria-pressed', String(isPlaying));
+          }
+        }
         function initVimeoElement(element, defaultOptions) {
-          const parentParagraph = element.parentNode;
-          const vimeoId = element.dataset.vimeoVideoId;
-          const videoPlayer =
-            element.getElementsByClassName('az-video-player')[0];
-          const VimeoPlayer = window.Vimeo;
-
-          // Initialize Vimeo Player
+          var parentParagraph = element.parentNode;
+          var vimeoId = element.dataset.vimeoVideoId;
+          var videoPlayer = element.getElementsByClassName('az-video-player')[0];
+          var VimeoPlayer = window.Vimeo;
           element.player = new VimeoPlayer.Player(videoPlayer, {
             id: vimeoId,
             autopause: defaultOptions.autopause,
             autoplay: element.dataset.autoplay === 'true',
             controls: 0,
             loop: defaultOptions.loop,
-            muted: defaultOptions.muted,
+            muted: defaultOptions.muted
           });
-
-          // Play/Pause button reference used by event handlers below.
-          const playPauseButton =
-            element.getElementsByClassName('az-video-playpause')[0];
-
-          // Update dimensions when buffering completes.
-          element.player.on('bufferend', () => {
+          var playPauseButton = element.getElementsByClassName(defaultOptions.playPauseButtonClass)[0];
+          element.player.on('bufferend', function () {
             setDimensions(element);
           });
-
-          // Sync button and class state when video plays.
-          element.player.on('play', () => {
-            parentParagraph.classList.remove('az-video-paused');
-            parentParagraph.classList.add('az-video-playing');
-            playPauseButton.textContent = 'Pause Video';
-            playPauseButton.setAttribute('aria-pressed', 'true');
+          element.player.on('play', function () {
+            syncPlayPause(parentParagraph, playPauseButton, true);
           });
-
-          // Sync button and class state when video pauses.
-          element.player.on('pause', () => {
-            parentParagraph.classList.remove('az-video-playing');
-            parentParagraph.classList.add('az-video-paused');
-            playPauseButton.textContent = 'Play Video';
-            playPauseButton.setAttribute('aria-pressed', 'false');
+          element.player.on('pause', function () {
+            syncPlayPause(parentParagraph, playPauseButton, false);
           });
-
-          // Set the iframe tabindex to -1 to prevent focus from reaching iframe.
-          element.player.ready().then(() => {
-            const iframe = element.player.element;
+          element.player.ready().then(function () {
+            var iframe = element.player.element;
             if (iframe) {
               iframe.setAttribute('tabindex', '-1');
             }
-          });
-
-          // Play/Pause button: delegate state changes to player events.
-          playPauseButton.addEventListener('click', (event) => {
-            event.preventDefault();
-            if (event.currentTarget.getAttribute('aria-pressed') === 'true') {
-              element.player.pause().catch((error) => vimeoError(error));
-            } else {
-              element.player.play().catch((error) => vimeoError(error));
+            if (playPauseButton) {
+              playPauseButton.hidden = false;
             }
           });
+          if (playPauseButton) {
+            playPauseButton.addEventListener('click', function (event) {
+              event.preventDefault();
+              if (event.currentTarget.getAttribute('aria-pressed') === 'true') {
+                element.player.pause().catch(function (error) {
+                  return vimeoError(error);
+                });
+              } else {
+                element.player.play().catch(function (error) {
+                  return vimeoError(error);
+                });
+              }
+            });
+          }
         }
-
-        // Helper function to handle API loaded callback
-        function handleVimeoAPILoaded(bgVideoParagraphs, defaultOptions) {
-          Array.from(bgVideoParagraphs).forEach((element) => {
-            initVimeoElement(element, defaultOptions);
-          });
-        }
-
         if (window.screen && window.screen.width > 768) {
           var defaultOptions = {
             vimeoId: '',
@@ -133,8 +118,7 @@
             controls: 0,
             loop: true,
             muted: true,
-            playButtonClass: 'az-video-play',
-            pauseButtonClass: 'az-video-pause'
+            playPauseButtonClass: 'az-video-playpause'
           };
           var bgVideoParagraphs = document.getElementsByClassName('az-js-vimeo-video-background');
           var tag = document.createElement('script');
@@ -142,44 +126,7 @@
           document.head.appendChild(tag);
           tag.onload = function () {
             Array.from(bgVideoParagraphs).forEach(function (element) {
-              var parentParagraph = element.parentNode;
-              var vimeoId = element.dataset.vimeoVideoId;
-              var videoPlayer = element.getElementsByClassName('az-video-player')[0];
-              var VimeoPlayer = window.Vimeo;
-              element.player = new VimeoPlayer.Player(videoPlayer, {
-                id: vimeoId,
-                autopause: defaultOptions.autopause,
-                autoplay: element.dataset.autoplay === 'true',
-                controls: 0,
-                loop: defaultOptions.loop,
-                muted: defaultOptions.muted
-              });
-              element.player.on('bufferend', function () {
-                setDimensions(element);
-                parentParagraph.classList.add('az-video-playing');
-              });
-              var playButtons = element.getElementsByClassName('az-video-play');
-              if (playButtons[0]) {
-                playButtons[0].addEventListener('click', function (event) {
-                  event.preventDefault();
-                  element.player.play().catch(function (error) {
-                    return vimeoError(error);
-                  });
-                  parentParagraph.classList.add('az-video-playing');
-                  parentParagraph.classList.remove('az-video-paused');
-                });
-              }
-              var pauseButtons = element.getElementsByClassName('az-video-pause');
-              if (pauseButtons[0]) {
-                pauseButtons[0].addEventListener('click', function (event) {
-                  event.preventDefault();
-                  element.player.pause().catch(function (error) {
-                    return vimeoError(error);
-                  });
-                  parentParagraph.classList.add('az-video-paused');
-                  parentParagraph.classList.remove('az-video-playing');
-                });
-              }
+              initVimeoElement(element, defaultOptions);
             });
           };
           var resize = function resize() {
