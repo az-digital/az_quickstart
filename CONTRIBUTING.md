@@ -87,6 +87,14 @@ Add new feature X...<at most 72 characters>
 Closes #123 by creating y and z. This can be a paragraph of explanation.
 ```
 
+## Tugboat Visual Diffs
+
+Tugboat compares screenshots of a set of `az_demo` pages (the `urls` list in
+`.tugboat/config.yml`) on each pull request preview against the same pages on
+its base preview. Results are available from the preview in the Tugboat
+dashboard. Use them to check whether a pull request changes how existing pages
+look.
+
 ## Local development
 
 To create a local copy of az_quickstart and build a working Drupal site from
