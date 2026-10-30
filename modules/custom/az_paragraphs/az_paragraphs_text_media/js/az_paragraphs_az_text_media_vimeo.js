@@ -67,6 +67,18 @@
           }
         }
 
+        // Sync the play/pause button and paragraph classes with player state.
+        function syncPlayPause(parentParagraph, playPauseButton, isPlaying) {
+          parentParagraph.classList.toggle('az-video-playing', isPlaying);
+          parentParagraph.classList.toggle('az-video-paused', !isPlaying);
+          if (playPauseButton) {
+            playPauseButton.textContent = isPlaying
+              ? Drupal.t('Pause Video')
+              : Drupal.t('Play Video');
+            playPauseButton.setAttribute('aria-pressed', String(isPlaying));
+          }
+        }
+
         // Helper function to initialize a single Vimeo element
         function initVimeoElement(element, defaultOptions) {
           const parentParagraph = element.parentNode;
@@ -86,47 +98,46 @@
           });
 
           // Play/Pause button reference used by event handlers below.
-          const playPauseButton =
-            element.getElementsByClassName('az-video-playpause')[0];
+          const playPauseButton = element.getElementsByClassName(
+            defaultOptions.playPauseButtonClass,
+          )[0];
 
           // Update dimensions when buffering completes.
           element.player.on('bufferend', () => {
             setDimensions(element);
           });
 
-          // Sync button and class state when video plays.
+          // Sync button and class state with the player.
           element.player.on('play', () => {
-            parentParagraph.classList.remove('az-video-paused');
-            parentParagraph.classList.add('az-video-playing');
-            playPauseButton.textContent = 'Pause Video';
-            playPauseButton.setAttribute('aria-pressed', 'true');
+            syncPlayPause(parentParagraph, playPauseButton, true);
           });
-
-          // Sync button and class state when video pauses.
           element.player.on('pause', () => {
-            parentParagraph.classList.remove('az-video-playing');
-            parentParagraph.classList.add('az-video-paused');
-            playPauseButton.textContent = 'Play Video';
-            playPauseButton.setAttribute('aria-pressed', 'false');
+            syncPlayPause(parentParagraph, playPauseButton, false);
           });
 
-          // Set the iframe tabindex to -1 to prevent focus from reaching iframe.
           element.player.ready().then(() => {
+            // Set the iframe tabindex to -1 to prevent focus from reaching iframe.
             const iframe = element.player.element;
             if (iframe) {
               iframe.setAttribute('tabindex', '-1');
             }
+            // Only reveal the button once the player can respond to it.
+            if (playPauseButton) {
+              playPauseButton.hidden = false;
+            }
           });
 
           // Play/Pause button: delegate state changes to player events.
-          playPauseButton.addEventListener('click', (event) => {
-            event.preventDefault();
-            if (event.currentTarget.getAttribute('aria-pressed') === 'true') {
-              element.player.pause().catch((error) => vimeoError(error));
-            } else {
-              element.player.play().catch((error) => vimeoError(error));
-            }
-          });
+          if (playPauseButton) {
+            playPauseButton.addEventListener('click', (event) => {
+              event.preventDefault();
+              if (event.currentTarget.getAttribute('aria-pressed') === 'true') {
+                element.player.pause().catch((error) => vimeoError(error));
+              } else {
+                element.player.play().catch((error) => vimeoError(error));
+              }
+            });
+          }
         }
 
         // Helper function to handle API loaded callback
@@ -145,8 +156,7 @@
             controls: 0,
             loop: true,
             muted: true,
-            playButtonClass: 'az-video-play',
-            pauseButtonClass: 'az-video-pause',
+            playPauseButtonClass: 'az-video-playpause',
           };
           const bgVideoParagraphs = document.getElementsByClassName(
             'az-js-vimeo-video-background',
