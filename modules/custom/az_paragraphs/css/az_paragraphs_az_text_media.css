@@ -44,6 +44,9 @@
   border: none;
   margin: 10px;
 }
+.az-video-background .bg-video-player-control[hidden] {
+  display: none;
+}
 .az-video-background .bg-video-player-control:focus,
 .az-video-background .bg-video-player-control:hover {
   color: #ab0520;

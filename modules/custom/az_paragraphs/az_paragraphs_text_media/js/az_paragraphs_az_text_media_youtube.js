@@ -12,8 +12,7 @@
           var defaultSettings = {
             loop: true,
             mute: true,
-            pauseButtonClass: 'az-video-pause',
-            playButtonClass: 'az-video-play',
+            playPauseButtonClass: 'az-video-playpause',
             ratio: 16 / 9,
             width: document.documentElement.clientWidth
           };
@@ -22,14 +21,10 @@
           var firstScriptTag = document.getElementsByTagName('script')[0];
           tag.src = 'https://www.youtube.com/iframe_api';
           firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-          // Set up IFrame player
-          const bgVideoParagraphs = document.getElementsByClassName(
-            'az-js-video-background',
-          );
-          window.onYouTubeIframeAPIReady = () => {
-            Array.from(bgVideoParagraphs).forEach((element) => {
-              const youtubeId = element.dataset.youtubeid;
+          var bgVideoParagraphs = document.getElementsByClassName('az-js-video-background');
+          window.onYouTubeIframeAPIReady = function () {
+            Array.from(bgVideoParagraphs).forEach(function (element) {
+              var youtubeId = element.dataset.youtubeid;
               bgVideoSettings[youtubeId] = {
                 autoplay: element.dataset.autoplay === 'true',
                 start: element.dataset.start
@@ -51,20 +46,17 @@
                   onStateChange: window.onPlayerStateChange
                 }
               });
-
-              // Play/Pause button: delegate state changes to player events.
-              const playPauseButton =
-                element.getElementsByClassName('az-video-playpause')[0];
-              playPauseButton.addEventListener('click', (event) => {
-                event.preventDefault();
-                if (
-                  event.currentTarget.getAttribute('aria-pressed') === 'true'
-                ) {
-                  element.player.pauseVideo();
-                } else {
-                  element.player.playVideo();
-                }
-              });
+              var playPauseButton = element.getElementsByClassName(defaultSettings.playPauseButtonClass)[0];
+              if (playPauseButton) {
+                playPauseButton.addEventListener('click', function (event) {
+                  event.preventDefault();
+                  if (event.currentTarget.getAttribute('aria-pressed') === 'true') {
+                    element.player.pauseVideo();
+                  } else {
+                    element.player.playVideo();
+                  }
+                });
+              }
             });
           };
           var setDimensions = function setDimensions(container) {
@@ -101,20 +93,29 @@
               setDimensions(element);
             });
           };
-
-          window.onPlayerReady = (event) => {
-            // Set the iframe tabindex to -1 to prevent focus from reaching iframe.
-            const iframe = event.target.getIframe();
-            iframe.setAttribute('tabindex', '-1');
-
-            const id = event.target.options.videoId;
+          var syncPlayPause = function syncPlayPause(parentContainer, isPlaying) {
+            parentContainer.classList.toggle('az-video-playing', isPlaying);
+            parentContainer.classList.toggle('az-video-paused', !isPlaying);
+            var playPauseButton = parentContainer.querySelector(".".concat(defaultSettings.playPauseButtonClass));
+            if (playPauseButton) {
+              playPauseButton.textContent = isPlaying ? Drupal.t('Pause Video') : Drupal.t('Play Video');
+              playPauseButton.setAttribute('aria-pressed', String(isPlaying));
+            }
+          };
+          window.onPlayerReady = function (event) {
+            event.target.getIframe().setAttribute('tabindex', '-1');
+            var id = event.target.options.videoId;
+            var container = document.getElementById("".concat(id, "-bg-video-container"));
+            var playPauseButton = container && container.getElementsByClassName(defaultSettings.playPauseButtonClass)[0];
+            if (playPauseButton) {
+              playPauseButton.hidden = false;
+            }
             if (!bgVideoSettings[id].autoplay) {
               return;
             }
             if (defaultSettings.mute) {
               event.target.mute();
             }
-
             event.target.seekTo(bgVideoSettings[id].start);
             event.target.playVideo();
             dispatchEvent(new Event('azVideoPlay'));
@@ -128,25 +129,11 @@
             }
             if (event.data === 1) {
               resize();
-              parentContainer.classList.add('az-video-playing');
-              parentContainer.classList.remove('az-video-paused');
               parentContainer.classList.remove('az-video-loading');
-              // Sync button state: video is confirmed playing.
-              const btn = parentContainer.querySelector('.az-video-playpause');
-              if (btn) {
-                btn.textContent = 'Pause Video';
-                btn.setAttribute('aria-pressed', 'true');
-              }
+              syncPlayPause(parentContainer, true);
             }
             if (event.data === 2) {
-              // Video paused: sync button state.
-              parentContainer.classList.remove('az-video-playing');
-              parentContainer.classList.add('az-video-paused');
-              const btn = parentContainer.querySelector('.az-video-playpause');
-              if (btn) {
-                btn.textContent = 'Play Video';
-                btn.setAttribute('aria-pressed', 'false');
-              }
+              syncPlayPause(parentContainer, false);
             }
           };
           window.addEventListener('load', function () {
