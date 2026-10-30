@@ -12,8 +12,7 @@
           var defaultSettings = {
             loop: true,
             mute: true,
-            pauseButtonClass: 'az-video-pause',
-            playButtonClass: 'az-video-play',
+            playPauseButtonClass: 'az-video-playpause',
             ratio: 16 / 9,
             width: document.documentElement.clientWidth
           };
@@ -25,7 +24,6 @@
           var bgVideoParagraphs = document.getElementsByClassName('az-js-video-background');
           window.onYouTubeIframeAPIReady = function () {
             Array.from(bgVideoParagraphs).forEach(function (element) {
-              var parentParagraph = document.getElementById(element.dataset.parentid);
               var youtubeId = element.dataset.youtubeid;
               bgVideoSettings[youtubeId] = {
                 autoplay: element.dataset.autoplay === 'true',
@@ -48,20 +46,17 @@
                   onStateChange: window.onPlayerStateChange
                 }
               });
-              var playButton = element.getElementsByClassName('az-video-play')[0];
-              playButton.addEventListener('click', function (event) {
-                event.preventDefault();
-                element.player.playVideo();
-                parentParagraph.classList.remove('az-video-paused');
-                parentParagraph.classList.add('az-video-playing');
-              });
-              var pauseButton = element.getElementsByClassName('az-video-pause')[0];
-              pauseButton.addEventListener('click', function (event) {
-                event.preventDefault();
-                element.player.pauseVideo();
-                parentParagraph.classList.remove('az-video-playing');
-                parentParagraph.classList.add('az-video-paused');
-              });
+              var playPauseButton = element.getElementsByClassName(defaultSettings.playPauseButtonClass)[0];
+              if (playPauseButton) {
+                playPauseButton.addEventListener('click', function (event) {
+                  event.preventDefault();
+                  if (event.currentTarget.getAttribute('aria-pressed') === 'true') {
+                    element.player.pauseVideo();
+                  } else {
+                    element.player.playVideo();
+                  }
+                });
+              }
             });
           };
           var setDimensions = function setDimensions(container) {
@@ -98,8 +93,23 @@
               setDimensions(element);
             });
           };
+          var syncPlayPause = function syncPlayPause(parentContainer, isPlaying) {
+            parentContainer.classList.toggle('az-video-playing', isPlaying);
+            parentContainer.classList.toggle('az-video-paused', !isPlaying);
+            var playPauseButton = parentContainer.querySelector(".".concat(defaultSettings.playPauseButtonClass));
+            if (playPauseButton) {
+              playPauseButton.textContent = isPlaying ? Drupal.t('Pause Video') : Drupal.t('Play Video');
+              playPauseButton.setAttribute('aria-pressed', String(isPlaying));
+            }
+          };
           window.onPlayerReady = function (event) {
+            event.target.getIframe().setAttribute('tabindex', '-1');
             var id = event.target.options.videoId;
+            var container = document.getElementById("".concat(id, "-bg-video-container"));
+            var playPauseButton = container && container.getElementsByClassName(defaultSettings.playPauseButtonClass)[0];
+            if (playPauseButton) {
+              playPauseButton.hidden = false;
+            }
             if (!bgVideoSettings[id].autoplay) {
               return;
             }
@@ -119,8 +129,11 @@
             }
             if (event.data === 1) {
               resize();
-              parentContainer.classList.add('az-video-playing');
               parentContainer.classList.remove('az-video-loading');
+              syncPlayPause(parentContainer, true);
+            }
+            if (event.data === 2) {
+              syncPlayPause(parentContainer, false);
             }
           };
           window.addEventListener('load', function () {

@@ -7,8 +7,7 @@
           const defaultSettings = {
             loop: true,
             mute: true,
-            pauseButtonClass: 'az-video-pause',
-            playButtonClass: 'az-video-play',
+            playPauseButtonClass: 'az-video-playpause',
             ratio: 16 / 9,
             width: document.documentElement.clientWidth,
           };
@@ -26,9 +25,6 @@
           );
           window.onYouTubeIframeAPIReady = () => {
             Array.from(bgVideoParagraphs).forEach((element) => {
-              const parentParagraph = document.getElementById(
-                element.dataset.parentid,
-              );
               const youtubeId = element.dataset.youtubeid;
               bgVideoSettings[youtubeId] = {
                 autoplay: element.dataset.autoplay === 'true',
@@ -54,22 +50,23 @@
                   onStateChange: window.onPlayerStateChange,
                 },
               });
-              const playButton =
-                element.getElementsByClassName('az-video-play')[0];
-              playButton.addEventListener('click', (event) => {
-                event.preventDefault();
-                element.player.playVideo();
-                parentParagraph.classList.remove('az-video-paused');
-                parentParagraph.classList.add('az-video-playing');
-              });
-              const pauseButton =
-                element.getElementsByClassName('az-video-pause')[0];
-              pauseButton.addEventListener('click', (event) => {
-                event.preventDefault();
-                element.player.pauseVideo();
-                parentParagraph.classList.remove('az-video-playing');
-                parentParagraph.classList.add('az-video-paused');
-              });
+
+              // Play/Pause button: delegate state changes to player events.
+              const playPauseButton = element.getElementsByClassName(
+                defaultSettings.playPauseButtonClass,
+              )[0];
+              if (playPauseButton) {
+                playPauseButton.addEventListener('click', (event) => {
+                  event.preventDefault();
+                  if (
+                    event.currentTarget.getAttribute('aria-pressed') === 'true'
+                  ) {
+                    element.player.pauseVideo();
+                  } else {
+                    element.player.playVideo();
+                  }
+                });
+              }
             });
           };
 
@@ -118,8 +115,40 @@
             });
           };
 
+          // Sync the play/pause button and paragraph classes with player state.
+          const syncPlayPause = (parentContainer, isPlaying) => {
+            parentContainer.classList.toggle('az-video-playing', isPlaying);
+            parentContainer.classList.toggle('az-video-paused', !isPlaying);
+            const playPauseButton = parentContainer.querySelector(
+              `.${defaultSettings.playPauseButtonClass}`,
+            );
+            if (playPauseButton) {
+              playPauseButton.textContent = isPlaying
+                ? Drupal.t('Pause Video')
+                : Drupal.t('Play Video');
+              playPauseButton.setAttribute('aria-pressed', String(isPlaying));
+            }
+          };
+
           window.onPlayerReady = (event) => {
+            // Set the iframe tabindex to -1 to prevent focus from reaching iframe.
+            event.target.getIframe().setAttribute('tabindex', '-1');
+
             const id = event.target.options.videoId;
+
+            // Only reveal the button once the player can respond to it.
+            const container = document.getElementById(
+              `${id}-bg-video-container`,
+            );
+            const playPauseButton =
+              container &&
+              container.getElementsByClassName(
+                defaultSettings.playPauseButtonClass,
+              )[0];
+            if (playPauseButton) {
+              playPauseButton.hidden = false;
+            }
+
             if (!bgVideoSettings[id].autoplay) {
               return;
             }
@@ -146,8 +175,11 @@
             }
             if (event.data === 1) {
               resize();
-              parentContainer.classList.add('az-video-playing');
               parentContainer.classList.remove('az-video-loading');
+              syncPlayPause(parentContainer, true);
+            }
+            if (event.data === 2) {
+              syncPlayPause(parentContainer, false);
             }
           };
 
