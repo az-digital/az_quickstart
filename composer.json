@@ -105,8 +105,6 @@
         "drupal/recaptcha": "3.5.0",
         "drupal/redirect": "1.13.0",
         "drupal/role_delegation": "1.6.0",
-        "drupal/scheduler": "2.3.0",
-        "drupal/scheduler_content_moderation_integration": "3.0.0",
         "drupal/schema_metatag": "3.1.0",
         "drupal/search_api": "1.41.0",
         "drupal/search_api_attachments": "10.0.13",
