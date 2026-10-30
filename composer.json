@@ -131,7 +131,7 @@
         "drupal/xmlsitemap": "2.0.0",
         "giggsey/libphonenumber-for-php": "^9.0",
         "kevinrob/guzzle-cache-middleware": "8.0.0",
-        "renanbr/bibtex-parser": "2.3.0",
+        "renanbr/bibtex-parser": "2.3.1",
         "seboettg/citeproc-php": "2.7.1"
     },
     "require-dev": {
