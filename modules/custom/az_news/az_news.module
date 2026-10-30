@@ -80,3 +80,18 @@ function az_news_node_presave(EntityInterface $entity) {
     $entity->get('field_az_media_thumbnail_image')->target_id = $entity->get('field_az_media_image')->target_id;
   }
 }
+
+/**
+ * Implements hook_preprocess_node().
+ *
+ * Adds news and card CSS for news display tpye az_media_list.
+ */
+function az_news_preprocess_node(&$variables) {
+  $node = $variables['node'];
+  if ($node->getType() === 'az_news') {
+    if (isset($variables['elements']) && $variables['elements']['#view_mode'] == 'az_media_list') {
+      $variables['#attached']['library'][] = 'az_card/az_card_title_hover';
+      $variables['#attached']['library'][] = 'az_news/az_news_card';
+    }
+  }
+}

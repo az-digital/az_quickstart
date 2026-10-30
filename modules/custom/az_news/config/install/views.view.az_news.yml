@@ -619,7 +619,7 @@ display:
         style_options: false
         row: false
         footer: false
-      css_class: add-pager-top-margin
+      css_class: 'add-pager-top-margin az-news'
       display_description: ''
       style_options: null
       footer:
