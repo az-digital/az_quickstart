@@ -3,6 +3,7 @@
 namespace Drupal\az_eds_user\EventSubscriber;
 
 use Drupal\cas\Event\CasPostValidateEvent;
+use Drupal\cas\Exception\CasValidateException;
 use Drupal\cas\Service\CasUserManager;
 use Drupal\externalauth\AuthmapInterface;
 use Drupal\ldap_query\Controller\QueryController;
@@ -10,6 +11,7 @@ use Drupal\ldap_user\Processor\DrupalUserProcessor;
 use Drupal\user\RoleInterface;
 use Drupal\user\UserInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Flood\FloodInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -17,6 +19,11 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  * Respond to successful CAS ticket validation.
  */
 class AZLdapCas implements EventSubscriberInterface {
+
+  // @todo determine appropriate flood window.
+  const FLOOD_WINDOW = 300;
+  // @todo determine allowed threshold per window.
+  const FLOOD_THRESHOLD = 2;
 
   /**
    * @var \Drupal\cas\Service\CasUserManager
@@ -43,6 +50,13 @@ class AZLdapCas implements EventSubscriberInterface {
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
   protected $entityTypeManager;
+
+  /**
+   * The flood controller.
+   *
+   * @var \Drupal\Core\Flood\FloodInterface
+   */
+  protected $flood;
 
   /**
    * Query controller.
@@ -72,14 +86,17 @@ class AZLdapCas implements EventSubscriberInterface {
    *   Controller helper to use for LDAP queries.
    * @param \Drupal\Core\Logger\LoggerChannelInterface $logger
    *   The logger channel service.
+   * @param \Drupal\Core\Flood\FloodInterface $flood
+   *   The flood controller service.
    */
-  public function __construct(CasUserManager $casUserManager, AuthmapInterface $authmap, DrupalUserProcessor $processor, EntityTypeManagerInterface $entityTypeManager, QueryController $ldapQuery, LoggerChannelInterface $logger) {
+  public function __construct(CasUserManager $casUserManager, AuthmapInterface $authmap, DrupalUserProcessor $processor, EntityTypeManagerInterface $entityTypeManager, QueryController $ldapQuery, LoggerChannelInterface $logger, FloodInterface $flood) {
     $this->casUserManager = $casUserManager;
     $this->externalAuth = $authmap;
     $this->drupalUserProcessor = $processor;
     $this->entityTypeManager = $entityTypeManager;
     $this->ldapQuery = $ldapQuery;
     $this->logger = $logger;
+    $this->flood = $flood;
   }
 
   /**
@@ -208,6 +225,12 @@ class AZLdapCas implements EventSubscriberInterface {
     if (($cas_uid !== FALSE) && ($ldap_uid === FALSE)) {
       // Regular CAS user. We don't have responsibility for this user.
       return;
+    }
+    // Register a flood event under the netID.
+    $this->flood->register('az_eds_user.ldap_query', self::FLOOD_WINDOW, $username);
+    // Check if this netID has had too many attempts.
+    if (!$this->flood->isAllowed('az_eds_user.ldap_query', self::FLOOD_THRESHOLD, self::FLOOD_WINDOW, $username)) {
+      throw new CasValidateException('Too many CAS tickets from ' . $username);
     }
     $roles = $this->userAllowedRoles($username);
     if ($cas_uid === FALSE) {
