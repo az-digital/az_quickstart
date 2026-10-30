@@ -120,6 +120,7 @@ class AZAnonymousAccess extends ProcessorPluginBase {
         // Exclude an item if entity is not accessible by the anonymous user.
         if (!$entity->access('view', $user)) {
           unset($items[$item_id]);
+          continue;
         }
       }
       if ($entity instanceof EntityInterface) {
