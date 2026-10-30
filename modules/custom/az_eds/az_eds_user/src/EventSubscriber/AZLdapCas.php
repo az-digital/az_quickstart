@@ -20,9 +20,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class AZLdapCas implements EventSubscriberInterface {
 
-  // Five minutes.
+  // @todo determine appropriate flood window.
   const FLOOD_WINDOW = 300;
-  // Five allowed logins.
+  // @todo determine allowed threshold per window.
   const FLOOD_THRESHOLD = 2;
 
   /**
