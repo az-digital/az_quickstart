@@ -7,11 +7,18 @@
 (function ($, Drupal) {
   Drupal.behaviors.azAlphabeticalListing = {
     attach: function attach() {
+      function azAlphabeticalListingGetGroup(href) {
+        if (typeof href !== 'string' || href.charAt(0) !== '#') {
+          return null;
+        }
+        return document.getElementById(href.slice(1));
+      }
       $('#az-js-alpha-navigation li').each(function (index, element) {
         var groupId = $(element).children().attr('data-href');
-        if ($(groupId).length !== 0) {
+        var group = azAlphabeticalListingGetGroup(groupId);
+        if (group) {
           $(element).removeClass('disabled');
-          $(element).children().attr('tabindex', '0').attr('aria-hidden', 'false').attr('href', groupId);
+          $(element).children().attr('tabindex', '0').attr('aria-hidden', 'false').attr('href', "#".concat(group.id));
         } else {
           $(element).addClass('disabled');
           $(element).children().attr('tabindex', '-1').attr('aria-hidden', 'true').removeAttr('href');
@@ -51,7 +58,7 @@
             $(element).show();
             $(element).removeClass('hide-result');
             navTarget.parent().removeClass('disabled');
-            navTarget.attr('tabindex', '0').attr('aria-hidden', 'false').attr('href', $(element).attr('id'));
+            navTarget.attr('tabindex', '0').attr('aria-hidden', 'false').attr('href', "#".concat(elementId));
           }
         });
       }
@@ -78,6 +85,10 @@
         event.preventDefault();
         var $alphaNav = $('#az-js-floating-alpha-nav-container');
         var href = $.attr(event.currentTarget, 'data-href');
+        var group = azAlphabeticalListingGetGroup(href);
+        if (!group) {
+          return;
+        }
         var fixedNavHeight = $alphaNav.outerHeight();
         var headingHeight = $('.az-alphabetical-listing-group-title:first').outerHeight();
         var offsetHeight = fixedNavHeight + headingHeight;
@@ -85,7 +96,7 @@
           fixedNavHeight = 0;
         }
         $root.animate({
-          scrollTop: $(href).offset().top - offsetHeight
+          scrollTop: $(group).offset().top - offsetHeight
         }, 500, function () {
           window.location.hash = href;
         });
