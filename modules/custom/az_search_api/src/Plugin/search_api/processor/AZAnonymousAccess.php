@@ -67,9 +67,17 @@ class AZAnonymousAccess extends ProcessorPluginBase {
    *   if the entity is protected by CAS forced login settings.
    */
   public function checkForcedLogin(EntityInterface $entity): bool {
-    // Haven't yet fetched the forced login paths.
+    // Haven't yet fetched the forced login settings. The paths only apply
+    // when CAS forced login is enabled.
     if ($this->forcedLoginPaths === NULL) {
-      $this->forcedLoginPaths = $this->configFactory->get('cas.settings')?->get('forced_login.paths') ?? [];
+      $cas_settings = $this->configFactory->get('cas.settings');
+      $this->forcedLoginPaths = $cas_settings->get('forced_login.enabled')
+        ? ($cas_settings->get('forced_login.paths') ?? [])
+        : [];
+    }
+    // Forced login is disabled, or CAS is not installed.
+    if (empty($this->forcedLoginPaths)) {
+      return FALSE;
     }
     // Get the paths associated with this entity.
     $url = $entity->toUrl('canonical');
