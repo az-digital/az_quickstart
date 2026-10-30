@@ -7,6 +7,7 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Path\PathMatcherInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\path_alias\AliasManagerInterface;
 use Drupal\search_api\Attribute\SearchApiProcessor;
 use Drupal\search_api\Processor\ProcessorPluginBase;
 use Drupal\user\Entity\User;
@@ -33,6 +34,13 @@ class AZAnonymousAccess extends ProcessorPluginBase {
   protected ConfigFactoryInterface $configFactory;
 
   /**
+   * An alias manager to find the alias for the current system path.
+   *
+   * @var \Drupal\path_alias\AliasManagerInterface
+   */
+  protected AliasManagerInterface $pathAliasManager;
+
+  /**
    * The path matcher service.
    *
    * @var \Drupal\Core\Path\PathMatcherInterface
@@ -54,6 +62,7 @@ class AZAnonymousAccess extends ProcessorPluginBase {
     $processor = parent::create($container, $configuration, $plugin_id, $plugin_definition);
     $processor->configFactory = $container->get('config.factory');
     $processor->pathMatcher = $container->get('path.matcher');
+    $processor->pathAliasManager = $container->get('path_alias.manager');
     return $processor;
   }
 
@@ -80,9 +89,15 @@ class AZAnonymousAccess extends ProcessorPluginBase {
       return FALSE;
     }
     // Get the paths associated with this entity.
-    $url = $entity->toUrl('canonical');
+    try {
+      $url = $entity->toUrl('canonical');
+    }
+    catch (\Exception $e) {
+      // Couldn't generate a canonical url for our entity.
+      return FALSE;
+    }
     $alias = $url->toString();
-    $system = '/' . $url->getInternalPath();
+    $system = $this->pathAliasManager->getAliasByPath('/' . $url->getInternalPath());
     // Get whether the forced login settings are negated (e.g. inversed).
     $negate = !empty($this->forcedLoginPaths['negate']);
     // Get the forced login paths if they exist.
