@@ -101,22 +101,20 @@ class AZAnonymousAccess extends ProcessorPluginBase {
     // Get whether the forced login settings are negated (e.g. inversed).
     $negate = !empty($this->forcedLoginPaths['negate']);
     // Get the forced login paths if they exist.
-    $pages = $this->forcedLoginPaths['pages'] ?? '';
-    $paths = [$alias, $system];
-    foreach ($paths as $path) {
-      // Check if the result of the match matches the negate state.
-      // If match opposite of the negate state, it's intended to be protected.
-      if ($this->pathMatcher->matchPath($path, $pages) !== $negate) {
-        // @todo this is only intended for testing purposes. It is not intended to be merged.
-        \Drupal::logger('az_search_api')->notice("Skipping entity %entity because @path matches against (@pages)", [
-          '%entity' => $entity->label(),
-          '@path' => $path,
-          '@pages' => $pages,
-        ]);
-        return TRUE;
-      }
+    $pages = mb_strtolower($this->forcedLoginPaths['pages'] ?? '');
+    $matches = $pages === '';
+    foreach ([mb_strtolower($alias), mb_strtolower($system)] as $path) {
+      $matches = $matches || $this->pathMatcher->matchPath($path, $pages);
     }
-    return FALSE;
+    if ($matches !== $negate) {
+      // @todo this is only intended for testing purposes. It is not intended to be merged.
+      \Drupal::logger('az_search_api')->notice("Skipping entity %entity because @path matches against (@pages)", [
+        '%entity' => $entity->label(),
+        '@path' => $alias,
+        '@pages' => $pages,
+      ]);
+    }
+    return $matches !== $negate;
   }
 
   /**
