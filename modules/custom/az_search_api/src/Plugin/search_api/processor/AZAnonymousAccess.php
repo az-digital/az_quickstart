@@ -33,11 +33,11 @@ class AZAnonymousAccess extends ProcessorPluginBase {
   protected ConfigFactoryInterface $configFactory;
 
   /**
-   * The patch matcher service.
+   * The path matcher service.
    *
    * @var \Drupal\Core\Path\PathMatcherInterface
    */
-  protected PathMatcherInterface $patchMatcher;
+  protected PathMatcherInterface $pathMatcher;
 
   /**
    * CAS forced login settings.
@@ -53,7 +53,7 @@ class AZAnonymousAccess extends ProcessorPluginBase {
     /** @var static $processor */
     $processor = parent::create($container, $configuration, $plugin_id, $plugin_definition);
     $processor->configFactory = $container->get('config.factory');
-    $processor->patchMatcher = $container->get('path.matcher');
+    $processor->pathMatcher = $container->get('path.matcher');
     return $processor;
   }
 
@@ -91,7 +91,7 @@ class AZAnonymousAccess extends ProcessorPluginBase {
     foreach ($paths as $path) {
       // Check if the result of the match matches the negate state.
       // If match opposite of the negate state, it's intended to be protected.
-      if ($this->patchMatcher->matchPath($path, $pages) !== $negate) {
+      if ($this->pathMatcher->matchPath($path, $pages) !== $negate) {
         // @todo this is only intended for testing purposes. It is not intended to be merged.
         \Drupal::logger('az_search_api')->notice("Skipping entity %entity because @path matches against (@pages)", [
           '%entity' => $entity->label(),
