@@ -1,0 +1,52 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.az_small
+    - field.field.media.az_form_embed.field_az_form_embed_url
+    - media.type.az_form_embed
+  module:
+    - az_form_embed
+    - field_group
+  enforced:
+    module:
+      - az_form_embed
+third_party_settings:
+  field_group:
+    group_responsive_embed:
+      children:
+        - field_az_form_embed_url
+      label: 'Responsive Embed'
+      parent_name: ''
+      region: content
+      weight: 0
+      format_type: html_element
+      format_settings:
+        classes: 'az-media az-small'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+id: media.az_form_embed.az_small
+targetEntityType: media
+bundle: az_form_embed
+mode: az_small
+content:
+  field_az_form_embed_url:
+    type: az_form_embed
+    label: visually_hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden:
+  created: true
+  name: true
+  thumbnail: true
+  uid: true
