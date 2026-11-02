@@ -156,8 +156,8 @@ settings:
           label: 'Button Blue'
           element: '<a class="btn btn-blue">'
         -
-          label: 'Button Sky'
-          element: '<a class="btn btn-sky">'
+          label: 'Button Rain'
+          element: '<a class="btn btn-rain">'
         -
           label: 'Button White (Red Text)'
           element: '<a class="btn btn-white-text-red">'
@@ -174,8 +174,8 @@ settings:
           label: 'Button Outline White'
           element: '<a class="btn btn-outline-white">'
         -
-          label: 'Button Outline Sky'
-          element: '<a class="btn btn-outline-sky">'
+          label: 'Button Outline Rain'
+          element: '<a class="btn btn-outline-rain">'
         -
           label: 'Button Link'
           element: '<a class="btn btn-link">'
@@ -183,11 +183,11 @@ settings:
           label: 'Text White'
           element: '<span class="text-white">'
         -
-          label: 'Text Sky'
-          element: '<span class="text-sky">'
+          label: 'Text Rain'
+          element: '<span class="text-rain">'
         -
-          label: 'Text Oasis'
-          element: '<span class="text-oasis">'
+          label: 'Text Arroyo Blue'
+          element: '<span class="text-arroyo-blue">'
         -
           label: 'Text Azurite'
           element: '<span class="text-azurite">'
@@ -195,8 +195,8 @@ settings:
           label: 'Text Blue'
           element: '<span class="text-blue">'
         -
-          label: 'Text Midnight'
-          element: '<span class="text-midnight">'
+          label: 'Text Tinta'
+          element: '<span class="text-tinta">'
         -
           label: 'Text Dark Silver'
           element: '<span class="text-dark-silver">'

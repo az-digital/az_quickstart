@@ -8,6 +8,8 @@
  * profile.
  */
 
+use Drupal\az_core\Utility\AZBootstrapColorNames;
+use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Entity\Query\QueryException;
 
 /**
@@ -495,4 +497,128 @@ function az_paragraphs_update_1130501() {
   if (!\Drupal::moduleHandler()->moduleExists('az_paragraphs_splitscreen')) {
     \Drupal::service('module_installer')->install(['az_paragraphs_splitscreen']);
   }
+}
+
+/**
+ * Rename Arizona Bootstrap brand color classes saved in paragraphs.
+ *
+ * Arizona Bootstrap 5.3.0 renamed its brand colors (for example, Midnight is
+ * now Tinta) and kept the old class names as deprecated aliases. This renames
+ * the color classes saved in paragraph behavior settings and in card and
+ * ranking fields. Only the current revision of each paragraph is updated.
+ */
+function az_paragraphs_update_1130701(&$sandbox) {
+  // Behavior settings that hold color classes, keyed by behavior plugin ID.
+  $behavior_settings_keys = [
+    'az_cards_paragraph_behavior' => ['card_deck_title_color'],
+    'az_link_group' => ['button_color'],
+    'az_rankings_paragraph_behavior' => ['ranking_deck_title_color'],
+    'az_split_screen' => ['bg_color'],
+    'az_text_background_paragraph_behavior' => [
+      'text_background_color',
+      'text_background_pattern',
+    ],
+  ];
+  // Field item properties that hold color classes, keyed by field type.
+  $field_properties = [
+    'az_card' => [
+      ['options', 'class'],
+      ['options', 'link_style'],
+    ],
+    'az_ranking' => [
+      ['options', 'class'],
+      ['options', 'hover_class'],
+      ['ranking_font_color'],
+      ['ranking_link_style'],
+    ],
+  ];
+
+  $paragraph_storage = \Drupal::entityTypeManager()->getStorage('paragraph');
+
+  if (!isset($sandbox['ids'])) {
+    // Find the paragraph types that use one of these behaviors or fields.
+    $bundles = [];
+    $paragraphs_types = \Drupal::entityTypeManager()->getStorage('paragraphs_type')->loadMultiple();
+    foreach ($paragraphs_types as $paragraphs_type) {
+      /** @var \Drupal\paragraphs\ParagraphsTypeInterface $paragraphs_type */
+      if (array_intersect_key($paragraphs_type->getEnabledBehaviorPlugins(), $behavior_settings_keys)) {
+        $bundles[] = $paragraphs_type->id();
+      }
+    }
+    $field_map = \Drupal::service('entity_field.manager')->getFieldMap();
+    foreach ($field_map['paragraph'] ?? [] as $field_info) {
+      if (isset($field_properties[$field_info['type']])) {
+        $bundles = array_merge($bundles, array_values($field_info['bundles']));
+      }
+    }
+    $bundles = array_unique($bundles);
+
+    $sandbox['ids'] = [];
+    if (!empty($bundles)) {
+      $sandbox['ids'] = array_values($paragraph_storage->getQuery()
+        ->accessCheck(FALSE)
+        ->condition('type', $bundles, 'IN')
+        ->execute());
+    }
+    $sandbox['max'] = count($sandbox['ids']);
+    $sandbox['progress'] = 0;
+    $sandbox['updated_count'] = 0;
+  }
+
+  $ids = array_slice($sandbox['ids'], $sandbox['progress'], 25);
+  foreach ($paragraph_storage->loadMultiple($ids) as $paragraph) {
+    /** @var \Drupal\paragraphs\ParagraphInterface $paragraph */
+    $needs_update = FALSE;
+
+    foreach (array_keys($paragraph->getTranslationLanguages()) as $langcode) {
+      $translation = $paragraph->getTranslation($langcode);
+
+      $behavior_settings = $translation->getAllBehaviorSettings();
+      $updated_settings = $behavior_settings;
+      foreach ($behavior_settings_keys as $plugin_id => $keys) {
+        foreach ($keys as $key) {
+          if (isset($updated_settings[$plugin_id][$key]) && is_string($updated_settings[$plugin_id][$key])) {
+            $updated_settings[$plugin_id][$key] = AZBootstrapColorNames::updateClasses($updated_settings[$plugin_id][$key]);
+          }
+        }
+      }
+      if ($updated_settings !== $behavior_settings) {
+        $translation->setAllBehaviorSettings($updated_settings);
+        $needs_update = TRUE;
+      }
+
+      foreach ($translation->getFieldDefinitions() as $field_name => $field_definition) {
+        $paths = $field_properties[$field_definition->getType()] ?? [];
+        if (empty($paths)) {
+          continue;
+        }
+        foreach ($translation->get($field_name) as $item) {
+          $value = $item->getValue();
+          $updated_value = $value;
+          foreach ($paths as $path) {
+            $classes = NestedArray::getValue($value, $path);
+            if (is_string($classes)) {
+              NestedArray::setValue($updated_value, $path, AZBootstrapColorNames::updateClasses($classes));
+            }
+          }
+          if ($updated_value !== $value) {
+            $item->setValue($updated_value);
+            $needs_update = TRUE;
+          }
+        }
+      }
+    }
+
+    if ($needs_update) {
+      $paragraph->save();
+      $sandbox['updated_count']++;
+    }
+  }
+  $sandbox['progress'] += count($ids);
+
+  $sandbox['#finished'] = empty($sandbox['max']) ? 1 : ($sandbox['progress'] / $sandbox['max']);
+  if ($sandbox['#finished'] >= 1) {
+    return t('Renamed Arizona Bootstrap color classes in @count paragraphs.', ['@count' => $sandbox['updated_count']]);
+  }
+  return NULL;
 }

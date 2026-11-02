@@ -2,6 +2,7 @@
 
 namespace Drupal\az_card\Plugin\Field\FieldWidget;
 
+use Drupal\az_core\Utility\AZBootstrapColorNames;
 use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Field\Attribute\FieldWidget;
@@ -230,26 +231,26 @@ class AZCardWidget extends WidgetBase {
         'bg-transparent' => $this->t('Transparent'),
         'text-bg-red' => $this->t('Arizona Red'),
         'text-bg-blue' => $this->t('Arizona Blue'),
-        'text-bg-sky' => $this->t('Sky'),
-        'text-bg-oasis' => $this->t('Oasis'),
+        'text-bg-rain' => $this->t('Rain'),
+        'text-bg-arroyo-blue' => $this->t('Arroyo Blue'),
         'text-bg-azurite' => $this->t('Azurite'),
-        'text-bg-midnight' => $this->t('Midnight'),
-        'text-bg-bloom' => $this->t('Bloom'),
-        'text-bg-chili' => $this->t('Chili'),
-        'text-bg-cool-gray' => $this->t('Cool Gray'),
-        'text-bg-warm-gray' => $this->t('Warm Gray'),
+        'text-bg-tinta' => $this->t('Tinta'),
+        'text-bg-bougainvillea' => $this->t('Bougainvillea'),
+        'text-bg-sonoran-red' => $this->t('Sonoran Red'),
+        'text-bg-cloud' => $this->t('Cloud'),
+        'text-bg-caliche' => $this->t('Caliche'),
         'text-bg-gray-100' => $this->t('Gray 100'),
         'text-bg-gray-200' => $this->t('Gray 200'),
         'text-bg-gray-300' => $this->t('Gray 300'),
-        'text-bg-leaf' => $this->t('Leaf'),
-        'text-bg-river' => $this->t('River'),
+        'text-bg-saguaro' => $this->t('Saguaro'),
+        'text-bg-shade' => $this->t('Shade'),
         'text-bg-silver' => $this->t('Silver'),
         'text-bg-ash' => $this->t('Ash'),
-        'text-bg-mesa' => $this->t('Mesa'),
+        'text-bg-brick' => $this->t('Brick'),
       ],
       '#required' => TRUE,
       '#title' => $this->t('Card Background'),
-      '#default_value' => (!empty($item->options['class'])) ? $item->options['class'] : 'text-bg-white',
+      '#default_value' => (!empty($item->options['class'])) ? AZBootstrapColorNames::updateClasses($item->options['class']) : 'text-bg-white',
     ];
 
     $element['media'] = [
@@ -324,16 +325,16 @@ class AZCardWidget extends WidgetBase {
         'w-100' => $this->t('Text link'),
         'btn w-100 btn-red' => $this->t('Red button'),
         'btn w-100 btn-blue' => $this->t('Blue button'),
-        'btn w-100 btn-sky' => $this->t('Sky button'),
+        'btn w-100 btn-rain' => $this->t('Rain button'),
         'btn w-100 btn-white-text-red' => $this->t('White button (red text)'),
         'btn w-100 btn-white-text-blue' => $this->t('White button (blue text)'),
         'btn w-100 btn-outline-red' => $this->t('Red outline button'),
         'btn w-100 btn-outline-blue' => $this->t('Blue outline button'),
-        'btn w-100 btn-outline-sky' => $this->t('Sky outline button'),
+        'btn w-100 btn-outline-rain' => $this->t('Rain outline button'),
         'btn w-100 btn-outline-white' => $this->t('White outline button'),
       ],
       '#title' => $this->t('Card Link Style'),
-      '#default_value' => (!empty($item->options['link_style'])) ? $item->options['link_style'] : 'btn w-100 btn-red',
+      '#default_value' => (!empty($item->options['link_style'])) ? AZBootstrapColorNames::updateClasses($item->options['link_style']) : 'btn w-100 btn-red',
     ];
 
     if (!$item->isEmpty()) {

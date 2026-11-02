@@ -33,25 +33,29 @@
  * Pre-set css hover colors based on primary card background color
  *
  */
+.text-bg-sonoran-red.ranking-bold-hover:hover *,
 .text-bg-chili.ranking-bold-hover:hover * {
   background-color: #ffffff !important;
-  color: RGBA(var(--bs-chili-rgb), var(--bs-bg-opacity, 1)) !important;
+  color: RGBA(var(--bs-sonoran-red-rgb), var(--bs-bg-opacity, 1)) !important;
 }
 .text-bg-blue.ranking-bold-hover:hover * {
     background-color: #ffffff !important;
     color: RGBA(var(--bs-blue-rgb),var(--bs-bg-opacity,1)) !important;
 }
+.bg-rain.ranking-bold-hover:hover *,
 .bg-sky.ranking-bold-hover:hover * {
     background-color: RGBA(var(--bs-blue-rgb),var(--bs-bg-opacity,1)) !important;
-    color: RGBA(var(--bs-sky-rgb),var(--bs-bg-opacity,1)) !important;
+    color: RGBA(var(--bs-rain-rgb),var(--bs-bg-opacity,1)) !important;
 }
+.bg-cloud.ranking-bold-hover:hover *,
 .bg-cool-gray.ranking-bold-hover:hover * {
   background-color: RGBA(var(--bs-azurite-rgb), var(--bs-bg-opacity, 1)) !important;
-  color: RGBA(var(--bs-cool-gray-rgb), var(--bs-bg-opacity, 1)) !important;
+  color: RGBA(var(--bs-cloud-rgb), var(--bs-bg-opacity, 1)) !important;
 }
+.bg-arroyo-blue.ranking-bold-hover:hover *,
 .bg-oasis.ranking-bold-hover:hover * {
-    background-color: RGBA(var(--bs-midnight-rgb),var(--bs-bg-opacity,1)) !important;
-    color: RGBA(var(--bs-oasis-rgb),var(--bs-bg-opacity,1)) !important;
+    background-color: RGBA(var(--bs-tinta-rgb),var(--bs-bg-opacity,1)) !important;
+    color: RGBA(var(--bs-arroyo-blue-rgb),var(--bs-bg-opacity,1)) !important;
 }
 
 /**
@@ -67,6 +71,7 @@
 .ranking-text-az-blue *:not(a) {
     color: RGBA(var(--bs-blue-rgb),var(--bs-bg-opacity,1));
 }
+.ranking-text-tinta *:not(a),
 .ranking-text-midnight *:not(a) {
-    color: RGBA(var(--bs-midnight-rgb),var(--bs-bg-opacity,1)) !important;
+    color: RGBA(var(--bs-tinta-rgb),var(--bs-bg-opacity,1)) !important;
 }
