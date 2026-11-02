@@ -28,14 +28,15 @@ third_party_settings:
   field_group:
     group_card_clickable:
       children:
-        - group_link
+        - group_media
+        - group_az_card_body
       label: 'Card Clickable'
       parent_name: ''
       region: content
       weight: 0
       format_type: html_element
       format_settings:
-        classes: 'card rounded-4 border-0 mt-0 mb-4 p-0 h-100 card-with-link overflow-hidden'
+        classes: 'card bg-cloud h-100 hover mb-3 overflow-hidden'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -48,17 +49,16 @@ third_party_settings:
         speed: fast
     group_link:
       children:
-        - group_media
         - group_heading
         - group_summary
         - group_az_when
       label: Link
-      parent_name: group_card_clickable
+      parent_name: group_az_card_body
       region: content
-      weight: 1
+      weight: 4
       format_type: link
       format_settings:
-        classes: 'card-body stretched-link text-decoration-none azs-event-card p-0 d-flex flex-column'
+        classes: 'stretched-link text-reset text-decoration-none az-event-card'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -131,12 +131,12 @@ third_party_settings:
         - field_az_media_thumbnail_image
         - group_date
       label: Media
-      parent_name: group_link
+      parent_name: group_card_clickable
       region: content
       weight: 2
       format_type: html_element
       format_settings:
-        classes: 'pb-card mb-nmin start-date-background'
+        classes: 'card-img-top img-fluid hover-img-zoom-in pb-card mb-nmin start-date-background position-relative overflow-hidden'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -176,7 +176,27 @@ third_party_settings:
       weight: 5
       format_type: html_element
       format_settings:
-        classes: 'pb-4 card-event-when'
+        classes: 'pb-4 az-event-when'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_az_card_body:
+      children:
+        - group_link
+      label: 'AZ Card Body'
+      parent_name: group_card_clickable
+      region: content
+      weight: 3
+      format_type: html_element
+      format_settings:
+        classes: card-body
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -194,6 +214,8 @@ third_party_settings:
       smart_title__tag: ''
       smart_title__classes:
         - node__title
+_core:
+  default_config_hash: OxDsXZg8gIe_Jir-QzhdJ01y2UrR4Xx1sKpSnVh6YEg
 id: node.az_event.az_card_alternate
 targetEntityType: node
 bundle: az_event
@@ -259,6 +281,7 @@ hidden:
   field_az_featured_image_as_thumb: true
   field_az_link: true
   field_az_location: true
+  field_az_metatag: true
   field_az_photos: true
   field_az_subheading: true
   field_az_trellis_id: true

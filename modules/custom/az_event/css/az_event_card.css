@@ -21,53 +21,19 @@
   text-transform: uppercase;
 }
 
-.azs-event-card {
-  background: var(--bs-cool-gray);
-}
-
-.azs-event-card .card-text p {
-  margin-bottom: 0px;
-}
-
-.azs-event-card:hover, .azs-event-card:focus {
-  background: var(--bs-blue);
-}
-
-.azs-event-card > .card-title {
-  margin: 0 24px;
-  color: var(--bs-blue);
-}
-.azs-event-card:hover .card-title, .azs-event-card:focus .card-title {
-  color: var(--bs-sky);
-}
-
-.azs-event-card > .card-text {
-  margin: 0 24px;
-  color: var(--bs-midnight);
-}
-
-.azs-event-card:hover .card-text, .azs-event-card:focus .card-text {
-  color: #fff;
-}
-
-.azs-event-card .card-event-when {
+.az-event-card .az-event-when {
   font-weight: 700;
   color: var(--bs-red);
-  margin: auto 24px 0 24px;
+  transition: color .3s ease-out;
 }
 
-.azs-event-card:hover .card-event-when {
+.az-event-card:hover .az-event-when, .az-event-card:focus .az-event-when {
   color: var(--bs-sky);
 }
 
 .start-end-time {
   color: var(--bs-red);
   font-weight: 700;
-}
-
-
-.azs-event-card:hover .start-end-time, .azs-event-card:focus .start-end-time {
-  color: var(--bs-sky);
 }
 
 .node--view-mode-az-card-alternate, .node--view-mode-az-card-alternate .node__content {
