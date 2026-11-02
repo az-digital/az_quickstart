@@ -27,7 +27,7 @@
   transition: color .3s ease-out;
 }
 
-.az-event-card:hover .az-event-when, .az-event-card:focus .az-event-when {
+.az-event-card:hover .az-event-when {
   color: var(--bs-sky);
 }
 
