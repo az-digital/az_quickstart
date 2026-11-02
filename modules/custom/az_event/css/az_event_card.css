@@ -1,8 +1,8 @@
-.start-date-background:not(:has(img)) {
+.az-start-date-background:not(:has(img)) {
   padding-top: 56px;
 }
 
-.start-date {
+.az-start-date {
   margin-left: 24px;
   margin-top: -38px;
   z-index: 1;
@@ -29,11 +29,6 @@
 
 .az-event-card:hover .az-event-when {
   color: var(--bs-sky);
-}
-
-.start-end-time {
-  color: var(--bs-red);
-  font-weight: 700;
 }
 
 .node--view-mode-az-card-alternate, .node--view-mode-az-card-alternate .node__content {
