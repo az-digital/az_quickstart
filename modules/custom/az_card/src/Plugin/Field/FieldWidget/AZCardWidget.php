@@ -166,8 +166,11 @@ class AZCardWidget extends WidgetBase {
         }
       }
 
-      // Add card class from options.
-      if (!empty($item->options['class'])) {
+      // Add card class from options, unless a Cloud card style sets the
+      // card's colors.
+      $card_style_classes = explode(' ', $card_classes);
+      $cloud_style = in_array('bg-cloud', $card_style_classes, TRUE);
+      if (!empty($item->options['class']) && !$cloud_style) {
         $card_classes .= ' ' . $item->options['class'];
       }
 
@@ -182,6 +185,9 @@ class AZCardWidget extends WidgetBase {
         '#theme' => 'az_card',
         '#title' => $item->title ?? '',
         '#body' => $body,
+        '#icon' => $item->options['icon'] ?? '',
+        '#hover_colors' => $cloud_style && in_array('hover', $card_style_classes, TRUE),
+        '#title_classes' => in_array('text-tinta', $card_style_classes, TRUE) ? ['text-azurite'] : [],
         '#attributes' => ['class' => $card_classes],
       ];
 
@@ -261,6 +267,14 @@ class AZCardWidget extends WidgetBase {
       '#cardinality' => 1,
     ];
 
+    $element['icon'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Card Icon'),
+      '#default_value' => $item->options['icon'] ?? NULL,
+      '#maxlength' => 64,
+      '#description' => $this->t('A <a href="https://fonts.google.com/icons?icon.set=Material+Symbols&icon.style=Rounded" target="_blank">Material Symbols</a> icon name, such as <code>person_raised_hand</code> or <code>school</code>. Shown at the top of the card in place of an image, so it is used only when Card Media is empty. Looks best with the "Hover color cards" card style.'),
+    ];
+
     $element['title'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Card Title'),
@@ -323,6 +337,7 @@ class AZCardWidget extends WidgetBase {
         'visually-hidden' => $this->t('Hidden link title'),
         'w-100' => $this->t('Text link'),
         'btn w-100 btn-red' => $this->t('Red button'),
+        'btn btn-red' => $this->t('Red button (fits text)'),
         'btn w-100 btn-blue' => $this->t('Blue button'),
         'btn w-100 btn-sky' => $this->t('Sky button'),
         'btn w-100 btn-white-text-red' => $this->t('White button (red text)'),
@@ -534,6 +549,7 @@ class AZCardWidget extends WidgetBase {
           'class' => $value['options'],
           'link_style' => $value['link_style'],
           'title_alignment' => $value['title_alignment'],
+          'icon' => trim($value['icon'] ?? ''),
         ];
       }
       $values[$delta]['body'] = $value['body']['value'];

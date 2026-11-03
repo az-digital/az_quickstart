@@ -43,9 +43,11 @@ class AZCardsParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#options' => [
         'card' => $this->t('Bordered cards'),
         'card border-0' => $this->t('Borderless cards'),
+        'card bg-cloud hover' => $this->t('Hover color cards (Cloud, Arizona Blue on hover)'),
+        'card border-0 bg-cloud text-tinta' => $this->t('Cloud cards (not clickable, for link lists and calls to action)'),
       ],
       '#default_value' => $config['card_style'] ?? 'card',
-      '#description' => $this->t('Select a card style.'),
+      '#description' => $this->t('Select a card style. Hover color cards are always clickable: the title links to the card link URL and the link button is not shown. Hover color cards and Cloud cards set their own colors, so the card background is not used.'),
     ];
 
     $form['card_title_style'] = [
@@ -54,6 +56,7 @@ class AZCardsParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#options' => [
         'default' => $this->t('Title within card (default)'),
         'title-on-image' => $this->t('Title on image'),
+        'title-on-image-only' => $this->t('Title on image only (square image, no body)'),
       ],
       '#default_value' => $config['card_title_style'] ?? 'default',
       '#description' => $this->t('Select a card title style.'),

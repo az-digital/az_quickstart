@@ -110,6 +110,10 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
     foreach ($items as $delta => $item) {
       assert($item instanceof AZCardItem);
 
+      $hover_colors = FALSE;
+      $cloud_style = FALSE;
+      $title_classes = [];
+
       // Format title.
       $title = $item->title ?? '';
 
@@ -187,15 +191,30 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
           }
           $column_classes[] = $card_defaults['card_width'] ?? 'col-md-4 col-lg-4';
           $card_classes = $card_defaults['card_style'] ?? 'card';
+          $card_style_classes = explode(' ', $card_classes);
+          // Cloud card styles set their own background and text colors.
+          $cloud_style = in_array('bg-cloud', $card_style_classes, TRUE);
+          // Arizona Bootstrap hover colors (.card.bg-cloud.hover) need the
+          // whole card to be a link.
+          $hover_colors = $cloud_style && in_array('hover', $card_style_classes, TRUE);
+          if (in_array('text-tinta', $card_style_classes, TRUE)) {
+            $title_classes[] = 'text-azurite';
+          }
 
           // Is the card clickable?
-          if (isset($card_defaults['card_clickable']) && $card_defaults['card_clickable']) {
+          if (!empty($card_defaults['card_clickable']) || $hover_colors) {
             if (!empty($link_render_array)) {
               $link_render_array['#attributes']['class'][] = 'stretched-link';
             }
-            $card_classes .= ' shadow overflow-hidden';
+            $card_classes .= $hover_colors ? ' overflow-hidden' : ' shadow overflow-hidden';
             if ($item->link_uri) {
-              $card_classes .= ' card-with-link';
+              if (!$hover_colors) {
+                $card_classes .= ' hover';
+                $title_classes[] = 'hover-text-underline';
+              }
+              if (!empty($media_render_array)) {
+                $media_render_array['#item_attributes']['class'][] = 'hover-img-zoom-in';
+              }
             }
           }
 
@@ -205,6 +224,14 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
             if (!empty($media_render_array)) {
               if ($item->title && $title_style === 'title-on-image') {
                 array_push($media_render_array['#item_attributes']['class'], 'img-fluid', 'image-style-az-card-image');
+              }
+              elseif ($item->title && $title_style === 'title-on-image-only') {
+                // Square image that fills the card, with no card border.
+                // h-100 keeps img-fluid from overriding the ratio's height.
+                array_push($media_render_array['#item_attributes']['class'], 'object-fit-cover', 'h-100', 'image-style-az-card-image');
+                $card_style_classes = array_diff(explode(' ', $card_classes), ['shadow']);
+                $card_style_classes[] = 'border-0';
+                $card_classes = implode(' ', array_unique($card_style_classes));
               }
             }
             // Force default title style if media field is not populated.
@@ -229,7 +256,8 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
       $column_classes = implode(' ', $column_classes);
       $column_classes = explode(' ', $column_classes);
       $column_classes[] = 'pb-4';
-      if (!empty($item->options['class'])) {
+      // A card background would block the Cloud card style's colors.
+      if (!empty($item->options['class']) && !$cloud_style) {
         $card_classes .= ' ' . $item->options['class'];
       }
 
@@ -251,6 +279,9 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         '#title_level' => $title_level ?? 'h3',
         '#title_alignment' => $title_alignment ?? 'text-start',
         '#title_display' => $title_display ?? 'h5',
+        '#title_classes' => $title_classes,
+        '#hover_colors' => $hover_colors,
+        '#icon' => $item->options['icon'] ?? '',
         '#attributes' => ['class' => $card_classes],
         '#attached' => $attached,
       ];

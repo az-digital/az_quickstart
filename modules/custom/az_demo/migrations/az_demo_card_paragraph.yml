@@ -90,6 +90,7 @@ process:
                 - filename
       options/class: background
       options/link_style: link_style
+      options/icon: icon
 
   behavior_settings:
     plugin: az_paragraphs_behavior_settings
