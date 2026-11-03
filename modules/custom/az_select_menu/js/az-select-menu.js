@@ -1,4 +1,4 @@
-((Drupal, window, document, once) => {
+(($, Drupal, window, document, once) => {
   Drupal.azSelectMenu = Drupal.azSelectMenu || {};
 
   /**
@@ -8,25 +8,43 @@
     attach(context, settings) {
       //  az_select_menu form id's are added in an array depending
       //  on the page you are on, and how many select menus are on the page.
-      Object.keys(settings.azSelectMenu.ids).forEach((property) => {
+      Object.keys(settings.azSelectMenu.ids).forEach(function (property) {
         if (settings.azSelectMenu.ids.hasOwnProperty(property)) {
           const selectFormId = settings.azSelectMenu.ids[property];
           const selectForm = document.querySelector(`#${selectFormId}`);
           once('azSelectMenu', selectForm, context).forEach((element) => {
-            // Add event listeners using the handler function directly
-            const { handleEvents } = Drupal.azSelectMenu;
-            element.addEventListener('focus', handleEvents);
-            element.addEventListener('change', handleEvents);
-            element.addEventListener('mouseenter', handleEvents);
-
+            $(element).popover();
+            element.addEventListener('focus', (event) => {
+              Drupal.azSelectMenu.handleEvents(event);
+            });
+            element.addEventListener('change', (event) => {
+              Drupal.azSelectMenu.handleEvents(event);
+            });
+            element.addEventListener('mouseenter', (event) => {
+              Drupal.azSelectMenu.handleEvents(event);
+            });
             const button = element.querySelector('button');
-            button.addEventListener('click', handleEvents);
-            button.addEventListener('touchstart', handleEvents);
-            button.addEventListener('mouseenter', handleEvents);
-            button.addEventListener('mouseleave', handleEvents);
-            button.addEventListener('focus', handleEvents);
-            button.addEventListener('blur', handleEvents);
-            document.addEventListener('touchstart', handleEvents);
+            button.addEventListener('click', (event) => {
+              Drupal.azSelectMenu.handleEvents(event);
+            });
+            button.addEventListener('touchstart', (event) => {
+              Drupal.azSelectMenu.handleEvents(event);
+            });
+            button.addEventListener('mouseenter', (event) => {
+              Drupal.azSelectMenu.handleEvents(event);
+            });
+            button.addEventListener('mouseleave', (event) => {
+              Drupal.azSelectMenu.handleEvents(event);
+            });
+            button.addEventListener('focus', (event) => {
+              Drupal.azSelectMenu.handleEvents(event);
+            });
+            button.addEventListener('blur', (event) => {
+              Drupal.azSelectMenu.handleEvents(event);
+            });
+            document.addEventListener('touchstart', (event) => {
+              Drupal.azSelectMenu.handleEvents(event);
+            });
             element.classList.add('processed');
           });
         }
@@ -47,33 +65,23 @@
     // select form button regardless of state.
     if (event.type === 'touchstart') {
       if (event.target.classList.contains('js_select_menu_button')) {
-        // Don't stop propagation - let it fall through to main logic
-        // This will handle disabled state and popover display for touch events
+        event.stopPropagation();
       } else {
-        // Hide all popovers
-        document.querySelectorAll('.az-select-menu').forEach((form) => {
-          const popoverInstance =
-            window.arizonaBootstrap?.Popover?.getInstance(form);
-          if (popoverInstance) popoverInstance.hide();
-        });
+        $('.az-select-menu').popover('hide');
         return;
       }
     }
 
     const selectForm = event.target.closest('form');
+    const $selectForm = $(selectForm);
     const selectElement = selectForm.querySelector('select');
     const [optionsSelected] = selectElement.selectedOptions;
     const selectElementHref = optionsSelected.dataset.href;
     const button = selectForm.querySelector('button');
-    let popoverInstance =
-      window.arizonaBootstrap?.Popover?.getInstance(selectForm);
 
     //  If a navigable link is selected in the dropdown.
     if (selectElementHref !== '') {
-      // Destroy popover when button is enabled
-      if (popoverInstance) {
-        popoverInstance.dispose();
-      }
+      $selectForm.popover('hide');
       button.classList.remove('disabled');
       button.setAttribute('aria-disabled', 'false');
       switch (event.type) {
@@ -92,19 +100,10 @@
       button.classList.add('disabled');
       button.setAttribute('aria-disabled', 'true');
       selectElement.setAttribute('aria-disabled', 'true');
-
-      // Recreate popover when button becomes disabled
-      if (!popoverInstance && window.arizonaBootstrap?.Popover) {
-        popoverInstance = window.arizonaBootstrap.Popover.getOrCreateInstance
-          ? window.arizonaBootstrap.Popover.getOrCreateInstance(selectForm)
-          : window.arizonaBootstrap.Popover.getInstance(selectForm);
-      }
-
       switch (event.type) {
         case 'click':
-        case 'touchstart':
           if (event.target.classList.contains('js_select_menu_button')) {
-            if (popoverInstance) popoverInstance.show();
+            $selectForm.popover('show');
             selectElement.focus();
           }
           break;
@@ -112,18 +111,18 @@
         case 'focus':
         case 'mouseenter':
           if (event.target.classList.contains('js_select_menu_button')) {
-            if (popoverInstance) popoverInstance.show();
-          } else if (popoverInstance) {
-            popoverInstance.hide();
+            $selectForm.popover('show');
+          } else {
+            $selectForm.popover('hide');
           }
           break;
 
         case 'mouseleave':
-          if (popoverInstance) popoverInstance.hide();
+          $selectForm.popover('hide');
           break;
         default:
           break;
       }
     }
   };
-})(Drupal, this, this.document, once);
+})(jQuery, Drupal, this, this.document, once);
