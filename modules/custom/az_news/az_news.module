@@ -92,6 +92,15 @@ function az_news_preprocess_node(&$variables) {
     if (isset($variables['elements']) && $variables['elements']['#view_mode'] == 'az_media_list') {
       $variables['#attached']['library'][] = 'az_card/az_card_title_hover';
       $variables['#attached']['library'][] = 'az_news/az_news_card';
+
+      $media_items = $node->get('field_az_media_thumbnail_image')->referencedEntities();
+      if (!empty($media_items)) {
+        $card_image = \Drupal::service('az_card.image')->generateImageRenderArray($media_items[0]);
+        if (!empty($card_image['#item_attributes']['class'])) {
+          $card_image['#item_attributes']['class'][] = 'hover-img-zoom-in';
+        }
+        $variables['content']['field_az_media_thumbnail_image'] = $card_image;
+      }
     }
   }
 }

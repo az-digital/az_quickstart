@@ -37,7 +37,7 @@ third_party_settings:
       weight: 7
       format_type: html_element
       format_settings:
-        classes: 'row h-100'
+        classes: 'row h-100 ms-0'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -79,7 +79,7 @@ third_party_settings:
       weight: 6
       format_type: html_element
       format_settings:
-        classes: 'col pt-4 pb-4 ms-3 me-3 d-flex flex-column'
+        classes: 'col pt-4 pb-4 ps-0 ms-4 me-3 d-flex flex-column'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -99,7 +99,7 @@ third_party_settings:
       weight: 5
       format_type: html_element
       format_settings:
-        classes: 'col-4 p-0 m-0 h-100 az-news-img'
+        classes: 'col-6 p-0 m-0 h-100 az-news-img'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -119,7 +119,7 @@ third_party_settings:
       weight: 10
       format_type: html_element
       format_settings:
-        classes: 'card-title text-blue h5 mt-2 fw-bold'
+        classes: 'card-title text-blue h5 fw-bold'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -255,7 +255,7 @@ third_party_settings:
       weight: 8
       format_type: html_element
       format_settings:
-        classes: 'text-azurite fw-semibold news-tags'
+        classes: 'text-azurite fw-semibold az-news-tags pb-2'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -273,7 +273,7 @@ third_party_settings:
       smart_title__tag: ''
       smart_title__classes: {  }
 _core:
-  default_config_hash: ChYYBlTVLY8SXO3j5y9p_sxbq_9GqCu-fx0CTm7B1-4
+  default_config_hash: 9SDGi_ldYDxNgv7JuC9Eawzpfdth_QfVStSL5B3obnk
 id: node.az_news.az_media_list
 targetEntityType: node
 bundle: az_news
