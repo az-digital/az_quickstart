@@ -191,6 +191,19 @@ final class TrellisHelper {
       ->accessCheck(FALSE)
       ->condition('type', 'az_event')
       ->exists('field_az_trellis_id');
+    // Determine which events are considered past.
+    $limit = $this->configFactory->get('az_event_trellis.settings')->get('update_limit');
+    try {
+      if (!empty($limit)) {
+        // Add the range constraint to the query if it exists.
+        $date = new \DateTimeImmutable($limit, new \DateTimeZone('UTC'));
+        $timestamp = $date->getTimestamp();
+        $query->condition('field_az_event_date.end_value', $timestamp, '>=');
+      }
+    }
+    catch (\Exception $e) {
+      // Expired time setting didn't evaulate to anything meaningful.
+    }
     $nids = $query->execute();
     $nodes = $nodeStorage->loadMultiple($nids);
 
