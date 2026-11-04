@@ -70,4 +70,4 @@ jobs:
           node-version: '20'
       - run: |
           corepack enable
-          yarn npm audit
+          yarn npm audit --recursive
