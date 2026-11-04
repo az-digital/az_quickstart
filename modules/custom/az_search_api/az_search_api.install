@@ -5,9 +5,22 @@
  * Install functions for az_search_api module.
  */
 
+use Drupal\search_api\Entity\Index;
+
 /**
  * Ensure search_api_attachments module is installed.
  */
 function az_search_api_update_1021401() {
   \Drupal::service('module_installer')->install(['search_api_attachments']);
+}
+
+/**
+ * Trigger a reindexing of az_search_api_index to account for processor changes.
+ */
+function az_search_api_update_1021402() {
+  $index = Index::load('az_search_api_index');
+  if ($index) {
+    $index->reindex();
+    return t('Triggered a reindexing on az_search_api_index.');
+  }
 }
