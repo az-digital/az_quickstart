@@ -1,1 +1,2 @@
 api_hostname: 'api.trellis.arizona.edu'
+update_limit: 'now - 180 days'
