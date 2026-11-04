@@ -23,7 +23,7 @@ class AZLdapCas implements EventSubscriberInterface {
   // @todo determine appropriate flood window.
   const FLOOD_WINDOW = 300;
   // @todo determine allowed threshold per window.
-  const FLOOD_THRESHOLD = 2;
+  const FLOOD_THRESHOLD = 20;
 
   /**
    * @var \Drupal\cas\Service\CasUserManager
