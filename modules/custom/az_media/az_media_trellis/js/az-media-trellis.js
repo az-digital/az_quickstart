@@ -81,31 +81,6 @@
     headObserver.observe(document.head, { childList: true });
   }
 
-  /**
-   * Dynamically loads the Trellis embed script after blockers are in place.
-   * @param {HTMLElement} el Container element with data-trellis-embed-src.
-   */
-  function loadTrellisScript(el) {
-    const url = el.getAttribute('data-trellis-embed-src');
-    // If the formatter already injected the script, respect that.
-    if (
-      !url ||
-      el.getAttribute('data-trellis-script-loaded') ||
-      el.getAttribute('data-trellis-script-preloaded')
-    ) {
-      return;
-    }
-    el.setAttribute('data-trellis-script-loaded', '1');
-    const script = document.createElement('script');
-    script.src = url;
-    script.defer = true;
-    script.type = 'text/javascript';
-    // Provide the original quick-publish target id for potential script usage.
-    if (el.id) {
-      script.setAttribute('data-qp-target-id', el.id);
-    }
-    document.head.appendChild(script);
-  }
   function TrellisFormHandler(container, queryParams, editing) {
     this.container = container;
     this.queryParams = queryParams;
@@ -441,7 +416,9 @@
     Object.keys(qp).forEach((name) => {
       const value = qp[name];
       if (value == null) return;
-      const field = this.container.querySelector(`[name="${name}"]`);
+      const field = this.container.querySelector(
+        `[name="${CSS.escape(name)}"]`,
+      );
       if (field && field.value !== String(value)) {
         field.value = value;
         field.dispatchEvent(new Event('input', { bubbles: true }));
@@ -540,7 +517,9 @@
       // blocking prefill when some fields render later than others.
       let allPresent = true;
       targetNames.forEach((name) => {
-        const field = this.container.querySelector(`[name="${name}"]`);
+        const field = this.container.querySelector(
+          `[name="${CSS.escape(name)}"]`,
+        );
         if (!field) {
           allPresent = false;
           return;
@@ -578,7 +557,9 @@
       console.warn('Prefill fallback: proceeding before all fields detected');
       // Best-effort partial prefill for whatever exists now.
       targetNames.forEach((name) => {
-        const field = this.container.querySelector(`[name="${name}"]`);
+        const field = this.container.querySelector(
+          `[name="${CSS.escape(name)}"]`,
+        );
         if (field && qp[name] != null && field.value !== String(qp[name])) {
           field.value = qp[name];
           field.dispatchEvent(new Event('input', { bubbles: true }));
@@ -667,9 +648,6 @@
 
         const handler = new TrellisFormHandler(container, queryParams, editing);
         handler.init();
-        if (blockRemoteCss) {
-          loadTrellisScript(container);
-        }
       });
     },
   };

@@ -29,7 +29,7 @@
         "cweagans/composer-patches": "^1.7",
         "devanych/mime-types": "2.1.2",
         "drupal/access_unpublished": "1.9.0",
-        "drupal/altcha": "2.0.0-beta1",
+        "drupal/altcha": "2.0.0-rc1",
         "drupal/antibot": "2.0.5",
         "drupal/asset_injector": "2.21.0",
         "drupal/auto_entitylabel": "3.4.0",
@@ -40,7 +40,7 @@
         "drupal/bootstrap_barrio": "5.5.20",
         "drupal/bootstrap_utilities": "3.0.1",
         "drupal/calendar_link": "3.0.4",
-        "drupal/captcha": "2.0.10",
+        "drupal/captcha": "2.0.11",
         "drupal/cas": "3.1.1",
         "drupal/chosen": "5.0.7",
         "drupal/ckeditor_bs_grid": "2.2.0-alpha2",
@@ -55,32 +55,32 @@
         "drupal/config_split": "2.0.2",
         "drupal/config_sync": "3.0.0-alpha5",
         "drupal/config_update": "2.0.0-alpha4",
-        "drupal/core-recommended": "11.4.8",
+        "drupal/core-recommended": "11.4.11",
         "drupal/crop": "2.6.0",
         "drupal/date_ap_style": "3.0.0",
         "drupal/decorative_image_widget": "1.0.3",
         "drupal/diff": "2.1.1",
-        "drupal/draggableviews": "2.1.4",
-        "drupal/easy_breadcrumb": "2.0.10",
+        "drupal/draggableviews": "2.1.5",
+        "drupal/easy_breadcrumb": "2.0.11",
         "drupal/embed": "1.10.0",
         "drupal/entity_embed": "1.7.0",
         "drupal/environment_indicator": "4.0.25",
         "drupal/exclude_node_title": "2.0.1",
-        "drupal/externalauth": "2.0.13",
+        "drupal/externalauth": "2.0.15",
         "drupal/extlink": "3.0.0",
         "drupal/field_group": "4.0.0",
         "drupal/field_group_link": "3.3.0",
-        "drupal/flag": "5.1.0",
+        "drupal/flag": "5.1.1",
         "drupal/google_tag": "2.0.9",
         "drupal/honeypot": "2.2.2",
         "drupal/image_widget_crop": "3.0.0",
         "drupal/imagemagick": "4.0.2",
         "drupal/inline_entity_form": "3.0.0",
-        "drupal/intelligencebank": "5.2.3",
+        "drupal/intelligencebank": "5.2.4",
         "drupal/jquery_ui": "1.8.0",
         "drupal/jquery_ui_datepicker": "2.1.1",
         "drupal/key": "1.22.0",
-        "drupal/klaro": "3.1.1",
+        "drupal/klaro": "3.1.2",
         "drupal/ldap": "4.13.0",
         "drupal/link_class": "2.2.0",
         "drupal/linkit": "7.0.17",
@@ -91,8 +91,8 @@
         "drupal/media_library_form_element": "2.1.5",
         "drupal/media_remote": "1.10",
         "drupal/menu_block": "1.14.0",
-        "drupal/menu_link_attributes": "1.7.0",
-        "drupal/metatag": "2.2.0",
+        "drupal/menu_link_attributes": "1.10.0",
+        "drupal/metatag": "2.2.3",
         "drupal/migmag": "1.8.4",
         "drupal/migrate_plus": "6.0.10",
         "drupal/migrate_queue_importer": "2.1.2",
@@ -105,9 +105,9 @@
         "drupal/recaptcha": "3.5.0",
         "drupal/redirect": "1.13.0",
         "drupal/role_delegation": "1.6.0",
-        "drupal/schema_metatag": "3.0.4",
+        "drupal/schema_metatag": "3.1.0",
         "drupal/search_api": "1.41.0",
-        "drupal/search_api_attachments": "10.0.11",
+        "drupal/search_api_attachments": "10.0.13",
         "drupal/search_api_solr": "4.4.0",
         "drupal/search_exclude": "3.0.0-beta2",
         "drupal/searchstax": "1.12.0",
@@ -118,10 +118,10 @@
         "drupal/smart_title": "1.0.0",
         "drupal/smtp": "1.4.0",
         "drupal/token": "1.17.0",
-        "drupal/ui_icons": "2.0.0",
+        "drupal/ui_icons": "2.1.0",
         "drupal/user_expire": "2.1.3",
-        "drupal/views_bootstrap": "5.5.2",
-        "drupal/views_bulk_operations": "4.4.8",
+        "drupal/views_bootstrap": "5.5.6",
+        "drupal/views_bulk_operations": "4.4.9",
         "drupal/views_remote_data": "1.0.3",
         "drupal/viewsreference": "2.0.0-beta14",
         "drupal/webform": "6.3.1",
@@ -129,7 +129,7 @@
         "drupal/xmlsitemap": "2.0.0",
         "giggsey/libphonenumber-for-php": "^9.0",
         "kevinrob/guzzle-cache-middleware": "8.0.0",
-        "renanbr/bibtex-parser": "2.3.0",
+        "renanbr/bibtex-parser": "2.3.1",
         "seboettg/citeproc-php": "2.7.1"
     },
     "require-dev": {
@@ -190,12 +190,6 @@
                 "Views with exposed filter and ajax causes unexpected scroll position change (3564586)": "https://gist.githubusercontent.com/bberndt-uaz/7183bc9aee173b19176955ba1cb178f9/raw/c7baa3a68d0325b1f459860831b075cd0819571d/3564586-11.x.patch",
                 "Synthetic service \"kernel\" error on CLI site:install of a profile with theme OOP hooks (3606822)": "https://gist.github.com/joeparsons/fe8bfa2c2bdbdce2a40499befa7cf8b8/raw/4ed3973ed9798cc90aa2a8430efc8400c067b438/3606822-classresolver-kernel-11x-mr-16159.patch"
             },
-            "drupal/draggableviews": {
-                "Row weights not displaying on sort view (3252365)": "https://www.drupal.org/files/issues/2023-08-25/3252365-check-remove-select-all-class.patch",
-                "Reset button, to reset the weight all back to 0 (3388659)": "https://www.drupal.org/files/issues/2023-09-21/3388659-reset-button-2.patch",
-                "Contextual Link throws RouteNotFoundException: Route 'view.this' does not exist (3316975)": "https://www.drupal.org/files/issues/2024-06-10/3316975-32-MR40.patch",
-                "Fix PHP 8.4 nullable type deprecations (3518553)": "https://www.drupal.org/files/issues/2025-11-26/3518553-fix-php-8.4-3.patch"
-            },
             "drupal/entity_embed": {
                 "Drupal 10.5/11.2 compatability (tooltip broken, cannot edit embedded entities) (3531672)": "https://www.drupal.org/files/issues/2025-08-08/entity_embed--fix-ckeditor-icon-reference--3531672-22.patch",
                 "Using null as an array offset is deprecated in PHP 8.5 (3577405)": "https://www.drupal.org/files/issues/2026-03-06/3577405-mr66-5.patch"
@@ -222,7 +216,7 @@
                 "Performance issue caused by build in access check (3509045)": "https://www.drupal.org/files/issues/2025-03-05/3509045-13.patch"
             },
             "drupal/metatag": {
-                "Merge special page metatags with node pages (2949963)": "https://gist.githubusercontent.com/tadean/42e1c5046e991ad1dba312c086450735/raw/cf95e6e2376afec56da425234f5c773301eade8e/metatag-special-page-metatags-2949963-MR34-2.2.0.patch"
+                "Merge special page metatags with node pages (2949963)": "https://www.drupal.org/files/issues/2026-10-26/2949963-mr-290-45.patch"
             },
             "drupal/migmag": {
                 "Fix fatal error when MigrationConfigurationTrait is stubbed during plugin discovery (3590259)": "https://www.drupal.org/files/issues/2026-05-15/3590259-9-mr19.patch"
@@ -238,9 +232,6 @@
             },
             "drupal/role_delegation": {
                 "Restrict access to cancel/remove accounts with non-assignable roles (3299201)": "https://www.drupal.org/files/issues/2022-07-25/3299201-4.patch"
-            },
-            "drupal/schema_metatag": {
-                "Add parentOrganization property/tag to schema_organization (3477869)": "https://www.drupal.org/files/issues/2025-01-13/add_parentOrganization.diff"
             },
             "drupal/search_exclude": {
                 "Request for a Views Handler (2882683)": "https://www.drupal.org/files/issues/2023-06-29/request_for_a_views-2882683-14_0.patch",

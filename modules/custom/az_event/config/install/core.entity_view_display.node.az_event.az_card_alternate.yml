@@ -94,7 +94,7 @@ third_party_settings:
       format_settings:
         classes: 'card-title text-red h5 mt-0 mb-2'
         id: ''
-        element: h2
+        element: h3
         show_label: false
         label_element: h3
         label_element_classes: ''
