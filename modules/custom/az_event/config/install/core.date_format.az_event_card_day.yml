@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az_event_card_day
+label: 'Event Card Day'
+locked: false
+pattern: j
