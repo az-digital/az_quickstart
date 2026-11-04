@@ -271,7 +271,7 @@ jobs:
             --do-not-cache-result \
             $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/profiles/custom/az_quickstart/"${{ matrix.test.file }}"
         env:
-          SYMFONY_DEPRECATIONS_HELPER: weak
+          SYMFONY_DEPRECATIONS_HELPER: ignoreFile=${{ github.workspace }}/az-quickstart-scaffolding/web/profiles/custom/az_quickstart/.deprecation-ignore.txt
           SIMPLETEST_DB: mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3306] }}/db
           SIMPLETEST_BASE_URL: http://172.17.0.1:8080
           BROWSERTEST_OUTPUT_DIRECTORY: ${{ github.workspace }}/az-quickstart-scaffolding/web/sites/simpletest/browser_output
