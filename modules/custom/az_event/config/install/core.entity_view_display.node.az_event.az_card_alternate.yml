@@ -214,8 +214,6 @@ third_party_settings:
       smart_title__tag: ''
       smart_title__classes:
         - node__title
-_core:
-  default_config_hash: OxDsXZg8gIe_Jir-QzhdJ01y2UrR4Xx1sKpSnVh6YEg
 id: node.az_event.az_card_alternate
 targetEntityType: node
 bundle: az_event
