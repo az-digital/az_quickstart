@@ -226,12 +226,12 @@ class AZLdapCas implements EventSubscriberInterface {
       // Regular CAS user. We don't have responsibility for this user.
       return;
     }
-    // Register a flood event under the netID.
-    $this->flood->register('az_eds_user.ldap_query', self::FLOOD_WINDOW, $username);
     // Check if this netID has had too many attempts.
     if (!$this->flood->isAllowed('az_eds_user.ldap_query', self::FLOOD_THRESHOLD, self::FLOOD_WINDOW, $username)) {
       throw new CasValidateException('Too many CAS tickets from ' . $username);
     }
+    // Register a flood event under the netID.
+    $this->flood->register('az_eds_user.ldap_query', self::FLOOD_WINDOW, $username);
     $roles = $this->userAllowedRoles($username);
     if ($cas_uid === FALSE) {
       if (empty($roles)) {
