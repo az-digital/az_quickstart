@@ -272,8 +272,6 @@ third_party_settings:
       smart_title__link: false
       smart_title__tag: ''
       smart_title__classes: {  }
-_core:
-  default_config_hash: 9SDGi_ldYDxNgv7JuC9Eawzpfdth_QfVStSL5B3obnk
 id: node.az_news.az_media_list
 targetEntityType: node
 bundle: az_news
