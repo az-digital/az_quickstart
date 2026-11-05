@@ -204,7 +204,7 @@
                 "JavaScript broken when using cropper.js v1.5.12 (3305831)": "https://www.drupal.org/files/issues/2025-07-04/3305831-8.patch"
             },
             "drupal/imagemagick": {
-                "Imagemagick fails to convert animated gifs into animated webps (3295470)": "https://www.drupal.org/files/issues/2023-08-29/imagemagick-convertation-keep-animation-3295470-10.patch"
+                "Convert image-style cannot convert GIF to WEBP (Lost animation) (3295470)": "https://gist.github.com/joeparsons/b8c0f99cb412db047c896e7846f33b50/raw/71308de20a30d67d549b7189ab8378e062008d4b/imagemagick-3295470-coalesce-webp.patch"
             },
             "drupal/inline_entity_form": {
                 "Support Referencing the same entity multiple times (3363988)": "https://gist.githubusercontent.com/tadean/d3c4969f0c8dd7bacc3a3c0ba0521b3e/raw/f5ad64286fdcfcc23b2bf147656b012bba6a4872/inline_entity_form_multiple.patch"
