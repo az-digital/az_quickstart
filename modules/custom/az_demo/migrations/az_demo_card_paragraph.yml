@@ -37,6 +37,9 @@ source:
       name: card_clickable
       selector: card_clickable
     -
+      name: card_fit_content
+      selector: card_fit_content
+    -
       name: card_title
       selector: card_title
     -
@@ -100,5 +103,6 @@ process:
         card_style: card_style
         card_title_style: card_title_style
         card_clickable: card_clickable
+        card_fit_content: card_fit_content
         az_display_settings:
           bottom_spacing: bottom_spacing

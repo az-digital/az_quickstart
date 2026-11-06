@@ -110,9 +110,16 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
     foreach ($items as $delta => $item) {
       assert($item instanceof AZCardItem);
 
-      $hover_colors = FALSE;
-      $cloud_style = FALSE;
       $title_classes = [];
+      $body_classes = [];
+      $title_style = 'default';
+      $title_link_stretched = FALSE;
+      $image_only = FALSE;
+      $hover_colors = FALSE;
+      $fit_content = FALSE;
+      // If Card Background is "Cloud (Contrast Hover)", its saved value is
+      // bg-cloud, the class that Arizona Bootstrap gives card hover colors to.
+      $contrast_hover = ($item->options['class'] ?? '') === 'bg-cloud';
 
       // Format title.
       $title = $item->title ?? '';
@@ -191,58 +198,72 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
           }
           $column_classes[] = $card_defaults['card_width'] ?? 'col-md-4 col-lg-4';
           $card_classes = $card_defaults['card_style'] ?? 'card';
-          $card_style_classes = explode(' ', $card_classes);
-          // Cloud card styles set their own background and text colors.
-          $cloud_style = in_array('bg-cloud', $card_style_classes, TRUE);
-          // Arizona Bootstrap hover colors (.card.bg-cloud.hover) need the
-          // whole card to be a link.
-          $hover_colors = $cloud_style && in_array('hover', $card_style_classes, TRUE);
-          if (in_array('text-tinta', $card_style_classes, TRUE)) {
-            $title_classes[] = 'text-azurite';
+          $clickable = !empty($card_defaults['card_clickable']);
+          $fit_content = !empty($card_defaults['card_fit_content']);
+
+          // Title style.
+          if (isset($card_defaults['card_title_style'])) {
+            $title_style = $card_defaults['card_title_style'];
+            // Force default title style if media field is not populated.
+            if (empty($media_render_array)) {
+              $title_style = 'default';
+            }
           }
+          $title_on_image = $item->title && $title_style === 'title-on-image';
+
+          // If a title on image card shows nothing under its image (no body,
+          // and a link that is hidden or absent), it is an image tile: a
+          // square image with the title on it. For example, a card with an
+          // empty body and a "Red button" link is not a tile, because the
+          // button shows under the image.
+          $link_hidden = empty($item->link_title) || in_array('visually-hidden', $link_render_array['#attributes']['class'] ?? [], TRUE);
+          $image_only = $title_on_image && ($item->body ?? '') === '' && $link_hidden;
+
+          // If a clickable card with a "Contrast Hover" background has a link,
+          // it gets the Arizona Bootstrap card hover colors. For example,
+          // .card.bg-cloud.hover is Cloud, then Arizona Blue on hover. An
+          // image tile is left out, because its image covers the background.
+          $hover_colors = $contrast_hover && $clickable && !empty($item->link_uri) && !$image_only;
 
           // Is the card clickable?
-          if (!empty($card_defaults['card_clickable']) || $hover_colors) {
+          if ($clickable) {
             if (!empty($link_render_array)) {
               $link_render_array['#attributes']['class'][] = 'stretched-link';
             }
-            $card_classes .= $hover_colors ? ' overflow-hidden' : ' shadow overflow-hidden';
+            // "Contrast Hover" cards and image tiles have no shadow in the
+            // brand design.
+            $card_classes .= ($contrast_hover || $image_only) ? ' overflow-hidden' : ' shadow overflow-hidden';
             if ($item->link_uri) {
+              $card_classes .= ' hover';
+              // The Arizona Bootstrap hover colors include an underline on
+              // the title.
               if (!$hover_colors) {
-                $card_classes .= ' hover';
                 $title_classes[] = 'hover-text-underline';
               }
               if (!empty($media_render_array)) {
                 $media_render_array['#item_attributes']['class'][] = 'hover-img-zoom-in';
               }
+              // An image tile shows no link under the image, so the link in
+              // its title covers the card.
+              $title_link_stretched = $image_only;
             }
           }
 
-          // Title style.
-          if (isset($card_defaults['card_title_style'])) {
-            $title_style = $card_defaults['card_title_style'];
-            if (!empty($media_render_array)) {
-              if ($item->title && $title_style === 'title-on-image') {
-                array_push($media_render_array['#item_attributes']['class'], 'img-fluid', 'image-style-az-card-image');
-              }
-              elseif ($item->title && $title_style === 'title-on-image-only') {
-                // Square image that fills the card, with no card border.
-                // h-100 keeps img-fluid from overriding the ratio's height.
-                array_push($media_render_array['#item_attributes']['class'], 'object-fit-cover', 'h-100', 'image-style-az-card-image');
-                $card_style_classes = array_diff(explode(' ', $card_classes), ['shadow']);
-                $card_style_classes[] = 'border-0';
-                $card_classes = implode(' ', array_unique($card_style_classes));
-              }
-              // Clip the image to the card's round corners. Rationale: when
-              // no card body follows the image, the image is the bottom of
-              // the card, and .card-img-top rounds only its top corners.
-              if ($item->title && in_array($title_style, ['title-on-image', 'title-on-image-only'], TRUE) && !str_contains($card_classes, 'overflow-hidden')) {
-                $card_classes .= ' overflow-hidden';
-              }
+          if ($title_on_image) {
+            if ($image_only) {
+              // Square image that fills the card, with no card border.
+              // h-100 keeps img-fluid from overriding the ratio's height.
+              array_push($media_render_array['#item_attributes']['class'], 'object-fit-cover', 'h-100', 'image-style-az-card-image');
+              $card_classes = implode(' ', array_unique(array_merge(explode(' ', $card_classes), ['border-0'])));
             }
-            // Force default title style if media field is not populated.
             else {
-              $title_style = 'default';
+              array_push($media_render_array['#item_attributes']['class'], 'img-fluid', 'image-style-az-card-image');
+            }
+            // Clip the image to the card's round corners. Rationale: when
+            // no card body follows the image, the image is the bottom of
+            // the card, and .card-img-top rounds only its top corners.
+            if (!str_contains($card_classes, 'overflow-hidden')) {
+              $card_classes .= ' overflow-hidden';
             }
           }
 
@@ -262,10 +283,27 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
       $column_classes = implode(' ', $column_classes);
       $column_classes = explode(' ', $column_classes);
       $column_classes[] = 'pb-4';
-      // A card background would block the Cloud card style's colors.
-      if (!empty($item->options['class']) && !$cloud_style) {
+      $card_attributes = [];
+      if (!empty($item->options['class'])) {
         $card_classes .= ' ' . $item->options['class'];
       }
+      // A Cloud card has the brand's Cloud card colors: Tinta text and an
+      // Azurite title. The card's .text-bg-* class sets black text, so the
+      // classes go on the card body and the title.
+      if (in_array($item->options['class'] ?? '', AZCardItem::CLOUD_BACKGROUND_CLASSES, TRUE)) {
+        $body_classes[] = 'text-tinta';
+        // A title on the image stays white, on its gradient.
+        if ($title_style === 'default') {
+          $title_classes[] = 'text-azurite';
+        }
+      }
+      // If a hover colors card has the "Bordered cards" style, keep its
+      // border. Arizona Bootstrap sets the border width of a hover colors
+      // card to 0.
+      if ($hover_colors && !in_array('border-0', explode(' ', $card_classes), TRUE)) {
+        $card_attributes['style'] = '--bs-card-border-width: var(--bs-border-width);';
+      }
+      $card_attributes['class'] = $card_classes;
 
       $element[$delta] = [
         '#theme' => 'az_card',
@@ -281,14 +319,17 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         ],
         '#link' => $link_render_array,
         '#link_url' => $link_url,
-        '#title_style' => $title_style ?? 'default',
+        '#title_style' => $title_style,
         '#title_level' => $title_level ?? 'h3',
         '#title_alignment' => $title_alignment ?? 'text-start',
         '#title_display' => $title_display ?? 'h5',
         '#title_classes' => $title_classes,
-        '#hover_colors' => $hover_colors,
+        '#body_classes' => $body_classes,
+        '#title_link_stretched' => $title_link_stretched,
+        '#image_only' => $image_only,
+        '#fit_content' => $fit_content,
         '#icon' => $item->options['icon'] ?? '',
-        '#attributes' => ['class' => $card_classes],
+        '#attributes' => $card_attributes,
         '#attached' => $attached,
       ];
 

@@ -43,11 +43,9 @@ class AZCardsParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#options' => [
         'card' => $this->t('Bordered cards'),
         'card border-0' => $this->t('Borderless cards'),
-        'card bg-cloud hover' => $this->t('Hover color cards (Cloud, Arizona Blue on hover)'),
-        'card border-0 bg-cloud text-tinta' => $this->t('Cloud cards (not clickable, for link lists and calls to action)'),
       ],
       '#default_value' => $config['card_style'] ?? 'card',
-      '#description' => $this->t('Select a card style. Hover color cards are always clickable: the title links to the card link URL and the link button is not shown. Hover color cards and Cloud cards set their own colors, so the card background is not used.'),
+      '#description' => $this->t('Select a card style.'),
     ];
 
     $form['card_title_style'] = [
@@ -56,10 +54,9 @@ class AZCardsParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#options' => [
         'default' => $this->t('Title within card (default)'),
         'title-on-image' => $this->t('Title on image'),
-        'title-on-image-only' => $this->t('Title on image only (square image, no body)'),
       ],
       '#default_value' => $config['card_title_style'] ?? 'default',
-      '#description' => $this->t('Select a card title style.'),
+      '#description' => $this->t('Select a card title style. With "Title on image", a card that has no body text and no visible link shows as a square image with the title on it.'),
     ];
 
     $form['card_title_level'] = [
@@ -98,7 +95,14 @@ class AZCardsParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#title' => $this->t('Clickable cards'),
       '#type' => 'checkbox',
       '#default_value' => $config['card_clickable'] ?? FALSE,
-      '#description' => $this->t('Make the whole card clickable if the link fields are populated.'),
+      '#description' => $this->t('Make the whole card clickable if the link fields are populated. A clickable card with a Contrast Hover card background changes color on hover.'),
+    ];
+
+    $form['card_fit_content'] = [
+      '#title' => $this->t('Fit card height to content'),
+      '#type' => 'checkbox',
+      '#default_value' => $config['card_fit_content'] ?? FALSE,
+      '#description' => $this->t('Make each card only as tall as its own content. By default, the cards in a row are all as tall as the tallest card.'),
     ];
 
     parent::buildBehaviorForm($paragraph, $form, $form_state);
