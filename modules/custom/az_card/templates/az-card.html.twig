@@ -15,8 +15,12 @@
  * - title_level: The heading level to use.
  * - title_display: The title text display size to use.
  * - title_classes: Additional classes for the card title.
- * - hover_colors: Whether the card uses the Arizona Bootstrap card hover
- *   colors. The title link covers the card, and the link is not shown.
+ * - body_classes: Additional classes for the card body.
+ * - title_link_stretched: Whether the link in the title covers the card.
+ * - image_only: Whether the card is an image tile: a square image with the
+ *   title on it, and nothing under the image.
+ * - fit_content: Whether the card is only as tall as its content. By default,
+ *   a card is as tall as the tallest card in its row.
  * - icon: A Material Symbols icon name, shown when the card has no media.
  *
  * @ingroup themeable
@@ -32,25 +36,26 @@
 {% endmacro %}
 {% import _self as card %}
 
-{% set attributes = attributes.addClass('h-100') %}
-{% set image_only = title_style == 'title-on-image-only' %}
+{% if not fit_content %}
+  {% set attributes = attributes.addClass('h-100') %}
+{% endif %}
 {% set has_link = link_url is not empty and link|render %}
 
 <div{{ attributes }}>
   {% if media %}
     <div class="{{ image_only ? 'ratio ratio-1x1' : 'position-relative' }} overflow-hidden">
       {{ media }}
-      {% if title and title_style in ['title-on-image', 'title-on-image-only'] %}
+      {% if title and title_style == 'title-on-image' %}
         <div class="card-img-overlay p-0 d-flex flex-column">
           <{{ title_level }} class="fw-bold mt-auto card-title text-bg-gradient-blue text-white mb-0 p-4 {{ image_only ? 'h-50 d-flex align-items-end' : 'pt-8' }} {{ title_alignment }} {{ title_display }} {{ title_classes|join(' ') }}">
-            {{ card.title_link(title, link_url, has_link, image_only) }}
+            {{ card.title_link(title, link_url, has_link, title_link_stretched) }}
           </{{ title_level }}>
         </div>
       {% endif %}
     </div>
   {% endif %}
   {% if image_only %}
-    {# The stretched title link covers the card. #}
+    {# An image tile shows nothing under the image. Its title holds the link. #}
   {% elseif title_style == 'title-on-image' and body['#text'] == '' and (link['#title'] == '' or 'visually-hidden' in link['#attributes']['class'] ) %}
     <div class="d-flex flex-column">
       {% if link|render %}
@@ -64,19 +69,19 @@
       {% endif %}
     </div>
   {% else %}
-    <div class="card-body d-flex flex-column">
+    <div class="card-body d-flex flex-column {{ body_classes|join(' ') }}">
       {% if icon and not media %}
         <span class="card-icon material-symbols-rounded fw-light" style="font-variation-settings: 'FILL' 0;" aria-hidden="true">{{ icon }}</span>
       {% endif %}
       {% if title and title_style == 'default' %}
-        <{{ title_level }} class="fw-bold mt-0 {{ hover_colors or 'text-azurite' in title_classes ? 'mb-2' : 'mb-3' }} card-title {{ title_alignment }} {{ title_display }} {{ title_classes|join(' ') }}">
-          {{ card.title_link(title, link_url, has_link, hover_colors) }}
+        <{{ title_level }} class="fw-bold mt-0 mb-2 card-title {{ title_alignment }} {{ title_display }} {{ title_classes|join(' ') }}">
+          {{ card.title_link(title, link_url, has_link, false) }}
         </{{ title_level }}>
       {% endif %}
       {% if body['#text'] %}
         <div class="card-text">{{ body }}</div>
       {% endif %}
-      {% if link and not hover_colors %}
+      {% if link %}
         <div class="mt-auto">{{ link }}</div>
       {% endif %}
     </div>

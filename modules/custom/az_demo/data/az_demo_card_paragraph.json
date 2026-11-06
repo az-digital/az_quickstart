@@ -187,8 +187,9 @@
       "card_width": "col-lg-4",
       "card_style": "card",
       "card_title": "Title on Image",
-      "card_title_style": "title-on-image-only",
+      "card_title_style": "title-on-image",
       "card_clickable": true,
+      "card_fit_content": false,
       "az_cards": [
         {
           "delta": 0,
@@ -226,10 +227,11 @@
     {
       "id": 421,
       "card_width": "col-lg-4",
-      "card_style": "card bg-cloud hover",
+      "card_style": "card border-0",
       "card_title": "Image and Text",
       "card_title_style": "default",
-      "card_clickable": false,
+      "card_clickable": true,
+      "card_fit_content": false,
       "az_cards": [
         {
           "delta": 0,
@@ -238,7 +240,7 @@
           "link_title": "Undergraduate Degrees",
           "link_url": "#top",
           "media": "arizona_campus_fireworks.jpg",
-          "background": "text-bg-white",
+          "background": "bg-cloud",
           "link_style": "visually-hidden"
         },
         {
@@ -248,7 +250,7 @@
           "link_title": "Graduate",
           "link_url": "#top",
           "media": "holsclaw_hall.jpg",
-          "background": "text-bg-white",
+          "background": "bg-cloud",
           "link_style": "visually-hidden"
         },
         {
@@ -258,7 +260,7 @@
           "link_title": "Online",
           "link_url": "#top",
           "media": "Health-Sciences-Education-Building-2464x1640.jpg",
-          "background": "text-bg-white",
+          "background": "bg-cloud",
           "link_style": "visually-hidden"
         }
       ],
@@ -266,11 +268,12 @@
     },
     {
       "id": 422,
-      "card_width": "col-lg-3",
-      "card_style": "card bg-cloud hover",
+      "card_width": "col-lg-4",
+      "card_style": "card border-0",
       "card_title": "Icons",
       "card_title_style": "default",
-      "card_clickable": false,
+      "card_clickable": true,
+      "card_fit_content": true,
       "az_cards": [
         {
           "delta": 0,
@@ -279,7 +282,7 @@
           "link_title": "Future Students",
           "link_url": "#top",
           "media": "",
-          "background": "text-bg-white",
+          "background": "bg-cloud",
           "link_style": "visually-hidden",
           "icon": "person_raised_hand"
         },
@@ -290,7 +293,7 @@
           "link_title": "Current Students",
           "link_url": "#top",
           "media": "",
-          "background": "text-bg-white",
+          "background": "bg-cloud",
           "link_style": "visually-hidden",
           "icon": "backpack"
         },
@@ -301,20 +304,9 @@
           "link_title": "Parents & Families",
           "link_url": "#top",
           "media": "",
-          "background": "text-bg-white",
+          "background": "bg-cloud",
           "link_style": "visually-hidden",
           "icon": "diversity_1"
-        },
-        {
-          "delta": 3,
-          "title": "Alumni",
-          "body": "<p>Once a Wildcat, always a Wildcat. Stay connected, give back, and celebrate what’s next.</p>",
-          "link_title": "Alumni",
-          "link_url": "#top",
-          "media": "",
-          "background": "text-bg-white",
-          "link_style": "visually-hidden",
-          "icon": "school"
         }
       ],
       "bottom_spacing": "mb-5"
@@ -322,10 +314,11 @@
     {
       "id": 423,
       "card_width": "col-lg-4",
-      "card_style": "card bg-cloud hover",
+      "card_style": "card border-0",
       "card_title": "Text Only",
       "card_title_style": "default",
-      "card_clickable": false,
+      "card_clickable": true,
+      "card_fit_content": true,
       "az_cards": [
         {
           "delta": 0,
@@ -334,7 +327,7 @@
           "link_title": "Distance Locations",
           "link_url": "#top",
           "media": "",
-          "background": "text-bg-white",
+          "background": "bg-cloud",
           "link_style": "visually-hidden"
         },
         {
@@ -344,7 +337,7 @@
           "link_title": "Returning Students",
           "link_url": "#top",
           "media": "",
-          "background": "text-bg-white",
+          "background": "bg-cloud",
           "link_style": "visually-hidden"
         },
         {
@@ -354,7 +347,7 @@
           "link_title": "DACA",
           "link_url": "#top",
           "media": "",
-          "background": "text-bg-white",
+          "background": "bg-cloud",
           "link_style": "visually-hidden"
         }
       ],
@@ -363,10 +356,11 @@
     {
       "id": 424,
       "card_width": "col-lg-4",
-      "card_style": "card border-0 bg-cloud text-tinta",
+      "card_style": "card border-0",
       "card_title": "Link Lists",
       "card_title_style": "default",
       "card_clickable": false,
+      "card_fit_content": true,
       "az_cards": [
         {
           "delta": 0,
@@ -375,7 +369,7 @@
           "link_title": "",
           "link_url": "",
           "media": "",
-          "background": "text-bg-white",
+          "background": "text-bg-cool-gray",
           "link_style": "visually-hidden"
         },
         {
@@ -385,7 +379,7 @@
           "link_title": "",
           "link_url": "",
           "media": "",
-          "background": "text-bg-white",
+          "background": "text-bg-cool-gray",
           "link_style": "visually-hidden"
         },
         {
@@ -395,7 +389,7 @@
           "link_title": "",
           "link_url": "",
           "media": "",
-          "background": "text-bg-white",
+          "background": "text-bg-cool-gray",
           "link_style": "visually-hidden"
         }
       ],
@@ -404,10 +398,11 @@
     {
       "id": 425,
       "card_width": "col-lg-4",
-      "card_style": "card border-0 bg-cloud text-tinta",
+      "card_style": "card border-0",
       "card_title": "Calls to Action",
       "card_title_style": "default",
       "card_clickable": false,
+      "card_fit_content": true,
       "az_cards": [
         {
           "delta": 0,
@@ -416,7 +411,7 @@
           "link_title": "Listen Now",
           "link_url": "#top",
           "media": "",
-          "background": "text-bg-white",
+          "background": "text-bg-cool-gray",
           "link_style": "btn btn-red"
         },
         {
@@ -426,7 +421,7 @@
           "link_title": "Subscribe",
           "link_url": "#top",
           "media": "",
-          "background": "text-bg-white",
+          "background": "text-bg-cool-gray",
           "link_style": "btn btn-red"
         },
         {
@@ -436,7 +431,7 @@
           "link_title": "",
           "link_url": "",
           "media": "",
-          "background": "text-bg-white",
+          "background": "text-bg-cool-gray",
           "link_style": "visually-hidden"
         }
       ],
