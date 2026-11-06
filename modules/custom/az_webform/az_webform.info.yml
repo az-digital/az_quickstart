@@ -1,5 +1,5 @@
 name: Quickstart Webform
-description: 'Provides preconfigured defaults for Webform'
+description: 'Provides preconfigured defaults for the Webform module.'
 core_version_requirement: ^11.3 || ^12
 type: module
 package: 'The University of Arizona - Experimental'
