@@ -1,0 +1,52 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Form embed
+status: experimental
+group: Forms
+description: A form hosted by another service, such as Slate, picked from the media library.
+props:
+  type: object
+  properties:
+    # Careful: az_form_embed's Canvas hook looks for this exact shape. Keep
+    # it in step with FormEmbedFormItem::PROP_SHAPE. If they drift apart,
+    # Canvas leaves this component out of its library, with no other error.
+    # FormEmbedPropShapeTest fails first.
+    form:
+      title: Form
+      description: Pick a Form embed from the media library.
+      type: object
+      required:
+        - vendor
+        - embed_url
+        - canonical_url
+      properties:
+        vendor:
+          title: Form provider id
+          description: The machine name of the service that hosts the form, such as slate. The loader runs that service's handler.
+          type: string
+        embed_url:
+          title: Embed URL
+          description: The address the service's embed script loads from. Use it only as a script src.
+          type: string
+          format: uri
+        canonical_url:
+          title: Form URL
+          description: The form's plain address, safe to link to.
+          type: string
+          format: uri
+        label:
+          title: Form name
+          description: The media item's name, shown in the alert when the form can't load.
+          type: string
+    # No examples. Rationale: Canvas copies the first example into every new
+    # placement, so an example here would add that class to every form placed
+    # in Canvas.
+    utility_classes:
+      type: array
+      title: Utility classes
+      description: Additional Bootstrap utility classes for the form's outer wrapper, for example mb-5 for more space below it.
+      items:
+        type: string
+libraryOverrides:
+  dependencies:
+    - core/drupal
+    - core/once
