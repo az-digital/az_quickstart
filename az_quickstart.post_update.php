@@ -91,8 +91,16 @@ function az_quickstart_post_update_webform_role_permissions(&$sandbox) {
       'grant' => [
         'administer webform',
       ],
+      'revoke' => [
+        'edit any webform',
+        'edit any webform submission',
+      ],
     ],
     'az_content_editor' => [
+      'grant' => [
+        'edit any webform',
+        'edit any webform submission',
+      ],
       'revoke' => [
         'administer webform',
         'edit own webform submission',
