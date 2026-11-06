@@ -63,10 +63,10 @@ arizona_icons:
   # such as text-rain.
   template: >-
     {% set new_names = constant('Drupal\\az_core\\Utility\\AZBootstrapColorNames::DEPRECATED_COLOR_NAMES') -%}
-    <i class="az-icon-{{ icon_id|clean_class }} {% if color != 'inherit' %}text-{{ new_names[color] ?? color }}{% endif %}" style="font-size: {{ size|default(24) }}px; line-height: {{ size|default(24) }}px;" title="{{ icon_id }}"></i>
+    <i class="az-icon-{{ icon_id|clean_class }} {% if color and color != 'inherit' %}text-{{ new_names[color] ?? color }}{% endif %}" style="font-size: {{ size|default(24) }}px; line-height: {{ size|default(24) }}px;" title="{{ icon_id }}"></i>
   preview: >
     {% set new_names = constant('Drupal\\az_core\\Utility\\AZBootstrapColorNames::DEPRECATED_COLOR_NAMES') -%}
-    <i class="az-icon-{{ icon_id|clean_class }} {% if color != 'inherit' %}text-{{ new_names[color] ?? color }}{% endif %}" style="font-size:35px" title="{{ icon_id }}"></i>
+    <i class="az-icon-{{ icon_id|clean_class }} {% if color and color != 'inherit' %}text-{{ new_names[color] ?? color }}{% endif %}" style="font-size:35px" title="{{ icon_id }}"></i>
 
 # Material symbols icons
 material_symbols:
@@ -135,7 +135,7 @@ material_symbols:
   # See the note on the arizona_icons templates.
   template: >-
     {% set new_names = constant('Drupal\\az_core\\Utility\\AZBootstrapColorNames::DEPRECATED_COLOR_NAMES') -%}
-    <span class="material-symbols-rounded {% if color != 'inherit' %}text-{{ new_names[color] ?? color }}{% endif %}" style="font-size:{{ size|default(24) }}px;">{{ icon_id }}</span>
+    <span class="material-symbols-rounded {% if color and color != 'inherit' %}text-{{ new_names[color] ?? color }}{% endif %}" style="font-size:{{ size|default(24) }}px;">{{ icon_id }}</span>
   preview: >
     {% set new_names = constant('Drupal\\az_core\\Utility\\AZBootstrapColorNames::DEPRECATED_COLOR_NAMES') -%}
-    <span class="material-symbols-rounded {% if color != 'inherit' %}text-{{ new_names[color] ?? color }}{% endif %}" style="font-size:35px;">{{ icon_id }}</span>
+    <span class="material-symbols-rounded {% if color and color != 'inherit' %}text-{{ new_names[color] ?? color }}{% endif %}" style="font-size:35px;">{{ icon_id }}</span>
