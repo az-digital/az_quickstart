@@ -233,6 +233,12 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
                 $card_style_classes[] = 'border-0';
                 $card_classes = implode(' ', array_unique($card_style_classes));
               }
+              // Clip the image to the card's round corners. Rationale: when
+              // no card body follows the image, the image is the bottom of
+              // the card, and .card-img-top rounds only its top corners.
+              if ($item->title && in_array($title_style, ['title-on-image', 'title-on-image-only'], TRUE) && !str_contains($card_classes, 'overflow-hidden')) {
+                $card_classes .= ' overflow-hidden';
+              }
             }
             // Force default title style if media field is not populated.
             else {
