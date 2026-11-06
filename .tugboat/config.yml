@@ -9,6 +9,24 @@ services:
       AZQS_DOCROOT: /var/www/azqs/web
       AZQS_SCAFFOLD_REPO: https://github.com/az-digital/az-quickstart-scaffolding.git
 
+    # Pages (from az_demo) to screenshot and compare against the base preview
+    # with Tugboat visual diffs. Pages with date-dependent content (e.g. events)
+    # or third-party embeds are left out to avoid noisy diffs.
+    urls:
+      - /
+      - /pages/text
+      - /pages/text-media
+      - /pages/text-background
+      - /pages/split-screen
+      - /pages/card-decks
+      - /pages/accordions
+      - /pages/rankings
+      - /pages/combo-page
+      - /pages/marketing-campaign-page
+      - /news
+      - /people
+      - /publications
+
     commands:
       init:
         - set -eux
