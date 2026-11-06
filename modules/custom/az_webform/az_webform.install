@@ -5,7 +5,7 @@
  * Contains az_webform.install.
  */
 
-use Drupal\Core\Serialization\Yaml;
+use Drupal\Component\Serialization\Yaml;
 
 /**
  * State key tracking changes made to config by the override files.
