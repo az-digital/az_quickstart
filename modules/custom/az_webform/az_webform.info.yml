@@ -9,7 +9,6 @@ dependencies:
   - az_core:az_core
   - az_spam_prevention:az_spam_prevention
   - linkit:linkit
-  - honeypot:honeypot
   - webform:webform
   - webform:webform_node
   - webform:webform_ui
