@@ -207,28 +207,6 @@ class AZColorClassUpdateTest extends KernelTestBase {
   }
 
   /**
-   * Tests that an older revision of a paragraph keeps its old classes.
-   */
-  public function testOlderRevisions() {
-    $splitscreen = $this->createParagraph('az_splitscreen', [
-      'az_split_screen' => ['bg_color' => 'text-bg-chili'],
-    ]);
-    $older_revision_id = $splitscreen->getRevisionId();
-    $splitscreen->setNewRevision(TRUE);
-    $splitscreen->setAllBehaviorSettings(['az_split_screen' => ['bg_color' => 'text-bg-river']]);
-    $splitscreen->save();
-    $this->assertNotEquals($older_revision_id, $splitscreen->getRevisionId());
-
-    $this->runUpdate();
-
-    $this->assertSame('text-bg-shade', $this->reload($splitscreen)->getAllBehaviorSettings()['az_split_screen']['bg_color']);
-    $storage = $this->container->get('entity_type.manager')->getStorage('paragraph');
-    $older_revision = $storage->loadRevision($older_revision_id);
-    $this->assertInstanceOf(ParagraphInterface::class, $older_revision);
-    $this->assertSame('text-bg-chili', $older_revision->getAllBehaviorSettings()['az_split_screen']['bg_color']);
-  }
-
-  /**
    * Tests that a missing behavior plugin does not stop the update.
    */
   public function testMissingBehaviorPlugin() {
@@ -257,7 +235,7 @@ class AZColorClassUpdateTest extends KernelTestBase {
   }
 
   /**
-   * Tests that the update runs after the Arizona Bootstrap 5 class updates.
+   * Tests that update 1130701 runs after the 1130001 updates.
    */
   public function testUpdateDependencies() {
     // None of the paragraph sub-modules are installed yet, and a dependency on

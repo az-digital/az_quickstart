@@ -24,13 +24,13 @@ function az_paragraphs_update_last_removed() {
  * Implements hook_update_dependencies().
  */
 function az_paragraphs_update_dependencies() {
-  // Run the Arizona Bootstrap 5 class updates before the 5.3 color renames
-  // in az_paragraphs_update_1130701(). Rationale: those updates match the old
-  // color names. For example, a Split Screen saved in 2.x has bg-midnight,
-  // and az_paragraphs_splitscreen_update_1130001() changes it to
-  // text-bg-midnight. If bg-midnight is already bg-tinta, that update finds
-  // nothing to change, and the paragraph keeps a class its form does not
-  // offer.
+  // Ensure the 1130001 updates run before the Arizona Bootstrap 5.3 color
+  // renames in az_paragraphs_update_1130701(). az_paragraphs_cards,
+  // az_paragraphs_splitscreen, and az_paragraphs_text_background all have
+  // 1130001 updates. Without this, the 5.3 color renames would take effect
+  // first: bg-midnight would change to bg-tinta before
+  // az_paragraphs_splitscreen_update_1130001() runs, and the change from
+  // bg-midnight to text-bg-midnight would never happen.
   $dependencies = [];
   $modules = [
     'az_paragraphs_cards',
