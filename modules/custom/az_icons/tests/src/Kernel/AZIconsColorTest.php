@@ -4,7 +4,6 @@ namespace Drupal\Tests\az_icons\Kernel;
 
 use Drupal\Core\Form\FormState;
 use Drupal\KernelTests\KernelTestBase;
-use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
@@ -43,50 +42,53 @@ class AZIconsColorTest extends KernelTestBase {
 
   /**
    * Tests the class that the icon templates print for a saved color.
-   *
-   * @param string|null $color
-   *   The saved color, or NULL for an icon with no saved color.
-   * @param string|null $expected_class
-   *   The class the icon gets, or NULL if it gets no color class.
    */
-  #[DataProvider('provideColors')]
-  public function testColorClass(?string $color, ?string $expected_class): void {
+  public function testColorClass(): void {
+    // Each saved color, and the class it prints. NULL is no color class.
+    $colors = [
+      'sky' => 'text-rain',
+      'cool-gray' => 'text-cloud',
+      'azurite' => 'text-azurite',
+      'rain' => 'text-rain',
+      'inherit' => NULL,
+      '' => NULL,
+    ];
     foreach ($this->packDefinitions() as $pack_id => $definition) {
       foreach (['template', 'preview'] as $key) {
-        $context = ['icon_id' => 'home', 'size' => 24];
-        if ($color !== NULL) {
-          $context['color'] = $color;
+        foreach ($colors as $color => $expected_class) {
+          $output = $this->renderTemplate($definition[$key], ['color' => $color]);
+          $message = "$pack_id $key with color '$color'";
+          if ($expected_class === NULL) {
+            $this->assertStringNotContainsString('text-', $output, $message);
+          }
+          else {
+            $this->assertMatchesRegularExpression('/class="[^"]*\b' . preg_quote($expected_class, '/') . '[ "]/', $output, $message);
+          }
         }
-        $build = [
-          '#type' => 'inline_template',
-          '#template' => $definition[$key],
-          '#context' => $context,
-        ];
-        $output = (string) $this->container->get('renderer')->renderRoot($build);
-        $message = "$pack_id $key with color " . var_export($color, TRUE);
-        if ($expected_class === NULL) {
-          $this->assertStringNotContainsString('text-', $output, $message);
-        }
-        else {
-          $this->assertMatchesRegularExpression('/class="[^"]*\b' . preg_quote($expected_class, '/') . '[ "]/', $output, $message);
-        }
+        // An icon with no saved color.
+        $this->assertStringNotContainsString('text-', $this->renderTemplate($definition[$key], []), "$pack_id $key with no color");
       }
     }
   }
 
   /**
-   * Provides saved colors and the class each one prints.
+   * Renders an icon pack template.
+   *
+   * @param string $template
+   *   The Twig template from the icon pack definition.
+   * @param array $settings
+   *   The icon settings to render it with.
+   *
+   * @return string
+   *   The rendered markup.
    */
-  public static function provideColors(): array {
-    return [
-      'old name' => ['sky', 'text-rain'],
-      'old name with a hyphen' => ['cool-gray', 'text-cloud'],
-      'name that did not change' => ['azurite', 'text-azurite'],
-      'new name' => ['rain', 'text-rain'],
-      'inherit' => ['inherit', NULL],
-      'empty' => ['', NULL],
-      'no saved color' => [NULL, NULL],
+  protected function renderTemplate(string $template, array $settings): string {
+    $build = [
+      '#type' => 'inline_template',
+      '#template' => $template,
+      '#context' => ['icon_id' => 'home', 'size' => 24] + $settings,
     ];
+    return (string) $this->container->get('renderer')->renderRoot($build);
   }
 
   /**
