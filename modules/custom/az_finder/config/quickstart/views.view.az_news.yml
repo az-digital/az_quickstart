@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.az_card
+    - core.entity_view_mode.node.az_card_alternate
     - core.entity_view_mode.node.az_feature
     - core.entity_view_mode.node.az_marquee
     - core.entity_view_mode.node.az_media_list
@@ -1625,6 +1626,55 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url
+        - 'user.node_grants:view'
+        - user.permissions
+      tags: {  }
+  az_more_news_view:
+    id: az_more_news_view
+    display_title: 'More News View'
+    display_plugin: page
+    position: 2
+    display_options:
+      style:
+        type: default
+        options:
+          row_class: media-list-row
+          default_row_class: false
+          uses_fields: false
+      row:
+        type: 'entity:node'
+        options:
+          relationship: none
+          view_mode: az_card_alternate
+      defaults:
+        css_class: false
+        style: false
+        style_options: false
+        row: false
+        footer: false
+      css_class: 'add-pager-top-margin az-news'
+      display_description: ''
+      style_options: null
+      footer:
+        result:
+          id: result
+          table: views
+          field: result
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: result
+          empty: false
+          content: '<p><em>Page @current_page of @page_count</em></p>'
+      display_extenders: {  }
+      path: news
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - url.query_args
         - 'user.node_grants:view'
         - user.permissions
       tags: {  }
