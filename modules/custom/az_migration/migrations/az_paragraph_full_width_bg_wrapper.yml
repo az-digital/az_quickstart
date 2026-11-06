@@ -40,19 +40,19 @@ process:
       map:
         bg-red: text-bg-red
         bg-blue: text-bg-blue
-        bg-sky: text-bg-sky
-        bg-oasis: text-bg-oasis
+        bg-sky: text-bg-rain
+        bg-oasis: text-bg-arroyo-blue
         bg-azurite: text-bg-azurite
-        bg-midnight: text-bg-midnight
-        bg-bloom: text-bg-bloom
-        bg-chili: text-bg-chili
-        bg-cool-gray: text-bg-cool-gray
-        bg-warm-gray: text-bg-warm-gray
-        bg-leaf: text-bg-leaf
-        bg-river: text-bg-river
+        bg-midnight: text-bg-tinta
+        bg-bloom: text-bg-bougainvillea
+        bg-chili: text-bg-sonoran-red
+        bg-cool-gray: text-bg-cloud
+        bg-warm-gray: text-bg-caliche
+        bg-leaf: text-bg-saguaro
+        bg-river: text-bg-shade
         bg-silver: text-bg-silver
         bg-ash: text-bg-ash
-        bg-mesa: text-bg-mesa
+        bg-mesa: text-bg-brick
   text_background_full_width_processed:
     plugin: default_value
     default_value: 'full-width-background'

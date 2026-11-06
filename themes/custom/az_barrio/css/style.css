@@ -447,7 +447,7 @@ td.menu-disabled {
 
 .region-header-ua-utilities .az-search-block .search-block-form:not(.az-search) .input-group button:hover,
 .region-header-ua-utilities .az-search-block .search-block-form:not(.az-search) .input-group button:focus {
-  background-color: var(--bs-chili);
+  background-color: var(--bs-sonoran-red);
   color: var(--bs-white);
 }
 
