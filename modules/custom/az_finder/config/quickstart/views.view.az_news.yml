@@ -1632,7 +1632,7 @@ display:
   az_more_news_view:
     id: az_more_news_view
     display_title: 'More News View'
-    display_plugin: page
+    display_plugin: block
     position: 2
     display_options:
       style:
@@ -1648,26 +1648,17 @@ display:
           view_mode: az_card_alternate
       defaults:
         css_class: false
+        title: false
+        pager: false
         style: false
         style_options: false
         row: false
         footer: false
+        pager_options: false
       css_class: 'add-pager-top-margin az-news'
       display_description: ''
       style_options: null
-      footer:
-        result:
-          id: result
-          table: views
-          field: result
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: result
-          empty: false
-          content: '<p><em>Page @current_page of @page_count</em></p>'
       display_extenders: {  }
-      path: news
     cache_metadata:
       max-age: -1
       contexts:
