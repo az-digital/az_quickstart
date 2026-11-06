@@ -1,0 +1,187 @@
+{#
+/**
+ * @file
+ * Template for the az_quickstart Ranking component.
+ *
+ * Renders one card - a large heading holding the ranking value, a
+ * supporting line, and an attribution, on a colored background:
+ *
+ *   <div class="az-ranking-sdc card ... text-bg-chili">
+ *     <div class="card-body ...">
+ *       <div class="card-text ...">
+ *         <div class="az-ranking-sdc__content">
+ *           <h3 class="az-ranking-sdc__heading ...">TOP 1%</h3>
+ *           <h4 class="az-ranking-sdc__description">of World Universities</h4>
+ *         </div>
+ *         <div class="az-ranking-sdc__source">US News, 2026</div>
+ *
+ * The card-body level is not just padding - ranking.css hangs the
+ * visually-hidden link fix off it.
+ *
+ * The card's own colors and styling are decided here. Callers pass semantic
+ * values like background: 'blue' or link_style: 'btn-red' and this template
+ * turns them into Bootstrap classes; the one exception is utility_classes,
+ * which callers pass through as written. That is what lets one component
+ * serve both Canvas and the page builder.
+ *
+ * For an image card use the Ranking Image component instead, dropped into a
+ * Ranking Deck alongside these.
+ *
+ * Props:
+ * - heading: Main ranking value.
+ * - description: Supporting line displayed below the heading.
+ * - source: Attribution text; newlines are preserved.
+ * - heading_level: Heading tag, h2-h6. Defaults to h3.
+ * - header_style: bold | thin | bolder. Defaults to bold. Sets the heading's
+ *   font weight; see ranking.css for the values.
+ * - heading_font: sans | serif. Defaults to sans.
+ * - alignment: left | center. Defaults to left.
+ * - background: chili | blue | sky | oasis | azurite | cool-gray | warm-gray |
+ *   white | transparent. Defaults to chili. Ignored when hover effect is active.
+ * - font_color: midnight | black | white | az-blue. Only used when background
+ *   is transparent. Defaults to midnight.
+ * - clickable: Whole card links to link_url. Ignored without a link_url —
+ *   see the guard below.
+ * - hover_effect: Contrasting hover colors; only honored when clickable, so
+ *   also ignored without a link_url.
+ * - hover_background: chili | blue | sky | cool-gray | oasis. Defaults to chili.
+ * - link_url: Link destination.
+ * - link_title: Link text when the card is not clickable; falls back to source.
+ * - link_style: hidden | text-link | btn-red | btn-blue | btn-outline-red |
+ *   btn-outline-blue | btn-outline-white. Defaults to btn-red. Ignored when
+ *   the card is clickable with the hover effect.
+ * - utility_classes: Additional Bootstrap utility classes for the card root
+ *   (e.g. bottom spacing). Not needed when the card is placed inside a
+ *   Ranking Deck.
+ */
+#}
+{% set attributes = attributes|default(create_attribute()) %}
+
+{#
+  Fall back to a safe default for anything missing or out of range.
+  Rationale: these all get interpolated further down. Most land in class
+  names - 'az-ranking-sdc--text-' ~ font_color, or the heading's
+  '--' ~ header_style - where a stray value produces a class no CSS matches
+  and the card quietly loses that piece of its styling. heading_level is the
+  one that matters more: it is printed as the heading's tag name, so a bad
+  value there emits broken markup rather than unstyled markup.
+#}
+{% set heading_level = heading_level|default('h3') %}
+{% if heading_level not in ['h2', 'h3', 'h4', 'h5', 'h6'] %}
+  {% set heading_level = 'h3' %}
+{% endif %}
+{% set header_style = header_style|default('bold') in ['bold', 'thin', 'bolder'] ? header_style|default('bold') : 'bold' %}
+{% set heading_font = heading_font|default('sans') in ['sans', 'serif'] ? heading_font|default('sans') : 'sans' %}
+{% set alignment = alignment|default('left') in ['left', 'center'] ? alignment|default('left') : 'left' %}
+
+{% set background_classes = {
+  'chili': 'text-bg-chili',
+  'blue': 'text-bg-blue',
+  'sky': 'bg-sky',
+  'oasis': 'bg-oasis',
+  'azurite': 'text-bg-azurite',
+  'cool-gray': 'bg-cool-gray',
+  'warm-gray': 'bg-warm-gray',
+  'white': 'bg-white',
+  'transparent': 'bg-transparent',
+} %}
+{% set background = background|default('chili') in background_classes|keys ? background|default('chili') : 'chili' %}
+
+{% set font_color = font_color|default('midnight') in ['midnight', 'black', 'white', 'az-blue'] ? font_color|default('midnight') : 'midnight' %}
+
+{% set clickable = clickable|default(false) and link_url|default('') %}
+{# Hover effect requires a clickable card. #}
+{% set hover_effect = clickable ? hover_effect|default(false) : false %}
+{% set hover_background = hover_background|default('chili') in ['chili', 'blue', 'sky', 'cool-gray', 'oasis'] ? hover_background|default('chili') : 'chili' %}
+
+{% set link_style_classes = {
+  'hidden': 'visually-hidden',
+  'text-link': 'link mt-2',
+  'btn-red': 'w-100 btn btn-red mt-2',
+  'btn-blue': 'w-100 btn btn-blue mt-2',
+  'btn-outline-red': 'w-100 btn btn-outline-red mt-2',
+  'btn-outline-blue': 'w-100 btn btn-outline-blue mt-2',
+  'btn-outline-white': 'w-100 btn btn-outline-white mt-2',
+} %}
+{% set link_style = link_style|default('btn-red') in link_style_classes|keys ? link_style|default('btn-red') : 'btn-red' %}
+{% set link_classes = link_style_classes[link_style] %}
+{# Text links need a darker color on light oasis/sky backgrounds. #}
+{% if link_style == 'text-link' and background in ['oasis', 'sky'] %}
+  {% set link_classes = link_classes ~ ' text-midnight' %}
+{% endif %}
+
+{% set utility_classes = utility_classes|default([]) %}
+{% if utility_classes is not iterable %}
+  {% set utility_classes = [utility_classes] %}
+{% endif %}
+
+{# Text contrast overrides for light backgrounds. #}
+{% set text_overrides = {
+  'sky': 'text-midnight',
+  'cool-gray': 'text-azurite',
+  'warm-gray': 'text-midnight',
+  'white': 'text-midnight',
+  'oasis': 'text-midnight',
+} %}
+{% set hover_text_overrides = {
+  'sky': 'text-midnight',
+  'cool-gray': 'text-azurite',
+  'oasis': 'text-midnight',
+} %}
+{% if hover_effect %}
+  {% set text_override = hover_text_overrides[hover_background]|default('') %}
+{% else %}
+  {% set text_override = text_overrides[background]|default('') %}
+{% endif %}
+
+{% set root_classes = ['az-ranking-sdc', 'card', 'h-100', 'border-0', 'overflow-hidden'] %}
+{% set root_classes = root_classes|merge([alignment == 'center' ? 'text-center' : 'text-left']) %}
+{% if hover_effect %}
+  {% set root_classes = root_classes|merge([background_classes[hover_background], 'az-ranking-sdc--bold-hover', 'hover']) %}
+{% else %}
+  {% set root_classes = root_classes|merge([background_classes[background]]) %}
+  {% if background == 'transparent' %}
+    {% set root_classes = root_classes|merge(['az-ranking-sdc--text-' ~ font_color]) %}
+  {% endif %}
+  {% if clickable and link_url|default('') %}
+    {% set root_classes = root_classes|merge(['az-ranking-sdc--with-link', 'hover']) %}
+  {% endif %}
+{% endif %}
+{% if clickable %}
+  {% set root_classes = root_classes|merge(['shadow']) %}
+{% endif %}
+{% if utility_classes %}
+  {% set root_classes = root_classes|merge(utility_classes) %}
+{% endif %}
+
+<div{{ attributes.addClass(root_classes) }}>
+  <div class="card-body d-flex flex-column h-100 p-4">
+    <div class="card-text d-flex flex-column flex-grow-1">
+      <div class="az-ranking-sdc__content">
+        {% if heading|default('') %}
+          <{{ heading_level }} class="m-0 az-ranking-sdc__heading{{ header_style != 'thin' ? ' az-ranking-sdc__heading--' ~ header_style : '' }}{{ heading_font == 'serif' ? ' az-ranking-sdc__heading--serif' : '' }}{{ clickable ? ' hover-text-underline' : '' }}{{ text_override ? ' ' ~ text_override : '' }}">{{ heading }}</{{ heading_level }}>
+        {% endif %}
+        {#
+          When transparent, we want description and source to have less margin
+          and be more 'snug' since a large gap without any colored background
+          looks weird.
+        #}
+        {% if description|default('') %}
+          <h4 class="m-0 mt-1{{ background != 'transparent' ? ' mb-5' : '' }} az-ranking-sdc__description{{ text_override ? ' ' ~ text_override : '' }}">{{ description }}</h4>
+        {% endif %}
+      </div>
+      {% if source|default('') %}
+        <div class="az-ranking-sdc__source mt-2{{ background != 'transparent' ? ' mt-auto' : '' }}{{ text_override ? ' ' ~ text_override : '' }}">
+          {{ source|nl2br }}
+        </div>
+      {% endif %}
+    </div>
+    {% if link_url|default('') %}
+      {% if hover_effect %}
+        <a href="{{ link_url }}" class="stretched-link"></a>
+      {% else %}
+        <a href="{{ link_url }}" class="{{ link_classes }}{{ clickable ? ' stretched-link' : '' }}">{{ link_title|default(source|default('')) }}</a>
+      {% endif %}
+    {% endif %}
+  </div>
+</div>

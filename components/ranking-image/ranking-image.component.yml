@@ -1,0 +1,112 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Ranking Image
+status: experimental
+description: A decorative, layout-aware image backed by the media library. Works standalone on a page, or dropped into a Ranking Deck alongside Ranking cards.
+props:
+  type: object
+  properties:
+    image:
+      title: Image
+      description: Pick an image from the media library.
+      type: object
+      required:
+        - src
+      properties:
+        src:
+          title: Image URL
+          type: string
+          format: uri-reference
+          contentMediaType: image/*
+          x-allowed-schemes:
+            - http
+            - https
+        alt:
+          title: Alternative text
+          type: string
+        width:
+          title: Image width
+          type: integer
+        height:
+          title: Image height
+          type: integer
+      examples:
+        - src: https://placehold.co/1000x500
+          alt: ''
+          width: 1000
+          height: 500
+    width_span_desktop:
+      type: string
+      title: Width Span (Desktop)
+      description: How many grid columns this image spans on desktop when placed inside a Ranking Deck (or any other CSS grid layout). Has no effect outside a grid layout. Keep at or below the deck's "Rankings per row on desktop" setting, or the image will overflow into extra columns.
+      enum:
+        - '1'
+        - '2'
+        - '3'
+        - '4'
+      meta:enum:
+        '1': 1 column
+        '2': 2 columns (default)
+        '3': 3 columns
+        '4': 4 columns
+      examples:
+        - '2'
+    width_span_tablet:
+      type: string
+      title: Width Span (Tablet)
+      description: How many grid columns this image spans on tablet. Keep at or below the deck's "Rankings per row on tablet" setting, or the image will overflow into extra columns.
+      enum:
+        - '1'
+        - '2'
+        - '3'
+        - '4'
+      meta:enum:
+        '1': 1 column
+        '2': 2 columns (default)
+        '3': 3 columns
+        '4': 4 columns
+      examples:
+        - '2'
+    width_span_phone:
+      type: string
+      title: Width Span (Phone)
+      description: How many grid columns this image spans on phone. Keep at or below the deck's "Rankings per row on phone" setting, or the image will overflow into extra columns.
+      enum:
+        - '1'
+        - '2'
+        - '3'
+        - '4'
+      meta:enum:
+        '1': 1 column (default)
+        '2': 2 columns
+        '3': 3 columns
+        '4': 4 columns
+      examples:
+        - '1'
+    focal_x:
+      type: number
+      title: Focal Point X
+      description: Horizontal focal point, as a fraction of the image's width from the left (0 = left edge, 1 = right edge). Keeps this point visible when the image is cropped to fill its container. Leave unset for default centered cropping.
+      minimum: 0
+      maximum: 1
+      examples:
+        - 0.5
+    focal_y:
+      type: number
+      title: Focal Point Y
+      description: Vertical focal point, as a fraction of the image's height from the top (0 = top edge, 1 = bottom edge). Keeps this point visible when the image is cropped to fill its container. Leave unset for default centered cropping.
+      minimum: 0
+      maximum: 1
+      examples:
+        - 0.5
+    utility_classes:
+      type: array
+      title: Utility Classes
+      description: Additional Bootstrap utility classes for the image wrapper, e.g. bottom spacing (mb-4) before the next item on the page. Not needed when the image is placed inside a Ranking Deck.
+      items:
+        type: string
+      examples:
+        - - mb-0
+libraryOverrides:
+  dependencies:
+    - core/drupal
+    - core/once
