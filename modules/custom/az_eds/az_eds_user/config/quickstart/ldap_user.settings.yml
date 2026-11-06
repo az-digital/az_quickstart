@@ -5,9 +5,9 @@ ldapEntryProvisionTriggers: {  }
 orphanedIncludeDisabledUsers: false
 orphanedDrupalAcctBehavior: user_cancel_block
 orphanedDrupalAcctReportingInbox: ''
-orphanedCheckQty: 100
+orphanedCheckQty: 0
 orphanedAccountCheckInterval: weekly
-userConflictResolve: resolve
+userConflictResolve: log
 manualAccountConflict: conflict_reject
 acctCreation: ldap_behavior
 disableAdminPasswordField: false
