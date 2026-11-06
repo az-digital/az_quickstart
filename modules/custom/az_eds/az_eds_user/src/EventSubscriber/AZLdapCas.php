@@ -20,9 +20,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class AZLdapCas implements EventSubscriberInterface {
 
-  // @todo determine appropriate flood window.
+  // Time window in seconds until flood events expire.
   const FLOOD_WINDOW = 300;
-  // @todo determine allowed threshold per window.
+  // Maximum attempts allowed during window.
   const FLOOD_THRESHOLD = 20;
 
   /**
