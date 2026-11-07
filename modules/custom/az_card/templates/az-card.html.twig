@@ -44,7 +44,7 @@
       {% if title and title_style == 'title-on-image' %}
         <div class="card-img-overlay p-0 d-flex flex-column">
           {# On a tile, the gradient covers at least the bottom half of the image, and grows with a long title. #}
-          <{{ title_level }} class="fw-bold mt-auto card-title text-bg-gradient-blue text-white mb-0 p-4 pt-8 {{ image_only ? 'd-flex align-items-end' }} {{ title_alignment }} {{ title_display }} {{ title_classes|join(' ') }}"{{ image_only ? ' style="min-height: 50%;"' }}>
+          <{{ title_level }} class="fw-bold mt-auto card-title text-bg-gradient-blue text-white mb-0 p-4 pt-8 {{ image_only ? 'd-flex flex-column justify-content-end' }} {{ title_alignment }} {{ title_display }} {{ title_classes|join(' ') }}"{{ image_only ? ' style="min-height: 50%;"' }}>
             {{ card.title_link(title, link_url, has_link, title_link_stretched, title_link_classes) }}
           </{{ title_level }}>
         </div>
