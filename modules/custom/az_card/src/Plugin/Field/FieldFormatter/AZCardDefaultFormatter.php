@@ -110,6 +110,13 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
     foreach ($items as $delta => $item) {
       assert($item instanceof AZCardItem);
 
+      $title_classes = [];
+      $body_classes = [];
+      $title_style = 'default';
+      $title_link_stretched = FALSE;
+      $title_link_classes = [];
+      $image_only = FALSE;
+
       // Format title.
       $title = $item->title ?? '';
 
@@ -151,6 +158,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
           explode(' ', $item->options['link_style']);
         if (empty($settings['interactive_links'])) {
           $link_render_array['#attributes']['class'][] = 'az-card-no-follow';
+          $title_link_classes[] = 'az-card-no-follow';
           $attached['library'][] = 'az_card/az_card_no_follow';
         }
         $attached['library'][] = 'az_card/az_card_title_hover';
@@ -187,29 +195,62 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
           }
           $column_classes[] = $card_defaults['card_width'] ?? 'col-md-4 col-lg-4';
           $card_classes = $card_defaults['card_style'] ?? 'card';
-
-          // Is the card clickable?
-          if (isset($card_defaults['card_clickable']) && $card_defaults['card_clickable']) {
-            if (!empty($link_render_array)) {
-              $link_render_array['#attributes']['class'][] = 'stretched-link';
-            }
-            $card_classes .= ' shadow overflow-hidden';
-            if ($item->link_uri) {
-              $card_classes .= ' card-with-link';
-            }
-          }
+          $clickable = !empty($card_defaults['card_clickable']);
 
           // Title style.
           if (isset($card_defaults['card_title_style'])) {
             $title_style = $card_defaults['card_title_style'];
-            if (!empty($media_render_array)) {
-              if ($item->title && $title_style === 'title-on-image') {
-                array_push($media_render_array['#item_attributes']['class'], 'img-fluid', 'image-style-az-card-image');
-              }
-            }
             // Force default title style if media field is not populated.
-            else {
+            if (empty($media_render_array)) {
               $title_style = 'default';
+            }
+          }
+          $title_on_image = $item->title && $title_style === 'title-on-image';
+
+          // If a title on image card shows nothing under its image (no body,
+          // and a link that is hidden or absent), it is an image tile: a
+          // square image with the title on it. For example, a card with an
+          // empty body and a "Red button" link is not a tile, because the
+          // button shows under the image.
+          $link_hidden = empty($item->link_title) || in_array('visually-hidden', $link_render_array['#attributes']['class'] ?? [], TRUE);
+          $image_only = $title_on_image && ($item->body ?? '') === '' && $link_hidden;
+
+          // Is the card clickable?
+          if ($clickable) {
+            if (!empty($link_render_array)) {
+              $link_render_array['#attributes']['class'][] = 'stretched-link';
+            }
+            // An image tile has no shadow in the brand design.
+            $card_classes .= $image_only ? ' overflow-hidden' : ' shadow overflow-hidden';
+            // $link_url is FALSE for a link the visitor can't open, such as an
+            // unpublished page. Then the card gets no hover effect.
+            if ($link_url) {
+              $card_classes .= ' hover';
+              $title_classes[] = 'hover-text-underline';
+              if (!empty($media_render_array)) {
+                $media_render_array['#item_attributes']['class'][] = 'hover-img-zoom-in';
+              }
+              // An image tile shows no link under the image, so the link in
+              // its title covers the card.
+              $title_link_stretched = $image_only;
+            }
+          }
+
+          if ($title_on_image) {
+            if ($image_only) {
+              // Square image that fills the card, with no card border.
+              // h-100 keeps img-fluid from overriding the ratio's height.
+              array_push($media_render_array['#item_attributes']['class'], 'object-fit-cover', 'h-100', 'image-style-az-card-image');
+              $card_classes = implode(' ', array_unique(array_merge(explode(' ', $card_classes), ['border-0'])));
+            }
+            else {
+              array_push($media_render_array['#item_attributes']['class'], 'img-fluid', 'image-style-az-card-image');
+            }
+            // Clip the image to the card's round corners. Rationale: when
+            // no card body follows the image, the image is the bottom of
+            // the card, and .card-img-top rounds only its top corners.
+            if (!str_contains($card_classes, 'overflow-hidden')) {
+              $card_classes .= ' overflow-hidden';
             }
           }
 
@@ -232,6 +273,16 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
       if (!empty($item->options['class'])) {
         $card_classes .= ' ' . $item->options['class'];
       }
+      // A Cloud card has the brand's Cloud card colors: Tinta text and an
+      // Azurite title. The card's .text-bg-* class sets black text, so the
+      // classes go on the card body and the title.
+      if (in_array($item->options['class'] ?? '', AZCardItem::CLOUD_BACKGROUND_CLASSES, TRUE)) {
+        $body_classes[] = 'text-tinta';
+        // A title on the image stays white, on its gradient.
+        if ($title_style === 'default') {
+          $title_classes[] = 'text-azurite';
+        }
+      }
 
       $element[$delta] = [
         '#theme' => 'az_card',
@@ -247,10 +298,15 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         ],
         '#link' => $link_render_array,
         '#link_url' => $link_url,
-        '#title_style' => $title_style ?? 'default',
+        '#title_style' => $title_style,
         '#title_level' => $title_level ?? 'h3',
         '#title_alignment' => $title_alignment ?? 'text-start',
         '#title_display' => $title_display ?? 'h5',
+        '#title_classes' => $title_classes,
+        '#body_classes' => $body_classes,
+        '#title_link_stretched' => $title_link_stretched,
+        '#title_link_classes' => $title_link_classes,
+        '#image_only' => $image_only,
         '#attributes' => ['class' => $card_classes],
         '#attached' => $attached,
       ];

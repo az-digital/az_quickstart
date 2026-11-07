@@ -181,6 +181,129 @@
           "body": "<p>Wilma Wildcat<br>University of Arizona<br>520-621-1986, wilma.wildcat@arizona.edu</p>"
         }
       ]
+    },
+    {
+      "id": 420,
+      "card_width": "col-lg-4",
+      "card_style": "card",
+      "card_title": "Title on Image",
+      "card_title_style": "title-on-image",
+      "card_clickable": true,
+      "az_cards": [
+        {
+          "delta": 0,
+          "title": "Undergraduate",
+          "body": "",
+          "link_title": "Undergraduate",
+          "link_url": "#top",
+          "media": "study.jpeg",
+          "background": "text-bg-white",
+          "link_style": "visually-hidden"
+        },
+        {
+          "delta": 1,
+          "title": "Graduate",
+          "body": "",
+          "link_title": "Graduate",
+          "link_url": "#top",
+          "media": "holsclaw_hall.jpg",
+          "background": "text-bg-white",
+          "link_style": "visually-hidden"
+        },
+        {
+          "delta": 2,
+          "title": "Online",
+          "body": "",
+          "link_title": "Online",
+          "link_url": "#top",
+          "media": "Health-Sciences-Education-Building-2464x1640.jpg",
+          "background": "text-bg-white",
+          "link_style": "visually-hidden"
+        }
+      ],
+      "bottom_spacing": "mb-5"
+    },
+    {
+      "id": 424,
+      "card_width": "col-lg-4",
+      "card_style": "card border-0",
+      "card_title": "Link Lists",
+      "card_title_style": "default",
+      "card_clickable": false,
+      "az_cards": [
+        {
+          "delta": 0,
+          "title": "Academic Resources",
+          "body": "<p>Find the support and guidance you need to succeed in the classroom. Explore tutoring options, connect with academic advisors, access the course catalog, and plan your academic journey.</p><ul class=\"list-unstyled fw-semibold mt-3 mb-0\"><li class=\"mb-2\"><a class=\"text-azurite\" href=\"#top\">Contact Your Advisor</a></li><li class=\"mb-2\"><a class=\"text-azurite\" href=\"#top\">Course Catalog &amp; Degree Programs</a></li><li class=\"mb-2\"><a class=\"text-azurite\" href=\"#top\">Registrar &amp; Transcripts</a></li><li class=\"mb-2\"><a class=\"text-azurite\" href=\"#top\">Tutoring &amp; Academic Support</a></li><li class=\"mb-2\"><a class=\"text-azurite\" href=\"#top\">University Libraries</a></li></ul>",
+          "link_title": "",
+          "link_url": "",
+          "media": "",
+          "background": "text-bg-cool-gray",
+          "link_style": "visually-hidden"
+        },
+        {
+          "delta": 1,
+          "title": "Campus Life & Involvement",
+          "body": "<p>Find your community and make the most of your time at Arizona. Explore clubs and organizations, learn about on-campus housing and meal plans, and discover ways to connect through events, clubs, and programs.</p><ul class=\"list-unstyled fw-semibold mt-3 mb-0\"><li class=\"mb-2\"><a class=\"text-azurite\" href=\"#top\">Calendar of Events</a></li><li class=\"mb-2\"><a class=\"text-azurite\" href=\"#top\">Campus Dining</a></li><li class=\"mb-2\"><a class=\"text-azurite\" href=\"#top\">Campus Recreation</a></li><li class=\"mb-2\"><a class=\"text-azurite\" href=\"#top\">Clubs &amp; Organizations</a></li><li class=\"mb-2\"><a class=\"text-azurite\" href=\"#top\">Fraternity &amp; Sorority Programs</a></li><li class=\"mb-2\"><a class=\"text-azurite\" href=\"#top\">Housing &amp; Residence Life</a></li><li class=\"mb-2\"><a class=\"text-azurite\" href=\"#top\">Off-Campus Housing</a></li><li class=\"mb-2\"><a class=\"text-azurite\" href=\"#top\">ZonaZoo</a></li></ul>",
+          "link_title": "",
+          "link_url": "",
+          "media": "",
+          "background": "text-bg-cool-gray",
+          "link_style": "visually-hidden"
+        },
+        {
+          "delta": 2,
+          "title": "Health & Safety",
+          "body": "<p>Take care of your mind, body, and overall well-being. Access healthcare, mental health services, accessibility resources, and support programs designed to help you feel your best and stay balanced throughout your college experience.</p><ul class=\"list-unstyled fw-semibold mt-3 mb-0\"><li class=\"mb-2\"><a class=\"text-azurite\" href=\"#top\">Campus Health</a></li><li class=\"mb-2\"><a class=\"text-azurite\" href=\"#top\">Campus Safety</a></li><li class=\"mb-2\"><a class=\"text-azurite\" href=\"#top\">Counseling &amp; CAPS Support</a></li><li class=\"mb-2\"><a class=\"text-azurite\" href=\"#top\">Disability Resource Center</a></li><li class=\"mb-2\"><a class=\"text-azurite\" href=\"#top\">Health &amp; Wellness</a></li><li class=\"mb-2\"><a class=\"text-azurite\" href=\"#top\">Housing &amp; Residence Life</a></li><li class=\"mb-2\"><a class=\"text-azurite\" href=\"#top\">Off-Campus Housing</a></li><li class=\"mb-2\"><a class=\"text-azurite\" href=\"#top\">SafeCats</a></li></ul>",
+          "link_title": "",
+          "link_url": "",
+          "media": "",
+          "background": "text-bg-cool-gray",
+          "link_style": "visually-hidden"
+        }
+      ],
+      "bottom_spacing": "mb-5"
+    },
+    {
+      "id": 425,
+      "card_width": "col-lg-4",
+      "card_style": "card border-0",
+      "card_title": "Calls to Action",
+      "card_title_style": "default",
+      "card_clickable": false,
+      "az_cards": [
+        {
+          "delta": 0,
+          "title": "Student Media",
+          "body": "<p>Arizona Student Media brings the campus community stories that matter while giving students hands-on experience in journalism, radio, TV, design, and business. From the student-run Arizona Daily Wildcat and KAMP Student Radio to UATV-3, these outlets showcase Wildcats making an impact.</p>",
+          "link_title": "Listen Now",
+          "link_url": "#top",
+          "media": "",
+          "background": "text-bg-cool-gray",
+          "link_style": "btn btn-red"
+        },
+        {
+          "delta": 1,
+          "title": "Bear Down Rundown",
+          "body": "<p>The Bear Down Rundown is your weekly update for all main campus undergraduates during the academic year. Stay in the loop with event highlights, important reminders, and tips to make the most of your Wildcat experience.</p>",
+          "link_title": "Subscribe",
+          "link_url": "#top",
+          "media": "",
+          "background": "text-bg-cool-gray",
+          "link_style": "btn btn-red"
+        },
+        {
+          "delta": 2,
+          "title": "Follow Along",
+          "body": "<p>Follow the university’s social media channels to stay up to date on events, campus highlights, and everything happening across Arizona.</p><div class=\"d-flex gap-2 mt-3 fs-1 lh-1\"><a class=\"text-red text-decoration-none\" href=\"#top\"><span class=\"az-icon-linkedin-circle\"></span><span class=\"visually-hidden\">LinkedIn</span></a><a class=\"text-red text-decoration-none\" href=\"#top\"><span class=\"az-icon-instagram-circle\"></span><span class=\"visually-hidden\">Instagram</span></a><a class=\"text-red text-decoration-none\" href=\"#top\"><span class=\"az-icon-facebook-circle\"></span><span class=\"visually-hidden\">Facebook</span></a><a class=\"text-red text-decoration-none\" href=\"#top\"><span class=\"az-icon-youtube-circle\"></span><span class=\"visually-hidden\">YouTube</span></a></div>",
+          "link_title": "",
+          "link_url": "",
+          "media": "",
+          "background": "text-bg-cool-gray",
+          "link_style": "visually-hidden"
+        }
+      ],
+      "bottom_spacing": "mb-5"
     }
   ]
 }
