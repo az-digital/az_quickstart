@@ -114,6 +114,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
       $body_classes = [];
       $title_style = 'default';
       $title_link_stretched = FALSE;
+      $title_link_classes = [];
       $image_only = FALSE;
 
       // Format title.
@@ -157,6 +158,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
           explode(' ', $item->options['link_style']);
         if (empty($settings['interactive_links'])) {
           $link_render_array['#attributes']['class'][] = 'az-card-no-follow';
+          $title_link_classes[] = 'az-card-no-follow';
           $attached['library'][] = 'az_card/az_card_no_follow';
         }
         $attached['library'][] = 'az_card/az_card_title_hover';
@@ -220,7 +222,9 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
             }
             // An image tile has no shadow in the brand design.
             $card_classes .= $image_only ? ' overflow-hidden' : ' shadow overflow-hidden';
-            if ($item->link_uri) {
+            // $link_url is FALSE for a link the visitor can't open, such as an
+            // unpublished page. Then the card gets no hover effect.
+            if ($link_url) {
               $card_classes .= ' hover';
               $title_classes[] = 'hover-text-underline';
               if (!empty($media_render_array)) {
@@ -301,6 +305,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         '#title_classes' => $title_classes,
         '#body_classes' => $body_classes,
         '#title_link_stretched' => $title_link_stretched,
+        '#title_link_classes' => $title_link_classes,
         '#image_only' => $image_only,
         '#attributes' => ['class' => $card_classes],
         '#attached' => $attached,

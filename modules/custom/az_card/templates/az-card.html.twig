@@ -17,6 +17,7 @@
  * - title_classes: Additional classes for the card title.
  * - body_classes: Additional classes for the card body.
  * - title_link_stretched: Whether the link in the title covers the card.
+ * - title_link_classes: Additional classes for the link in the title.
  * - image_only: Whether the card is an image tile: a square image with the
  *   title on it, and nothing under the image.
  *
@@ -24,9 +25,9 @@
  */
 #}
 
-{% macro title_link(title, link_url, has_link, stretched) %}
+{% macro title_link(title, link_url, has_link, stretched, classes) %}
   {% if has_link %}
-    <a href="{{ link_url }}" class="text-reset{{ stretched ? ' stretched-link text-decoration-none' }}">{{ title }}</a>
+    <a href="{{ link_url }}" class="text-reset{{ stretched ? ' stretched-link text-decoration-none' }}{{ classes ? ' ' ~ classes|join(' ') }}">{{ title }}</a>
   {% else %}
     {{ title }}
   {% endif %}
@@ -42,8 +43,9 @@
       {{ media }}
       {% if title and title_style == 'title-on-image' %}
         <div class="card-img-overlay p-0 d-flex flex-column">
-          <{{ title_level }} class="fw-bold mt-auto card-title text-bg-gradient-blue text-white mb-0 p-4 {{ image_only ? 'h-50 d-flex align-items-end' : 'pt-8' }} {{ title_alignment }} {{ title_display }} {{ title_classes|join(' ') }}">
-            {{ card.title_link(title, link_url, has_link, title_link_stretched) }}
+          {# On a tile, the gradient covers at least the bottom half of the image, and grows with a long title. #}
+          <{{ title_level }} class="fw-bold mt-auto card-title text-bg-gradient-blue text-white mb-0 p-4 pt-8 {{ image_only ? 'd-flex align-items-end' }} {{ title_alignment }} {{ title_display }} {{ title_classes|join(' ') }}"{{ image_only ? ' style="min-height: 50%;"' }}>
+            {{ card.title_link(title, link_url, has_link, title_link_stretched, title_link_classes) }}
           </{{ title_level }}>
         </div>
       {% endif %}
@@ -67,7 +69,7 @@
     <div class="card-body d-flex flex-column {{ body_classes|join(' ') }}">
       {% if title and title_style == 'default' %}
         <{{ title_level }} class="fw-bold mt-0 mb-2 card-title {{ title_alignment }} {{ title_display }} {{ title_classes|join(' ') }}">
-          {{ card.title_link(title, link_url, has_link, false) }}
+          {{ card.title_link(title, link_url, has_link, false, title_link_classes) }}
         </{{ title_level }}>
       {% endif %}
       {% if body['#text'] %}
