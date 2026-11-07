@@ -37,9 +37,6 @@ source:
       name: card_clickable
       selector: card_clickable
     -
-      name: card_fit_content
-      selector: card_fit_content
-    -
       name: card_title
       selector: card_title
     -
@@ -93,7 +90,6 @@ process:
                 - filename
       options/class: background
       options/link_style: link_style
-      options/icon: icon
 
   behavior_settings:
     plugin: az_paragraphs_behavior_settings
@@ -103,6 +99,5 @@ process:
         card_style: card_style
         card_title_style: card_title_style
         card_clickable: card_clickable
-        card_fit_content: card_fit_content
         az_display_settings:
           bottom_spacing: bottom_spacing

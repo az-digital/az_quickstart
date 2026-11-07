@@ -47,7 +47,7 @@ regions:
 ckeditor5-stylesheets:
   - css/ckeditor5.css
   - https://cdn.digital.arizona.edu/lib/az-icons/main/az-icons-styles.css
-  - https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,300..400,0..1,0#.css
+  - https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0#.css
 
 libraries-extend:
   system/base:

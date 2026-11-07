@@ -183,7 +183,6 @@ class AZCardWidget extends WidgetBase {
         '#theme' => 'az_card',
         '#title' => $item->title ?? '',
         '#body' => $body,
-        '#icon' => $item->options['icon'] ?? '',
         '#attributes' => ['class' => $card_classes],
       ];
       // A Cloud card has Tinta text and an Azurite title, as in the formatter.
@@ -244,7 +243,6 @@ class AZCardWidget extends WidgetBase {
         'text-bg-bloom' => $this->t('Bloom'),
         'text-bg-chili' => $this->t('Chili'),
         'text-bg-cool-gray' => $this->t('Cool Gray'),
-        'bg-cloud' => $this->t('Cloud (Contrast Hover)'),
         'text-bg-warm-gray' => $this->t('Warm Gray'),
         'text-bg-gray-100' => $this->t('Gray 100'),
         'text-bg-gray-200' => $this->t('Gray 200'),
@@ -258,7 +256,6 @@ class AZCardWidget extends WidgetBase {
       '#required' => TRUE,
       '#title' => $this->t('Card Background'),
       '#default_value' => (!empty($item->options['class'])) ? $item->options['class'] : 'text-bg-white',
-      '#description' => $this->t('Contrast Hover options work only when "Clickable cards" is selected. They have no shadow.'),
     ];
 
     $element['media'] = [
@@ -268,14 +265,6 @@ class AZCardWidget extends WidgetBase {
       '#allowed_bundles' => ['az_image'],
       '#delta' => $delta,
       '#cardinality' => 1,
-    ];
-
-    $element['icon'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Card Icon'),
-      '#default_value' => $item->options['icon'] ?? NULL,
-      '#maxlength' => 64,
-      '#description' => $this->t('A <a href="https://fonts.google.com/icons?icon.set=Material+Symbols&icon.style=Rounded" target="_blank">Material Symbols</a> icon name, such as <code>person_raised_hand</code> or <code>school</code>. Shown at the top of the card in place of an image, so it is used only when Card Media is empty. Looks best on a card with a Contrast Hover background.'),
     ];
 
     $element['title'] = [
@@ -552,7 +541,6 @@ class AZCardWidget extends WidgetBase {
           'class' => $value['options'],
           'link_style' => $value['link_style'],
           'title_alignment' => $value['title_alignment'],
-          'icon' => trim($value['icon'] ?? ''),
         ];
       }
       $values[$delta]['body'] = $value['body']['value'];

@@ -5,5 +5,4 @@ arizona_icons:
 material_symbols:
   css:
     theme: 
-      https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,300..400,0..1,0#.css: {}
-      css/az-icons-material-symbols.css: {}
+      https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0#.css: {}

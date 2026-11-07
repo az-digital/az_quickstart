@@ -115,11 +115,6 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
       $title_style = 'default';
       $title_link_stretched = FALSE;
       $image_only = FALSE;
-      $hover_colors = FALSE;
-      $fit_content = FALSE;
-      // If Card Background is "Cloud (Contrast Hover)", its saved value is
-      // bg-cloud, the class that Arizona Bootstrap gives card hover colors to.
-      $contrast_hover = ($item->options['class'] ?? '') === 'bg-cloud';
 
       // Format title.
       $title = $item->title ?? '';
@@ -199,7 +194,6 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
           $column_classes[] = $card_defaults['card_width'] ?? 'col-md-4 col-lg-4';
           $card_classes = $card_defaults['card_style'] ?? 'card';
           $clickable = !empty($card_defaults['card_clickable']);
-          $fit_content = !empty($card_defaults['card_fit_content']);
 
           // Title style.
           if (isset($card_defaults['card_title_style'])) {
@@ -219,27 +213,16 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
           $link_hidden = empty($item->link_title) || in_array('visually-hidden', $link_render_array['#attributes']['class'] ?? [], TRUE);
           $image_only = $title_on_image && ($item->body ?? '') === '' && $link_hidden;
 
-          // If a clickable card with a "Contrast Hover" background has a link,
-          // it gets the Arizona Bootstrap card hover colors. For example,
-          // .card.bg-cloud.hover is Cloud, then Arizona Blue on hover. An
-          // image tile is left out, because its image covers the background.
-          $hover_colors = $contrast_hover && $clickable && !empty($item->link_uri) && !$image_only;
-
           // Is the card clickable?
           if ($clickable) {
             if (!empty($link_render_array)) {
               $link_render_array['#attributes']['class'][] = 'stretched-link';
             }
-            // "Contrast Hover" cards and image tiles have no shadow in the
-            // brand design.
-            $card_classes .= ($contrast_hover || $image_only) ? ' overflow-hidden' : ' shadow overflow-hidden';
+            // An image tile has no shadow in the brand design.
+            $card_classes .= $image_only ? ' overflow-hidden' : ' shadow overflow-hidden';
             if ($item->link_uri) {
               $card_classes .= ' hover';
-              // The Arizona Bootstrap hover colors include an underline on
-              // the title.
-              if (!$hover_colors) {
-                $title_classes[] = 'hover-text-underline';
-              }
+              $title_classes[] = 'hover-text-underline';
               if (!empty($media_render_array)) {
                 $media_render_array['#item_attributes']['class'][] = 'hover-img-zoom-in';
               }
@@ -283,7 +266,6 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
       $column_classes = implode(' ', $column_classes);
       $column_classes = explode(' ', $column_classes);
       $column_classes[] = 'pb-4';
-      $card_attributes = [];
       if (!empty($item->options['class'])) {
         $card_classes .= ' ' . $item->options['class'];
       }
@@ -297,13 +279,6 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
           $title_classes[] = 'text-azurite';
         }
       }
-      // If a hover colors card has the "Bordered cards" style, keep its
-      // border. Arizona Bootstrap sets the border width of a hover colors
-      // card to 0.
-      if ($hover_colors && !in_array('border-0', explode(' ', $card_classes), TRUE)) {
-        $card_attributes['style'] = '--bs-card-border-width: var(--bs-border-width);';
-      }
-      $card_attributes['class'] = $card_classes;
 
       $element[$delta] = [
         '#theme' => 'az_card',
@@ -327,9 +302,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         '#body_classes' => $body_classes,
         '#title_link_stretched' => $title_link_stretched,
         '#image_only' => $image_only,
-        '#fit_content' => $fit_content,
-        '#icon' => $item->options['icon'] ?? '',
-        '#attributes' => $card_attributes,
+        '#attributes' => ['class' => $card_classes],
         '#attached' => $attached,
       ];
 

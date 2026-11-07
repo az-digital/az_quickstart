@@ -876,7 +876,6 @@ form.webform-submission-form {
 }
 
 /* Link lists in Cloud cards (arizona.edu card design). */
-.card.bg-cloud .card-text ul.list-unstyled,
 .card.text-bg-cloud .card-text ul.list-unstyled,
 .card.text-bg-cool-gray .card-text ul.list-unstyled {
   font-family: proxima-nova-condensed, proxima-nova, calibri, sans-serif;

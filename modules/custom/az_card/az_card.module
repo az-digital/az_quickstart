@@ -44,8 +44,6 @@ function az_card_theme($existing, $type, $theme, $path) {
         'body_classes' => [],
         'title_link_stretched' => FALSE,
         'image_only' => FALSE,
-        'fit_content' => FALSE,
-        'icon' => '',
       ],
       'template' => 'az-card',
     ],

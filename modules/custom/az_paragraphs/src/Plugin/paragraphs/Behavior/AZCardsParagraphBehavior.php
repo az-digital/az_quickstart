@@ -95,14 +95,7 @@ class AZCardsParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#title' => $this->t('Clickable cards'),
       '#type' => 'checkbox',
       '#default_value' => $config['card_clickable'] ?? FALSE,
-      '#description' => $this->t('Make the whole card clickable if the link fields are populated. A clickable card with a Contrast Hover card background changes color on hover.'),
-    ];
-
-    $form['card_fit_content'] = [
-      '#title' => $this->t('Fit card height to content'),
-      '#type' => 'checkbox',
-      '#default_value' => $config['card_fit_content'] ?? FALSE,
-      '#description' => $this->t('Make each card only as tall as its own content. By default, the cards in a row are all as tall as the tallest card.'),
+      '#description' => $this->t('Make the whole card clickable if the link fields are populated.'),
     ];
 
     parent::buildBehaviorForm($paragraph, $form, $form_state);

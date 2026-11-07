@@ -1,7 +1,0 @@
-/**
- * Keep Material Symbols icons filled. The font link loads both the outline
- * and the filled icons (FILL 0..1), and a browser shows the outline by default.
- */
-.material-symbols-rounded {
-  font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24;
-}

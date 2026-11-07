@@ -189,7 +189,6 @@
       "card_title": "Title on Image",
       "card_title_style": "title-on-image",
       "card_clickable": true,
-      "card_fit_content": false,
       "az_cards": [
         {
           "delta": 0,
@@ -225,142 +224,12 @@
       "bottom_spacing": "mb-5"
     },
     {
-      "id": 421,
-      "card_width": "col-lg-4",
-      "card_style": "card border-0",
-      "card_title": "Image and Text",
-      "card_title_style": "default",
-      "card_clickable": true,
-      "card_fit_content": false,
-      "az_cards": [
-        {
-          "delta": 0,
-          "title": "Undergraduate Degrees",
-          "body": "<p>Our undergraduate programs give you the freedom to follow your interests.</p>",
-          "link_title": "Undergraduate Degrees",
-          "link_url": "#top",
-          "media": "arizona_campus_fireworks.jpg",
-          "background": "bg-cloud",
-          "link_style": "visually-hidden"
-        },
-        {
-          "delta": 1,
-          "title": "Graduate",
-          "body": "<p>I’m pursuing a master’s, doctoral, or professional degree in a specific field.</p>",
-          "link_title": "Graduate",
-          "link_url": "#top",
-          "media": "holsclaw_hall.jpg",
-          "background": "bg-cloud",
-          "link_style": "visually-hidden"
-        },
-        {
-          "delta": 2,
-          "title": "Online",
-          "body": "<p>I want to earn my Arizona degree on my own schedule, from anywhere.</p>",
-          "link_title": "Online",
-          "link_url": "#top",
-          "media": "Health-Sciences-Education-Building-2464x1640.jpg",
-          "background": "bg-cloud",
-          "link_style": "visually-hidden"
-        }
-      ],
-      "bottom_spacing": "mb-5"
-    },
-    {
-      "id": 422,
-      "card_width": "col-lg-4",
-      "card_style": "card border-0",
-      "card_title": "Icons",
-      "card_title_style": "default",
-      "card_clickable": true,
-      "card_fit_content": true,
-      "az_cards": [
-        {
-          "delta": 0,
-          "title": "Future Students",
-          "body": "<p>Become a Wildcat and embrace “Bear Down!” Explore information on applying, transferring, Arizona Online, and more.</p>",
-          "link_title": "Future Students",
-          "link_url": "#top",
-          "media": "",
-          "background": "bg-cloud",
-          "link_style": "visually-hidden",
-          "icon": "person_raised_hand"
-        },
-        {
-          "delta": 1,
-          "title": "Current Students",
-          "body": "<p>Access student email and BrightSpace, discover academic resources and student services, and get involved on campus.</p>",
-          "link_title": "Current Students",
-          "link_url": "#top",
-          "media": "",
-          "background": "bg-cloud",
-          "link_style": "visually-hidden",
-          "icon": "backpack"
-        },
-        {
-          "delta": 2,
-          "title": "Parents & Families",
-          "body": "<p>Explore Parent &amp; Family Programs and other networks so you can support your Wildcat (or future Wildcat!) from near and far.</p>",
-          "link_title": "Parents & Families",
-          "link_url": "#top",
-          "media": "",
-          "background": "bg-cloud",
-          "link_style": "visually-hidden",
-          "icon": "diversity_1"
-        }
-      ],
-      "bottom_spacing": "mb-5"
-    },
-    {
-      "id": 423,
-      "card_width": "col-lg-4",
-      "card_style": "card border-0",
-      "card_title": "Text Only",
-      "card_title_style": "default",
-      "card_clickable": true,
-      "card_fit_content": true,
-      "az_cards": [
-        {
-          "delta": 0,
-          "title": "Distance Locations",
-          "body": "<p>Close-to-home flexibility with locations across the state of Arizona.</p>",
-          "link_title": "Distance Locations",
-          "link_url": "#top",
-          "media": "",
-          "background": "bg-cloud",
-          "link_style": "visually-hidden"
-        },
-        {
-          "delta": 1,
-          "title": "Returning Students",
-          "body": "<p>Continue your academic journey where you left off with flexible options and support.</p>",
-          "link_title": "Returning Students",
-          "link_url": "#top",
-          "media": "",
-          "background": "bg-cloud",
-          "link_style": "visually-hidden"
-        },
-        {
-          "delta": 2,
-          "title": "DACA",
-          "body": "<p>Learn about resources and opportunities available to DACA students pursuing higher education.</p>",
-          "link_title": "DACA",
-          "link_url": "#top",
-          "media": "",
-          "background": "bg-cloud",
-          "link_style": "visually-hidden"
-        }
-      ],
-      "bottom_spacing": "mb-5"
-    },
-    {
       "id": 424,
       "card_width": "col-lg-4",
       "card_style": "card border-0",
       "card_title": "Link Lists",
       "card_title_style": "default",
       "card_clickable": false,
-      "card_fit_content": true,
       "az_cards": [
         {
           "delta": 0,
@@ -402,7 +271,6 @@
       "card_title": "Calls to Action",
       "card_title_style": "default",
       "card_clickable": false,
-      "card_fit_content": true,
       "az_cards": [
         {
           "delta": 0,
