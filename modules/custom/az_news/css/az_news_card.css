@@ -20,12 +20,14 @@
   margin-bottom: 18px;
 }
 
-.az-news .media-list-row .node--view-mode-az-media-list {
-  width: 100%;
+@media (max-width: 1199px) {
+  .az-news .media-list-row {
+    width: 100%;
+  }
 }
 
 .az-news .node--view-mode-az-card-alternate {
-  width: 100%;
+  flex: auto;
 }
 
 .az-news .media-list-row .node__content {
@@ -60,13 +62,7 @@
 }
 
 .card-title {
-  text-decoration: none;
-  font-weight: 700;
   font-size: 1.25rem !important;
-}
-
-.card-title:hover {
-  text-decoration: underline;
 }
 
 .field--type-datetime {
