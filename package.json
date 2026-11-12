@@ -13,7 +13,7 @@
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-yml": "^1.8.0",
-    "prettier": "^3.0.3"
+    "prettier": "^3.9.10"
   },
   "browserslist": [
     "last 2 Chrome major versions",
