@@ -74,8 +74,10 @@ function az_quickstart_post_update_remove_block_content_permissions_from_roles(&
  * Update webform permissions for AZQS roles.
  *
  * Grants own-submission access to authenticated users, moves "administer
- * webform" from content editors to content admins, and removes own-submission
- * permissions from content editors (now inherited from authenticated).
+ * webform" from content editors to content admins, moves "edit any webform"
+ * and "edit any webform submission" from content admins to content editors,
+ * and removes own-submission permissions from content editors (now inherited
+ * from authenticated).
  */
 function az_quickstart_post_update_webform_role_permissions(&$sandbox) {
   $changes = [
