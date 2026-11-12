@@ -1,6 +1,4 @@
 dependencies:
-  config:
-    - node.type.webform
   module:
     - node
     - webform
