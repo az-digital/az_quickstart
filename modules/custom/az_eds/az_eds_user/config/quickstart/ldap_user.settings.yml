@@ -5,7 +5,7 @@ ldapEntryProvisionTriggers: {  }
 orphanedIncludeDisabledUsers: false
 orphanedDrupalAcctBehavior: user_cancel_block
 orphanedDrupalAcctReportingInbox: ''
-orphanedCheckQty: 0
+orphanedCheckQty: 100
 orphanedAccountCheckInterval: weekly
 userConflictResolve: log
 manualAccountConflict: conflict_reject
