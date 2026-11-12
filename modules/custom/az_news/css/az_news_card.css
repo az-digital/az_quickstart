@@ -45,12 +45,6 @@
 
 /* Content styles */
 
-.az-news-tags {
-  display: flex;
-  flex-direction: row;
-  font-size: 1rem;
-}
-
 .az-news-tags > div {
   display: flex;
   flex-direction: row;
@@ -58,17 +52,5 @@
 }
 
 .az-news-tags .field__item {
-  padding-right: 1.4rem !important;
-}
-
-.card-title {
-  font-size: 1.25rem !important;
-}
-
-.field--type-datetime {
-  margin-top: auto;
-  display: block;
-  color: var(--bs-blue);
-  font-weight: 400;
-  font-size: 1rem;
+  padding-right: 1rem !important;
 }
