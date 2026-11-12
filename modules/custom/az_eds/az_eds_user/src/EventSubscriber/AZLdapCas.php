@@ -225,7 +225,7 @@ class AZLdapCas implements EventSubscriberInterface {
         );
       }
       catch (\Exception $e) {
-        $this->logger->notice('Failed to provision @username during LDAP mapping: %msg',
+        $this->logger->warning('Failed to provision @username during LDAP mapping: %msg',
         [
           '@username' => $username,
           '%msg' => $e->getMessage(),
