@@ -162,8 +162,7 @@
                 "Region class field: increase maxlength from 40 to 255 (3548552)": "https://www.drupal.org/files/issues/2025-09-24/3548552-4.patch"
             },
             "drupal/captcha": {
-                "Add captcha to all webforms automatically (3380095)": "https://www.drupal.org/files/issues/2023-08-08/3380095-add-captcha-to-webforms.patch",
-                "CAPTCHA persistence ignored when 'cacheable' attribute is enabled (3496865)": "https://gist.githubusercontent.com/joshuasosa/7f3617e1f42aef7873ae4f180fa5c50c/raw/c54019ea7df57b1c03f00d6652b1f455f807e5f7/captcha-3496865"
+                "Add captcha to all webforms automatically (3380095)": "https://www.drupal.org/files/issues/2023-08-08/3380095-add-captcha-to-webforms.patch"
             },
             "drupal/config_distro": {
                 "Storage comparer issue": "https://gist.githubusercontent.com/tadean/e2e0dd57f1a9c4eae28d8e713cb01d82/raw/e114987d4a76c183208c763de4dbfecbf41b7f35/config_distro_storage_comparer_issue.patch"
