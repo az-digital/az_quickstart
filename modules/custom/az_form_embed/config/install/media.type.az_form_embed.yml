@@ -1,0 +1,17 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - az_form_embed
+  enforced:
+    module:
+      - az_form_embed
+id: az_form_embed
+label: 'Form embed'
+description: 'A form hosted by another service, such as Slate. Some services allow only one of their forms on a page.'
+source: az_form_embed
+queue_thumbnail_downloads: false
+new_revision: false
+source_configuration:
+  source_field: field_az_form_embed_url
+field_map: {  }

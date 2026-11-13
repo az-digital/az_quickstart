@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_az_form_embed_url
+    - media.type.az_form_embed
+  enforced:
+    module:
+      - az_form_embed
+id: media.az_form_embed.field_az_form_embed_url
+field_name: field_az_form_embed_url
+entity_type: media
+bundle: az_form_embed
+label: 'Form link'
+description: 'The form''s share link, from the service that hosts it. Do not put personal or confidential information in the link.'
+required: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,15 @@
+# Loads the Form embed placeholder's styles into CKEditor 5 whenever media
+# embed is on. Rationale: CKEditor draws each embedded media item from core's
+# preview route (media.filter.preview), which returns plain HTML and drops any
+# library the placeholder attaches. Without this, the placeholder shows unstyled until something else,
+# like the Media Library, happens to load the styles.
+az_form_embed_placeholder:
+  ckeditor5:
+    # No CKEditor JavaScript plugin. This entry only carries the library.
+    plugins: []
+  drupal:
+    label: Form embed placeholder styles
+    library: az_form_embed/placeholder
+    elements: false
+    conditions:
+      plugins: [media_media]

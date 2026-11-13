@@ -1,0 +1,19 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Form embed placeholder
+status: experimental
+group: Forms
+description: What editors see instead of a live embedded form, in CKEditor and the Media Library, and in Canvas's editor before a form is picked.
+# Keep this out of Canvas's library. Rationale: editors place the Form embed
+# component, which shows this placeholder by itself until a form is picked.
+noUi: true
+props:
+  type: object
+  properties:
+    label:
+      title: Form name
+      description: The form's name. Leave it empty where the page already shows the name, such as the Media Library.
+      type: string
+    vendor:
+      title: Form provider
+      description: The name of the service that hosts the form, such as Slate.
+      type: string

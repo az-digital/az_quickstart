@@ -1,0 +1,12 @@
+# Slate's handler for the Form embed component's loader, and Slate's CSS
+# fixes. az_form_embed_slate_library_info_alter() adds this library to the
+# component's own, so it loads wherever the component does, Canvas included.
+slate:
+  js:
+    js/slate.js: {}
+  css:
+    component:
+      css/slate.css: {}
+  dependencies:
+    - core/drupal
+    - core/drupalSettings

@@ -1,0 +1,12 @@
+name: Quickstart Form Embed
+type: module
+description: Adds a Form embed media type for forms hosted by other services. Turn on a submodule for each service, such as Slate.
+core_version_requirement: ^11.3 || ^12
+package: 'The University of Arizona - Experimental'
+lifecycle: experimental
+lifecycle_link: 'https://github.com/az-digital/az_quickstart/blob/main/RELEASES.md#experimental-features'
+dependencies:
+  - az_media:az_media
+  - drupal:media
+  - drupal:media_library
+  - field_group:field_group
