@@ -4,6 +4,7 @@ description: "Default configurations for icon sets in Quickstart. Leverages the 
 package: The University of Arizona
 core_version_requirement: ^11 || ^12
 dependencies:
+  - az_core:az_core
   - ui_icons:ui_icons
   - ui_icons:ui_icons_ckeditor5
   - ui_icons:ui_icons_field

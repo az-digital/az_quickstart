@@ -19,6 +19,11 @@ final class AZBootstrapColorNames {
    * Matches $deprecated-color-names in Arizona Bootstrap's
    * scss/custom/_variables.scss.
    *
+   * The icon templates in az_icons.icons.yml read this constant by name, to
+   * print the new class for an icon saved with an old color name. Keep it for
+   * as long as saved icons can have the old names, or every page with an icon
+   * fails with a Twig error.
+   *
    * @var array<string, string>
    */
   const DEPRECATED_COLOR_NAMES = [
