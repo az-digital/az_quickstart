@@ -87,6 +87,14 @@ Add new feature X...<at most 72 characters>
 Closes #123 by creating y and z. This can be a paragraph of explanation.
 ```
 
+## Tugboat Visual Diffs
+
+Tugboat compares screenshots of a set of `az_demo` pages (the `urls` list in
+`.tugboat/config.yml`) on each pull request preview against the same pages on
+its base preview. Results are available from the preview in the Tugboat
+dashboard. Use them to check whether a pull request changes how existing pages
+look.
+
 ## Local development
 
 To create a local copy of az_quickstart and build a working Drupal site from
@@ -217,34 +225,6 @@ Note that by default, Behavior form elements are shown on a **Behavior** tab
 on the paragraph. This can be avoided currently by
 [a workaround](https://www.drupal.org/project/paragraphs/issues/2928759).
 There will likely be a more official paragraphs API for this in the future.
-
-## Compiling Javascript in Local Development
-
-This project uses an ES6 to ES5 transpile process
-[similar to Drupal core](https://www.drupal.org/node/2815083).
-
-This means that you should only update `.js` files named `.es6.js` and should
-never manually edit files named `.js` as these are machine-generated.
-
-This can be done on demand with `yarn build`, or in response to changes
-with `yarn watch`. When in watch mode, javascript files will be transpiled as
-they are updated.
-
-### ES6 Transpiling on Lando
-
-```
-lando yarn build
-OR
-lando yarn watch
-```
-
-### ES6 Transpiling on DDEV
-
-```
-ddev yarn build
-OR
-ddev yarn watch
-```
 
 ## ESLint in Local Development
 
