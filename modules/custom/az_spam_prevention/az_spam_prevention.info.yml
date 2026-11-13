@@ -8,3 +8,4 @@ lifecycle_link: 'https://github.com/az-digital/az_quickstart/blob/main/RELEASES.
 dependencies:
   - 'captcha:captcha'
   - 'altcha:altcha'
+  - 'honeypot:honeypot'

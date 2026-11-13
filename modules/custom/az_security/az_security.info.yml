@@ -6,4 +6,3 @@ package: The University of Arizona
 container_rebuild_required: true
 dependencies:
   - az_core:az_core
-  - honeypot:honeypot
