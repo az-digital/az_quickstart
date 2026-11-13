@@ -2,6 +2,7 @@
 
 namespace Drupal\az_paragraphs\Plugin\paragraphs\Behavior;
 
+use Drupal\az_core\Utility\AZBootstrapColorNames;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\paragraphs\ParagraphInterface;
@@ -66,15 +67,15 @@ class AZLinkGroupParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#options' => [
         'btn-red' => $this->t('Red'),
         'btn-blue' => $this->t('Blue'),
-        'btn-sky' => $this->t('Sky'),
+        'btn-rain' => $this->t('Rain'),
         'btn-white-text-red' => $this->t('White (Red Text)'),
         'btn-white-text-blue' => $this->t('White (Blue Text)'),
         'btn-outline-red' => $this->t('Red Outline'),
         'btn-outline-blue' => $this->t('Blue Outline'),
-        'btn-outline-sky' => $this->t('Sky Outline'),
+        'btn-outline-rain' => $this->t('Rain Outline'),
         'btn-outline-white' => $this->t('White Outline'),
       ],
-      '#default_value' => $config['button_color'] ?? 'btn-blue',
+      '#default_value' => AZBootstrapColorNames::updateClasses($config['button_color'] ?? 'btn-blue'),
       '#states' => [
         'visible' => [
           ':input[id="' . $linkgroup_style_unique_id . '"]' => [

@@ -97,7 +97,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: '<h3 class="text-midnight text-uppercase az-alphabetical-listing-group-title" id="{{ field_az_alphabetical_index|upper }}">{{ field_az_alphabetical_index }}</h3>'
+            text: '<h3 class="text-tinta text-uppercase az-alphabetical-listing-group-title" id="{{ field_az_alphabetical_index|upper }}">{{ field_az_alphabetical_index }}</h3>'
             make_link: false
             path: ''
             absolute: false
