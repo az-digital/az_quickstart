@@ -1,0 +1,12 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - az_search_node_metatag
+id: az_search_node_metatag
+label: 'Quickstart Content with Metatags'
+path: node
+weight: 0
+plugin: az_search_node_metatag
+configuration:
+  rankings: {  }
