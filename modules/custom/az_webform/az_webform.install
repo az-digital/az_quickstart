@@ -62,22 +62,27 @@ function az_webform_install($is_syncing) {
       }
     }
 
-    $original_dependencies = $config->get('dependencies') ?? [];
+    // Config::merge() preserves integer keys, so list values such as
+    // dependency lists would be overwritten by position rather than
+    // appended. Merge dependencies separately as a union of both lists.
+    $override_dependencies = $data['dependencies'] ?? [];
+    unset($data['dependencies']);
+    $dependencies = $config->get('dependencies') ?? [];
     $config->merge($data);
 
-    // Merging appends list values; dedupe and sort dependency lists so they
-    // match what Drupal's dependency calculation produces. Record which
-    // dependencies were new so uninstall removes only those.
-    $dependencies = $config->get('dependencies') ?? [];
+    // Dedupe and sort dependency lists so they match what Drupal's dependency
+    // calculation produces. Record which dependencies were new so uninstall
+    // removes only those.
     foreach (AZ_WEBFORM_DEPENDENCY_TYPES as $type) {
-      if (empty($dependencies[$type])) {
+      if (empty($override_dependencies[$type])) {
         continue;
       }
-      $values = array_values(array_unique($dependencies[$type]));
+      $original = $dependencies[$type] ?? [];
+      $values = array_values(array_unique(array_merge($original, $override_dependencies[$type])));
       sort($values);
       $dependencies[$type] = $values;
 
-      $new = array_values(array_diff($values, $original_dependencies[$type] ?? []));
+      $new = array_values(array_diff($values, $original));
       if ($new) {
         $changes[$config_name]['dependencies'][$type] = $new;
       }
