@@ -8,6 +8,8 @@
          failOnRisky="true"
          failOnWarning="true"
          failOnDeprecation="true"
+         failOnPhpunitDeprecation="true"
+         failOnPhpunitWarning="true"
          displayDetailsOnTestsThatTriggerErrors="true"
          displayDetailsOnTestsThatTriggerWarnings="true"
          displayDetailsOnTestsThatTriggerNotices="true"
@@ -53,7 +55,7 @@
     </testsuite>
   </testsuites>
   <!-- Settings for coverage reports. -->
-  <source>
+  <source ignoreSuppressionOfDeprecations="true">
     <include>
       <directory>./modules</directory>
     </include>
