@@ -175,6 +175,46 @@
       "display_id" : "grid",
       "data" : "",
       "bottom_spacing" : "mb-4"
+    },
+    {
+      "id" : 416,
+      "title" : "Paged Row View",
+      "target_id" : "az_news",
+      "display_id" : "az_paged_row",
+      "data" : "",
+      "bottom_spacing" : "mb-0"
+    },
+    {
+      "id" : 417,
+      "title" : "Small Row View",
+      "target_id" : "az_news",
+      "display_id" : "az_small_row",
+      "data" : "",
+      "bottom_spacing" : "mb-0"
+    },
+    {
+      "id" : 418,
+      "title" : "Teaser Grid Page",
+      "target_id" : "az_news",
+      "display_id" : "az_teaser_grid",
+      "data" : "",
+      "bottom_spacing" : "mb-0"
+    },
+    {
+      "id" : 419,
+      "title" : "Sidebar Row View",
+      "target_id" : "az_news",
+      "display_id" : "az_sidebar",
+      "data" : "",
+      "bottom_spacing" : "mb-0"
+    },
+    {
+      "id" : 420,
+      "title" : "More News View",
+      "target_id" : "az_news",
+      "display_id" : "az_more_news_view",
+      "data" : "",
+      "bottom_spacing" : "mb-0"
     }
   ]
 }
