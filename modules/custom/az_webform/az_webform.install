@@ -13,11 +13,6 @@ use Drupal\Component\Serialization\Yaml;
 const AZ_WEBFORM_INSTALL_CHANGES_STATE_KEY = 'az_webform.install_changes';
 
 /**
- * Dependency types that can appear in a config object's dependencies.
- */
-const AZ_WEBFORM_DEPENDENCY_TYPES = ['config', 'content', 'module', 'theme'];
-
-/**
  * Returns the parsed override files, keyed by config name.
  *
  * @return array
@@ -33,6 +28,29 @@ function _az_webform_get_overrides() {
     }
   }
   return $overrides;
+}
+
+/**
+ * Saves a config entity so its dependencies are recalculated.
+ *
+ * Override files are applied to raw config, which doesn't update the
+ * dependencies a config entity declares. Saving the entity recalculates them
+ * from its current contents (e.g. a Linkit profile's matchers), so they stay
+ * correct regardless of changes a site builder made in the meantime.
+ *
+ * @param string $config_name
+ *   The config name. Simple config is ignored.
+ */
+function _az_webform_recalculate_dependencies(string $config_name): void {
+  $config_manager = \Drupal::service('config.manager');
+  $entity_type_id = $config_manager->getEntityTypeIdByName($config_name);
+  if (!$entity_type_id) {
+    return;
+  }
+  // Clear the static cache so the entity reflects the raw config just saved.
+  \Drupal::entityTypeManager()->getStorage($entity_type_id)->resetCache();
+  $entity = $config_manager->loadConfigEntityByName($config_name);
+  $entity?->save();
 }
 
 /**
@@ -62,36 +80,11 @@ function az_webform_install($is_syncing) {
       }
     }
 
-    // Config::merge() preserves integer keys, so list values such as
-    // dependency lists would be overwritten by position rather than
-    // appended. Merge dependencies separately as a union of both lists.
-    $override_dependencies = $data['dependencies'] ?? [];
+    // Dependencies are recalculated from the merged config below.
     unset($data['dependencies']);
-    $dependencies = $config->get('dependencies') ?? [];
     $config->merge($data);
-
-    // Dedupe and sort dependency lists so they match what Drupal's dependency
-    // calculation produces. Record which dependencies were new so uninstall
-    // removes only those.
-    foreach (AZ_WEBFORM_DEPENDENCY_TYPES as $type) {
-      if (empty($override_dependencies[$type])) {
-        continue;
-      }
-      $original = $dependencies[$type] ?? [];
-      $values = array_values(array_unique(array_merge($original, $override_dependencies[$type])));
-      sort($values);
-      $dependencies[$type] = $values;
-
-      $new = array_values(array_diff($values, $original));
-      if ($new) {
-        $changes[$config_name]['dependencies'][$type] = $new;
-      }
-    }
-    if ($dependencies) {
-      $config->set('dependencies', $dependencies);
-    }
-
     $config->save();
+    _az_webform_recalculate_dependencies($config_name);
   }
 
   \Drupal::state()->set(AZ_WEBFORM_INSTALL_CHANGES_STATE_KEY, $changes);
@@ -142,24 +135,7 @@ function az_webform_uninstall($is_syncing) {
       }
     }
 
-    // Remove only the dependencies that install added.
-    $dependencies = $config->get('dependencies') ?? [];
-    foreach ($changes[$config_name]['dependencies'] ?? [] as $type => $values) {
-      if (empty($dependencies[$type])) {
-        continue;
-      }
-      $dependencies[$type] = array_values(array_diff($dependencies[$type], $values));
-      if (empty($dependencies[$type])) {
-        unset($dependencies[$type]);
-      }
-    }
-    if ($dependencies) {
-      $config->set('dependencies', $dependencies);
-    }
-    else {
-      $config->clear('dependencies');
-    }
-
     $config->save();
+    _az_webform_recalculate_dependencies($config_name);
   }
 }

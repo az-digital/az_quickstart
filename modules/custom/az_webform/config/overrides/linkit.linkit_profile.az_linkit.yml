@@ -1,7 +1,3 @@
-dependencies:
-  module:
-    - node
-    - webform
 matchers:
   167a2cef-82fa-4ae2-88ef-e1005aa7e5da:
     id: 'entity:node'
