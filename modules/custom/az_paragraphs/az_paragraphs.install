@@ -541,7 +541,16 @@ function az_paragraphs_update_1130701(&$sandbox) {
     $paragraphs_types = \Drupal::entityTypeManager()->getStorage('paragraphs_type')->loadMultiple();
     foreach ($paragraphs_types as $paragraphs_type) {
       /** @var \Drupal\paragraphs\ParagraphsTypeInterface $paragraphs_type */
-      if (array_intersect_key($paragraphs_type->getEnabledBehaviorPlugins(), $behavior_settings_keys)) {
+      // Read the enabled behavior IDs from the saved config. Rationale:
+      // getEnabledBehaviorPlugins() creates each plugin, and throws an
+      // exception if a paragraph type has a behavior from a module that was
+      // removed. That would stop this update for a paragraph type it does
+      // not even change.
+      $enabled_behaviors = array_filter(
+        $paragraphs_type->get('behavior_plugins') ?? [],
+        static fn ($settings) => !empty($settings['enabled']),
+      );
+      if (array_intersect_key($enabled_behaviors, $behavior_settings_keys)) {
         $bundles[] = $paragraphs_type->id();
       }
     }

@@ -89,7 +89,7 @@ class AZColorClassUpdateTest extends KernelTestBase {
       'az_cards_paragraph_behavior' => ['card_deck_title_color' => 'text-oasis'],
     ]);
     $rankings = $this->createParagraph('az_rankings', [
-      'az_rankings_paragraph_behavior' => ['ranking_deck_title_color' => 'text-blue'],
+      'az_rankings_paragraph_behavior' => ['ranking_deck_title_color' => 'text-oasis'],
     ]);
     $text = $this->createParagraph('az_text', [
       'az_text_background_paragraph_behavior' => ['text_background_color' => 'text-bg-chili'],
@@ -105,7 +105,7 @@ class AZColorClassUpdateTest extends KernelTestBase {
     $this->assertSame('text-bg-caliche', $this->reload($splitscreen)->getAllBehaviorSettings()['az_split_screen']['bg_color']);
     $this->assertSame('btn-outline-rain', $this->reload($link_group)->getAllBehaviorSettings()['az_link_group']['button_color']);
     $this->assertSame('text-arroyo-blue', $this->reload($cards)->getAllBehaviorSettings()['az_cards_paragraph_behavior']['card_deck_title_color']);
-    $this->assertSame('text-blue', $this->reload($rankings)->getAllBehaviorSettings()['az_rankings_paragraph_behavior']['ranking_deck_title_color']);
+    $this->assertSame('text-arroyo-blue', $this->reload($rankings)->getAllBehaviorSettings()['az_rankings_paragraph_behavior']['ranking_deck_title_color']);
     // Paragraph types without these behaviors or fields are not updated.
     $this->assertSame('text-bg-chili', $this->reload($text)->getAllBehaviorSettings()['az_text_background_paragraph_behavior']['text_background_color']);
     // The current revision is updated, rather than a new revision created.
@@ -203,6 +203,34 @@ class AZColorClassUpdateTest extends KernelTestBase {
     $cards = $this->reload($cards);
     $this->assertSame('text-bg-sonoran-red', $cards->get('field_az_cards')->getValue()[0]['options']['class']);
     $this->assertSame('text-bg-bougainvillea', $cards->getTranslation('es')->get('field_az_cards')->getValue()[0]['options']['class']);
+  }
+
+  /**
+   * Tests that a missing behavior plugin does not stop the update.
+   */
+  public function testMissingBehaviorPlugin() {
+    // Write the config directly. Saving this paragraph type through the
+    // entity API would create the plugin and fail before the update runs.
+    $this->config('paragraphs.paragraphs_type.custom_removed')
+      ->setData([
+        'langcode' => 'en',
+        'status' => TRUE,
+        'dependencies' => [],
+        'id' => 'custom_removed',
+        'label' => 'custom_removed',
+        'icon_uuid' => NULL,
+        'icon_default' => NULL,
+        'description' => '',
+        'behavior_plugins' => ['az_removed_behavior' => ['enabled' => TRUE]],
+      ])
+      ->save();
+    $splitscreen = $this->createParagraph('az_splitscreen', [
+      'az_split_screen' => ['bg_color' => 'text-bg-leaf'],
+    ]);
+
+    $this->runUpdate();
+
+    $this->assertSame('text-bg-saguaro', $this->reload($splitscreen)->getAllBehaviorSettings()['az_split_screen']['bg_color']);
   }
 
   /**
