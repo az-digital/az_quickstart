@@ -220,10 +220,7 @@ class AZCardWidget extends WidgetBase {
     }
 
     // Add link style classes.
-    $element['preview_container']['card_preview']['#link']['#attributes']['class'] =
-      empty($item->options['link_style']) ?
-      ['btn', 'w-100', 'btn-red'] :
-      explode(' ', $item->options['link_style']);
+    $element['preview_container']['card_preview']['#link']['#attributes']['class'] = AZCardItem::linkClasses($item->options['link_style'] ?? NULL);
 
     if (!empty($element['preview_container']['card_preview']['#link'])) {
       $element['preview_container']['card_preview']['#link']['#attributes']['class'][] = 'az-card-no-follow';

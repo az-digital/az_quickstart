@@ -42,6 +42,30 @@ class AZCardItem extends FieldItemBase {
   const CLOUD_BACKGROUND_CLASSES = ['text-bg-cloud', 'text-bg-cool-gray'];
 
   /**
+   * Gets the classes for the card link from its Card Link Style.
+   *
+   * If the link is a button (has the btn class), remove w-100 (full width),
+   * so the button is only as wide as its text, as in the arizona.edu card
+   * design. A text link keeps w-100. Rationale: every button option in Card
+   * Link Style has w-100 in its saved value, for example 'btn w-100 btn-red'.
+   * Removing it from the option values instead would need an update hook to
+   * rewrite every saved card.
+   *
+   * @param string|null $link_style
+   *   The saved Card Link Style, such as 'btn w-100 btn-red'.
+   *
+   * @return string[]
+   *   The classes for the link.
+   */
+  public static function linkClasses(?string $link_style): array {
+    $classes = empty($link_style) ? ['btn', 'btn-red'] : explode(' ', $link_style);
+    if (in_array('btn', $classes, TRUE)) {
+      $classes = array_values(array_diff($classes, ['w-100']));
+    }
+    return $classes;
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function isEmpty() {

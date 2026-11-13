@@ -152,10 +152,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
           '#title' => $item->link_title ?? '',
           '#url' => $link_url ?: Url::fromRoute('<none>'),
         ];
-        $link_render_array['#attributes']['class'] =
-          empty($item->options['link_style']) ?
-          ['btn', 'w-100', 'btn-red'] :
-          explode(' ', $item->options['link_style']);
+        $link_render_array['#attributes']['class'] = AZCardItem::linkClasses($item->options['link_style'] ?? NULL);
         if (empty($settings['interactive_links'])) {
           $link_render_array['#attributes']['class'][] = 'az-card-no-follow';
           $title_link_classes[] = 'az-card-no-follow';
