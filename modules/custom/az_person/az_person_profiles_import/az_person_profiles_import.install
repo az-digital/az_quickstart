@@ -11,3 +11,10 @@
 function az_person_profiles_import_update_1021301() {
   \Drupal::service('module_installer')->install(['az_migration_remote']);
 }
+
+/**
+ * Ensure az_http is installed.
+ */
+function az_person_profiles_import_update_1130601() {
+  \Drupal::service('module_installer')->install(['az_http']);
+}

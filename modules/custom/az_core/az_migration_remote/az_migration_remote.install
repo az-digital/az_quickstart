@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * @file
+ * Contains az_migration_remote.install.
+ */
+
+/**
+ * Ensure az_http is installed.
+ */
+function az_migration_remote_update_1130601() {
+  \Drupal::service('module_installer')->install(['az_http']);
+}

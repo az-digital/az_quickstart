@@ -2,7 +2,7 @@ services:
   az_course.search:
     class: Drupal\az_course\CourseSearch
     arguments:
-      - '@http_client'
+      - '@az_http.http_client'
       - '@logger.channel.az_course'
   logger.channel.az_course:
     parent: logger.channel_base

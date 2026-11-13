@@ -49,7 +49,7 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
     return new static(
       $container->get('config.factory'),
       $container->get('config.typed'),
-      $container->get('http_client')
+      $container->get('az_http.http_client')
     );
   }
 

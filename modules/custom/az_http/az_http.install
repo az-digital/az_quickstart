@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * @file
+ * Contains az_http.install.
+ */
+
+/**
+ * Ensure az_http.settings cache settings are enabled.
+ */
+function az_http_update_1130601() {
+  $config = \Drupal::configFactory()->getEditable('az_http.settings');
+  $status = $config->get('migrations.http_cached');
+  // Update the value of it is false or absent.
+  // There is no longer an interface to set this setting.
+  if (empty($status)) {
+    $config->set('migrations.http_cached', TRUE);
+    $config->save();
+    return t('Caching has been enabled on az_http requests.');
+  }
+}
