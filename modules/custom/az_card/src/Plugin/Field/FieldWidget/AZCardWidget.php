@@ -2,6 +2,7 @@
 
 namespace Drupal\az_card\Plugin\Field\FieldWidget;
 
+use Drupal\az_card\Plugin\Field\FieldType\AZCardItem;
 use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Field\Attribute\FieldWidget;
@@ -184,6 +185,11 @@ class AZCardWidget extends WidgetBase {
         '#body' => $body,
         '#attributes' => ['class' => $card_classes],
       ];
+      // A Cloud card has Tinta text and an Azurite title, as in the formatter.
+      if (in_array($item->options['class'] ?? '', AZCardItem::CLOUD_BACKGROUND_CLASSES, TRUE)) {
+        $element['preview_container']['card_preview']['#body_classes'] = ['text-tinta'];
+        $element['preview_container']['card_preview']['#title_classes'] = ['text-azurite'];
+      }
 
       // Check and see if we can construct a valid image to preview.
       $media_id = $item->media ?? NULL;

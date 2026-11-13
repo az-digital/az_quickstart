@@ -56,7 +56,7 @@ class AZCardsParagraphBehavior extends AZDefaultParagraphsBehavior {
         'title-on-image' => $this->t('Title on image'),
       ],
       '#default_value' => $config['card_title_style'] ?? 'default',
-      '#description' => $this->t('Select a card title style.'),
+      '#description' => $this->t('Select a card title style. With "Title on image", a card that has no body text and no visible link shows as a square image with the title on it.'),
     ];
 
     $form['card_title_level'] = [

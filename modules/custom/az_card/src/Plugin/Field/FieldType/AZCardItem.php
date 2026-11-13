@@ -29,6 +29,19 @@ use Drupal\Core\TypedData\MapDataDefinition;
 class AZCardItem extends FieldItemBase {
 
   /**
+   * Card Background classes for the Cloud color.
+   *
+   * Arizona Bootstrap 5.3 renamed Cool Gray to Cloud and kept the old class
+   * as an alias, so a saved card can hold either one.
+   *
+   * @todo Replace with AZBootstrapColorNames::updateClasses() when
+   *   https://github.com/az-digital/az_quickstart/pull/6206 is merged.
+   *
+   * @var string[]
+   */
+  const CLOUD_BACKGROUND_CLASSES = ['text-bg-cloud', 'text-bg-cool-gray'];
+
+  /**
    * {@inheritdoc}
    */
   public function isEmpty() {
