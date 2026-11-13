@@ -27,36 +27,6 @@ function az_ranking_help($route_name, RouteMatchInterface $route_match) {
 }
 
 /**
- * Implements hook_theme().
- */
-function az_ranking_theme($existing, $type, $theme, $path) {
-  return [
-    'az_ranking' => [
-      'variables' => [
-        'attributes' => [],
-        'media' => NULL,
-        'column_span' => NULL,
-        'ranking_clickable' => NULL,
-        'ranking_hover_effect' => NULL,
-        'ranking_heading' => NULL,
-        'ranking_alignment' => NULL,
-        'ranking_header_style' => NULL,
-        'ranking_description' => NULL,
-        'ranking_source' => NULL,
-        'ranking_source_classes' => NULL,
-        'ranking_font_color' => NULL,
-        'text_color_override' => NULL,
-        'link' => NULL,
-        'link_url' => NULL,
-        'link_title' => NULL,
-        'ranking_link_style' => NULL,
-      ],
-      'template' => 'az-ranking',
-    ],
-  ];
-}
-
-/**
  * Implements hook_form_FORM_ID_alter() for media_az_image_edit_form.
  */
 function az_ranking_form_media_az_image_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
