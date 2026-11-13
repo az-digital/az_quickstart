@@ -146,9 +146,9 @@ third_party_settings:
       smart_title__tag: ''
       smart_title__classes:
         - node__title
-id: node.az_event.az_card_alternate
+id: node.az_news.az_card_alternate
 targetEntityType: node
-bundle: az_event
+bundle: az_news
 mode: az_card_alternate
 content:
   field_az_event_date:
