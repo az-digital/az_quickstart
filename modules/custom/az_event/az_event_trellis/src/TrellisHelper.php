@@ -193,23 +193,15 @@ final class TrellisHelper {
       ->condition('type', 'az_event')
       ->exists('field_az_trellis_id');
     // Add query condition to determine which events need updates.
-    try {
-      $date = new \DateTimeImmutable(timezone: new \DateTimeZone('UTC'));
-      $timestamp = $date->getTimestamp();
-      // Events may have updates if they are published OR not ended.
-      // Events unpublished AND in the past are considered no longer relevant.
-      $group = $query->orConditionGroup()
-        // Published events eventually are unpublished by Trellis.
-        // Any event which is still published may have a final update.
-        ->condition('status', NodeInterface::PUBLISHED)
-        // Events which have their end in the future may have updates.
-        ->condition('field_az_event_date.end_value', $timestamp, '>=');
-      $query->condition($group);
-    }
-    catch (\Exception $e) {
-      // Constructor can throw \DateMalformedStringException.
-      // This is unlikely given we are using 'now'.
-    }
+    // Events may have updates if they are published OR not ended.
+    // Events unpublished AND in the past are considered no longer relevant.
+    $group = $query->orConditionGroup()
+      // Published events eventually are unpublished by Trellis.
+      // Any event which is still published may have a final update.
+      ->condition('status', NodeInterface::PUBLISHED)
+      // Events which have their end in the future may have updates.
+      ->condition('field_az_event_date.end_value', time(), '>=');
+    $query->condition($group);
     $nids = $query->execute();
     $nodes = $nodeStorage->loadMultiple($nids);
 
