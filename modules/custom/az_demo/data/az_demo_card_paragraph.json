@@ -280,7 +280,7 @@
           "link_url": "#top",
           "media": "",
           "background": "text-bg-cool-gray",
-          "link_style": "btn btn-red"
+          "link_style": "btn w-100 btn-red"
         },
         {
           "delta": 1,
@@ -290,7 +290,7 @@
           "link_url": "#top",
           "media": "",
           "background": "text-bg-cool-gray",
-          "link_style": "btn btn-red"
+          "link_style": "btn w-100 btn-red"
         },
         {
           "delta": 2,

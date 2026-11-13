@@ -329,7 +329,6 @@ class AZCardWidget extends WidgetBase {
         'visually-hidden' => $this->t('Hidden link title'),
         'w-100' => $this->t('Text link'),
         'btn w-100 btn-red' => $this->t('Red button'),
-        'btn btn-red' => $this->t('Red button (fits text)'),
         'btn w-100 btn-blue' => $this->t('Blue button'),
         'btn w-100 btn-sky' => $this->t('Sky button'),
         'btn w-100 btn-white-text-red' => $this->t('White button (red text)'),
