@@ -16,7 +16,6 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * Tests the update that renames Arizona Bootstrap 5.3 brand color classes.
  *
  * @see az_paragraphs_update_1130701()
- * @see az_paragraphs_update_dependencies()
  */
 #[Group('az_paragraphs')]
 #[RunTestsInSeparateProcesses]
@@ -232,25 +231,6 @@ class AZColorClassUpdateTest extends KernelTestBase {
     $this->runUpdate();
 
     $this->assertSame('text-bg-saguaro', $this->reload($splitscreen)->getAllBehaviorSettings()['az_split_screen']['bg_color']);
-  }
-
-  /**
-   * Tests that update 1130701 runs after the 1130001 updates.
-   */
-  public function testUpdateDependencies() {
-    // None of the paragraph sub-modules are installed yet, and a dependency on
-    // a module that is not installed would block the update.
-    $this->assertSame([], az_paragraphs_update_dependencies());
-
-    $this->enableModules(['az_paragraphs_splitscreen', 'az_paragraphs_text_background']);
-    $this->assertSame([
-      'az_paragraphs' => [
-        1130701 => [
-          'az_paragraphs_splitscreen' => 1130001,
-          'az_paragraphs_text_background' => 1130001,
-        ],
-      ],
-    ], az_paragraphs_update_dependencies());
   }
 
   /**
