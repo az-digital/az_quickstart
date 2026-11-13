@@ -202,7 +202,7 @@ final class TrellisHelper {
       }
     }
     catch (\Exception $e) {
-      // Expired time setting didn't evaulate to anything meaningful.
+      // Expired time setting didn't evaluate to anything meaningful.
     }
     $nids = $query->execute();
     $nodes = $nodeStorage->loadMultiple($nids);
