@@ -114,3 +114,15 @@ matchers:
       limit: 100
       include_unpublished: false
     weight: 0
+  167a2cef-82fa-4ae2-88ef-e1005aa7e5da:
+    id: 'entity:node'
+    uuid: 167a2cef-82fa-4ae2-88ef-e1005aa7e5da
+    settings:
+      metadata: 'Path: [node:url:path] | ID: [node:nid]'
+      bundles:
+        webform: webform
+      group_by_bundle: true
+      substitution_type: canonical
+      limit: 100
+      include_unpublished: false
+    weight: 0
