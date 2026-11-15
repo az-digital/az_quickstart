@@ -19,6 +19,7 @@ use Drupal\Core\TypedData\MapDataDefinition;
  * @property string $body_format
  * @property string $link_title
  * @property string $link_uri
+ * @property array $options
  */
 #[FieldType(
   id: "az_card",
@@ -40,23 +41,6 @@ class AZCardItem extends FieldItemBase {
    * @var string[]
    */
   const CLOUD_BACKGROUND_CLASSES = ['text-bg-cloud', 'text-bg-cool-gray'];
-
-  /**
-   * Gets the card link classes. Buttons drop w-100 so they fit their text.
-   *
-   * @param string|null $link_style
-   *   The saved Card Link Style, such as 'btn w-100 btn-red'.
-   *
-   * @return string[]
-   *   The classes for the link.
-   */
-  public static function linkClasses(?string $link_style): array {
-    $classes = empty($link_style) ? ['btn', 'btn-red'] : explode(' ', $link_style);
-    if (in_array('btn', $classes, TRUE)) {
-      $classes = array_values(array_diff($classes, ['w-100']));
-    }
-    return $classes;
-  }
 
   /**
    * {@inheritdoc}

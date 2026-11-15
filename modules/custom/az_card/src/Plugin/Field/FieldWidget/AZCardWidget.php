@@ -220,7 +220,10 @@ class AZCardWidget extends WidgetBase {
     }
 
     // Add link style classes.
-    $element['preview_container']['card_preview']['#link']['#attributes']['class'] = AZCardItem::linkClasses($item->options['link_style'] ?? NULL);
+    $element['preview_container']['card_preview']['#link']['#attributes']['class'] =
+      empty($item->options['link_style']) ?
+      ['btn', 'btn-red'] :
+      explode(' ', $item->options['link_style']);
 
     if (!empty($element['preview_container']['card_preview']['#link'])) {
       $element['preview_container']['card_preview']['#link']['#attributes']['class'][] = 'az-card-no-follow';
@@ -325,18 +328,18 @@ class AZCardWidget extends WidgetBase {
       '#options' => [
         'visually-hidden' => $this->t('Hidden link title'),
         'w-100' => $this->t('Text link'),
-        'btn w-100 btn-red' => $this->t('Red button'),
-        'btn w-100 btn-blue' => $this->t('Blue button'),
-        'btn w-100 btn-sky' => $this->t('Sky button'),
-        'btn w-100 btn-white-text-red' => $this->t('White button (red text)'),
-        'btn w-100 btn-white-text-blue' => $this->t('White button (blue text)'),
-        'btn w-100 btn-outline-red' => $this->t('Red outline button'),
-        'btn w-100 btn-outline-blue' => $this->t('Blue outline button'),
-        'btn w-100 btn-outline-sky' => $this->t('Sky outline button'),
-        'btn w-100 btn-outline-white' => $this->t('White outline button'),
+        'btn btn-red' => $this->t('Red button'),
+        'btn btn-blue' => $this->t('Blue button'),
+        'btn btn-sky' => $this->t('Sky button'),
+        'btn btn-white-text-red' => $this->t('White button (red text)'),
+        'btn btn-white-text-blue' => $this->t('White button (blue text)'),
+        'btn btn-outline-red' => $this->t('Red outline button'),
+        'btn btn-outline-blue' => $this->t('Blue outline button'),
+        'btn btn-outline-sky' => $this->t('Sky outline button'),
+        'btn btn-outline-white' => $this->t('White outline button'),
       ],
       '#title' => $this->t('Card Link Style'),
-      '#default_value' => (!empty($item->options['link_style'])) ? $item->options['link_style'] : 'btn w-100 btn-red',
+      '#default_value' => (!empty($item->options['link_style'])) ? $item->options['link_style'] : 'btn btn-red',
     ];
 
     if (!$item->isEmpty()) {
