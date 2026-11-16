@@ -1,0 +1,16 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - canvas
+id: canvas_page
+label: 'Canvas page'
+tags:
+  canonical_url: '[canvas_page:url:absolute]'
+  description: '[canvas_page:description]'
+  og_description: '[canvas_page:description]'
+  og_image: '[canvas_page:image:entity:field_media_az_image]'
+  og_title: '[canvas_page:title]'
+  og_url: '[canvas_page:url:absolute]'
+  title: '[canvas_page:title] | [site:name]'

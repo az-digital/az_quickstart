@@ -64,3 +64,19 @@ function az_seo_update_1021301() {
 function az_seo_update_1021302() {
   \Drupal::service('module_installer')->install(['schema_organization']);
 }
+
+/**
+ * Install Quickstart meta tag defaults for Canvas pages.
+ */
+function az_seo_update_1130701() {
+  $name = 'metatag.metatag_defaults.canvas_page';
+  if (!\Drupal::moduleHandler()->moduleExists('canvas') || \Drupal::config($name)->get()) {
+    return;
+  }
+  $config_path = \Drupal::service('extension.list.module')->getPath('az_seo') . '/config/optional';
+  $storage = new FileStorage($config_path);
+  \Drupal::entityTypeManager()
+    ->getStorage('metatag_defaults')
+    ->createFromStorageRecord($storage->read($name))
+    ->save();
+}

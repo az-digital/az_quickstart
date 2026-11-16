@@ -5,6 +5,26 @@
  * Contains az_seo.module.
  */
 
+use Drupal\Component\Serialization\Json;
+use Drupal\Core\Entity\EntityTypeInterface;
+
+/**
+ * Implements hook_entity_base_field_info_alter().
+ *
+ * Canvas stores its own meta tag patterns on every new page, which take
+ * precedence over the metatag.metatag_defaults.canvas_page config shipped by
+ * this module (and use a media field Quickstart doesn't have). Keep only the
+ * title, which the Canvas page form exposes, so everything else falls back to
+ * the Quickstart defaults.
+ */
+function az_seo_entity_base_field_info_alter(array &$fields, EntityTypeInterface $entity_type) {
+  if ($entity_type->id() === 'canvas_page' && isset($fields['metatags'])) {
+    $fields['metatags']->setDefaultValue(Json::encode([
+      'title' => '[canvas_page:title] | [site:name]',
+    ]));
+  }
+}
+
 /**
  * Implements hook_xmlsitemap_link_alter().
  *
