@@ -82,7 +82,7 @@ env:
   # Identifies the build shared by the jobs of one call to this workflow. It
   # includes every input that changes what is built, so that several calls in
   # one workflow run do not share a build.
-  BUILD_CACHE_KEY: azqs-build-${{ github.sha }}-${{ inputs.template }}-${{ inputs.quickstart-ref || 'default' }}-${{ inputs.template-ref || 'default' }}-${{ inputs.dev-ref || 'default' }}
+  BUILD_CACHE_KEY: azqs-build-${{ github.sha }}-php${{ inputs.php-version }}-${{ inputs.template }}-${{ inputs.quickstart-ref || 'default' }}-${{ inputs.template-ref || 'default' }}-${{ inputs.dev-ref || 'default' }}
 
 jobs:
   composer-validate:
