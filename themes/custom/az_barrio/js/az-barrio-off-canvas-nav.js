@@ -6,7 +6,7 @@
         offCanvasNav.addEventListener('shown.bs.offcanvas', (event) => {
           if (event.relatedTarget.id === 'jsAzSearch') {
             document
-              .querySelector('#block-az-barrio-offcanvas-searchform input')
+              .querySelector('#azMobileNav .search-block-form input')
               .focus();
           }
         });
