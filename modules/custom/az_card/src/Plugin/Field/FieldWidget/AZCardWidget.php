@@ -323,6 +323,15 @@ class AZCardWidget extends WidgetBase {
       ];
     }
 
+    // Buttons saved before az_paragraphs_cards_update_1130701() have w-100.
+    // This removes w-100 from them, so the select shows the matching option
+    // and saving the form doesn't change them to "Hidden link title".
+    $link_style = $item->options['link_style'] ?? '';
+    $link_classes = explode(' ', $link_style);
+    if (in_array('btn', $link_classes, TRUE)) {
+      $link_style = implode(' ', array_diff($link_classes, ['w-100']));
+    }
+
     $element['link_style'] = [
       '#type' => 'select',
       '#options' => [
@@ -339,7 +348,7 @@ class AZCardWidget extends WidgetBase {
         'btn btn-outline-white' => $this->t('White outline button'),
       ],
       '#title' => $this->t('Card Link Style'),
-      '#default_value' => (!empty($item->options['link_style'])) ? $item->options['link_style'] : 'btn btn-red',
+      '#default_value' => $link_style ?: 'btn btn-red',
     ];
 
     if (!$item->isEmpty()) {
