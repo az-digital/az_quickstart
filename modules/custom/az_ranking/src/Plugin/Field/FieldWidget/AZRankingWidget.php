@@ -2,6 +2,7 @@
 
 namespace Drupal\az_ranking\Plugin\Field\FieldWidget;
 
+use Drupal\az_core\Utility\AZBootstrapColorNames;
 use Drupal\Core\Render\Element;
 use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\NestedArray;
@@ -112,6 +113,15 @@ class AZRankingWidget extends WidgetBase {
     /** @var \Drupal\az_ranking\Plugin\Field\FieldType\AZRankingItem $item */
     $item = $items[$delta];
 
+    // Arizona Bootstrap 5.3.0 renamed some brand colors. Use the new class
+    // names for values saved before the rename.
+    $options = $item->options;
+    foreach (['class', 'hover_class'] as $key) {
+      if (!empty($options[$key])) {
+        $options[$key] = AZBootstrapColorNames::updateClasses($options[$key]);
+      }
+    }
+
     // Get current collapse status.
     $field_name = $this->fieldDefinition->getName();
     $field_parents = $element['#field_parents'];
@@ -162,20 +172,20 @@ class AZRankingWidget extends WidgetBase {
     if ($ranking_hover_effect) {
       // Try to read hover-specific value from the item.
       $hover_class = '';
-      if (!empty($item->options['hover_class'])) {
-        $hover_class = $item->options['hover_class'];
+      if (!empty($options['hover_class'])) {
+        $hover_class = $options['hover_class'];
       }
       // Fallback to persisted background class if no hover-specific value.
-      if (empty($hover_class) && !empty($item->options['class'])) {
-        $hover_class = $item->options['class'];
+      if (empty($hover_class) && !empty($options['class'])) {
+        $hover_class = $options['class'];
       }
-      if (!empty($hover_class) && $item->options['ranking_type'] !== 'image_only') {
+      if (!empty($hover_class) && $options['ranking_type'] !== 'image_only') {
         $ranking_classes .= ' from-hover-effect ' . $hover_class;
       }
     }
     else {
-      if (!empty($item->options['class']) && $item->options['ranking_type'] !== 'image_only') {
-        $ranking_classes .= ' non-hover-effect ' . $item->options['class'];
+      if (!empty($options['class']) && $options['ranking_type'] !== 'image_only') {
+        $ranking_classes .= ' non-hover-effect ' . $options['class'];
       }
     }
 
@@ -238,7 +248,7 @@ class AZRankingWidget extends WidgetBase {
         'image_only' => $this->t('Image Only'),
       ],
       '#title' => $this->t('Ranking Type'),
-      '#default_value' => (!empty($item->options['ranking_type'])) ? $item->options['ranking_type'] : 'standard',
+      '#default_value' => (!empty($options['ranking_type'])) ? $options['ranking_type'] : 'standard',
       '#attributes' => ['data-az-ranking-type-input-id' => $ranking_type_unique_id],
     ];
 
@@ -267,7 +277,7 @@ class AZRankingWidget extends WidgetBase {
       ],
       '#title' => $this->t('Image Width Span'),
       '#description' => $this->t('How many cards do you want this image to span (in multiples of ranking-card width)?'),
-      '#default_value' => (!empty($item->options['column_span'])) ? $item->options['column_span'] : 2,
+      '#default_value' => (!empty($options['column_span'])) ? $options['column_span'] : 2,
       '#states' => [
         // Column Span is only visible when Ranking Type is "image_only".
         'visible' => [
@@ -283,20 +293,20 @@ class AZRankingWidget extends WidgetBase {
     $element['details']['options'] = [
       '#type' => 'select',
       '#options' => [
-        'text-bg-chili' => $this->t('Chili (default)'),
+        'text-bg-sonoran-red' => $this->t('Sonoran Red (default)'),
         'text-bg-blue' => $this->t('Arizona Blue'),
-        'bg-sky' => $this->t('Sky'),
-        'bg-oasis' => $this->t('Oasis'),
+        'bg-rain' => $this->t('Rain'),
+        'bg-arroyo-blue' => $this->t('Arroyo Blue'),
         'text-bg-azurite' => $this->t('Azurite'),
-        'bg-cool-gray' => $this->t('Cool Gray'),
-        'bg-warm-gray' => $this->t('Warm Gray'),
+        'bg-cloud' => $this->t('Cloud'),
+        'bg-caliche' => $this->t('Caliche'),
         'bg-white' => $this->t('White'),
         'bg-transparent' => $this->t('Transparent'),
       ],
       '#required' => TRUE,
       '#attributes' => ['data-az-ranking-bg-input-id' => $ranking_background_unique_id],
       '#title' => $this->t('Ranking Background'),
-      '#default_value' => (!empty($item->options['class'])) ? $item->options['class'] : 'text-bg-chili',
+      '#default_value' => (!empty($options['class'])) ? $options['class'] : 'text-bg-sonoran-red',
       '#states' => [
         'visible' => [
           ':input[data-az-ranking-type-input-id="' . $ranking_type_unique_id . '"]' => ['value' => 'standard'],
@@ -310,15 +320,15 @@ class AZRankingWidget extends WidgetBase {
     $element['details']['options_hover_effect'] = [
       '#type' => 'select',
       '#options' => [
-        'text-bg-chili' => $this->t('Chili (default)'),
+        'text-bg-sonoran-red' => $this->t('Sonoran Red (default)'),
         'text-bg-blue' => $this->t('Arizona Blue'),
-        'bg-sky' => $this->t('Sky'),
-        'bg-cool-gray' => $this->t('Cool Gray'),
-        'bg-oasis' => $this->t('Oasis'),
+        'bg-rain' => $this->t('Rain'),
+        'bg-cloud' => $this->t('Cloud'),
+        'bg-arroyo-blue' => $this->t('Arroyo Blue'),
       ],
       '#required' => TRUE,
       '#title' => $this->t('Ranking Background with Hover Effect'),
-      '#default_value' => (!empty($item->options['hover_class'])) ? $item->options['hover_class'] : 'text-bg-chili',
+      '#default_value' => (!empty($options['hover_class'])) ? $options['hover_class'] : 'text-bg-sonoran-red',
       '#states' => [
         'visible' => [
           ':input[data-az-ranking-type-input-id="' . $ranking_type_unique_id . '"]' => ['value' => 'standard'],
@@ -333,12 +343,12 @@ class AZRankingWidget extends WidgetBase {
       '#type' => 'select',
       '#title' => $this->t('Ranking Font Color'),
       '#options' => [
-        'ranking-text-midnight' => $this->t('Midnight (default)'),
+        'ranking-text-tinta' => $this->t('Tinta (default)'),
         'ranking-text-black' => $this->t('Black'),
         'ranking-text-white' => $this->t('White'),
         'ranking-text-az-blue' => $this->t('Arizona Blue'),
       ],
-      '#default_value' => $item->ranking_font_color ?? 'ranking-text-midnight',
+      '#default_value' => AZBootstrapColorNames::updateClasses($item->ranking_font_color ?? 'ranking-text-tinta'),
       '#states' => [
         'visible' => [
           ':input[data-az-ranking-type-input-id="' . $ranking_type_unique_id . '"]' => ['value' => 'standard'],
@@ -433,15 +443,15 @@ class AZRankingWidget extends WidgetBase {
         'link mt-2' => $this->t('Text link'),
         'w-100 btn btn-red mt-2' => $this->t('Red button (default)'),
         'w-100 btn btn-blue mt-2' => $this->t('Blue button'),
-        'w-100 btn btn-sky mt-2' => $this->t('Sky button'),
+        'w-100 btn btn-rain mt-2' => $this->t('Rain button'),
         'w-100 btn btn-white-text-red mt-2' => $this->t('White button (red text)'),
         'w-100 btn btn-white-text-blue mt-2' => $this->t('White button (blue text)'),
         'w-100 btn btn-outline-red mt-2' => $this->t('Red outline button'),
         'w-100 btn btn-outline-blue mt-2' => $this->t('Blue outline button'),
-        'w-100 btn btn-outline-sky mt-2' => $this->t('Sky outline button'),
+        'w-100 btn btn-outline-rain mt-2' => $this->t('Rain outline button'),
         'w-100 btn btn-outline-white mt-2' => $this->t('White outline button'),
       ],
-      '#default_value' => $item->ranking_link_style ?? 'w-100 btn btn-red mt-2',
+      '#default_value' => AZBootstrapColorNames::updateClasses($item->ranking_link_style ?? 'w-100 btn btn-red mt-2'),
       '#states' => [
         'visible' => [
           ':input[data-az-ranking-type-input-id="' . $ranking_type_unique_id . '"]' => ['value' => 'standard'],
@@ -774,6 +784,16 @@ class AZRankingWidget extends WidgetBase {
   protected function buildRankingPreview($item, $ranking_classes) {
     $parent = $item->getEntity();
 
+    // Arizona Bootstrap 5.3.0 renamed some brand colors. Use the new class
+    // names for values saved before the rename.
+    $options = $item->options;
+    foreach (['class', 'hover_class'] as $key) {
+      if (!empty($options[$key])) {
+        $options[$key] = AZBootstrapColorNames::updateClasses($options[$key]);
+      }
+    }
+    $font_color_class = AZBootstrapColorNames::updateClasses($item->ranking_font_color ?? '');
+
     // Get ranking settings from parent paragraph.
     $ranking_hover_effect = FALSE;
     $ranking_clickable = FALSE;
@@ -790,18 +810,18 @@ class AZRankingWidget extends WidgetBase {
       }
     }
     // Apply paragraph settings found in AZRankingDefaultFormatter.
-    if ($item->options['ranking_type'] !== 'image_only') {
+    if ($options['ranking_type'] !== 'image_only') {
       $ranking_classes .= ' ' . $ranking_alignment;
     }
 
     // Apply clickable ranking styles (like formatter does).
     $link_title = $item->link_title ?? '';
-    $ranking_link_style = $item->ranking_link_style ?? 'w-100 btn btn-red mt-2';
+    $ranking_link_style = AZBootstrapColorNames::updateClasses($item->ranking_link_style ?? 'w-100 btn btn-red mt-2');
 
     if ($ranking_clickable) {
       // Add shadow when ranking is clickable.
       $ranking_classes .= ' shadow';
-      if (!empty($ranking_hover_effect) && $item->options['ranking_type'] !== 'image_only') {
+      if (!empty($ranking_hover_effect) && $options['ranking_type'] !== 'image_only') {
         $ranking_classes .= ' ranking-bold-hover';
       }
     }
@@ -812,13 +832,13 @@ class AZRankingWidget extends WidgetBase {
 
     // Link color override.
     if (str_contains($ranking_link_style, 'link')) {
-      if (str_contains($item->options['class'], 'bg-oasis') ||
-        str_contains($item->options['class'], 'bg-sky')) {
-        $ranking_link_style .= ' text-midnight';
+      if (str_contains($options['class'], 'bg-arroyo-blue') ||
+        str_contains($options['class'], 'bg-rain')) {
+        $ranking_link_style .= ' text-tinta';
       }
     }
     // Determine font color and text color override.
-    $ranking_font_color = $item->ranking_font_color ?? 'ranking-text-midnight';
+    $ranking_font_color = $font_color_class ?: 'ranking-text-tinta';
     $text_color_override = '';
 
     // Determine source classes based on background color (like formatter does).
@@ -827,16 +847,16 @@ class AZRankingWidget extends WidgetBase {
 
     // Get the appropriate background class depending on hover effect.
     if ($ranking_hover_effect) {
-      if (!empty($item->options['hover_class'])) {
-        $background_class = $item->options['hover_class'];
+      if (!empty($options['hover_class'])) {
+        $background_class = $options['hover_class'];
       }
       // Fallback to the persisted background class.
-      if (empty($background_class) && !empty($item->options['class'])) {
-        $background_class = $item->options['class'];
+      if (empty($background_class) && !empty($options['class'])) {
+        $background_class = $options['class'];
       }
     }
     else {
-      $background_class = $item->options['class'] ?? '';
+      $background_class = $options['class'] ?? '';
     }
 
     // Apply mt-auto if NOT transparent background.
@@ -845,50 +865,50 @@ class AZRankingWidget extends WidgetBase {
     }
     else {
       // transparent: apply font color to ranking _font_color and _classes.
-      $ranking_font_color = ' ' . $item->ranking_font_color;
-      $ranking_classes .= ' ' . $item->ranking_font_color;
+      $ranking_font_color = ' ' . $font_color_class;
+      $ranking_classes .= ' ' . $font_color_class;
     }
 
     // Set text_color_override based on background color (like formatter does).
     if (!$ranking_hover_effect) {
-      if (!empty($item->options['class'])) {
+      if (!empty($options['class'])) {
         switch (TRUE) {
-          case str_contains($item->options['class'], 'bg-sky'):
-            $text_color_override = 'text-midnight';
+          case str_contains($options['class'], 'bg-rain'):
+            $text_color_override = 'text-tinta';
             break;
 
-          case str_contains($item->options['class'], 'bg-cool-gray'):
+          case str_contains($options['class'], 'bg-cloud'):
             $text_color_override = 'text-azurite';
             break;
 
-          case str_contains($item->options['class'], 'bg-warm-gray'):
-            $text_color_override = 'text-midnight';
+          case str_contains($options['class'], 'bg-caliche'):
+            $text_color_override = 'text-tinta';
             break;
 
-          case str_contains($item->options['class'], 'bg-white'):
-            $text_color_override = 'text-midnight';
+          case str_contains($options['class'], 'bg-white'):
+            $text_color_override = 'text-tinta';
             break;
 
-          case str_contains($item->options['class'], 'bg-oasis'):
-            $text_color_override = 'text-midnight';
+          case str_contains($options['class'], 'bg-arroyo-blue'):
+            $text_color_override = 'text-tinta';
             break;
         }
       }
     }
     else {
       // Override hover class.
-      if (!empty($item->options['hover_class'])) {
+      if (!empty($options['hover_class'])) {
         switch (TRUE) {
-          case str_contains($item->options['hover_class'], 'bg-sky'):
-            $text_color_override = 'text-midnight';
+          case str_contains($options['hover_class'], 'bg-rain'):
+            $text_color_override = 'text-tinta';
             break;
 
-          case str_contains($item->options['hover_class'], 'bg-cool-gray'):
+          case str_contains($options['hover_class'], 'bg-cloud'):
             $text_color_override = 'text-azurite';
             break;
 
-          case str_contains($item->options['hover_class'], 'bg-oasis'):
-            $text_color_override = 'text-midnight';
+          case str_contains($options['hover_class'], 'bg-arroyo-blue'):
+            $text_color_override = 'text-tinta';
             break;
         }
       }

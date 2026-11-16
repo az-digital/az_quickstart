@@ -2,6 +2,7 @@
 
 namespace Drupal\az_paragraphs\Plugin\paragraphs\Behavior;
 
+use Drupal\az_core\Utility\AZBootstrapColorNames;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\paragraphs\ParagraphInterface;
 
@@ -129,16 +130,16 @@ class AZRankingsParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#type' => 'select',
       '#options' => [
         'text-blue' => $this->t('Arizona Blue (default)'),
-        'text-sky' => $this->t('Sky'),
-        'text-oasis' => $this->t('Oasis'),
+        'text-rain' => $this->t('Rain'),
+        'text-arroyo-blue' => $this->t('Arroyo Blue'),
         'text-azurite' => $this->t('Azurite'),
-        'text-midnight' => $this->t('Midnight'),
+        'text-tinta' => $this->t('Tinta'),
         'text-ash' => $this->t('Ash'),
         'text-dark-silver' => $this->t('Dark Silver'),
         'text-black' => $this->t('Black'),
         'text-white' => $this->t('White'),
       ],
-      '#default_value' => $config['ranking_deck_title_color'] ?? 'text-blue',
+      '#default_value' => AZBootstrapColorNames::updateClasses($config['ranking_deck_title_color'] ?? 'text-blue'),
       '#description' => $this->t('Change the color of the Ranking group title.'),
     ];
 

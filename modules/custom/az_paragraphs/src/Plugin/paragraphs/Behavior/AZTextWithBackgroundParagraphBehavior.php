@@ -2,6 +2,7 @@
 
 namespace Drupal\az_paragraphs\Plugin\paragraphs\Behavior;
 
+use Drupal\az_core\Utility\AZBootstrapColorNames;
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
@@ -30,8 +31,8 @@ class AZTextWithBackgroundParagraphBehavior extends AZDefaultParagraphsBehavior 
    * @var array<string, string[]>
    */
   const RESTRICTED_PATTERNS = [
-    'bg-monsoon-sky-start' => ['text-bg-azurite', 'text-bg-blue'],
-    'bg-monsoon-sky-end' => ['text-bg-azurite', 'text-bg-blue'],
+    'bg-monsoon-rain-start' => ['text-bg-azurite', 'text-bg-blue'],
+    'bg-monsoon-rain-end' => ['text-bg-azurite', 'text-bg-blue'],
   ];
 
   /**
@@ -61,24 +62,24 @@ class AZTextWithBackgroundParagraphBehavior extends AZDefaultParagraphsBehavior 
         'bg-transparent' => $this->t('Transparent'),
         'text-bg-red' => $this->t('Arizona Red'),
         'text-bg-blue' => $this->t('Arizona Blue'),
-        'text-bg-sky' => $this->t('Sky'),
-        'text-bg-oasis' => $this->t('Oasis'),
+        'text-bg-rain' => $this->t('Rain'),
+        'text-bg-arroyo-blue' => $this->t('Arroyo Blue'),
         'text-bg-azurite' => $this->t('Azurite'),
-        'text-bg-midnight' => $this->t('Midnight'),
-        'text-bg-bloom' => $this->t('Bloom'),
-        'text-bg-chili' => $this->t('Chili'),
-        'text-bg-cool-gray' => $this->t('Cool Gray'),
-        'text-bg-warm-gray' => $this->t('Warm Gray'),
+        'text-bg-tinta' => $this->t('Tinta'),
+        'text-bg-bougainvillea' => $this->t('Bougainvillea'),
+        'text-bg-sonoran-red' => $this->t('Sonoran Red'),
+        'text-bg-cloud' => $this->t('Cloud'),
+        'text-bg-caliche' => $this->t('Caliche'),
         'text-bg-gray-100' => $this->t('Gray 100'),
         'text-bg-gray-200' => $this->t('Gray 200'),
         'text-bg-gray-300' => $this->t('Gray 300'),
-        'text-bg-leaf' => $this->t('Leaf'),
-        'text-bg-river' => $this->t('River'),
+        'text-bg-saguaro' => $this->t('Saguaro'),
+        'text-bg-shade' => $this->t('Shade'),
         'text-bg-silver' => $this->t('Silver'),
         'text-bg-ash' => $this->t('Ash'),
-        'text-bg-mesa' => $this->t('Mesa'),
+        'text-bg-brick' => $this->t('Brick'),
       ],
-      '#default_value' => $config['text_background_color'] ?? 'text-bg-white',
+      '#default_value' => AZBootstrapColorNames::updateClasses($config['text_background_color'] ?? 'text-bg-white'),
       '#attributes' => [
         'data-az-text-background-color-input-id' => $background_color_unique_id,
       ],
@@ -98,15 +99,15 @@ class AZTextWithBackgroundParagraphBehavior extends AZDefaultParagraphsBehavior 
         'bg-triangles-centered' => $this->t('Triangles Centered'),
         'bg-triangles-top-right' => $this->t('Triangles Right'),
         'bg-trilines' => $this->t('Trilines'),
-        'bg-monsoon-sky-start' => $this->t('Monsoon Sky Start'),
-        'bg-monsoon-sky-end' => $this->t('Monsoon Sky End'),
+        'bg-monsoon-rain-start' => $this->t('Monsoon Rain Start'),
+        'bg-monsoon-rain-end' => $this->t('Monsoon Rain End'),
       ],
-      '#default_value' => $config['text_background_pattern'] ?? '',
+      '#default_value' => AZBootstrapColorNames::updateClasses($config['text_background_pattern'] ?? ''),
       '#attributes' => [
         'data-az-text-background-pattern-for' => $background_color_unique_id,
         'data-az-restricted-patterns' => Json::encode(self::RESTRICTED_PATTERNS),
       ],
-      '#description' => $this->t('<br><big><strong>Important:</strong></big> Patterns are intended to be used sparingly.<ul><li>Please ensure sufficient contrast between text and its background.</li><li>The Monsoon Sky patterns are only available with the Azurite and Arizona Blue background colors.</li><li> More detail on background pattern options can be found in the @arizona_bootstrap_docs_bg_wrappers_link.</li></ul>',
+      '#description' => $this->t('<br><big><strong>Important:</strong></big> Patterns are intended to be used sparingly.<ul><li>Please ensure sufficient contrast between text and its background.</li><li>The Monsoon Rain patterns are only available with the Azurite and Arizona Blue background colors.</li><li> More detail on background pattern options can be found in the @arizona_bootstrap_docs_bg_wrappers_link.</li></ul>',
         [
           '@arizona_bootstrap_docs_bg_wrappers_link' => Link::fromTextAndUrl('Arizona Bootstrap Background Wrappers documentation', Url::fromUri('https://digital.arizona.edu/arizona-bootstrap/v5/docs/5.2/components/background-wrappers/', ['attributes' => ['target' => '_blank']]))->toString(),
         ]),

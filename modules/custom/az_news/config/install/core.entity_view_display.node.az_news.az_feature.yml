@@ -38,7 +38,7 @@ third_party_settings:
       smart_title__link: false
       smart_title__tag: h2
       smart_title__classes:
-        - text-midnight
+        - text-tinta
         - mt-2
         - mb-1
   field_group:

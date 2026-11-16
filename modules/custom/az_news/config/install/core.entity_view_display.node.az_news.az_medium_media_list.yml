@@ -115,7 +115,7 @@ third_party_settings:
       weight: 6
       format_type: html_element
       format_settings:
-        classes: 'card-title text-midnight h5 mt-0 mb-0'
+        classes: 'card-title text-tinta h5 mt-0 mb-0'
         id: ''
         element: h3
         show_label: false

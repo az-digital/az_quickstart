@@ -182,7 +182,7 @@ third_party_settings:
       weight: 5
       format_type: html_element
       format_settings:
-        classes: 'h5 text-chili mt-3 mt-lg-0'
+        classes: 'h5 text-sonoran-red mt-3 mt-lg-0'
         id: ''
         element: h2
         show_label: false

@@ -10,22 +10,22 @@
           "az_cards": [
             {
               "delta": 0,
-              "title": "Cool Gray",
+              "title": "Cloud",
               "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>",
               "link_title": "Card Link",
               "link_url": "#top",
               "media": "",
-              "background": "text-bg-cool-gray",
+              "background": "text-bg-cloud",
               "link_style": "btn w-100 btn-red"
             },
             {
               "delta": 1,
-              "title": "Chili",
+              "title": "Sonoran Red",
               "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>",
               "link_title": "",
               "link_url": "",
               "media": "",
-              "background": "text-bg-chili",
+              "background": "text-bg-sonoran-red",
               "link_style": "w-100"
             }
           ],
@@ -47,7 +47,7 @@
             "link_url": "#top",
             "media": "runners_brains.jpeg",
             "background": "text-bg-blue",
-            "link_style": "btn w-100 btn-outline-sky"
+            "link_style": "btn w-100 btn-outline-rain"
           },
           {
             "delta": 1,
@@ -56,7 +56,7 @@
             "link_title": "Visually hidden card link",
             "link_url": "#top",
             "media": "mans_best_friend.jpeg",
-            "background": "text-bg-river",
+            "background": "text-bg-shade",
             "link_style": "visually-hidden"
           },
           {
@@ -87,7 +87,7 @@
           "link_title": "Card Link",
           "link_url": "#top",
           "media": "runners_brains.jpeg",
-          "background": "text-bg-warm-gray",
+          "background": "text-bg-caliche",
           "link_style": "btn btn-red w-100"
         },
         {
@@ -138,17 +138,17 @@
             "link_title": "",
             "link_url": "",
             "media": "mans_best_friend.jpeg",
-            "background": "text-bg-river",
+            "background": "text-bg-shade",
             "link_style": "w-100"
           },
           {
             "delta": 1,
-            "title": "Cool Gray",
+            "title": "Cloud",
             "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>",
             "link_title": "External link",
             "link_url": "https://www.arizona.edu",
             "media": "",
-            "background": "text-bg-cool-gray",
+            "background": "text-bg-cloud",
             "link_style": "w-100"
           }
         ],
