@@ -75,7 +75,8 @@ class FlexiblePageToCanvasAction extends ViewsBulkOperationsActionBase implement
     $nodes = [];
     foreach ($entities as $entity) {
       if ($entity instanceof NodeInterface && $entity->bundle() === 'az_flexible_page') {
-        $nodes[$entity->id()] = $entity;
+        // The migrations only include the default translation.
+        $nodes[$entity->id()] = $entity->getUntranslated();
       }
     }
     if (!$nodes) {

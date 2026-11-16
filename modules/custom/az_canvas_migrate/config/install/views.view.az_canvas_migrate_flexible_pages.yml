@@ -4,6 +4,7 @@ dependencies:
   config:
     - node.type.az_flexible_page
   module:
+    - canvas
     - node
     - user
     - views_bulk_operations
@@ -457,6 +458,16 @@ display:
           expose:
             operator_limit_selection: false
             operator_list: {  }
+        default_langcode:
+          id: default_langcode
+          table: node_field_data
+          field: default_langcode
+          entity_type: node
+          entity_field: default_langcode
+          plugin_id: boolean
+          value: '1'
+          expose:
+            operator: ''
       filter_groups:
         operator: AND
         groups:
@@ -468,31 +479,23 @@ display:
           row_class: ''
           default_row_class: true
           columns:
-            node_bulk_form: node_bulk_form
+            views_bulk_operations_bulk_form: views_bulk_operations_bulk_form
             title: title
-            type: type
             name: name
             status: status
             changed: changed
-            edit_node: edit_node
-            delete_node: delete_node
-            dropbutton: dropbutton
-            timestamp: title
+            langcode: langcode
+            operations: operations
           default: changed
           info:
-            node_bulk_form:
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            title:
-              sortable: true
+            views_bulk_operations_bulk_form:
+              sortable: false
               default_sort_order: asc
               align: ''
               separator: ''
               empty_column: false
               responsive: ''
-            type:
+            title:
               sortable: true
               default_sort_order: asc
               align: ''
@@ -520,28 +523,14 @@ display:
               separator: ''
               empty_column: false
               responsive: priority-low
-            edit_node:
+            langcode:
               sortable: false
               default_sort_order: asc
               align: ''
               separator: ''
               empty_column: false
               responsive: ''
-            delete_node:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            dropbutton:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            timestamp:
+            operations:
               sortable: false
               default_sort_order: asc
               align: ''

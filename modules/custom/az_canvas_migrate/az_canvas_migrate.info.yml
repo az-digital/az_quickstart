@@ -11,5 +11,6 @@ dependencies:
   - canvas:canvas
   - drupal:migrate
   - drupal:views
+  - migrate_plus:migrate_plus
   - migrate_tools:migrate_tools
   - views_bulk_operations:views_bulk_operations

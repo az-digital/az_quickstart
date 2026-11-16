@@ -27,7 +27,8 @@ process:
     source: field_az_main_content
     migrations:
       az_rankings: az_paragraph_rankings_to_canvas
-# The URL alias and the source node's published state are handled by
+# The URL alias, the source node's published state and, on update, the
+# page's published state are handled by
 # \Drupal\az_canvas_migrate\EventSubscriber\CanvasPageMigrationSubscriber,
 # since moving an alias between entities is not a field mapping.
 destination:

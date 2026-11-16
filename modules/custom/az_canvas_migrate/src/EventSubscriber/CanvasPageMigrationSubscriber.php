@@ -9,7 +9,9 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\migrate\Event\MigrateEvents;
 use Drupal\migrate\Event\MigratePostRowSaveEvent;
+use Drupal\migrate\Event\MigratePreRowSaveEvent;
 use Drupal\migrate\Event\MigrateRowDeleteEvent;
+use Drupal\migrate\MigrateException;
 use Drupal\node\NodeInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -19,7 +21,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  * After a row is imported, the source node is unpublished and its alias is
  * moved to the new Canvas page, so visitors land on the Canvas version. On
  * rollback, the alias and published state are handed back to the node, so
- * rolling back is a full undo.
+ * rolling back is a full undo. Updating a page keeps its published state.
  */
 class CanvasPageMigrationSubscriber implements EventSubscriberInterface {
 
@@ -43,9 +45,31 @@ class CanvasPageMigrationSubscriber implements EventSubscriberInterface {
    */
   public static function getSubscribedEvents(): array {
     return [
+      MigrateEvents::PRE_ROW_SAVE => 'onPreRowSave',
       MigrateEvents::POST_ROW_SAVE => 'onPostRowSave',
       MigrateEvents::PRE_ROW_DELETE => 'onPreRowDelete',
     ];
+  }
+
+  /**
+   * Keeps an existing Canvas page's published state when it is updated.
+   *
+   * By the time a page is updated, converting it has unpublished the source
+   * node, so the node's status no longer says whether the page should be
+   * published. The overwrite_properties destination option can't be used to
+   * leave status alone: on update it loses the ID map row, and the page is
+   * then kept on rollback.
+   */
+  public function onPreRowSave(MigratePreRowSaveEvent $event): void {
+    if ($event->getMigration()->id() !== self::MIGRATION_ID) {
+      return;
+    }
+    $row = $event->getRow();
+    $page_id = $row->getIdMap()['destid1'] ?? NULL;
+    $page = $page_id ? $this->entityTypeManager->getStorage('canvas_page')->load($page_id) : NULL;
+    if ($page instanceof ContentEntityInterface) {
+      $row->setDestinationProperty('status', $page->get('status')->value);
+    }
   }
 
   /**
@@ -91,7 +115,13 @@ class CanvasPageMigrationSubscriber implements EventSubscriberInterface {
     }
     catch (\Throwable $e) {
       $transaction->rollBack();
-      throw $e;
+      // Core saves the ID map row after this event, so a failure here would
+      // leave a new page untracked: delete it, and throw a MigrateException
+      // so the row is recorded as failed with this message.
+      if (empty($event->getRow()->getIdMap()['destid1'])) {
+        $page->delete();
+      }
+      throw new MigrateException(sprintf('Handing node %d over to Canvas page failed: %s', $node->id(), $e->getMessage()), 0, $e);
     }
   }
 
