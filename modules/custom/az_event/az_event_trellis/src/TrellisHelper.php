@@ -7,6 +7,7 @@ use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\az_event_trellis\Plugin\views\filter\AZEventTrellisViewsAttributeFilter;
+use Drupal\node\NodeInterface;
 use Drupal\views\Views;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
@@ -191,6 +192,16 @@ final class TrellisHelper {
       ->accessCheck(FALSE)
       ->condition('type', 'az_event')
       ->exists('field_az_trellis_id');
+    // Add query condition to determine which events need updates.
+    // Events may have updates if they are published OR not ended.
+    // Events unpublished AND in the past are considered no longer relevant.
+    $group = $query->orConditionGroup()
+      // Published events eventually are unpublished by Trellis.
+      // Any event which is still published may have a final update.
+      ->condition('status', NodeInterface::PUBLISHED)
+      // Events which have their end in the future may have updates.
+      ->condition('field_az_event_date.end_value', time(), '>=');
+    $query->condition($group);
     $nids = $query->execute();
     $nodes = $nodeStorage->loadMultiple($nids);
 
