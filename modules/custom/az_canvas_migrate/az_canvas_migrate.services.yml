@@ -1,10 +1,4 @@
 services:
-  az_canvas_migrate.component_tree_builder:
-    class: Drupal\az_canvas_migrate\CanvasComponentTreeBuilder
-    arguments:
-      - '@entity_type.manager'
-      - '@az_ranking.component_builder'
-      - '@uuid'
   az_canvas_migrate.component_store:
     class: Drupal\az_canvas_migrate\CanvasComponentStore
     arguments:
