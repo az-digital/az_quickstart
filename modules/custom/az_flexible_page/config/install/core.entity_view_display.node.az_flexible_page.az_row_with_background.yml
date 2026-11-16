@@ -21,7 +21,7 @@ third_party_settings:
       smart_title__link: false
       smart_title__tag: h3
       smart_title__classes:
-        - text-midnight
+        - text-tinta
         - card-title
         - h4
         - mt-0

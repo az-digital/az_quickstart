@@ -186,7 +186,7 @@ third_party_settings:
       smart_title__link: false
       smart_title__tag: h1
       smart_title__classes:
-        - text-midnight
+        - text-tinta
 id: node.az_news.default
 targetEntityType: node
 bundle: az_news

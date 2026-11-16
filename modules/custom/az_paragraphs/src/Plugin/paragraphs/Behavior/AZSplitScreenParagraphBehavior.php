@@ -2,6 +2,7 @@
 
 namespace Drupal\az_paragraphs\Plugin\paragraphs\Behavior;
 
+use Drupal\az_core\Utility\AZBootstrapColorNames;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
@@ -52,24 +53,24 @@ class AZSplitScreenParagraphBehavior extends AZDefaultParagraphsBehavior {
         'bg-transparent' => $this->t('Transparent'),
         'text-bg-red' => $this->t('Arizona Red'),
         'text-bg-blue' => $this->t('Arizona Blue'),
-        'text-bg-sky' => $this->t('Sky'),
-        'text-bg-oasis' => $this->t('Oasis'),
+        'text-bg-rain' => $this->t('Rain'),
+        'text-bg-arroyo-blue' => $this->t('Arroyo Blue'),
         'text-bg-azurite' => $this->t('Azurite'),
-        'text-bg-midnight' => $this->t('Midnight'),
-        'text-bg-bloom' => $this->t('Bloom'),
-        'text-bg-chili' => $this->t('Chili'),
-        'text-bg-cool-gray' => $this->t('Cool Gray'),
-        'text-bg-warm-gray' => $this->t('Warm Gray'),
+        'text-bg-tinta' => $this->t('Tinta'),
+        'text-bg-bougainvillea' => $this->t('Bougainvillea'),
+        'text-bg-sonoran-red' => $this->t('Sonoran Red'),
+        'text-bg-cloud' => $this->t('Cloud'),
+        'text-bg-caliche' => $this->t('Caliche'),
         'text-bg-gray-100' => $this->t('Gray 100'),
         'text-bg-gray-200' => $this->t('Gray 200'),
         'text-bg-gray-300' => $this->t('Gray 300'),
-        'text-bg-leaf' => $this->t('Leaf'),
-        'text-bg-river' => $this->t('River'),
+        'text-bg-saguaro' => $this->t('Saguaro'),
+        'text-bg-shade' => $this->t('Shade'),
         'text-bg-silver' => $this->t('Silver'),
         'text-bg-ash' => $this->t('Ash'),
-        'text-bg-mesa' => $this->t('Mesa'),
+        'text-bg-brick' => $this->t('Brick'),
       ],
-      '#default_value' => $config['bg_color'] ?? 'text-bg-white',
+      '#default_value' => AZBootstrapColorNames::updateClasses($config['bg_color'] ?? 'text-bg-white'),
       '#description' => $this->t('<br><big><b>Important:</b></big> Site editors are responsible for accessibility and brand guideline considerations.<ul><li>To ensure proper color contrast, use the text color accessibility test at the bottom of the @arizona_bootstrap_color_docs_link.</li><li>For guidance on using the University of Arizona color palette, visit @ua_brand_colors_link.</li></ul>',
       [
         '@arizona_bootstrap_color_docs_link' => Link::fromTextAndUrl('Arizona Bootstrap color documentation', Url::fromUri('https://digital.arizona.edu/arizona-bootstrap/v5/docs/5.2/getting-started/color-contrast/', ['attributes' => ['target' => '_blank']]))->toString(),

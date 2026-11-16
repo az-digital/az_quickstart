@@ -106,7 +106,7 @@ third_party_settings:
       smart_title__tag: h5
       smart_title__classes:
         - card-title
-        - text-midnight
+        - text-tinta
         - mt-1
         - hover-text-underline
 id: node.az_course.az_card

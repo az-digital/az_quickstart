@@ -3,6 +3,7 @@
 namespace Drupal\az_card\Plugin\Field\FieldFormatter;
 
 use Drupal\az_card\Plugin\Field\FieldType\AZCardItem;
+use Drupal\az_core\Utility\AZBootstrapColorNames;
 use Drupal\Core\Field\Attribute\FieldFormatter;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
@@ -276,7 +277,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
       // A Cloud card has the brand's Cloud card colors: Tinta text and an
       // Azurite title. The card's .text-bg-* class sets black text, so the
       // classes go on the card body and the title.
-      if (in_array($item->options['class'] ?? '', AZCardItem::CLOUD_BACKGROUND_CLASSES, TRUE)) {
+      if (AZBootstrapColorNames::updateClasses($item->options['class'] ?? '') === 'text-bg-cloud') {
         $body_classes[] = 'text-tinta';
         // A title on the image stays white, on its gradient.
         if ($title_style === 'default') {
