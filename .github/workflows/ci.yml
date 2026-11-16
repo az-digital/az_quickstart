@@ -2,6 +2,9 @@ name: CI
 on:
   pull_request:
   push:
+    # The CI workflow in az-digital/az-quickstart-dev reads this list to decide
+    # which az_quickstart branches to test against, so it should only contain
+    # supported branches.
     branches:
       - 'main'
       - '2.x'
