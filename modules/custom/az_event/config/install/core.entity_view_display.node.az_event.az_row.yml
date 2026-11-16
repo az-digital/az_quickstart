@@ -184,7 +184,7 @@ third_party_settings:
       format_settings:
         classes: 'h5 text-chili mt-3 mt-lg-0'
         id: ''
-        element: div
+        element: h2
         show_label: false
         label_element: h3
         label_element_classes: ''

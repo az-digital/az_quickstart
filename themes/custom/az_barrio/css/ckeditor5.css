@@ -27,18 +27,6 @@
   --ck-z-modal: calc( var(--ck-z-default) + 999 );
 }
 
-.ck.ck-content ul {
-  list-style-type: initial;
-}
-
-.ck.ck-content ul ul {
-  list-style-type: circle;
-}
-
-.ck.ck-content ul ul ul {
-  list-style-type: square;
-}
-
 .ck.ck-content .table>figcaption {
   caption-side: bottom;
 }

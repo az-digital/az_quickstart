@@ -6,6 +6,9 @@ on:
     types:
       - closed
 
+permissions:
+  contents: read
+
 jobs:
   backport:
     name: Backport to 2.x
@@ -15,6 +18,10 @@ jobs:
       github.event.pull_request.base.ref == 'main' &&
       contains(github.event.pull_request.labels.*.name, 'backport-2.x')
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
 
     steps:
       - name: Checkout repository
