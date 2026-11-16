@@ -22,7 +22,7 @@ third_party_settings:
       smart_title__tag: h2
       smart_title__classes:
         - card-title
-        - text-midnight
+        - text-tinta
         - h4
         - mt-md-2
         - hover-text-underline
@@ -128,7 +128,7 @@ third_party_settings:
       weight: 3
       format_type: html_element
       format_settings:
-        classes: 'card-title text-midnight h4 mt-md-2'
+        classes: 'card-title text-tinta h4 mt-md-2'
         id: ''
         element: h2
         show_label: false
