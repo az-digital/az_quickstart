@@ -8,9 +8,9 @@ source:
   include_translations: false
   add_revision_id: false
 process:
-  title: title/0/value
-  status: status/0/value
-  owner: uid/0/target_id
+  title: title
+  status: status
+  owner: uid
   langcode: langcode
   description:
     - plugin: skip_on_empty
@@ -20,7 +20,7 @@ process:
       callable: strip_tags
     - plugin: callback
       callable: trim
-  image: field_az_media_image/0/target_id
+  image: field_az_media_image
   # Add each paragraph type's migration here, and to migration_dependencies.
   components:
     plugin: az_canvas_component_tree
