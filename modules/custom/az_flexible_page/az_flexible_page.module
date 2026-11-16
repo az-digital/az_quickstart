@@ -6,7 +6,50 @@
  */
 
 use Drupal\Core\Entity\EntityFormInterface;
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+
+/**
+ * Implements hook_entity_base_field_info().
+ *
+ * Canvas pages have no bundles or Field UI, so the page category field shared
+ * with Flexible Pages is defined here as a base field.
+ */
+function az_flexible_page_entity_base_field_info(EntityTypeInterface $entity_type) {
+  $fields = [];
+  if ($entity_type->id() === 'canvas_page') {
+    $fields['field_az_page_category'] = _az_flexible_page_canvas_page_category_definition();
+  }
+  return $fields;
+}
+
+/**
+ * Builds the Canvas page category base field definition.
+ *
+ * @return \Drupal\Core\Field\BaseFieldDefinition
+ *   The field definition.
+ */
+function _az_flexible_page_canvas_page_category_definition() {
+  return BaseFieldDefinition::create('entity_reference')
+    ->setLabel(new TranslatableMarkup('Category'))
+    ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+    ->setTranslatable(TRUE)
+    ->setSetting('target_type', 'taxonomy_term')
+    ->setSetting('handler', 'default:taxonomy_term')
+    ->setSetting('handler_settings', [
+      'target_bundles' => ['az_page_categories' => 'az_page_categories'],
+      'sort' => ['field' => 'name', 'direction' => 'asc'],
+      'auto_create' => FALSE,
+    ])
+    ->setDisplayOptions('form', [
+      'type' => 'options_select',
+      'weight' => 13,
+    ])
+    ->setDisplayConfigurable('form', TRUE)
+    ->setDisplayConfigurable('view', TRUE);
+}
 
 /**
  * Implements hook_preprocess_node().

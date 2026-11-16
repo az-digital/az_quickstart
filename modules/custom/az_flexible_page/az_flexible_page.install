@@ -12,3 +12,17 @@ function az_flexible_page_update_last_removed() {
   // Remove updates added before 2.6.0.
   return 9201;
 }
+
+/**
+ * Add the page category field to Canvas pages.
+ */
+function az_flexible_page_update_1130701() {
+  $manager = \Drupal::entityDefinitionUpdateManager();
+  if ($manager->getEntityType('canvas_page') && !$manager->getFieldStorageDefinition('field_az_page_category', 'canvas_page')) {
+    $definition = _az_flexible_page_canvas_page_category_definition()
+      ->setName('field_az_page_category')
+      ->setTargetEntityTypeId('canvas_page')
+      ->setProvider('az_flexible_page');
+    $manager->installFieldStorageDefinition('field_az_page_category', 'canvas_page', 'az_flexible_page', $definition);
+  }
+}

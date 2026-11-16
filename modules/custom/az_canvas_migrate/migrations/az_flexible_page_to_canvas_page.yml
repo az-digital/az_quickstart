@@ -21,6 +21,7 @@ process:
     - plugin: callback
       callable: trim
   image: field_az_media_image
+  field_az_page_category: field_az_page_category
   # Per-page overrides only; pages without them use the canvas_page defaults
   # from az_seo. Node tokens are rewritten to their Canvas page equivalents.
   metatags:
@@ -33,6 +34,7 @@ process:
         - '[node:az-canonical-url]'
         - '[node:field_az_summary'
         - '[node:field_az_media_image'
+        - '[node:field_az_page_category'
         - '[node:title]'
         - '[node:url'
       replace:
@@ -40,6 +42,7 @@ process:
         - '[canvas_page:url]'
         - '[canvas_page:description'
         - '[canvas_page:image'
+        - '[canvas_page:field_az_page_category'
         - '[canvas_page:title]'
         - '[canvas_page:url'
   # Lists any node tokens left over, which render empty on a Canvas page.
