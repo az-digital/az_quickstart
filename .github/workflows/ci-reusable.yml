@@ -79,8 +79,10 @@ env:
   SITE_DIR: site
   # Location of the profile within the built site.
   PROFILE_PATH: web/profiles/custom/az_quickstart
-  # Identifies the build shared by the jobs of one call to this workflow.
-  BUILD_CACHE_KEY: azqs-build-${{ github.sha }}-${{ inputs.template }}-${{ inputs.quickstart-ref || 'default' }}
+  # Identifies the build shared by the jobs of one call to this workflow. It
+  # includes every input that changes what is built, so that several calls in
+  # one workflow run do not share a build.
+  BUILD_CACHE_KEY: azqs-build-${{ github.sha }}-${{ inputs.template }}-${{ inputs.quickstart-ref || 'default' }}-${{ inputs.template-ref || 'default' }}-${{ inputs.dev-ref || 'default' }}
 
 jobs:
   composer-validate:
