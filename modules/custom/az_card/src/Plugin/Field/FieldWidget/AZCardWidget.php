@@ -2,7 +2,6 @@
 
 namespace Drupal\az_card\Plugin\Field\FieldWidget;
 
-use Drupal\az_card\Plugin\Field\FieldType\AZCardItem;
 use Drupal\az_core\Utility\AZBootstrapColorNames;
 use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\NestedArray;
@@ -187,7 +186,7 @@ class AZCardWidget extends WidgetBase {
         '#attributes' => ['class' => $card_classes],
       ];
       // A Cloud card has Tinta text and an Azurite title, as in the formatter.
-      if (in_array($item->options['class'] ?? '', AZCardItem::CLOUD_BACKGROUND_CLASSES, TRUE)) {
+      if (AZBootstrapColorNames::updateClasses($item->options['class'] ?? '') === 'text-bg-cloud') {
         $element['preview_container']['card_preview']['#body_classes'] = ['text-tinta'];
         $element['preview_container']['card_preview']['#title_classes'] = ['text-azurite'];
       }

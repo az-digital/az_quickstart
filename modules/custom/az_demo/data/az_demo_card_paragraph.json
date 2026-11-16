@@ -238,7 +238,7 @@
           "link_title": "",
           "link_url": "",
           "media": "",
-          "background": "text-bg-cool-gray",
+          "background": "text-bg-cloud",
           "link_style": "visually-hidden"
         },
         {
@@ -248,7 +248,7 @@
           "link_title": "",
           "link_url": "",
           "media": "",
-          "background": "text-bg-cool-gray",
+          "background": "text-bg-cloud",
           "link_style": "visually-hidden"
         },
         {
@@ -258,7 +258,7 @@
           "link_title": "",
           "link_url": "",
           "media": "",
-          "background": "text-bg-cool-gray",
+          "background": "text-bg-cloud",
           "link_style": "visually-hidden"
         }
       ],
@@ -279,7 +279,7 @@
           "link_title": "Listen Now",
           "link_url": "#top",
           "media": "",
-          "background": "text-bg-cool-gray",
+          "background": "text-bg-cloud",
           "link_style": "btn w-100 btn-red"
         },
         {
@@ -289,7 +289,7 @@
           "link_title": "Subscribe",
           "link_url": "#top",
           "media": "",
-          "background": "text-bg-cool-gray",
+          "background": "text-bg-cloud",
           "link_style": "btn w-100 btn-red"
         },
         {
@@ -299,7 +299,7 @@
           "link_title": "",
           "link_url": "",
           "media": "",
-          "background": "text-bg-cool-gray",
+          "background": "text-bg-cloud",
           "link_style": "visually-hidden"
         }
       ],
