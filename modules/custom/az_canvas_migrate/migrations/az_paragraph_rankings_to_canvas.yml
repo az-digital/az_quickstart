@@ -1,0 +1,18 @@
+id: az_paragraph_rankings_to_canvas
+label: 'Rankings paragraphs to Canvas components'
+migration_tags:
+  - Quickstart Canvas
+source:
+  plugin: content_entity:paragraph
+  bundle: az_rankings
+  include_translations: false
+  # Key rows on paragraph ID only: every host node save creates new paragraph
+  # revisions, which would otherwise leave stale rows in the ID map.
+  add_revision_id: false
+process:
+  tree:
+    plugin: az_paragraph_to_canvas_tree
+    source: id
+destination:
+  plugin: az_canvas_component
+migration_dependencies: {}

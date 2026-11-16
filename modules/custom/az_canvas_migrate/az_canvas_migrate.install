@@ -1,0 +1,31 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for az_canvas_migrate.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function az_canvas_migrate_schema() {
+  $schema['az_canvas_migrate_component'] = [
+    'description' => 'Canvas component subtrees migrated from paragraphs, waiting to be assembled into Canvas pages.',
+    'fields' => [
+      'id' => [
+        'description' => 'UUID identifying the migrated subtree.',
+        'type' => 'varchar_ascii',
+        'length' => 128,
+        'not null' => TRUE,
+      ],
+      'tree' => [
+        'description' => 'JSON-encoded Canvas component tree items.',
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => TRUE,
+      ],
+    ],
+    'primary key' => ['id'],
+  ];
+  return $schema;
+}

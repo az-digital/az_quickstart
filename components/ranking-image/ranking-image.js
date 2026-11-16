@@ -7,10 +7,10 @@
  * picked survives that cut. Runs on .az-ranking-image__img, once on load and
  * again after a resize.
  *
- * It lives with the component rather than in az_ranking because focal_x and
- * focal_y are ordinary ranking-image props. The component has to keep
- * working wherever it is placed - in Canvas or authored as a paragraph, with
- * az_ranking installed or not.
+ * It lives with the component rather than in az_ranking because
+ * image_focal_x and image_focal_y are ordinary ranking-image props. The
+ * component has to keep working wherever it is placed - in Canvas or authored
+ * as a paragraph, with az_ranking installed or not.
  */
 
 ((Drupal, once) => {

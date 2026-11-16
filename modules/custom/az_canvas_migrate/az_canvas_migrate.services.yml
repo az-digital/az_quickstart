@@ -1,0 +1,19 @@
+services:
+  az_canvas_migrate.component_tree_builder:
+    class: Drupal\az_canvas_migrate\CanvasComponentTreeBuilder
+    arguments:
+      - '@entity_type.manager'
+      - '@az_ranking.component_builder'
+      - '@uuid'
+  az_canvas_migrate.component_store:
+    class: Drupal\az_canvas_migrate\CanvasComponentStore
+    arguments:
+      - '@database'
+  az_canvas_migrate.migration_subscriber:
+    class: Drupal\az_canvas_migrate\EventSubscriber\CanvasPageMigrationSubscriber
+    arguments:
+      - '@entity_type.manager'
+      - '@database'
+      - '@string_translation'
+    tags:
+      - { name: event_subscriber }

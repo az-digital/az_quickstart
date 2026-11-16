@@ -82,22 +82,22 @@ props:
         '4': 4 columns
       examples:
         - '1'
-    focal_x:
+    image_focal_x:
       type: number
       title: Focal Point X
-      description: Horizontal focal point, as a fraction of the image's width from the left (0 = left edge, 1 = right edge). Keeps this point visible when the image is cropped to fill its container. Leave unset for default centered cropping.
+      description: Horizontal focal point, as a percentage of the image's width from the left (0 = left edge, 50 = center, 100 = right edge). Keeps this point visible when the image is cropped to fill its container. Leave unset for default centered cropping.
       minimum: 0
-      maximum: 1
+      maximum: 100
       examples:
-        - 0.5
-    focal_y:
+        - 50
+    image_focal_y:
       type: number
       title: Focal Point Y
-      description: Vertical focal point, as a fraction of the image's height from the top (0 = top edge, 1 = bottom edge). Keeps this point visible when the image is cropped to fill its container. Leave unset for default centered cropping.
+      description: Vertical focal point, as a percentage of the image's height from the top (0 = top edge, 50 = center, 100 = bottom edge). Keeps this point visible when the image is cropped to fill its container. Leave unset for default centered cropping.
       minimum: 0
-      maximum: 1
+      maximum: 100
       examples:
-        - 0.5
+        - 50
     utility_classes:
       type: array
       title: Utility Classes

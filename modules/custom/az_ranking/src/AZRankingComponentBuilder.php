@@ -268,8 +268,12 @@ class AZRankingComponentBuilder {
           $props['image'] = ['src' => $image_data['src']];
         }
         if ($image_data['focal_x'] !== NULL && $image_data['focal_y'] !== NULL) {
-          $props['focal_x'] = $image_data['focal_x'];
-          $props['focal_y'] = $image_data['focal_y'];
+          // Legacy media fields store focal points as 0-1 fractions, while
+          // Canvas Focal Point Widget's component props use whole 0-100
+          // percentages. Rounding avoids float artifacts (0.29 * 100 is
+          // 28.999...) and loses nothing, as legacy values have 2 decimals.
+          $props['image_focal_x'] = (int) round($image_data['focal_x'] * 100);
+          $props['image_focal_y'] = (int) round($image_data['focal_y'] * 100);
         }
       }
     }

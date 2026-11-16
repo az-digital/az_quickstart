@@ -1,0 +1,40 @@
+id: az_flexible_page_to_canvas_page
+label: 'Flexible Pages to Canvas pages'
+migration_tags:
+  - Quickstart Canvas
+source:
+  plugin: content_entity:node
+  bundle: az_flexible_page
+  include_translations: false
+  add_revision_id: false
+process:
+  title: title/0/value
+  status: status/0/value
+  owner: uid/0/target_id
+  langcode: langcode
+  description:
+    - plugin: skip_on_empty
+      method: process
+      source: field_az_summary/0/value
+    - plugin: callback
+      callable: strip_tags
+    - plugin: callback
+      callable: trim
+  image: field_az_media_image/0/target_id
+  # Add each paragraph type's migration here, and to migration_dependencies.
+  components:
+    plugin: az_canvas_component_tree
+    source: field_az_main_content
+    migrations:
+      az_rankings: az_paragraph_rankings_to_canvas
+# The URL alias and the source node's published state are handled by
+# \Drupal\az_canvas_migrate\EventSubscriber\CanvasPageMigrationSubscriber,
+# since moving an alias between entities is not a field mapping.
+destination:
+  plugin: 'entity:canvas_page'
+  validate: true
+# Optional rather than required: required dependencies must be fully
+# imported first, which would block converting selected pages with --idlist.
+migration_dependencies:
+  optional:
+    - az_paragraph_rankings_to_canvas
