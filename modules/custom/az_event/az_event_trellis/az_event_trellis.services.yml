@@ -5,6 +5,7 @@ services:
     class: Drupal\az_event_trellis\TrellisHelper
     arguments:
       - '@config.factory'
+      # Core client by design; see the TrellisHelper class docblock.
       - '@http_client'
       - '@cache.default'
       - '@entity_type.manager'
