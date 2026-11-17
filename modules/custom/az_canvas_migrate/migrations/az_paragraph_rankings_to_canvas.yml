@@ -1,0 +1,242 @@
+# Converts each Rankings paragraph into an az_quickstart:ranking-deck SDC,
+# with one az_quickstart:ranking or az_quickstart:ranking-image child per
+# ranking. The value mappings mirror \Drupal\az_ranking\AZRankingComponentBuilder,
+# which renders the same SDCs for Paragraphs, so both pages match.
+#
+# The destination sets the root component. Process builds its inputs and
+# slots, and picks each child's component. See the az_canvas_component
+# destination for how these become Canvas component tree items.
+id: az_paragraph_rankings_to_canvas
+label: 'Rankings paragraphs to Canvas components'
+migration_tags:
+  - Quickstart Canvas
+source:
+  plugin: content_entity:paragraph
+  bundle: az_rankings
+  include_translations: false
+  # Key rows on paragraph ID only: every host node save creates new paragraph
+  # revisions, which would otherwise leave stale rows in the ID map.
+  add_revision_id: false
+  constants:
+    deck_row_gap: pb-4
+process:
+  # A paragraph with no rankings has nothing to place. The page migration
+  # skips paragraphs whose rows were ignored.
+  _rankings:
+    # single_value passes the item list as one value. Otherwise an empty
+    # list is iterated as zero items and skip_on_empty never runs.
+    - plugin: single_value
+      source: field_az_rankings
+    - plugin: skip_on_empty
+      method: row
+      message: 'The rankings paragraph has no rankings.'
+  _title_notice:
+    plugin: az_canvas_notice
+    source: field_az_title/0/value
+    message: 'The rankings title "@value" was not converted; add a heading in Canvas if needed.'
+  _behavior: &behavior
+    plugin: az_paragraph_behavior_settings
+    source: behavior_settings/0/value
+    behavior: az_rankings_paragraph_behavior
+
+  inputs/columns_desktop: &columns_desktop
+    plugin: static_map
+    source: '@_behavior/ranking_width'
+    map:
+      col-lg-12: '1'
+      col-lg-6: '2'
+      col-lg-4: '3'
+      col-lg-3: '4'
+    default_value: '4'
+  inputs/columns_tablet: &columns_tablet
+    plugin: static_map
+    source: '@_behavior/az_display_settings/ranking_width_sm'
+    map:
+      col-md-12: '1'
+      col-md-6: '2'
+      col-md-4: '3'
+      col-md-3: '4'
+    default_value: '1'
+  inputs/columns_phone: &columns_phone
+    plugin: static_map
+    source: '@_behavior/az_display_settings/ranking_width_xs'
+    map:
+      col-12: '1'
+      col-6: '2'
+      col-4: '3'
+      col-3: '4'
+    default_value: '1'
+  # The Paragraphs formatter's row gap, plus the paragraph wrapper's bottom
+  # spacing, which Canvas has no wrapper for.
+  inputs/utility_classes/0: constants/deck_row_gap
+  inputs/utility_classes/1: '@_behavior/az_display_settings/bottom_spacing'
+
+  slots/rankings:
+    plugin: sub_process
+    source: '@_rankings'
+    include_source: true
+    source_key: paragraph
+    process:
+      _behavior:
+        <<: *behavior
+        source: paragraph/behavior_settings/0/value
+      component:
+        plugin: static_map
+        source: options/ranking_type
+        map:
+          image_only: 'az_quickstart:ranking-image'
+        default_value: 'az_quickstart:ranking'
+
+      # Inputs for both child components are built here. The destination
+      # keeps only the props each component defines.
+
+      # az_quickstart:ranking
+      inputs/heading: ranking_heading
+      inputs/description: ranking_description
+      inputs/source: ranking_source
+      inputs/link_url:
+        plugin: az_canvas_link
+        source: link_uri
+      inputs/link_title:
+        - plugin: skip_on_empty
+          source: link_uri
+          method: process
+        - plugin: get
+          source: link_title
+      inputs/link_style:
+        - plugin: skip_on_empty
+          source: link_uri
+          method: process
+        - plugin: static_map
+          source: ranking_link_style
+          map:
+            visually-hidden: hidden
+            'link mt-2': text-link
+            'w-100 btn btn-red mt-2': btn-red
+            'w-100 btn btn-blue mt-2': btn-blue
+            'w-100 btn btn-outline-red mt-2': btn-outline-red
+            'w-100 btn btn-outline-blue mt-2': btn-outline-blue
+            'w-100 btn btn-outline-white mt-2': btn-outline-white
+          default_value: btn-red
+      inputs/header_style:
+        plugin: static_map
+        source: '@_behavior/ranking_header_style'
+        map:
+          ranking-title-thin: thin
+          ranking-title-bold: bold
+          ranking-title-bolder: bolder
+        default_value: bold
+      inputs/heading_font:
+        plugin: static_map
+        source: '@_behavior/ranking_heading_font'
+        map:
+          serif: serif
+        default_value: sans
+      inputs/alignment:
+        plugin: static_map
+        source: '@_behavior/ranking_alignment'
+        map:
+          text-center: center
+        default_value: left
+      inputs/clickable:
+        plugin: callback
+        source: '@_behavior/ranking_clickable'
+        callable: boolval
+      inputs/hover_effect:
+        plugin: callback
+        source: '@_behavior/ranking_hover_effect'
+        callable: boolval
+      inputs/background: &background
+        plugin: static_map
+        source: options/class
+        map:
+          text-bg-chili: chili
+          text-bg-blue: blue
+          bg-sky: sky
+          bg-oasis: oasis
+          text-bg-azurite: azurite
+          bg-cool-gray: cool-gray
+          bg-warm-gray: warm-gray
+          bg-white: white
+          bg-transparent: transparent
+        default_value: chili
+      inputs/hover_background:
+        <<: *background
+        source: options/hover_class
+      # Font color only applies on a transparent background.
+      inputs/font_color:
+        - plugin: skip_on_value
+          source: options/class
+          value: bg-transparent
+          not_equals: true
+          method: process
+        - plugin: static_map
+          source: ranking_font_color
+          map:
+            ranking-text-midnight: midnight
+            ranking-text-black: black
+            ranking-text-white: white
+            ranking-text-az-blue: az-blue
+          default_value: midnight
+
+      # az_quickstart:ranking-image
+      _media:
+        - plugin: skip_on_empty
+          source: media
+          method: process
+        - plugin: entity_exists
+          entity_type: media
+      inputs/image/target_id:
+        - plugin: skip_on_empty
+          source: '@_media'
+          method: process
+        - plugin: callback
+          callable: strval
+      inputs/image_focal_x:
+        plugin: az_media_focal_point
+        source: '@_media'
+        axis: x
+      inputs/image_focal_y:
+        plugin: az_media_focal_point
+        source: '@_media'
+        axis: y
+      # An image can't span more columns than its deck has at each
+      # breakpoint; CSS Grid would add a track instead of clamping.
+      _span:
+        plugin: default_value
+        source: options/column_span
+        default_value: 2
+      _columns_desktop: *columns_desktop
+      _columns_tablet: *columns_tablet
+      _columns_phone: *columns_phone
+      inputs/width_span_desktop:
+        - plugin: callback
+          source:
+            - '@_span'
+            - '@_columns_desktop'
+          callable: min
+          unpack_source: true
+        - plugin: callback
+          callable: strval
+      inputs/width_span_tablet:
+        - plugin: callback
+          source:
+            - '@_span'
+            - '@_columns_tablet'
+          callable: min
+          unpack_source: true
+        - plugin: callback
+          callable: strval
+      inputs/width_span_phone:
+        - plugin: callback
+          source:
+            - '@_span'
+            - '@_columns_phone'
+          callable: min
+          unpack_source: true
+        - plugin: callback
+          callable: strval
+destination:
+  plugin: az_canvas_component
+  component: 'az_quickstart:ranking-deck'
+migration_dependencies: {}

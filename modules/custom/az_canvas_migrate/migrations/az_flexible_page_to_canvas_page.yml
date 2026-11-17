@@ -1,0 +1,76 @@
+id: az_flexible_page_to_canvas_page
+label: 'Flexible Pages to Canvas pages'
+migration_tags:
+  - Quickstart Canvas
+source:
+  plugin: content_entity:node
+  bundle: az_flexible_page
+  include_translations: false
+  add_revision_id: false
+process:
+  title: title
+  status: status
+  owner: uid
+  langcode: langcode
+  description:
+    - plugin: skip_on_empty
+      method: process
+      source: field_az_summary/0/value
+    - plugin: callback
+      callable: strip_tags
+    - plugin: callback
+      callable: trim
+  image: field_az_media_image
+  field_az_page_category: field_az_page_category
+  # Per-page overrides only; pages without them use the canvas_page defaults
+  # from az_seo. Node tokens are rewritten to their Canvas page equivalents.
+  metatags:
+    - plugin: skip_on_empty
+      method: process
+      source: field_az_metatag/0/value
+    - plugin: str_replace
+      search:
+        - '[node:az-canonical-absolute-url]'
+        - '[node:az-canonical-url]'
+        - '[node:field_az_summary'
+        - '[node:field_az_media_image'
+        - '[node:field_az_page_category'
+        - '[node:title]'
+        - '[node:url'
+      replace:
+        - '[canvas_page:url:absolute]'
+        - '[canvas_page:url]'
+        - '[canvas_page:description'
+        - '[canvas_page:image'
+        - '[canvas_page:field_az_page_category'
+        - '[canvas_page:title]'
+        - '[canvas_page:url'
+  # Lists any node tokens left over, which render empty on a Canvas page.
+  _metatags_notice:
+    - plugin: skip_on_empty
+      method: process
+      source: '@metatags'
+    - plugin: str_replace
+      regex: true
+      search: '/.*?(\[node:[^\]]+\])|.+/s'
+      replace: '$1 '
+    - plugin: az_canvas_notice
+      message: 'These meta tag tokens have no Canvas page equivalent and were not converted: @value'
+  # Add each paragraph type's migration here, and to migration_dependencies.
+  components:
+    plugin: az_canvas_component_tree
+    source: field_az_main_content
+    migrations:
+      az_rankings: az_paragraph_rankings_to_canvas
+# The URL alias, the source node's published state and, on update, the
+# page's published state are handled by
+# \Drupal\az_canvas_migrate\EventSubscriber\CanvasPageMigrationSubscriber,
+# since moving an alias between entities is not a field mapping.
+destination:
+  plugin: 'entity:canvas_page'
+  validate: true
+# Optional rather than required: required dependencies must be fully
+# imported first, which would block converting selected pages with --idlist.
+migration_dependencies:
+  optional:
+    - az_paragraph_rankings_to_canvas

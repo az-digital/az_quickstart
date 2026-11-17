@@ -40,6 +40,8 @@
         "drupal/bootstrap_barrio": "5.5.20",
         "drupal/bootstrap_utilities": "3.0.1",
         "drupal/calendar_link": "3.0.4",
+        "drupal/canvas": "1.12.0",
+        "drupal/canvas_focal_point_widget": "1.0.0-alpha1",
         "drupal/captcha": "2.0.11",
         "drupal/cas": "3.1.1",
         "drupal/chosen": "5.0.7",

@@ -1,0 +1,16 @@
+name: 'Quickstart Canvas Migrate'
+type: module
+description: 'Provides a bulk action that converts Flexible Pages into Drupal Canvas pages.'
+core_version_requirement: ^11.3 || ^12
+package: 'The University of Arizona - Experimental'
+lifecycle: experimental
+dependencies:
+  - az_flexible_page:az_flexible_page
+  - az_paragraphs_rankings:az_paragraphs_rankings
+  - az_ranking:az_ranking
+  - canvas:canvas
+  - drupal:migrate
+  - drupal:views
+  - migrate_plus:migrate_plus
+  - migrate_tools:migrate_tools
+  - views_bulk_operations:views_bulk_operations
