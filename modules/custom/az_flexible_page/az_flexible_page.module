@@ -33,7 +33,10 @@ function az_flexible_page_entity_base_field_info(EntityTypeInterface $entity_typ
  */
 function _az_flexible_page_canvas_page_category_definition() {
   return BaseFieldDefinition::create('entity_reference')
-    ->setLabel(new TranslatableMarkup('Category'))
+    // Cast to string: Canvas's multivalue widget handling requires a string
+    // label. Base field definitions are cached per language, so it is still
+    // translated.
+    ->setLabel((string) new TranslatableMarkup('Category'))
     ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
     ->setTranslatable(TRUE)
     ->setSetting('target_type', 'taxonomy_term')
@@ -45,7 +48,7 @@ function _az_flexible_page_canvas_page_category_definition() {
     ])
     ->setDisplayOptions('form', [
       'type' => 'options_select',
-      'weight' => 13,
+      'weight' => 30,
     ])
     ->setDisplayConfigurable('form', TRUE)
     ->setDisplayConfigurable('view', TRUE);
