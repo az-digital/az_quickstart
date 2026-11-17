@@ -1,4 +1,4 @@
-name: Build & deploy review site
+name: Build & deploy demo site
 on:
   push:
     branches:
@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   update-code:
-    name: Update review site code
+    name: Update demo site code
     runs-on: ubuntu-latest
     outputs:
       superseded: ${{ steps.superseded.outputs.superseded }}
