@@ -1629,8 +1629,8 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags: {  }
-  az_more_news_view:
-    id: az_more_news_view
+  az_more_news:
+    id: az_more_news
     display_title: 'More News View'
     display_plugin: block
     position: 2

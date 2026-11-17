@@ -212,7 +212,7 @@
       "id" : 420,
       "title" : "More News View",
       "target_id" : "az_news",
-      "display_id" : "az_more_news_view",
+      "display_id" : "az_more_news",
       "data" : "",
       "bottom_spacing" : "mb-0"
     }
