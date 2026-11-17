@@ -66,7 +66,7 @@ options:
   responsives:
     responsive:
       -
-        breakpoint: 1110
+        breakpoint: 1296
         unslick: false
         settings:
           adaptiveHeight: false

@@ -87,7 +87,7 @@ third_party_settings:
         show_empty_fields: false
         id: ''
         label_as_html: false
-        element: h4
+        element: h3
         show_label: false
         label_element: h3
         label_element_classes: ''

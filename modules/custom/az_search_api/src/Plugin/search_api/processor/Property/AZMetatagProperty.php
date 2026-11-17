@@ -45,6 +45,9 @@ class AZMetatagProperty extends ConfigurablePropertyBase {
         }
       }
     }
+    // @todo Fetch this in a better way. Our seo defaults don't have any keyword defaults.
+    $options['keywords'] = $this->t('keywords');
+
     ksort($options);
     $form['value'] = [
       '#type' => 'select',

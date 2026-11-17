@@ -185,6 +185,11 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
       $style_context = $default_config->get('default_citation_style');
       // Attempt to find citation argument context.
       if (function_exists('views_get_current_view')) {
+        // @todo deprecated function to be removed in Drupal 13.
+        // @todo this should be refactored to not use this API.
+        // @todo $entity->view does not contain complete argument information.
+        // @see https://www.drupal.org/node/3572594
+        // @phpstan-ignore-next-line
         $view = views_get_current_view();
         // Phpstan doesn't know this can be NULL.
         // @phpstan-ignore-next-line
@@ -218,6 +223,9 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
         // Add cache tag based on citation mode.
         $cache_tag = "citation:az_publication.az_citation_style." . $style_context;
         $renderer = \Drupal::service('renderer');
+        // Causes warning in phpstan, due to no CacheableDependencyInterface.
+        // @todo needs careful consideration on how to resolve to create per-style caching.
+        // @phpstan-ignore-next-line
         $renderer->addCacheableDependency($build, $cache_tag);
         // Map authorship information.
         foreach ($pmap as $source => $destination) {
@@ -378,7 +386,12 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
         $az_citation_format = FilterFormat::load('az_citation');
         if ($az_citation_format !== NULL) {
           // Provide reference-specific filters.
-          $biblio = check_markup($biblio, 'az_citation');
+          $toRender = [
+            '#type' => 'processed_text',
+            '#text' => $biblio,
+            '#format' => 'az_citation',
+          ];
+          $biblio = \Drupal::service('renderer')->renderInIsolation($toRender);
         }
         $build['az_publication_bibliography'] = [
           '#type' => 'markup',

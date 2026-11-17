@@ -1,9 +1,9 @@
 /* AZ Barrio off-canvas search (for mobile devices) */
-#block-az-barrio-offcanvas-searchform .search-form {
+#azMobileNav .search-block-form {
   margin-left: .25rem;
 }
 
-#block-az-barrio-offcanvas-searchform .form-search {
+#azMobileNav .search-block-form .form-search {
   height: unset;
   margin-left: 0;
   padding-left: .75rem;
@@ -12,24 +12,24 @@
   border-bottom-left-radius: 0 !important;
 }
 
-#block-az-barrio-offcanvas-searchform .btn {
+#azMobileNav .search-block-form .btn {
   padding: .5rem 1rem;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
   border-color: transparent;
 }
 
-#block-az-barrio-offcanvas-searchform .btn:focus {
+#azMobileNav .search-block-form .btn:focus {
   background-color: var(--bs-red);
   color: var(--bs-white);
 }
 
-#block-az-barrio-offcanvas-searchform .material-symbols-rounded {
+#azMobileNav .search-block-form .material-symbols-rounded {
   vertical-align: text-bottom;
 }
 
 /* Overrides for blue Arizona Header */
-.offcanvas-header.text-bg-blue + .region-navigation-offcanvas #block-az-barrio-offcanvas-searchform .button:focus {
+.offcanvas-header.text-bg-blue + .region-navigation-offcanvas .search-block-form .button:focus {
   background-color: var(--bs-blue);
   color: var(--bs-white);
 }

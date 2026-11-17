@@ -20,18 +20,24 @@ use Drupal\filter\Plugin\FilterInterface;
 class AZDOIFilter extends FilterBase {
 
   /**
+   * Temporary storage for HTML comments.
+   *
+   * @var array<string, string>
+   */
+  protected array $htmlComments = [];
+
+  /**
    * {@inheritdoc}
    */
   public function process($text, $langcode) {
-    // Based upon _filter_url().
+    // Based upon \Drupal\filter\Plugin\Filter\FilterUrl::process().
     // Store the current text in case any of the preg_* functions fail.
     $saved_text = $text;
 
     // Tags to skip and not recurse into.
     $ignore_tags = 'a|script|style|code|pre';
 
-    _filter_url_escape_comments('', TRUE);
-    $text = is_null($text) ? '' : preg_replace_callback('`<!--(.*?)-->`s', '_filter_url_escape_comments', $text);
+    $text = is_null($text) ? '' : preg_replace_callback('`<!--(.*?)-->`s', [$this, 'escapeComments'], $text);
 
     // Split at all tags; ensures that no tags or attributes are processed.
     $chunks = is_null($text) ? [
@@ -89,13 +95,55 @@ class AZDOIFilter extends FilterBase {
     }
 
     // Revert to the original comment contents.
-    _filter_url_escape_comments('', FALSE);
-    $text = $text ? preg_replace_callback('`<!--(.*?)-->`', '_filter_url_escape_comments', $text) : $text;
+    $text = $text ? preg_replace_callback('`<!--(.*?)-->`', [$this, 'unescapeComments'], $text) : $text;
 
     // Make sure our regex chunking didn't eat the text due to a broken tag.
     $text = strlen((string) $text) > 0 ? $text : $saved_text;
 
     return new FilterProcessResult($text);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function tips($long = FALSE) {
+    return $this->t('DOI identifiers (e.g. doi:10.1000/xyz123) turn into links to doi.org automatically.');
+  }
+
+  /**
+   * Escapes the contents of HTML comments.
+   *
+   * Callback for preg_replace_callback() within self::process().
+   *
+   * @param array<string> $match
+   *   Matches from preg_replace_callback(), where $match[1] is the comment
+   *   content.
+   *
+   * @return string
+   *   The comment with its contents replaced by a hash placeholder.
+   */
+  protected function escapeComments(array $match): string {
+    $hash = hash('sha256', $match[1]);
+    $this->htmlComments[$hash] = $match[1];
+    return "<!-- $hash -->";
+  }
+
+  /**
+   * Unescapes the contents of HTML comments.
+   *
+   * Callback for preg_replace_callback() within self::process().
+   *
+   * @param array<string> $match
+   *   Matches from preg_replace_callback(), where $match[1] is the hash
+   *   placeholder.
+   *
+   * @return string
+   *   The original comment.
+   */
+  protected function unescapeComments(array $match): string {
+    $hash = trim($match[1]);
+    $content = $this->htmlComments[$hash] ?? '';
+    return "<!--$content-->";
   }
 
   /**

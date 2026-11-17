@@ -89,11 +89,6 @@
             {{ page.navigation }}
           {% endblock %}
         {% endif %}
-        {% if page.help %}
-          <div class="row">
-            {{ page.help }}
-          </div>
-        {% endif %}
       {% else %}
         <div class="arizona-header{{ page.navigation_offcanvas ? ' az-fixed-header-on-mobile' }} {{ az_header_blue ? 'bg-blue' : 'bg-red' }}" id="header_arizona">
           <div class="{{ container }}">
@@ -108,22 +103,20 @@
               {% endif %}
               {% if page.navigation_offcanvas %}
                 <div class="d-lg-none d-flex col-auto px-0">
-                  {% if page.navigation_offcanvas.az_barrio_offcanvas_searchform %}
+                  {% if has_offcanvas_search %}
                     <button type="button" data-bs-toggle="offcanvas" data-bs-target="#azMobileNav" aria-controls="azMobileNav" class="btn btn-arizona-header" id="jsAzSearch">
                       <span aria-hidden="true" class="icon material-symbols-rounded">search</span>
                       <span class="icon-text">Search</span>
                     </button>
                   {% endif %}
-                  {% for offcanvasblock in page.navigation_offcanvas %}
-                    {% if 'mobile_nav_block' in offcanvasblock['#cache']['keys'] %}
-                      <button type="button" data-bs-toggle="offcanvas" data-bs-target="#azMobileNav" aria-controls="azMobileNav" class="btn btn-arizona-header">
-                        <span aria-hidden="true" class="icon material-symbols-rounded">menu</span>
-                        <span class="icon-text">Menu</span>
-                      </button>
-                    {% endif %}
-                  {% endfor %}
+                  {% if has_offcanvas_menu %}
+                    <button type="button" data-bs-toggle="offcanvas" data-bs-target="#azMobileNav" aria-controls="azMobileNav" class="btn btn-arizona-header">
+                      <span aria-hidden="true" class="icon material-symbols-rounded">menu</span>
+                      <span class="icon-text">Menu</span>
+                    </button>
+                  {% endif %}
                   <div class="offcanvas offcanvas-end mw-100 w-100 bg-white d-flex d-lg-none overflow-y-auto" tabindex="-1" id="azMobileNav" aria-label="Mobile navigation">
-                    <div class="offcanvas-header sticky-top p-0 mb-2 {{ az_header_blue ? 'text-bg-blue' : 'text-bg-red' }} text-bg-red d-flex justify-content-between align-items-center">
+                    <div class="offcanvas-header sticky-top p-0 mb-2 {{ az_header_blue ? 'text-bg-blue' : 'text-bg-red' }} d-flex justify-content-between align-items-center">
                       <a href="/" class="btn btn-arizona-header">
                         <span aria-hidden="true" class="icon material-symbols-rounded">home</span>
                         <span class="icon-text">Home</span>
@@ -162,7 +155,7 @@
             {% if page.navigation %}
               <div class="row d-none d-lg-flex">
                 <div class="col-lg">
-                  <nav id="navbar-top" class="navbar navbar-expand{{ az_navbar ? ' navbar-az' }}">
+                  <nav id="navbar-top" class="navbar navbar-expand navbar-az" aria-label="{{ 'Primary navigation'|t }}">
                     {{ page.navigation }}
                   </nav>
                 </div>
@@ -178,7 +171,14 @@
       {% endif %}
     </header>
 
-    <div id="main-wrapper" class="layout-main-wrapper clearfix">
+    <div id="main-wrapper" class="layout-main-wrapper clearfix{{ az_navbar_fullscreen ? ' navbar-az-fullscreen-fixed-top-offset' }}">
+        {% if az_navbar_fullscreen and page.help %}
+          <div class="{{ container }}">
+            <div class="row">
+              {{ page.help }}
+            </div>
+          </div>
+        {% endif %}
         <div id="main">
           {% if page.content_featured %}
           <section id="content_featured">
@@ -267,7 +267,7 @@
 
     <footer class="site-footer">
         {% if page.footer or page.footer_sub or footer_logo %}
-        <div class="text-bg-warm-gray py-5" role="contentinfo">
+        <div class="text-bg-warm-gray py-5">
           {% if page.footer or footer_logo %}
           <section{{ attributes.addClass(classes) }}>
             <div class="container">
