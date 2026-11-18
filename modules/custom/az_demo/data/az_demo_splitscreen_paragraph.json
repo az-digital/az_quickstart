@@ -36,7 +36,7 @@
             "filename" : "mecklerphoto_mens-wearhouse.jpeg",
             "full_width" : "full-width-background",
             "ordering" : "order_1",
-            "bg_color" : "text-bg-sky",
+            "bg_color" : "text-bg-rain",
             "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         },
@@ -46,7 +46,7 @@
             "filename" : "june_bugs.jpeg",
             "full_width" : false,
             "ordering" : "order_0",
-            "bg_color" : "text-bg-oasis",
+            "bg_color" : "text-bg-arroyo-blue",
             "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         },
@@ -67,7 +67,7 @@
             "filename" : "daisy.jpg",
             "full_width" : false,
             "ordering" : "order_0",
-            "bg_color" : "text-bg-midnight",
+            "bg_color" : "text-bg-tinta",
             "text_width" : "content_width",
             "bottom_spacing" : "mb-5"
         },
@@ -78,7 +78,7 @@
             "filename" : "https://www.youtube.com/watch?v=fePMsmtd7EU",
             "full_width" : false,
             "ordering" : "order_1",
-            "bg_color" : "text-bg-bloom",
+            "bg_color" : "text-bg-bougainvillea",
             "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         },
@@ -88,7 +88,7 @@
             "filename" : "https://www.youtube.com/watch?v=9VntGNAE4L8",
             "full_width" : "full-width-background",
             "ordering" : "order_0",
-            "bg_color" : "text-bg-chili",
+            "bg_color" : "text-bg-sonoran-red",
             "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         },
@@ -98,7 +98,7 @@
             "filename" : "https://www.youtube.com/watch?v=KkogmuRNt1M",
             "full_width" : false,
             "ordering" : "order_1",
-            "bg_color" : "text-bg-cool-gray",
+            "bg_color" : "text-bg-cloud",
             "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         },
@@ -108,7 +108,7 @@
             "filename" : "https://www.youtube.com/watch?v=x_C7XpqJdso",
             "full_width" : "full-width-background",
             "ordering" : "order_0",
-            "bg_color" : "text-bg-warm-gray",
+            "bg_color" : "text-bg-caliche",
             "text_width" : "content_width",
             "bottom_spacing" : "mb-5"
         },
@@ -118,7 +118,7 @@
             "filename" : "https://www.youtube.com/watch?v=o5AcFV8f230",
             "full_width" : false,
             "ordering" : "order_1",
-            "bg_color" : "text-bg-leaf",
+            "bg_color" : "text-bg-saguaro",
             "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         },
@@ -128,7 +128,7 @@
             "filename" : "https://www.youtube.com/watch?v=GHnSIobpE-0",
             "full_width" : "full-width-background",
             "ordering" : "order_0",
-            "bg_color" : "text-bg-river",
+            "bg_color" : "text-bg-shade",
             "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         },
@@ -164,11 +164,11 @@
         },
         {
             "id":70,
-            "az_text_area" : "<h2>Warm Gray Background<\/h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p><p><a class=\"btn btn-outline-blue\" href=\"https:\/\/insects.arizona.edu\">Bug out!<\/a><\/p>",
+            "az_text_area" : "<h2>Caliche Background<\/h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p><p><a class=\"btn btn-outline-blue\" href=\"https:\/\/insects.arizona.edu\">Bug out!<\/a><\/p>",
             "filename" : "june_bugs.jpeg",
             "full_width" : false,
             "ordering" : "order_0",
-            "bg_color" : "text-bg-warm-gray",
+            "bg_color" : "text-bg-caliche",
             "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         },
@@ -178,7 +178,7 @@
             "filename" : "mecklerphoto_mens-wearhouse.jpeg",
             "full_width" : "full-width-background",
             "ordering" : "order_1",
-            "bg_color" : "text-bg-sky",
+            "bg_color" : "text-bg-rain",
             "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         },
@@ -198,7 +198,7 @@
             "filename" : "arizona_campus_fireworks.jpg",
             "full_width" : "full-width-background",
             "ordering" : "order_1",
-            "bg_color" : "text-bg-chili",
+            "bg_color" : "text-bg-sonoran-red",
             "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         },
@@ -208,7 +208,7 @@
             "filename" : "arizona_campus_fireworks.jpg",
             "full_width" : "full-width-background",
             "ordering" : "order_1",
-            "bg_color" : "text-bg-chili",
+            "bg_color" : "text-bg-sonoran-red",
             "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         }
