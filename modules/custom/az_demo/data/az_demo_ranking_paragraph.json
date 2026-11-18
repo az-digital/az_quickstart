@@ -21,12 +21,12 @@
                     "link_title": "",
                     "link_uri": "",
                     "ranking_link_style": "w-100 btn btn-red mt-2",
-                    "ranking_font_color": "ranking-text-midnight",
+                    "ranking_font_color": "ranking-text-tinta",
                     "media": "",
-                    "options_class": "text-bg-chili",
+                    "options_class": "text-bg-sonoran-red",
                     "ranking_type": "standard",
                     "column_span": "2",
-                    "options_hover_class": "text-bg-chili"
+                    "options_hover_class": "text-bg-sonoran-red"
                 },
                 {
                     "delta": 1,
@@ -36,12 +36,12 @@
                     "link_title": "Read more",
                     "link_uri": "#",
                     "ranking_link_style": "link mt-2",
-                    "ranking_font_color": "ranking-text-midnight",
+                    "ranking_font_color": "ranking-text-tinta",
                     "media": "",
                     "options_class": "text-bg-blue",
                     "ranking_type": "standard",
                     "column_span": "2",
-                    "options_hover_class": "text-bg-chili"
+                    "options_hover_class": "text-bg-sonoran-red"
                 },
                 {
                     "delta": 2,
@@ -51,12 +51,12 @@
                     "link_title": "Read more",
                     "link_uri": "#",
                     "ranking_link_style": "w-100 btn btn-blue mt-2",
-                    "ranking_font_color": "ranking-text-midnight",
+                    "ranking_font_color": "ranking-text-tinta",
                     "media": "",
-                    "options_class": "bg-sky",
+                    "options_class": "bg-rain",
                     "ranking_type": "standard",
                     "column_span": "2",
-                    "options_hover_class": "text-bg-chili"
+                    "options_hover_class": "text-bg-sonoran-red"
                 },
                 {
                     "delta": 3,
@@ -66,12 +66,12 @@
                     "link_title": "Read more",
                     "link_uri": "#",
                     "ranking_link_style": "link mt-2",
-                    "ranking_font_color": "ranking-text-midnight",
+                    "ranking_font_color": "ranking-text-tinta",
                     "media": "",
-                    "options_class": "bg-oasis",
+                    "options_class": "bg-arroyo-blue",
                     "ranking_type": "standard",
                     "column_span": "2",
-                    "options_hover_class": "text-bg-chili"
+                    "options_hover_class": "text-bg-sonoran-red"
                 },
                 {
                     "delta": 4,
@@ -80,13 +80,13 @@
                     "ranking_source": "Center for World University Rankings, 2025",
                     "link_title": "Read more",
                     "link_uri": "#",
-                    "ranking_link_style": "w-100 btn btn-outline-sky mt-2",
-                    "ranking_font_color": "ranking-text-midnight",
+                    "ranking_link_style": "w-100 btn btn-outline-rain mt-2",
+                    "ranking_font_color": "ranking-text-tinta",
                     "media": "",
                     "options_class": "text-bg-azurite",
                     "ranking_type": "standard",
                     "column_span": "2",
-                    "options_hover_class": "text-bg-chili"
+                    "options_hover_class": "text-bg-sonoran-red"
                 },
                 {
                     "delta": 5,
@@ -96,12 +96,12 @@
                     "link_title": "",
                     "link_uri": "",
                     "ranking_link_style": "w-100 btn btn-red mt-2",
-                    "ranking_font_color": "ranking-text-midnight",
+                    "ranking_font_color": "ranking-text-tinta",
                     "media": "daisy.jpg",
-                    "options_class": "text-bg-chili",
+                    "options_class": "text-bg-sonoran-red",
                     "ranking_type": "image_only",
                     "column_span": "2",
-                    "options_hover_class": "text-bg-chili"
+                    "options_hover_class": "text-bg-sonoran-red"
                 },
                 {
                     "delta": 6,
@@ -111,12 +111,12 @@
                     "link_title": "Read more",
                     "link_uri": "#",
                     "ranking_link_style": "w-100 btn btn-red mt-2",
-                    "ranking_font_color": "ranking-text-midnight",
+                    "ranking_font_color": "ranking-text-tinta",
                     "media": "",
-                    "options_class": "bg-cool-gray",
+                    "options_class": "bg-cloud",
                     "ranking_type": "standard",
                     "column_span": "2",
-                    "options_hover_class": "text-bg-chili"
+                    "options_hover_class": "text-bg-sonoran-red"
                 }
             ]
         },
@@ -124,7 +124,7 @@
             "id": 309,
             "ranking_title": "Thin Clickable",
             "ranking_width": "col-lg-3",
-            "ranking_deck_title_color": "text-oasis",
+            "ranking_deck_title_color": "text-arroyo-blue",
             "ranking_alignment": "text-center",
             "ranking_header_style": "ranking-title-thin",
             "ranking_clickable": 1,
@@ -141,12 +141,12 @@
                     "link_title": "",
                     "link_uri": "https://news.arizona.edu/news/u-ranked-no-1-southwest-and-recognized-top-25-public-university-times-higher-education",
                     "ranking_link_style": "visually-hidden",
-                    "ranking_font_color": "ranking-text-midnight",
+                    "ranking_font_color": "ranking-text-tinta",
                     "media": "",
                     "options_class": "bg-white",
                     "ranking_type": "standard",
                     "column_span": "2",
-                    "options_hover_class": "text-bg-chili"
+                    "options_hover_class": "text-bg-sonoran-red"
                 },
                 {
                     "delta": 1,
@@ -156,12 +156,12 @@
                     "link_title": "Read more",
                     "link_uri": "#",
                     "ranking_link_style": "link mt-2",
-                    "ranking_font_color": "ranking-text-midnight",
+                    "ranking_font_color": "ranking-text-tinta",
                     "media": "",
-                    "options_class": "bg-warm-gray",
+                    "options_class": "bg-caliche",
                     "ranking_type": "standard",
                     "column_span": "2",
-                    "options_hover_class": "text-bg-chili"
+                    "options_hover_class": "text-bg-sonoran-red"
                 },
                 {
                     "delta": 2,
@@ -171,12 +171,12 @@
                     "link_title": "Read more",
                     "link_uri": "#",
                     "ranking_link_style": "w-100 btn btn-outline-red mt-2",
-                    "ranking_font_color": "ranking-text-midnight",
+                    "ranking_font_color": "ranking-text-tinta",
                     "media": "",
-                    "options_class": "bg-cool-gray",
+                    "options_class": "bg-cloud",
                     "ranking_type": "standard",
                     "column_span": "2",
-                    "options_hover_class": "text-bg-chili"
+                    "options_hover_class": "text-bg-sonoran-red"
                 },
                 {
                     "delta": 3,
@@ -186,12 +186,12 @@
                     "link_title": "Read more",
                     "link_uri": "#",
                     "ranking_link_style": "link mt-2",
-                    "ranking_font_color": "ranking-text-midnight",
+                    "ranking_font_color": "ranking-text-tinta",
                     "media": "",
-                    "options_class": "bg-sky",
+                    "options_class": "bg-rain",
                     "ranking_type": "standard",
                     "column_span": "2",
-                    "options_hover_class": "text-bg-chili"
+                    "options_hover_class": "text-bg-sonoran-red"
                 },
                 {
                     "delta": 4,
@@ -201,12 +201,12 @@
                     "link_title": "Read more",
                     "link_uri": "#",
                     "ranking_link_style": "w-100 btn btn-outline-white mt-2",
-                    "ranking_font_color": "ranking-text-midnight",
+                    "ranking_font_color": "ranking-text-tinta",
                     "media": "",
-                    "options_class": "bg-oasis",
+                    "options_class": "bg-arroyo-blue",
                     "ranking_type": "standard",
                     "column_span": "2",
-                    "options_hover_class": "text-bg-chili"
+                    "options_hover_class": "text-bg-sonoran-red"
                 },
                 {
                     "delta": 5,
@@ -216,12 +216,12 @@
                     "link_title": "",
                     "link_uri": "",
                     "ranking_link_style": "w-100 btn btn-red mt-2",
-                    "ranking_font_color": "ranking-text-midnight",
+                    "ranking_font_color": "ranking-text-tinta",
                     "media": "Health-Sciences-Education-Building-2464x1640.jpg",
-                    "options_class": "text-bg-chili",
+                    "options_class": "text-bg-sonoran-red",
                     "ranking_type": "image_only",
                     "column_span": "2",
-                    "options_hover_class": "text-bg-chili"
+                    "options_hover_class": "text-bg-sonoran-red"
                 },
                 {
                     "delta": 6,
@@ -231,12 +231,12 @@
                     "link_title": "Read more",
                     "link_uri": "#",
                     "ranking_link_style": "w-100 btn btn-red mt-2",
-                    "ranking_font_color": "ranking-text-midnight",
+                    "ranking_font_color": "ranking-text-tinta",
                     "media": "",
-                    "options_class": "bg-cool-gray",
+                    "options_class": "bg-cloud",
                     "ranking_type": "standard",
                     "column_span": "2",
-                    "options_hover_class": "text-bg-chili"
+                    "options_hover_class": "text-bg-sonoran-red"
                 }
             ]
         },
@@ -261,12 +261,12 @@
                     "link_title": "#",
                     "link_uri": "#",
                     "ranking_link_style": "w-100 btn btn-red mt-2",
-                    "ranking_font_color": "ranking-text-midnight",
+                    "ranking_font_color": "ranking-text-tinta",
                     "media": "",
-                    "options_class": "text-bg-chili",
+                    "options_class": "text-bg-sonoran-red",
                     "ranking_type": "standard",
                     "column_span": "2",
-                    "options_hover_class": "text-bg-chili"
+                    "options_hover_class": "text-bg-sonoran-red"
                 },
                 {
                     "delta": 1,
@@ -276,9 +276,9 @@
                     "link_title": "",
                     "link_uri": "#",
                     "ranking_link_style": "w-100 btn btn-red mt-2",
-                    "ranking_font_color": "ranking-text-midnight",
+                    "ranking_font_color": "ranking-text-tinta",
                     "media": "",
-                    "options_class": "text-bg-chili",
+                    "options_class": "text-bg-sonoran-red",
                     "ranking_type": "standard",
                     "column_span": "2",
                     "options_hover_class": "text-bg-blue"
@@ -291,12 +291,12 @@
                     "link_title": "",
                     "link_uri": "#",
                     "ranking_link_style": "w-100 btn btn-red mt-2",
-                    "ranking_font_color": "ranking-text-midnight",
+                    "ranking_font_color": "ranking-text-tinta",
                     "media": "",
-                    "options_class": "text-bg-chili",
+                    "options_class": "text-bg-sonoran-red",
                     "ranking_type": "standard",
                     "column_span": "2",
-                    "options_hover_class": "bg-sky"
+                    "options_hover_class": "bg-rain"
                 },
                 {
                     "delta": 3,
@@ -306,12 +306,12 @@
                     "link_title": "",
                     "link_uri": "",
                     "ranking_link_style": "w-100 btn btn-red mt-2",
-                    "ranking_font_color": "ranking-text-midnight",
+                    "ranking_font_color": "ranking-text-tinta",
                     "media": "arizona_campus_fireworks.jpg",
-                    "options_class": "text-bg-chili",
+                    "options_class": "text-bg-sonoran-red",
                     "ranking_type": "image_only",
                     "column_span": "1",
-                    "options_hover_class": "text-bg-chili"
+                    "options_hover_class": "text-bg-sonoran-red"
                 },
                 {
                     "delta": 4,
@@ -321,12 +321,12 @@
                     "link_title": "#",
                     "link_uri": "#",
                     "ranking_link_style": "w-100 btn btn-red mt-2",
-                    "ranking_font_color": "ranking-text-midnight",
+                    "ranking_font_color": "ranking-text-tinta",
                     "media": "",
-                    "options_class": "text-bg-chili",
+                    "options_class": "text-bg-sonoran-red",
                     "ranking_type": "standard",
                     "column_span": "2",
-                    "options_hover_class": "bg-cool-gray"
+                    "options_hover_class": "bg-cloud"
                 },
                 {
                     "delta": 5,
@@ -336,12 +336,12 @@
                     "link_title": "#",
                     "link_uri": "#",
                     "ranking_link_style": "w-100 btn btn-red mt-2",
-                    "ranking_font_color": "ranking-text-midnight",
+                    "ranking_font_color": "ranking-text-tinta",
                     "media": "",
-                    "options_class": "text-bg-chili",
+                    "options_class": "text-bg-sonoran-red",
                     "ranking_type": "standard",
                     "column_span": "2",
-                    "options_hover_class": "bg-oasis"
+                    "options_hover_class": "bg-arroyo-blue"
                 }
             ]
         },
@@ -366,12 +366,12 @@
                     "link_title": "",
                     "link_uri": "#",
                     "ranking_link_style": "w-100 btn btn-red mt-2",
-                    "ranking_font_color": "ranking-text-midnight",
+                    "ranking_font_color": "ranking-text-tinta",
                     "media": "",
-                    "options_class": "text-bg-chili",
+                    "options_class": "text-bg-sonoran-red",
                     "ranking_type": "standard",
                     "column_span": "2",
-                    "options_hover_class": "text-bg-chili"
+                    "options_hover_class": "text-bg-sonoran-red"
                 },
                 {
                     "delta": 1,
@@ -381,9 +381,9 @@
                     "link_title": "#",
                     "link_uri": "#",
                     "ranking_link_style": "w-100 btn btn-red mt-2",
-                    "ranking_font_color": "ranking-text-midnight",
+                    "ranking_font_color": "ranking-text-tinta",
                     "media": "",
-                    "options_class": "text-bg-chili",
+                    "options_class": "text-bg-sonoran-red",
                     "ranking_type": "standard",
                     "column_span": "2",
                     "options_hover_class": "text-bg-blue"
@@ -396,12 +396,12 @@
                     "link_title": "#",
                     "link_uri": "#",
                     "ranking_link_style": "w-100 btn btn-red mt-2",
-                    "ranking_font_color": "ranking-text-midnight",
+                    "ranking_font_color": "ranking-text-tinta",
                     "media": "",
-                    "options_class": "text-bg-chili",
+                    "options_class": "text-bg-sonoran-red",
                     "ranking_type": "standard",
                     "column_span": "2",
-                    "options_hover_class": "bg-sky"
+                    "options_hover_class": "bg-rain"
                 },
                 {
                     "delta": 3,
@@ -411,12 +411,12 @@
                     "link_title": "",
                     "link_uri": "",
                     "ranking_link_style": "w-100 btn btn-red mt-2",
-                    "ranking_font_color": "ranking-text-midnight",
+                    "ranking_font_color": "ranking-text-tinta",
                     "media": "mecklerphoto_mens-wearhouse.jpeg",
-                    "options_class": "text-bg-chili",
+                    "options_class": "text-bg-sonoran-red",
                     "ranking_type": "image_only",
                     "column_span": "1",
-                    "options_hover_class": "text-bg-chili"
+                    "options_hover_class": "text-bg-sonoran-red"
                 },
                 {
                     "delta": 4,
@@ -426,12 +426,12 @@
                     "link_title": "#",
                     "link_uri": "#",
                     "ranking_link_style": "w-100 btn btn-red mt-2",
-                    "ranking_font_color": "ranking-text-midnight",
+                    "ranking_font_color": "ranking-text-tinta",
                     "media": "",
-                    "options_class": "text-bg-chili",
+                    "options_class": "text-bg-sonoran-red",
                     "ranking_type": "standard",
                     "column_span": "2",
-                    "options_hover_class": "bg-cool-gray"
+                    "options_hover_class": "bg-cloud"
                 },
                 {
                     "delta": 5,
@@ -441,12 +441,12 @@
                     "link_title": "#",
                     "link_uri": "#",
                     "ranking_link_style": "w-100 btn btn-red mt-2",
-                    "ranking_font_color": "ranking-text-midnight",
+                    "ranking_font_color": "ranking-text-tinta",
                     "media": "",
-                    "options_class": "text-bg-chili",
+                    "options_class": "text-bg-sonoran-red",
                     "ranking_type": "standard",
                     "column_span": "2",
-                    "options_hover_class": "bg-oasis"
+                    "options_hover_class": "bg-arroyo-blue"
                 }
             ]
         },
@@ -471,12 +471,12 @@
                     "link_title": "Read more",
                     "link_uri": "#",
                     "ranking_link_style": "link mt-2",
-                    "ranking_font_color": "ranking-text-midnight",
+                    "ranking_font_color": "ranking-text-tinta",
                     "media": "",
                     "options_class": "bg-transparent",
                     "ranking_type": "standard",
                     "column_span": "2",
-                    "options_hover_class": "text-bg-chili"
+                    "options_hover_class": "text-bg-sonoran-red"
                 },
                 {
                     "delta": 1,
@@ -491,7 +491,7 @@
                     "options_class": "bg-transparent",
                     "ranking_type": "standard",
                     "column_span": "2",
-                    "options_hover_class": "text-bg-chili"
+                    "options_hover_class": "text-bg-sonoran-red"
                 },
                 {
                     "delta": 2,
@@ -506,7 +506,7 @@
                     "options_class": "bg-transparent",
                     "ranking_type": "standard",
                     "column_span": "2",
-                    "options_hover_class": "text-bg-chili"
+                    "options_hover_class": "text-bg-sonoran-red"
                 },
                 {
                     "delta": 3,
@@ -516,12 +516,12 @@
                     "link_title": "",
                     "link_uri": "",
                     "ranking_link_style": "w-100 btn btn-red mt-2",
-                    "ranking_font_color": "ranking-text-midnight",
+                    "ranking_font_color": "ranking-text-tinta",
                     "media": "connection-647206_1920.jpeg",
-                    "options_class": "text-bg-chili",
+                    "options_class": "text-bg-sonoran-red",
                     "ranking_type": "image_only",
                     "column_span": "1",
-                    "options_hover_class": "text-bg-chili"
+                    "options_hover_class": "text-bg-sonoran-red"
                 },
                 {
                     "delta": 4,
@@ -536,7 +536,7 @@
                     "options_class": "bg-transparent",
                     "ranking_type": "standard",
                     "column_span": "2",
-                    "options_hover_class": "text-bg-chili"
+                    "options_hover_class": "text-bg-sonoran-red"
                 }
             ]
         },
@@ -561,12 +561,12 @@
                     "link_title": "Read more",
                     "link_uri": "#",
                     "ranking_link_style": "link mt-2",
-                    "ranking_font_color": "ranking-text-midnight",
+                    "ranking_font_color": "ranking-text-tinta",
                     "media": "",
                     "options_class": "bg-transparent",
                     "ranking_type": "standard",
                     "column_span": "2",
-                    "options_hover_class": "text-bg-chili"
+                    "options_hover_class": "text-bg-sonoran-red"
                 },
                 {
                     "delta": 1,
@@ -581,7 +581,7 @@
                     "options_class": "bg-transparent",
                     "ranking_type": "standard",
                     "column_span": "2",
-                    "options_hover_class": "text-bg-chili"
+                    "options_hover_class": "text-bg-sonoran-red"
                 },
                 {
                     "delta": 2,
@@ -596,7 +596,7 @@
                     "options_class": "bg-transparent",
                     "ranking_type": "standard",
                     "column_span": "2",
-                    "options_hover_class": "text-bg-chili"
+                    "options_hover_class": "text-bg-sonoran-red"
                 },
                 {
                     "delta": 3,
@@ -606,12 +606,12 @@
                     "link_title": "",
                     "link_uri": "",
                     "ranking_link_style": "w-100 btn btn-red mt-2",
-                    "ranking_font_color": "ranking-text-midnight",
+                    "ranking_font_color": "ranking-text-tinta",
                     "media": "BIO5-Keating-1224x682.jpg",
-                    "options_class": "text-bg-chili",
+                    "options_class": "text-bg-sonoran-red",
                     "ranking_type": "image_only",
                     "column_span": "1",
-                    "options_hover_class": "text-bg-chili"
+                    "options_hover_class": "text-bg-sonoran-red"
                 },
                 {
                     "delta": 4,
@@ -626,7 +626,7 @@
                     "options_class": "bg-transparent",
                     "ranking_type": "standard",
                     "column_span": "2",
-                    "options_hover_class": "text-bg-chili"
+                    "options_hover_class": "text-bg-sonoran-red"
                 }
             ]
         }
