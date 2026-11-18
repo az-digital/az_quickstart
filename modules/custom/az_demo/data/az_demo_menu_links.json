@@ -538,6 +538,17 @@
       "expanded": false,
       "enabled": true,
       "weight": "16"
+    },
+    {
+      "link_id": "412",
+      "parent_link_id": "16",
+      "menu": "main",
+      "title": "Event Views",
+      "urlpath": "/pages/event-view-paragraphs",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "3"
     }
   ]
 }
