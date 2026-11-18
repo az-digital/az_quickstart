@@ -29,6 +29,7 @@ third_party_settings:
     group_card_clickable:
       children:
         - group_media
+        - group_date
         - group_az_card_body
       label: 'Card Clickable'
       parent_name: ''
@@ -70,9 +71,9 @@ third_party_settings:
         - az_event_month
         - group_date_spacer
       label: Date
-      parent_name: group_media
+      parent_name: group_card_clickable
       region: content
-      weight: 4
+      weight: 3
       format_type: html_element
       format_settings:
         classes: 'az-start-date position-relative'
@@ -95,7 +96,7 @@ third_party_settings:
       weight: 3
       format_type: html_element
       format_settings:
-        classes: 'card-title fw-bold h5 pb-2'
+        classes: 'card-title fw-bold h5 pb-2 pt-2'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -129,14 +130,13 @@ third_party_settings:
     group_media:
       children:
         - field_az_media_thumbnail_image
-        - group_date
       label: Media
       parent_name: group_card_clickable
       region: content
       weight: 2
       format_type: html_element
       format_settings:
-        classes: 'card-img-top img-fluid hover-img-zoom-in pb-card mb-nmin az-start-date-background position-relative overflow-hidden'
+        classes: 'card-img-top img-fluid hover-img-zoom-in mb-nmin az-start-date-background position-relative overflow-hidden'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -193,7 +193,7 @@ third_party_settings:
       label: 'AZ Card Body'
       parent_name: group_card_clickable
       region: content
-      weight: 3
+      weight: 4
       format_type: html_element
       format_settings:
         classes: 'card-body pb-0 pt-0 d-flex flex-column'
