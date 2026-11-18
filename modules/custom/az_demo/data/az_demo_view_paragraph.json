@@ -175,6 +175,38 @@
       "display_id" : "grid",
       "data" : "",
       "bottom_spacing" : "mb-4"
+    },
+    {
+      "id" : 416,
+      "title" : "Grid View",
+      "target_id" : "az_events",
+      "display_id" : "az_grid",
+      "data" : "",
+      "bottom_spacing" : "mb-4"
+    },
+    {
+      "id" : 417,
+      "title" : "Grid View with Images",
+      "target_id" : "az_events",
+      "display_id" : "az_grid_images",
+      "data" : "",
+      "bottom_spacing" : "mb-4"
+    },
+    {
+      "id" : 418,
+      "title" : "Past Grid View with Images",
+      "target_id" : "az_events",
+      "display_id" : "az_past_grid_images",
+      "data" : "",
+      "bottom_spacing" : "mb-4"
+    },
+    {
+      "id" : 419,
+      "title" : "Past Row View",
+      "target_id" : "az_events",
+      "display_id" : "az_past_row",
+      "data" : "",
+      "bottom_spacing" : "mb-4"
     }
   ]
 }
