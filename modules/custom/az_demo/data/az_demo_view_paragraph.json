@@ -225,7 +225,7 @@
       "bottom_spacing" : "mb-4"
     },
     {
-      "id" : 421,
+      "id" : 422,
       "title" : "Grid View with Images",
       "target_id" : "az_events",
       "display_id" : "az_grid_images",
@@ -233,7 +233,7 @@
       "bottom_spacing" : "mb-4"
     },
     {
-      "id" : 422,
+      "id" : 423,
       "title" : "Past Grid View with Images",
       "target_id" : "az_events",
       "display_id" : "az_past_grid_images",
@@ -241,7 +241,7 @@
       "bottom_spacing" : "mb-4"
     },
     {
-      "id" : 423,
+      "id" : 424,
       "title" : "Past Row View",
       "target_id" : "az_events",
       "display_id" : "az_past_row",
