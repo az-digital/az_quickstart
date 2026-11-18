@@ -215,6 +215,35 @@
       "display_id" : "az_more_news",
       "data" : "",
       "bottom_spacing" : "mb-0"
+      "title" : "Grid View",
+      "target_id" : "az_events",
+      "display_id" : "az_grid",
+      "data" : "",
+      "bottom_spacing" : "mb-4"
+    },
+    {
+      "id" : 421,
+      "title" : "Grid View with Images",
+      "target_id" : "az_events",
+      "display_id" : "az_grid_images",
+      "data" : "",
+      "bottom_spacing" : "mb-4"
+    },
+    {
+      "id" : 422,
+      "title" : "Past Grid View with Images",
+      "target_id" : "az_events",
+      "display_id" : "az_past_grid_images",
+      "data" : "",
+      "bottom_spacing" : "mb-4"
+    },
+    {
+      "id" : 423,
+      "title" : "Past Row View",
+      "target_id" : "az_events",
+      "display_id" : "az_past_row",
+      "data" : "",
+      "bottom_spacing" : "mb-4"
     }
   ]
 }
