@@ -74,7 +74,7 @@
     },
     {
       "id": 82,
-      "card_width": "col-lg-6",
+      "card_width": "col-lg-4",
       "card_style": "card",
       "card_title": "Clickable Title-on-Image Cards",
       "card_title_style": "title-on-image",
@@ -114,9 +114,29 @@
           "delta": 3,
           "title": "No body with hidden link title",
           "body": "",
-          "link_title": "Visually hidden card link",
+          "link_title": "Undergraduate",
           "link_url": "#top",
-          "media": "sea-anemone.jpg",
+          "media": "study.jpeg",
+          "background": "text-bg-white",
+          "link_style": "visually-hidden"
+        },
+        {
+          "delta": 4,
+          "title": "Graduate",
+          "body": "",
+          "link_title": "Graduate",
+          "link_url": "#top",
+          "media": "holsclaw_hall.jpg",
+          "background": "text-bg-white",
+          "link_style": "visually-hidden"
+        },
+        {
+          "delta": 5,
+          "title": "Online",
+          "body": "",
+          "link_title": "Online",
+          "link_url": "#top",
+          "media": "Health-Sciences-Education-Building-2464x1640.jpg",
           "background": "text-bg-white",
           "link_style": "visually-hidden"
         }
@@ -181,47 +201,6 @@
           "body": "<p>Wilma Wildcat<br>University of Arizona<br>520-621-1986, wilma.wildcat@arizona.edu</p>"
         }
       ]
-    },
-    {
-      "id": 420,
-      "card_width": "col-lg-4",
-      "card_style": "card",
-      "card_title": "Title on Image",
-      "card_title_style": "title-on-image",
-      "card_clickable": true,
-      "az_cards": [
-        {
-          "delta": 0,
-          "title": "Undergraduate",
-          "body": "",
-          "link_title": "Undergraduate",
-          "link_url": "#top",
-          "media": "study.jpeg",
-          "background": "text-bg-white",
-          "link_style": "visually-hidden"
-        },
-        {
-          "delta": 1,
-          "title": "Graduate",
-          "body": "",
-          "link_title": "Graduate",
-          "link_url": "#top",
-          "media": "holsclaw_hall.jpg",
-          "background": "text-bg-white",
-          "link_style": "visually-hidden"
-        },
-        {
-          "delta": 2,
-          "title": "Online",
-          "body": "",
-          "link_title": "Online",
-          "link_url": "#top",
-          "media": "Health-Sciences-Education-Building-2464x1640.jpg",
-          "background": "text-bg-white",
-          "link_style": "visually-hidden"
-        }
-      ],
-      "bottom_spacing": "mb-5"
     },
     {
       "id": 424,
