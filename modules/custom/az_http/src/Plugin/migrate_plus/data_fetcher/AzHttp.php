@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Drupal\az_http\Plugin\migrate_plus\data_fetcher;
 
+use Drupal\migrate_plus\Attribute\DataFetcher;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\migrate\MigrateException;
 use Drupal\migrate_plus\Plugin\migrate_plus\data_fetcher\Http;
 use GuzzleHttp\Client;
@@ -28,12 +30,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *     Authorization-Key: secret
  *     Arbitrary-Header: foobarbaz
  * @endcode
- *
- * @DataFetcher(
- *   id = "az_http",
- *   title = @Translation("Quickstart HTTP Fetcher with optional cache")
- * )
  */
+#[DataFetcher(
+  id: 'az_http',
+  title: new TranslatableMarkup('Quickstart HTTP Fetcher with optional cache')
+)]
 class AzHttp extends Http {
 
   /**
