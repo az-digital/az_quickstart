@@ -8,6 +8,6 @@
 /**
  * Ensure az_http is installed.
  */
-function az_migration_remote_update_1130601() {
+function az_migration_remote_update_1130701() {
   \Drupal::service('module_installer')->install(['az_http']);
 }

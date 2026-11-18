@@ -25,6 +25,6 @@ function az_news_feeds_uninstall() {
 /**
  * Ensure az_http is installed.
  */
-function az_news_feeds_update_1130601() {
+function az_news_feeds_update_1130701() {
   \Drupal::service('module_installer')->install(['az_http']);
 }

@@ -8,7 +8,7 @@
 /**
  * Ensure az_http.settings cache settings are enabled.
  */
-function az_http_update_1130601() {
+function az_http_update_1130701() {
   $config = \Drupal::configFactory()->getEditable('az_http.settings');
   $status = $config->get('migrations.http_cached');
   // Update the value of it is false or absent.
