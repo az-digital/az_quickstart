@@ -10,7 +10,7 @@ use Psr\Http\Message\ResponseInterface;
 /**
  * Provides a Middleware that conducts retries for failed requests.
  *
- * This middleware inherits an expotential retry delay.
+ * This middleware inherits an exponential retry delay.
  *
  * @see \GuzzleHttp\Middleware::exponentialDelay()
  */
