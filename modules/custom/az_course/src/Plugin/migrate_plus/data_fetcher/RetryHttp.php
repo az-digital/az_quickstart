@@ -12,7 +12,7 @@ use Psr\Http\Message\ResponseInterface;
 /**
  * Retrieve data over an HTTP connection for migration. Retry if necessary.
  *
- * @deprecated in az_quickstart:3.6.0 and is removed from az_quickstart:4.0.0.
+ * @deprecated in az_quickstart:3.7.0 and is removed from az_quickstart:4.0.0.
  * Use http or az_http instead. az_http incorporates the retry behavior.
  *
  * phpcs:ignore Drupal.Commenting.Deprecated.DeprecatedWrongSeeUrlFormat
