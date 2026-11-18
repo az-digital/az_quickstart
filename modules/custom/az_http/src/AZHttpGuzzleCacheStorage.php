@@ -31,7 +31,7 @@ class AZHttpGuzzleCacheStorage implements CacheStorageInterface {
   /**
    * {@inheritdoc}
    */
-  public function fetch($key) {
+  public function fetch($key): ?CacheEntry {
     $item = $this->cache->get($key);
     return $item ? $item->data : NULL;
   }
@@ -39,7 +39,7 @@ class AZHttpGuzzleCacheStorage implements CacheStorageInterface {
   /**
    * {@inheritdoc}
    */
-  public function save($key, CacheEntry $data) {
+  public function save($key, CacheEntry $data): bool {
     $expires = $data->getStaleAt()->getTimestamp();
     $this->cache->set($key, $data, $expires);
     return TRUE;
@@ -48,7 +48,7 @@ class AZHttpGuzzleCacheStorage implements CacheStorageInterface {
   /**
    * {@inheritdoc}
    */
-  public function delete($key) {
+  public function delete($key): bool {
     $this->cache->delete($key);
     return TRUE;
   }
