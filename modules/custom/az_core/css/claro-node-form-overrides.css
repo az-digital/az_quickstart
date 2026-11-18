@@ -46,3 +46,12 @@ tr.odd {
   overflow-wrap: anywhere;
   padding-inline-start: revert;
 }
+
+/**
+ * Keep original color of anchor elements in Webforms overview table after modal dialogs have loaded.
+ * Also preserves color of anchor token-dialog elements in webform editing sidebars
+ * See https://github.com/az-digital/az_quickstart/issues/5949.
+ */
+table.webform-forms a, a.token-dialog {
+  color: var(--color-link)
+}

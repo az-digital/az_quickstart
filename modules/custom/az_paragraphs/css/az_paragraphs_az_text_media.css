@@ -53,6 +53,8 @@
   padding: 0.3em 0.6em;
   border: none;
   margin: 10px;
+  z-index:1;
+  border: 1px solid #adb5bd;
 }
 .az-video-background .bg-video-player-control:focus,
 .az-video-background .bg-video-player-control:hover {

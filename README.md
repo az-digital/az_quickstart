@@ -183,28 +183,16 @@ allow the web server to write there.
 
 ## Deprecation Notice: asset-packagist Libraries
 
-Arizona Quickstart is moving away from JavaScript/CSS dependencies installed via
-asset-packagist. These packages currently remain in composer.json for backward
-compatibility with custom site implementations, but they are considered
-deprecated.
+Arizona Quickstart has moved away from JavaScript/CSS dependencies installed
+via asset-packagist.
 
-What this means:
+npm-asset/easepick--bundle and npm-asset/slick-carousel have been removed.
+easepick was replaced by vanilla-calendar-pro; slick-carousel is still used
+but is now vendored directly instead of installed via asset-packagist.
 
-* Existing sites continue to receive these packages for now.
-* New customizations should not introduce new dependencies on asset-packagist
-  packages.
-* Site owners should migrate custom code to libraries shipped by contrib,
-  custom modules/themes, or other supported package sources.
-
-Current deprecated asset-packagist packages retained for compatibility:
-
-* npm-asset/easepick--bundle
-* npm-asset/slick-carousel
-
-Planned removal:
-
-* Deprecated asset-packagist packages will be removed in a future minor
-  Quickstart release.
+New customizations should not introduce new dependencies on asset-packagist
+packages. Site owners should migrate custom code to libraries shipped by
+contrib, custom modules/themes, or other supported package sources.
 
 ### Using Xdebug with Lando and VSCode
 

@@ -101,19 +101,15 @@ final class AZPersonProfilesImportForm extends FormBase {
         foreach ($queries as $query) {
           $options[$query->id()] = $query->label();
         }
-        // Phpstan doesn't realize this can be empty.
-        // @phpstan-ignore-next-line
-        if (!empty($options)) {
-          // Add a form element to the form that allows selection of a query.
-          $form['query'] = [
-            '#type' => 'radios',
-            '#title' => $this->t('EDS Query'),
-            '#options' => $options,
-            '#description' => $this->t('If selected, the NetIDs found in the query will be used to determine what profiles to import.'),
-            '#disabled' => !$has_key,
-            '#required' => FALSE,
-          ];
-        }
+        // Add a form element to the form that allows selection of a query.
+        $form['query'] = [
+          '#type' => 'radios',
+          '#title' => $this->t('EDS Query'),
+          '#options' => $options,
+          '#description' => $this->t('If selected, the NetIDs found in the query will be used to determine what profiles to import.'),
+          '#disabled' => !$has_key,
+          '#required' => FALSE,
+        ];
       }
     }
     catch (\Exception $e) {

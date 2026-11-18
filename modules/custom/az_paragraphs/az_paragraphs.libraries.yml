@@ -21,6 +21,12 @@ az_paragraphs.az_text_background:
     - az_barrio/arizona-bootstrap-css
     - az_barrio/arizona-bootstrap-js
     - az_barrio/button-no-conflict
+az_paragraphs.az_text_background_form:
+  js:
+    js/az_paragraphs_text_background_form.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
 az_paragraphs.az_text_media:
   css:
     theme:

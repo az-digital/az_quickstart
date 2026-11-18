@@ -41,8 +41,8 @@ class AZProfilesAPIFetcher extends Http {
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): self {
-    /** @var \Drupal\az_person_profiles_import\Plugin\migrate_plus\data_fetcher\AZProfilesAPIFetcher $instance */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): static {
+    /** @var static $instance */
     $instance = parent::create(
       $container,
       $configuration,
