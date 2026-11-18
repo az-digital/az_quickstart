@@ -22,14 +22,13 @@
 }
 
 .az-event-card .az-event-when {
-  margin-top: auto;
   font-weight: 700;
   color: var(--bs-red);
   transition: color .3s ease-out;
 }
 
 .az-event-card:hover .az-event-when {
-  color: var(--bs-sky);
+  color: var(--bs-rain);
 }
 
 .node--view-mode-az-card-alternate, .node--view-mode-az-card-alternate .node__content {
