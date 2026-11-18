@@ -2,6 +2,7 @@
 
 namespace Drupal\az_paragraphs\Plugin\paragraphs\Behavior;
 
+use Drupal\az_core\Utility\AZBootstrapColorNames;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\paragraphs\ParagraphInterface;
 
@@ -137,15 +138,15 @@ class AZCardsParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#options' => [
         'text-dark-silver' => $this->t('Dark Silver (default)'),
         'text-blue' => $this->t('Blue'),
-        'text-sky' => $this->t('Sky'),
-        'text-oasis' => $this->t('Oasis'),
+        'text-rain' => $this->t('Rain'),
+        'text-arroyo-blue' => $this->t('Arroyo Blue'),
         'text-azurite' => $this->t('Azurite'),
-        'text-midnight' => $this->t('Midnight'),
+        'text-tinta' => $this->t('Tinta'),
         'text-ash' => $this->t('Ash'),
         'text-black' => $this->t('Black'),
         'text-white' => $this->t('White'),
       ],
-      '#default_value' => $config['card_deck_title_color'] ?? 'text-dark-silver',
+      '#default_value' => AZBootstrapColorNames::updateClasses($config['card_deck_title_color'] ?? 'text-dark-silver'),
       '#description' => $this->t('Change the color of the Card group title.'),
     ];
 
