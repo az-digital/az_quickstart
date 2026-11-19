@@ -38,7 +38,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class AzHttp extends Http {
 
   /**
-   * Provides cached HTTP requests via guzzle middlewear.
+   * Provides cached HTTP requests via guzzle middleware.
    *
    * @var \GuzzleHttp\Client
    */
