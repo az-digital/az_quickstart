@@ -50,7 +50,7 @@
       "title"  : "Card Decks",
       "path" : "/pages/card-decks",
       "az_page_category"  : "Cards",
-      "az_main_content"  : "80|81|82|83",
+      "az_main_content"  : "80|81|82|83|424|425",
       "az_media_image"    : "",
       "az_summary" : ""
     },
@@ -366,6 +366,15 @@
       "az_main_content" : "413|414",
       "az_media_image" : "",
       "az_summary" : "Overview page for the Pages section."
+    },
+    {
+      "id":45,
+      "title" : "Event Views",
+      "path" : "/pages/event-view-paragraphs",
+      "az_page_category" : "Views",
+      "az_main_content" : "416|417|418|419",
+      "az_media_image" : "",
+      "az_summary" : "A flexible page with event views."
     }
   ]
 }
