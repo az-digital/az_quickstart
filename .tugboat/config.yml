@@ -37,6 +37,12 @@ services:
         - pecl install apcu
         - docker-php-ext-enable apcu
         - docker-php-ext-install intl
+        # Install the ImageMagick binaries so the ImageMagick image toolkit
+        # (drupal/imagemagick) can be tested on previews. The toolkit is not
+        # enabled by default.
+        - apt-get update
+        - apt-get install -y imagemagick
+        - rm -rf /var/lib/apt/lists/*
         # Enable apache modules.
         - a2enmod headers rewrite
         - service apache2 restart
