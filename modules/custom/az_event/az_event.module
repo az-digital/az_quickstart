@@ -116,9 +116,10 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
 
       // Day pseudo field.
       if ($display->getComponent('az_event_day')) {
+        $day_format = $view_mode === 'az_card_alternate' ? 'az_event_card_day' : 'az_event_day';
         $build['az_event_day'][] = [
           '#type' => 'markup',
-          '#markup' => Html::escape($formatter->format($timestamp, 'az_event_day')),
+          '#markup' => Html::escape($formatter->format($timestamp, $day_format)),
         ];
       }
     }
@@ -415,7 +416,8 @@ function az_event_preprocess_node(&$variables) {
 
             // Format the replacement value.
             if (!empty($variables['content']['az_event_day'])) {
-              $variables['content']['az_event_day'][0]['#markup'] = Html::escape($formatter->format($timestamp, 'az_event_card_day'));
+              $day_format = $variables['view_mode'] === 'az_card_alternate' ? 'az_event_card_day' : 'az_event_day';
+              $variables['content']['az_event_day'][0]['#markup'] = Html::escape($formatter->format($timestamp, $day_format));
               $variables['content']['az_event_day']['#cache']['max-age'] = 0;
             }
             if (!empty($variables['content']['az_event_month'])) {
