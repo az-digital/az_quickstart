@@ -3,6 +3,7 @@
   margin-top: -38px;
   z-index: 1;
   width: min-content;
+  min-width: 4rem;
   font-size: 20px;
   padding: .625rem;
   background: var(--bs-red);
