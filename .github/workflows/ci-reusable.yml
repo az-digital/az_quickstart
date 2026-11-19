@@ -323,6 +323,14 @@ jobs:
       - name: Run phpunit test (${{ matrix.test.file }})
         working-directory: ${{ env.SITE_DIR }}
         run: |
+          # Fail on deprecations in Quickstart code only, using the profile's
+          # ignore file. Profile branches without the file report deprecations
+          # without failing.
+          if [[ -f "$PROFILE_PATH/.deprecation-ignore.txt" ]]; then
+            export SYMFONY_DEPRECATIONS_HELPER="ignoreFile=$PWD/$PROFILE_PATH/.deprecation-ignore.txt"
+          else
+            export SYMFONY_DEPRECATIONS_HELPER=weak
+          fi
           ./vendor/bin/phpunit \
             --configuration "$PROFILE_PATH/phpunit.xml.dist" \
             --bootstrap web/core/tests/bootstrap.php \
@@ -332,7 +340,6 @@ jobs:
             "$PROFILE_PATH/$TEST_FILE"
         env:
           TEST_FILE: ${{ matrix.test.file }}
-          SYMFONY_DEPRECATIONS_HELPER: weak
           SIMPLETEST_DB: mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3306] }}/db
           SIMPLETEST_BASE_URL: http://172.17.0.1:8080
           BROWSERTEST_OUTPUT_DIRECTORY: ${{ github.workspace }}/${{ env.SITE_DIR }}/web/sites/simpletest/browser_output
