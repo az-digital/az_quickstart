@@ -512,40 +512,6 @@ To rollback menu links, use the following command:
 ```
 drush mr az_menu_links
 ```
-## Exclude Node Title Migration
-
-This migration uses migmag_lookup to match source node id to the nid of
-migrated content.
-
-Optional Migration Dependencies:
-Optional dependencies are honored in the correct order if the group import is run.
-`drush migrate:import --group=az_migration`
-If the variable doesn't exist in the source db, it will stop immediately and move on.
-- az_node_carousel
-- az_node_event
-- az_node_flexible_page
-- az_node_news
-- az_node_person
-- az_node_uaqs_basic_page_to_az_page
-
-Quickstart 1 exclude node title per node settings can be migrated using the
-following command:
-
-```
-drush mim az_exclude_node_title
-```
-You do have the option to run this migration as many times as necessary.
-To update content after running additional quickstart migrations:
-
-```
-drush mim az_exclude_node_title --update
-```
-
-To rollback menu links, use the following command:
-```
-drush mr az_exclude_node_title
-```
-
 
 # Migrate plugins
 
