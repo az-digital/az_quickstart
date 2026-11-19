@@ -31,8 +31,16 @@
   color: var(--bs-rain);
 }
 
+.az-event-card .card-text > :last-child > :last-child {
+  margin-bottom: 0;
+}
+
 .node--view-mode-az-card-alternate, .node--view-mode-az-card-alternate .node__content {
   height: 100%;
+}
+
+.node--view-mode-az-card-alternate .node__content {
+  margin-top: 0;
 }
 
 .view-display-id-az_grid_images > .view-content > div > div {
