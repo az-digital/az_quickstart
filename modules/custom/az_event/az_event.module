@@ -386,9 +386,9 @@ function az_event_preprocess_node(&$variables) {
         // If there is no image, re-align the overlayed start date.
         if (!empty($variables['elements']['#fieldgroups']['group_date'])) {
           $variables['elements']['#fieldgroups']['group_date']->format_settings['classes'] .= ' mt-4';
-       }
+        }
       }
-    } 
+    }
     // Only process if we see view information.
     if (isset($variables['elements']['#az_view_row_index'])) {
 
