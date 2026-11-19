@@ -59,7 +59,7 @@ third_party_settings:
       weight: 4
       format_type: link
       format_settings:
-        classes: 'stretched-link text-reset text-decoration-none az-event-card d-flex flex-column flex-grow-1'
+        classes: 'stretched-link text-reset text-decoration-none az-event-card'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -176,7 +176,7 @@ third_party_settings:
       weight: 5
       format_type: html_element
       format_settings:
-        classes: 'az-event-when mt-auto pb-4'
+        classes: 'az-event-when mt-auto'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -196,7 +196,7 @@ third_party_settings:
       weight: 4
       format_type: html_element
       format_settings:
-        classes: 'card-body pb-0 pt-0 d-flex flex-column'
+        classes: 'card-body pb-0 pt-0 d-flex flex-column flex-grow-1'
         show_empty_fields: false
         id: ''
         label_as_html: false
