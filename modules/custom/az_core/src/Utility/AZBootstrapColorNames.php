@@ -19,10 +19,14 @@ final class AZBootstrapColorNames {
    * Matches $deprecated-color-names in Arizona Bootstrap's
    * scss/custom/_variables.scss.
    *
-   * The icon templates in az_icons.icons.yml read this constant by name, to
-   * print the new class for an icon saved with an old color name. Keep it for
-   * as long as saved icons can have the old names, or every page with an icon
-   * fails with a Twig error.
+   * getClassMap() below uses this list. az_icons also uses it to render
+   * icons saved with an old color name: an icon saved as sky gets the class
+   * text-rain on the page. New icons are saved in the db with the old names,
+   * so don't remove a mapping, even after Arizona Bootstrap removes it.
+   *
+   * Note: az_icons.icons.yml references this const by name, so if you rename
+   * it, static analysis tools can't warn you that every page with an icon
+   * will break.
    *
    * @var array<string, string>
    */
