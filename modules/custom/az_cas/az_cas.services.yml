@@ -5,3 +5,47 @@ services:
     class: Drupal\az_cas\Routing\AzCasRouteSubscriber
     arguments:
       - '@config.factory'
+
+  az_cas.guest_session_manager:
+    class: Drupal\az_cas\Service\GuestSessionManager
+    arguments:
+      - '@state'
+      - '@request_stack'
+      - '@datetime.time'
+      - '@config.factory'
+
+  az_cas.guest_path_matcher:
+    class: Drupal\az_cas\Service\GuestPathMatcher
+    arguments:
+      - '@config.factory'
+      - '@path.matcher'
+      - '@path_alias.manager'
+
+  az_cas.pre_register_subscriber:
+    class: Drupal\az_cas\EventSubscriber\CasPreRegisterSubscriber
+    arguments:
+      - '@config.factory'
+      - '@logger.factory'
+      - '@request_stack'
+      - '@cas.user_manager'
+      - '@az_cas.guest_session_manager'
+      - '@entity_type.manager'
+
+  az_cas.pre_login_subscriber:
+    class: Drupal\az_cas\EventSubscriber\CasPreLoginSubscriber
+    arguments:
+      - '@request_stack'
+
+  az_cas.guest_redirect_exception_subscriber:
+    class: Drupal\az_cas\EventSubscriber\GuestRedirectExceptionSubscriber
+    arguments:
+      - '@logger.factory'
+
+  az_cas.guest_auth_path_subscriber:
+    class: Drupal\az_cas\EventSubscriber\GuestAuthPathSubscriber
+    arguments:
+      - '@config.factory'
+      - '@current_user'
+      - '@logger.factory'
+      - '@az_cas.guest_session_manager'
+      - '@az_cas.guest_path_matcher'
