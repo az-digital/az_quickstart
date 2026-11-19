@@ -1,0 +1,15 @@
+services:
+  az_media.image_url:
+    class: Drupal\az_media\AZImageUrlGenerator
+    arguments:
+      - '@stream_wrapper_manager'
+      - '@file_url_generator'
+      - '@image.toolkit.manager'
+      - '@request_stack'
+      - '@entity_type.manager'
+  az_media.image_url_twig_extension:
+    class: Drupal\az_media\Twig\AZImageUrlTwigExtension
+    arguments:
+      - '@az_media.image_url'
+    tags:
+      - { name: twig.extension }

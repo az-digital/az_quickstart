@@ -1,0 +1,140 @@
+/**
+ * Ranking Image component.
+ *
+ * A layout wrapper around a media-library-backed <img>. The width_span_*
+ * props become `grid-column: span N`, which only does anything when this
+ * component sits inside a CSS grid - a Ranking Deck, usually. Outside one it
+ * is inert, so the same props are safe whether the image is in a deck or
+ * standalone on a page.
+ *
+ * Why three span props rather than one that adapts: CSS Grid gives a grid
+ * item no way to clamp its own span against its container's column count.
+ * That is a gap in the spec, not in browsers -
+ * https://github.com/w3c/csswg-drafts/issues/5852. An item spanning more
+ * tracks than exist gets an extra implicit track instead of clamping, which
+ * squeezes every sibling in that row, not just the image.
+ *
+ * The spans default to 2 / 2 / 1 (desktop / tablet / phone). Tablet and
+ * phone match Ranking Deck's own defaults; desktop is deliberately below the
+ * deck's default of 4, since a span can only cause trouble by being too
+ * large. So an image is safe out of the box. Raise one to match if a deck is
+ * configured with more columns.
+ */
+
+.az-ranking-image {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--bs-border-radius);
+  /*
+   * The same responsive floor .az-ranking-sdc uses in ranking.css, so a row
+   * holding only images still has a sensible height, and so the image never
+   * decides the row height itself (see the img rule below). Legacy got the
+   * same result from two elements: the floor sat on the parent column
+   * .az-ranking-responsive, and .ranking-image-wrapper was absolutely
+   * positioned inside it. This component does both jobs itself.
+   */
+  min-height: 190px;
+}
+
+/*
+ * Give the hover preview in Canvas's Library panel the right shape.
+ * Rationale: the <img> below is positioned absolutely, so it adds no height
+ * of its own, and in the panel there is no grid row to borrow a height from
+ * either - the preview falls back to the min-height above and shows at
+ * whatever proportions that happens to give. 2/1 is the shape of the
+ * placeholder the schema points at,
+ * public://az-placeholder/1000x500/placeholder.svg.
+ *
+ * #component-wrapper is the id Canvas wraps previews in; see its
+ * ComponentPreview.tsx.
+ */
+#component-wrapper .az-ranking-image {
+  aspect-ratio: 2 / 1;
+}
+
+/* Medium viewports. */
+@media (min-width: 768px) {
+  .az-ranking-image {
+    min-height: 230px;
+  }
+}
+
+/* Large viewports. */
+@media (min-width: 992px) {
+  .az-ranking-image {
+    min-height: 260px;
+  }
+}
+
+/* Two classes, to beat Bootstrap's img:not(.card-img) rule for border radius */
+.az-ranking-image .az-ranking-image__img {
+  /*
+   * Positioned absolutely so the image's own proportions never affect how
+   * tall the grid row gets. The row is sized by its other content - Ranking
+   * cards - and the image then crops with object-fit to fill whatever height
+   * that came to. The legacy .ranking-image-wrapper did the same.
+   */
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+/* Phone (base). */
+.az-ranking-image--span-phone-1 {
+  grid-column: span 1;
+}
+
+.az-ranking-image--span-phone-2 {
+  grid-column: span 2;
+}
+
+.az-ranking-image--span-phone-3 {
+  grid-column: span 3;
+}
+
+.az-ranking-image--span-phone-4 {
+  grid-column: span 4;
+}
+
+/* Tablet. */
+@media (min-width: 768px) {
+  .az-ranking-image--span-tablet-1 {
+    grid-column: span 1;
+  }
+
+  .az-ranking-image--span-tablet-2 {
+    grid-column: span 2;
+  }
+
+  .az-ranking-image--span-tablet-3 {
+    grid-column: span 3;
+  }
+
+  .az-ranking-image--span-tablet-4 {
+    grid-column: span 4;
+  }
+}
+
+/* Desktop. */
+@media (min-width: 992px) {
+  .az-ranking-image--span-desktop-1 {
+    grid-column: span 1;
+  }
+
+  .az-ranking-image--span-desktop-2 {
+    grid-column: span 2;
+  }
+
+  .az-ranking-image--span-desktop-3 {
+    grid-column: span 3;
+  }
+
+  .az-ranking-image--span-desktop-4 {
+    grid-column: span 4;
+  }
+}

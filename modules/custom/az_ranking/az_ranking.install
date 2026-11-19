@@ -1,0 +1,54 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the az_ranking module.
+ */
+
+use Drupal\image\Entity\ImageStyle;
+
+/**
+ * Remove the az_ranking_responsive image style.
+ *
+ * Az_ranking_responsive upscaled images because we thought focal point
+ * needed that. But after testing, we realized it's not necessary, so
+ * this is no longer needed. Max_1300x1300, an image style that comes
+ * with Quickstart out of the box, is used instead.
+ *
+ * Skips the deletion when other configuration still depends on the style.
+ * Rationale: a site running this distribution could have (not likely but
+ * still a possibility) picked az_ranking_responsive for a view display
+ * that's not ranking related.
+ */
+function az_ranking_update_1130601() {
+  $style = ImageStyle::load('az_ranking_responsive');
+  // If the style has already gone, there is nothing to do. A site may have
+  // deleted it by hand, and a fresh install never creates it.
+  if (!$style) {
+    return NULL;
+  }
+
+  // Ask the config dependency system rather than searching raw config text.
+  // Anything really using an image style - an entity view display's image
+  // formatter, a responsive image style - records it as a config
+  // dependency, and a stray copy of the style's own data, such as a
+  // config_snapshot entry, does not.
+  $dependents = \Drupal::service('config.manager')
+    ->findConfigEntityDependencies('config', ['image.style.az_ranking_responsive']);
+
+  if ($dependents) {
+    $names = array_map(
+      fn($dependency) => $dependency->getConfigDependencyName(),
+      $dependents
+    );
+    sort($names);
+    // This string is shown to whoever runs the update. Don't use t() in an
+    // update hook.
+    return 'The az_ranking_responsive image style is unused by the ranking image component, but was kept because other configuration still depends on it: '
+      . implode(', ', $names)
+      . '. Delete it manually once those are updated.';
+  }
+
+  $style->delete();
+  return NULL;
+}
