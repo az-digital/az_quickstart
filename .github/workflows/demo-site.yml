@@ -13,6 +13,7 @@ jobs:
   update-code:
     name: Update demo site code
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     outputs:
       superseded: ${{ steps.superseded.outputs.superseded }}
     steps:
@@ -61,7 +62,7 @@ jobs:
       # give up with a warning and a zero exit code. The step timeout fails
       # the job instead, and a failed sync makes the command exit non-zero.
       - name: Wait for Pantheon code sync
-        timeout-minutes: 10
+        timeout-minutes: 15
         env:
           DEMO_SITE_NAME: ${{ secrets.DEMO_SITE_NAME }}
         run: |
@@ -87,6 +88,7 @@ jobs:
     needs: update-code
     if: needs.update-code.outputs.superseded != 'true'
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - name: Setup PHP
         uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
