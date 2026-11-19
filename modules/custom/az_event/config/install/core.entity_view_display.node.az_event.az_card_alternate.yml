@@ -136,7 +136,7 @@ third_party_settings:
       weight: 2
       format_type: html_element
       format_settings:
-        classes: 'card-img-top img-fluid hover-img-zoom-in mb-nmin az-start-date-background position-relative overflow-hidden'
+        classes: 'card-img-top mb-nmin position-relative overflow-hidden'
         show_empty_fields: false
         id: ''
         label_as_html: false
