@@ -29,3 +29,4 @@ dependencies:
   - drupal:text
   - drupal:user
   - views_bootstrap:views_bootstrap
+  - date_ical:date_ical
