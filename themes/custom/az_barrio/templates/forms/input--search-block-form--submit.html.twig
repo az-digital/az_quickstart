@@ -15,8 +15,8 @@
  * @see template_preprocess_input()
  */
 #}
-{% set button_label = attributes.value|default('Search'|t) %}
-<button{{ attributes.removeClass('btn-primary').setAttribute('aria-label', button_label) }}>
+{% set button_label = attributes['aria-label']|default(attributes.value)|default('Search'|t) %}
+<button{{ attributes.removeClass('btn-primary').removeAttribute('aria-label') }}>
   <span class="visually-hidden">{{ button_label }}</span>
   {% if az_navbar_fullscreen %}
     <span class="az-search-icon" aria-hidden="true"></span>
