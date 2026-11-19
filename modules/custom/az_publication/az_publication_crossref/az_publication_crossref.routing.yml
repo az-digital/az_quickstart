@@ -1,0 +1,7 @@
+az_publication_crossref.az_publication_crossref_import_form:
+  path: '/admin/content/az-publication/import/crossref'
+  defaults:
+    _form: '\Drupal\az_publication_crossref\Form\AZPublicationCrossrefForm'
+    _title: 'Crossref Import'
+  requirements:
+    _permission: 'administer quickstart configuration'

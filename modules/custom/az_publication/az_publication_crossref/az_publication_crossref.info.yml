@@ -1,0 +1,16 @@
+name: 'Quickstart Publication Crossref Import'
+type: module
+description: 'Allows Crossref import of publications'
+core_version_requirement: ^9 || ^10
+package: 'The University of Arizona - Experimental'
+lifecycle: experimental
+lifecycle_link: 'https://github.com/az-digital/az_quickstart/blob/main/RELEASES.md#experimental-features'
+dependencies:
+  - 'az_core:az_core'
+  - 'az_http:az_http'
+  - 'az_publication:az_publication'
+  - 'az_publication_bibtex:az_publication_bibtex'
+  - 'az_publication_import:az_publication_import'
+  - migrate
+  - migrate_plus
+  - migrate_tools
