@@ -37,7 +37,7 @@ third_party_settings:
       weight: 0
       format_type: html_element
       format_settings:
-        classes: 'card bg-cloud h-100 hover mb-3 overflow-hidden'
+        classes: 'card bg-cloud h-100 hover overflow-hidden'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -59,7 +59,7 @@ third_party_settings:
       weight: 4
       format_type: link
       format_settings:
-        classes: 'stretched-link text-reset text-decoration-none az-event-card'
+        classes: 'stretched-link text-reset text-decoration-none az-event-card d-flex flex-column flex-grow-1'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -96,7 +96,7 @@ third_party_settings:
       weight: 3
       format_type: html_element
       format_settings:
-        classes: 'card-title fw-bold h5 pb-2 pt-2'
+        classes: 'card-title fw-bold h5 pb-2 mb-1'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -176,7 +176,7 @@ third_party_settings:
       weight: 5
       format_type: html_element
       format_settings:
-        classes: 'az-event-when mt-auto'
+        classes: 'az-event-when mt-auto pt-4'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -196,7 +196,7 @@ third_party_settings:
       weight: 4
       format_type: html_element
       format_settings:
-        classes: 'card-body pb-0 pt-0 d-flex flex-column flex-grow-1'
+        classes: 'card-body d-flex flex-column'
         show_empty_fields: false
         id: ''
         label_as_html: false
