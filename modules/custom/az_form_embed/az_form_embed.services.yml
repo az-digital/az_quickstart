@@ -1,0 +1,12 @@
+services:
+  plugin.manager.az_form_embed_vendor:
+    class: Drupal\az_form_embed\FormEmbedVendorManager
+    parent: default_plugin_manager
+  az_form_embed.editing_context:
+    class: Drupal\az_form_embed\EditingContext
+    arguments: ['@current_route_match']
+  az_form_embed.uninstall_validator:
+    class: Drupal\az_form_embed\FormEmbedUninstallValidator
+    arguments: ['@entity_type.manager', '@plugin.manager.az_form_embed_vendor', '@string_translation']
+    tags:
+      - { name: module_install.uninstall_validator }

@@ -1,0 +1,36 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_form_mode.media.media_library
+    - field.field.media.az_form_embed.field_az_form_embed_url
+    - media.type.az_form_embed
+  enforced:
+    module:
+      - az_form_embed
+id: media.az_form_embed.media_library
+targetEntityType: media
+bundle: az_form_embed
+mode: media_library
+content:
+  field_az_form_embed_url:
+    type: string_textfield
+    weight: 1
+    region: content
+    settings:
+      size: 100
+      placeholder: ''
+    third_party_settings: {  }
+  name:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  path: true
+  status: true
+  uid: true

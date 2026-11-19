@@ -1,0 +1,105 @@
+/**
+ * @file
+ * Styles for the Form embed component.
+ *
+ * Covers the loading spinner and the fallback alert. The fixes for each
+ * vendor's own markup live in that vendor's submodule, such as
+ * az_form_embed_slate's css/slate.css. The box shown while editing is the
+ * Form embed placeholder component.
+ *
+ * Nothing here sets how wide the embed is. Quickstart's theme sizes the
+ * wrapper around every media item by view mode, in az_barrio's
+ * css/az-media-display.css, and the form fills that wrapper.
+ */
+
+:root {
+  --az-form-embed-min-height: 200px;
+}
+
+/* Hold space for the form while it loads, so the page doesn't jump when the
+ * form arrives. Give that space back once the fallback alert shows.
+ * Rationale: the alert is far shorter than a form, and the space left under
+ * it looks like a gap. */
+.az-form-embed {
+  min-height: var(--az-form-embed-min-height);
+}
+
+.az-form-embed--failed {
+  min-height: 0;
+}
+
+.az-form-embed__form {
+  width: 100%;
+}
+
+/* The loading spinner (Arizona Bootstrap's spinner-border), centered in the
+ * space the form will fill. */
+.az-form-embed__spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--az-form-embed-min-height);
+}
+
+/* The fallback alert, saying which form is missing and why, and linking to
+ * it on the vendor's own site. Its look is Arizona Bootstrap's alert; the
+ * rules below show and hide it.
+ *
+ * It's visible by default, so a browser with no JavaScript, where the embed
+ * can't load anyway, still gets the link. The loader adds --js, which hides
+ * it, and adds --failed if the form doesn't arrive, which shows it again.
+ * Keep the --failed rule below the --js rule: they have the same specificity,
+ * so the later one wins. */
+.az-form-embed--js .az-form-embed__fallback {
+  display: none;
+}
+
+.az-form-embed--failed .az-form-embed__fallback {
+  display: block;
+}
+
+/* One of the two openings shows. The plain one, for a visitor, is the
+ * default; the loader asks for the named one where naming the form helps
+ * whoever has to fix the page. */
+.az-form-embed__opening--named {
+  display: none;
+}
+
+.az-form-embed--names-form .az-form-embed__opening--plain {
+  display: none;
+}
+
+.az-form-embed--names-form .az-form-embed__opening--named {
+  display: inline;
+}
+
+/* The alert's sentence, sitting directly above the link. */
+.az-form-embed__message {
+  margin-bottom: 0.5rem;
+}
+
+/* The retry button, shown only when the form took too long. It carries
+ * alert-link, like the "Open the form" link below it. These declarations
+ * strip the rest of a button's look so the two match. */
+.az-form-embed__retry {
+  padding: 0;
+  border: 0;
+  background: none;
+  text-decoration: underline;
+}
+
+/* The form's name inside that sentence. Drupal's placeholder filter wraps it
+ * in an em, which browsers render italic. Bold reads better here, and the
+ * name is the part of the sentence worth finding at a glance. */
+.az-form-embed__message .placeholder {
+  font-style: normal;
+  font-weight: 700;
+}
+
+/* The icons after "Try again" and "Open the form", sized against the text
+ * they follow rather than in pixels. */
+.az-form-embed__link-icon {
+  width: 0.85em;
+  height: 0.85em;
+  margin-left: 0.25rem;
+}
