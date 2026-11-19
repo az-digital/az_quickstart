@@ -579,17 +579,51 @@ function az_core_preprocess_container__text_format_filter_help(&$variables) {
  * Implements hook_preprocess_entity_embed_container().
  *
  * Prevents competing submit button lockup errors in edit pages
- * by swapping embedded webforms with a custom preview when in collapsed mode.
+ * by swapping embedded webforms with a custom preview or teaser
+ * when in collapsed mode.
  */
 function az_core_preprocess_entity_embed_container(array &$variables) {
+  $route_name = \Drupal::routeMatch()->getRouteName();
+  if ($route_name !== 'entity.node.edit_form' && $route_name !== 'entity.block_content.edit_form') {
+    return;
+  }
+
+  // Check for embedded webforms in Webform Node.
   if (isset($variables['element']['entity']['webform'])) {
-    if (\Drupal::routeMatch()->getRouteName() === 'entity.node.edit_form' || \Drupal::routeMatch()->getRouteName() === 'entity.block_content.edit_form') {
-      // Get the view builder for the entity.
-      $entity = $variables["element"]['#entity'];
-      $type_id = $entity->getEntityTypeId();
-      $builder = \Drupal::entityTypeManager()->getViewBuilder($type_id);
-      // Render the entity as a teaser.
-      $variables['children'] = $builder->view($entity, 'teaser');
+    $type_id = $variables['element']['#entity']->getEntityTypeId();
+    $builder = \Drupal::entityTypeManager()->getViewBuilder($type_id);
+    $variables['children'] = $builder->view($variables['element']['#entity'], 'teaser');
+  }
+
+  // Check for webforms embedded in blocks.
+  if (isset($variables['element']['entity']['#entity_type'])) {
+    if ($variables['element']['entity']['#entity_type'] === 'block_content') {
+
+      // Search each custom block field for a webform reference field.
+      $block_has_webform = FALSE;
+      foreach ($variables['element']['#entity']->getFields() as $field_name => $field) {
+        if ($field->getFieldDefinition()->getType() === 'webform') {
+          $block_has_webform = TRUE;
+          // Found one, break the loop and carry on.
+          break;
+        }
+      }
+      if (!$block_has_webform) {
+        return;
+      }
+
+      // Display the block Teaser display mode if exists, otherwise use custom placeholder text.
+      $block_type = $variables['element']['#entity']->bundle();
+      $view_modes = \Drupal::service('entity_display.repository')->getViewModeOptionsByBundle('block_content', $block_type);
+      $teaser_exists = isset($view_modes['teaser']);
+      if ($teaser_exists) {
+        $builder = \Drupal::entityTypeManager()->getViewBuilder('block_content');
+        $variables['children'] = $builder->view($variables['element']['#entity'], 'teaser');
+      }
+      else {
+        $variables['children'] = 'Webform Preview';
+      }
+      return;
     }
   }
 }
