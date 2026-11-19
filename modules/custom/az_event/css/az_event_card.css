@@ -1,18 +1,13 @@
-.az-start-date-background:not(:has(img)) {
-  padding-top: 56px;
-}
-
 .az-start-date {
   margin-left: 24px;
   margin-top: -38px;
   z-index: 1;
   width: min-content;
   font-size: 20px;
-  padding: 10px 11.37px;
+  padding: .625rem .75rem;
   background: var(--bs-red);
   border-radius: 4px;
   color: var(--bs-white);
-  font-family: proxima-nova;
   font-weight: 700;
   text-align: center;
   letter-spacing: .08px;
@@ -43,10 +38,11 @@
   margin-top: 0;
 }
 
-.view-display-id-az_grid_images > .view-content > div > div {
-  margin-bottom: 2rem;
+/* No image: the date badge is the card's first child. */
+.node--view-mode-az-card-alternate .az-start-date:first-child {
+  margin-top: 1.5rem;
 }
 
-.view-display-id-az_past_grid_images > .view-content > div > div {
+.views-view-grid > :has(> .node--view-mode-az-card-alternate) {
   margin-bottom: 2rem;
 }

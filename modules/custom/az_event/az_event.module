@@ -369,25 +369,23 @@ function az_event_preprocess_node(&$variables) {
       $variables['#attached']['library'][] = 'az_card/az_card_title_hover';
       $variables['#attached']['library'][] = 'az_event/az_event_card';
 
-      $media_items = $node->get('field_az_media_thumbnail_image')->referencedEntities();
-      if (!empty($media_items)) {
-        $card_image =
-          \Drupal::service('az_card.image')->generateImageRenderArray($media_items[0]);
-        if (!empty($card_image['#item_attributes']['class'])) {
+      // Render the first thumbnail with the card image classes, so the image
+      // gets rounded corners and zooms on hover. Without access, leave the
+      // field formatter's output, which performs its own access check.
+      $renderer = \Drupal::service('renderer');
+      foreach ($node->get('field_az_media_thumbnail_image')->referencedEntities() as $media) {
+        $access = $media->access('view', NULL, TRUE);
+        $card_image = $access->isAllowed()
+          ? \Drupal::service('az_card.image')->generateImageRenderArray($media)
+          : [];
+        if (!empty($card_image)) {
           $card_image['#item_attributes']['class'][] = 'rounded-top-4';
           $card_image['#item_attributes']['class'][] = 'hover-img-zoom-in';
-          $card_image['#item_attributes']['class'] = array_values(array_unique($card_image['#item_attributes']['class']));
+          $renderer->addCacheableDependency($card_image, $access);
+          $renderer->addCacheableDependency($card_image, $media);
+          $variables['content']['field_az_media_thumbnail_image'] = $card_image;
         }
-        else {
-          $card_image['#item_attributes'] = ['class' => ['card-img-top rounded-top-4']];
-        }
-        $variables['content']['field_az_media_thumbnail_image'] = $card_image;
-      }
-      else {
-        // If there is no image, re-align the overlayed start date.
-        if (!empty($variables['elements']['#fieldgroups']['group_date'])) {
-          $variables['elements']['#fieldgroups']['group_date']->format_settings['classes'] .= ' mt-4';
-        }
+        break;
       }
     }
     // Only process if we see view information.
