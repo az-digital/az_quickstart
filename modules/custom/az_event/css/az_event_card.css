@@ -1,38 +1,19 @@
 .az-start-date {
   margin-left: 24px;
   margin-top: -38px;
-  z-index: 1;
   width: min-content;
   min-width: 4rem;
   font-size: 20px;
   padding: .625rem;
-  background: var(--bs-red);
-  border-radius: 4px;
-  color: var(--bs-white);
-  font-weight: 700;
-  text-align: center;
-  letter-spacing: .08px;
   line-height: 24px;
-  word-wrap: normal;
-  text-transform: uppercase;
 }
 
 .az-event-card .card-title {
   --bs-card-title-color: var(--bs-blue);
-  font-size: 1.25rem;
-  line-height: 1.75rem;
-  letter-spacing: .08px;
-}
-
-.az-event-card .card-text {
-  letter-spacing: .07px;
 }
 
 .az-event-card .az-event-when {
-  font-weight: 700;
   color: var(--bs-red);
-  letter-spacing: -.11px;
-  line-height: 1.5rem;
   transition: color .3s ease-out;
 }
 

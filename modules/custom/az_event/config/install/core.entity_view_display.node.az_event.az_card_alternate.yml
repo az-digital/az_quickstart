@@ -76,7 +76,7 @@ third_party_settings:
       weight: 3
       format_type: html_element
       format_settings:
-        classes: 'az-start-date position-relative'
+        classes: 'az-start-date position-relative z-1 text-bg-red rounded-1 fw-bolder text-center text-uppercase'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -176,7 +176,7 @@ third_party_settings:
       weight: 5
       format_type: html_element
       format_settings:
-        classes: 'az-event-when mt-auto pt-4 small'
+        classes: 'az-event-when mt-auto pt-4 small fw-bolder'
         show_empty_fields: false
         id: ''
         label_as_html: false
