@@ -36,7 +36,7 @@
   transition: color .3s ease-out;
 }
 
-.az-event-card:hover .az-event-when {
+.az-event-card:is(:hover, :focus-visible) .az-event-when {
   color: var(--bs-rain);
 }
 
