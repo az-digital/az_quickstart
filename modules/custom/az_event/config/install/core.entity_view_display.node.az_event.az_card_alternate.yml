@@ -116,7 +116,7 @@ third_party_settings:
       weight: 4
       format_type: html_element
       format_settings:
-        classes: 'card-text fw-normal small mb-0'
+        classes: 'card-text fw-normal mb-0'
         show_empty_fields: false
         id: ''
         label_as_html: false

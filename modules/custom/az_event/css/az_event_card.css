@@ -17,9 +17,22 @@
   text-transform: uppercase;
 }
 
+.az-event-card .card-title {
+  --bs-card-title-color: var(--bs-blue);
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  letter-spacing: .08px;
+}
+
+.az-event-card .card-text {
+  letter-spacing: .07px;
+}
+
 .az-event-card .az-event-when {
   font-weight: 700;
   color: var(--bs-red);
+  letter-spacing: -.11px;
+  line-height: 1.5rem;
   transition: color .3s ease-out;
 }
 
