@@ -1,11 +1,5 @@
-.card-with-link:hover .card-title,
 .card-title > a:hover {
   text-decoration: underline;
-}
-
-.card-with-link:hover img {
-  transform: scale(1.03);
-  transition: ease .25s;
 }
 
 .card-title > a {
