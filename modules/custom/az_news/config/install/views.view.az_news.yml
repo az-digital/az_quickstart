@@ -1114,25 +1114,54 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags: {  }
-  more_news_view:
-    id: more_news_view
+  az_more_news:
+    id: az_more_news
     display_title: 'More News View'
     display_plugin: block
     position: 2
     display_options:
-      style:
-        type: default
+      pager:
+        type: mini
         options:
-          row_class: media-list-row
+          offset: 0
+          pagination_heading_level: h4
+          items_per_page: 6
+          total_pages: null
+          id: 0
+          tags:
+            next: ››
+            previous: ‹‹
+          expose:
+            items_per_page: false
+            items_per_page_label: 'Items per page'
+            items_per_page_options: '5, 10, 25, 50'
+            items_per_page_options_all: false
+            items_per_page_options_all_label: '- All -'
+            offset: false
+            offset_label: Offset
+      style:
+        type: views_bootstrap_grid
+        options:
+          row_class: 'media-list-row d-flex align-items-stretch mb-4'
           default_row_class: false
           uses_fields: false
+          grid_class: ''
+          col_xs: col-12
+          col_sm: col-sm-12
+          col_md: col-md-12
+          col_lg: col-lg-6
+          col_xl: col-xl-6
+          col_xxl: col-xxl-6
       row:
         type: 'entity:node'
         options:
           relationship: none
           view_mode: az_card_alternate
       defaults:
+        title: false
         css_class: false
+        pager: false
+        pager_options: false
         style: false
         style_options: false
         row: false
@@ -1140,19 +1169,7 @@ display:
       css_class: 'add-pager-top-margin az-news'
       display_description: ''
       style_options: null
-      footer:
-        result:
-          id: result
-          table: views
-          field: result
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: result
-          empty: false
-          content: '<p><em>Page @current_page of @page_count</em></p>'
       display_extenders: {  }
-      path: news
     cache_metadata:
       max-age: -1
       contexts:

@@ -174,7 +174,7 @@ third_party_settings:
       weight: 6
       format_type: html_element
       format_settings:
-        classes: 'col-6 p-0 m-0 h-100 az-news-img'
+        classes: 'col-6 p-0 m-0 h-100 overflow-hidden'
         show_empty_fields: false
         id: ''
         label_as_html: false

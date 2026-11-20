@@ -102,7 +102,7 @@ function az_news_preprocess_node(&$variables) {
           ? \Drupal::service('az_card.image')->generateImageRenderArray($media)
           : [];
         if (!empty($card_image)) {
-          $card_image['#item_attributes']['class'][] = 'hover-img-zoom-in rounded-end-0';
+          $card_image['#item_attributes']['class'][] = 'hover-img-zoom-in rounded-end-0 h-100 object-fit-cover overflow-hidden';
           // $card_image['#item_attributes']['class'][] = 'h-100';
           $renderer->addCacheableDependency($card_image, $access);
           $renderer->addCacheableDependency($card_image, $media);
