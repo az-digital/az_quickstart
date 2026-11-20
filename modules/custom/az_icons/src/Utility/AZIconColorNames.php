@@ -32,9 +32,13 @@ final class AZIconColorNames {
   const ICON_TAG_PATTERN = '/<drupal-icon\b(?:[^>"\']|"[^"]*"|\'[^\']*\')*+>/i';
 
   /**
-   * Matches a data-icon-settings attribute and its quoted value.
+   * Matches one attribute in a tag, and its value if it has one.
+   *
+   * \G makes each match start where the one before it ended. Without this,
+   * a match could start inside another attribute's value, such as an
+   * aria-label whose text is data-icon-id="material_symbols:home".
    */
-  const SETTINGS_ATTRIBUTE_PATTERN = '/(\sdata-icon-settings\s*=\s*)("[^"]*"|\'[^\']*\')/i';
+  const ATTRIBUTE_PATTERN = '/\G(\s+)([^\s"\'>\/=]+)(?:(\s*=\s*)("[^"]*"|\'[^\']*\'|[^\s"\'>]*))?/';
 
   /**
    * Renames the old color names in every az_icons icon in a piece of HTML.
@@ -57,25 +61,62 @@ final class AZIconColorNames {
     if (stripos($html, '<drupal-icon') === FALSE) {
       return $html;
     }
-    $pack_ids = implode('|', array_map(static fn ($pack_id) => preg_quote($pack_id, '/'), self::PACK_IDS));
-    $pack_pattern = '/\sdata-icon-id\s*=\s*["\'](?:' . $pack_ids . '):/i';
-    return preg_replace_callback(self::ICON_TAG_PATTERN, static function ($tag) use ($pack_pattern) {
-      if (!preg_match($pack_pattern, $tag[0])) {
-        return $tag[0];
+    return preg_replace_callback(
+      self::ICON_TAG_PATTERN,
+      static fn ($tag) => self::updateTag($tag[0]),
+      $html,
+    ) ?? $html;
+  }
+
+  /**
+   * Renames the old color name in one opening <drupal-icon> tag.
+   *
+   * @param string $tag
+   *   The opening tag, for example <drupal-icon data-icon-id="..." ...>.
+   *
+   * @return string
+   *   The tag, with the old color name in data-icon-settings replaced, if the
+   *   icon is from one of PACK_IDS.
+   */
+  protected static function updateTag(string $tag): string {
+    // Read the attributes one at a time, the way a browser does, so text
+    // inside an attribute's value is never taken for another attribute.
+    $tag_name = substr($tag, 0, strlen('<drupal-icon'));
+    $attributes = substr($tag, strlen($tag_name));
+    if (!preg_match_all(self::ATTRIBUTE_PATTERN, $attributes, $matches, PREG_SET_ORDER)) {
+      return $tag;
+    }
+
+    // If an attribute appears twice, a browser uses the first one.
+    $values = [];
+    foreach ($matches as $match) {
+      $values[strtolower($match[2])] ??= trim($match[4] ?? '', '"\'');
+    }
+    $pack_id = explode(':', $values['data-icon-id'] ?? '')[0];
+    if (!in_array($pack_id, self::PACK_IDS, TRUE)) {
+      return $tag;
+    }
+
+    $updated = $tag_name;
+    foreach ($matches as $match) {
+      if (strtolower($match[2]) === 'data-icon-settings' && isset($match[4])) {
+        $updated .= $match[1] . $match[2] . $match[3] . self::updateSettings($match[4]);
       }
-      return preg_replace_callback(
-        self::SETTINGS_ATTRIBUTE_PATTERN,
-        static fn ($attribute) => $attribute[1] . self::updateSettings($attribute[2]),
-        $tag[0],
-      ) ?? $tag[0];
-    }, $html) ?? $html;
+      else {
+        $updated .= $match[0];
+      }
+    }
+    // Add back what comes after the last attribute, such as >.
+    $read_length = array_sum(array_map('strlen', array_column($matches, 0)));
+    return $updated . substr($attributes, $read_length);
   }
 
   /**
    * Renames the old color name in one data-icon-settings value.
    *
    * @param string $value
-   *   The attribute value, with its quotes. The JSON quotes inside it are "
+   *   The attribute value, with its quotes if it has any. The JSON quotes
+   *   inside it are "
    *   when the attribute is in single quotes, and &quot; (or a numeric
    *   character reference, such as &#34;) when it's in double quotes.
    *

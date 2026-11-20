@@ -86,6 +86,22 @@ class AZIconColorNamesTest extends UnitTestCase {
         '<drupal-icon data-icon-id="site_pack:star" data-icon-settings=\'{"color":"sky"}\'></drupal-icon>',
         '<drupal-icon data-icon-id="site_pack:star" data-icon-settings=\'{"color":"sky"}\'></drupal-icon>',
       ],
+      'icon ID text inside another attribute' => [
+        '<drupal-icon aria-label=\'Example data-icon-id="material_symbols:home"\' data-icon-id="site_pack:star" data-icon-settings=\'{"color":"sky"}\'></drupal-icon>',
+        '<drupal-icon aria-label=\'Example data-icon-id="material_symbols:home"\' data-icon-id="site_pack:star" data-icon-settings=\'{"color":"sky"}\'></drupal-icon>',
+      ],
+      'settings text inside another attribute' => [
+        '<drupal-icon aria-label=\'Example data-icon-settings="{&quot;color&quot;:&quot;sky&quot;}"\' data-icon-id="material_symbols:home" data-icon-settings="{&quot;color&quot;:&quot;sky&quot;}"></drupal-icon>',
+        '<drupal-icon aria-label=\'Example data-icon-settings="{&quot;color&quot;:&quot;sky&quot;}"\' data-icon-id="material_symbols:home" data-icon-settings="{&quot;color&quot;:&quot;rain&quot;}"></drupal-icon>',
+      ],
+      'unquoted values and a self-closing tag' => [
+        '<drupal-icon data-icon-id=material_symbols:home data-icon-settings={&quot;color&quot;:&quot;sky&quot;} />',
+        '<drupal-icon data-icon-id=material_symbols:home data-icon-settings={&quot;color&quot;:&quot;rain&quot;} />',
+      ],
+      'attribute names in capitals' => [
+        '<DRUPAL-ICON DATA-ICON-ID="material_symbols:home" DATA-ICON-SETTINGS=\'{"color":"sky"}\'></DRUPAL-ICON>',
+        '<DRUPAL-ICON DATA-ICON-ID="material_symbols:home" DATA-ICON-SETTINGS=\'{"color":"rain"}\'></DRUPAL-ICON>',
+      ],
       'icon with no icon ID' => [
         '<drupal-icon data-icon-settings=\'{"color":"sky"}\'></drupal-icon>',
         '<drupal-icon data-icon-settings=\'{"color":"sky"}\'></drupal-icon>',
