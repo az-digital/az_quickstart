@@ -1,4 +1,4 @@
-name: Build & deploy review site
+name: Build & deploy demo site
 on:
   push:
     branches:
@@ -10,34 +10,12 @@ permissions:
   contents: read
 
 jobs:
-  watch-workflow:
-    name: Watch workflow logs
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - name: Setup PHP
-        uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
-        with:
-          php-version: '8.5'
-
-      - name: Install Terminus and authenticate Terminus
-        uses: pantheon-systems/terminus-github-actions@26fc7c754c80fd1c9fe2d6d3ae77528a15033b6f # v1.2.13
-        with:
-          pantheon-machine-token: ${{ secrets.TERMINUS_TOKEN }}
-
-      - name: Watch workflow logs
-        env:
-          DEMO_SITE_NAME: ${{ secrets.DEMO_SITE_NAME }}
-        run: |
-          START_TIME="$(date '+%s')"
-          while [ -z "$(terminus workflow:list "${DEMO_SITE_NAME}" --format=json | jq --arg start_time "${START_TIME}" '.[] | select((.started_at|tostring > $start_time) and (.workflow == "Sync code on \"dev\"") and (.finished_at != null))')" ]; do
-            echo 'watching workflows...'
-            sleep 2
-          done
-
   update-code:
-    name: Update review site code
+    name: Update demo site code
     runs-on: ubuntu-latest
+    timeout-minutes: 25
+    outputs:
+      superseded: ${{ steps.superseded.outputs.superseded }}
     steps:
       - name: Setup PHP
         uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
@@ -61,6 +39,9 @@ jobs:
           DEMO_SITE_NAME: ${{ secrets.DEMO_SITE_NAME }}
           COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
         run: |
+          # The concurrency group guarantees no earlier run is still syncing,
+          # so any code sync created after this point belongs to this run.
+          echo "SYNC_START_TIME=$(date '+%s')" >> "${GITHUB_ENV}"
           terminus -y -n connection:set "${DEMO_SITE_NAME}.dev" git
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git config --global user.name "${GITHUB_ACTOR}"
@@ -73,10 +54,41 @@ jobs:
           git commit --allow-empty -m "${COMMIT_MESSAGE}"
           git push
 
+      # Runs in the same job as the push so that a failed push fails the run
+      # immediately instead of leaving a watcher polling for a sync that will
+      # never start while it holds the concurrency group.
+      #
+      # --max=0 turns off the command's own timeout, which would otherwise
+      # give up with a warning and a zero exit code. The step timeout fails
+      # the job instead, and a failed sync makes the command exit non-zero.
+      - name: Wait for Pantheon code sync
+        timeout-minutes: 15
+        env:
+          DEMO_SITE_NAME: ${{ secrets.DEMO_SITE_NAME }}
+        run: |
+          terminus -n workflow:wait "${DEMO_SITE_NAME}.dev" --start="${SYNC_START_TIME}" --max=0
+
+      # Every run deploys dev-main, so when a newer commit has landed on the
+      # branch the run queued for it will reinstall the site anyway.
+      - name: Check for newer commits
+        id: superseded
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          LATEST_SHA="$(gh api "repos/${GITHUB_REPOSITORY}/commits/${GITHUB_REF_NAME}" --jq '.sha' || true)"
+          if [ -n "${LATEST_SHA}" ] && [ "${LATEST_SHA}" != "${GITHUB_SHA}" ]; then
+            echo "Skipping install: ${GITHUB_REF_NAME} is now at ${LATEST_SHA}."
+            echo "superseded=true" >> "${GITHUB_OUTPUT}"
+          else
+            echo "superseded=false" >> "${GITHUB_OUTPUT}"
+          fi
+
   install-azqs:
     name: Install AZQS
-    needs: watch-workflow
+    needs: update-code
+    if: needs.update-code.outputs.superseded != 'true'
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - name: Setup PHP
         uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
