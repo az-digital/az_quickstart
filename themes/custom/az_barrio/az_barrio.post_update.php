@@ -290,15 +290,15 @@ function az_barrio_post_update_enable_az_navbar(&$sandbox = NULL) {
 }
 
 /**
- * Enables the blue Arizona Header.
+ * Formerly enabled the blue Arizona Header.
+ * 
+ * Intentionally left as a no-op rather than deleted. The az_header_blue theme
+ * setting no longer exists, so this update must not run its former body.
+ * 
+ * @see az_barrio_post_update_delete_az_header_blue_setting()
  */
 function az_barrio_post_update_enable_az_header_blue(&$sandbox = NULL) {
-  $config_factory = \Drupal::configFactory();
-  $theme_settings = $config_factory->getEditable('az_barrio.settings');
-  if ($theme_settings->get('az_header_blue') !== TRUE) {
-    $theme_settings->set('az_header_blue', TRUE)->save();
-    \Drupal::logger('az_quickstart')->notice('Enabled the blue Arizona Header during post update.');
-  }
+  // Intentionally empty. See the documentation above.
 }
 
 /**
@@ -320,6 +320,28 @@ function az_barrio_post_update_delete_az_navbar_setting(&$sandbox = NULL) {
     }
     else {
       \Drupal::logger('az_quickstart')->notice('Deleted removed az_navbar configuration key during post update.');
+    }
+  }
+}
+
+/**
+ * Deletes the removed az_header_blue setting.
+ */
+function az_barrio_post_update_delete_az_header_blue_setting(&$sandbox = NULL) {
+  $config_factory = \Drupal::configFactory();
+  $theme_settings = $config_factory->getEditable('az_barrio.settings');
+  $az_header_blue = $theme_settings->get('az_header_blue');
+
+  // Delete the az_header_blue key if it exists. The blue Arizona Header setting is no longer used.
+  if ($az_header_blue !== NULL) {
+    $theme_settings
+      ->clear('az_header_blue')
+      ->save();
+    if ($az_header_blue !== TRUE) {
+      \Drupal::logger('az_quickstart')->warning('The blue Arizona Header theme setting was disabled on this site. This theme setting has been removed and the blue Arizona Header is now required.');
+    }
+    else {
+      \Drupal::logger('az_quickstart')->notice('Deleted removed az_header_blue configuration key during post update.');
     }
   }
 }
