@@ -217,7 +217,7 @@
       "bottom_spacing" : "mb-0"
     },
     {
-      "id": "421",
+      "id": 421,
       "title" : "Grid View",
       "target_id" : "az_events",
       "display_id" : "az_grid",

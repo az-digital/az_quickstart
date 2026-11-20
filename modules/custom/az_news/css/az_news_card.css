@@ -37,8 +37,8 @@
 /* Image styles */
 
 .az-news-img, .az-news-img img {
-  border-top-right-radius: 0px !important;
-  border-bottom-right-radius: 0px !important;
+  /* border-top-right-radius: 0px !important;
+  border-bottom-right-radius: 0px !important; */
   object-fit: cover;
   overflow: hidden;
 }

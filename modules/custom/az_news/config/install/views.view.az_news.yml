@@ -1117,7 +1117,7 @@ display:
   more_news_view:
     id: more_news_view
     display_title: 'More News View'
-    display_plugin: page
+    display_plugin: block
     position: 2
     display_options:
       style:
