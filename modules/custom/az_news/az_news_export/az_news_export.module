@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Provides views data for az_news_export.module.
+ * Contains az_news_export.module.
  */
 
 use Drupal\Core\Entity\Sql\SqlEntityStorageInterface;
