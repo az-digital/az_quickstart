@@ -98,19 +98,27 @@ class AZIconsColorTest extends KernelTestBase {
     $form = [
       'icon' => [
         '#default_settings' => [
+          'arizona_icons' => ['color' => 'tinta', 'size' => 24],
           'material_symbols' => ['color' => 'rain', 'size' => 24],
         ],
       ],
     ];
     az_icons_form_ui_icons_ckeditor5_icon_dialog_alter($form, new FormState(), 'ui_icons_ckeditor5_icon_dialog');
-    // The Color select has no "rain" value. "sky" is the value labeled Rain.
+    // The Color select has no "tinta" or "rain" value. "midnight" is the value
+    // labeled Tinta, and "sky" is the value labeled Rain.
+    $this->assertSame('midnight', $form['icon']['#default_settings']['arizona_icons']['color']);
     $this->assertSame('sky', $form['icon']['#default_settings']['material_symbols']['color']);
+    $this->assertSame(24, $form['icon']['#default_settings']['arizona_icons']['size']);
     $this->assertSame(24, $form['icon']['#default_settings']['material_symbols']['size']);
 
     // A value that is already in the select stays as it is.
-    $form['icon']['#default_settings'] = ['arizona_icons' => ['color' => 'midnight']];
+    $form['icon']['#default_settings'] = [
+      'arizona_icons' => ['color' => 'midnight'],
+      'material_symbols' => ['color' => 'sky'],
+    ];
     az_icons_form_ui_icons_ckeditor5_icon_dialog_alter($form, new FormState(), 'ui_icons_ckeditor5_icon_dialog');
     $this->assertSame('midnight', $form['icon']['#default_settings']['arizona_icons']['color']);
+    $this->assertSame('sky', $form['icon']['#default_settings']['material_symbols']['color']);
   }
 
   /**
