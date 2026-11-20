@@ -25,19 +25,20 @@
   margin-bottom: 0;
 }
 
-.node--view-mode-az-card-alternate, .node--view-mode-az-card-alternate .node__content {
+.node--type-az-event.node--view-mode-az-card-alternate,
+.node--type-az-event.node--view-mode-az-card-alternate .node__content {
   height: 100%;
 }
 
-.node--view-mode-az-card-alternate .node__content {
+.node--type-az-event.node--view-mode-az-card-alternate .node__content {
   margin-top: 0;
 }
 
 /* No image: the date badge is the card's first child. */
-.node--view-mode-az-card-alternate .az-start-date:first-child {
+.node--type-az-event.node--view-mode-az-card-alternate .az-start-date:first-child {
   margin-top: 1.5rem;
 }
 
-.views-view-grid > :has(> .node--view-mode-az-card-alternate) {
+.views-view-grid > :has(> .node--type-az-event.node--view-mode-az-card-alternate) {
   margin-bottom: 2rem;
 }
