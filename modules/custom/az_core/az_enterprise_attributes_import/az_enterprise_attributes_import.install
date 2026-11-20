@@ -17,7 +17,13 @@ function az_enterprise_attributes_import_install() {
   // Run the migrations that are tagged as imports for enterprise attributes.
   $migrations = \Drupal::service('plugin.manager.migration')->createInstancesByTag($tag);
   foreach ($migrations as $migration) {
-    $executable = new MigrateExecutable($migration, new MigrateMessage());
+    $executable = new MigrateExecutable(
+      $migration,
+      new MigrateMessage(),
+      \Drupal::service('keyvalue'),
+      \Drupal::service('datetime.time'),
+      \Drupal::service('string_translation')
+    );
     $executable->import();
   }
 
