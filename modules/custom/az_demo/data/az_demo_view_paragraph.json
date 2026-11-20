@@ -178,6 +178,46 @@
     },
     {
       "id" : 416,
+      "title" : "Paged Row View",
+      "target_id" : "az_news",
+      "display_id" : "az_paged_row",
+      "data" : "",
+      "bottom_spacing" : "mb-0"
+    },
+    {
+      "id" : 417,
+      "title" : "Small Row View",
+      "target_id" : "az_news",
+      "display_id" : "az_small_row",
+      "data" : "",
+      "bottom_spacing" : "mb-0"
+    },
+    {
+      "id" : 418,
+      "title" : "Teaser Grid Page",
+      "target_id" : "az_news",
+      "display_id" : "az_teaser_grid",
+      "data" : "",
+      "bottom_spacing" : "mb-0"
+    },
+    {
+      "id" : 419,
+      "title" : "Sidebar Row View",
+      "target_id" : "az_news",
+      "display_id" : "az_sidebar",
+      "data" : "",
+      "bottom_spacing" : "mb-0"
+    },
+    {
+      "id" : 420,
+      "title" : "More News View",
+      "target_id" : "az_news",
+      "display_id" : "az_more_news",
+      "data" : "",
+      "bottom_spacing" : "mb-0"
+    },
+    {
+      "id": 421,
       "title" : "Grid View",
       "target_id" : "az_events",
       "display_id" : "az_grid",
@@ -185,7 +225,7 @@
       "bottom_spacing" : "mb-4"
     },
     {
-      "id" : 417,
+      "id" : 422,
       "title" : "Grid View with Images",
       "target_id" : "az_events",
       "display_id" : "az_grid_images",
@@ -193,7 +233,7 @@
       "bottom_spacing" : "mb-4"
     },
     {
-      "id" : 418,
+      "id" : 423,
       "title" : "Past Grid View with Images",
       "target_id" : "az_events",
       "display_id" : "az_past_grid_images",
@@ -201,7 +241,7 @@
       "bottom_spacing" : "mb-4"
     },
     {
-      "id" : 419,
+      "id" : 424,
       "title" : "Past Row View",
       "target_id" : "az_events",
       "display_id" : "az_past_row",

@@ -1,0 +1,27 @@
+
+/* News View wrapper */
+
+.az-news .media-list-row .node__content {
+  height: 100%;
+}
+
+.az-news .node--view-mode-az-card-alternate {
+  width: 100%;
+}
+
+/* Content styles */
+
+.az-news-tags {
+  display: flex;
+  flex-direction: row;
+}
+
+.az-news-tags > div {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.az-news-tags .field__item {
+  padding-right: 1rem !important;
+}

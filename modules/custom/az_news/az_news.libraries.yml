@@ -1,0 +1,6 @@
+az_news_card:
+  css:
+    theme:
+      css/az_news_card.css: {}
+  dependencies:
+    - az_barrio/arizona-bootstrap-css
