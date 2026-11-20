@@ -27,15 +27,14 @@ function az_mail_mail_alter(&$message) {
     $tag['value'] = $_ENV['PANTHEON_ENVIRONMENT'];
     array_push($ses_message_tags, $tag);
   }
-  if ($smtp_host = \Drupal::config('smtp.settings')->get('smtp_host', FALSE)) {
+  if ($smtp_host = \Drupal::config('smtp.settings')->get('smtp_host')) {
     if (preg_match('/email-smtp\..*\.amazonaws.com/', $smtp_host)) {
-      if ($configuration_set = \Drupal::config('az_mail.settings')->get('ses_configuration_set', FALSE)) {
+      if ($configuration_set = \Drupal::config('az_mail.settings')->get('ses_configuration_set')) {
         $message['headers']['X-SES-CONFIGURATION-SET'] = $configuration_set;
       }
       if (count($ses_message_tags) > 0) {
         $message['headers']['X-SES-MESSAGE-TAGS'] = implode(
           ',',
-          //phpcs:ignore Security.BadFunctions.CallbackFunctions.WarnCallbackFunctions
           array_map(
             function ($tag) {
               return $tag['key'] . '=' . $tag['value'];

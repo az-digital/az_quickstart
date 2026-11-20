@@ -1,0 +1,73 @@
+{#
+/**
+ * @file
+ * Reusable carousel component for photo galleries.
+ *
+ * Available variables:
+ * - gallery_display: Can be grid, slider, or slider_full.
+ * - photos: Array of photo entities
+ * - gallery: Unique ID for the carousel element
+ * - style_name: Image style to use for the carousel images
+ */
+#}
+
+{% set gallery_class = {
+  'grid': 'grid',
+  'slider': 'slider-crop',
+  'slider_full': 'slider-full'
+} %}
+
+<div id="{{ gallery }}" class="carousel slide az-gallery az-gallery-{{ gallery_class[gallery_display] }}">
+
+  {# Navigation control - Previous #}
+  <button class="carousel-control-prev" type="button" data-bs-target="#{{ gallery }}" data-bs-slide="prev">
+    <span class="material-symbols-rounded display-5" aria-hidden="true">arrow_back_ios_new</span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+
+  <div class="carousel-inner h-100{% if gallery_display == 'slider' %} rounded{% endif %}">
+    {% for key, item in photos %}
+      {% if key|first != '#' %}
+        {% set carousel_image = {
+          '#theme': 'image_style',
+          '#style_name': style_name,
+          '#uri': item.entity.field_media_az_image.0.entity.uri.value,
+          '#alt': item.entity.field_media_az_image.alt,
+          '#attributes': { class: ['h-100', 'w-100', gallery_display == 'grid' ? 'object-fit-contain rounded-0' : (gallery_display == 'slider_full' ? 'object-fit-contain' : '')] },
+        } %}
+        <div class="carousel-item h-100{% if loop.first %} active{% endif %}">
+          <div class="d-flex flex-column h-100 justify-content-center">
+            <div class="carousel-image az-gallery-image">{{ carousel_image }}</div>
+            {% set caption = item.entity.field_az_caption.value %}
+            {% set credit = item.entity.field_az_credit.value %}
+            {% if caption or credit %}
+              <div class="carousel-caption az-gallery-caption">
+                {% if caption %}
+                  <p class="mb-0">{{ caption }}</p>
+                {% endif %}
+                {% if credit %}
+                  <cite class="small">{{ credit }}</cite>
+                {% endif %}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  {# Navigation control - Next #}
+  <button class="carousel-control-next" type="button" data-bs-target="#{{ gallery }}" data-bs-slide="next">
+    <span class="material-symbols-rounded display-5" aria-hidden="true">arrow_forward_ios</span>
+    <span class="visually-hidden">Next</span>
+  </button>
+
+  {# Carousel indicators #}
+  <div class="carousel-indicators">
+    {% for key, item in photos %}
+      {% if key|first != '#' %}
+        <button type="button" data-bs-target="#{{ gallery }}" data-bs-slide-to="{{ loop.index0 }}" {% if loop.first %}class="active" aria-current="true"{% endif %} aria-label="Slide {{ loop.index }}"></button>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>

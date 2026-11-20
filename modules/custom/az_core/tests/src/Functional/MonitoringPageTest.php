@@ -3,14 +3,15 @@
 namespace Drupal\Tests\az_core\Functional;
 
 use Drupal\Core\Url;
-use Drupal\Tests\BrowserTestBase;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Test to ensure that monitoring page works correctly.
- *
- * @group az_core
  */
-class MonitoringPageTest extends BrowserTestBase {
+#[Group('az_core')]
+#[RunTestsInSeparateProcesses]
+class MonitoringPageTest extends QuickstartFunctionalTestBase {
 
   /**
    * The profile to install as a basis for testing.
@@ -55,7 +56,7 @@ class MonitoringPageTest extends BrowserTestBase {
       'monitoring_page_enabled' => TRUE,
       'monitoring_page_path' => 'monitoring-page',
     ];
-    $this->submitForm($edit, t('Save configuration'), 'az-core-settings');
+    $this->submitForm($edit, 'Save configuration', 'az-core-settings');
 
     // Clear caches.
     drupal_flush_all_caches();

@@ -2,12 +2,18 @@
 
 namespace Drupal\az_migration\Plugin\migrate\process;
 
+use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
 
 /**
  * Process plugin for converting uaqs_jumbotron paragraphs to az_text.
+ *
+ * @deprecated in az_quickstart:3.5.0 and is removed from az_quickstart:4.0.0.
+ * There is no replacement.
+ *
+ * @see https://www.drupal.org/node/3533564
  *
  * NOTE: This plugin is only designed to be used with uaqs_jumbotron source
  * paragraphs and is not generically reusable for other use cases.
@@ -36,11 +42,8 @@ use Drupal\migrate\Row;
  *     plugin: default_value
  *     default_value: az_standard
  * @endcode
- *
- * @MigrateProcessPlugin(
- *   id = "paragraphs_jumbotron_field_merge"
- * )
  */
+#[MigrateProcess('paragraphs_jumbotron_field_merge')]
 class ParagraphsJumbotronFieldMerge extends ProcessPluginBase {
 
   /**

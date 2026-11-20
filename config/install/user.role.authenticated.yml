@@ -3,7 +3,7 @@ status: true
 dependencies: {  }
 id: authenticated
 label: 'Authenticated user'
-weight: 1
+weight: -9
 is_admin: false
 permissions:
   - 'access comments'
@@ -17,6 +17,7 @@ permissions:
   - 'bypass honeypot protection'
   - 'post comments'
   - 'search content'
+  - 'skip CAPTCHA'
   - 'skip antibot'
   - 'skip comment approval'
-  - 'use exclude node title'
+  - 'view media'

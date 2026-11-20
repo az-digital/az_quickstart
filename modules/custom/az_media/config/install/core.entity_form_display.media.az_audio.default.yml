@@ -50,3 +50,4 @@ content:
     third_party_settings: {  }
 hidden:
   name: true
+  replace_file: true

@@ -2,8 +2,8 @@
 
 namespace Drupal\az_mail\Commands;
 
-use Drush\Commands\DrushCommands;
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drush\Commands\DrushCommands;
 
 /**
  * Drush commandfile for az_mail.
@@ -11,20 +11,20 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 class AZMailCommands extends DrushCommands {
 
   /**
-   * The config for the smtp module.
+   * The configFactory service.
    *
    * @var \Drupal\Core\Config\ConfigFactoryInterface
    */
-  protected $config;
+  protected $configFactory;
 
   /**
    * Constructs a AZMailCommands object.
    *
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $config
-   *   The factory for configuration objects.
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   *   The configFactory service.
    */
-  public function __construct(ConfigFactoryInterface $config) {
-    $this->config = $config->getEditable('smtp.settings');
+  public function __construct(ConfigFactoryInterface $config_factory) {
+    $this->configFactory = $config_factory;
   }
 
   /**
@@ -43,17 +43,17 @@ class AZMailCommands extends DrushCommands {
    * Converts a regular AWS IAM secret key to an SMTP password for SES.
    */
   public function setSmtpPassword($region, $secret) {
-    $smtp_password = $this->sesHash($secret, $region);
-    $this->config->set('smtp_password', $smtp_password);
-    $this->config->save();
+    $smtpConfig = $this->configFactory->getEditable('smtp.settings');
+    $smtpPassword = $this->sesHash($secret, $region);
+    $smtpConfig->set('smtp_password', $smtpPassword);
+    $smtpConfig->save();
   }
 
   /**
    * Helper function for az_mail_ses_hash.
    */
   private function sesSign($key, $msg) {
-    //phpcs:ignore Security.BadFunctions.CryptoFunctions.WarnCryptoFunc
-    return hash_hmac('sha256', utf8_encode($msg), $key, TRUE);
+    return hash_hmac('sha256', mb_convert_encoding($msg, 'UTF-8', mb_list_encodings()), $key, TRUE);
   }
 
   /**
@@ -68,15 +68,14 @@ class AZMailCommands extends DrushCommands {
     $terminal = "aws4_request";
     $version = 0x04;
 
-    $signature = $this->sesSign(utf8_encode("AWS4" . $secret), $date);
+    $signature = $this->sesSign(mb_convert_encoding("AWS4" . $secret, 'UTF-8', mb_list_encodings()), $date);
     $signature = $this->sesSign($signature, $region);
     $signature = $this->sesSign($signature, $service);
     $signature = $this->sesSign($signature, $terminal);
     $signature = $this->sesSign($signature, $message);
     $signature_and_version = pack("C*", $version) . $signature;
-    //phpcs:ignore Security.BadFunctions.CryptoFunctions.WarnCryptoFunc
     $smtp_password = base64_encode($signature_and_version);
-    return utf8_decode($smtp_password);
+    return mb_convert_encoding($smtp_password, 'ISO-8859-1', 'UTF-8');
   }
 
 }

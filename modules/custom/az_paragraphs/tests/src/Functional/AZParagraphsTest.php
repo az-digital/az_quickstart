@@ -2,38 +2,34 @@
 
 namespace Drupal\Tests\az_paragraphs\Functional;
 
-use Drupal\Tests\BrowserTestBase;
+use Drupal\Tests\az_core\Functional\QuickstartFunctionalTestBase;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Run tests of paragraph bundles.
- *
- * @ingroup az_paragraphs
- *
- * @group az_paragraphs
  */
-class AZParagraphsTest extends BrowserTestBase {
+#[Group('az_paragraphs')]
+#[RunTestsInSeparateProcesses]
+class AZParagraphsTest extends QuickstartFunctionalTestBase {
 
   /**
-   * The profile to install as a basis for testing.
-   *
-   * @var string
+   * {@inheritdoc}
    */
   protected $profile = 'az_quickstart';
 
   /**
-   * @var bool
+   * {@inheritdoc}
    */
   protected $strictConfigSchema = FALSE;
 
   /**
-   * @var string
+   * {@inheritdoc}
    */
   protected $defaultTheme = 'az_barrio';
 
   /**
-   * Modules to enable.
-   *
-   * @var array
+   * {@inheritdoc}
    */
   protected static $modules = [
     'az_paragraphs',
@@ -60,7 +56,7 @@ class AZParagraphsTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     // Set up our initial permissions.

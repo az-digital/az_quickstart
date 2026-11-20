@@ -1,0 +1,29 @@
+<?php
+
+/**
+ * @file
+ * Contains az_paragraphs_link_group.module.
+ */
+
+/**
+ * Implements hook_theme_registry_alter().
+ */
+function az_paragraphs_link_group_theme_registry_alter(&$theme_registry) {
+  $module_path = \Drupal::service('extension.list.module')->getPath('az_paragraphs_link_group');
+  // Find all .html.twig files in this module's folder recursively.
+  $template_file_objects = drupal_find_theme_templates($theme_registry, '.html.twig', $module_path);
+  // Iterate through all found template file objects.
+  foreach ($template_file_objects as $key => $template_file_object) {
+    // If the template has not already been overridden by a theme.
+    if (!isset($theme_registry[$key]['theme path']) || !preg_match('#/themes/#', $theme_registry[$key]['theme path'])) {
+      // Copy default paragraph registry entry for paragraph entries.
+      if (strpos($key, 'paragraph__') === 0) {
+        $theme_registry[$key] = $theme_registry['paragraph'];
+      }
+      // Alter the theme path and template elements.
+      $theme_registry[$key]['theme path'] = $module_path;
+      $theme_registry[$key] = array_merge($theme_registry[$key], $template_file_object);
+      $theme_registry[$key]['type'] = 'module';
+    }
+  }
+}

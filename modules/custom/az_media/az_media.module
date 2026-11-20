@@ -5,25 +5,27 @@
  * Contains az_media.module.
  */
 
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Entity\EntityFormInterface;
 use Drupal\Core\Entity\EntityInterface;
-use Drupal\editor\Entity\Editor;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Logger\RfcLogLevel;
 use Drupal\responsive_image\Entity\ResponsiveImageStyle;
+use Drupal\responsive_image\ResponsiveImageBuilder;
 
 /**
- * Implements hook_ckeditor_css_alter().
+ * Implements hook_library_info_alter().
  */
-function az_media_ckeditor_css_alter(array &$css, Editor $editor) {
-  $css[] = \Drupal::service('extension.list.module')->getPath('az_media') . '/css/az-media-edit.css';
+function az_media_library_info_alter(array &$libraries, $extension) {
+  if ($extension === 'ckeditor5' && isset($libraries['internal.drupal.ckeditor5.media'])) {
+    $libraries['internal.drupal.ckeditor5.media']['dependencies'][] = 'az_media/az_media_edit';
+  }
 }
 
 /**
  * Implements hook_form_alter().
  */
 function az_media_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  /** @var Drupal\Core\Entity\FieldableEntityInterface $entity */
+  /** @var \Drupal\Core\Entity\FieldableEntityInterface $formObject */
   $formObject = $form_state->getFormObject();
   if ($formObject instanceof EntityFormInterface) {
     $entity = $formObject->getEntity();
@@ -65,11 +67,11 @@ function template_preprocess_az_responsive_background_image(array &$variables) {
   // If a responsive image style is not selected, log the error and stop
   // execution.
   if (!$responsive_image_style) {
-    $variables = [];
     \Drupal::logger('az_media')
       ->log(RfcLogLevel::ERROR, 'Failed to load responsive image style: “@style“ while displaying responsive image.', [
         '@style' => $variables['responsive_image_style_id'],
       ]);
+    $variables = [];
     return;
   }
 
@@ -89,23 +91,23 @@ function template_preprocess_az_responsive_background_image(array &$variables) {
   foreach ($responsive_image_style
     ->getKeyedImageStyleMappings() as $breakpoint_id => $multipliers) {
     if (isset($breakpoints[$breakpoint_id])) {
-      $variables['sources'][] = _responsive_image_build_source_attributes($variables, $breakpoints[$breakpoint_id], $multipliers);
+      $variables['sources'][] = \Drupal::service(ResponsiveImageBuilder::class)->buildSourceAttributes($variables, $breakpoints[$breakpoint_id], $multipliers);
     }
   }
 
-  $variables['fallback_image'] = _responsive_image_image_style_url($responsive_image_style
+  $variables['fallback_image'] = \Drupal::service(ResponsiveImageBuilder::class)->getImageStyleUrl($responsive_image_style
     ->getFallbackImageStyle(), $variables['uri']);
 
   // Split each source into multiple rules.
-  foreach (array_reverse($variables['sources']) as $source_i => $source) {
+  foreach (array_reverse($variables['sources']) as $source) {
     $attr = $source->toArray();
 
     $srcset = explode(', ', $attr['srcset']);
 
-    foreach ($srcset as $src_i => $src) {
-      list($src, $res) = explode(' ', $src);
+    foreach ($srcset as $src) {
+      [$src, $res] = explode(' ', $src);
 
-      $media = isset($attr['media']) ? $attr['media'] : '';
+      $media = $attr['media'] ?? '';
 
       // Add "retina" to media query if this is a 2x image.
       if ($res && $res === '2x' && !empty($media)) {
@@ -123,6 +125,25 @@ function template_preprocess_az_responsive_background_image(array &$variables) {
       ];
 
     }
+  }
+}
+
+/**
+ * Implements hook_field_widget_single_element_WIDGET_TYPE_form_alter() for image_widget_crop.
+ *
+ * Modification for image_widget_crop widgets to show usage warning.
+ */
+function az_media_field_widget_single_element_image_widget_crop_form_alter(array &$element, FormStateInterface $form_state, array $context) {
+  // Make modifications only to managed files that are part of az_media fields.
+  $field = $element['#field_name'] ?? NULL;
+  if ($field === 'field_media_az_image') {
+    $element['#pre_render'] = [
+      ['Drupal\az_media\AZMediaMultipleUsagesHelper', 'warnMultipleUsages'],
+      // @todo determine why this needs to be added.
+      // If this is not added, the default ManagedFile callback does not run.
+      // Perhaps our pre_render needs to be added in a later hook.
+      ['Drupal\file\Element\ManagedFile', 'preRenderManagedFile'],
+    ];
   }
 }
 
@@ -157,6 +178,37 @@ function az_media_theme() {
  */
 function az_media_entity_presave(EntityInterface $entity) {
   if ($entity->getEntityTypeId() === 'media' && $entity->bundle() === 'az_remote_video' && isset($entity->field_media_az_image->entity)) {
+    // @phpstan-ignore-next-line
     $entity->thumbnail->target_id = $entity->field_media_az_image->target_id;
+  }
+}
+
+/**
+ * Implements hook_preprocess_field().
+ */
+function az_media_preprocess_field(&$variables) {
+  // Target the oembed video field specifically.
+  if ($variables['field_name'] === 'field_media_az_oembed_video') {
+    // Add rounded-2 class to iframe elements.
+    foreach ($variables['items'] as &$item) {
+      if (isset($item['content']['#attributes'])) {
+        $item['content']['#attributes']['class'][] = 'rounded-2';
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter() for media_form.
+ */
+function az_media_form_media_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // Hide focal point fields since they are set by JS.
+  if (isset($form['field_focal_point_x'])) {
+    $form['field_focal_point_x']['#attributes']['class'][] = 'visually-hidden';
+    $form['field_focal_point_x']['widget'][0]['value']['#attributes']['class'][] = 'js-focal-point-x-value';
+  }
+  if (isset($form['field_focal_point_y'])) {
+    $form['field_focal_point_y']['#attributes']['class'][] = 'visually-hidden';
+    $form['field_focal_point_y']['widget'][0]['value']['#attributes']['class'][] = 'js-focal-point-y-value';
   }
 }

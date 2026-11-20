@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies: {  }
+id: node__az_person
+label: 'Content: Person'
+tags:
+  og_type: profile
+  profile_first_name: '[node:field_az_fname]'
+  profile_last_name: '[node:field_az_lname]'

@@ -1,0 +1,34 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.az_custom_menu_block
+    - field.field.block_content.az_custom_menu_block.field_az_block
+  module:
+    - block_field
+  enforced:
+    module:
+      - az_custom_menu_block
+id: block_content.az_custom_menu_block.default
+targetEntityType: block_content
+bundle: az_custom_menu_block
+mode: default
+content:
+  field_az_block:
+    type: block_field_default
+    weight: 1
+    region: content
+    settings:
+      plugin_id: ''
+      settings: {  }
+      configuration_form: full
+    third_party_settings: {  }
+  info:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden: {  }

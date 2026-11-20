@@ -1,7 +1,8 @@
-#!/bin/sh
+#!/bin/bash
 
 ## Description: Provide phpstan tooling to check for code quality and deprecated code.
 ## Usage: phpstan [flags] [args]
 ## Example: "ddev phpstan --version"
+## ExecRaw: true
 
-vendor/bin/phpstan --configuration web/profiles/custom/az_quickstart/phpstan.neon web/profiles/custom/az_quickstart $@
+vendor/bin/phpstan analyse --configuration web/profiles/custom/az_quickstart/phpstan.neon "$@"

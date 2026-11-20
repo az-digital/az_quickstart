@@ -1,0 +1,72 @@
+id: az_person_eds_import
+label: Person EDS Integration
+migration_tags:
+  - EDS Integration
+source:
+  plugin: az_ldap
+  # Replace with formalized settings that allow a defined query to be selected for import.
+  queries: []
+  ids:
+    dn:
+      type: string
+
+process:
+  # Intentionally set the defined nid if the person already exists.
+  nid:
+    - 
+      plugin: entity_lookup
+      entity_type: node
+      bundle_key: type
+      bundle: az_person
+      value_key: field_az_netid
+      source: uid
+    - 
+      plugin: skip_on_empty
+      method: process
+  type:
+    plugin: default_value
+    default_value: az_person
+  # Placeholder: add additional fields.
+  field_az_fname: preferredPriorityGivenName
+  field_az_lname: preferredPrioritySn
+  field_az_titles:
+    plugin: az_eds_privacy
+    source: employeeTitle
+    attribute: isMemberOf
+    privacy: 'arizona.edu:services:enterprise:ldap.arizona.edu:title-suppress'
+  field_az_netid: uid
+  field_az_pronouns: pronouns
+  field_az_phones:
+    -
+      plugin: az_phone
+      source: employeePhone
+    -
+      plugin: az_eds_privacy
+      attribute: isMemberOf
+      privacy: 'arizona.edu:services:enterprise:ldap.arizona.edu:phone-suppress'
+    -
+      plugin: az_eds_privacy
+      attribute: studentInfoReleaseCode
+      affiliation: student
+      privacy: 'MAIN PHONE'
+  field_az_email: 
+    -
+      plugin: az_eds_privacy
+      source: mail
+      attribute: isMemberOf
+      privacy: 'arizona.edu:services:enterprise:ldap.arizona.edu:mail-suppress'
+    -
+      plugin: az_eds_privacy
+      attribute: studentInfoReleaseCode
+      affiliation: student
+      privacy: 'CAMPUS EMAIL'
+
+destination:
+  plugin: entity:node
+  bundle: az_person
+
+dependencies:
+  enforced:
+    module:
+      - az_person
+      - az_eds

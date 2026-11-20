@@ -1,0 +1,5 @@
+az_enterprise_attributes_import.settings_tab:
+  route_name: az_enterprise_attributes_import.settings
+  title: 'Enterprise Attributes Import'
+  base_route: az_core.az_settings
+  weight: 2

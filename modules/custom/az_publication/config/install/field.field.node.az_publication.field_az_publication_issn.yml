@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_az_publication_issn
+    - node.type.az_publication
+id: node.az_publication.field_az_publication_issn
+field_name: field_az_publication_issn
+entity_type: node
+bundle: az_publication
+label: 'International Standard Serial Number (ISSN)'
+description: 'An optional International Standard Serial Number, e.g. 1234-5678'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

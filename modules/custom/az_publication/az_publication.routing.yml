@@ -1,0 +1,7 @@
+az_publication.settings:
+  path: '/admin/config/az-quickstart/settings/az-publication'
+  defaults:
+    _form: '\Drupal\az_publication\Form\AzPublicationSettingsForm'
+    _title: 'AZ Publication Settings'
+  requirements:
+    _permission: 'administer quickstart configuration'

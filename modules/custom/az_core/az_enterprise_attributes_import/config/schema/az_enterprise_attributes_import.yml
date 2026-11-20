@@ -1,0 +1,7 @@
+az_enterprise_attributes_import.settings:
+  type: config_object
+  label: 'AZ Quickstart Enterprise Attributes Import settings'
+  mapping:
+    endpoint:
+      type: string
+      label: 'Enterprise Attributes Endpoint'

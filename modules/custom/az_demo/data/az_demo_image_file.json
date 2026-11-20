@@ -10,7 +10,8 @@
     },
     {
       "filename" : "placeduck04.jpg",
-      "alt" : "José An'ersen"
+      "alt" : "José An'ersen",
+      "credit": "Renowned Placeduck Photographer"
     },
     {
       "filename" : "placeduck11.jpg",
@@ -22,19 +23,25 @@
       },
     {
       "filename" : "placeduck07.jpg",
-      "alt" : "Thomas Urquhart"
+      "alt" : "Thomas Urquhart",
+      "credit": "Renowned Placeduck Photographer"
       },
     {
       "filename" : "placeduck06.jpg",
-      "alt" : "Janet Horne"
+      "alt" : "Janet Horne",
+      "credit": "Renowned Placeduck Photographer"
     },
     {
       "filename" : "placeduck08.jpg",
-      "alt" : "Antonio de Espinosa"
+      "alt" : "Antonio de Espinosa",
+      "caption": "Fray Antonio Vazquez de Espinosa was a Spanish friar of the Discalced Carmelites originally from Jerez de la Frontera."
     },
     {
       "filename" : "placeduck02.jpg",
-      "alt" : "Barbara Strozzi"
+      "alt" : "Barbara Strozzi",
+      "caption": "Barbara Strozzi was an Italian Baroque composer and waterfowl call vocalizer.",
+      "title": "Barbara Strozzi",
+      "credit": "Renowned Placeduck Photographer"
     },
     {
       "filename" : "placeduck03.jpg",
@@ -72,6 +79,7 @@
       "title": ""
     },
     {
+      "uuid": "5cec161c-71bc-4d23-824f-a692400ee17a",
       "filename" : "arizona_campus_fireworks.jpg",
       "alt" : "Fireworks over campus",
       "title": ""
@@ -92,9 +100,16 @@
       "title": ""
     },
     {
+      "filename" : "runners_brains_2.jpg",
+      "alt" : "Man running",
+      "title": ""
+    },
+    {
       "filename" : "mans_best_friend.jpeg",
       "alt" : "Cute dog",
-      "title": ""
+      "title": "",
+      "caption": "Research shows that dog owners often experience lower levels of stress, anxiety, and depression compared to those without pets.",
+      "credit": "Photo by Wilma Wildcat"
     },
     {
       "filename" : "connection-647206_1920.jpeg",
@@ -106,7 +121,81 @@
       "filename" : "The_Hay_Wain_by_Hieronymus_Bosch.jpeg",
       "alt" : "The Hay Wain by Hieronymus Bosch",
       "title": ""
+    },
+    {
+      "filename" : "arizona_running.png",
+      "alt" : "Arizona running logo",
+      "title": ""
+    },
+    {
+      "filename" : "canyon_running.jpg",
+      "alt" : "Woman running in a canyon",
+      "title": ""
+    },
+    {
+      "filename" : "earth_solid.jpg",
+      "alt" : "A volcanic crater",
+      "title": ""
+    },
+    {
+      "filename" : "earth_solid_2.jpg",
+      "alt" : "A mountain range with a river of lava",
+      "title": ""
+    },
+    {
+      "filename" : "pumpelly_arizona.jpg",
+      "alt" : "Map of Arizona from 1878",
+      "title": ""
+    },
+    {
+      "filename" : "europe_film.png",
+      "alt" : "Northern European film festival logo",
+      "title": ""
+    },
+    {
+      "filename" : "holsclaw_hall.jpg",
+      "alt" : "Holsclaw Hall",
+      "title": ""
+    },
+    {
+      "filename" : "gmo.jpg",
+      "alt" : "Concept of research on genetic modification of food",
+      "title": ""
+    },
+    {
+      "filename" : "sea-anemone.jpg",
+      "alt" : "A close-up image of a vibrant sea anemone under water. The anemone's long, slender tentacles are colored in varying shades of blue and tipped with yellow, creating a striking contrast. Partially hidden among the tentacles, a clownfish with its characteristic orange and white stripes can be seen, adding a sense of life and movement to the scene. The background is a blur of marine colors, indicating a complex reef environment.",
+      "title" : "Clownfish Peekaboo in a Sea Anemone",
+      "uuid": "6c01643a-9935-4317-874f-5fd0a29fad26"
+    },
+    {
+      "filename" : "navajo_wool_weaving.jpg",
+      "alt" : "Navajo wool weaving",
+      "title": "",
+      "caption": "Axis Radius, 2016, Wool, aniline dyes, vegetal dyes, Lent by James Wezelman and Denise Grusin"
+    },
+    {
+      "filename" : "Health-Sciences-Education-Building-2464x1640.jpg",
+      "alt" : "Alternate text",
+      "title" : "",
+      "caption" : "The innovative treatment, known as Insulix-21, has demonstrated remarkable success in early clinical trials.",
+      "credit" : "Photo by Jacob Chinn, University of Arizona Alumni Association"
+    },
+    {
+      "filename" : "BIO5-Keating-1224x682.jpg",
+      "alt" : "Alternate text",
+      "title" : "",
+      "caption" : "Insulix-21 is a novel therapy that combines cutting-edge stem cell technology with advanced immunomodulation techniques",
+      "credit" : "Courtesy of Wilma Wildcat",
+      "uuid": "aec26a34-72da-4a7c-94e1-8e2793ec67c2"
+    },
+    {
+      "filename" : "1386px-Leonardo_da_Vinci_-_presumed_self-portrait_-_WGA12798.jpg",
+      "alt" : "Self-portrait of Leonardo da Vinci",
+      "title": "Self-portrait of Leonardo da Vinci",
+      "caption": "Leonardo da Vinci was an Italian polymath of the Renaissance whose areas of interest included invention, painting, sculpting, architecture, science, music, mathematics, engineering, literature, anatomy, geology, astronomy, botany, writing, history, and cartography.",
+      "credit": "By Leonardo da Vinci. Image source: Wikipedia, https://commons.wikimedia.org/w/index.php?curid=15497207. Public domain.",
+      "uuid": "5cec161c-71bc-4d23-124f-a692400ee17a"
     }
   ]
 }
-

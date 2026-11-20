@@ -1,0 +1,28 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_az_course_types
+    - node.type.az_course
+    - taxonomy.vocabulary.az_course_types
+id: node.az_course.field_az_course_types
+field_name: field_az_course_types
+entity_type: node
+bundle: az_course
+label: 'Course Types'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      az_course_types: az_course_types
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

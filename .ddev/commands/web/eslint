@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ## Description: Run eslint inside the web container
 ## Usage: eslint [args]

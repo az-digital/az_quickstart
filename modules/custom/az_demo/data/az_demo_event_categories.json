@@ -1,0 +1,96 @@
+{
+  "event_categories": [
+    { "name" : "Event Subjects",
+      "description" : "",
+      "parent_name" : ""
+    },
+    { "name" : "Event Types",
+      "description" : "",
+      "parent_name" : ""
+    },
+    { "name" : "Aerospace Engineering",
+      "description" : "The primary field of engineering concerned with the development of aircraft and spacecraft.",
+      "parent_name" : "Event Subjects"
+    },
+    { "name" : "Astronomy",
+      "description" : "A natural science that studies celestial objects and phenomena.",
+      "parent_name" : "Event Subjects"
+    },
+    { "name" : "Athletics",
+      "description" : "Competitions based on human qualities of stamina, fitness, and skill.",
+      "parent_name" : "Event Subjects"
+    },
+    { "name" : "Concert",
+      "description" : "A live music performance in front of an audience.",
+      "parent_name" : "Event Types"
+    },
+    { "name" : "Course",
+      "description" : "A unit of instruction in one subject, lasting one academic term.",
+      "parent_name" : "Event Types"
+    },
+    { "name" : "Environmental Science",
+      "description" : "An interdisciplinary academic field that integrates physics, biology, and geography to the study of the environment, and the solution of environmental problems.",
+      "parent_name" : "Event Subjects"
+    },
+    { "name" : "Field Trip",
+      "description" : "A trip made by students or research workers to study something at first hand.",
+      "parent_name" : "Event Types"
+    },
+    { "name" : "Film",
+      "description" : "Works of visual art that simulate experiences and otherwise communicate ideas, stories, perceptions, feelings, beauty, or atmosphere through the use of moving images.",
+      "parent_name" : "Event Subjects"
+    },
+    { "name" : "Film Screening",
+      "description" : "The displaying of a motion picture or film.",
+      "parent_name" : "Event Types"
+    },
+    { "name" : "Geology",
+      "description" : "A branch of natural science concerned with Earth and other astronomical objects, the rocks of which it is composed, and the processes by which they change over time.",
+      "parent_name" : "Event Subjects"
+    },
+    { "name" : "History",
+      "description" : "The systematic study and documentation of human activity.",
+      "parent_name" : "Event Subjects"
+    },
+    { "name" : "Lecture",
+      "description" : "An oral presentation intended to present information or teach people about a particular subject.",
+      "parent_name" : "Event Types"
+    },
+    { "name" : "Literature",
+      "description" : "A method of recording, preserving, and transmitting knowledge and entertainment, which can also have a social, psychological, spiritual, or political role.",
+      "parent_name" : "Event Subjects"
+    },
+    { "name" : "Mathematics",
+      "description" : "The abstract science of number, quantity, and space.",
+      "parent_name" : "Event Subjects"
+    },
+    { "name" : "Music",
+      "description" : "Vocal or instrumental sounds (or both) combined in such a way as to produce beauty of form, harmony, and expression of emotion.",
+      "parent_name" : "Event Subjects"
+    },
+    { "name" : "Northern European Comedy Film Festival",
+      "description" : "A comedy film festival featuring directors from northern Europe.",
+      "parent_name" : "Event Subjects"
+    },
+    { "name" : "Physics",
+      "description" : "The natural science that studies matter, its fundamental constituents, its motion and behavior through space and time, and the related entities of energy and force.",
+      "parent_name" : "Event Subjects"
+    },
+    { "name" : "Planetary Engineering",
+      "description" : "The development and application of technology for the purpose of influencing the environment of a planet.",
+      "parent_name" : "Event Subjects"
+    },
+    { "name" : "Security",
+      "description" : "Procedures followed or measures taken to ensure the safety of a state or organization.",
+      "parent_name" : "Event Subjects"
+    },
+    { "name" : "Special Event",
+      "description" : "An individual event or celebrated date, such as a holiday.",
+      "parent_name" : "Event Types"
+    },
+    { "name" : "Training",
+      "description" : "Practice or instruction to improve physical fitness or skill.",
+      "parent_name" : "Event Types"
+    }
+  ]
+}

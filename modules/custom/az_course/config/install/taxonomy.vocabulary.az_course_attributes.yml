@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'Course Attributes'
+vid: az_course_attributes
+description: 'Taxonomy for course attributes.'
+weight: 0
+new_revision: false

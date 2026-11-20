@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - az_publication
+name: Citation
+format: az_citation
+weight: 0
+filters:
+  az_doi_filter:
+    id: az_doi_filter
+    provider: az_publication
+    status: true
+    weight: -49
+    settings: {  }
+  filter_url:
+    id: filter_url
+    provider: filter
+    status: true
+    weight: -50
+    settings:
+      filter_url_length: 72

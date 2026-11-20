@@ -1,0 +1,4 @@
+az_finder_settings:
+  title: 'Configure AZ Finder settings'
+  route_name: 'az_finder.settings'
+  group: 'az_finder'

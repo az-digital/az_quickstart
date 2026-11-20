@@ -3,6 +3,21 @@
 ## Description
 <!--- Describe your changes in detail (include keywords close/fix/resolve) -->
 
+
+### Release notes
+<!--- Delete this line (and the closing comment line) to enable release notes.
+
+If this change requires release notes: provide a summary of changes, how to use this change, and any related links. This content will be pasted in the [release notes](https://github.com/az-digital/az_quickstart/releases). Use markdown format to ensure proper pasting of information. [Release notes example](https://github.com/az-digital/az_quickstart/releases/tag/2.11.0)
+
+Make sure to add the `release notes` label to this PR.
+
+```
+Add markdown of release notes here.
+```
+
+Delete this line to enable release notes.  -->
+
+
 ## Related issues
 <!--- This project only accepts pull requests related to open issues -->
 <!--- If suggesting a new feature or change, please discuss it in an issue first -->
@@ -17,37 +32,44 @@
 <!--- What types of changes does your code introduce? Put an `x` in all the boxes that apply: -->
 
 ### Arizona Quickstart (install profile, custom modules, custom theme)
-- Patch release changes
+- **Patch release changes**
    - [ ] Bug fix
    - [ ] Accessibility, performance, or security improvement
    - [ ] Critical institutional link or brand change
-- Minor release changes
+   - [ ] Adding experimental module
+   - [ ] Update experimental module
+- **Minor release changes**
    - [ ] New feature
    - [ ] Breaking or visual change to existing behavior
+   - [ ] Upgrade experimental module to stable
+   - [ ] Enable existing module by default or database update
    - [ ] Non-critical brand change
    - [ ] New internal API or API improvement with backwards compatibility
    - [ ] Risky or disruptive cleanup to comply with coding standards
    - [ ] High-risk or disruptive change (requires upgrade path, risks regression, etc.)
-- [ ] Other or unknown
+- **Other or unknown**
+   - [ ] Other or unknown
 
 ### Drupal core
-- Patch release changes
+- **Patch release changes**
    - [ ] Security update
    - [ ] Patch level release (non-security bug-fix release)
    - [ ] Patch removal that's no longer necessary
-- Minor release changes
+- **Minor release changes**
    - [ ] Major or minor level update
-- [ ] Other or unknown
+- **Other or unknown**
+   - [ ] Other or unknown
 
 ### Drupal contrib projects
-- Patch release changes
+- **Patch release changes**
    - [ ] Security update
    - [ ] Patch or minor level update
    - [ ] Add new module
    - [ ] Patch removal that's no longer necessary
-- Minor release changes
+- **Minor release changes**
    - [ ] Major level update
-- [ ] Other or unknown
+- **Other or unknown**
+   - [ ] Other or unknown
 
 ## Checklist
 <!--- Go over all the following points, and put an `x` in all the boxes that apply. -->
@@ -58,3 +80,4 @@
 - [ ] I have read the **CONTRIBUTING** document.
 - [ ] I have added tests to cover my changes.
 - [ ] All new and existing tests passed.
+- [ ] My change requires release notes.

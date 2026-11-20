@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_az_publication_doi
+    - node.type.az_publication
+id: node.az_publication.field_az_publication_doi
+field_name: field_az_publication_doi
+entity_type: node
+bundle: az_publication
+label: 'Digital Object Identifier (DOI)'
+description: 'An optional digital object identifier (DOI) prefix/suffix for the publication, e.g. 10.1000/182'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

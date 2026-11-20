@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for az_paragraphs_link_group.
+ */
+
+/**
+ * Ensure linkit module is installed.
+ */
+function az_paragraphs_link_group_update_1021001() {
+  \Drupal::service('module_installer')->install(['linkit']);
+}

@@ -1,13 +1,15 @@
 name: 'Quickstart Flexible Page'
+description: "Provides Page content type and related configuration."
 type: module
-core_version_requirement: ^9
+core_version_requirement: ^11.3 || ^12
 package: The University of Arizona
+configure: az_flexible_page.settings
 dependencies:
   - drupal:field
   - drupal:menu_ui
   - drupal:node
   - drupal:path
   - drupal:user
-  - az_paragraphs
+  - az_paragraphs:az_paragraphs
   - smart_title:smart_title
   - views_bootstrap:views_bootstrap

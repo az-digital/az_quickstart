@@ -1,0 +1,93 @@
+id: az_paragraph_full_width_bg_wrapper
+label: AZ Paragraph Full Width BG Wrapper
+migration_group: az_migration
+migration_tags:
+  - Quickstart Content Migration
+  - Quickstart Paragraphs
+status: true
+
+source:
+  plugin: az_paragraphs_item
+  bundle: uaqs_full_width_bg_wrapper
+
+destination:
+  plugin: 'entity_reference_revisions:paragraph'
+  default_bundle: az_text_background
+
+process:
+
+  field_az_text_area:
+    -
+      plugin: sub_process
+      source: field_uaqs_summary
+      process:
+        delta: delta
+        value:
+          plugin: az_entity_embed_process
+          source: value
+        format:
+          plugin: default_value
+          default_value: az_standard
+  text_background_color_processed:
+    - plugin: extract
+      source: field_uaqs_background_color
+      index:
+        - 0
+        - value
+      default: ''
+    - plugin: static_map
+      default_value: ''
+      map:
+        bg-red: text-bg-red
+        bg-blue: text-bg-blue
+        bg-sky: text-bg-sky
+        bg-oasis: text-bg-oasis
+        bg-azurite: text-bg-azurite
+        bg-midnight: text-bg-midnight
+        bg-bloom: text-bg-bloom
+        bg-chili: text-bg-chili
+        bg-cool-gray: text-bg-cool-gray
+        bg-warm-gray: text-bg-warm-gray
+        bg-leaf: text-bg-leaf
+        bg-river: text-bg-river
+        bg-silver: text-bg-silver
+        bg-ash: text-bg-ash
+        bg-mesa: text-bg-mesa
+  text_background_full_width_processed:
+    plugin: default_value
+    default_value: 'full-width-background'
+  text_background_pattern_processed:
+    - plugin: extract
+      source: field_uaqs_background_pattern
+      index:
+        - 0
+        - value
+      default: ''
+    - plugin: static_map
+      default_value: ''
+      map:
+        bg-triangles-top-left: 'bg-triangles-top-left'
+        bg-triangles-centered: 'bg-triangles-centered'
+        bg-triangles-top-right: 'bg-triangles-top-right'
+        bg-trilines: 'bg-trilines'
+        bg-triangles-mosaic: ''
+        bg-triangles-fade: ''
+        bg-catalinas-abstract: ''
+  text_background_padding_processed:
+    plugin: default_value
+    default_value: 'py-5'
+  behavior_settings:
+    plugin: az_paragraphs_behavior_settings
+    paragraph_behavior_plugins:
+      az_text_background_paragraph_behavior:
+        text_background_color: '@text_background_color_processed'
+        text_background_full_width: '@text_background_full_width_processed'
+        text_background_pattern: '@text_background_pattern_processed'
+        text_background_padding: '@text_background_padding_processed'
+        az_display_settings:
+          bottom_spacing: bottom_spacing
+
+dependencies:
+  enforced:
+    module:
+      - az_migration

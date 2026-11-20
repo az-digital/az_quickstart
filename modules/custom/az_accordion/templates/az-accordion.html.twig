@@ -9,32 +9,36 @@
  * - body: The body field of a accordion.
  * - collapsed: The collapsed field of an accordion.
  * - accordion_item_id: Unique ID for an accordion item.
+ * - accordion_header_id: Unique ID for an accordion item header.
+ * - accordion_container_id: Unique ID for the accordion container.
  * - aria_expanded: Aria field equal to the collapsed value.
- * - aria_controls: Unique ID for aria controls.
+ * - clipboard_link: Whether to render a clipboard link in the accordion item.
  *
  * @ingroup themeable
  */
 #}
 
-{% set attributes = attributes.addClass('h-100') %}
+{% set button_classes = (aria_expanded == 'false') ? 'collapsed' : '' %}
 
-<div {{ attributes }}>
-  <div class="card">
-    <div class="card-header">
-      <h3 class="my-0">
-        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#{{ accordion_item_id }}" aria-expanded="{{ aria_expanded }}" aria-controls="{{ aria_controls }}">
-          {% if title %}
-            {{ title }}
-          {% endif %}
-        </button>
-      </h3>
-    </div>
-    <div id="{{ accordion_item_id }}" class="{{ collapsed }}" aria-labelledby="{{ accordion_item_id }}" data-parent="#{{ accordion_item_id }}">
-      <div class="card-body bg-white">
-        {% if body %}
-        <div class="accordion-text">{{ body }}</div>
-        {% endif %}
-      </div>
-    </div>
+<h3 id="{{ accordion_header_id }}" class="accordion-header">
+  <button class="accordion-button {{ button_classes }}" type="button" data-bs-toggle="collapse" data-bs-target="#{{ accordion_item_id }}" aria-expanded="{{ aria_expanded }}" aria-controls="{{ accordion_item_id }}">
+    {% if title %}
+      {{ title }}
+    {% endif %}
+  </button>
+</h3>
+<div id="{{ accordion_item_id }}" class="accordion-collapse collapse {{ collapsed }}" aria-labelledby="{{ accordion_header_id }}">
+  <div class="accordion-body">
+    {% if body %}
+      {{ body }}
+      {% if clipboard_link %}
+        <div class="pt-2">
+          <a class="az-accordion-anchor icon-link" href="#{{ accordion_header_id }}" data-bs-toggle="tooltip" data-bs-title="Copied!" data-bs-trigger="click">
+            <span class="material-symbols-rounded" aria-hidden="true">link</span>
+            <span>{{ 'Copy link'|t }}</span>
+          </a>
+        </div>
+      {% endif %}
+    {% endif %}
   </div>
 </div>

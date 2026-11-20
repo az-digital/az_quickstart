@@ -8,5 +8,6 @@ dependencies:
       - az_core
 id: node.az_feature
 label: Feature
+description: ''
 targetEntityType: node
 cache: true

@@ -9,10 +9,10 @@ id: node.az_event.field_az_photos
 field_name: field_az_photos
 entity_type: node
 bundle: az_event
-label: 'Event Photos'
+label: 'Featured Images'
 description: ''
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:

@@ -13,7 +13,7 @@ cck_plugin_method: null
 migration_tags:
   - 'Quickstart News Feeds'
 migration_group: az_news_feeds
-label: 'UArizona News Stories - Files'
+label: 'University of Arizona News Stories - Files'
 source:
   ids:
     fid:
@@ -68,7 +68,6 @@ process:
         - '@destination_path'
       file_exists: 'use existing'
       move: false
-      skip_process_on_failure: true
   field_media_az_image/target_id:
     -
       plugin: entity_generate

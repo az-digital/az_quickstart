@@ -3,4 +3,10 @@ status: true
 dependencies: {  }
 name: az_natural
 label: 'Natural Size'
-effects: {  }
+effects:
+  1311fe5a-92b2-4191-888c-edb9f2f5e920:
+    uuid: 1311fe5a-92b2-4191-888c-edb9f2f5e920
+    id: image_convert
+    weight: 1
+    data:
+      extension: webp

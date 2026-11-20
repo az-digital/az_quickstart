@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - az_paragraphs
+id: az_rankings
+label: Rankings
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins:
+  az_rankings_paragraph_behavior:
+    enabled: true

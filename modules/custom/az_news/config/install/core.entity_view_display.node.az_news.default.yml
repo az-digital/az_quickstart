@@ -6,10 +6,13 @@ dependencies:
     - field.field.node.az_news.field_az_body
     - field.field.node.az_news.field_az_byline
     - field.field.node.az_news.field_az_contacts
+    - field.field.node.az_news.field_az_enterprise_attributes
     - field.field.node.az_news.field_az_expiration_date
+    - field.field.node.az_news.field_az_featured_image_as_thumb
     - field.field.node.az_news.field_az_link
     - field.field.node.az_news.field_az_main_content
     - field.field.node.az_news.field_az_media_image
+    - field.field.node.az_news.field_az_media_thumbnail_image
     - field.field.node.az_news.field_az_news_tags
     - field.field.node.az_news.field_az_published
     - field.field.node.az_news.field_az_short_title
@@ -67,14 +70,16 @@ third_party_settings:
     group_text_muted:
       children:
         - field_az_published
-      label: 'Text Muted'
+      label: 'Text Body Secondary'
       parent_name: group_title_block
       region: content
       weight: 6
       format_type: html_element
       format_settings:
-        classes: text-muted
+        classes: text-body-secondary
+        show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -91,7 +96,7 @@ third_party_settings:
       weight: 4
       format_type: html_element
       format_settings:
-        classes: col-12
+        classes: 'col-12 position-relative'
         id: ''
         element: div
         show_label: false
@@ -112,7 +117,7 @@ third_party_settings:
       weight: 6
       format_type: html_element
       format_settings:
-        classes: 'col-lg-10 offset-lg-1'
+        classes: 'col-12 position-relative'
         id: ''
         element: div
         show_label: false
@@ -148,7 +153,7 @@ third_party_settings:
       weight: 1
       format_type: html_element
       format_settings:
-        classes: row
+        classes: 'row mb-5'
         id: ''
         element: div
         show_label: false
@@ -241,16 +246,18 @@ content:
     type: timestamp_ap_style
     label: hidden
     settings:
-      always_display_year: '1'
-      use_today: '1'
-      cap_today: '1'
-      display_day: '1'
-      display_noon_and_midnight: '1'
+      always_display_year: true
+      use_today: true
+      cap_today: true
+      display_day: true
+      display_time: false
+      hide_date: false
+      time_before_date: false
+      display_noon_and_midnight: true
+      capitalize_noon_and_midnight: false
+      use_all_day: false
       timezone: ''
-      display_time: 0
-      time_before_date: 0
-      use_all_day: 0
-      capitalize_noon_and_midnight: 0
+      month_only: false
     third_party_settings: {  }
     weight: 6
     region: content
@@ -261,19 +268,19 @@ content:
     third_party_settings: {  }
     weight: 9
     region: content
-  links:
-    settings: {  }
-    third_party_settings: {  }
-    weight: 4
-    region: content
   smart_title:
     settings: {  }
     third_party_settings: {  }
     weight: 5
     region: content
 hidden:
+  az_news_read_more: true
+  field_az_enterprise_attributes: true
   field_az_expiration_date: true
+  field_az_featured_image_as_thumb: true
   field_az_link: true
+  field_az_media_thumbnail_image: true
   field_az_news_tags: true
   field_az_short_title: true
   field_az_summary: true
+  links: true

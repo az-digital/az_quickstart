@@ -1,0 +1,25 @@
+extlink_use_external_js_file: false
+extlink_exclude_admin_routes: false
+extlink_target: true
+extlink_target_no_override: true
+extlink_nofollow: false
+extlink_noreferrer: false
+extlink_follow_no_override: false
+extlink_subdomains: false
+extlink_alert: false
+extlink_alert_text: 'This link will take you to an external web site. We are not responsible for their content.'
+extlink_exclude: '^(?!(https?:\/\/)(arizona.box.com|docs.google.com|dropbox.com|www.dropbox.com|emailarizona-my.sharepoint.com|events.trellis.arizona.edu)).*'
+extlink_include: /sites/.+/files/.+\.pdf
+extlink_class: '0'
+extlink_label: '(link is external)'
+extlink_img_class: false
+extlink_css_exclude: ''
+extlink_css_explicit: ''
+extlink_mailto_class: '0'
+extlink_mailto_label: '(link sends email)'
+extlink_use_font_awesome: false
+extlink_font_awesome_classes:
+  links: ''
+  mailto: ''
+extlink_icon_placement: append
+whitelisted_domains: {  }

@@ -1,0 +1,7 @@
+az_http.settings:
+  path: '/admin/config/az-quickstart/settings/az-http'
+  defaults:
+    _form: '\Drupal\az_http\Form\AZHttpSettingsForm'
+    _title: 'AZ HTTP Settings'
+  requirements:
+    _permission: 'administer content types'

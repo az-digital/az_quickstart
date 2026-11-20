@@ -1,0 +1,97 @@
+<?php
+
+/**
+ * @file
+ * Contains az_gdpr_consent.module.
+ *
+ * Provides geolocation-based GDPR cookie consent management.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function az_gdpr_consent_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.az_gdpr_consent':
+      $output = '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t("The Quickstart GDPR Consent Management module provides geolocation-based cookie consent management using a pure JavaScript implementation. It uses client-side detection via Pantheon's /cdn-loc endpoint to determine visitor location and conditionally shows the Klaro consent banner only for visitors from GDPR countries.") . '</p>';
+      $output .= '<p>' . t('For non-GDPR countries (like the United States), the module automatically accepts consent for all services before Klaro loads, allowing tracking to work without displaying a banner.') . '</p>';
+      $output .= '<h3>' . t('Configuration') . '</h3>';
+      $output .= '<ul>';
+      $output .= '<li>' . t('<strong>GDPR Countries:</strong> 60+ countries including EU/EEA, UK, Canada, Brazil, Japan, and others with data protection laws') . '</li>';
+      $output .= '<li>' . t('<strong>Klaro Services:</strong> Automatically loaded from all enabled Klaro services') . '</li>';
+      $output .= '<li>' . t('<strong>Storage Method:</strong> cookie (180 days expiration)') . '</li>';
+      $output .= '</ul>';
+      $output .= '<p>' . t('To add or remove services, manage them via <a href="@klaro">Klaro Consent Management</a>. To customize GDPR country list or storage settings, edit <code>modules/custom/az_gdpr_consent/js/az-gdpr-consent.js</code>.', ['@klaro' => '/admin/config/user-interface/klaro/services']) . '</p>';
+      $output .= '<h3>' . t('How It Works') . '</h3>';
+      $output .= '<p>' . t("The same HTML is served to all visitors globally, allowing for efficient CDN cache. The JavaScript executes fresh on every page load, fetches real-time geolocation data from Pantheon's /cdn-loc endpoint, and determines whether to show the consent banner based on the visitor's country.") . '</p>';
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_page_attachments().
+ *
+ * Attaches geolocation-based consent logic using client-side detection.
+ */
+function az_gdpr_consent_page_attachments(array &$attachments) {
+  // Don't run on admin routes.
+  if (\Drupal::service('router.admin_context')->isAdminRoute()) {
+    return;
+  }
+
+  // Load all enabled Klaro services dynamically.
+  $klaro_services = [];
+
+  // Get all Klaro app configurations.
+  $config_factory = \Drupal::configFactory();
+  $klaro_app_configs = $config_factory->listAll('klaro.klaro_app.');
+
+  foreach ($klaro_app_configs as $config_name) {
+    $config = $config_factory->get($config_name);
+
+    // Only include enabled services.
+    if ($config->get('status') === TRUE) {
+      $service_id = $config->get('id');
+      // Auto-accept all enabled services for non-GDPR countries.
+      $klaro_services[$service_id] = TRUE;
+    }
+  }
+
+  // Pass services to JavaScript via drupalSettings.
+  $attachments['#attached']['drupalSettings']['azGdprConsent']['klaroServices'] = $klaro_services;
+
+  // Attach the JavaScript libraries.
+  $attachments['#attached']['library'][] = 'az_gdpr_consent/gdpr_intercept';
+  $attachments['#attached']['library'][] = 'az_gdpr_consent/gdpr_consent';
+}
+
+/**
+ * Implements hook_library_info_alter().
+ *
+ * Adds az_gdpr_consent/gdpr_consent as a dependency for libraries that need
+ * to load after our consent scripts. This ensures:
+ * - Video script interception is in place before YouTube/Vimeo scripts run.
+ * - Geolocation check and auto-consent runs before Klaro initializes.
+ */
+function az_gdpr_consent_library_info_alter(&$libraries, $extension) {
+  // Make our consent library load before az_paragraphs video libraries.
+  if ($extension === 'az_paragraphs_text_media') {
+    if (isset($libraries['az_paragraphs_text_media.youtube'])) {
+      $libraries['az_paragraphs_text_media.youtube']['dependencies'][] = 'az_gdpr_consent/gdpr_consent';
+    }
+    if (isset($libraries['az_paragraphs_text_media.vimeo'])) {
+      $libraries['az_paragraphs_text_media.vimeo']['dependencies'][] = 'az_gdpr_consent/gdpr_consent';
+    }
+  }
+
+  // Make Klaro's core JS library depend on this module's consent library.
+  if ($extension === 'klaro' && isset($libraries['library'])) {
+    if (!isset($libraries['library']['dependencies'])) {
+      $libraries['library']['dependencies'] = [];
+    }
+    $libraries['library']['dependencies'][] = 'az_gdpr_consent/gdpr_consent';
+  }
+}

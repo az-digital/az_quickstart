@@ -13,7 +13,7 @@ bundle: az_news
 label: 'Expiration Date'
 description: 'The date and time this news item drops out of website displays.'
 required: false
-translatable: false
+translatable: true
 default_value:
   -
     default_date_type: now

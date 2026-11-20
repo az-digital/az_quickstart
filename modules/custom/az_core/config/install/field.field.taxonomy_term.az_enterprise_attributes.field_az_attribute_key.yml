@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_az_attribute_key
+    - taxonomy.vocabulary.az_enterprise_attributes
+id: taxonomy_term.az_enterprise_attributes.field_az_attribute_key
+field_name: field_az_attribute_key
+entity_type: taxonomy_term
+bundle: az_enterprise_attributes
+label: 'Attribute Key'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

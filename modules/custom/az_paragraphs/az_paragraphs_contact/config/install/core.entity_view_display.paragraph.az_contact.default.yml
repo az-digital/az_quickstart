@@ -20,7 +20,7 @@ third_party_settings:
       region: content
       format_settings:
         id: ''
-        classes: 'bold mt-3'
+        classes: 'fw-bold mt-3'
         element: div
         show_label: false
         label_element: h3

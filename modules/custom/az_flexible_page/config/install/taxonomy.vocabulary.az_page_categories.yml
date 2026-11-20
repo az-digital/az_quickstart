@@ -5,3 +5,4 @@ name: 'Page Categories'
 vid: az_page_categories
 description: 'Taxonomy for categorizing pages'
 weight: 0
+new_revision: false

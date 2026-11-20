@@ -1,1 +1,3 @@
+libraries/**/*
+node_modules/**/*
 *.yml

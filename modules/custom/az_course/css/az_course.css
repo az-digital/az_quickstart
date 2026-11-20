@@ -1,0 +1,10 @@
+/**
+ * @file
+ * Styles for the az_course module.
+ */
+
+/* Allow links inside course description to be clickable above the stretched-link overlay */
+.node--type-az-course.node--view-mode-az-card .field--name-field-az-course-description a {
+  position: relative;
+  z-index: 2;
+}

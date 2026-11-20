@@ -13,7 +13,7 @@ id: node.az_news.field_az_main_content
 field_name: field_az_main_content
 entity_type: node
 bundle: az_news
-label: 'Extra Body Content'
+label: 'Extra Page Elements'
 description: ''
 required: false
 translatable: false

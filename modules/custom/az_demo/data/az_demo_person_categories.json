@@ -1,80 +1,99 @@
 {
-    "person_categories": [
-    { "name" : "Directors",
-      "description" : "Directors.",
-      "parent_name" : ""
+  "person_categories": [
+    {
+      "name": "Directors",
+      "description": "Directors.",
+      "parent_name": ""
     },
-    { "name" : "Director",
-      "description" : "Director.",
-      "parent_name" : "Directors"
+    {
+      "name": "Director",
+      "description": "Director.",
+      "parent_name": "Directors"
     },
-    { "name" : "Associate Director",
-      "description" : "Associate Director.",
-      "parent_name" : "Directors"
+    {
+      "name": "Associate Director",
+      "description": "Associate Director.",
+      "parent_name": "Directors"
     },
-    { "name" : "Faculty",
-      "description" : "Faculty.",
-      "parent_name" : ""
+    {
+      "name": "Faculty",
+      "description": "Faculty.",
+      "parent_name": ""
     },
-    { "name" : "Departmental Faculty",
-      "description" : "Departmental Faculty.",
-      "parent_name" : "Faculty"
+    {
+      "name": "Departmental Faculty",
+      "description": "Departmental Faculty.",
+      "parent_name": "Faculty"
     },
-    { "name" : "Joint Faculty",
-      "description" : "Joint Faculty.",
-      "parent_name" : "Faculty"
+    {
+      "name": "Joint Faculty",
+      "description": "Joint Faculty.",
+      "parent_name": "Faculty"
     },
-    { "name" : "Outreach",
-      "description" : "Outreach.",
-      "parent_name" : "Faculty"
+    {
+      "name": "Outreach",
+      "description": "Outreach.",
+      "parent_name": "Faculty"
     },
-    { "name" : "Research Associates",
-      "description" : "Research Associates.",
-      "parent_name" : "Faculty"
+    {
+      "name": "Research Associates",
+      "description": "Research Associates.",
+      "parent_name": "Faculty"
     },
-    { "name" : "Affiliates",
-      "description" : "Affiliates.",
-      "parent_name" : "Faculty"
+    {
+      "name": "Affiliates",
+      "description": "Affiliates.",
+      "parent_name": "Faculty"
     },
-    { "name" : "Emeritus Faculty",
-      "description" : "Emeritus Faculty.",
-      "parent_name" : "Faculty"
+    {
+      "name": "Emeritus Faculty",
+      "description": "Emeritus Faculty.",
+      "parent_name": "Faculty"
     },
-    { "name" : "Staff",
-      "description" : "Staff.",
-      "parent_name" : ""
+    {
+      "name": "Staff",
+      "description": "Staff.",
+      "parent_name": ""
     },
-    { "name" : "Administrative Staff",
-      "description" : "Administrative Staff.",
-      "parent_name" : "Staff"
+    {
+      "name": "Administrative Staff",
+      "description": "Administrative Staff.",
+      "parent_name": "Staff"
     },
-    { "name" : "Scientific Staff",
-      "description" : "Scientific Staff.",
-      "parent_name" : "Staff"
+    {
+      "name": "Scientific Staff",
+      "description": "Scientific Staff.",
+      "parent_name": "Staff"
     },
-    { "name" : "Students",
-      "description" : "Students.",
-      "parent_name" : ""
+    {
+      "name": "Students",
+      "description": "Students.",
+      "parent_name": ""
     },
-    { "name" : "Graduate Students",
-      "description" : "Graduate Students.",
-      "parent_name" : "Students"
+    {
+      "name": "Graduate Students",
+      "description": "Graduate Students.",
+      "parent_name": "Students"
     },
-    { "name" : "Undergraduates",
-      "description" : "Undergraduates.",
-      "parent_name" : "Students"
+    {
+      "name": "Undergraduates",
+      "description": "Undergraduates.",
+      "parent_name": "Students"
     },
-    { "name" : "Temporary Employees",
-      "description" : "Temporary Employees.",
-      "parent_name" : ""
+    {
+      "name": "Temporary Employees",
+      "description": "Temporary Employees.",
+      "parent_name": ""
     },
-    { "name" : "Visitors and Consultants",
-      "description" : "Visitors and Consultants.",
-      "parent_name" : ""
+    {
+      "name": "Visitors and Consultants",
+      "description": "Visitors and Consultants.",
+      "parent_name": ""
     },
-    { "name" : "Docents",
-      "description" : "Docents.",
-      "parent_name" : ""
+    {
+      "name": "Docents",
+      "description": "Docents.",
+      "parent_name": ""
     }
   ]
 }

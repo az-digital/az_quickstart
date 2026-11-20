@@ -3,14 +3,16 @@
 namespace Drupal\Tests\az_cas\Functional;
 
 use Drupal\Core\Url;
-use Drupal\Tests\BrowserTestBase;
+use Drupal\Tests\az_core\Functional\QuickstartFunctionalTestBase;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests for the AZ CAS module.
- *
- * @group az_cas
  */
-class AzCasTest extends BrowserTestBase {
+#[Group('az_cas')]
+#[RunTestsInSeparateProcesses]
+class AzCasTest extends QuickstartFunctionalTestBase {
 
   /**
    * The profile to install as a basis for testing.
@@ -27,19 +29,19 @@ class AzCasTest extends BrowserTestBase {
   /**
    * @var string
    */
-  protected $defaultTheme = 'seven';
+  protected $defaultTheme = 'claro';
 
   /**
    * The created user.
    *
-   * @var User
+   * @var \Drupal\user\UserInterface
    */
   protected $adminUser;
 
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     // Create a test user.
@@ -94,9 +96,19 @@ class AzCasTest extends BrowserTestBase {
       $config->get('server.cert')
     );
     $this->assertSession()->fieldValueEquals(
-      'gateway[check_frequency]',
+      'gateway[enabled]',
       // This is the az_cas overridden value.
-      $config->get('gateway.check_frequency')
+      $config->get('gateway.enabled')
+    );
+    $this->assertSession()->fieldValueEquals(
+      'gateway[recheck_time]',
+      // This is the az_cas overridden value.
+      $config->get('gateway.recheck_time')
+    );
+    $this->assertSession()->fieldValueEquals(
+      'gateway[method]',
+      // This is the az_cas overridden value.
+      $config->get('gateway.method')
     );
     $this->assertSession()->fieldValueEquals(
       'gateway[paths][negate]',
@@ -199,42 +211,42 @@ class AzCasTest extends BrowserTestBase {
       $config->get('error_handling.login_failure_page')
     );
     $this->assertSession()->fieldValueEquals(
-      'error_handling[messages][message_validation_failure]',
+      'error_handling[message_validation_failure]',
       // This is the az_cas overridden value.
       $config->get('error_handling.message_validation_failure')
     );
     $this->assertSession()->fieldValueEquals(
-      'error_handling[messages][message_no_local_account]',
+      'error_handling[message_no_local_account]',
       // This is the az_cas overridden value.
       $config->get('error_handling.message_no_local_account')
     );
     $this->assertSession()->fieldValueEquals(
-      'error_handling[messages][message_subscriber_denied_reg]',
+      'error_handling[message_subscriber_denied_reg]',
       // This is the az_cas overridden value.
       $config->get('error_handling.message_subscriber_denied_reg')
     );
     $this->assertSession()->fieldValueEquals(
-      'error_handling[messages][message_account_blocked]',
+      'error_handling[message_account_blocked]',
       // This is the az_cas overridden value.
       $config->get('error_handling.message_account_blocked')
     );
     $this->assertSession()->fieldValueEquals(
-      'error_handling[messages][message_subscriber_denied_login]',
+      'error_handling[message_subscriber_denied_login]',
       // This is the az_cas overridden value.
       $config->get('error_handling.message_subscriber_denied_login')
     );
     $this->assertSession()->fieldValueEquals(
-      'error_handling[messages][message_username_already_exists]',
+      'error_handling[message_username_already_exists]',
       // This is the az_cas overridden value.
       $config->get('error_handling.message_username_already_exists')
     );
     $this->assertSession()->fieldValueEquals(
-      'error_handling[messages][message_prevent_normal_login]',
+      'error_handling[message_prevent_normal_login]',
       // This is the az_cas overridden value.
       $config->get('error_handling.message_prevent_normal_login')
     );
     $this->assertSession()->fieldValueEquals(
-      'error_handling[messages][message_restrict_password_management]',
+      'error_handling[message_restrict_password_management]',
       // This is the az_cas overridden value.
       $config->get('error_handling.message_restrict_password_management')
     );
@@ -249,17 +261,17 @@ class AzCasTest extends BrowserTestBase {
       $config->get('advanced.connection_timeout')
     );
     $this->assertSession()->fieldValueEquals(
-      'general[login_link_enabled]',
+      'login_link_enabled',
       // This is the az_cas overridden value.
       $config->get('login_link_enabled')
     );
     $this->assertSession()->fieldValueEquals(
-      'general[login_link_label]',
+      'login_link_label',
       // This is the az_cas overridden value.
       $config->get('login_link_label')
     );
     $this->assertSession()->fieldValueEquals(
-      'general[login_success_message]',
+      'login_success_message',
       // This is the az_cas overridden value.
       $config->get('login_success_message')
     );

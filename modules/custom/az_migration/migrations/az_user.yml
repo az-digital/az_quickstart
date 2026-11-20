@@ -1,0 +1,64 @@
+id: az_user
+label: AZ User accounts
+audit: true
+migration_group: az_migration
+status: true
+
+migration_tags:
+  - Drupal 7
+  - Content
+  - Quickstart Content Migration
+
+class: Drupal\user\Plugin\migrate\User
+source:
+  plugin: d7_user
+process:
+  # If you are using this file to build a custom migration consider removing
+  # the uid field to allow incremental migrations.
+  name: name
+  pass: pass
+  mail: mail
+  created: created
+  access: access
+  login: login
+  # Skip blocked users.  If you want to maintain a blocked user's history, you should not use this approach.
+  status:
+    plugin: skip_on_value
+    equals: true
+    method: row
+    source: status
+    value:
+      - 0
+  timezone: timezone
+  langcode:
+    plugin: user_langcode
+    source: entity_language
+    fallback_to_site_default: false
+  preferred_langcode:
+    plugin: user_langcode
+    source: language
+    fallback_to_site_default: true
+  preferred_admin_langcode:
+    plugin: user_langcode
+    source: language
+    fallback_to_site_default: true
+  init: init
+  user_picture:
+    -
+      plugin: default_value
+      source: picture
+      default_value: null
+    -
+      plugin: migmag_lookup
+      migration: d7_file
+destination:
+  plugin: entity:user
+migration_dependencies:
+  optional:
+    - d7_field_instance
+    - d7_file
+    - language
+    - default_language
+    - user_picture_field_instance
+    - user_picture_entity_display
+    - user_picture_entity_form_display

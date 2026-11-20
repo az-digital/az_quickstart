@@ -1,0 +1,4 @@
+use marketing campaign page styles:
+  title: 'Use Marketing Campaign Page styles'
+  description: 'Set pages to display with a Marketing Campaign page style (if styles are globally enabled)'
+  restrict access: FALSE

@@ -1,0 +1,11 @@
+az_event_trellis_date:
+  js:
+    js/az_event_trellis_date.js: {}
+  css:
+    theme:
+      css/az_event_trellis_datewrapper.css: {}
+  dependencies:
+    - core/drupal
+    - core/once
+    - az_core/vanilla-calendar-pro
+    - az_core/az-date-picker-integration

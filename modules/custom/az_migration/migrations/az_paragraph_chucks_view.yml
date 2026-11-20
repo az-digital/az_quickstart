@@ -1,0 +1,44 @@
+id: az_paragraph_chucks_view
+label: AZ Paragraph Chunks View
+migration_group: az_migration
+migration_tags:
+  - Quickstart Content Migration
+  - Quickstart Paragraphs
+status: true
+
+source:
+  plugin: az_paragraphs_item
+  bundle: uaqs_content_chunks_view
+
+destination:
+  plugin: 'entity_reference_revisions:paragraph'
+  default_bundle: az_view_reference
+
+process:
+
+
+  field_az_view_reference:
+    plugin: az_views_reference_mapping
+    source: field_uaqs_view
+
+  behavior_settings:
+    plugin: az_paragraphs_behavior_settings
+    paragraph_behavior_plugins:
+      az_default_paragraph_behavior:
+        az_display_settings:
+          bottom_spacing: bottom_spacing
+
+dependencies:
+  module:
+    az_paragraphs_view
+  enforced:
+    module:
+      - az_migration
+
+migration_dependencies:
+  optional:
+    - az_event_categories
+    - az_flexible_page_categories
+    - az_news_tags
+    - az_person_categories
+    - az_person_categories_secondary

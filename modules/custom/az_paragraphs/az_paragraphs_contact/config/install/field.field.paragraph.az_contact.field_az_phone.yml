@@ -13,7 +13,7 @@ bundle: az_contact
 label: 'Contact Phone'
 description: '<strong>Suggested format:</strong> 520-626-0000'
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings: {  }

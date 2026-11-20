@@ -39,6 +39,7 @@ class DenyMonitoringPage implements ResponsePolicyInterface {
     if ($this->routeMatch->getRouteName() === 'az_core.monitoring_page') {
       return static::DENY;
     }
+    return NULL;
   }
 
 }

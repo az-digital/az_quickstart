@@ -13,11 +13,11 @@
     <ol class="breadcrumb">
     {% for item in breadcrumb %}
       {% if item.url %}
-        <li class="breadcrumb-item">
+        <li class="{{ item.classes }}">
           <a href="{{ item.url }}">{{ item.text }}</a>
         </li>
       {% else %}
-        <li class="breadcrumb-item active" aria-current="page">
+        <li class="{{ item.classes }}" aria-current="page">
           {{ item.text }}
         </li>
       {% endif %}

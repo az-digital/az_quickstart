@@ -2,14 +2,19 @@
 
 namespace Drupal\az_core;
 
+use Drupal\Component\Uuid\UuidInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Config\ConfigManager;
 use Drupal\Core\Extension\ModuleExtensionList;
-use Drupal\config_provider\Plugin\ConfigCollector;
+use Drupal\Core\Extension\ModuleHandler;
 use Drupal\az_core\Plugin\ConfigProvider\QuickstartConfigProvider;
+use Drupal\config_provider\Plugin\ConfigCollector;
+use Drupal\config_snapshot\ConfigSnapshotStorageTrait;
 use Drupal\config_sync\ConfigSyncSnapshotter;
 use Drupal\config_sync\ConfigSyncSnapshotterInterface;
 use Drupal\config_update\ConfigListByProviderInterface;
-use Drupal\Core\Extension\ModuleHandler;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
 
 /**
  * Class AZConfigOverride.
@@ -21,7 +26,10 @@ use Drupal\Core\Extension\ModuleHandler;
  * to avoid needing to import the changes whenever an override module is
  * enabled, e.g. az_cas.
  */
-class AZConfigOverride {
+class AZConfigOverride implements LoggerAwareInterface {
+
+  use ConfigSnapshotStorageTrait;
+  use LoggerAwareTrait;
 
   /**
    * Drupal\config_provider\Plugin\ConfigCollector definition.
@@ -66,15 +74,40 @@ class AZConfigOverride {
   protected $moduleHandler;
 
   /**
+   * Drupal\Core\Config\ConfigManager definition.
+   *
+   * @var \Drupal\Core\Config\ConfigManager
+   */
+  protected $configManager;
+
+  /**
+   * Drupal\Component\Uuid\UuidInterface definition.
+   *
+   * @var \Drupal\Component\Uuid\UuidInterface
+   */
+  protected $uuidService;
+
+  /**
    * Constructs a new AZConfigOverride object.
    */
-  public function __construct(ConfigFactoryInterface $config_factory, ModuleExtensionList $extension_list_module, ConfigCollector $config_collector, ConfigSyncSnapshotter $config_sync_snapshotter, ConfigListByProviderInterface $config_update_lister, ModuleHandler $module_handler) {
+  public function __construct(
+    ConfigFactoryInterface $config_factory,
+    ModuleExtensionList $extension_list_module,
+    ConfigCollector $config_collector,
+    ConfigSyncSnapshotter $config_sync_snapshotter,
+    ConfigListByProviderInterface $config_update_lister,
+    ModuleHandler $module_handler,
+    ConfigManager $config_manager,
+    UuidInterface $uuid_service,
+  ) {
     $this->configFactory = $config_factory;
     $this->extensionListModule = $extension_list_module;
     $this->configCollector = $config_collector;
     $this->configSyncSnapshotter = $config_sync_snapshotter;
     $this->configUpdateLister = $config_update_lister;
     $this->moduleHandler = $module_handler;
+    $this->configManager = $config_manager;
+    $this->uuidService = $uuid_service;
   }
 
   /**
@@ -113,9 +146,16 @@ class AZConfigOverride {
         $snapshots = [];
         // Edit active configuration for each explicit override.
         foreach ($overrides as $name => $data) {
+          $this->logger->info("Applying override config to @config_id.", [
+            '@config_id' => $name,
+          ]);
           $config = $this->configFactory->getEditable($name);
+          // Generate UUID if one doesn't exist (for config entities only).
+          if ($this->configManager->getEntityTypeIdByName($name)) {
+            $data['uuid'] = $config->get('uuid') ?? $data['uuid'] ?? $this->uuidService->generate();
+          }
           $config->setData($data);
-          $config->Save();
+          $config->save();
 
           // Determine the extension owner of the configuration (array tuple).
           $provided_by = $this->configUpdateLister->getConfigProvider($name);
@@ -124,16 +164,21 @@ class AZConfigOverride {
             $owner = $provided_by[1];
 
             // Record we need to do a snapshot.
-            $snapshots[$type][] = $owner;
+            $snapshots[$type][$owner][$name] = $data;
           }
         }
 
         // Update the config_snapshot of the modules that owned the config.
         foreach ($snapshots as $type => $owners) {
-          $owners = array_unique($owners);
-          foreach ($owners as $owner) {
-            $this->configSyncSnapshotter->refreshExtensionSnapshot($type, [$owner],
-              ConfigSyncSnapshotterInterface::SNAPSHOT_MODE_IMPORT);
+          foreach ($owners as $owner => $names) {
+            $snapshot_storage = $this->getConfigSnapshotStorage(ConfigSyncSnapshotterInterface::CONFIG_SNAPSHOT_SET, $type, $owner);
+            foreach ($names as $name => $data) {
+              $this->logger->info("Snapshotting @config_id for @module.", [
+                '@module' => $owner,
+                '@config_id' => $name,
+              ]);
+              $snapshot_storage->write($name, $data);
+            }
           }
         }
       }

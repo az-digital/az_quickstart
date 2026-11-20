@@ -1,0 +1,80 @@
+{
+  "blocks": [
+    {
+      "id":1,
+      "info" : "Vertical Pills 1",
+      "uuid" : "8d5d7e34-7d98-489d-8415-fc0c72a6568f",
+      "field_az_block": [
+        {
+          "plugin_id": "menu_block:main",
+          "settings": {
+          "id" : "menu_block:main",
+          "label" : "Main navigation",
+          "label_display" : "visible",
+          "provider" : "menu_block",
+          "follow" : "0",
+          "follow_parent" : "child",
+          "level" : "2",
+          "depth" : "2",
+          "expand_all_items" : false,
+          "parent" : "main:",
+          "suggestion" : "sidebar",
+          "label_type" : "block",
+          "label_link" : "0"
+          }
+        }
+      ]
+    },
+    {
+      "id":2,
+      "info" : "Vertical Pills 2",
+      "uuid" : "3a7fffab-e13b-429e-9405-f2bb89c83d63",
+      "field_az_block": [
+        {
+          "plugin_id": "menu_block:main",
+          "settings": {
+            "id" : "menu_block:main",
+            "label" : "Main navigation",
+            "label_display" : "visible",
+            "provider" : "menu_block",
+            "follow" : "0",
+            "follow_parent" : "child",
+            "level" : "2",
+            "depth" : "0",
+            "expand_all_items" : "0",
+            "parent" : "main:",
+            "suggestion" : "sidebar",
+            "label_type" : "block",
+            "label_link" : "0"
+          }
+        }
+      ]
+    },
+    {
+      "id":3,
+      "info" : "Vertical Pills 3",
+      "uuid" : "462e3902-55a4-4c2a-b7d5-b5814e394b9c",
+      "menu_parent_link_id": "26",
+      "field_az_block": [
+        {
+          "plugin_id": "menu_block:main",
+          "settings": {
+            "id" : "menu_block:main",
+            "label" : "Main navigation",
+            "label_display" : "visible",
+            "provider" : "menu_block",
+            "follow" : "0",
+            "follow_parent" : "child",
+            "level" : "1",
+            "depth" : "0",
+            "expand_all_items" : "1",
+            "parent" : "see menu_parent_link_id above",
+            "suggestion" : "sidebar",
+            "label_type" : "block",
+            "label_link" : "0"
+          }
+        }
+      ]
+    }
+  ]
+}

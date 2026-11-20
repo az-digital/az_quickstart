@@ -2,12 +2,18 @@
 
 namespace Drupal\az_migration\Plugin\migrate\process;
 
+use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
 
 /**
  * Process Plugin to handle Callout Paragraphs from QS1.
+ *
+ * @deprecated in az_quickstart:3.5.0 and is removed from az_quickstart:4.0.0.
+ * There is no replacement.
+ *
+ * @see https://www.drupal.org/node/3533564
  *
  * Quickstart 1 to Quickstart2 Process plugin to extract specific field values
  * from the source, (uaqs_callout paragraphs), and transforming those values
@@ -42,11 +48,8 @@ use Drupal\migrate\Row;
  *     background: field_uaqs_callout_background
  *     border: field_uaqs_callout_border_color
  * @endcode
- *
- * @MigrateProcessPlugin(
- *   id = "paragraphs_callout_field_merge"
- * )
  */
+#[MigrateProcess('paragraphs_callout_field_merge')]
 class ParagraphsCalloutFieldMerge extends ProcessPluginBase {
 
   /**
@@ -59,7 +62,7 @@ class ParagraphsCalloutFieldMerge extends ProcessPluginBase {
     if (!empty($this->configuration['background'])) {
       $field_uaqs_callout_background = $row->getSourceProperty($this->configuration['background']);
       if (!empty($field_uaqs_callout_background[0]['value'])) {
-        $bg_light = 'bg-light';
+        $bg_light = 'text-bg-light';
       }
     }
     // Color and text Mapping.

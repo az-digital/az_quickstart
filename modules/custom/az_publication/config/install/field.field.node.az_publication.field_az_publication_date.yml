@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_az_publication_date
+    - node.type.az_publication
+  module:
+    - datetime_range
+id: node.az_publication.field_az_publication_date
+field_name: field_az_publication_date
+entity_type: node
+bundle: az_publication
+label: 'Publication Date'
+description: 'Date when the resource was published.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: daterange

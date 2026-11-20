@@ -17,7 +17,7 @@ translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:
-  file_extensions: 'png gif jpg jpeg'
+  file_extensions: 'png gif jpg jpeg webp'
   file_directory: 'pictures/[date:custom:Y]-[date:custom:m]'
   max_filesize: ''
   alt_field: false

@@ -9,13 +9,13 @@ type: 'canonical_entities:node'
 pattern: 'person/[node:title]'
 selection_criteria:
   b204ad38-c993-453e-b9ba-4200941238f4:
-    id: node_type
-    bundles:
-      az_person: az_person
+    id: 'entity_bundle:node'
     negate: false
+    uuid: b204ad38-c993-453e-b9ba-4200941238f4
     context_mapping:
       node: node
-    uuid: b204ad38-c993-453e-b9ba-4200941238f4
+    bundles:
+      az_person: az_person
 selection_logic: and
 weight: -5
 relationships: {  }

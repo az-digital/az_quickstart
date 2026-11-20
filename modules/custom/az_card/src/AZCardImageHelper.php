@@ -39,7 +39,7 @@ class AZCardImageHelper {
    * @param \Drupal\media\MediaInterface $media
    *   A Drupal media entity object.
    *
-   * @return string[]
+   * @return array
    *   An image render array.
    */
   public function generateImageRenderArray(MediaInterface $media) {
@@ -53,7 +53,7 @@ class AZCardImageHelper {
     if ($file = $this->entityTypeManager->getStorage('file')->load($media_attributes[0]['target_id'])) {
       $image = new \stdClass();
       $image->title = NULL;
-      $image->alt = isset($media_attributes[0]['alt']) ? $media_attributes[0]['alt'] : '';
+      $image->alt = $media_attributes[0]['alt'] ?? '';
       $image->entity = $file;
       $image->uri = $file->getFileUri();
       $image->width = NULL;

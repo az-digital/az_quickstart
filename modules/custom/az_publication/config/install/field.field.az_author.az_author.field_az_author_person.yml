@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.az_author.field_az_author_person
+    - node.type.az_person
+  module:
+    - az_publication
+id: az_author.az_author.field_az_author_person
+field_name: field_az_author_person
+entity_type: az_author
+bundle: az_author
+label: Person
+description: 'Use to create a link between the author and a person in the site directory.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      az_person: az_person
+    sort:
+      field: title
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

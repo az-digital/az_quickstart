@@ -1,0 +1,18 @@
+frequency: 0
+offset: 0
+user_expire_roles:
+  authenticated: 0
+  az_content_editor: 0
+  az_content_admin: 0
+  az_user_admin: 0
+  az_html_admin: 0
+  az_auto_expiring_user: 2592000
+  administrator: 0
+  az_profile_editor: 0
+send_expiration_warnings: false
+expiration_warning_mail:
+  subject: "[site:name]: Account expiration warning"
+  body: |-
+    Hello [user:display-name],
+    Because you have not logged in recently, your account at [site:name] will be blocked in the near future. If you still use this site, log in now [site:login-url] to prevent your account being blocked.
+    -- [site:name] team

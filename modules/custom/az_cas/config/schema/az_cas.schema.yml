@@ -5,6 +5,9 @@ az_cas.settings:
     disable_login_form:
       type: boolean
       label: 'Disable login form'
+    disable_admin_add_user_button:
+      type: boolean
+      label: 'Disable button for adding non-CAS users in admin interface'
     disable_password_recovery_link:
       type: boolean
       label: 'Disable password recovery link'

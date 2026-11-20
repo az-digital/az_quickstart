@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'Enterprise Attributes'
+vid: az_enterprise_attributes
+description: 'Tags for interfacing with integrations at the University of Arizona'
+weight: 0
+new_revision: false

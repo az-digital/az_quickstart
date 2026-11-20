@@ -1,0 +1,177 @@
+id: az_demo_node_publication
+label: AZ Quickstart Demo Publication Content
+migration_tags:
+  - Quickstart Demo Content
+  - Content
+  - Publications
+migration_dependencies:
+  required:
+    - az_demo_az_author_author
+    - az_demo_taxonomy_term_publication_categories
+    - az_demo_image_file
+    - az_demo_media_document
+dependencies:
+  enforced:
+    module:
+      - az_demo
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: json
+  urls:
+    - profiles/custom/az_quickstart/modules/custom/az_demo/data/az_demo_node_publication.json
+  item_selector: publications
+  ids:
+    id:
+      type: integer
+  fields:
+    - name: id
+      selector: id
+    - name: title
+      selector: title
+    - name: authors
+      selector: authors
+    - name: accessed_date
+      selector: accessed_date
+    - name: abstract
+      selector: abstract
+    - name: approximate
+      selector: approximate
+    - name: category
+      selector: category
+    - name: container
+      selector: container
+    - name: content
+      selector: content
+    - name: date
+      selector: date
+    - name: date_type
+      selector: date_type
+    - name: doi
+      selector: doi
+    - name: extra_links
+      selector: extra_links
+    - name: image
+      selector: image
+    - name: isbn
+      selector: isbn
+    - name: issn
+      selector: issn
+    - name: issue
+      selector: issue
+    - name: link
+      selector: link
+    - name: location
+      selector: location
+    - name: media
+      selector: media
+    - name: page
+      selector: page
+    - name: pmcid
+      selector: pmcid
+    - name: pmid
+      selector: pmid
+    - name: publisher
+      selector: publisher
+    - name: type
+      selector: type
+    - name: version
+      selector: version
+    - name: volume
+      selector: volume
+    - name: uuid
+      selector: uuid
+process:
+  type:
+    plugin: default_value
+    default_value: az_publication
+  uuid:
+    - plugin: skip_on_empty
+      method: process
+      source: uuid
+  title: title
+  field_az_contributors:
+    - plugin: skip_on_empty
+      method: process
+      source: authors
+    - plugin: sub_process
+      process:
+        target_id:
+          plugin: migration_lookup
+          source: '0'
+          migration: az_demo_az_author_author
+        role: '1'
+  field_az_accessed_date: accessed_date
+  field_az_publication_abstract/value: abstract
+  field_az_publication_abstract/format:
+    plugin: default_value
+    default_value: az_standard
+  field_az_publication_approximate: approximate
+  field_az_publication_category:
+    - plugin: explode
+      source: category
+      delimiter: '|'
+    - plugin: skip_on_empty
+      method: process
+    - plugin: migration_lookup
+      migration: az_demo_taxonomy_term_publication_categories
+      ignore_case: true
+  field_az_publication_container: container
+  pseudo_exploded_paragraphs:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: content
+    -
+      plugin: explode
+      source: content
+      delimiter: '|'
+
+  pseudo_paragraphs:
+    -
+      plugin: migration_lookup
+      migration:
+        - az_demo_text_paragraph
+        - az_demo_text_background_paragraph
+        - az_demo_text_media_paragraph
+        - az_demo_splitscreen_paragraph
+        - az_demo_card_paragraph
+        - az_demo_view_paragraph
+        - az_demo_paragraph_gallery
+      source: '@pseudo_exploded_paragraphs'
+
+  field_az_main_content:
+    plugin: sub_process
+    source: '@pseudo_paragraphs'
+    process:
+      target_id: '0'
+      target_revision_id: '1'
+  field_az_publication_date: date
+  field_az_publication_date_type: date_type
+  field_az_publication_doi: doi
+  field_az_publication_extra_links: extra_links
+  field_az_publication_image/target_id:
+    - plugin: migration_lookup
+      source: image
+      migration:
+        - az_demo_image_file
+  field_az_publication_isbn: isbn
+  field_az_publication_issn: issn
+  field_az_publication_issue: issue
+  field_az_publication_link: link
+  field_az_publication_location: location
+  field_az_publication_media/target_id:
+    - plugin: migration_lookup
+      source: media
+      migration:
+        - az_demo_media_document
+  field_az_publication_page: page
+  field_az_publication_pmcid: pmcid
+  field_az_publication_pmid: pmid
+  field_az_publication_publisher: publisher
+  field_az_publication_mapped_type/0/target_id: type
+  field_az_publication_version: version
+  field_az_publication_volume: volume
+destination:
+  plugin: entity:node
+  bundle: az_publication

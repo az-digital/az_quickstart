@@ -15,5 +15,6 @@ hidden:
   field_media_az_audio_file: true
   name: true
   path: true
+  replace_file: true
   status: true
   uid: true

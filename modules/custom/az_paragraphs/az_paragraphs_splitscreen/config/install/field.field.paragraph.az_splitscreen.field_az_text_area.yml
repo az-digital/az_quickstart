@@ -1,0 +1,26 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_az_text_area
+    - filter.format.az_standard
+    - paragraphs.paragraphs_type.az_splitscreen
+  module:
+    - text
+  enforced:
+    module:
+      - az_paragraphs_splitscreen
+id: paragraph.az_splitscreen.field_az_text_area
+field_name: field_az_text_area
+entity_type: paragraph
+bundle: az_splitscreen
+label: Text
+description: 'White text will be highlighted in gray (only while editing) to keep the text visible.'
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - az_standard
+field_type: text_long

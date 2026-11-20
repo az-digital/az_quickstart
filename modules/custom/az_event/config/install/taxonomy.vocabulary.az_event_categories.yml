@@ -5,3 +5,4 @@ name: 'Event Categories'
 vid: az_event_categories
 description: 'Taxonomy for categorizing events'
 weight: 0
+new_revision: false

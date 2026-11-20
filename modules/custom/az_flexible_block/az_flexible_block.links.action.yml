@@ -1,6 +1,0 @@
-az_flexible_block_add_action:
-  route_name: block_content.add_page
-  title: 'Add custom block'
-  appears_on:
-    - view.block_content.admin
-  class: \Drupal\az_flexible_block\Plugin\Menu\LocalAction\AzFlexibleBlockAddLocalAction

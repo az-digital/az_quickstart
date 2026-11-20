@@ -6,7 +6,6 @@
  */
 
 use Drupal\Core\Extension\MissingDependencyException;
-use Drupal\user\Entity\User;
 use Drupal\shortcut\Entity\Shortcut;
 
 /**
@@ -17,11 +16,6 @@ use Drupal\shortcut\Entity\Shortcut;
  * @see system_install()
  */
 function az_quickstart_install() {
-  // Assign user 1 the "administrator" role.
-  $user = User::load(1);
-  $user->roles[] = 'administrator';
-  $user->save();
-
   // Populate the default shortcut set.
   $shortcut = Shortcut::create([
     'shortcut_set' => 'default',
@@ -39,190 +33,183 @@ function az_quickstart_install() {
   ]);
   $shortcut->save();
 
-  // Install Pantheon module dependencies when running on Pantheon.
+  // Install additional modules if site is running on Pantheon (or not).
   if (defined('PANTHEON_ENVIRONMENT')) {
-    $pantheon_modules = [
+    // Modules to install only on Pantheon.
+    $extra_modules = [
       'pantheon_advanced_page_cache',
       'environment_indicator',
+      'environment_indicator_toolbar',
     ];
-    foreach ($pantheon_modules as $module) {
-      try {
-        \Drupal::service('module_installer')->install([$module]);
-      }
-      catch (MissingDependencyException $e) {
-        \Drupal::logger('az_quickstart')->warning('@module module not available to install.', ['@module' => $module]);
-      }
-    }
-  }
-}
-
-/**
- * Install az_metrics.
- */
-function az_quickstart_update_9201() {
-  \Drupal::service('module_installer')->install(['az_metrics']);
-}
-
-/**
- * Set account creation rules, default to admin_only.
- */
-function az_quickstart_update_9202() {
-  $config = \Drupal::service('config.factory')->getEditable('user.settings');
-  $config->set('register', 'admin_only')
-    ->save(TRUE);
-}
-
-/**
- * Enable the role_delegation module.
- */
-function az_quickstart_update_9203() {
-  $module_list = ['role_delegation'];
-  \Drupal::service('module_installer')->install($module_list);
-}
-
-/**
- * Place system branding block in new region.
- *
- * Save default barrio settings for new branding theme region,
- * and place the new branding block in it.
- */
-function az_quickstart_update_9204() {
-  $config = \Drupal::service('config.factory')->getEditable('az_barrio.settings');
-  $config
-    ->set('bootstrap_barrio_region_clean_branding', FALSE)
-    ->set('bootstrap_barrio_region_class_branding', '')
-    ->save(TRUE);
-
-  $config = \Drupal::service('config.factory')->getEditable('block.block.az_barrio_branding');
-  $config
-    ->set('status', TRUE)
-    ->set('region', 'branding')
-    ->set('weight', -9)
-    ->set('settings.use_site_name', FALSE)
-    ->set('settings.use_site_slogan', FALSE)
-    ->save(TRUE);
-}
-
-/**
- * Disable land acknowledgement theme setting by default on existing sites.
- */
-function az_quickstart_update_9205() {
-  $config = \Drupal::service('config.factory')->getEditable('az_barrio.settings');
-  $config
-    ->set('land_acknowledgment', FALSE)
-    ->save(TRUE);
-}
-
-/**
- * Update footer logo link destination if it's currently set to "<front>".
- */
-function az_quickstart_update_9206() {
-  $config = \Drupal::service('config.factory')->getEditable('az_barrio.settings');
-  if ($config->get('footer_logo_link_destination') === '<front>') {
-    $config
-      ->set('footer_logo_link_destination', '')
-      ->save(TRUE);
-  }
-}
-
-/**
- * Enable the az_security module.
- */
-function az_quickstart_update_9207() {
-  $module_list = ['az_security'];
-  \Drupal::service('module_installer')->install($module_list);
-}
-
-/**
- * Ensure Pantheon sites have the advanced page cache module installed.
- */
-function az_quickstart_update_9208() {
-  if (defined('PANTHEON_ENVIRONMENT')) {
-    try {
-      \Drupal::service('module_installer')->install(['pantheon_advanced_page_cache']);
-    }
-    catch (MissingDependencyException $e) {
-      return t('Pantheon Advanced Page Cache module not available to install.');
-    }
-
-    return t('Pantheon Advanced Page Cache module installed.');
-  }
-}
-
-/**
- * Set the default columns classes on the new theme setting (Removed).
- */
-function az_quickstart_update_9209() {
-  // Update removed and moved to az_quickstart_update_920101().
-  // @see https://github.com/az-digital/az_quickstart/issues/1350
-}
-
-/**
- * Set the default columns classes on the new theme setting.
- */
-function az_quickstart_update_920101() {
-  $config = \Drupal::service('config.factory')->getEditable('az_barrio.settings');
-  if ($config->get('header_one_col_classes') === NULL && $config->get('header_two_col_classes') === NULL) {
-    $config
-      ->set('header_one_col_classes', 'col-12 col-sm-6 col-lg-4')
-      ->set('header_two_col_classes', 'col-12 col-sm-6 col-lg-8')
-      ->save(TRUE);
-  }
-}
-
-/**
- * Delete unmodified legacy footer menu blocks to prevent global footer issues.
- */
-function az_quickstart_update_920102() {
-  if (\Drupal::service('module_handler')->moduleExists('az_global_footer')) {
-    return t('Quickstart Global Footer module already installed.  No footer menu blocks need to be deleted.');
   }
   else {
-    $delete_blocks = TRUE;
-
-    // Default config hashes generated from clean install of Quickstart 2.0.18.
-    $footer_menu_blocks = [
-      'block.block.az_barrio_footer_menu_info' => 'UPd_XW4rSu7i2VUmkzxPOWBlNM-ckDDv3p_3YFzTOxw',
-      'block.block.az_barrio_footer_menu_main' => 'fYhWRgj2xwKqlRJMJgsVftrGWu3Py7p6SQoHslS6eks',
-      'block.block.az_barrio_footer_menu_resources' => 'NwIzEthgG1SVgWc7GJKsW_44TaWW4HbyY4sZqLqxEKE',
-      'block.block.az_barrio_footer_menu_social_media' => 'Vk6yulKY8Q3ErOnox11fzDTu4-uBxB1oKTQmcxG94RQ',
-      'block.block.az_barrio_footer_menu_topics' => '5GU2oFYWqdhXrFxFcxxArQXQd3YBskaIdVS1uJZ7kDg',
+    // Modules to install if not on Pantheon.
+    $extra_modules = [
+      'big_pipe',
     ];
-
-    // Check whether any of the footer menu blocks have been modified.
-    foreach ($footer_menu_blocks as $block => $default_config_hash) {
-      $current_config_hash = \Drupal::service('config.factory')
-        ->get($block)
-        ->get('_core.default_config_hash');
-      if ($current_config_hash !== $default_config_hash) {
-        $delete_blocks = FALSE;
-      }
+  }
+  foreach ($extra_modules as $module) {
+    try {
+      \Drupal::service('module_installer')->install([$module]);
     }
-
-    if ($delete_blocks) {
-      foreach ($footer_menu_blocks as $block => $default_config_hash) {
-        \Drupal::service('config.factory')->getEditable($block)->delete();
-      }
-      return t('Deleted legacy global footer menu blocks. Install Quickstart Global Footer module to re-enable footer menu blocks.');
-    }
-    else {
-      return t('Legacy global footer blocks not deleted because config differences detected. Blocks will need to be manually deleted with drush in order to install Quickstart Global Footer module.');
+    catch (MissingDependencyException $e) {
+      \Drupal::logger('az_quickstart')->warning('@module module not available to install.', ['@module' => $module]);
     }
   }
 }
 
 /**
- * Ensure Pantheon sites have the environment_indicator module installed.
+ * Implements hook_update_last_removed().
  */
-function az_quickstart_update_920103() {
-  if (defined('PANTHEON_ENVIRONMENT')) {
-    try {
-      \Drupal::service('module_installer')->install(['environment_indicator']);
-    }
-    catch (MissingDependencyException $e) {
-      return t('Environment Indicator module not available to install.');
-    }
+function az_quickstart_update_last_removed() {
+  // Remove updates added before 2.6.0.
+  return 920103;
+}
 
-    return t('Environment Indicator module installed.');
+/**
+ * Uninstall the deprecated media_library_theme_reset module.
+ */
+function az_quickstart_update_920601() {
+  \Drupal::service('module_installer')->uninstall(['media_library_theme_reset']);
+}
+
+/**
+ * Change Arizona Bootstrap CDN references (removed).
+ */
+function az_quickstart_update_920602() {
+  // This update has been removed.
+}
+
+/**
+ * Uninstall deprecated Drupal core modules.
+ */
+function az_quickstart_update_920603() {
+  $deprecated_modules = [
+    'aggregator',
+    'color',
+    'hal',
+    'quickedit',
+    'rdf',
+  ];
+  \Drupal::service('module_installer')->uninstall($deprecated_modules);
+}
+
+/**
+ * Ensure block_class module is installed.
+ */
+function az_quickstart_update_920604() {
+  \Drupal::service('module_installer')->install(['block_class']);
+}
+
+/**
+ * Ensure media_entity_file_replace module is installed.
+ */
+function az_quickstart_update_920701() {
+  \Drupal::service('module_installer')->install(['media_entity_file_replace']);
+}
+
+/**
+ * Empty update moved to az_paragraphs_update_1130501().
+ */
+function az_quickstart_update_920702() {
+}
+
+/**
+ * Ensure ckeditor5 module is installed.
+ */
+function az_quickstart_update_1020801() {
+  \Drupal::service('module_installer')->install(['ckeditor5']);
+}
+
+/**
+ * Enable extlink module by default.
+ */
+function az_quickstart_update_1020802() {
+  \Drupal::service('module_installer')->install(['extlink']);
+}
+
+/**
+ * Uninstall unsupported media_library_theme_reset module.
+ */
+function az_quickstart_update_1020803() {
+  \Drupal::service('module_installer')->uninstall(['media_library_theme_reset']);
+}
+
+/**
+ * Update langcode for migrated menu links to be the site's default language.
+ */
+function az_quickstart_update_1020901(&$sandbox) {
+  if (!isset($sandbox['progress'])) {
+    $sandbox['progress'] = 0;
+    $sandbox['max'] = \Drupal::entityQuery('menu_link_content')
+      ->accessCheck(FALSE)
+      ->condition('langcode', 'und')
+      ->count()
+      ->execute();
   }
+  $batch_size = 25;
+  $default_langcode = \Drupal::languageManager()->getDefaultLanguage()->getId();
+
+  $ids = \Drupal::entityQuery('menu_link_content')
+    ->accessCheck(FALSE)
+    ->condition('langcode', 'und')
+    ->range(0, $batch_size)
+    ->execute();
+  $menu_links = \Drupal::entityTypeManager()->getStorage('menu_link_content')->loadMultiple($ids);
+  foreach ($menu_links as $menu_link) {
+    $menu_link->set('langcode', $default_langcode);
+    $menu_link->save();
+    $sandbox['progress']++;
+  }
+  $sandbox['#finished'] = empty($sandbox['max']) ? 1 : $sandbox['progress'] / $sandbox['max'];
+  return t('Updated langcode on %count menu links.', ['%count' => $sandbox['progress']]);
+}
+
+/**
+ * Enable masquerade and masquerade_log modules by default.
+ */
+function az_quickstart_update_1021301() {
+  \Drupal::service('module_installer')->install(['masquerade', 'masquerade_log']);
+}
+
+/**
+ * Enable quick_node_clone module by default.
+ */
+function az_quickstart_update_1021302() {
+  \Drupal::service('module_installer')->install(['quick_node_clone']);
+}
+
+/**
+ * Enable az_icons module by default (removed).
+ */
+function az_quickstart_update_1130001() {
+  // This update was meant for 3.1.x only and was replaced by
+  // az_quickstart_install_1130101().
+}
+
+/**
+ * Enable environment_indicator_toolbar module if applicable.
+ *
+ * This update ensures that environment_indicator_toolbar is enabled on sites
+ * that have both environment_indicator and toolbar modules enabled, regardless
+ * of configuration state. This addresses an issue where the module may not
+ * have been enabled during updates due to config changes happening before the
+ * environment_indicator module's own update hook could run.
+ */
+function az_quickstart_update_1130002() {
+  $module_handler = \Drupal::service('module_handler');
+  // Check if both environment_indicator and toolbar are enabled.
+  if ($module_handler->moduleExists('environment_indicator') && $module_handler->moduleExists('toolbar')) {
+    // Enable environment_indicator_toolbar if not already enabled.
+    if (!$module_handler->moduleExists('environment_indicator_toolbar')) {
+      \Drupal::service('module_installer')->install(['environment_indicator_toolbar']);
+    }
+  }
+}
+
+/**
+ * Enable az_icons module by default.
+ */
+function az_quickstart_update_1130101() {
+  \Drupal::service('module_installer')->install(['az_icons']);
 }

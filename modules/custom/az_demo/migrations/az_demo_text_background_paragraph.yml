@@ -56,7 +56,7 @@ process:
         text_background_pattern: bg_pattern
         text_background_padding: bg_padding
         az_display_settings:
-            bottom_spacing: bottom_spacing
+          bottom_spacing: bottom_spacing
 
 dependencies:
   enforced:

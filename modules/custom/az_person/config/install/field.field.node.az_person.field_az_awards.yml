@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_az_awards
+    - node.type.az_person
+id: node.az_person.field_az_awards
+field_name: field_az_awards
+entity_type: node
+bundle: az_person
+label: Awards
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

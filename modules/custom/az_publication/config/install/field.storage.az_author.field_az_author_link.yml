@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - az_publication
+    - link
+id: az_author.field_az_author_link
+field_name: field_az_author_link
+entity_type: az_author
+type: link
+settings: {  }
+module: link
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

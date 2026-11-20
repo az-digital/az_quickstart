@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_az_title
+    - paragraphs.paragraphs_type.az_rankings
+id: paragraph.az_rankings.field_az_title
+field_name: field_az_title
+entity_type: paragraph
+bundle: az_rankings
+label: 'Rankings group title'
+description: 'Add a custom title above the group of rankings.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

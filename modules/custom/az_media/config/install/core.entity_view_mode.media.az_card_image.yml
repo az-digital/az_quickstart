@@ -5,5 +5,6 @@ dependencies:
     - media
 id: media.az_card_image
 label: 'Card Image'
+description: ''
 targetEntityType: media
 cache: true

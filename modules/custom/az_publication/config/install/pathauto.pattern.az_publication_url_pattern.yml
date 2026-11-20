@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: az_publication_url_pattern
+label: 'Publication Content Type'
+type: 'canonical_entities:node'
+pattern: 'publication/[node:title]'
+selection_criteria:
+  25cb43b1-0741-46b2-a6fc-ad3f02c8cef7:
+    id: 'entity_bundle:node'
+    negate: false
+    uuid: 25cb43b1-0741-46b2-a6fc-ad3f02c8cef7
+    context_mapping:
+      node: node
+    bundles:
+      az_publication: az_publication
+selection_logic: and
+weight: -5
+relationships: {  }

@@ -5,7 +5,7 @@ Pre-configures the contrib Drupal [CAS module](https://www.drupal.org/project/ca
 ## Requirements
 
 ### University of Arizona WebAuth
-In order to use UArizona WebAuth with your Drupal website, you must first [request WebAuth website access](https://apps.iam.arizona.edu/?&tab=webauthtab).
+If your website is hosted at an `arizona.edu` domain, and supports SSL/TLS, you do not need to register your website with WebAuth. If your website doesn't match the pattern of `https://*.arizona.edu/` you can [request SSO Access in ServiceNow](https://uarizona.service-now.com/sp?id=sc_cat_item&sys_id=203b92371bdda1104addfe6edd4bcbd2).
 
 ### Dependencies
 This module requires the following modules and libraries to be available.

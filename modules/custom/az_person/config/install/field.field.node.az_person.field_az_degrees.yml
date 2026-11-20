@@ -8,10 +8,10 @@ id: node.az_person.field_az_degrees
 field_name: field_az_degrees
 entity_type: node
 bundle: az_person
-label: Degree(s)
+label: Degrees
 description: ''
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings: {  }

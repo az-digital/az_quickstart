@@ -1,0 +1,69 @@
+/* See https://www.drupal.org/project/drupal/issues/3332416 */
+.ck.ck-toolbar.ck-toolbar_grouping > .ck.ck-toolbar__items {
+  flex-wrap: wrap;
+}
+
+/**
+ * Fix editor wrap issue
+ * See https://github.com/az-digital/az_quickstart/issues/2868.
+ */
+.ck.ck-content, .ck-source-editing-area {
+  overflow-wrap: anywhere;
+}
+
+/**
+ * Override the width of the table set by Bootstrap content styles.
+ * See: https://github.com/ckeditor/ckeditor5/issues/3253.
+ */
+ .ck.ck-content .table {
+  width: auto;
+}
+/**
+ * Configure the z-index of the editor UI, so when inside a Bootstrap
+ * modal, it will be rendered over the modal.
+ */
+ :root {
+  --ck-z-default: 100;
+  --ck-z-modal: calc( var(--ck-z-default) + 999 );
+}
+
+.ck.ck-content .table>figcaption {
+  caption-side: bottom;
+}
+
+/**
+ * Ensure white text is visible in editor.
+ */
+.ck.ck-content .text-white,
+.ck.ck-content .btn-outline-white {
+  background-color: #6c757d;
+  padding: 0.2rem;
+}
+
+/** 
+ * Hide disabled styles.
+ */
+.ck-dropdown__panel .ck.ck-style-panel .ck-style-grid .ck-disabled {
+  display: none;
+}
+
+/** 
+ * Match editor styling with that of style.css.
+ * See https://github.com/az-digital/az_quickstart/pull/4195.
+ */
+.ck .ck-content .drupal-media-style-align-left {
+  margin-right: 0;
+}
+.ck-widget.drupal-media-style-align-left ~ ul,
+.ck-widget.drupal-media-style-align-left ~ ol {
+  overflow: auto;
+  overflow-wrap: anywhere;
+  padding-inline-start: revert;
+}
+
+/**
+ * Ensure dark table preview in style picker renders with a dark background.
+ */
+.ck-dropdown__panel .ck-style-panel .ck-content .table-dark {
+  background-color: var(--bs-table-bg);
+}

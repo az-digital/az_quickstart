@@ -1,7 +1,8 @@
-#!/bin/sh
+#!/bin/bash
 
 ## Description: Provide phpcs tooling to check coding standards.
 ## Usage: phpcs [flags] [args]
 ## Example: "ddev phpcs --version"
+## ExecRaw: true
 
-vendor/bin/phpcs --colors --standard=web/profiles/custom/az_quickstart/phpcs.xml.dist web/profiles/custom/az_quickstart $@
+vendor/bin/phpcs -s --colors --standard=web/profiles/custom/az_quickstart/phpcs.xml.dist web/profiles/custom/az_quickstart "$@"

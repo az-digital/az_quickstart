@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.node.az_carousel_item.field_az_carousel_category
     - field.field.node.az_carousel_item.field_az_carousel_short_summary
     - field.field.node.az_carousel_item.field_az_link
     - field.field.node.az_carousel_item.field_az_media_image
@@ -9,6 +10,7 @@ dependencies:
   module:
     - link_class
     - media_library
+    - media_library_edit
     - path
 id: node.az_carousel_item.default
 targetEntityType: node
@@ -17,20 +19,28 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 5
+    weight: 6
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_az_carousel_category:
+    type: options_select
+    weight: 1
     region: content
     settings: {  }
     third_party_settings: {  }
   field_az_carousel_short_summary:
-    weight: 2
+    type: string_textfield
+    weight: 3
+    region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    type: string_textfield
-    region: content
   field_az_link:
-    weight: 3
+    type: link_class_field_widget
+    weight: 4
+    region: content
     settings:
       placeholder_url: ''
       placeholder_title: ''
@@ -38,41 +48,42 @@ content:
       link_class_force: 'btn btn-outline-white btn-sm'
       link_class_select: ''
     third_party_settings: {  }
-    type: link_class_field_widget
-    region: content
   field_az_media_image:
-    weight: 1
+    type: media_library_widget
+    weight: 2
+    region: content
     settings:
       media_types: {  }
-    third_party_settings: {  }
-    type: media_library_widget
-    region: content
+    third_party_settings:
+      media_library_edit:
+        show_edit: true
+        edit_form_mode: default
   path:
     type: path
-    weight: 8
+    weight: 9
     region: content
     settings: {  }
     third_party_settings: {  }
   promote:
     type: boolean_checkbox
+    weight: 7
+    region: content
     settings:
       display_label: true
-    weight: 6
-    region: content
     third_party_settings: {  }
   status:
     type: boolean_checkbox
+    weight: 11
+    region: content
     settings:
       display_label: true
-    weight: 10
-    region: content
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
+    weight: 8
+    region: content
     settings:
       display_label: true
-    weight: 7
-    region: content
     third_party_settings: {  }
   title:
     type: string_textfield
@@ -84,16 +95,16 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 4
+    weight: 5
+    region: content
     settings:
       match_operator: CONTAINS
+      match_limit: 10
       size: 60
       placeholder: ''
-      match_limit: 10
-    region: content
     third_party_settings: {  }
   url_redirects:
-    weight: 9
+    weight: 10
     region: content
     settings: {  }
     third_party_settings: {  }

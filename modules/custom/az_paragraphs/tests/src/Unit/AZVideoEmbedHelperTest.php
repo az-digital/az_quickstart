@@ -2,16 +2,17 @@
 
 namespace Drupal\Tests\az_paragraphs\Unit;
 
-use Drupal\az_paragraphs\AZVideoEmbedHelper;
 use Drupal\Tests\UnitTestCase;
+use Drupal\az_paragraphs\AZVideoEmbedHelper;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
- * @coversDefaultClass \Drupal\az_paragraphs\AZVideoEmbedHelper
- *
- * @ingroup az_paragraphs
- *
- * @group az_paragraphs
+ * Test coverage for AZVideoEmbedHelper class.
  */
+#[CoversClass(AZVideoEmbedHelper::class)]
+#[Group('az_paragraphs')]
 class AZVideoEmbedHelperTest extends UnitTestCase {
 
   /**
@@ -23,16 +24,14 @@ class AZVideoEmbedHelperTest extends UnitTestCase {
    * {@inheritdoc}
    */
   protected function setUp(): void {
+    parent::setup();
     $this->videoEmbedHelper = new AZVideoEmbedHelper();
   }
 
   /**
    * Tests parsing of YouTube video ID from URLs.
-   *
-   * @covers ::getYoutubeIdFromUrl
-   *
-   * @dataProvider providerYouTubeVideoData
    */
+  #[DataProvider('providerYouTubeVideoData')]
   public function testGetYoutubeIdFromUrl($youtube_url, $expected_id) {
     $this->assertEquals($expected_id, $this->videoEmbedHelper->getYoutubeIdFromUrl($youtube_url));
   }
@@ -40,7 +39,7 @@ class AZVideoEmbedHelperTest extends UnitTestCase {
   /**
    * Array of links and the ids they should output.
    */
-  public function providerYouTubeVideoData() {
+  public static function providerYouTubeVideoData() {
     return [
       [
         'http://youtube.com/v/dQw4w9WgXcQ?feature=youtube_gdata_player',

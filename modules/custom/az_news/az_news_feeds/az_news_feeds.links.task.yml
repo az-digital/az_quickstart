@@ -1,5 +1,5 @@
 az_news_feeds.admin:
-  title: 'Configure UArizona News Importer'
+  title: 'Configure University News Importer'
   route_name: az_news_feeds.admin_importers
   parent_id: system.admin_content
   weight: 100

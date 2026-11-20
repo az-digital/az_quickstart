@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az_enterprise_attributes_import
+label: 'Quickstart Enterprise Attributes'
+migration: az_enterprise_attributes_import
+time: 86400
+update: true
+sync: true
+ignore_dependencies: false

@@ -25,6 +25,9 @@ source:
       name: field_az_lname
       selector: az_lname
     -
+      name: field_az_suffix
+      selector: az_suffix
+    -
       name: field_az_email
       selector: az_email
     -
@@ -54,6 +57,25 @@ source:
     -
       name: filename
       selector: az_photo
+    -
+      name: netid
+      selector: netid
+    -
+      name: field_az_work_experience
+      selector: az_work_experience
+    -
+      name: field_az_awards
+      selector: az_awards
+    -
+      name: field_az_licensure_certification
+      selector: az_licensure_certification
+    -
+      name: field_az_teaching_interests
+      selector: az_teaching_interests
+    -
+      name: field_az_research_interests
+      selector: az_research_interests
+
 
 process:
   type:
@@ -63,6 +85,8 @@ process:
   field_az_fname: field_az_fname
 
   field_az_lname: field_az_lname
+
+  field_az_suffix: field_az_suffix
 
   field_az_email: field_az_email
 
@@ -126,6 +150,35 @@ process:
       source: filename
       migration:
         - az_demo_image_file
+
+  field_az_netid: netid
+
+  field_az_work_experience:
+    plugin: explode
+    source: field_az_work_experience
+    delimiter: '|'
+
+  field_az_awards:
+    plugin: explode
+    source: field_az_awards
+    delimiter: '|'
+
+  field_az_licensure_certification:
+    plugin: explode
+    source: field_az_licensure_certification
+    delimiter: '|'
+
+  'field_az_teaching_interests/value': field_az_teaching_interests
+  'field_az_teaching_interests/format':
+    -
+      plugin: default_value
+      default_value: plain_text
+
+  'field_az_research_interests/value': field_az_research_interests
+  'field_az_research_interests/format':
+    -
+      plugin: default_value
+      default_value: plain_text
 
 destination:
   plugin: entity:node

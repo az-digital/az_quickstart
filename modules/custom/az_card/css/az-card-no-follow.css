@@ -1,0 +1,5 @@
+/* Do not traverse card preview links. */
+
+.az-card-no-follow, .az-card-no-follow.btn:not(:disabled):not(.disabled) {
+    cursor: not-allowed;
+}

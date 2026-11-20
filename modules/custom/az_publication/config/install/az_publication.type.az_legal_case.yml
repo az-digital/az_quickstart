@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - az_publication
+id: az_legal_case
+type: 'legal_case'
+label: 'Legal Case'

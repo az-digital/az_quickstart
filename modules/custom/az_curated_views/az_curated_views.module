@@ -1,0 +1,89 @@
+<?php
+
+/**
+ * @file
+ * Contains az_curated_views.module.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\views\Entity\View;
+
+/**
+ * Implements hook_views_data_alter().
+ */
+function az_curated_views_views_data_alter(&$data) {
+
+  // Tell entity integrations about curation field handler.
+  foreach (\Drupal::entityTypeManager()->getDefinitions() as $entity_type) {
+    $base_table = $entity_type->getDataTable() ?: $entity_type->getBaseTable();
+    $entity_keys = $entity_type->getKeys();
+    if ($base_table && isset($data[$base_table]['table']) && isset($data[$base_table]['table']['group'])) {
+      $data[$base_table]['az_curated_views'] = [
+        'title' => $data[$base_table]['table']['group'],
+        'group' => t('Quickstart Curated Views'),
+        'help' => t('Provide view curation options based on context.'),
+        'entity field' => $entity_keys['id'],
+        'field' => [
+          'id' => 'az_curated_views_field',
+          'click sortable' => FALSE,
+        ],
+      ];
+    }
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function az_curated_views_form_views_ui_config_item_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // For draggable views options, add curated views to the display list.
+  if (!empty($form['options']['draggable_views_reference'])) {
+    $view_data = [];
+    $query = \Drupal::entityQuery('view');
+    $entity_ids = $query->execute();
+
+    // Search for views using the az_curated_views_field.
+    foreach ($entity_ids as $view_id) {
+      $v = View::load($view_id);
+
+      $default_display = NULL;
+      foreach ($v->get('display') as $display_id => $display) {
+        if ($display_id === "default") {
+          $default_display = $display;
+        }
+        else {
+          // Use default display if fields are not overwritten.
+          $fields = !empty($display['display_options']['fields'])
+            ? $display['display_options']['fields']
+            : $default_display['display_options']['fields'];
+          // Need to check that "fields" is an array, view may be configured to
+          // render rows otherwise.
+          if (is_array($fields) && in_array("az_curated_views", array_keys($fields))) {
+            if (!isset($view_data[$view_id])) {
+              $view_data[$view_id] = [
+                'id' => $view_id,
+                'label' => $v->label(),
+                'displays' => [],
+              ];
+            }
+            $view_data[$view_id]['displays'][$display_id] = [
+              'id' => $display_id,
+              'label' => $display['display_title'],
+            ];
+          }
+        }
+      }
+    }
+
+    // Add displays to option list.
+    foreach ($view_data as $view_id => $v_data) {
+      $view_key = $v_data['label'] . " (" . $view_id . ")";
+      $form['options']['draggable_views_reference']['#options'][$view_key] = [];
+
+      foreach ($v_data['displays'] as $display) {
+        $display_key = $view_id . ":" . $display['id'];
+        $form['options']['draggable_views_reference']['#options'][$view_key][$display_key] = $display['label'];
+      }
+    }
+  }
+}

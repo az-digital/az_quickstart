@@ -87,7 +87,7 @@ process:
         style: content_style
         text_media_spacing: spacing
         az_display_settings:
-            bottom_spacing: bottom_spacing
+          bottom_spacing: bottom_spacing
 
 migration_dependencies:
   required:

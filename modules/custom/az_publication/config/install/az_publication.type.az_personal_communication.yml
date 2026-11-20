@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - az_publication
+id: az_personal_communication
+type: 'personal_communication'
+label: 'Personal Communication'

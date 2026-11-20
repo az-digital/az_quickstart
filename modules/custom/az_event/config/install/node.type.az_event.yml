@@ -11,7 +11,7 @@ third_party_settings:
 name: Event
 type: az_event
 description: 'Use this content type to add calendar entries and other events.'
-help: ''
+help: null
 new_revision: true
 preview_mode: 1
 display_submitted: false

@@ -4,3 +4,21 @@
  * @file
  * Contains az_seo.module.
  */
+
+/**
+ * Implements hook_xmlsitemap_link_alter().
+ *
+ * Exclude AZQS nodes that have an external link (az_link) set.
+ */
+function az_seo_xmlsitemap_link_alter(array &$link) {
+  $check_types = ['az_event', 'az_news', 'az_person'];
+
+  if (in_array($link['subtype'], $check_types)) {
+    $node = \Drupal::entityTypeManager()->getStorage('node')->load($link['id']);
+
+    if (!empty($node->field_az_link[0]->uri)) {
+      $link['status'] = 0;
+      $link['status_override'] = 1;
+    }
+  }
+}

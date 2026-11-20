@@ -1,0 +1,24 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.az_enterprise_attributes.field_az_attribute_key
+    - field.field.taxonomy_term.az_enterprise_attributes.field_az_attribute_type
+    - taxonomy.vocabulary.az_enterprise_attributes
+  module:
+    - text
+id: taxonomy_term.az_enterprise_attributes.default
+targetEntityType: taxonomy_term
+bundle: az_enterprise_attributes
+mode: default
+content:
+  description:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  field_az_attribute_key: true
+  field_az_attribute_type: true

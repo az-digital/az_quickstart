@@ -18,14 +18,17 @@ source:
     -
       name: filename
       selector: filename
+    -
+      name: uuid
+      selector: uuid
 
 destination:
   plugin: 'entity:media'
 process:
+  uuid: uuid
   bundle:
     plugin: default_value
     default_value: az_remote_video
-
   'field_media_az_oembed_video/value': filename
 
 # Dependencies.

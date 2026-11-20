@@ -1,0 +1,14 @@
+az-media-trellis:
+  css:
+    theme:
+      css/az-media-trellis.css: {}
+  js:
+    js/az-media-trellis.js: {}
+  dependencies:
+    - core/drupal
+    - core/drupalSettings
+
+az-media-trellis.styles:
+  css:
+    theme:
+      css/az-media-trellis.css: {}

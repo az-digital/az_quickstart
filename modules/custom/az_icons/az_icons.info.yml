@@ -1,0 +1,13 @@
+name: "Quickstart Icons"
+type: module
+description: "Default configurations for icon sets in Quickstart. Leverages the UI icons module."
+package: The University of Arizona
+core_version_requirement: ^11 || ^12
+dependencies:
+  - ui_icons:ui_icons
+  - ui_icons:ui_icons_ckeditor5
+  - ui_icons:ui_icons_field
+  - ui_icons:ui_icons_font
+  - ui_icons:ui_icons_library
+  - ui_icons:ui_icons_picker
+  - ui_icons:ui_icons_text

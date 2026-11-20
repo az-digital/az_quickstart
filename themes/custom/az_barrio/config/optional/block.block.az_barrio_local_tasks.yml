@@ -1,6 +1,8 @@
 langcode: en
 status: true
 dependencies:
+  module:
+    - block_class
   theme:
     - az_barrio
 id: az_barrio_local_tasks

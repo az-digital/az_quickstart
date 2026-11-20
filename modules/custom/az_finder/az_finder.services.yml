@@ -1,0 +1,24 @@
+services:
+  _defaults:
+    autoconfigure: true
+  az_finder.icons:
+    class: Drupal\az_finder\Service\AZFinderIcons
+  az_finder.view_options:
+    class: Drupal\az_finder\Service\AZFinderViewOptions
+    arguments:
+      - '@cache.default'
+      - '@entity_type.manager'
+  az_finder.vocabulary:
+    class: Drupal\az_finder\Service\AZFinderVocabulary
+    arguments:
+      - '@entity_type.manager'
+      - '@string_translation'
+  az_finder.overrides:
+    class: Drupal\az_finder\Service\AZFinderOverrides
+    arguments:
+      - '@config.factory'
+  logger.channel.az_finder:
+    parent: logger.channel_base
+    arguments: ['az_finder']
+  az_finder.ajax_response_subscriber:
+    class: Drupal\az_finder\EventSubscriber\AZFinderAjaxResponseSubscriber

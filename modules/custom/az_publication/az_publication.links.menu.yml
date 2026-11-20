@@ -1,0 +1,7 @@
+
+# Author menu items definition
+az_author.admin.structure.settings:
+  title: 'Authors'
+  description: 'Create and manage fields, forms, and display settings for your authors.'
+  route_name: az_author.settings
+  parent: system.admin_structure

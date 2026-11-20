@@ -1,0 +1,130 @@
+id: az_demo_ranking_paragraph
+label: AZ Quickstart Demo Ranking Paragraphs
+migration_tags:
+  - Quickstart Demo Content
+  - Content
+migration_dependencies:
+  required:
+    - az_demo_image_file
+dependencies:
+  enforced:
+    module:
+      - az_ranking
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: json
+  urls:
+    - profiles/custom/az_quickstart/modules/custom/az_demo/data/az_demo_ranking_paragraph.json
+  item_selector: paragraphs
+  ids:
+    id:
+      type: integer
+  fields:
+    -
+      name: id
+      selector: id
+    -
+      name: ranking_width
+      selector: ranking_width
+    -
+      name: ranking_width_sm
+      selector: ranking_width_sm
+    -
+      name: ranking_width_xs
+      selector: ranking_width_xs
+    -
+      name: ranking_deck_title_color
+      selector: ranking_deck_title_color
+    -
+      name: ranking_alignment
+      selector: ranking_alignment
+    -
+      name: ranking_header_style
+      selector: ranking_header_style
+    -
+      name: ranking_clickable
+      selector: ranking_clickable
+    -
+      name: ranking_hover_effect
+      selector: ranking_hover_effect
+    -
+      name: ranking_title
+      selector: ranking_title
+    -
+      name: az_rankings
+      selector: az_rankings
+    -
+      name: bottom_spacing
+      selector: bottom_spacing
+
+destination:
+  plugin: 'entity_reference_revisions:paragraph'
+  default_bundle: az_rankings
+
+process:
+  field_az_title: ranking_title
+  field_az_rankings:
+    source: az_rankings
+    plugin: sub_process
+    process:
+      delta: delta
+      ranking_heading:
+        plugin: skip_on_empty
+        method: process
+        source: ranking_heading
+      ranking_description:
+        plugin: skip_on_empty
+        method: process
+        source: ranking_description
+      ranking_source:
+        plugin: skip_on_empty
+        method: process
+        source: ranking_source
+      link_title:
+        plugin: skip_on_empty
+        method: process
+        source: link_title
+      link_uri:
+        plugin: skip_on_empty
+        method: process
+        source: link_uri
+      ranking_link_style:
+        plugin: skip_on_empty
+        method: process
+        source: ranking_link_style
+      ranking_font_color:
+        plugin: skip_on_empty
+        method: process
+        source: ranking_font_color
+      media:
+        -
+          plugin: skip_on_empty
+          method: process
+          source: media
+        -
+          plugin: migration_lookup
+          migration:
+            - az_demo_image_file
+          source_ids:
+            - az_demo_image_file:
+                - filename
+      options/class: options_class
+      options/hover_class: options_hover_class
+      options/ranking_type: ranking_type
+      options/column_span: column_span
+
+  behavior_settings:
+    plugin: az_paragraphs_behavior_settings
+    paragraph_behavior_plugins:
+      az_rankings_paragraph_behavior:
+        ranking_width: ranking_width
+        ranking_deck_title_color: ranking_deck_title_color
+        ranking_alignment: ranking_alignment
+        ranking_header_style: ranking_header_style
+        ranking_clickable: ranking_clickable
+        ranking_hover_effect: ranking_hover_effect
+        az_display_settings:
+          ranking_width_sm: ranking_width_sm
+          ranking_width_xs: ranking_width_xs
+          bottom_spacing: bottom_spacing

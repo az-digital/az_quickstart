@@ -10,7 +10,7 @@ third_party_settings:
 name: 'Carousel item'
 type: az_carousel_item
 description: 'Allows users to create and order carousel items.'
-help: ''
+help: null
 new_revision: true
 preview_mode: 1
 display_submitted: false

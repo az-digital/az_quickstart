@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - crop.type.az_marketing_cloud_hero_layout
+  module:
+    - crop
+name: az_marketing_cloud_hero_layout
+label: 'Marketing Cloud - Hero Layout (600x300)'
+effects:
+  1a7907b5-69bf-454b-a78e-e4b6be7c8ec7:
+    uuid: 1a7907b5-69bf-454b-a78e-e4b6be7c8ec7
+    id: image_scale_and_crop
+    weight: -9
+    data:
+      width: 1200
+      height: 600
+      anchor: center-center
+  462a4762-1b73-4823-b82e-b10e767d6bda:
+    uuid: 462a4762-1b73-4823-b82e-b10e767d6bda
+    id: crop_crop
+    weight: -10
+    data:
+      crop_type: az_marketing_cloud_hero_layout
+      automatic_crop_provider: null

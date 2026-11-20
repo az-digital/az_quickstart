@@ -1,0 +1,26 @@
+<?php
+
+/**
+ * @file
+ * Contains az_http.module.
+ */
+
+/**
+ * Implements hook_migration_plugins_alter().
+ */
+function az_http_migration_plugins_alter(array &$migrations) {
+  // Check to see if the migration setting is enabled.
+  $enabled = \Drupal::config('az_http.settings')->get('migrations.http_cached');
+  // Do not swap plugins if the feature is not enabled.
+  if (empty($enabled)) {
+    return;
+  }
+  $affected_plugins = ['http', 'retry_http'];
+  // Swap in custom implementation for migrations which use a HTTP fetcher.
+  foreach ($migrations as &$migration) {
+    $fetcher = $migration['source']['data_fetcher_plugin'] ?? '';
+    if (in_array($fetcher, $affected_plugins)) {
+      $migration['source']['data_fetcher_plugin'] = 'az_http';
+    }
+  }
+}

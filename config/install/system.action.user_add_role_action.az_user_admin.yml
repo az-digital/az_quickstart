@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.az_user_admin
+  module:
+    - user
+id: user_add_role_action.az_user_admin
+label: 'Add the User administrator role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: az_user_admin

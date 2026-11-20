@@ -5,6 +5,8 @@ dependencies:
     - core.entity_view_mode.media.az_natural_size
     - field.field.media.az_image.field_az_caption
     - field.field.media.az_image.field_az_credit
+    - field.field.media.az_image.field_focal_point_x
+    - field.field.media.az_image.field_focal_point_y
     - field.field.media.az_image.field_media_az_image
     - image.style.az_natural
     - media.type.az_image
@@ -114,12 +116,16 @@ content:
     settings:
       image_style: az_natural
       image_link: ''
+      image_loading:
+        attribute: lazy
     third_party_settings: {  }
     type: image
     weight: 2
     region: content
 hidden:
   created: true
+  field_focal_point_x: true
+  field_focal_point_y: true
   name: true
   thumbnail: true
   uid: true

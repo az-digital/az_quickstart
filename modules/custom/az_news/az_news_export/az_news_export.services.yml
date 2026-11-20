@@ -1,0 +1,5 @@
+services:
+  az_news_export.empty_normalizer:
+    class: Drupal\az_news_export\Normalizer\AZNewsDataEmptyNormalizer
+    tags:
+      - { name: normalizer }

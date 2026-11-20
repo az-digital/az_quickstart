@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_az_publication_volume
+    - node.type.az_publication
+id: node.az_publication.field_az_publication_volume
+field_name: field_az_publication_volume
+entity_type: node
+bundle: az_publication
+label: Volume
+description: 'Volume number of the resource, e.g. 1, 7, VII.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

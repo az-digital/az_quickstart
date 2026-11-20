@@ -67,7 +67,7 @@ class AZDefaultParagraphsBehavior extends ParagraphsBehaviorBase {
    */
   protected function getSettings(ParagraphInterface $paragraph) {
     $settings = $paragraph->getAllBehaviorSettings();
-    return isset($settings[$this->pluginId]) ? $settings[$this->pluginId] : [];
+    return $settings[$this->pluginId] ?? [];
   }
 
   /**
@@ -107,7 +107,7 @@ class AZDefaultParagraphsBehavior extends ParagraphsBehaviorBase {
         'mb-10' => $this->t('10 (8.0rem | ~128px)'),
       ],
       '#default_value' => $default_bottom_spacing,
-      '#description' => $this->t('More detail on spacing can be found in the <a href="https://digital.arizona.edu/arizona-bootstrap/docs/2.0/utilities/spacing/" target="_blank">AZ Bootstrap documentation</a>.'),
+      '#description' => $this->t('More detail on spacing can be found in the <a href="https://digital.arizona.edu/arizona-bootstrap/v5/docs/5.2/utilities/spacing/" target="_blank">AZ Bootstrap documentation</a>.'),
       '#weight' => 10,
     ];
 
@@ -128,9 +128,6 @@ class AZDefaultParagraphsBehavior extends ParagraphsBehaviorBase {
 
     /** @var \Drupal\paragraphs\Entity\Paragraph $paragraph */
     $paragraph = $variables['paragraph'];
-
-    // Get plugin configuration.
-    $config = $this->getSettings($paragraph);
 
     // Get the paragraph bundle name and compute name of potential library.
     $bundle = $paragraph->bundle();

@@ -1,0 +1,5 @@
+az_course.import_form_link:
+  route_name: az_course.course_import_form
+  parent: az_core.az_quickstart
+  title: 'Import Courses'
+  description: 'Import courses from The University of Arizona courses API.'

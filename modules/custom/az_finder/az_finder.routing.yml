@@ -1,0 +1,7 @@
+az_finder.settings:
+  path: '/admin/config/az-quickstart/settings/az-finder'
+  defaults:
+    _form: '\Drupal\az_finder\Form\AZFinderSettingsForm'
+    _title: 'AZ Finder Settings'
+  requirements:
+    _permission: 'administer az_finder settings'

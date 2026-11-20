@@ -2,12 +2,18 @@
 
 namespace Drupal\az_migration\Plugin\migrate\process;
 
+use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
 
 /**
  * Process plugin that maps QS1 view & display names QS2 view & display names.
+ *
+ * @deprecated in az_quickstart:3.5.0 and is removed from az_quickstart:4.0.0.
+ * There is no replacement.
+ *
+ * @see https://www.drupal.org/node/3533564
  *
  * Used to map view and display names in uaqs_content_chunks_view Quickstart 1
  * source paragraphs into view and display names suitable for use
@@ -38,11 +44,8 @@ use Drupal\migrate\Row;
  * @see https://github.com/az-digital/az_quickstart/pull/1109
  * @see https://github.com/az-digital/az_quickstart/issues/880
  * // @codingStandardsIgnoreEnd
- *
- * @MigrateProcessPlugin(
- *   id = "paragraphs_chunks_view_display_mapping"
- * )
  */
+#[MigrateProcess('paragraphs_chunks_view_display_mapping')]
 class ParagraphsChunksViewDisplayMapping extends ProcessPluginBase {
 
   /**

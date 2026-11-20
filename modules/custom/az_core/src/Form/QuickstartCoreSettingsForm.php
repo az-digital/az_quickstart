@@ -3,6 +3,7 @@
 namespace Drupal\az_core\Form;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Config\TypedConfigManagerInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Path\PathValidatorInterface;
@@ -57,6 +58,8 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The factory for configuration objects.
+   * @param \Drupal\Core\Config\TypedConfigManagerInterface|null $typedConfigManager
+   *   The typed config manager.
    * @param \Drupal\Core\Routing\RouteBuilderInterface $route_builder
    *   The route builder.
    * @param \Drupal\Core\Routing\RouteProviderInterface $route_provider
@@ -68,8 +71,8 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
    * @param \Drupal\Core\Routing\RequestContext $request_context
    *   The request context.
    */
-  public function __construct(ConfigFactoryInterface $config_factory, RouteBuilderInterface $route_builder, RouteProviderInterface $route_provider, AliasManagerInterface $alias_manager, PathValidatorInterface $path_validator, RequestContext $request_context) {
-    parent::__construct($config_factory);
+  public function __construct(ConfigFactoryInterface $config_factory, TypedConfigManagerInterface|null $typedConfigManager, RouteBuilderInterface $route_builder, RouteProviderInterface $route_provider, AliasManagerInterface $alias_manager, PathValidatorInterface $path_validator, RequestContext $request_context) {
+    parent::__construct($config_factory, $typedConfigManager);
 
     $this->routeBuilder = $route_builder;
     $this->routeProvider = $route_provider;
@@ -85,6 +88,7 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('config.factory'),
+      $container->get('config.typed'),
       $container->get('router.builder'),
       $container->get('router.route_provider'),
       $container->get('path_alias.manager'),
@@ -116,19 +120,19 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
 
     $form['clear_cache'] = [
       '#type' => 'details',
-      '#title' => t('Clear cache'),
+      '#title' => $this->t('Clear cache'),
       '#open' => TRUE,
     ];
 
     $form['clear_cache']['clear'] = [
       '#type' => 'submit',
-      '#value' => t('Clear all caches'),
+      '#value' => $this->t('Clear all caches'),
       '#submit' => ['::submitCacheClear'],
     ];
 
     $form['site_name'] = [
       '#type' => 'textfield',
-      '#title' => t('Site name'),
+      '#title' => $this->t('Site name'),
       '#default_value' => $site_config->get('name'),
       '#required' => TRUE,
     ];
@@ -173,22 +177,22 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
 
     $form['monitoring_page'] = [
       '#type' => 'details',
-      '#title' => t('Monitoring page'),
+      '#title' => $this->t('Monitoring page'),
       '#open' => TRUE,
       '#access' => $this->currentUser()->hasPermission('administer site configuration'),
     ];
 
     $form['monitoring_page']['monitoring_page_enabled'] = [
-      '#title' => t('Enable monitoring page'),
+      '#title' => $this->t('Enable monitoring page'),
       '#type' => 'checkbox',
-      '#description' => t("Provides an uncacheable page intended for use with uptime monitoring tools to check the health of the site, bypassing any edge cache layer (e.g. varnish)."),
+      '#description' => $this->t("Provides an uncacheable page intended for use with uptime monitoring tools to check the health of the site, bypassing any edge cache layer (e.g. varnish)."),
       '#default_value' => $az_core_config->get('monitoring_page.enabled'),
     ];
 
     $form['monitoring_page']['monitoring_page_path'] = [
-      '#title' => t('Monitoring page path'),
+      '#title' => $this->t('Monitoring page path'),
       '#type' => 'textfield',
-      '#description' => t('Path for monitoring page.'),
+      '#description' => $this->t('Path for monitoring page.'),
       '#default_value' => $az_core_config->get('monitoring_page.path'),
       '#element_validate' => ['::monitoringPagePathValidate'],
       '#states' => [
@@ -196,6 +200,20 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
         'enabled' => [':input[name="monitoring_page_enabled"]' => ['checked' => TRUE]],
         'required' => [':input[name="monitoring_page_enabled"]' => ['checked' => TRUE]],
       ],
+    ];
+
+    $form['enterprise_attributes'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Enterprise attributes'),
+      '#open' => FALSE,
+      '#access' => $this->currentUser()->hasPermission('administer site configuration'),
+    ];
+
+    $form['enterprise_attributes']['enterprise_attributes_locked'] = [
+      '#title' => $this->t('Enterprise attributes edits prohibited'),
+      '#type' => 'checkbox',
+      '#description' => $this->t("With this setting enabled, edits to the enterprise attributes taxonomy will be prohibited (recommended)."),
+      '#default_value' => $az_core_config->get('enterprise_attributes.locked'),
     ];
 
     return parent::buildForm($form, $form_state);
@@ -253,7 +271,7 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
    * @param array $element
    *   An associative array containing the properties and children of the
    *   generic form element.
-   * @param Drupal\Core\Form\FormStateInterface $form_state
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   The current state of the form.
    * @param array $complete_form
    *   The complete form structure.
@@ -262,13 +280,13 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
     if ($form_state->getValue('monitoring_page_enabled')) {
       $submitted_value = $form_state->getValue('monitoring_page_path');
       if (empty($submitted_value)) {
-        $form_state->setError($element, t('A monitoring page path must be provided.'));
+        $form_state->setError($element, $this->t('A monitoring page path must be provided.'));
       }
 
       $path = strtolower(trim(trim($submitted_value), " \\/"));
       if (!empty($path) && $submitted_value !== $element['#default_value']) {
         if ($this->routeProvider->getRoutesByPattern($path)->count()) {
-          $form_state->setError($element, t('The path is already in use.'));
+          $form_state->setError($element, $this->t('The path is already in use.'));
         }
       }
     }
@@ -288,6 +306,7 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
     $this->config('az_core.settings')
       ->set('monitoring_page.enabled', $form_state->getValue('monitoring_page_enabled'))
       ->set('monitoring_page.path', $form_state->getValue('monitoring_page_path'))
+      ->set('enterprise_attributes.locked', $form_state->getValue('enterprise_attributes_locked'))
       ->save();
 
     $this->routeBuilder->setRebuildNeeded();

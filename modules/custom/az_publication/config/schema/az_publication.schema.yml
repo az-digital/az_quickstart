@@ -1,0 +1,7 @@
+az_publication.settings:
+  type: config_object
+  label: 'AZ Publication settings'
+  mapping:
+    default_citation_style:
+      type: string
+      label: 'Default Citation Style to be used throughout the site.'

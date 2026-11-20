@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - field.field.node.az_flexible_page.field_az_main_content
+    - field.field.node.az_flexible_page.field_az_marketing_page_style
     - field.field.node.az_flexible_page.field_az_media_image
     - field.field.node.az_flexible_page.field_az_page_category
     - field.field.node.az_flexible_page.field_az_summary
@@ -30,6 +31,8 @@ content:
     weight: 0
     region: content
 hidden:
+  field_az_marketing_page_style: true
   field_az_media_image: true
   field_az_page_category: true
   field_az_summary: true
+  smart_title: true

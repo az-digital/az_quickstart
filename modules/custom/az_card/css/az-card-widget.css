@@ -24,6 +24,7 @@ tr.odd .az-card-elements .form-item {
   overflow: hidden;
 }
 
+.az-card-elements.az-card-elements-closed .form-type--linkit,
 .az-card-elements.az-card-elements-closed .form-type--textfield,
 .az-card-elements.az-card-elements-closed .form-type--textarea,
 .az-card-elements.az-card-elements-closed .filter-wrapper,

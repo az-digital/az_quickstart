@@ -2,12 +2,18 @@
 
 namespace Drupal\az_migration\Plugin\migrate\process;
 
+use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
 
 /**
  * Process Plugin to handle Full-Width Media Row Paragraphs from QS1.
+ *
+ * @deprecated in az_quickstart:3.5.0 and is removed from az_quickstart:4.0.0.
+ * There is no replacement.
+ *
+ * @see https://www.drupal.org/node/3533564
  *
  * Quickstart 1 to Quickstart 2 Process plugin to extract specific field values
  * from the source, (uaqs_full_width_media_row paragraphs), and transforming
@@ -36,11 +42,8 @@ use Drupal\migrate\Row;
  *   body: field_uaqs_summary
  *   link: field_uaqs_links
  * @endcode
- *
- * @MigrateProcessPlugin(
- *   id = "paragraphs_fw_media_row_field_merge"
- * )
  */
+#[MigrateProcess('paragraphs_fw_media_row_field_merge')]
 class ParagraphsFWMediaRowFieldMerge extends ProcessPluginBase {
 
   /**
@@ -58,7 +61,7 @@ class ParagraphsFWMediaRowFieldMerge extends ProcessPluginBase {
     if (!empty($this->configuration['link'])) {
       $link = $row->getSourceProperty($this->configuration['link']);
       foreach ($link as $link_item) {
-        $attributes = unserialize($link_item['attributes']);
+        $attributes = unserialize($link_item['attributes'], ['allowed_classes' => FALSE]);
         $value['markup'] .= '<a href="' . $link_item['url'] . '" class="' . $attributes['class'] . '">' . $link_item['title'] . '</a>';
       }
     }

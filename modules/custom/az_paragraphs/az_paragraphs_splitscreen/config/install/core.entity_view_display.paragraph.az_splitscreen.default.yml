@@ -1,0 +1,96 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.az_splitscreen.field_az_media
+    - field.field.paragraph.az_splitscreen.field_az_text_area
+    - image.style.az_large
+    - paragraphs.paragraphs_type.az_splitscreen
+  module:
+    - field_group
+    - media
+    - text
+  enforced:
+    module:
+      - az_paragraphs_splitscreen
+third_party_settings:
+  field_group:
+    group_split_screen:
+      children:
+        - field_az_media
+      label: 'Split Screen Image'
+      parent_name: ''
+      region: content
+      weight: 2
+      format_type: html_element
+      format_settings:
+        classes: 'az-splitscreen-image d-flex'
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_split_screen_content:
+      children:
+        - group_splitscreen_text
+      label: 'Split Screen Content'
+      parent_name: ''
+      region: content
+      weight: 3
+      format_type: html_element
+      format_settings:
+        classes: 'az-splitscreen-content d-flex align-items-center p-4 p-lg-6'
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_splitscreen_text:
+      children:
+        - field_az_text_area
+      label: 'Splitscreen Text'
+      parent_name: group_split_screen_content
+      region: content
+      weight: 4
+      format_type: html_element
+      format_settings:
+        classes: az-splitscreen-text
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+id: paragraph.az_splitscreen.default
+targetEntityType: paragraph
+bundle: az_splitscreen
+mode: default
+content:
+  field_az_media:
+    type: media_thumbnail
+    label: hidden
+    settings:
+      image_link: ''
+      image_style: az_large
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_az_text_area:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden: {  }

@@ -11,7 +11,7 @@ third_party_settings:
 name: Person
 type: az_person
 description: 'Use this content type to add a person profile to your site'
-help: ''
+help: null
 new_revision: true
 preview_mode: 1
 display_submitted: false

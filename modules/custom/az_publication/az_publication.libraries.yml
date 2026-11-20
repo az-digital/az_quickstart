@@ -1,0 +1,8 @@
+az_publication_picker:
+  js:
+    js/az_publication_date_picker.js: {}
+  dependencies:
+    - az_core/vanilla-calendar-pro
+    - az_core/az-date-picker-integration
+    - core/drupal
+    - core/once

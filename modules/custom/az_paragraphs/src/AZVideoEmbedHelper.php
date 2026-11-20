@@ -8,13 +8,13 @@ namespace Drupal\az_paragraphs;
 class AZVideoEmbedHelper {
 
   /**
-   * Get YouTube video id from URL.
+   * Get YouTube/Vimeo video id from URL.
    *
    * @param string $url
-   *   A YouTube url.
+   *   A YouTube/Vimeo url.
    *
    * @return mixed
-   *   String Youtube video ID or boolean FALSE if not found.
+   *   String Youtube/Vimeo video ID or boolean FALSE if not found.
    */
   public function getYoutubeIdFromUrl($url) {
     $parts = parse_url($url);
@@ -27,6 +27,8 @@ class AZVideoEmbedHelper {
         return $qs['vi'];
       }
     }
+
+    // Extract the last segment from the path for both YouTube and Vimeo.
     if (isset($parts['path'])) {
       $path = explode('/', trim($parts['path'], '/'));
       return $path[count($path) - 1];
