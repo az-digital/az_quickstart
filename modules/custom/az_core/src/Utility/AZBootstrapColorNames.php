@@ -19,6 +19,15 @@ final class AZBootstrapColorNames {
    * Matches $deprecated-color-names in Arizona Bootstrap's
    * scss/custom/_variables.scss.
    *
+   * getClassMap() below uses this list. az_icons also uses it to render
+   * icons saved with an old color name: an icon saved as sky gets the class
+   * text-rain on the page. New icons are saved in the db with the old names,
+   * so don't remove a mapping, even after Arizona Bootstrap removes it.
+   *
+   * Note: az_icons.icons.yml references this const by name, so if you rename
+   * it, static analysis tools can't warn you that every page with an icon
+   * will break.
+   *
    * @var array<string, string>
    */
   const DEPRECATED_COLOR_NAMES = [
