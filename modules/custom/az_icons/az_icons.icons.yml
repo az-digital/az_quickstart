@@ -22,25 +22,51 @@ arizona_icons:
         - inherit
         - red
         - blue
-        - cool-gray
-        - warm-gray
-        - midnight
+        - cloud
+        - caliche
+        - tinta
         - azurite
-        - oasis
-        - chili
-        - bloom
-        - sky
-        - leaf
-        - river
-        - mesa
+        - arroyo-blue
+        - sonoran-red
+        - bougainvillea
+        - rain
+        - saguaro
+        - shade
+        - brick
         - white
         - black
+      # The labels the icon dialog shows. Every enum value needs a label here:
+      # Drupal drops a value that has none.
+      meta:enum:
+        inherit: Inherit
+        red: Arizona Red
+        blue: Arizona Blue
+        cloud: Cloud
+        caliche: Caliche
+        tinta: Tinta
+        azurite: Azurite
+        arroyo-blue: Arroyo Blue
+        sonoran-red: Sonoran Red
+        bougainvillea: Bougainvillea
+        rain: Rain
+        saguaro: Saguaro
+        shade: Shade
+        brick: Brick
+        white: White
+        black: Black
       default: inherit
   library: "az_icons/arizona_icons"
+  # Some icons are still saved with an old Arizona Bootstrap color name, such
+  # as sky: old revisions and drafts that
+  # az_icons_post_update_rename_icon_colors() didn't reach, and content added
+  # later. The templates look the old name up in the old-to-new name map and
+  # print the new class, such as text-rain.
   template: >-
-    <i class="az-icon-{{ icon_id|clean_class }} {% if color != 'inherit' %}text-{{ color }}{% endif %}" style="font-size: {{ size|default(24) }}px; line-height: {{ size|default(24) }}px;" title="{{ icon_id }}"></i>
+    {% set new_names = constant('Drupal\\az_core\\Utility\\AZBootstrapColorNames::DEPRECATED_COLOR_NAMES') -%}
+    <i class="az-icon-{{ icon_id|clean_class }} {% if color and color != 'inherit' %}text-{{ new_names[color] ?? color }}{% endif %}" style="font-size: {{ size|default(24) }}px; line-height: {{ size|default(24) }}px;" title="{{ icon_id }}"></i>
   preview: >
-    <i class="az-icon-{{ icon_id|clean_class }} {% if color != 'inherit' %}text-{{ color }}{% endif %}" style="font-size:35px" title="{{ icon_id }}"></i>
+    {% set new_names = constant('Drupal\\az_core\\Utility\\AZBootstrapColorNames::DEPRECATED_COLOR_NAMES') -%}
+    <i class="az-icon-{{ icon_id|clean_class }} {% if color and color != 'inherit' %}text-{{ new_names[color] ?? color }}{% endif %}" style="font-size:35px" title="{{ icon_id }}"></i>
 
 # Material symbols icons
 material_symbols:
@@ -70,22 +96,44 @@ material_symbols:
         - inherit
         - red
         - blue
-        - cool-gray
-        - warm-gray
-        - midnight
+        - cloud
+        - caliche
+        - tinta
         - azurite
-        - oasis
-        - chili
-        - bloom
-        - sky
-        - leaf
-        - river
-        - mesa
+        - arroyo-blue
+        - sonoran-red
+        - bougainvillea
+        - rain
+        - saguaro
+        - shade
+        - brick
         - white
         - black
+      # The labels the icon dialog shows. Every enum value needs a label here:
+      # Drupal drops a value that has none.
+      meta:enum:
+        inherit: Inherit
+        red: Arizona Red
+        blue: Arizona Blue
+        cloud: Cloud
+        caliche: Caliche
+        tinta: Tinta
+        azurite: Azurite
+        arroyo-blue: Arroyo Blue
+        sonoran-red: Sonoran Red
+        bougainvillea: Bougainvillea
+        rain: Rain
+        saguaro: Saguaro
+        shade: Shade
+        brick: Brick
+        white: White
+        black: Black
       default: inherit
   library: "az_icons/material_symbols"
+  # See the note on the arizona_icons templates.
   template: >-
-    <span class="material-symbols-rounded {% if color != 'inherit' %}text-{{ color }}{% endif %}" style="font-size:{{ size|default(24) }}px;">{{ icon_id }}</span>
+    {% set new_names = constant('Drupal\\az_core\\Utility\\AZBootstrapColorNames::DEPRECATED_COLOR_NAMES') -%}
+    <span class="material-symbols-rounded {% if color and color != 'inherit' %}text-{{ new_names[color] ?? color }}{% endif %}" style="font-size:{{ size|default(24) }}px;">{{ icon_id }}</span>
   preview: >
-    <span class="material-symbols-rounded {% if color != 'inherit' %}text-{{ color }}{% endif %}" style="font-size:35px;">{{ icon_id }}</span>
+    {% set new_names = constant('Drupal\\az_core\\Utility\\AZBootstrapColorNames::DEPRECATED_COLOR_NAMES') -%}
+    <span class="material-symbols-rounded {% if color and color != 'inherit' %}text-{{ new_names[color] ?? color }}{% endif %}" style="font-size:35px;">{{ icon_id }}</span>
