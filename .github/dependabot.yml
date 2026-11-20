@@ -73,7 +73,9 @@ updates:
 
   # GitHub Actions updates
   - package-ecosystem: "github-actions"
-    directory: "/"
+    directories:
+      - "/"
+      - "/.github/actions/build-site"
     schedule:
       interval: "daily"
     cooldown:

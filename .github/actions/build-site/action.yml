@@ -1,0 +1,190 @@
+name: Build Quickstart site
+description: >-
+  Builds a Quickstart site with composer from matching branches of the profile,
+  a project template and the dev package. PHP and composer must already be set
+  up.
+
+# A Quickstart site is assembled from three repositories: the profile
+# (az_quickstart), a project template (az-quickstart-scaffolding) and the dev
+# package (az-quickstart-dev). The repository that triggered the workflow is
+# the one under test and is always built from the triggering branch. For the
+# other repositories, the first of these branches that exists is used:
+#
+#   1. The explicit ref passed as an input, if any.
+#   2. A branch with the same name as the triggering (pull request) branch.
+#   3. A branch with the same name as the requested profile ref, if any.
+#   4. A branch with the same name as the pull request's base branch.
+#   5. The default development branch for the release series.
+
+inputs:
+  template:
+    description: Project template to build the site from. Only "scaffolding" is supported so far.
+    default: scaffolding
+  path:
+    description: Directory to build the site in, relative to the workspace.
+    default: site
+  quickstart-ref:
+    description: Profile (az_quickstart) branch to build. Defaults to the best match for the triggering branch.
+    default: ''
+  template-ref:
+    description: Project template branch to build from. Defaults to the best match for the triggering branch.
+    default: ''
+  dev-ref:
+    description: Dev package (az-quickstart-dev) branch to install. Defaults to the best match for the triggering branch.
+    default: ''
+
+outputs:
+  path:
+    description: Absolute path of the built site.
+    value: ${{ github.workspace }}/${{ inputs.path }}
+  profile-ref:
+    description: Profile branch that was built.
+    value: ${{ steps.refs.outputs.profile-ref }}
+  template-ref:
+    description: Project template branch that was built. Empty when the template is the repository under test.
+    value: ${{ steps.refs.outputs.template-ref }}
+  dev-ref:
+    description: Dev package branch that was installed.
+    value: ${{ steps.refs.outputs.dev-ref }}
+
+runs:
+  using: composite
+  steps:
+    - name: Resolve branches
+      id: refs
+      shell: bash
+      env:
+        TEMPLATE: ${{ inputs.template }}
+        INPUT_QUICKSTART_REF: ${{ inputs.quickstart-ref }}
+        INPUT_TEMPLATE_REF: ${{ inputs.template-ref }}
+        INPUT_DEV_REF: ${{ inputs.dev-ref }}
+        PR_HEAD_REPO_URL: ${{ github.event.pull_request.head.repo.clone_url }}
+      run: |
+        ORG_URL="$GITHUB_SERVER_URL/az-digital"
+        if [[ "$TEMPLATE" != "scaffolding" ]]; then
+          echo "::error::The '$TEMPLATE' project template is not supported yet. Only 'scaffolding' is implemented."
+          exit 1
+        fi
+
+        # Compare by repository name only, so this also works in a fork.
+        CALLER="${GITHUB_REPOSITORY##*/}"
+
+        # The branch being tested, and the branch it will be merged into.
+        if [[ "$GITHUB_EVENT_NAME" == pull_request* ]]; then
+          SOURCE_REF="$GITHUB_HEAD_REF"
+          TARGET_REF="$GITHUB_BASE_REF"
+        else
+          SOURCE_REF="$GITHUB_REF_NAME"
+          TARGET_REF="$GITHUB_REF_NAME"
+        fi
+
+        # Where to fetch the repository under test from. For pull requests from
+        # forks this is the fork, since the branch is not in the base repository.
+        CALLER_URL="${PR_HEAD_REPO_URL:-$GITHUB_SERVER_URL/$GITHUB_REPOSITORY.git}"
+
+        # The 2.x branches of the profile and scaffolding repositories pair
+        # with the 1.x branch of the dev package.
+        if [[ -n "$INPUT_QUICKSTART_REF" ]]; then
+          SERIES_REF="$INPUT_QUICKSTART_REF"
+        else
+          SERIES_REF="$TARGET_REF"
+        fi
+        PREVIOUS_SERIES_PREFIX="2."
+        if [[ -z "$INPUT_QUICKSTART_REF" && "$CALLER" == "az-quickstart-dev" ]]; then
+          PREVIOUS_SERIES_PREFIX="1."
+        fi
+        if [[ "$SERIES_REF" == "$PREVIOUS_SERIES_PREFIX"* ]]; then
+          DEFAULT_REF="2.x"
+          DEFAULT_DEV_REF="1.x"
+        else
+          DEFAULT_REF="main"
+          DEFAULT_DEV_REF="main"
+        fi
+
+        # Prints the first candidate branch that exists in the repository.
+        # Usage: pick_ref <repository name> <default> <candidate>...
+        pick_ref() {
+          local repo="$1" default="$2" candidate
+          shift 2
+          for candidate in "$@"; do
+            if [[ -n "$candidate" && -n "$(git ls-remote --heads "$ORG_URL/$repo.git" "refs/heads/$candidate")" ]]; then
+              echo "$candidate"
+              return
+            fi
+          done
+          echo "$default"
+        }
+
+        # Profile.
+        PROFILE_URL="$ORG_URL/az_quickstart.git"
+        if [[ -n "$INPUT_QUICKSTART_REF" ]]; then
+          PROFILE_REF="$INPUT_QUICKSTART_REF"
+        elif [[ "$CALLER" == "az_quickstart" ]]; then
+          PROFILE_REF="$SOURCE_REF"
+          PROFILE_URL="$CALLER_URL"
+        else
+          PROFILE_REF="$(pick_ref az_quickstart "$DEFAULT_REF" "$SOURCE_REF" "$TARGET_REF")"
+        fi
+
+        # Project template. An empty ref means "the commit that triggered the
+        # workflow", which for pull requests is the merge commit.
+        TEMPLATE_REPOSITORY="az-digital/az-quickstart-scaffolding"
+        if [[ -n "$INPUT_TEMPLATE_REF" ]]; then
+          TEMPLATE_REF="$INPUT_TEMPLATE_REF"
+        elif [[ "$CALLER" == "az-quickstart-scaffolding" ]]; then
+          TEMPLATE_REPOSITORY="$GITHUB_REPOSITORY"
+          TEMPLATE_REF=""
+        else
+          TEMPLATE_REF="$(pick_ref az-quickstart-scaffolding "$DEFAULT_REF" "$SOURCE_REF" "$INPUT_QUICKSTART_REF" "$TARGET_REF")"
+        fi
+
+        # Dev package. The URL is only set when the dev package is under test,
+        # so that it is installed from version control instead of Packagist.
+        DEV_URL=""
+        if [[ -n "$INPUT_DEV_REF" ]]; then
+          DEV_REF="$INPUT_DEV_REF"
+        elif [[ "$CALLER" == "az-quickstart-dev" ]]; then
+          DEV_REF="$SOURCE_REF"
+          DEV_URL="$CALLER_URL"
+        else
+          DEV_REF="$(pick_ref az-quickstart-dev "$DEFAULT_DEV_REF" "$SOURCE_REF" "$INPUT_QUICKSTART_REF" "$TARGET_REF")"
+        fi
+
+        {
+          echo "profile-ref=$PROFILE_REF"
+          echo "profile-url=$PROFILE_URL"
+          echo "template-repository=$TEMPLATE_REPOSITORY"
+          echo "template-ref=$TEMPLATE_REF"
+          echo "dev-ref=$DEV_REF"
+          echo "dev-url=$DEV_URL"
+        } | tee -a "$GITHUB_OUTPUT"
+    - name: Checkout project template
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        repository: ${{ steps.refs.outputs.template-repository }}
+        ref: ${{ steps.refs.outputs.template-ref }}
+        path: ${{ inputs.path }}
+    - name: Install dependencies
+      shell: bash
+      working-directory: ${{ inputs.path }}
+      env:
+        PROFILE_REF: ${{ steps.refs.outputs.profile-ref }}
+        PROFILE_URL: ${{ steps.refs.outputs.profile-url }}
+        DEV_REF: ${{ steps.refs.outputs.dev-ref }}
+        DEV_URL: ${{ steps.refs.outputs.dev-url }}
+      run: |
+        composer config repositories.az_quickstart vcs "$PROFILE_URL"
+        composer config preferred-install.az-digital/az_quickstart source
+        composer config use-github-api false
+        ./quickstart_branch.sh --branch "$PROFILE_REF"
+        if [[ -n "$DEV_URL" ]]; then
+          composer config repositories.az-quickstart-dev vcs "$DEV_URL"
+          composer config preferred-install.az-digital/az-quickstart-dev source
+        fi
+        if [[ "$DEV_REF" =~ ^[0-9]\.[0-9x] ]]; then
+          DEV_PACKAGE_VERSION="$DEV_REF-dev"
+        else
+          DEV_PACKAGE_VERSION="dev-$DEV_REF"
+        fi
+        composer require --no-update --dev "az-digital/az-quickstart-dev:$DEV_PACKAGE_VERSION"
+        composer install -o

@@ -2,7 +2,7 @@
 #
 # Drupal core's DeprecationBridge test extension reads this file from the
 # SYMFONY_DEPRECATIONS_HELPER environment variable, which is set in
-# .github/workflows/ci.yml and .ddev/config.quickstart.yaml:
+# .github/workflows/ci-reusable.yml and .ddev/config.quickstart.yaml:
 #   SYMFONY_DEPRECATIONS_HELPER="ignoreFile=/path/to/az_quickstart/.deprecation-ignore.txt"
 # Each non-comment line is a PCRE pattern matched against deprecation messages.
 # See https://www.drupal.org/node/3285162

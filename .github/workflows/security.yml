@@ -17,48 +17,12 @@ jobs:
         uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
         with:
           php-version: '8.5'
-      - name: Find the push source branch name
-        if: ${{ github.event_name != 'pull_request' }}
-        run: echo "AZ_TRIMMED_REF=${GITHUB_REF#refs/*/}" >> ${GITHUB_ENV}
-      - name: Find the pull request source branch name
-        if: ${{ github.event_name == 'pull_request' }}
-        run: echo "AZ_TRIMMED_REF=${GITHUB_HEAD_REF}" >> ${GITHUB_ENV}
-      - name: Set variables
-        run: |
-          if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $AZ_TRIMMED_REF | wc -l) = 1 ]; then
-            echo "SCAFFOLD_BRANCH=${AZ_TRIMMED_REF}" >> ${GITHUB_ENV}
-          else
-            echo "SCAFFOLD_BRANCH=main" >> ${GITHUB_ENV}
-          fi
-          if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-dev.git $AZ_TRIMMED_REF | wc -l) = 1 ]; then
-            echo "DEV_PACKAGE_BRANCH=${AZ_TRIMMED_REF}" >> ${GITHUB_ENV}
-          else
-            echo "DEV_PACKAGE_BRANCH=main" >> ${GITHUB_ENV}
-          fi
-      - name: Clone scaffolding repo
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          repository: az-digital/az-quickstart-scaffolding
-          path: az-quickstart-scaffolding
-          ref: ${{ env.SCAFFOLD_BRANCH }}
-      - name: Install dependencies
-        run: |
-          cd az-quickstart-scaffolding
-          composer config repositories.az_quickstart vcs https://github.com/az-digital/az_quickstart.git
-          composer config preferred-install.az-digital/az_quickstart source
-          composer config use-github-api false
-          ./quickstart_branch.sh --branch ${AZ_TRIMMED_REF}
-          if [[ ${DEV_PACKAGE_BRANCH} =~ ^[0-9]\.[0-9x] ]]; then
-            DEV_PACKAGE_VERSION="${DEV_PACKAGE_BRANCH}-dev"
-          else
-            DEV_PACKAGE_VERSION="dev-${DEV_PACKAGE_BRANCH}"
-          fi
-          composer require --no-update --dev az-digital/az-quickstart-dev:${DEV_PACKAGE_VERSION}
-          composer install -o
+      - name: Build site
+        id: build
+        uses: ./.github/actions/build-site
       - name: Audit composer dependencies
-        run: |
-          cd az-quickstart-scaffolding
-          composer audit
+        working-directory: ${{ steps.build.outputs.path }}
+        run: composer audit
 
   yarn-npm-audit:
     name: yarn npm audit (security)

@@ -1,0 +1,454 @@
+name: Quickstart CI (reusable)
+
+# Builds a Quickstart site and runs the Quickstart checks against it.
+#
+# This workflow is called by ci.yml in this repository and can be called from
+# the other Quickstart repositories. The repository that calls it is built from
+# the branch that triggered the workflow, and matching branches are used for
+# the other Quickstart repositories (see .github/actions/build-site).
+#
+# The calling job must grant these permissions:
+#   contents: read
+#   checks: write
+#   pull-requests: read
+on:
+  workflow_call:
+    inputs:
+      template:
+        description: Project template to build the site from. Only "scaffolding" is supported so far.
+        type: string
+        default: scaffolding
+      quickstart-ref:
+        description: Profile (az_quickstart) branch to build. Defaults to the best match for the triggering branch.
+        type: string
+        default: ''
+      template-ref:
+        description: Project template branch to build from. Defaults to the best match for the triggering branch.
+        type: string
+        default: ''
+      dev-ref:
+        description: Dev package (az-quickstart-dev) branch to install. Defaults to the best match for the triggering branch.
+        type: string
+        default: ''
+      php-version:
+        description: PHP version to run the checks with.
+        type: string
+        default: '8.5'
+      composer-validate:
+        description: Run composer validate on the calling repository.
+        type: boolean
+        default: true
+      phpcs:
+        description: Run PHP_CodeSniffer.
+        type: boolean
+        default: true
+      phpstan:
+        description: Run PHPStan.
+        type: boolean
+        default: true
+      composer-audit:
+        description: Run composer audit on the built site.
+        type: boolean
+        default: true
+      yarn-audit:
+        description: Run yarn npm audit on the calling repository.
+        type: boolean
+        default: true
+      eslint:
+        description: Run eslint on the calling repository.
+        type: boolean
+        default: true
+      phpunit:
+        description: Run the PHPUnit tests.
+        type: boolean
+        default: true
+      install:
+        description: Install a site with drush and check for PHP errors.
+        type: boolean
+        default: true
+      upgrade-status:
+        description: Generate an upgrade_status report.
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+env:
+  # Directory the site is built in, relative to the workspace.
+  SITE_DIR: site
+  # Location of the profile within the built site.
+  PROFILE_PATH: web/profiles/custom/az_quickstart
+  # Identifies the build shared by the jobs of one call to this workflow. It
+  # includes every input that changes what is built, so that several calls in
+  # one workflow run do not share a build. It is hashed into the build
+  # artifact's name, which cannot contain the slashes a branch name can.
+  BUILD_ID: php${{ inputs.php-version }}-${{ inputs.template }}-${{ inputs.quickstart-ref || 'default' }}-${{ inputs.template-ref || 'default' }}-${{ inputs.dev-ref || 'default' }}
+
+jobs:
+  composer-validate:
+    name: composer validate
+    if: ${{ inputs.composer-validate }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Setup PHP
+        uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
+        with:
+          php-version: ${{ inputs.php-version }}
+      - name: composer version
+        run: composer --version
+      - name: composer validate
+        run: composer validate
+
+  composer:
+    name: composer install
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.setup-test-matrix.outputs.matrix }}
+      build-artifact: ${{ steps.package.outputs.name }}
+    steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
+        with:
+          php-version: ${{ inputs.php-version }}
+      # The build action lives next to this workflow, which is not necessarily
+      # in the repository that called it.
+      - name: Checkout CI tooling
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: ${{ job.workflow_repository }}
+          ref: ${{ job.workflow_sha }}
+          path: .ci
+          sparse-checkout: .github/actions
+      - name: Build site
+        uses: ./.ci/.github/actions/build-site
+        with:
+          template: ${{ inputs.template }}
+          path: ${{ env.SITE_DIR }}
+          quickstart-ref: ${{ inputs.quickstart-ref }}
+          template-ref: ${{ inputs.template-ref }}
+          dev-ref: ${{ inputs.dev-ref }}
+      - name: Setup test matrix
+        id: setup-test-matrix
+        working-directory: ${{ env.SITE_DIR }}/${{ env.PROFILE_PATH }}
+        run: |
+          MATRIX=$(find . -name "*Test.php" | sort | jq -R -s -c '{test: [split("\n")[] | select(length > 0) | {file: ., name: (split("/") | last | rtrimstr(".php"))}]}')
+          echo "matrix=$MATRIX" >> "$GITHUB_OUTPUT"
+      # The site is passed to the other jobs as an artifact of this workflow
+      # run. It is packed into a tarball first because artifacts do not keep
+      # file permissions, and uploaded without zipping because it is already
+      # compressed. An unzipped artifact is named after its file.
+      - name: Package build
+        id: package
+        run: |
+          NAME="azqs-build-$(printf '%s' "$BUILD_ID" | sha256sum | cut -c1-16).tar.zst"
+          tar --zstd -cf "$RUNNER_TEMP/$NAME" "$SITE_DIR"
+          ls -lh "$RUNNER_TEMP/$NAME"
+          echo "name=$NAME" >> "$GITHUB_OUTPUT"
+      - name: Upload build
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          path: ${{ runner.temp }}/${{ steps.package.outputs.name }}
+          archive: false
+          if-no-files-found: error
+          # Long enough to re-run failed jobs, which reuse this build.
+          retention-days: 7
+          # A full re-run of the workflow builds and uploads the site again.
+          overwrite: true
+
+  phpcs:
+    name: PHP_CodeSniffer
+    if: ${{ inputs.phpcs }}
+    needs: composer
+    runs-on: ubuntu-latest
+    steps:
+      - uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
+        with:
+          php-version: ${{ inputs.php-version }}
+          tools: cs2pr, phpcs
+      - name: Download build
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: ${{ needs.composer.outputs.build-artifact }}
+          path: ${{ runner.temp }}
+      - name: Unpack build
+        run: tar --zstd -xf "$RUNNER_TEMP/$BUILD_ARTIFACT"
+        env:
+          BUILD_ARTIFACT: ${{ needs.composer.outputs.build-artifact }}
+      - name: Generate phpcs report
+        continue-on-error: true
+        working-directory: ${{ env.SITE_DIR }}
+        run: |
+          ./vendor/bin/phpcs --standard="$PROFILE_PATH/phpcs.xml.dist" -sq --report=checkstyle | sed "s#$PROFILE_PATH/##" | cs2pr
+      - name: Run phpcs
+        working-directory: ${{ env.SITE_DIR }}
+        run: |
+          ./vendor/bin/phpcs -sp --colors --standard="$PROFILE_PATH/phpcs.xml.dist"
+
+  phpstan:
+    name: PHPStan
+    if: ${{ inputs.phpstan }}
+    needs: composer
+    runs-on: ubuntu-latest
+    steps:
+      - uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
+        with:
+          php-version: ${{ inputs.php-version }}
+          tools: cs2pr, phpstan
+      - name: Download build
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: ${{ needs.composer.outputs.build-artifact }}
+          path: ${{ runner.temp }}
+      - name: Unpack build
+        run: tar --zstd -xf "$RUNNER_TEMP/$BUILD_ARTIFACT"
+        env:
+          BUILD_ARTIFACT: ${{ needs.composer.outputs.build-artifact }}
+      - name: Run phpstan
+        working-directory: ${{ env.SITE_DIR }}
+        run: |
+          ./vendor/bin/phpstan analyse --configuration "$PROFILE_PATH/phpstan.neon" "$PROFILE_PATH" --error-format=checkstyle | sed "s#$PROFILE_PATH/##" | cs2pr
+
+  composer-audit:
+    name: composer audit (security)
+    if: ${{ inputs.composer-audit }}
+    needs: composer
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download build
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: ${{ needs.composer.outputs.build-artifact }}
+          path: ${{ runner.temp }}
+      - name: Unpack build
+        run: tar --zstd -xf "$RUNNER_TEMP/$BUILD_ARTIFACT"
+        env:
+          BUILD_ARTIFACT: ${{ needs.composer.outputs.build-artifact }}
+      - name: Run composer audit
+        working-directory: ${{ env.SITE_DIR }}
+        run: |
+          composer audit --no-dev --ignore-severity=low --ignore-severity=moderate --abandoned=report
+
+  yarn-audit:
+    name: yarn audit (security)
+    if: ${{ inputs.yarn-audit }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '20'
+      - run: |
+          corepack enable
+          yarn npm audit --recursive --severity high
+
+  eslint:
+    name: eslint
+    if: ${{ inputs.eslint }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '20'
+      - run: |
+          corepack enable
+          yarn install --immutable
+      - name: Generate eslint report
+        continue-on-error: true
+        run: |
+          yarn run eslint . --format json --output-file eslint-report.json
+      - name: Annotate eslint results
+        continue-on-error: true
+        uses: ataylorme/eslint-annotate-action@5a8d8ab89a57679e90c32750e0f382e9d8570750 # 4.0.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          report-json: "eslint-report.json"
+      - name: Run eslint
+        run: |
+          yarn run eslint --color .
+
+  phpunit:
+    name: PHPUnit (${{ matrix.test.name }})
+    if: ${{ inputs.phpunit }}
+    needs: composer
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.composer.outputs.matrix) }}
+    services:
+      chromedriver:
+        image: drupalci/webdriver-chromedriver:production
+        ports:
+          - 9515
+      mysql:
+        image: mysql:8
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: db
+        ports:
+          - 3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+    steps:
+      - uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
+        with:
+          php-version: ${{ inputs.php-version }}
+          extensions: dom, curl, libxml, mbstring, zip, pdo, mysql, pdo_mysql, bcmath, soap, intl, gd, exif, iconv
+      - name: Download build
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: ${{ needs.composer.outputs.build-artifact }}
+          path: ${{ runner.temp }}
+      - name: Unpack build
+        run: tar --zstd -xf "$RUNNER_TEMP/$BUILD_ARTIFACT"
+        env:
+          BUILD_ARTIFACT: ${{ needs.composer.outputs.build-artifact }}
+      - name: Run php built-in server
+        working-directory: ${{ env.SITE_DIR }}
+        run: |
+          php -S 172.17.0.1:8080 -t web &
+      - name: Prepare test directories
+        working-directory: ${{ env.SITE_DIR }}
+        run: |
+          mkdir -pv reports
+          mkdir -pv web/sites/simpletest/browser_output
+          chmod -R 777 reports
+          chmod -R 777 web/sites/simpletest
+      - name: Run phpunit test (${{ matrix.test.file }})
+        working-directory: ${{ env.SITE_DIR }}
+        run: |
+          # Fail on deprecations in Quickstart code only, using the profile's
+          # ignore file. Profile branches without the file report deprecations
+          # without failing.
+          if [[ -f "$PROFILE_PATH/.deprecation-ignore.txt" ]]; then
+            export SYMFONY_DEPRECATIONS_HELPER="ignoreFile=$PWD/$PROFILE_PATH/.deprecation-ignore.txt"
+          else
+            export SYMFONY_DEPRECATIONS_HELPER=weak
+          fi
+          ./vendor/bin/phpunit \
+            --configuration "$PROFILE_PATH/phpunit.xml.dist" \
+            --bootstrap web/core/tests/bootstrap.php \
+            --log-junit reports/junit.xml \
+            --colors="always" \
+            --do-not-cache-result \
+            "$PROFILE_PATH/$TEST_FILE"
+        env:
+          TEST_FILE: ${{ matrix.test.file }}
+          SIMPLETEST_DB: mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3306] }}/db
+          SIMPLETEST_BASE_URL: http://172.17.0.1:8080
+          BROWSERTEST_OUTPUT_DIRECTORY: ${{ github.workspace }}/${{ env.SITE_DIR }}/web/sites/simpletest/browser_output
+          BROWSERTEST_OUTPUT_VERBOSE: true
+          MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","goog:chromeOptions":{"args":["--disable-gpu","--headless","--disable-dev-shm-usage","--no-sandbox"]}}, "http://127.0.0.1:${{ job.services.chromedriver.ports[9515] }}"]'
+      - name: Upload PHPUnit Artifacts
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: phpunit-results-${{ inputs.quickstart-ref && format('{0}-', inputs.quickstart-ref) || '' }}${{ matrix.test.name }}
+          path: |
+            ./${{ env.SITE_DIR }}/web/sites/simpletest/browser_output/
+            ./${{ env.SITE_DIR }}/reports/junit.xml
+
+  install:
+    name: drush site:install
+    if: ${{ inputs.install }}
+    needs: composer
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: db
+        ports:
+          - 3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+    steps:
+      - uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
+        with:
+          php-version: ${{ inputs.php-version }}
+          extensions: dom, curl, libxml, mbstring, zip, pdo, mysql, pdo_mysql, bcmath, soap, intl, gd, exif, iconv
+      - name: Download build
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: ${{ needs.composer.outputs.build-artifact }}
+          path: ${{ runner.temp }}
+      - name: Unpack build
+        run: tar --zstd -xf "$RUNNER_TEMP/$BUILD_ARTIFACT"
+        env:
+          BUILD_ARTIFACT: ${{ needs.composer.outputs.build-artifact }}
+      - name: Install AZ Quickstart
+        working-directory: ${{ env.SITE_DIR }}
+        run: |
+          ./vendor/bin/drush site:install az_quickstart --db-url=mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3306] }}/db --verbose --yes -n
+          ./vendor/bin/drush -y -n pm:install az_demo
+      - name: Run php built-in server
+        working-directory: ${{ env.SITE_DIR }}
+        run: |
+          php -S 127.0.0.1:8080 -t web &
+      - name: Check for PHP errors and notices
+        working-directory: ${{ env.SITE_DIR }}
+        run: |
+          curl -sS -o /dev/null http://127.0.0.1:8080
+          curl -sS -o /dev/null http://127.0.0.1:8080/user
+          curl -sS -o /dev/null http://127.0.0.1:8080/people
+          curl -sS -o /dev/null http://127.0.0.1:8080/people-list
+          curl -sS -o /dev/null http://127.0.0.1:8080/pages/text
+          curl -sS -o /dev/null http://127.0.0.1:8080/pages/text-background
+          curl -sS -o /dev/null http://127.0.0.1:8080/pages/text-media
+          curl -sS -o /dev/null http://127.0.0.1:8080/pages/card-decks
+          curl -sS -o /dev/null http://127.0.0.1:8080/pages/accordions
+          curl -sS -o /dev/null http://127.0.0.1:8080/pages/photo-galleries
+          curl -sS -o /dev/null http://127.0.0.1:8080/page-grid
+          curl -sS -o /dev/null http://127.0.0.1:8080/page-list
+          curl -sS -o /dev/null http://127.0.0.1:8080/news
+          curl -sS -o /dev/null http://127.0.0.1:8080/calendar
+          curl -sS -o /dev/null http://127.0.0.1:8080/pages/annual-events
+          ./vendor/bin/drush -n watchdog:show --count=100 --type=php || true
+          if [ -z "$(./vendor/bin/drush -n watchdog:show --count=100 --type=php)" ]; then echo "No PHP notices/errors logged."; else echo "PHP notices/errors found in log." >&2 && exit 1; fi
+
+  upgrade-status:
+    name: upgrade_status
+    if: ${{ inputs.upgrade-status }}
+    needs: composer
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: db
+        ports:
+          - 3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+    steps:
+      - uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
+        with:
+          php-version: ${{ inputs.php-version }}
+          extensions: dom, curl, libxml, mbstring, zip, pdo, mysql, pdo_mysql, bcmath, soap, intl, gd, exif, iconv
+          tools: cs2pr
+      - name: Download build
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: ${{ needs.composer.outputs.build-artifact }}
+          path: ${{ runner.temp }}
+      - name: Unpack build
+        run: tar --zstd -xf "$RUNNER_TEMP/$BUILD_ARTIFACT"
+        env:
+          BUILD_ARTIFACT: ${{ needs.composer.outputs.build-artifact }}
+      - name: Install AZ Quickstart
+        working-directory: ${{ env.SITE_DIR }}
+        run: |
+          ./vendor/bin/drush site:install az_quickstart --db-url=mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3306] }}/db --verbose --yes -n
+          ./vendor/bin/drush -y -n pm:install az_demo
+      - name: Generate upgrade status report
+        continue-on-error: true
+        working-directory: ${{ env.SITE_DIR }}
+        run: |
+          ./vendor/bin/drush -y -n pm:install upgrade_status
+          ./vendor/bin/drush upgrade_status:analyze az_quickstart
