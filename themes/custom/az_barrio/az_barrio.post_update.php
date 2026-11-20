@@ -291,10 +291,10 @@ function az_barrio_post_update_enable_az_navbar(&$sandbox = NULL) {
 
 /**
  * Formerly enabled the blue Arizona Header.
- * 
+ *
  * Intentionally left as a no-op rather than deleted. The az_header_blue theme
  * setting no longer exists, so this update must not run its former body.
- * 
+ *
  * @see az_barrio_post_update_delete_az_header_blue_setting()
  */
 function az_barrio_post_update_enable_az_header_blue(&$sandbox = NULL) {
@@ -325,14 +325,14 @@ function az_barrio_post_update_delete_az_navbar_setting(&$sandbox = NULL) {
 }
 
 /**
- * Deletes the removed az_header_blue setting.
+ * Deletes the configuration key for the removed az_header_blue theme setting.
  */
 function az_barrio_post_update_delete_az_header_blue_setting(&$sandbox = NULL) {
   $config_factory = \Drupal::configFactory();
   $theme_settings = $config_factory->getEditable('az_barrio.settings');
   $az_header_blue = $theme_settings->get('az_header_blue');
 
-  // Delete the az_header_blue key if it exists. The blue Arizona Header setting is no longer used.
+  // Delete the az_header_blue key if it exists.
   if ($az_header_blue !== NULL) {
     $theme_settings
       ->clear('az_header_blue')
