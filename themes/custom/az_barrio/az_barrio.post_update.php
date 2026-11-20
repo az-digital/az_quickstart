@@ -337,11 +337,9 @@ function az_barrio_post_update_delete_az_header_blue_setting(&$sandbox = NULL) {
     $theme_settings
       ->clear('az_header_blue')
       ->save();
+    \Drupal::logger('az_quickstart')->notice('Deleted obsolete az_header_blue configuration key during post update.');
     if ($az_header_blue !== TRUE) {
       \Drupal::logger('az_quickstart')->warning('The blue Arizona Header theme setting was disabled on this site. This theme setting has been removed and the blue Arizona Header is now required.');
-    }
-    else {
-      \Drupal::logger('az_quickstart')->notice('Deleted removed az_header_blue configuration key during post update.');
     }
   }
 }
