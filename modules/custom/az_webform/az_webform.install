@@ -1,0 +1,141 @@
+<?php
+
+/**
+ * @file
+ * Contains az_webform.install.
+ */
+
+use Drupal\Component\Serialization\Yaml;
+
+/**
+ * State key tracking changes made to config by the override files.
+ */
+const AZ_WEBFORM_INSTALL_CHANGES_STATE_KEY = 'az_webform.install_changes';
+
+/**
+ * Returns the parsed override files, keyed by config name.
+ *
+ * @return array
+ *   An array of override data keyed by the config name they apply to.
+ */
+function _az_webform_get_overrides() {
+  $module_path = \Drupal::service('extension.list.module')->getPath('az_webform');
+  $overrides = [];
+  foreach (glob($module_path . '/config/overrides/*.yml') ?: [] as $file) {
+    $data = Yaml::decode(file_get_contents($file));
+    if (!empty($data) && is_array($data)) {
+      $overrides[basename($file, '.yml')] = $data;
+    }
+  }
+  return $overrides;
+}
+
+/**
+ * Saves a config entity so its dependencies are recalculated.
+ *
+ * Override files are applied to raw config, which doesn't update the
+ * dependencies a config entity declares. Saving the entity recalculates them
+ * from its current contents (e.g. a Linkit profile's matchers), so they stay
+ * correct regardless of changes a site builder made in the meantime.
+ *
+ * @param string $config_name
+ *   The config name. Simple config is ignored.
+ */
+function _az_webform_recalculate_dependencies(string $config_name): void {
+  $config_manager = \Drupal::service('config.manager');
+  $entity_type_id = $config_manager->getEntityTypeIdByName($config_name);
+  if (!$entity_type_id) {
+    return;
+  }
+  // Clear the static cache so the entity reflects the raw config just saved.
+  \Drupal::entityTypeManager()->getStorage($entity_type_id)->resetCache();
+  $entity = $config_manager->loadConfigEntityByName($config_name);
+  $entity?->save();
+}
+
+/**
+ * Implements hook_install().
+ */
+function az_webform_install($is_syncing) {
+  // Config is being imported from sync; don't alter it.
+  if ($is_syncing) {
+    return;
+  }
+
+  $config_factory = \Drupal::configFactory();
+  $changes = [];
+
+  // Merge each override file onto its existing config object.
+  foreach (_az_webform_get_overrides() as $config_name => $data) {
+    $config = $config_factory->getEditable($config_name);
+    if ($config->isNew()) {
+      continue;
+    }
+
+    // Record the original values of top-level scalars the override replaces,
+    // so uninstall can restore them.
+    foreach ($data as $key => $value) {
+      if ($key !== 'dependencies' && !is_array($value)) {
+        $changes[$config_name]['values'][$key] = $config->get($key);
+      }
+    }
+
+    // Dependencies are recalculated from the merged config below.
+    unset($data['dependencies']);
+    $config->merge($data);
+    $config->save();
+    _az_webform_recalculate_dependencies($config_name);
+  }
+
+  \Drupal::state()->set(AZ_WEBFORM_INSTALL_CHANGES_STATE_KEY, $changes);
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function az_webform_uninstall($is_syncing) {
+  $state = \Drupal::state();
+  $changes = $state->get(AZ_WEBFORM_INSTALL_CHANGES_STATE_KEY, []);
+  $state->delete(AZ_WEBFORM_INSTALL_CHANGES_STATE_KEY);
+
+  // Config is being imported from sync; don't alter it.
+  if ($is_syncing) {
+    return;
+  }
+
+  $config_factory = \Drupal::configFactory();
+
+  // Undo what the override files added. Linkit profiles don't implement
+  // onDependencyRemoval(), so leaving the webform matchers and dependencies in
+  // place would cause the entire profile to be deleted when webform or
+  // webform_node is later uninstalled.
+  foreach (_az_webform_get_overrides() as $config_name => $data) {
+    $config = $config_factory->getEditable($config_name);
+    if ($config->isNew()) {
+      continue;
+    }
+
+    foreach ($data as $key => $value) {
+      if ($key === 'dependencies') {
+        continue;
+      }
+      if (is_array($value)) {
+        // Remove child keys the override added under top-level mappings,
+        // e.g. matchers.<uuid>.
+        foreach (array_keys($value) as $child_key) {
+          $config->clear($key . '.' . $child_key);
+        }
+      }
+      elseif (isset($changes[$config_name]['values'])
+        && array_key_exists($key, $changes[$config_name]['values'])
+        && $config->get($key) === $value) {
+        // Restore the original scalar value, unless a site builder has changed
+        // it since install.
+        $config->set($key, $changes[$config_name]['values'][$key]);
+      }
+    }
+
+    $config->save();
+    _az_webform_recalculate_dependencies($config_name);
+  }
+}

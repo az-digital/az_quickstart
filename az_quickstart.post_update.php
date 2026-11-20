@@ -69,3 +69,66 @@ function az_quickstart_post_update_remove_block_content_permissions_from_roles(&
     return $update;
   });
 }
+
+/**
+ * Update webform permissions for AZQS roles.
+ *
+ * Grants own-submission access to authenticated users, moves "administer
+ * webform" from content editors to content admins, moves "edit any webform"
+ * and "edit any webform submission" from content admins to content editors,
+ * and removes own-submission permissions from content editors (now inherited
+ * from authenticated).
+ */
+function az_quickstart_post_update_webform_role_permissions(&$sandbox) {
+  $changes = [
+    'authenticated' => [
+      'grant' => [
+        'access webform submission user',
+        'edit own webform submission',
+        'use text format webform_default',
+        'view own webform submission',
+      ],
+    ],
+    'az_content_admin' => [
+      'grant' => [
+        'administer webform',
+      ],
+      'revoke' => [
+        'edit any webform',
+        'edit any webform submission',
+      ],
+    ],
+    'az_content_editor' => [
+      'grant' => [
+        'edit any webform',
+        'edit any webform submission',
+      ],
+      'revoke' => [
+        'administer webform',
+        'edit own webform submission',
+        'view own webform submission',
+      ],
+    ],
+  ];
+
+  // Only grant permissions that exist on this site, e.g. webform is enabled.
+  $available = \Drupal::service('user.permissions')->getPermissions();
+
+  \Drupal::classResolver(ConfigEntityUpdater::class)->update($sandbox, 'user_role', function (Role $role) use ($changes, $available) {
+    $update = FALSE;
+    $id = $role->id();
+    foreach ($changes[$id]['grant'] ?? [] as $permission) {
+      if (isset($available[$permission]) && !$role->hasPermission($permission)) {
+        $role->grantPermission($permission);
+        $update = TRUE;
+      }
+    }
+    foreach ($changes[$id]['revoke'] ?? [] as $permission) {
+      if ($role->hasPermission($permission)) {
+        $role->revokePermission($permission);
+        $update = TRUE;
+      }
+    }
+    return $update;
+  });
+}
