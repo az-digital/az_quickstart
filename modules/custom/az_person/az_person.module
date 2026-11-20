@@ -192,8 +192,12 @@ function az_person_node_presave(EntityInterface $entity) {
     }
   }
   // Set a new revision to be created if this is a migrating person.
-  // Nodes from migrations are isSyncing().
-  if (($entity instanceof NodeInterface) && ($entity->bundle() === 'az_person') && $entity->isSyncing() && !$entity->isNew()) {
+  // Nodes from migrations are isSyncing(). Other code can also save a person
+  // as a sync without importing it. For example,
+  // az_icons_post_update_rename_icon_colors() fixes icon colors in the
+  // current revision. That code sets az_person_skip_import_revision, so no
+  // new revision is made.
+  if (($entity instanceof NodeInterface) && ($entity->bundle() === 'az_person') && $entity->isSyncing() && !$entity->isNew() && empty($entity->az_person_skip_import_revision)) {
     // Create new revision on syncing person records.
     $revision_log = 'Updated via automated import.';
     $fields = [

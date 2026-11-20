@@ -17,7 +17,12 @@ final class AZBootstrapColorNames {
    * Deprecated brand color names, keyed by old name, with new names as values.
    *
    * Matches $deprecated-color-names in Arizona Bootstrap's
-   * scss/custom/_variables.scss.
+   * scss/custom/_variables.scss. But don't remove a mapping when Arizona
+   * Bootstrap does: icons in old revisions and drafts still have old names.
+   *
+   * Note: az_icons.icons.yml references this const by name, so if you rename
+   * it, static analysis tools can't warn you that every page with an icon
+   * will break.
    *
    * @var array<string, string>
    */
