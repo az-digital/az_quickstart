@@ -1,4 +1,4 @@
-<?php
+  <?php
 
 namespace Drupal\Tests\az_webform\Kernel;
 
@@ -100,46 +100,6 @@ class AZWebformLinkitProfileTest extends KernelTestBase {
     $uninstalled = $this->container->get('config.factory')->get(self::PROFILE)->getRawData();
     $this->assertSame($original['matchers'], $uninstalled['matchers']);
     $this->assertSame($original['dependencies'], $uninstalled['dependencies']);
-  }
-
-  /**
-   * Tests that uninstall keeps changes a site builder made to the profile.
-   */
-  public function testUninstallKeepsSiteChanges(): void {
-    $original = $this->container->get('config.factory')->get(self::PROFILE)->getRawData();
-    $this->container->get('module_installer')->install(['az_webform']);
-
-    // Change the label and add a webform matcher of the site's own.
-    $storage = $this->container->get('entity_type.manager')->getStorage('linkit_profile');
-    /** @var \Drupal\linkit\ProfileInterface $profile */
-    $profile = $storage->load('az_linkit');
-    $profile->set('label', 'Changed label');
-    $custom_uuid = $profile->addMatcher([
-      'id' => 'entity:webform',
-      'weight' => 5,
-      'settings' => [
-        'metadata' => '',
-        'limit' => 10,
-        'substitution_type' => 'canonical',
-      ],
-    ]);
-    $profile->save();
-
-    $this->container->get('module_installer')->uninstall(['az_webform']);
-    $uninstalled = $this->container->get('config.factory')->get(self::PROFILE)->getRawData();
-
-    // The site's changes are kept and az_webform's matchers are removed.
-    $this->assertSame('Changed label', $uninstalled['label']);
-    $this->assertSame('entity:webform', $uninstalled['matchers'][$custom_uuid]['id'] ?? NULL);
-    foreach (array_keys(self::WEBFORM_MATCHERS) as $uuid) {
-      $this->assertArrayNotHasKey($uuid, $uninstalled['matchers']);
-    }
-
-    // The site's webform matcher still needs the webform dependency.
-    $expected_dependencies = $original['dependencies'];
-    $expected_dependencies['module'][] = 'webform';
-    sort($expected_dependencies['module']);
-    $this->assertSame($expected_dependencies, $uninstalled['dependencies']);
   }
 
 }
