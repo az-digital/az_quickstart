@@ -1,0 +1,15 @@
+name: Quickstart Webform
+description: 'Provides preconfigured defaults for the Webform module.'
+core_version_requirement: ^11.3 || ^12
+type: module
+package: 'The University of Arizona - Experimental'
+lifecycle: experimental
+lifecycle_link: 'https://github.com/az-digital/az_quickstart/blob/main/RELEASES.md#experimental-features'
+dependencies:
+  - az_core:az_core
+  - az_security:az_security
+  - az_spam_prevention:az_spam_prevention
+  - linkit:linkit
+  - webform:webform
+  - webform:webform_node
+  - webform:webform_ui
