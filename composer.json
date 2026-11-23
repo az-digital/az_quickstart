@@ -71,7 +71,7 @@
         "drupal/field_group": "4.0.0",
         "drupal/field_group_link": "3.3.0",
         "drupal/flag": "5.2.2",
-        "drupal/google_tag": "2.0.9",
+        "drupal/google_tag": "2.1.0",
         "drupal/honeypot": "2.2.2",
         "drupal/image_widget_crop": "3.0.0",
         "drupal/imagemagick": "5.0.2",
@@ -79,7 +79,7 @@
         "drupal/intelligencebank": "5.2.4",
         "drupal/jquery_ui": "1.8.0",
         "drupal/jquery_ui_datepicker": "2.1.1",
-        "drupal/key": "1.22.0",
+        "drupal/key": "1.23.0",
         "drupal/klaro": "3.1.2",
         "drupal/ldap": "4.13.0",
         "drupal/link_class": "2.2.0",
@@ -94,9 +94,9 @@
         "drupal/menu_link_attributes": "1.10.0",
         "drupal/metatag": "2.2.7",
         "drupal/migmag": "1.8.4",
-        "drupal/migrate_plus": "6.0.10",
+        "drupal/migrate_plus": "6.0.11",
         "drupal/migrate_queue_importer": "2.1.2",
-        "drupal/migrate_tools": "6.1.4",
+        "drupal/migrate_tools": "6.1.5",
         "drupal/optional_end_date": "2.0.0",
         "drupal/paragraphs": "1.23.0",
         "drupal/paragraphs_admin": "1.7.0",
@@ -189,9 +189,6 @@
                 "Display Bug when using #states (Forms API) with Ajax Request (1091852)": "https://www.drupal.org/files/issues/2026-10-09/1091852-204-11.x.patch",
                 "Views with exposed filter and ajax causes unexpected scroll position change (3564586)": "https://gist.githubusercontent.com/bberndt-uaz/7183bc9aee173b19176955ba1cb178f9/raw/c7baa3a68d0325b1f459860831b075cd0819571d/3564586-11.x.patch",
                 "Synthetic service \"kernel\" error on CLI site:install of a profile with theme OOP hooks (3606822)": "https://gist.github.com/joeparsons/fe8bfa2c2bdbdce2a40499befa7cf8b8/raw/4ed3973ed9798cc90aa2a8430efc8400c067b438/3606822-classresolver-kernel-11x-mr-16159.patch"
-            },
-            "drupal/google_tag": {
-                "PHP 8.5: Method SplObjectStorage::contains() is deprecated since 8.5 (3560958)": "https://www.drupal.org/files/issues/2026-03-06/3560958-mr129-11.patch"
             },
             "drupal/image_widget_crop": {
                 "Can't save image widget crop settings (ImmutableConfigException) (3491004)": "https://www.drupal.org/files/issues/2025-03-06/image_widget_crop_fix.patch",

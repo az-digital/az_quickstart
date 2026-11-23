@@ -4,6 +4,8 @@ namespace Drupal\az_secrets\Plugin\KeyProvider;
 
 use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\key\Attribute\KeyProvider;
 use Drupal\key\KeyInterface;
 use Drupal\key\Plugin\KeyProviderBase;
 use Drupal\key\Plugin\KeyPluginFormInterface;
@@ -11,17 +13,16 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * A key provider to provide fallbacks based on Quickstart best practices.
- *
- * @KeyProvider(
- *   id = "az_secrets",
- *   label = @Translation("Quickstart Secrets Management"),
- *   description = @Translation("A key provider to provide fallbacks based on Quickstart best practices."),
- *   key_value = {
- *     "accepted" = FALSE,
- *     "required" = FALSE
- *   }
- * )
  */
+#[KeyProvider(
+  id: 'az_secrets',
+  label: new TranslatableMarkup('Quickstart Secrets Management'),
+  description: new TranslatableMarkup('A key provider to provide fallbacks based on Quickstart best practices.'),
+  key_value: [
+    'accepted' => FALSE,
+    'required' => FALSE,
+  ],
+)]
 class AZSecrets extends KeyProviderBase implements KeyPluginFormInterface {
 
   /**
@@ -114,10 +115,12 @@ class AZSecrets extends KeyProviderBase implements KeyPluginFormInterface {
 
     // Fallback to environment variables if no secrets available.
     $secret_name = $this->configuration['secret_name'];
-    $key_value = getenv($secret_name);
+    $key_value = $this->getEnvironmentVariable($secret_name);
 
-    if (!$key_value) {
-      return '';
+    // A missing value is NULL, so that key config overrides are skipped
+    // rather than overriding with an empty string. '0' is a valid value.
+    if ($key_value === FALSE || $key_value === '') {
+      return NULL;
     }
 
     if (isset($this->configuration['base64_encoded']) && $this->configuration['base64_encoded'] === TRUE) {
@@ -125,6 +128,28 @@ class AZSecrets extends KeyProviderBase implements KeyPluginFormInterface {
       $key_value = base64_decode($key_value);
     }
 
+    return $key_value;
+  }
+
+  /**
+   * Gets the value of an environment variable.
+   *
+   * The value is read with getenv() first. If that finds nothing, the $_ENV
+   * superglobal is checked, because tools such as symfony/dotenv populate
+   * $_ENV without calling putenv() by default. $_SERVER is deliberately not
+   * consulted, as it also holds client-supplied request headers.
+   *
+   * @param string $env_variable
+   *   The name of the environment variable.
+   *
+   * @return string|false
+   *   The value of the environment variable, or FALSE if it is not set.
+   */
+  protected function getEnvironmentVariable(string $env_variable): string|false {
+    $key_value = getenv($env_variable);
+    if ($key_value === FALSE && isset($_ENV[$env_variable]) && is_scalar($_ENV[$env_variable])) {
+      $key_value = (string) $_ENV[$env_variable];
+    }
     return $key_value;
   }
 
