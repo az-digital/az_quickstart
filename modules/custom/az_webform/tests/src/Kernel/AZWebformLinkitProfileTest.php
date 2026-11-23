@@ -67,8 +67,7 @@ class AZWebformLinkitProfileTest extends KernelTestBase {
   }
 
   /**
-   * Tests that installing az_webform adds its matchers to
-   * the az_linkit profile.
+   * Test that installing az_webform adds its matchers to the az_linkit profile.
    */
   public function testInstall(): void {
     $original = $this->container->get('config.factory')->get(self::PROFILE)->getRawData();
