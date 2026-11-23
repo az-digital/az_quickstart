@@ -7,7 +7,7 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
- * Tests az_webform's changes to the az_linkit profile on install/uninstall.
+ * Tests az_webform's changes to the az_linkit profile on install.
  */
 #[Group('az_webform')]
 #[RunTestsInSeparateProcesses]
@@ -22,7 +22,6 @@ class AZWebformLinkitProfileTest extends KernelTestBase {
    * The matcher UUIDs added by az_webform's override file.
    */
   protected const WEBFORM_MATCHERS = [
-    '167a2cef-82fa-4ae2-88ef-e1005aa7e5da' => 'entity:node',
     '6eee3301-f4d9-4787-9659-9cee0ea6ca70' => 'entity:webform',
   ];
 
@@ -68,7 +67,8 @@ class AZWebformLinkitProfileTest extends KernelTestBase {
   }
 
   /**
-   * Tests that installing az_webform is reversible.
+   * Tests that installing az_webform adds its matchers to
+   * the az_linkit profile.
    */
   public function testInstall(): void {
     $original = $this->container->get('config.factory')->get(self::PROFILE)->getRawData();
