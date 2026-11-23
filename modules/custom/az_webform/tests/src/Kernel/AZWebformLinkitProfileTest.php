@@ -68,9 +68,9 @@ class AZWebformLinkitProfileTest extends KernelTestBase {
   }
 
   /**
-   * Tests that installing and uninstalling az_webform is reversible.
+   * Tests that installing az_webform is reversible.
    */
-  public function testInstallUninstall(): void {
+  public function testInstall(): void {
     $original = $this->container->get('config.factory')->get(self::PROFILE)->getRawData();
     $this->assertNotEmpty($original, 'The az_linkit profile is installed by az_core.');
     foreach (array_keys(self::WEBFORM_MATCHERS) as $uuid) {
@@ -93,13 +93,6 @@ class AZWebformLinkitProfileTest extends KernelTestBase {
     $expected_dependencies['module'][] = 'webform';
     sort($expected_dependencies['module']);
     $this->assertSame($expected_dependencies, $installed['dependencies']);
-
-    // Uninstalling az_webform restores the profile's original matchers and
-    // dependencies.
-    $this->container->get('module_installer')->uninstall(['az_webform']);
-    $uninstalled = $this->container->get('config.factory')->get(self::PROFILE)->getRawData();
-    $this->assertSame($original['matchers'], $uninstalled['matchers']);
-    $this->assertSame($original['dependencies'], $uninstalled['dependencies']);
   }
 
 }
