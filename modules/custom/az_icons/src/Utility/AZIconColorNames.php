@@ -3,6 +3,8 @@
 namespace Drupal\az_icons\Utility;
 
 use Drupal\az_core\Utility\AZBootstrapColorNames;
+use Drupal\Core\Field\FieldStorageDefinitionInterface;
+use Drupal\filter\FilterFormatRepositoryInterface;
 
 /**
  * Renames the Arizona Bootstrap color names saved in icons.
@@ -12,6 +14,7 @@ use Drupal\az_core\Utility\AZBootstrapColorNames;
  * data-icon-settings='{"color":"sky"}'>. Arizona Bootstrap 5.3.0 renamed the
  * brand colors, so sky is now rain.
  *
+ * @see az_icons_entity_presave()
  * @see az_icons_post_update_rename_icon_colors()
  */
 final class AZIconColorNames {
@@ -41,6 +44,51 @@ final class AZIconColorNames {
   const ATTRIBUTE_PATTERN = '/\G(\s+)([^\s"\'>\/=]+)(?:(\s*=\s*)("[^"]*"|\'[^\']*\'|[^\s"\'>]*))?/';
 
   /**
+   * Returns the IDs of the text formats that show icons.
+   *
+   * An icon in another text format doesn't show as an icon, so it's left as
+   * it is.
+   *
+   * @return string[]
+   *   The IDs of the enabled text formats that use the icon_embed filter.
+   */
+  public static function getIconFormatIds(): array {
+    $format_ids = [];
+    foreach (\Drupal::service(FilterFormatRepositoryInterface::class)->getAllFormats() as $format_id => $format) {
+      if (!empty($format->get('filters')['icon_embed']['status'])) {
+        $format_ids[] = $format_id;
+      }
+    }
+    return $format_ids;
+  }
+
+  /**
+   * Returns the columns of a field that hold formatted text.
+   *
+   * A column holds formatted text if it has a text format column beside it:
+   * format for the value and summary of a text field, or body_format for the
+   * body of a card or accordion field.
+   *
+   * @param \Drupal\Core\Field\FieldStorageDefinitionInterface $storage_definition
+   *   The field's storage definition.
+   *
+   * @return array<string, string>
+   *   The names of the text format columns, keyed by the names of the columns
+   *   that hold formatted text. For example, ['value' => 'format'].
+   */
+  public static function getTextColumns(FieldStorageDefinitionInterface $storage_definition): array {
+    $columns = array_keys($storage_definition->getColumns());
+    $text_columns = [];
+    foreach ($columns as $column) {
+      $format_column = in_array($column, ['value', 'summary'], TRUE) ? 'format' : $column . '_format';
+      if (in_array($format_column, $columns, TRUE)) {
+        $text_columns[$column] = $format_column;
+      }
+    }
+    return $text_columns;
+  }
+
+  /**
    * Renames the old color names in every az_icons icon in a piece of HTML.
    *
    * Only the color value changes. The rest of the HTML stays byte for byte as
@@ -54,8 +102,9 @@ final class AZIconColorNames {
    *   The HTML, with each old color name in data-icon-settings replaced by its
    *   new name. For example, "color":"sky" becomes "color":"rain". Icons from
    *   other packs keep their colors: in a pack a site added, sky can be a
-   *   valid color. If a regex fails, the HTML is returned as it is, and the
-   *   templates still render the old name.
+   *   valid color. If a regex fails, the HTML is returned as it is. The icon
+   *   still shows its color, because Arizona Bootstrap keeps the old class
+   *   names as aliases.
    */
   public static function updateMarkup(string $html): string {
     if (stripos($html, '<drupal-icon') === FALSE) {
@@ -124,14 +173,14 @@ final class AZIconColorNames {
    *   The attribute value, with the old color name replaced.
    */
   protected static function updateSettings(string $value): string {
-    $new_names = AZBootstrapColorNames::DEPRECATED_COLOR_NAMES;
-    $old_names = implode('|', array_map(static fn ($name) => preg_quote($name, '/'), array_keys($new_names)));
+    $azbs53_names = AZBootstrapColorNames::DEPRECATED_COLOR_NAMES;
+    $old_names = implode('|', array_map(static fn ($name) => preg_quote($name, '/'), array_keys($azbs53_names)));
     // \1 is the JSON quote, so the color name has to be the whole value.
     // For example, "sky" matches, but "sky-blue" doesn't.
     $pattern = '/("|&quot;|&#0*34;|&#[xX]0*22;)color\1(\s*:\s*)\1(' . $old_names . ')\1/';
     return preg_replace_callback(
       $pattern,
-      static fn ($match) => $match[1] . 'color' . $match[1] . $match[2] . $match[1] . $new_names[$match[3]] . $match[1],
+      static fn ($match) => $match[1] . 'color' . $match[1] . $match[2] . $match[1] . $azbs53_names[$match[3]] . $match[1],
       $value,
     ) ?? $value;
   }

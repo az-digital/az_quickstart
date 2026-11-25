@@ -7,7 +7,48 @@
 
 use Drupal\az_core\Utility\AZBootstrapColorNames;
 use Drupal\az_icons\Utility\AZIconColorNames;
+use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_entity_presave().
+ *
+ * Renames the old Arizona Bootstrap color names in icons each time content is
+ * saved. az_icons_post_update_rename_icon_colors() renames them only in the
+ * current revision of each entity. So without this, publishing a draft or
+ * reverting to an old revision would put old names back on a live page.
+ */
+function az_icons_entity_presave(EntityInterface $entity) {
+  if (!$entity instanceof ContentEntityInterface) {
+    return;
+  }
+  $format_ids = AZIconColorNames::getIconFormatIds();
+  foreach ($entity->getFieldDefinitions() as $field_name => $field_definition) {
+    $text_columns = AZIconColorNames::getTextColumns($field_definition->getFieldStorageDefinition());
+    if (!$text_columns) {
+      continue;
+    }
+    foreach (array_keys($entity->getTranslationLanguages()) as $langcode) {
+      foreach ($entity->getTranslation($langcode)->get($field_name) as $item) {
+        // Read the values with getValue(), not $item->get(). $item->get()
+        // throws an exception for a column that has no property of the same
+        // name, and the save would fail.
+        $values = $item->getValue();
+        foreach ($text_columns as $column => $format_column) {
+          $value = $values[$column] ?? NULL;
+          if (!is_string($value) || !in_array($values[$format_column] ?? NULL, $format_ids, TRUE)) {
+            continue;
+          }
+          $updated_value = AZIconColorNames::updateMarkup($value);
+          if ($updated_value !== $value) {
+            $item->set($column, $updated_value);
+          }
+        }
+      }
+    }
+  }
+}
 
 /**
  * Implements hook_form_FORM_ID_alter().
@@ -21,11 +62,11 @@ function az_icons_form_ui_icons_ckeditor5_icon_dialog_alter(array &$form, FormSt
   // select the Color option with the new name, rain. Saving the dialog then
   // saves rain. Without this, the Color select has no option for sky. It
   // shows "Inherit", and saving the dialog removes the icon's color.
-  $new_names = AZBootstrapColorNames::DEPRECATED_COLOR_NAMES;
+  $azbs53_names = AZBootstrapColorNames::DEPRECATED_COLOR_NAMES;
   foreach (AZIconColorNames::PACK_IDS as $pack_id) {
     $color = $form['icon']['#default_settings'][$pack_id]['color'] ?? NULL;
-    if (is_string($color) && isset($new_names[$color])) {
-      $form['icon']['#default_settings'][$pack_id]['color'] = $new_names[$color];
+    if (is_string($color) && isset($azbs53_names[$color])) {
+      $form['icon']['#default_settings'][$pack_id]['color'] = $azbs53_names[$color];
     }
   }
 }

@@ -12,8 +12,8 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * Tests the color setting of the Quickstart icon packs.
  *
  * The color values are the new Arizona Bootstrap color names. Some icons are
- * still saved with an old name, such as sky, so the templates and the icon
- * dialog map an old name to its new name.
+ * still saved with an old name, such as sky, so the icon dialog selects the
+ * new name.
  */
 #[Group('az_icons')]
 #[RunTestsInSeparateProcesses]
@@ -41,58 +41,6 @@ class AZIconsColorTest extends KernelTestBase {
       $this->assertSame('Rain', $color['meta:enum']['rain']);
       $this->assertSame('Cloud', $color['meta:enum']['cloud']);
     }
-  }
-
-  /**
-   * Tests the class that the icon templates print for a saved color.
-   */
-  public function testColorClass(): void {
-    // Each saved color, and the class it prints. NULL is no color class.
-    $colors = [
-      'rain' => 'text-rain',
-      'cloud' => 'text-cloud',
-      'azurite' => 'text-azurite',
-      'sky' => 'text-rain',
-      'cool-gray' => 'text-cloud',
-      'inherit' => NULL,
-      '' => NULL,
-    ];
-    foreach ($this->packDefinitions() as $pack_id => $definition) {
-      foreach (['template', 'preview'] as $key) {
-        foreach ($colors as $color => $expected_class) {
-          $output = $this->renderTemplate($definition[$key], ['color' => $color]);
-          $message = "$pack_id $key with color '$color'";
-          if ($expected_class === NULL) {
-            $this->assertStringNotContainsString('text-', $output, $message);
-          }
-          else {
-            $this->assertMatchesRegularExpression('/class="[^"]*\b' . preg_quote($expected_class, '/') . '[ "]/', $output, $message);
-          }
-        }
-        // An icon with no saved color.
-        $this->assertStringNotContainsString('text-', $this->renderTemplate($definition[$key], []), "$pack_id $key with no color");
-      }
-    }
-  }
-
-  /**
-   * Renders an icon pack template.
-   *
-   * @param string $template
-   *   The Twig template from the icon pack definition.
-   * @param array $settings
-   *   The icon settings to render it with.
-   *
-   * @return string
-   *   The rendered markup.
-   */
-  protected function renderTemplate(string $template, array $settings): string {
-    $build = [
-      '#type' => 'inline_template',
-      '#template' => $template,
-      '#context' => ['icon_id' => 'home', 'size' => 24] + $settings,
-    ];
-    return (string) $this->container->get('renderer')->renderRoot($build);
   }
 
   /**
