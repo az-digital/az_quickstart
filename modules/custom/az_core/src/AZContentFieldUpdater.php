@@ -2,8 +2,10 @@
 
 namespace Drupal\az_core;
 
+use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\RevisionableInterface;
+use Drupal\Core\Entity\RevisionableStorageInterface;
 use Drupal\Core\Entity\RevisionLogInterface;
 use Drupal\Core\Entity\TranslatableRevisionableInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
@@ -106,6 +108,37 @@ final class AZContentFieldUpdater implements AZContentFieldUpdaterInterface {
         $sandbox['skipped']++;
         $sandbox['progress']++;
         continue;
+      }
+
+      // For a paragraph, update the copy that its parent's current revision
+      // shows, and skip a paragraph that the parent doesn't show. Without
+      // this, a draft's edits can go live: a revert to a draft revision makes
+      // the draft's copy of the paragraph its current revision, and the code
+      // below points the parent's current revision at the copy it saves.
+      if ($options['create_revisions'] && $entity instanceof ParagraphInterface) {
+        $revision_id = $this->getUsedRevisionId($entity);
+        if ($revision_id === NULL) {
+          $logger->notice("Skipped paragraph @id, because the current revision of its parent doesn't use it", [
+            '@id' => $id,
+          ]);
+          $sandbox['skipped']++;
+          $sandbox['progress']++;
+          continue;
+        }
+        if ($revision_id !== (int) $entity->getRevisionId()) {
+          assert($storage instanceof RevisionableStorageInterface);
+          /** @var \Drupal\Core\Entity\ContentEntityInterface|null $entity */
+          $entity = $storage->loadRevision($revision_id);
+          if (!$entity) {
+            $logger->warning("Could not load revision @vid of paragraph @id", [
+              '@vid' => $revision_id,
+              '@id' => $id,
+            ]);
+            $sandbox['skipped']++;
+            $sandbox['progress']++;
+            continue;
+          }
+        }
       }
 
       // Check all languages that exist for entity.
@@ -353,6 +386,42 @@ final class AZContentFieldUpdater implements AZContentFieldUpdaterInterface {
     }
 
     return NULL;
+  }
+
+  /**
+   * Returns the paragraph revision that its parent's current revision uses.
+   *
+   * For example, a published page with a newer draft shows its own copy of
+   * each paragraph. The paragraph's current revision can be the draft's copy.
+   *
+   * @param \Drupal\paragraphs\ParagraphInterface $paragraph
+   *   The current revision of the paragraph.
+   *
+   * @return int|null
+   *   The paragraph revision ID, or NULL if the paragraph has no parent or the
+   *   parent's current revision doesn't use it.
+   */
+  protected function getUsedRevisionId(ParagraphInterface $paragraph): ?int {
+    $parent = $paragraph->getParentEntity();
+    $parent_field = $paragraph->get('parent_field_name')->value;
+    if (!$parent instanceof ContentEntityInterface || !$parent_field || !$parent->hasField($parent_field)) {
+      return NULL;
+    }
+    $revision_ids = [];
+    foreach (array_keys($parent->getTranslationLanguages()) as $langcode) {
+      /** @var \Drupal\entity_reference_revisions\Plugin\Field\FieldType\EntityReferenceRevisionsItem $item */
+      foreach ($parent->getTranslation($langcode)->get($parent_field) as $item) {
+        if ($item->target_id == $paragraph->id()) {
+          $revision_ids[] = (int) $item->get('target_revision_id')->getValue();
+        }
+      }
+    }
+    // If the parent uses the paragraph's current revision, as it does for most
+    // paragraphs, keep it. Then nothing changes for those paragraphs.
+    if (in_array((int) $paragraph->getRevisionId(), $revision_ids, TRUE)) {
+      return (int) $paragraph->getRevisionId();
+    }
+    return $revision_ids[0] ?? NULL;
   }
 
 }
