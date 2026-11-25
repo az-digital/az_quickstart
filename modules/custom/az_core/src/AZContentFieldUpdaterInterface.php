@@ -28,7 +28,9 @@ interface AZContentFieldUpdaterInterface {
    *   Additional options:
    *   - create_revisions: (bool) Whether to create new revisions. When TRUE,
    *     will also make them the default revision and update parent entity
-   *     revisions for paragraphs. Defaults to FALSE.
+   *     revisions for paragraphs. For a paragraph, it updates the revision
+   *     that the parent's current revision uses, and skips a paragraph that
+   *     the parent's current revision doesn't use. Defaults to FALSE.
    *   - prefix: (string|null) Optional prefix for revision log messages. Useful
    *     for including the update hook name.
    *   - suffix: (string|null) Optional suffix to append to both revision log
