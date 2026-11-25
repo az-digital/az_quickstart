@@ -131,7 +131,7 @@ third_party_settings:
       weight: 20
       format_type: html_element
       format_settings:
-        classes: 'card-title text-midnight h4 m-0 hover-text-underline'
+        classes: 'card-title text-tinta h4 m-0 hover-text-underline'
         show_empty_fields: false
         id: ''
         element: h2

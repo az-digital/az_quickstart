@@ -117,9 +117,10 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
 
       // Day pseudo field.
       if ($display->getComponent('az_event_day')) {
+        $day_format = $view_mode === 'az_card_alternate' ? 'az_event_card_day' : 'az_event_day';
         $build['az_event_day'][] = [
           '#type' => 'markup',
-          '#markup' => Html::escape($formatter->format($timestamp, 'az_event_day')),
+          '#markup' => Html::escape($formatter->format($timestamp, $day_format)),
         ];
       }
     }
@@ -365,7 +366,29 @@ function az_event_preprocess_node(&$variables) {
 
   // Only for the event content type.
   if ($node->getType() === 'az_event') {
+    if (isset($variables['elements']) && $variables['elements']['#view_mode'] == 'az_card_alternate') {
+      $variables['#attached']['library'][] = 'az_card/az_card_title_hover';
+      $variables['#attached']['library'][] = 'az_event/az_event_card';
 
+      // Render the first thumbnail with the card image classes, so the image
+      // gets rounded corners and zooms on hover. Without access, leave the
+      // field formatter's output, which performs its own access check.
+      $renderer = \Drupal::service('renderer');
+      foreach ($node->get('field_az_media_thumbnail_image')->referencedEntities() as $media) {
+        $access = $media->access('view', NULL, TRUE);
+        $card_image = $access->isAllowed()
+          ? \Drupal::service('az_card.image')->generateImageRenderArray($media)
+          : [];
+        if (!empty($card_image)) {
+          $card_image['#item_attributes']['class'][] = 'rounded-top-4';
+          $card_image['#item_attributes']['class'][] = 'hover-img-zoom-in';
+          $renderer->addCacheableDependency($card_image, $access);
+          $renderer->addCacheableDependency($card_image, $media);
+          $variables['content']['field_az_media_thumbnail_image'] = $card_image;
+        }
+        break;
+      }
+    }
     // Only process if we see view information.
     if (isset($variables['elements']['#az_view_row_index'])) {
 
@@ -392,7 +415,8 @@ function az_event_preprocess_node(&$variables) {
 
             // Format the replacement value.
             if (!empty($variables['content']['az_event_day'])) {
-              $variables['content']['az_event_day'][0]['#markup'] = Html::escape($formatter->format($timestamp, 'az_event_day'));
+              $day_format = $variables['view_mode'] === 'az_card_alternate' ? 'az_event_card_day' : 'az_event_day';
+              $variables['content']['az_event_day'][0]['#markup'] = Html::escape($formatter->format($timestamp, $day_format));
               $variables['content']['az_event_day']['#cache']['max-age'] = 0;
             }
             if (!empty($variables['content']['az_event_month'])) {

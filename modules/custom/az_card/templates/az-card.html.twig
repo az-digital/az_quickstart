@@ -14,31 +14,46 @@
  * - title_alignment: The title alignment to use.
  * - title_level: The heading level to use.
  * - title_display: The title text display size to use.
+ * - title_classes: Additional classes for the card title.
+ * - body_classes: Additional classes for the card body.
+ * - title_link_stretched: Whether the link in the title covers the card.
+ * - title_link_classes: Additional classes for the link in the title.
+ * - image_only: Whether the card is an image tile: a square image with the
+ *   title on it, and nothing under the image.
  *
  * @ingroup themeable
  */
 #}
 
+{% macro title_link(title, link_url, has_link, stretched, classes) %}
+  {% if has_link %}
+    <a href="{{ link_url }}" class="text-reset{{ stretched ? ' stretched-link text-decoration-none' }}{{ classes ? ' ' ~ classes|join(' ') }}">{{ title }}</a>
+  {% else %}
+    {{ title }}
+  {% endif %}
+{% endmacro %}
+{% import _self as card %}
+
 {% set attributes = attributes.addClass('h-100') %}
+{% set has_link = link_url is not empty and link|render %}
 
 <div{{ attributes }}>
   {% if media %}
-    <div class="position-relative overflow-hidden">
+    <div class="{{ image_only ? 'ratio ratio-1x1' : 'position-relative' }} overflow-hidden">
       {{ media }}
       {% if title and title_style == 'title-on-image' %}
         <div class="card-img-overlay p-0 d-flex flex-column">
-          <{{ title_level }} class="fw-bold mt-auto card-title text-bg-gradient-black text-white mb-0 p-card pt-8 {{ title_alignment }} {{ title_display }}">
-            {% if link|render %}
-              <a href="{{ link_url }}" class="text-reset">{{ title }}</a>
-            {% else %}
-              {{ title }}
-            {% endif %}
+          {# On a tile, the gradient covers at least the bottom half of the image, and grows with a long title. #}
+          <{{ title_level }} class="fw-bold mt-auto card-title text-bg-gradient-blue text-white mb-0 p-4 pt-8 {{ image_only ? 'd-flex flex-column justify-content-end' }} {{ title_alignment }} {{ title_display }} {{ title_classes|join(' ') }}"{{ image_only ? ' style="min-height: 50%;"' }}>
+            {{ card.title_link(title, link_url, has_link, title_link_stretched, title_link_classes) }}
           </{{ title_level }}>
         </div>
       {% endif %}
     </div>
   {% endif %}
-  {% if title_style == 'title-on-image' and body['#text'] == '' and (link['#title'] == '' or 'visually-hidden' in link['#attributes']['class'] ) %}
+  {% if image_only %}
+    {# An image tile shows nothing under the image. Its title holds the link. #}
+  {% elseif title_style == 'title-on-image' and body['#text'] == '' and (link['#title'] == '' or 'visually-hidden' in link['#attributes']['class'] ) %}
     <div class="d-flex flex-column">
       {% if link|render %}
         {% if 'visually-hidden' in link['#attributes']['class'] and 'stretched-link' in link['#attributes']['class'] %}
@@ -51,14 +66,10 @@
       {% endif %}
     </div>
   {% else %}
-    <div class="card-body d-flex flex-column">
+    <div class="card-body d-flex flex-column {{ body_classes|join(' ') }}">
       {% if title and title_style == 'default' %}
-        <{{ title_level }} class="fw-bold mt-0 mb-3 card-title {{ title_alignment }} {{ title_display }}">
-          {% if link|render %}
-            <a href="{{ link_url }}" class="text-reset">{{ title }}</a>
-          {% else %}
-            {{ title }}
-          {% endif %}
+        <{{ title_level }} class="fw-bold mt-0 mb-2 card-title {{ title_alignment }} {{ title_display }} {{ title_classes|join(' ') }}">
+          {{ card.title_link(title, link_url, has_link, false, title_link_classes) }}
         </{{ title_level }}>
       {% endif %}
       {% if body['#text'] %}
