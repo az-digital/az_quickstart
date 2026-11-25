@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Drupal\az_http\Plugin\migrate_plus\data_fetcher;
 
+use Drupal\migrate_plus\Attribute\DataFetcher;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\migrate_plus\Plugin\migrate_plus\data_fetcher\Http;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -22,12 +24,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *     Authorization-Key: secret
  *     Arbitrary-Header: foobarbaz
  * @endcode
- *
- * @DataFetcher(
- *   id = "az_http",
- *   title = @Translation("Quickstart HTTP Fetcher with optional cache")
- * )
  */
+#[DataFetcher(
+  id: 'az_http',
+  title: new TranslatableMarkup('Quickstart HTTP Fetcher with optional cache')
+)]
 class AzHttp extends Http {
 
   /**
@@ -38,10 +39,10 @@ class AzHttp extends Http {
       $configuration,
       $plugin_id,
       $plugin_definition,
+      // Use the client with http caching instead of the default client.
       $container->get('az_http.http_client'),
       $container->get('plugin.manager.migrate_plus.authentication'),
     );
-
   }
 
 }

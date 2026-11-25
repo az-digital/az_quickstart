@@ -13,6 +13,12 @@ use GuzzleHttp\Exception\GuzzleException;
 
 /**
  * Contains constants and helpers for Trellis Opportunities.
+ *
+ * This service intentionally uses the core HTTP client and not
+ * the az_http client. Program data is requested with POST, which
+ * the middleware cache cannot easily serve. This class implements its
+ * own caching so that batch requests only fetches the IDs that are
+ * not cached already.
  */
 final class TrellisHelper {
 
