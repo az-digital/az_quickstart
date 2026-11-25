@@ -22,19 +22,38 @@ arizona_icons:
         - inherit
         - red
         - blue
-        - cool-gray
-        - warm-gray
-        - midnight
+        - cloud
+        - caliche
+        - tinta
         - azurite
-        - oasis
-        - chili
-        - bloom
-        - sky
-        - leaf
-        - river
-        - mesa
+        - arroyo-blue
+        - sonoran-red
+        - bougainvillea
+        - rain
+        - saguaro
+        - shade
+        - brick
         - white
         - black
+      # The labels the icon dialog shows. Every enum value needs a label here:
+      # Drupal drops a value that has none.
+      meta:enum:
+        inherit: Inherit
+        red: Arizona Red
+        blue: Arizona Blue
+        cloud: Cloud
+        caliche: Caliche
+        tinta: Tinta
+        azurite: Azurite
+        arroyo-blue: Arroyo Blue
+        sonoran-red: Sonoran Red
+        bougainvillea: Bougainvillea
+        rain: Rain
+        saguaro: Saguaro
+        shade: Shade
+        brick: Brick
+        white: White
+        black: Black
       default: inherit
   library: "az_icons/arizona_icons"
   template: >-
@@ -70,19 +89,38 @@ material_symbols:
         - inherit
         - red
         - blue
-        - cool-gray
-        - warm-gray
-        - midnight
+        - cloud
+        - caliche
+        - tinta
         - azurite
-        - oasis
-        - chili
-        - bloom
-        - sky
-        - leaf
-        - river
-        - mesa
+        - arroyo-blue
+        - sonoran-red
+        - bougainvillea
+        - rain
+        - saguaro
+        - shade
+        - brick
         - white
         - black
+      # The labels the icon dialog shows. Every enum value needs a label here:
+      # Drupal drops a value that has none.
+      meta:enum:
+        inherit: Inherit
+        red: Arizona Red
+        blue: Arizona Blue
+        cloud: Cloud
+        caliche: Caliche
+        tinta: Tinta
+        azurite: Azurite
+        arroyo-blue: Arroyo Blue
+        sonoran-red: Sonoran Red
+        bougainvillea: Bougainvillea
+        rain: Rain
+        saguaro: Saguaro
+        shade: Shade
+        brick: Brick
+        white: White
+        black: Black
       default: inherit
   library: "az_icons/material_symbols"
   template: >-
