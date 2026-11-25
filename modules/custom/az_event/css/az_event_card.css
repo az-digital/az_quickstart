@@ -1,0 +1,44 @@
+.az-start-date {
+  margin-left: 24px;
+  margin-top: -38px;
+  width: min-content;
+  min-width: 4rem;
+  font-size: 20px;
+  padding: .625rem;
+  line-height: 24px;
+}
+
+.az-event-card .card-title {
+  --bs-card-title-color: var(--bs-blue);
+}
+
+.az-event-card .az-event-when {
+  color: var(--bs-red);
+  transition: color .3s ease-out;
+}
+
+.az-event-card:is(:hover, :focus-visible) .az-event-when {
+  color: var(--bs-rain);
+}
+
+.az-event-card .card-text > :last-child > :last-child {
+  margin-bottom: 0;
+}
+
+.node--type-az-event.node--view-mode-az-card-alternate,
+.node--type-az-event.node--view-mode-az-card-alternate .node__content {
+  height: 100%;
+}
+
+.node--type-az-event.node--view-mode-az-card-alternate .node__content {
+  margin-top: 0;
+}
+
+/* No image: the date badge is the card's first child. */
+.node--type-az-event.node--view-mode-az-card-alternate .az-start-date:first-child {
+  margin-top: 1.5rem;
+}
+
+.views-view-grid > :has(> .node--type-az-event.node--view-mode-az-card-alternate) {
+  margin-bottom: 2rem;
+}
