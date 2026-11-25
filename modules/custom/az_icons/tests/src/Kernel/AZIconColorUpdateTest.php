@@ -21,11 +21,6 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 /**
  * Tests renaming the Arizona Bootstrap color names in icons.
  *
- * The az_icons module isn't enabled until a test calls enableAzIcons(). So a
- * test can save content with old color names first, as sites did before this
- * update.
- *
- * @see az_icons_entity_presave()
  * @see az_icons_post_update_rename_icon_colors()
  */
 #[Group('az_icons')]
@@ -50,6 +45,7 @@ class AZIconColorUpdateTest extends KernelTestBase {
   protected static $modules = [
     'az_card',
     'az_core',
+    'az_icons',
     'az_person',
     'config_filter',
     'config_normalizer',
@@ -80,6 +76,7 @@ class AZIconColorUpdateTest extends KernelTestBase {
    */
   protected function setUp(): void {
     parent::setUp();
+    $this->container->get('module_handler')->loadInclude('az_icons', 'php', 'az_icons.post_update');
 
     $this->installEntitySchema('user');
     $this->installEntitySchema('node');
@@ -148,11 +145,12 @@ class AZIconColorUpdateTest extends KernelTestBase {
     $this->assertSame($this->icon('tinta'), $node->get('field_cards')->getValue()[0]['body']);
     $this->assertSame($this->icon('rain'), $node->get('field_cards')->getValue()[1]['body']);
     $this->assertSame($this->icon('saguaro'), $node->getTranslation('es')->get('body')->value);
-    // The update saves the node once. az_icons_entity_presave() renames the
-    // other columns and the Spanish translation in the same save.
-    $this->assertSame('Renamed the Arizona Bootstrap color names in icons in 1 entity.', (string) $result);
-    $this->assertSame(2, $this->countRevisions($node));
-    $this->assertSame(self::LOG_PREFIX . 'Updated field body on node ' . $node->id() . ' for English language' . self::LOG_SUFFIX, $node->getRevisionLogMessage());
+    // The update saves the node once for each column and language with an
+    // old name: the English body, the Spanish body, the summary, and the
+    // cards.
+    $this->assertSame('Renamed the Arizona Bootstrap color names in icons in 4 field values.', (string) $result);
+    $this->assertSame(5, $this->countRevisions($node));
+    $this->assertSame(self::LOG_PREFIX . 'Updated field field_cards on node ' . $node->id() . ' for English language' . self::LOG_SUFFIX, $node->getRevisionLogMessage());
     // Old revisions are left as they are.
     $this->assertSame($this->icon('sky'), $this->loadRevision($revision_id)->get('body')->summary);
   }
@@ -183,7 +181,7 @@ class AZIconColorUpdateTest extends KernelTestBase {
 
     $result = $this->runUpdate();
 
-    $this->assertSame('Renamed the Arizona Bootstrap color names in icons in 0 entities.', (string) $result);
+    $this->assertSame('Renamed the Arizona Bootstrap color names in icons in 0 field values.', (string) $result);
     $this->assertSame($this->icon('rain'), $this->reload($new_names)->get('body')->value);
     $this->assertSame('<p class="text-sky">"color":"sky"</p>', $this->reload($no_icon)->get('body')->value);
     $this->assertSame($this->icon('sky'), $this->reload($plain_text)->get('body')->value);
@@ -284,17 +282,18 @@ class AZIconColorUpdateTest extends KernelTestBase {
   /**
    * Tests a published page with a newer draft that edits its paragraph.
    *
-   * The live paragraph is renamed, and the page gets a published revision
-   * that is newer than the draft. The draft keeps its own copy of the
-   * paragraph, with the old names and the unfinished edit.
+   * The live paragraph is renamed, and the page gets 2 published revisions
+   * that are newer than the draft, 1 for each paragraph field with an old
+   * name. The draft keeps its own copy of the paragraph, with the old names
+   * and the unfinished edit.
    */
   public function testDraftParagraph(): void {
     $page = $this->createPageWithDraft();
 
     $result = $this->runUpdate();
 
-    $this->assertSame('Renamed the Arizona Bootstrap color names in icons in 1 entity.', (string) $result);
-    $this->assertSame(3, $this->countRevisions($page['node']));
+    $this->assertSame('Renamed the Arizona Bootstrap color names in icons in 2 field values.', (string) $result);
+    $this->assertSame(4, $this->countRevisions($page['node']));
     $published = $this->reload($page['node']);
     $this->assertSame('published', $published->get('moderation_state')->value);
     $this->assertGreaterThan($page['draft_revision_id'], $published->getRevisionId());
@@ -322,7 +321,7 @@ class AZIconColorUpdateTest extends KernelTestBase {
 
     $result = $this->runUpdate();
 
-    $this->assertSame('Renamed the Arizona Bootstrap color names in icons in 0 entities.', (string) $result);
+    $this->assertSame('Renamed the Arizona Bootstrap color names in icons in 0 field values.', (string) $result);
     $published = $this->reload($page['node']);
     $this->assertEquals($page['published_revision_id'], $published->getRevisionId());
     $this->assertEquals($page['published_paragraph_revision_id'], $published->get('field_main_content')->target_revision_id);
@@ -349,7 +348,7 @@ class AZIconColorUpdateTest extends KernelTestBase {
 
     $result = $this->runUpdate();
 
-    $this->assertSame('Renamed the Arizona Bootstrap color names in icons in 0 entities.', (string) $result);
+    $this->assertSame('Renamed the Arizona Bootstrap color names in icons in 0 field values.', (string) $result);
     $this->assertSame(2, $this->countRevisions($node));
   }
 
@@ -369,96 +368,8 @@ class AZIconColorUpdateTest extends KernelTestBase {
 
     $result = $this->runUpdate();
 
-    $this->assertSame('Renamed the Arizona Bootstrap color names in icons in 1 entity.', (string) $result);
+    $this->assertSame('Renamed the Arizona Bootstrap color names in icons in 1 field value.', (string) $result);
     $this->assertSame($this->icon('rain'), User::load($user->id())->get('field_bio')->value);
-  }
-
-  /**
-   * Tests that saving content renames old color names.
-   */
-  public function testSaveRenamesColors(): void {
-    $this->enableAzIcons();
-    $node = $this->createNode('page', [
-      'body' => [
-        'value' => $this->icon('sky'),
-        'summary' => $this->icon('mesa'),
-        'format' => 'az_standard',
-      ],
-      'field_cards' => [
-        [
-          'title' => 'Card',
-          'body' => $this->icon('midnight'),
-          'body_format' => 'az_standard',
-        ],
-      ],
-    ]);
-    $plain_text = $this->createNode('page', [
-      'body' => [
-        'value' => $this->icon('sky'),
-        'format' => 'plain_text',
-      ],
-    ]);
-
-    $node = $this->reload($node);
-    $this->assertSame($this->icon('rain'), $node->get('body')->value);
-    $this->assertSame($this->icon('brick'), $node->get('body')->summary);
-    $this->assertSame($this->icon('tinta'), $node->get('field_cards')->getValue()[0]['body']);
-    $this->assertSame($this->icon('sky'), $this->reload($plain_text)->get('body')->value);
-  }
-
-  /**
-   * Tests that reverting to a draft the update didn't reach renames it.
-   */
-  public function testRevertDraft(): void {
-    $workflow = $this->createEditorialWorkflow();
-    $this->addEntityTypeAndBundleToWorkflow($workflow, 'node', 'page');
-    $node = $this->createNode('page', [
-      'body' => [
-        'value' => $this->icon('sky'),
-        'format' => 'az_standard',
-      ],
-      'moderation_state' => 'published',
-    ]);
-    $node->set('moderation_state', 'draft');
-    $node->save();
-    $draft_revision_id = $node->getRevisionId();
-    $this->runUpdate();
-
-    $draft = $this->loadRevision($draft_revision_id);
-    $draft->setNewRevision(TRUE);
-    $draft->isDefaultRevision(TRUE);
-    $draft->set('moderation_state', 'published');
-    $draft->save();
-
-    $this->assertSame($this->icon('rain'), $this->reload($node)->get('body')->value);
-  }
-
-  /**
-   * Tests that saving a page renames old color names in its paragraphs.
-   */
-  public function testSaveRenamesParagraph(): void {
-    $this->createParagraphField();
-    $node = $this->createNode('page', [
-      'field_main_content' => [
-        Paragraph::create([
-          'type' => 'text',
-          'field_text' => [
-            'value' => $this->icon('sky'),
-            'format' => 'az_standard',
-          ],
-        ]),
-      ],
-    ]);
-    $this->enableAzIcons();
-
-    $node = $this->reload($node);
-    $node->setNewRevision(TRUE);
-    $node->save();
-
-    $item = $this->reload($node)->get('field_main_content')->first()->getValue();
-    $paragraph = $this->container->get('entity_type.manager')->getStorage('paragraph')->loadRevision($item['target_revision_id']);
-    $this->assertInstanceOf(ParagraphInterface::class, $paragraph);
-    $this->assertSame($this->icon('rain'), $paragraph->get('field_text')->value);
   }
 
   /**
@@ -475,13 +386,12 @@ class AZIconColorUpdateTest extends KernelTestBase {
       ]);
     }
 
-    $this->enableAzIcons();
     $sandbox = [];
     az_icons_post_update_rename_icon_colors($sandbox);
     $this->assertLessThan(1, $sandbox['#finished']);
     $result = az_icons_post_update_rename_icon_colors($sandbox);
     $this->assertEquals(1, $sandbox['#finished']);
-    $this->assertSame('Renamed the Arizona Bootstrap color names in icons in 30 entities.', (string) $result);
+    $this->assertSame('Renamed the Arizona Bootstrap color names in icons in 30 field values.', (string) $result);
 
     foreach ($nodes as $node) {
       $this->assertSame($this->icon('sonoran-red'), $this->reload($node)->get('body')->value);
@@ -492,11 +402,10 @@ class AZIconColorUpdateTest extends KernelTestBase {
    * Tests that the update finishes when there is nothing to update.
    */
   public function testNoEntities(): void {
-    $this->enableAzIcons();
     $sandbox = [];
     $result = az_icons_post_update_rename_icon_colors($sandbox);
     $this->assertEquals(1, $sandbox['#finished']);
-    $this->assertSame('Renamed the Arizona Bootstrap color names in icons in 0 entities.', (string) $result);
+    $this->assertSame('Renamed the Arizona Bootstrap color names in icons in 0 field values.', (string) $result);
   }
 
   /**
@@ -506,20 +415,11 @@ class AZIconColorUpdateTest extends KernelTestBase {
    *   The message the update returns when it finishes.
    */
   protected function runUpdate() {
-    $this->enableAzIcons();
     $sandbox = [];
     do {
       $result = az_icons_post_update_rename_icon_colors($sandbox);
     } while ($sandbox['#finished'] < 1);
     return $result;
-  }
-
-  /**
-   * Enables az_icons, and loads its post update functions.
-   */
-  protected function enableAzIcons(): void {
-    $this->enableModules(['az_icons']);
-    $this->container->get('module_handler')->loadInclude('az_icons', 'php', 'az_icons.post_update');
   }
 
   /**

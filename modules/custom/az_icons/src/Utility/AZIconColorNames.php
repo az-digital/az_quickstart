@@ -14,7 +14,6 @@ use Drupal\filter\FilterFormatRepositoryInterface;
  * data-icon-settings='{"color":"sky"}'>. Arizona Bootstrap 5.3.0 renamed the
  * brand colors, so sky is now rain.
  *
- * @see az_icons_entity_presave()
  * @see az_icons_post_update_rename_icon_colors()
  */
 final class AZIconColorNames {

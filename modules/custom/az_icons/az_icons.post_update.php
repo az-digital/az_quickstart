@@ -107,10 +107,13 @@ function az_icons_post_update_rename_icon_colors(&$sandbox) {
     return NULL;
   }
   $sandbox['#finished'] = 1;
+  // AZContentFieldUpdater counts each column, in each language, that it
+  // changed. Each one is a new revision. For example, a page with icons in its
+  // body and in its summary counts as 2.
   return \Drupal::translation()->formatPlural(
     $sandbox['updated_count'],
-    'Renamed the Arizona Bootstrap color names in icons in 1 entity.',
-    'Renamed the Arizona Bootstrap color names in icons in @count entities.',
+    'Renamed the Arizona Bootstrap color names in icons in 1 field value.',
+    'Renamed the Arizona Bootstrap color names in icons in @count field values.',
   );
 }
 

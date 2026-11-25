@@ -19,7 +19,7 @@ final class AZBootstrapColorNames {
    * Matches $deprecated-color-names in Arizona Bootstrap's
    * scss/custom/_variables.scss. But don't remove a mapping when Arizona
    * Bootstrap does: icons in old revisions and drafts still have old names,
-   * and az_icons renames them when they're saved.
+   * and az_icons uses this map to rename them.
    *
    * @var array<string, string>
    */
