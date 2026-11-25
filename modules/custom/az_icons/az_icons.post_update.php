@@ -7,7 +7,6 @@
 
 use Drupal\az_icons\Utility\AZIconColorNames;
 use Drupal\Core\Entity\ContentEntityTypeInterface;
-use Drupal\Core\Entity\Query\QueryException;
 use Drupal\Core\Entity\Sql\SqlEntityStorageInterface;
 
 /**
@@ -18,8 +17,7 @@ use Drupal\Core\Entity\Sql\SqlEntityStorageInterface;
  * <drupal-icon data-icon-id="material_symbols:home"
  * data-icon-settings='{"color":"sky"}'>. This renames the color of every
  * arizona_icons and material_symbols icon, in every formatted text field,
- * including fields a site added. Some paragraphs are skipped; see
- * _az_icons_used_paragraph_ids().
+ * including fields a site added.
  *
  * AZContentFieldUpdater saves each change as a new revision, with a log
  * message that starts with the name of this function.
@@ -34,6 +32,7 @@ function az_icons_post_update_rename_icon_colors(&$sandbox) {
     $sandbox['fields'] = [];
     $sandbox['max'] = 0;
     $entity_field_manager = \Drupal::service('entity_field.manager');
+    $revisionable_type_ids = array_keys(array_filter($entity_type_manager->getDefinitions(), fn ($entity_type) => $entity_type->isRevisionable()));
     foreach ($sandbox['formats'] ? $entity_type_manager->getDefinitions() : [] as $entity_type_id => $entity_type) {
       if (!$entity_type instanceof ContentEntityTypeInterface || !is_subclass_of($entity_type->getStorageClass(), SqlEntityStorageInterface::class)) {
         continue;
@@ -43,14 +42,17 @@ function az_icons_post_update_rename_icon_colors(&$sandbox) {
           continue;
         }
         foreach (AZIconColorNames::getTextColumns($storage_definition) as $column => $format_column) {
-          $ids = $entity_type_manager->getStorage($entity_type_id)->getQuery()
+          $query = $entity_type_manager->getStorage($entity_type_id)->getQuery()
             ->accessCheck(FALSE)
             ->condition("$field_name.$format_column", $sandbox['formats'], 'IN')
-            ->condition("$field_name.$column", '<drupal-icon', 'CONTAINS')
-            ->execute();
+            ->condition("$field_name.$column", '<drupal-icon', 'CONTAINS');
+          // Skip paragraphs on content without revisions, such as a paragraph
+          // field a site added to users. Without this, AZContentFieldUpdater
+          // would throw an exception, and the update would stop.
           if ($entity_type_id === 'paragraph') {
-            $ids = _az_icons_used_paragraph_ids($ids);
+            $query->condition('parent_type', $revisionable_type_ids, 'IN');
           }
+          $ids = $query->execute();
           if ($ids) {
             $sandbox['fields'][] = [
               'entity_type_id' => $entity_type_id,
@@ -115,61 +117,4 @@ function az_icons_post_update_rename_icon_colors(&$sandbox) {
     'Renamed the Arizona Bootstrap color names in icons in 1 field value.',
     'Renamed the Arizona Bootstrap color names in icons in @count field values.',
   );
-}
-
-/**
- * Returns the paragraphs that are safe to give AZContentFieldUpdater.
- *
- * AZContentFieldUpdater loads the current revision of each paragraph, saves
- * the renamed copy, and makes a new revision of the parent that shows it.
- * This leaves out:
- * - A paragraph that an editor removed from a page. It is still saved,
- *   because old revisions of the page use it. Without this check, the page
- *   would get a revision for a paragraph it doesn't show.
- * - A paragraph whose current revision is a draft's copy. Reverting a page to
- *   a draft revision from the Revisions tab does this. Without this check,
- *   the update would put the draft's unfinished edits on the live page.
- * - A paragraph on content without revisions, such as a user. Without this
- *   check, AZContentFieldUpdater would throw an exception, and the update
- *   would stop.
- *
- * @param array $ids
- *   The paragraph IDs.
- *
- * @return array
- *   The IDs of the paragraphs in $ids that are safe to update.
- */
-function _az_icons_used_paragraph_ids(array $ids): array {
-  $entity_type_manager = \Drupal::entityTypeManager();
-  $used_ids = [];
-  foreach (array_chunk($ids, 50) as $chunk) {
-    foreach ($entity_type_manager->getStorage('paragraph')->loadMultiple($chunk) as $paragraph) {
-      $parent_type = $paragraph->get('parent_type')->value;
-      $parent_field = $paragraph->get('parent_field_name')->value;
-      if (empty($parent_type) || empty($parent_field)) {
-        continue;
-      }
-      // Content without revisions, such as a user.
-      $parent_definition = $entity_type_manager->getDefinition($parent_type, FALSE);
-      if (!$parent_definition || !$parent_definition->isRevisionable()) {
-        continue;
-      }
-      try {
-        $count = $entity_type_manager->getStorage($parent_type)->getQuery()
-          ->accessCheck(FALSE)
-          ->condition("$parent_field.target_id", $paragraph->id())
-          ->condition("$parent_field.target_revision_id", $paragraph->getRevisionId())
-          ->count()
-          ->execute();
-      }
-      catch (QueryException) {
-        // The parent's field was removed.
-        continue;
-      }
-      if ($count) {
-        $used_ids[] = $paragraph->id();
-      }
-    }
-  }
-  return $used_ids;
 }

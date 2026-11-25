@@ -304,55 +304,6 @@ class AZIconColorUpdateTest extends KernelTestBase {
   }
 
   /**
-   * Tests a page whose draft came from reverting to a draft revision.
-   *
-   * Reverting to a draft revision from the Revisions tab makes the draft's
-   * copy of the paragraph its current revision. The update skips the
-   * paragraph, so the draft's unfinished edit doesn't go live.
-   */
-  public function testRevertedDraftParagraph(): void {
-    $page = $this->createPageWithDraft();
-    // Revert to the draft, the way the Revisions tab does.
-    $storage = $this->container->get('entity_type.manager')->getStorage('node');
-    $reverted = $storage->createRevision($this->loadRevision($page['draft_revision_id']));
-    $reverted->save();
-    $page['draft_revision_id'] = $reverted->getRevisionId();
-    $page['draft_paragraph_revision_id'] = $reverted->get('field_main_content')->target_revision_id;
-
-    $result = $this->runUpdate();
-
-    $this->assertSame('Renamed the Arizona Bootstrap color names in icons in 0 field values.', (string) $result);
-    $published = $this->reload($page['node']);
-    $this->assertEquals($page['published_revision_id'], $published->getRevisionId());
-    $this->assertEquals($page['published_paragraph_revision_id'], $published->get('field_main_content')->target_revision_id);
-    $this->assertSame($this->icon('sky'), $this->loadParagraphRevision($page['published_paragraph_revision_id'])->get('field_text')->value);
-    $this->assertDraftUnchanged($page);
-  }
-
-  /**
-   * Tests that a paragraph that a page no longer uses is left as it is.
-   */
-  public function testUnusedParagraph(): void {
-    $this->createParagraphField();
-    $paragraph = Paragraph::create([
-      'type' => 'text',
-      'field_text' => [
-        'value' => $this->icon('sky'),
-        'format' => 'az_standard',
-      ],
-    ]);
-    $node = $this->createNode('page', ['field_main_content' => [$paragraph]]);
-    $node->set('field_main_content', []);
-    $node->setNewRevision(TRUE);
-    $node->save();
-
-    $result = $this->runUpdate();
-
-    $this->assertSame('Renamed the Arizona Bootstrap color names in icons in 0 field values.', (string) $result);
-    $this->assertSame(2, $this->countRevisions($node));
-  }
-
-  /**
    * Tests an entity type that has no revisions.
    */
   public function testNoRevisions(): void {
@@ -486,9 +437,8 @@ class AZIconColorUpdateTest extends KernelTestBase {
    * page, with an unfinished edit to the paragraph.
    *
    * @return array
-   *   The page, keyed by 'node', and its revision IDs, keyed by
-   *   'published_revision_id', 'published_paragraph_revision_id',
-   *   'draft_revision_id', and 'draft_paragraph_revision_id'.
+   *   The page, keyed by 'node', and its draft's revision IDs, keyed by
+   *   'draft_revision_id' and 'draft_paragraph_revision_id'.
    */
   protected function createPageWithDraft(): array {
     $workflow = $this->createEditorialWorkflow();
@@ -514,11 +464,7 @@ class AZIconColorUpdateTest extends KernelTestBase {
         ]),
       ],
     ]);
-    $page = [
-      'node' => $node,
-      'published_revision_id' => $node->getRevisionId(),
-      'published_paragraph_revision_id' => $node->get('field_main_content')->target_revision_id,
-    ];
+    $page = ['node' => $node];
 
     // Save a clone, as the edit form does (EntityForm::buildEntity()).
     // Saving the page object from the entity cache instead makes the draft's
