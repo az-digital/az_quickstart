@@ -1,0 +1,18 @@
+<?php
+
+/**
+ * @file
+ * Contains az_http.install.
+ */
+
+/**
+ * Remove the az_http.settings that no longer exist.
+ */
+function az_http_update_1130701() {
+  $config = \Drupal::configFactory()->getEditable('az_http.settings');
+  // This setting no longer exists.
+  if (!$config->isNew()) {
+    $config->delete();
+    return t('Deleted az_http.settings.');
+  }
+}

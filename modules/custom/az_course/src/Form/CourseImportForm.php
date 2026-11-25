@@ -142,7 +142,7 @@ class CourseImportForm extends ConfigFormBase {
     ];
 
     $form['warning'] = [
-      '#markup' => $this->t('<p>This form can time out if run through the web interface. Consider using <strong>Drush</strong> or enabling the <strong>Quickstart HTTP</strong> module if you encounter problems.</p>'),
+      '#markup' => $this->t('<p>This form can time out if run through the web interface. Consider using <strong>Drush</strong> if you encounter problems.</p>'),
       '#weight' => '3',
     ];
     $form['submit'] = [
