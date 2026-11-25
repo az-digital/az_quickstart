@@ -5,6 +5,7 @@
  * Contains az_icons.module.
  */
 
+use Drupal\az_core\Utility\AZBootstrapColorNames;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
@@ -13,6 +14,18 @@ use Drupal\Core\Form\FormStateInterface;
 function az_icons_form_ui_icons_ckeditor5_icon_dialog_alter(array &$form, FormStateInterface $form_state, $form_id) {
   if (isset($form['icon'])) {
     $form['icon']['#after_build'][] = 'az_icons_icon_after_build';
+  }
+
+  // If an icon is saved with a new Arizona Bootstrap color name, such as
+  // rain, select the Color option for the same color, which is saved as sky.
+  // Without this, the Color select has no option for rain. It shows
+  // "Inherit", and saving the dialog removes the icon's color.
+  $old_names = array_flip(AZBootstrapColorNames::DEPRECATED_COLOR_NAMES);
+  foreach (['arizona_icons', 'material_symbols'] as $pack_id) {
+    $color = $form['icon']['#default_settings'][$pack_id]['color'] ?? NULL;
+    if (is_string($color) && isset($old_names[$color])) {
+      $form['icon']['#default_settings'][$pack_id]['color'] = $old_names[$color];
+    }
   }
 }
 
