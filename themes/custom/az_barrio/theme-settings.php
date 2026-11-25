@@ -48,12 +48,6 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#description' => t('With few exceptions, this should always be enabled.'),
     '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('wordmark'),
   ];
-  $form['az_settings']['settings']['institutional_header']['az_header_blue'] = [
-    '#type' => 'checkbox',
-    '#title' => t('Enable blue Arizona Header'),
-    '#description' => t('Set the Arizona Header background color to Arizona Blue instead of Arizona Red.'),
-    '#default_value' => \Drupal::service('Drupal\Core\Extension\ThemeSettingsProvider')->getSetting('az_header_blue'),
-  ];
 
   // Land Acknowledgment.
   $form['az_settings']['settings']['land_acknowledgment'] = [
